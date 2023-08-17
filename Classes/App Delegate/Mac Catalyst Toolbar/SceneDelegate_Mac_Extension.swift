@@ -59,7 +59,8 @@ class FTShelfToolbar: NSToolbar {
     let toolbardel = FTShelfToolbarDelegate();
     
     required init(windwowScene scene: UIWindowScene?) {
-        super.init(identifier: "shelf_toolbar");
+        let uniqueID = scene?.session.persistentIdentifier ?? UUID().uuidString;
+        super.init(identifier: "shelf_toolbar_\(uniqueID)");
         self.allowsUserCustomization = false;
         self.delegate = toolbardel;
         self.displayMode = .iconOnly

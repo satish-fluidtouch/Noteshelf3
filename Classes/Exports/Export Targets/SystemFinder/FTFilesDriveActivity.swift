@@ -24,6 +24,8 @@ class FTFilesDriveActivity: FTCustomActivity {
     override func activityDidFinish(_ completed: Bool) {
         super.activityDidFinish(completed)
     }
+    
+#if !targetEnvironment(macCatalyst)
     override func perform() {
         if self.exportItems.isEmpty {
             self.didCancelExport();
@@ -37,4 +39,5 @@ class FTFilesDriveActivity: FTCustomActivity {
             }
         }
     }
+#endif
 }
