@@ -671,12 +671,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     if(self.playerController && [self.playerController isExpanded]) {
 //        yoffset += kAudioBarHeight;
     }
-    if (self.pageLayoutType == FTPageLayoutHorizontal && self.toolBarState == FTScreenModeNormal) {
-        yoffset += [self deskToolBarHeight];
-        self.contentHolderView.clipsToBounds = NO;
-    } else if (self.pageLayoutType == FTPageLayoutVertical && self.toolBarState == FTScreenModeShortCompact) {
-        yoffset += [self deskToolBarHeight];
-    }
+    yoffset = [self topPadding];
     CGRect contentHolderRect = CGRectMake(CGRectGetMinX(self.view.bounds), yoffset, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-yoffset);
     self.contentHolderView.frame = contentHolderRect;
     

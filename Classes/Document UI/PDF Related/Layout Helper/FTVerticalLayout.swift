@@ -187,7 +187,7 @@ private extension FTVerticalLayout
         else {
             if(index == 0) {
                 rectToReturn = CGRect.zero;
-                if let yoffset = self.delegate?.toolbarHeight() {
+                if let yoffset = self.delegate?.yPosition() {
                     rectToReturn.origin.y += yoffset;
                 }
             }

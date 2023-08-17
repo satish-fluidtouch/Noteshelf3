@@ -301,11 +301,15 @@ extension FTPDFRenderViewController: FTPHPickerDelegate, FTImagePickerDelegate {
 }
 
 extension FTPDFRenderViewController: FTPageLayouterDelegate {
-    func toolbarHeight() -> CGFloat {
+    func yPosition() -> CGFloat {
+    #if !targetEnvironment(macCatalyst)
         if self.pageLayoutHelper.layoutType == .vertical
             , self.toolBarState() != .shortCompact {
             return self.deskToolBarHeight();
         }
         return 0;
+    #else
+        return 0
+    #endif
     }
 }

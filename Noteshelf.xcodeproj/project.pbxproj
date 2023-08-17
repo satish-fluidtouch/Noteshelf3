@@ -535,7 +535,6 @@
 		5292B2322A27283C00216330 /* FTNotebookSettingViewController+Siri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */; };
 		5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2C9F1E027D72007B5CAD /* FTUserDefaults.swift */; };
 		52941CA72A84F2A90022243D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
-		529EA1442A4ADF590014FABD /* FTAudioPlayerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 211E2D561E027D72007B5CAD /* FTAudioPlayerController.xib */; };
 		529EA1452A4ADFB30014FABD /* FTAudioTrackHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D689EB28B7998600EA1925 /* FTAudioTrackHeaderView.xib */; };
 		529EA1462A4ADFC80014FABD /* FTFinderUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4213C34E288955DB00A7A6F3 /* FTFinderUI.storyboard */; };
 		529EA1472A4AE0190014FABD /* FTAddMenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7E3EC3A29A4882E004372B6 /* FTAddMenuItemCell.xib */; };
@@ -11081,7 +11080,6 @@
 			files = (
 				52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */,
 				529EA14F2A4AE27B0014FABD /* FTNoteBookSettings.storyboard in Resources */,
-				529EA1442A4ADF590014FABD /* FTAudioPlayerController.xib in Resources */,
 				529EA14B2A4AE0620014FABD /* FTPenRack.storyboard in Resources */,
 				529EA1462A4ADFC80014FABD /* FTFinderUI.storyboard in Resources */,
 				529EA14E2A4AE2760014FABD /* FTiOSShelfCategoryHeaderView.xib in Resources */,
