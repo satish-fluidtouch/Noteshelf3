@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TRIAL_IN_APP_DOWNLOAD_COUNT</key>
+	<integer>0</integer>
+	<key>WRITING_STYLE_SELECTED</key>
+	<integer>0</integer>
+	<key>EVERNOTE_PUBLISH_PURCHASED</key>
+	<false/>
+	<key>EVERNOTE_PUBLISH_ON_WIFI_ONLY</key>
+	<true/>
+	<key>EVERNOTE_EXPORT_AS_SINGLE_NOTE</key>
+	<true/>
+	<key>TOUCH_ID_STATUS</key>
+	<true/>
+	<key>isRandomCoverEnabled</key>
+	<true/>
+	<key>ExportFormat</key>
+	<integer>2</integer>
+	<key>FTEraseSize</key>
+	<integer>0</integer>
+	<key>FTWHITEBOARD_ENABLE_KEY</key>
+	<true/>
+	<key>CLS_REPORTING_ENABLED_KEY</key>
+	<true/>
+	<key>Shelf_ShowDate</key>
+	<true/>
+	<key>NonCollectionMode</key>
+	<true/>
+	<key>isFirstLaunch</key>
+	<true/>
+	<key>displayStyle</key>
+	<integer>0</integer>
+	<key>APPLE_PENCIL_SETTINGS_PRESSURE</key>
+	<true/>
+</dict>
+</plist>

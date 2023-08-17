@@ -1,0 +1,48 @@
+/* 
+  FTNoteshelfAILocalized.strings
+  Sample AI
+
+  Created by Amar Udupa on 31/07/23.
+  
+*/
+"noteshelf.ai.generateNotes" = "노트 생성하기"; //generate_notes
+"noteshelf.ai.generateNotesOn" = "노트 생성하기"; //generate_notes_on
+"noteshelf.ai.summarize" = "요약하다"; //summarize
+"noteshelf.ai.explain" = "설명하다"; //explain
+"noteshelf.ai.translate" = "번역하다"; //translate
+
+"noteshelf.ai.sendFeedback" = "피드백 보내기"; //send_feedback
+"noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
+
+"noteshelf.ai.languagePlaceholder" = "어떤 언어든 입력하세요 (예: \"포르투갈어\")"; //ai_assistant_enter_language
+"noteshelf.ai.askAnything" = "아무 질문이나 해주세요..."; //ai_assistant
+"noteshelf.ai.enterTopic" = "주제를 입력하세요"; //enter_the_topic
+"noteshelf.ai.provideContent" = "노트를 작성할 주제를 입력해주세요"; //please_provide_a_topic_to_create_notes
+
+"noteshelf.ai.commandSummarize" = ".50자에서 200자로 요약해주세요"; //summarize_command
+"noteshelf.ai.commandExplain" = ".간단한 용어로 설명해주세요"; //explain_command
+"noteshelf.ai.commandKeyPoints" = ".주요 사항을 제시하다"; //generates_notes_command
+"noteshelf.ai.commandTranslate" = "%@ 로 번역하기"; //translate_command
+
+"noteshelf.ai.actionCopyToClipboard" = "클립보드에 복사"; //copy_to_clipboard
+"noteshelf.ai.actionAddAsText" = "텍스트로 추가"; //add_to_page
+"noteshelf.ai.actionMore" = "더 보기..."; //more_text
+"noteshelf.ai.actionAddAsTextNewPage" = "새 페이지에 텍스트로 추가"; //add_to_new_Page
+"noteshelf.ai.actionRegenerateResponse" = "Regenerate Response"; //regenerate_response
+"noteshelf.ai.actionAddHandwriting" = "손글씨로 추가";
+"noteshelf.ai.actionAddHandwritingNewPage" = "새 페이지에 필기로 추가";
+"noteshelf.ai.actionAddToPage" = "페이지에 추가하기"; //add_to_page
+"noteshelf.ai.actionAddToNewPage" = "새 페이지에 추가하기"; //add_to_new_Page
+
+"noteshelf.ai.tokenCompleteTitle" = "Noteshelf AI를 사용해 주셔서 감사합니다"; //thank_you_msg
+"noteshelf.ai.tokenCompleteMessage" = "Noteshelf AI의 평가판이 종료되었습니다. 공개 버전을 준비하는 동안에는 이 기능을 어떻게 개선할 수 있는지에 대한 의견을 듣고 싶습니다."; //noteshelf_beta_msg
+
+"noteshelf.ai.translateToEnglish" = "영어로 번역하기";
+"noteshelf.ai.translateToGerman" = "독일어로 번역하기";
+"noteshelf.ai.translateToSpanish" = "스페인어로 번역하기";
+"noteshelf.ai.translateToFrench" = "프랑스어로 번역하기";
+"noteshelf.ai.translateToItalian" = "이탈리아어로 번역하기";
+"noteshelf.ai.translateToJapanese" = "일본어로 번역하기";
+"noteshelf.ai.translateToKorean" = "한국어로 번역하기";
+"noteshelf.ai.translateToChineseSimplified" = "중국어(간체)로 번역하기";
+"noteshelf.ai.translateToChineseTraditional" = "중국어(번체)로 번역하기";

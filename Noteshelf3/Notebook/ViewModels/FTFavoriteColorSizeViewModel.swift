@@ -1,0 +1,235 @@
+//
+//  FTFavoriteColorSizeViewModel.swift
+//  Noteshelf3
+//
+//  Created by Narayana on 16/12/22.
+//  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
+//
+
+import Foundation
+
+enum FTFavoriteSizeMode: String {
+    case sizeSelect
+    case sizeEdit
+}
+
+protocol FTFavoriteSelectDelegate: AnyObject {
+    func didChangeCurrentPenset(_ penset: FTPenSetProtocol, dismissSizeEditView: Bool)
+}
+
+protocol FTFavoriteColorEditDelegate: FTFavoriteSelectDelegate {
+    func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition)
+}
+
+class FTFavoriteColorViewModel: ObservableObject {
+    @Published var favoriteColors: [FTPenColorModel] = []
+    @Published private(set) var currentSelectedColor: String = blackColorHex
+
+    private weak var delegate: FTFavoriteColorEditDelegate?
+
+    private var rackData: FTRackData!
+    private var currentPenset: FTPenSetProtocol!
+    private(set) var colorEditPostion: FavoriteColorPosition?
+
+    // MARK: Initialization
+    init(rackData: FTRackData, delegate: FTFavoriteColorEditDelegate?) {
+        self.rackData = rackData
+        self.currentPenset = self.rackData.currentPenset
+        self.delegate = delegate
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: NSNotification.Name("FTPenTypeDisplayChange"), object: nil)
+    }
+
+    // This is to show different display size for pencil and other pen types
+    @objc func handlePenTypeVariantChange(_ notification: Notification) {
+        if let rackData = notification.object as? FTRackData, rackData.userActivity == self.rackData.userActivity {
+            self.rackData = rackData
+            self.fetchColorData()
+        }
+    }
+
+    func getRackType() -> FTRackType {
+        return self.rackData.type
+    }
+
+    func showEditColorScreen(at position: FavoriteColorPosition) {
+        self.delegate?.showEditColorScreen(using: self.rackData, position: position)
+        self.colorEditPostion = position
+    }
+
+    func resetToDefaultColor(at position: FavoriteColorPosition) {
+        if position == .custom {
+            return
+        }
+        let defaultFavs = self.rackData.defaultColors(for: self.currentPenset.type)
+        let index = position.rawValue
+        if index < defaultFavs.count {
+            let currentColor = self.favoriteColors[index]
+            currentColor.hex = defaultFavs[index].color
+            self.favoriteColors[index] = currentColor
+            self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
+            if currentColor.isSelected {
+                self.currentPenset.color = currentColor.hex
+                self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
+            }
+        }
+    }
+}
+
+extension FTFavoriteColorViewModel {
+    func fetchColorData() {
+        self.favoriteColors = []
+        self.currentPenset = self.rackData.currentPenset
+        self.currentSelectedColor = self.currentPenset.color
+
+        let favModels = self.rackData.getFavoriteColors(for: self.currentPenset.type)
+        self.favoriteColors = favModels.map({
+            return FTPenColorModel(hex: $0.color, isSelected: $0.isSelected)
+        })
+    }
+
+    func resetFavoriteColorSelection() {
+        for colorVm in self.favoriteColors where colorVm.isSelected == true {
+            colorVm.isSelected = false
+        }
+    }
+
+    func updateCurrentSelection(colorHex: String) {
+        self.currentPenset.color = colorHex
+        self.currentSelectedColor = colorHex
+        self.rackData.currentPenset = self.currentPenset
+        self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
+        self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: true)
+    }
+
+    func updateCurrentFavoriteColors() {
+        self.rackData.saveFavoriteColors(self.favoriteColors, type: self.currentPenset.type)
+    }
+
+    func updateFavoriteColor(with color: String) {
+        if let index = self.colorEditPostion?.rawValue {
+            let colorModel = FTPenColorModel(hex: color, isSelected: true)
+            self.favoriteColors[index] = colorModel
+        }
+    }
+}
+
+protocol FTFavoriteSizeEditDelegate: FTFavoriteSelectDelegate {
+    func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel)
+}
+
+class FTFavoriteSizeViewModel: ObservableObject {
+    @Published var favoritePenSizes: [FTPenSizeModel] = []
+    @Published private var currentSelectedSize: CGFloat = 3.0
+
+    private var rackData: FTRackData!
+    private var currentPenset: FTPenSetProtocol!
+    private var sizeEditPostion: FavoriteSizePosition?
+
+    private weak var delegate: FTFavoriteSizeEditDelegate?
+
+    // MARK: Initialization
+    init(rackData: FTRackData, delegate: FTFavoriteSizeEditDelegate?) {
+        self.rackData = rackData
+        self.currentPenset = self.rackData.currentPenset
+        self.delegate = delegate
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: NSNotification.Name("FTPenTypeDisplayChange"), object: nil)
+    }
+
+    // This is to show different display size for pencil and other pen types
+    @objc func handlePenTypeVariantChange(_ notification: Notification) {
+        if let rackData = notification.object as? FTRackData, rackData.userActivity == self.rackData.userActivity {
+            self.rackData = rackData
+            self.fetchSizesData()
+        }
+    }
+
+    func getRackType() -> FTRackType {
+        return self.rackData.type
+    }
+}
+
+extension FTFavoriteSizeViewModel {
+    func fetchSizesData() {
+        self.currentPenset = self.rackData.currentPenset
+        self.currentSelectedSize = self.currentPenset.preciseSize
+        let favModels = self.rackData.getFavoriteSizes(for: self.currentPenset.type)
+        self.favoritePenSizes = favModels.map({
+            return FTPenSizeModel(size: $0.size, isSelected: $0.isSelected)
+        })
+    }
+
+    func saveFavoriteSizes() {
+        self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
+    }
+
+    func updateCurrentPenSize(size: CGFloat, sizeMode: FTFavoriteSizeMode) {
+        let formattedSize = size.roundToDecimal(1)
+        self.currentSelectedSize = formattedSize
+        if let penSize = FTPenSize(rawValue: formattedSize.toInt) {
+            self.currentPenset.size = penSize
+        }
+        self.currentPenset.preciseSize = formattedSize
+        self.rackData.currentPenset = self.currentPenset
+        self.rackData.saveFavoriteSizes(self.favoritePenSizes, type: self.currentPenset.type)
+        self.delegate?.didChangeCurrentPenset(self.currentPenset, dismissSizeEditView: sizeMode == .sizeSelect)
+    }
+
+    func updateFavoriteSize(with size: CGFloat, at index: Int) {
+        let formattedSize = size.roundToDecimal(1)
+        if let index = self.sizeEditPostion?.rawValue, index < self.favoritePenSizes.count  {
+            let sizeModel = FTPenSizeModel(size: formattedSize, isSelected: true)
+            self.favoritePenSizes[index] = sizeModel
+        }
+    }
+
+    func resetSizeSelection() {
+        for sizeVm in self.favoritePenSizes where sizeVm.isSelected == true {
+            sizeVm.isSelected = false
+        }
+    }
+
+    func showSizeEditScreen(index: Int) {
+        self.sizeEditPostion = FavoriteSizePosition.getPosition(index: index)
+        if let pos = self.sizeEditPostion {
+            self.delegate?.showSizeEditScreen(position: pos, viewModel: self)
+        }
+    }
+
+    var sizeRange: ClosedRange<CGFloat> {
+        let rackType = self.getRackType()
+        var range = CGFloat(0.0)...CGFloat(8.0)
+        if rackType == .highlighter {
+            range = CGFloat(1.0)...CGFloat(6.0)
+        } else if rackType == .shape {
+            range = CGFloat(1.0)...CGFloat(8.0)
+        }
+        return range
+    }
+
+    func getViewSize(using sizeValue: CGFloat) -> CGSize {
+        let floatSize = Float(sizeValue)
+        var reqSize: CGSize = .zero
+        if let penSize = FTPenSize(rawValue: Int(sizeValue)) {
+            if currentPenset.type.isHighlighterPenType() {
+                var width = penSize.maxDisplaySize(penType: currentPenset.type)
+                var scale = penSize.scaleToApply(penType: currentPenset.type, preciseSize: sizeValue)
+                scale = scale*0.8
+                reqSize = CGSize(width: width*scale, height: width*scale)
+            } else {
+                var width = penSize.displayPixel(currentPenset.type)
+                let fractionalPart = sizeValue.truncatingRemainder(dividingBy: 1)
+                width += fractionalPart * 2.0
+                reqSize = CGSize(width: width, height: width)
+            }
+        }
+        return reqSize
+    }
+}
+
+private extension Float {
+    var roundedValue: Int {
+        return Int(roundf(self))
+    }
+}

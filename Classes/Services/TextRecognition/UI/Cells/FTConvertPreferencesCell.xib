@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Aeonik-Regular.otf">
+            <string>Aeonik-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTConvertPreferencesCell" rowHeight="64" id="KGk-i7-Jjw" customClass="FTConvertPreferencesCell" customModule="NS3_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="vAl-JV-Sto">
+                        <rect key="frame" x="16" y="11" width="116.5" height="42"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fit To Selection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kG-L7-UhY">
+                                <rect key="frame" x="0.0" y="0.0" width="116.5" height="20"/>
+                                <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontStyle">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Iw-4C-pwE" userLabel="FTStyledLabel">
+                                <rect key="frame" x="0.0" y="24" width="49" height="18"/>
+                                <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
+                                <color key="textColor" name="black50"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="fontStyle">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffE-p8-eqL" userLabel="Download">
+                        <rect key="frame" x="264" y="12" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="Jxp-nF-G9M"/>
+                            <constraint firstAttribute="width" constant="40" id="YWC-oQ-6HT"/>
+                        </constraints>
+                        <color key="tintColor" name="accent"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="12" maxY="0.0"/>
+                        <state key="normal" image="icloud.and.arrow.down" catalog="system"/>
+                    </button>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="gNt-6G-FvN">
+                        <rect key="frame" x="274" y="22" width="20" height="20"/>
+                        <color key="tintColor" name="accentNew"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="5lm-pU-vcR"/>
+                            <constraint firstAttribute="height" constant="20" id="vjE-nx-cKS"/>
+                        </constraints>
+                        <color key="color" name="accentNew"/>
+                    </activityIndicatorView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="vAl-JV-Sto" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="6Ql-5z-5D5"/>
+                    <constraint firstAttribute="bottom" secondItem="vAl-JV-Sto" secondAttribute="bottom" constant="11" id="YTf-WN-oGf"/>
+                    <constraint firstItem="gNt-6G-FvN" firstAttribute="centerY" secondItem="ffE-p8-eqL" secondAttribute="centerY" id="nRa-Nf-EIU"/>
+                    <constraint firstItem="vAl-JV-Sto" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="qMu-Jz-iRw"/>
+                    <constraint firstAttribute="trailing" secondItem="ffE-p8-eqL" secondAttribute="trailing" constant="16" id="sH4-L4-AXE"/>
+                    <constraint firstItem="gNt-6G-FvN" firstAttribute="centerX" secondItem="ffE-p8-eqL" secondAttribute="centerX" id="vwC-Jp-5eu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" name="white70"/>
+            <constraints>
+                <constraint firstItem="ffE-p8-eqL" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" id="f6N-wC-BJb"/>
+            </constraints>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="activityIndicator" destination="gNt-6G-FvN" id="uMj-lQ-ml7"/>
+                <outlet property="downloadButton" destination="ffE-p8-eqL" id="q7V-pE-QZ0"/>
+                <outlet property="labelSubTitle" destination="5Iw-4C-pwE" id="vTu-vL-1Ed"/>
+                <outlet property="titleLabel" destination="1kG-L7-UhY" id="Evs-hc-I5T"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="155"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icloud.and.arrow.down" catalog="system" width="128" height="111"/>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="accentNew">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white70">
+            <color red="1" green="1" blue="1" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

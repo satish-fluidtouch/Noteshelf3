@@ -1,0 +1,45 @@
+//
+//  FTOpenAI.swift
+//  Sample AI
+//
+//  Created by Amar Udupa on 31/07/23.
+//
+
+import UIKit
+import OpenAI
+
+class FTOpenAI: NSObject {
+    private static let OPEN_API_TOKEN = "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";
+    private lazy var openAI: OpenAI = {
+        return OpenAI(apiToken: FTOpenAI.OPEN_API_TOKEN);
+    }();
+    static let shared = FTOpenAI();
+        
+    func execute(command: FTAICommand
+                 ,onUpdate: @escaping ((String,Error?,_ token: String) -> (Void))
+                 ,onCompletion: @escaping  ((Error?,_ token:String) -> (Void))) {
+        
+        let commandString: String = command.content.appending(command.command());
+        
+        var messages = [Chat]();
+        messages.append(Chat(role: .user, content: commandString));
+        
+        let query = ChatQuery(model: .gpt3_5Turbo, messages: messages,temperature: 0.2)
+        openAI.chatsStream(query: query) { partialResult in
+            switch partialResult {
+            case .success(let result):
+                DispatchQueue.main.async {
+                    onUpdate(result.choices.first?.delta.content ?? "", nil,command.commandToken);
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    onUpdate("",error,command.commandToken);
+                }
+            }
+        } completion: { error in
+            DispatchQueue.main.async {
+                onCompletion(error,command.commandToken);
+            }
+        };
+    }
+}

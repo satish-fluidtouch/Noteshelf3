@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Light.otf">
+            <string>Montserrat-Light</string>
+        </array>
+        <array key="SF-Pro-Text-Light.otf">
+            <string>SFProText-Light</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="FTShelfViewController" customClass="FTShelfViewController" customModule="NS2_Beta" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellShelf" id="eOC-Cb-546" userLabel="FTShelfContentCollectionViewCell" customClass="FTShelfContentCollectionViewCell" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="198" height="240"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="198" height="240"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7k5-C1-rui" userLabel="groupingBackgroundView">
+                        <rect key="frame" x="-2.5" y="11.5" width="203" height="217"/>
+                        <color key="backgroundColor" name="cellHighlightColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="203" id="7KT-Uj-672"/>
+                            <constraint firstAttribute="height" constant="217" id="Ri3-FO-OJd"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LCt-Kp-pmf" userLabel="BooksContainerView">
+                        <rect key="frame" x="0.0" y="35" width="198" height="180"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="covershadow" translatesAutoresizingMaskIntoConstraints="NO" id="KUr-sU-dH9" userLabel="shadowImageView3" customClass="FTShelfItemShadowImageView" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="12.5" y="17" width="149" height="166"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_background_orange" translatesAutoresizingMaskIntoConstraints="NO" id="zGe-eJ-dEk" userLabel="coverImageView3">
+                                <rect key="frame" x="14.5" y="21" width="137" height="154"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="covershadow" translatesAutoresizingMaskIntoConstraints="NO" id="GP6-PR-ViT" userLabel="shadowImageView2" customClass="FTShelfItemShadowImageView" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="16.5" y="9" width="149" height="174"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_background_green" translatesAutoresizingMaskIntoConstraints="NO" id="oY9-f9-G8R" userLabel="coverImageView2">
+                                <rect key="frame" x="22.5" y="13" width="137" height="162"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="covershadow" translatesAutoresizingMaskIntoConstraints="NO" id="at1-fB-Ozz" userLabel="shadowImageView" customClass="FTShelfItemShadowImageView" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="24.5" y="1" width="149" height="182"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_background_yellow" translatesAutoresizingMaskIntoConstraints="NO" id="TUg-QB-sN4" userLabel="coverImageView">
+                                <rect key="frame" x="30.5" y="5" width="137" height="170"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="170" id="Jhl-fg-QJa"/>
+                                    <constraint firstAttribute="width" constant="137" id="r4m-mv-eH0"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mZ6-IE-pWJ" userLabel="statusImageView">
+                                <rect key="frame" x="141.5" y="5" width="26" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="26" id="cOm-zh-iZ6"/>
+                                    <constraint firstAttribute="height" constant="26" id="jRj-sy-gZy"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="themeHighlighter" translatesAutoresizingMaskIntoConstraints="NO" id="lko-T8-NQr" userLabel="selectionBorderImageView" customClass="FTSelectionBorderImageView" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="20.5" y="-5" width="157" height="190"/>
+                                <color key="tintColor" name="blueDodger"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QnZ-PJ-B7k" userLabel="titleLabel" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="42.5" y="50" width="113" height="50"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="dsb-jB-vo5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="style">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L8C-X9-98O" customClass="FTRoundProgressView" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="30.5" y="5" width="137" height="170"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconCheckBadge" translatesAutoresizingMaskIntoConstraints="NO" id="ltI-Ro-OW9">
+                                <rect key="frame" x="38.5" y="13" width="128" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="zGe-eJ-dEk" firstAttribute="leading" secondItem="TUg-QB-sN4" secondAttribute="leading" constant="-16" id="0uV-ki-iE1"/>
+                            <constraint firstItem="KUr-sU-dH9" firstAttribute="width" secondItem="zGe-eJ-dEk" secondAttribute="width" constant="12" id="7B7-QZ-Inb"/>
+                            <constraint firstItem="L8C-X9-98O" firstAttribute="height" secondItem="TUg-QB-sN4" secondAttribute="height" id="93e-fM-Kby"/>
+                            <constraint firstItem="at1-fB-Ozz" firstAttribute="leading" secondItem="TUg-QB-sN4" secondAttribute="leading" constant="-6" id="9ES-6I-ycq"/>
+                            <constraint firstAttribute="height" constant="180" id="C35-MW-phE"/>
+                            <constraint firstItem="TUg-QB-sN4" firstAttribute="centerX" secondItem="LCt-Kp-pmf" secondAttribute="centerX" id="FsT-4V-Twm"/>
+                            <constraint firstItem="KUr-sU-dH9" firstAttribute="leading" secondItem="zGe-eJ-dEk" secondAttribute="leading" constant="-2" id="Gc3-vP-WEE"/>
+                            <constraint firstItem="GP6-PR-ViT" firstAttribute="top" secondItem="oY9-f9-G8R" secondAttribute="top" constant="-4" id="HSh-MA-agg"/>
+                            <constraint firstItem="TUg-QB-sN4" firstAttribute="trailing" secondItem="QnZ-PJ-B7k" secondAttribute="trailing" constant="12" id="IIX-d8-BtR"/>
+                            <constraint firstItem="zGe-eJ-dEk" firstAttribute="width" secondItem="TUg-QB-sN4" secondAttribute="width" id="JDJ-Ym-jzS"/>
+                            <constraint firstItem="mZ6-IE-pWJ" firstAttribute="trailing" secondItem="TUg-QB-sN4" secondAttribute="trailing" id="JYD-cR-cBi"/>
+                            <constraint firstItem="KUr-sU-dH9" firstAttribute="top" secondItem="zGe-eJ-dEk" secondAttribute="top" constant="-4" id="LlI-fs-FzM"/>
+                            <constraint firstItem="L8C-X9-98O" firstAttribute="centerX" secondItem="TUg-QB-sN4" secondAttribute="centerX" id="N3A-Fs-lFU"/>
+                            <constraint firstItem="L8C-X9-98O" firstAttribute="centerY" secondItem="TUg-QB-sN4" secondAttribute="centerY" id="NBj-v8-hey"/>
+                            <constraint firstItem="at1-fB-Ozz" firstAttribute="width" secondItem="TUg-QB-sN4" secondAttribute="width" constant="12" id="NLu-gd-Liv"/>
+                            <constraint firstItem="oY9-f9-G8R" firstAttribute="height" secondItem="TUg-QB-sN4" secondAttribute="height" constant="-8" id="RTZ-hW-plP"/>
+                            <constraint firstItem="oY9-f9-G8R" firstAttribute="leading" secondItem="TUg-QB-sN4" secondAttribute="leading" constant="-8" id="TC3-ws-Yxs"/>
+                            <constraint firstItem="TUg-QB-sN4" firstAttribute="top" secondItem="LCt-Kp-pmf" secondAttribute="top" constant="5" id="Umb-CH-Yr1"/>
+                            <constraint firstItem="lko-T8-NQr" firstAttribute="centerX" secondItem="TUg-QB-sN4" secondAttribute="centerX" id="YAJ-9h-Vn1"/>
+                            <constraint firstItem="zGe-eJ-dEk" firstAttribute="bottom" secondItem="TUg-QB-sN4" secondAttribute="bottom" id="a55-N6-f10"/>
+                            <constraint firstItem="at1-fB-Ozz" firstAttribute="height" secondItem="TUg-QB-sN4" secondAttribute="height" constant="12" id="aoB-zG-IeI"/>
+                            <constraint firstItem="zGe-eJ-dEk" firstAttribute="height" secondItem="TUg-QB-sN4" secondAttribute="height" constant="-16" id="blZ-ds-hkC"/>
+                            <constraint firstItem="ltI-Ro-OW9" firstAttribute="leading" secondItem="TUg-QB-sN4" secondAttribute="leading" constant="8" id="c1Z-3x-w7k"/>
+                            <constraint firstItem="QnZ-PJ-B7k" firstAttribute="top" secondItem="TUg-QB-sN4" secondAttribute="top" constant="45" id="fUr-UL-iFB"/>
+                            <constraint firstItem="GP6-PR-ViT" firstAttribute="width" secondItem="oY9-f9-G8R" secondAttribute="width" constant="12" id="hHk-Kh-klF"/>
+                            <constraint firstItem="lko-T8-NQr" firstAttribute="centerY" secondItem="TUg-QB-sN4" secondAttribute="centerY" id="i7L-cd-6Wy"/>
+                            <constraint firstItem="QnZ-PJ-B7k" firstAttribute="leading" secondItem="TUg-QB-sN4" secondAttribute="leading" constant="12" id="l07-Zl-gvZ"/>
+                            <constraint firstItem="L8C-X9-98O" firstAttribute="width" secondItem="TUg-QB-sN4" secondAttribute="width" id="mQJ-x9-xOg"/>
+                            <constraint firstItem="GP6-PR-ViT" firstAttribute="leading" secondItem="oY9-f9-G8R" secondAttribute="leading" constant="-6" id="njF-1P-g2i"/>
+                            <constraint firstItem="oY9-f9-G8R" firstAttribute="bottom" secondItem="TUg-QB-sN4" secondAttribute="bottom" id="pWs-SE-YzD"/>
+                            <constraint firstItem="at1-fB-Ozz" firstAttribute="top" secondItem="TUg-QB-sN4" secondAttribute="top" constant="-4" id="rUo-5F-eeL"/>
+                            <constraint firstItem="oY9-f9-G8R" firstAttribute="width" secondItem="TUg-QB-sN4" secondAttribute="width" id="sJD-h5-vtt"/>
+                            <constraint firstItem="lko-T8-NQr" firstAttribute="width" secondItem="TUg-QB-sN4" secondAttribute="width" constant="20" id="sOv-ph-iO0"/>
+                            <constraint firstItem="lko-T8-NQr" firstAttribute="height" secondItem="TUg-QB-sN4" secondAttribute="height" constant="20" id="sWj-ZF-iyg"/>
+                            <constraint firstItem="GP6-PR-ViT" firstAttribute="height" secondItem="oY9-f9-G8R" secondAttribute="height" constant="12" id="whP-44-E4K"/>
+                            <constraint firstItem="mZ6-IE-pWJ" firstAttribute="top" secondItem="TUg-QB-sN4" secondAttribute="top" id="xgO-Sw-eep"/>
+                            <constraint firstItem="KUr-sU-dH9" firstAttribute="height" secondItem="zGe-eJ-dEk" secondAttribute="height" constant="12" id="yAl-Dh-M6i"/>
+                            <constraint firstItem="ltI-Ro-OW9" firstAttribute="top" secondItem="TUg-QB-sN4" secondAttribute="top" constant="8" id="zD0-SG-qm0"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Notes Category / Group" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1c-HU-TRh" userLabel="bookLocationLabel">
+                        <rect key="frame" x="3" y="216" width="192" height="13"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
+                        <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="11"/>
+                        <color key="textColor" name="shelfCellContentColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFt-3W-XlR" userLabel="subTitleLabel" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                        <rect key="frame" x="85.5" y="231" width="27" height="15"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Dub-pI-FXe"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="11"/>
+                        <color key="textColor" name="shelfCellContentColor"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="style">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kgt-nv-cuk" userLabel="renameView">
+                        <rect key="frame" x="0.0" y="215" width="198" height="40"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ndv-qh-H3c" userLabel="renameButton">
+                                <rect key="frame" x="0.0" y="0.0" width="198" height="40"/>
+                                <accessibility key="accessibilityConfiguration" label="Rename Book"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="renameClicked" destination="eOC-Cb-546" eventType="touchUpInside" id="Ky0-eg-Pxw"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swc-Wv-BHg" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                                <rect key="frame" x="53.5" y="9" width="91.5" height="22"/>
+                                <color key="backgroundColor" name="colorHighlight2Medium"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="style">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="c5f-Sc-EQb">
+                                <rect key="frame" x="65.5" y="9" width="67.5" height="22"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconRename" translatesAutoresizingMaskIntoConstraints="NO" id="5zC-w6-x2q">
+                                        <rect key="frame" x="0.0" y="0.0" width="14" height="22"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eni-CM-w1t" userLabel="renameLabel" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="19" y="0.0" width="48.5" height="22"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Light" family="Montserrat" pointSize="13"/>
+                                        <color key="highlightedColor" name="lightTitleColor_50"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="Rename"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="qhd-N2-nWN"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="c5f-Sc-EQb" firstAttribute="centerX" secondItem="Kgt-nv-cuk" secondAttribute="centerX" id="3Jg-c9-sGV"/>
+                            <constraint firstItem="c5f-Sc-EQb" firstAttribute="centerY" secondItem="Kgt-nv-cuk" secondAttribute="centerY" id="3yg-cP-TME"/>
+                            <constraint firstItem="swc-Wv-BHg" firstAttribute="top" secondItem="c5f-Sc-EQb" secondAttribute="top" id="6jy-1D-SNP"/>
+                            <constraint firstItem="ndv-qh-H3c" firstAttribute="leading" secondItem="Kgt-nv-cuk" secondAttribute="leading" id="LhB-6O-2cz"/>
+                            <constraint firstAttribute="trailing" secondItem="ndv-qh-H3c" secondAttribute="trailing" id="SIH-Fm-AQf"/>
+                            <constraint firstAttribute="height" constant="40" id="ZOv-bH-Aj7"/>
+                            <constraint firstItem="ndv-qh-H3c" firstAttribute="top" secondItem="Kgt-nv-cuk" secondAttribute="top" id="aAb-qQ-hA8"/>
+                            <constraint firstItem="swc-Wv-BHg" firstAttribute="width" secondItem="c5f-Sc-EQb" secondAttribute="width" constant="24" id="aRl-GU-w4o"/>
+                            <constraint firstItem="swc-Wv-BHg" firstAttribute="height" secondItem="c5f-Sc-EQb" secondAttribute="height" id="lyY-b6-uqq"/>
+                            <constraint firstAttribute="bottom" secondItem="ndv-qh-H3c" secondAttribute="bottom" id="mfI-d6-6VU"/>
+                            <constraint firstItem="swc-Wv-BHg" firstAttribute="leading" secondItem="c5f-Sc-EQb" secondAttribute="leading" constant="-12" id="qrX-rp-ZWB"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lrI-3V-NVJ" customClass="FTBookOpeningSpinner" customModule="NS2_Beta" customModuleProvider="target">
+                        <rect key="frame" x="30.5" y="40" width="137" height="170"/>
+                        <subviews>
+                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMd-aW-pWn">
+                                <rect key="frame" x="0.0" y="0.0" width="137" height="170"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spinnerwhite" translatesAutoresizingMaskIntoConstraints="NO" id="GsV-2v-bfB" userLabel="LoadingIndicator">
+                                <rect key="frame" x="53.5" y="70" width="30" height="30"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GsV-2v-bfB" secondAttribute="height" multiplier="1:1" id="28x-g6-h97"/>
+                                    <constraint firstAttribute="width" constant="30" id="Xjd-1q-fNB"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GsV-2v-bfB" firstAttribute="centerY" secondItem="lrI-3V-NVJ" secondAttribute="centerY" id="Bcq-wl-v94"/>
+                            <constraint firstItem="uMd-aW-pWn" firstAttribute="height" secondItem="lrI-3V-NVJ" secondAttribute="height" id="Lj7-kK-gBw"/>
+                            <constraint firstItem="uMd-aW-pWn" firstAttribute="centerY" secondItem="lrI-3V-NVJ" secondAttribute="centerY" id="MMI-2d-vXa"/>
+                            <constraint firstItem="uMd-aW-pWn" firstAttribute="width" secondItem="lrI-3V-NVJ" secondAttribute="width" id="Onk-CX-O6I"/>
+                            <constraint firstItem="uMd-aW-pWn" firstAttribute="centerX" secondItem="lrI-3V-NVJ" secondAttribute="centerX" id="b99-5V-yHP"/>
+                            <constraint firstItem="GsV-2v-bfB" firstAttribute="centerX" secondItem="lrI-3V-NVJ" secondAttribute="centerX" id="fr8-u7-AZS"/>
+                        </constraints>
+                        <connections>
+                            <outlet property="spinImageView" destination="GsV-2v-bfB" id="wOG-nB-qpq"/>
+                        </connections>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="B1c-HU-TRh" firstAttribute="leading" secondItem="eOC-Cb-546" secondAttribute="leading" constant="3" id="6Up-DG-tEl"/>
+                <constraint firstItem="LCt-Kp-pmf" firstAttribute="leading" secondItem="eOC-Cb-546" secondAttribute="leading" id="6rO-At-qpl"/>
+                <constraint firstItem="B1c-HU-TRh" firstAttribute="centerX" secondItem="eOC-Cb-546" secondAttribute="centerX" id="Jlz-v8-u8V"/>
+                <constraint firstItem="lrI-3V-NVJ" firstAttribute="centerY" secondItem="TUg-QB-sN4" secondAttribute="centerY" id="Q02-GH-Jxk"/>
+                <constraint firstAttribute="trailing" secondItem="LCt-Kp-pmf" secondAttribute="trailing" id="QPh-A4-NNR"/>
+                <constraint firstItem="lrI-3V-NVJ" firstAttribute="height" secondItem="TUg-QB-sN4" secondAttribute="height" id="RP3-Vd-TTT"/>
+                <constraint firstItem="Kgt-nv-cuk" firstAttribute="leading" secondItem="eOC-Cb-546" secondAttribute="leading" id="SdE-kj-2b0"/>
+                <constraint firstItem="Kgt-nv-cuk" firstAttribute="top" secondItem="LCt-Kp-pmf" secondAttribute="bottom" id="VIY-40-kSh"/>
+                <constraint firstAttribute="trailing" secondItem="B1c-HU-TRh" secondAttribute="trailing" constant="3" id="Vzi-nu-u19"/>
+                <constraint firstItem="B1c-HU-TRh" firstAttribute="top" secondItem="LCt-Kp-pmf" secondAttribute="bottom" constant="1" id="ZB6-Ne-bGX"/>
+                <constraint firstItem="lrI-3V-NVJ" firstAttribute="centerX" secondItem="TUg-QB-sN4" secondAttribute="centerX" id="c2q-JU-vKa"/>
+                <constraint firstItem="LCt-Kp-pmf" firstAttribute="centerX" secondItem="eOC-Cb-546" secondAttribute="centerX" id="hG1-Ib-6Sa"/>
+                <constraint firstAttribute="trailing" secondItem="Kgt-nv-cuk" secondAttribute="trailing" id="jS7-y1-8FQ"/>
+                <constraint firstItem="LCt-Kp-pmf" firstAttribute="top" secondItem="eOC-Cb-546" secondAttribute="top" constant="35" id="qo0-q5-lgj"/>
+                <constraint firstItem="lrI-3V-NVJ" firstAttribute="width" secondItem="TUg-QB-sN4" secondAttribute="width" id="uhX-Tn-hqG"/>
+                <constraint firstItem="7k5-C1-rui" firstAttribute="centerY" secondItem="eOC-Cb-546" secondAttribute="centerY" id="utD-2i-Abl"/>
+                <constraint firstItem="bFt-3W-XlR" firstAttribute="centerX" secondItem="eOC-Cb-546" secondAttribute="centerX" id="wEd-px-CPy"/>
+                <constraint firstItem="bFt-3W-XlR" firstAttribute="top" secondItem="B1c-HU-TRh" secondAttribute="bottom" constant="2" id="zRI-BK-5Yh"/>
+                <constraint firstItem="7k5-C1-rui" firstAttribute="centerX" secondItem="eOC-Cb-546" secondAttribute="centerX" id="zYI-EM-vJa"/>
+            </constraints>
+            <size key="customSize" width="254" height="240"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                    <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="bookLocationLabel" destination="B1c-HU-TRh" id="6Na-KK-lOh"/>
+                <outlet property="bookOpenSpinner" destination="lrI-3V-NVJ" id="uVx-oa-NSu"/>
+                <outlet property="booksContainerView" destination="LCt-Kp-pmf" id="1Au-cw-AMd"/>
+                <outlet property="coverImageCenterAdjustConstraint" destination="FsT-4V-Twm" id="pIk-Ho-04q"/>
+                <outlet property="coverImageTopConstraint" destination="qo0-q5-lgj" id="wYp-xu-eSp"/>
+                <outlet property="coverImageView" destination="TUg-QB-sN4" id="koP-WK-x44"/>
+                <outlet property="coverImageView2" destination="oY9-f9-G8R" id="tVV-ce-1Bo"/>
+                <outlet property="coverImageView3" destination="zGe-eJ-dEk" id="0ex-Fe-0Rj"/>
+                <outlet property="groupingBackgroundView" destination="7k5-C1-rui" id="6Zo-XJ-s8H"/>
+                <outlet property="imageHeightConstraint" destination="Jhl-fg-QJa" id="eUY-4f-FRK"/>
+                <outlet property="imageWidthConstraint" destination="r4m-mv-eH0" id="WA2-IH-9jG"/>
+                <outlet property="pieProgressView" destination="L8C-X9-98O" id="xQL-O1-dbt"/>
+                <outlet property="renameButton" destination="ndv-qh-H3c" id="iOC-FO-HtI"/>
+                <outlet property="renameLabel" destination="eni-CM-w1t" id="Ubj-hg-gZJ"/>
+                <outlet property="renameView" destination="Kgt-nv-cuk" id="ZKE-u6-WZ7"/>
+                <outlet property="selectCellImage" destination="ltI-Ro-OW9" id="tDv-VM-U4O"/>
+                <outlet property="selectionBorderImageView" destination="lko-T8-NQr" id="JA4-Tn-Kh7"/>
+                <outlet property="shadowImageView" destination="at1-fB-Ozz" id="YyO-fG-xc1"/>
+                <outlet property="shadowImageView2" destination="GP6-PR-ViT" id="wrM-Qq-kxB"/>
+                <outlet property="shadowImageView3" destination="KUr-sU-dH9" id="jL0-lV-31a"/>
+                <outlet property="statusImageView" destination="mZ6-IE-pWJ" id="e0k-tf-GIN"/>
+                <outlet property="subTitleLabel" destination="bFt-3W-XlR" id="8HY-SJ-6ba"/>
+                <outlet property="titleLabel" destination="QnZ-PJ-B7k" id="lc2-VK-hD3"/>
+                <outlet property="titleLabelTopConstraint" destination="fUr-UL-iFB" id="Huw-Pw-rhy"/>
+            </connections>
+            <point key="canvasLocation" x="181.25" y="95.5078125"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="cover_background_green" width="137" height="170"/>
+        <image name="cover_background_orange" width="137" height="170"/>
+        <image name="cover_background_yellow" width="137" height="170"/>
+        <image name="covershadow" width="149" height="182"/>
+        <image name="iconCheckBadge" width="128" height="128"/>
+        <image name="iconRename" width="14" height="14"/>
+        <image name="spinnerwhite" width="30" height="30"/>
+        <image name="themeHighlighter" width="157" height="157"/>
+        <namedColor name="blueDodger">
+            <color red="0.29019607843137257" green="0.63137254901960782" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="cellHighlightColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="colorHighlight2Medium">
+            <color red="0.92549019607843142" green="0.92549019607843142" blue="0.89411764705882357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="lightTitleColor_50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="shelfCellContentColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

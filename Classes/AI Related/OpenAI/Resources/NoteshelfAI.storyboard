@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--NoteshelfAI Options View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAIOptionsViewController" id="Y6W-OH-hqX" customClass="FTNoteshelfAIOptionsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9mi-hb-KiQ">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" name="cellBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="q6G-yo-bwK"/>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="9Qc-Ah-rch"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="HOw-Pm-SZp"/>
+                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="ePb-5x-NLB"/>
+                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uE7-Di-QTV"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="9mi-hb-KiQ" secondAttribute="bottom" id="zNF-we-VKA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="EvG-Uv-fG8"/>
+                    <connections>
+                        <outlet property="aiTableView" destination="9mi-hb-KiQ" id="NKm-0t-fJm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="48" y="-2"/>
+        </scene>
+        <!--NoteshelfAI Translate View Controller-->
+        <scene sceneID="oBA-g0-Wtb">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAITranslateViewController" id="zQv-Qm-p1u" customClass="FTNoteshelfAITranslateViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="d7f-dy-Vtr">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Q9H-hI-SUp">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" name="cellBackgroundColor"/>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="zQv-Qm-p1u" id="c9X-Lx-YkJ"/>
+                                    <outlet property="delegate" destination="zQv-Qm-p1u" id="vKw-2x-Wje"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CLa-Oj-Tjg"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="width" secondItem="d7f-dy-Vtr" secondAttribute="width" id="6iY-bo-9jD"/>
+                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="top" secondItem="CLa-Oj-Tjg" secondAttribute="top" id="Mbv-cb-oBa"/>
+                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="centerX" secondItem="CLa-Oj-Tjg" secondAttribute="centerX" id="SfA-Dk-jcm"/>
+                            <constraint firstItem="CLa-Oj-Tjg" firstAttribute="bottom" secondItem="Q9H-hI-SUp" secondAttribute="bottom" id="hrA-bP-85u"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="PEw-Vg-qy7"/>
+                    <connections>
+                        <outlet property="aiTableView" destination="Q9H-hI-SUp" id="I9I-5Z-D0J"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YEW-mN-wQw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="48" y="-2"/>
+        </scene>
+        <!--NoteshelfAI Footer View Controller-->
+        <scene sceneID="jeg-xT-q42">
+            <objects>
+                <viewController id="xOW-95-GFB" customClass="FTNoteshelfAIFooterViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fln-aR-HVO">
+                        <rect key="frame" x="0.0" y="0.0" width="361" height="48"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMR-oZ-UdA">
+                                <rect key="frame" x="121.66666666666669" y="6.6666666666666679" width="118" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Send Feedback">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="sendFeedback:" destination="xOW-95-GFB" eventType="touchUpInside" id="t9a-Zw-YIo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-PV-sFF">
+                                <rect key="frame" x="100.66666666666669" y="6.6666666666666679" width="160" height="35"/>
+                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system" title="About NoteshelfAI">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="showNoteshelfAILearnmore:" destination="xOW-95-GFB" eventType="touchUpInside" id="476-gf-Gsk"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Awl-t4-fzt"/>
+                        <constraints>
+                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="centerY" secondItem="xhT-PV-sFF" secondAttribute="centerY" id="8it-sJ-dYM"/>
+                            <constraint firstItem="xhT-PV-sFF" firstAttribute="centerX" secondItem="Fln-aR-HVO" secondAttribute="centerX" id="F7Y-E1-neN"/>
+                            <constraint firstItem="xhT-PV-sFF" firstAttribute="centerY" secondItem="Fln-aR-HVO" secondAttribute="centerY" id="JRC-c9-Hmq"/>
+                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="centerX" secondItem="xhT-PV-sFF" secondAttribute="centerX" id="LFW-CG-pbf"/>
+                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="bottom" secondItem="xhT-PV-sFF" secondAttribute="bottom" id="NuM-Gh-cCs"/>
+                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="top" secondItem="xhT-PV-sFF" secondAttribute="top" id="UZd-ek-gF7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="learnMore" destination="xhT-PV-sFF" id="kGc-MC-c6f"/>
+                        <outlet property="sendFeedback" destination="AMR-oZ-UdA" id="UjT-Fk-xQ0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fy9-VC-Scc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-306" y="-679"/>
+        </scene>
+        <!--NoteshelfAI Text View View Controller-->
+        <scene sceneID="yea-KV-jzc">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAITextViewViewController" id="eyF-S8-pnK" customClass="FTNoteshelfAITextViewViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="hOE-2Y-rer">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="798"/>
+                                <color key="backgroundColor" name="cellBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q84-gf-X3D">
+                                <rect key="frame" x="0.0" y="818" width="344" height="0.0"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="0.0"/>
+                                        <color key="backgroundColor" name="accent"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add as Handwrite">
+                                            <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="addAsHandwrite:" destination="eyF-S8-pnK" eventType="touchUpInside" id="lNB-q0-TsQ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="118" y="0.0" width="108" height="0.0"/>
+                                        <color key="backgroundColor" name="accent"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Add to page">
+                                            <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="addToPage:" destination="eyF-S8-pnK" eventType="touchUpInside" id="XMc-MQ-4Kq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="236" y="0.0" width="108" height="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Copy To Clipboard">
+                                            <color key="baseForegroundColor" name="accent"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="copyToClipboard:" destination="eyF-S8-pnK" eventType="touchUpInside" id="BLm-gb-tzR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="7Gf-dp-a3r"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="354" y="818" width="39" height="0.0"/>
+                                <color key="backgroundColor" name="accentBg"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="39" id="2yM-T8-1j6"/>
+                                </constraints>
+                                <color key="tintColor" name="accent"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="moreOptions:" destination="eyF-S8-pnK" eventType="touchUpInside" id="fum-cj-UqC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MnQ-Rb-6zd"/>
+                        <constraints>
+                            <constraint firstItem="7KU-f4-tjE" firstAttribute="centerY" secondItem="Q84-gf-X3D" secondAttribute="centerY" id="0oq-Qm-Tus"/>
+                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="top" constant="-20" id="6ih-cM-RWb"/>
+                            <constraint firstItem="Q84-gf-X3D" firstAttribute="leading" secondItem="MnQ-Rb-6zd" secondAttribute="leading" id="CeK-Jm-qJx"/>
+                            <constraint firstItem="MnQ-Rb-6zd" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="bottom" id="Fjw-KG-mm4"/>
+                            <constraint firstItem="MnQ-Rb-6zd" firstAttribute="trailing" secondItem="7KU-f4-tjE" secondAttribute="trailing" id="Mw1-nW-3gO"/>
+                            <constraint firstItem="7KU-f4-tjE" firstAttribute="leading" secondItem="Q84-gf-X3D" secondAttribute="trailing" constant="10" id="RZ6-Yw-y2i"/>
+                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="width" secondItem="hOE-2Y-rer" secondAttribute="width" id="Ydg-Bd-Lr5"/>
+                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="centerX" secondItem="hOE-2Y-rer" secondAttribute="centerX" id="cRw-cb-wI5"/>
+                            <constraint firstItem="7KU-f4-tjE" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" multiplier="0.780303" id="fL0-xY-zat"/>
+                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="top" secondItem="hOE-2Y-rer" secondAttribute="top" id="lYr-9Q-KhH"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addAsHandwrite" destination="YBF-iL-iDT" id="rak-Az-oHV"/>
+                        <outlet property="addToPageButton" destination="us1-QN-E6H" id="hHq-Az-FVJ"/>
+                        <outlet property="clipboardButton" destination="K6O-bs-QgG" id="lgH-DA-yRk"/>
+                        <outlet property="moreButton" destination="7KU-f4-tjE" id="Dc7-T6-CYn"/>
+                        <outlet property="stackHeightConstraint" destination="7Gf-dp-a3r" id="cBA-k0-rVH"/>
+                        <outlet property="stackView" destination="Q84-gf-X3D" id="dgN-gX-T1M"/>
+                        <outlet property="textView" destination="CIA-5r-bQ5" id="id8-uZ-GQg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sf9-O9-YI9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-976" y="-89"/>
+        </scene>
+        <!--NoteshelfAI View Controller-->
+        <scene sceneID="keM-4g-0Z7">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAIViewController" id="3PP-7r-iC7" customClass="FTNoteshelfAIViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mE6-0L-BUy" customClass="FTSafeAreazView" customModule="NS3_Beta" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Lzk-hw-Us3" customClass="FTNoteshelfAIInputField" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="16" y="75" width="361" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="PTk-Xl-2ub"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="3PP-7r-iC7" id="Fzf-2m-czr"/>
+                                </connections>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-21-mVm" userLabel="Content View">
+                                <rect key="frame" x="16" y="139" width="361" height="631"/>
+                            </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6i-wZ-1px" userLabel="Footer View">
+                                <rect key="frame" x="16" y="770" width="361" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="wRT-mR-stq"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="xOW-95-GFB" kind="embed" id="JIM-M7-ACU"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8MX-3N-UlA"/>
+                        <color key="backgroundColor" name="panelBgColor"/>
+                        <constraints>
+                            <constraint firstItem="V6w-21-mVm" firstAttribute="width" secondItem="Lzk-hw-Us3" secondAttribute="width" id="Dd3-hj-6el"/>
+                            <constraint firstItem="V6w-21-mVm" firstAttribute="bottom" secondItem="i6i-wZ-1px" secondAttribute="top" id="Ens-Va-8BJ"/>
+                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="centerX" secondItem="8MX-3N-UlA" secondAttribute="centerX" id="MUO-mP-WTG"/>
+                            <constraint firstItem="V6w-21-mVm" firstAttribute="centerX" secondItem="8MX-3N-UlA" secondAttribute="centerX" id="XmG-bO-phS"/>
+                            <constraint firstItem="i6i-wZ-1px" firstAttribute="centerX" secondItem="8MX-3N-UlA" secondAttribute="centerX" id="YXw-qT-0lG"/>
+                            <constraint firstItem="V6w-21-mVm" firstAttribute="top" secondItem="Lzk-hw-Us3" secondAttribute="bottom" constant="16" id="dbQ-AR-A7P"/>
+                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="width" secondItem="mE6-0L-BUy" secondAttribute="width" constant="-32" id="e4O-mB-uxx"/>
+                            <constraint firstItem="i6i-wZ-1px" firstAttribute="bottom" secondItem="8MX-3N-UlA" secondAttribute="bottom" id="hjm-WV-6Ks"/>
+                            <constraint firstItem="i6i-wZ-1px" firstAttribute="width" secondItem="Lzk-hw-Us3" secondAttribute="width" id="sEF-ga-GLI"/>
+                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="top" secondItem="8MX-3N-UlA" secondAttribute="top" constant="16" id="w93-Qa-ZnV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="contentView" destination="V6w-21-mVm" id="ZLu-jk-9lj"/>
+                        <outlet property="textField" destination="Lzk-hw-Us3" id="ckN-e8-pPE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CZd-Iw-Pet" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="363" y="-679"/>
+        </scene>
+        <!--NoteshelfAI Tokens Consumed Alert View Controller-->
+        <scene sceneID="eU4-zy-XrR">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAITokensConsumedAlertViewController" id="Bz4-aN-P0u" customClass="FTNoteshelfAITokensConsumedAlertViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4c8-0r-k7e">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
+                                <rect key="frame" x="0.0" y="75" width="393" height="33.666666666666657"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCz-we-RCy">
+                                <rect key="frame" x="0.0" y="124.66666666666669" width="393" height="693.33333333333326"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Jsq-hP-ijA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jIk-ps-3qg" firstAttribute="top" secondItem="Jsq-hP-ijA" secondAttribute="top" constant="16" id="FXo-dR-CWx"/>
+                            <constraint firstItem="Jsq-hP-ijA" firstAttribute="bottom" secondItem="jCz-we-RCy" secondAttribute="bottom" id="FqY-s2-rq4"/>
+                            <constraint firstItem="jIk-ps-3qg" firstAttribute="width" secondItem="4c8-0r-k7e" secondAttribute="width" id="MpW-Qf-jM3"/>
+                            <constraint firstItem="jIk-ps-3qg" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="NJY-N1-d0y"/>
+                            <constraint firstItem="jCz-we-RCy" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="QEJ-OA-PVI"/>
+                            <constraint firstItem="jCz-we-RCy" firstAttribute="top" secondItem="jIk-ps-3qg" secondAttribute="bottom" constant="16" id="mmj-Oa-jGR"/>
+                            <constraint firstItem="jCz-we-RCy" firstAttribute="width" secondItem="jIk-ps-3qg" secondAttribute="width" id="ohq-vg-IBQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="messageView" destination="jCz-we-RCy" id="uyp-PZ-KJj"/>
+                        <outlet property="titleLabel" destination="jIk-ps-3qg" id="LAh-9G-Mjt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Akv-gH-sWe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1089" y="-1065"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="info.circle" catalog="system" width="128" height="123"/>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="accentBg">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="cellBackgroundColor">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="panelBgColor">
+            <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTConvertPreferencesViewController" customModule="NS3_Beta" customModuleProvider="target">
+            <connections>
+                <outlet property="searchBar" destination="wf2-cX-uXH" id="WpJ-0P-5fN"/>
+                <outlet property="tableView" destination="wDF-tD-fk0" id="aaQ-HK-PUZ"/>
+                <outlet property="view" destination="gWw-KH-VuR" id="J2f-Lp-kEP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="gWw-KH-VuR">
+            <rect key="frame" x="0.0" y="0.0" width="540" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="50" sectionHeaderHeight="18" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="wDF-tD-fk0" userLabel="tableViewSettings">
+                    <rect key="frame" x="0.0" y="24" width="540" height="560"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="separatorColor" name="black10"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" showsCancelButton="YES" id="wf2-cX-uXH">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" name="accent"/>
+                        <color key="barTintColor" name="formSheetBgColor"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <outlet property="delegate" destination="-1" id="alg-B7-q9E"/>
+                        </connections>
+                    </searchBar>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="ea8-80-XUc"/>
+                        <outlet property="delegate" destination="-1" id="PMN-dh-LmC"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="GPF-zR-vtd"/>
+            <color key="backgroundColor" name="formSheetBgColor"/>
+            <constraints>
+                <constraint firstItem="GPF-zR-vtd" firstAttribute="trailing" secondItem="wDF-tD-fk0" secondAttribute="trailing" id="Dqc-5U-vWa"/>
+                <constraint firstItem="GPF-zR-vtd" firstAttribute="bottom" secondItem="wDF-tD-fk0" secondAttribute="bottom" constant="16" id="ISQ-S0-eEn"/>
+                <constraint firstItem="wDF-tD-fk0" firstAttribute="top" secondItem="GPF-zR-vtd" secondAttribute="top" constant="24" id="mci-fT-JsO"/>
+                <constraint firstItem="wDF-tD-fk0" firstAttribute="leading" secondItem="GPF-zR-vtd" secondAttribute="leading" id="v7B-Or-Ijv"/>
+            </constraints>
+            <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="26.5625" y="31.640624999999996"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black10">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="formSheetBgColor">
+            <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

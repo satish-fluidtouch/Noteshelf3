@@ -1,0 +1,14 @@
+/* 
+  File.strings
+  Noteshelf
+
+  Created by Akshay on 23/04/20.
+  Copyright © 2020 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+// For Home Screen Quick Create Actions
+"new_notebook" = "Notebook";
+"new_photo" = "New Photo";
+"new_audio" = "New Audio";
+"scan_document" = "Scan Document";
+

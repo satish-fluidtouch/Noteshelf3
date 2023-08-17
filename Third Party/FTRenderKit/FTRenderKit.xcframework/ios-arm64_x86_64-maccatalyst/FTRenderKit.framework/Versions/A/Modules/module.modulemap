@@ -1,0 +1,11 @@
+framework module FTRenderKit {
+  umbrella header "FTRenderKit.h"
+
+  export *
+  module * { export * }
+}
+
+module FTRenderKit.Swift {
+  header "FTRenderKit-Swift.h"
+  requires objc
+}

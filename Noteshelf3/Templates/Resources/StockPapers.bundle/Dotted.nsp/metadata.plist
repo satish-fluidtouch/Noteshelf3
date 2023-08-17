@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Dotted</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>width_834_1112</key>
+	<integer>834</integer>
+	<key>width_834_1194</key>
+	<integer>834</integer>
+	<key>width_1024_1366</key>
+	<integer>1024</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>height_834_1112</key>
+	<integer>1048</integer>
+	<key>height_834_1194</key>
+	<integer>1130</integer>
+	<key>height_1024_1366</key>
+	<real>1302</real>
+	<key>display_name_ja</key>
+	<string>ドット入り</string>
+	<key>display_name_it</key>
+	<string>Isometrica</string>
+	<key>display_name_es</key>
+	<string>Punteado</string>
+	<key>display_name_de</key>
+	<string>Punktraster</string>
+	<key>display_name_zh-Hans</key>
+	<string>带点的</string>
+	<key>display_name_zh-Hant</key>
+	<string>虛線</string>
+	<key>display_name_fr</key>
+	<string>Pointillé</string>
+	<key>display_name_ko</key>
+	<string>점이 찍힌</string>
+	<key>dynamic_id</key>
+	<integer>2</integer>
+	<key>template_type</key>
+	<integer>5</integer>
+	<key>dynamic_template_info</key>
+	<dict>
+		<key>width</key>
+		<integer>0</integer>
+		<key>height</key>
+		<integer>0</integer>
+		<key>supporting_device_type</key>
+		<integer>1</integer>
+		<key>leftMargin</key>
+		<integer>0</integer>
+		<key>topMargin</key>
+		<integer>0</integer>
+		<key>rightMargin</key>
+		<integer>0</integer>
+		<key>bottomMargin</key>
+		<integer>45</integer>
+		<key>horizontalSpacing</key>
+		<integer>31</integer>
+		<key>verticalSpacing</key>
+		<integer>31</integer>
+		<key>bgColor</key>
+		<string>#FAFAF0-1.0</string>
+		<key>horizontalLineColor</key>
+		<string>#D4D4CC-1.0</string>
+		<key>verticalLineColor</key>
+		<string>#D4D4CC-1.0</string>
+		<key>themeClassName</key>
+		<string>FTDottedTemplateFormat</string>
+	</dict>
+</dict>
+</plist>

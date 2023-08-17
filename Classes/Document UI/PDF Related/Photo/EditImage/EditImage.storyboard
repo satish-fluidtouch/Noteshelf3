@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AAM-fl-dd9">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Aeonik-Bold.otf">
+            <string>Aeonik-Bold</string>
+        </array>
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Edit Image Root View Controller-->
+        <scene sceneID="RNk-tA-jp8">
+            <objects>
+                <viewController id="AAM-fl-dd9" customClass="EditImageRootViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="55W-kg-8Q2">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d23-Oj-bvz" userLabel="Options View">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="42"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="alF-bj-Sbe"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8V-re-c73">
+                                <rect key="frame" x="0.0" y="42" width="768" height="922"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PCf-4v-dNW">
+                                        <rect key="frame" x="197" y="157" width="374" height="608"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="374" id="32e-rE-aUV"/>
+                                            <constraint firstAttribute="height" constant="608" id="Jah-KI-CX7"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="PCf-4v-dNW" secondAttribute="bottom" constant="20" id="AkA-1W-e6J"/>
+                                    <constraint firstItem="PCf-4v-dNW" firstAttribute="top" secondItem="S8V-re-c73" secondAttribute="top" constant="20" id="KWT-BI-NcU"/>
+                                    <constraint firstItem="PCf-4v-dNW" firstAttribute="centerY" secondItem="S8V-re-c73" secondAttribute="centerY" id="Nvg-Vs-2hB"/>
+                                    <constraint firstItem="PCf-4v-dNW" firstAttribute="leading" secondItem="S8V-re-c73" secondAttribute="leading" constant="20" id="Qnp-jc-Ass"/>
+                                    <constraint firstItem="PCf-4v-dNW" firstAttribute="centerX" secondItem="S8V-re-c73" secondAttribute="centerX" id="kiV-1b-4Hr"/>
+                                    <constraint firstAttribute="trailing" secondItem="PCf-4v-dNW" secondAttribute="trailing" constant="20" id="n9T-gC-HVa"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="AkA-1W-e6J"/>
+                                        <exclude reference="KWT-BI-NcU"/>
+                                        <exclude reference="Qnp-jc-Ass"/>
+                                        <exclude reference="n9T-gC-HVa"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Au5-ze-SZz" userLabel="Toolbar View">
+                                <rect key="frame" x="0.0" y="964" width="768" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="MAI-I0-hUJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Frl-rA-6OA"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Frl-rA-6OA" firstAttribute="bottom" secondItem="Au5-ze-SZz" secondAttribute="bottom" constant="16" id="3i1-71-UtI"/>
+                            <constraint firstItem="S8V-re-c73" firstAttribute="trailing" secondItem="Frl-rA-6OA" secondAttribute="trailing" id="C2T-Uq-LBW"/>
+                            <constraint firstItem="Au5-ze-SZz" firstAttribute="leading" secondItem="Frl-rA-6OA" secondAttribute="leading" id="HUp-Yj-LaX"/>
+                            <constraint firstItem="Au5-ze-SZz" firstAttribute="top" secondItem="S8V-re-c73" secondAttribute="bottom" id="YF2-rX-Xh0"/>
+                            <constraint firstItem="d23-Oj-bvz" firstAttribute="leading" secondItem="Frl-rA-6OA" secondAttribute="leading" id="YSE-nw-19K"/>
+                            <constraint firstItem="S8V-re-c73" firstAttribute="leading" secondItem="Frl-rA-6OA" secondAttribute="leading" id="aKg-gk-6MM"/>
+                            <constraint firstItem="Frl-rA-6OA" firstAttribute="trailing" secondItem="Au5-ze-SZz" secondAttribute="trailing" id="kLp-0x-4yc"/>
+                            <constraint firstItem="S8V-re-c73" firstAttribute="top" secondItem="d23-Oj-bvz" secondAttribute="bottom" id="lnb-fQ-6Wy"/>
+                            <constraint firstItem="d23-Oj-bvz" firstAttribute="top" secondItem="55W-kg-8Q2" secondAttribute="top" id="udO-1v-Wq4"/>
+                            <constraint firstItem="Frl-rA-6OA" firstAttribute="trailing" secondItem="d23-Oj-bvz" secondAttribute="trailing" id="yRS-bi-aGc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="baseView" destination="S8V-re-c73" id="5aV-Oj-7ma"/>
+                        <outlet property="editImageView" destination="PCf-4v-dNW" id="mhC-fC-kiM"/>
+                        <outlet property="imageViewBottomConstraint" destination="AkA-1W-e6J" id="XVW-XG-4mZ"/>
+                        <outlet property="imageViewHeightConstraint" destination="Jah-KI-CX7" id="gFn-6j-sep"/>
+                        <outlet property="imageViewLeadingConstraint" destination="Qnp-jc-Ass" id="lyL-pt-huW"/>
+                        <outlet property="imageViewTopConstraint" destination="KWT-BI-NcU" id="iDC-7H-fZY"/>
+                        <outlet property="imageViewTrailingConstraint" destination="n9T-gC-HVa" id="MyS-7E-Dpe"/>
+                        <outlet property="imageViewWidthConstraint" destination="32e-rE-aUV" id="778-Gk-2W9"/>
+                        <outlet property="optionBarView" destination="d23-Oj-bvz" id="nnz-GU-62H"/>
+                        <outlet property="toolBarView" destination="Au5-ze-SZz" id="tW6-G1-Vz1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PkL-zE-05x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-68.75" y="53.3203125"/>
+        </scene>
+        <!--Crop View Controller-->
+        <scene sceneID="84N-JS-XiQ">
+            <objects>
+                <viewController storyboardIdentifier="CropViewController" id="eXd-RW-zCs" customClass="CropViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pqW-7k-QsU">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aVx-6K-ET5">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kZc-7N-YKu"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aVx-6K-ET5" firstAttribute="trailing" secondItem="kZc-7N-YKu" secondAttribute="trailing" id="Cx8-cy-K09"/>
+                            <constraint firstItem="aVx-6K-ET5" firstAttribute="leading" secondItem="kZc-7N-YKu" secondAttribute="leading" id="UsC-UV-Xsh"/>
+                            <constraint firstItem="aVx-6K-ET5" firstAttribute="top" secondItem="pqW-7k-QsU" secondAttribute="top" id="liK-vZ-ac9"/>
+                            <constraint firstItem="aVx-6K-ET5" firstAttribute="bottom" secondItem="kZc-7N-YKu" secondAttribute="bottom" id="rO6-ap-aNv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="maskView" destination="aVx-6K-ET5" id="rzN-P7-n7F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qUN-kt-HjJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="631" y="53"/>
+        </scene>
+        <!--Edit Image Option Bar View Controller-->
+        <scene sceneID="rsQ-oj-jWY">
+            <objects>
+                <viewController storyboardIdentifier="EditImageOptionBarViewController" id="UML-D2-goB" customClass="EditImageOptionBarViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nLP-0w-vwq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9I-Nx-C4U" userLabel="OptionView">
+                                <rect key="frame" x="0.0" y="20" width="414" height="24"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4l-I2-OPI" userLabel="undoButton" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="0.0" width="24" height="24"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="IzG-vg-KKv"/>
+                                            <constraint firstAttribute="height" constant="24" id="hrT-Vc-hHc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="arrow.uturn.backward" catalog="system">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="undoClicked:" destination="UML-D2-goB" eventType="touchUpInside" id="Yed-u2-P3K"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXj-Nk-8Mc" userLabel="redoButton" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="61" y="0.0" width="24" height="24"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="cDD-GO-aqt"/>
+                                            <constraint firstAttribute="height" constant="24" id="xUa-ll-Bvl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="arrow.uturn.forward" catalog="system">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="redoClicked:" destination="UML-D2-goB" eventType="touchUpInside" id="geV-RT-vms"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EDIT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9w-8c-FZU">
+                                        <rect key="frame" x="191" y="3" width="32" height="18"/>
+                                        <fontDescription key="fontDescription" name="Aeonik-Bold" family="Aeonik" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8w-Xa-GgW" userLabel="resetButton">
+                                        <rect key="frame" x="341" y="-4" width="63" height="32"/>
+                                        <color key="tintColor" name="darkRed"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Reset">
+                                            <fontDescription key="titleFontDescription" name="Aeonik-Medium" family="Aeonik" pointSize="15"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="resetClicked:" destination="UML-D2-goB" eventType="touchUpInside" id="en4-7X-ujH"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CWR-ZS-6Rb">
+                                        <rect key="frame" x="25" y="-10" width="364" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kts-sK-5F7" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="56" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="56" id="Ppg-Fq-oPT"/>
+                                                    <constraint firstAttribute="height" constant="44" id="bsk-Uy-k4F"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="arrow.uturn.backward" catalog="system">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiv-KP-wNP" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="102.5" y="0.0" width="56" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="56" id="0I8-aP-gbo"/>
+                                                    <constraint firstAttribute="height" constant="44" id="mV3-Pz-yE2"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eyw-H6-aSv" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="205.5" y="0.0" width="56" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="56" id="fhH-Eq-ybB"/>
+                                                    <constraint firstAttribute="height" constant="44" id="pvO-2T-Heg"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                                <state key="normal" title="RESET">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" title="RESET"/>
+                                                <state key="highlighted" title="RESET">
+                                                    <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2P-Yq-2w5" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="308" y="0.0" width="56" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="56" id="IVg-Qv-wA5"/>
+                                                    <constraint firstAttribute="height" constant="44" id="cm1-GY-Bz4"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                                <state key="normal" title="CROP">
+                                                    <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <state key="disabled">
+                                                    <color key="titleColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cropClicked:" destination="UML-D2-goB" eventType="touchUpInside" id="O40-6e-CQi"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Xb3-fW-GhQ"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="q8w-Xa-GgW" firstAttribute="centerY" secondItem="f9I-Nx-C4U" secondAttribute="centerY" id="DfW-2f-qdq"/>
+                                    <constraint firstItem="o4l-I2-OPI" firstAttribute="centerY" secondItem="f9I-Nx-C4U" secondAttribute="centerY" id="IAc-fL-s3i"/>
+                                    <constraint firstItem="a9w-8c-FZU" firstAttribute="centerY" secondItem="f9I-Nx-C4U" secondAttribute="centerY" id="J4J-hD-6Mq"/>
+                                    <constraint firstItem="fXj-Nk-8Mc" firstAttribute="leading" secondItem="o4l-I2-OPI" secondAttribute="trailing" constant="21" id="KfK-Mj-N9v"/>
+                                    <constraint firstItem="fXj-Nk-8Mc" firstAttribute="centerY" secondItem="f9I-Nx-C4U" secondAttribute="centerY" id="Lfd-J6-wsO"/>
+                                    <constraint firstItem="CWR-ZS-6Rb" firstAttribute="centerY" secondItem="f9I-Nx-C4U" secondAttribute="centerY" id="XeT-2N-x6y"/>
+                                    <constraint firstItem="CWR-ZS-6Rb" firstAttribute="leading" secondItem="f9I-Nx-C4U" secondAttribute="leading" constant="25" id="cyp-z3-8N8"/>
+                                    <constraint firstItem="a9w-8c-FZU" firstAttribute="centerX" secondItem="f9I-Nx-C4U" secondAttribute="centerX" id="hGG-5Y-z9J"/>
+                                    <constraint firstAttribute="trailing" secondItem="q8w-Xa-GgW" secondAttribute="trailing" constant="10" id="n03-xP-O8u"/>
+                                    <constraint firstItem="o4l-I2-OPI" firstAttribute="leading" secondItem="f9I-Nx-C4U" secondAttribute="leading" constant="16" id="oyI-88-7VI"/>
+                                    <constraint firstAttribute="trailing" secondItem="CWR-ZS-6Rb" secondAttribute="trailing" constant="25" id="xVr-jT-IUv"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="CWR-ZS-6Rb"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lhg-na-aTB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="f9I-Nx-C4U" firstAttribute="trailing" secondItem="lhg-na-aTB" secondAttribute="trailing" id="UPc-xO-d1t"/>
+                            <constraint firstItem="f9I-Nx-C4U" firstAttribute="leading" secondItem="lhg-na-aTB" secondAttribute="leading" id="UQm-Vi-lpj"/>
+                            <constraint firstItem="f9I-Nx-C4U" firstAttribute="bottom" secondItem="lhg-na-aTB" secondAttribute="bottom" id="XyQ-WX-s3H"/>
+                            <constraint firstItem="f9I-Nx-C4U" firstAttribute="top" secondItem="lhg-na-aTB" secondAttribute="top" id="jRJ-AL-Li7"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="414" height="44"/>
+                    <connections>
+                        <outlet property="cropButton" destination="Z2P-Yq-2w5" id="53J-cM-zlc"/>
+                        <outlet property="optionStackView" destination="CWR-ZS-6Rb" id="mZy-wJ-6GB"/>
+                        <outlet property="redoButton" destination="fXj-Nk-8Mc" id="ADC-XO-LyN"/>
+                        <outlet property="resetButton" destination="q8w-Xa-GgW" id="lIp-V0-NN6"/>
+                        <outlet property="stackLeadingConstraint" destination="cyp-z3-8N8" id="bC3-Xt-M1M"/>
+                        <outlet property="stackTrailingConstraint" destination="xVr-jT-IUv" id="f1E-gn-dHT"/>
+                        <outlet property="undoButton" destination="o4l-I2-OPI" id="6Un-Pv-mpO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X0y-4b-4K7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1278" y="46"/>
+        </scene>
+        <!--Edit Image Tool Bar View Controller-->
+        <scene sceneID="Q5G-Zd-y3n">
+            <objects>
+                <viewController storyboardIdentifier="EditImageToolBarViewController" id="YfE-1H-3T6" customClass="EditImageToolBarViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bI7-fq-QIQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yZf-uB-B9q" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="8" y="4" width="67" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="1VP-7g-tBP"/>
+                                    <constraint firstAttribute="width" constant="67" id="hXN-DQ-oK6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.54117647059999996" green="0.80000000000000004" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelClicked:" destination="YfE-1H-3T6" eventType="touchUpInside" id="XbJ-LX-Ld7"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="6EO-pk-aNp">
+                                <rect key="frame" x="112.5" y="8" width="150" height="28"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jJ-1g-cpC" userLabel="crop" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="RbM-CZ-08x"/>
+                                            <constraint firstAttribute="width" constant="28" id="jcM-A3-PUW"/>
+                                        </constraints>
+                                        <state key="normal" image="iconImageeditorCrop"/>
+                                        <state key="selected" image="iconImageeditorCropSel"/>
+                                        <connections>
+                                            <action selector="cropClicked:" destination="YfE-1H-3T6" eventType="touchUpInside" id="Gx6-CL-l02"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8e-WN-64r" userLabel="erase" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="61" y="0.0" width="28" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="Dxs-9u-cRi"/>
+                                            <constraint firstAttribute="width" constant="28" id="WTV-c5-dKk"/>
+                                        </constraints>
+                                        <state key="normal" image="iconImageeditorErase"/>
+                                        <state key="selected" image="iconImageeditorEraseSel"/>
+                                        <connections>
+                                            <action selector="eraseClicked:" destination="YfE-1H-3T6" eventType="touchUpInside" id="jIR-eB-OyP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ctr-EC-fgY" userLabel="Lasso" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="122" y="0.0" width="28" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="BXK-uc-YSO"/>
+                                            <constraint firstAttribute="width" constant="28" id="Y8E-AR-vWd"/>
+                                        </constraints>
+                                        <state key="normal" image="iconImageeditorLasso"/>
+                                        <state key="selected" image="iconImageeditorLassoSel"/>
+                                        <connections>
+                                            <action selector="lassoClicked:" destination="YfE-1H-3T6" eventType="touchUpInside" id="69A-TA-hYz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHe-4W-5RS" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="316" y="4" width="51" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="PMK-wu-Bad"/>
+                                    <constraint firstAttribute="width" constant="51" id="bXn-6d-u0W"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" systemColor="tintColor"/>
+                                </state>
+                                <state key="selected">
+                                    <color key="titleColor" red="0.54117647058823526" green="0.80000000000000004" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneClicked:" destination="YfE-1H-3T6" eventType="touchUpInside" id="kIW-O6-Vch"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jH2-al-1F5"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="yZf-uB-B9q" firstAttribute="centerY" secondItem="bI7-fq-QIQ" secondAttribute="centerY" id="LIn-Ce-Rfh"/>
+                            <constraint firstItem="jH2-al-1F5" firstAttribute="trailing" secondItem="lHe-4W-5RS" secondAttribute="trailing" constant="8" id="RyE-sX-oUH"/>
+                            <constraint firstItem="yZf-uB-B9q" firstAttribute="leading" secondItem="bI7-fq-QIQ" secondAttribute="leading" constant="8" id="Zx2-Hy-VFE"/>
+                            <constraint firstItem="6EO-pk-aNp" firstAttribute="centerX" secondItem="bI7-fq-QIQ" secondAttribute="centerX" id="ktH-LA-5gO"/>
+                            <constraint firstItem="lHe-4W-5RS" firstAttribute="centerY" secondItem="bI7-fq-QIQ" secondAttribute="centerY" id="qBu-pH-XAv"/>
+                            <constraint firstItem="6EO-pk-aNp" firstAttribute="centerY" secondItem="bI7-fq-QIQ" secondAttribute="centerY" id="yAe-jr-SE6"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="44"/>
+                    <connections>
+                        <outlet property="cancelButton" destination="yZf-uB-B9q" id="V6V-Es-cIQ"/>
+                        <outlet property="cropButton" destination="9jJ-1g-cpC" id="QeC-nf-w4y"/>
+                        <outlet property="doneButton" destination="lHe-4W-5RS" id="G8R-TP-74m"/>
+                        <outlet property="eraseButton" destination="i8e-WN-64r" id="BfO-Gl-m77"/>
+                        <outlet property="lassoButton" destination="Ctr-EC-fgY" id="qjg-Rd-pIH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lh5-fR-7G2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-68" y="507"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrow.uturn.backward" catalog="system" width="128" height="113"/>
+        <image name="arrow.uturn.forward" catalog="system" width="128" height="113"/>
+        <image name="iconImageeditorCrop" width="28" height="28"/>
+        <image name="iconImageeditorCropSel" width="28" height="28"/>
+        <image name="iconImageeditorErase" width="28" height="28"/>
+        <image name="iconImageeditorEraseSel" width="28" height="28"/>
+        <image name="iconImageeditorLasso" width="28" height="28"/>
+        <image name="iconImageeditorLassoSel" width="28" height="28"/>
+        <namedColor name="darkRed">
+            <color red="0.86274509803921573" green="0.070588235294117646" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

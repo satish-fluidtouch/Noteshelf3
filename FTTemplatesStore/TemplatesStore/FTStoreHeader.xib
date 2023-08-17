@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Clearface-Serial-Medium.ttf">
+            <string>Clearface-Serial-Medium-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="5nK-Y5-DyP" customClass="FTStoreHeader" customModule="FTTemplatesStore" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="71"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="VvL-kE-s0v">
+                    <rect key="frame" x="20" y="18.333333333333332" width="353" height="34.333333333333343"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZT-GD-igM">
+                            <rect key="frame" x="0.0" y="0.0" width="201" height="34.333333333333336"/>
+                            <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="28"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sey-UA-eKb" customClass="FTCustomButton" customModule="FTCommon">
+                            <rect key="frame" x="203" y="0.0" width="150" height="34.333333333333336"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="Pe3-Qb-Nia"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="See All">
+                                <color key="baseForegroundColor" name="accent"/>
+                            </buttonConfiguration>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.seeAll"/>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="NR6-cJ-0TS"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="NR6-cJ-0TS" firstAttribute="trailing" secondItem="VvL-kE-s0v" secondAttribute="trailing" constant="20" id="1HR-yh-Jn2"/>
+                <constraint firstItem="VvL-kE-s0v" firstAttribute="centerY" secondItem="5nK-Y5-DyP" secondAttribute="centerY" id="3sG-CE-s3Q"/>
+                <constraint firstItem="VvL-kE-s0v" firstAttribute="leading" secondItem="NR6-cJ-0TS" secondAttribute="leading" constant="20" id="QJE-ib-RGu"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="seeAllButton" destination="sey-UA-eKb" id="0OE-Sl-pzb"/>
+                <outlet property="titleLabel" destination="xZT-GD-igM" id="quq-Qp-7rS"/>
+            </connections>
+            <point key="canvasLocation" x="-40.458015267175568" y="-287.67605633802816"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

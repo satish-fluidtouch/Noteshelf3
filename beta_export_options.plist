@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>method</key>
+	<string>app-store</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.fluidtouch.noteshelf3-beta</key>
+		<string>Noteshelf3 beta TestFlight</string>
+		<key>com.fluidtouch.noteshelf3</key>
+		<string>Noteshelf 3 AppStore</string>
+		<key>com.fluidtouch.noteshelf3-beta.noteshelf-action</key>
+		<string>Noteshelf3 Action beta TestFlight</string>
+		<key>com.fluidtouch.noteshelf3.noteshelf-action</key>
+		<string>Noteshelf 3 Action AppStore</string>
+	</dict>
+	<key>signingStyle</key>
+	<string>manual</string>
+</dict>
+</plist>

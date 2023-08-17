@@ -1,0 +1,48 @@
+/* 
+  FTNoteshelfAILocalized.strings
+  Sample AI
+
+  Created by Amar Udupa on 31/07/23.
+  
+*/
+"noteshelf.ai.generateNotes" = "Generate Notes";
+"noteshelf.ai.generateNotesOn" = "Generate Notes on";
+"noteshelf.ai.summarize" = "Summarize";
+"noteshelf.ai.explain" = "Explain";
+"noteshelf.ai.translate" = "Translate";
+
+"noteshelf.ai.sendFeedback" = "Send Feedback";
+"noteshelf.ai.noteshelfAI" = "Noteshelf AI";
+
+"noteshelf.ai.languagePlaceholder" = "Enter any language (eg: Portuguese)";
+"noteshelf.ai.askAnything" = "Ask anything...";
+"noteshelf.ai.enterTopic" = "Enter the topic";
+"noteshelf.ai.provideContent" = "Please provide a topic to create notes";
+
+"noteshelf.ai.commandSummarize" = ".Summarize in 50 to 200 words";
+"noteshelf.ai.commandExplain" = ".Explain in simple terms";
+"noteshelf.ai.commandKeyPoints" = ".Give Key Points";
+"noteshelf.ai.commandTranslate" = "Translate to %@";
+
+"noteshelf.ai.actionCopyToClipboard" = "Copy to Clipboard";
+"noteshelf.ai.actionAddAsText" = "Add as Text";
+"noteshelf.ai.actionMore" = "more...";
+"noteshelf.ai.actionAddAsTextNewPage" = "Add as Text to New Page";
+"noteshelf.ai.actionRegenerateResponse" = "Regenerate Response";
+"noteshelf.ai.actionAddHandwriting" = "Add as Handwriting";
+"noteshelf.ai.actionAddHandwritingNewPage" = "Add as Handwriting to New Page";
+"noteshelf.ai.actionAddToPage" = "Add to page";
+"noteshelf.ai.actionAddToNewPage" = "Add to new Page";
+
+"noteshelf.ai.tokenCompleteTitle" = "Thank you for trying out Noteshelf AI";
+"noteshelf.ai.tokenCompleteMessage" = "The Noteshelf AI trial has ended. As we work on the public release, we’d love to know your thoughts and ideas on how we can improve this feature.";
+
+"noteshelf.ai.translateToEnglish" = "Translate to English";
+"noteshelf.ai.translateToGerman" = "Translate to German";
+"noteshelf.ai.translateToSpanish" = "Translate to Spanish";
+"noteshelf.ai.translateToFrench" = "Translate to French";
+"noteshelf.ai.translateToItalian" = "Translate to Italian";
+"noteshelf.ai.translateToJapanese" = "Translate to Japanese";
+"noteshelf.ai.translateToKorean" = "Translate to Korean";
+"noteshelf.ai.translateToChineseSimplified" = "Translate to Chinese Simplified";
+"noteshelf.ai.translateToChineseTraditional" = "Translate to Chinese Traditional";

@@ -1,0 +1,83 @@
+/* 
+  MyScriptLanguageLocalizable.strings
+  Noteshelf
+
+  Created by Amar on 05/08/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+// Languages
+"Languages" = "認識言語";
+"EnglishUS" = "英語（米国）";
+"EnglishUK" = "英語（イギリス）";
+"ChineseS" = "中国語（簡体字）";
+"ChineseT" = "中国語（繁体字）";
+"German" = "ドイツ語";
+"French" = "フランス語";
+"Spanish" = "スペイン語";
+"Italian" = "イタリア語";
+"Japanese" = "日本語";
+"Portugal" = "ポルトガル語";
+"Korean" = "韓国語";
+
+//New MyScript Languages
+"Africans" = "アフリカ人";
+"Albanian" = "アルバニア語";
+"Armenian" = "アルメニア";
+"Azeri" = "アゼルバイジャン";
+"Basque" = "バスク";
+"Belarusian" = "ベラルーシ";
+"Bulgarian" = "ブルガリア";
+"Catalan" = "カタロニア語";
+"Chinese(Hong Kong)" = "中国（香港）";
+"Chinese(Simplified)" = "中国語（簡体字）";
+"Chinese(Taiwan)" = "中国語（台湾）";
+"Croatian" = "クロアチア";
+"Czech" = "チェコ";
+"Danish" = "デンマーク";
+"Dutch(Belgium)" = "オランダ語（ベルギー）";
+"Dutch(Netherlands)" = "オランダ語（オランダ）";
+"English(Canada)" = "英語（カナダ）";
+"Estonian" = "エストニア";
+"Finnish" = "フィンランド";
+"French(Canada)" = "フランス語（カナダ）";
+"French(France)" = "フランス語（フランス）";
+"Galician" = "ガリシア";
+"Georgian" = "グルジア";
+"German(Austria)" = "ドイツ語（オーストリア）";
+"German(Germany)" = "ドイツ語（ドイツ）";
+"Greek" = "ギリシャ語";
+"Hungarian" = "ハンガリー";
+"Indonesian" = "インドネシア";
+"Irish" = "アイルランド人";
+"Islandic" = "Islandic";
+"Kazakh" = "カザフ";
+"Latvian" = "ラトビア";
+"Lithuanian" = "リトアニア";
+"Macedonian" = "マケドニアの";
+"Malay" = "マレー語";
+"Mongolian" = "モンゴル";
+"Norwegian" = "ノルウェーの";
+"Polish" = "研磨";
+"Portuguese(Brazil)" = "ポルトガル語（ブラジル）";
+"Portuguese(Portugal)" = "ポルトガル語（ポルトガル）";
+"Romanian" = "ルーマニア語";
+"Russian" = "ロシア";
+"Serbian(Cyrillic)" = "セルビア語（キリル文字）";
+"Serbian(Latin)" = "セルビア語（ラテン）";
+"Slovak" = "スロバキア";
+"Slovenian" = "スロベニア";
+"Spanish(Mexico)" = "スペイン語（メキシコ）";
+"Spanish(Spain)" = "スペイン語（スペイン）";
+"Swedish" = "スウェーデンの";
+"Tatar" = "タタール";
+"Turkish" = "トルコ語";
+"Ukrainian" = "ウクライナ";
+"Vietnamese" = "ベトナム語";
+"Swahili(Tanzania)" = "スワヒリ語（タンザニア）";
+"Bosnian" = "ボスニア語";
+"Cebuano(Philippines)" = "セブアノ語（フィリピン）";
+"English(Philippines)" = "英語（フィリピン）";
+"Filipino(Philippines)" = "フィリピン（フィリピン）";
+"Malagasy(Madagascar)" = "マダガスカル（マダガスカル）";
+"Spanish(Colombia)" = "スペイン語（コロンビア）";

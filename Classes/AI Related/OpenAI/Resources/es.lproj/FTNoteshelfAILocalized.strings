@@ -1,0 +1,48 @@
+/* 
+  FTNoteshelfAILocalized.strings
+  Sample AI
+
+  Created by Amar Udupa on 31/07/23.
+  
+*/
+"noteshelf.ai.generateNotes" = "Generar notas"; //generate_notes
+"noteshelf.ai.generateNotesOn" = "Generar notas sobre"; //generate_notes_on
+"noteshelf.ai.summarize" = "Resumir"; //summarize
+"noteshelf.ai.explain" = "Explicar"; //explain
+"noteshelf.ai.translate" = "Traducir"; //translate
+
+"noteshelf.ai.sendFeedback" = "Enviar comentarios"; //send_feedback
+"noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
+
+"noteshelf.ai.languagePlaceholder" = "Ingresa cualquier idioma (ej: \"Portugués\")"; //ai_assistant_enter_language
+"noteshelf.ai.askAnything" = "Pregunta cualquier cosa..."; //ai_assistant
+"noteshelf.ai.enterTopic" = "Ingresar el tema"; //enter_the_topic
+"noteshelf.ai.provideContent" = "Por favor, proporciona un tema para crear notas"; //please_provide_a_topic_to_create_notes
+
+"noteshelf.ai.commandSummarize" = ".Resumir en 50 a 200 palabras"; //summarize_command
+"noteshelf.ai.commandExplain" = ".Explica en términos simples"; //explain_command
+"noteshelf.ai.commandKeyPoints" = ".Dar puntos clave"; //generates_notes_command
+"noteshelf.ai.commandTranslate" = "Traducir al %@"; //translate_command
+
+"noteshelf.ai.actionCopyToClipboard" = "Copiar al portapapeles"; //copy_to_clipboard
+"noteshelf.ai.actionAddAsText" = "Agregar como texto"; //add_to_page
+"noteshelf.ai.actionMore" = "Más..."; //more_text
+"noteshelf.ai.actionAddAsTextNewPage" = "Añadir como texto a nueva página."; //add_to_new_Page
+"noteshelf.ai.actionRegenerateResponse" = "Regenerar la respuesta"; //regenerate_response
+"noteshelf.ai.actionAddHandwriting" = "Agregar como escritura a mano";
+"noteshelf.ai.actionAddHandwritingNewPage" = "Agregar como escritura a una nueva página";
+"noteshelf.ai.actionAddToPage" = "Agregar a una nueva página"; //add_to_page
+"noteshelf.ai.actionAddToNewPage" = "Agregar a una nueva página"; //add_to_new_Page
+
+"noteshelf.ai.tokenCompleteTitle" = "Gracias por probar Noteshelf AI"; //thank_you_msg
+"noteshelf.ai.tokenCompleteMessage" = "Su periodo de prueba de Noteshelf AI ha finalizado. Mientras trabajamos en el lanzamiento"; //noteshelf_beta_msg
+
+"noteshelf.ai.translateToEnglish" = "Traducir al inglés";
+"noteshelf.ai.translateToGerman" = "Traducir al alemán";
+"noteshelf.ai.translateToSpanish" = "Traducir al español";
+"noteshelf.ai.translateToFrench" = "Traducir al francés";
+"noteshelf.ai.translateToItalian" = "Traducir al italiano";
+"noteshelf.ai.translateToJapanese" = "Traducir al japonés";
+"noteshelf.ai.translateToKorean" = "Traducir al coreano";
+"noteshelf.ai.translateToChineseSimplified" = "Traducir al chino simplificado";
+"noteshelf.ai.translateToChineseTraditional" = "Traducir al chino tradicional";

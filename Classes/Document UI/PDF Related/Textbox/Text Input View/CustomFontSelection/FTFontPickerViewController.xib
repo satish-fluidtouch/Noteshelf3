@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Aeonik-Medium.otf">
+            <string>Aeonik-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTFontPickerViewController" customModule="Noteshelf3" customModuleProvider="target">
+            <connections>
+                <outlet property="backBtn" destination="KUR-l2-rrz" id="J5v-7k-azt"/>
+                <outlet property="closeBtn" destination="UoJ-Ae-ULJ" id="5WV-8B-WgM"/>
+                <outlet property="containerView" destination="CTM-4p-qv9" id="Mdd-9b-7Z2"/>
+                <outlet property="titleLbl" destination="loq-PF-ixJ" id="cis-SZ-JOH"/>
+                <outlet property="titleView" destination="PVI-Hn-X8L" id="pz3-Tv-1lt"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PVI-Hn-X8L">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUR-l2-rrz">
+                            <rect key="frame" x="4" y="5" width="39.666666666666664" height="34.333333333333336"/>
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system"/>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="-1" eventType="touchUpInside" id="Ikf-EF-7pu"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Font" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="loq-PF-ixJ">
+                            <rect key="frame" x="166" y="12.333333333333334" width="82" height="19.333333333333329"/>
+                            <fontDescription key="fontDescription" name="Aeonik-Medium" family="Aeonik" pointSize="16"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UoJ-Ae-ULJ">
+                            <rect key="frame" x="360" y="0.0" width="54" height="44"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="close_popup"/>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="-1" eventType="touchUpInside" id="gDk-Zy-4d0"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="KUR-l2-rrz" firstAttribute="centerY" secondItem="PVI-Hn-X8L" secondAttribute="centerY" id="56V-ZW-vTb"/>
+                        <constraint firstItem="loq-PF-ixJ" firstAttribute="centerX" secondItem="PVI-Hn-X8L" secondAttribute="centerX" id="Bom-Xf-VJz"/>
+                        <constraint firstItem="UoJ-Ae-ULJ" firstAttribute="centerY" secondItem="PVI-Hn-X8L" secondAttribute="centerY" id="CcN-Cs-aIh"/>
+                        <constraint firstAttribute="height" constant="44" id="HyS-8x-PrH"/>
+                        <constraint firstItem="loq-PF-ixJ" firstAttribute="centerY" secondItem="PVI-Hn-X8L" secondAttribute="centerY" id="K5c-nb-tW6"/>
+                        <constraint firstAttribute="trailing" secondItem="UoJ-Ae-ULJ" secondAttribute="trailing" id="QJG-0i-vaP"/>
+                        <constraint firstItem="KUR-l2-rrz" firstAttribute="leading" secondItem="PVI-Hn-X8L" secondAttribute="leading" constant="4" id="Ubo-gU-ao1"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CTM-4p-qv9">
+                    <rect key="frame" x="0.0" y="44" width="414" height="692"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CTM-4p-qv9" secondAttribute="trailing" id="7jR-0I-FOb"/>
+                <constraint firstItem="PVI-Hn-X8L" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="BdD-hP-v85"/>
+                <constraint firstItem="CTM-4p-qv9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Fbb-Bv-66b"/>
+                <constraint firstItem="CTM-4p-qv9" firstAttribute="top" secondItem="PVI-Hn-X8L" secondAttribute="bottom" id="PwM-bO-9nI"/>
+                <constraint firstItem="CTM-4p-qv9" firstAttribute="top" secondItem="PVI-Hn-X8L" secondAttribute="bottom" id="cFX-W9-hmx"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PVI-Hn-X8L" secondAttribute="trailing" id="dRT-zx-8yY"/>
+                <constraint firstItem="PVI-Hn-X8L" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="erz-lo-gjV"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="CTM-4p-qv9" secondAttribute="bottom" id="ezg-0j-A4d"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="cFX-W9-hmx"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="PVI-Hn-X8L"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="cFX-W9-hmx"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="23.188405797101453" y="72.554347826086968"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="close_popup" width="30" height="30"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

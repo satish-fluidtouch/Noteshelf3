@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FTAudioTrackHeaderView" customModule="FTCommon" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="298" height="70"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BF5-ex-NlG" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="0.0" width="298" height="70"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cmJ-NO-5EO">
+                            <rect key="frame" x="0.0" y="0.0" width="298" height="70"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="6" maxY="0.0"/>
+                            <connections>
+                                <action selector="didTapToggleButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="G78-EU-gtv"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zu0-Wi-D9O">
+                            <rect key="frame" x="12" y="2" width="30" height="66"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="fht-qk-FB0"/>
+                            </constraints>
+                            <color key="tintColor" name="accent"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="play.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="20"/>
+                                </preferredSymbolConfiguration>
+                            </state>
+                            <connections>
+                                <action selector="didTapPlayButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="KUl-lb-YWf"/>
+                            </connections>
+                        </button>
+                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hfn-J2-oUf">
+                            <rect key="frame" x="52" y="8" width="41.5" height="54"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySI-jg-8yZ" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-Wi-4gS" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="21" width="41.5" height="16.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" name="black70"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQO-HK-Dtd" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="37.5" width="41.5" height="16.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" name="black50"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </stackView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Wyw-15-Odu">
+                            <rect key="frame" x="254" y="14.5" width="44" height="41"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" systemColor="labelColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="CzF-Kf-72N"/>
+                                <constraint firstAttribute="height" constant="44" id="Tdm-tV-yLm"/>
+                            </constraints>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                            </preferredSymbolConfiguration>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="cmJ-NO-5EO" secondAttribute="trailing" id="5AP-ld-8BP"/>
+                        <constraint firstItem="cmJ-NO-5EO" firstAttribute="centerY" secondItem="BF5-ex-NlG" secondAttribute="centerY" id="D8d-de-izV"/>
+                        <constraint firstItem="Zu0-Wi-D9O" firstAttribute="centerY" secondItem="BF5-ex-NlG" secondAttribute="centerY" id="Ddi-sx-bM7"/>
+                        <constraint firstItem="hfn-J2-oUf" firstAttribute="leading" secondItem="Zu0-Wi-D9O" secondAttribute="trailing" constant="10" id="INB-7b-LYZ"/>
+                        <constraint firstAttribute="bottom" secondItem="hfn-J2-oUf" secondAttribute="bottom" constant="8" id="KzO-Sx-nJO"/>
+                        <constraint firstItem="Wyw-15-Odu" firstAttribute="centerY" secondItem="cmJ-NO-5EO" secondAttribute="centerY" id="RMP-rY-LhW"/>
+                        <constraint firstItem="Zu0-Wi-D9O" firstAttribute="leading" secondItem="BF5-ex-NlG" secondAttribute="leading" constant="12" id="U4M-9s-9j7"/>
+                        <constraint firstItem="cmJ-NO-5EO" firstAttribute="width" secondItem="BF5-ex-NlG" secondAttribute="width" id="aw8-HQ-wKq"/>
+                        <constraint firstAttribute="trailing" secondItem="Wyw-15-Odu" secondAttribute="trailing" id="gO3-r9-hd3"/>
+                        <constraint firstItem="hfn-J2-oUf" firstAttribute="top" secondItem="BF5-ex-NlG" secondAttribute="top" constant="8" id="qR9-44-Zjd"/>
+                        <constraint firstItem="Zu0-Wi-D9O" firstAttribute="top" secondItem="BF5-ex-NlG" secondAttribute="top" constant="2" id="vYG-hE-IKW"/>
+                        <constraint firstItem="cmJ-NO-5EO" firstAttribute="height" secondItem="BF5-ex-NlG" secondAttribute="height" id="y9B-Qz-Awf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" name="cellBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="BF5-ex-NlG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="St3-g1-MsH"/>
+                <constraint firstItem="BF5-ex-NlG" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="ZEX-OL-7SG"/>
+                <constraint firstAttribute="bottom" secondItem="BF5-ex-NlG" secondAttribute="bottom" id="ZEe-NB-4mQ"/>
+                <constraint firstItem="BF5-ex-NlG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dqf-si-eBq"/>
+                <constraint firstItem="BF5-ex-NlG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="gPO-rG-v4P"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="BF5-ex-NlG" secondAttribute="trailing" id="w9K-p4-8rY"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="actionButton" destination="Zu0-Wi-D9O" id="IwN-PB-avi"/>
+                <outlet property="audioDuration" destination="NKd-Wi-4gS" id="zeR-gM-ZVy"/>
+                <outlet property="chevronImage" destination="Wyw-15-Odu" id="iRB-Ka-Hlx"/>
+                <outlet property="pageNumberLabel" destination="UQO-HK-Dtd" id="buF-cI-PnY"/>
+                <outlet property="titleLabel" destination="ySI-jg-8yZ" id="buR-QZ-Y3h"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="97"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black70">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="cellBackgroundColor">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

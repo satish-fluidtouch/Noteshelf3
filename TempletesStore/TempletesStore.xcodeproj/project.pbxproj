@@ -1,0 +1,1120 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4708C1922A4448FF001F78F6 /* FTStoreloadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4708C1912A4448FF001F78F6 /* FTStoreloadingIndicatorView.swift */; };
+		471B90EA29F0ED0D00861A2B /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 471B90E929F0ED0D00861A2B /* FTCommon.framework */; };
+		471B90FE29F0FC2C00861A2B /* FTStoreStickersTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471B90F429F0F91200861A2B /* FTStoreStickersTableCell.swift */; };
+		471B90FF29F0FC3000861A2B /* FTStoreStickersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 471B90F529F0F91200861A2B /* FTStoreStickersTableCell.xib */; };
+		471B910029F0FC3300861A2B /* FTStoreStickersCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 471B90FA29F0F9BF00861A2B /* FTStoreStickersCollectionCell.swift */; };
+		471B910129F0FC3900861A2B /* FTStoreStickersCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 471B90FB29F0F9BF00861A2B /* FTStoreStickersCollectionCell.xib */; };
+		472522C12A1F3F5E008FFC46 /* UIViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472522BF2A1F3F5B008FFC46 /* UIViewController+Additions.swift */; };
+		473C1F8229C86770003BD6BB /* FTTemplatesStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47859AB729C85C7F00E0F080 /* FTTemplatesStore.storyboard */; };
+		473C1F8929C96CD8003BD6BB /* FTCustomTemplateImportActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473C1F8729C96B21003BD6BB /* FTCustomTemplateImportActions.swift */; };
+		473C1F9129C98581003BD6BB /* FTStoreCustomTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473C1F8A29C971F6003BD6BB /* FTStoreCustomTemplateViewModel.swift */; };
+		474406A429F90DBF00B46401 /* FTStoreLibraryEmptyCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474406A229F90D9500B46401 /* FTStoreLibraryEmptyCollectionCell.swift */; };
+		474406A729F9118D00B46401 /* FTStoreCustomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474406A529F9118B00B46401 /* FTStoreCustomCollectionCell.swift */; };
+		474406AA29F92E6400B46401 /* FTStoreCustomTemplatesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474406A829F92CE000B46401 /* FTStoreCustomTemplatesHandler.swift */; };
+		474406AD29F930AA00B46401 /* FTStoreCustomTemplatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474406AB29F9308800B46401 /* FTStoreCustomTemplatesModel.swift */; };
+		4744E4762A28B8F900A9795A /* Date+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E4742A28B8F700A9795A /* Date+Addition.swift */; };
+		4744E4792A2DB18100A9795A /* Filemanager+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E4782A2DB18100A9795A /* Filemanager+Addition.swift */; };
+		4744E47B2A2EE29B00A9795A /* FTStoreLibraryViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E47A2A2EE29B00A9795A /* FTStoreLibraryViewController+ContextMenu.swift */; };
+		4744E47D2A2EE37000A9795A /* FTStoreTemplateContextPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E47C2A2EE37000A9795A /* FTStoreTemplateContextPreview.swift */; };
+		475EF802299A013C004EEA7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475EF801299A013C004EEA7D /* AppDelegate.swift */; };
+		475EF804299A013C004EEA7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475EF803299A013C004EEA7D /* SceneDelegate.swift */; };
+		475EF806299A013C004EEA7D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475EF805299A013C004EEA7D /* ViewController.swift */; };
+		47614FEE2A6FEB51009140BA /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47614FED2A6FEB51009140BA /* UIAlertController+Additions.swift */; };
+		477524FF2A6A461D00189A1C /* FTStoreCustomViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477524FE2A6A461D00189A1C /* FTStoreCustomViewController+ContextMenu.swift */; };
+		4783442E2A174AD60062E0C4 /* FTStoreContainerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4783442D2A174AD60062E0C4 /* FTStoreContainerHandler.swift */; };
+		47859A8629C85ADF00E0F080 /* FTTemplatesStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 47859A8529C85ADF00E0F080 /* FTTemplatesStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		47859A8929C85ADF00E0F080 /* FTTemplatesStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47859A8329C85ADF00E0F080 /* FTTemplatesStore.framework */; };
+		47859A8A29C85ADF00E0F080 /* FTTemplatesStore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 47859A8329C85ADF00E0F080 /* FTTemplatesStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		47859A8F29C85BCC00E0F080 /* FTStoreContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2627629A4C77C00504F33 /* FTStoreContainerViewController.swift */; };
+		47859A9029C85BCF00E0F080 /* FTStoreCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2630C29A8763900504F33 /* FTStoreCustomViewController.swift */; };
+		47859A9129C85BD800E0F080 /* FTStoreLibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478599DC29C2FBA500E0F080 /* FTStoreLibraryModel.swift */; };
+		47859A9229C85BD800E0F080 /* FTStoreLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478599DE29C31F5D00E0F080 /* FTStoreLibraryViewModel.swift */; };
+		47859A9329C85BD800E0F080 /* FTStoreLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2627829A4C7EC00504F33 /* FTStoreLibraryViewController.swift */; };
+		47859A9429C85BD800E0F080 /* FTStoreLibraryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478599DA29C2F31D00E0F080 /* FTStoreLibraryHandler.swift */; };
+		47859A9529C85BD800E0F080 /* FTStoreLibraryCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478599E129C331D000E0F080 /* FTStoreLibraryCollectionCell.swift */; };
+		47859A9629C85BDF00E0F080 /* FTStoreSectionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2629B29A5DAF400504F33 /* FTStoreSectionHandler.swift */; };
+		47859A9729C85BDF00E0F080 /* FTStoreActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47210BD329B895B800B0A3D6 /* FTStoreActionManager.swift */; };
+		47859A9829C85BDF00E0F080 /* FTStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475EF817299A022B004EEA7D /* FTStoreViewController.swift */; };
+		47859A9929C85BDF00E0F080 /* FTStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF001299F517600111AAA /* FTStoreViewModel.swift */; };
+		47859A9A29C85BDF00E0F080 /* FTStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475EF819299A05E6004EEA7D /* FTStoreModel.swift */; };
+		47859A9B29C85BDF00E0F080 /* FTStoreHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2627029A49A6700504F33 /* FTStoreHeader.swift */; };
+		47859A9C29C85BDF00E0F080 /* FTStoreHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F2627229A49C4A00504F33 /* FTStoreHeader.xib */; };
+		47859A9D29C85BE400E0F080 /* FTCategoryTempaltesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4793F1E8299B88D6006C139D /* FTCategoryTempaltesViewController.swift */; };
+		47859A9E29C85BE400E0F080 /* FTCategoryTemplatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2626D29A4940200504F33 /* FTCategoryTemplatesViewModel.swift */; };
+		47859A9F29C85BEB00E0F080 /* FTTemplateStyleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47210BD729B8972F00B0A3D6 /* FTTemplateStyleCell.swift */; };
+		47859AA029C85BEB00E0F080 /* FTTemplatesPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47210BD029B74FF900B0A3D6 /* FTTemplatesPageViewController.swift */; };
+		47859AA129C85BEB00E0F080 /* FTTemplatesPageActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47210BD529B895DC00B0A3D6 /* FTTemplatesPageActionManager.swift */; };
+		47859AA229C85BEB00E0F080 /* FTTemplatePreviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A312A029AF7BE5004BA79B /* FTTemplatePreviewViewModel.swift */; };
+		47859AA329C85BEB00E0F080 /* FTTemplatePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2631329A8BF4C00504F33 /* FTTemplatePreviewViewController.swift */; };
+		47859AA529C85BF000E0F080 /* FTStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EEFFF299F514900111AAA /* FTStoreService.swift */; };
+		47859AA729C85BF600E0F080 /* FTStorePlannerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF009299F51B700111AAA /* FTStorePlannerTableCell.swift */; };
+		47859AA829C85BF600E0F080 /* FTStorePlannerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF00B299F51B700111AAA /* FTStorePlannerCollectionCell.swift */; };
+		47859AA929C85BF600E0F080 /* FTStorePlannerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474EF00F299F51B700111AAA /* FTStorePlannerCollectionCell.xib */; };
+		47859AAA29C85BF600E0F080 /* FTStorePlannerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474EF00A299F51B700111AAA /* FTStorePlannerTableCell.xib */; };
+		47859AAD29C85BFB00E0F080 /* FTStoreCategoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF016299F51B700111AAA /* FTStoreCategoryTableCell.swift */; };
+		47859AAE29C85BFB00E0F080 /* FTStoreCategoryTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474EF015299F51B700111AAA /* FTStoreCategoryTableCell.xib */; };
+		47859AAF29C85C0200E0F080 /* FTStoreJournalsCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474EF004299F51B700111AAA /* FTStoreJournalsCollectionCell.xib */; };
+		47859AB029C85C0200E0F080 /* FTStoreJournalsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF007299F51B700111AAA /* FTStoreJournalsCollectionCell.swift */; };
+		47859AB129C85C0200E0F080 /* FTStoreJournalTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF006299F51B700111AAA /* FTStoreJournalTableCell.swift */; };
+		47859AB229C85C0200E0F080 /* FTStoreJournalTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 474EF005299F51B700111AAA /* FTStoreJournalTableCell.xib */; };
+		47859AB329C85C0A00E0F080 /* UICells+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EF011299F51B700111AAA /* UICells+Additions.swift */; };
+		47859AB429C85C0A00E0F080 /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2627429A4AB4E00504F33 /* UINavigationController+Additions.swift */; };
+		47859AB529C85C1D00E0F080 /* templates.plist in Resources */ = {isa = PBXBuildFile; fileRef = 475EF815299A017B004EEA7D /* templates.plist */; };
+		47859AB629C85C2C00E0F080 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 475EF80A299A013D004EEA7D /* Assets.xcassets */; };
+		478917F42A1C73E2003FCC96 /* FTStoreCustomPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478917F32A1C73E2003FCC96 /* FTStoreCustomPreviewViewController.swift */; };
+		47A4B3E92A2085F600D6B3C6 /* URL+Addition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4B3E72A2085F400D6B3C6 /* URL+Addition.swift */; };
+		47A4B3EB2A20889F00D6B3C6 /* FTStoreConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A4B3EA2A20889F00D6B3C6 /* FTStoreConstants.swift */; };
+		47AEE3792A5D24CB00FA924A /* FTStoreCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AEE3782A5D24CB00FA924A /* FTStoreCategoryView.swift */; };
+		47CE07A52A0B6FFC00E15028 /* FTStickersPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CE07A42A0B6FFC00E15028 /* FTStickersPreviewViewController.swift */; };
+		47D01DCB29F658480034567F /* FTLibraryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D01DC729F657FA0034567F /* FTLibraryHeaderView.swift */; };
+		47DB56D52A304E9600CFA886 /* Sleep_Tracker.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 47DB56D42A304E9600CFA886 /* Sleep_Tracker.jpg */; };
+		47E7C2942A2880AA00EDCB60 /* FTDairyDateSelectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E7C2932A2880AA00EDCB60 /* FTDairyDateSelectionPicker.swift */; };
+		47F39EB22A05190200CB1599 /* FTStoreBannerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F39EB02A05190200CB1599 /* FTStoreBannerTableCell.swift */; };
+		47F39EB32A05190200CB1599 /* FTStoreBannerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F39EB12A05190200CB1599 /* FTStoreBannerTableCell.xib */; };
+		47F39EB62A05192500CB1599 /* FTStoreBannerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F39EB42A05192500CB1599 /* FTStoreBannerCollectionCell.swift */; };
+		47F39EB72A05192500CB1599 /* FTStoreBannerCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47F39EB52A05192500CB1599 /* FTStoreBannerCollectionCell.xib */; };
+		47F39EBA2A08A8F300CB1599 /* FTStoreTemplatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F39EB82A08A8EB00CB1599 /* FTStoreTemplatesViewController.swift */; };
+		47F39EBD2A08D55100CB1599 /* FTStoreTemplatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F39EBB2A08D54E00CB1599 /* FTStoreTemplatesViewModel.swift */; };
+		47FC71442A39DB7700C87A22 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 47FC71432A39DB7700C87A22 /* ZipArchive */; };
+		47FC71462A39DBE800C87A22 /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 47FC71452A39DBE800C87A22 /* ZipArchive */; };
+		DDAD78F22A08C6EB001D8B21 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAD78F12A08C6EB001D8B21 /* SDWebImage */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47859A8729C85ADF00E0F080 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 475EF7F6299A013C004EEA7D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47859A8229C85ADF00E0F080;
+			remoteInfo = FTTemplatesStore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		47859A8E29C85ADF00E0F080 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				47859A8A29C85ADF00E0F080 /* FTTemplatesStore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4708C1912A4448FF001F78F6 /* FTStoreloadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreloadingIndicatorView.swift; sourceTree = "<group>"; };
+		471B90E929F0ED0D00861A2B /* FTCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FTCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		471B90F429F0F91200861A2B /* FTStoreStickersTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreStickersTableCell.swift; sourceTree = "<group>"; };
+		471B90F529F0F91200861A2B /* FTStoreStickersTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTStoreStickersTableCell.xib; sourceTree = "<group>"; };
+		471B90FA29F0F9BF00861A2B /* FTStoreStickersCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreStickersCollectionCell.swift; sourceTree = "<group>"; };
+		471B90FB29F0F9BF00861A2B /* FTStoreStickersCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTStoreStickersCollectionCell.xib; sourceTree = "<group>"; };
+		47210BD029B74FF900B0A3D6 /* FTTemplatesPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplatesPageViewController.swift; sourceTree = "<group>"; };
+		47210BD329B895B800B0A3D6 /* FTStoreActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreActionManager.swift; sourceTree = "<group>"; };
+		47210BD529B895DC00B0A3D6 /* FTTemplatesPageActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplatesPageActionManager.swift; sourceTree = "<group>"; };
+		47210BD729B8972F00B0A3D6 /* FTTemplateStyleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplateStyleCell.swift; sourceTree = "<group>"; };
+		472522BF2A1F3F5B008FFC46 /* UIViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Additions.swift"; sourceTree = "<group>"; };
+		473C1F8729C96B21003BD6BB /* FTCustomTemplateImportActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomTemplateImportActions.swift; sourceTree = "<group>"; };
+		473C1F8A29C971F6003BD6BB /* FTStoreCustomTemplateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCustomTemplateViewModel.swift; sourceTree = "<group>"; };
+		474406A229F90D9500B46401 /* FTStoreLibraryEmptyCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryEmptyCollectionCell.swift; sourceTree = "<group>"; };
+		474406A529F9118B00B46401 /* FTStoreCustomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCustomCollectionCell.swift; sourceTree = "<group>"; };
+		474406A829F92CE000B46401 /* FTStoreCustomTemplatesHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCustomTemplatesHandler.swift; sourceTree = "<group>"; };
+		474406AB29F9308800B46401 /* FTStoreCustomTemplatesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCustomTemplatesModel.swift; sourceTree = "<group>"; };
+		4744E4742A28B8F700A9795A /* Date+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Addition.swift"; sourceTree = "<group>"; };
+		4744E4782A2DB18100A9795A /* Filemanager+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Filemanager+Addition.swift"; sourceTree = "<group>"; };
+		4744E47A2A2EE29B00A9795A /* FTStoreLibraryViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTStoreLibraryViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		4744E47C2A2EE37000A9795A /* FTStoreTemplateContextPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreTemplateContextPreview.swift; sourceTree = "<group>"; };
+		474EEFFF299F514900111AAA /* FTStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreService.swift; sourceTree = "<group>"; };
+		474EF001299F517600111AAA /* FTStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreViewModel.swift; sourceTree = "<group>"; };
+		474EF004299F51B700111AAA /* FTStoreJournalsCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTStoreJournalsCollectionCell.xib; sourceTree = "<group>"; };
+		474EF005299F51B700111AAA /* FTStoreJournalTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTStoreJournalTableCell.xib; sourceTree = "<group>"; };
+		474EF006299F51B700111AAA /* FTStoreJournalTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreJournalTableCell.swift; sourceTree = "<group>"; };
+		474EF007299F51B700111AAA /* FTStoreJournalsCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreJournalsCollectionCell.swift; sourceTree = "<group>"; };
+		474EF009299F51B700111AAA /* FTStorePlannerTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStorePlannerTableCell.swift; sourceTree = "<group>"; };
+		474EF00A299F51B700111AAA /* FTStorePlannerTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTStorePlannerTableCell.xib; sourceTree = "<group>"; };
+		474EF00B299F51B700111AAA /* FTStorePlannerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStorePlannerCollectionCell.swift; sourceTree = "<group>"; };
+		474EF00F299F51B700111AAA /* FTStorePlannerCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTStorePlannerCollectionCell.xib; sourceTree = "<group>"; };
+		474EF011299F51B700111AAA /* UICells+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICells+Additions.swift"; sourceTree = "<group>"; };
+		474EF015299F51B700111AAA /* FTStoreCategoryTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTStoreCategoryTableCell.xib; sourceTree = "<group>"; };
+		474EF016299F51B700111AAA /* FTStoreCategoryTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreCategoryTableCell.swift; sourceTree = "<group>"; };
+		474EF02D29A383DE00111AAA /* TempletesStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TempletesStore.entitlements; sourceTree = "<group>"; };
+		475EF7FE299A013C004EEA7D /* TempletesStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TempletesStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		475EF801299A013C004EEA7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		475EF803299A013C004EEA7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		475EF805299A013C004EEA7D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		475EF80A299A013D004EEA7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		475EF80F299A013D004EEA7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		475EF815299A017B004EEA7D /* templates.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = templates.plist; sourceTree = "<group>"; };
+		475EF817299A022B004EEA7D /* FTStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreViewController.swift; sourceTree = "<group>"; };
+		475EF819299A05E6004EEA7D /* FTStoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreModel.swift; sourceTree = "<group>"; };
+		47614FED2A6FEB51009140BA /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
+		477524FE2A6A461D00189A1C /* FTStoreCustomViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTStoreCustomViewController+ContextMenu.swift"; sourceTree = "<group>"; };
+		4783442D2A174AD60062E0C4 /* FTStoreContainerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreContainerHandler.swift; sourceTree = "<group>"; };
+		478599DA29C2F31D00E0F080 /* FTStoreLibraryHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryHandler.swift; sourceTree = "<group>"; };
+		478599DC29C2FBA500E0F080 /* FTStoreLibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryModel.swift; sourceTree = "<group>"; };
+		478599DE29C31F5D00E0F080 /* FTStoreLibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryViewModel.swift; sourceTree = "<group>"; };
+		478599E129C331D000E0F080 /* FTStoreLibraryCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryCollectionCell.swift; sourceTree = "<group>"; };
+		47859A8329C85ADF00E0F080 /* FTTemplatesStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FTTemplatesStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47859A8529C85ADF00E0F080 /* FTTemplatesStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTTemplatesStore.h; sourceTree = "<group>"; };
+		47859AB729C85C7F00E0F080 /* FTTemplatesStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTTemplatesStore.storyboard; sourceTree = "<group>"; };
+		478917F32A1C73E2003FCC96 /* FTStoreCustomPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCustomPreviewViewController.swift; sourceTree = "<group>"; };
+		4793F1E8299B88D6006C139D /* FTCategoryTempaltesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCategoryTempaltesViewController.swift; sourceTree = "<group>"; };
+		479A45AF29CD75AE00E25EDD /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47A312A029AF7BE5004BA79B /* FTTemplatePreviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplatePreviewViewModel.swift; sourceTree = "<group>"; };
+		47A4B3E72A2085F400D6B3C6 /* URL+Addition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Addition.swift"; sourceTree = "<group>"; };
+		47A4B3EA2A20889F00D6B3C6 /* FTStoreConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreConstants.swift; sourceTree = "<group>"; };
+		47AEE3782A5D24CB00FA924A /* FTStoreCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCategoryView.swift; sourceTree = "<group>"; };
+		47CE07A42A0B6FFC00E15028 /* FTStickersPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStickersPreviewViewController.swift; sourceTree = "<group>"; };
+		47D01DC729F657FA0034567F /* FTLibraryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTLibraryHeaderView.swift; sourceTree = "<group>"; };
+		47D77E0429CDA7B00063FFCC /* FTStyles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FTStyles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		47DB56D42A304E9600CFA886 /* Sleep_Tracker.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sleep_Tracker.jpg; sourceTree = "<group>"; };
+		47E7C2932A2880AA00EDCB60 /* FTDairyDateSelectionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDairyDateSelectionPicker.swift; sourceTree = "<group>"; };
+		47F2626D29A4940200504F33 /* FTCategoryTemplatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCategoryTemplatesViewModel.swift; sourceTree = "<group>"; };
+		47F2627029A49A6700504F33 /* FTStoreHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreHeader.swift; sourceTree = "<group>"; };
+		47F2627229A49C4A00504F33 /* FTStoreHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTStoreHeader.xib; sourceTree = "<group>"; };
+		47F2627429A4AB4E00504F33 /* UINavigationController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Additions.swift"; sourceTree = "<group>"; };
+		47F2627629A4C77C00504F33 /* FTStoreContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreContainerViewController.swift; sourceTree = "<group>"; };
+		47F2627829A4C7EC00504F33 /* FTStoreLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryViewController.swift; sourceTree = "<group>"; };
+		47F2629B29A5DAF400504F33 /* FTStoreSectionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreSectionHandler.swift; sourceTree = "<group>"; };
+		47F2630C29A8763900504F33 /* FTStoreCustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreCustomViewController.swift; sourceTree = "<group>"; };
+		47F2631329A8BF4C00504F33 /* FTTemplatePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplatePreviewViewController.swift; sourceTree = "<group>"; };
+		47F39EB02A05190200CB1599 /* FTStoreBannerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreBannerTableCell.swift; sourceTree = "<group>"; };
+		47F39EB12A05190200CB1599 /* FTStoreBannerTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTStoreBannerTableCell.xib; sourceTree = "<group>"; };
+		47F39EB42A05192500CB1599 /* FTStoreBannerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreBannerCollectionCell.swift; sourceTree = "<group>"; };
+		47F39EB52A05192500CB1599 /* FTStoreBannerCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTStoreBannerCollectionCell.xib; sourceTree = "<group>"; };
+		47F39EB82A08A8EB00CB1599 /* FTStoreTemplatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreTemplatesViewController.swift; sourceTree = "<group>"; };
+		47F39EBB2A08D54E00CB1599 /* FTStoreTemplatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreTemplatesViewModel.swift; sourceTree = "<group>"; };
+		DDAD78F62A08C8B2001D8B21 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		475EF7FB299A013C004EEA7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47859A8929C85ADF00E0F080 /* FTTemplatesStore.framework in Frameworks */,
+				47FC71442A39DB7700C87A22 /* ZipArchive in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47859A8029C85ADF00E0F080 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDAD78F22A08C6EB001D8B21 /* SDWebImage in Frameworks */,
+				471B90EA29F0ED0D00861A2B /* FTCommon.framework in Frameworks */,
+				47FC71462A39DBE800C87A22 /* ZipArchive in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		471B90F129F0F8D000861A2B /* StickersViews */ = {
+			isa = PBXGroup;
+			children = (
+				471B90F429F0F91200861A2B /* FTStoreStickersTableCell.swift */,
+				471B90F529F0F91200861A2B /* FTStoreStickersTableCell.xib */,
+				471B90FA29F0F9BF00861A2B /* FTStoreStickersCollectionCell.swift */,
+				471B90FB29F0F9BF00861A2B /* FTStoreStickersCollectionCell.xib */,
+			);
+			path = StickersViews;
+			sourceTree = "<group>";
+		};
+		47210BD229B8957A00B0A3D6 /* TemplatesPreview */ = {
+			isa = PBXGroup;
+			children = (
+				47210BD029B74FF900B0A3D6 /* FTTemplatesPageViewController.swift */,
+				47F2631329A8BF4C00504F33 /* FTTemplatePreviewViewController.swift */,
+				47A312A029AF7BE5004BA79B /* FTTemplatePreviewViewModel.swift */,
+				47210BD729B8972F00B0A3D6 /* FTTemplateStyleCell.swift */,
+				47210BD529B895DC00B0A3D6 /* FTTemplatesPageActionManager.swift */,
+				47CE07A42A0B6FFC00E15028 /* FTStickersPreviewViewController.swift */,
+			);
+			path = TemplatesPreview;
+			sourceTree = "<group>";
+		};
+		473C1F6529C85E82003BD6BB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DDAD78F62A08C8B2001D8B21 /* Core.framework */,
+				471B90E929F0ED0D00861A2B /* FTCommon.framework */,
+				47D77E0429CDA7B00063FFCC /* FTStyles.framework */,
+				479A45AF29CD75AE00E25EDD /* Core.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		473C1F8E29C983E9003BD6BB /* CustomTemplates */ = {
+			isa = PBXGroup;
+			children = (
+				47F2630C29A8763900504F33 /* FTStoreCustomViewController.swift */,
+				477524FE2A6A461D00189A1C /* FTStoreCustomViewController+ContextMenu.swift */,
+				478917F32A1C73E2003FCC96 /* FTStoreCustomPreviewViewController.swift */,
+				474406A529F9118B00B46401 /* FTStoreCustomCollectionCell.swift */,
+				473C1F8A29C971F6003BD6BB /* FTStoreCustomTemplateViewModel.swift */,
+				474406AB29F9308800B46401 /* FTStoreCustomTemplatesModel.swift */,
+				474406A829F92CE000B46401 /* FTStoreCustomTemplatesHandler.swift */,
+				473C1F8729C96B21003BD6BB /* FTCustomTemplateImportActions.swift */,
+			);
+			path = CustomTemplates;
+			sourceTree = "<group>";
+		};
+		474EF003299F51B700111AAA /* JournalViews */ = {
+			isa = PBXGroup;
+			children = (
+				474EF006299F51B700111AAA /* FTStoreJournalTableCell.swift */,
+				474EF005299F51B700111AAA /* FTStoreJournalTableCell.xib */,
+				474EF007299F51B700111AAA /* FTStoreJournalsCollectionCell.swift */,
+				474EF004299F51B700111AAA /* FTStoreJournalsCollectionCell.xib */,
+			);
+			path = JournalViews;
+			sourceTree = "<group>";
+		};
+		474EF008299F51B700111AAA /* PlannerViews */ = {
+			isa = PBXGroup;
+			children = (
+				474EF009299F51B700111AAA /* FTStorePlannerTableCell.swift */,
+				474EF00A299F51B700111AAA /* FTStorePlannerTableCell.xib */,
+				474EF00B299F51B700111AAA /* FTStorePlannerCollectionCell.swift */,
+				474EF00F299F51B700111AAA /* FTStorePlannerCollectionCell.xib */,
+				474EF013299F51B700111AAA /* CategoryViews */,
+			);
+			path = PlannerViews;
+			sourceTree = "<group>";
+		};
+		474EF010299F51B700111AAA /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				474EF011299F51B700111AAA /* UICells+Additions.swift */,
+				47F2627429A4AB4E00504F33 /* UINavigationController+Additions.swift */,
+				472522BF2A1F3F5B008FFC46 /* UIViewController+Additions.swift */,
+				47A4B3E72A2085F400D6B3C6 /* URL+Addition.swift */,
+				4744E4742A28B8F700A9795A /* Date+Addition.swift */,
+				4744E4782A2DB18100A9795A /* Filemanager+Addition.swift */,
+				47614FED2A6FEB51009140BA /* UIAlertController+Additions.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		474EF013299F51B700111AAA /* CategoryViews */ = {
+			isa = PBXGroup;
+			children = (
+				474EF016299F51B700111AAA /* FTStoreCategoryTableCell.swift */,
+				474EF015299F51B700111AAA /* FTStoreCategoryTableCell.xib */,
+				47AEE3782A5D24CB00FA924A /* FTStoreCategoryView.swift */,
+			);
+			path = CategoryViews;
+			sourceTree = "<group>";
+		};
+		475EF7F5299A013C004EEA7D = {
+			isa = PBXGroup;
+			children = (
+				475EF800299A013C004EEA7D /* TempletesStore */,
+				47859A8429C85ADF00E0F080 /* FTTemplatesStore */,
+				475EF7FF299A013C004EEA7D /* Products */,
+				473C1F6529C85E82003BD6BB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		475EF7FF299A013C004EEA7D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				475EF7FE299A013C004EEA7D /* TempletesStore.app */,
+				47859A8329C85ADF00E0F080 /* FTTemplatesStore.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		475EF800299A013C004EEA7D /* TempletesStore */ = {
+			isa = PBXGroup;
+			children = (
+				474EF02D29A383DE00111AAA /* TempletesStore.entitlements */,
+				475EF801299A013C004EEA7D /* AppDelegate.swift */,
+				475EF803299A013C004EEA7D /* SceneDelegate.swift */,
+				475EF805299A013C004EEA7D /* ViewController.swift */,
+				47F2627629A4C77C00504F33 /* FTStoreContainerViewController.swift */,
+				4783442D2A174AD60062E0C4 /* FTStoreContainerHandler.swift */,
+				47A4B3EA2A20889F00D6B3C6 /* FTStoreConstants.swift */,
+				47E7C2932A2880AA00EDCB60 /* FTDairyDateSelectionPicker.swift */,
+				4744E47C2A2EE37000A9795A /* FTStoreTemplateContextPreview.swift */,
+				474EEFFF299F514900111AAA /* FTStoreService.swift */,
+				4708C1912A4448FF001F78F6 /* FTStoreloadingIndicatorView.swift */,
+				47F2626C29A4939300504F33 /* TemplatesStore */,
+				47CE07872A09FD1700E15028 /* Templates */,
+				47F2626F29A4995000504F33 /* CategoryTemplates */,
+				47210BD229B8957A00B0A3D6 /* TemplatesPreview */,
+				478599E029C321DA00E0F080 /* Library */,
+				473C1F8E29C983E9003BD6BB /* CustomTemplates */,
+				47F39EAF2A0518CC00CB1599 /* Banners */,
+				474EF008299F51B700111AAA /* PlannerViews */,
+				474EF003299F51B700111AAA /* JournalViews */,
+				471B90F129F0F8D000861A2B /* StickersViews */,
+				474EF010299F51B700111AAA /* Extentions */,
+				47859AB729C85C7F00E0F080 /* FTTemplatesStore.storyboard */,
+				475EF815299A017B004EEA7D /* templates.plist */,
+				475EF80A299A013D004EEA7D /* Assets.xcassets */,
+				47DB56D42A304E9600CFA886 /* Sleep_Tracker.jpg */,
+				475EF80F299A013D004EEA7D /* Info.plist */,
+			);
+			path = TempletesStore;
+			sourceTree = "<group>";
+		};
+		478599E029C321DA00E0F080 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				47F2627829A4C7EC00504F33 /* FTStoreLibraryViewController.swift */,
+				4744E47A2A2EE29B00A9795A /* FTStoreLibraryViewController+ContextMenu.swift */,
+				478599DE29C31F5D00E0F080 /* FTStoreLibraryViewModel.swift */,
+				478599DA29C2F31D00E0F080 /* FTStoreLibraryHandler.swift */,
+				478599DC29C2FBA500E0F080 /* FTStoreLibraryModel.swift */,
+				478599E129C331D000E0F080 /* FTStoreLibraryCollectionCell.swift */,
+				474406A229F90D9500B46401 /* FTStoreLibraryEmptyCollectionCell.swift */,
+				47D01DC729F657FA0034567F /* FTLibraryHeaderView.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		47859A8429C85ADF00E0F080 /* FTTemplatesStore */ = {
+			isa = PBXGroup;
+			children = (
+				47859A8529C85ADF00E0F080 /* FTTemplatesStore.h */,
+			);
+			path = FTTemplatesStore;
+			sourceTree = "<group>";
+		};
+		47CE07872A09FD1700E15028 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				47F39EB82A08A8EB00CB1599 /* FTStoreTemplatesViewController.swift */,
+				47F39EBB2A08D54E00CB1599 /* FTStoreTemplatesViewModel.swift */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		47F2626C29A4939300504F33 /* TemplatesStore */ = {
+			isa = PBXGroup;
+			children = (
+				475EF817299A022B004EEA7D /* FTStoreViewController.swift */,
+				474EF001299F517600111AAA /* FTStoreViewModel.swift */,
+				475EF819299A05E6004EEA7D /* FTStoreModel.swift */,
+				47F2629B29A5DAF400504F33 /* FTStoreSectionHandler.swift */,
+				47210BD329B895B800B0A3D6 /* FTStoreActionManager.swift */,
+				47F2627029A49A6700504F33 /* FTStoreHeader.swift */,
+				47F2627229A49C4A00504F33 /* FTStoreHeader.xib */,
+			);
+			path = TemplatesStore;
+			sourceTree = "<group>";
+		};
+		47F2626F29A4995000504F33 /* CategoryTemplates */ = {
+			isa = PBXGroup;
+			children = (
+				4793F1E8299B88D6006C139D /* FTCategoryTempaltesViewController.swift */,
+				47F2626D29A4940200504F33 /* FTCategoryTemplatesViewModel.swift */,
+			);
+			path = CategoryTemplates;
+			sourceTree = "<group>";
+		};
+		47F39EAF2A0518CC00CB1599 /* Banners */ = {
+			isa = PBXGroup;
+			children = (
+				47F39EB02A05190200CB1599 /* FTStoreBannerTableCell.swift */,
+				47F39EB12A05190200CB1599 /* FTStoreBannerTableCell.xib */,
+				47F39EB42A05192500CB1599 /* FTStoreBannerCollectionCell.swift */,
+				47F39EB52A05192500CB1599 /* FTStoreBannerCollectionCell.xib */,
+			);
+			path = Banners;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		47859A7E29C85ADF00E0F080 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47859A8629C85ADF00E0F080 /* FTTemplatesStore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		475EF7FD299A013C004EEA7D /* TempletesStore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 475EF812299A013D004EEA7D /* Build configuration list for PBXNativeTarget "TempletesStore" */;
+			buildPhases = (
+				475EF7FA299A013C004EEA7D /* Sources */,
+				475EF7FB299A013C004EEA7D /* Frameworks */,
+				475EF7FC299A013C004EEA7D /* Resources */,
+				474EF02B29A37BEC00111AAA /* SwiftLint */,
+				47859A8E29C85ADF00E0F080 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47859A8829C85ADF00E0F080 /* PBXTargetDependency */,
+			);
+			name = TempletesStore;
+			packageProductDependencies = (
+				47FC71432A39DB7700C87A22 /* ZipArchive */,
+			);
+			productName = TempletesStore;
+			productReference = 475EF7FE299A013C004EEA7D /* TempletesStore.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47859A8229C85ADF00E0F080 /* FTTemplatesStore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47859A8B29C85ADF00E0F080 /* Build configuration list for PBXNativeTarget "FTTemplatesStore" */;
+			buildPhases = (
+				47859A7E29C85ADF00E0F080 /* Headers */,
+				47859A7F29C85ADF00E0F080 /* Sources */,
+				47859A8029C85ADF00E0F080 /* Frameworks */,
+				47859A8129C85ADF00E0F080 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FTTemplatesStore;
+			packageProductDependencies = (
+				DDAD78F12A08C6EB001D8B21 /* SDWebImage */,
+				47FC71452A39DBE800C87A22 /* ZipArchive */,
+			);
+			productName = FTTemplatesStore;
+			productReference = 47859A8329C85ADF00E0F080 /* FTTemplatesStore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		475EF7F6299A013C004EEA7D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					475EF7FD299A013C004EEA7D = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					47859A8229C85ADF00E0F080 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = 475EF7F9299A013C004EEA7D /* Build configuration list for PBXProject "TempletesStore" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 475EF7F5299A013C004EEA7D;
+			packageReferences = (
+				DDAD78F02A08C6EB001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				47FC71422A39DB7700C87A22 /* XCRemoteSwiftPackageReference "ZipArchive" */,
+			);
+			productRefGroup = 475EF7FF299A013C004EEA7D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				475EF7FD299A013C004EEA7D /* TempletesStore */,
+				47859A8229C85ADF00E0F080 /* FTTemplatesStore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		475EF7FC299A013C004EEA7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47859A8129C85ADF00E0F080 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47859AB529C85C1D00E0F080 /* templates.plist in Resources */,
+				47859AA929C85BF600E0F080 /* FTStorePlannerCollectionCell.xib in Resources */,
+				47859A9C29C85BDF00E0F080 /* FTStoreHeader.xib in Resources */,
+				473C1F8229C86770003BD6BB /* FTTemplatesStore.storyboard in Resources */,
+				47859AAF29C85C0200E0F080 /* FTStoreJournalsCollectionCell.xib in Resources */,
+				47859AAE29C85BFB00E0F080 /* FTStoreCategoryTableCell.xib in Resources */,
+				47F39EB72A05192500CB1599 /* FTStoreBannerCollectionCell.xib in Resources */,
+				47859AAA29C85BF600E0F080 /* FTStorePlannerTableCell.xib in Resources */,
+				471B90FF29F0FC3000861A2B /* FTStoreStickersTableCell.xib in Resources */,
+				47859AB629C85C2C00E0F080 /* Assets.xcassets in Resources */,
+				47DB56D52A304E9600CFA886 /* Sleep_Tracker.jpg in Resources */,
+				47859AB229C85C0200E0F080 /* FTStoreJournalTableCell.xib in Resources */,
+				47F39EB32A05190200CB1599 /* FTStoreBannerTableCell.xib in Resources */,
+				471B910129F0FC3900861A2B /* FTStoreStickersCollectionCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		474EF02B29A37BEC00111AAA /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		475EF7FA299A013C004EEA7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				475EF806299A013C004EEA7D /* ViewController.swift in Sources */,
+				475EF802299A013C004EEA7D /* AppDelegate.swift in Sources */,
+				475EF804299A013C004EEA7D /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47859A7F29C85ADF00E0F080 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4744E4792A2DB18100A9795A /* Filemanager+Addition.swift in Sources */,
+				47E7C2942A2880AA00EDCB60 /* FTDairyDateSelectionPicker.swift in Sources */,
+				47F39EB22A05190200CB1599 /* FTStoreBannerTableCell.swift in Sources */,
+				4744E4762A28B8F900A9795A /* Date+Addition.swift in Sources */,
+				47859AA229C85BEB00E0F080 /* FTTemplatePreviewViewModel.swift in Sources */,
+				47859A9629C85BDF00E0F080 /* FTStoreSectionHandler.swift in Sources */,
+				477524FF2A6A461D00189A1C /* FTStoreCustomViewController+ContextMenu.swift in Sources */,
+				4783442E2A174AD60062E0C4 /* FTStoreContainerHandler.swift in Sources */,
+				47614FEE2A6FEB51009140BA /* UIAlertController+Additions.swift in Sources */,
+				471B90FE29F0FC2C00861A2B /* FTStoreStickersTableCell.swift in Sources */,
+				473C1F8929C96CD8003BD6BB /* FTCustomTemplateImportActions.swift in Sources */,
+				47859AB129C85C0200E0F080 /* FTStoreJournalTableCell.swift in Sources */,
+				474406AA29F92E6400B46401 /* FTStoreCustomTemplatesHandler.swift in Sources */,
+				478917F42A1C73E2003FCC96 /* FTStoreCustomPreviewViewController.swift in Sources */,
+				47859A9A29C85BDF00E0F080 /* FTStoreModel.swift in Sources */,
+				47859AA129C85BEB00E0F080 /* FTTemplatesPageActionManager.swift in Sources */,
+				47CE07A52A0B6FFC00E15028 /* FTStickersPreviewViewController.swift in Sources */,
+				471B910029F0FC3300861A2B /* FTStoreStickersCollectionCell.swift in Sources */,
+				47AEE3792A5D24CB00FA924A /* FTStoreCategoryView.swift in Sources */,
+				4744E47D2A2EE37000A9795A /* FTStoreTemplateContextPreview.swift in Sources */,
+				47859AB329C85C0A00E0F080 /* UICells+Additions.swift in Sources */,
+				47859A9229C85BD800E0F080 /* FTStoreLibraryViewModel.swift in Sources */,
+				473C1F9129C98581003BD6BB /* FTStoreCustomTemplateViewModel.swift in Sources */,
+				47859A8F29C85BCC00E0F080 /* FTStoreContainerViewController.swift in Sources */,
+				47F39EBA2A08A8F300CB1599 /* FTStoreTemplatesViewController.swift in Sources */,
+				4744E47B2A2EE29B00A9795A /* FTStoreLibraryViewController+ContextMenu.swift in Sources */,
+				472522C12A1F3F5E008FFC46 /* UIViewController+Additions.swift in Sources */,
+				47859A9429C85BD800E0F080 /* FTStoreLibraryHandler.swift in Sources */,
+				47859A9E29C85BE400E0F080 /* FTCategoryTemplatesViewModel.swift in Sources */,
+				4708C1922A4448FF001F78F6 /* FTStoreloadingIndicatorView.swift in Sources */,
+				47859A9729C85BDF00E0F080 /* FTStoreActionManager.swift in Sources */,
+				47859A9D29C85BE400E0F080 /* FTCategoryTempaltesViewController.swift in Sources */,
+				47859A9B29C85BDF00E0F080 /* FTStoreHeader.swift in Sources */,
+				47859AA329C85BEB00E0F080 /* FTTemplatePreviewViewController.swift in Sources */,
+				47859A9129C85BD800E0F080 /* FTStoreLibraryModel.swift in Sources */,
+				47F39EBD2A08D55100CB1599 /* FTStoreTemplatesViewModel.swift in Sources */,
+				47859AB029C85C0200E0F080 /* FTStoreJournalsCollectionCell.swift in Sources */,
+				47A4B3E92A2085F600D6B3C6 /* URL+Addition.swift in Sources */,
+				47859AA029C85BEB00E0F080 /* FTTemplatesPageViewController.swift in Sources */,
+				47859A9829C85BDF00E0F080 /* FTStoreViewController.swift in Sources */,
+				47859AAD29C85BFB00E0F080 /* FTStoreCategoryTableCell.swift in Sources */,
+				474406A429F90DBF00B46401 /* FTStoreLibraryEmptyCollectionCell.swift in Sources */,
+				47859A9F29C85BEB00E0F080 /* FTTemplateStyleCell.swift in Sources */,
+				47859AA529C85BF000E0F080 /* FTStoreService.swift in Sources */,
+				47859A9329C85BD800E0F080 /* FTStoreLibraryViewController.swift in Sources */,
+				47A4B3EB2A20889F00D6B3C6 /* FTStoreConstants.swift in Sources */,
+				47859A9529C85BD800E0F080 /* FTStoreLibraryCollectionCell.swift in Sources */,
+				47859AA829C85BF600E0F080 /* FTStorePlannerCollectionCell.swift in Sources */,
+				47859A9029C85BCF00E0F080 /* FTStoreCustomViewController.swift in Sources */,
+				47F39EB62A05192500CB1599 /* FTStoreBannerCollectionCell.swift in Sources */,
+				474406AD29F930AA00B46401 /* FTStoreCustomTemplatesModel.swift in Sources */,
+				47859A9929C85BDF00E0F080 /* FTStoreViewModel.swift in Sources */,
+				47859AB429C85C0A00E0F080 /* UINavigationController+Additions.swift in Sources */,
+				47859AA729C85BF600E0F080 /* FTStorePlannerTableCell.swift in Sources */,
+				47D01DCB29F658480034567F /* FTLibraryHeaderView.swift in Sources */,
+				474406A729F9118D00B46401 /* FTStoreCustomCollectionCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47859A8829C85ADF00E0F080 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47859A8229C85ADF00E0F080 /* FTTemplatesStore */;
+			targetProxy = 47859A8729C85ADF00E0F080 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4734D3ED29CDCAD20094DD67 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Beta;
+		};
+		4734D3EE29CDCAD20094DD67 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TempletesStore/TempletesStore.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TempletesStore/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.templetes-beta";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Beta;
+		};
+		4734D3EF29CDCAD20094DD67 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.templatesStore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Beta;
+		};
+		475EF810299A013D004EEA7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		475EF811299A013D004EEA7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		475EF813299A013D004EEA7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TempletesStore/TempletesStore.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TempletesStore/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.templetes-dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Debug;
+		};
+		475EF814299A013D004EEA7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TempletesStore/TempletesStore.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TempletesStore/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.templetes;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Release;
+		};
+		47859A8C29C85ADF00E0F080 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.templatesStore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		47859A8D29C85ADF00E0F080 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.templatesStore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		475EF7F9299A013C004EEA7D /* Build configuration list for PBXProject "TempletesStore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				475EF810299A013D004EEA7D /* Debug */,
+				4734D3ED29CDCAD20094DD67 /* Beta */,
+				475EF811299A013D004EEA7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		475EF812299A013D004EEA7D /* Build configuration list for PBXNativeTarget "TempletesStore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				475EF813299A013D004EEA7D /* Debug */,
+				4734D3EE29CDCAD20094DD67 /* Beta */,
+				475EF814299A013D004EEA7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47859A8B29C85ADF00E0F080 /* Build configuration list for PBXNativeTarget "FTTemplatesStore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47859A8C29C85ADF00E0F080 /* Debug */,
+				4734D3EF29CDCAD20094DD67 /* Beta */,
+				47859A8D29C85ADF00E0F080 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		47FC71422A39DB7700C87A22 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		DDAD78F02A08C6EB001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		47FC71432A39DB7700C87A22 /* ZipArchive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47FC71422A39DB7700C87A22 /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			productName = ZipArchive;
+		};
+		47FC71452A39DBE800C87A22 /* ZipArchive */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47FC71422A39DB7700C87A22 /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			productName = ZipArchive;
+		};
+		DDAD78F12A08C6EB001D8B21 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDAD78F02A08C6EB001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 475EF7F6299A013C004EEA7D /* Project object */;
+}

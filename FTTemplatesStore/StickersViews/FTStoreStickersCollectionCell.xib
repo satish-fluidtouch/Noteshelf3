@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreStickersCollectionCell" id="ZeK-fy-32F" customClass="FTStoreStickersCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="438" height="282"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7oq-qe-NUW">
+                <rect key="frame" x="0.0" y="0.0" width="438" height="282"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Banner_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="99e-TF-Ra8">
+                        <rect key="frame" x="-30" y="-20" width="498" height="314"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QP4-6P-A4X">
+                        <rect key="frame" x="0.0" y="0.0" width="438" height="254"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hk-ZM-YIc">
+                        <rect key="frame" x="0.0" y="264" width="438" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="5j3-fS-VXp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0hk-ZM-YIc" firstAttribute="leading" secondItem="7oq-qe-NUW" secondAttribute="leading" id="5aC-7Q-dFA"/>
+                    <constraint firstItem="QP4-6P-A4X" firstAttribute="leading" secondItem="7oq-qe-NUW" secondAttribute="leading" id="6kh-ok-byP"/>
+                    <constraint firstItem="0hk-ZM-YIc" firstAttribute="top" secondItem="QP4-6P-A4X" secondAttribute="bottom" constant="10" id="9nf-14-BeV"/>
+                    <constraint firstItem="99e-TF-Ra8" firstAttribute="leading" secondItem="7oq-qe-NUW" secondAttribute="leading" constant="-30" id="Mjf-Lx-Dh1"/>
+                    <constraint firstAttribute="trailing" secondItem="99e-TF-Ra8" secondAttribute="trailing" constant="-30" id="NlS-xM-G6S"/>
+                    <constraint firstAttribute="trailing" secondItem="0hk-ZM-YIc" secondAttribute="trailing" id="Xpd-Lc-gNb"/>
+                    <constraint firstItem="99e-TF-Ra8" firstAttribute="bottom" secondItem="QP4-6P-A4X" secondAttribute="bottom" constant="40" id="duS-sY-49n"/>
+                    <constraint firstAttribute="bottom" secondItem="0hk-ZM-YIc" secondAttribute="bottom" id="eV9-wn-l80"/>
+                    <constraint firstAttribute="trailing" secondItem="QP4-6P-A4X" secondAttribute="trailing" id="eVA-se-HkM"/>
+                    <constraint firstItem="99e-TF-Ra8" firstAttribute="top" secondItem="7oq-qe-NUW" secondAttribute="top" constant="-20" id="lgq-g3-Jfq"/>
+                    <constraint firstItem="QP4-6P-A4X" firstAttribute="top" secondItem="7oq-qe-NUW" secondAttribute="top" id="zgo-qQ-QnZ"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="438" height="282"/>
+            <connections>
+                <outlet property="shadowImageView" destination="99e-TF-Ra8" id="o7b-bw-SIn"/>
+                <outlet property="thumbnail" destination="QP4-6P-A4X" id="0oz-iK-02B"/>
+                <outlet property="titleLabel" destination="0hk-ZM-YIc" id="w1y-fk-VME"/>
+            </connections>
+            <point key="canvasLocation" x="33.587786259541986" y="-9.8591549295774659"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Banner_shadow" width="160" height="160"/>
+    </resources>
+</document>

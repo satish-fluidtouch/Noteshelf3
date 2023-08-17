@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Midnight</string>
+	<key>display_name_es</key>
+	<string>Medianoche</string>
+	<key>display_name_ja</key>
+	<string>真夜中</string>
+	<key>display_name_it</key>
+	<string>Mezzanotte</string>
+	<key>display_name_fr</key>
+	<string>Minuit</string>
+	<key>display_name_zh-Hans</key>
+	<string>午夜</string>
+	<key>display_name_zh-Hant</key>
+	<string>午夜</string>
+	<key>display_name_de</key>
+	<string>Mitternacht</string>
+	<key>display_name_ko</key>
+	<string>한밤중</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>dynamic_id</key>
+	<integer>1</integer>
+	<key>template_id</key>
+	<string>Digital_Diaries_Midnight</string>
+	<key>template_type</key>
+	<integer>6</integer>
+	<key>restrictsChangeTemplate</key>
+	<true/>
+</dict>
+</plist>

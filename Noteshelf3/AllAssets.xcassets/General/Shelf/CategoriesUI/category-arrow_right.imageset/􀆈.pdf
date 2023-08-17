@@ -1,0 +1,185 @@
+%PDF-1.7
+
+1 0 obj
+  << /Length 2 0 R >>
+stream
+1.126953 0 0.124512 0.079102 1.002441 0.636230 d1
+
+endstream
+endobj
+
+2 0 obj
+  50
+endobj
+
+3 0 obj
+  [ 1.126953 ]
+endobj
+
+4 0 obj
+  << /Length 5 0 R >>
+stream
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CIDSystemInfo
+<< /Registry (FigmaPDF)
+   /Ordering (FigmaPDF)
+   /Supplement 0
+>> def
+/CMapName /A-B-C def
+/CMapType 2 def
+1 begincodespacerange
+<00> <FF>
+endcodespacerange
+1 beginbfchar
+<00> <DBC0DD88>
+endbfchar
+endcmap
+CMapName currentdict /CMap defineresource pop
+end
+end
+endstream
+endobj
+
+5 0 obj
+  336
+endobj
+
+6 0 obj
+  << /Subtype /Type3
+     /CharProcs << /C0 1 0 R >>
+     /Encoding << /Type /Encoding
+                  /Differences [ 0 /C0 ]
+               >>
+     /Widths 3 0 R
+     /FontBBox [ 0.000000 0.000000 0.000000 0.000000 ]
+     /FontMatrix [ 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 ]
+     /Type /Font
+     /ToUnicode 4 0 R
+     /FirstChar 0
+     /LastChar 0
+     /Resources << >>
+  >>
+endobj
+
+7 0 obj
+  << /Font << /F1 6 0 R >> >>
+endobj
+
+8 0 obj
+  << /Length 9 0 R >>
+stream
+/DeviceRGB CS
+/DeviceRGB cs
+q
+1.000000 0.000000 -0.000000 1.000000 -1.867676 5.137695 cm
+1.000000 1.000000 1.000000 scn
+0.000000 -6.324219 m
+h
+8.452148 -5.137695 m
+8.752441 -5.137695 9.008789 -5.020508 9.243164 -4.778809 c
+14.750977 0.853516 l
+14.941406 1.043945 15.036621 1.270996 15.036621 1.541992 c
+15.036621 2.091309 14.597168 2.538086 14.047852 2.538086 c
+13.784180 2.538086 13.527832 2.420898 13.330078 2.223145 c
+8.459473 -2.786621 l
+3.574219 2.223145 l
+3.376465 2.420898 3.127441 2.538086 2.849121 2.538086 c
+2.307129 2.538086 1.867676 2.091309 1.867676 1.541992 c
+1.867676 1.270996 1.970215 1.043945 2.153320 0.853516 c
+7.661133 -4.786133 l
+7.902832 -5.020508 8.151855 -5.137695 8.452148 -5.137695 c
+h
+f
+n
+Q
+q
+1.000000 0.000000 -0.000000 1.000000 -1.867676 5.137695 cm
+BT
+15.000000 0.000000 0.000000 15.000000 0.000000 -6.324219 Tm
+/F1 1.000000 Tf
+[ (\000) ] TJ
+ET
+Q
+
+endstream
+endobj
+
+9 0 obj
+  877
+endobj
+
+10 0 obj
+  << /Annots []
+     /Type /Page
+     /MediaBox [ 0.000000 0.000000 13.168945 7.675781 ]
+     /Resources 7 0 R
+     /Contents 8 0 R
+     /Parent 11 0 R
+  >>
+endobj
+
+11 0 obj
+  << /Kids [ 10 0 R ]
+     /Count 1
+     /Type /Pages
+  >>
+endobj
+
+12 0 obj
+  << /Type /Catalog
+     /Pages 11 0 R
+  >>
+endobj
+
+xref
+0 13
+0000000000 65535 f
+0000000010 00000 n
+0000000116 00000 n
+0000000137 00000 n
+0000000168 00000 n
+0000000560 00000 n
+0000000582 00000 n
+0000000994 00000 n
+0000001040 00000 n
+0000001973 00000 n
+0000001995 00000 n
+0000002169 00000 n
+0000002245 00000 n
+trailer
+<< /ID [ (some) (id) ]
+   /Root 12 0 R
+   /Size 13
+>>
+startxref
+2306
+%%EOF10 0 obj
+<< /Annots [ ] /Type /Page /MediaBox [ 0 0 13.16894 7.675781 ] /Resources
+7 0 R /Parent 11 0 R /Rotate 270 /Contents 8 0 R >>
+endobj
+12 0 obj
+<< /Info 14 0 R /Pages 11 0 R /Type /Catalog >>
+endobj
+13 0 obj
+<< /Producer (macOS Version 11.6 \(Build 20G165\) Quartz PDFContext, AppendMode 1.1)
+/ModDate (D:20211109063951Z00'00') >>
+endobj
+14 0 obj
+13 0 R
+endobj
+xref
+0 1
+0000000000 65535 f 
+10 1
+0000002645 00000 n 
+12 3
+0000002787 00000 n 
+0000002851 00000 n 
+0000002990 00000 n 
+trailer
+<< /ID [<736F6D65><A0AD4DAC0985E1950AF12A667C3F8396> ] /Root 12 0 R /Size 15 /Prev 2306 >> 
+startxref
+3013
+%%EOF

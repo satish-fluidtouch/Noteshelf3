@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>ID</key>
+		<string>ReadOnlyEnabledTip</string>
+		<key>textMaxWidth</key>
+		<string>300</string>
+		<key>canExpire</key>
+		<false/>
+		<key>shouldTapToDismiss</key>
+		<false/>
+		<key>tipDirection</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>ID</key>
+		<string>PenSelectionTip</string>
+		<key>textMaxWidth</key>
+		<string>300</string>
+		<key>canExpire</key>
+		<true/>
+		<key>shouldTapToDismiss</key>
+		<true/>
+		<key>tipDirection</key>
+		<integer>0</integer>
+	</dict>
+	<dict>
+		<key>ID</key>
+		<string>SwipeForNextPageTip</string>
+		<key>textMaxWidth</key>
+		<string>300</string>
+		<key>canExpire</key>
+		<true/>
+		<key>shouldTapToDismiss</key>
+		<false/>
+		<key>tipDirection</key>
+		<integer>3</integer>
+	</dict>
+</array>
+</plist>

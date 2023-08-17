@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>getInspitedList</key>
+	<array>
+		<dict>
+			<key>imageName</key>
+			<string>BulletJournal_thumbnail</string>
+			<key>pdfName</key>
+			<string>BulletJournal_Preview</string>
+			<key>titleLocalizationKey</key>
+			<string>getInspired.bulletJournal</string>
+		</dict>
+		<dict>
+			<key>imageName</key>
+			<string>Student_thumbnail</string>
+			<key>pdfName</key>
+			<string>Student_Preview</string>
+			<key>titleLocalizationKey</key>
+			<string>getInspired.student</string>
+		</dict>
+		<dict>
+			<key>imageName</key>
+			<string>Business_thumbnail</string>
+			<key>pdfName</key>
+			<string>Business_Preview</string>
+			<key>titleLocalizationKey</key>
+			<string>getInspired.business</string>
+		</dict>
+	</array>
+</dict>
+</plist>

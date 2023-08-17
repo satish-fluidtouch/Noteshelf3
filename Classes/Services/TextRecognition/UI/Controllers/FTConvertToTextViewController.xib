@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTConvertToTextViewController" customModule="NS3_Beta" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="l7x-lc-Jqh" id="eze-75-Lqn"/>
+                <outlet property="convertToTextButton" destination="Ojw-TD-YYE" id="q82-wa-9Go"/>
+                <outlet property="copyButton" destination="qAh-n4-N3u" id="P2s-kA-174"/>
+                <outlet property="scrollView" destination="j8S-ho-Nvk" id="dJL-17-X93"/>
+                <outlet property="tableView" destination="Psh-Nf-hlt" id="hX4-Fq-EP9"/>
+                <outlet property="textView" destination="1WE-yV-8YR" id="OgH-jv-Sd4"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8S-ho-Nvk">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neT-MH-NLK" userLabel="contentView">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="886"/>
+                            <subviews>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1WE-yV-8YR">
+                                    <rect key="frame" x="16" y="24" width="382" height="277"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="277" id="krG-5P-9PR"/>
+                                    </constraints>
+                                    <color key="textColor" systemColor="labelColor"/>
+                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="07g-JE-PhG"/>
+                                    </connections>
+                                </textView>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="l7x-lc-Jqh">
+                                    <rect key="frame" x="188.5" y="144" width="37" height="37"/>
+                                    <color key="color" name="titleColor"/>
+                                </activityIndicatorView>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="insetGrouped" rowHeight="44" estimatedRowHeight="44" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Psh-Nf-hlt">
+                                    <rect key="frame" x="0.0" y="317" width="414" height="132"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="132" id="19M-Nf-Jme"/>
+                                    </constraints>
+                                    <color key="separatorColor" name="black10"/>
+                                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="zbA-5R-xJr"/>
+                                        <outlet property="delegate" destination="-1" id="b8X-NR-FH2"/>
+                                    </connections>
+                                </tableView>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gOw-Bf-NMf">
+                                    <rect key="frame" x="16" y="808" width="382" height="44"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qAh-n4-N3u">
+                                            <rect key="frame" x="0.0" y="0.0" width="183" height="44"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="cD4-EV-wzu"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                            <color key="tintColor" name="accentNew"/>
+                                            <state key="normal" title="Copy to Clipboard">
+                                                <color key="titleColor" name="accent"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="copyToClipBoardClicked:" destination="-1" eventType="touchUpInside" id="7gi-rk-HTA"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ojw-TD-YYE">
+                                            <rect key="frame" x="199" y="0.0" width="183" height="44"/>
+                                            <color key="backgroundColor" name="accentNew"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                            <state key="normal" title="Convert to Textbox">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <real key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="replaceWithTextBoxClicked:" destination="-1" eventType="touchUpInside" id="wfR-KE-OCI"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="CLN-dp-teB"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Psh-Nf-hlt" secondAttribute="trailing" id="52C-XR-gcH"/>
+                                <constraint firstItem="l7x-lc-Jqh" firstAttribute="centerY" secondItem="1WE-yV-8YR" secondAttribute="centerY" id="OdL-3j-vNw"/>
+                                <constraint firstItem="gOw-Bf-NMf" firstAttribute="leading" secondItem="neT-MH-NLK" secondAttribute="leading" constant="16" id="X0Q-2q-Q8O"/>
+                                <constraint firstAttribute="trailing" secondItem="gOw-Bf-NMf" secondAttribute="trailing" constant="16" id="YY5-P2-pfH"/>
+                                <constraint firstItem="1WE-yV-8YR" firstAttribute="leading" secondItem="neT-MH-NLK" secondAttribute="leading" constant="16" id="aTt-cF-Eca"/>
+                                <constraint firstItem="Psh-Nf-hlt" firstAttribute="top" secondItem="1WE-yV-8YR" secondAttribute="bottom" constant="16" id="lMK-pS-Iq9"/>
+                                <constraint firstItem="1WE-yV-8YR" firstAttribute="top" secondItem="neT-MH-NLK" secondAttribute="top" constant="24" id="opX-8T-0hN"/>
+                                <constraint firstAttribute="trailing" secondItem="1WE-yV-8YR" secondAttribute="trailing" constant="16" id="qWs-i5-TJJ"/>
+                                <constraint firstItem="l7x-lc-Jqh" firstAttribute="centerX" secondItem="1WE-yV-8YR" secondAttribute="centerX" id="qZ7-co-Lw8"/>
+                                <constraint firstItem="Psh-Nf-hlt" firstAttribute="leading" secondItem="neT-MH-NLK" secondAttribute="leading" id="yiJ-9m-eih"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="neT-MH-NLK" firstAttribute="leading" secondItem="j8S-ho-Nvk" secondAttribute="leading" id="KcG-5J-lFz"/>
+                        <constraint firstAttribute="bottom" secondItem="neT-MH-NLK" secondAttribute="bottom" id="Mkb-sl-z0s"/>
+                        <constraint firstAttribute="trailing" secondItem="neT-MH-NLK" secondAttribute="trailing" id="Nd2-9u-t51"/>
+                        <constraint firstItem="neT-MH-NLK" firstAttribute="top" secondItem="j8S-ho-Nvk" secondAttribute="top" id="r66-Nn-yBe"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="Vvg-oc-Khu"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="PRi-J2-ev7"/>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="3wL-g7-JyC"/>
+            <color key="backgroundColor" name="formSheetBgColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="j8S-ho-Nvk" secondAttribute="bottom" id="4jb-f4-tEx"/>
+                <constraint firstItem="3wL-g7-JyC" firstAttribute="bottom" secondItem="gOw-Bf-NMf" secondAttribute="bottom" constant="34" id="I93-Wn-YZi"/>
+                <constraint firstItem="j8S-ho-Nvk" firstAttribute="trailing" secondItem="3wL-g7-JyC" secondAttribute="trailing" id="JJl-hG-lEZ"/>
+                <constraint firstItem="j8S-ho-Nvk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TKt-4e-ulN"/>
+                <constraint firstItem="3wL-g7-JyC" firstAttribute="leading" secondItem="j8S-ho-Nvk" secondAttribute="leading" id="UiQ-rl-rt0"/>
+                <constraint firstItem="neT-MH-NLK" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="i0n-td-WDW"/>
+                <constraint firstItem="neT-MH-NLK" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" priority="250" id="zVH-4a-tVX"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="137.109375" y="146.26647144948754"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="accentNew">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black10">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="formSheetBgColor">
+            <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleColor">
+            <color red="0.2199999988079071" green="0.2199999988079071" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PenSize" id="gTV-IL-0wX" userLabel="FTPenSizeCollectionViewCell" customClass="FTPenSizeCollectionViewCell" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="34" height="34"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DynamicSize/placeholderDot" translatesAutoresizingMaskIntoConstraints="NO" id="HhS-jE-NdH" userLabel="sizeImageView">
+                        <rect key="frame" x="7" y="7" width="20" height="20"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="qj7-OF-kch" userLabel="constraintSizeWidth"/>
+                            <constraint firstAttribute="width" secondItem="HhS-jE-NdH" secondAttribute="height" multiplier="1:1" id="yGC-H2-HzP"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="HhS-jE-NdH" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="ZmD-7E-VXe"/>
+                <constraint firstItem="HhS-jE-NdH" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="odS-H7-7ie"/>
+            </constraints>
+            <connections>
+                <outlet property="sizeImageView" destination="HhS-jE-NdH" id="6AG-hZ-75p"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="155"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="DynamicSize/placeholderDot" width="3" height="3"/>
+    </resources>
+</document>

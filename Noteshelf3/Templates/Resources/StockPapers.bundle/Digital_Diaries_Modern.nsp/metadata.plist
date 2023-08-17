@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Modern</string>
+	<key>line_height</key>
+	<integer>35</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>display_name_ja</key>
+	<string>モダン</string>
+	<key>display_name_it</key>
+	<string>Moderno</string>
+	<key>display_name_es</key>
+	<string>Moderno</string>
+	<key>display_name_de</key>
+	<string>Modern</string>
+	<key>display_name_zh-Hans</key>
+	<string>现代</string>
+	<key>display_name_zh-Hant</key>
+	<string>現代</string>
+	<key>display_name_fr</key>
+	<string>Moderne</string>
+	<key>display_name_ko</key>
+	<string>현대</string>
+	<key>dynamic_id</key>
+	<integer>1</integer>
+	<key>template_id</key>
+	<string>Digital_Diaries_Modern</string>
+	<key>template_type</key>
+	<integer>4</integer>
+	<key>restrictsChangeTemplate</key>
+	<true/>
+</dict>
+</plist>

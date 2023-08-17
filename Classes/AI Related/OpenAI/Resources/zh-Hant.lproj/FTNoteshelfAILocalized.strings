@@ -1,0 +1,48 @@
+/* 
+  FTNoteshelfAILocalized.strings
+  Sample AI
+
+  Created by Amar Udupa on 31/07/23.
+  
+*/
+"noteshelf.ai.generateNotes" = "生成筆記"; //generate_notes
+"noteshelf.ai.generateNotesOn" = "生成筆記"; //generate_notes_on
+"noteshelf.ai.summarize" = "总结"; //summarize
+"noteshelf.ai.explain" = "解釋"; //explain
+"noteshelf.ai.translate" = "翻譯"; //translate
+
+"noteshelf.ai.sendFeedback" = "發送反饋"; //send_feedback
+"noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
+
+"noteshelf.ai.languagePlaceholder" = "輸入任意語言（例如：\"葡萄牙語\"）"; //ai_assistant_enter_language
+"noteshelf.ai.askAnything" = "請問任何問題..."; //ai_assistant
+"noteshelf.ai.enterTopic" = "輸入主題"; //enter_the_topic
+"noteshelf.ai.provideContent" = "請提供一個主題來創建筆記"; //please_provide_a_topic_to_create_notes
+
+"noteshelf.ai.commandSummarize" = ".用50到200字概括"; //summarize_command
+"noteshelf.ai.commandExplain" = ".用簡單的話解釋"; //explain_command
+"noteshelf.ai.commandKeyPoints" = ".給關鍵要點"; //generates_notes_command
+"noteshelf.ai.commandTranslate" = "翻譯為 %@"; //translate_command
+
+"noteshelf.ai.actionCopyToClipboard" = "複製到剪貼板"; //copy_to_clipboard
+"noteshelf.ai.actionAddAsText" = "添加為文字"; //add_to_page
+"noteshelf.ai.actionMore" = "更多..."; //more_text
+"noteshelf.ai.actionAddAsTextNewPage" = "新增為文字至新頁面"; //add_to_new_Page
+"noteshelf.ai.actionRegenerateResponse" = "重新生成回應"; //regenerate_response
+"noteshelf.ai.actionAddHandwriting" = "加入手寫";
+"noteshelf.ai.actionAddHandwritingNewPage" = "新增手寫至新頁";
+"noteshelf.ai.actionAddToPage" = "添加到新頁面"; //add_to_page
+"noteshelf.ai.actionAddToNewPage" = "添加到新頁面"; //add_to_new_Page
+
+"noteshelf.ai.tokenCompleteTitle" = "謝謝您嘗試使用Noteshelf AI"; //thank_you_msg
+"noteshelf.ai.tokenCompleteMessage" = "您的Noteshelf AI試用已結束。在我們準備公開發布之前，我們很樂意聽取您對於如何改進這個功能的想法"; //noteshelf_beta_msg
+
+"noteshelf.ai.translateToEnglish" = "翻譯成英語";
+"noteshelf.ai.translateToGerman" = "翻譯成德語";
+"noteshelf.ai.translateToSpanish" = "翻譯成西班牙語";
+"noteshelf.ai.translateToFrench" = "翻譯成法語";
+"noteshelf.ai.translateToItalian" = "翻譯成意大利語";
+"noteshelf.ai.translateToJapanese" = "翻譯成日語";
+"noteshelf.ai.translateToKorean" = "翻譯成韓語";
+"noteshelf.ai.translateToChineseSimplified" = "翻譯成繁體中文";
+"noteshelf.ai.translateToChineseTraditional" = "翻譯成繁體中文";

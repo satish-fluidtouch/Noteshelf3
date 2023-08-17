@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Watch</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>annotationInfo</key>
+	<dict>
+		<key>titleAnnotation</key>
+		<dict>
+			<key>boundingRect</key>
+			<string>{{35,38},{500,90}}</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

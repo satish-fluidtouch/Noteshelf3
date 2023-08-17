@@ -1,0 +1,21 @@
+/* 
+  WhatsNewLocalizable.strings
+  Noteshelf
+
+  Created by Amar on 05/08/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+//What's New
+"WhatsNewStartTitle" = "새로운 소식";
+"SeeWhatsNew" = "새로운 소식 보기";
+"ReviewApp" = "리뷰하기";
+"ShowMeTomorrow" = "내일 보기";
+"SKIP" = "건너뛰기";
+"NEXTALLCAPS" = "다음";
+
+"JoinUsTitle" = "우리를 따르라";
+"JoinUsDescription" = "우리는 팁, 요령을 게시하고 전 세계 Noteshelf 에서 가져온 영감을주는 메모를 제공합니다.";
+"MayBeLater" = "나중에";
+"FollowUs" = "우리를 따르라";
+"WhatsNewLearnMore" = "더 알아보기";

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Checked</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>width_834_1112</key>
+	<integer>834</integer>
+	<key>width_1024_1366</key>
+	<integer>1024</integer>
+	<key>width_834_1194</key>
+	<integer>834</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>height_834_1112</key>
+	<integer>1048</integer>
+	<key>height_1024_1366</key>
+	<integer>1302</integer>
+	<key>height_834_1194</key>
+	<integer>1130</integer>
+	<key>display_name_ja</key>
+	<string>マス目入り</string>
+	<key>display_name_it</key>
+	<string>A quadretti</string>
+	<key>display_name_es</key>
+	<string>Cuadriculado</string>
+	<key>display_name_de</key>
+	<string>Kariert</string>
+	<key>display_name_zh-Hans</key>
+	<string>带格子的</string>
+	<key>display_name_zh-Hant</key>
+	<string>網格</string>
+	<key>display_name_fr</key>
+	<string>Quadrillé</string>
+	<key>display_name_ko</key>
+	<string>바둑판 무늬의</string>
+	<key>dynamic_id</key>
+	<integer>2</integer>
+	<key>template_type</key>
+	<integer>5</integer>
+	<key>dynamic_template_info</key>
+	<dict>
+		<key>width</key>
+		<integer>0</integer>
+		<key>height</key>
+		<integer>0</integer>
+		<key>supporting_device_type</key>
+		<integer>1</integer>
+		<key>leftMargin</key>
+		<integer>0</integer>
+		<key>topMargin</key>
+		<integer>0</integer>
+		<key>rightMargin</key>
+		<integer>0</integer>
+		<key>bottomMargin</key>
+		<integer>45</integer>
+		<key>horizontalSpacing</key>
+		<integer>33</integer>
+		<key>verticalSpacing</key>
+		<integer>33</integer>
+		<key>bgColor</key>
+		<string>#F7F7F2-1.0</string>
+		<key>horizontalLineColor</key>
+		<string>#000000-0.15</string>
+		<key>verticalLineColor</key>
+		<string>#000000-0.15</string>
+		<key>themeClassName</key>
+		<string>FTCheckedTemplateFormat</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,48 @@
+/* 
+  FTNoteshelfAILocalized.strings
+  Sample AI
+
+  Created by Amar Udupa on 31/07/23.
+  
+*/
+"noteshelf.ai.generateNotes" = "Notizen generieren"; //generate_notes
+"noteshelf.ai.generateNotesOn" = "Notizen generieren zu"; //generate_notes_on
+"noteshelf.ai.summarize" = "Zusammenfassen"; //summarize
+"noteshelf.ai.explain" = "Erklären"; //explain
+"noteshelf.ai.translate" = "Übersetzen"; //translate
+
+"noteshelf.ai.sendFeedback" = "Feedback senden"; //send_feedback
+"noteshelf.ai.noteshelfAI" = "Noteshelf-AI"; //about_noteshelf_ai
+
+"noteshelf.ai.languagePlaceholder" = "Geben Sie eine beliebige Sprache ein (z.B. \"Portugiesisch\")"; //ai_assistant_enter_language
+"noteshelf.ai.askAnything" = "Frag alles..."; //ai_assistant
+"noteshelf.ai.enterTopic" = "Geben Sie das Thema ein"; //enter_the_topic
+"noteshelf.ai.provideContent" = "Bitte geben Sie ein Thema an, um Notizen zu erstellen"; //please_provide_a_topic_to_create_notes
+
+"noteshelf.ai.commandSummarize" = ".Fassen Sie es in 50 bis 200 Wörtern zusammen"; //summarize_command
+"noteshelf.ai.commandExplain" = ".Erkläre es in einfachen Worten"; //explain_command
+"noteshelf.ai.commandKeyPoints" = ".Geben Sie die Hauptpunkte"; //generates_notes_command
+"noteshelf.ai.commandTranslate" = "Ins %@ übersetzen "; //translate_command
+
+"noteshelf.ai.actionCopyToClipboard" = "In Zwischenablage kopieren"; //copy_to_clipboard
+"noteshelf.ai.actionAddAsText" = "Als Text hinzufügen"; //add_to_page
+"noteshelf.ai.actionMore" = "Mehr..."; //more_text
+"noteshelf.ai.actionAddAsTextNewPage" = "Als Text zu neuer Seite hinzufügen"; //add_to_new_Page
+"noteshelf.ai.actionRegenerateResponse" = "Antwort neu generieren"; //regenerate_response
+"noteshelf.ai.actionAddHandwriting" = "Als Handschrift hinzufügen";
+"noteshelf.ai.actionAddHandwritingNewPage" = "Hinzufügen als Handschrift auf neue Seite'";
+"noteshelf.ai.actionAddToPage" = "Zur Seite hinzufügen"; //add_to_page
+"noteshelf.ai.actionAddToNewPage" = "Zu neuer Seite hinzufügen"; //add_to_new_Page
+
+"noteshelf.ai.tokenCompleteTitle" = "Vielen Dank, dass Sie Noteshelf AI ausprobiert haben"; //thank_you_msg
+"noteshelf.ai.tokenCompleteMessage" = "Ihre Noteshelf AI-Testphase ist abgelaufen. Während wir an der Veröffentlichung arbeiten, würden wir gerne Ihre Meinung dazu hören, wie wir diese Funktion verbessern können."; //noteshelf_beta_msg
+
+"noteshelf.ai.translateToEnglish" = "Ins Englische übersetzen";
+"noteshelf.ai.translateToGerman" = "Ins Deutsche übersetzen";
+"noteshelf.ai.translateToSpanish" = "Ins Spanische übersetzen";
+"noteshelf.ai.translateToFrench" = "Ins Französische übersetzen";
+"noteshelf.ai.translateToItalian" = "Ins Italienische übersetzen";
+"noteshelf.ai.translateToJapanese" = "Ins Japanische übersetzen";
+"noteshelf.ai.translateToKorean" = "Ins Koreanische übersetzen";
+"noteshelf.ai.translateToChineseSimplified" = "Ins vereinfachte Chinesisch übersetzen";
+"noteshelf.ai.translateToChineseTraditional" = "Ins traditionelle Chinesisch übersetzen";

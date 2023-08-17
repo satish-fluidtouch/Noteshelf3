@@ -1,0 +1,24 @@
+//
+// Prefix header for all source files of the 'Noteshelf' target in the 'Noteshelf' project
+//
+
+#define USE_TEST_COLOR_FOR_STROKE 0 //Make sure the file Drawing.vsh is also updated.
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+	#import <CoreData/CoreData.h>
+    #import "FTLogger.h"
+    #import "FTEventsTracker.h"
+    #import "Constants.h"
+    #import "FTDefaults.h"
+    #import "FTUtils.h"
+    #import "NSStringAdditions.h"
+    
+#if !TARGET_OS_MACCATALYST
+    #import <EvernoteSDK/EvernoteSDK.h>
+#endif
+    #import <FirebaseCrashlytics/FirebaseCrashlytics.h>
+    #import "FTDiagonosisHeader.h"
+    #import "FTStrokeConstants.h"
+#endif

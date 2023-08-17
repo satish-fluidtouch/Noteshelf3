@@ -1,0 +1,48 @@
+/* 
+  FTNoteshelfAILocalized.strings
+  Sample AI
+
+  Created by Amar Udupa on 31/07/23.
+  
+*/
+"noteshelf.ai.generateNotes" = "ノートを生成する"; //generate_notes
+"noteshelf.ai.generateNotesOn" = ".ノートを生成する"; //generate_notes_on
+"noteshelf.ai.summarize" = "要約する"; //summarize
+"noteshelf.ai.explain" = "説明する"; //explain
+"noteshelf.ai.translate" = "翻訳する"; //translate
+
+"noteshelf.ai.sendFeedback" = "フィードバックを送信する"; //send_feedback
+"noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
+
+"noteshelf.ai.languagePlaceholder" = "任意の言語を入力してください（例：\"ポルトガル語\"）"; //ai_assistant_enter_language
+"noteshelf.ai.askAnything" = "何でも質問してください..."; //ai_assistant
+"noteshelf.ai.enterTopic" = "トピックを入力してください"; //enter_the_topic
+"noteshelf.ai.provideContent" = "ノートを作成するためのトピックを提供してください"; //please_provide_a_topic_to_create_notes
+
+"noteshelf.ai.commandSummarize" = ".50から200語で要約してください"; //summarize_command
+"noteshelf.ai.commandExplain" = ".簡単な言葉で説明してください"; //explain_command
+"noteshelf.ai.commandKeyPoints" = ".キーポイントを示す"; //generates_notes_command
+"noteshelf.ai.commandTranslate" = "%@ に翻訳する"; //translate_command
+
+"noteshelf.ai.actionCopyToClipboard" = "クリップボードにコピーする"; //copy_to_clipboard
+"noteshelf.ai.actionAddAsText" = "テキストとして追加"; //add_to_page
+"noteshelf.ai.actionMore" = "もっと見る..."; //more_text
+"noteshelf.ai.actionAddAsTextNewPage" = "新しいページにテキストとして追加"; //add_to_new_Page
+"noteshelf.ai.actionRegenerateResponse" = "応答を再生成する"; //regenerate_response
+"noteshelf.ai.actionAddHandwriting" = "手書きで追加";
+"noteshelf.ai.actionAddHandwritingNewPage" = "新しいページに手書きで追加";
+"noteshelf.ai.actionAddToPage" = "ページに追加する"; //add_to_page
+"noteshelf.ai.actionAddToNewPage" = "新しいページに追加する"; //add_to_new_Page
+
+"noteshelf.ai.tokenCompleteTitle" = "Noteshelf AI をお試しいただきありがとうございます"; //thank_you_msg
+"noteshelf.ai.tokenCompleteMessage" = "Noteshelf AIのトライアルは終了しました。公開リリースに取り組んでいる間に、この機能の改善に関するご意見をお聞かせいただければ幸いです."; //noteshelf_beta_msg
+
+"noteshelf.ai.translateToEnglish" = "英語に翻訳する";
+"noteshelf.ai.translateToGerman" = "ドイツ語に翻訳する";
+"noteshelf.ai.translateToSpanish" = "スペイン語に翻訳する";
+"noteshelf.ai.translateToFrench" = "フランス語に翻訳する";
+"noteshelf.ai.translateToItalian" = "イタリア語に翻訳する";
+"noteshelf.ai.translateToJapanese" = "日本語に翻訳する";
+"noteshelf.ai.translateToKorean" = "韓国語に翻訳する";
+"noteshelf.ai.translateToChineseSimplified" = "簡体字中国語に翻訳する";
+"noteshelf.ai.translateToChineseTraditional" = "繁体字中国語に翻訳する";

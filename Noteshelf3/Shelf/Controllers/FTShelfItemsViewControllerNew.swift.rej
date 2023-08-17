@@ -1,0 +1,28 @@
+diff a/Noteshelf3/Shelf/Controllers/FTShelfItemsViewControllerNew.swift b/Noteshelf3/Shelf/Controllers/FTShelfItemsViewControllerNew.swift	(rejected hunks)
+@@ -70,15 +70,20 @@ private extension FTShelfItemsViewControllerNew {
+         }, navigateToTemplates: {
+             self.navigateToTemplatesScreen()
+         })
+-        let controller = FTCreateNotebookController(rootView: newNotebookView)
+-        let navController = UINavigationController(rootViewController: controller)
+-        navController.modalPresentationStyle = .pageSheet
+-        navController.isModalInPresentation = true
+-        self.present(navController, animated: true)
++//        let controller = FTCreateNotebookController(rootView: newNotebookView)
++//        let navController = UINavigationController(rootViewController: controller)
++//        navController.modalPresentationStyle = .pageSheet
++//        navController.isModalInPresentation = true
++//        self.present(navController, animated: true)
++        
++        let covers = FTCoversHomeView()
++        let controller = FTChooseCoverViewController(rootView: covers)
++        controller.modalPresentationStyle = .overFullScreen
++        navigationController?.present(controller, animated: true)
+     }
+ 
+     func showCoverPicker() {
+-        let covers = FTCoverSelectionView(viewModel: FTChooseCoversViewModel())
++        let covers = FTCoversHomeView()
+         let controller = FTChooseCoverViewController(rootView: covers)
+         controller.modalPresentationStyle = .overFullScreen
+         navigationController?.present(controller, animated: true)

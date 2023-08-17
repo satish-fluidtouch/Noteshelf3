@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9ZK-i7-ngC">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Zoom Overlay View Controller-->
+        <scene sceneID="c79-1p-1iC">
+            <objects>
+                <viewController storyboardIdentifier="FTZoomOverlayViewController" id="9ZK-i7-ngC" customClass="FTZoomOverlayViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aLj-NM-wqy" customClass="FTZoomOverlayView" customModule="NS3_Beta" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NA7-Vf-ylj">
+                                <rect key="frame" x="0.0" y="47" width="390" height="797"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Uu6-xq-nYj">
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="797"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfa-6e-DDl" userLabel="Toolbar Container View">
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="aPu-ce-PZF"/>
+                                            </constraints>
+                                            <connections>
+                                                <segue destination="wxc-SN-I5W" kind="embed" identifier="EmbedZoomPanelVC" id="fqh-pu-k66"/>
+                                            </connections>
+                                        </containerView>
+                                        <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klM-h9-71l" userLabel="Content Holder View">
+                                            <rect key="frame" x="0.0" y="62" width="390" height="230"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="230" id="ejz-kz-Xcb"/>
+                                            </constraints>
+                                            <connections>
+                                                <segue destination="Rh6-cg-HXL" kind="embed" identifier="EmbedZoomContentVC" id="qnY-KP-htB"/>
+                                            </connections>
+                                        </containerView>
+                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bj4-Zu-Kmb" userLabel="Palm View">
+                                            <rect key="frame" x="0.0" y="292" width="390" height="505"/>
+                                            <subviews>
+                                                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDt-cl-nHn" userLabel="Line View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="390" height="1"/>
+                                                    <color key="backgroundColor" name="toolColorInactive"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="KnZ-P6-G42"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="tDt-cl-nHn" firstAttribute="top" secondItem="bj4-Zu-Kmb" secondAttribute="top" id="20q-co-xai"/>
+                                                <constraint firstItem="tDt-cl-nHn" firstAttribute="width" secondItem="bj4-Zu-Kmb" secondAttribute="width" id="HlW-28-hys"/>
+                                                <constraint firstItem="tDt-cl-nHn" firstAttribute="centerX" secondItem="bj4-Zu-Kmb" secondAttribute="centerX" id="U3x-kO-dM1"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="bj4-Zu-Kmb" firstAttribute="width" secondItem="Uu6-xq-nYj" secondAttribute="width" id="9wa-a9-FHI"/>
+                                        <constraint firstItem="bj4-Zu-Kmb" firstAttribute="centerX" secondItem="Uu6-xq-nYj" secondAttribute="centerX" id="B8t-zS-Qvh"/>
+                                        <constraint firstItem="klM-h9-71l" firstAttribute="centerX" secondItem="Uu6-xq-nYj" secondAttribute="centerX" id="gU7-Lz-Ra5"/>
+                                        <constraint firstItem="klM-h9-71l" firstAttribute="top" secondItem="kfa-6e-DDl" secondAttribute="bottom" constant="6" id="hJF-MH-mxg"/>
+                                        <constraint firstAttribute="bottom" secondItem="bj4-Zu-Kmb" secondAttribute="bottom" id="ivF-Rw-VdC"/>
+                                        <constraint firstItem="kfa-6e-DDl" firstAttribute="centerX" secondItem="Uu6-xq-nYj" secondAttribute="centerX" id="lha-og-Fxk"/>
+                                        <constraint firstItem="kfa-6e-DDl" firstAttribute="width" secondItem="Uu6-xq-nYj" secondAttribute="width" id="qR2-1O-2lP"/>
+                                        <constraint firstItem="klM-h9-71l" firstAttribute="width" secondItem="Uu6-xq-nYj" secondAttribute="width" id="s7H-fz-vVm"/>
+                                        <constraint firstItem="kfa-6e-DDl" firstAttribute="top" secondItem="Uu6-xq-nYj" secondAttribute="top" id="vlY-yK-u7I"/>
+                                        <constraint firstItem="klM-h9-71l" firstAttribute="bottom" secondItem="bj4-Zu-Kmb" secondAttribute="top" id="xxv-KN-2aP"/>
+                                    </constraints>
+                                </view>
+                                <color key="backgroundColor" systemColor="systemFillColor"/>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ndf-eG-hah"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NA7-Vf-ylj" firstAttribute="width" secondItem="aLj-NM-wqy" secondAttribute="width" id="5nz-iI-xXT"/>
+                            <constraint firstItem="NA7-Vf-ylj" firstAttribute="centerX" secondItem="Ndf-eG-hah" secondAttribute="centerX" id="Ald-Ch-3yh"/>
+                            <constraint firstAttribute="bottom" secondItem="NA7-Vf-ylj" secondAttribute="bottom" id="CvU-qh-aBP"/>
+                            <constraint firstItem="NA7-Vf-ylj" firstAttribute="top" secondItem="Ndf-eG-hah" secondAttribute="top" id="KoY-Ye-YTP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="contentHolderView" destination="klM-h9-71l" id="qJH-z0-ysc"/>
+                        <outlet property="contentViewHeightConstraint" destination="ejz-kz-Xcb" id="Ziq-cl-MqH"/>
+                        <outlet property="palmRestView" destination="bj4-Zu-Kmb" id="Vn3-uJ-Jp9"/>
+                        <outlet property="toolbarHolderView" destination="kfa-6e-DDl" id="10M-hL-Jok"/>
+                        <outlet property="visualEffectView" destination="NA7-Vf-ylj" id="RpZ-Fl-Iv2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iww-9T-xHI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="130"/>
+        </scene>
+        <!--Zoom Panel View Controller-->
+        <scene sceneID="VHH-9j-UhU">
+            <objects>
+                <viewController storyboardIdentifier="FTZoomPanelViewController" id="wxc-SN-I5W" customClass="FTZoomPanelViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qdg-NV-BXU">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="65"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow_top" translatesAutoresizingMaskIntoConstraints="NO" id="27E-CM-512" userLabel="Shadow Top">
+                                <rect key="frame" x="0.0" y="-20" width="390" height="20"/>
+                                <rect key="contentStretch" x="0.34999999999999998" y="0.0" width="0.29999999999999999" height="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Qd4-uf-LwW"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r1l-dF-Eoy" userLabel="GrabberContainer">
+                                <rect key="frame" x="0.0" y="-8" width="390" height="30"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eHF-yD-g87" userLabel="Grabber">
+                                        <rect key="frame" x="181" y="13" width="28" height="5"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="5" id="U9f-EE-OCU"/>
+                                            <constraint firstAttribute="width" constant="28" id="rbg-rD-rQa"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="eHF-yD-g87" secondAttribute="bottom" constant="12" id="BGK-bH-exL"/>
+                                    <constraint firstItem="eHF-yD-g87" firstAttribute="centerX" secondItem="r1l-dF-Eoy" secondAttribute="centerX" id="aNn-iq-ymX"/>
+                                    <constraint firstAttribute="height" constant="30" id="bfA-MK-hTb"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQb-kv-hOX" userLabel="Nav View">
+                                <rect key="frame" x="0.0" y="-13" width="390" height="44"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNZ-6B-U7Y" userLabel="Settings View">
+                                        <rect key="frame" x="16" y="0.0" width="120" height="44"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e5K-GF-GzI" userLabel="Settings">
+                                                <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxQ-qy-n8v" userLabel="Settings Button" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                        <rect key="frame" x="8.3333333333333339" y="10.333333333333334" width="23.333333333333329" height="23.333333333333329"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <state key="normal" image="gearshape" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="didTapOnSettingsButton:" destination="wxc-SN-I5W" eventType="touchUpInside" id="y9X-sh-efB"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="MAm-fG-vsB"/>
+                                                    <constraint firstItem="cxQ-qy-n8v" firstAttribute="centerY" secondItem="e5K-GF-GzI" secondAttribute="centerY" id="Y76-FC-UCj"/>
+                                                    <constraint firstAttribute="height" constant="44" id="b1f-fv-etF"/>
+                                                    <constraint firstItem="cxQ-qy-n8v" firstAttribute="centerX" secondItem="e5K-GF-GzI" secondAttribute="centerX" id="hnf-CD-Ihh"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E5V-MC-sQT" userLabel="Undo">
+                                                <rect key="frame" x="40" y="0.0" width="40" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzg-Uc-DMK" userLabel="Undo Redo Button" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                        <rect key="frame" x="9" y="11" width="22" height="22"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <state key="normal" image="desk_tool_undo">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="didTapOnUndoRedoButton:" destination="wxc-SN-I5W" eventType="touchUpInside" id="fBq-T6-FfU"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="L0N-Oa-gHC"/>
+                                                    <constraint firstAttribute="height" constant="44" id="Mk6-5V-3Sl"/>
+                                                    <constraint firstItem="tzg-Uc-DMK" firstAttribute="centerX" secondItem="E5V-MC-sQT" secondAttribute="centerX" id="RcO-Tz-66d"/>
+                                                    <constraint firstItem="tzg-Uc-DMK" firstAttribute="centerY" secondItem="E5V-MC-sQT" secondAttribute="centerY" id="gmo-WO-O59"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIw-xr-P4L" userLabel="Redo">
+                                                <rect key="frame" x="80" y="0.0" width="40" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3W-BB-D86" userLabel="Undo Redo Button" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                        <rect key="frame" x="9" y="11" width="22" height="22"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <state key="normal" image="desk_tool_redo">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="didTapOnUndoRedoButton:" destination="wxc-SN-I5W" eventType="touchUpInside" id="lqr-uk-P1C"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="m3W-BB-D86" firstAttribute="centerY" secondItem="KIw-xr-P4L" secondAttribute="centerY" id="F2c-6U-AKL"/>
+                                                    <constraint firstItem="m3W-BB-D86" firstAttribute="centerX" secondItem="KIw-xr-P4L" secondAttribute="centerX" id="GTb-oi-6RL"/>
+                                                    <constraint firstAttribute="width" constant="40" id="NXR-nM-tJT"/>
+                                                    <constraint firstAttribute="height" constant="44" id="TmY-yP-v1Z"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Srg-Xc-8UK"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLj-bx-0Oo" userLabel="Tools View">
+                                        <rect key="frame" x="115" y="0.0" width="160" height="44"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTq-BC-19M" userLabel="Pen" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="hzk-8o-7Es"/>
+                                                    <constraint firstAttribute="width" constant="40" id="zhB-79-1dv"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ecl-fs-6Ip" userLabel="Highlighter" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="40" y="0.0" width="40" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="I0T-Uw-g6q"/>
+                                                    <constraint firstAttribute="width" constant="40" id="Xx4-tk-6st"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UcT-n7-5IO" userLabel="Eraser" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="80" y="0.0" width="40" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="NVY-hA-mPz"/>
+                                                    <constraint firstAttribute="width" constant="40" id="iTJ-Kf-701"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sE8-bh-o4m" userLabel="Shape" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="120" y="0.0" width="40" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="MZ4-U6-mev"/>
+                                                    <constraint firstAttribute="height" constant="44" id="fLR-I1-c79"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JJu-ay-l7N" userLabel="Arrows View">
+                                        <rect key="frame" x="262" y="0.0" width="120" height="44"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7c9-7h-Wym" userLabel="Left">
+                                                <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGe-7s-cGz" userLabel="Pan Left" customClass="FTAutoTriggerButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="FMV-1w-woO"/>
+                                                            <constraint firstAttribute="width" constant="40" id="dxX-0B-329"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <state key="normal" image="arrow.backward.square" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="didTapOnPanOptionsButton:" destination="wxc-SN-I5W" eventType="touchUpInside" id="gGw-Cz-3TG"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="2AJ-ht-Vuz"/>
+                                                    <constraint firstItem="gGe-7s-cGz" firstAttribute="centerY" secondItem="7c9-7h-Wym" secondAttribute="centerY" id="Wiv-hE-VLY"/>
+                                                    <constraint firstItem="gGe-7s-cGz" firstAttribute="centerX" secondItem="7c9-7h-Wym" secondAttribute="centerX" id="pab-as-SpO"/>
+                                                    <constraint firstAttribute="width" constant="40" id="vMg-xo-Kin"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s5S-ap-cjc" userLabel="Right">
+                                                <rect key="frame" x="40" y="0.0" width="40" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibI-SK-bLi" userLabel="Pane right" customClass="FTAutoTriggerButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="40" id="MN2-cZ-yai"/>
+                                                            <constraint firstAttribute="height" constant="44" id="Zff-41-bFm"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <state key="normal" image="arrow.right.square" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="didTapOnPanOptionsButton:" destination="wxc-SN-I5W" eventType="touchUpInside" id="p3G-de-rsL"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="ibI-SK-bLi" firstAttribute="centerX" secondItem="s5S-ap-cjc" secondAttribute="centerX" id="0Ap-1F-fno"/>
+                                                    <constraint firstAttribute="height" constant="44" id="3cl-t8-Syq"/>
+                                                    <constraint firstItem="ibI-SK-bLi" firstAttribute="centerY" secondItem="s5S-ap-cjc" secondAttribute="centerY" id="4S5-OO-S0f"/>
+                                                    <constraint firstAttribute="width" constant="40" id="Rqm-Yk-zfC"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ir2-Hc-kjh" userLabel="Down">
+                                                <rect key="frame" x="80" y="0.0" width="40" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akE-uN-odH" userLabel="Pan Down" customClass="FTAutoTriggerButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="40" id="9K2-Yx-sjt"/>
+                                                            <constraint firstAttribute="height" constant="44" id="EMT-Kq-J7Z"/>
+                                                        </constraints>
+                                                        <color key="tintColor" systemColor="labelColor"/>
+                                                        <state key="normal" image="zoom_panel_pane_newline">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="didTapOnPanOptionsButton:" destination="wxc-SN-I5W" eventType="touchUpInside" id="z6y-Ma-rio"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="5FL-vT-JuF"/>
+                                                    <constraint firstItem="akE-uN-odH" firstAttribute="centerX" secondItem="ir2-Hc-kjh" secondAttribute="centerX" id="8tU-hI-kRb"/>
+                                                    <constraint firstAttribute="width" constant="40" id="dkU-bG-Abc"/>
+                                                    <constraint firstItem="akE-uN-odH" firstAttribute="centerY" secondItem="ir2-Hc-kjh" secondAttribute="centerY" id="u3g-Bk-Bqw"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Sl2-i5-f9u"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="nLj-bx-0Oo" firstAttribute="centerX" secondItem="WQb-kv-hOX" secondAttribute="centerX" id="0wl-SQ-0Bo"/>
+                                    <constraint firstItem="DNZ-6B-U7Y" firstAttribute="leading" secondItem="WQb-kv-hOX" secondAttribute="leading" constant="16" id="Aa2-SZ-rV6"/>
+                                    <constraint firstItem="DNZ-6B-U7Y" firstAttribute="top" secondItem="WQb-kv-hOX" secondAttribute="top" id="EdG-Z6-9p9"/>
+                                    <constraint firstAttribute="trailing" secondItem="JJu-ay-l7N" secondAttribute="trailing" constant="8" id="Hig-Kz-bUo"/>
+                                    <constraint firstItem="nLj-bx-0Oo" firstAttribute="centerY" secondItem="WQb-kv-hOX" secondAttribute="centerY" id="Qig-pp-xrz"/>
+                                    <constraint firstAttribute="bottom" secondItem="DNZ-6B-U7Y" secondAttribute="bottom" id="aK8-LU-ytO"/>
+                                    <constraint firstAttribute="height" constant="44" id="eCT-By-ldx"/>
+                                    <constraint firstAttribute="bottom" secondItem="JJu-ay-l7N" secondAttribute="bottom" id="lUk-e0-zw0"/>
+                                    <constraint firstItem="JJu-ay-l7N" firstAttribute="top" secondItem="WQb-kv-hOX" secondAttribute="top" id="nFk-QO-ojb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PvX-6Q-yS0"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="PvX-6Q-yS0" firstAttribute="bottom" secondItem="WQb-kv-hOX" secondAttribute="bottom" id="803-Iu-OIb"/>
+                            <constraint firstItem="r1l-dF-Eoy" firstAttribute="top" secondItem="27E-CM-512" secondAttribute="bottom" constant="-8" id="DWj-eo-pWz"/>
+                            <constraint firstItem="r1l-dF-Eoy" firstAttribute="centerX" secondItem="Qdg-NV-BXU" secondAttribute="centerX" id="Hfp-sL-Lnx"/>
+                            <constraint firstItem="PvX-6Q-yS0" firstAttribute="trailing" secondItem="WQb-kv-hOX" secondAttribute="trailing" id="Kov-Ss-s2E"/>
+                            <constraint firstItem="r1l-dF-Eoy" firstAttribute="leading" secondItem="Qdg-NV-BXU" secondAttribute="leading" id="TxC-bg-0Tf"/>
+                            <constraint firstAttribute="top" secondItem="27E-CM-512" secondAttribute="bottom" id="cFN-3b-AuQ"/>
+                            <constraint firstItem="27E-CM-512" firstAttribute="centerX" secondItem="PvX-6Q-yS0" secondAttribute="centerX" id="pKR-tZ-WKA"/>
+                            <constraint firstAttribute="trailing" secondItem="r1l-dF-Eoy" secondAttribute="trailing" id="rqX-zp-iAb"/>
+                            <constraint firstItem="WQb-kv-hOX" firstAttribute="leading" secondItem="Qdg-NV-BXU" secondAttribute="leading" id="yec-4c-isc"/>
+                            <constraint firstItem="27E-CM-512" firstAttribute="width" secondItem="Qdg-NV-BXU" secondAttribute="width" id="ysi-Pq-c4s"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ZqC-1Y-qX6" appends="YES" id="Z8G-Gi-DkI"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="arrowsTrailingConstraint" destination="Hig-Kz-bUo" id="1pw-HY-cgr"/>
+                        <outlet property="arrowsView" destination="JJu-ay-l7N" id="041-FE-arO"/>
+                        <outlet property="eraserToolView" destination="UcT-n7-5IO" id="0zn-4h-sDi"/>
+                        <outlet property="highlighterToolView" destination="Ecl-fs-6Ip" id="dgd-3Z-jWf"/>
+                        <outlet property="panDownButton" destination="akE-uN-odH" id="Jrh-xx-4bn"/>
+                        <outlet property="panGestureRecognizer" destination="ZqC-1Y-qX6" id="856-sR-xTl"/>
+                        <outlet property="panLeftButton" destination="gGe-7s-cGz" id="bUD-8u-Y4a"/>
+                        <outlet property="panRightButton" destination="ibI-SK-bLi" id="AiP-RD-MAg"/>
+                        <outlet property="penContentStackView" destination="nLj-bx-0Oo" id="YRu-wH-Wl8"/>
+                        <outlet property="penToolView" destination="gTq-BC-19M" id="DWI-as-KAF"/>
+                        <outlet property="redoButton" destination="m3W-BB-D86" id="r5O-eJ-0C7"/>
+                        <outlet property="redoView" destination="KIw-xr-P4L" id="EXo-Rs-OZT"/>
+                        <outlet property="settingsBtnView" destination="e5K-GF-GzI" id="EqT-tU-8Zn"/>
+                        <outlet property="settingsLeadingConstraint" destination="Aa2-SZ-rV6" id="p55-hh-hpI"/>
+                        <outlet property="settingsView" destination="DNZ-6B-U7Y" id="Dam-mD-lym"/>
+                        <outlet property="shapeToolView" destination="sE8-bh-o4m" id="BIz-t4-3pz"/>
+                        <outlet property="undoButton" destination="tzg-Uc-DMK" id="hZ5-7c-CVl"/>
+                        <outlet property="undoView" destination="E5V-MC-sQT" id="n18-t7-XXF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PPI-Xu-MGN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="ZqC-1Y-qX6">
+                    <connections>
+                        <action selector="panGestureDidPan:" destination="wxc-SN-I5W" id="srx-mh-gSL"/>
+                        <outlet property="delegate" destination="wxc-SN-I5W" id="NLs-qV-Mst"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="86" y="-610"/>
+        </scene>
+        <!--Zoom Content View Controller-->
+        <scene sceneID="9hH-6r-r1b">
+            <objects>
+                <viewController storyboardIdentifier="FTZoomContentViewController" id="Rh6-cg-HXL" customClass="FTZoomContentViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="29N-VH-eVO">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="230"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VNo-Fe-HHY" userLabel="Content View">
+                                <rect key="frame" x="8" y="8" width="374" height="200"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xe4-rO-Ap6" userLabel="Zoom Border View" customClass="FTZoomBorderView" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="8" y="8" width="374" height="200"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccx-29-ARp" userLabel="auto scroll Indicator" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="156" y="-2" width="34" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="cgr-7m-uex"/>
+                                    <constraint firstAttribute="height" constant="45" id="qcV-hy-UYD"/>
+                                </constraints>
+                                <color key="tintColor" name="imageTintColor"/>
+                                <inset key="imageEdgeInsets" minX="-1" minY="7" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="zoom_panel_auto_scroll_slider"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="RBY-wP-MFN"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="RBY-wP-MFN" firstAttribute="trailing" secondItem="ccx-29-ARp" secondAttribute="trailing" constant="200" id="7tB-72-4BN"/>
+                            <constraint firstItem="VNo-Fe-HHY" firstAttribute="top" secondItem="ccx-29-ARp" secondAttribute="bottom" constant="-35" id="AEH-0S-z2a"/>
+                            <constraint firstItem="xe4-rO-Ap6" firstAttribute="centerY" secondItem="VNo-Fe-HHY" secondAttribute="centerY" id="NHR-WL-pSR"/>
+                            <constraint firstItem="VNo-Fe-HHY" firstAttribute="leading" secondItem="29N-VH-eVO" secondAttribute="leading" constant="8" id="aiK-gq-Rym"/>
+                            <constraint firstAttribute="trailing" secondItem="VNo-Fe-HHY" secondAttribute="trailing" constant="8" id="eIQ-im-9zw"/>
+                            <constraint firstItem="xe4-rO-Ap6" firstAttribute="width" secondItem="VNo-Fe-HHY" secondAttribute="width" id="i4p-K5-fJ8"/>
+                            <constraint firstItem="VNo-Fe-HHY" firstAttribute="top" secondItem="29N-VH-eVO" secondAttribute="top" constant="8" id="khO-of-s5g"/>
+                            <constraint firstItem="VNo-Fe-HHY" firstAttribute="trailing" secondItem="xe4-rO-Ap6" secondAttribute="trailing" id="tCG-kp-65G"/>
+                            <constraint firstItem="xe4-rO-Ap6" firstAttribute="height" secondItem="VNo-Fe-HHY" secondAttribute="height" id="uzg-7N-cCg"/>
+                            <constraint firstAttribute="bottom" secondItem="VNo-Fe-HHY" secondAttribute="bottom" priority="999" constant="22" id="w0q-9v-uUf"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="sdW-ua-0V5" appends="YES" id="Tkl-cR-j3u"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="autoAdvanceIndicator" destination="ccx-29-ARp" id="sSU-BY-vlb"/>
+                        <outlet property="autoAdvanceIndicatorTrailingConstraint" destination="7tB-72-4BN" id="bWZ-5J-pV0"/>
+                        <outlet property="autoAdvancePanGesture" destination="sdW-ua-0V5" id="FiD-Wu-HCI"/>
+                        <outlet property="autoAdvanceView" destination="xe4-rO-Ap6" id="MrP-nS-Hpo"/>
+                        <outlet property="contentView" destination="VNo-Fe-HHY" id="KOO-K2-9lf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="928-bS-MCz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="sdW-ua-0V5">
+                    <connections>
+                        <action selector="autoAdvanceGestureRecognized:" destination="Rh6-cg-HXL" id="wMb-UZ-WHd"/>
+                        <outlet property="delegate" destination="Rh6-cg-HXL" id="cbE-cc-O5K"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1128" y="-43"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrow.backward.square" catalog="system" width="128" height="114"/>
+        <image name="arrow.right.square" catalog="system" width="128" height="114"/>
+        <image name="desk_tool_redo" width="22" height="22"/>
+        <image name="desk_tool_undo" width="22" height="22"/>
+        <image name="gearshape" catalog="system" width="128" height="123"/>
+        <image name="toolbar_shadow_top" width="64" height="10"/>
+        <image name="zoom_panel_auto_scroll_slider" width="34" height="40"/>
+        <image name="zoom_panel_pane_newline" width="17" height="17"/>
+        <namedColor name="imageTintColor">
+            <color red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="toolColorInactive">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

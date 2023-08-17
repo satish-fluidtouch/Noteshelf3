@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loadingresuableviewid" id="U6b-Vx-4bR" customClass="FTLoadingReusableView" customModule="NS3_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zZk-Cj-wku">
+                    <rect key="frame" x="117.5" y="0.0" width="85" height="16"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Cz7-Jl-oCs">
+                            <rect key="frame" x="10" y="-2" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="maw-zQ-pWn"/>
+                                <constraint firstAttribute="width" constant="20" id="mbX-fu-Zp2"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Z6-V8-xEN" customClass="FTStaticTextLabel" customModule="NS3_Beta" customModuleProvider="target">
+                            <rect key="frame" x="38" y="0.0" width="47" height="16"/>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="Loading"/>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="0Z6-V8-xEN" firstAttribute="leading" secondItem="Cz7-Jl-oCs" secondAttribute="trailing" constant="8" id="KEL-HS-YTC"/>
+                        <constraint firstItem="Cz7-Jl-oCs" firstAttribute="leading" secondItem="zZk-Cj-wku" secondAttribute="leading" constant="10" id="Lxq-UP-19F"/>
+                        <constraint firstItem="0Z6-V8-xEN" firstAttribute="centerY" secondItem="zZk-Cj-wku" secondAttribute="centerY" id="NQc-H6-Lva"/>
+                        <constraint firstAttribute="trailing" secondItem="0Z6-V8-xEN" secondAttribute="trailing" id="vRD-P2-42j"/>
+                        <constraint firstItem="Cz7-Jl-oCs" firstAttribute="centerY" secondItem="zZk-Cj-wku" secondAttribute="centerY" id="y0k-eB-3pi"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="BmV-UD-7Jt"/>
+            <constraints>
+                <constraint firstItem="zZk-Cj-wku" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="A4G-Pf-jFZ"/>
+                <constraint firstItem="zZk-Cj-wku" firstAttribute="centerX" secondItem="BmV-UD-7Jt" secondAttribute="centerX" id="GSV-W6-DVO"/>
+                <constraint firstItem="zZk-Cj-wku" firstAttribute="bottom" secondItem="BmV-UD-7Jt" secondAttribute="bottom" id="NQA-wv-Ncz"/>
+                <constraint firstItem="zZk-Cj-wku" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="xRd-PM-tYy"/>
+                <constraint firstItem="zZk-Cj-wku" firstAttribute="bottom" secondItem="BmV-UD-7Jt" secondAttribute="bottom" id="zfR-7w-T8W"/>
+            </constraints>
+            <connections>
+                <outlet property="activityIndicator" destination="Cz7-Jl-oCs" id="rRt-j8-2im"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="153.34821428571428"/>
+        </collectionReusableView>
+    </objects>
+</document>

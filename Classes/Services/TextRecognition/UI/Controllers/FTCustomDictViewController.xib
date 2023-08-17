@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Aeonik-Regular.otf">
+            <string>Aeonik-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTCustomDictViewController" customModule="NS3_Beta" customModuleProvider="target">
+            <connections>
+                <outlet property="addBtn" destination="Y9T-Ej-UKt" id="Rxj-hc-XaM"/>
+                <outlet property="addTextField" destination="nL5-ab-Bfm" id="fzg-6k-Ma0"/>
+                <outlet property="addView" destination="nHJ-Tj-6UI" id="oAR-to-9tF"/>
+                <outlet property="headerInfo" destination="8xT-dU-UeA" id="BPH-Bx-Cqh"/>
+                <outlet property="tableView" destination="yDP-qj-FLs" id="l3l-j3-t93"/>
+                <outlet property="view" destination="iN0-l3-epB" id="3Ds-vS-z3Y"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="786"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="yDP-qj-FLs">
+                    <rect key="frame" x="8" y="104" width="377" height="682"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="separatorColor" name="black10"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="MKY-0m-VKf"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHJ-Tj-6UI">
+                    <rect key="frame" x="24" y="52" width="345" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9T-Ej-UKt">
+                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="Hd2-XT-sPj"/>
+                                <constraint firstAttribute="width" constant="44" id="yvB-x5-CkK"/>
+                            </constraints>
+                            <color key="tintColor" name="accent"/>
+                            <buttonConfiguration key="configuration" style="plain">
+                                <imageReference key="image" image="plus.circle" catalog="system" symbolScale="default"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
+                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                </preferredSymbolConfiguration>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="addTapped:" destination="-1" eventType="touchUpInside" id="fzL-dF-bCi"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New Word" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="nL5-ab-Bfm">
+                            <rect key="frame" x="44" y="11.33333333333333" width="293" height="21.666666666666671"/>
+                            <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="17"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" name="white70"/>
+                    <constraints>
+                        <constraint firstItem="Y9T-Ej-UKt" firstAttribute="centerY" secondItem="nL5-ab-Bfm" secondAttribute="centerY" id="5fA-tt-9ZX"/>
+                        <constraint firstAttribute="height" constant="44" id="DbN-nI-KhX"/>
+                        <constraint firstItem="nL5-ab-Bfm" firstAttribute="centerY" secondItem="nHJ-Tj-6UI" secondAttribute="centerY" id="cON-lo-xmg"/>
+                        <constraint firstAttribute="trailing" secondItem="nL5-ab-Bfm" secondAttribute="trailing" constant="8" id="dXV-Sw-DhZ"/>
+                        <constraint firstItem="Y9T-Ej-UKt" firstAttribute="leading" secondItem="nHJ-Tj-6UI" secondAttribute="leading" id="lk6-xS-bF9"/>
+                        <constraint firstItem="nL5-ab-Bfm" firstAttribute="leading" secondItem="Y9T-Ej-UKt" secondAttribute="trailing" id="mUp-Ox-8ca"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8xT-dU-UeA">
+                    <rect key="frame" x="24" y="24" width="345" height="20"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" name="formSheetBgColor"/>
+            <constraints>
+                <constraint firstItem="yDP-qj-FLs" firstAttribute="top" secondItem="nHJ-Tj-6UI" secondAttribute="bottom" constant="8" id="C6o-mr-lTN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="nHJ-Tj-6UI" secondAttribute="trailing" constant="24" id="Ci8-7j-sAW"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="yDP-qj-FLs" secondAttribute="bottom" id="GTr-4o-Vx8"/>
+                <constraint firstItem="nHJ-Tj-6UI" firstAttribute="top" secondItem="8xT-dU-UeA" secondAttribute="bottom" constant="8" id="Sjh-FU-ttn"/>
+                <constraint firstItem="yDP-qj-FLs" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="XSC-9R-1vo"/>
+                <constraint firstItem="8xT-dU-UeA" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="24" id="be7-LE-Cf5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="yDP-qj-FLs" secondAttribute="trailing" constant="8" id="lPB-Ed-M0s"/>
+                <constraint firstItem="8xT-dU-UeA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="loU-Ww-eHc"/>
+                <constraint firstItem="nHJ-Tj-6UI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="tgw-V2-4Xl"/>
+                <constraint firstAttribute="trailing" secondItem="8xT-dU-UeA" secondAttribute="trailing" constant="24" id="zgF-uA-nwT"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="140" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="plus.circle" catalog="system" width="128" height="123"/>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black10">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="formSheetBgColor">
+            <color red="0.92199999094009399" green="0.9100000262260437" blue="0.9100000262260437" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white70">
+            <color red="1" green="1" blue="1" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

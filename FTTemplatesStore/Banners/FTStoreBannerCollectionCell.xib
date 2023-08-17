@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreBannerCollectionCell" id="W0h-JG-vLZ" customClass="FTStoreBannerCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="438" height="218"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="x0x-en-Kuz">
+                <rect key="frame" x="0.0" y="0.0" width="438" height="218"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Banner_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="gpM-eo-7vI">
+                        <rect key="frame" x="-30" y="-20" width="498" height="278"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aR1-Ui-weI">
+                        <rect key="frame" x="0.0" y="0.0" width="438" height="218"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gpM-eo-7vI" firstAttribute="top" secondItem="x0x-en-Kuz" secondAttribute="top" constant="-20" id="2no-BQ-1sm"/>
+                    <constraint firstItem="aR1-Ui-weI" firstAttribute="leading" secondItem="x0x-en-Kuz" secondAttribute="leading" id="EeJ-8z-GvY"/>
+                    <constraint firstAttribute="bottom" secondItem="gpM-eo-7vI" secondAttribute="bottom" constant="-40" id="FCG-bF-Y9A"/>
+                    <constraint firstAttribute="bottom" secondItem="aR1-Ui-weI" secondAttribute="bottom" id="J1E-fa-FMb"/>
+                    <constraint firstItem="aR1-Ui-weI" firstAttribute="top" secondItem="x0x-en-Kuz" secondAttribute="top" id="KHL-md-kv8"/>
+                    <constraint firstItem="gpM-eo-7vI" firstAttribute="leading" secondItem="x0x-en-Kuz" secondAttribute="leading" constant="-30" id="PUJ-ez-49n"/>
+                    <constraint firstAttribute="trailing" secondItem="aR1-Ui-weI" secondAttribute="trailing" id="T5a-PK-RFl"/>
+                    <constraint firstAttribute="trailing" secondItem="gpM-eo-7vI" secondAttribute="trailing" constant="-30" id="zVc-6a-w2e"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="438" height="218"/>
+            <connections>
+                <outlet property="shadowImageView" destination="gpM-eo-7vI" id="s4u-vC-GoL"/>
+                <outlet property="thumbnail" destination="aR1-Ui-weI" id="cKm-RX-ewm"/>
+            </connections>
+            <point key="canvasLocation" x="289" y="2"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Banner_shadow" width="160" height="160"/>
+    </resources>
+</document>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>USER_GUIDE_URL</key>
+	<string>http://noteshelf-support.fluidtouch.biz</string>
+	<key>NOTESHELF_SUPPORT_URL</key>
+	<string>http://noteshelf-support.fluidtouch.biz</string>
+	<key>AIR_TRANSFER_FAQ_URL</key>
+	<string>http://noteshelf-support.fluidtouch.biz/knowledgebase/topics/62551-backup-restore</string>
+	<key>AIR_TRANSFER_SUPPORT_URL</key>
+	<string>http://noteshelf-support.fluidtouch.biz</string>
+	<key>TELL_A_FRIEND_FULL_URL</key>
+	<string>http://itunes.apple.com/app/id1271086060</string>
+	<key>TELL_A_FRIEND_SHORT_URL</key>
+	<string>goo.gl/fVfn2f</string>
+	<key>LEARN_MORE_LIVESCRIBE</key>
+	<string>http://www.noteshelf.net/livescribe</string>
+	<key>LEARN_MORE_LIVESCRIBE_JP</key>
+	<string>http://www.noteshelf.net/livescribe/jp</string>
+</dict>
+</plist>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Colorful Planner (Dark)</string>
+	<key>display_name_es</key>
+	<string>Planificador colorido (Oscuro)</string>
+	<key>display_name_ja</key>
+	<string>カラフルなプランナー (ダーク)</string>
+	<key>display_name_it</key>
+	<string>Agenda colorata (Buio)</string>
+	<key>display_name_fr</key>
+	<string>Agenda coloré (Noir)</string>
+	<key>display_name_zh-Hans</key>
+	<string>多彩规划师 (黑暗)</string>
+	<key>display_name_zh-Hant</key>
+	<string>多彩規劃師 (黑暗)</string>
+	<key>display_name_de</key>
+	<string>Bunte Planer (Dunkel)</string>
+	<key>display_name_ko</key>
+	<string>다채로운 플래너 (어두운)</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>dynamic_id</key>
+	<integer>1</integer>
+	<key>template_id</key>
+	<string>Digital_Diaries_Colorful_Planner_Dark</string>
+	<key>template_type</key>
+	<integer>8</integer>
+	<key>restrictsChangeTemplate</key>
+	<true/>
+	<key>footer_option</key>
+	<integer>1</integer>
+</dict>
+</plist>

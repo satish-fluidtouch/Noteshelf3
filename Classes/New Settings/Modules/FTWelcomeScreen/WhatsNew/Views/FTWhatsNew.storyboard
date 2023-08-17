@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y9n-Al-kat">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Bold.otf">
+            <string>SFProDisplay-Bold</string>
+        </array>
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--FTWhatsNewViewController-->
+        <scene sceneID="FnL-f2-SnU">
+            <objects>
+                <viewController id="Y9n-Al-kat" userLabel="FTWhatsNewViewController" customClass="FTWhatsNewViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="aqg-9v-5Qv">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ziJ-8o-dBR">
+                                <rect key="frame" x="94" y="172" width="580" height="680"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDz-eC-NtF">
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="680"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="580" id="5Ps-Ho-ap0"/>
+                                            <constraint firstAttribute="height" constant="680" id="WUQ-Pa-vTA"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="5Ps-Ho-ap0"/>
+                                                <exclude reference="WUQ-Pa-vTA"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="delegate" destination="Y9n-Al-kat" id="n7f-s9-lvT"/>
+                                        </connections>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="UDz-eC-NtF" secondAttribute="bottom" id="6gY-nK-rtn"/>
+                                    <constraint firstItem="UDz-eC-NtF" firstAttribute="centerX" secondItem="ziJ-8o-dBR" secondAttribute="centerX" id="9tu-IE-0ID"/>
+                                    <constraint firstItem="UDz-eC-NtF" firstAttribute="centerY" secondItem="ziJ-8o-dBR" secondAttribute="centerY" id="Fbd-Hh-LkT"/>
+                                    <constraint firstAttribute="height" constant="680" id="dKI-JR-zg1"/>
+                                    <constraint firstItem="UDz-eC-NtF" firstAttribute="leading" secondItem="ziJ-8o-dBR" secondAttribute="leading" id="h6t-fL-3fO"/>
+                                    <constraint firstAttribute="width" constant="580" id="lP7-iH-z8N"/>
+                                    <constraint firstAttribute="trailing" secondItem="UDz-eC-NtF" secondAttribute="trailing" id="r9j-mI-TUx"/>
+                                    <constraint firstItem="UDz-eC-NtF" firstAttribute="top" secondItem="ziJ-8o-dBR" secondAttribute="top" id="vBk-Hu-7yy"/>
+                                </constraints>
+                            </view>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="WVT-y9-bQj" userLabel="pageControl">
+                                <rect key="frame" x="236" y="998" width="296" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="296" id="Rcb-Ug-Buu"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.21960784310000001" green="0.21960784310000001" blue="0.21960784310000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="pageToggled" destination="Y9n-Al-kat" eventType="valueChanged" id="HKv-iS-6sr"/>
+                                </connections>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHO-ey-CKX" userLabel="closeButton" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="718" y="30" width="40" height="40"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="Close"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="7Tc-SM-hVp"/>
+                                    <constraint firstAttribute="width" constant="40" id="WlI-i9-LLU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="tintColor" name="titleColor"/>
+                                <inset key="titleEdgeInsets" minX="17" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" image="whatsNewClose">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeClicked:" destination="Y9n-Al-kat" eventType="touchUpInside" id="yyc-4k-Rd8"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="COF-an-0hx"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="COF-an-0hx" firstAttribute="bottom" secondItem="WVT-y9-bQj" secondAttribute="bottom" id="KiQ-Ch-Uw1"/>
+                            <constraint firstItem="lHO-ey-CKX" firstAttribute="top" secondItem="COF-an-0hx" secondAttribute="top" constant="10" id="SPw-f4-ZRc"/>
+                            <constraint firstItem="WVT-y9-bQj" firstAttribute="centerX" secondItem="COF-an-0hx" secondAttribute="centerX" id="j6c-aW-mg9"/>
+                            <constraint firstItem="ziJ-8o-dBR" firstAttribute="centerY" secondItem="aqg-9v-5Qv" secondAttribute="centerY" id="rU3-Qc-uMh"/>
+                            <constraint firstItem="lHO-ey-CKX" firstAttribute="trailing" secondItem="COF-an-0hx" secondAttribute="trailing" constant="-10" id="z2Z-LF-PWp"/>
+                            <constraint firstItem="ziJ-8o-dBR" firstAttribute="centerX" secondItem="aqg-9v-5Qv" secondAttribute="centerX" id="zTA-JX-nUC"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="580" height="680"/>
+                    <connections>
+                        <outlet property="closeButton" destination="lHO-ey-CKX" id="KxF-He-TGW"/>
+                        <outlet property="pageControl" destination="WVT-y9-bQj" id="tqn-yv-ezE"/>
+                        <outlet property="scrollContainer" destination="ziJ-8o-dBR" id="OB2-FG-iJz"/>
+                        <outlet property="scrollView" destination="UDz-eC-NtF" id="6AX-Wp-dKd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rQ0-ow-3Yo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-685.15625" y="259.5703125"/>
+        </scene>
+        <!--FTWhatsNewFollowUsViewController-->
+        <scene sceneID="HVS-Bf-ojh">
+            <objects>
+                <viewController storyboardIdentifier="FTWhatsNewFollowUsViewController" title="FTWhatsNewFollowUsViewController" id="Hrx-Yo-odM" customClass="FTWhatsNewFollowUsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nwk-Xc-f73">
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="660"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="social-media-joinus-2" translatesAutoresizingMaskIntoConstraints="NO" id="M6d-iq-IjW">
+                                <rect key="frame" x="0.0" y="72" width="580" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="seP-Pw-trJ"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join us on Instagram" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0sl-Wh-bGi" userLabel="helpTitle" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="340" width="580" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="8O8-Im-QTf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="40"/>
+                                <color key="textColor" name="titleColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We post product updates and inspiring notes taken in Noteshelf from around the world." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Us7-HM-447" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="54" y="396" width="472" height="44.5"/>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="19"/>
+                                <color key="textColor" name="titleColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNS-yb-T0n" userLabel="actionButton1" customClass="FTWhatsNewButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="142" y="475" width="296" height="46"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="296" id="Cbi-dY-d7t"/>
+                                    <constraint firstAttribute="height" constant="46" id="kIr-3d-TZw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                <inset key="titleEdgeInsets" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Maybe Later">
+                                    <color key="titleColor" name="titleColor"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="23"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                        <color key="value" red="0.79607843137254897" green="0.79607843137254897" blue="0.79607843137254897" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="mayBeLaterClicked" destination="Hrx-Yo-odM" eventType="touchUpInside" id="6jk-J5-9ZK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQx-36-dxh" userLabel="actionButton2" customClass="FTWhatsNewButton" customModule="NS3_Beta" customModuleProvider="target">
+                                <rect key="frame" x="142" y="537" width="296" height="46"/>
+                                <color key="backgroundColor" name="blueDodger"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="Y9o-8x-5bg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                <state key="normal" title="Follow Us">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="23"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="followUsClicked" destination="Hrx-Yo-odM" eventType="touchUpInside" id="Vjw-ip-qwi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="saJ-i1-X02"/>
+                        <color key="backgroundColor" name="bgColor"/>
+                        <constraints>
+                            <constraint firstItem="GNS-yb-T0n" firstAttribute="centerX" secondItem="saJ-i1-X02" secondAttribute="centerX" id="29J-Ym-B1A"/>
+                            <constraint firstItem="GNS-yb-T0n" firstAttribute="top" secondItem="Us7-HM-447" secondAttribute="bottom" constant="34.5" id="2cf-ai-hEy"/>
+                            <constraint firstItem="Us7-HM-447" firstAttribute="leading" secondItem="saJ-i1-X02" secondAttribute="leading" constant="54" id="AsG-AU-ttX"/>
+                            <constraint firstItem="M6d-iq-IjW" firstAttribute="top" secondItem="nwk-Xc-f73" secondAttribute="top" constant="72" id="IR3-Ru-1yK"/>
+                            <constraint firstItem="ZQx-36-dxh" firstAttribute="centerX" secondItem="GNS-yb-T0n" secondAttribute="centerX" id="LxW-Ci-gdx"/>
+                            <constraint firstItem="0sl-Wh-bGi" firstAttribute="top" secondItem="M6d-iq-IjW" secondAttribute="bottom" constant="28" id="Lzh-Mx-a0c"/>
+                            <constraint firstItem="M6d-iq-IjW" firstAttribute="width" secondItem="nwk-Xc-f73" secondAttribute="width" id="M9a-4V-2xP"/>
+                            <constraint firstItem="Us7-HM-447" firstAttribute="top" secondItem="0sl-Wh-bGi" secondAttribute="bottom" constant="8" id="S4e-er-IUS"/>
+                            <constraint firstItem="ZQx-36-dxh" firstAttribute="top" secondItem="GNS-yb-T0n" secondAttribute="bottom" constant="16" id="a5g-RR-I6K"/>
+                            <constraint firstItem="ZQx-36-dxh" firstAttribute="height" secondItem="GNS-yb-T0n" secondAttribute="height" id="gQU-gO-Kuv"/>
+                            <constraint firstItem="M6d-iq-IjW" firstAttribute="centerX" secondItem="saJ-i1-X02" secondAttribute="centerX" id="ip6-Jn-KJZ"/>
+                            <constraint firstItem="saJ-i1-X02" firstAttribute="trailing" secondItem="0sl-Wh-bGi" secondAttribute="trailing" id="pU6-4e-NBm"/>
+                            <constraint firstItem="saJ-i1-X02" firstAttribute="trailing" secondItem="Us7-HM-447" secondAttribute="trailing" constant="54" id="rAi-wV-BZt"/>
+                            <constraint firstItem="ZQx-36-dxh" firstAttribute="width" secondItem="GNS-yb-T0n" secondAttribute="width" id="x63-b9-r3w"/>
+                            <constraint firstItem="0sl-Wh-bGi" firstAttribute="leading" secondItem="saJ-i1-X02" secondAttribute="leading" id="x63-pX-V1h"/>
+                        </constraints>
+                    </view>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="580" height="680"/>
+                    <connections>
+                        <outlet property="actionButton1" destination="GNS-yb-T0n" id="J99-WQ-N74"/>
+                        <outlet property="actionButton2" destination="ZQx-36-dxh" id="A1h-VA-LfR"/>
+                        <outlet property="helpMessage" destination="Us7-HM-447" id="rhC-nq-IKr"/>
+                        <outlet property="helpTitle" destination="0sl-Wh-bGi" id="cbv-zJ-uEs"/>
+                        <outlet property="socialBannerImageView" destination="M6d-iq-IjW" id="DDZ-w0-hqw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NBb-q9-WAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3673" y="195"/>
+        </scene>
+        <!--FTWhatsNewStartViewController-->
+        <scene sceneID="oop-cr-Mt1">
+            <objects>
+                <viewController storyboardIdentifier="FTWhatsNewStartViewController" id="rv9-Sd-awb" userLabel="FTWhatsNewStartViewController" customClass="FTWhatsNewStartViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="hqn-Ks-V3H">
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="680"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTu-UK-4pB">
+                                <rect key="frame" x="0.0" y="0.0" width="580" height="680"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHAT’S NEW" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHW-i6-KS3" userLabel="helpTitle" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="233" width="580" height="87"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="87" id="h55-mM-QWy"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="wnBlue"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching through your notes just got better! 😎" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ag7-fk-lcu" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="74" y="328" width="432" height="67"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="WD2-y4-QKz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="28"/>
+                                        <color key="textColor" name="titleColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXV-ce-IWL" userLabel="actionButton1" customClass="FTWhatsNewButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="142" y="572" width="296" height="46"/>
+                                        <color key="backgroundColor" red="0.90196078431372551" green="0.027450980392156862" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="eb2-zX-M16"/>
+                                            <constraint firstAttribute="width" constant="296" id="oPz-rl-htf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
+                                        <state key="normal" title="See What’s New">
+                                            <color key="titleColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="23"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="seeWhatsNewClicked" destination="rv9-Sd-awb" eventType="touchUpInside" id="I4R-Os-a1g"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="CHW-i6-KS3" firstAttribute="centerX" secondItem="ag7-fk-lcu" secondAttribute="centerX" id="1ZC-NJ-Eo5"/>
+                                    <constraint firstAttribute="height" constant="680" id="3Lw-CF-bLa"/>
+                                    <constraint firstItem="ag7-fk-lcu" firstAttribute="leading" secondItem="BTu-UK-4pB" secondAttribute="leading" constant="74" id="8KG-sj-Kh2"/>
+                                    <constraint firstItem="CHW-i6-KS3" firstAttribute="top" secondItem="BTu-UK-4pB" secondAttribute="top" constant="233" id="92R-Oz-bvU"/>
+                                    <constraint firstItem="CHW-i6-KS3" firstAttribute="width" secondItem="BTu-UK-4pB" secondAttribute="width" id="D8W-Fw-5im"/>
+                                    <constraint firstItem="ag7-fk-lcu" firstAttribute="top" secondItem="CHW-i6-KS3" secondAttribute="bottom" constant="8" id="O6Q-hG-r6Y"/>
+                                    <constraint firstItem="hXV-ce-IWL" firstAttribute="centerX" secondItem="BTu-UK-4pB" secondAttribute="centerX" id="Qps-d0-24a"/>
+                                    <constraint firstAttribute="trailing" secondItem="ag7-fk-lcu" secondAttribute="trailing" constant="74" id="n2e-PW-Tcm"/>
+                                    <constraint firstAttribute="bottom" secondItem="hXV-ce-IWL" secondAttribute="bottom" constant="62" id="sKa-vI-VFJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Dqa-sS-eye"/>
+                        <color key="backgroundColor" name="bgColor"/>
+                        <constraints>
+                            <constraint firstItem="BTu-UK-4pB" firstAttribute="centerX" secondItem="Dqa-sS-eye" secondAttribute="centerX" id="7mu-Iv-9jI"/>
+                            <constraint firstItem="BTu-UK-4pB" firstAttribute="centerY" secondItem="Dqa-sS-eye" secondAttribute="centerY" id="ByM-Fg-OcB"/>
+                            <constraint firstItem="BTu-UK-4pB" firstAttribute="width" secondItem="hqn-Ks-V3H" secondAttribute="width" id="PKe-b1-KWc"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="580" height="680"/>
+                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="actionButton1" destination="hXV-ce-IWL" id="PIm-9w-y78"/>
+                        <outlet property="helpMessage" destination="ag7-fk-lcu" id="AHY-eW-08n"/>
+                        <outlet property="helpTitle" destination="CHW-i6-KS3" id="eXI-wl-9BI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1vf-bV-5zb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-53" y="260"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="social-media-joinus-2" width="768" height="240"/>
+        <image name="whatsNewClose" width="30" height="30"/>
+        <namedColor name="bgColor">
+            <color red="0.9882352941176471" green="0.9882352941176471" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="blueDodger">
+            <color red="0.32549019607843138" green="0.46666666666666667" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleColor">
+            <color red="0.2199999988079071" green="0.2199999988079071" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="wnBlue">
+            <color red="0.36078431372549019" green="0.65490196078431373" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

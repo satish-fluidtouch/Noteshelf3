@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-SemiBold.otf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FTBrandLogoView" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="175" height="38"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5N-cG-rSQ">
+                    <rect key="frame" x="0.0" y="4" width="42" height="30"/>
+                    <color key="backgroundColor" red="0.97254901960784312" green="0.44313725490196076" blue="0.22745098039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="42" id="LEq-ab-368"/>
+                        <constraint firstAttribute="height" constant="30" id="ySm-t3-PjY"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="34t-ZO-TuX">
+                    <rect key="frame" x="52" y="0.0" width="123" height="39"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTESHELF" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SvU-De-KCn" userLabel="titleLabel" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="123" height="24.5"/>
+                            <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="20"/>
+                            <color key="textColor" red="0.16471" green="0.74117999999999995" blue="0.76078000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHITEBOARD MODE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KKH-vv-RA4" userLabel="whiteboardModeLabel" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="24.5" width="123" height="14.5"/>
+                            <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="11.5"/>
+                            <color key="textColor" red="0.34117999999999998" green="0.27843000000000001" blue="0.31764999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="123" id="5bs-DR-pXT"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="34t-ZO-TuX" secondAttribute="trailing" id="ADd-I3-HbC"/>
+                <constraint firstItem="Y5N-cG-rSQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Tbc-vf-fgb"/>
+                <constraint firstItem="34t-ZO-TuX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="lJC-sE-h3C"/>
+                <constraint firstItem="Y5N-cG-rSQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="od9-Z4-53h"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="titleLabel" destination="SvU-De-KCn" id="X7k-ca-feV"/>
+                <outlet property="whiteboardModeLabel" destination="KKH-vv-RA4" id="GRS-ZF-tY4"/>
+            </connections>
+        </view>
+    </objects>
+</document>

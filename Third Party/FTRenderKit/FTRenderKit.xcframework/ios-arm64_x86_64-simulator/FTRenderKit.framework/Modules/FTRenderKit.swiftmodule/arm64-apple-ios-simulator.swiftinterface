@@ -1,0 +1,532 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FTRenderKit
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import CoreGraphics
+@_exported import FTRenderKit
+import Foundation
+import Metal
+import MetalKit
+import QuartzCore
+import Swift
+import UIKit
+import VideoToolbox
+import _Concurrency
+import _StringProcessing
+import simd
+public let mtlDevice: any Metal.MTLDevice
+@objc public enum FTWritingMode : Swift.Int {
+  case pen
+  case highlighter
+  case laser
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum FTVertexType {
+  case FirstVertex
+  case InterimVertex
+  case LastVertex
+  public static func == (a: FTRenderKit.FTVertexType, b: FTRenderKit.FTVertexType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol FTTouchProcess : ObjectiveC.NSObjectProtocol {
+  @objc var pressure: CoreFoundation.CGFloat { get }
+  @objc func touchView() -> UIKit.UIView
+  @objc func location(inView view: UIKit.UIView?) -> CoreFoundation.CGPoint
+  @objc func coalescedTouches() -> [any FTRenderKit.FTTouchProcess]?
+  @objc func predictiveTouches() -> [any FTRenderKit.FTTouchProcess]?
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class FTRenderConstants : ObjectiveC.NSObject {
+  @objc public static let TILE_SIZE: CoreFoundation.CGFloat
+  @objc public static var USE_ONSCREEN_TILING: Swift.Bool
+  @objc public static var USE_BG_TILING: Swift.Bool
+  @objc public static var STOP_OFFSCREEN_RENDER: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+open class FTOnScreenRenderRequest : FTRenderKit.FTRenderRequest {
+  open var transparentBackground: Swift.Bool {
+    get
+  }
+  public var label: Swift.String
+  public var areaToRefresh: CoreFoundation.CGRect
+  public var visibleArea: CoreFoundation.CGRect
+  public var annotations: [any FTRenderKit.FTAnnotationProtocol]
+  public var renderingProperties: FTRenderKit.FTMetalRenderingProperties
+  public var backgroundTexture: (any Metal.MTLTexture)?
+  public var scale: CoreFoundation.CGFloat
+  public var contentSize: CoreFoundation.CGSize
+  public var isCancelled: Swift.Bool {
+    get
+  }
+  public func cancelRequest()
+  public var writingMode: FTRenderKit.FTWritingMode
+  public var completionBlock: ((Swift.Bool) -> ())?
+  public var backgroundColor: UIKit.UIColor
+  open var ignoreAnnotationSelection: Swift.Bool {
+    get
+  }
+  public var backgroundTextureTileContent: FTRenderKit.FTBackgroundTextureTileContent?
+  required public init(with windowHash: Swift.Int?)
+  public var windowHash: Swift.Int {
+    get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class FTMetalView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public var viewFrame: CoreFoundation.CGRect {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open class var layerClass: Swift.AnyClass {
+    @objc get
+  }
+  @objc deinit
+}
+public protocol FTSegmentProtocol {
+  var startPoint: FTRenderKit.FTPoint { get set }
+  var endPoint: FTRenderKit.FTPoint { get set }
+  var thickness: Swift.Float { get set }
+  var opacity: Swift.Float { get set }
+}
+@objc public enum FTAnnotationType : Swift.Int {
+  case none = -1
+  case stroke
+  case text
+  case image
+  case sticky
+  case audio
+  case shape
+  case fancyTitle
+  case sticker
+  case webclip
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct FTPoint {
+  public var x: Swift.Float
+  public var y: Swift.Float
+  public static var zero: FTRenderKit.FTPoint {
+    get
+  }
+  public init(x: Swift.Float, y: Swift.Float)
+  public init(cgpoint: CoreFoundation.CGPoint)
+  public mutating func translate(dx: Swift.Float, dy: Swift.Float)
+  public mutating func rotate(by angle: CoreFoundation.CGFloat, refPoint: CoreFoundation.CGPoint)
+}
+public struct FTSize {
+  public var width: Swift.Float
+  public var height: Swift.Float
+  public init(width: Swift.Float, height: Swift.Float)
+}
+public struct FTRect {
+  public var origin: FTRenderKit.FTPoint
+  public var size: FTRenderKit.FTSize
+  public init(x: Swift.Float, y: Swift.Float, width: Swift.Float, height: Swift.Float)
+  public init(cgRect: CoreFoundation.CGRect)
+}
+@objc public enum FTPenType : Swift.Int {
+  case pen
+  case caligraphy
+  case pencil
+  case highlighter
+  case pilotPen
+  case flatHighlighter
+  case laser
+  case laserPointer
+  public func isHighlighterPenType() -> Swift.Bool
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol FTRenderer : AnyObject {
+  var uuid: Swift.String { get }
+  init(targetSize: CoreFoundation.CGSize, contentScale: CoreFoundation.CGFloat)
+  func prepareForReuse()
+}
+public protocol FTRendererDelegate : AnyObject {
+  func renderer(inRect rect: CoreFoundation.CGRect) -> [any FTRenderKit.FTOnScreenRenderer]
+}
+public protocol FTOnScreenRenderer : FTRenderKit.FTRenderer {
+  func publishChanges(mode: FTRenderKit.FTWritingMode, onCompletion: ((Swift.Bool) -> (Swift.Void))?)
+  func render(request: FTRenderKit.FTOnScreenRenderRequest) -> Swift.String
+  func bind(view: FTRenderKit.FTMetalView)
+  func waitUntilComplete()
+}
+public protocol FTOffScreenRenderer : FTRenderKit.FTRenderer {
+  @discardableResult
+  func imageFor(request: any FTRenderKit.FTOffScreenRenderRequest) -> Swift.String
+}
+public protocol FTShapeRenderer : FTRenderKit.FTRenderer {
+  func render(request: FTRenderKit.FTOnScreenRenderRequest) -> Swift.String
+  func bind(view: FTRenderKit.FTMetalView)
+}
+@objc @_inheritsConvenienceInitializers open class FTDebugLog : ObjectiveC.NSObject {
+  public class func log(_ object: Any, filename: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, funcName: Swift.String = #function)
+  @objc override dynamic public init()
+  @objc deinit
+}
+open class FTOffScreenPageImageRequest : FTRenderKit.FTOffScreenRenderRequest {
+  public var label: Swift.String
+  open var transparentBackground: Swift.Bool {
+    get
+  }
+  public var areaToRefresh: CoreFoundation.CGRect
+  public var visibleArea: CoreFoundation.CGRect
+  public var contentSize: CoreFoundation.CGSize
+  public var annotations: [any FTRenderKit.FTAnnotationProtocol]
+  public var renderingProperties: FTRenderKit.FTMetalRenderingProperties
+  public var backgroundTexture: (any Metal.MTLTexture)?
+  public var scale: CoreFoundation.CGFloat
+  public var imageSize: CoreFoundation.CGSize
+  public var origin: CoreFoundation.CGPoint
+  public var screenScale: CoreFoundation.CGFloat
+  public var isCancelled: Swift.Bool {
+    get
+  }
+  public func cancelRequest()
+  public var completionBlock: ((UIKit.UIImage?) -> ())?
+  open var ignoreAnnotationSelection: Swift.Bool {
+    get
+  }
+  public var backgroundColor: UIKit.UIColor
+  required public init(with windowHash: Swift.Int?)
+  public var backgroundTextureTileContent: FTRenderKit.FTBackgroundTextureTileContent?
+  public var windowHash: Swift.Int {
+    get
+  }
+  @objc deinit
+}
+public protocol FTSupportsDocumentLevelAnnotation {
+  func pageOrigin() -> CoreFoundation.CGPoint
+}
+public protocol FTAnnotationProtocol {
+  var boundingRect: CoreFoundation.CGRect { get set }
+  var uuid: Swift.String { get set }
+  var hidden: Swift.Bool { get set }
+  var modifiedTimeInterval: Foundation.TimeInterval { get set }
+  var createdTimeInterval: Foundation.TimeInterval { get set }
+  var isReadonly: Swift.Bool { get set }
+  var version: Swift.Int { get set }
+  var renderingRect: CoreFoundation.CGRect { get }
+  var annotationType: FTRenderKit.FTAnnotationType { get }
+  func isSelected(for windowHash: Swift.Int?) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers public class FTLaserBrushTexture : ObjectiveC.NSObject {
+  public var innerCoreTexture: (any Metal.MTLTexture)?
+  public var innerStrokeColor: UIKit.UIColor
+  public var innerStrokeScaleFactor: Swift.Float
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol FTLaserStrokeAnnotationProtocol : FTRenderKit.FTStrokeAnnotationProtocol {
+  func laserBrushTexture(scale: CoreFoundation.CGFloat) -> FTRenderKit.FTLaserBrushTexture
+}
+public protocol FTStrokeAnnotationProtocol : FTRenderKit.FTAnnotationProtocol {
+  var strokeColor: UIKit.UIColor { get set }
+  var strokeWidth: CoreFoundation.CGFloat { get set }
+  var penType: FTRenderKit.FTPenType { get set }
+  var segmentCount: Swift.Int { get set }
+  var strokeInProgress: Swift.Bool { get set }
+  mutating func addSegment(startPoint: CoreFoundation.CGPoint, endPoint: CoreFoundation.CGPoint, thickness: CoreFoundation.CGFloat, opacity: CoreFoundation.CGFloat)
+  func metalBrushTexture(scale: CoreFoundation.CGFloat) -> (any Metal.MTLTexture)?
+  func segmentBounds(index: Swift.Int) -> CoreFoundation.CGRect
+  func isErasedSegment(_ segment: any FTRenderKit.FTSegmentProtocol, index: Swift.Int) -> Swift.Bool
+  func segment(at index: Swift.Int) -> any FTRenderKit.FTSegmentProtocol
+  func shouldUseQuadRender(scale: CoreFoundation.CGFloat) -> Swift.Bool
+  var highlighterOpacity: Swift.Float { get }
+}
+public protocol FTImageRenderingProtocol {
+  func textureToRender(scale: CoreFoundation.CGFloat) -> (any Metal.MTLTexture)?
+  var renderingRect: CoreFoundation.CGRect { get }
+}
+public struct FTShapeProperties : Swift.Codable {
+  public var strokeThickness: CoreFoundation.CGFloat
+  public var strokeOpacity: CoreFoundation.CGFloat
+  public init(strokeThickness: CoreFoundation.CGFloat, strokeOpacity: CoreFoundation.CGFloat)
+  public init()
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol FTShapeAnnotationProtocol : FTRenderKit.FTStrokeAnnotationProtocol {
+  var shapeControlPoints: [CoreFoundation.CGPoint] { get }
+  func shapeDrawingPoints(for scale: CoreFoundation.CGFloat) -> [CoreFoundation.CGPoint]
+  var properties: FTRenderKit.FTShapeProperties { get }
+}
+public struct FTStrokeAttributes {
+  public init()
+  public init(curDrag: CoreFoundation.CGFloat, curmass: CoreFoundation.CGFloat, penDiffFactor: CoreFoundation.CGFloat, penMinFactor: CoreFoundation.CGFloat, penVelocityFactor: CoreFoundation.CGFloat, brushWidth: CoreFoundation.CGFloat, velocitySensitive: Swift.Bool)
+}
+@objc open class FTCurrentStroke : ObjectiveC.NSObject {
+  public var stroke: any FTRenderKit.FTStrokeAnnotationProtocol
+  public init(withScale scale: CoreFoundation.CGFloat, stroke inStroke: any FTRenderKit.FTStrokeAnnotationProtocol, attributes: FTRenderKit.FTStrokeAttributes, renderDelegate: any FTRenderKit.FTRendererDelegate)
+  public func processTouch(_ touch: any FTRenderKit.FTTouchProcess, vertexType: FTRenderKit.FTVertexType, touchView: UIKit.UIView?)
+  public func didCancelCurrentStroke()
+  public func encode(clipRect: CoreFoundation.CGRect)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class FTMetalRenderingProperties : ObjectiveC.NSObject {
+  public var synchronously: Swift.Bool
+  public var renderImmediately: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol FTRenderRequest {
+  var label: Swift.String { get set }
+  var annotations: [any FTRenderKit.FTAnnotationProtocol] { get }
+  var renderingProperties: FTRenderKit.FTMetalRenderingProperties { get }
+  var backgroundTexture: (any Metal.MTLTexture)? { get }
+  var scale: CoreFoundation.CGFloat { get }
+  var contentSize: CoreFoundation.CGSize { get }
+  var areaToRefresh: CoreFoundation.CGRect { get }
+  var visibleArea: CoreFoundation.CGRect { get }
+  var isCancelled: Swift.Bool { get }
+  var transparentBackground: Swift.Bool { get }
+  var backgroundColor: UIKit.UIColor { get }
+  func cancelRequest()
+  var backgroundTextureTileContent: FTRenderKit.FTBackgroundTextureTileContent? { get }
+  init(with windowHash: Swift.Int?)
+  var windowHash: Swift.Int { get }
+  var info: Swift.String { get }
+}
+public protocol FTOffScreenRenderRequest : FTRenderKit.FTRenderRequest {
+  var completionBlock: ((UIKit.UIImage?) -> ())? { get }
+}
+extension FTRenderKit.FTRenderRequest {
+  public var info: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class FTMetalUtils : ObjectiveC.NSObject {
+  @objc public class func texture(from image: UIKit.UIImage) -> (any Metal.MTLTexture)?
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension Swift.Int {
+  public var cappedToMaxTextureSize: Swift.Int {
+    get
+  }
+}
+extension CoreFoundation.CGFloat {
+  public var toFloat: Swift.Float {
+    get
+  }
+  public var toDouble: Swift.Double {
+    get
+  }
+  public var toInt: Swift.Int {
+    get
+  }
+}
+extension CoreFoundation.CGRect {
+  public var topLeft: Swift.SIMD2<Swift.Float> {
+    get
+  }
+  public var topRight: Swift.SIMD2<Swift.Float> {
+    get
+  }
+  public var bottomLeft: Swift.SIMD2<Swift.Float> {
+    get
+  }
+  public var bottomRight: Swift.SIMD2<Swift.Float> {
+    get
+  }
+}
+extension UIKit.UIColor {
+  public var rgbComp: Swift.SIMD4<Swift.Float> {
+    get
+  }
+  public var isDarkColor: Swift.Bool {
+    get
+  }
+  public func components() -> (red: CoreFoundation.CGFloat, green: CoreFoundation.CGFloat, blue: CoreFoundation.CGFloat, alpha: CoreFoundation.CGFloat)
+}
+extension Swift.Array {
+  public func chunked(into size: Swift.Int) -> [[Element]]
+}
+extension CoreFoundation.CGRect {
+  public init(ftRect: FTRenderKit.FTRect)
+  public static func scale(_ rect: CoreFoundation.CGRect, _ scale: CoreFoundation.CGFloat) -> CoreFoundation.CGRect
+  public func transform(to rect: CoreFoundation.CGRect) -> CoreFoundation.CGAffineTransform
+  public var floatMinX: Swift.Float {
+    get
+  }
+  public var floatMaxX: Swift.Float {
+    get
+  }
+  public var floatMidX: Swift.Float {
+    get
+  }
+  public var floatMinY: Swift.Float {
+    get
+  }
+  public var floatMaxY: Swift.Float {
+    get
+  }
+  public var floatMidY: Swift.Float {
+    get
+  }
+  public var floatWidth: Swift.Float {
+    get
+  }
+  public var floatheight: Swift.Float {
+    get
+  }
+  public var mtlScissorRect: Metal.MTLScissorRect {
+    get
+  }
+  public func translateOrigin(dx: Swift.Float, dy: Swift.Float) -> CoreFoundation.CGRect
+  public func convertRect(toTextureCoordinate coordinateRect: CoreFoundation.CGRect) -> CoreFoundation.CGRect
+}
+extension CoreFoundation.CGSize {
+  public static func scale(_ size: CoreFoundation.CGSize, _ scale: CoreFoundation.CGFloat) -> CoreFoundation.CGSize
+  public mutating func scale(scale: CoreFoundation.CGFloat)
+}
+extension CoreFoundation.CGPoint {
+  public var asFTPoint: FTRenderKit.FTPoint {
+    get
+  }
+  public init(ftpoint: FTRenderKit.FTPoint)
+  public static func scale(_ point: CoreFoundation.CGPoint, _ scale: CoreFoundation.CGFloat) -> CoreFoundation.CGPoint
+  public mutating func scale(scale: CoreFoundation.CGFloat)
+  public mutating func translate(dx: Swift.Float, dy: Swift.Float)
+  public func distanceBetweenPoint(_ point2: CoreFoundation.CGPoint) -> Swift.Float
+  public func glPoint(scale: CoreFoundation.CGFloat, refRect: CoreFoundation.CGRect) -> CoreFoundation.CGPoint
+}
+public enum FTLaserStrokeType : Swift.Int {
+  case pointer, stroke, pointerOnly
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers open class FTLaserStroke : FTRenderKit.FTCurrentStroke {
+  public var laserStrokeType: FTRenderKit.FTLaserStrokeType
+  override public init(withScale scale: CoreFoundation.CGFloat, stroke inStroke: any FTRenderKit.FTStrokeAnnotationProtocol, attributes: FTRenderKit.FTStrokeAttributes, renderDelegate: any FTRenderKit.FTRendererDelegate)
+  public func processPoint(_ point: CoreFoundation.CGPoint, vertexType: FTRenderKit.FTVertexType, pressure: CoreFoundation.CGFloat = -1)
+  override public func processTouch(_ touch: any FTRenderKit.FTTouchProcess, vertexType: FTRenderKit.FTVertexType, touchView: UIKit.UIView?)
+  override public func didCancelCurrentStroke()
+  override public func encode(clipRect: CoreFoundation.CGRect)
+  @objc deinit
+}
+public protocol FTDiagnosticCounter : ObjectiveC.NSObjectProtocol {
+  func incrementCounter(key: Swift.String)
+  func decrementCounter(key: Swift.String)
+  func logEvent(event: Swift.String)
+}
+public enum FTRendererIntent : Swift.Int {
+  case onScreen
+  case offScreen
+  case presentation
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class FTRendererFactory {
+  public static func createOnScreenRenderer() -> any FTRenderKit.FTOnScreenRenderer
+  public static func createOffScreenRenderer() -> any FTRenderKit.FTOffScreenRenderer
+  public static func createPresenterRender(screen: UIKit.UIScreen? = nil) -> any FTRenderKit.FTOnScreenRenderer
+  public static func createShapeRender(size: CoreFoundation.CGSize) -> any FTRenderKit.FTShapeRenderer
+  @objc deinit
+}
+open class FTOffScreenTileImageRequest : FTRenderKit.FTOffScreenRenderRequest {
+  public var label: Swift.String
+  open var transparentBackground: Swift.Bool {
+    get
+  }
+  public var annotations: [any FTRenderKit.FTAnnotationProtocol]
+  public var renderingProperties: FTRenderKit.FTMetalRenderingProperties
+  public var backgroundTexture: (any Metal.MTLTexture)?
+  public var scale: CoreFoundation.CGFloat
+  public var contentSize: CoreFoundation.CGSize
+  public var areaToRefresh: CoreFoundation.CGRect
+  public var visibleArea: CoreFoundation.CGRect {
+    get
+  }
+  public var isCancelled: Swift.Bool {
+    get
+  }
+  public func cancelRequest()
+  public var completionBlock: ((UIKit.UIImage?) -> ())?
+  open var ignoreAnnotationSelection: Swift.Bool {
+    get
+  }
+  public var backgroundColor: UIKit.UIColor
+  required public init(with windowHash: Swift.Int?)
+  public var backgroundTextureTileContent: FTRenderKit.FTBackgroundTextureTileContent?
+  public var windowHash: Swift.Int {
+    get
+  }
+  @objc deinit
+}
+public enum FTTileEvictionMode {
+  case aggressive
+  case partial
+  public static func == (a: FTRenderKit.FTTileEvictionMode, b: FTRenderKit.FTTileEvictionMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc open class FTBackgroundTextureTileContent : ObjectiveC.NSObject {
+  final public let contentSize: CoreFoundation.CGSize
+  final public let tiles: [FTRenderKit.FTTextureTile]
+  final public let tileSize: CoreFoundation.CGSize
+  public init(contentSize: CoreFoundation.CGSize, tileSize: CoreFoundation.CGSize, tileCacheLimit: Swift.Int)
+  public func evictTiles(mode: FTRenderKit.FTTileEvictionMode)
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  public func visibleTiles(in rect: CoreFoundation.CGRect) -> [FTRenderKit.FTTextureTile]
+  open func updateTextures(for tiles: [FTRenderKit.FTTextureTile], targetSize: CoreFoundation.CGSize, request: any FTRenderKit.FTRenderRequest)
+  @objc deinit
+}
+@objc public class FTTextureTile : ObjectiveC.NSObject {
+  final public let rect: CoreFoundation.CGRect
+  final public let index: Swift.Int
+  public var lastAccessTime: Foundation.TimeInterval
+  public init(rect: CoreFoundation.CGRect, index: Swift.Int)
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+  public func setTexture(_ texture: (any Metal.MTLTexture)?)
+  public func getTexture() -> (any Metal.MTLTexture)?
+  public func isEmpty() -> Swift.Bool
+  @objc deinit
+}
+extension FTRenderKit.FTWritingMode : Swift.Equatable {}
+extension FTRenderKit.FTWritingMode : Swift.Hashable {}
+extension FTRenderKit.FTWritingMode : Swift.RawRepresentable {}
+extension FTRenderKit.FTVertexType : Swift.Equatable {}
+extension FTRenderKit.FTVertexType : Swift.Hashable {}
+extension FTRenderKit.FTAnnotationType : Swift.Equatable {}
+extension FTRenderKit.FTAnnotationType : Swift.Hashable {}
+extension FTRenderKit.FTAnnotationType : Swift.RawRepresentable {}
+extension FTRenderKit.FTPenType : Swift.Equatable {}
+extension FTRenderKit.FTPenType : Swift.Hashable {}
+extension FTRenderKit.FTPenType : Swift.RawRepresentable {}
+extension FTRenderKit.FTLaserStrokeType : Swift.Equatable {}
+extension FTRenderKit.FTLaserStrokeType : Swift.Hashable {}
+extension FTRenderKit.FTLaserStrokeType : Swift.RawRepresentable {}
+extension FTRenderKit.FTRendererIntent : Swift.Equatable {}
+extension FTRenderKit.FTRendererIntent : Swift.Hashable {}
+extension FTRenderKit.FTRendererIntent : Swift.RawRepresentable {}
+extension FTRenderKit.FTTileEvictionMode : Swift.Equatable {}
+extension FTRenderKit.FTTileEvictionMode : Swift.Hashable {}

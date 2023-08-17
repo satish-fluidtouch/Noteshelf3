@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTShelfItemDragPreview" customModule="NS2_Beta" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="FTShelfItemDragPreview" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="153" height="170"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8Q-8g-Wkg" userLabel="BooksContainerView">
+                    <rect key="frame" x="0.0" y="0.0" width="153" height="170"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dMa-bH-Po5" userLabel="coverImageView3">
+                            <rect key="frame" x="0.0" y="16" width="137" height="154"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Unk-Fc-VAT" userLabel="coverImageView2">
+                            <rect key="frame" x="8" y="8" width="137" height="162"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DVp-os-rZ1" userLabel="coverImageView">
+                            <rect key="frame" x="16" y="0.0" width="137" height="170"/>
+                            <accessibility key="accessibilityConfiguration">
+                                <accessibilityTraits key="traits" button="YES"/>
+                                <bool key="isElement" value="NO"/>
+                            </accessibility>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="137" id="GxW-Hp-A71"/>
+                                <constraint firstAttribute="height" constant="170" id="bON-RX-QPw"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="6Cs-ag-Nb0"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Unk-Fc-VAT" firstAttribute="height" secondItem="DVp-os-rZ1" secondAttribute="height" constant="-8" id="0Pn-Uq-1uD"/>
+                        <constraint firstItem="Unk-Fc-VAT" firstAttribute="bottom" secondItem="DVp-os-rZ1" secondAttribute="bottom" id="2ok-WH-1WH"/>
+                        <constraint firstItem="Unk-Fc-VAT" firstAttribute="leading" secondItem="DVp-os-rZ1" secondAttribute="leading" constant="-8" id="3bu-Sz-wDD"/>
+                        <constraint firstAttribute="height" constant="170" id="ISe-8Y-BpT"/>
+                        <constraint firstItem="6Cs-ag-Nb0" firstAttribute="trailing" secondItem="DVp-os-rZ1" secondAttribute="trailing" id="SbG-lb-vPi"/>
+                        <constraint firstAttribute="bottom" secondItem="dMa-bH-Po5" secondAttribute="bottom" id="Wbo-aO-C9x"/>
+                        <constraint firstItem="dMa-bH-Po5" firstAttribute="width" secondItem="DVp-os-rZ1" secondAttribute="width" id="XfG-1h-g5t"/>
+                        <constraint firstItem="Unk-Fc-VAT" firstAttribute="width" secondItem="DVp-os-rZ1" secondAttribute="width" id="bqj-EZ-Rk3"/>
+                        <constraint firstItem="dMa-bH-Po5" firstAttribute="leading" secondItem="DVp-os-rZ1" secondAttribute="leading" constant="-16" id="dlI-r3-Bp2"/>
+                        <constraint firstItem="dMa-bH-Po5" firstAttribute="bottom" secondItem="DVp-os-rZ1" secondAttribute="bottom" id="gAq-CT-iUf"/>
+                        <constraint firstItem="DVp-os-rZ1" firstAttribute="top" secondItem="P8Q-8g-Wkg" secondAttribute="top" id="hzY-xp-pbe"/>
+                        <constraint firstItem="dMa-bH-Po5" firstAttribute="leading" secondItem="6Cs-ag-Nb0" secondAttribute="leading" id="qQO-En-u7c"/>
+                        <constraint firstItem="dMa-bH-Po5" firstAttribute="height" secondItem="DVp-os-rZ1" secondAttribute="height" constant="-16" id="xJ0-Ni-HAI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="P8Q-8g-Wkg" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="bse-T6-Yxd"/>
+                <constraint firstItem="P8Q-8g-Wkg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="k2c-fn-or0"/>
+                <constraint firstItem="P8Q-8g-Wkg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ld9-h3-zh9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageViewIcon" destination="DVp-os-rZ1" id="vu6-dU-Wdn"/>
+                <outlet property="imageViewIcon2" destination="Unk-Fc-VAT" id="a3l-hb-gar"/>
+                <outlet property="imageViewIcon3" destination="dMa-bH-Po5" id="5tx-mt-vUo"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="119"/>
+        </view>
+    </objects>
+</document>

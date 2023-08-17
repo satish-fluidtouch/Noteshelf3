@@ -1,0 +1,83 @@
+/* 
+  MyScriptLanguageLocalizable.strings
+  Noteshelf
+
+  Created by Amar on 05/08/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+//Languages
+"Languages" = "언어";
+"EnglishUS" = "영어 (미국)";
+"EnglishUK" = "영어 (영국)";
+"ChineseS" = "중국어 간체";
+"ChineseT" = "중국 전통";
+"German" = "독일 사람";
+"French" = "프랑스 국민";
+"Spanish" = "스페인 사람";
+"Italian" = "이탈리아 사람";
+"Japanese" = "일본어";
+"Portugal" = "포르투갈 인";
+"Korean" = "한국어";
+
+//New Recognition Languages
+"Africans" = "아프리카 인";
+"Albanian" = "알바니아 사람";
+"Armenian" = "아르메니아의";
+"Azeri" = "아제리어";
+"Basque" = "바스크 사람";
+"Belarusian" = "벨로루시 어";
+"Bulgarian" = "불가리아 사람";
+"Catalan" = "카탈로니아 사람";
+"Chinese(Hong Kong)" = "중국어 (홍콩)";
+"Chinese(Simplified)" = "중국어 간체";
+"Chinese(Taiwan)" = "중국어 (대만)";
+"Croatian" = "크로아티아어";
+"Czech" = "체코 사람";
+"Danish" = "덴마크 말";
+"Dutch(Belgium)" = "네덜란드어 (벨기에)";
+"Dutch(Netherlands)" = "네덜란드어 (네덜란드)";
+"English(Canada)" = "영어 (캐나다)";
+"Estonian" = "에스토니아 사람";
+"Finnish" = "핀란드어";
+"French(Canada)" = "프랑스어 (캐나다)";
+"French(France)" = "프랑스어 (프랑스)";
+"Galician" = "갈리시아어";
+"Georgian" = "조르지아 주 사람";
+"German(Austria)" = "독일어 (오스트리아)";
+"German(Germany)" = "독일어 (독일)";
+"Greek" = "그리스 사람";
+"Hungarian" = "헝가리 인";
+"Indonesian" = "인도네시아 인";
+"Irish" = "아일랜드의";
+"Islandic" = "아이슬란드 어";
+"Kazakh" = "카자흐어";
+"Latvian" = "라트비아 사람";
+"Lithuanian" = "리투아니아 사람";
+"Macedonian" = "마케도니아 어";
+"Malay" = "말레이 사람";
+"Mongolian" = "몽고 어";
+"Norwegian" = "노르웨이어";
+"Polish" = "폴란드어";
+"Portuguese(Brazil)" = "포르투갈어 (브라질)";
+"Portuguese(Portugal)" = "포르투갈어 (포르투갈)";
+"Romanian" = "루마니아어";
+"Russian" = "러시아어";
+"Serbian(Cyrillic)" = "세르비아어 (키릴 자모)";
+"Serbian(Latin)" = "세르비아어 (라틴)";
+"Slovak" = "슬로바키아어";
+"Slovenian" = "슬로베니아어";
+"Spanish(Mexico)" = "스페인어 (멕시코)";
+"Spanish(Spain)" = "S스페인어 (스페인)";
+"Swedish" = "스웨덴어";
+"Tatar" = "타타르";
+"Turkish" = "터키어";
+"Ukrainian" = "우크라이나어";
+"Vietnamese" = "베트남어";
+"Swahili(Tanzania)" = "스와힐리어 (탄자니아)";
+"Bosnian" = "보스니아 어";
+"Cebuano(Philippines)" = "세부 아노 (필리핀)";
+"English(Philippines)" = "영어 (필리핀)";
+"Filipino(Philippines)" = "필리핀 (필리핀)";
+"Malagasy(Madagascar)" = "말라가시 (마다가스카르)";
+"Spanish(Colombia)" = "스페인어 (콜롬비아)";

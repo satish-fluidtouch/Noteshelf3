@@ -1,0 +1,83 @@
+/* 
+  MyScriptLanguageLocalizable.strings
+  Noteshelf
+
+  Created by Amar on 05/08/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+//Languages
+"Languages" = "Languages";
+"EnglishUS" = "English (US)";
+"EnglishUK" = "English (UK)";
+"ChineseS" = "Chinese (Simplified)";
+"ChineseT" = "Chinese (Traditional)";
+"German" = "German";
+"French" = "French";
+"Spanish" = "Spanish";
+"Italian" = "Italian";
+"Japanese" = "Japanese";
+"Portugal" = "Portuguese";
+"Korean" = "Korean";
+
+//New Recognition Languages
+"Africans" = "Afrikaans";
+"Albanian" = "Albanian";
+"Armenian" = "Armenian";
+"Azeri" = "Azeri";
+"Basque" = "Basque";
+"Belarusian" = "Belarusian";
+"Bulgarian" = "Bulgarian";
+"Catalan" = "Catalan";
+"Chinese(Hong Kong)" = "Chinese(Hong Kong)";
+"Chinese(Simplified)" = "Chinese(Simplified)";
+"Chinese(Taiwan)" = "Chinese(Taiwan)";
+"Croatian" = "Croatian";
+"Czech" = "Czech";
+"Danish" = "Danish";
+"Dutch(Belgium)" = "Dutch(Belgium)";
+"Dutch(Netherlands)" = "Dutch(Netherlands)";
+"English(Canada)" = "English(Canada)";
+"Estonian" = "Estonian";
+"Finnish" = "Finnish";
+"French(Canada)" = "French(Canada)";
+"French(France)" = "French(France)";
+"Galician" = "Galician";
+"Georgian" = "Georgian";
+"German(Austria)" = "German(Austria)";
+"German(Germany)" = "German(Germany)";
+"Greek" = "Greek";
+"Hungarian" = "Hungarian";
+"Indonesian" = "Indonesian";
+"Irish" = "Irish";
+"Islandic" = "Islandic";
+"Kazakh" = "Kazakh";
+"Latvian" = "Latvian";
+"Lithuanian" = "Lithuanian";
+"Macedonian" = "Macedonian";
+"Malay" = "Malay";
+"Mongolian" = "Mongolian";
+"Norwegian" = "Norwegian";
+"Polish" = "Polish";
+"Portuguese(Brazil)" = "Portuguese(Brazil)";
+"Portuguese(Portugal)" = "Portuguese(Portugal)";
+"Romanian" = "Romanian";
+"Russian" = "Russian";
+"Serbian(Cyrillic)" = "Serbian(Cyrillic)";
+"Serbian(Latin)" = "Serbian(Latin)";
+"Slovak" = "Slovak";
+"Slovenian" = "Slovenian";
+"Spanish(Mexico)" = "Spanish(Mexico)";
+"Spanish(Spain)" = "Spanish(Spain)";
+"Swedish" = "Swedish";
+"Tatar" = "Tatar";
+"Turkish" = "Turkish";
+"Ukrainian" = "Ukrainian";
+"Vietnamese" = "Vietnamese";
+"Swahili(Tanzania)" = "Swahili (Tanzania)";
+"Bosnian" = "Bosnian";
+"Cebuano(Philippines)" = "Cebuano (Philippines)";
+"English(Philippines)" = "English (Philippines)";
+"Filipino(Philippines)" = "Filipino (Philippines)";
+"Malagasy(Madagascar)" = "Malagasy (Madagascar)";
+"Spanish(Colombia)" = "Spanish (Colombia)";

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Classic</string>
+	<key>display_name_es</key>
+	<string>Clásico</string>
+	<key>display_name_ja</key>
+	<string>クラシック</string>
+	<key>display_name_it</key>
+	<string>Classico</string>
+	<key>display_name_fr</key>
+	<string>Classique</string>
+	<key>display_name_zh-Hans</key>
+	<string>经典</string>
+	<key>display_name_zh-Hant</key>
+	<string>經典</string>
+	<key>display_name_de</key>
+	<string>Klassisch</string>
+	<key>display_name_ko</key>
+	<string>고전적인</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>dynamic_id</key>
+	<integer>1</integer>
+	<key>template_id</key>
+	<string>Digital_Diaries_Classic</string>
+	<key>template_type</key>
+	<integer>4</integer>
+	<key>restrictsChangeTemplate</key>
+	<true/>
+</dict>
+</plist>

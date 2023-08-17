@@ -1,0 +1,7 @@
+#include "../Pods/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.beta.xcconfig"
+
+OTHER_MY_SCRIPT_LINKER_FLAGS[sdk=iphoneos*] = -Wl,-u,_MyScript2D -Wl,-u,_MyScriptDocument -Wl,-u,_MyScriptAnalyzer -Wl,-u,_MyScriptEngine -l"MyScriptAnalyzer" -l"MyScript2D" -Wl,-u,_MyScriptText -Wl,-u,_MyScriptShape -Wl,-u,_MyScriptPrediction -Wl,-u,_MyScriptInk -l"MyScriptInk" -l"MyScriptEngine" -l"MyScriptText" -l"MyScriptGesture" -l"MyScriptMath" -l"MyScriptPrediction" -l"iink" -Wl,-u,_MyScriptMath -Wl,-u,_MyScriptGesture -l"MyScriptDocument" -l"MyScriptShape"
+
+OTHER_LDFLAGS[sdk=iphoneos*] = $(OTHER_MY_SCRIPT_LINKER_FLAGS) $(inherited)
+
+OTHER_LDFLAGS[sdk=macosx*] = $(OTHER_MY_SCRIPT_LINKER_FLAGS) -ObjC -framework "FBLPromises" -framework "FirebaseABTesting" -framework "FirebaseAnalytics" -framework "FirebaseCore" -framework "FirebaseCrashlytics" -framework "FirebaseInstallations" -framework "FirebaseRemoteConfig" -framework "GoogleAppMeasurement" -framework "GoogleAppMeasurementIdentitySupport" -framework "GoogleDataTransport" -framework "GoogleUtilities" -framework "LocalAuthentication" -framework "MSAL" -framework "MSGraphClientSDK" -framework "MSGraphMSALAuthProvider" -framework "Reachability" -framework "nanopb"

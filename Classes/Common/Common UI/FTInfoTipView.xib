@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Medium.otf">
+            <string>SFProText-Medium</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTInfoTipView" customModule="NS2_Beta" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="7BN-kY-lD1" id="SPp-hv-hS6"/>
+                <outlet property="firstBtn" destination="LRT-tc-3s1" id="lA4-jF-10o"/>
+                <outlet property="lblSubTitle" destination="mAI-2m-JGg" id="D4V-4J-aeB"/>
+                <outlet property="lblTitle" destination="utV-sN-Wjk" id="8dA-tT-UMW"/>
+                <outlet property="secondBtn" destination="vXb-a2-YKf" id="G4c-El-UIw"/>
+                <outlet property="stackView" destination="vpL-Va-y6Q" id="t1Q-IR-Cnd"/>
+                <outlet property="stackViewTrailingConstraint" destination="6in-dc-L1z" id="90e-vh-ZR8"/>
+                <outlet property="tipIconImageView" destination="Gwj-27-FBf" id="R8O-hN-HWw"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7BN-kY-lD1">
+            <rect key="frame" x="0.0" y="0.0" width="306" height="135"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Vertical scrolling is here!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="utV-sN-Wjk">
+                    <rect key="frame" x="52" y="16" width="224" height="18"/>
+                    <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="15"/>
+                    <color key="textColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gwj-27-FBf">
+                    <rect key="frame" x="16" y="16" width="20" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Gwj-27-FBf" secondAttribute="height" multiplier="1:1" constant="1" id="42q-hb-ZB3"/>
+                        <constraint firstAttribute="width" constant="20" id="COL-nP-X3n"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Navigate your pages by scrolling up or down. Would you like to switch it vertical scrolling now?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAI-2m-JGg">
+                    <rect key="frame" x="52" y="42" width="224" height="43"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                    <color key="textColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="vpL-Va-y6Q">
+                    <rect key="frame" x="52" y="97" width="238" height="28"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LRT-tc-3s1" userLabel="firstBtn">
+                            <rect key="frame" x="0.0" y="0.0" width="116" height="28"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <accessibility key="accessibilityConfiguration" label="Back"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="28" id="Lbe-yM-IKL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
+                            <color key="tintColor" name="imageTintColor"/>
+                            <state key="normal" title="Keep Horizontal">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="7"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="firstBtnTapped:" destination="-1" eventType="touchUpInside" id="lId-q3-Fpg"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vXb-a2-YKf" userLabel="secondBtn">
+                            <rect key="frame" x="122" y="0.0" width="116" height="28"/>
+                            <color key="backgroundColor" red="0.2901960784" green="0.63137254899999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <accessibility key="accessibilityConfiguration" label="Back"/>
+                            <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
+                            <color key="tintColor" name="imageTintColor"/>
+                            <state key="normal" title="Switch To Vertical">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="secondBtnTapped:" destination="-1" eventType="touchUpInside" id="c3v-kI-aiC"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="krW-tq-pWU"/>
+            <color key="backgroundColor" red="0.24313725490196078" green="0.27450980392156865" blue="0.32156862745098036" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="vpL-Va-y6Q" secondAttribute="trailing" constant="16" id="6in-dc-L1z"/>
+                <constraint firstItem="Gwj-27-FBf" firstAttribute="top" secondItem="7BN-kY-lD1" secondAttribute="top" constant="16" id="9Yl-EK-FZ4"/>
+                <constraint firstItem="utV-sN-Wjk" firstAttribute="leading" secondItem="Gwj-27-FBf" secondAttribute="trailing" constant="16" id="Ghi-LR-fdu"/>
+                <constraint firstItem="mAI-2m-JGg" firstAttribute="top" secondItem="utV-sN-Wjk" secondAttribute="bottom" constant="8" id="IRD-cx-Vuk"/>
+                <constraint firstItem="utV-sN-Wjk" firstAttribute="top" secondItem="Gwj-27-FBf" secondAttribute="top" id="Jea-ep-RsY"/>
+                <constraint firstItem="Gwj-27-FBf" firstAttribute="leading" secondItem="7BN-kY-lD1" secondAttribute="leading" constant="16" id="KpF-YA-YmD"/>
+                <constraint firstItem="vpL-Va-y6Q" firstAttribute="top" secondItem="mAI-2m-JGg" secondAttribute="bottom" constant="12" id="Ovg-Sv-5V9"/>
+                <constraint firstAttribute="trailing" secondItem="utV-sN-Wjk" secondAttribute="trailing" constant="30" id="QnL-1O-Ewy"/>
+                <constraint firstItem="mAI-2m-JGg" firstAttribute="trailing" secondItem="utV-sN-Wjk" secondAttribute="trailing" id="YGJ-96-YHa"/>
+                <constraint firstAttribute="width" constant="306" id="ehe-49-bwc"/>
+                <constraint firstItem="mAI-2m-JGg" firstAttribute="leading" secondItem="utV-sN-Wjk" secondAttribute="leading" id="fW1-bJ-tJC"/>
+                <constraint firstItem="vpL-Va-y6Q" firstAttribute="leading" secondItem="mAI-2m-JGg" secondAttribute="leading" id="rP2-xo-458"/>
+                <constraint firstAttribute="bottom" secondItem="vpL-Va-y6Q" secondAttribute="bottom" constant="10" id="xcr-nw-zoc"/>
+                <constraint firstItem="Gwj-27-FBf" firstAttribute="width" secondItem="Gwj-27-FBf" secondAttribute="height" multiplier="1:1" constant="1" id="yfm-Zx-cew"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-754" y="729"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="imageTintColor">
+            <color red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

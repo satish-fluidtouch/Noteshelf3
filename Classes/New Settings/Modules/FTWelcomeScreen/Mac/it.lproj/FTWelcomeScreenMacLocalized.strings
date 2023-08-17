@@ -1,0 +1,16 @@
+/* 
+  FTWelcomeScreenMacLocalized.strings
+  Noteshelf
+
+  Created by Amar on 20/12/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+"WelcomeScreen1Title" = "Benvenuto in Noteshelf per Mac!";
+"WelcomeScreen1Info" = "Il compagno perfetto per la tua versione iOS.";
+"WelcomeScreen2Title" = "Prendere appunti su un grande schermo! 🤩";
+"WelcomeScreen2Info" = "Prendi appunti digitati, crea elenchi e caselle di controllo.\nScegli tra i molti stili e opzioni di formattazione.";
+"WelcomeScreen3Title" = "Rivedi facilmente le tue note!";
+"WelcomeScreen3Info" = "Apri le tue note in più finestre su un Mac.\nRivedi, annota e fai revisioni con assoluta facilità.";
+
+"Continue" = "Continua";

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PenType" id="gTV-IL-0wX" userLabel="FTPenTypeCollectionViewCell" customClass="FTPenTypeCollectionViewCell" customModule="NS3_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="72" height="108"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="72" height="108"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aDP-L3-hU0" userLabel="buttonBackground">
+                        <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="aDP-L3-hU0" secondAttribute="height" multiplier="1:1" id="yKY-2Y-lRS"/>
+                        </constraints>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yAM-EE-mF1" userLabel="viewPenImage">
+                        <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="2g8-Vu-oTd" userLabel="imageViewShadow">
+                                <rect key="frame" x="3" y="-55" width="66" height="163"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_mask" translatesAutoresizingMaskIntoConstraints="NO" id="tfY-xx-w9j" userLabel="imageViewIconMask">
+                                <rect key="frame" x="3" y="-55" width="66" height="163"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_color" translatesAutoresizingMaskIntoConstraints="NO" id="9F7-h7-eZv" userLabel="imageViewIconOverlay">
+                                <rect key="frame" x="3" y="-55" width="66" height="163"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="66" id="IeU-ee-ZS3"/>
+                                    <constraint firstAttribute="height" constant="163" id="ROl-s3-R9g"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_penEffect" translatesAutoresizingMaskIntoConstraints="NO" id="BqT-3t-Avx">
+                                <rect key="frame" x="3" y="-55" width="66" height="163"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_noiseBottom" translatesAutoresizingMaskIntoConstraints="NO" id="KpT-xL-KVx">
+                                <rect key="frame" x="3" y="-55" width="66" height="163"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.16" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_noiseTop" translatesAutoresizingMaskIntoConstraints="NO" id="crl-ye-K6w">
+                                <rect key="frame" x="3" y="-55" width="66" height="163"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="tfY-xx-w9j" firstAttribute="width" secondItem="9F7-h7-eZv" secondAttribute="width" id="1DS-rF-LJ5"/>
+                            <constraint firstItem="KpT-xL-KVx" firstAttribute="width" secondItem="9F7-h7-eZv" secondAttribute="width" id="2HJ-rz-I86"/>
+                            <constraint firstItem="KpT-xL-KVx" firstAttribute="bottom" secondItem="9F7-h7-eZv" secondAttribute="bottom" id="3CG-xf-WJz"/>
+                            <constraint firstItem="BqT-3t-Avx" firstAttribute="height" secondItem="9F7-h7-eZv" secondAttribute="height" id="5Bt-6x-nKy"/>
+                            <constraint firstItem="crl-ye-K6w" firstAttribute="width" secondItem="9F7-h7-eZv" secondAttribute="width" id="KyH-Ta-1n3"/>
+                            <constraint firstItem="KpT-xL-KVx" firstAttribute="height" secondItem="9F7-h7-eZv" secondAttribute="height" id="Pf9-Vi-a72"/>
+                            <constraint firstItem="BqT-3t-Avx" firstAttribute="width" secondItem="9F7-h7-eZv" secondAttribute="width" id="RPY-NU-wma"/>
+                            <constraint firstItem="2g8-Vu-oTd" firstAttribute="centerX" secondItem="yAM-EE-mF1" secondAttribute="centerX" id="UWZ-iq-xUD"/>
+                            <constraint firstItem="KpT-xL-KVx" firstAttribute="centerX" secondItem="yAM-EE-mF1" secondAttribute="centerX" id="XxJ-BN-Vxd"/>
+                            <constraint firstItem="crl-ye-K6w" firstAttribute="height" secondItem="9F7-h7-eZv" secondAttribute="height" id="ess-Ag-AKT"/>
+                            <constraint firstAttribute="bottom" secondItem="9F7-h7-eZv" secondAttribute="bottom" constant="-36" id="hgC-eC-Nga"/>
+                            <constraint firstItem="BqT-3t-Avx" firstAttribute="bottom" secondItem="9F7-h7-eZv" secondAttribute="bottom" id="iDe-zX-tly"/>
+                            <constraint firstItem="tfY-xx-w9j" firstAttribute="bottom" secondItem="9F7-h7-eZv" secondAttribute="bottom" id="iZc-Sk-RMV"/>
+                            <constraint firstItem="9F7-h7-eZv" firstAttribute="centerX" secondItem="yAM-EE-mF1" secondAttribute="centerX" id="kkM-gR-2eY"/>
+                            <constraint firstItem="crl-ye-K6w" firstAttribute="bottom" secondItem="9F7-h7-eZv" secondAttribute="bottom" id="m7R-oY-vcr"/>
+                            <constraint firstItem="tfY-xx-w9j" firstAttribute="height" secondItem="9F7-h7-eZv" secondAttribute="height" id="mKs-IC-TN0"/>
+                            <constraint firstItem="tfY-xx-w9j" firstAttribute="centerX" secondItem="yAM-EE-mF1" secondAttribute="centerX" id="mjc-5g-4CJ"/>
+                            <constraint firstItem="2g8-Vu-oTd" firstAttribute="width" secondItem="9F7-h7-eZv" secondAttribute="width" id="sCm-ed-x0b"/>
+                            <constraint firstItem="crl-ye-K6w" firstAttribute="centerX" secondItem="yAM-EE-mF1" secondAttribute="centerX" id="t7H-wi-Dja"/>
+                            <constraint firstItem="2g8-Vu-oTd" firstAttribute="height" secondItem="9F7-h7-eZv" secondAttribute="height" id="uNg-4T-cmE"/>
+                            <constraint firstAttribute="width" secondItem="yAM-EE-mF1" secondAttribute="height" multiplier="1:1" id="usO-0p-c1I"/>
+                            <constraint firstItem="BqT-3t-Avx" firstAttribute="centerX" secondItem="yAM-EE-mF1" secondAttribute="centerX" id="yj9-j4-CPg"/>
+                            <constraint firstItem="2g8-Vu-oTd" firstAttribute="bottom" secondItem="9F7-h7-eZv" secondAttribute="bottom" id="zta-P1-MIu"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="aDP-L3-hU0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4sl-rr-ZHp"/>
+                <constraint firstItem="aDP-L3-hU0" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="7nF-Lw-62M"/>
+                <constraint firstItem="aDP-L3-hU0" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="9J7-ax-3Dd"/>
+                <constraint firstItem="yAM-EE-mF1" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="AjH-Ny-v58"/>
+                <constraint firstItem="yAM-EE-mF1" firstAttribute="width" secondItem="aDP-L3-hU0" secondAttribute="width" id="dux-S8-syy"/>
+                <constraint firstItem="yAM-EE-mF1" firstAttribute="leading" secondItem="aDP-L3-hU0" secondAttribute="leading" id="tJ2-5H-kCd"/>
+            </constraints>
+            <connections>
+                <outlet property="buttonBackground" destination="aDP-L3-hU0" id="dtt-i5-dCX"/>
+                <outlet property="imageViewEffect" destination="BqT-3t-Avx" id="cNO-vJ-Xq5"/>
+                <outlet property="imageViewIconMask" destination="tfY-xx-w9j" id="THc-39-fYq"/>
+                <outlet property="imageViewIconOverlay" destination="9F7-h7-eZv" id="zUG-rR-8aA"/>
+                <outlet property="imageViewNoiseBottom" destination="KpT-xL-KVx" id="sik-Ox-e3P"/>
+                <outlet property="imageViewNoiseTop" destination="crl-ye-K6w" id="tLE-im-gVu"/>
+                <outlet property="imageViewShadow" destination="2g8-Vu-oTd" id="6fG-xG-zNU"/>
+                <outlet property="penBottomConstraint" destination="hgC-eC-Nga" id="qiI-vg-zWm"/>
+                <outlet property="viewPenImage" destination="yAM-EE-mF1" id="qlM-qF-s11"/>
+            </connections>
+            <point key="canvasLocation" x="139.84375" y="111.91406249999999"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="PenRack/ballpoint_color" width="66" height="163"/>
+        <image name="PenRack/ballpoint_mask" width="198" height="489"/>
+        <image name="PenRack/ballpoint_noiseBottom" width="66" height="163"/>
+        <image name="PenRack/ballpoint_noiseTop" width="66" height="163"/>
+        <image name="PenRack/ballpoint_penEffect" width="66" height="163"/>
+        <image name="PenRack/ballpoint_shadow" width="66" height="167"/>
+    </resources>
+</document>

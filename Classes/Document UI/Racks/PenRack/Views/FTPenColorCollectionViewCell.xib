@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PenColor" id="YYn-vx-cZI" userLabel="FTPenColorCollectionViewCell" customClass="FTPenColorCollectionViewCell" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aK-Rr-vgy">
+                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="Jqw-Ge-Pyq"/>
+                            <constraint firstAttribute="width" constant="36" id="Wf1-Xg-utl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                        <state key="normal" image="plusImage" backgroundImage="PenRack/emptycolor">
+                            <color key="titleColor" name="blueDodger"/>
+                        </state>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/emptycolor" translatesAutoresizingMaskIntoConstraints="NO" id="ddm-VA-PPJ" userLabel="imageViewEmpty">
+                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBX-3j-hzu" userLabel="viewColor">
+                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/selectioncolor" translatesAutoresizingMaskIntoConstraints="NO" id="6Lk-2P-HEj" userLabel="imageViewBorder">
+                                <rect key="frame" x="2" y="3" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="O2x-T9-Fkl"/>
+                                    <constraint firstAttribute="width" constant="32" id="cTZ-vL-sZA"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Lk-2P-HEj" firstAttribute="centerX" secondItem="kBX-3j-hzu" secondAttribute="centerX" id="AaU-M5-3mj"/>
+                            <constraint firstItem="6Lk-2P-HEj" firstAttribute="centerY" secondItem="kBX-3j-hzu" secondAttribute="centerY" constant="1" id="ujv-o7-FkR"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="18"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ddm-VA-PPJ" secondAttribute="trailing" id="1jS-Gb-6Ro"/>
+                <constraint firstAttribute="bottom" secondItem="kBX-3j-hzu" secondAttribute="bottom" id="4W7-fd-Ou7"/>
+                <constraint firstItem="kBX-3j-hzu" firstAttribute="leading" secondItem="YYn-vx-cZI" secondAttribute="leading" id="96c-gC-4hP"/>
+                <constraint firstItem="ddm-VA-PPJ" firstAttribute="top" secondItem="YYn-vx-cZI" secondAttribute="top" id="LfH-Ve-giZ"/>
+                <constraint firstAttribute="trailing" secondItem="kBX-3j-hzu" secondAttribute="trailing" id="Su8-pj-DVY"/>
+                <constraint firstItem="kBX-3j-hzu" firstAttribute="top" secondItem="YYn-vx-cZI" secondAttribute="top" id="X4n-xf-gfK"/>
+                <constraint firstItem="5aK-Rr-vgy" firstAttribute="centerY" secondItem="YYn-vx-cZI" secondAttribute="centerY" id="d6g-da-YyN"/>
+                <constraint firstItem="5aK-Rr-vgy" firstAttribute="centerX" secondItem="YYn-vx-cZI" secondAttribute="centerX" id="jNf-Ny-a93"/>
+                <constraint firstAttribute="bottom" secondItem="ddm-VA-PPJ" secondAttribute="bottom" id="oAI-EJ-7Hl"/>
+                <constraint firstItem="ddm-VA-PPJ" firstAttribute="leading" secondItem="YYn-vx-cZI" secondAttribute="leading" id="u0O-wU-dCP"/>
+            </constraints>
+            <connections>
+                <outlet property="editButton" destination="5aK-Rr-vgy" id="xWA-u5-O27"/>
+                <outlet property="imageViewBorder" destination="6Lk-2P-HEj" id="eGm-LD-yYe"/>
+                <outlet property="imageViewEmpty" destination="ddm-VA-PPJ" id="7FM-qF-ccc"/>
+                <outlet property="viewColor" destination="kBX-3j-hzu" id="f7R-g8-kp2"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="155"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="PenRack/emptycolor" width="29" height="29"/>
+        <image name="PenRack/selectioncolor" width="32" height="32"/>
+        <image name="plusImage" width="10" height="10"/>
+        <namedColor name="blueDodger">
+            <color red="0.32549019607843138" green="0.46666666666666667" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_es</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_ja</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_it</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_fr</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_zh-Hans</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_zh-Hant</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_de</key>
+	<string>Day and Night Journal</string>
+	<key>display_name_ko</key>
+	<string>Day and Night Journal</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>dynamic_id</key>
+	<integer>1</integer>
+	<key>template_id</key>
+	<string>Digital_Diaries_Day_and_Night_Journal</string>
+	<key>template_type</key>
+	<integer>7</integer>
+	<key>restrictsChangeTemplate</key>
+	<true/>
+</dict>
+</plist>

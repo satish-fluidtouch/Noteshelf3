@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="FTAddViewController" customClass="FTAddViewController" customModule="NS2_Beta" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellPDFSetting" id="KGk-i7-Jjw" userLabel="FTNewNotebookSettingTableViewCell" customClass="FTNewNotebookSettingTableViewCell" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z19-0Q-wN8" userLabel="titleLabel" customClass="FTSettingsLabel" customModule="NS2_Beta" customModuleProvider="target">
+                        <rect key="frame" x="16" y="12" width="219" height="20"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" name="titleColor"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="fontStyle">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9uT-3q-3kQ" userLabel="switchToToggle">
+                        <rect key="frame" x="255" y="6.5" width="51" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="49" id="4K4-dc-nWM"/>
+                            <constraint firstAttribute="height" constant="31" id="UJH-7f-0js"/>
+                        </constraints>
+                    </switch>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uwg-VV-Hqo" userLabel="actionButton">
+                        <rect key="frame" x="253" y="4.5" width="53" height="35"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="settingClicked:" destination="-1" eventType="touchUpInside" id="dFn-Tb-gjK"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" name="cellContentBgColor"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="9uT-3q-3kQ" secondAttribute="trailing" constant="16" id="I5n-23-78j"/>
+                    <constraint firstItem="Uwg-VV-Hqo" firstAttribute="top" secondItem="9uT-3q-3kQ" secondAttribute="top" constant="-2" id="WAS-2L-13b"/>
+                    <constraint firstItem="Z19-0Q-wN8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="do8-wr-CUy"/>
+                    <constraint firstItem="Uwg-VV-Hqo" firstAttribute="width" secondItem="9uT-3q-3kQ" secondAttribute="width" constant="4" id="fHl-TA-caM"/>
+                    <constraint firstItem="Uwg-VV-Hqo" firstAttribute="height" secondItem="9uT-3q-3kQ" secondAttribute="height" constant="4" id="jlV-iQ-QYG"/>
+                    <constraint firstItem="9uT-3q-3kQ" firstAttribute="leading" secondItem="Z19-0Q-wN8" secondAttribute="trailing" constant="20" id="kRu-Zt-FWb"/>
+                    <constraint firstItem="9uT-3q-3kQ" firstAttribute="centerY" secondItem="Z19-0Q-wN8" secondAttribute="centerY" id="sh6-Ru-lVW"/>
+                    <constraint firstItem="Uwg-VV-Hqo" firstAttribute="leading" secondItem="9uT-3q-3kQ" secondAttribute="leading" constant="-2" id="wgz-hf-XMk"/>
+                    <constraint firstItem="Z19-0Q-wN8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="yCb-MS-v7S"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="actionButton" destination="Uwg-VV-Hqo" id="faa-82-btp"/>
+                <outlet property="switchToToggle" destination="9uT-3q-3kQ" id="JSb-9l-5ab"/>
+                <outlet property="titleLabel" destination="Z19-0Q-wN8" id="Sli-MT-twb"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="155"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="cellContentBgColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleColor">
+            <color red="0.2199999988079071" green="0.2199999988079071" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

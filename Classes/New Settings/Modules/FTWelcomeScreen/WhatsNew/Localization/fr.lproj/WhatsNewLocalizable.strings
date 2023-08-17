@@ -1,0 +1,21 @@
+/*
+  WhatsNewLocalizable.strings
+  Noteshelf
+
+  Created by Amar on 05/08/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+//What's New
+"WhatsNewStartTitle" = "QUOI DE NEUF";
+"SeeWhatsNew" = "Voir les nouveautés";
+"ReviewApp" = "Noter l’app";
+"ShowMeTomorrow" = "Rappel demain";
+"SKIP" = "SAUTER";
+"NEXTALLCAPS" = "SUIVANT";
+
+"JoinUsTitle" = "Suivez nous";
+"JoinUsDescription" = "Nous publions des conseils, des astuces et des notes inspirantes prises dans Noteshelf du monde entier.";
+"MayBeLater" = "Peut-être plus tard";
+"FollowUs" = "Suivez nous";
+"WhatsNewLearnMore" = "En savoir plus";

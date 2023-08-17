@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FTSearchResultContentHeader" id="EOs-6H-kSA" userLabel="FTSearchResultContentHeader" customClass="FTSearchResultContentHeader" customModule="NS3_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="706" height="64"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReH-2W-LG3">
+                    <rect key="frame" x="24" y="15.666666666666666" width="603.33333333333337" height="26.333333333333336"/>
+                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="22"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="2 pages" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57S-T5-Wvj">
+                    <rect key="frame" x="643.33333333333337" y="21" width="46.666666666666629" height="16"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                    <color key="textColor" name="lightTitleColor_50"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Notes" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DhM-Kf-AGd">
+                    <rect key="frame" x="24" y="46" width="603.33333333333337" height="16"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
+                    <color key="textColor" name="lightTitleColor_50"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="qYh-jZ-p8A"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="57S-T5-Wvj" firstAttribute="leading" secondItem="DhM-Kf-AGd" secondAttribute="trailing" constant="16" id="1Yp-zQ-197"/>
+                <constraint firstAttribute="trailing" secondItem="57S-T5-Wvj" secondAttribute="trailing" constant="16" id="4ew-i1-fmc">
+                    <variation key="heightClass=regular-widthClass=regular" constant="24"/>
+                </constraint>
+                <constraint firstItem="ReH-2W-LG3" firstAttribute="leading" secondItem="EOs-6H-kSA" secondAttribute="leading" constant="24" id="IzM-lP-aFh">
+                    <variation key="heightClass=regular-widthClass=regular" constant="24"/>
+                </constraint>
+                <constraint firstItem="qYh-jZ-p8A" firstAttribute="bottom" secondItem="DhM-Kf-AGd" secondAttribute="bottom" constant="2" id="KdL-yb-q9T"/>
+                <constraint firstItem="DhM-Kf-AGd" firstAttribute="top" secondItem="ReH-2W-LG3" secondAttribute="bottom" constant="4" id="OXC-VS-Nrq"/>
+                <constraint firstItem="57S-T5-Wvj" firstAttribute="centerY" secondItem="ReH-2W-LG3" secondAttribute="centerY" id="Pdc-vm-Pxk"/>
+                <constraint firstItem="DhM-Kf-AGd" firstAttribute="leading" secondItem="ReH-2W-LG3" secondAttribute="leading" id="rff-FD-F3W"/>
+                <constraint firstItem="57S-T5-Wvj" firstAttribute="leading" secondItem="ReH-2W-LG3" secondAttribute="trailing" constant="16" id="t53-Q3-ID7"/>
+            </constraints>
+            <connections>
+                <outlet property="lblCategory" destination="DhM-Kf-AGd" id="knn-zn-gdh"/>
+                <outlet property="lblMatchCount" destination="57S-T5-Wvj" id="eYw-Od-oiQ"/>
+                <outlet property="lblTitle" destination="ReH-2W-LG3" id="ctk-WU-w4I"/>
+            </connections>
+            <point key="canvasLocation" x="-976.81159420289862" y="-624.45652173913049"/>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <namedColor name="lightTitleColor_50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

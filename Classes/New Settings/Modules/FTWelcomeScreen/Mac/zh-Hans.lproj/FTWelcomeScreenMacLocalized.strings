@@ -1,0 +1,16 @@
+/* 
+  FTWelcomeScreenMacLocalized.strings
+  Noteshelf
+
+  Created by Amar on 20/12/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+"WelcomeScreen1Title" = "欢迎使用Mac版Noteshelf！";
+"WelcomeScreen1Info" = "您的iOS版本的完美伴侣。";
+"WelcomeScreen2Title" = "在大屏幕上做笔记！ 🤩";
+"WelcomeScreen2Info" = "键入您的笔记，创建列表和复选框。 从多种样式和格式选项中进行选择。";
+"WelcomeScreen3Title" = "轻松修改笔记！";
+"WelcomeScreen3Info" = "在Mac上的多个窗口中打开笔记。 绝对轻松地对其进行审阅，注释和修订。";
+
+"Continue" = "继续";

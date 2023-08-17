@@ -1,0 +1,83 @@
+/* 
+  MyScriptLanguageLocalizable.strings
+  Noteshelf
+
+  Created by Amar on 05/08/19.
+  Copyright © 2019 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+// Languages
+"Languages" = "识别语言";
+"EnglishUS" = "英语（美国）";
+"EnglishUK" = "英语（英国）";
+"ChineseS" = "汉语（简体）";
+"ChineseT" = "汉语（繁体）";
+"German" = "德语";
+"French" = "法语";
+"Spanish" = "西班牙语";
+"Italian" = "意大利语";
+"Japanese" = "日语";
+"Portugal" = "葡萄牙语";
+"Korean" = "韩国语";
+
+//New MyScript Languages
+"Africans" = "非洲人";
+"Albanian" = "阿尔巴尼亚人";
+"Armenian" = "亚美尼亚";
+"Azeri" = "里人";
+"Basque" = "巴斯克";
+"Belarusian" = "白俄罗斯";
+"Bulgarian" = "保加利亚语";
+"Catalan" = "加泰罗尼亚";
+"Chinese(Hong Kong)" = "中国（香港）";
+"Chinese(Simplified)" = "简体中文）";
+"Chinese(Taiwan)" = "中国（台湾）";
+"Croatian" = "克罗地亚";
+"Czech" = "捷克";
+"Danish" = "丹麦";
+"Dutch(Belgium)" = "荷兰（比利时）";
+"Dutch(Netherlands)" = "荷兰（荷兰）";
+"English(Canada)" = "英语（加拿大）";
+"Estonian" = "爱沙尼亚语";
+"Finnish" = "芬兰";
+"French(Canada)" = "法语（加拿大）";
+"French(France)" = "法国（法国）";
+"Galician" = "加利西亚";
+"Georgian" = "格鲁吉亚";
+"German(Austria)" = "德语（奥地利）";
+"German(Germany)" = "德国（德国）";
+"Greek" = "希腊语";
+"Hungarian" = "匈牙利";
+"Indonesian" = "印度尼西亚";
+"Irish" = "爱尔兰的";
+"Islandic" = "岛式";
+"Kazakh" = "哈萨克人";
+"Latvian" = "拉脱维亚";
+"Lithuanian" = "立陶宛";
+"Macedonian" = "马其顿";
+"Malay" = "马来语";
+"Mongolian" = "蒙";
+"Norwegian" = "挪威";
+"Polish" = "抛光";
+"Portuguese(Brazil)" = "葡萄牙语（巴西）";
+"Portuguese(Portugal)" = "葡萄牙语（葡萄牙）";
+"Romanian" = "罗马尼亚";
+"Russian" = "俄语";
+"Serbian(Cyrillic)" = "塞尔维亚语（西里尔文）";
+"Serbian(Latin)" = "塞尔维亚语（拉丁）";
+"Slovak" = "斯洛伐克";
+"Slovenian" = "斯洛文尼亚";
+"Spanish(Mexico)" = "西班牙语（墨西哥）";
+"Spanish(Spain)" = "西班牙语（西班牙）";
+"Swedish" = "瑞典";
+"Tatar" = "鞑靼";
+"Turkish" = "土耳其";
+"Ukrainian" = "乌克兰";
+"Vietnamese" = "越南";
+"Swahili(Tanzania)" = "斯瓦希里语（坦桑尼亚）";
+"Bosnian" = "波斯尼亚";
+"Cebuano(Philippines)" = "宿务（菲律宾）";
+"English(Philippines)" = "英语（菲律宾）";
+"Filipino(Philippines)" = "菲律宾语（菲律宾）";
+"Malagasy(Madagascar)" = "马达加斯加（马达加斯加）";
+"Spanish(Colombia)" = "西班牙语（哥伦比亚）";

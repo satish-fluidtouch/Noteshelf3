@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
+            <connections>
+                <outlet property="bgButton" destination="Y1P-7z-Lda" id="wfd-gL-I54"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="SUN-Nj-vaK"/>
+                <outlet property="tintButton" destination="Y2U-6N-kSr" id="VN8-ci-6IQ"/>
+                <outlet property="toolButton" destination="Msf-2J-Yfv" id="cry-HR-goz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="40" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1P-7z-Lda" userLabel="BgButton" customClass="FTToolBgButton" customModule="NS3_Beta" customModuleProvider="target">
+                    <rect key="frame" x="2" y="6" width="36" height="36"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" name="white100"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                </button>
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2U-6N-kSr" userLabel="TintButton">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="48"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msf-2J-Yfv" userLabel="DeskToolButton">
+                    <rect key="frame" x="0.0" y="0.0" width="40" height="48"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="YxY-5v-wtb"/>
+                        <constraint firstAttribute="height" constant="48" id="mVq-mB-S3h"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="labelColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="desk_tool_pen"/>
+                    <connections>
+                        <action selector="deskToolButtonTapped:" destination="-1" eventType="touchUpInside" id="QVQ-6n-HsQ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Y1P-7z-Lda" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="EMj-v4-nbp"/>
+                <constraint firstItem="Y1P-7z-Lda" firstAttribute="width" secondItem="Msf-2J-Yfv" secondAttribute="width" constant="-4" id="Has-YK-ndC"/>
+                <constraint firstItem="Msf-2J-Yfv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="PJj-Tr-t2B"/>
+                <constraint firstItem="Y2U-6N-kSr" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VYv-tQ-pAL"/>
+                <constraint firstItem="Msf-2J-Yfv" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="iro-77-7kd"/>
+                <constraint firstItem="Msf-2J-Yfv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mVZ-0V-Sg4"/>
+                <constraint firstItem="Msf-2J-Yfv" firstAttribute="height" secondItem="Y2U-6N-kSr" secondAttribute="height" id="nuz-PI-kdJ"/>
+                <constraint firstItem="Y1P-7z-Lda" firstAttribute="height" secondItem="Msf-2J-Yfv" secondAttribute="height" constant="-12" id="tCF-QP-dqh"/>
+                <constraint firstItem="Y2U-6N-kSr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="tFC-wB-JGZ"/>
+                <constraint firstItem="Msf-2J-Yfv" firstAttribute="width" secondItem="Y2U-6N-kSr" secondAttribute="width" id="uD7-gq-sRc"/>
+                <constraint firstItem="Y1P-7z-Lda" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uIA-SD-GtM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="112" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="desk_tool_pen" width="20" height="20"/>
+        <namedColor name="white100">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

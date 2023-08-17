@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="mac" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB" customClass="FTShelfCategoryHeaderView" customModule="NS2_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="800" height="32"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K76-dg-grx" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="32"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABw-3z-Hi7" userLabel="Title">
+                            <rect key="frame" x="10" y="5" width="43" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="13" id="N5L-3s-JE3"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IXv-Sv-bGG" userLabel="Hover Add Action" customClass="FTMacToolbarButton" customModule="NS2_Beta" customModuleProvider="target">
+                            <rect key="frame" x="718" y="8" width="16" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="IXv-Sv-bGG" secondAttribute="height" multiplier="1:1" id="F1N-Sb-2dd"/>
+                                <constraint firstAttribute="height" constant="16" id="rGb-5O-VlL"/>
+                            </constraints>
+                            <state key="normal" image="mac_plus"/>
+                            <connections>
+                                <action selector="didTapOnHoverAddAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="JUy-8A-lvp"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y58-Zs-vCc" userLabel="Hover Toggle Action">
+                            <rect key="frame" x="742" y="1" width="48" height="31"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="didTapOnHoverToggleAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Txl-z2-6zV"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="ABw-3z-Hi7" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="IXv-Sv-bGG" secondAttribute="leading" constant="-4" id="0cf-P5-fbc"/>
+                        <constraint firstAttribute="trailing" secondItem="y58-Zs-vCc" secondAttribute="trailing" constant="10" id="Kfy-OK-jc0"/>
+                        <constraint firstItem="ABw-3z-Hi7" firstAttribute="leading" secondItem="K76-dg-grx" secondAttribute="leading" constant="10" id="UzN-tE-TLC"/>
+                        <constraint firstItem="IXv-Sv-bGG" firstAttribute="centerY" secondItem="K76-dg-grx" secondAttribute="centerY" id="W3p-KB-FF0"/>
+                        <constraint firstItem="IXv-Sv-bGG" firstAttribute="trailing" secondItem="y58-Zs-vCc" secondAttribute="leading" constant="-8" id="bc3-kV-tpD"/>
+                        <constraint firstItem="y58-Zs-vCc" firstAttribute="centerY" secondItem="IXv-Sv-bGG" secondAttribute="centerY" id="mVZ-y3-FdO"/>
+                        <constraint firstAttribute="bottom" secondItem="ABw-3z-Hi7" secondAttribute="bottom" constant="7" id="v4d-Vs-bJI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="K76-dg-grx" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="40l-3r-14i"/>
+                <constraint firstItem="K76-dg-grx" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="P15-uW-Vgb"/>
+                <constraint firstItem="K76-dg-grx" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="fEO-pW-k5h"/>
+                <constraint firstItem="K76-dg-grx" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="jWn-bw-bPM"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="hoverAddActionButton" destination="IXv-Sv-bGG" id="mpJ-Lm-ybF"/>
+                <outlet property="hoverContentView" destination="K76-dg-grx" id="eZx-al-1cU"/>
+                <outlet property="hoverToggleActionButton" destination="y58-Zs-vCc" id="Bhr-hf-ism"/>
+                <outlet property="titleLabel" destination="ABw-3z-Hi7" id="aAu-gb-8Yk"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="153"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="mac_plus" width="14" height="14"/>
+    </resources>
+</document>

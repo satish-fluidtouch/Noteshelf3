@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Aeonik-Medium.otf">
+            <string>Aeonik-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="BR1-JX-3sG" customClass="FTTagCollectionCell" customModule="FTCommon" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="289" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7Dr-Rv-u6v">
+                <rect key="frame" x="0.0" y="0.0" width="289" height="30"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="eXL-Us-X6t">
+                        <rect key="frame" x="10" y="4" width="269" height="22"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cross-remove-sign" translatesAutoresizingMaskIntoConstraints="NO" id="ptQ-Jm-05p">
+                                <rect key="frame" x="0.0" y="0.0" width="24" height="22"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hai-Mb-QH5">
+                                <rect key="frame" x="32" y="0.0" width="237" height="22"/>
+                                <fontDescription key="fontDescription" name="Aeonik-Medium" family="Aeonik" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="eXL-Us-X6t" secondAttribute="bottom" constant="4" id="Abj-jT-nvS"/>
+                    <constraint firstAttribute="trailing" secondItem="eXL-Us-X6t" secondAttribute="trailing" constant="10" id="Myi-07-uQX"/>
+                    <constraint firstItem="eXL-Us-X6t" firstAttribute="leading" secondItem="7Dr-Rv-u6v" secondAttribute="leading" constant="10" id="VjP-lg-1pL"/>
+                    <constraint firstItem="eXL-Us-X6t" firstAttribute="top" secondItem="7Dr-Rv-u6v" secondAttribute="top" constant="4" id="t0M-KA-2Gz"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="289" height="100"/>
+            <connections>
+                <outlet property="iconView" destination="ptQ-Jm-05p" id="0Ir-Rb-FTl"/>
+                <outlet property="label" destination="Hai-Mb-QH5" id="VLC-DT-STP"/>
+            </connections>
+            <point key="canvasLocation" x="-244" y="159"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="cross-remove-sign" width="24" height="24"/>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
