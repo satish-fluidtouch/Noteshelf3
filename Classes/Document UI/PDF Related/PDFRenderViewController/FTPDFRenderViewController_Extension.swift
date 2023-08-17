@@ -802,6 +802,20 @@ extension FTPDFRenderViewController {
             self.present(alertController, animated: true, completion: nil);
         }
     }
+    
+    @objc func topPadding() -> CGFloat {
+        var yOffSet: CGFloat = 0
+    #if !targetEnvironment(macCatalyst)
+        if self.pageLayoutHelper.layoutType == .horizontal
+            , self.toolBarState() == .normal {
+            yOffSet += self.deskToolBarHeight()
+            self.contentHolderView.clipsToBounds = false;
+        } else if (self.pageLayoutHelper.layoutType == .vertical && self.toolBarState() == .shortCompact) {
+            yOffSet += self.deskToolBarHeight()
+        }
+    #endif
+        return yOffSet
+    }
 }
 
 extension FTPDFRenderViewController: FTQuickNoteSaveDelegate {

@@ -149,7 +149,7 @@ extension FTPDFRenderViewController {
         case .deskModeEraser:
             FTEraserRackViewController.setRackType(penTypeRack: FTRackData(type: .eraser, userActivity: activity))
             let eraserVc = FTEraserRackViewController.showPopOver(presentingController: self, sourceView: toolbarItem)
-            (eraserVc as? FTEraserRackViewController)?.eraserDelegate = (self as? FTEraserRackControllerDelegate)
+            (eraserVc as? FTEraserRackViewController)?.eraserDelegate = self
         case .deskModeShape:
             FTShapesRackViewController.setRackType(penTypeRack: FTRackData(type: .shape, userActivity: activity))
             FTShapesRackViewController.showPopOver(presentingController: self, sourceView: toolbarItem)

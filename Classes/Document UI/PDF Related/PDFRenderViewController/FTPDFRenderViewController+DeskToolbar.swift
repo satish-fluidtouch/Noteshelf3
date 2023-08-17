@@ -215,10 +215,14 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
     }
     
     @objc func deskToolBarHeight() -> CGFloat {
+    #if !targetEnvironment(macCatalyst)
         if let documentController = self.parent as? FTDocumentRenderViewController {
             return documentController.deskToolBarHeight()
         }
         return CGFloat.zero
+    #else
+        return CGFloat.zero
+    #endif
     }
 
     @objc func toolBarState() -> FTScreenMode {
