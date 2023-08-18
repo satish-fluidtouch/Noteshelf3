@@ -622,7 +622,9 @@
                                 </view>
                                 <color key="backgroundColor" name="regularToolbarBgColor"/>
                                 <blurEffect style="regular"/>
-                                <variation key="userInterfaceIdiom=mac" hidden="NO"/>
+                                <variation key="userInterfaceIdiom=mac" hidden="NO">
+                                    <color key="backgroundColor" name="macTextToolbarBgColor"/>
+                                </variation>
                             </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uhS-Da-KEg">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="48"/>
@@ -848,6 +850,9 @@
                                     <constraint firstItem="ucX-qv-OfQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mNu-Xx-GjJ" secondAttribute="trailing" constant="10" id="uTk-Ev-qI4"/>
                                     <constraint firstAttribute="bottom" secondItem="ucX-qv-OfQ" secondAttribute="bottom" constant="4" id="ykt-59-KT2"/>
                                 </constraints>
+                                <variation key="userInterfaceIdiom=mac">
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </variation>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Geh-hE-X7u" userLabel="compactView">
                                 <rect key="frame" x="0.0" y="10" width="768" height="34"/>
@@ -1797,6 +1802,9 @@
         </namedColor>
         <namedColor name="gray75">
             <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="macTextToolbarBgColor">
+            <color red="0.96078431372549022" green="0.94117647058823528" blue="0.92156862745098034" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="popoverBgColor">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
