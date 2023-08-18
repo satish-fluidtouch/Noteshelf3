@@ -44,7 +44,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         if FTWhatsNewManger.shouldShowWhatsNew() {
             FTWhatsNewManger.start()
         }
-        _ = FTIAPManager.shared
+
         FTiRateManager.configureiRate(delegate: self);
         FTCloudSetupManager.configure()
         DataServices.shared().initializeDatabase()
