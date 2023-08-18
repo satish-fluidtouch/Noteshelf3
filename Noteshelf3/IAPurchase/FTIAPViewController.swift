@@ -31,8 +31,8 @@ class FTIAPViewController: UIViewController {
         super.viewDidLoad()
         self.preferredContentSize = CGSize(width: 700, height: 740);
         initializeActivityIndicator()
-        
-        self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20);
+
+        self.setTitleToPurchaseButton(title:"")
         
         self.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 44);
         self.subheadingLabel?.font = UIFont.appFont(for: .bold, with: 13);
@@ -41,8 +41,6 @@ class FTIAPViewController: UIViewController {
         self.titleLabel?.text = "iap.title".localized
         self.subheadingLabel?.text = "iap.onetimepurchase".localized
         self.messageLabel?.text = "iap.message".localized
-        
-        self.upgradeButton?.configuration?.title = "";
 
         self.privacyButton?.setTitle("iap.privacy".localized, for: .normal);
         self.restorePurchaseButton?.setTitle("iap.restorePurchase".localized, for: .normal);
@@ -98,6 +96,11 @@ class FTIAPViewController: UIViewController {
     @IBAction func closeAction(_ sender: Any) {
         self.dismiss(animated: true)
     }
+    private func setTitleToPurchaseButton(title:String) {
+        let attributedTitle = NSAttributedString(string: title,
+                                                 attributes: [.font: UIFont.clearFaceFont(for: .medium, with: 20)])
+        self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
+    }
 }
 
 // MARK: - ViewModelDelegate
@@ -106,8 +109,7 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
         if let product = viewModel.getProduct(at: 0) {
             guard let price = FTIAPManager.shared.getPriceFormatted(for: product) else { return }
             let title = String(format: "iap.purchase".localized, price);
-            self.upgradeButton?.configuration?.title = title;
-            self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20);
+            self.setTitleToPurchaseButton(title:title)
         }
     }
 

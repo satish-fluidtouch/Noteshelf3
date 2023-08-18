@@ -160,10 +160,26 @@ extension FTExportDataViewController : UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTExportDataInfoCell", for: indexPath) as? FTExportDataInfoCell else {
-                fatalError("Programmer error - Couldnot find FTExportDataMessageCell")
+                fatalError("Programmer error - Could not find FTExportDataMessageCell")
             }
-            cell.messageLabel.text = "\("export_description1".localized)" + "\n\n" + "\("export_description2".localized)"
+
+            let description1 = NSAttributedString(string: "export_description1".localized)
+            let description2 = NSAttributedString(string: "export_description2".localized)
+
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(description1)
+            attributedText.append(NSAttributedString(string: "\n\n"))
+            attributedText.append(description2)
+
+            let range = (description2.string as NSString).range(of: ".noteshelf")
+            let boldItalicAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.appFont(for: .bold, with: 17).boldItalic()
+            ]
+            attributedText.addAttributes(boldItalicAttributes, range: NSRange(location: description1.length + 2 + range.location, length: range.length))
+
             cell.messageLabel.addCharacterSpacing(kernValue: -0.41)
+            cell.messageLabel.attributedText = attributedText
+
             return cell
         }  else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTExportDataFailedItemCell", for: indexPath) as? FTExportDataFailedItemCell else {
