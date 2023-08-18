@@ -32,8 +32,9 @@ struct FTToastView:  View {
         }
         .frame(width: size.width)
         .frame(minHeight: size.height)
-        .background(Color.appColor(.white90))
+        .background(Color.appColor(.toastBgColor))
         .cornerRadius(size.height/2.0)
+        .border(Color.appColor(.black10), width: 1.0, cornerRadius: size.height/2.0)
         .shadow(color: Color.primary.opacity(0.2), radius: 60, x: 0, y: 10)
         .onAppear {
             size = toastConfig.getToastSize()

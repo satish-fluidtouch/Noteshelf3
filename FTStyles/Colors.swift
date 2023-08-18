@@ -92,8 +92,10 @@ public enum AssetsColor: String, CaseIterable {
     case toolbarOutline
     case hModeToolbarBgColor
     case regularToolbarBgColor
+    case macTextToolbarBgColor
     case eraserBtnUnselected
-    
+    case toastBgColor
+
     // System
     case black1
     case black2

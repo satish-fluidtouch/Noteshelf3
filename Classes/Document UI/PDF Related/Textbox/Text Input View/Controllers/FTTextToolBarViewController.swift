@@ -97,9 +97,6 @@ class FTTextToolBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-#if targetEnvironment(macCatalyst)
-        self.rootToolsView?.backgroundColor = FTToolbarConfig.stickyBgColor
-#endif
         switchMode()
     }
     
