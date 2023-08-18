@@ -52,6 +52,7 @@ extension FTAudioPlayerController {
         
         button.menu = UIMenu(children: actions)
         button.showsMenuAsPrimaryAction = true
+        self.updateSpeedIcon(button)
     }
     
     func didTapOption(identifier: String, button: UIButton) {
@@ -106,8 +107,34 @@ extension FTAudioPlayerController {
             self.delegate.audioPlayerDidClose?(self)
         case .speed:
             self.applyRate()
+            self.updateSpeedIcon(button)
         case .none:
             print("None")
         }
+    }
+    
+    @objc func updateSpeedIcon(_ button: UIButton) {
+        if let menu = button.menu?.children.first as? UIMenu {
+            let elements = menu.children
+            elements.forEach { eachElement in
+                if let action = eachElement as? UIAction, action.identifier.rawValue == FTAudioMoreOption.speed.rawValue {
+                    action.image = imageForSpeed()
+                }
+            }
+        }
+    }
+    
+     func imageForSpeed() -> UIImage? {
+        var image = UIImage(named: "normal")
+        if self.playbackRate == KSlowRate {
+            image = UIImage(named: "slow")
+        } else if self.playbackRate == KNormalRate {
+             image = UIImage(named: "normal")
+        } else if self.playbackRate == KFastRate {
+            image = UIImage(named: "fast")
+        } else if self.playbackRate == KDoubleRate {
+            image = UIImage(named: "double")
+        }
+        return image?.withTintColor(.label)
     }
 }
