@@ -372,6 +372,7 @@
 		47CE079D2A0A317800E15028 /* FTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2CA51E027D72007B5CAD /* FTUtils.m */; };
 		47CE079F2A0A317A00E15028 /* FTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2CA51E027D72007B5CAD /* FTUtils.m */; };
 		47D3E3F02A8F5C83004C70A7 /* FTTemplateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D3E3EF2A8F5C83004C70A7 /* FTTemplateImageView.swift */; };
+		47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		47F39E872A04DF7400CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F39E892A04E0FB00CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		520DA2A52A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */; };
@@ -11136,6 +11137,7 @@
 				52550F1D2A70FCC100E7A1E7 /* FTTemplatesStore.storyboard in Resources */,
 				BAF0DE8D2A6FE6DC006D293B /* (null) in Resources */,
 				478142BE2A85F33A0029378B /* templates_zh-Hans.plist in Resources */,
+				47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */,
 				478142C12A85F33A0029378B /* templates_en.plist in Resources */,
 				52550F582A70FCC100E7A1E7 /* templates.plist in Resources */,
 				478142C42A85F33A0029378B /* templates_es.plist in Resources */,
