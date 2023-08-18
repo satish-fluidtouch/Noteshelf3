@@ -13,7 +13,7 @@ struct FTHandWritingView: View {
     @State var selecteStyle:WrittingSyle = WrittingSyle.rightTop
     @EnvironmentObject var premiumUser: FTPremiumUser;
     @EnvironmentObject var viewModel: FTHandWringViewModel;
-    
+
     let columns = [
         GridItem(.fixed(133)),
         GridItem(.fixed(133))
@@ -39,9 +39,11 @@ struct FTHandWritingView: View {
                             Text("Language".localized)
                                 .foregroundColor(Color.label)
                             if !premiumUser.isPremiumUser {
-                                Image("premium_icon", bundle: nil)
+                                Image("premium_dynamic", bundle: nil)
                                     .resizable()
-                                    .frame(width: 24,height: 24)
+                                    .scaledToFit()
+                                    .frame(height: 24)
+                                Spacer()
                             }
                         }
                     }

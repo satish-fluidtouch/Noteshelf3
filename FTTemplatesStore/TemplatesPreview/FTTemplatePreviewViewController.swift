@@ -241,11 +241,12 @@ private extension FTTemplatePreviewViewController {
 
         if let styles {
             for (index, _) in styles.enumerated() {
-                let previewImageView = UIImageView(frame: CGRect(x: x , y: 0, width: viewWidth , height: viewHeight))
+                let previewImageView = FTTemplateImageView(frame: CGRect(x: x , y: 0, width: viewWidth , height: viewHeight))
                 previewImageView.layer.cornerRadius = 10
                 previewImageView.clipsToBounds = true
                 previewImageViews.append(previewImageView)
                 scrollView.addSubview(previewImageView)
+                previewImageView.configureImageViewWith(template: self.template)
                 updatePreviewAt(index: index)
                 x += viewWidth
             }
