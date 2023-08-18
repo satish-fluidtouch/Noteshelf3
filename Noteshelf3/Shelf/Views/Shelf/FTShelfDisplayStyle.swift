@@ -14,9 +14,9 @@ public enum FTShelfDisplayStyle: Int {
     var displayTitle: String {
         switch self {
         case .Gallery:
-            return "shelf.view.gallery".localized
+            return "shelf.view.largeNotebooks".localized
         case .Icon:
-            return "shelf.view.icons".localized
+            return "shelf.view.smallNotebooks".localized
         case .List:
             return "shelf.view.list".localized
         }
@@ -25,9 +25,9 @@ public enum FTShelfDisplayStyle: Int {
     var iconName: String {
         switch self {
         case .Gallery:
-            return "squares.below.rectangle"
+            return "squareshape.split.2x2"
         case .Icon:
-            return "rectangle.grid.2x2"
+            return "squareshape.split.3x3"
         case .List:
             return "list.bullet"
         }

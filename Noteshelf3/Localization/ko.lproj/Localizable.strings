@@ -714,7 +714,7 @@
 "ResolveConflict" = "녹음";
 "ResolveConflictMessage" = "녹음 중...";
 "Restore" = "페이지 복구";
-"ResultsFor" = "다시하기/실행취소";
+"ResultsFor" = "%@에 대한 결과";
 "RetakeKey" = "3-손가락 오른쪽 스와이프/왼쪽 스와이프";
 "Right" = "새 페이지를 추가하려면 놓아주세요.";
 "Rotate" = "나중에 알려주세요";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "당신의 휴지통은 비어 있습니다.";
 "shelf.view.gallery" = "갤러리";
 "shelf.view.icons" = "아이콘";
+"shelf.view.largeNotebooks" = "큰 노트북";
 "shelf.view.list" = "목록";
+"shelf.view.smallNotebooks" = "작은 노트북";
 "shelfItem.contexualMenu.addToStarred" = "스타에 추가";
 "shelfItem.contexualMenu.changeCover" = "표지 변경";
 "shelfItem.contexualMenu.getInfo" = "정보 얻기";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM

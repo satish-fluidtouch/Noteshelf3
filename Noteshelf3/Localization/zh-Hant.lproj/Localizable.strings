@@ -714,7 +714,7 @@
 "ResolveConflict" = "錄音";
 "ResolveConflictMessage" = "錄音進行中...";
 "Restore" = "恢復頁面";
-"ResultsFor" = "重做/撤銷";
+"ResultsFor" = "結果為 %@";
 "RetakeKey" = "3-指右滑/左滑";
 "Right" = "發布以添加新頁面";
 "Rotate" = "稍後提醒";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "您的垃圾桶是空的";
 "shelf.view.gallery" = "畫廊";
 "shelf.view.icons" = "圖示";
+"shelf.view.largeNotebooks" = "大筆記本";
 "shelf.view.list" = "列表";
+"shelf.view.smallNotebooks" = "小筆記本";
 "shelfItem.contexualMenu.addToStarred" = "加入星標";
 "shelfItem.contexualMenu.changeCover" = "更改封面";
 "shelfItem.contexualMenu.getInfo" = "獲取資訊";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM
