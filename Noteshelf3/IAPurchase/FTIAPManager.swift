@@ -27,7 +27,7 @@ extension FTPremiumUser {
         self.updateNoOfBooks(nil);
     }
     
-    private func updateNoOfBooks(_ onCompletion: (() -> ())?) {
+    func updateNoOfBooks(_ onCompletion: (() -> ())?) {
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { allItems in
             FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
                 trashCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in
