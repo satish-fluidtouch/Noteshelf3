@@ -678,7 +678,7 @@ extension FTShelfSplitViewController: MFMailComposeViewControllerDelegate {
 
 // MARK: Migration
 extension FTShelfSplitViewController {
-    private func migrateBookToNS3(shelfItem: FTShelfItemProtocol) {
+    func migrateBookToNS3(shelfItem: FTShelfItemProtocol) {
         guard shelfItem.URL.isNS2Book else { return }
         guard shelfItem.URL.downloadStatus() != .notDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)

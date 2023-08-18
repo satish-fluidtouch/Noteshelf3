@@ -141,7 +141,7 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
             delegate?.showDetailedViewForCollection(currentCollection)
         case .templates:
             delegate?.openTemplates()
-        case .category:
+        case .category,.ns2Category:
             delegate?.showDetailedViewForCollection(currentCollection)
         case .media:
             delegate?.openPhotos()

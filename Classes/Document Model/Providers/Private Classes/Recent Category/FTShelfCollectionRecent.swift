@@ -9,7 +9,10 @@
 import UIKit
 
 class FTShelfCollectionRecent: NSObject,FTShelfCollection {
-    
+    func ns2Shelfs(_ onCompletion: @escaping (([FTShelfItemCollection]) -> Void)) {
+        onCompletion([])
+    }
+
     var recentShelfItemCollection : FTShelfItemCollectionRecent?;
     var favoritesShelfItemCollection : FTShelfItemCollectionRecent?;
     fileprivate(set) var shelfCollections = [FTShelfItemCollection]();

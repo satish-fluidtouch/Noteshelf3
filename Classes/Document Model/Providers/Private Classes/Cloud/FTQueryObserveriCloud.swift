@@ -17,10 +17,7 @@ protocol FTiCloudQueryObserverDelegate: AnyObject {
 
 class FTiCloudQueryObserver: FTQueryListenerProtocol {
     fileprivate var rootURL: URL;
-
-    #if BETA || DEBUG
-//    fileprivate var productionContainerURL: URL;
-    #endif
+    fileprivate var productionContainerURL: URL;
     fileprivate var extsToListen: [String];
     fileprivate var query: NSMetadataQuery?;
     fileprivate weak var delegate: FTiCloudQueryObserverDelegate?;
@@ -33,9 +30,9 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
                   extensionsToListen exts: [String],
                   delegate: FTiCloudQueryObserverDelegate) {
         self.rootURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
-#if BETA || DEBUG
-//        self.productionContainerURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf")!.appendingPathComponent("Documents").urlByDeleteingPrivate()
-#endif
+
+        // TODO: (AK) put in a proper place
+        self.productionContainerURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf")!.appendingPathComponent("Documents").urlByDeleteingPrivate()
         self.extsToListen = exts;
         self.delegate = delegate;
     }
@@ -146,16 +143,16 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         let itemsRemoved = notification.userInfo![NSMetadataQueryUpdateRemovedItemsKey] as? [NSMetadataItem];
         let itemsChanged = notification.userInfo![NSMetadataQueryUpdateChangedItemsKey] as? [NSMetadataItem];
 
-        if((nil != itemsChanged) && (itemsChanged!.count > 0) && (nil != self.delegate)) {
-            self.delegate?.ftiCloudQueryObserver(self, didUpdatedItems: itemsChanged!)
+        if let itemsChanged, !itemsChanged.isEmpty, nil != self.delegate {
+            self.delegate?.ftiCloudQueryObserver(self, didUpdatedItems: itemsChanged)
         }
 
-        if((nil != itemsRemoved) && (itemsRemoved!.count > 0) && (nil != self.delegate)) {
-            self.delegate?.ftiCloudQueryObserver(self, didRemovedItems: itemsRemoved!)
+        if let itemsRemoved, !itemsRemoved.isEmpty, nil != self.delegate {
+            self.delegate?.ftiCloudQueryObserver(self, didRemovedItems: itemsRemoved)
         }
 
-        if((nil != itemsAdded) && (itemsAdded!.count > 0) && (nil != self.delegate)) {
-            self.delegate?.ftiCloudQueryObserver(self, didAddedItems: itemsAdded!)
+        if let itemsAdded, !itemsAdded.isEmpty, nil != self.delegate {
+            self.delegate?.ftiCloudQueryObserver(self, didAddedItems: itemsAdded)
         }
 
         self.enableUpdates();
@@ -177,18 +174,12 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
                                           self.rootURL.path,
                                           NSMetadataItemFSNameKey, pattern)
             predicateArray.append(predicate1);
-
-            //TODO: (AK) Removed listening to ns books, in favor of changing the migration approach.
-
-//#if BETA || DEBUG
-//            let  predicate2 = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
-//                                          NSMetadataItemPathKey,
-//                                          self.productionContainerURL.path,
-//                                          NSMetadataItemFSNameKey, pattern)
-//
-//            predicateArray.append(predicate2);
-//#endif
-
+            let  predicate2 = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
+                                          NSMetadataItemPathKey,
+                                          self.productionContainerURL.path,
+                                          NSMetadataItemFSNameKey, pattern)
+            
+            predicateArray.append(predicate2);
         }
         query.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicateArray);
         return query;

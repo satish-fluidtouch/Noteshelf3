@@ -26,6 +26,7 @@ enum FTShelfItemContexualOption {
     case restore
     case delete
     case removeFromRecents
+    case migrate
 
     var displayTitle: String {
         let title: String
@@ -62,6 +63,8 @@ enum FTShelfItemContexualOption {
             title = NSLocalizedString("delete", comment: "Delete")
         case .removeFromRecents:
             title = NSLocalizedString("RemoveFromRecents", comment: "Remove from Recents")
+        case .migrate:
+            title = NSLocalizedString("shelfItem.contexualMenu.migrate", comment: "Migrate")
         }
         return title
     }
@@ -101,6 +104,8 @@ enum FTShelfItemContexualOption {
             icon = FTIcon.showEnclosingFolder
         case .removeFromRecents:
             icon = FTIcon.trash
+        case .migrate:
+            icon = FTIcon.migrate
         }
         return icon
     }

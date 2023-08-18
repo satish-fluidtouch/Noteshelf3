@@ -40,6 +40,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     private(set) var sidebarItemContexualMenuVM: FTSidebarItemContextualMenuVM = FTSidebarItemContextualMenuVM()
     private var systemItems: [FTSideBarItem] = []
     private var categoriesItems: [FTSideBarItem] = []
+    private var ns2categoriesItems: [FTSideBarItem] = []
     private var contentItems: [FTSideBarItem] = []
     private var newCollectionAddedOrUpdated: Bool = false
     private var cancellables = [AnyCancellable]()
@@ -428,6 +429,9 @@ extension FTSidebarViewModel {
         let newlyCreatedSideBarItems = await userCreatedSidebarItems()
         self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(newlyCreatedSideBarItems)
 
+        // Fetching ns2 categories
+        self.ns2categoriesItems = await fetchNS2Categories()
+
         //First section items creation
         self.buildSystemMenuOptions()
         self.setCollectionToSystemType(.home, collection: FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection)
@@ -500,6 +504,9 @@ extension FTSidebarViewModel {
         self.menuItems = []
         self.menuItems = [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)]
         self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))
+        if !ns2categoriesItems.isEmpty {
+            self.menuItems.append(FTSidebarSection(type: .ns2Categories, items: self.ns2categoriesItems,supportsRearrangeOfItems: false))
+        }
         self.menuItems.append(FTSidebarSection(type: .media, items: self.contentItems,supportsRearrangeOfItems: false))
         self.menuItems.append(FTSidebarSection(type: .tags, items: self.tags,supportsRearrangeOfItems: false))
         self.setSideBarItemSelection()

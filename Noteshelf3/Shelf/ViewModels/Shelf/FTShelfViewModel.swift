@@ -39,6 +39,7 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func showGlobalSearchController()
     func showInEnclosingFolder(forItem shelfItem: FTShelfItemProtocol)
     func createNewNotebookInside(collection: FTShelfItemCollection, group: FTGroupItemProtocol?,notebookDetails: FTNewNotebookDetails?,isQuickCreate: Bool, mode:ThemeDefaultMode, onCompletion: @escaping (NSError?, _ shelfItem:FTShelfItemProtocol?) -> ())
+    func migrateBookToNS3(shelfItem: FTShelfItemProtocol)
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
 }
@@ -129,6 +130,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
+        canShowCreateNBButtons = !isNS2Collection
     }
     
     init(sidebarItemType: FTSideBarItemType){
@@ -173,7 +175,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return (collection.isAllNotesShelfItemCollection || collection.isMigratedCollection || collection.isDefaultCollection)
     }
     var canShowNewNoteNavOption: Bool {
-        return !(collection.isStarred || collection.isTrash)
+        return !(collection.isStarred || collection.isTrash || hideNS3NotesCreationOptions)
     }
     var canShowStarredIconOnNB: Bool {
         return !(collection.isTrash)
@@ -182,10 +184,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
         self.selectedSideBarItem?.type ?? .home
     }
     var supportsDragAndDrop: Bool {
-        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash)
+        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash || isNS2Collection)
     }
     var supportsDrop: Bool {
-       (isInHomeMode || !(collection.isStarred || collection.isTrash))
+       (isInHomeMode || !(collection.isStarred || collection.isTrash || isNS2Collection))
     }
     var disableBottomBarItems: Bool {
         !shelfItems.contains(where: { $0.isSelected })
@@ -198,6 +200,30 @@ class FTShelfViewModel: NSObject, ObservableObject {
         }
         return selectedItems
     }
+
+    var isNS2Collection: Bool {
+        if collection.isNS2Collection() {
+            return true
+        }
+        return false
+    }
+
+    var hideNS3NotesCreationOptions: Bool {
+        return isNS2Collection
+    }
+
+    var canShowSearchOption: Bool {
+        return !isNS2Collection
+    }
+
+    var canShowNotebookUpdateOptions: Bool {
+        return !isNS2Collection
+    }
+
+    var shouldShowNS3MigrationHeader: Bool {
+        return isNS2Collection
+    }
+    
     
     // MARK: Mutating functions
     func selectAllItems() {

@@ -78,6 +78,9 @@ protocol FTShelfItemCollection: FTDiskItemProtocol, FTDroppable {
                          inGroup: FTGroupItemProtocol?,
                          shelfItemsToGroup items: [FTShelfItemProtocol]?,
                          onCompletion block: @escaping (NSError?, FTGroupItemProtocol?) -> Void);
+
+    // For NS3 Migration
+    func isNS2Collection() -> Bool
 }
 
 extension FTShelfItemCollection {
@@ -185,7 +188,7 @@ extension FTShelfItemCollection //for searching
         } else if self.isStarred {
             return NSLocalizedString("sidebar.topSection.starred", comment: self.title);
         }
-        else if self.title == uncategorizedShefItemCollectionTitle {
+        else if self.title == uncategorizedShefItemCollectionTitle && !self.isNS2Collection() {
             return NSLocalizedString("sidebar.topSection.unfiled", comment: "Unfiled");
         }
         return self.title;

@@ -95,7 +95,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
             
             self.tempCompletionBlock = completionBlock;
             self.query = FTLocalQueryGather(rootURL: self.URL,
-                                            extensionsToListen: [FTFileExtension.ns3, groupExtension],
+                                            extensionsToListen: [FTFileExtension.ns3, FTFileExtension.ns2, groupExtension],
                                             skipSubFolder : false,
                                             delegate: self);
             self.query?.startQuery();
@@ -817,6 +817,14 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         rootURL = rootURL.urlByDeleteingPrivate()
         let destFileName = FileManager.uniqueFileName(name, inFolder: rootURL);
         onCompletion(destFileName);
+    }
+
+    func isNS2Collection() -> Bool {
+        var belongs: Bool = false
+        if let ns2ProdLocalURL = userProdFolderURL(), self.URL.path.hasPrefix(ns2ProdLocalURL.urlByDeleteingPrivate().path) {
+            belongs =  true;
+        }
+        return belongs
     }
 }
 

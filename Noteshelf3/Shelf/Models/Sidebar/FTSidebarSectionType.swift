@@ -11,6 +11,7 @@ import SwiftUI
 enum FTSidebarSectionType: String {
     case all
     case categories
+    case ns2Categories
     case tags
     case media
 
@@ -21,66 +22,14 @@ enum FTSidebarSectionType: String {
             title = nil
         case .categories:
             title = NSLocalizedString("Categories", comment: "Categories")
+        case .ns2Categories:
+            title = "Noteshelf 2"
         case .tags:
             title = NSLocalizedString("Tags", comment: "Tags")
         case .media:
             title = NSLocalizedString("shelf.sidebar.content", comment: "Content")
         }
         return title
-    }
-
-    var sectionDisplayLimit: Int {
-        let limit: Int
-        switch self {
-        case .all:
-            limit = 5
-        case .media:
-            limit = 7
-        case .categories:
-            limit = 5
-        case .tags:
-            limit = 2
-        }
-        return limit
-    }
-
-    var showAddNewOption: Bool {
-        let showAddNewOption: Bool
-        if self == .categories {
-            showAddNewOption = true
-        } else {
-            showAddNewOption = false
-        }
-        return showAddNewOption
-    }
-}
-
-enum FTMenuFooterType {
-    case allCategories
-    case showLess
-    case allTags
-
-    var displayTitle: String {
-        switch self {
-        case .allCategories :
-            return "All Categories"
-        case .showLess :
-            return "Show less"
-        case .allTags :
-            return "All Tags..."
-        }
-    }
-    var icon: FTIcon {
-        let iconObj: FTIcon
-        switch self {
-        case .allCategories:
-            iconObj = FTIcon.folder
-        case .showLess:
-            iconObj = FTIcon.upChevron
-        case .allTags:
-            iconObj = FTIcon.tags
-        }
-        return iconObj
     }
 }
 
@@ -90,6 +39,7 @@ enum FTSideBarItemType: String {
     case unCategorized
     case trash
     case category
+    case ns2Category
     case starred
     case media
     case audio
@@ -140,7 +90,7 @@ enum FTSideBarItemType: String {
         case .unCategorized:
             color = Color.appColor(.unfiledSelectedBG)
         default:
-            color = Color.red
+            color = Color.white
         }
         return color
     }
@@ -156,7 +106,7 @@ enum FTSideBarItemType: String {
         case .unCategorized:
             color = Color.appColor(.unfiledBG)
         default:
-            color = Color.clear
+            color = Color.white
         }
         return color
     }
@@ -172,7 +122,7 @@ enum FTSideBarItemType: String {
         case .unCategorized:
             color = Color.appColor(.unfiledIconTint)
         default:
-            color = Color.red
+            color = Color.white
         }
         return color
     }
@@ -190,7 +140,7 @@ enum FTSideBarItemType: String {
         case .templates:
             color = Color.appColor(.templatesShadow)
         default:
-            color = Color.red
+            color = Color.white
         }
         return color
     }
@@ -206,7 +156,7 @@ enum FTSideBarItemType: String {
             case .unCategorized:
                 color = Color.appColor(.unfiledBG).opacity(0.5)
             default:
-                color = Color.red
+                color = Color.white
             }
             return color
     }

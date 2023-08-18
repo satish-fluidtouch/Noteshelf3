@@ -599,6 +599,8 @@
 		972B53FC2A4C6944001158D9 /* FTSharePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B53FB2A4C6944001158D9 /* FTSharePreviewView.swift */; };
 		972B54002A4D893B001158D9 /* FTSharePreviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B53FF2A4D893B001158D9 /* FTSharePreviewItemViewModel.swift */; };
 		972B54042A4EB7BE001158D9 /* FTShareBasePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B54032A4EB7BE001158D9 /* FTShareBasePreviewView.swift */; };
+		973652E22A82786800FD4326 /* FTSidebarViewModel + NS2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973652E12A82786800FD4326 /* FTSidebarViewModel + NS2.swift */; };
+		973653E12A851D4200FD4326 /* FTMigrationMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973653E02A851D4200FD4326 /* FTMigrationMessageView.swift */; };
 		974E8A682A01192A00EFF8D8 /* FTShelfHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974E8A672A01192A00EFF8D8 /* FTShelfHomeView.swift */; };
 		974E8A6A2A011B5800EFF8D8 /* FTShelfHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974E8A692A011B5800EFF8D8 /* FTShelfHomeViewController.swift */; };
 		976F27372A16090800034D5A /* FTShelfView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27362A16090800034D5A /* FTShelfView+Extensions.swift */; };
@@ -3260,6 +3262,8 @@
 		972B53FB2A4C6944001158D9 /* FTSharePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSharePreviewView.swift; sourceTree = "<group>"; };
 		972B53FF2A4D893B001158D9 /* FTSharePreviewItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSharePreviewItemViewModel.swift; sourceTree = "<group>"; };
 		972B54032A4EB7BE001158D9 /* FTShareBasePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShareBasePreviewView.swift; sourceTree = "<group>"; };
+		973652E12A82786800FD4326 /* FTSidebarViewModel + NS2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTSidebarViewModel + NS2.swift"; sourceTree = "<group>"; };
+		973653E02A851D4200FD4326 /* FTMigrationMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMigrationMessageView.swift; sourceTree = "<group>"; };
 		9741222F2A73E061002D3DDB /* FTDiscoverWhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDiscoverWhatsNewView.swift; sourceTree = "<group>"; };
 		9742535E2549943D00EBA40E /* FTENIgnoreListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTENIgnoreListManager.swift; sourceTree = "<group>"; };
 		9742535F2549943E00EBA40E /* FTENPublishManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTENPublishManager.swift; sourceTree = "<group>"; };
@@ -8169,6 +8173,7 @@
 				974E8A672A01192A00EFF8D8 /* FTShelfHomeView.swift */,
 				09C714522A405BD200E69E4A /* FTShelfBaseView.swift */,
 				09C714542A405E4400E69E4A /* FTShelfDisplayStyle.swift */,
+				973653E02A851D4200FD4326 /* FTMigrationMessageView.swift */,
 			);
 			path = Shelf;
 			sourceTree = "<group>";
@@ -8316,6 +8321,7 @@
 				47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */,
 				97C5A22D29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift */,
 				97C5A22F29F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift */,
+				973652E12A82786800FD4326 /* FTSidebarViewModel + NS2.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -12273,6 +12279,7 @@
 				979BC281288FE9D500208B21 /* FTSideBarItemView.swift in Sources */,
 				E7B5769C292368F70066BA45 /* FTToastView.swift in Sources */,
 				520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */,
+				973652E22A82786800FD4326 /* FTSidebarViewModel + NS2.swift in Sources */,
 				144AA3332A44279E00C969AC /* FTSettingsAboutViewModel.swift in Sources */,
 				E7AE4DA728995093004CF608 /* FTFavoriteShapeView.swift in Sources */,
 				14C76ADC2A092DBA004251B5 /* FTWrittingAndStylusModel.swift in Sources */,
@@ -12515,6 +12522,7 @@
 				97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */,
 				97F60C0E291E13A80050C3F3 /* FTShelfViewControllerNew.swift in Sources */,
 				3DAB582129519BE30098282A /* FTTextColorViewController.swift in Sources */,
+				973653E12A851D4200FD4326 /* FTMigrationMessageView.swift in Sources */,
 				97F60BFC291D32A30050C3F3 /* FTGrouping.swift in Sources */,
 				BAF393052859ADF00067CA9F /* NetworkError.swift in Sources */,
 				14BF48B22A134EC3002B09A9 /* FTGetInspiredViewModel.swift in Sources */,

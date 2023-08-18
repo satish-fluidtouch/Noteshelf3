@@ -221,6 +221,12 @@ class FTNoteshelfDocumentProvider: NSObject {
         }
     }
 
+    func ns2Shelfs(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
+        self.currentCollection().ns2Shelfs { items in
+            completion(items)
+        }
+    }
+
     func shelfs(_ completion : @escaping (([FTShelfCategoryCollection]) -> Void))
     {
         if categorizedShelfs.isEmpty {

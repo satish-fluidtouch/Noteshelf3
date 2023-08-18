@@ -17,6 +17,10 @@ class FTShelfItemCollectionMigration: FTShelfItemCollectionLocal {
 
 class FTShelfCollectionMigration : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting
 {
+    func ns2Shelfs(_ onCompletion: @escaping (([FTShelfItemCollection]) -> Void)) {
+        onCompletion([])
+    }
+
     fileprivate var shelfCollections = [FTShelfItemCollection]();
     fileprivate var localDocumentsURL : URL!;
     fileprivate var query : FTLocalQueryGather?;

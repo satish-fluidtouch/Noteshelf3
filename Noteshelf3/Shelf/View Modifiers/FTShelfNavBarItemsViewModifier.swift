@@ -71,6 +71,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
                                 }
                             }
+                        if shelfViewModel.canShowSearchOption {
                             Button {
                                 if !shelfMenuOverlayInfo.isMenuShown {
                                     shelfViewModel.searchTapped()
@@ -81,6 +82,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .foregroundColor(Color.appColor(.accent))
                             }
                             .frame(width: 44,height: 44,alignment: .center)
+                        }
                         FTShelfSelectAndSettingsView(viewModel: shelfViewModel)
                             .frame(width: 44,height: 44,alignment: .center)
                     }

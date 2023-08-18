@@ -57,6 +57,10 @@ class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSear
 
 // MARK: - FTShelfItemCollection -
 extension FTShelfItemCollectionICloud: FTShelfItemCollection {
+    func isNS2Collection() -> Bool {
+        let belongs = self.parent?.belongsToNS2DocumentsFolder(self.URL)
+        return belongs ?? false
+    }
 
     func shelfItemCollection(for metadata: NSMetadataItem) -> FTShelfItemProtocol? {
         return self.hashTable.itemFromHashTable(metadata) as? FTShelfItemProtocol
@@ -813,7 +817,7 @@ private extension FTShelfItemCollectionICloud {
     }
     
     func addBookItemForURL(_ url: Foundation.URL) -> FTShelfItemProtocol {
-        var shelfItem: FTDocumentItemProtocol?;
+        let shelfItem: FTDocumentItemProtocol;
         if(self.docBelongsToGroup(url)) {
             let groupURL = url.deletingLastPathComponent().urlByDeleteingPrivate()
             var groupItem = self.groupItemForURL(groupURL);
@@ -822,12 +826,12 @@ private extension FTShelfItemCollectionICloud {
                 groupItem = self.addGroupItemForURL(groupURL)
             }
             shelfItem = FTDocumentItem(fileURL: url);
-            groupItem?.addChild(shelfItem!);
+            groupItem?.addChild(shelfItem);
         } else {
             shelfItem = FTDocumentItem(fileURL: url);
-            self.addChild(shelfItem!);
+            self.addChild(shelfItem);
         }
-        return shelfItem!;
+        return shelfItem;
     }
 }
 

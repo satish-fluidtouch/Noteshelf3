@@ -15,11 +15,7 @@ extension FTShelfViewModel {
             let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
 
             if self.hasNS2BookItemAmongSelectedShelfItems(selectedShelfItems + [item]) {
-                if item.model.shelfCollection.isTrash {
-                    return [[.restore],[.delete]]
-                } else {
-                    return [[.move],[.trash]]
-                }
+                return [[.migrate]]
             }
             if selectedShelfItems.count > 1 {
                 if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
@@ -37,11 +33,7 @@ extension FTShelfViewModel {
         }
         else {
             if self.hasNS2BookItemAmongSelectedShelfItems([item]) {
-                if item.model.shelfCollection.isTrash {
-                    return [[.restore],[.delete]]
-                } else {
-                    return [[.move],[.trash]]
-                }
+                return [[.migrate]]
             } else {
                 return contexualMenuOptionsInNormalModeForShelfItem(item)
             }
@@ -95,6 +87,8 @@ extension FTShelfViewModel {
             self.showEnclosingFolderFor(shelfItem.model)
         case .removeFromRecents:
             self.removeRecentItemsFromRecents([shelfItem.model])
+        case .migrate:
+            self.delegate?.migrateBookToNS3(shelfItem: shelfItem.model)
         }
     }
     func favoriteOrUnFavoriteShelfItem(_ item: FTShelfItemViewModel){

@@ -28,6 +28,8 @@ protocol FTShelfCollection: NSObjectProtocol {
     func renameShelf(_ shelf: FTShelfItemCollection,
                      title: String,
                      onCompletion : @escaping ((NSError?, FTShelfItemCollection?) -> Void));
+
+    func ns2Shelfs(_ onCompletion : @escaping (([FTShelfItemCollection]) -> Void))
 }
 
 extension FTShelfCollection {

@@ -238,6 +238,9 @@ struct SidebarSectionHeader: View {
     //TODO: Check
     var body: some View {
         HStack {
+            if section.type == .ns2Categories {
+                Image("ns2_migration_logo")
+            }
             Text(section.title)
                 .font(.clearFaceFont(for: .medium, with: 22))
                 .fontWeight(.heavy)

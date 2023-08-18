@@ -17,7 +17,11 @@ class FTShelfItemCollectionSystem: FTShelfItemCollectionLocal {
 }
 
 class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting {
-    
+
+    func ns2Shelfs(_ onCompletion: @escaping (([FTShelfItemCollection]) -> Void)) {
+        onCompletion([])
+    }
+
     static func TrashCollectionURL() -> URL
     {
         return self.systenFolderURL().appendingPathComponent(trashCollectionTitle);

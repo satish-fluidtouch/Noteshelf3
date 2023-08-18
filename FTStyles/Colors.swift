@@ -72,6 +72,8 @@ public enum AssetsColor: String, CaseIterable {
     case unfiledSelectedBG
     case finderBgColor
     case moreTemplatesBorderTint
+    case migrationHeaderBG
+    case migrationHeaderBorderBG
 
     //AccentNew
     case accentBg

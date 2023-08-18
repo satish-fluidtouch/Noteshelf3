@@ -65,6 +65,10 @@ struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentab
                 }
                 let _shelfModel = strongSelf.representView.shelfItemModel;
 
+                if _shelfModel.isNS2Collection && _shelfItem is FTGroupItemViewModel {
+                    return nil;
+                }
+
                 let menuItems = _shelfModel.getContexualOptionsForShelfItem(_shelfItem);
                 var mainGroups = [UIMenuElement]();
 

@@ -18,15 +18,18 @@ class FTLocalQueryGather {
     fileprivate var skipSubFolder = true;
     
     fileprivate weak var delegate : FTLocalQueryGatherDelegate!;
+    fileprivate var ns2ProdLocalURL: URL?
 
     init(rootURL: URL,
          extensionsToListen exts: [String],
          skipSubFolder : Bool,
-         delegate: FTLocalQueryGatherDelegate) {
+         delegate: FTLocalQueryGatherDelegate,
+         ns2ProdLocalURL: URL? = nil) {
         self.rootURL = rootURL;
         self.extToListen = exts;
         self.delegate = delegate;
         self.skipSubFolder = skipSubFolder;
+        self.ns2ProdLocalURL = ns2ProdLocalURL
     }
     
     deinit
@@ -44,7 +47,10 @@ class FTLocalQueryGather {
             t1 = Date.timeIntervalSinceReferenceDate;
         }
         
-        let urls = self.contentsOfURL(self.directoryURLToSearch(), skipsSubFolder: skipSubFolder);
+        var urls = self.contentsOfURL(self.directoryURLToSearch(), skipsSubFolder: skipSubFolder);
+        if let ns2ProdURL = self.ns2ProdLocalURL {
+            urls.append(contentsOf:self.contentsOfURL(ns2ProdURL, skipsSubFolder: skipSubFolder))
+        }
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
             t2 = Date.timeIntervalSinceReferenceDate;
             debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Gathering : \(String(describing: self.rootURL)) time taken to gather:\(t2-t1)");

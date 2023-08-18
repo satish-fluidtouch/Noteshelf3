@@ -15,7 +15,11 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
     weak var listenerDelegate: FTQueryListenerProtocol?
 
     fileprivate var shelfCollections = [FTShelfItemCollection]();
-    fileprivate var iCloudDocumentsURL: URL!;
+    // TODO: (AK) rethink about the naming
+    fileprivate var ns2ShelfCollections = [FTShelfItemCollection]();
+    fileprivate let iCloudDocumentsURL: URL
+    fileprivate let productionContainerURL: URL
+
     fileprivate var hashTable = FTHashTable();
 
     //Temporary
@@ -29,29 +33,27 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
         #endif
     }
 
-#if DEBUG || BETA
-    private var productionContainerURL: URL?;
-#endif
+    private override init() {
+        guard let icloudRootURL = FTiCloudManager.shared().iCloudRootURL() else {
+            fatalError("iCloud Container not found")
+        }
+
+        // TODO: (AK) put identifier in a proper place
+        guard let productionCloudURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf") else {
+            fatalError("production Container not found")
+        }
+        iCloudDocumentsURL = icloudRootURL.appendingPathComponent("Documents").urlByDeleteingPrivate();
+
+        productionContainerURL = productionCloudURL.appendingPathComponent("Documents").urlByDeleteingPrivate();
+
+    }
 
     static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
     {
-        let provider = FTShelfCollectioniCloud();
-        let icloudRootURL = FTiCloudManager.shared().iCloudRootURL();
-        provider.iCloudDocumentsURL = icloudRootURL?.appendingPathComponent("Documents").urlByDeleteingPrivate();
-
-#if DEBUG || BETA
-      //  provider.productionContainerURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf")?.appendingPathComponent("Documents").urlByDeleteingPrivate();
-#endif
-
+        let collection = FTShelfCollectioniCloud();
         DispatchQueue.main.async(execute: {
-            onCompletion(provider);
+            onCompletion(collection);
         });
-
-        if(ENABLE_SHELF_RPOVIDER_LOGS) {
-             #if DEBUG
-            debugPrint("\(self.classForCoder): Container Available");
-            #endif
-        }
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -70,6 +72,14 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
         } else {
             tempCompletionBlock = onCompletion
         }
+        objc_sync_exit(self);
+    }
+
+    func ns2Shelfs(_ onCompletion : @escaping (([FTShelfItemCollection]) -> Void)) {
+        objc_sync_enter(self);
+        DispatchQueue.main.async(execute: {
+            onCompletion(self.ns2ShelfCollections);
+        })
         objc_sync_exit(self);
     }
 
@@ -117,7 +127,7 @@ extension FTShelfCollectioniCloud: FTShelfCollection {
         self.disableUpdates()
         self.shelfs { items in
             let name = self.uniqueFileName(title+".shelf", inItems: items);
-            let destURL = self.iCloudDocumentsURL!.appendingPathComponent(name)
+            let destURL = self.iCloudDocumentsURL.appendingPathComponent(name)
             DispatchQueue.global().async(execute: {
                 let fileCoordinator = NSFileCoordinator(filePresenter: nil);
                 fileCoordinator.coordinate(writingItemAt: collection.URL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: destURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { newURL1, newURL2 in
@@ -360,9 +370,16 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
         let fileItemURL = fileURL;
         var collectionItem = self.collectionForURL(fileItemURL);
         if(nil == collectionItem) {
-            collectionItem = FTShelfItemCollectionICloud(fileURL: fileItemURL);
-            (collectionItem as? FTShelfItemCollectionICloud)?.parent = self
-            self.shelfCollections.append(collectionItem!);
+            let item = FTShelfItemCollectionICloud(fileURL: fileItemURL);
+            item.parent = self
+
+            if belongsToNS2DocumentsFolder(fileItemURL) {
+                self.ns2ShelfCollections.append(item);
+            } else {
+                self.shelfCollections.append(item);
+            }
+
+            collectionItem = item
         }
         objc_sync_exit(self);
         return collectionItem;
@@ -378,7 +395,7 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
             assert(false, "Only shelf items needs to be passed: Use addItemToCache");
         }
         if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionICloud {
-            _ = itemCollection.addItemsToCache([item], isBuildingCache: isBuildingCache)
+            itemCollection.addItemsToCache([item], isBuildingCache: isBuildingCache)
             return itemCollection
         } else {
             orphanMetadataItems.append(item)
@@ -408,12 +425,7 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
     func removeItemFromCache(_ fileURL: URL, shelfItem: FTDiskItemProtocol) {
         objc_sync_enter(self);
         (shelfItem as? FTSortIndexContainerProtocol)?.indexCache?.handleDeletionUpdate()
-        let index = self.shelfCollections.index(where: { eachItem -> Bool in
-            if(eachItem.uuid == shelfItem.uuid) {
-                return true;
-            }
-            return false;
-        });
+        let index = self.shelfCollections.firstIndex(where: { $0.uuid == shelfItem.uuid });
         if(nil != index) {
             self.shelfCollections.remove(at: index!);
         }
@@ -448,10 +460,17 @@ extension FTShelfCollectioniCloud {
             collectionURL = url.collectionURL();
         }
         if collectionURL?.pathExtension == shelfExtension {
-            let item = self.shelfCollections.first { item -> Bool in
-                return item.URL == collectionURL
+            if belongsToNS2DocumentsFolder(url) {
+                let item = self.ns2ShelfCollections.first { item -> Bool in
+                    return item.URL == collectionURL
+                }
+                return item;
+            } else {
+                let item = self.shelfCollections.first { item -> Bool in
+                    return item.URL == collectionURL
+                }
+                return item
             }
-            return item;
         } else {
             let params = ["Path" : url.path]
             FTLogError("Location Issue", attributes: params)
@@ -460,29 +479,38 @@ extension FTShelfCollectioniCloud {
     }
 
     fileprivate func collectionForMetadata(_ metadata: NSMetadataItem) -> FTShelfItemCollection? {
-        let itemCollection = self.shelfCollections.filter { colletion -> Bool in
+        let shelfCollections = metadata.URL().isNS2Book ? self.ns2ShelfCollections : self.shelfCollections
+        let itemCollection = shelfCollections.filter { colletion -> Bool in
             let itemCollection = (colletion as? FTShelfItemCollectionICloud)?.shelfItemCollection(for: metadata)
             return itemCollection != nil
         }
         return itemCollection.first
     }
 
+    // This will return true, for all the containers. i.e., NS2 & NS3
     fileprivate func belongsToDocumentsFolder(_ url: URL) -> Bool {
-        if(url.urlByDeleteingPrivate().path.hasPrefix(self.iCloudDocumentsURL!.path)) {
+        if(url.urlByDeleteingPrivate().path.hasPrefix(self.iCloudDocumentsURL.path)) {
             return true;
         }
-#if DEBUG || BETA
-        if let prodURL = self.productionContainerURL?.urlByDeleteingPrivate(), url.urlByDeleteingPrivate().path.hasPrefix(prodURL.path) {
+        if belongsToNS2DocumentsFolder(url) {
             return true;
         }
-#endif
         
+        return false;
+    }
+
+    // This will return true only for the NS2 Container
+    func belongsToNS2DocumentsFolder(_ url: URL) -> Bool {
+        if url.urlByDeleteingPrivate().path.hasPrefix(self.productionContainerURL.path) {
+            return true;
+        }
+
         return false;
     }
 
     // MARK: - Private Shelf Create
     fileprivate func createNewShelf(_ shelfName: String, onCompletion : @escaping (NSError?, FTShelfItemCollection?) -> Void) {
-        let defaultCollectionURL = self.iCloudDocumentsURL!.appendingPathComponent(shelfName);
+        let defaultCollectionURL = self.iCloudDocumentsURL.appendingPathComponent(shelfName);
         DispatchQueue.global().async(execute: {
 
             let fileManager = FileManager();

@@ -15,11 +15,20 @@ import ZipArchive
 class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting
 {
     fileprivate var shelfCollections = [FTShelfItemCollection]();
-    fileprivate var localDocumentsURL : URL!;
+    fileprivate var ns2ShelfCollections = [FTShelfItemCollection]();
+
+    fileprivate var localDocumentsURL: URL!;
+    fileprivate var productionDocumentsURL: URL?
+
     fileprivate var query : FTLocalQueryGather?;
 
     fileprivate var tempCompletionBlock : (([FTShelfItemCollection])->Void)? = nil;
 
+    private override init(){
+        super.init()
+        self.localDocumentsURL = Self.userFolderURL();
+        self.productionDocumentsURL = userProdFolderURL()
+    }
     fileprivate static func userFolderURL() -> URL
     {
         let noteshelfURL = FTUtils.noteshelfDocumentsDirectory();
@@ -34,12 +43,10 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
 
     static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
     {
-        let noteshelfURL = self.userFolderURL();
         let provider = FTShelfCollectionLocal();
-        provider.localDocumentsURL =  noteshelfURL;
         onCompletion(provider);
     }
-    
+
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
     {
         self.query = nil;
@@ -69,12 +76,20 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             self.query = FTLocalQueryGather(rootURL: self.localDocumentsURL,
                                             extensionsToListen: [shelfExtension],
                                             skipSubFolder : true,
-                                            delegate: self);
+                                            delegate: self,ns2ProdLocalURL: self.productionDocumentsURL);
             self.query?.startQuery();
         }
         objc_sync_exit(self);
     }
-    
+
+    func ns2Shelfs(_ onCompletion : @escaping (([FTShelfItemCollection]) -> Void)) {
+        objc_sync_enter(self);
+        DispatchQueue.main.async(execute: {
+            onCompletion(self.ns2ShelfCollections);
+        })
+        objc_sync_exit(self);
+    }
+
     func collection(withTitle title : String) -> FTShelfItemCollection?
     {
         if(nil == self.query) {
@@ -183,6 +198,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     //MARK:- Cache Mgmt -
     fileprivate func buildCache(_ items: [URL]?) {
         self.shelfCollections.removeAll();
+        self.ns2ShelfCollections.removeAll();
         if(nil != items) {
             if(items!.count > 0) {
                 self.addItemsToCache(items! as [AnyObject]);
@@ -228,7 +244,11 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         var collectionItem = self.collectionForURL(fileItemURL);
         if(nil == collectionItem) {
             collectionItem = FTShelfItemCollectionLocal.init(fileURL:fileItemURL);
-            self.shelfCollections.append(collectionItem!);
+            if belongsToNS2DocumentsFolder(fileItemURL), let collectionItem {
+                self.ns2ShelfCollections.append(collectionItem);
+            } else {
+                self.shelfCollections.append(collectionItem!);
+            }
         }
         objc_sync_exit(self);
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
@@ -270,11 +290,19 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         }
         return true;
     }
-    
+    // This will return true only for the NS2 Container
+    func belongsToNS2DocumentsFolder(_ url: URL) -> Bool {
+        if let prodLocalDocsURl = self.productionDocumentsURL ,url.path.hasPrefix(prodLocalDocsURl.path) {
+            return true;
+        }
+
+        return false;
+    }
+
     //MARK:- private Methods -
     fileprivate func collectionForURL(_ url : URL) -> FTShelfItemCollection?
-    {
-        let items = self.shelfCollections.filter { (item) -> Bool in
+    {   let shelfCollections = belongsToNS2DocumentsFolder(url) ? self.ns2ShelfCollections : self.shelfCollections
+        let items = shelfCollections.filter { (item) -> Bool in
             if(item.URL == url) {
                 return true;
             }
@@ -325,4 +353,18 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             onCompletion();
         };
     }
+}
+
+func userProdFolderURL() -> URL?
+{
+    var docProdURL: URL?
+    let noteshelfLocalProdURL = FileManager().containerURL(forSecurityApplicationGroupIdentifier: "group.com.fluidtouch.noteshelf")?.appendingPathComponent("Noteshelf").appendingPathExtension("nsdata")
+    if let systemURL = noteshelfLocalProdURL?.appendingPathComponent("User Documents") {
+        let fileManger = FileManager();
+        var isDir = ObjCBool.init(false);
+        if (fileManger.fileExists(atPath: systemURL.path, isDirectory: &isDir)) {
+            docProdURL = systemURL
+        }
+    }
+    return docProdURL
 }
