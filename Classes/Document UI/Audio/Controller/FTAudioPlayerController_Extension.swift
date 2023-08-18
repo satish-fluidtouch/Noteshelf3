@@ -116,10 +116,15 @@ extension FTAudioPlayerController {
     @objc func updateSpeedIcon(_ button: UIButton) {
         if let menu = button.menu?.children.first as? UIMenu {
             let elements = menu.children
-            elements.forEach { eachElement in
-                if let action = eachElement as? UIAction, action.identifier.rawValue == FTAudioMoreOption.speed.rawValue {
-                    action.image = imageForSpeed()
+            if let speedAction = elements.first(where: { eachElement in
+                if let element = eachElement as? UIAction, element.identifier.rawValue == FTAudioMoreOption.speed.rawValue
+                {
+                    return true
+                } else {
+                    return false
                 }
+            }) as? UIAction {
+                speedAction.image = imageForSpeed()
             }
         }
     }
