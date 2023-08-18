@@ -53,11 +53,15 @@ enum FTAudioMoreOption: String, CaseIterable {
         case .delete:
             imageKey = "trash"
         case .speed:
-            imageKey = "square.and.arrow.up"
+            imageKey = "normal"
         case .close:
             imageKey = "xmark.circle.fill"
         }
-        return UIImage.image(for: imageKey, font: UIFont.appFont(for: .regular, with: 15))
+        var image = UIImage.image(for: imageKey, font: UIFont.appFont(for: .regular, with: 15))
+        if image == nil {
+            image = UIImage(named: imageKey)?.withTintColor(.label)
+        }
+        return image
     }
     
     func actionElment(completion: @escaping (UIAction) -> Void) -> UIAction {

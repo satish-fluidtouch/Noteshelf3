@@ -714,7 +714,7 @@
 "ResolveConflict" = "Registrazione";
 "ResolveConflictMessage" = "Registrazione in corso...";
 "Restore" = "Recupera pagine";
-"ResultsFor" = "Ripeti/Annulla.";
+"ResultsFor" = "Risultati per %@";
 "RetakeKey" = "3-finger right swipe/left swipe:  Sfoglia a destra con 3 dita/sfoglia a sinistra con 3 dita";
 "Right" = "Rilascia per aggiungere nuova pagina";
 "Rotate" = "Ricordamelo più tardi";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "Il tuo cestino è vuoto";
 "shelf.view.gallery" = "Galleria";
 "shelf.view.icons" = "Icone";
+"shelf.view.largeNotebooks" = "Grandi quaderni";
 "shelf.view.list" = "Elenco";
+"shelf.view.smallNotebooks" = "Piccoli quaderni";
 "shelfItem.contexualMenu.addToStarred" = "Aggiungi a Preferiti";
 "shelfItem.contexualMenu.changeCover" = "Cambia copertina";
 "shelfItem.contexualMenu.getInfo" = "Ottieni informazioni";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM

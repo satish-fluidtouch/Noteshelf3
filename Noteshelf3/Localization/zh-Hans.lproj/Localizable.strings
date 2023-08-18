@@ -714,7 +714,7 @@
 "ResolveConflict" = "录音";
 "ResolveConflictMessage" = "录音进行中...";
 "Restore" = "恢复页面";
-"ResultsFor" = "重做/撤销";
+"ResultsFor" = "结果为%@";
 "RetakeKey" = "3指向右滑动/向左滑动";
 "Right" = "发布以添加新页面";
 "Rotate" = "稍后提醒";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "您的垃圾箱是空的";
 "shelf.view.gallery" = "画廊";
 "shelf.view.icons" = "图标";
+"shelf.view.largeNotebooks" = "大笔记本";
 "shelf.view.list" = "列表";
+"shelf.view.smallNotebooks" = "小笔记本";
 "shelfItem.contexualMenu.addToStarred" = "添加到星标";
 "shelfItem.contexualMenu.changeCover" = "更换封面";
 "shelfItem.contexualMenu.getInfo" = "获取信息";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM

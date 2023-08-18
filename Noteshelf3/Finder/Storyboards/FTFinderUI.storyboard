@@ -346,7 +346,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2m-UQ-Ouo" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="16" y="68" width="99" height="33.666666666666657"/>
+                                        <rect key="frame" x="15.999999999999993" y="68" width="100.33333333333331" height="32.666666666666657"/>
                                         <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -732,7 +732,6 @@
                                                                                 <bool key="isElement" value="NO"/>
                                                                             </accessibility>
                                                                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                                            <color key="textColor" name="headerColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PIr-n9-m2E" userLabel="labelSubTitle" customClass="FTCustomLabel" customModule="FTCommon">
@@ -784,14 +783,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="doc.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dHY-zn-OLr">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doc.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dHY-zn-OLr">
                                                     <rect key="frame" x="81.333333333333329" y="81.333333333333329" width="34.666666666666671" height="38.333333333333329"/>
                                                     <color key="tintColor" name="accent"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
                                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                     </preferredSymbolConfiguration>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="omh-iv-S6r">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="omh-iv-S6r">
                                                     <rect key="frame" x="24" y="0.0" width="152" height="198"/>
                                                     <color key="backgroundColor" name="black5"/>
                                                     <constraints>
@@ -799,7 +798,7 @@
                                                         <constraint firstAttribute="height" constant="198" id="kfM-Gg-80X"/>
                                                     </constraints>
                                                 </view>
-                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYG-dG-Iod">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYG-dG-Iod">
                                                     <rect key="frame" x="24" y="0.0" width="152" height="198"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain"/>
@@ -807,7 +806,7 @@
                                                         <action selector="didTapAddNewPage:" destination="4Bf-CA-Raf" eventType="touchUpInside" id="Ura-Qy-vRt"/>
                                                     </connections>
                                                 </button>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y9n-g7-xlz">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y9n-g7-xlz">
                                                     <rect key="frame" x="24" y="228" width="152" height="22"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7XW-yD-lBS">
@@ -815,7 +814,7 @@
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain"/>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="New Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68G-0h-Ghr" customClass="FTCustomLabel" customModule="FTCommon">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="68G-0h-Ghr" customClass="FTCustomLabel" customModule="FTCommon">
                                                             <rect key="frame" x="0.0" y="0.0" width="69" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" name="accent"/>
@@ -1509,7 +1508,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="HKT-w7-Prf"/>
-                        <color key="backgroundColor" name="popoverBgColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="HKT-w7-Prf" firstAttribute="bottom" secondItem="xxn-Hi-D6f" secondAttribute="bottom" constant="16" id="5l2-vO-XJw"/>
                             <constraint firstItem="xxn-Hi-D6f" firstAttribute="top" secondItem="Oza-N3-EvM" secondAttribute="bottom" constant="18" id="EHU-fA-Ecx"/>
@@ -1921,8 +1920,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Bookmark" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EbQ-lV-T3j">
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Untitled" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EbQ-lV-T3j">
                                                     <rect key="frame" x="16" y="0.0" width="398" height="50"/>
+                                                    <color key="backgroundColor" name="white100"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -1943,7 +1943,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sCe-0z-6vh">
                                                     <rect key="frame" x="16" y="0.0" width="398" height="50"/>
-                                                    <color key="backgroundColor" name="white40"/>
+                                                    <color key="backgroundColor" name="white60"/>
                                                     <color key="tintColor" name="destructiveRed"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="Button"/>
@@ -1986,7 +1986,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NmL-Zk-oTB"/>
-                        <color key="backgroundColor" name="popoverBgColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="h93-Tn-r3b" firstAttribute="trailing" secondItem="NmL-Zk-oTB" secondAttribute="trailing" id="5gQ-my-Phe"/>
                             <constraint firstItem="NmL-Zk-oTB" firstAttribute="bottom" secondItem="h93-Tn-r3b" secondAttribute="bottom" id="TSf-Mq-4ig"/>
@@ -2082,14 +2082,8 @@
         <namedColor name="gray9">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="headerColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="lightTitleColor_70">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="popoverBgColor">
-            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="systemTabBar">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="0.89999997615814209" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2097,8 +2091,11 @@
         <namedColor name="titleColor">
             <color red="0.2199999988079071" green="0.2199999988079071" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="white40">
-            <color red="1" green="1" blue="1" alpha="0.40000000596046448" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="white100">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white60">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
