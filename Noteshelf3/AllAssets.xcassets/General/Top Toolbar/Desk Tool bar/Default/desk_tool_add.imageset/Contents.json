@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "frame.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "frame 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "nav-notebook.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "popovericon.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "popovericon 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "popovericon 2.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

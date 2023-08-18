@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "desk_tool_page.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_page 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "icon-3.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

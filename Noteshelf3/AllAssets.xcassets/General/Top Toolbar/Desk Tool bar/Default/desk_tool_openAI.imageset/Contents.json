@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "desk_tool_openAI.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_openAI 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "icon (5).pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

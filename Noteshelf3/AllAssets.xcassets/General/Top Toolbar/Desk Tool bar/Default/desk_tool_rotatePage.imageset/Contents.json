@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "icon.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "icon 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "icon-3.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

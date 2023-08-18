@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "pen-2.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "pen-2 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "pen-2 2.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

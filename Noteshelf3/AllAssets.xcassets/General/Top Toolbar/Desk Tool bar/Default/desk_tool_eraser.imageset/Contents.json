@@ -2,7 +2,15 @@
   "images" : [
     {
       "filename" : "Frame.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "Frame 1.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "Frame 2.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {
