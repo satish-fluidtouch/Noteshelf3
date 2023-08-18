@@ -63,6 +63,9 @@ class FTTemplatesPageViewController: UIViewController {
            , let premiumUser = FTStoreContainerHandler.shared.premiumUser, !premiumUser.isPremiumUser {
             cancellabelAction = FTStoreContainerHandler.shared.premiumUser?.$isPremiumUser.sink(receiveValue: { [weak self] isPremiumUser in
                 self?.premiumIconView?.isHidden = isPremiumUser;
+                if !(self?.isRegularClass() ?? false) {
+                    self?.premiumIconView?.isHidden = true;
+                }
             })
         }
     }
@@ -308,6 +311,9 @@ private extension FTTemplatesPageViewController {
             , let premiumUser = FTStoreContainerHandler.shared.premiumUser
             , !premiumUser.isPremiumUser {
             self.premiumIconView?.isHidden = false;
+            if !(self.isRegularClass() ) {
+                self.premiumIconView?.isHidden = true;
+            }
         }
 
         /// Enable and Disable

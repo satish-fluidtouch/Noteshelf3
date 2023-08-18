@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "rocket_light.pdf",
+      "filename" : "premium_icon_logo.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "rocket_dark.pdf",
+      "filename" : "premium_icon_logo_dark.pdf",
       "idiom" : "universal"
     }
   ],
