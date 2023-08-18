@@ -42,6 +42,12 @@ extension UIFont {
         }
         return self
     }
+    func boldItalic() -> UIFont {
+        if let font = withTraits(traits: [.traitBold, .traitItalic]) {
+            return font
+        }
+        return self
+    }
 
     func boldFont() -> UIFont {
         if let font = withTraits(traits: .traitBold) {

@@ -162,6 +162,8 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.zoomButtonAction()
             
         case .hand:
+            let config = FTToastConfiguration(title: "customizeToolbar.readOnlyMode".localized)
+            FTToastHostController.showToast(from: self, toastConfig: config)
             self.readOnlyButtonAction()
             
         case .share:

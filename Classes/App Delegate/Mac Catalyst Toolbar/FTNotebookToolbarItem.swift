@@ -52,6 +52,16 @@ class FTNotebookDefaultToolbarItem: FTNotebookToolbarItem {
     
     override func validate() {
         super.validate()
+        self.validateUndoRedo()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.validateUndoRedo()
+        }
+    }
+
+    private func validateUndoRedo() {
         if(toolType == .undo || toolType == .redo) {
             if let undoManger = (self.toolbar as? FTNotebookToolbar)?.undoManager {
                 if(toolType == .undo) {
