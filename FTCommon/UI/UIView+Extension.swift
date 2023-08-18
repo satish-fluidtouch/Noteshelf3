@@ -131,12 +131,19 @@ extension UIView {
         }
     }
 
-    public func addEqualConstraintsToView(toView:UIView) {
+    public func addEqualConstraintsToView(toView:UIView,safeAreaLayout: Bool = false) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.leadingAnchor.constraint(equalTo: toView.leadingAnchor, constant: 0).isActive = true
-        self.trailingAnchor.constraint(equalTo: toView.trailingAnchor, constant: 0).isActive = true
-        self.topAnchor.constraint(equalTo: toView.topAnchor, constant: 0).isActive = true
-        self.bottomAnchor.constraint(equalTo: toView.bottomAnchor, constant: 0).isActive = true
+        if safeAreaLayout {
+            self.leadingAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.leadingAnchor, constant: 0).isActive = true
+            self.trailingAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.trailingAnchor, constant: 0).isActive = true
+            self.topAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+            self.bottomAnchor.constraint(equalTo: toView.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
+        } else {
+            self.leadingAnchor.constraint(equalTo: toView.leadingAnchor, constant: 0).isActive = true
+            self.trailingAnchor.constraint(equalTo: toView.trailingAnchor, constant: 0).isActive = true
+            self.topAnchor.constraint(equalTo: toView.topAnchor, constant: 0).isActive = true
+            self.bottomAnchor.constraint(equalTo: toView.bottomAnchor, constant: 0).isActive = true
+        }
     }
 
     public func asImage() -> UIImage? {

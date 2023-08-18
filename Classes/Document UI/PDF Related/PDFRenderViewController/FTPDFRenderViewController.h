@@ -60,8 +60,14 @@ typedef enum: NSInteger  {
 @interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate> {
 }
 #else
-@interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate> {
-}
+@interface FTPDFRenderViewController : FTBaseRenderViewController
+<UIPopoverPresentationControllerDelegate,
+UINavigationControllerDelegate,
+FTDeskToolbarDelegate,
+FTAudioListViewControllerDelegtes,
+FTApplePencilInteractionProtocol,
+FTPenRackSelectDelegate,
+FTEraserRackControllerDelegate> {}
 #endif
 
 @property (strong) FTScrollViewPageOffset *contentOffsetPercentage; //internal

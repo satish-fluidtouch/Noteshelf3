@@ -63,7 +63,7 @@ class FTFilesDriveExporter: FTBaseExporter, UIDocumentPickerDelegate {
     }
     
     private func presentDocumentPicker(_ urls: [URL]) {
-        self.documentPickerController = UIDocumentPickerViewController.init(urls: urls, in: UIDocumentPickerMode.moveToService)
+        self.documentPickerController = UIDocumentPickerViewController(forExporting: urls);
         self.documentPickerController.delegate = self;
         self.documentPickerController.modalPresentationStyle = UIModalPresentationStyle.pageSheet
         self.baseViewController.present(self.documentPickerController, animated: true, completion: nil)
@@ -71,16 +71,12 @@ class FTFilesDriveExporter: FTBaseExporter, UIDocumentPickerDelegate {
     
     // MARK: - UIDocumentPickerDelegate Methods
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]){
-        if controller.documentPickerMode == UIDocumentPickerMode.moveToService {
-            self.delegate.didEndExport(withMessage: "ExportComplete".localized);
-        }
+        self.delegate.didEndExport(withMessage: "ExportComplete".localized);
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController)
     {
-        if controller.documentPickerMode == UIDocumentPickerMode.moveToService {
-            self.delegate.didCancelExport();
-        }
+        self.delegate.didCancelExport();
     }
     
     override func name() -> String! {

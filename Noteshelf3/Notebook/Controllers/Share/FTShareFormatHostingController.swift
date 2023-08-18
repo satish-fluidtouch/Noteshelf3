@@ -64,9 +64,15 @@ extension FTShareFormatHostingController: FTShareFormatDelegate {
     }
 
     func didInitiateShare(type:FTShareType) {
+#if targetEnvironment(macCatalyst)
+        let properties = FTExportProperties.getSavedProperties()
+        self.coordinator.presentingVc = self;
+        self.coordinator.beginShare(properties, option: self.selectedOption,type: type)
+#else
         self.dismiss(animated: true) {
             let properties = FTExportProperties.getSavedProperties()
             self.coordinator.beginShare(properties, option: self.selectedOption,type: type)
         }
+#endif
     }
 }
