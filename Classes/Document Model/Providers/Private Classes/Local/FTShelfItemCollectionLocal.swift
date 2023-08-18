@@ -95,7 +95,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
             
             self.tempCompletionBlock = completionBlock;
             self.query = FTLocalQueryGather(rootURL: self.URL,
-                                            extensionsToListen: [FTFileExtension.ns3, FTFileExtension.ns2, groupExtension],
+                                            extensionsToListen: [FTFileExtension.ns3, groupExtension],
                                             skipSubFolder : false,
                                             delegate: self);
             self.query?.startQuery();
