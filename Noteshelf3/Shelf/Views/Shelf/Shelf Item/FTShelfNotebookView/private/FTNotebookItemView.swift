@@ -21,6 +21,7 @@ struct FTNotebookItemView: View {
     @State var hideShadow: Bool = false
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.colorScheme) var colorScheme
 
     var shelfItemWidth: CGFloat = 212
     var shelfItemHeight: CGFloat = 334
@@ -41,7 +42,7 @@ struct FTNotebookItemView: View {
         VStack(alignment: .center,spacing: 0) {
             ZStack(alignment:.bottom) {
                 FTNotebookShadowView(shelfItem: shelfItem,thumbnailSize: thumbnailSize)
-                    .isHidden(hideShadow)
+                    .isHidden((hideShadow || colorScheme == .dark))
                 FTShelfItemContextMenuPreview(preview: {
                     FTNotebookCoverView(isHighlighted: (shelfViewModel.highlightItem == shelfItem))
                         .ignoresSafeArea()

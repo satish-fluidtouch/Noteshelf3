@@ -20,6 +20,8 @@ struct FTNotebookViewList : View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @State var hideShadow: Bool = false
+    @Environment(\.colorScheme) var colorScheme
 
     @Binding var isAnyNBActionPopoverShown: Bool
 
@@ -39,9 +41,11 @@ struct FTNotebookViewList : View {
             return FTNotebookShape(raidus: 10);
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true;
+            hideShadow = true
         }, onDisappearActon: {
             if !isAnyNBActionPopoverShown {
                 shelfMenuOverlayInfo.isMenuShown = false;
+                hideShadow = false
             }
         }, shelfItem: shelfItem)
     }
@@ -68,6 +72,7 @@ struct FTNotebookViewList : View {
         VStack(alignment: .center,spacing: 0) {
             ZStack(alignment:.bottom) {
                 FTNotebookShadowView(shelfItem: shelfItem,thumbnailSize: shelfImageSize)
+                    .isHidden((hideShadow || colorScheme == .dark))
                 FTNotebookCoverView(isHighlighted: false)
                     .frame(width: shelfImageSize.width,height: shelfImageSize.height,alignment: .center)
                     .padding(coverPadding)
