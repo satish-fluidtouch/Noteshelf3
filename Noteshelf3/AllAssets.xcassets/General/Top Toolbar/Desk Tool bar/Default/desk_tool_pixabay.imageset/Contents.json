@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "icon.pdf",
+      "filename" : "desk_tool_pixabay.imageset_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "icon 1.pdf",
+      "filename" : "desk_tool_pixabay_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "icon-6.pdf",
+      "filename" : "desk_tool_pixabay.imageset_mac.pdf",
       "idiom" : "mac"
     }
   ],

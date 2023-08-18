@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "popovericon.pdf",
+      "filename" : "desk_tool_unsplash_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "popovericon 1.pdf",
+      "filename" : "desk_tool_unsplash_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "popovericon 2.pdf",
+      "filename" : "desk_tool_unsplash_mac.pdf",
       "idiom" : "mac"
     }
   ],

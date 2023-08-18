@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "desk_tool_openAI.pdf",
+      "filename" : "desk_tool_openAI_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "desk_tool_openAI 1.pdf",
+      "filename" : "desk_tool_openAI_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "icon (5).pdf",
+      "filename" : "desk_tool_openAI_mac.pdf",
       "idiom" : "mac"
     }
   ],

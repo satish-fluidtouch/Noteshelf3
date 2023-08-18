@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "Frame.pdf",
+      "filename" : "desk_tool_eraser_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "Frame 1.pdf",
+      "filename" : "desk_tool_eraser_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "Frame 2.pdf",
+      "filename" : "desk_tool_eraser_mac.pdf",
       "idiom" : "mac"
     }
   ],

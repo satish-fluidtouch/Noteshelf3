@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "pen-2.pdf",
+      "filename" : "desk_tool_highlighter_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "pen-2 1.pdf",
+      "filename" : "desk_tool_highlighter_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "pen-2 2.pdf",
+      "filename" : "desk_tool_highlighter_mac.pdf",
       "idiom" : "mac"
     }
   ],

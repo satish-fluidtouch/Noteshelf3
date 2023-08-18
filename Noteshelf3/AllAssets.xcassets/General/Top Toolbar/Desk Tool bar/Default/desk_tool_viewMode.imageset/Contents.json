@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "desk_tool_viewMode.pdf",
+      "filename" : "desk_tool_viewMode_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "desk_tool_viewMode 1.pdf",
+      "filename" : "desk_tool_viewMode_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "icon.pdf",
+      "filename" : "desk_tool_viewMode_mac.pdf",
       "idiom" : "mac"
     }
   ],

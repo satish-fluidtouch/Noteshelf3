@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "shape.pdf",
+      "filename" : "desk_tool_shape_iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "filename" : "shape 1.pdf",
+      "filename" : "desk_tool_shape_ipad.pdf",
       "idiom" : "ipad"
     },
     {
-      "filename" : "shape 2.pdf",
+      "filename" : "desk_tool_shape_mac.pdf",
       "idiom" : "mac"
     }
   ],
