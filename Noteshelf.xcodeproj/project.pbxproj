@@ -269,7 +269,6 @@
 		4209FED3295C798100ACC02E /* FTShareItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4209FED2295C798100ACC02E /* FTShareItemTableViewCell.swift */; };
 		4209FED8295C799800ACC02E /* FTShareActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4209FED5295C799700ACC02E /* FTShareActionViewController.swift */; };
 		4209FED9295C799800ACC02E /* FTShareActionItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4209FED6295C799700ACC02E /* FTShareActionItemsViewController.swift */; };
-		4209FEDC295D50C700ACC02E /* FTAudioPlayerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4209FEDB295D50C700ACC02E /* FTAudioPlayerContentView.swift */; };
 		4213C34B288953EE00A7A6F3 /* FTFinderTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213C34A288953EE00A7A6F3 /* FTFinderTabBarController.swift */; };
 		4213C351288958C900A7A6F3 /* FTMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213C350288958C900A7A6F3 /* FTMediaViewController.swift */; };
 		4213C35528895F1500A7A6F3 /* FTStoryBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4213C35428895F1500A7A6F3 /* FTStoryBoard.swift */; };
@@ -371,6 +370,8 @@
 		47CE07992A0A248D00E15028 /* FTPrintPageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8048DAA227C61DF00096D86 /* FTPrintPageRenderer.swift */; };
 		47CE079D2A0A317800E15028 /* FTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2CA51E027D72007B5CAD /* FTUtils.m */; };
 		47CE079F2A0A317A00E15028 /* FTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2CA51E027D72007B5CAD /* FTUtils.m */; };
+		47D3E3F02A8F5C83004C70A7 /* FTTemplateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D3E3EF2A8F5C83004C70A7 /* FTTemplateImageView.swift */; };
+		47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		47F39E872A04DF7400CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F39E892A04E0FB00CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		520DA2A52A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */; };
@@ -2832,7 +2833,6 @@
 		4209FED2295C798100ACC02E /* FTShareItemTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShareItemTableViewCell.swift; sourceTree = "<group>"; };
 		4209FED5295C799700ACC02E /* FTShareActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShareActionViewController.swift; sourceTree = "<group>"; };
 		4209FED6295C799700ACC02E /* FTShareActionItemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShareActionItemsViewController.swift; sourceTree = "<group>"; };
-		4209FEDB295D50C700ACC02E /* FTAudioPlayerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAudioPlayerContentView.swift; sourceTree = "<group>"; };
 		421279F2250F8F5500B98ACF /* NSMutableParagraphStyle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableParagraphStyle+Extension.swift"; sourceTree = "<group>"; };
 		421279F4250F8F9100B98ACF /* FTAlphabetTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAlphabetTextList.swift; sourceTree = "<group>"; };
 		421279F6250F8F9C00B98ACF /* FTCheckBoxTextList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCheckBoxTextList.swift; sourceTree = "<group>"; };
@@ -3011,6 +3011,7 @@
 		47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsProcessor.swift; sourceTree = "<group>"; tabWidth = 4; };
 		47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsRepresentableView.swift; sourceTree = "<group>"; };
 		47D348672939BA8900A4B379 /* FTShelfTagsSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsSectionHeader.swift; sourceTree = "<group>"; };
+		47D3E3EF2A8F5C83004C70A7 /* FTTemplateImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTemplateImageView.swift; sourceTree = "<group>"; };
 		47E226F11E10052700A12998 /* FTPDFDocumentContentGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPDFDocumentContentGenerator.swift; sourceTree = "<group>"; };
 		47E226F21E10052700A12998 /* FTPDFDocumentImageContentGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPDFDocumentImageContentGenerator.swift; sourceTree = "<group>"; };
 		47E226F31E10052700A12998 /* FTPDFDocumentPDFContentGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPDFDocumentPDFContentGenerator.swift; sourceTree = "<group>"; };
@@ -6310,7 +6311,6 @@
 				C806290B22BA0EA800FB37DA /* FTAudioAnnotationViewController.swift */,
 				C806290E22BA521600FB37DA /* FTAudioAnnotationViewController.xib */,
 				4271849528FE885400C4986B /* FTAudioMoreOptionsViewController.swift */,
-				4209FEDB295D50C700ACC02E /* FTAudioPlayerContentView.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -7700,6 +7700,7 @@
 				52550EF62A70FCC000E7A1E7 /* FTTemplatePreviewViewModel.swift */,
 				52550EF72A70FCC000E7A1E7 /* FTTemplateStyleCell.swift */,
 				52550EF82A70FCC000E7A1E7 /* FTTemplatesPageViewController.swift */,
+				47D3E3EF2A8F5C83004C70A7 /* FTTemplateImageView.swift */,
 			);
 			path = TemplatesPreview;
 			sourceTree = "<group>";
@@ -11133,6 +11134,7 @@
 				52550F1D2A70FCC100E7A1E7 /* FTTemplatesStore.storyboard in Resources */,
 				BAF0DE8D2A6FE6DC006D293B /* (null) in Resources */,
 				478142BE2A85F33A0029378B /* templates_zh-Hans.plist in Resources */,
+				47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */,
 				478142C12A85F33A0029378B /* templates_en.plist in Resources */,
 				52550F582A70FCC100E7A1E7 /* templates.plist in Resources */,
 				478142C42A85F33A0029378B /* templates_es.plist in Resources */,
@@ -11713,6 +11715,7 @@
 				52550F1E2A70FCC100E7A1E7 /* FTStoreContainerHandler.swift in Sources */,
 				52550F252A70FCC100E7A1E7 /* FTStoreLibraryModel.swift in Sources */,
 				52550F3C2A70FCC100E7A1E7 /* FTDairyDateSelectionPicker_iOS.swift in Sources */,
+				47D3E3F02A8F5C83004C70A7 /* FTTemplateImageView.swift in Sources */,
 				52550F192A70FCC100E7A1E7 /* FTStoreCustomCollectionCell.swift in Sources */,
 				52550F222A70FCC100E7A1E7 /* FTStoreStickersTableCell.swift in Sources */,
 				52550F272A70FCC100E7A1E7 /* FTStoreLibraryEmptyCollectionCell.swift in Sources */,
@@ -12993,7 +12996,6 @@
 				BAF394B62859ADF10067CA9F /* FTShelfItemCollectionRecentPrivate.swift in Sources */,
 				091482BC2A725800009E49C2 /* FTWordWrapStrokeRender.swift in Sources */,
 				BA666A4C2A790B96002FF383 /* FTDocumentMigration.swift in Sources */,
-				4209FEDC295D50C700ACC02E /* FTAudioPlayerContentView.swift in Sources */,
 				4786A7EF297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift in Sources */,
 				BAF394B82859ADF10067CA9F /* FTMidnightDiaryTemplateAssetGenerator.swift in Sources */,
 				5283D39D2A5BEDAD00C6C125 /* FTShareItemTableViewCell.swift in Sources */,

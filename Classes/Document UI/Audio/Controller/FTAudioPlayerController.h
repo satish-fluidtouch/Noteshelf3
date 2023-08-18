@@ -13,6 +13,13 @@
 
 @protocol FTAudioPlayerControllerProtocol <NSObject>
 
+typedef enum : NSInteger {
+    KSlowRate=0,
+    KNormalRate,
+    KFastRate,
+    KDoubleRate
+}playbackRate;
+
 @optional
 - (void)audioPlayerDidClose:(FTAudioPlayerController *)controller;
 - (void)audioPlayer:(FTAudioPlayerController *)controller navigateToAnnotation:(FTAudioAnnotation *)audioAnnotation;
@@ -35,6 +42,7 @@
 @property (nonatomic,strong) FTAudioAnnotation *annotation;
 @property(nonatomic,assign)CGFloat rate;
 @property (nonatomic,readonly) bool isExpanded;
+@property (nonatomic,assign) playbackRate playbackRate;
 
 - (void)recordAudio;
 - (void)applyRate;

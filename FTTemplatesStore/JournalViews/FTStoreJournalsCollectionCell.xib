@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -26,52 +26,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="178" height="249"/>
                         <color key="backgroundColor" name="secondaryBG"/>
                     </imageView>
-                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NB8-eA-tP4">
-                        <rect key="frame" x="143" y="5" width="30" height="30"/>
-                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Y1v-6F-Vax">
-                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Od-kQ-9bo">
-                                    <rect key="frame" x="2" y="2" width="26" height="26"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="premium_icon_logo" translatesAutoresizingMaskIntoConstraints="NO" id="ut0-i3-KY9">
-                                            <rect key="frame" x="4" y="4" width="18" height="18"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="ut0-i3-KY9" firstAttribute="leading" secondItem="7Od-kQ-9bo" secondAttribute="leading" constant="4" id="Cdf-ig-jjF"/>
-                                        <constraint firstItem="ut0-i3-KY9" firstAttribute="top" secondItem="7Od-kQ-9bo" secondAttribute="top" constant="4" id="giJ-1L-KKe"/>
-                                        <constraint firstAttribute="trailing" secondItem="ut0-i3-KY9" secondAttribute="trailing" constant="4" id="mQ5-1g-zTI"/>
-                                        <constraint firstAttribute="bottom" secondItem="ut0-i3-KY9" secondAttribute="bottom" constant="4" id="qJB-xc-J7d"/>
-                                    </constraints>
-                                </view>
-                            </subviews>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="7Od-kQ-9bo" secondAttribute="bottom" constant="2" id="8oe-Lw-OBj"/>
-                                <constraint firstAttribute="trailing" secondItem="7Od-kQ-9bo" secondAttribute="trailing" constant="2" id="Dd5-j0-Wk7"/>
-                                <constraint firstItem="7Od-kQ-9bo" firstAttribute="top" secondItem="Y1v-6F-Vax" secondAttribute="top" constant="2" id="mSf-SE-6cZ"/>
-                                <constraint firstItem="7Od-kQ-9bo" firstAttribute="leading" secondItem="Y1v-6F-Vax" secondAttribute="leading" constant="2" id="qBa-pP-6Jh"/>
-                            </constraints>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="20"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                        <color key="backgroundColor" name="hModeToolbarBgColor"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXY-AZ-v1x">
+                        <rect key="frame" x="145" y="216" width="27" height="27"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="premium_icon_logo" translatesAutoresizingMaskIntoConstraints="NO" id="LZc-t0-dgJ">
+                                <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="DiH-0h-Ekf"/>
-                            <constraint firstAttribute="width" constant="30" id="Whb-Ne-pOx"/>
+                            <constraint firstAttribute="width" constant="27" id="Ae5-Zh-fqf"/>
+                            <constraint firstAttribute="bottom" secondItem="LZc-t0-dgJ" secondAttribute="bottom" id="LNH-OS-URv"/>
+                            <constraint firstItem="LZc-t0-dgJ" firstAttribute="top" secondItem="oXY-AZ-v1x" secondAttribute="top" id="Qbh-fU-5KX"/>
+                            <constraint firstAttribute="trailing" secondItem="LZc-t0-dgJ" secondAttribute="trailing" id="V9y-Dc-8uK"/>
+                            <constraint firstItem="LZc-t0-dgJ" firstAttribute="leading" secondItem="oXY-AZ-v1x" secondAttribute="leading" id="iZi-2W-VGH"/>
+                            <constraint firstAttribute="width" secondItem="oXY-AZ-v1x" secondAttribute="height" multiplier="1:1" id="qhh-Rs-l4X"/>
                         </constraints>
-                        <blurEffect style="light"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="15"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </visualEffectView>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sek-OF-rGA">
                         <rect key="frame" x="0.0" y="257" width="178" height="18"/>
                         <constraints>
@@ -89,13 +60,13 @@
                     <constraint firstItem="Uo5-AE-NqJ" firstAttribute="bottom" secondItem="vrM-lV-Ilm" secondAttribute="bottom" constant="32" id="2rw-Iq-qK7"/>
                     <constraint firstItem="Uo5-AE-NqJ" firstAttribute="leading" secondItem="qIV-NK-mH4" secondAttribute="leading" constant="-20" id="60V-1q-ClJ"/>
                     <constraint firstItem="sek-OF-rGA" firstAttribute="top" secondItem="vrM-lV-Ilm" secondAttribute="bottom" constant="8" id="Agb-XP-hkH"/>
-                    <constraint firstItem="NB8-eA-tP4" firstAttribute="top" secondItem="qIV-NK-mH4" secondAttribute="top" constant="5" id="C6H-9d-ci4"/>
                     <constraint firstItem="Uo5-AE-NqJ" firstAttribute="top" secondItem="qIV-NK-mH4" secondAttribute="top" constant="-8" id="CjM-hR-C9g"/>
                     <constraint firstItem="vrM-lV-Ilm" firstAttribute="leading" secondItem="qIV-NK-mH4" secondAttribute="leading" id="KRB-5r-Yvs"/>
                     <constraint firstItem="vrM-lV-Ilm" firstAttribute="top" secondItem="qIV-NK-mH4" secondAttribute="top" id="OiI-mU-UeH"/>
-                    <constraint firstAttribute="trailing" secondItem="NB8-eA-tP4" secondAttribute="trailing" constant="5" id="XlP-Zs-5SE"/>
+                    <constraint firstItem="oXY-AZ-v1x" firstAttribute="trailing" secondItem="vrM-lV-Ilm" secondAttribute="trailing" constant="-6" id="Pf1-XX-XK3"/>
                     <constraint firstAttribute="trailing" secondItem="Uo5-AE-NqJ" secondAttribute="trailing" constant="-20" id="jAt-eI-IvO"/>
                     <constraint firstItem="sek-OF-rGA" firstAttribute="leading" secondItem="vrM-lV-Ilm" secondAttribute="leading" id="vAZ-oZ-EfX"/>
+                    <constraint firstItem="oXY-AZ-v1x" firstAttribute="bottom" secondItem="vrM-lV-Ilm" secondAttribute="bottom" constant="-6" id="vJv-oz-dyf"/>
                     <constraint firstAttribute="trailing" secondItem="vrM-lV-Ilm" secondAttribute="trailing" id="veg-ge-4hB"/>
                 </constraints>
             </collectionViewCellContentView>
@@ -103,7 +74,7 @@
             <color key="backgroundColor" name="secondaryBG"/>
             <size key="customSize" width="177" height="270"/>
             <connections>
-                <outlet property="premiumView" destination="NB8-eA-tP4" id="XmW-FE-uPp"/>
+                <outlet property="premiumView" destination="oXY-AZ-v1x" id="SDp-eX-QWG"/>
                 <outlet property="shadowImageView" destination="Uo5-AE-NqJ" id="MJr-W0-n3I"/>
                 <outlet property="thumbnail" destination="vrM-lV-Ilm" id="BzG-bL-L0k"/>
                 <outlet property="titlrLabel" destination="sek-OF-rGA" id="9pd-Ie-fyb"/>
@@ -113,10 +84,7 @@
     </objects>
     <resources>
         <image name="Dairy_shadow" width="140" height="140"/>
-        <image name="premium_icon_logo" width="36" height="36"/>
-        <namedColor name="hModeToolbarBgColor">
-            <color red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="0.80000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <image name="premium_icon_logo" width="27" height="27"/>
         <namedColor name="secondaryBG">
             <color red="0.94117647058823528" green="0.93333333333333335" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
