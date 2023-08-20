@@ -1204,7 +1204,7 @@
 "shapes" = "Formes";
 "share" = "Partager";
 "share.savetoCameraRoll" = "Enregistrer dans la pellicule.";
-"shefl.home.addnotestoyourshelfbegin" = "Ajoutez des notes à votre étagère et commencez votre expérience de prise de notes numérique.";
+"shefl.home.addnotestoyourshelfbegin" = "Ajoutez des notes à votre étagère et commencez votre expérience de prise de notes numériques.";
 "shefl.home.getStartedwithNoteShelf" = "Commencez avec Noteshelf";
 "shelf.MovePopover.MoveHere" = "Déplacer ici";
 "shelf.alert.cancel" = "Annuler";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM
+// Last Synced by Akshay on 20 August 2023 at 11:41
