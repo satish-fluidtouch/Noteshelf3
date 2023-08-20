@@ -11,6 +11,10 @@ import UIKit
 extension FTStoreCustomViewController {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+        if sectionType == .noRecords {
+            return nil
+        }
         let identifier = indexPath as NSIndexPath
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
             let delete = UIAction(title: "templatesStore.custom.alert.remove".localized, image: UIImage(systemName: "trash")) { [weak self] _ in

@@ -1045,7 +1045,7 @@
 "finder.tag" = "标签";
 "foodanddrink" = "食物与饮料";
 "gesture.activeFocusMode.subTitle" = "4指单次轻拍";
-"gesture.activeFocusMode.title" = "激活焦点模式或隐藏焦点模式工具栏";
+"gesture.activeFocusMode.title" = "激活专注模式";
 "gesture.undoredo.subTitle" = "2指或3指单击";
 "gesture.undoredo.title" = "撤销或重做";
 "getInspired.bulletJournal" = "子弹笔记";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 11:41
+// Last Synced by Akshay on 20 August 2023 at 16:22

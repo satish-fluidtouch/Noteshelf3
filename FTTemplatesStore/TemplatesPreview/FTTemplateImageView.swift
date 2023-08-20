@@ -11,7 +11,7 @@ import Combine
 class FTTemplateImageView: UIImageView {
     private var cancellabelAction: AnyCancellable?;
     var template: TemplateInfo!
-    var premiumView: UIImageView!
+    var premiumView: UIImageView?
 
      override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,9 +25,9 @@ class FTTemplateImageView: UIImageView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if self.traitCollection.isRegular {
-            premiumView.isHidden = true
+            premiumView?.isHidden = true
         } else {
-            premiumView.isHidden = false
+            premiumView?.isHidden = false
         }
     }
 
@@ -42,7 +42,7 @@ class FTTemplateImageView: UIImageView {
             , let premiumUser = FTStoreContainerHandler.shared.premiumUser
             , !premiumUser.isPremiumUser {
             // Add Premium Icon
-            premiumView = UIImageView(frame: CGRect(x: 0 , y: 8, width: self.frame.size.width , height: 20))
+            let premiumView = UIImageView(frame: CGRect(x: 0 , y: 8, width: self.frame.size.width , height: 20))
             premiumView.image = UIImage(named: "premium", in: storeBundle, with: nil)
             premiumView.contentMode = .scaleAspectFit
             premiumView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +54,8 @@ class FTTemplateImageView: UIImageView {
             } else {
                 premiumView.isHidden = false
             }
+
+            self.premiumView = premiumView
         }
 
     }
@@ -62,9 +64,9 @@ class FTTemplateImageView: UIImageView {
         if nil == cancellabelAction
             , let premiumUser = FTStoreContainerHandler.shared.premiumUser, !premiumUser.isPremiumUser {
             cancellabelAction = FTStoreContainerHandler.shared.premiumUser?.$isPremiumUser.sink(receiveValue: { [weak self] isPremiumUser in
-                self?.premiumView.isHidden = true
+                self?.premiumView?.isHidden = true
                 if self?.premiumView != nil, isPremiumUser {
-                    self?.premiumView.isHidden = isPremiumUser
+                    self?.premiumView?.isHidden = isPremiumUser
                 }
             })
         }
