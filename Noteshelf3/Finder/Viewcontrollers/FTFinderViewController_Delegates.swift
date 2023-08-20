@@ -124,9 +124,11 @@ extension FTFinderViewController:  UICollectionViewDropDelegate {
             }
             self.filteredPages.move(fromOffsets: IndexSet(indexesToRemove), toOffset: destinationIndexPath.row)
             self.document.movePages(pages, toIndex: destinationIndexPath.item)
-            self.document.saveDocument { (success) in
-                FTCLSLog("Finder - Pages Moved");
-                self.createSnapShot()
+            runInMainThread {
+                self.document.saveDocument { (success) in
+                    FTCLSLog("Finder - Pages Moved");
+                    self.createSnapShot()
+                }
             }
         } else {
             //TODO: Accept items from outside
