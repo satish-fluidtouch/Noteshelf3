@@ -714,7 +714,7 @@
 "ResolveConflict" = "Resolve Conflict";
 "ResolveConflictMessage" = "Modifications aren't in sync. Choose which documents to keep.";
 "Restore" = "Restore";
-"ResultsFor" = "Results for '%@'";
+"ResultsFor" = "Results for %@";
 "RetakeKey" = "Retake";
 "Right" = "Right";
 "Rotate" = "Rotate";
@@ -1204,7 +1204,7 @@
 "shapes" = "Shapes";
 "share" = "Share";
 "share.savetoCameraRoll" = "Save to Camera Roll";
-"shefl.home.addnotestoyourshelfbegin" = "Add notes to your shelf and begin your digital note-taking experiance.";
+"shefl.home.addnotestoyourshelfbegin" = "Add notes to your shelf and begin your digital note-taking experience";
 "shefl.home.getStartedwithNoteShelf" = "Get Started with Noteshelf";
 "shelf.MovePopover.MoveHere" = "Move Here";
 "shelf.alert.cancel" = "Cancel";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "Your trash is empty";
 "shelf.view.gallery" = "Gallery";
 "shelf.view.icons" = "Icons";
+"shelf.view.largeNotebooks" = "Large Notebooks";
 "shelf.view.list" = "List";
+"shelf.view.smallNotebooks" = "Small Notebooks";
 "shelfItem.contexualMenu.addToStarred" = "Add to Starred";
 "shelfItem.contexualMenu.changeCover" = "Change Cover";
 "shelfItem.contexualMenu.getInfo" = "Get Info";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Akshay on 20 August 2023 at 11:41

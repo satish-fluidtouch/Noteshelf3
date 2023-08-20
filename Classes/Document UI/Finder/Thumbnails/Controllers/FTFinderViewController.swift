@@ -1014,25 +1014,6 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             }
         }
     }
-    
-    private func randomTransparentCover() -> FTThemeable{
-        let coverThemeLibrary = FTThemesLibrary(libraryType: FTNThemeLibraryType.covers);
-        let defaultCover: FTThemeable = coverThemeLibrary.getARandomCoverThemeForCategory(type: .transparent);
-        return defaultCover
-    }
-
-    internal func getTransparent12CoverTheme() -> FTThemeable {
-        let coverThemeLibrary = FTThemesLibrary(libraryType: FTNThemeLibraryType.covers);
-        let themeCovers = coverThemeLibrary.getTransparentCovers()
-        for theme in themeCovers {
-            let transparentCover = theme.themes.filter({($0 as! FTTheme).isTransparent12Cover()})
-            if let cover = transparentCover.first {
-                return cover
-            }
-        }
-        //Incase, if transparent cover 12 is not available, then set random transaparent cover
-        return  randomTransparentCover()
-    }
 
     //MARK:- Custom
     @IBAction func dismiss() {
@@ -1699,7 +1680,6 @@ extension FTFinderViewController {
             return (p1.pageIndex() < p2.pageIndex())
         });
 
-        let defaultCover = self.getTransparent12CoverTheme();
 
         let info = FTDocumentInputInfo();
 

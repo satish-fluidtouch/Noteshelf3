@@ -13,9 +13,7 @@ class FTNotebookToolbar: NSToolbar {
     weak var toolbarActionDelegate: FTToolbarActionDelegate? {
         didSet {
             if let mode = self.toolbarActionDelegate?.toolbarCurrentDeskMode(self) {
-                if let ids = FTDeskCenterPanelTool.toolFor(mode: mode) {
-                    self.selectedItemIdentifier = ids.toolbarIdentifier;
-                }
+                self.selectItem(with: mode)
             }
         }
     }
@@ -33,11 +31,25 @@ class FTNotebookToolbar: NSToolbar {
         self.autosavesConfiguration = true;
         windowScene.titlebar?.titleVisibility = .hidden;
         self.selectedItemIdentifier = FTDeskCenterPanelTool.pen.toolbarIdentifier;
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
+            guard let strongSelf = self else {
+                return
+            }
+            if let mode = strongSelf.toolbarActionDelegate?.toolbarCurrentDeskMode(strongSelf) {
+                strongSelf.selectItem(with: mode)
+            }
+        }
     }
     
     func toolbarItem(_ identifier: NSToolbarItem.Identifier) -> NSToolbarItem? {
         let item = self.visibleItems?.first(where: {$0.itemIdentifier == identifier});
         return item;
+    }
+
+    func selectItem(with mode: RKDeskMode) {
+        if let selTool = FTDeskCenterPanelTool.toolFor(mode: mode) {
+            self.selectedItemIdentifier = selTool.toolbarIdentifier;
+        }
     }
 }
 

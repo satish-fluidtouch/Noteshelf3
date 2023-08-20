@@ -14,7 +14,7 @@ class FTShareCoordinator: NSObject {
     private let sourceView: UIView?
     private var exportManager: FTExportProgressManager?
 
-    private(set) weak var presentingVc: UIViewController!
+    weak var presentingVc: UIViewController!
 
     init(shelfItems: [FTShelfItemProtocol], pages: [FTPageProtocol]? = [], presentingController: UIViewController, sourceView: UIView? = nil) {
         self.shelfItems = shelfItems

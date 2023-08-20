@@ -35,6 +35,8 @@ class FTBookmarkViewController: UIViewController, FTPopoverPresentable {
             }
         }
         self.collectionView?.reloadData()
+        textField?.layer.borderColor = UIColor.appColor(.black20).cgColor
+        textField?.layer.borderWidth = 1
     }
     
     override func viewDidDisappear(_ animated: Bool) {

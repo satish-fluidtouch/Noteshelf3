@@ -12,7 +12,6 @@ import FTDocumentFramework
 
 private let fileExtensionsToListen = [shelfExtension,
                                       FTFileExtension.ns3,
-                                      FTFileExtension.ns2,
                                       "m4a",
                                       "plist",
                                       sortIndexExtension]

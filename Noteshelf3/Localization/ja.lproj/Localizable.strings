@@ -665,7 +665,7 @@
 "PublishedByNoteshelf" = "「%@ によって公開されました」";
 "PullToAddNewPage" = "新しいページを追加するために引っ張ってください";
 "QuickAccess" = "クイックアクセス";
-"QuickAccessGesture" = "クイックアクセスジェスチャー (kuikku akusesu jesuchā)";
+"QuickAccessGesture" = "クイックアクセスジェスチャー";
 "QuickAccessGestureDetail" = "画面の左端からノートブック内にスワイプして、クイックアクセスメニューにアクセスしてください。";
 "QuickCreateNoteInfoTipSubTitle" = "現在のページテンプレートを変更したいですか？他のオプションを見つけるにはここをタップしてください。";
 "QuickCreateNoteInfoTipTitle" = "ここにもっと紙のテンプレートがあります。";
@@ -714,7 +714,7 @@
 "ResolveConflict" = "記録";
 "ResolveConflictMessage" = "録音中...";
 "Restore" = "復元ページ";
-"ResultsFor" = "やり直す/取り消す";
+"ResultsFor" = "%@の結果";
 "RetakeKey" = "3本指で右にスワイプ/左にスワイプ";
 "Right" = "新しいページを追加するには、リリースしてください。";
 "Rotate" = "後でお知らせ";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "ゴミ箱は空です。";
 "shelf.view.gallery" = "ギャラリー";
 "shelf.view.icons" = "アイコン";
+"shelf.view.largeNotebooks" = "大きなノートブック";
 "shelf.view.list" = "リスト";
+"shelf.view.smallNotebooks" = "小さなノートブック";
 "shelfItem.contexualMenu.addToStarred" = "お気に入りに追加";
 "shelfItem.contexualMenu.changeCover" = "カバーを変更する";
 "shelfItem.contexualMenu.getInfo" = "情報を取得";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Akshay on 20 August 2023 at 11:41

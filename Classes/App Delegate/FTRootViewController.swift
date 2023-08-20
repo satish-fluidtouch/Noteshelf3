@@ -421,7 +421,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                isInNonCollectionMode: Bool = false,
                                lastSelectedSideBarContentType sideBarContentType: FTSideBarItemType = .home,
                                lastSelectedTag: String = "") {
-
+        // Upodating created notebok count here, assuming, by this time provider will be ready and the books count is updated.
+        FTIAPManager.shared.premiumUser.updateNoOfBooks(nil)
         //Instantiate Shelf view controller
         if(nil == self.rootContentViewController) {
             let controller =  FTShelfSplitViewController(style: .doubleColumn)

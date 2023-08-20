@@ -31,10 +31,6 @@ class FTStoreJournalsCollectionCell: UICollectionViewCell {
 
         self.thumbnail.image = nil
         self.thumbnail.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-
-        self.premiumView?.layer.borderColor = UIColor.appColor(.black5).cgColor
-        self.premiumView?.layer.borderWidth = 0.5
-
         self.premiumView?.isHidden = FTStoreContainerHandler.shared.premiumUser?.isPremiumUser ?? true;        
         if nil == self.cancellableAction
             , let premiumUser = FTStoreContainerHandler.shared.premiumUser

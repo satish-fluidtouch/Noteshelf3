@@ -714,7 +714,7 @@
 "ResolveConflict" = "Aufnahme";
 "ResolveConflictMessage" = "Aufnahme läuft...";
 "Restore" = "Wiederherstellen";
-"ResultsFor" = "Wiederholen/Rückgängig machen";
+"ResultsFor" = "Ergebnisse für %@";
 "RetakeKey" = "3-Finger Rechts-Wischen/Links-Wischen";
 "Right" = "Freigeben, um eine neue Seite hinzuzufügen.";
 "Rotate" = "Später erinnern";
@@ -1204,7 +1204,7 @@
 "shapes" = "Formen";
 "share" = "Teilen";
 "share.savetoCameraRoll" = "In der Galerie speichern";
-"shefl.home.addnotestoyourshelfbegin" = "Fügen Sie Notizen zu Ihrem Regal hinzu und beginnen Sie Ihre digitale Notizenerfahrung.";
+"shefl.home.addnotestoyourshelfbegin" = "Fügen Sie Notizen zu Ihrem Regal hinzu und beginnen Sie Ihr digitales Notizen-Erlebnis.";
 "shefl.home.getStartedwithNoteShelf" = "Erste Schritte mit Noteshelf";
 "shelf.MovePopover.MoveHere" = "Hierher ziehen";
 "shelf.alert.cancel" = "Stornieren";
@@ -1329,7 +1329,9 @@
 "shelf.trash.noTrashTitle" = "Ihr Papierkorb ist leer.";
 "shelf.view.gallery" = "Galerie";
 "shelf.view.icons" = "Symbole";
+"shelf.view.largeNotebooks" = "Große Notebooks";
 "shelf.view.list" = "Liste";
+"shelf.view.smallNotebooks" = "Kleine Notizbücher";
 "shelfItem.contexualMenu.addToStarred" = "Zu Starred hinzufügen.";
 "shelfItem.contexualMenu.changeCover" = "Ändere Titelbild";
 "shelfItem.contexualMenu.getInfo" = "Information erhalten";
@@ -1481,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 17 August 2023 at 4:28 PM
+// Last Synced by Akshay on 20 August 2023 at 11:41

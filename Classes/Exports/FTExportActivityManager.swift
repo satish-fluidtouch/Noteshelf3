@@ -25,6 +25,11 @@ class FTExportActivityManager: NSObject {
     weak var delegate : FTExportActivityDelegate?
     private var activityViewController : UIActivityViewController!
     
+#if targetEnvironment(macCatalyst)
+    private var onCompletion: ((Error?,RKExportMode)->())?;
+    private var FilesExporter: FTFilesDriveExporter?;
+#endif
+    
     private func mappingActivity(_ name : String) -> RKExportMode {
         var deskMode : RKExportMode = kExportModeNone;
         switch name {
@@ -66,7 +71,12 @@ class FTExportActivityManager: NSObject {
         progress.totalUnitCount = 1
         self.exportFile { (error, mode) in
             runInMainThread {
+#if targetEnvironment(macCatalyst)
+                self.onCompletion = nil;
+                self.baseViewController?.dismiss(animated: true);
+#else
                 self.activityViewController.dismiss(animated: true, completion: nil);
+#endif
                 if nil != error {
                     self.delegate?.exportActivity(self, didFailWith: error!, mode: mode)
                 } else {
@@ -112,8 +122,8 @@ class FTExportActivityManager: NSObject {
                 
             }
             if ftExportItems.count == 1,
-                let exportItem = ftExportItems.first,
-                let childItems = exportItem.childItems {
+               let exportItem = ftExportItems.first,
+               let childItems = exportItem.childItems {
                 var exportItemurl : URL;
                 if let urlString = exportItem.representedObject as? URL {
                     exportItemurl = urlString;
@@ -130,12 +140,17 @@ class FTExportActivityManager: NSObject {
                     });
                 }
             }
-            self.activityViewController = UIActivityViewController(activityItems: items, applicationActivities: customActivities);
-            let shareNavigationController = UINavigationController(rootViewController: self.activityViewController)
-            shareNavigationController.modalPresentationStyle = .formSheet
-            shareNavigationController.isNavigationBarHidden = true
-            shareNavigationController.presentationController?.delegate = baseViewController as? UIAdaptivePresentationControllerDelegate
+            let actController = UIActivityViewController(activityItems: items, applicationActivities: customActivities);
+            self.activityViewController = actController
             self.activityViewController.completionWithItemsHandler = { [weak self] (activityType, completed, returnedItems, error) in
+#if targetEnvironment(macCatalyst)
+                if nil == error
+                    , let str = activityType?.rawValue
+                    , str == "kExportModeFilesDrive" {
+                    self?.exportToFinder(onCompletion);
+                    return;
+                }
+#endif
                 if(nil != error) {
                     onCompletion(error,kExportModeNone);
                 }
@@ -147,7 +162,51 @@ class FTExportActivityManager: NSObject {
                     onCompletion(nil,typeToReturn);
                 }
             }
+#if targetEnvironment(macCatalyst)
+            actController.modalPresentationStyle = .popover;
+            actController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.none
+            actController.popoverPresentationController?.sourceView = baseViewController.view;
+            let rect = CGRect(x: baseViewController.view.bounds.midX, y: baseViewController.view.bounds.height - 44 - 20, width: 1, height: 1);
+            actController.popoverPresentationController?.sourceRect = rect;
+            baseViewController.present(actController, animated: true, completion: nil);
+#else
+            let shareNavigationController = UINavigationController(rootViewController: self.activityViewController)
+            shareNavigationController.modalPresentationStyle = .formSheet
+            shareNavigationController.isNavigationBarHidden = true
+            shareNavigationController.presentationController?.delegate = baseViewController as? UIAdaptivePresentationControllerDelegate
             baseViewController.present(shareNavigationController, animated: true, completion: nil);
+#endif
         }
     }
 }
+
+
+
+#if targetEnvironment(macCatalyst)
+extension FTExportActivityManager: FTExporterDelegate {
+    func exportToFinder(_ onCompeltion: @escaping ((Error?,RKExportMode)->())) {
+        if let exporter = FTFilesDriveExporter.init(delegate: self) {
+            self.FilesExporter = exporter;
+            exporter.exportItems = self.exportItems;
+            exporter.exportFormat = self.exportFormat
+            exporter.baseViewController = self.baseViewController;
+            exporter.export();
+            self.onCompletion = onCompeltion;
+        }
+    }
+    
+    func didCancelExport() {
+        onCompletion?(NSError.exportCancelError(),kExportModeFilesDrive);
+    }
+    
+    func didFailExportWithError(_ error: Error!, withMessage message: String!) {
+        onCompletion?(error,kExportModeFilesDrive);
+    }
+    
+    func didEndExport(withMessage message: String!) {
+        onCompletion?(nil,kExportModeFilesDrive);
+    }
+}
+
+#endif
+

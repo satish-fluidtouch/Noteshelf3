@@ -188,27 +188,6 @@ extension FTThemesLibrary {
         return randomTheme
     }
 
-    func getARandomCoverThemeForCategory(type : FTCoverThemeType) -> FTThemeable {
-        let allCategories = self.getCoverCategoryList()
-        var transparentCategories:[FTThemeCategory]
-        if type == .transparent {
-            transparentCategories  = allCategories.filter({!$0.themes.isEmpty && $0.isTransparent()})
-        } else {
-            transparentCategories  = allCategories.filter({!$0.themes.isEmpty && $0.isAudio()})
-
-        }
-        var transparentCategory = transparentCategories.last
-        if(transparentCategory == nil){
-            transparentCategory = allCategories.first // To avoid unexpected crashes, and not to stop importing A PDF just for a random cover
-        }
-        let theme = transparentCategory!.getRandomCoverTheme(type: type)
-        guard theme != nil else {
-            return getARandomCoverThemeForCategory(type: type)
-        }
-
-        return theme!
-    }
-
     func getTransparentCovers() -> [FTThemeCategory]{
         let allCategories = self.getCoverCategoryList()
         var transparentCategories  = allCategories.filter({!$0.themes.isEmpty && $0.isTransparent()})

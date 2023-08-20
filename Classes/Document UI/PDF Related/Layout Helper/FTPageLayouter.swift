@@ -31,7 +31,7 @@ protocol FTLayouterInternal: FTPageLayouter {
 }
 
 @objc protocol FTPageLayouterDelegate: NSObjectProtocol {
-    func toolbarHeight() -> CGFloat;
+    func yPosition() -> CGFloat;
 }
 
 @objc protocol FTPageLayouter: NSObjectProtocol {

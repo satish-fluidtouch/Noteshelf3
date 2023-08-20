@@ -40,7 +40,9 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
     
     func openBookmarks() {
-        if let detailController = detailController(), !detailController.isKind(of: FTShelfBookmarksViewController.self) {
+        if let detailController = detailController(), detailController.isKind(of: FTShelfBookmarksViewController.self) {
+            self.showDetailViewController(detailController, sender: self)
+        } else {
             let navigationController = UINavigationController(rootViewController: getBookmarkVC())
             navigationController.navigationBar.prefersLargeTitles = true
             self.showDetailViewController(navigationController, sender: self)
@@ -123,26 +125,35 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
 
     func openTemplates() {
-        if let detailController = self.detailController(), !detailController.isKind(of: FTStoreContainerViewController.self) {
+        if let detailController = self.detailController(), detailController.isKind(of: FTStoreContainerViewController.self) {
+            self.showDetailViewController(detailController, sender: self)
+        } else {
             let navigationController = UINavigationController(rootViewController: getTemplatesVC())
             navigationController.navigationBar.prefersLargeTitles = true
             self.showDetailViewController(navigationController, sender: self)
         }
     }
+
     func openPhotos() {
-        if let detailController = self.detailController(), !detailController.isKind(of: FTShelfContentPhotoViewController.self) {
+        if let detailController = self.detailController(), detailController.isKind(of: FTShelfContentPhotoViewController.self) {
+            self.showDetailViewController(detailController, sender: self)
+        } else {
             let navigationController = UINavigationController(rootViewController: getPhotosVC())
             navigationController.navigationBar.prefersLargeTitles = true
             self.showDetailViewController(navigationController, sender: self)
         }
     }
+
     func openAudio() {
-        if let detailController = self.detailController(), !detailController.isKind(of: FTShelfContentAudioViewController.self) {
+        if let detailController = self.detailController(), detailController.isKind(of: FTShelfContentAudioViewController.self)  {
+            self.showDetailViewController(detailController, sender: self)
+        } else {
             let navigationController = UINavigationController(rootViewController: getAudioVC())
             navigationController.navigationBar.prefersLargeTitles = true
             self.showDetailViewController(navigationController, sender: self)
         }
     }
+    
     func didTapOnCategoriesOverlay() {
         self.exitFromGlobalSearch()
     }

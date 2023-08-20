@@ -109,8 +109,7 @@ private extension FTBookSessionRootViewController {
         controller.view.frame = self.view.bounds;
         self.view.addSubview(controller.view)
         self.add(controller);
-        self.addConstraintForView(controller.view, withrespectTo: self.view)
-        
+        controller.view.addEqualConstraintsToView(toView: self.view,safeAreaLayout: true);
         controller.didMove(toParent: self)
         
         controller.view.layoutIfNeeded();

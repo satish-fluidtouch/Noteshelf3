@@ -2,7 +2,7 @@
   "images" : [
     {
       "filename" : "icon.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
     },
     {
       "appearances" : [
@@ -12,7 +12,35 @@
         }
       ],
       "filename" : "icon 1.pdf",
-      "idiom" : "universal"
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "icon 3.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "icon 2.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "icon 4.pdf",
+      "idiom" : "mac"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "icon-1.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

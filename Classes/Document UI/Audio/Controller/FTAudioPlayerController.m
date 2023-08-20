@@ -17,12 +17,7 @@
 
 NSString *const FTAudioAnnotationDidGetDeletedNotification = @"FTAudioAnnotationDidGetDeletedNotification";
 
-typedef enum : NSInteger {
-    KSlowRate=0,
-    KNormalRate,
-    KFastRate,
-    KDoubleRate
-}playbackRate;
+
 
 @interface FTAudioPlayerView : UIView
 
@@ -51,7 +46,6 @@ typedef enum : NSInteger {
 @property (weak, nonatomic) IBOutlet UILabel *maxDurationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *expandImageView;
 @property (weak, nonatomic) IBOutlet UIButton *rateButton;
-@property (nonatomic,assign) playbackRate playbackRate;
 @property (weak, nonatomic) IBOutlet UIView *closeButtonView;
 
 @property (nonatomic,weak)   FTAudioSession *audioSession;
@@ -74,6 +68,7 @@ typedef enum : NSInteger {
 @property (weak, nonatomic) IBOutlet UIStackView *recordingStackView;
 @property (weak, nonatomic) IBOutlet UISlider *progressSlider;
 @property (nonatomic,weak) IBOutlet FTInfiniteWave *infiniteBar;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *visualEffectView;
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @end
@@ -225,7 +220,7 @@ typedef enum : NSInteger {
     #if !TARGET_OS_MACCATALYST
     [self.progressSlider setThumbImage:[UIImage imageNamed:@"knob"] forState:UIControlStateNormal];
     #endif
-    self.contentView.layer.cornerRadius = 12;
+    self.visualEffectView.layer.cornerRadius = 12;
 }
 
 -(void)setRecordingModel:(FTAudioRecordingModel *)recordingModel
@@ -257,14 +252,14 @@ typedef enum : NSInteger {
             [self.rateButton setEnabled:NO];
             self.progressSlider.hidden = true;
             [self startInfiniteWaveIfNeeded];
-            self.contentView.backgroundColor = [[[UIColor alloc] initWithHexString:@"FFE6E4"] colorWithAlphaComponent:1.0];
+            self.visualEffectView.backgroundColor = [UIColor colorNamed:@"audio_recording"];
         }
             break;
         case AudioStatePlaying:{
             [self.rateButton setEnabled:YES];
             self.infiniteBar.hidden = true;
             self.progressSlider.hidden = false;
-            self.contentView.backgroundColor = [UIColor clearColor];
+            self.visualEffectView.backgroundColor = [UIColor colorNamed:@"alert_default"];
         }
             break;
             
@@ -272,7 +267,7 @@ typedef enum : NSInteger {
             [self.rateButton setEnabled:YES];
             self.infiniteBar.hidden = true;
             self.progressSlider.hidden = false;
-            self.contentView.backgroundColor = [UIColor clearColor];
+            self.visualEffectView.backgroundColor = [UIColor colorNamed:@"alert_default"];
         }
             break;
     }
@@ -441,6 +436,7 @@ typedef enum : NSInteger {
     if(self.currentState == AudioStateNone) {
         [self.audioSession startPlayback];
     }
+    [self updateSpeedIcon:self.moreButton];
 }
 
 -(void)playAudioMenuItemAction

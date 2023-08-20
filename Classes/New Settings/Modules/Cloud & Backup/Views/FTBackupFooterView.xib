@@ -18,23 +18,23 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FTBackupFooterView" customModule="NS3_Beta" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="431" height="252"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KRk-cq-Fqm">
-                    <rect key="frame" x="16" y="16" width="382" height="168"/>
+                    <rect key="frame" x="16" y="16" width="399" height="220"/>
                     <subviews>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Gu2-gV-5Xv">
-                            <rect key="frame" x="24" y="16" width="334" height="4"/>
+                            <rect key="frame" x="24" y="16" width="351" height="4"/>
                             <color key="tintColor" name="accentNew"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="4" id="a5b-7L-mhH"/>
                             </constraints>
                         </progressView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6On-CY-TRk">
-                            <rect key="frame" x="24" y="36" width="342" height="20"/>
+                            <rect key="frame" x="24" y="30" width="359" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="20" id="t76-B7-MGd"/>
+                                <constraint firstAttribute="height" constant="35" id="t76-B7-MGd"/>
                             </constraints>
                             <attributedString key="attributedText">
                                 <fragment content="  ">
@@ -48,17 +48,17 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8G-Jr-eqT">
-                            <rect key="frame" x="0.0" y="72" width="382" height="80"/>
+                            <rect key="frame" x="0.0" y="73" width="399" height="139"/>
                             <subviews>
                                 <view hidden="YES" alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5hk-r5-POP">
-                                    <rect key="frame" x="20" y="0.0" width="342" height="0.5"/>
+                                    <rect key="frame" x="20" y="0.0" width="359" height="0.5"/>
                                     <color key="backgroundColor" systemColor="labelColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="0.5" id="Ju3-wm-R3I"/>
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSq-uq-ahW">
-                                    <rect key="frame" x="16" y="16.5" width="350" height="20"/>
+                                    <rect key="frame" x="16" y="16.5" width="367" height="20"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="ySd-Sg-KD3"/>
@@ -68,7 +68,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxK-pg-x8d">
-                                    <rect key="frame" x="146.5" y="44.5" width="89" height="44"/>
+                                    <rect key="frame" x="155" y="44.5" width="89" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="Zrq-nn-pCI"/>
                                     </constraints>
@@ -107,19 +107,19 @@
                         <constraint firstItem="Gu2-gV-5Xv" firstAttribute="top" secondItem="KRk-cq-Fqm" secondAttribute="top" constant="16" id="0ER-mT-Hhf"/>
                         <constraint firstItem="6On-CY-TRk" firstAttribute="leading" secondItem="KRk-cq-Fqm" secondAttribute="leading" constant="24" id="5pc-vg-Aq8"/>
                         <constraint firstAttribute="trailing" secondItem="Gu2-gV-5Xv" secondAttribute="trailing" constant="24" id="6pD-xE-K5k"/>
-                        <constraint firstItem="6On-CY-TRk" firstAttribute="top" secondItem="Gu2-gV-5Xv" secondAttribute="bottom" constant="16" id="8k3-f2-DwV"/>
+                        <constraint firstItem="6On-CY-TRk" firstAttribute="top" secondItem="Gu2-gV-5Xv" secondAttribute="bottom" constant="10" id="8k3-f2-DwV"/>
                         <constraint firstItem="A8G-Jr-eqT" firstAttribute="leading" secondItem="KRk-cq-Fqm" secondAttribute="leading" id="BGC-zK-cRi"/>
-                        <constraint firstItem="A8G-Jr-eqT" firstAttribute="top" secondItem="6On-CY-TRk" secondAttribute="bottom" constant="16" id="CJj-wk-vUN"/>
+                        <constraint firstItem="A8G-Jr-eqT" firstAttribute="top" secondItem="6On-CY-TRk" secondAttribute="bottom" constant="8" id="CJj-wk-vUN"/>
                         <constraint firstItem="Gu2-gV-5Xv" firstAttribute="leading" secondItem="KRk-cq-Fqm" secondAttribute="leading" constant="24" id="DSy-By-K4t">
                             <variation key="heightClass=regular-widthClass=regular" constant="40"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="A8G-Jr-eqT" secondAttribute="trailing" id="dCq-rE-AsQ"/>
                         <constraint firstAttribute="trailing" secondItem="6On-CY-TRk" secondAttribute="trailing" constant="16" id="mWx-wb-5Rh"/>
-                        <constraint firstAttribute="bottom" secondItem="A8G-Jr-eqT" secondAttribute="bottom" constant="16" id="p8U-RQ-kqc"/>
+                        <constraint firstAttribute="bottom" secondItem="A8G-Jr-eqT" secondAttribute="bottom" constant="8" id="p8U-RQ-kqc"/>
                     </constraints>
                 </view>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="k18-w1-Y1b">
-                    <rect key="frame" x="197" y="0.0" width="20" height="200"/>
+                    <rect key="frame" x="205.5" y="0.0" width="20" height="252"/>
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -145,7 +145,7 @@
                 <outlet property="progressView" destination="Gu2-gV-5Xv" id="UWT-Uq-Zrs"/>
                 <outlet property="seperator" destination="5hk-r5-POP" id="mYY-aI-jMd"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="112.5"/>
+            <point key="canvasLocation" x="150" y="129.24107142857142"/>
         </view>
     </objects>
     <resources>
