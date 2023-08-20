@@ -197,23 +197,4 @@ class FTNotebookCreation: NSObject {
             }
         }
     }
-    private func defaultTransparentCoverTheme() -> FTThemeable {
-        let coverThemeLibrary = FTThemesLibrary(libraryType: FTNThemeLibraryType.covers);
-        let themeCovers = coverThemeLibrary.getTransparentCovers()
-        for theme in themeCovers {
-            if let themes = theme.themes as? [FTTheme] {
-                let transparentCover = themes.filter({$0.isClearWhiteCover()})
-                if let cover = transparentCover.first {
-                    return cover
-                }
-            }
-        }
-        //Incase, if clearWhite cover is not available, then set random transaparent cover
-        return randomTransparentCoverTheme()
-    }
-    private func randomTransparentCoverTheme() -> FTThemeable {
-        let coverThemeLibrary = FTThemesLibrary(libraryType: FTNThemeLibraryType.covers);
-        let defaultCover: FTThemeable! = coverThemeLibrary.getARandomCoverThemeForCategory(type: .transparent);
-        return defaultCover;
-    }
 }
