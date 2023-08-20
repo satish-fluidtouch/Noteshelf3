@@ -3,6 +3,16 @@
     {
       "filename" : "gesture-two-finger-tap.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "gesture-two-finger-tap_dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

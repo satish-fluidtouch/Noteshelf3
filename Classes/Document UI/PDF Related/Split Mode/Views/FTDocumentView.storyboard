@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2MJ-ct-QPx">
-    <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
@@ -229,17 +229,17 @@
             <objects>
                 <viewController storyboardIdentifier="FTDocumentRenderViewController" id="2MJ-ct-QPx" customClass="FTDocumentRenderViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KLf-47-W5E">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToC-1w-gD8" userLabel="Content Holder View">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <viewLayoutGuide key="safeArea" id="ouL-Q4-M1a"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cVe-rT-6vY" userLabel="Toolbar Holder View" customClass="FTToolbarView" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="110.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="110.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="110.5" id="5sD-bl-PwR"/>
@@ -258,6 +258,11 @@
                             <constraint firstAttribute="bottom" secondItem="ToC-1w-gD8" secondAttribute="bottom" id="fI3-8H-7Iv"/>
                             <constraint firstItem="cVe-rT-6vY" firstAttribute="width" secondItem="YCW-dA-tY2" secondAttribute="width" id="yBT-Dv-HOF"/>
                         </constraints>
+                        <variation key="userInterfaceIdiom=mac">
+                            <mask key="subviews">
+                                <exclude reference="cVe-rT-6vY"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="contentHolderView" destination="ToC-1w-gD8" id="lDi-9A-oNO"/>
@@ -437,7 +442,7 @@
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="regularToolbarBgColor">
-            <color red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="0.10000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

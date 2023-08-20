@@ -78,7 +78,6 @@ FTEraserRackControllerDelegate> {}
 @property (weak) id textToolbarDelegate;
 @property (weak,readonly) FTZoomOverlayViewController *zoomOverlayController;
 
-@property (strong) NSString *currentSceneID;
 @property (strong) FTDocumentOpenToken *openDocToken;
 
 @property (assign,readonly) CGFloat contentScaleInNormalMode;

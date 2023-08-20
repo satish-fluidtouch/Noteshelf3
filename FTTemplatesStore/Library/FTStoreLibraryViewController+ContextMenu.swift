@@ -11,6 +11,10 @@ import UIKit
 extension FTStoreLibraryViewController {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+        if sectionType == .noRecords {
+            return nil
+        }
         let identifier = indexPath as NSIndexPath
         contextMenuSelectedIndexPath = indexPath as IndexPath
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in

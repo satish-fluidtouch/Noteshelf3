@@ -256,7 +256,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>8</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>INAlternativeAppNames</key>

@@ -74,7 +74,7 @@ protocol FTToolbarElements : NSObjectProtocol {
 
 class FTDocumentRenderViewController: UIViewController {
     @IBOutlet private weak var contentHolderView:UIView?
-    @IBOutlet private weak var toolBarView: FTToolbarView!
+    @IBOutlet private weak var toolBarView: FTToolbarView?
 
     @IBOutlet private weak var toolbarHeightConstraint: NSLayoutConstraint?
     @IBOutlet private weak var toolbarTopConstraint: NSLayoutConstraint?
@@ -228,12 +228,12 @@ class FTDocumentRenderViewController: UIViewController {
 
 private extension FTDocumentRenderViewController {
     func addToolbar() {
-        if let toolbarVc = self.toolBarView.addToolbar() {
+        if let toolbarVc = self.toolBarView?.addToolbar(), let toolBarView = self.toolBarView {
             addChild(toolbarVc)
             if let leftController = documentViewController {
                 toolbarVc.delegate = leftController
             }
-            self.view.bringSubviewToFront(self.toolBarView)
+            self.view.bringSubviewToFront(toolBarView)
             self.deskToolbarController = toolbarVc
         }
     }
@@ -242,7 +242,7 @@ private extension FTDocumentRenderViewController {
 extension FTDocumentRenderViewController: FTToolbarElements {
     //MARK: - Enable or Disable Toolbar for some synchronous internal actions
     func setToolbarEnabled(_ isEnabled:Bool) {
-        self.toolBarView.isUserInteractionEnabled = isEnabled
+        self.toolBarView?.isUserInteractionEnabled = isEnabled
     }
 
     //MARK: - Child Controllers Helper Methods
@@ -472,7 +472,7 @@ extension FTDocumentRenderViewController: FTTextToolbarControllerDelegate {
         #else
             controller.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: textToolbarHeight)
             annot.textInputView.inputAccessoryView = controller.view
-            self.toolBarView.isHidden = false
+            self.toolBarView?.isHidden = false
 #endif
         }
         self.textToolbarController = controller
@@ -485,7 +485,7 @@ extension FTDocumentRenderViewController: FTTextToolbarControllerDelegate {
             self.textToolbarController?.removeFromParent()
             self.textToolbarController?.view.removeFromSuperview()
             self.textToolbarController = nil
-            self.toolBarView.isHidden = false
+            self.toolBarView?.isHidden = false
 #if targetEnvironment(macCatalyst)
             self.view.viewWithTag(textContainerTag)?.removeFromSuperview()
 #endif

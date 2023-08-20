@@ -24,7 +24,7 @@ struct FTGetInspireView: View {
                                 VStack(alignment: .center,spacing: 8){
                                     Image(uiImage: listitem.getinspireImage)
                                         .resizable()
-                                        .frame(width: 172,height: 230)
+                                        .frame(width: 130,height: 175)
                                         .shadow(color: Color.appColor(.black8), radius: 20,x:0,y:12)
                                         .cornerRadius(4, corners: [.topLeft, .bottomLeft])
                                         .cornerRadius(10, corners: [.topRight, .bottomRight])
@@ -33,7 +33,7 @@ struct FTGetInspireView: View {
                                         .font(.appFont(for: .medium, with: 16))
                                 }
                                 .padding(.top,16)
-                                .padding(.trailing,16)
+                                .padding(.trailing,32)
                                 .padding(.bottom,24)
                                 .shadow(color: Color.appColor(.black16), radius:4, x: 0, y: 2)
                                 .onTapGesture {

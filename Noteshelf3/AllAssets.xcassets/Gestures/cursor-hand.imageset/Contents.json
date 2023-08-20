@@ -3,6 +3,16 @@
     {
       "filename" : "cursor-hand.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "cursor-hand_dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
