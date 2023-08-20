@@ -156,6 +156,7 @@ struct FTShareContentView: View {
                 .frame(height: 36)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(Color.white)
+                .macOnlyTapAreaFixer()
         }
         .background(Color.appColor(.accent)).cornerRadius(10)
     }
@@ -170,6 +171,7 @@ struct FTShareContentView: View {
                     .appFont(for: .medium, with: 15.0)
                     .foregroundColor(Color.appColor(.accent))
                     .padding(FTSpacing.extraLarge)
+                    .macOnlyTapAreaFixer()
             }
                 .frame(maxWidth: .infinity,minHeight: 36.0,maxHeight: 36.0)
                 .border(Color.appColor(.accent),
@@ -184,6 +186,7 @@ struct FTShareContentView: View {
                     .appFont(for: .medium, with: 15.0)
                     .padding(FTSpacing.extraLarge)
                     .foregroundColor(.white)
+                    .macOnlyTapAreaFixer()
             }
                 .frame(maxWidth: .infinity,minHeight: 36.0,maxHeight: 36.0)
                 .background(Color.appColor(.accent))

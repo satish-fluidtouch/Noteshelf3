@@ -11,10 +11,9 @@ import Foundation
 #if targetEnvironment(macCatalyst)
 extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbarActionDelegate {
     func toolbar(_ toolbar: NSToolbar, canPerformAction item: NSToolbarItem) -> Bool {
-        if self.shelfViewModel.collection.isTrash, item.itemIdentifier == FTShelfEmptyTrashToolbarItem.identifier {
-            return !self.shelfViewModel.shelfItems.isEmpty;
-        }
-        else if item.itemIdentifier == FTShelfAddToolbarItem.identifier {
+        if self.shelfViewModel.collection.isTrash, (item.itemIdentifier == FTShelfEmptyTrashToolbarItem.identifier || item.itemIdentifier == FTSelectToolbarItem.identifier) {
+            return !self.shelfViewModel.shelfItems.isEmpty
+        } else if item.itemIdentifier == FTShelfAddToolbarItem.identifier {
             return (shelfViewModel.collection.collectionType == .default
                     || shelfViewModel.collection.collectionType == .allNotes)
         }
@@ -74,9 +73,11 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
         case FTHomeNavItemFilteredItemsModel.settings.menuIdenfier:
             self.shelfViewModel.delegate?.showSettings()
         case FTHomeNavItemFilteredItemsModel.selectNotes.menuIdenfier:
-            (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
-            self.shelfViewModel.mode = .selection
-            self.observeSelectModeChanges(of: toolbar)
+            if !self.shelfViewModel.shelfItems.isEmpty {
+                (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
+                self.shelfViewModel.mode = .selection
+                self.observeSelectModeChanges(of: toolbar)
+            }
         default:
             break
         }
@@ -109,9 +110,11 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
         } else if item.itemIdentifier == FTSelectDoneToolbarItem.identifier {
             self.shelfViewModel.mode = .normal
         } else if item.itemIdentifier == FTSelectToolbarItem.identifier {
-            self.shelfViewModel.mode = .selection
-            (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
-            self.observeSelectModeChanges(of: toolbar)
+           if !self.shelfViewModel.shelfItems.isEmpty {
+               self.shelfViewModel.mode = .selection
+               (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
+               self.observeSelectModeChanges(of: toolbar)
+            }
         }
     }
 

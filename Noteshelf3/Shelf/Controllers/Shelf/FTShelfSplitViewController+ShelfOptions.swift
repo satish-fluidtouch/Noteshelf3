@@ -273,7 +273,21 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                     controller.coverImagePreview = model.coverImage
                 }
             }
+#if !targetEnvironment(macCatalyst)
             self.present(controller, animated: true);
+#else
+            controller.overrideUserInterfaceStyle = UIApplication.shared.uiColorScheme()
+            controller.modalPresentationStyle = .formSheet
+            let navController = UINavigationController(rootViewController: controller)
+            controller.title = "Covers"
+            let insetBy: CGFloat = 20
+            var preferedSize = self.view.frame.insetBy(dx: insetBy, dy: 0).size
+            if let size = self.view.window?.windowScene?.sizeRestrictions?.minimumSize {
+                preferedSize = CGSize(width: size.width - 2 * insetBy, height: size.height)
+            }
+            navController.navigationBar.isTranslucent = false
+            self.ftPresentFormsheet(vcToPresent: navController, contentSize: preferedSize)
+#endif
         }
     }
 
