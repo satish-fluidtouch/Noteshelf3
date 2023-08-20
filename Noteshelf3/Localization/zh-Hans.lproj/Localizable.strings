@@ -1390,7 +1390,7 @@
 "speechbubbles" = "气泡";
 "stickers.alert.error" = "错误";
 "stickers.alert.ok" = "好的";
-"stickersTitle" = "片段/贴纸";
+"stickersTitle" = "贴纸";
 "stickies" = "粘贴便签";
 "stickynotes" = "便签";
 "stylus.goto.settings" = "去设置/Apple Pencil";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:22
+// Last Synced by Akshay on 20 August 2023 at 16:40

@@ -25,7 +25,7 @@ class FTBookmarkCollectionViewCell: UICollectionViewCell {
   
     override func awakeFromNib() {
         super.awakeFromNib()
-        thumbnail?.layer.borderColor = UIColor.appColor(.black20).cgColor
+        thumbnail?.layer.borderColor = UIColor.appColor(.black10).cgColor
         thumbnail?.layer.borderWidth = 1
         thumbnail?.layer.cornerRadius = 4
     }

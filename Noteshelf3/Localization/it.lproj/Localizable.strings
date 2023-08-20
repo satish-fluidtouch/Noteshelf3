@@ -1390,7 +1390,7 @@
 "speechbubbles" = "Bolle di testo";
 "stickers.alert.error" = "Errore";
 "stickers.alert.ok" = "Ok";
-"stickersTitle" = "Frammenti/Autocollanti";
+"stickersTitle" = "Adesivi";
 "stickies" = "Appunti";
 "stickynotes" = "Appunti adesivi";
 "stylus.goto.settings" = "Vai su Impostazioni/Apple Pencil";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:22
+// Last Synced by Akshay on 20 August 2023 at 16:40

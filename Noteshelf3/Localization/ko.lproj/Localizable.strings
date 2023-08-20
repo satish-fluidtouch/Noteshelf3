@@ -1390,7 +1390,7 @@
 "speechbubbles" = "말풍선";
 "stickers.alert.error" = "에러";
 "stickers.alert.ok" = "알겠습니다.";
-"stickersTitle" = "조각/스티커";
+"stickersTitle" = "스티커";
 "stickies" = "스티키";
 "stickynotes" = "스티키 노트";
 "stylus.goto.settings" = "설정으로 가기/Apple Pencil";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:22
+// Last Synced by Akshay on 20 August 2023 at 16:40
