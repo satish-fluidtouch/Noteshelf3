@@ -18,7 +18,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
         let secondaryViewController = getSecondaryViewControllerForHomeOption()
         detailNavigationController = UINavigationController(rootViewController: secondaryViewController)
-        if let detailNavVC = detailNavigationController {
+        if let detailNavVC = detailNavigationController,let detailController = self.detailController(), !detailController.isKind(of: FTShelfHomeViewController.self){
             detailNavVC.viewControllers.first?.title = "Home"
             self.showDetailViewController(detailNavVC, sender: self)
         }
@@ -103,18 +103,20 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
              self.shelfItemCollection = selectedCollection
          }
      }
-     func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
-        if detailNavigationController != nil {
-             detailNavigationController?.popToRootViewController(animated: false)
+    func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
+        if (currentShelfViewModel?.collection.title != collection.title || currentShelfViewModel?.groupItem != nil) {
+            if detailNavigationController != nil {
+                detailNavigationController?.popToRootViewController(animated: false)
+            }
+            let secondaryViewController = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+            detailNavigationController = UINavigationController(rootViewController: secondaryViewController)
+            saveLastSelectedCollection(collection)
+            if let detailNavVC = detailNavigationController {
+                detailNavVC.viewControllers.first?.title = collection.title
+                self.showDetailViewController(detailNavVC, sender: self)
+            }
         }
-        let secondaryViewController = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
-        detailNavigationController = UINavigationController(rootViewController: secondaryViewController)
-        saveLastSelectedCollection(collection)
-        if let detailNavVC = detailNavigationController {
-            detailNavVC.viewControllers.first?.title = collection.title
-            self.showDetailViewController(detailNavVC, sender: self)
-        }
-     }
+    }
 
     func showSearchResultCollection(_ collection: FTShelfItemCollection) {
         self.saveLastSelectedCollection(collection)
