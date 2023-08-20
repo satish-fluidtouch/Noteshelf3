@@ -33,6 +33,9 @@ platform :ios do
         build_app(workspace: "Noteshelf.xcworkspace",
                   scheme: "Noteshelf3",
                   configuration: "Beta",
+                  output_directory: "build",
+                  silent: true,
+                  clean: true,
                   export_options: "beta_export_options.plist",
                   silent: true)
                   
@@ -69,6 +72,9 @@ platform :ios do
 
         build_app(workspace: "Noteshelf.xcworkspace",
                   scheme: "Noteshelf3",
+                  output_directory: "build",
+                  silent: true,
+                  clean: true,
                   configuration: "Release",
                   export_options: "beta_export_options.plist",
                   silent: true)
@@ -113,6 +119,9 @@ platform :mac do
         
         build_mac_app(workspace: "Noteshelf.xcworkspace",
                       scheme: "Noteshelf3",
+                      output_directory: "build",
+                      silent: true,
+                      clean: true,
                       destination: 'platform=macOS,arch=x86_64,variant=Mac Catalyst',
                       installer_cert_name: '3rd Party Mac Developer Installer: Fluid Touch Pte. Ltd. (CNTLGGQX2J)',
                       configuration: "Beta",
@@ -155,6 +164,9 @@ platform :mac do
 
         build_mac_app(workspace: "Noteshelf.xcworkspace",
                       scheme: "Noteshelf3",
+                      output_directory: "build",
+                      silent: true,
+                      clean: true,
                       destination: 'platform=macOS,arch=x86_64,variant=Mac Catalyst',
                       installer_cert_name: '3rd Party Mac Developer Installer: Fluid Touch Pte. Ltd. (CNTLGGQX2J)',
                       configuration: "Release",
