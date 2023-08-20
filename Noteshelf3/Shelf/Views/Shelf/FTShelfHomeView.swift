@@ -36,6 +36,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                                 .padding(.bottom,28)
                             FTDiscoverWhatsNewView()
                                 .environmentObject(viewModel)
+                                .macOnlyPlainButtonStyle()
                                 .padding(.horizontal,gridHorizontalPadding)
                                 .padding(.bottom,24)
                         }

@@ -189,6 +189,15 @@ class FTSelectToolbarItem: FTShelfToolbarItem {
         self.action = #selector(self.didTapOnToolbarItem(_:))
     }
 
+    override func validate() {
+        super.validate()
+        var canPerform = false;
+        if let sheflToolbar = self.toolbar as? FTShelfToolbar {
+            canPerform = sheflToolbar.toolbarActionDelegate?.toolbar(sheflToolbar, canPerformAction: self) ?? false;
+        }
+        self.isEnabled = canPerform;
+    }
+
     override var buttonLabel: String {
         return self.title
     }
