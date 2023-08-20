@@ -26,6 +26,7 @@ struct FTShareView: View {
                             let thumbImage = viewModel.getthumbnailImage(option: option)
                             Image(uiImage: thumbImage)
                                 .resizable()
+                                .scaledToFit()
                                 .frame(width: thumbnailSizeForImage(thumbImage).width, height: thumbnailSizeForImage(thumbImage).height)
                                 .cornerRadius(leftCornerRadiusForOption(option), corners: [.topLeft, .bottomLeft])
                                 .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
@@ -106,10 +107,10 @@ struct FTShareView: View {
     }
 
     private func thumbnailSizeForImage(_ image: UIImage) -> CGSize {
-        var size = CGSize(width: 33, height: 44)
-        if image.size.width > image.size.height {
-            size = CGSize(width: 33, height: 26)
-        }
+        var size = CGSize(width: 50, height: 50)
+//        if image.size.width > image.size.height {
+//            size = CGSize(width: 33, height: 26)
+//        }
         return size
     }
 }

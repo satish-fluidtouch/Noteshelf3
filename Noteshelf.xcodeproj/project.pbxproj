@@ -322,7 +322,6 @@
 		471B90ED29F0ED7F00861A2B /* FTTagsView+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */; };
 		471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450152924E24200B6113B /* FTTagCollectionCell.swift */; };
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
-		471B90F029F0ED8C00861A2B /* FTTagCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476450172924E24200B6113B /* FTTagCollectionCell.xib */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
 		472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472BDF8329E7E9FF001BE43A /* FTDataCache.swift */; };
 		473310782A1F2DFC008DC0DB /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */; };
@@ -536,16 +535,6 @@
 		5292B2322A27283C00216330 /* FTNotebookSettingViewController+Siri.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5292B2312A27283C00216330 /* FTNotebookSettingViewController+Siri.swift */; };
 		5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2C9F1E027D72007B5CAD /* FTUserDefaults.swift */; };
 		52941CA72A84F2A90022243D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E7A912E22861F20C00BACD79 /* Localizable.strings */; };
-		529EA1452A4ADFB30014FABD /* FTAudioTrackHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D689EB28B7998600EA1925 /* FTAudioTrackHeaderView.xib */; };
-		529EA1462A4ADFC80014FABD /* FTFinderUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4213C34E288955DB00A7A6F3 /* FTFinderUI.storyboard */; };
-		529EA1472A4AE0190014FABD /* FTAddMenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7E3EC3A29A4882E004372B6 /* FTAddMenuItemCell.xib */; };
-		529EA1482A4AE0280014FABD /* FTImageResizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 094E5E5020ADB094009171B6 /* FTImageResizeViewController.xib */; };
-		529EA1492A4AE0370014FABD /* FTRefreshPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D663C4A28F9652900024B3D /* FTRefreshPageView.xib */; };
-		529EA14A2A4AE0570014FABD /* FTTextInputUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FDAF221EB1B8A400D03C12 /* FTTextInputUI.storyboard */; };
-		529EA14B2A4AE0620014FABD /* FTPenRack.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7AC024A2A14E420009AE92A /* FTPenRack.storyboard */; };
-		529EA14D2A4AE26E0014FABD /* FTShelfItems.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09953F011F1F2D2A00753F70 /* FTShelfItems.storyboard */; };
-		529EA14E2A4AE2760014FABD /* FTiOSShelfCategoryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED82728723DF0C8A00F3BD0B /* FTiOSShelfCategoryHeaderView.xib */; };
-		529EA14F2A4AE27B0014FABD /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
 		52B34DB129E561F600360F10 /* UIFonts+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B34DB029E561F600360F10 /* UIFonts+Custom.swift */; };
 		52B34DFC29E5684400360F10 /* Montserrat-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DF629E5684100360F10 /* Montserrat-Bold.otf */; };
 		52B34DFD29E5684400360F10 /* Montserrat-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52B34DF729E5684100360F10 /* Montserrat-Light.otf */; };
@@ -789,7 +778,6 @@
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BAF0DD362A6FE2E2006D293B /* (null) in Resources */ = {isa = PBXBuildFile; };
 		BAF0DD542A6FE30D006D293B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0DD532A6FE30D006D293B /* SDWebImage */; };
 		BAF0DD552A6FE315006D293B /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAF0DD5D2A6FE334006D293B /* FTStyles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E1528730F5800DE801B /* FTStyles.framework */; };
@@ -797,7 +785,6 @@
 		BAF0DD672A6FE57B006D293B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		BAF0DD732A6FE676006D293B /* FTTemplatesStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DD6D2A6FE675006D293B /* FTTemplatesStore.framework */; };
 		BAF0DD742A6FE676006D293B /* FTTemplatesStore.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DD6D2A6FE675006D293B /* FTTemplatesStore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BAF0DE8D2A6FE6DC006D293B /* (null) in Resources */ = {isa = PBXBuildFile; };
 		BAF0DE8F2A6FE6F5006D293B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0DE8E2A6FE6F5006D293B /* SDWebImage */; };
 		BAF0DE902A6FE6F9006D293B /* FTStyles.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E1528730F5800DE801B /* FTStyles.framework */; };
 		BAF0DE952A6FE6FF006D293B /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
@@ -1831,6 +1818,7 @@
 		BAF3959C2859ADF10067CA9F /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 976AA9C425E7E1D00003B793 /* Webdav.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF6A8F72A1CC5EF00A755DB /* FTTextToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF6A8F62A1CC5EF00A755DB /* FTTextToolbarButton.swift */; };
+		BAFC3FA62A8F619600D8FD71 /* FTTagCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476450172924E24200B6113B /* FTTagCollectionCell.xib */; };
 		C8054ADD23350C4B0083BB04 /* FTSharedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860737123276B48009658F1 /* FTSharedAction.swift */; };
 		C8054ADE23350C530083BB04 /* FTImportStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860736D23275E5D009658F1 /* FTImportStorageManager.swift */; };
 		C8140D4323266E8E0053FC86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8140D4223266E8E0053FC86 /* Assets.xcassets */; };
@@ -1861,7 +1849,6 @@
 		E788FBBF29768585004A526D /* FTNotebookTagsSearchProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E788FBBE29768585004A526D /* FTNotebookTagsSearchProcessor.swift */; };
 		E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */; };
 		E79E84332A31B15500683B23 /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E84312A31B15500683B23 /* FTRecentSectionHeader.swift */; };
-		E79E84342A31B15500683B23 /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E79E84322A31B15500683B23 /* FTRecentSectionHeader.xib */; };
 		E79E84372A31B1DD00683B23 /* FTCustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E84352A31B1DC00683B23 /* FTCustomLabel.swift */; };
 		E79E84382A31B1DD00683B23 /* FTCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E84362A31B1DC00683B23 /* FTCustomButton.swift */; };
 		E79E843E2A31D0E200683B23 /* FTRecentSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E843D2A31D0E200683B23 /* FTRecentSearchCell.swift */; };
@@ -11079,19 +11066,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAFC3FA62A8F619600D8FD71 /* FTTagCollectionCell.xib in Resources */,
 				52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */,
-				529EA14F2A4AE27B0014FABD /* FTNoteBookSettings.storyboard in Resources */,
-				529EA14B2A4AE0620014FABD /* FTPenRack.storyboard in Resources */,
-				529EA1462A4ADFC80014FABD /* FTFinderUI.storyboard in Resources */,
-				529EA14E2A4AE2760014FABD /* FTiOSShelfCategoryHeaderView.xib in Resources */,
-				471B90F029F0ED8C00861A2B /* FTTagCollectionCell.xib in Resources */,
-				529EA1492A4AE0370014FABD /* FTRefreshPageView.xib in Resources */,
-				529EA1482A4AE0280014FABD /* FTImageResizeViewController.xib in Resources */,
-				529EA1472A4AE0190014FABD /* FTAddMenuItemCell.xib in Resources */,
-				529EA1452A4ADFB30014FABD /* FTAudioTrackHeaderView.xib in Resources */,
-				529EA14D2A4AE26E0014FABD /* FTShelfItems.storyboard in Resources */,
-				529EA14A2A4AE0570014FABD /* FTTextInputUI.storyboard in Resources */,
-				E79E84342A31B15500683B23 /* FTRecentSectionHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11099,7 +11075,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAF0DD362A6FE2E2006D293B /* (null) in Resources */,
 				52550E9B2A70FCAD00E7A1E7 /* FTNewNotebook.storyboard in Resources */,
 				52550EB42A70FCAD00E7A1E7 /* FTUnsplashCollectionViewCell.xib in Resources */,
 				52550E9C2A70FCAD00E7A1E7 /* FTPapers.storyboard in Resources */,
@@ -11132,7 +11107,6 @@
 				478142BD2A85F33A0029378B /* templates_fr.plist in Resources */,
 				52550F4A2A70FCC100E7A1E7 /* FTStoreCategoryTableCell.xib in Resources */,
 				52550F1D2A70FCC100E7A1E7 /* FTTemplatesStore.storyboard in Resources */,
-				BAF0DE8D2A6FE6DC006D293B /* (null) in Resources */,
 				478142BE2A85F33A0029378B /* templates_zh-Hans.plist in Resources */,
 				47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */,
 				478142C12A85F33A0029378B /* templates_en.plist in Resources */,
