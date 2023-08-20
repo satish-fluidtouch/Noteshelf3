@@ -18,7 +18,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
         let secondaryViewController = getSecondaryViewControllerForHomeOption()
         detailNavigationController = UINavigationController(rootViewController: secondaryViewController)
-        if let detailNavVC = detailNavigationController,let detailController = self.detailController(), !detailController.isKind(of: FTShelfHomeViewController.self){
+        if let detailNavVC = detailNavigationController,let detailController = self.detailController(), (!self.isRegularClass() || !detailController.isKind(of: FTShelfHomeViewController.self)){
             detailNavVC.viewControllers.first?.title = "Home"
             self.showDetailViewController(detailNavVC, sender: self)
         }
@@ -104,7 +104,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
          }
      }
     func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
-        if (currentShelfViewModel?.collection.title != collection.title || currentShelfViewModel?.groupItem != nil) {
+        if !self.isRegularClass() || (currentShelfViewModel?.collection.title != collection.title || currentShelfViewModel?.groupItem != nil) {
             if detailNavigationController != nil {
                 detailNavigationController?.popToRootViewController(animated: false)
             }
