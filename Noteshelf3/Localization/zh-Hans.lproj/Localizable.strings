@@ -1204,7 +1204,7 @@
 "shapes" = "形状";
 "share" = "分享";
 "share.savetoCameraRoll" = "保存到相机胶卷";
-"shefl.home.addnotestoyourshelfbegin" = "将笔记添加到您的书架上，并开始您的数字记笔记体验。";
+"shefl.home.addnotestoyourshelfbegin" = "将笔记添加到书架，开始您的数字记笔记体验";
 "shefl.home.getStartedwithNoteShelf" = "开始使用Noteshelf";
 "shelf.MovePopover.MoveHere" = "移动到这里";
 "shelf.alert.cancel" = "取消";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM
+// Last Synced by Akshay on 20 August 2023 at 11:41
