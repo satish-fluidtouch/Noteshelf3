@@ -1,8 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "pen-2.pdf",
-      "idiom" : "universal"
+      "filename" : "desk_tool_highlighter_iphone.pdf",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_highlighter_ipad.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "desk_tool_highlighter_mac.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

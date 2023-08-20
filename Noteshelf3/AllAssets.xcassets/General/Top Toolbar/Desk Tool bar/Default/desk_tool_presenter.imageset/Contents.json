@@ -1,8 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "desk_tool_present.pdf",
-      "idiom" : "universal"
+      "filename" : "desk_tool_presenter_iphone.pdf",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_presenter_ipad.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "desk_tool_presenter_mac.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {
