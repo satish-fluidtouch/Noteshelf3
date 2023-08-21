@@ -50,7 +50,7 @@ enum FTSideBarItemType: String {
         let title: String
         switch self {
         case .home:
-            title = NSLocalizedString("sidebar.topSection.home", comment: "Starred")
+            title = NSLocalizedString("sidebar.topSection.home", comment: "Home")
         case .starred:
             title = NSLocalizedString("sidebar.topSection.starred", comment: "Starred")
         case .trash:

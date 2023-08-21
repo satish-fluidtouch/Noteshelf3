@@ -1045,7 +1045,7 @@
 "finder.tag" = "Tag";
 "foodanddrink" = "Cibo e Bevande";
 "gesture.activeFocusMode.subTitle" = "4-dito singolo tocco";
-"gesture.activeFocusMode.title" = "Attiva la modalità di focus o nascondi la barra degli strumenti in modalità di focus.";
+"gesture.activeFocusMode.title" = "Attiva la modalità di concentrazione";
 "gesture.undoredo.subTitle" = "2 dita o 3 dita tocco singolo";
 "gesture.undoredo.title" = "Annulla o Ripeti";
 "getInspired.bulletJournal" = "Bullet Journal";
@@ -1204,7 +1204,7 @@
 "shapes" = "Forme";
 "share" = "Condividi";
 "share.savetoCameraRoll" = "Salva nella Libreria fotografica";
-"shefl.home.addnotestoyourshelfbegin" = "Aggiungi note alla tua bacheca e inizia la tua esperienza di appunti digitali.";
+"shefl.home.addnotestoyourshelfbegin" = "Aggiungi note alla tua scaffale e inizia la tua esperienza di appunti digitali.";
 "shefl.home.getStartedwithNoteShelf" = "Inizia con Noteshelf";
 "shelf.MovePopover.MoveHere" = "Sposta qui";
 "shelf.alert.cancel" = "Annulla";
@@ -1390,7 +1390,7 @@
 "speechbubbles" = "Bolle di testo";
 "stickers.alert.error" = "Errore";
 "stickers.alert.ok" = "Ok";
-"stickersTitle" = "Frammenti/Autocollanti";
+"stickersTitle" = "Adesivi";
 "stickies" = "Appunti";
 "stickynotes" = "Appunti adesivi";
 "stylus.goto.settings" = "Vai su Impostazioni/Apple Pencil";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM
+// Last Synced by Akshay on 20 August 2023 at 16:40

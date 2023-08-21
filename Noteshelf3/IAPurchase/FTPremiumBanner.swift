@@ -42,7 +42,7 @@ struct FTPremiumBanner: View {
                     .padding(.horizontal, 12)
                     .padding(.vertical, 3)
                     .frame(height: 28,alignment: .leading)
-                    .background(Color.appColor(.secondaryAccent))
+                    .background(Color("premium_bg"))
                     .cornerRadius(6)
                     .shadow(color: .black.opacity(0.04), radius: 0.5, x: 0, y: 3)
                     .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 3)

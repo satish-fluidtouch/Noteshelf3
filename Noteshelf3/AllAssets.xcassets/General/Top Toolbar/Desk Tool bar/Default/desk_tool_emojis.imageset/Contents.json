@@ -1,8 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "icon.pdf",
-      "idiom" : "universal"
+      "filename" : "desk_tool_emojis_iphone.pdf",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_emojis_ipad.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "desk_tool_emojis_mac.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

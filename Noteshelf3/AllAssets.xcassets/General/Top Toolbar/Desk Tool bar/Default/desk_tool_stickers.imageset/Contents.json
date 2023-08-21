@@ -1,8 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "popovericon.pdf",
-      "idiom" : "universal"
+      "filename" : "desk_tool_stickers_ipad.pdf",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "desk_tool_stickers_iphone.pdf",
+      "idiom" : "ipad"
+    },
+    {
+      "filename" : "desk_tool_stickers_mac.pdf",
+      "idiom" : "mac"
     }
   ],
   "info" : {

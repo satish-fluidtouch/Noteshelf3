@@ -1045,7 +1045,7 @@
 "finder.tag" = "태그";
 "foodanddrink" = "음식 및 음료";
 "gesture.activeFocusMode.subTitle" = "4-손가락 단일 탭";
-"gesture.activeFocusMode.title" = "포커스 모드 활성화 또는 포커스 모드에서 도구 모음 숨기기";
+"gesture.activeFocusMode.title" = "포커스 모드 활성화";
 "gesture.undoredo.subTitle" = "2-손가락 또는 3-손가락 단일 탭";
 "gesture.undoredo.title" = "실행 취소 또는 다시 실행";
 "getInspired.bulletJournal" = "불릿 저널";
@@ -1204,7 +1204,7 @@
 "shapes" = "모양";
 "share" = "공유";
 "share.savetoCameraRoll" = "카메라 롤에 저장";
-"shefl.home.addnotestoyourshelfbegin" = "선반에 메모 추가하고 디지털 노트 작성을 시작하세요.";
+"shefl.home.addnotestoyourshelfbegin" = "선반에 메모를 추가하고 디지털 노트 작성 경험을 시작하세요.";
 "shefl.home.getStartedwithNoteShelf" = "Noteshelf로 시작하기";
 "shelf.MovePopover.MoveHere" = "이곳으로 이동";
 "shelf.alert.cancel" = "취소";
@@ -1390,7 +1390,7 @@
 "speechbubbles" = "말풍선";
 "stickers.alert.error" = "에러";
 "stickers.alert.ok" = "알겠습니다.";
-"stickersTitle" = "조각/스티커";
+"stickersTitle" = "스티커";
 "stickies" = "스티키";
 "stickynotes" = "스티키 노트";
 "stylus.goto.settings" = "설정으로 가기/Apple Pencil";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM
+// Last Synced by Akshay on 20 August 2023 at 16:40

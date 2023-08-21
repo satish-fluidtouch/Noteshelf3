@@ -34,7 +34,7 @@
 "noteshelf.ai.actionAddToPage" = "Add to page";
 "noteshelf.ai.actionAddToNewPage" = "Add to new Page";
 
-"noteshelf.ai.tokenCompleteTitle" = "Thank you for trying out Noteshelf AI";
+"noteshelf.ai.tokenCompleteTitle" = "Thank you for trying out\nNoteshelf AI";
 "noteshelf.ai.tokenCompleteMessage" = "The Noteshelf AI trial has ended. As we work on the public release, we’d love to know your thoughts and ideas on how we can improve this feature.";
 
 "noteshelf.ai.translateToEnglish" = "Translate to English";

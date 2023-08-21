@@ -1045,7 +1045,7 @@
 "finder.tag" = "標籤";
 "foodanddrink" = "食物和飲料";
 "gesture.activeFocusMode.subTitle" = "4-指單點";
-"gesture.activeFocusMode.title" = "啟用焦點模式或在焦點模式下隱藏工具欄";
+"gesture.activeFocusMode.title" = "啟動專注模式";
 "gesture.undoredo.subTitle" = "2指或3指單點";
 "gesture.undoredo.title" = "撤銷或重做";
 "getInspired.bulletJournal" = "彈鏡";
@@ -1204,7 +1204,7 @@
 "shapes" = "形狀";
 "share" = "分享";
 "share.savetoCameraRoll" = "保存到相機膠卷";
-"shefl.home.addnotestoyourshelfbegin" = "將筆記添加到您的書架，開始您的數位筆記體驗。";
+"shefl.home.addnotestoyourshelfbegin" = "將筆記新增到書架上，開始您的數位筆記體驗。";
 "shefl.home.getStartedwithNoteShelf" = "開始使用Noteshelf";
 "shelf.MovePopover.MoveHere" = "搬到這裡";
 "shelf.alert.cancel" = "取消";
@@ -1390,7 +1390,7 @@
 "speechbubbles" = "對話框";
 "stickers.alert.error" = "錯誤";
 "stickers.alert.ok" = "好";
-"stickersTitle" = "片段/貼圖";
+"stickersTitle" = "貼紙";
 "stickies" = "便條";
 "stickynotes" = "便利貼";
 "stylus.goto.settings" = "前往「設定/Apple Pencil」";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 18 August 2023 at 5:25 PM
+// Last Synced by Akshay on 20 August 2023 at 16:40

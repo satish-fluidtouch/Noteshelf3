@@ -1,5 +1,5 @@
 app_identifier("com.fluidtouch.noteshelf3") # The bundle identifier of your app
-apple_id("akshay@fluidtouch.biz") # Your Apple Developer Portal username
+apple_id("apple-developer@fluidtouch.biz") # Your Apple Developer Portal username
 
 itc_team_id("258816") # App Store Connect Team ID
 team_id("CNTLGGQX2J") # Developer Portal Team ID

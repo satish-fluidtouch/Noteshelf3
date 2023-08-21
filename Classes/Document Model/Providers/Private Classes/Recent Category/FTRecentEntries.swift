@@ -33,7 +33,8 @@ class FTDiskRecentItem: NSObject {
     var fileURL: URL? {
         get {
             guard let returnURL = _fileURL else {
-                fatalError("URL Cannot be nil")
+                FTLogError("ALIAS_NIL", attributes: ["mode": self.mode.rawValue])
+                return nil
             }
             return _fileURL;
         }
