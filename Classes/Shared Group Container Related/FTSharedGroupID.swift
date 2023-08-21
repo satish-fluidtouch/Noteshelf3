@@ -8,9 +8,8 @@
 
 import UIKit
 
-@objc class FTSharedGroupID: NSObject {
-    @objc static func getAppGroupID() -> String
-    {
+public class FTSharedGroupID {
+    public static func getAppGroupID() -> String {
         #if DEBUG
         return "group.com.fluidtouch.noteshelf-dev"
         #elseif BETA
@@ -20,8 +19,7 @@ import UIKit
         #endif
     }
     
-    static func getAppGroupIdForNS1Migration() -> String
-    {
+    public static func getAppGroupIdForNS1Migration() -> String {
         #if DEBUG
         return "group.com.fluidtouch.noteshelf-1to2-migration-dev"
         #elseif BETA
@@ -29,5 +27,9 @@ import UIKit
         #else
         return "group.com.fluidtouch.noteshelf-1to2-migration"
         #endif
+    }
+
+    public static func getNS2AppGroupID() -> String {
+        return "group.com.fluidtouch.noteshelf"
     }
 }

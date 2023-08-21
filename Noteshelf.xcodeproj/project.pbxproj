@@ -326,9 +326,7 @@
 		472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472BDF8329E7E9FF001BE43A /* FTDataCache.swift */; };
 		473310782A1F2DFC008DC0DB /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */; };
 		473C1F8029C864E4003BD6BB /* FTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */; };
-		473C1F9C29CC2B69003BD6BB /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		473C1FA229CC2B6E003BD6BB /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
-		473C1FA329CC2B6F003BD6BB /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		473CD5302A8CA0F0007A01BB /* FTNetworkPathMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77CE2882A86648400092774 /* FTNetworkPathMonitor.swift */; };
 		4744E4732A28B18C00A9795A /* FTModalScaleUpPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E4722A28B18C00A9795A /* FTModalScaleUpPresentationController.swift */; };
 		475E53492A5D6E75004AB827 /* FTShelfTagsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E53482A5D6E75004AB827 /* FTShelfTagsConstants.swift */; };
@@ -11983,7 +11981,6 @@
 				BAF391402859ADF00067CA9F /* FTLaserPenPointerBrushBuilder_v5.swift in Sources */,
 				97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */,
 				F3ACB199289E371E00872CBD /* FTShapeCollectionViewCell.swift in Sources */,
-				473C1F9C29CC2B69003BD6BB /* FTSharedGroupID.swift in Sources */,
 				BAF391412859ADF00067CA9F /* FTStickerPlacementView.swift in Sources */,
 				BAF391422859ADF00067CA9F /* FTMidnightDiaryWeekTemplate.swift in Sources */,
 				F3A63A7F2892792A00B7D3DF /* FTLassoRackViewController.swift in Sources */,
@@ -13178,7 +13175,6 @@
 				4209FEAF295C62E500ACC02E /* Siri+Common.swift in Sources */,
 				5283D3B32A5EC8AB00C6C125 /* FTShareActionAlertView.swift in Sources */,
 				4209FEA7295C625200ACC02E /* FTDiagnosticInstanceCounter.swift in Sources */,
-				473C1FA329CC2B6F003BD6BB /* FTSharedGroupID.swift in Sources */,
 				C85AFDF02331FF4300D25D5F /* BEMPathManager.m in Sources */,
 				4209FE91295C614300ACC02E /* FTMonthInfo.swift in Sources */,
 				4209FE7A295C5FBA00ACC02E /* FTRuledTemplateFormat.swift in Sources */,

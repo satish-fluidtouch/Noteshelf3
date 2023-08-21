@@ -8,19 +8,20 @@
 
 import Foundation
 
+private let ns2URLScheme = "com.fluidtouch.noteshelf://"
+
 enum FTMigrationError: Error {
     case unfiledCollectionNotFound
     case unableToCreateDocument
 }
 
+enum NS2MigrationSource {
+    case local
+    case cloud
+    case doesNotSupport
+}
+
 final class FTDocumentMigration {
-    static func canSupportMigration() -> Bool {
-        guard let ns2URL = URL(string: "com.fluidtouch.noteshelf://") else {
-            return false
-        }
-        let canOpen = UIApplication.shared.canOpenURL(ns2URL)
-        return canOpen
-    }
 
     static func showNS3MigrationAlert(on controller: UIViewController,
                                       onCopyAction: (() -> Void)?) {
@@ -115,5 +116,42 @@ final class FTDocumentMigration {
             debugLog("Migration Error \(error)")
             onCompletion?(nil, error)
         }
+    }
+}
+
+private extension FTDocumentMigration {
+    static func getNS2MigrationDataSource() -> NS2MigrationSource {
+        let source: NS2MigrationSource
+
+        // Check whether the NS2 app is installed or not
+        if isNS2AppInstalled() {
+
+            // Check NS2 iCloud Status
+            if isNS2iCloudTurnedOn() {
+                source = .cloud
+            } else {
+                source = .local
+            }
+        } else {
+            source = .doesNotSupport
+        }
+        return source
+    }
+
+    static func isNS2AppInstalled() -> Bool {
+        guard let ns2URL = URL(string: ns2URLScheme) else {
+            return false
+        }
+        let canOpen = UIApplication.shared.canOpenURL(ns2URL)
+        return canOpen
+    }
+
+    static func isNS2iCloudTurnedOn() -> Bool {
+        guard let ns2UserDefaults = UserDefaults(suiteName: FTSharedGroupID.getNS2AppGroupID()) else {
+            fatalError("Make sure the \(FTSharedGroupID.getNS2AppGroupID()) added in capabilities")
+        }
+
+        let isNS2iCloudOn = ns2UserDefaults.iCloudOn
+        return isNS2iCloudOn
     }
 }

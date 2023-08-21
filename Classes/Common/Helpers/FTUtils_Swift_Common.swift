@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FTCommon
 
 extension FTUtils {
     @objc class func getGroupId() -> String {

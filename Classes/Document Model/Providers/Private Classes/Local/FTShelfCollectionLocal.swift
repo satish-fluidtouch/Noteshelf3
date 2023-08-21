@@ -76,7 +76,8 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             self.query = FTLocalQueryGather(rootURL: self.localDocumentsURL,
                                             extensionsToListen: [shelfExtension],
                                             skipSubFolder : true,
-                                            delegate: self,ns2ProdLocalURL: self.productionDocumentsURL);
+                                            delegate: self,
+                                            ns2ProdLocalURL: self.productionDocumentsURL);
             self.query?.startQuery();
         }
         objc_sync_exit(self);
