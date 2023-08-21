@@ -281,11 +281,9 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
 
 private extension FTPDFRenderViewController {
     var sceneID: String {
-        if #available(iOS 13.0, *) {
             if let scene = self.sceneToObserve as? UIWindowScene {
                 return scene.session.persistentIdentifier;
             }
-        }
         return "NO_SCENE";
     }
 }
