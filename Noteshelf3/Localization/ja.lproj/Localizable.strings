@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "タグ名変更 (Tagumei Henkō)";
 "tags.delete.alert.message" = "アイテムからタグが削除されます。";
 "tags.delete.alert.title" = "%@ タグを削除してもよろしいですか？";
-"templateSizes.currentDevice.thisDevice" = "（このデバイス）";
+"templateSizes.currentDevice.thisDevice" = "このデバイス";
 "templatepreview.addtofavorites" = "お気に入りに追加";
 "templatepreview.removefromfavorites" = "お気に入りから削除";
 "templatepreview.setasdefault" = "デフォルトに設定する";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM

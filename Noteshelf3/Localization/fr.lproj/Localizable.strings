@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "Renommer le tag";
 "tags.delete.alert.message" = "L'étiquette sera retirée des articles auxquels elle est attachée.";
 "tags.delete.alert.title" = "Êtes-vous sûr de vouloir supprimer l'étiquette %@ ?";
-"templateSizes.currentDevice.thisDevice" = "(Cet appareil)";
+"templateSizes.currentDevice.thisDevice" = "Cet appareil";
 "templatepreview.addtofavorites" = "Ajouter aux favoris";
 "templatepreview.removefromfavorites" = "Retirer des favoris";
 "templatepreview.setasdefault" = "Définir par défaut";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM

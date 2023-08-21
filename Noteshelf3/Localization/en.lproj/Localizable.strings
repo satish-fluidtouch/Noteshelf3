@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "Rename Tag";
 "tags.delete.alert.message" = "The tag will be removed from the items the tag is attached to.";
 "tags.delete.alert.title" = "Are you sure you want to delete %@ tag?";
-"templateSizes.currentDevice.thisDevice" = "(This device)";
+"templateSizes.currentDevice.thisDevice" = "This device";
 "templatepreview.addtofavorites" = "Add to Favorites";
 "templatepreview.removefromfavorites" = "Remove from Favorites";
 "templatepreview.setasdefault" = "Set as Default";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM
