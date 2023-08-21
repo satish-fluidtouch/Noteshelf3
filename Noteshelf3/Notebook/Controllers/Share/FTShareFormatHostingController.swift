@@ -21,8 +21,10 @@ class FTShareFormatHostingController: UIHostingController<FTShareContentView> {
     private let selectedOption: FTShareOption
     private let coordinator: FTShareCoordinator
     fileprivate weak var presentingVc: UIViewController?
+    private let viewModel: FTShareFormatViewModel
 
     init(with viewModel: FTShareFormatViewModel, coordinator: FTShareCoordinator) {
+        self.viewModel = viewModel
         self.selectedOption = viewModel.option
         self.coordinator = coordinator
         let shareView = FTShareContentView(viewModel: viewModel)
@@ -33,6 +35,10 @@ class FTShareFormatHostingController: UIHostingController<FTShareContentView> {
     @MainActor
     dynamic required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    var canShowSaveToCameraRollButton: Bool {
+        self.viewModel.canShowSaveToCameraRollOption
     }
 
     override func viewDidLoad() {
