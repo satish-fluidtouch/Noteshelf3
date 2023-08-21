@@ -19,7 +19,8 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
             var currentWord: String = "";
             line.forEach { eachChar in
                 if(eachChar.isWhitespace) {
-                    self.drawWord(currentWord, origin: &origin, pageScale: self.pageScale,currentPage: page);
+                    let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(currentWord);
+                    self.drawWord(wordInfo, origin: &origin)
                     currentWord = "";
                 }
                 else {
@@ -27,7 +28,8 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
                 }
             }            
             if(!currentWord.isEmpty) {
-                self.drawWord(currentWord, origin: &origin, pageScale: self.pageScale,currentPage: page);
+                let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(currentWord);
+                self.drawWord(wordInfo, origin: &origin)
                 currentWord = ""
             }
             self.gotoNextParagraph(page, origin: &origin);
@@ -53,20 +55,35 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
             }
         }
         
+        func drawCurrentWord(_ word: String,isLastChar: Bool) {
+            if isLastChar {
+                debugLog("ente");
+            }
+            let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(word);
+            if self.canFixWord(wordInfo, origin: &origin, pageScale: self.pageScale, currentPage: currentPage) {
+                self.drawWord(wordInfo, origin: &origin)
+            }
+            else {
+                _createNewPageIfNeeded(isLastChar);
+                self.drawWord(wordInfo, origin: &origin)
+            }
+        }
+        var curindex = -1;
         content.enumerateLines { line, stop in
+            curindex += 1;
             var currentWord: String = "";
             line.forEach { eachChar in
+                curindex += 1;
                 if(eachChar.isWhitespace) {
-                    self.drawWord(currentWord, origin: &origin, pageScale: self.pageScale,currentPage: currentPage);
+                    drawCurrentWord(currentWord, isLastChar: (curindex == content.count));
                     currentWord = "";
-                    _createNewPageIfNeeded(eachChar == content.last);
                 }
                 else {
                     currentWord.append(eachChar);
                 }
             }
-            if(!currentWord.isEmpty) {
-                self.drawWord(currentWord, origin: &origin, pageScale: self.pageScale,currentPage: currentPage);
+            if !currentWord.isEmpty {
+                drawCurrentWord(currentWord, isLastChar: (curindex == content.count));
                 currentWord = ""
             }
             self.gotoNextParagraph(currentPage, origin: &origin);
@@ -80,24 +97,27 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         onComplete();
     }
 
-    private func drawWord(_ word: String
-                          , origin: inout CGPoint
-                          ,pageScale: CGFloat
-                          ,currentPage: FTPageProtocol) {
-        let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(word);
-        let scaledGlyphWidth = wordInfo.glyphWidth * pageScale;
-        let maxWordWidth = scaledGlyphWidth; //scaledWordRect.width
-        
-        let leftmargin = currentPage.pageLeftMargin;
-        let rightMargin = currentPage.pageRightMargin;
-        
-        if((self.pageRect.width - rightMargin) < (origin.x + maxWordWidth)) {
-            gotoNextLine(currentPage, origin: &origin);
-        }
+    private func drawWord(_ wordInfo: FTWordStrokeInfo
+                          , origin: inout CGPoint) {
         wordInfo.wordStrokesInfo.forEach { strokesInfo in
             let info = self.drawStroke(strokesInfo: strokesInfo, origin: &origin);
             strokesToAdd.append(contentsOf: info.strokes);
         }
         origin.x += FTTextToStrokeProperties.spaceCharWidth;
+    }
+    
+    private func canFixWord(_ wordInfo: FTWordStrokeInfo
+                            , origin: inout CGPoint
+                            ,pageScale: CGFloat
+                            ,currentPage: FTPageProtocol) -> Bool {
+        let scaledGlyphWidth = wordInfo.glyphWidth * pageScale;
+        let maxWordWidth = scaledGlyphWidth; //scaledWordRect.width
+        
+        let rightMargin = currentPage.pageRightMargin;
+        
+        if((self.pageRect.width - rightMargin) < (origin.x + maxWordWidth)) {
+            gotoNextLine(currentPage, origin: &origin);
+        }
+        return !currentPage.isAtTheEndOfPage(origin)
     }
 }
