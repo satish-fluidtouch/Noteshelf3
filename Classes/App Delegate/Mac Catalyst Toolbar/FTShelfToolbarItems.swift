@@ -249,6 +249,15 @@ class FTShelfMoreToolbarItem: NSMenuToolbarItem {
         self.rebuildMenu();
     }
 
+    override func validate() {
+        super.validate()
+        var canPerform = false;
+        if let sheflToolbar = self.toolbar as? FTShelfToolbar {
+            canPerform = sheflToolbar.toolbarActionDelegate?.toolbar(sheflToolbar, canPerformAction: self) ?? false;
+        }
+        self.isEnabled = canPerform
+    }
+
     private func rebuildMenu() {
         var menuitems = [UIMenuElement]();
         menuitems.append(UIMenu.menuFor(.selectNotes,onAction: { [weak self] (homeNavitem,identifier) in

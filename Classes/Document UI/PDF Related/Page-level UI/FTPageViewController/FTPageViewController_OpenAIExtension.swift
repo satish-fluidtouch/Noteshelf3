@@ -95,7 +95,13 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
                 origin.y = max(origin.y, eachAnnotaiton.boundingRect.maxY);
             }
             if !annotations.isEmpty {
-                origin.y += FTTextToStrokeProperties.spaceCharWidth;
+                let offset = (origin.y - page.pageTopMargin).toInt;
+                var yquotient = offset / page.lineHeight;
+                if offset % page.lineHeight > 0 {
+                    yquotient += 1;
+                }
+                
+                origin.y = (yquotient * page.lineHeight).toCGFloat() + page.pageTopMargin
             }
         }
         origin.x += FTTextToStrokeProperties.paragraphMargin;
