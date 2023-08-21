@@ -53,6 +53,7 @@ struct FTDownloadedStickersView: View {
                                             .lineLimit(2)
                                     }
                                 }
+                                .macOnlyPlainButtonStyle()
                             }
                         }
                     }
