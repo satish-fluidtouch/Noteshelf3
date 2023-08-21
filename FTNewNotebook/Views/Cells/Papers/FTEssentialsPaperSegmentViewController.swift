@@ -185,7 +185,13 @@ private extension FTEssentialsPaperSegmentViewController{
             }
             action.state = action.title == actionTitle ? .on : .off
         }
-        let filteredMenuChildren = varaintsData.selectedVariantsAndTheme.size == .mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        var filteredMenuChildren : [UIMenu] = [UIMenu]()
+        if self.traitCollection.isRegular {
+            filteredMenuChildren = [templateSizeOptionsMenu]
+        } else {
+            filteredMenuChildren = varaintsData.selectedVariantsAndTheme.size == FTTemplateSize.mobile ? [templateSizeOptionsMenu] : [templateSizeOptionsMenu,orientaionOptionsMenu]
+        }
+        
         if actionTitle != nil {
             filteredMenuChildren.forEach { child in
                 if self.traitCollection.isRegular {
