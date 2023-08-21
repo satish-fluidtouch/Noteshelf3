@@ -1045,7 +1045,7 @@
 "finder.tag" = "タグ";
 "foodanddrink" = "食べ物と飲み物";
 "gesture.activeFocusMode.subTitle" = "4本指のタップ";
-"gesture.activeFocusMode.title" = "フォーカスモードのアクティベートまたはツールバーを非表示にする";
+"gesture.activeFocusMode.title" = "アクティベートフォーカスモード";
 "gesture.undoredo.subTitle" = "2本指または3本指のシングルタップ";
 "gesture.undoredo.title" = "取り消すまたはやり直す";
 "getInspired.bulletJournal" = "バレットジャーナル";
@@ -1390,7 +1390,7 @@
 "speechbubbles" = "スピーチバブル";
 "stickers.alert.error" = "エラー";
 "stickers.alert.ok" = "大丈夫";
-"stickersTitle" = "スニペット/ステッカー";
+"stickersTitle" = "ステッカー";
 "stickies" = "付箋";
 "stickynotes" = "付箋";
 "stylus.goto.settings" = "設定/Apple Pencilに移動";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 11:41
+// Last Synced by Akshay on 20 August 2023 at 16:40

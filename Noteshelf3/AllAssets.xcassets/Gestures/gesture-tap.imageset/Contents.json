@@ -3,6 +3,16 @@
     {
       "filename" : "gesture-tap.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "gesture-tap_dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -53,7 +53,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     var isInGroupMode: Bool = false
     var groupItemIfExists: FTGroupItemProtocol?
     var sideMenuController: FTSideMenuViewController?
-    weak var detailNavigationController: UINavigationController?
+    var detailNavigationController: UINavigationController?
 
     var restoringToastMessage : String?
     var restorePageToastMessage : String?
