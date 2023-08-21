@@ -11,6 +11,10 @@ import Foundation
 extension FTSidebarViewModel {
     func fetchNS2Categories() async -> [FTSideBarItem] {
         return await withCheckedContinuation { continuation in
+            guard FTDocumentMigration.supportsMigration() else {
+                continuation.resume(returning: [])
+                return
+            }
             FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
                 let newlyCreatedSidebarItems = collections.map { shelfItem -> FTSideBarItem in
                     let item = FTSideBarItem(shelfCollection: shelfItem)

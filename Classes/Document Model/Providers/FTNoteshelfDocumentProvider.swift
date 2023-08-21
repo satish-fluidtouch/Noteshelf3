@@ -95,10 +95,8 @@ class FTNoteshelfDocumentProvider: NSObject {
             let documentProvider = FTNoteshelfDocumentProvider();
             documentProvider.prepareSystemDefaultCollections {
                 FTShelfCollectionLocal.shelfCollection({ localCollection in
-                    if(localCollection != nil) {
-                        self.localShelfCollection = localCollection;
-                        self.providerMode = .local;
-                    }
+                    self.localShelfCollection = localCollection;
+                    self.providerMode = .local;
                     onCompletion?(true)
                 })
             }
@@ -112,10 +110,8 @@ class FTNoteshelfDocumentProvider: NSObject {
             let documentProvider = FTNoteshelfDocumentProvider();
             documentProvider.prepareSystemDefaultCollections {
                 FTShelfCollectionLocal.shelfCollection({ localCollection in
-                    if(localCollection != nil) {
-                        self.localShelfCollection = localCollection;
-                        self.providerMode = .local;
-                    }
+                    self.localShelfCollection = localCollection;
+                    self.providerMode = .local;
                     onCompletion?(true)
                 })
             }
@@ -136,18 +132,15 @@ class FTNoteshelfDocumentProvider: NSObject {
         let documentProvider = FTNoteshelfDocumentProvider();
         documentProvider.prepareSystemDefaultCollections {
             FTShelfCollectionLocal.shelfCollection({ localCollection in
-                if(localCollection != nil) {
-                    documentProvider.localShelfCollection = localCollection;
-                    documentProvider.providerMode = .local;
+                documentProvider.localShelfCollection = localCollection;
+                documentProvider.providerMode = .local;
 
-                    #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                    documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
-                    #endif
-                }
+                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
+                #endif
                 FTiCloudManager.shared().updateiCloudStatus(completionHandler: { (_) in
                     if(FTiCloudManager.shared().iCloudOn() && FTiCloudManager.shared().iCloudRootURL() != nil) {
                         FTShelfCollectioniCloud.shelfCollection({ (cloudCollection) in
-                            if(cloudCollection != nil) {
                                 let queryListener = FTCloudDocumentListener()
                                 documentProvider.cloudDocumentListener = queryListener
                                 documentProvider.providerMode = .cloud;
@@ -168,7 +161,6 @@ class FTNoteshelfDocumentProvider: NSObject {
                                     queryListener.addListener(audioListener)
                                 }
                                 #endif
-                            }
                             onCompletion(documentProvider);
                         });
                     } else {
@@ -693,9 +685,7 @@ extension FTNoteshelfDocumentProvider {
             self.cloudDocumentListener = FTCloudDocumentListener()
         }
 
-        FTShelfCollectioniCloud.shelfCollection({ collection in
-
-            guard let cloudCollection = collection else { return }
+        FTShelfCollectioniCloud.shelfCollection({ cloudCollection in
 
             if let shelfListener = cloudCollection as? FTMetadataCachingProtocol {
                 self.cloudDocumentListener?.addListener(shelfListener)

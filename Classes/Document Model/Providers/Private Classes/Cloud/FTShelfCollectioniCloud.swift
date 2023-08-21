@@ -48,7 +48,7 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
 
     }
 
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
+    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
     {
         let collection = FTShelfCollectioniCloud();
         DispatchQueue.main.async(execute: {

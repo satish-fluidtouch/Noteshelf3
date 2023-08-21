@@ -41,7 +41,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         return systemURL;
     }
 
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
+    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
     {
         let provider = FTShelfCollectionLocal();
         onCompletion(provider);

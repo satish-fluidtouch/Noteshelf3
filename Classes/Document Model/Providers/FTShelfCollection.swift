@@ -10,7 +10,7 @@ import Foundation
 
 protocol FTShelfCollection: NSObjectProtocol {
 
-    static func shelfCollection(_ onCompletion : @escaping ((FTShelfCollection?) -> Void));
+    static func shelfCollection(_ onCompletion : @escaping ((FTShelfCollection) -> Void));
 
     func collection(withTitle title: String) -> FTShelfItemCollection?;
     func refreshShelfCollection(onCompletion : @escaping (() -> Void));

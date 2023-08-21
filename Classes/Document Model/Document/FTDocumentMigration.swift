@@ -22,6 +22,9 @@ enum NS2MigrationSource {
 }
 
 final class FTDocumentMigration {
+    static func supportsMigration() -> Bool {
+        return getNS2MigrationDataSource() != .doesNotSupport
+    }
 
     static func showNS3MigrationAlert(on controller: UIViewController,
                                       onCopyAction: (() -> Void)?) {

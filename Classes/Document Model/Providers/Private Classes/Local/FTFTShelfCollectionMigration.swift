@@ -51,7 +51,7 @@ class FTShelfCollectionMigration : NSObject,FTShelfCollection,FTLocalQueryGather
         NotificationCenter.default.addObserver(forName: UIScene.didActivateNotification, object: nil, queue: nil, using: notificationBlock)
     }
     
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
+    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
     {
         let migratedFolderURL = self.migratedFolderURL();
         let provider = FTShelfCollectionMigration();

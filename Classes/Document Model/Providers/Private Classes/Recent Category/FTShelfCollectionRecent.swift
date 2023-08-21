@@ -17,7 +17,7 @@ class FTShelfCollectionRecent: NSObject,FTShelfCollection {
     var favoritesShelfItemCollection : FTShelfItemCollectionRecent?;
     fileprivate(set) var shelfCollections = [FTShelfItemCollection]();
 
-    static func shelfCollection(_ onCompletion : @escaping ((FTShelfCollection?) -> Void))
+    static func shelfCollection(_ onCompletion : @escaping ((FTShelfCollection) -> Void))
     {
         let collection = FTShelfCollectionRecent();
         

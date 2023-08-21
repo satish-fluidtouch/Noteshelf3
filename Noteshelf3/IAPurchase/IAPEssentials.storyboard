@@ -106,11 +106,11 @@
                                             <action selector="purchaseAction:" destination="lxO-Z0-dTp" eventType="touchUpInside" id="ta8-dB-ayF"/>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hgl-Af-sOT" userLabel="Footer stack View">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hgl-Af-sOT" userLabel="Footer stack View">
                                         <rect key="frame" x="0.0" y="914" width="688" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M4f-Bf-Ub7" userLabel="privacy policy">
-                                                <rect key="frame" x="0.0" y="0.0" width="303" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="110.5" height="30"/>
                                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Privacy Policy">
@@ -121,7 +121,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAa-Q0-zbD">
-                                                <rect key="frame" x="303" y="0.0" width="385" height="30"/>
+                                                <rect key="frame" x="547.5" y="0.0" width="140.5" height="30"/>
                                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Restore Purchases">
