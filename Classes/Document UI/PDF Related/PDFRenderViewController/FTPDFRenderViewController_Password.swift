@@ -194,7 +194,7 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
     func configureSceneNotifications() {
         let object = self.sceneToObserve;
         self.currentSceneID = self.sceneID;
-        FTDeviceAutoLockHelper.share.notebookWillConnectScene(self.currentSceneID);
+        FTDeviceAutoLockHelper.share.notebookWillConnectScene(self.sceneID);
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(sceneWillEnterForeground(_:)),
                                                name: UIApplication.sceneWillEnterForeground,
@@ -215,11 +215,15 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
     }
 
     @objc func willDellocate() {
-        FTDeviceAutoLockHelper.share.notebookDidDisconnectScene(self.currentSceneID);
+        if let currentSceneID {
+            FTDeviceAutoLockHelper.share.notebookDidDisconnectScene(currentSceneID);
+        }
     }
     
     func sceneWillEnterForeground(_ notification: Notification) {
-        FTDeviceAutoLockHelper.share.notebookWillEnterForeground(self.currentSceneID);
+        if let currentSceneID {
+            FTDeviceAutoLockHelper.share.notebookWillEnterForeground(currentSceneID);
+        }
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
@@ -234,7 +238,9 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
     }
 
     func sceneDidEnterBackground(_ notification: Notification) {
-        FTDeviceAutoLockHelper.share.notebookDidEnterBackground(self.currentSceneID);
+        if let currentSceneID {
+            FTDeviceAutoLockHelper.share.notebookDidEnterBackground(currentSceneID)
+        }
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
