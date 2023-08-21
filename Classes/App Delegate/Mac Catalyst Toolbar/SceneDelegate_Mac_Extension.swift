@@ -66,7 +66,12 @@ class FTShelfToolbar: NSToolbar {
         self.displayMode = .iconOnly
         self.windowScene = scene;
     }
-    
+
+    func getToolbarItem(with id: NSToolbarItem.Identifier) -> NSToolbarItem? {
+        let reqItem: NSToolbarItem? = self.items.first(where: { $0.itemIdentifier == id })
+        return reqItem
+    }
+
     func showBackButton(_ show: Bool) {
         let item = self.items.first(where: {$0.itemIdentifier == FTShelfBackToolbarItem.identifier});
         if show {
@@ -78,7 +83,20 @@ class FTShelfToolbar: NSToolbar {
             self.removeItem(at: index);
         }
     }
-    
+
+    func addSearchItem() {
+        let item = self.items.first(where: {$0.itemIdentifier == FTShelfSearchToolbarItem.identifier})
+        if let _item = item {
+            guard let index = self.items.firstIndex(of: _item) else {
+                let indexToAppend = self.items.count
+                self.insertItem(withItemIdentifier: FTShelfSearchToolbarItem.identifier, at: indexToAppend)
+                return
+            }
+            self.removeItem(at: index)
+            self.insertItem(withItemIdentifier: FTShelfSearchToolbarItem.identifier, at: index)
+        }
+    }
+
     func switchMode(_ mode: FTShelfToolbarMode) {
         if(mode != self.sheflToolbarMode) {
             self.sheflToolbarMode = mode;
