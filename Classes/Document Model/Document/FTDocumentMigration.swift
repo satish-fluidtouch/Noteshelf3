@@ -14,6 +14,14 @@ enum FTMigrationError: Error {
 }
 
 final class FTDocumentMigration {
+    static func canSupportMigration() -> Bool {
+        guard let ns2URL = URL(string: "com.fluidtouch.noteshelf://") else {
+            return false
+        }
+        let canOpen = UIApplication.shared.canOpenURL(ns2URL)
+        return canOpen
+    }
+
     static func showNS3MigrationAlert(on controller: UIViewController,
                                       onCopyAction: (() -> Void)?) {
         let alert = UIAlertController(title: "migration.alert.title".localized, message: "migration.alert.message".localized, preferredStyle: UIAlertController.Style.alert)

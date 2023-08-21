@@ -289,6 +289,7 @@
 		<string>msauth</string>
 		<string>msauthv2</string>
 		<string>msauthv3</string>
+		<string>com.fluidtouch.noteshelf</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
