@@ -206,6 +206,9 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
 
     func showGroup(with shelfItem: FTShelfItemProtocol, animate: Bool) {
+        if let shelfviewmodel = currentShelfViewModel, shelfviewmodel.isInHomeMode { // When shelf is showing home, we are not showing groups
+            return
+        }
         self.setLastOpenedGroup(shelfItem.URL)
         var secondaryViewController: FTShelfViewControllerNew?
 
