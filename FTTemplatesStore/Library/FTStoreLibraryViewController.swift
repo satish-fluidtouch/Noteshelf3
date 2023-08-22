@@ -56,6 +56,7 @@ public protocol FTStoreLibraryDelegate:NSObjectProtocol, FTThemeUpdateURL {
 
 class FTStoreLibraryViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private var emptyView: UIView!
 
     weak var delegate: FTStoreLibraryDelegate?;
     let viewModel = FTStoreLibraryViewModel()
@@ -76,6 +77,10 @@ class FTStoreLibraryViewController: UIViewController {
             self.view.backgroundColor = UIColor.appColor(.panelBgColor)
             self.collectionView.backgroundColor = UIColor.appColor(.panelBgColor)
         }
+
+        viewModel.applySnapshotClosure = { [weak self] in
+            self?.updateEmptyView()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -95,6 +100,16 @@ class FTStoreLibraryViewController: UIViewController {
             self.collectionView.reloadData()
         }, completion: { (_) in
         })
+    }
+
+    private func updateEmptyView() {
+        runInMainThread {
+            if self.viewModel.items().isEmpty {
+                self.collectionView.backgroundView = self.emptyView
+            } else {
+                self.collectionView.backgroundView = nil
+            }
+        }
     }
 
     private func updateFrame() {
@@ -131,12 +146,6 @@ class FTStoreLibraryViewController: UIViewController {
 
     func configureDatasource() {
         viewModel.dataSource = StoreLibraryDatasource(collectionView: self.collectionView, cellProvider: {[weak self] collectionView, indexPath, item in
-            if item is FTStoreLibraryType {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FTStoreLibraryEmptyCollectionCell.reuseIdentifier, for: indexPath) as? FTStoreLibraryEmptyCollectionCell else {
-                    fatalError("can't dequeue FTStoreLibraryEmptyCollectionCell")
-                }
-                return cell
-            }
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FTStoreLibraryCollectionCell.reuseIdentifier, for: indexPath) as? FTStoreLibraryCollectionCell else {
                 fatalError("can't dequeue FTStoreLibraryCollectionCell")
             }
@@ -262,9 +271,6 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
  
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-        if sectionType == .noRecords {
-            return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height - 200)
-        }
         let item = viewModel.itemAt(index: indexPath.row)
 
         let columnWidth = columnWidthForSize(self.view.frame.size)

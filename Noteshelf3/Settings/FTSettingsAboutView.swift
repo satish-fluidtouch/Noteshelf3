@@ -119,8 +119,8 @@ struct FTSettingsAboutView: View {
                     Text(viewModel.welcomeTourText)
                 }
             }
+            .macOnlyPlainButtonStyle()
             .modifier(MiddleSectionItemConfig())
-            
             .fullScreenCover(isPresented: $showWelcome) {
                 FTWelcomeView(viewModel: FTGetStartedItemViewModel(), source: .settings)
             }

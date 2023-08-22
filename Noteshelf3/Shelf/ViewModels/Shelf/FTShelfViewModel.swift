@@ -144,23 +144,23 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var areAllItemsSelected: Bool {
         shelfItems.filter({ $0.isSelected }).count == shelfItems.count
     }
-    var navigationTitle: LocalizedStringKey {
+    var navigationTitle: String {
         get {
-            let title: LocalizedStringKey
+            let title: String
             if mode == .normal && collection.collectionType == .allNotes {
-                title = isInHomeMode ? (self.shouldShowGetStartedInfo ? "" : LocalizedStringKey("sidebar.topSection.home")): LocalizedStringKey(collection.displayTitle)
+                title = isInHomeMode ? (self.shouldShowGetStartedInfo ? "" : "sidebar.topSection.home".localized) : collection.displayTitle
             } else if mode == .normal && collection.collectionType != .allNotes {
                 if let groupItem = groupItem {
-                    title = LocalizedStringKey(groupItem.displayTitle)
+                    title = groupItem.displayTitle
                 } else {
-                    title = LocalizedStringKey(collection.displayTitle)
+                    title = collection.displayTitle
                 }
             } else {
                 let selectedCount = shelfItems.filter({ $0.isSelected }).count
                 if selectedCount > 0 {
-                    title = "\(selectedCount) Selected"
+                    title = String(format: "sidebar.allTags.navbar.selected".localized, String(describing: selectedCount))
                 } else {
-                    title = "Select Notes"
+                    title = "shelf.navmenu.selectNotes".localized
                 }
             }
             return title

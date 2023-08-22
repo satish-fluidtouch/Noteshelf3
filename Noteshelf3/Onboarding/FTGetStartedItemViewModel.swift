@@ -159,7 +159,7 @@ enum FTGetStartedViewItems:CaseIterable {
         case .richText:
             name = "richText"
         case .tags:
-            name = "tags"
+            name = "welcome_tags"
         case .nestedGroups:
             name = "nestedGroups"
         case .presureSensitive:

@@ -75,6 +75,7 @@ struct FTWelcomeView: View {
                 .background(Color.appColor(.welcomeBtnColor))
                 .cornerRadius(16)
         }
+        .macOnlyPlainButtonStyle()
         .shadow(color: .appColor(.welcomeBtnColor).opacity(0.24), radius: 16.0, x: 0, y: 12.0)
     }
     @ViewBuilder

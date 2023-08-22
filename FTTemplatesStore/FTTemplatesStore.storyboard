@@ -131,7 +131,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreLibraryCollectionCell" id="giX-8s-6sd" customClass="FTStoreLibraryCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="82.5" width="264" height="452"/>
+                                        <rect key="frame" x="0.0" y="75" width="264" height="452"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ow1-Ey-4HK">
                                             <rect key="frame" x="0.0" y="0.0" width="264" height="452"/>
@@ -252,9 +252,65 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="Lgv-tH-Glz" id="4e4-Xf-o2d"/>
+                        <outlet property="emptyView" destination="ZZT-SN-fgq" id="gvW-OS-qDj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdE-bi-z1H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="ZZT-SN-fgq">
+                    <rect key="frame" x="0.0" y="0.0" width="683" height="430"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vq6-jR-ged">
+                            <rect key="frame" x="191" y="192" width="301" height="166"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="library_empty" translatesAutoresizingMaskIntoConstraints="NO" id="KoS-57-alr">
+                                    <rect key="frame" x="115.5" y="0.0" width="70" height="64"/>
+                                    <color key="tintColor" name="black50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="64" id="Gp6-OU-ajR"/>
+                                        <constraint firstAttribute="width" constant="70" id="qRW-cw-PXk"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library is empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFG-oE-a0i" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="96" width="301" height="26"/>
+                                    <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                    <color key="textColor" name="black1"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.library.empty.title"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your preferred templates to the Library from the preview screen for easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nN6-DK-pjf" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="130" width="301" height="36"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" name="black70"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.library.empty.subTitle"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="nN6-DK-pjf" secondAttribute="bottom" id="4fZ-n9-GmR"/>
+                                <constraint firstItem="nN6-DK-pjf" firstAttribute="leading" secondItem="AFG-oE-a0i" secondAttribute="leading" id="85L-bK-0o8"/>
+                                <constraint firstItem="nN6-DK-pjf" firstAttribute="top" secondItem="AFG-oE-a0i" secondAttribute="bottom" constant="8" symbolic="YES" id="DqT-qo-H9C"/>
+                                <constraint firstItem="KoS-57-alr" firstAttribute="centerX" secondItem="Vq6-jR-ged" secondAttribute="centerX" id="Ir9-8Z-oqe"/>
+                                <constraint firstItem="KoS-57-alr" firstAttribute="top" secondItem="Vq6-jR-ged" secondAttribute="top" id="LSM-mo-4eM"/>
+                                <constraint firstAttribute="trailing" secondItem="AFG-oE-a0i" secondAttribute="trailing" id="WbH-CA-Dr0"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="320" id="cbX-jk-Ji9"/>
+                                <constraint firstItem="AFG-oE-a0i" firstAttribute="top" secondItem="KoS-57-alr" secondAttribute="bottom" constant="32" id="dWM-hd-dsd"/>
+                                <constraint firstItem="nN6-DK-pjf" firstAttribute="trailing" secondItem="AFG-oE-a0i" secondAttribute="trailing" id="hNL-aD-EXW"/>
+                                <constraint firstItem="AFG-oE-a0i" firstAttribute="leading" secondItem="Vq6-jR-ged" secondAttribute="leading" id="tZN-KZ-Z6L"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="HpX-WT-ckQ"/>
+                    <constraints>
+                        <constraint firstItem="Vq6-jR-ged" firstAttribute="centerY" secondItem="HpX-WT-ckQ" secondAttribute="centerY" constant="50" id="MJE-vZ-3sJ"/>
+                        <constraint firstItem="Vq6-jR-ged" firstAttribute="centerX" secondItem="HpX-WT-ckQ" secondAttribute="centerX" id="UpM-oh-s10"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="2569.7841726618708" y="322.61306532663315"/>
         </scene>
@@ -398,11 +454,67 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="jRa-HH-GLz" id="GLm-cq-eij"/>
+                        <outlet property="emptyView" destination="NhW-Bo-OuE" id="5bO-3E-8kQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GgN-b2-Cnu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="NhW-Bo-OuE">
+                    <rect key="frame" x="0.0" y="0.0" width="762" height="301"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CC-4X-cbF">
+                            <rect key="frame" x="225.5" y="127.5" width="311" height="166"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="custom_empty" translatesAutoresizingMaskIntoConstraints="NO" id="fsE-Cn-cUn">
+                                    <rect key="frame" x="120.5" y="0.0" width="70" height="64"/>
+                                    <color key="tintColor" name="black50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="70" id="NiV-PY-ANB"/>
+                                        <constraint firstAttribute="height" constant="64" id="xz6-1i-6Gm"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2PV-Kc-qa5" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="96" width="311" height="26"/>
+                                    <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                    <color key="textColor" name="black1"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.custom.empty.title"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66b-0G-J5W" customClass="FTCustomLabel" customModule="FTCommon">
+                                    <rect key="frame" x="0.0" y="130" width="311" height="36"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" name="black70"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.custom.empty.subTitle"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="2PV-Kc-qa5" firstAttribute="leading" secondItem="2CC-4X-cbF" secondAttribute="leading" id="15F-9I-o5p"/>
+                                <constraint firstItem="66b-0G-J5W" firstAttribute="top" secondItem="2PV-Kc-qa5" secondAttribute="bottom" constant="8" symbolic="YES" id="8SV-8U-6N5"/>
+                                <constraint firstItem="fsE-Cn-cUn" firstAttribute="top" secondItem="2CC-4X-cbF" secondAttribute="top" id="CP4-LY-nJC"/>
+                                <constraint firstItem="fsE-Cn-cUn" firstAttribute="centerX" secondItem="2CC-4X-cbF" secondAttribute="centerX" id="TDr-xV-eiY"/>
+                                <constraint firstItem="2PV-Kc-qa5" firstAttribute="top" secondItem="fsE-Cn-cUn" secondAttribute="bottom" constant="32" id="adh-a2-pUE"/>
+                                <constraint firstItem="66b-0G-J5W" firstAttribute="leading" secondItem="2PV-Kc-qa5" secondAttribute="leading" id="axS-F1-aXw"/>
+                                <constraint firstItem="66b-0G-J5W" firstAttribute="trailing" secondItem="2PV-Kc-qa5" secondAttribute="trailing" id="doS-dG-PpB"/>
+                                <constraint firstAttribute="bottom" secondItem="66b-0G-J5W" secondAttribute="bottom" id="f4c-xe-BQ8"/>
+                                <constraint firstAttribute="trailing" secondItem="2PV-Kc-qa5" secondAttribute="trailing" id="jL4-ye-Z4u"/>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="320" id="n9t-hw-gwF"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="qNk-sH-fr7"/>
+                    <constraints>
+                        <constraint firstItem="2CC-4X-cbF" firstAttribute="centerX" secondItem="qNk-sH-fr7" secondAttribute="centerX" id="QhA-y6-M73"/>
+                        <constraint firstItem="2CC-4X-cbF" firstAttribute="centerY" secondItem="qNk-sH-fr7" secondAttribute="centerY" constant="50" id="n9L-y7-a8M"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="3267.6258992805756" y="322.61306532663315"/>
+            <point key="canvasLocation" x="3268" y="266"/>
         </scene>
         <!--Store Custom Preview View Controller-->
         <scene sceneID="C9O-1D-gZR">

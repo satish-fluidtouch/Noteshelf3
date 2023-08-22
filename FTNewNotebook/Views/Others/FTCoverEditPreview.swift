@@ -54,6 +54,7 @@ class FTCoverEditPreview: UIView {
     }
 
     func updatePreviewIfNeeded(_ image: UIImage?) {
+        self.rawImage = image
         self.selectedImageView.image = image
         self.setUpScrollView()
         self.updateScaledRect()
@@ -74,7 +75,6 @@ class FTCoverEditPreview: UIView {
                 self.isDownloading = false
                 if let image = img {
                     self.updatePreviewIfNeeded(image)
-                    self.rawImage = image
                     FTCurrentCoverSelection.shared.selectedCover = nil
                 }
             })
