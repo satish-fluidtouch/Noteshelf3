@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "태그 이름 바꾸기";
 "tags.delete.alert.message" = "태그는 태그가 연결된 항목에서 제거될 것입니다.";
 "tags.delete.alert.title" = "%@ 태그를 삭제하시겠습니까?'";
-"templateSizes.currentDevice.thisDevice" = "(이 장치)";
+"templateSizes.currentDevice.thisDevice" = "이 장치";
 "templatepreview.addtofavorites" = "즐겨찾기에 추가";
 "templatepreview.removefromfavorites" = "즐겨찾기에서 제거";
 "templatepreview.setasdefault" = "기본값 설정";
@@ -1483,4 +1483,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM
