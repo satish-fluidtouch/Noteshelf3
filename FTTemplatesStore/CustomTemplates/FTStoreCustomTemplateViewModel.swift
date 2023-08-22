@@ -24,6 +24,7 @@ class FTStoreCustomTemplateViewModel {
     var snapshot = StoreCustomSnapshot()
     private let handler = FTStoreCustomTemplatesHandler.shared
     private var templates: [FTTemplateStyle] = []
+    var applySnapshotClosure: (() -> Void)?
 
     func loadTemplates() {
         if let customTemplates = try? handler.templates() {
@@ -41,15 +42,16 @@ extension FTStoreCustomTemplateViewModel {
         if templates.isEmpty {
             let type = FTStoreCustomType.noRecords
             self.snapshot.appendSections([type])
-            self.snapshot.appendItems([type], toSection: type)
-
+            self.snapshot.appendItems([], toSection: type)
             self.dataSource.apply(self.snapshot, animatingDifferences: true)
+            self.applySnapshotClosure?()
             return
         }
         let type = FTStoreCustomType.templates
         self.snapshot.appendSections([type])
         self.snapshot.appendItems(templates, toSection: type)
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
+        self.applySnapshotClosure?()
     }
 
     func items() -> [FTTemplateStyle] {
