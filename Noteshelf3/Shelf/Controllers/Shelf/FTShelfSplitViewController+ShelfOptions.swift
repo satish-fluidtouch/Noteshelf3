@@ -424,10 +424,14 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
 
     //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
-        if !self.openingBookInProgress {
-            self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate, pageIndex: pageIndex, onCompletion: nil)
-        }else {
-            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+        if !shelfItem.shelfCollection.isTrash  {
+            if !self.openingBookInProgress {
+                self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate, pageIndex: pageIndex, onCompletion: nil)
+            }else {
+                NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+            }
+        } else {
+            UIAlertController.showAlert(withTitle: "", message: "trash.alert.cannotOpenNotebook".localized, from: self, withCompletionHandler: nil)
         }
     }
     

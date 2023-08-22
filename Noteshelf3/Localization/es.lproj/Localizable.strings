@@ -1439,7 +1439,9 @@
 "templatesStore.templatePreview.createNotebook" = "Crear cuaderno";
 "templatesStore.templatePreview.inyourLibrary" = "En tu biblioteca";
 "templatesStore.templatePreview.style" = "Estilo";
+"trash.alert.cannotOpenNotebook" = "Esta libreta no se puede abrir ya que ha sido eliminada. Para restaurar, mantén presionado y selecciona la opción del menú.";
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
+"unsplash.search.alertMessage" = "Introducir texto para buscar'";
 "untitled" = "Sin título";
 "useSticker" = "Usar etiqueta";
 "welcome.appleWatch" = "RELOJ DE APPLE";
@@ -1483,4 +1485,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM
+// Last Synced by Ramakrishna on 22 August 2023 at 7:17 PM

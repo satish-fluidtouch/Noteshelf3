@@ -1439,7 +1439,9 @@
 "templatesStore.templatePreview.createNotebook" = "노트북 만들기";
 "templatesStore.templatePreview.inyourLibrary" = "당신의 라이브러리";
 "templatesStore.templatePreview.style" = "스타일";
+"trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
+"unsplash.search.alertMessage" = "텍스트를 검색하세요";
 "untitled" = "무제";
 "useSticker" = "스티커 사용";
 "welcome.appleWatch" = "애플 워치";
@@ -1483,4 +1485,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM
+// Last Synced by Ramakrishna on 22 August 2023 at 7:17 PM

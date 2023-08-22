@@ -1439,7 +1439,9 @@
 "templatesStore.templatePreview.createNotebook" = "創建筆記本";
 "templatesStore.templatePreview.inyourLibrary" = "在您的圖書館";
 "templatesStore.templatePreview.style" = "風格";
+"trash.alert.cannotOpenNotebook" = "這個筆記本無法打開，因為它已被刪除。要恢復，請長按並從菜單選擇該選項。";
 "trash.alert.title" = "您確定要清空垃圾桶嗎？";
+"unsplash.search.alertMessage" = "輸入要搜索的文字";
 "untitled" = "無標題";
 "useSticker" = "使用貼紙";
 "welcome.appleWatch" = "蘋果手錶";
@@ -1483,4 +1485,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM
+// Last Synced by Ramakrishna on 22 August 2023 at 7:17 PM
