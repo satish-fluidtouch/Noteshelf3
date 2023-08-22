@@ -26,12 +26,13 @@ class FTEssentialsPaperSegmentViewController: UIViewController {
     @IBOutlet weak private var paperSizeBtn: UIButton!
     @IBOutlet weak private var paperSizeLable: UILabel!
 
+    @IBOutlet weak var chevronIcon: UIImageView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-    #if targetEnvironment(macCatalyst)
-        self.paperSizeBtn.changesSelectionAsPrimaryAction = true
-    #endif
-        // Do any additional setup after loading the view.
+        #if targetEnvironment(macCatalyst)
+            addMacOnlySettings()
+        #endif
     }
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -56,6 +57,10 @@ class FTEssentialsPaperSegmentViewController: UIViewController {
                 }
             }
         }
+    }
+    private func addMacOnlySettings(){
+        self.chevronIcon?.isHidden = true
+        self.paperSizeBtn.changesSelectionAsPrimaryAction = true
     }
 }
 extension FTEssentialsPaperSegmentViewController: FTPaperDelegate {

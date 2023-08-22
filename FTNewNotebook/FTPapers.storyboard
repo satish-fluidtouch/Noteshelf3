@@ -894,6 +894,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="chevronIcon" destination="G2z-og-oHA" id="NOb-pe-XFl"/>
                         <outlet property="paperSizeBtn" destination="2cZ-Gr-ma7" id="TmF-ua-BPE"/>
                         <outlet property="paperSizeLable" destination="cjD-3n-0Mw" id="rel-WI-3bi"/>
                     </connections>
