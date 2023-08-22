@@ -30,7 +30,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
             FTNotebookCreation().quickCreateNotebook(collection: collection, group: group) {[weak self] error, shelfItem in
                 loadingIndicatorView.hide()
                 if error != nil {
-                    self?.showAlertForError(error)
+                    runInMainThread {
+                        self?.showAlertForError(error)
+                    }
                 }else {
                     if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItem {
                         self?.showNotebookAskPasswordIfNeeded(notebookItem,
@@ -48,7 +50,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 FTNotebookCreation().createNewNotebookInside(collection: collection, group: group, notebookDetails: notebookDetails,mode: mode) { [weak self] error, shelfItemProtocol in
                     loadingIndicatorView.hide()
                     if error != nil {
-                        self?.showAlertForError(error)
+                        runInMainThread {
+                            self?.showAlertForError(error)
+                        }
                     }else {
                         if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItemProtocol {
                             self?.showNotebookAskPasswordIfNeeded(notebookItem,
