@@ -83,11 +83,15 @@ private extension FTBookSessionRootViewController {
                 if let pin = userActivity.userInfo?["docPin"] as? String {
                     request.pin = pin;
                 }
+                let createWithAudio = userActivity.userInfo?["createWithAudio"] as? Bool ?? false
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
                     if let _docitem = docItem {
                         let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem);
                         docInfo.documentOpenToken = token;
                         self?.showNotebookView(docInfo);
+                        if createWithAudio {
+                            self?.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
+                        }
                     }
                     else {
                         self?.killSession();
