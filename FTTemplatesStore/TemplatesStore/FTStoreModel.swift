@@ -107,7 +107,7 @@ struct DiscoveryItem: Codable, Hashable {
     }
 
     var stickersPackUrl: URL? {
-        let stickersPackPath = baseUrl + "Stickers/" + self.fileName + "/stickers.zip"
+        let stickersPackPath = baseUrl + "Stickers/" + self.fileName + "/stickers_dev.zip"
         var outputURL = stickersPackPath.properUrlForPath()
         if isInChinaRegion() {
             outputURL.append(queryItems: [URLQueryItem(name: "token", value: self.fileToken)])
