@@ -14,7 +14,6 @@ extension FTShelfTagsViewController: FTToolbarActionDelegate {
         if item.itemIdentifier == FTSelectToolbarItem.identifier {
             (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
             self.handleSelectActionInMac()
-            // self.observeSelectModeChanges(of: toolbar)
         } else if item.itemIdentifier == FTSelectDoneToolbarItem.identifier {
             self.handleSelectActionInMac()
             (toolbar as? FTShelfToolbar)?.switchMode(.tags)

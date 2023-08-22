@@ -135,9 +135,9 @@ struct FTShareContentView: View {
     private var stickyFooterView: some View {
         VStack(spacing: 0){
             if viewModel.canShowSaveToCameraRollOption {
-                footerDoubleButton
+                footerView
             } else {
-                footerSingleButton
+                shareButton
             }
         }
         .padding(.horizontal, FTSpacing.extraLarge)
@@ -146,7 +146,7 @@ struct FTShareContentView: View {
         .macOnlyPlainButtonStyle()
     }
 
-    private var footerSingleButton : some View {
+    private var shareButton : some View {
         Button(action: {
             self.viewModel.handleShareAction()
         }) {
@@ -155,45 +155,33 @@ struct FTShareContentView: View {
                 .padding(FTSpacing.extraLarge)
                 .frame(height: 36)
                 .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
                 .foregroundColor(Color.white)
-                .macOnlyTapAreaFixer()
         }
         .background(Color.appColor(.accent)).cornerRadius(10)
     }
 
     @ViewBuilder
-    var footerDoubleButton : some View {
+    var footerView: some View {
         HStack(spacing: 16.0){
             Button(action: {
                 self.viewModel.handleAddCameraRollAction()
             }) {
                 Text(viewModel.saveToCameraroll)
                     .appFont(for: .medium, with: 15.0)
-                    .foregroundColor(Color.appColor(.accent))
                     .padding(FTSpacing.extraLarge)
-                    .macOnlyTapAreaFixer()
+                    .frame(height: 36)
+                    .frame(maxWidth: .infinity)
+                    .contentShape(Rectangle())
+                    .foregroundColor(Color.appColor(.accent))
             }
-                .frame(maxWidth: .infinity,minHeight: 36.0,maxHeight: 36.0)
                 .border(Color.appColor(.accent),
                         width:1.0,
                         cornerRadius: 10)
                 .buttonStyle(PlainButtonStyle())
 
-            Button(action: {
-                self.viewModel.handleShareAction()
-            }) {
-                Text(viewModel.share)
-                    .appFont(for: .medium, with: 15.0)
-                    .padding(FTSpacing.extraLarge)
-                    .foregroundColor(.white)
-                    .macOnlyTapAreaFixer()
-            }
-                .frame(maxWidth: .infinity,minHeight: 36.0,maxHeight: 36.0)
-                .background(Color.appColor(.accent))
-                .cornerRadius(10)
-                .shadow(color: .appColor(.accent).opacity(0.24), radius: 4.0, x: 0, y: 4.0)
+            shareButton
         }
-        .frame(maxWidth: .infinity,minHeight: 36.0,maxHeight: 36.0)
     }
 
     @ToolbarContentBuilder
