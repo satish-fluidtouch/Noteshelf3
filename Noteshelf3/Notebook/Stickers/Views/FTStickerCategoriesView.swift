@@ -62,7 +62,7 @@ struct FTStickerCategoriesView: View {
                         }
                         if !downloadedViewModel.downloadedStickers.isEmpty {
                             FTDownloadedStickersView(downloadedviewModel: downloadedViewModel, stickerCategoryViewModel: viewModel)
-                                .id("Downloaded")
+                                .id("downloadedStickers".localized)
                         }
                     }
                     .background(GeometryReader {
