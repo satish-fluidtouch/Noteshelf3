@@ -28,6 +28,7 @@ public protocol FTStoreCustomDelegate: NSObjectProtocol, FTThemeUpdateURL {
 
 class FTStoreCustomViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var emptyView: UIView!
 
     weak var delegate: FTStoreCustomDelegate?;
     var selectedFile: URL?
@@ -47,6 +48,10 @@ class FTStoreCustomViewController: UIViewController {
         if sourceType != .none {
             self.view.backgroundColor = UIColor.appColor(.panelBgColor)
             self.collectionView.backgroundColor = UIColor.appColor(.panelBgColor)
+        }
+
+        viewModel.applySnapshotClosure = { [weak self] in
+            self?.updateEmptyView()
         }
     }
 
@@ -71,6 +76,16 @@ class FTStoreCustomViewController: UIViewController {
             self.collectionView.reloadData()
         }, completion: { (_) in
         })
+    }
+
+    private func updateEmptyView() {
+        runInMainThread {
+            if self.viewModel.items().isEmpty {
+                self.collectionView.backgroundView = self.emptyView
+            } else {
+                self.collectionView.backgroundView = nil
+            }
+        }
     }
 
     private func updateFrame() {
@@ -98,12 +113,6 @@ class FTStoreCustomViewController: UIViewController {
 
     private func configureDatasource() {
         viewModel.dataSource = StoreCustomDatasource(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
-            if item is FTStoreCustomType {
-                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FTStoreLibraryEmptyCollectionCell.reuseIdentifier, for: indexPath) as? FTStoreLibraryEmptyCollectionCell else {
-                    fatalError("can't dequeue FTStoreLibraryEmptyCollectionCell")
-                }
-                return cell
-            }
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FTStoreCustomCollectionCell.reuseIdentifier, for: indexPath) as? FTStoreCustomCollectionCell else {
                 fatalError("can't dequeue FTStoreCustomCollectionCell")
             }
@@ -167,9 +176,6 @@ extension FTStoreCustomViewController: UICollectionViewDelegate, UICollectionVie
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-        if sectionType == .noRecords {
-            return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height - 150)
-        }
         let columnWidth = columnWidthForSize(self.view.frame.size)
         let size = CGSize(width: columnWidth, height: ((columnWidth)/FTStoreConstants.Template.potraitAspectRation) + FTStoreConstants.Template.extraHeightPadding)
         if let item = viewModel.itemAt(index: indexPath.row) {

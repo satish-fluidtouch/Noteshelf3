@@ -456,7 +456,6 @@
 		52550F242A70FCC100E7A1E7 /* FTStoreLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED32A70FCC000E7A1E7 /* FTStoreLibraryViewModel.swift */; };
 		52550F252A70FCC100E7A1E7 /* FTStoreLibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED42A70FCC000E7A1E7 /* FTStoreLibraryModel.swift */; };
 		52550F262A70FCC100E7A1E7 /* FTLibraryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED52A70FCC000E7A1E7 /* FTLibraryHeaderView.swift */; };
-		52550F272A70FCC100E7A1E7 /* FTStoreLibraryEmptyCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED62A70FCC000E7A1E7 /* FTStoreLibraryEmptyCollectionCell.swift */; };
 		52550F282A70FCC100E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED72A70FCC000E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift */; };
 		52550F292A70FCC100E7A1E7 /* FTStoreLibraryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED82A70FCC000E7A1E7 /* FTStoreLibraryHandler.swift */; };
 		52550F2A2A70FCC100E7A1E7 /* FTStoreLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED92A70FCC000E7A1E7 /* FTStoreLibraryViewController.swift */; };
@@ -3097,7 +3096,6 @@
 		52550ED32A70FCC000E7A1E7 /* FTStoreLibraryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryViewModel.swift; sourceTree = "<group>"; };
 		52550ED42A70FCC000E7A1E7 /* FTStoreLibraryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryModel.swift; sourceTree = "<group>"; };
 		52550ED52A70FCC000E7A1E7 /* FTLibraryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLibraryHeaderView.swift; sourceTree = "<group>"; };
-		52550ED62A70FCC000E7A1E7 /* FTStoreLibraryEmptyCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryEmptyCollectionCell.swift; sourceTree = "<group>"; };
 		52550ED72A70FCC000E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTStoreLibraryViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		52550ED82A70FCC000E7A1E7 /* FTStoreLibraryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryHandler.swift; sourceTree = "<group>"; };
 		52550ED92A70FCC000E7A1E7 /* FTStoreLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryViewController.swift; sourceTree = "<group>"; };
@@ -7636,7 +7634,6 @@
 				52550ED32A70FCC000E7A1E7 /* FTStoreLibraryViewModel.swift */,
 				52550ED42A70FCC000E7A1E7 /* FTStoreLibraryModel.swift */,
 				52550ED52A70FCC000E7A1E7 /* FTLibraryHeaderView.swift */,
-				52550ED62A70FCC000E7A1E7 /* FTStoreLibraryEmptyCollectionCell.swift */,
 				52550ED72A70FCC000E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift */,
 				52550ED82A70FCC000E7A1E7 /* FTStoreLibraryHandler.swift */,
 				52550ED92A70FCC000E7A1E7 /* FTStoreLibraryViewController.swift */,
@@ -11697,7 +11694,6 @@
 				47D3E3F02A8F5C83004C70A7 /* FTTemplateImageView.swift in Sources */,
 				52550F192A70FCC100E7A1E7 /* FTStoreCustomCollectionCell.swift in Sources */,
 				52550F222A70FCC100E7A1E7 /* FTStoreStickersTableCell.swift in Sources */,
-				52550F272A70FCC100E7A1E7 /* FTStoreLibraryEmptyCollectionCell.swift in Sources */,
 				52550F1C2A70FCC100E7A1E7 /* FTStoreService.swift in Sources */,
 				52550F502A70FCC100E7A1E7 /* Filemanager+Addition.swift in Sources */,
 				52550F4D2A70FCC100E7A1E7 /* Date+Addition.swift in Sources */,
