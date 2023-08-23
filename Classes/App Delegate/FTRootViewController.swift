@@ -17,23 +17,6 @@ protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
     func closeDocument(shelfItemManagedObject:FTDocumentItemWrapperObject, animate: Bool, onCompletion : (() -> Void)?)
 }
 
-protocol FTRootViewControllerDelegate : NSObjectProtocol {
-    func showNotebookAskPasswordIfNeeded(_ shelfItem : FTShelfItemProtocol,
-                                         animate : Bool,
-                                         pin:String?,
-                                         addToRecent : Bool,
-                                         onCompletion : ((FTDocumentProtocol?, Bool) -> Void)?)
-
-    func importItemAndAutoScroll(_ item: FTImportItem,
-                                 shouldOpen: Bool,
-                                 completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
-
-    func shelfItems(_ sortOrder: FTShelfSortOrder,
-                    parent: FTGroupItemProtocol?,
-                    searchKey: String?,
-                    onCompletion completionBlock:@escaping (([FTShelfItemProtocol]) -> Void))
-}
-
 // iCloud Retry
 private var currentRetryCount = 1
 private var maxRetryCount = 5
@@ -588,7 +571,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     selfObject.isOpeningDocument = false
 
                     if selfObject.rootContentViewController != nil {
-                        selfObject.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: animate, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: {[weak self] (_, _) in
+                        selfObject.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: animate, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: {[weak self] (_, _) in
                             if !isPasswordEnabled{
                                 self?.removeLaunchScreen(true);
                             }
@@ -1148,7 +1131,7 @@ extension FTRootViewController
                         passcode: String?,
                         shouldAskforPasscode: Bool,
                         onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
-        self.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: false, pin: shouldAskforPasscode ? nil : passcode, addToRecent: addToRecent, isQuickCreate: false, onCompletion: onCompletion)
+        self.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: false, pin: shouldAskforPasscode ? nil : passcode, addToRecent: addToRecent, isQuickCreate: false, createWithAudio: false, onCompletion: onCompletion)
     }
 }
 
