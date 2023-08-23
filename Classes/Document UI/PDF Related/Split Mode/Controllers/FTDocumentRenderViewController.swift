@@ -208,6 +208,10 @@ class FTDocumentRenderViewController: UIViewController {
         self.deskBarDelegate = documentViewController
         self.deskPanelActionDelegate = documentViewController
         self.deskToolbarController?.updateDeskToolbarDelegate(self, actionDelegate: self)
+        (documentViewController.pdfDocument as? FTRecognitionHelper)?.recognitionHelper?.startPendingRecognition()
+        if FTVisionNotebookRecognitionHelper.supportsImageToTextRecognition() {
+            (documentViewController.pdfDocument as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
+        }
     }
 
     override func overrideTraitCollection(forChild childViewController: UIViewController) -> UITraitCollection? {

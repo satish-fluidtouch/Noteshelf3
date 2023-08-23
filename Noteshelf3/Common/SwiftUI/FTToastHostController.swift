@@ -70,7 +70,11 @@ extension FTToastHostController {
 
             UIView.animate(withDuration: toastConfig.animationTime) {
                 hostingVc.view.alpha = 1.0
+#if !targetEnvironment(macCatalyst)
                 hostingVc.view.center.y = toastConfig.getToastSize().height/2.0 + 24.0
+#else
+                hostingVc.view.center.y = toastConfig.getToastSize().height/2.0 + 44.0
+#endif
             } completion: { _ in
                 if toastConfig.autoRemovalOfToast {
                     hostingVc.view.removeWithAnimation()

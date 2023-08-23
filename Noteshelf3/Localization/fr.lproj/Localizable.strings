@@ -1440,6 +1440,7 @@
 "templatesStore.templatePreview.inyourLibrary" = "Dans votre bibliothèque";
 "templatesStore.templatePreview.style" = "Style";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
+"unsplash.search.alertMessage" = "Entrez le texte à rechercher";
 "untitled" = "Sans titre";
 "useSticker" = "Utiliser l'autocollant";
 "welcome.appleWatch" = "MONTRE APPLE";
@@ -1483,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 August 2023 at 6:41 PM
+// Last Synced by Narayana on 22 August 2023 at 6:02 PM

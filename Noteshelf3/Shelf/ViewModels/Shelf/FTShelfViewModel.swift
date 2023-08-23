@@ -27,7 +27,6 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func restoreShelfItem( items : [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void))
     func favoriteShelfItem(_ item: FTShelfItemProtocol,toPin: Bool)
     func showMoveItemsPopOverWith(selectedShelfItems: [FTShelfItemProtocol])
-    func showNewNotePopoverOnRect(_ rect: CGRect)
     func duplicateDocuments(_ items : [FTShelfItemProtocol], onCompletion: @escaping((Bool) -> Void))
     func renameDocuments(_ items : [FTShelfItemProtocol], onCompletion: @escaping(() -> Void))
     func showCoverViewOnShelfWith(models: [FTShelfItemViewModel])
