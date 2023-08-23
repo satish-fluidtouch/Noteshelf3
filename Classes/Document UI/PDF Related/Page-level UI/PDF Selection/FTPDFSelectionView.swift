@@ -85,9 +85,9 @@ private class FTTextGrabHandle {
               ,isVertical: Bool) {
         let rect = selectionRect;
         context?.saveGState();
-#if !DEBUG
+//#if !DEBUG
         UIColor(hexString: "#2D6FFF").setFill();
-#endif
+//#endif
         var circleRect = rect;
         if(isVertical) {
             circleRect.size.width = rect.height;
@@ -385,11 +385,11 @@ class FTPDFSelectionView: UIView {
         guard supportsPDFSelection,nil == self.longtextInteraction else {
             return;
         }
-        #if DEBUG || ADHOC
+#if DEBUG || ADHOC
         guard FTDeveloperOption.enablePDFSelection else {
             return;
         }
-        #endif
+#endif
         if(nil == self.textSelectionLayer) {
             let _view = FTPDFTextSelectionView.init(frame: self.bounds);
             _view.backgroundColor = UIColor.clear;
