@@ -94,7 +94,7 @@ CG_EXTERN NSString* _Nullable MIMETypeFileAtPath(NSString *_Nonnull path);
 
 CG_EXTERN BOOL shouldConvertToPDF(NSString * _Nonnull path,NSString* _Nullable * _Nullable mimeType);
 
-CG_EXTERN FTPackageType packageType(NSString* _Nonnull path);
+//CG_EXTERN FTPackageType packageType(NSString* _Nonnull path);
 
 CG_EXTERN CGAffineTransform NSPDFPageGetDrawingTransform(PDFPage * _Nonnull pageRef,CGRect rect,CGFloat pdfScale,PDFDisplayBox pdfBox,int rotatedAngle);
 

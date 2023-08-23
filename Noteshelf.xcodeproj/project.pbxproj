@@ -79,6 +79,8 @@
 		09CDCB582A580593000340FB /* NoteshelfAppDelegate_Mac_Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDCB572A580593000340FB /* NoteshelfAppDelegate_Mac_Menu.swift */; };
 		09CDCB672A581A65000340FB /* FTPreferenceSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDCB662A581A65000340FB /* FTPreferenceSceneDelegate.swift */; };
 		09CDCB692A58320B000340FB /* FTSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDCB682A58320B000340FB /* FTSceneDelegate.swift */; };
+		09CDDCFE2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDDCFD2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift */; };
+		09CDDD002A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDDCFF2A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift */; };
 		09DBD5262A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5252A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift */; };
 		09DBD5282A7CDABE00987ED1 /* FTNoteshelfAI_String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5272A7CDABE00987ED1 /* FTNoteshelfAI_String_Extension.swift */; };
 		09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */; };
@@ -2503,6 +2505,8 @@
 		09CDCB572A580593000340FB /* NoteshelfAppDelegate_Mac_Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteshelfAppDelegate_Mac_Menu.swift; sourceTree = "<group>"; };
 		09CDCB662A581A65000340FB /* FTPreferenceSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPreferenceSceneDelegate.swift; sourceTree = "<group>"; };
 		09CDCB682A58320B000340FB /* FTSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSceneDelegate.swift; sourceTree = "<group>"; };
+		09CDDCFD2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCloudFilePublishRequest.swift; sourceTree = "<group>"; };
+		09CDDCFF2A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCloudMultiFormatPublishrequest.swift; sourceTree = "<group>"; };
 		09D13BFD2021FFE3000B4BB7 /* FTWatchRecordedAudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedAudioCell.swift; sourceTree = "<group>"; };
 		09D13BFE2021FFE3000B4BB7 /* FTWatchRecordedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedListViewController.swift; sourceTree = "<group>"; };
 		09D863F3201F273B0023899B /* FTDetailDiagnosisHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDetailDiagnosisHandler.swift; sourceTree = "<group>"; };
@@ -5360,6 +5364,15 @@
 			path = "Preference Scene";
 			sourceTree = "<group>";
 		};
+		09CDDCFC2A94E81B00E9ABB4 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				09CDDCFD2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift */,
+				09CDDCFF2A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
 		09D13BFC2021FFE3000B4BB7 /* WatchUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -6659,6 +6672,7 @@
 				ED8F323D24F7996C003A7A5E /* FTCloudBackupPublisher.swift */,
 				ED8F323C24F7996B003A7A5E /* FTCloudBackupStatusInfo.swift */,
 				ED8F323E24F7996C003A7A5E /* FTCloudPublishRequest.swift */,
+				09CDDCFC2A94E81B00E9ABB4 /* internal */,
 				ED8F323F24F7996D003A7A5E /* SwiftConstants.swift */,
 				211E301D1E027D73007B5CAD /* Helpers */,
 			);
@@ -12371,6 +12385,7 @@
 				BAF3929A2859ADF00067CA9F /* FTWatchAudioActionsProvider.swift in Sources */,
 				E7AAD7B028D9A77D0071607C /* FTToolbarCenterPanelController.swift in Sources */,
 				BAF3929B2859ADF00067CA9F /* FTMediaLibraryManager.swift in Sources */,
+				09CDDD002A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift in Sources */,
 				BAF3929C2859ADF00067CA9F /* FTCloudBackUpManager.swift in Sources */,
 				E7B143B9299CC12800C7EA56 /* FTCustomDictViewController.swift in Sources */,
 				BAF3929D2859ADF00067CA9F /* FTPointerInteraction.swift in Sources */,
@@ -12502,6 +12517,7 @@
 				E7AAD7B528D9CF0B0071607C /* FTDeskToolCell.swift in Sources */,
 				BAF3930F2859ADF00067CA9F /* FTFromTopPresentationController.swift in Sources */,
 				4213C3572889605300A7A6F3 /* FTNoteBookSplitViewController.swift in Sources */,
+				09CDDCFE2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift in Sources */,
 				42A971DA28B782D600EDAC90 /* FTAudioTrackController.swift in Sources */,
 				BAF393112859ADF00067CA9F /* FTAudioRecordingModel.m in Sources */,
 				BAF393132859ADF00067CA9F /* FTSearchResultCategoryCell.swift in Sources */,

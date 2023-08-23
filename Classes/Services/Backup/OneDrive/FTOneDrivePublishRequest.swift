@@ -8,8 +8,15 @@
 
 import UIKit
 
-class FTOneDrivePublishRequest: FTCloudPublishRequest {
-    
+class FTOneDrivePublishRequest: FTCloudMultiFormatPublishRequest {
+    override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
+        let request = FTOneDriveFilePublishRequest(backupEntry: self.refObject,delegate: self);
+        request.exportFormat = format;
+        return request;
+    }
+}
+
+private class FTOneDriveFilePublishRequest: FTCloudFilePublishRequest {
     fileprivate var currentOneDriveFileItem : FTOneDriveFileItem?;
     fileprivate var uploadPath : URL?;
     fileprivate var currentRequest : FTOneDriveUploadTask?;
@@ -44,9 +51,9 @@ class FTOneDrivePublishRequest: FTCloudPublishRequest {
                 }
                 weakSelf.currentRequest?.uploadFile(atLocation: uploadFilePath, toParentPath: pathToUpload, onCompletion: { (item, error) in
                         if(nil == error) {
-                            let onedriveItem = weakSelf.refObject as? FTOneDriveBackupEntry;
+                            let onedriveItem = weakSelf.fileInfo
                             onedriveItem?.oneDriveFileID = item?.id;
-                            debugPrint("File ID: \(String(describing: onedriveItem?.oneDriveFileID))")
+                            debugLog("File ID: \(String(describing: onedriveItem?.oneDriveFileID))")
                         }
                         weakSelf.publishFinishedWith(error: error);
                 })
@@ -107,16 +114,16 @@ class FTOneDrivePublishRequest: FTCloudPublishRequest {
     private func preprocessRequest(onCompletion : @escaping (Error?) -> Void)
     {
         self.delegate?.publishRequest(self,
-                                       uploadProgress: 0,
-                                       backUpProgressType: FTBackUpProgressType.preparingContent);
+                                      uploadProgress: 0,
+                                      backUpProgressType: FTBackUpProgressType.preparingContent);
         self.prepareContent { [weak self] (error, path) in
             guard let weakSelf = self else {
                 onCompletion(FTOneDriveError.cloudBackupError);
                 return;
             }
             weakSelf.delegate?.publishRequest(weakSelf,
-                                               uploadProgress: 0.5,
-                                               backUpProgressType: FTBackUpProgressType.preparingContent);
+                                              uploadProgress: 0.5,
+                                              backUpProgressType: FTBackUpProgressType.preparingContent);
             
             if(nil != error) {
                 onCompletion(error);
@@ -127,7 +134,7 @@ class FTOneDrivePublishRequest: FTCloudPublishRequest {
                 }
                 else {
                     weakSelf.uploadPath = URL.init(fileURLWithPath: path!);
-                    if let oneDriveFileItem = weakSelf.refObject as? FTOneDriveBackupEntry {
+                    if let oneDriveFileItem = weakSelf.fileInfo {
                         if let oneDriveFileID = oneDriveFileItem.oneDriveFileID {
                             let fileInfoTask = FTOneDriveClient.shared.getFileInfoTask()
                             fileInfoTask.getFileInfo(for: oneDriveFileID) { (item, error) in
@@ -170,11 +177,12 @@ class FTOneDrivePublishRequest: FTCloudPublishRequest {
         
         func completionCallback(_ error: Error?){
             self.delegate?.publishRequest(self,
-                                           uploadProgress: 1,
-                                           backUpProgressType: FTBackUpProgressType.preparingContent);
+                                          uploadProgress: 1,
+                                          backUpProgressType: FTBackUpProgressType.preparingContent);
             onCompletion(error)
         }
     }
+    
     private func renameOrMoveIfNecessary(for fileName:String,
                                          onCompletion : @escaping (FTOneDriveFileItem? ,Error?) -> Void) {
         let moveTask = FTOneDriveClient.shared.getMoveTask()
@@ -233,5 +241,11 @@ class FTOneDrivePublishRequest: FTCloudPublishRequest {
                                     backUpProgressType: FTBackUpProgressType.uploadingContent);
             }
         }
+    }
+}
+
+private extension FTOneDriveFilePublishRequest {
+    var fileInfo: FTOneDriveBackupFileInfo? {
+        return self.refObject.cloudFileInfo(exportFormat) as? FTOneDriveBackupFileInfo
     }
 }
