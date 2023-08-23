@@ -112,12 +112,10 @@ extension NSNotification.Name {
                 if(nil != metadataItem) {
                     FTDocumentUUIDReader.shared.readDocumentUUID(self.URL) { (documentUUID) in
                         self.documentUUID = documentUUID;
-                        self.URL.readLastOpenedDate { date in
-                            self._fileLastOpenedDate = date;
-                            self.downloaded = newValue;
-                            if let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
-                                shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
-                            }
+                        self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
+                        self.downloaded = newValue;
+                        if let shelfCollection = self.shelfCollection as? FTShelfItemDocumentStatusChangePublisher {
+                            shelfCollection.documentItem(self, didChangeDownloadStatus: newValue);
                         }
                     }
                 }
@@ -132,10 +130,8 @@ extension NSNotification.Name {
             }
             else {
                 if(newValue) {
-                    self.URL.readLastOpenedDate { date in
-                        self._fileLastOpenedDate = date;
-                        self.downloaded = newValue;
-                    }
+                    self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
+                    self.downloaded = newValue;
                 }
                 else {
                     self.downloaded = newValue;
