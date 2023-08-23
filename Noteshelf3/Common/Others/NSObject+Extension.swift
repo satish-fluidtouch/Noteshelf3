@@ -74,8 +74,8 @@ extension NSObject {
         if let _docPin = docPin {
             userInfo["docPin"] = _docPin;
         }
-        userInfo["createWithAudio"] = createWithAudio;
         userActivity.userInfo = userInfo
+        userActivity.createWithAudio = createWithAudio
 #if targetEnvironment(macCatalyst)
         if let sesssion = UIApplication.shared.sessionForDocument(docPath) {
             UIApplication.shared.requestSceneSessionActivation(sesssion

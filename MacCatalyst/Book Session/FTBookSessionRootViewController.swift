@@ -8,6 +8,7 @@
 
 import UIKit
 import FTCommon
+#if targetEnvironment(macCatalyst)
 
 class FTBookSessionRootViewController: UIViewController {
     private weak var launchScreenController: UIViewController?
@@ -83,7 +84,7 @@ private extension FTBookSessionRootViewController {
                 if let pin = userActivity.userInfo?["docPin"] as? String {
                     request.pin = pin;
                 }
-                let createWithAudio = userActivity.userInfo?["createWithAudio"] as? Bool ?? false
+                let createWithAudio = userActivity.createWithAudio
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
                     if let _docitem = docItem {
                         let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem);
@@ -132,3 +133,4 @@ extension FTBookSessionRootViewController: FTOpenCloseDocumentProtocol {
         killSession();
     }
 }
+#endif
