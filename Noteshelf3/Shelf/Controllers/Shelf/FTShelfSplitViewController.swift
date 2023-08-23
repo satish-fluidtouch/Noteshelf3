@@ -425,7 +425,7 @@ extension FTShelfSplitViewController {
         //----------- Migration for NS3 ------------------- //
 
         func openDoc(_ pin: String?) {
-            openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio)
+            openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
             onCompletion?(nil,true);
         }
         
@@ -436,14 +436,15 @@ extension FTShelfSplitViewController {
             self.view.isUserInteractionEnabled = false
             self.openingBookInProgress = true
             FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
-                                                         onviewController: self) { [weak self] (pin, success,_) in
+                                                         onviewController: self) { [weak self] (pin, success, cancelled) in
                 self?.view.isUserInteractionEnabled = true
                 self?.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(success) {
                     openDoc(pin)
-                }
-                else {
+                } else if cancelled {
+                    onCompletion?(nil,false);
+                } else  {
                     self?.handleNotebookOpenError(for: shelfItem, error: FTDocumentOpenErrorCode.error(.invalidPin));
                     onCompletion?(nil,false);
                 }
