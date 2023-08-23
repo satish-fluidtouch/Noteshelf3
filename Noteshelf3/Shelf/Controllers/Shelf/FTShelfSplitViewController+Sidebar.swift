@@ -240,7 +240,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                             loadingIndicatorView.hide()
                             if let shelfItem, error == nil {
                                 if FTDeveloperOption.bookScaleAnim {
-                                    self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: nil)
+                                    self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
                                 }
                                 else {
                                     self?.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: false)
@@ -281,7 +281,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     loadingIndicatorView.hide()
                     if let shelfItem, error == nil {
                         if FTDeveloperOption.bookScaleAnim {
-                            self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: nil)
+                            self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
                         }
                         else {
                             self?.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: false)

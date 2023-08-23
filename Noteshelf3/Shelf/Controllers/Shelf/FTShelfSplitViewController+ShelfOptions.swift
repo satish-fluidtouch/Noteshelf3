@@ -37,7 +37,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                               animate: true,
                                                               pin: notebookDetails?.documentPin?.pin,
                                                               addToRecent: true,
-                                                              isQuickCreate: true,
+                                                              isQuickCreate: true, createWithAudio: false,
                                                               onCompletion: nil);
                     }
                     onCompletion(error,shelfItem)
@@ -55,7 +55,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                                                                   animate: true,
                                                                   pin: notebookDetails.documentPin?.pin,
                                                                   addToRecent: true,
-                                                                  isQuickCreate: false,
+                                                                  isQuickCreate: false, createWithAudio: false,
                                                                   onCompletion: nil);
                         }
                         onCompletion(error,shelfItemProtocol)
@@ -418,10 +418,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         }
     }
 
-    //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
         if !self.openingBookInProgress {
-            self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate, pageIndex: pageIndex, onCompletion: nil)
+            self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate, createWithAudio: false, pageIndex: pageIndex, onCompletion: nil)
         }else {
             NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
         }
@@ -1315,10 +1314,13 @@ extension FTShelfSplitViewController {
                 if error == nil, let shelfItem {
                     self.currentShelfViewModel?.addObserversForShelfItems()
                     self.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: true)
-                    self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false) { _, success in
+                    self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false, createWithAudio: true) { _, success in
+                        //For mac, audio note will be added at FTBookSessionRootViewController level.
+                        #if !targetEnvironment(macCatalyst)
                         if success, let rootController = self.parent as? FTRootViewController {
                             rootController.startRecordingOnAudioNotebook()
                         }
+                        #endif
                     }
                 }
             }

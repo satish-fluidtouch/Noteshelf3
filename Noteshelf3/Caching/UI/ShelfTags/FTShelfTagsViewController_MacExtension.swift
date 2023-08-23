@@ -27,6 +27,14 @@ extension FTShelfTagsViewController: FTToolbarActionDelegate {
         }
     }
 
+
+    func toolbar(_ toolbar: NSToolbar, canPerformAction item: NSToolbarItem) -> Bool {
+        if item.itemIdentifier == FTSelectToolbarItem.identifier {
+            return true 
+        }
+        return false
+    }
+
     private func handleSelectActionInMac() {
         if self.viewState == .edit {
             activateViewMode()
