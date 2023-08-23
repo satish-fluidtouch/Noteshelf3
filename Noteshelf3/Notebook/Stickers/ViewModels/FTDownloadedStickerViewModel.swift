@@ -62,8 +62,10 @@ final class FTDownloadedStickerViewModel: ObservableObject {
     }
 
     func fetchDownloadedThumbnailStickers(filePath: String) -> [FTStickerItem] {
-        let downloadedStickerURL = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: filePath).appendingPathComponent("thumbnails")
-
+        var downloadedStickerURL = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: filePath).appendingPathComponent("thumbnails")
+        if !FileManager.default.fileExists(atPath: downloadedStickerURL.path) {
+            downloadedStickerURL = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: filePath).appendingPathComponent("stickers")
+        }
         var stickerItems = [FTStickerItem]()
         do {
             let subcontents = try FileManager.default.contentsOfDirectory(at:downloadedStickerURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
