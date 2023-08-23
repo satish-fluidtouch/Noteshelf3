@@ -20,16 +20,13 @@ protocol FTTagsViewControllerDelegate: NSObjectProtocol {
 
 class FTTagsViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
-
-    @IBOutlet weak var backButton: UIButton!
-    
     weak var delegate: FTTagsViewControllerDelegate?
     weak var contextMenuTagDelegate: FTFinderContextMenuTagDelegate?
 
     @IBOutlet weak var tagsView: FTTagsView?
     @IBOutlet weak var textField: UITextField?
+    @IBOutlet private weak var cancelButton: FTCustomButton?
 
-    @IBOutlet weak var backBtn: FTStaticTextButton?
     var tagsList: [FTTagModel] = []
 
     var isPresenting = false
@@ -50,9 +47,10 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         if showCloseIcon {
-            self.backBtn?.setImage(UIImage(named: "naviconCloseLight"), for: .normal)
+#if targetEnvironment(macCatalyst)
+            self.cancelButton?.isHidden = false
+#endif
         }
-        backButton.isHidden = !showBackButton
         self.textField?.delegate = self
         self.textField?.layer.cornerRadius = 10.0
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 34))
@@ -112,7 +110,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
             tagsController.isPresenting = true
-            tagsController.showCloseIcon = true
             tagsController.sourceViewController = controller
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
@@ -131,11 +128,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
             tagsController.modalPresentationStyle = .formSheet
-            let popover = tagsController.popoverPresentationController
-            popover?.containerView?.addVisualEffectBlur(cornerRadius: 0.0)
-            popover?.overrideTraitCollection = controller.traitCollection
-            tagsController.preferredContentSize = CGSize(width: 320, height:360)
-            controller.present(tagsController, animated: true, completion: nil)
+            controller.ftPresentFormsheet(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
         }
     }
     
@@ -150,8 +143,8 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     }
 
     //MARK:- IBActions
-    @IBAction  override func backButtonTapped(_ sender: UIButton?) {
-        self.navigationController?.popViewController(animated: true)
+    @IBAction func cancelButtonTapped(_ sender: UIButton?) {
+        self.dismiss(animated: true)
         UserDefaults.standard.setValue("", forKey: TAG_MENU_TYPE_SELECTED_NAME_KEY)
     }
     
