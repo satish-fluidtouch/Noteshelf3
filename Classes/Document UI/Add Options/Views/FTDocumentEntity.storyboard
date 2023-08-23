@@ -1785,19 +1785,23 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="Tags"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJa-DJ-tIa" userLabel="backButton">
-                                        <rect key="frame" x="16" y="18" width="28" height="29"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJa-DJ-tIa" userLabel="backButton" customClass="FTCustomButton" customModule="FTCommon">
+                                        <rect key="frame" x="16" y="18" width="56" height="29"/>
                                         <accessibility key="accessibilityConfiguration" label="Back"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="29" id="Rwf-tN-T71"/>
-                                            <constraint firstAttribute="width" constant="28" id="idc-VO-SCr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="18"/>
                                         <color key="tintColor" name="accent"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="chevron.left" catalog="system"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" name="accent"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="cancel"/>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="backButtonTapped:" destination="QIq-fi-E7f" eventType="touchUpInside" id="dVv-hJ-ZHN"/>
+                                            <action selector="cancelButtonTapped:" destination="QIq-fi-E7f" eventType="touchUpInside" id="uhg-eF-MZW"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1844,7 +1848,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="3Ah-d1-Q57"/>
                     <connections>
-                        <outlet property="backButton" destination="IJa-DJ-tIa" id="E9V-h4-cr4"/>
+                        <outlet property="cancelButton" destination="IJa-DJ-tIa" id="eAf-Gj-NqU"/>
                         <outlet property="tagsView" destination="rWe-iO-VUe" id="zXR-19-TpW"/>
                         <outlet property="textField" destination="3iR-J0-LVd" id="QTT-T2-HtA"/>
                     </connections>

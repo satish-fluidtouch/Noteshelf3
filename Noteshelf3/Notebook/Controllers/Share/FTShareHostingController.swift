@@ -65,7 +65,6 @@ extension FTShareHostingController: FTShareDelegate {
 extension FTShareHostingController {
     class func showAsPopover(from controller: UIViewController, source: FTCenterToolSourceItem, info: FTShareOptionsInfo) -> FTShareHostingController {
         let hostingVc = FTShareHostingController(with: FTShareViewModel(info: info))
-        hostingVc.view.backgroundColor = UIColor.appColor(.popoverBgColor)
         hostingVc.ftPresentationDelegate.source = source
         controller.ftPresentPopover(vcToPresent: hostingVc, contentSize: shareContentSize, hideNavBar: true)
         return hostingVc
