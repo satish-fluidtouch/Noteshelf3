@@ -19,8 +19,9 @@ struct FTShelfBookmarksRepresentableView: UIViewControllerRepresentable {
             bookmarksController.viewModel = self.viewModel
             // Do some configurations here if needed.
             return bookmarksController
+        } else {
+            fatalError("FTShelfBookmarksViewController doesnt exist")
         }
-        return FTShelfBookmarksViewController()
     }
 
     func updateUIViewController(_ uiViewController: FTShelfBookmarksViewController, context: Context) {
