@@ -454,10 +454,16 @@ extension FTTemplatesPageViewController {
     }
 
     @IBAction func downloadStickersPack(_ sender: Any) {
-        if let vc = previewControllers[self.currentIndex] as? FTStickersPreviewViewController {
-            vc.downloadStickersPack()
+        Task { @MainActor in
+            if let vc = previewControllers[self.currentIndex] as? FTStickersPreviewViewController {
+                do {
+                    try await vc.downloadStickersPack()
+                } catch {
+                    UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
+                    self.hideLoadingindicator()
+                }
+            }
         }
-
     }
 
     @IBAction func addToFavorite(_ sender: Any) {

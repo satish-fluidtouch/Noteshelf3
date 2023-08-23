@@ -47,10 +47,9 @@ class FTStickersPreviewViewController: UIViewController {
         }
     }
 
-    func downloadStickersPack() {
+    func downloadStickersPack() async throws {
 
         let storeServiceApi = FTStoreService()
-        Task {
             guard let templa = template as? DiscoveryItem else {
                 throw TemplateDownloadError.InvalidTemplate
             }
@@ -77,7 +76,6 @@ class FTStickersPreviewViewController: UIViewController {
                 self.parent?.hideLoadingindicator()
                 self.delegate?.didUpdateUIFor(sticker: false)
             }
-        }
     }
 
     @IBAction func authorAction(_ sender: Any) {

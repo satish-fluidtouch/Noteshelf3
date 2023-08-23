@@ -20,30 +20,29 @@ final class FTDownloadedStickerViewModel: ObservableObject {
         let filePaths = fileStickerManager.getDirectoryContent(directory: .library)
         filePaths.forEach { path in
             let stickerItems = fetchDownloadedThumbnailStickers(filePath: path)
-            let title = getDownloadedStickerTitle(folderName: path)
-            let downloadedStickersPack = FTStickerSubCategory(title: title, image: "", filename: path, stickerItems: stickerItems)
-            downloadedStickers.append(downloadedStickersPack)
+            do{
+                let title = try getDownloadedStickerTitle(folderName: path)
+                let downloadedStickersPack = FTStickerSubCategory(title: title, image: "", filename: path, stickerItems: stickerItems)
+                downloadedStickers.append(downloadedStickersPack)
+            }catch{
+                debugLog("No Downloaded Stickers Found")
+            }
         }
     }
 
-    func getDownloadedStickerTitle(folderName: String) -> String{
+    func getDownloadedStickerTitle(folderName: String) throws -> String{
         let metadataPath = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: folderName).appendingPathComponent("metadata.plist")
-        do {
             let infoPlistData = try Data(contentsOf: metadataPath)
             let decodedData = try PropertyListDecoder().decode([String: String].self, from: infoPlistData)
             var templatesFileName = "display_name_en"
              let currentLocalization = FTCommonUtils.currentLanguage()
             templatesFileName = "display_name_\(currentLocalization)"
 
-            guard let title = decodedData[templatesFileName] else {
-                print("Key not found in metadata")
+            if let title = decodedData[templatesFileName] {
+                return title
+            }else{
                 return ""
             }
-            return title
-        } catch {
-            print("Error in data parsing: \(error.localizedDescription)")
-            return ""
-        }
     }
 
     func getDownloadedStickerThumbnail(_ filename: String) -> UIImage? {
@@ -56,7 +55,7 @@ final class FTDownloadedStickerViewModel: ObservableObject {
             let data = try Data(contentsOf: docsURL)
             return UIImage(data: data) ?? UIImage()
         } catch {
-            print("Error loading data: \(error.localizedDescription)")
+            debugLog("Error loading data: \(error.localizedDescription)")
             return nil
         }
     }
@@ -74,7 +73,7 @@ final class FTDownloadedStickerViewModel: ObservableObject {
                 stickerItems.append(sticker)
             }
         } catch {
-            print("Unable to load data from \(downloadedStickerURL.absoluteString)")
+            debugLog("Unable to load data from \(downloadedStickerURL.absoluteString)")
         }
         return stickerItems
     }
@@ -88,6 +87,22 @@ final class FTDownloadedStickerViewModel: ObservableObject {
             .appendingPathComponent(imageName)
         let newSubitem = FTStickerItem(image: docsURL.path)
         return newSubitem
+    }
+
+    func validateDownloadedStickersPath() -> Bool{
+        let filePaths = fileStickerManager.getDirectoryContent(directory: .library)
+        var pathAvailable: Bool = false
+        filePaths.forEach { path in
+            let urlPath = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: path)
+            var stickerPathURL = urlPath.appendingPathComponent("stickers")
+            var metadataPathUrl = urlPath.appendingPathComponent("metadata.plist")
+            var thubnailImagePath = urlPath.appendingPathComponent("preview.jpg")
+
+            if  FileManager.default.fileExists(atPath: stickerPathURL.path) && FileManager.default.fileExists(atPath: metadataPathUrl.path) && FileManager.default.fileExists(atPath: thubnailImagePath.path) {
+                pathAvailable = true
+            }
+        }
+        return pathAvailable
     }
 
     func removeDownloadedStickers(item: FTStickerSubCategory) throws {
