@@ -1085,19 +1085,19 @@ extension FTOnScreenWritingViewController: FTPDFSelectionViewDelegate {
         self.scheduleDelayedEnableGesture()
     }
     
-    func interactionShouldBegin(_ interaction: UITextInteraction, at point: CGPoint) -> Bool {
+    func pdfInteractionShouldBegin(at point: CGPoint) -> Bool {
         if self.delegate?.mode == FTRenderModeZoom {
             return false;
         }
-        return (self.delegate as? UITextInteractionDelegate)?.interactionShouldBegin?(interaction, at: point) ?? true;
+        return (self.delegate as? FTTextInteractionDelegate)?.pdfInteractionShouldBegin?(at: point) ?? true;
     }
     
     func requiredTapGestureToFail() -> UITapGestureRecognizer? {
         return (self.delegate as? FTWritingViewController)?.requiredTapGestureToFail()
     }
 
-    func interactionWillBegin(_ interaction: UITextInteraction) {
-        (self.delegate as? UITextInteractionDelegate)?.interactionWillBegin?(interaction);
+    func pdfInteractionWillBegin() {
+        (self.delegate as? FTTextInteractionDelegate)?.pdfInteractionWillBegin?();
     }
 }
 
