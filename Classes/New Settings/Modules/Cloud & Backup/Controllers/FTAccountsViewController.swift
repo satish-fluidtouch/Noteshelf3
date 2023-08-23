@@ -160,7 +160,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         if section == 0 {
             numRows = 1
         } else if section == 1 {
-            numRows = self.isAutoBackUpEnabled() ? 2 : 1
+            numRows = self.isAutoBackUpEnabled() ? 3 : 1
         } else if section == 2 {
 #if targetEnvironment(macCatalyst)
             numRows = 1;
@@ -187,6 +187,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         } else if cellIdentifier == CellIdentifiers.backUpOptions.rawValue {
             track("Shelf_Settings_Cloud_Backup_DriveOption", params: [:], screenName: FTScreenNames.shelfSettings)
             self.performSegue(withIdentifier: "showBackupOptionsSegue", sender: nil)
+        }else if cellIdentifier == CellIdentifiers.backUpFormatOptions.rawValue {
+            track("Shelf_Settings_Cloud_Backup_Drive_Format_Option", params: [:], screenName: FTScreenNames.shelfSettings)
         } else if cellIdentifier == CellIdentifiers.notebooks.rawValue {
             track("Shelf_Settings_Cloud_Backup_NotebooksOption", params: [:], screenName: FTScreenNames.shelfSettings)
             self.performSegue(withIdentifier: "NotebooksToBackUpSegue", sender: nil)
@@ -303,6 +305,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 cell.rightSideDetailLabel?.text = self.getBackUpLocation()
                 cell.backUpOptionImageview.image = self.getCloudBackupIcon()
                 cell.rightSideDetailLabel?.addCharacterSpacing(kernValue: -0.41)
+            case CellIdentifiers.backUpFormatOptions.rawValue:
+                text = "Backup Format".localized;
             case CellIdentifiers.notebooks.rawValue:
                 text = FTAutoBackUpSection.notebooks.localized()
                 self.updateBackUpFraction(cell: cell)
@@ -447,6 +451,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             cellIdentifier = CellIdentifiers.backUp.rawValue
         case (1,1):
             cellIdentifier = CellIdentifiers.backUpOptions.rawValue
+        case (1,2):
+            cellIdentifier = CellIdentifiers.backUpFormatOptions.rawValue
 #if targetEnvironment(macCatalyst)
         case (2, 0):
             cellIdentifier = CellIdentifiers.exportData.rawValue

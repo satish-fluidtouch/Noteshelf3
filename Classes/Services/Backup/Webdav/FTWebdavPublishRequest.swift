@@ -11,7 +11,7 @@ import Foundation
 typealias FTWebdavPreprocessCompletionHandler = (Error?) -> Void
 class FTWebdavPublishRequest: FTCloudMultiFormatPublishRequest {
     override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
-        let request = FTWebdavFilePublishRequest(backupEntry: self.refObject, delegate: self);
+        let request = FTWebdavFilePublishRequest(backupEntry: self.refObject, delegate: self,sourceFile: self.sourceFileURL);
         request.exportFormat = format;
         return request;
     }

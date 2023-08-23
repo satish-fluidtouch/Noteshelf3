@@ -3,7 +3,7 @@
     <device id="ipad10_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -408,6 +408,55 @@
                                             <outlet property="accessoryImageView" destination="ybn-DU-c3h" id="7U7-Gv-XVF"/>
                                             <outlet property="backUpOptionImageview" destination="DOT-tY-UlX" id="q2g-yu-sRB"/>
                                             <outlet property="rightSideDetailLabel" destination="TjD-oX-erK" id="kTN-QD-qYA"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellBackUpFormatOptions" rowHeight="54" id="JUZ-eP-asc" customClass="FTSettingsBckupFormatTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="433.5" width="772" height="54"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JUZ-eP-asc" id="Bag-e2-XBK">
+                                            <rect key="frame" x="0.0" y="0.0" width="772" height="54"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="googleDrive" translatesAutoresizingMaskIntoConstraints="NO" id="6jQ-ag-Tk6">
+                                                    <rect key="frame" x="16" y="11.5" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="4tv-Pk-eM4"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="bm1-F7-dnh"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" verticalHuggingPriority="251" text="Backup To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lyY-Cc-Ucn" userLabel="labelTitle" customClass="FTSettingsLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                                    <rect key="frame" x="62" y="16.5" width="80" height="21"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="fontStyle">
+                                                            <integer key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="BackUpTo"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shc-Ar-U4P">
+                                                    <rect key="frame" x="681" y="9.5" width="75" height="35"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="lyY-Cc-Ucn" firstAttribute="centerY" secondItem="Bag-e2-XBK" secondAttribute="centerY" id="7Ry-0I-eaj"/>
+                                                <constraint firstAttribute="trailing" secondItem="shc-Ar-U4P" secondAttribute="trailing" constant="16" id="BQo-Qv-8XU"/>
+                                                <constraint firstItem="shc-Ar-U4P" firstAttribute="centerY" secondItem="Bag-e2-XBK" secondAttribute="centerY" id="PIh-dY-Lvk"/>
+                                                <constraint firstItem="lyY-Cc-Ucn" firstAttribute="leading" secondItem="6jQ-ag-Tk6" secondAttribute="trailing" constant="16" id="hS6-4r-saQ"/>
+                                                <constraint firstItem="6jQ-ag-Tk6" firstAttribute="leading" secondItem="Bag-e2-XBK" secondAttribute="leading" constant="16" id="kNC-TS-yK6"/>
+                                                <constraint firstItem="shc-Ar-U4P" firstAttribute="width" relation="lessThanOrEqual" secondItem="Bag-e2-XBK" secondAttribute="width" multiplier="0.5" id="pjv-ec-f4N"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellBackgroundColor"/>
+                                        <connections>
+                                            <outlet property="backUpOptionImageview" destination="6jQ-ag-Tk6" id="9cu-h4-wDn"/>
+                                            <outlet property="formatOptions" destination="shc-Ar-U4P" id="kpo-QQ-GT6"/>
+                                            <outlet property="labelTitle" destination="lyY-Cc-Ucn" id="Iox-SA-oAk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

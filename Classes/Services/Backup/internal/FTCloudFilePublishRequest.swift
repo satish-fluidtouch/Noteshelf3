@@ -41,23 +41,16 @@ import UIKit
         FTCloudBackupPublisher.recordSyncLog("preparing Content")
         
         var localError: NSError?;
-        guard let rootURL = FTCloudBackUpManager.shared.rootDocumentsURL else {
-            localError = NSError(domain: "NSCloudBackUp", code: 1002, userInfo: [
-                NSLocalizedDescriptionKey: "Package Not present"
-            ])
-            completion(localError, nil)
-            return
-        }
-        
-        let packageURL = rootURL.appendingPathComponent(refObject.filePath)
-        if FileManager().fileExists(atPath: packageURL.path) {
+
+        let packageURL = self.sourceFileURL;
+        if FileManager().fileExists(atPath: self.sourceFileURL.path) {
             let nbkExporter = self.contentGeneratorFor(self.exportFormat, fileURL: packageURL);
             let shelfItem = FTDocumentItem(fileURL: packageURL);
             shelfItem.isDownloaded = true;
             let itemToImport = FTItemToExport(shelfItem: shelfItem);
 
             nbkExporter.generateContent(forItem: itemToImport, onCompletion: {(exportItem,error,cancelled) in
-                if let nserror = error {
+                if nil != error {
                     localError = NSError(domain: "NSCloudBackUp", code: 1001, userInfo: [
                         NSLocalizedDescriptionKey: NSLocalizedString("Failedtocreatebackup", comment: "Failed to create backup file. Check remaining space on your device.")
                     ])

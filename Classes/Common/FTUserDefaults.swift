@@ -336,19 +336,6 @@ extension FTUserDefaults //for export settings
     }
 }
 
-#if  !NS2_SIRI_APP && !NOTESHELF_ACTION && !TODAY_WIDGET && !NOTESHELF_ACTION
-extension FTUserDefaults //for backup settings
-{
-    class func setBackupFileFormat(format : FTBackupFormat?) {
-        UserDefaults.standard.set(format != nil ? format?.rawValue : ".noteshelf", forKey: "BackupFileFormat");
-        UserDefaults.standard.synchronize();
-    }
-    class func backupFileFormat() -> String{
-        return (UserDefaults.standard.value(forKey: "BackupFileFormat") ?? ".noteshelf") as! String
-    }
-}
-#endif
-
 extension FTUserDefaults //for watch audio file count
 {
     class func incrementWatchAudioFileReceived() {

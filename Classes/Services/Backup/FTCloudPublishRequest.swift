@@ -12,14 +12,16 @@ import FTCommon
 
 @objcMembers class FTCloudPublishRequest: NSObject {
     static let backup_Folder_Name = "Noteshelf3 Backup";
-    weak var delegate: FTCloudPublishRequestDelegate?
-    var refObject: FTCloudBackup
+    private(set) weak var delegate: FTCloudPublishRequestDelegate?
+    private(set) var refObject: FTCloudBackup
+    private(set) var sourceFileURL: URL
     
     func startRequest() {
         self.delegate?.willBeginPublishRequest(self)
     }
     
-    init(backupEntry cloudBackupObject: FTCloudBackup, delegate: FTCloudPublishRequestDelegate?) {
+    init(backupEntry cloudBackupObject: FTCloudBackup, delegate: FTCloudPublishRequestDelegate?,sourceFile : URL) {
+        sourceFileURL = sourceFile;
         refObject = cloudBackupObject;
         super.init()
         self.delegate = delegate

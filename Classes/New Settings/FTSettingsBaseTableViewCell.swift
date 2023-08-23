@@ -66,3 +66,29 @@ class FTSettingsBaseTableViewCell: UITableViewCell {
         self.selectedBackgroundView = backgroundView;
     }
 }
+
+class FTSettingsBckupFormatTableViewCell: FTSettingsBaseTableViewCell {
+    @IBOutlet weak var formatOptions: UIButton?;
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.formatOptions?.setTitle(FTUserDefaults.backupFormat.displayTitle, for: .normal);
+
+        let menuItem = UIDeferredMenuElement.uncached({ [weak self] items in
+            var menuItems = [UIMenuElement]();
+            let currentItem = FTUserDefaults.backupFormat;
+            FTCloudBackupFormat.allCases.forEach { eachItem  in
+                let action = UIAction(title: eachItem.displayTitle,state: (eachItem == currentItem) ? .on : .off) { action in
+                    FTUserDefaults.backupFormat = eachItem;
+                    self?.formatOptions?.setTitle(eachItem.displayTitle, for: .normal);
+                }
+                menuItems.append(action);
+            }
+            items(menuItems)
+        });
+        
+        self.formatOptions?.menu = UIMenu(children: [menuItem]);
+        self.formatOptions?.showsMenuAsPrimaryAction = true;
+    }
+}

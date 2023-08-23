@@ -217,3 +217,43 @@ extension FTCloudBackUpManager: FTBaseCloudManagerDelegate {
         
     }
 }
+
+enum FTCloudBackupFormat: Int,CaseIterable {
+    case noteshelf
+    case pdf
+    case both
+    
+    var displayTitle: String {
+        switch self {
+        case .noteshelf:
+            return ".noteshelf";
+        case .pdf:
+            return ".pdf";
+        case .both:
+            return ".noteshelf and .pdf";
+        }
+    }
+    
+    var exportFormats: [RKExportFormat] {
+        switch self {
+        case .noteshelf:
+            return [kExportFormatNBK];
+        case .pdf:
+            return [kExportFormatPDF];
+        case .both:
+            return [kExportFormatNBK,kExportFormatPDF];
+        }
+    }
+}
+
+extension FTUserDefaults {
+    class var backupFormat: FTCloudBackupFormat {
+        set {
+            FTUserDefaults.defaults().setValue(newValue.rawValue, forKey: "cloudBackupFormat");
+        }
+        get {
+            let rawValue = FTUserDefaults.defaults().integer(forKey: "cloudBackupFormat");
+            return FTCloudBackupFormat(rawValue: rawValue) ?? .noteshelf
+        }
+    }
+}

@@ -14,7 +14,7 @@ typealias FTDropBoxPreprocessCompletionHandler = (Error?) -> Void
 
 class FTDropboxPublishRequest: FTCloudMultiFormatPublishRequest {
     override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
-        let request = FTDropboxFilePublishRequest(backupEntry: self.refObject,delegate: self);
+        let request = FTDropboxFilePublishRequest(backupEntry: self.refObject,delegate: self,sourceFile: self.sourceFileURL);
         request.exportFormat = format;
         return request;
     }
@@ -30,15 +30,6 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
     private var uploadFilePath: String?
     private var queue: DispatchQueue?
     private var isCancelled = false
-
-    override init(backupEntry refObject: FTCloudBackup, delegate: FTCloudPublishRequestDelegate?) {
-        super.init(backupEntry: refObject, delegate: delegate)
-        NotificationCenter.default.addObserver(self, selector: #selector(dropboxClientUnlinked(_:)), name: NSNotification.Name(rawValue: FTDidUnlinkAllDropboxClient), object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 
     override func startRequest() {
         self.queue = self.publishQueue()

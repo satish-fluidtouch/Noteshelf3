@@ -10,7 +10,7 @@ import UIKit
 
 class FTOneDrivePublishRequest: FTCloudMultiFormatPublishRequest {
     override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
-        let request = FTOneDriveFilePublishRequest(backupEntry: self.refObject,delegate: self);
+        let request = FTOneDriveFilePublishRequest(backupEntry: self.refObject,delegate: self,sourceFile: self.sourceFileURL);
         request.exportFormat = format;
         return request;
     }

@@ -12,7 +12,7 @@ import GoogleAPIClientForREST_Drive
 
 class FTGoogleDrivePublishRequest: FTCloudMultiFormatPublishRequest {
     override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
-        let request = FTGoogleDriveFilePublishRequest(backupEntry: self.refObject,delegate: self);
+        let request = FTGoogleDriveFilePublishRequest(backupEntry: self.refObject,delegate: self,sourceFile: self.sourceFileURL);
         request.exportFormat = format;
         return request;
     }

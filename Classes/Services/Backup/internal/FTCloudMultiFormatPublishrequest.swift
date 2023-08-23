@@ -9,9 +9,18 @@
 import UIKit
 
 @objcMembers class FTCloudMultiFormatPublishRequest: FTCloudPublishRequest {
-    var backupFormats: [RKExportFormat] = [kExportFormatNBK,kExportFormatPDF];
+    var backupFormats: [RKExportFormat];
     private var currentFileRequest: FTCloudFilePublishRequest?;
         
+    private var totalProgress: CGFloat = 1;
+    private var currentProgress: CGFloat = 0;
+    
+    override init(backupEntry cloudBackupObject: FTCloudBackup, delegate: FTCloudPublishRequestDelegate?, sourceFile: URL) {
+        backupFormats = FTUserDefaults.backupFormat.exportFormats;
+        super.init(backupEntry: cloudBackupObject, delegate: delegate,sourceFile: sourceFile);
+        self.totalProgress = backupFormats.count.toCGFloat();
+    }
+    
     override func startRequest() {
         guard !backupFormats.isEmpty else {
             self.delegate?.didComplete(publishRequest: self, error: nil);
@@ -55,6 +64,8 @@ extension FTCloudMultiFormatPublishRequest: FTCloudPublishRequestDelegate {
     @objc func publishRequest(_ request: FTCloudPublishRequest,
                               uploadProgress progress: CGFloat,
                               backUpProgressType type: FTBackUpProgressType) {
-        self.delegate?.publishRequest(self, uploadProgress: progress, backUpProgressType: type);
+        currentProgress += (progress/totalProgress)
+        debugLog("Progress: backup: \(currentProgress)");
+        self.delegate?.publishRequest(self, uploadProgress: currentProgress, backUpProgressType: type);
     }
 }

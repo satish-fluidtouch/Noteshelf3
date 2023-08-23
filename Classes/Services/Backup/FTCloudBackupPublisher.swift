@@ -61,11 +61,8 @@ class FTCloudBackupPublisher: NSObject {
         block(false)
     }
     
-    func publishRequest(forItem inItem: FTCloudBackup?) -> FTCloudPublishRequest? {
-        var request: FTCloudPublishRequest?
-        if let item = inItem {
-            request = FTCloudPublishRequest(backupEntry: item, delegate: self)
-        }
+    func publishRequest(forItem inItem: FTCloudBackup,itemURL: URL) -> FTCloudPublishRequest? {
+        let request = FTCloudPublishRequest(backupEntry: inItem, delegate: self,sourceFile:itemURL)
         return request
     }
 
@@ -184,7 +181,7 @@ class FTCloudBackupPublisher: NSObject {
                                 self.ignoreList.remove(fromIgnoreList: docId);
                                 refObject.filePath = eachItem.URL.relativePathWRTCollection();
                                 refObject.lastUpdated = autobackupItem.lastUpdated;
-                                request = self.publishRequest(forItem: refObject);
+                                request = self.publishRequest(forItem: refObject,itemURL: eachItem.URL);
                                 break;
                             }
                         }
@@ -193,7 +190,7 @@ class FTCloudBackupPublisher: NSObject {
                             if let refObject = self.backupItem(docId) {
                                 self.ignoreList.remove(fromIgnoreList: docId);
                                 refObject.lastUpdated = autobackupItem.lastUpdated;
-                                request = self.publishRequest(forItem: refObject);
+                                request = self.publishRequest(forItem: refObject,itemURL: eachItem.URL);
                                 break;
                             }
                         }
