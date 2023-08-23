@@ -94,9 +94,9 @@ final class FTDownloadedStickerViewModel: ObservableObject {
         var pathAvailable: Bool = false
         filePaths.forEach { path in
             let urlPath = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: path)
-            var stickerPathURL = urlPath.appendingPathComponent("stickers")
-            var metadataPathUrl = urlPath.appendingPathComponent("metadata.plist")
-            var thubnailImagePath = urlPath.appendingPathComponent("preview.jpg")
+            let stickerPathURL = urlPath.appendingPathComponent("stickers")
+            let metadataPathUrl = urlPath.appendingPathComponent("metadata.plist")
+            let thubnailImagePath = urlPath.appendingPathComponent("preview.jpg")
 
             if  FileManager.default.fileExists(atPath: stickerPathURL.path) && FileManager.default.fileExists(atPath: metadataPathUrl.path) && FileManager.default.fileExists(atPath: thubnailImagePath.path) {
                 pathAvailable = true
