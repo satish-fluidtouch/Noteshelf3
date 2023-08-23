@@ -22,8 +22,9 @@ struct FTShelfTagsRepresentableView: UIViewControllerRepresentable {
             tagsController.delegate = self.delegate
             // Do some configurations here if needed.
             return tagsController
+        } else {
+            fatalError("FTShelfBookmarksViewController doesnt exist")
         }
-        return FTTagsViewController()
     }
 
     func updateUIViewController(_ uiViewController: FTTagsViewController, context: Context) {

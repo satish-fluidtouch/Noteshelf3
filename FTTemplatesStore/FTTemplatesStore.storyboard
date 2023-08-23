@@ -3,7 +3,7 @@
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -131,7 +131,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTStoreLibraryCollectionCell" id="giX-8s-6sd" customClass="FTStoreLibraryCollectionCell" customModule="FTTemplatesStore" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="75" width="264" height="452"/>
+                                        <rect key="frame" x="0.0" y="82.5" width="264" height="452"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ow1-Ey-4HK">
                                             <rect key="frame" x="0.0" y="0.0" width="264" height="452"/>
@@ -770,7 +770,7 @@
                                         <rect key="frame" x="167" y="12" width="81" height="20"/>
                                     </imageView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TSQ-BO-hhG">
-                                        <rect key="frame" x="576.5" y="6" width="80" height="33"/>
+                                        <rect key="frame" x="600" y="6" width="80" height="33"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="Y9q-kQ-lil"/>
@@ -790,12 +790,13 @@
                                         </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zbh-cY-Wlp" customClass="FTCustomButton" customModule="FTCommon">
-                                        <rect key="frame" x="671.5" y="5" width="64.5" height="34"/>
+                                        <rect key="frame" x="695" y="6" width="41" height="32"/>
+                                        <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="17"/>
                                         <color key="tintColor" name="accent"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Done">
-                                            <fontDescription key="titleFontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="17"/>
-                                        </buttonConfiguration>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" name="accent"/>
+                                        </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.preview.navbar.done"/>
                                         </userDefinedRuntimeAttributes>
@@ -823,8 +824,10 @@
                                         <variation key="heightClass=regular-widthClass=regular" constant="32"/>
                                     </constraint>
                                     <constraint firstItem="wzc-aN-e2y" firstAttribute="centerY" secondItem="6Iu-i0-fp5" secondAttribute="centerY" id="hFb-Wg-Uig"/>
+                                    <constraint firstItem="Zbh-cY-Wlp" firstAttribute="centerY" secondItem="E1V-z4-PNc" secondAttribute="centerY" id="hrY-it-AqC">
+                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=regular" constant="-5"/>
+                                    </constraint>
                                     <constraint firstItem="6Iu-i0-fp5" firstAttribute="leading" secondItem="wzc-aN-e2y" secondAttribute="trailing" constant="8" id="kM6-VS-xRL"/>
-                                    <constraint firstItem="TSQ-BO-hhG" firstAttribute="centerY" secondItem="Zbh-cY-Wlp" secondAttribute="centerY" id="nnO-9S-LYj"/>
                                     <constraint firstItem="wzc-aN-e2y" firstAttribute="centerY" secondItem="E1V-z4-PNc" secondAttribute="centerY" id="x4m-Eo-KaD"/>
                                 </constraints>
                                 <variation key="default">
@@ -1426,13 +1429,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="748" height="480"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lrC-xg-yfi">
-                                                <rect key="frame" x="0.0" y="0.0" width="748" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="748" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUy-yf-IO9">
-                                                <rect key="frame" x="0.0" y="31" width="748" height="439"/>
+                                                <rect key="frame" x="0.0" y="30" width="748" height="440"/>
                                                 <connections>
                                                     <segue destination="TxU-R9-nOF" kind="embed" identifier="From_Date_Picker" id="Lhv-Fv-EO3"/>
                                                 </connections>
@@ -1453,13 +1456,13 @@
                                         <rect key="frame" x="0.0" y="480" width="748" height="480"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Cm-mD-w1G">
-                                                <rect key="frame" x="0.0" y="0.0" width="748" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="748" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pM0-ba-O94">
-                                                <rect key="frame" x="0.0" y="30.5" width="748" height="439.5"/>
+                                                <rect key="frame" x="0.0" y="30" width="748" height="440"/>
                                                 <connections>
                                                     <segue destination="TxU-R9-nOF" kind="embed" identifier="To_Date_Picker" id="7Sc-cw-VM1"/>
                                                 </connections>
@@ -1518,11 +1521,11 @@
             <objects>
                 <viewController id="TxU-R9-nOF" customClass="FTdairyDatePickerViewController_Mac" customModule="FTTemplatesStore" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OPa-o4-FOZ">
-                        <rect key="frame" x="0.0" y="0.0" width="748" height="439.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="357.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3PY-6e-LhS" userLabel="Table View Month">
-                                <rect key="frame" x="0.0" y="20" width="374" height="439.5"/>
+                                <rect key="frame" x="0.0" y="20" width="205" height="357.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="TxU-R9-nOF" id="keg-52-UB6"/>
@@ -1530,7 +1533,7 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2k1-zI-BUB" userLabel="Table View Year">
-                                <rect key="frame" x="374" y="20" width="374" height="439.5"/>
+                                <rect key="frame" x="205" y="20" width="205" height="357.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="TxU-R9-nOF" id="hhT-bJ-7AT"/>
