@@ -32,7 +32,12 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         self.rootURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
 
         // TODO: (AK) put in a proper place
-        self.productionContainerURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf")!.appendingPathComponent("Documents").urlByDeleteingPrivate()
+        guard let productionCloudURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf") else {
+            fatalError("production Container not found")
+        }
+
+        self.productionContainerURL = productionCloudURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
+
         self.extsToListen = exts;
         self.delegate = delegate;
     }

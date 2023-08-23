@@ -31,17 +31,6 @@ extension URL {
         }
     }
      */
-
-    func localRelativePathWRTDocuments() -> String
-    {
-        if(self.isCloudItem()) {
-            return self.path;
-        }
-        else {
-            let noteshelfURL = NSURL.noteshelfDocumentsDirectory().urlByDeleteingPrivate();
-            return self.urlByDeleteingPrivate().path.replacingOccurrences(of: noteshelfURL.path, with: "");
-        }
-    }
     
     func isUbiquitousFileExists() -> Bool
     {

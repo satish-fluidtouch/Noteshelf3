@@ -921,4 +921,65 @@ extension FTNoteshelfDocumentProvider {
         self.cloudDocumentListener?.disableUpdates()
     }
 }
+
+// MARK: Migration to NS3
+extension FTNoteshelfDocumentProvider {
+
+    func migrateNS2BookToNS3(url: URL, relativePath: String) throws -> FTDocumentItemProtocol? {
+        var destinationURL = self.currentCollection().documentsDirectory().appending(path: relativePath)
+
+        // Change Destination Path extesion to `ns3`
+        destinationURL = destinationURL.pathExtesnionChangedToNS3()
+
+        do {
+            // Path until final location
+            let parentURL = destinationURL.deletingLastPathComponent()
+
+            // Change to unique name if required
+            if(FileManager().fileExists(atPath: destinationURL.path)) {
+
+                // TODO: Take control if required
+                let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+                destinationURL = parentURL.appendingPathComponent(uniqueName);
+            }
+
+            if providerMode == .cloud {
+                try FileManager().setUbiquitous(true,
+                                                itemAt: url,
+                                                destinationURL: destinationURL);
+            } else {
+                // TODO: Take control if required
+                // Create the parent directory if required
+                if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                }
+                try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                if let collectionTitle = url.collectionURL()?.lastPathComponent.deletingPathExtension {
+                    let collection = localShelfCollection.collection(withTitle: collectionTitle)
+                    let diskItem = (collection as? FTShelfCacheProtocol)?.addItemToCache(destinationURL)
+                    print(">>>> local disk item found", diskItem)
+                }
+
+               // print(">>>> Disk ITem", diskItem)
+            }
+
+            // Fetch FTDocumentItemProtocol, from the destination
+            let relativePath = destinationURL.relativePathWRTCollection()
+            //TODO: wait here, unti completes
+            getShelfItemDetails(relativePath: relativePath) { [weak self] (collection, groupNotebookView, item) in
+                print("Item >>>", item)
+            }
+            return nil
+        } catch {
+            debugLog(">>>>> Migration Failure \(error)")
+            throw FTMigrationError.moveToNS3Error
+        }
+    }
+}
+
+extension URL {
+    func pathExtesnionChangedToNS3() -> URL {
+        return self.deletingPathExtension().appendingPathExtension(FTFileExtension.ns3)
+    }
+}
 #endif
