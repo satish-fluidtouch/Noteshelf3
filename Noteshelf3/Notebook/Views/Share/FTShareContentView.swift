@@ -115,9 +115,9 @@ struct FTShareContentView: View {
                     }
                 }
                 .macOnlyTapAreaFixer()
+                .macOnlyPlainButtonStyle()
             }
         )
-        .macOnlyPlainButtonStyle()
         .isHidden(viewModel.selectedFormat == kExportFormatNBK)
         .accentColor(Color.clear)
         .id(1).onChange(of: isExapanded) { value in
