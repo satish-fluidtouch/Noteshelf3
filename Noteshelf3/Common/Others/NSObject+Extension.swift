@@ -29,7 +29,7 @@ extension NSObject {
         }
     }
     
-    func openItemInNewWindow(_ item: FTDiskItemProtocol,pageIndex : Int?,docPin: String? = nil) {
+    func openItemInNewWindow(_ item: FTDiskItemProtocol,pageIndex : Int?,docPin: String? = nil, createWithAudio: Bool = false) {
         if let shelf = item as? FTShelfItemCollection {
             self.openShelfInNewWindow(shelf)
         }
@@ -37,7 +37,7 @@ extension NSObject {
             self.openGroupInNewWindow(groupItem)
         }
         else if let shelfItem = item as? FTDocumentItemProtocol {
-            self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex,docPin: docPin)
+            self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex,docPin: docPin, createWithAudio: createWithAudio)
         }
     }
     
@@ -49,7 +49,7 @@ extension NSObject {
         self.openNonCollectionTypeInNewWindow(contentType: .tag,selectedTag:selectedTag)
     }
     
-    private func openNotebookItemInNewWindow(_ shelfItem: FTShelfItemProtocol,pageIndex : Int?,docPin: String?)
+    private func openNotebookItemInNewWindow(_ shelfItem: FTShelfItemProtocol,pageIndex : Int?,docPin: String?, createWithAudio: Bool)
     {
         let sourceURL = shelfItem.URL
         let userActivityID = FTNoteshelfSessionID.openNotebook.activityIdentifier;
@@ -75,6 +75,7 @@ extension NSObject {
             userInfo["docPin"] = _docPin;
         }
         userActivity.userInfo = userInfo
+        userActivity.createWithAudio = createWithAudio
 #if targetEnvironment(macCatalyst)
         if let sesssion = UIApplication.shared.sessionForDocument(docPath) {
             UIApplication.shared.requestSceneSessionActivation(sesssion
