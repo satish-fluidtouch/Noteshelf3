@@ -276,7 +276,6 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
 #if !targetEnvironment(macCatalyst)
             self.present(controller, animated: true);
 #else
-            controller.overrideUserInterfaceStyle = UIApplication.shared.uiColorScheme()
             controller.modalPresentationStyle = .formSheet
             let navController = UINavigationController(rootViewController: controller)
             controller.title = "Covers"
@@ -291,41 +290,6 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         }
     }
 
-    func showNewNotePopoverOnRect(_ rect: CGRect) {
-        //(AK): This is being removed in the new design
-
-        let shelfNewNoteViewModel = FTNewNotePopoverViewModel()
-        shelfNewNoteViewModel.delegate = currentShelfViewModel
-        let popOverHeight: CGFloat = self.traitCollection.isRegular ? 436 : 500
-        let controller = FTShelfNewNoteController(viewModel: shelfNewNoteViewModel
-                                                  , popOverHeight: popOverHeight
-                                                  , appState:getSizeClass()
-                                                  , shelfViewModel: currentShelfViewModel!
-                                                  ,delegate: self)
-        controller.view.backgroundColor = .clear
-        let alreadyCreatedSampleViewIfAny  = self.view.viewWithTag(101)
-        alreadyCreatedSampleViewIfAny?.removeFromSuperview()
-        let sampleView = UIView()
-        sampleView.backgroundColor = .red
-        sampleView.frame = rect
-        sampleView.alpha = 0.0
-        sampleView.tag = 101
-        self.view.addSubview(sampleView)
-        sampleView.sendSubviewToBack(self.view)
-
-        let navController = FTNavigationController(rootViewController: controller)
-        navController.modalPresentationStyle = self.traitCollection.isRegular ? .popover : .automatic
-        navController.popoverPresentationController?.sourceView = sampleView
-        navController.preferredContentSize = CGSize(width: 360, height: popOverHeight)
-        navController.isNavigationBarHidden = true
-        navController.presentationController?.delegate = self
-        if traitCollection.isRegular {
-            self.present(navController, animated: true)
-        }else {
-            self.ftPresentModally(controller, contentSize: CGSize(width: 360, height: popOverHeight), animated: true, completion: nil)
-        }
-
-    }
     func showMoveItemsPopOverWith(selectedShelfItems: [FTShelfItemProtocol]) {
         let shelfItemsViewModel = FTShelfItemsViewModel(selectedShelfItems: selectedShelfItems)
         shelfItemsViewModel.selectedShelfItemsForMove = selectedShelfItems

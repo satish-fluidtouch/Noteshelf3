@@ -94,9 +94,9 @@ extension FTSearchUnsplashCell {
             textField.text = text
         }
 
-        let searchAction = UIAlertAction(title: "Search".localized, style: .default) { _ in
+        let searchAction = UIAlertAction(title: "Search".localized, style: .default) { [weak self] _ in
             if let searchText = alertController.textFields?.first?.text, !searchText.isEmpty {
-                self.searchUnsplash?(searchText)
+                self?.searchUnsplash?(searchText)
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil)
