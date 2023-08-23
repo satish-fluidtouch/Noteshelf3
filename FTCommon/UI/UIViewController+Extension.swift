@@ -52,9 +52,6 @@ extension UIViewController {
         navController.navigationBar.isHidden = hideNavBar
         navController.modalPresentationStyle = .formSheet
         navController.preferredContentSize = contentSize
-#if targetEnvironment(macCatalyst)
-        navController.overrideUserInterfaceStyle = UIApplication.shared.uiColorScheme()
-#endif
         self.present(navController, animated: animated, completion: completion)
     }
 
