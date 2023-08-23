@@ -46,7 +46,10 @@ class FTShelfNewNoteController: UIHostingController<AnyView>, FTPopoverPresentab
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
-        let popOverHeight: CGFloat = appState.sizeClass == .regular ? 384.0 : 420
+        var popOverHeight: CGFloat = appState.sizeClass == .regular ? 384.0 : 420
+#if targetEnvironment(macCatalyst)
+        popOverHeight = 340.0
+#endif
         self.preferredContentSize = CGSize(width: 330, height: popOverHeight)
     }
     override func viewDidAppear(_ animated: Bool) {

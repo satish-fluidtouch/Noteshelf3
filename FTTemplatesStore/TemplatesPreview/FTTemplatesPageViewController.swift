@@ -136,7 +136,6 @@ class FTTemplatesPageViewController: UIViewController {
                 preferedSize = CGSize(width: size.width - 2 * insetBy, height: size.height);
             }
             vc.preferredContentSize = preferedSize;
-            vc.overrideUserInterfaceStyle = UIApplication.shared.uiColorScheme()
 #else
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = vc.customTransitionDelegate;
