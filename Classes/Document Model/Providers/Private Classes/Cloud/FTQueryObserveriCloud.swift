@@ -16,27 +16,17 @@ protocol FTiCloudQueryObserverDelegate: AnyObject {
 }
 
 class FTiCloudQueryObserver: FTQueryListenerProtocol {
-    fileprivate var rootURL: URL;
-    fileprivate var productionContainerURL: URL;
-    fileprivate var extsToListen: [String];
-    fileprivate var query: NSMetadataQuery?;
-    fileprivate weak var delegate: FTiCloudQueryObserverDelegate?;
-    fileprivate var queryPaused = false;
-
-    var t1: TimeInterval = Date.timeIntervalSinceReferenceDate;
+    fileprivate var rootURLs: [URL]
+    fileprivate var extsToListen: [String]
+    fileprivate var query: NSMetadataQuery?
+    fileprivate weak var delegate: FTiCloudQueryObserverDelegate?
+    fileprivate var queryPaused = false
 
     //nil to root
-    required init(rootURL: URL,
+    required init(rootURLs: [URL],
                   extensionsToListen exts: [String],
                   delegate: FTiCloudQueryObserverDelegate) {
-        self.rootURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
-
-        // TODO: (AK) put in a proper place
-        guard let productionCloudURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf") else {
-            fatalError("production Container not found")
-        }
-
-        self.productionContainerURL = productionCloudURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
+        self.rootURLs = rootURLs.map{ $0.appendingPathComponent("Documents").urlByDeleteingPrivate() }
 
         self.extsToListen = exts;
         self.delegate = delegate;
@@ -57,9 +47,6 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         #if DEBUG
             //print("☁️ Query Started");
         #endif
-        if(ENABLE_SHELF_RPOVIDER_LOGS) {
-            self.t1 = Date.timeIntervalSinceReferenceDate;
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(FTiCloudQueryObserver.processiCloudFilesForInitialGathering(_:)), name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
         self.query?.start();
     }
@@ -111,27 +98,13 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
 
     // MARK: - Notifications
     @objc fileprivate func processiCloudFilesForInitialGathering(_ notification: Notification) {
-        var t2: TimeInterval!;
         self.disableUpdates();
-
-        if(ENABLE_SHELF_RPOVIDER_LOGS) {
-            t2 = Date.timeIntervalSinceReferenceDate;
-            #if DEBUG
-            debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Query: \(String(describing: self.rootURL)) time taken to gather:\(t2 - self.t1)");
-            #endif
-        }
 
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
 
         // The query reports all files found, every time.
         if(self.delegate != nil) {
             self.delegate?.ftiCloudQueryObserver(self, didFinishGathering: self.query?.results as? [NSMetadataItem]);
-        }
-        if(ENABLE_SHELF_RPOVIDER_LOGS) {
-            let t3 = Date.timeIntervalSinceReferenceDate;
-             #if DEBUG
-            debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Processing: \(String(describing: self.rootURL)) time taken to process:\(t3 - t2)");
-            #endif
         }
 
         //After initial gathering start observing for query results array for any changes
@@ -173,18 +146,14 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
 
         var predicateArray = [NSPredicate]();
         for eachExtension in self.extsToListen {
-            let pattern = "*.\(eachExtension)"
-            let  predicate1 = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
-                                          NSMetadataItemPathKey,
-                                          self.rootURL.path,
-                                          NSMetadataItemFSNameKey, pattern)
-            predicateArray.append(predicate1);
-            let  predicate2 = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
-                                          NSMetadataItemPathKey,
-                                          self.productionContainerURL.path,
-                                          NSMetadataItemFSNameKey, pattern)
-            
-            predicateArray.append(predicate2);
+            for url in self.rootURLs {
+                let pattern = "*.\(eachExtension)"
+                let  predicate = NSPredicate(format: "(%K CONTAINS %@) AND (%K Like %@)",
+                                             NSMetadataItemPathKey,
+                                             url.path,
+                                             NSMetadataItemFSNameKey, pattern)
+                predicateArray.append(predicate)
+            }
         }
         query.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicateArray);
         return query;

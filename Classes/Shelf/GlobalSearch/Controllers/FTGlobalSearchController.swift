@@ -433,7 +433,7 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
 
         if(!FileManager().fileExists(atPath: shelfItem.URL.path)) {
             var shouldDisplayAlert: Bool = false
-            if let iCloudOn = FTiCloudManager.shared()?.iCloudOn(), iCloudOn == true {
+            if FTiCloudManager.shared().iCloudOn() == true {
                 if (shelfItem.URL.isUbiquitousFileExists() == false) {
                     shouldDisplayAlert = true
                 }

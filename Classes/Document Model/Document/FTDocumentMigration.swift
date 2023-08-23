@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FTCommon
 
 private let ns2URLScheme = "com.fluidtouch.noteshelf://"
 
@@ -92,7 +93,7 @@ final class FTDocumentMigration {
     }
 }
 
-private extension FTDocumentMigration {
+extension FTDocumentMigration {
     static func getNS2MigrationDataSource() -> NS2MigrationSource {
         let source: NS2MigrationSource
 

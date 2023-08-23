@@ -24,9 +24,8 @@ class FTCloudDocumentListener: FTDocumentListener {
 
     fileprivate var tempCompletionBlock: (() -> Void)?
 
-    required init() {
-        let icloudRootURL = FTiCloudManager.shared().iCloudRootURL()!;
-        self.query = FTiCloudQueryObserver(rootURL: icloudRootURL,
+    required init(rootURLs: [URL]) {
+        self.query = FTiCloudQueryObserver(rootURLs: rootURLs,
                                            extensionsToListen: fileExtensionsToListen,
                                            delegate: self);
     }

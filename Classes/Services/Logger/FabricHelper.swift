@@ -47,7 +47,7 @@ class FabricHelper: NSObject {
         }
 
         var keys = [String: String]()
-        keys[FabircKeys.iCloud] = FTiCloudManager.shared()?.iCloudOn().asString
+        keys[FabircKeys.iCloud] = FTiCloudManager.shared().iCloudOn().asString
         keys[FabircKeys.Pencil] = UserDefaults.standard.bool(forKey: "isUsingApplePencil").asString
         keys[FabircKeys.Watch] = watchStatus
         keys[FabircKeys.ENPublish] = UserDefaults.standard.bool(forKey: "EvernotePubUsed").asString

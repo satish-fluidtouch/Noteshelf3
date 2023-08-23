@@ -657,6 +657,10 @@
 		BA111C392988E5DC001E854F /* CTRun+Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C0C2988D7A7001E854F /* CTRun+Metrics.swift */; };
 		BA111C3A2988E75C001E854F /* UIFont+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C052988D7A7001E854F /* UIFont+Helper.swift */; };
 		BA169E2C2984076C00765F5C /* FTShelfContentAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C07A8C29839213007B8D2C /* FTShelfContentAudioViewController.swift */; };
+		BA1963532A9609FF000C47FA /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */; };
+		BA1963552A96148A000C47FA /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */; };
+		BA1963622A963C5B000C47FA /* FTDocumentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */; };
+		BA1963632A963C5B000C47FA /* FTDocumentFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA2D8EB52859F6F7001BB495 /* FTShelfSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D8EB42859F6F7001BB495 /* FTShelfSplitViewController.swift */; };
 		BA2D90B5285C4416001BB495 /* FTFormsheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D90A5285C4415001BB495 /* FTFormsheet.swift */; };
 		BA2D90B6285C4416001BB495 /* FTDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D90A8285C4415001BB495 /* FTDocumentPicker.swift */; };
@@ -1812,9 +1816,7 @@
 		BAF3956A2859ADF10067CA9F /* FTRenderKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; };
 		BAF3956F2859ADF10067CA9F /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 211E3A0F1E028265007B5CAD /* libGPUImage.a */; platformFilter = ios; };
 		BAF395752859ADF10067CA9F /* Webdav.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976AA9C425E7E1D00003B793 /* Webdav.xcframework */; };
-		BAF3957F2859ADF10067CA9F /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
 		BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BAF3959C2859ADF10067CA9F /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 976AA9C425E7E1D00003B793 /* Webdav.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF6A8F72A1CC5EF00A755DB /* FTTextToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF6A8F62A1CC5EF00A755DB /* FTTextToolbarButton.swift */; };
 		BAFC3FA62A8F619600D8FD71 /* FTTagCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476450172924E24200B6113B /* FTTagCollectionCell.xib */; };
@@ -2043,6 +2045,27 @@
 			remoteGlobalIDString = BAA84E1428730F5800DE801B;
 			remoteInfo = FTStyles;
 		};
+		BA19635C2A963C2E000C47FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8B0CA0511A1DF53400375014;
+			remoteInfo = FTDocumentFramework;
+		};
+		BA19635E2A963C2E000C47FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8B0CA05C1A1DF53400375014;
+			remoteInfo = FTDocumentFrameworkTests;
+		};
+		BA1963602A963C43000C47FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B0CA0501A1DF53400375014;
+			remoteInfo = FTDocumentFramework;
+		};
 		BAA84E1B28730F5800DE801B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2156,9 +2179,9 @@
 			files = (
 				BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */,
 				BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */,
-				BAF3959C2859ADF10067CA9F /* FTDocumentFramework.xcframework in CopyFiles */,
 				BAF0DD742A6FE676006D293B /* FTTemplatesStore.framework in CopyFiles */,
 				BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */,
+				BA1963632A963C5B000C47FA /* FTDocumentFramework.framework in CopyFiles */,
 				BAA84E4D2873105500DE801B /* FTCommon.framework in CopyFiles */,
 				BAA84E1E28730F5800DE801B /* FTStyles.framework in CopyFiles */,
 			);
@@ -3470,6 +3493,8 @@
 		BA11637B227ACAD500CCC153 /* FTDocumentRenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentRenderViewController.swift; sourceTree = "<group>"; };
 		BA11637E227ACAD500CCC153 /* FTDocumentView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTDocumentView.storyboard; sourceTree = "<group>"; };
 		BA1265452302CDB500AD4647 /* FTPageProtocol_Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageProtocol_Additions.swift; sourceTree = "<group>"; };
+		BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNSiCloudManager.swift; sourceTree = "<group>"; };
+		BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FTDocumentFramework.xcodeproj; path = ../../../FTDocumentFramework/FTDocumentFramework.xcodeproj; sourceTree = "<group>"; };
 		BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeveloperOptionsViewController.swift; sourceTree = "<group>"; };
 		BA2D8EB42859F6F7001BB495 /* FTShelfSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController.swift; sourceTree = "<group>"; };
 		BA2D90A5285C4415001BB495 /* FTFormsheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTFormsheet.swift; sourceTree = "<group>"; };
@@ -4287,7 +4312,6 @@
 				BA3F7FB8299E2F51003964C6 /* libMyScriptMath.xcframework in Frameworks */,
 				BA3F7FB7299E2F51003964C6 /* libMyScriptAnalyzer.xcframework in Frameworks */,
 				BA3F7FB6299E2F51003964C6 /* libMyScript2D.xcframework in Frameworks */,
-				BAF3957F2859ADF10067CA9F /* FTDocumentFramework.xcframework in Frameworks */,
 				BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */,
 				BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */,
 				09ABDCB22A790FB3008F144D /* OpenAI in Frameworks */,
@@ -4297,6 +4321,7 @@
 				BAA84E4C2873105500DE801B /* FTCommon.framework in Frameworks */,
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
 				70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */,
+				BA1963622A963C5B000C47FA /* FTDocumentFramework.framework in Frameworks */,
 				BA3F7FB9299E2F51003964C6 /* libMyScriptShape.xcframework in Frameworks */,
 				BA3F7FB2299E2F51003964C6 /* libMyScriptPrediction.xcframework in Frameworks */,
 				DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */,
@@ -6242,6 +6267,7 @@
 				ED64446B24A0F22E00C997D4 /* FTShelfItemsIndexInfo.swift */,
 				ED5DC7232540759A007120EE /* FTCustomSortingCache.swift */,
 				09AB9D981E7C0FE70041A0F5 /* Private Classes */,
+				BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */,
 			);
 			path = "ShelfItem Providers";
 			sourceTree = "<group>";
@@ -8419,6 +8445,7 @@
 		B86B7B2F24B6DB9100B57783 /* FTDocumentFramework */ = {
 			isa = PBXGroup;
 			children = (
+				BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */,
 				BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */,
 			);
 			path = FTDocumentFramework;
@@ -8494,6 +8521,15 @@
 				BA11637E227ACAD500CCC153 /* FTDocumentView.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BA1963572A963C2E000C47FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */,
+				BA19635F2A963C2E000C47FA /* FTDocumentFrameworkTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */ = {
@@ -10929,6 +10965,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BA1963612A963C43000C47FA /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
@@ -11040,6 +11077,12 @@
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BA1963572A963C2E000C47FA /* Products */;
+					ProjectRef = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
@@ -11052,6 +11095,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FTDocumentFramework.framework;
+			remoteRef = BA19635C2A963C2E000C47FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BA19635F2A963C2E000C47FA /* FTDocumentFrameworkTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FTDocumentFrameworkTests.xctest;
+			remoteRef = BA19635E2A963C2E000C47FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BAA84E1328730F5800DE801B /* Resources */ = {
@@ -11982,6 +12042,7 @@
 				BAF391422859ADF00067CA9F /* FTMidnightDiaryWeekTemplate.swift in Sources */,
 				F3A63A7F2892792A00B7D3DF /* FTLassoRackViewController.swift in Sources */,
 				520DA2BE2A2F55C4003A6F22 /* FTBookmarkColorCell.swift in Sources */,
+				BA1963532A9609FF000C47FA /* FTNSiCloudManager.swift in Sources */,
 				F305FD8228DC5C36000D670F /* FTEmojiCategoryHeaderView.swift in Sources */,
 				BAF391462859ADF00067CA9F /* FTInfoTipView.swift in Sources */,
 				BAF391472859ADF00067CA9F /* FTShelfItemPublishRequest.swift in Sources */,
@@ -13222,6 +13283,7 @@
 				C85AFDE82331F5E500D25D5F /* BEMCheckBox.m in Sources */,
 				4209FE9C295C619D00ACC02E /* FTSelectedVariants.swift in Sources */,
 				4209FECA295C70F300ACC02E /* UIImage+.swift in Sources */,
+				BA1963552A96148A000C47FA /* FTNSiCloudManager.swift in Sources */,
 				4209FE99295C618600ACC02E /* FTPaperTheme.swift in Sources */,
 				4209FE97295C617D00ACC02E /* FTDevicesModel.swift in Sources */,
 				4209FEC6295C6CAC00ACC02E /* FTUtils_Swift.swift in Sources */,
@@ -13287,6 +13349,11 @@
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
 			targetProxy = 5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */;
+		};
+		BA1963612A963C43000C47FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FTDocumentFramework;
+			targetProxy = BA1963602A963C43000C47FA /* PBXContainerItemProxy */;
 		};
 		BAA84E1C28730F5800DE801B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
