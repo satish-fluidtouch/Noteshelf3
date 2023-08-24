@@ -94,9 +94,9 @@ struct FTStickerDeleteImage:View{
     var body: some View {
         ZStack{
             Image(systemName: imagename)
-                .frame(width: 30, height: 30)
+                .frame(width: 25, height: 25)
                 .foregroundColor(Color.appColor(.darkRed))
-                .background(Color.appColor(.white100))
+                .background(Color.white)
                 .clipShape(Circle())
                 .overlay(
                     Circle()

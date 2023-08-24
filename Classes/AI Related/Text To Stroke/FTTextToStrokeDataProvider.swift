@@ -73,9 +73,10 @@ class FTTextToStrokeDataProvider: NSObject {
             }
         }
         else  {
+            let fontWidth = strokeInfo.width + abs(strokeInfo.lsb) + abs(strokeInfo.rsb);
             let strokeBound = CGRect(x: strokeInfo.x
                                      , y: strokeInfo.y
-                                     , width: strokeInfo.fontWidth
+                                     , width: fontWidth
                                      , height: onexGlyphHeight);
             let scaledBound = CGRectScale(strokeBound, scale);
 

@@ -73,6 +73,11 @@ extension FTGlobalSearchController: UITableViewDataSource, UITableViewDelegate {
         if (UIDevice.current.isIphone() || UIDevice.current.isMac()) && (!searchbar.searchTextField.isFirstResponder) {
             self.updateUICondictionally(with: self.searchKey)
         }
+#if targetEnvironment(macCatalyst)
+        if let toolbar = self.view.toolbar as? FTShelfToolbar {
+            toolbar.updateSearchText(self.searchKey)
+        }
+#endif
         self.isRecentSelected = false
     }
 
