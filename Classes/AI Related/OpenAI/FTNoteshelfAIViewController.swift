@@ -279,10 +279,14 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
 
 private extension FTNoteshelfAIViewController {
     var allTokensConsumed: Bool {
+#if DEBUG || ADHOC
+        return false;
+#else
         if FTNoteshelfAIViewController.maxAllowedTokenCounter <= UserDefaults.aiTokensConsumed {
             return true;
         }
         return false;
+#endif
     }
     
     func canExecuteAIAction() -> Bool {
