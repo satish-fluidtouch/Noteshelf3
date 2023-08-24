@@ -32,6 +32,7 @@ struct FTDownloadedStickersView: View {
                             .appFont(for: .regular, with: 15)
                             .foregroundColor(Color.appColor(.accent))
                     }
+                    .macOnlyPlainButtonStyle()
                 }
                     ScrollView(.horizontal,showsIndicators: false) {
                         LazyHGrid(rows: columns,alignment: .center, spacing: 11) {
@@ -85,6 +86,7 @@ struct FTDownloadedStickersView: View {
         }, label: {
             FTStickerDeleteImage(imagename: "trash")
         })
+        .macOnlyPlainButtonStyle()
         .alert(isPresented: $showAlert) {
             return Alert(title: Text("stickers.alert.error".localized), message: Text(downloadedviewModel.error?.localizedDescription ?? "UnexpectedError".localized), dismissButton: .default(Text("stickers.alert.ok".localized)))
         }
