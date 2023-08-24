@@ -22,7 +22,7 @@ extension String {
         if self.count > length {
             let index = self.index(self.startIndex, offsetBy: length)
             let substring = self.prefix(upTo: index) // Hello
-            return String(substring);
+            return String(substring.appending("..."));
         }
         return self;
     }

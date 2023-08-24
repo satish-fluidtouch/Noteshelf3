@@ -56,6 +56,16 @@ extension NSUserActivity {
             self.userInfo?[createWithAudioKey] = newValue;
         }
     }
+    
+    var isQuickCreate: Bool {
+        get {
+            let isQuickCreate = self.userInfo?[quickCreateKey] as? Bool;
+            return isQuickCreate ?? false
+        }
+        set {
+            self.userInfo?[quickCreateKey] = newValue;
+        }
+    }
 }
 
 extension NSUserActivity {

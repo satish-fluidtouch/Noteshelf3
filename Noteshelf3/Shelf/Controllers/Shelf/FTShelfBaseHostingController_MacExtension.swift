@@ -11,15 +11,32 @@ import Foundation
 #if targetEnvironment(macCatalyst)
 extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbarActionDelegate {
     func toolbar(_ toolbar: NSToolbar, canPerformAction item: NSToolbarItem) -> Bool {
+        var status = false
         if self.isInTrash(), (item.itemIdentifier == FTShelfEmptyTrashToolbarItem.identifier || item.itemIdentifier == FTSelectToolbarItem.identifier) {
-            return !self.shelfViewModel.shelfItems.isEmpty && !self.isInSearchMode()
-        } else if (item.itemIdentifier == FTShelfAddToolbarItem.identifier || item.itemIdentifier == FTShelfMoreToolbarItem.identifier) {
-            return (shelfViewModel.collection.collectionType == .default
-                    || shelfViewModel.collection.collectionType == .allNotes) && !self.isInSearchMode()
+            status = !self.shelfViewModel.shelfItems.isEmpty && !self.isInSearchMode()
+        } else if item.itemIdentifier == FTShelfAddToolbarItem.identifier {
+            status = self.toEnableAddToolbarItem()
+        } else if item.itemIdentifier == FTShelfMoreToolbarItem.identifier {
+            status = self.toEnableMoreToolbarItem()
         }
-        return false
+        return status
     }
-    
+
+    private func toEnableMoreToolbarItem() -> Bool {
+        let status = (shelfViewModel.collection.collectionType == .default
+                      || shelfViewModel.collection.collectionType == .allNotes || shelfViewModel.collection.collectionType == .starred) && !self.isInSearchMode()
+        return status
+    }
+
+    private func toEnableAddToolbarItem() -> Bool {
+        var status = false
+        if !(shelfViewModel.collection.collectionType == .starred) {
+            status = (shelfViewModel.collection.collectionType == .default
+                      || shelfViewModel.collection.collectionType == .allNotes) && !self.isInSearchMode()
+        }
+        return status
+    }
+
     func toolbarDidBeginSearch(_ toolbarId: NSToolbar.Identifier, textField: UISearchTextField) {
         if let splitVc = self.splitViewController as? FTShelfSplitViewController, !splitVc.checkIfGlobalSearchControllerExists() {
             splitVc.navigateToGlobalSearch()

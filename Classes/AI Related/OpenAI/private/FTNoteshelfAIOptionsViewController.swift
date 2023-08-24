@@ -50,7 +50,7 @@ extension FTNoteshelfAIOptionsViewController: UITableViewDataSource,UITableViewD
             let displayText = contentString?.openAIDisplayString ?? "";
             let attr = NSMutableAttributedString(string: aitoption.title(content: displayText));
             if !displayText.isEmpty {
-                let subString = NSAttributedString(string: " \"\(displayText)...\"",attributes: [.foregroundColor:UIColor.gray]);
+                let subString = NSAttributedString(string: " \"\(displayText)\"",attributes: [.foregroundColor:UIColor.gray]);
                 attr.append(subString);
             }
             optionCell.textLabel?.attributedText = attr;

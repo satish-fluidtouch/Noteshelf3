@@ -34,6 +34,7 @@ let EraserEraseHighlighterKey = "eraseHighlighter"
 let EraserPencilKey = "erasePencil"
 let whiteBoardEnableKey = "whiteBoardEnableKey"
 let createWithAudioKey = "createWithAudio"
+let quickCreateKey = "quickCreate"
 
 let SortOrderKey = "SORT_ORDER"
 let AllNotesModeKey = "isAllNotesMode"
