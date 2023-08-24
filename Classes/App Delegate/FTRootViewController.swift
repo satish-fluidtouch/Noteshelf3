@@ -1521,10 +1521,6 @@ extension FTRootViewController {
         self.rootContentViewController?.shelfWillMovetoBack()
         
         let blockToCall : () -> Void = { [weak self] in
-            (document as? FTRecognitionHelper)?.recognitionHelper?.startPendingRecognition()
-            if FTVisionNotebookRecognitionHelper.supportsImageToTextRecognition() {
-                (document as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
-            }
             self?.docuemntViewController?.didCompleteDocumentPresentation();
             onCompletion?();
         };
