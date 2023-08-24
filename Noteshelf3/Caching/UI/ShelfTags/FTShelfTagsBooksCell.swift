@@ -15,7 +15,7 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     private var books = [FTShelfTagsItem]()
     private var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
-    var parentVC: UIViewController?
+    weak var parentVC: UIViewController?
 
     override class func awakeFromNib() {
         super.awakeFromNib()
