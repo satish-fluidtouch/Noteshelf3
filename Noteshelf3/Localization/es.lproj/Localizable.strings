@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "Cambiar nombre de etiqueta";
 "tags.delete.alert.message" = "La etiqueta será eliminada de los elementos a los que está adjunta.";
 "tags.delete.alert.title" = "¿Estás seguro/a de que quieres eliminar la etiqueta %@?";
-"templateSizes.currentDevice.thisDevice" = "(Este dispositivo)";
+"templateSizes.currentDevice.thisDevice" = "Este dispositivo";
 "templatepreview.addtofavorites" = "Añadir a favoritos";
 "templatepreview.removefromfavorites" = "Eliminar de favoritos";
 "templatepreview.setasdefault" = "Establecer como predeterminado.";
@@ -1440,6 +1440,7 @@
 "templatesStore.templatePreview.inyourLibrary" = "En tu biblioteca";
 "templatesStore.templatePreview.style" = "Estilo";
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
+"unsplash.search.alertMessage" = "Introducir texto para buscar'";
 "untitled" = "Sin título";
 "useSticker" = "Usar etiqueta";
 "welcome.appleWatch" = "RELOJ DE APPLE";
@@ -1483,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Narayana on 22 August 2023 at 6:02 PM

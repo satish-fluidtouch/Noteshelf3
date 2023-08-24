@@ -32,6 +32,7 @@ extension View {
 
     func popoverApperanceOperations(popoverIsShown: Binding<Bool>) -> some View {
         modifier(FTPopoverApperanceViewModifier(popoverIsShown:popoverIsShown))
+        .macOnlyColorSchemeFixer()
     }
 
     func contextualMenuApperanceOperations() -> some View {

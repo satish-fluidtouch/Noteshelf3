@@ -18,10 +18,10 @@ class FTGlobalSettingsController: UITableViewController {
     lazy var settingsSections: [[FTGlobalSettingsOptions]] = {
         var sections = [[FTGlobalSettingsOptions]]();
         if supportsHWRecognition {
-            sections.append([.appearance, .handwriting,.cloudAndBackup])
+            sections.append([.handwriting,.cloudAndBackup])
         }
         else {
-            sections.append([.appearance,.cloudAndBackup])
+            sections.append([.cloudAndBackup])
         }
         sections.append([.about,.noteshelfHelp])
         return sections;

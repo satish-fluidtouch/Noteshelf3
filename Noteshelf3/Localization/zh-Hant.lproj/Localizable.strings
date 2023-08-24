@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "重命名標籤";
 "tags.delete.alert.message" = "標籤將從附有該標籤的項目中刪除。";
 "tags.delete.alert.title" = "您確定要刪除 %@ 標籤嗎？";
-"templateSizes.currentDevice.thisDevice" = "(此裝置)";
+"templateSizes.currentDevice.thisDevice" = "此裝置";
 "templatepreview.addtofavorites" = "加入最愛";
 "templatepreview.removefromfavorites" = "從收藏中移除";
 "templatepreview.setasdefault" = "設為預設";
@@ -1440,6 +1440,7 @@
 "templatesStore.templatePreview.inyourLibrary" = "在您的圖書館";
 "templatesStore.templatePreview.style" = "風格";
 "trash.alert.title" = "您確定要清空垃圾桶嗎？";
+"unsplash.search.alertMessage" = "輸入要搜索的文字";
 "untitled" = "無標題";
 "useSticker" = "使用貼紙";
 "welcome.appleWatch" = "蘋果手錶";
@@ -1483,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Narayana on 22 August 2023 at 6:02 PM

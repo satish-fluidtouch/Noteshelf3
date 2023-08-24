@@ -1440,6 +1440,7 @@
 "templatesStore.templatePreview.inyourLibrary" = "在您的图书馆";
 "templatesStore.templatePreview.style" = "风格";
 "trash.alert.title" = "你确定要清空垃圾桶吗？";
+"unsplash.search.alertMessage" = "输入要搜索的文本";
 "untitled" = "无标题";
 "useSticker" = "使用贴纸";
 "welcome.appleWatch" = "苹果手表";
@@ -1483,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Narayana on 22 August 2023 at 6:02 PM

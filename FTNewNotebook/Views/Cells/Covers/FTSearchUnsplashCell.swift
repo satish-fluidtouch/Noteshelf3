@@ -32,7 +32,9 @@ class FTSearchUnsplashCell: UICollectionViewCell {
         self.searchStarter.center = self.imgView.center
         self.imgView.addSubview(self.searchStarter)
         self.searchStarter.delegate = self
+#if !targetEnvironment(macCatalyst)
         self.configureSearchAccessory()
+#endif
     }
 
     private func configureSearchAccessory() {
@@ -57,10 +59,14 @@ class FTSearchUnsplashCell: UICollectionViewCell {
 
 extension FTSearchUnsplashCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+#if !targetEnvironment(macCatalyst)
         if textField == self.searchStarter {
             self.searchTextField.becomeFirstResponder()
             self.searchTextField.text = self.delegate?.getSearchKey()
         }
+#else
+        self.presentSearchAlert(with: self.delegate?.getSearchKey())
+#endif
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -78,3 +84,27 @@ extension FTSearchUnsplashCell: UITextFieldDelegate {
         return true
     }
 }
+
+#if targetEnvironment(macCatalyst)
+extension FTSearchUnsplashCell {
+    func presentSearchAlert(with text: String?) {
+        let alertController = UIAlertController(title: "Search", message: "unsplash.search.alertMessage".localized, preferredStyle: .alert)
+        alertController.addTextField { textField in
+            textField.placeholder = "Search".localized
+            textField.text = text
+        }
+
+        let searchAction = UIAlertAction(title: "Search".localized, style: .default) { [weak self] _ in
+            if let searchText = alertController.textFields?.first?.text, !searchText.isEmpty {
+                self?.searchUnsplash?(searchText)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil)
+        alertController.addAction(searchAction)
+        alertController.addAction(cancelAction)
+        if let del = self.delegate as? FTUnsplashViewController {
+            del.present(alertController, animated: true, completion: nil)
+        }
+    }
+}
+#endif

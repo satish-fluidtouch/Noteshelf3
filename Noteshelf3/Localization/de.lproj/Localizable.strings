@@ -1399,7 +1399,7 @@
 "tags.contextualMenu.renameTag" = "Tag umbenennen";
 "tags.delete.alert.message" = "Das Etikett wird von den Gegenständen entfernt, an die das Etikett angebracht ist.";
 "tags.delete.alert.title" = "Bist du sicher, dass du das %@-Tag löschen möchtest?";
-"templateSizes.currentDevice.thisDevice" = "(Dieses Gerät)";
+"templateSizes.currentDevice.thisDevice" = "Dieses Gerät";
 "templatepreview.addtofavorites" = "Zu Favoriten hinzufügen.";
 "templatepreview.removefromfavorites" = "Aus Favoriten entfernen";
 "templatepreview.setasdefault" = "Als Standard festlegen";
@@ -1440,6 +1440,7 @@
 "templatesStore.templatePreview.inyourLibrary" = "In deiner Bibliothek";
 "templatesStore.templatePreview.style" = "Stil";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
+"unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
 "untitled" = "Unbenannt";
 "useSticker" = "Benutze Aufkleber";
 "welcome.appleWatch" = "APPLE WATCH";
@@ -1483,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Narayana on 22 August 2023 at 6:02 PM

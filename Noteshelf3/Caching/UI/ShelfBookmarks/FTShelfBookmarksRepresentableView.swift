@@ -15,12 +15,13 @@ struct FTShelfBookmarksRepresentableView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> FTShelfBookmarksViewController {
         let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        if let tagsController: FTShelfBookmarksViewController = storyBoard.instantiateViewController(withIdentifier: "FTShelfBookmarksViewController") as? FTShelfBookmarksViewController {
-            tagsController.viewModel = self.viewModel
+        if let bookmarksController: FTShelfBookmarksViewController = storyBoard.instantiateViewController(withIdentifier: "FTShelfBookmarksViewController") as? FTShelfBookmarksViewController {
+            bookmarksController.viewModel = self.viewModel
             // Do some configurations here if needed.
-            return tagsController
+            return bookmarksController
+        } else {
+            fatalError("FTShelfBookmarksViewController doesnt exist")
         }
-        return FTShelfBookmarksViewController()
     }
 
     func updateUIViewController(_ uiViewController: FTShelfBookmarksViewController, context: Context) {

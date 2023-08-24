@@ -56,11 +56,20 @@ class AddMenuDataManager {
         let choseTemplateItem = PageItem(image: UIImage(named: folderPrefix + "addmenu_chooseTemplate"), name: "ChoosePaperTemplate".localized, type: .chooseTemplate)
 
         let photoItem = PageItem(image: UIImage(systemName: "photo.artframe"), name: "Photo".localized, type: .photoTemplate)
-        let scanItem = PageItem(image: UIImage(systemName: "viewfinder"), name: "Scan".localized, type: .scanDocument)
         let cameraItem = PageItem(image: UIImage(systemName: "camera"), name: "Camera".localized, type: .pageFromCamera)
 
+        var items = [[newPageItem], [choseTemplateItem]]
+
+#if !targetEnvironment(macCatalyst)
+        let scanItem = PageItem(image: UIImage(systemName: "viewfinder"), name: "Scan".localized, type: .scanDocument)
+        items.append([photoItem, scanItem, cameraItem])
+#else
+        items.append([photoItem, cameraItem])
+#endif
+
         let importDocItem = PageItem(image: UIImage(systemName: "square.and.arrow.down"), name: "ImportDocument".localized, type: .importDocument)
-        var items = [[newPageItem], [choseTemplateItem], [photoItem, scanItem, cameraItem], [importDocItem]]
+        items.append([importDocItem])
+
         if FTPasteBoardManager.shared.isUrlValid() {
             let insertFromClipboard = PageItem(image: UIImage(systemName: "clipboard"), name: "Insert from Clipboard", type: .inserFromclipboard)
             items.append([insertFromClipboard])

@@ -3,7 +3,7 @@
     <device id="ipad12_9" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -324,8 +324,8 @@
                     <exclude reference="6td-YE-lNY"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="fVM-xg-nza"/>
                     <exclude reference="8ct-qJ-zaz"/>
+                    <exclude reference="fVM-xg-nza"/>
                 </mask>
             </variation>
             <variation key="userInterfaceIdiom=mac">
@@ -335,22 +335,22 @@
                     <exclude reference="OxY-MQ-n3E"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="8ct-qJ-zaz"/>
+                    <include reference="fVM-xg-nza"/>
                     <exclude reference="KEP-fo-TYs"/>
                     <exclude reference="Wtj-0L-2Dn"/>
                     <exclude reference="Xr5-qU-XGT"/>
                     <exclude reference="DAn-km-Za7"/>
                     <exclude reference="cKg-Lr-7L0"/>
                     <exclude reference="d8b-jf-ern"/>
-                    <include reference="fVM-xg-nza"/>
-                    <include reference="8ct-qJ-zaz"/>
                 </mask>
             </variation>
             <connections>
                 <outlet property="bottomStackview" destination="OxY-MQ-n3E" id="fy3-6E-Nwa"/>
-                <outlet property="gotoPageLabel" destination="ghK-7y-lUd" id="l3a-Zw-mag"/>
-                <outlet property="numberOfPagesLabel" destination="03T-cc-7iE" id="TXV-5O-TXP"/>
+                <outlet property="gotoPageLabel" destination="n27-u7-JhP" id="NUZ-jJ-3tx"/>
+                <outlet property="numberOfPagesLabel" destination="hfK-Kj-Pwm" id="UZC-aJ-w6f"/>
                 <outlet property="presentLabel" destination="a71-1x-GXb" id="bMm-d7-xzz"/>
-                <outlet property="shareLabel" destination="nUg-uk-Sra" id="ZHQ-cA-RSn"/>
+                <outlet property="shareLabel" destination="IDJ-JP-O2N" id="W4b-vO-J4g"/>
                 <outlet property="topStackview" destination="B0P-Yf-qye" id="5b1-pJ-AEF"/>
                 <outlet property="zoomLabel" destination="veU-hd-YcV" id="3AQ-Ua-28K"/>
             </connections>

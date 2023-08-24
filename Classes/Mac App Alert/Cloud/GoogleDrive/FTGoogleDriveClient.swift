@@ -50,11 +50,11 @@ class FTGoogleDriveClient: NSObject, FTBackUpClient {
                     if let inerror = error {
                         onCompletion?(result?.user,inerror)
                     }
-                    else if let scopes =  result?.user.grantedScopes, scopes.contains(kGTLRAuthScopeDrive) {
+                    else if let scopes =  result?.user.grantedScopes, scopes.contains(kGTLRAuthScopeDriveFile) {
                         onCompletion?(result?.user,error)
                     }
                     else {
-                        GIDSignIn.sharedInstance.currentUser?.addScopes([kGTLRAuthScopeDrive], presenting: onController)
+                        GIDSignIn.sharedInstance.currentUser?.addScopes([kGTLRAuthScopeDriveFile], presenting: onController)
                     }
                }
             }

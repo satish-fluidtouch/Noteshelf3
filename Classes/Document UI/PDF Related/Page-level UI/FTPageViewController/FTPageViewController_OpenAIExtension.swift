@@ -14,19 +14,33 @@ extension FTPageViewController {
         guard let page = self.pdfPage else {
             return;
         }
+        var shouldReadPDFContent = true;
         var annotationsToConsider = [FTAnnotation]();
         if currentDeskMode() == .deskModeClipboard {
             annotationsToConsider = self.lassoInfo.selectedAnnotations;
             self.lassoSelectionView?.finalizeMove();
+            shouldReadPDFContent = annotationsToConsider.isEmpty;
         }
         annotationsToConsider = annotationsToConsider.isEmpty ? page.annotations() : annotationsToConsider
-        self.generateOpenAIContentFor(annotations: annotationsToConsider);
+        
+        var pdfContent = "";
+        if !page.templateInfo.isTemplate
+            , shouldReadPDFContent
+            , let pdfString = page.pdfPageRef?.string?.openAITrim()
+            ,!pdfString.isEmpty {
+            pdfContent = pdfString;
+        }
+        self.generateOpenAIContentFor(annotations: annotationsToConsider,pdfContent: pdfContent);
     }
     
-    @objc func generateOpenAIContentFor(annotations : [FTAnnotation]) {
+    @objc private func generateOpenAIContentFor(annotations : [FTAnnotation],pdfContent: String = "") {
         var annotationsToConsider = [FTAnnotation]();
         
         var contentToSearch: String = "";
+        if !pdfContent.isEmpty {
+            contentToSearch = pdfContent.appending(" ");
+        }
+        
         annotations.forEach { eachAnnotation in
             if(eachAnnotation.supportsHandwrittenRecognition) {
                 annotationsToConsider.append(eachAnnotation)
