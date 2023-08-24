@@ -47,7 +47,7 @@ enum SocialMediaTypes:CaseIterable{
 
 class FTSettingsAboutViewModel: ObservableObject {
     var headerTopTitle: String {
-        return "settings.about.toptitle".localized
+        return "Noteshelf 3"
     }
     var headerdescription: String {
         return "settings.about.description".localized
