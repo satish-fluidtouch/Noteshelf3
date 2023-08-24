@@ -43,7 +43,7 @@ class FTAICommand: NSObject {
         if commandType == .none {
             return "";
         }
-        return self.content.openAIDisplayString;
+        return self.content;
     }
 }
 
