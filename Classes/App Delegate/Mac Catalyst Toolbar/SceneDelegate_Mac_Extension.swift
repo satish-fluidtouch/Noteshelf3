@@ -139,13 +139,6 @@ extension SceneDelegate {
             return (self.toolbar as? FTShelfToolbar)?.searchActionDelegate
         }
     }
-
-    func initilizeToolbarForMac() {
-        if let scene = self.window?.windowScene {
-            let toolbar =  FTShelfToolbar(windwowScene: scene);
-            scene.titlebar?.toolbar = toolbar;
-        }
-    }
 }
 
 class FTShelfToolbarDelegate: NSObject, NSToolbarDelegate {

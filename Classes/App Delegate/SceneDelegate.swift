@@ -71,10 +71,6 @@ class SceneDelegate: FTSceneDelegate {
             self.scene(scene, openURLContexts: urlContext);
         }
         updateSessionCountInFabric()
-
-        #if targetEnvironment(macCatalyst)
-        self.initilizeToolbarForMac();
-        #endif
     }
     
     override func sceneDidDisconnect(_ scene: UIScene) {
