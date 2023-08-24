@@ -1197,7 +1197,6 @@
 "settings" = "설정";
 "settings.about.copyrightmessage" = "저작권 © 2023 노트셀프. 모든 권리 보유.";
 "settings.about.description" = "Introducing Noteshelf 3 '는 당신이 좋아하는 노트 테이킹 앱의 새로운 개선된 버전입니다.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "사용자 ID %@";
 "settings.about.version" = "버전 %@ %@";
 "settings.useApplePencil" = "애플 펜슬 사용";
@@ -1485,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 22 August 2023 at 7:17 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

@@ -20,6 +20,7 @@ enum FTTemplatesServiceError: String, Error {
     case notImplemented = "Not implemented service fetch for Templates"
     case templateNotFound = "Template Not Found"
     case savingError = "Error while saving Template"
+    case unableToDownloadStickers = "Error while downloading stickers"
 
 }
 
@@ -112,8 +113,15 @@ class FTStoreService: FTStoreServiceApi {
                     continuation.resume(throwing: error)
                 }
                 if let tempUrl = responseUrl {
-                    FTTemplatesCache().createDirectoryForstickerFileIfNeeded(url: dest)
-                    SSZipArchive.unzipFile(atPath: tempUrl.path, toDestination: dest.path)
+                    do {
+                        try FTTemplatesCache().createDirectoryForstickerFileIfNeeded(url: dest)
+                    } catch {
+                        continuation.resume(throwing: error)
+                    }
+                    let success = SSZipArchive.unzipFile(atPath: tempUrl.path, toDestination: dest.path)
+                    if success == false {
+                        continuation.resume(throwing: FTTemplatesServiceError.unableToDownloadStickers)
+                    }
                     continuation.resume(returning: dest)
                 }
             }
@@ -168,13 +176,9 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         return URL(fileURLWithPath: path)
     }
 
-    func createDirectoryForstickerFileIfNeeded(url: URL) {
+    func createDirectoryForstickerFileIfNeeded(url: URL) throws {
         if !FileManager.default.fileExists(atPath: url.path) && url.path != "" {
-            do {
-                try FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: false, attributes: nil)
-            } catch {
-
-            }
+            try FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: false, attributes: nil)
         }
     }
 

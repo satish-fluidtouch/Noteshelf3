@@ -1197,7 +1197,6 @@
 "settings" = "Impostazioni";
 "settings.about.copyrightmessage" = "Copyright © 2023 Noteshelf. Tutti i diritti riservati.";
 "settings.about.description" = "Presentazione di Noteshelf 3, una nuova e migliorata versione della tua app preferita per prendere appunti.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "ID Utente %@";
 "settings.about.version" = "VERSIONE %@ %@";
 "settings.useApplePencil" = "Usa Apple Pencil";
@@ -1485,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 22 August 2023 at 7:17 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
