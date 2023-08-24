@@ -69,7 +69,7 @@ class FTSafeAreazView: UIView {
 class FTNoteshelfAIViewController: UIViewController {
     private var currentToken : String = UUID().uuidString
 
-    public static var maxAllowedTokenCounter = 30;
+    public static var maxAllowedTokenCounter = 100;
     
     @IBOutlet private weak var textField: UITextField?;
     @IBOutlet private weak var textView: UITextView?;
@@ -358,7 +358,7 @@ private extension FTNoteshelfAIViewController {
     
     var contentToExecute: String? {
         if aiCommand == .generalQuestion {
-            return self.enteredContent;
+            return self.contentString?.appending(" \(self.enteredContent)");
         }
         if aiCommand != .langTranslate {
             if !self.enteredContent.isEmpty {
