@@ -14,8 +14,15 @@ extension FTPageViewController {
         guard let page = self.pdfPage else {
             return;
         }
-        var shouldReadPDFContent = true;
         var annotationsToConsider = [FTAnnotation]();
+
+        if let selectedText = self.writingView?.selectedPDFString(), !selectedText.isEmpty {
+            self.writingView?.selectedTextRange = nil;
+            self.generateOpenAIContentFor(annotations: annotationsToConsider,pdfContent: selectedText);
+            return;
+        }
+        
+        var shouldReadPDFContent = true;
         if currentDeskMode() == .deskModeClipboard {
             annotationsToConsider = self.lassoInfo.selectedAnnotations;
             self.lassoSelectionView?.finalizeMove();
