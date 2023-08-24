@@ -417,7 +417,22 @@ extension FTWritingViewController :  FTWritingProtocol
         }
         return false;
     }
-
+    
+    var selectedTextRange: UITextRange? {
+        set {
+            self.onscreenViewController?.selectedTextRange = newValue;
+        }
+        get {
+            return self.onscreenViewController?.selectedTextRange;
+        }
+    }
+    
+    func selectedPDFString() -> String? {
+        if isPDFTextSelected() {
+            return self.onscreenViewController?.selectedText;
+        }
+        return nil;
+    }
 }
 
 private extension FTWritingViewController
@@ -840,6 +855,10 @@ extension FTWritingViewController: FTSceneBackgroundHandling {
 }
 
 extension FTWritingViewController: FTTextInteractionDelegate {
+    func pdfSelectionView(_ view: FTPDFSelectionView, performAIAction selectedString: String) {
+        (self.pageContentDelegate as? FTTextInteractionDelegate)?.pdfSelectionView?(view, performAIAction: selectedString);
+    }
+    
     func pdfInteractionWillBegin() {
         (self.pageContentDelegate as? FTTextInteractionDelegate)?.pdfInteractionWillBegin?();
     }

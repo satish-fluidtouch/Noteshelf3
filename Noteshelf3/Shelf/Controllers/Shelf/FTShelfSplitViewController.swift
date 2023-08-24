@@ -504,7 +504,9 @@ extension FTShelfSplitViewController {
                     }
                 }
                 else if inError.isNotExistError {
-                    self?.showAlertForError(inError as NSError)
+                    runInMainThread {
+                        self?.showAlertForError(inError as NSError)
+                    }
                 }
                 else if(!inError.isInvalidPinError) {
                     FTCLSLog("Book: \(notebookName): Open failed invalid Pin")
