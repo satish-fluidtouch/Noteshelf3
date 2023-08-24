@@ -84,17 +84,19 @@ class FTShelfToolbar: NSToolbar {
         }
     }
 
-    func addSearchItem() {
-        let item = self.items.first(where: {$0.itemIdentifier == FTShelfSearchToolbarItem.identifier})
-        if let _item = item {
-            guard let index = self.items.firstIndex(of: _item) else {
-                let indexToAppend = self.items.count
-                self.insertItem(withItemIdentifier: FTShelfSearchToolbarItem.identifier, at: indexToAppend)
-                return
-            }
-            self.removeItem(at: index)
-            self.insertItem(withItemIdentifier: FTShelfSearchToolbarItem.identifier, at: index)
-        }
+    // MARK: The reason to have following 2 functions(resignSearchToolbar, updateSearchText)
+    // As we donot get FTShelfSearchToolbarItem type from toolbar items. System is always giving us default type like - NSUIViewToolbarITem instead of our custom type, if we force to use, it gives EXC BAD exception.
+    func resignSearchToolbar() {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTShelfSearchToolbarNotifiers.resignSearchToolbarItem.rawValue),
+                                        object: self,
+                                        userInfo: nil)
+    }
+
+    func updateSearchText(_ text: String) {
+        let userInfo = ["searchText": text]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: FTShelfSearchToolbarNotifiers.updateRecentSearchText.rawValue),
+                                        object: self,
+                                        userInfo: userInfo)
     }
 
     func switchMode(_ mode: FTShelfToolbarMode) {

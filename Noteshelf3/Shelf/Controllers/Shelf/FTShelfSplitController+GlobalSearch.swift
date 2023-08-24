@@ -26,6 +26,9 @@ extension FTShelfSplitViewController {
             navVc.popViewController(animated: false)
             self.globalSearchController = nil
         }
+#if targetEnvironment(macCatalyst)
+        (self.view.toolbar as? FTShelfToolbar)?.resignSearchToolbar()
+#endif
     }
 
     func checkIfGlobalSearchControllerExists() -> Bool {
