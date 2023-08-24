@@ -24,6 +24,7 @@ public extension FTThemeUpdateURL {
 public protocol FTStoreCustomDelegate: NSObjectProtocol, FTThemeUpdateURL {
     func customController(_ contmroller: UIViewController,didSelectTemplate info: FTTemplateInfo);
     func customController(_ contmroller: UIViewController,showIAPAlert feature: String?);
+    func customController(_ contmroller: UIViewController,menuShown isMenuShown: Bool);
 }
 
 class FTStoreCustomViewController: UIViewController {

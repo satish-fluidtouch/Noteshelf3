@@ -223,6 +223,12 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
  }
 
 extension FTShelfSplitViewController: FTStoreContainerDelegate {
+    func storeController(_ controller: UIViewController, menuShown isMenuShown: Bool) {
+        if let splitContorller = controller.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = isMenuShown;
+        }
+    }
+
     func createNotebookFor(url: URL, onCompletion: @escaping ((Error?) -> Void)) {
         if(!FTDeveloperOption.bookScaleAnim) {
             self.presentedViewController?.dismiss(animated: true)

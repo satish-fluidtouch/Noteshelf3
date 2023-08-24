@@ -177,6 +177,9 @@ public class FTPaperTemplateNavigationController: UINavigationController {
 }
 
 extension FTPaperTemplateViewController: FTStoreLibraryDelegate {
+    public func libraryController(_ contmroller: UIViewController, menuShown isMenuShown: Bool) {
+    }
+
     public func currentSelectedURL() -> URL? {
         return self.currentSelectedThemeURL
     }
@@ -209,6 +212,9 @@ extension FTPaperTemplateViewController: FTStoreLibraryDelegate {
 }
 
 extension FTPaperTemplateViewController: FTStoreCustomDelegate {
+    public func customController(_ contmroller: UIViewController, menuShown isMenuShown: Bool) {
+    }
+
     public func customController(_ contmroller: UIViewController, showIAPAlert feature: String?) {
         self.delegate?.paperTemplatePicker(contmroller, showIAPAlert: feature);
     }

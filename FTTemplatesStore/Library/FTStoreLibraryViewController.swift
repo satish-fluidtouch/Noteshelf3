@@ -50,8 +50,9 @@ public class FTDairyTemplateInfo: FTTemplateInfo {
 }
 
 public protocol FTStoreLibraryDelegate:NSObjectProtocol, FTThemeUpdateURL {
-     func libraryController(_ contmroller: UIViewController,didSelectTemplate info: FTTemplateInfo);
+    func libraryController(_ contmroller: UIViewController,didSelectTemplate info: FTTemplateInfo);
     func libraryController(_ contmroller: UIViewController,showIAPAlert feature: String?);
+    func libraryController(_ contmroller: UIViewController,menuShown isMenuShown: Bool);
 }
 
 class FTStoreLibraryViewController: UIViewController {

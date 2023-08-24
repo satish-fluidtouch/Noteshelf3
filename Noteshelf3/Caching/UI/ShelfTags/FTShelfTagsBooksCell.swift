@@ -15,16 +15,17 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     private var books = [FTShelfTagsItem]()
     private var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
-    
+    var parentVC: UIViewController?
+
     override class func awakeFromNib() {
         super.awakeFromNib()
 
     }
 
-    func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState) {
+    func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState, parentVC: UIViewController) {
         self.books = books
         self.viewState = viewState
-        
+        self.parentVC = parentVC
         let layout = FTShelfPagesLayout()
         layout.scrollDirection = .horizontal
         self.collectionView.collectionViewLayout = layout
