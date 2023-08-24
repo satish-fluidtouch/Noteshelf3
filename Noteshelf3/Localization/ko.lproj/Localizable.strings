@@ -1197,7 +1197,6 @@
 "settings" = "설정";
 "settings.about.copyrightmessage" = "저작권 © 2023 노트셀프. 모든 권리 보유.";
 "settings.about.description" = "Introducing Noteshelf 3 '는 당신이 좋아하는 노트 테이킹 앱의 새로운 개선된 버전입니다.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "사용자 ID %@";
 "settings.about.version" = "버전 %@ %@";
 "settings.useApplePencil" = "애플 펜슬 사용";
@@ -1439,6 +1438,7 @@
 "templatesStore.templatePreview.createNotebook" = "노트북 만들기";
 "templatesStore.templatePreview.inyourLibrary" = "당신의 라이브러리";
 "templatesStore.templatePreview.style" = "스타일";
+"trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
 "untitled" = "무제";
@@ -1484,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

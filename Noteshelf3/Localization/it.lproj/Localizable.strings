@@ -1197,7 +1197,6 @@
 "settings" = "Impostazioni";
 "settings.about.copyrightmessage" = "Copyright © 2023 Noteshelf. Tutti i diritti riservati.";
 "settings.about.description" = "Presentazione di Noteshelf 3, una nuova e migliorata versione della tua app preferita per prendere appunti.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "ID Utente %@";
 "settings.about.version" = "VERSIONE %@ %@";
 "settings.useApplePencil" = "Usa Apple Pencil";
@@ -1439,6 +1438,7 @@
 "templatesStore.templatePreview.createNotebook" = "Crea quaderno";
 "templatesStore.templatePreview.inyourLibrary" = "Nella tua libreria";
 "templatesStore.templatePreview.style" = "Stile";
+"trash.alert.cannotOpenNotebook" = "Questo quaderno non può essere aperto poiché è stato eliminato. Per ripristinare, premi a lungo e seleziona l'opzione dal menu.";
 "trash.alert.title" = "Sei sicuro di voler svuotare il Cestino?";
 "unsplash.search.alertMessage" = "Inserisci il testo da cercare";
 "untitled" = "Senza titolo";
@@ -1484,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

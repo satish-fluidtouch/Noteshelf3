@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct FTStickerItemView:View{
-    @ObservedObject var viewModel = FTStickerRecentItemViewModel()
+    @ObservedObject var recentViewModel = FTStickerRecentItemViewModel()
     var model: FTStickerCategoriesViewModel?
     let stickerSubCategory: FTStickerSubCategory?
     @ObservedObject var downloadviewModel = FTDownloadedStickerViewModel()
@@ -27,9 +27,9 @@ struct FTStickerItemView:View{
                         StickerTileView(image: UIImage(named: subitem.image) ?? UIImage(),isFromRecent: false, title: stickerSubCategory?.title ?? "")
                             .padding(.trailing,8)
                             .onTapGesture {
-                                let newSubitem = downloadviewModel.getOriginalDownloadedSticker(subitem: subitem, fileName: stickerSubCategory?.filename ?? "")
-                                viewModel.saveSticker(stickerInfo: newSubitem)
-                                model?.stickerDelegate?.didTapSticker(with: UIImage(named: newSubitem.image) ?? UIImage())
+                                let newSubitem = downloadviewModel.getStickerSubitem(subitem: subitem, fileName: stickerSubCategory?.filename ?? "",type: stickerSubCategory?.type ?? .staticSticker)
+                                    recentViewModel.saveSticker(stickerInfo: newSubitem)
+                                    model?.stickerDelegate?.didTapSticker(with: UIImage(named: newSubitem.image) ?? UIImage())
                             }
                     }
                 }

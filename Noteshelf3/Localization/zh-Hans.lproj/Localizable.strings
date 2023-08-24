@@ -1197,7 +1197,6 @@
 "settings" = "设置";
 "settings.about.copyrightmessage" = "版权所有 © 2023 Noteshelf。保留所有权利。";
 "settings.about.description" = "介绍Noteshelf 3（测试版），您最喜爱的笔记应用的全新改进版本。";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "用户ID %@";
 "settings.about.version" = "版本 %@ %@";
 "settings.useApplePencil" = "使用Apple Pencil";
@@ -1439,6 +1438,7 @@
 "templatesStore.templatePreview.createNotebook" = "创建笔记本";
 "templatesStore.templatePreview.inyourLibrary" = "在您的图书馆";
 "templatesStore.templatePreview.style" = "风格";
+"trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾桶吗？";
 "unsplash.search.alertMessage" = "输入要搜索的文本";
 "untitled" = "无标题";
@@ -1484,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

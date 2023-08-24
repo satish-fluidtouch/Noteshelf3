@@ -1197,7 +1197,6 @@
 "settings" = "設定";
 "settings.about.copyrightmessage" = "著作権 © 2023 Noteshelf。全著作権所有。";
 "settings.about.description" = "お気に入りのノートテイキングアプリの新しい改良版、Noteshelf 3 をご紹介します。";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "ユーザーID %@";
 "settings.about.version" = "バージョン %@ %@";
 "settings.useApplePencil" = "Apple Pencil を使用してください。";
@@ -1439,6 +1438,7 @@
 "templatesStore.templatePreview.createNotebook" = "ノートブックを作成する";
 "templatesStore.templatePreview.inyourLibrary" = "あなたの図書館";
 "templatesStore.templatePreview.style" = "スタイル";
+"trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
 "untitled" = "無題";
@@ -1484,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

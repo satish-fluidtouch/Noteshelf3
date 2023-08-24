@@ -105,9 +105,7 @@ struct FTStickerCategoriesView: View {
                     viewModel.getStickers()
                 }
                 .onFirstAppear {
-                    if downloadedViewModel.validateDownloadedStickersPath(){
-                        downloadedViewModel.getDownloadedStickers()
-                    }
+                     downloadedViewModel.validateAndGetDownloadedStickers()
                 }
             }
             .environmentObject(viewModel)
