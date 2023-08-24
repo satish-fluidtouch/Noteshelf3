@@ -68,7 +68,6 @@ struct FTShareView: View {
                     .padding(.horizontal, FTSpacing.large)
                     .background(Color.appColor(.cellBackgroundColor))
                 }
-                .background(Color.appColor(.popoverBgColor))
                 .cornerRadius(10.0)
                 .padding(.horizontal, FTSpacing.large)
             }.padding(.top, 10)
@@ -87,6 +86,7 @@ struct FTShareView: View {
                         .fontWeight(.regular)
                         .foregroundColor(Color.appColor(.accent))
                 }
+                .buttonStyle(.plain)
                 .padding(.leading,0)
                 .padding(.trailing,20)
             }

@@ -156,6 +156,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
             page.bookmarkTitle = ""
             page.bookmarkColor = "C69C3C"
         }
+        (page as? FTNoteshelfPage)?.isDirty = true
     }
 
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?) {

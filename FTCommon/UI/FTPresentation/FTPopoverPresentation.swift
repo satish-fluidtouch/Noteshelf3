@@ -34,7 +34,6 @@ public class FTPopoverPresentation: NSObject, UIViewControllerTransitioningDeleg
         self.sourceVc = source
 
 #if targetEnvironment(macCatalyst)
-        presented.overrideUserInterfaceStyle = UIApplication.shared.uiColorScheme()
         let presentation = popoverPresenter()
         if let toolItem = self.source as? NSToolbarItem {
             presentation.sourceItem = toolItem

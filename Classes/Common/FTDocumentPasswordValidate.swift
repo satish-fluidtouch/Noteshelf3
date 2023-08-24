@@ -37,7 +37,11 @@ class FTDocumentPasswordValidate : NSObject {
             }
             func showPasswordAlert() {
                 biometricManager.showPasswordAlert(for: shelfItem, from: onviewController) { success, pin, error in
-                    onCompletion?(pin,success,false);
+                    if error == nil {
+                        onCompletion?(pin,success,true);
+                    } else {
+                        onCompletion?(pin,success,false);
+                    }
                 }
             }
             if let presentedViewController = onviewController.presentedViewController {

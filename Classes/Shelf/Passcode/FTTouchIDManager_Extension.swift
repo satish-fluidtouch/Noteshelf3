@@ -122,7 +122,7 @@ extension FTBiometricManager: UITextFieldDelegate {
                                               style: .cancel,
                                               handler:
             { (_) in
-                completionHandler(false, nil, NSError.init(domain: "NSExport", code: 101, userInfo: nil));
+                completionHandler(false, nil, nil);
         });
         alertController.addAction(cancelAction);
         

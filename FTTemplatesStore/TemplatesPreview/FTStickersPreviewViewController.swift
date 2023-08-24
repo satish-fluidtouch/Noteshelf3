@@ -63,7 +63,6 @@ class FTStickersPreviewViewController: UIViewController {
             if isDownloaded {
                 return
             }
-            self.parent?.showingLoadingindicator()
             do {
                 _ = try await storeServiceApi.downloadStickersFor(url: downloadUrl, fileName: templa.fileName)
                 self.parent?.hideLoadingindicator()

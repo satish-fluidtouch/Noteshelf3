@@ -25,7 +25,7 @@ class FTTextColorCollectionView: UICollectionView {
 
     var lastSelectedIndex = 0
     var selectedColor: String? = "#000000"
-    var textColorDelegate: FTTextColorCollectionViewDelegate?
+    weak var textColorDelegate: FTTextColorCollectionViewDelegate?
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)

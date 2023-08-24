@@ -17,9 +17,6 @@ extension FTShelfViewModel {
         self.openItemInNewWindow(item, pageIndex: nil)
     }
     
-    func showNewNotePopoverOnRect(_ rect: CGRect){
-        self.delegate?.showNewNotePopoverOnRect(rect)
-    }
     func moveShelfItems(_ shelfItems : [FTShelfItemProtocol]) {
         delegate?.showMoveItemsPopOverWith(selectedShelfItems: shelfItems)
     }

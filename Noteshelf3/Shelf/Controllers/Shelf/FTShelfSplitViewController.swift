@@ -33,7 +33,7 @@ protocol FTShelfPresentable {
     
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?)
     func showGroup(with shelfItem: FTShelfItemProtocol, animate: Bool)
-    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, addToRecent: Bool,isQuickCreate: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
+    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, addToRecent: Bool,isQuickCreate: Bool,createWithAudio: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol)
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
@@ -258,20 +258,21 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
             }
         }
     }
-    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, addToRecent: Bool, isQuickCreate: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, addToRecent: Bool, isQuickCreate: Bool, createWithAudio: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
         self.openNotebookAndAskPasswordIfNeeded(shelfItem,
                                                 animate: animate,
                                                 presentWithAnimation: false,
                                                 pin: pin,
                                                 addToRecent: addToRecent,
                                                 isQuickCreate: isQuickCreate,
+                                                createWithAudio: createWithAudio,
                                                 pageIndex: nil,
                                                 onCompletion: onCompletion)
     }
 
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol) {
         if openDoc, self.shelfItemCollection.collectionType != .system, !(item.URL.isPinEnabledForDocument()) {
-            self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: nil)
+            self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
         }
     }
 
@@ -411,18 +412,20 @@ extension FTShelfSplitViewController {
                                              pin: String?,
                                              addToRecent: Bool,
                                              isQuickCreate: Bool,
+                                             createWithAudio: Bool,
                                              pageIndex: Int?,
                                              onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
 
         //----------- Migration for NS3 ------------------- //
         guard !shelfItem.URL.isNS2Book else {
             migrateBookToNS3(shelfItem: shelfItem)
+            onCompletion?(nil,true);
             return
         }
         //----------- Migration for NS3 ------------------- //
 
         func openDoc(_ pin: String?) {
-            openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin)
+            openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
             onCompletion?(nil,true);
         }
         
@@ -433,14 +436,15 @@ extension FTShelfSplitViewController {
             self.view.isUserInteractionEnabled = false
             self.openingBookInProgress = true
             FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
-                                                         onviewController: self) { [weak self] (pin, success,_) in
+                                                         onviewController: self) { [weak self] (pin, success, cancelled) in
                 self?.view.isUserInteractionEnabled = true
                 self?.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(success) {
                     openDoc(pin)
-                }
-                else {
+                } else if cancelled {
+                    onCompletion?(nil,false);
+                } else  {
                     self?.handleNotebookOpenError(for: shelfItem, error: FTDocumentOpenErrorCode.error(.invalidPin));
                     onCompletion?(nil,false);
                 }
@@ -454,6 +458,7 @@ extension FTShelfSplitViewController {
                                             pin: String?,
                                             addToRecent: Bool,
                                             isQuickCreate: Bool,
+                                            createWithAudio: Bool,
                                             pageIndex: Int?,
                                             onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
         //----------- Migration for NS3 ------------------- //
@@ -713,6 +718,7 @@ extension FTShelfSplitViewController {
                                                     pin: nil,
                                                     addToRecent: true,
                                                     isQuickCreate: false,
+                                                    createWithAudio: false,
                                                     pageIndex: nil) { doc, isSuccess in
 
             }
