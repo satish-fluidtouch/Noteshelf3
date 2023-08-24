@@ -49,12 +49,12 @@ class FTStickersPreviewViewController: UIViewController {
 
     func downloadStickersPack() async throws {
         let storeServiceApi = FTStoreService()
-        guard let templa = template as? DiscoveryItem else {
-            throw TemplateDownloadError.InvalidTemplate
-        }
-        guard let downloadUrl = templa.stickersPackUrl else {
-            throw TemplateDownloadError.InvalidTemplate
-        }
+            guard let templa = template as? DiscoveryItem else {
+                throw TemplateDownloadError.InvalidTemplate
+            }
+            guard let downloadUrl = templa.stickersPackUrl else {
+                throw TemplateDownloadError.InvalidTemplate
+            }
 
         let isDownloaded = FTTemplatesCache().stickerpackisExists(fileName: templa.fileName)
         self.delegate?.didUpdateUIFor(sticker: isDownloaded)
