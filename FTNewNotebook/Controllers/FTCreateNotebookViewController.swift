@@ -164,6 +164,7 @@ public class FTCreateNotebookViewController: UIViewController {
         } else {
             // Removing Password
             passwordDetails = nil
+            self.newNotebookDetails?.passwordDetails = FTPasswordModel()
             updatePasswordStatus()
         }
      }
