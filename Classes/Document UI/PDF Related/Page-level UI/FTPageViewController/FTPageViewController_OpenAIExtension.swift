@@ -17,9 +17,9 @@ extension FTPageViewController {
         var shouldReadPDFContent = true;
         var annotationsToConsider = [FTAnnotation]();
         if currentDeskMode() == .deskModeClipboard {
-            shouldReadPDFContent = false;
             annotationsToConsider = self.lassoInfo.selectedAnnotations;
             self.lassoSelectionView?.finalizeMove();
+            shouldReadPDFContent = annotationsToConsider.isEmpty;
         }
         annotationsToConsider = annotationsToConsider.isEmpty ? page.annotations() : annotationsToConsider
         
