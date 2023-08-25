@@ -1237,6 +1237,8 @@
 "shelf.discover.digitalDiariesTitle" = "デジタルダイアリーズ＆プランナーズ";
 "shelf.discover.focusModeDescription" = "集中したノート取りのために、気を散らさずに行ってください。";
 "shelf.discover.focusModeTitle" = "フォーカスモード";
+"shelf.discover.migrationDescription" = "Noteshelf 3 にすべてのカテゴリ、グループ、ノートを持ってきてください。";
+"shelf.discover.migrationTitle" = "ノートシェルフ2から移行";
 "shelf.discover.tagsDescription" = "メモを整理して瞬時に見つける。";
 "shelf.discover.tagsTitle" = "タグのページとノートブック";
 "shelf.discover.templatesDescription" = "学校、仕事、ジャーナリングなどのための数百のテンプレートを見つける。";
@@ -1484,4 +1486,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM

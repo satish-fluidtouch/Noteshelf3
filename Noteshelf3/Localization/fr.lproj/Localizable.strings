@@ -1237,6 +1237,8 @@
 "shelf.discover.digitalDiariesTitle" = "Agendas et planificateurs numériques";
 "shelf.discover.focusModeDescription" = "Notez sans distraction pour une prise de notes concentrée.";
 "shelf.discover.focusModeTitle" = "Mode de concentration";
+"shelf.discover.migrationDescription" = "Apportez toutes vos catégories, groupes et notes dans Noteshelf 3.";
+"shelf.discover.migrationTitle" = "Migrer depuis Noteshelf 2";
 "shelf.discover.tagsDescription" = "Organisez vos notes et retrouvez-les en un instant.";
 "shelf.discover.tagsTitle" = "Pages de tags et carnets";
 "shelf.discover.templatesDescription" = "Découvrez des centaines de modèles pour l'école, le travail, le journaling et plus encore.";
@@ -1484,4 +1486,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM
