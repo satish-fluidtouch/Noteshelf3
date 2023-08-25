@@ -38,17 +38,17 @@
                 SUBQUERY (
                     $extensionItem.attachments,
                     $attachment,
-                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.adobe.pdf"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.microsoft.excel.xls"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "org.openxmlformats.spreadsheetml.sheet"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.microsoft.word.doc"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "org.openxmlformats.wordprocessingml.document"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "org.openxmlformats.presentationml.presentation"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.microsoft.powerpoint.ppt"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.ramki.noteshelfbook"
-                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.fluidtouch.noteshelfbook"
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.adobe.pdf&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.microsoft.excel.xls&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;org.openxmlformats.spreadsheetml.sheet&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.microsoft.word.doc&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;org.openxmlformats.wordprocessingml.document&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;org.openxmlformats.presentationml.presentation&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.microsoft.powerpoint.ppt&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.image&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.url&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.ramki.noteshelfbook&quot;
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;com.fluidtouch.noteshelfbook&quot;
                 ).@count == $extensionItem.attachments.@count
             ).@count &gt; 0</string>
 			<key>NSExtensionServiceRoleType</key>

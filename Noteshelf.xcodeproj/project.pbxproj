@@ -89,6 +89,23 @@
 		1408AB7B2A14F9A500EF4B6D /* FTSettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */; };
 		14126F092A8CDBE500C3F903 /* FTStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14126F082A8CDBE500C3F903 /* FTStepperView.swift */; };
 		141FDB5F2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141FDB5E2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift */; };
+		142C94F42A9886A400D14EF4 /* FTPDFRenderViewController+FancyTitles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C94F32A9886A400D14EF4 /* FTPDFRenderViewController+FancyTitles.swift */; };
+		142C95112A988A1200D14EF4 /* FTFancyTitlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C95102A988A1200D14EF4 /* FTFancyTitlesViewModel.swift */; };
+		142C95132A988A4B00D14EF4 /* FTFancyTitlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C95122A988A4B00D14EF4 /* FTFancyTitlesView.swift */; };
+		142C95162A988CEC00D14EF4 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 142C95152A988CEC00D14EF4 /* SVGKit */; };
+		142C954B2A9899BB00D14EF4 /* Bistro Sans (Line).otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C953E2A9899B100D14EF4 /* Bistro Sans (Line).otf */; };
+		142C954C2A9899BB00D14EF4 /* Alona Manhatan.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C953F2A9899B100D14EF4 /* Alona Manhatan.otf */; };
+		142C954D2A9899BB00D14EF4 /* memorita.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95402A9899B200D14EF4 /* memorita.otf */; };
+		142C954E2A9899BB00D14EF4 /* Bistro Sans (Fill).otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95412A9899B300D14EF4 /* Bistro Sans (Fill).otf */; };
+		142C954F2A9899BB00D14EF4 /* High & Low.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95422A9899B400D14EF4 /* High & Low.otf */; };
+		142C95502A9899BB00D14EF4 /* Catalina_Avalon_Sans_Inline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95432A9899B500D14EF4 /* Catalina_Avalon_Sans_Inline.otf */; };
+		142C95512A9899BB00D14EF4 /* Garfolk.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95442A9899B500D14EF4 /* Garfolk.otf */; };
+		142C95522A9899BB00D14EF4 /* Sketching Universe.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95452A9899B600D14EF4 /* Sketching Universe.otf */; };
+		142C95532A9899BB00D14EF4 /* Leah Gaviota Outline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95462A9899B700D14EF4 /* Leah Gaviota Outline.otf */; };
+		142C95542A9899BB00D14EF4 /* Leah Gaviota Double.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95472A9899B800D14EF4 /* Leah Gaviota Double.otf */; };
+		142C95552A9899BB00D14EF4 /* Bistro Sans (Slant).otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95482A9899B900D14EF4 /* Bistro Sans (Slant).otf */; };
+		142C95562A9899BB00D14EF4 /* Chiprush.otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C95492A9899BA00D14EF4 /* Chiprush.otf */; };
+		142C95572A9899BB00D14EF4 /* Bistro Sans (Bold).otf in Resources */ = {isa = PBXBuildFile; fileRef = 142C954A2A9899BB00D14EF4 /* Bistro Sans (Bold).otf */; };
 		142DB8892A72855C00469B5E /* FTStickerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142DB8882A72855C00469B5E /* FTStickerModels.swift */; };
 		143570522A42D37D0088B4EB /* FTWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143570512A42D37D0088B4EB /* FTWelcomeView.swift */; };
 		143570542A42D4080088B4EB /* FTGetStartedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */; };
@@ -2567,6 +2584,22 @@
 		1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingsAboutView.swift; sourceTree = "<group>"; };
 		14126F082A8CDBE500C3F903 /* FTStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStepperView.swift; sourceTree = "<group>"; };
 		141FDB5E2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetinspirePDFviewer.swift; sourceTree = "<group>"; };
+		142C94F32A9886A400D14EF4 /* FTPDFRenderViewController+FancyTitles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTPDFRenderViewController+FancyTitles.swift"; sourceTree = "<group>"; };
+		142C95102A988A1200D14EF4 /* FTFancyTitlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFancyTitlesViewModel.swift; sourceTree = "<group>"; };
+		142C95122A988A4B00D14EF4 /* FTFancyTitlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFancyTitlesView.swift; sourceTree = "<group>"; };
+		142C953E2A9899B100D14EF4 /* Bistro Sans (Line).otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bistro Sans (Line).otf"; sourceTree = "<group>"; };
+		142C953F2A9899B100D14EF4 /* Alona Manhatan.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Alona Manhatan.otf"; sourceTree = "<group>"; };
+		142C95402A9899B200D14EF4 /* memorita.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = memorita.otf; sourceTree = "<group>"; };
+		142C95412A9899B300D14EF4 /* Bistro Sans (Fill).otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bistro Sans (Fill).otf"; sourceTree = "<group>"; };
+		142C95422A9899B400D14EF4 /* High & Low.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "High & Low.otf"; sourceTree = "<group>"; };
+		142C95432A9899B500D14EF4 /* Catalina_Avalon_Sans_Inline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Catalina_Avalon_Sans_Inline.otf; sourceTree = "<group>"; };
+		142C95442A9899B500D14EF4 /* Garfolk.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Garfolk.otf; sourceTree = "<group>"; };
+		142C95452A9899B600D14EF4 /* Sketching Universe.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sketching Universe.otf"; sourceTree = "<group>"; };
+		142C95462A9899B700D14EF4 /* Leah Gaviota Outline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Leah Gaviota Outline.otf"; sourceTree = "<group>"; };
+		142C95472A9899B800D14EF4 /* Leah Gaviota Double.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Leah Gaviota Double.otf"; sourceTree = "<group>"; };
+		142C95482A9899B900D14EF4 /* Bistro Sans (Slant).otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bistro Sans (Slant).otf"; sourceTree = "<group>"; };
+		142C95492A9899BA00D14EF4 /* Chiprush.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Chiprush.otf; sourceTree = "<group>"; };
+		142C954A2A9899BB00D14EF4 /* Bistro Sans (Bold).otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bistro Sans (Bold).otf"; sourceTree = "<group>"; };
 		142DB8882A72855C00469B5E /* FTStickerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickerModels.swift; sourceTree = "<group>"; };
 		143570512A42D37D0088B4EB /* FTWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWelcomeView.swift; sourceTree = "<group>"; };
 		143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetStartedItemViewModel.swift; sourceTree = "<group>"; };
@@ -4294,6 +4327,7 @@
 				BA3F7FB5299E2F51003964C6 /* libMyScriptInk.xcframework in Frameworks */,
 				BAA84E4C2873105500DE801B /* FTCommon.framework in Frameworks */,
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
+				142C95162A988CEC00D14EF4 /* SVGKit in Frameworks */,
 				70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */,
 				BA3F7FB9299E2F51003964C6 /* libMyScriptShape.xcframework in Frameworks */,
 				BA3F7FB2299E2F51003964C6 /* libMyScriptPrediction.xcframework in Frameworks */,
@@ -5744,6 +5778,7 @@
 				143936F329D6E00F00D93033 /* FTStickerCategoriesViewModel.swift */,
 				143936F429D6E00F00D93033 /* FTStickerRecentItemViewModel.swift */,
 				143936F529D6E00F00D93033 /* FTDownloadedStickerViewModel.swift */,
+				142C95102A988A1200D14EF4 /* FTFancyTitlesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -5764,6 +5799,7 @@
 			children = (
 				143936FA29D6E01800D93033 /* FTStickerDataSource.swift */,
 				143936FB29D6E01800D93033 /* FTStickersStorageManager.swift */,
+				142C94F32A9886A400D14EF4 /* FTPDFRenderViewController+FancyTitles.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -5787,6 +5823,7 @@
 				1439370329D6E02700D93033 /* FTDownloadedStickersView.swift */,
 				1439370429D6E02700D93033 /* FTStickerSubCategoryView.swift */,
 				1439370529D6E02700D93033 /* FTStickerCategoryRecentView.swift */,
+				142C95122A988A4B00D14EF4 /* FTFancyTitlesView.swift */,
 			);
 			path = StickerSubCategoryViews;
 			sourceTree = "<group>";
@@ -9078,6 +9115,19 @@
 		BAA84E2828730FA900DE801B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				142C953F2A9899B100D14EF4 /* Alona Manhatan.otf */,
+				142C954A2A9899BB00D14EF4 /* Bistro Sans (Bold).otf */,
+				142C95412A9899B300D14EF4 /* Bistro Sans (Fill).otf */,
+				142C953E2A9899B100D14EF4 /* Bistro Sans (Line).otf */,
+				142C95482A9899B900D14EF4 /* Bistro Sans (Slant).otf */,
+				142C95432A9899B500D14EF4 /* Catalina_Avalon_Sans_Inline.otf */,
+				142C95492A9899BA00D14EF4 /* Chiprush.otf */,
+				142C95442A9899B500D14EF4 /* Garfolk.otf */,
+				142C95422A9899B400D14EF4 /* High & Low.otf */,
+				142C95472A9899B800D14EF4 /* Leah Gaviota Double.otf */,
+				142C95462A9899B700D14EF4 /* Leah Gaviota Outline.otf */,
+				142C95402A9899B200D14EF4 /* memorita.otf */,
+				142C95452A9899B600D14EF4 /* Sketching Universe.otf */,
 				E7D87C9929CEF47700E1FD1E /* ClearFace */,
 			);
 			path = Fonts;
@@ -10940,6 +10990,7 @@
 				DDAD78EB2A08C550001D8B21 /* SDWebImage */,
 				478394A92A55250C00EEB75C /* ZipArchive */,
 				09ABDCB12A790FB3008F144D /* OpenAI */,
+				142C95152A988CEC00D14EF4 /* SVGKit */,
 			);
 			productName = Noteshelf;
 			productReference = BAF395B12859ADF10067CA9F /* NS3 Dev.app */;
@@ -11033,6 +11084,7 @@
 				DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */,
 				09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */,
+				142C95142A988CEC00D14EF4 /* XCRemoteSwiftPackageReference "SVGKit" */,
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
@@ -11128,6 +11180,7 @@
 				52BBD52029E95BDC003088AE /* Spectral-Medium.ttf in Resources */,
 				52BBD52729E95D02003088AE /* Hanuman-Regular.ttf in Resources */,
 				52BBD52129E95BDC003088AE /* Spectral-SemiBold.ttf in Resources */,
+				142C954B2A9899BB00D14EF4 /* Bistro Sans (Line).otf in Resources */,
 				BA56E9282A65139600BC603C /* AllAssets.xcassets in Resources */,
 				09ABDCAE2A790F94008F144D /* NoteshelfAI.storyboard in Resources */,
 				520DA2AA2A2DF3D8003A6F22 /* FTFinderUI.storyboard in Resources */,
@@ -11150,6 +11203,8 @@
 				52B34E0029E5684400360F10 /* Montserrat-ExtraBold.ttf in Resources */,
 				14ADBFA82A665795000FA417 /* GetInspiredThumbnail.bundle in Resources */,
 				52B34E0129E5684400360F10 /* Montserrat-ExtraLight.otf in Resources */,
+				142C95572A9899BB00D14EF4 /* Bistro Sans (Bold).otf in Resources */,
+				142C95562A9899BB00D14EF4 /* Chiprush.otf in Resources */,
 				E7AC024E2A14E46B009AE92A /* FTPenTypeCollectionViewCell.xib in Resources */,
 				52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */,
 				14D7726D2A6E7CF600A8C3D1 /* BulletJournal_Preview.bundle in Resources */,
@@ -11157,11 +11212,13 @@
 				52BBD4FB29E95BC9003088AE /* Inter-Medium.ttf in Resources */,
 				52BBD4FC29E95BC9003088AE /* Inter-Light.ttf in Resources */,
 				52BBD4FD29E95BC9003088AE /* Inter-SemiBold.ttf in Resources */,
+				142C95552A9899BB00D14EF4 /* Bistro Sans (Slant).otf in Resources */,
 				BAF38F562859ADF00067CA9F /* BrushAssets_V2.xcassets in Resources */,
 				52BBD4DF29E951D1003088AE /* Baskerville.ttc in Resources */,
 				52BBD4E129E951D1003088AE /* Abel-Regular.ttf in Resources */,
 				52BBD4E429E951D1003088AE /* Coming Soon Regular.ttf in Resources */,
 				52BBD4E629E951D1003088AE /* Baskerville T Medium.otf in Resources */,
+				142C954E2A9899BB00D14EF4 /* Bistro Sans (Fill).otf in Resources */,
 				52BBD4E829E951D1003088AE /* Andrea-Normal.ttf in Resources */,
 				14E976882A17534700382189 /* FTSettings_Accounts.storyboard in Resources */,
 				BAF38F5A2859ADF00067CA9F /* BrushAssets_V4.xcassets in Resources */,
@@ -11210,17 +11267,20 @@
 				BAF38FA72859ADF00067CA9F /* FTRecentsHeaderView.xib in Resources */,
 				BAF38FAC2859ADF00067CA9F /* default_paper_image.png in Resources */,
 				BAF38FAF2859ADF00067CA9F /* FTActiveStickyIndicatorViewController.xib in Resources */,
+				142C954F2A9899BB00D14EF4 /* High & Low.otf in Resources */,
 				BAF38FB02859ADF00067CA9F /* FTShelfItems.storyboard in Resources */,
 				09ABDCA82A790F94008F144D /* NoteshelfAI.xcassets in Resources */,
 				BAF38FB12859ADF00067CA9F /* FTQuickPageNavigatorViewController.xib in Resources */,
 				BAF38FB32859ADF00067CA9F /* MyScriptLanguageLocalizable.strings in Resources */,
 				E7E3EC3C29A4882F004372B6 /* FTAddMenuItemCell.xib in Resources */,
+				142C95512A9899BB00D14EF4 /* Garfolk.otf in Resources */,
 				BAF38FB42859ADF00067CA9F /* FTExportDataFailedItemCell.xib in Resources */,
 				E7AE404528755D4500C0F3EC /* Quotes.plist in Resources */,
 				BAF38FB62859ADF00067CA9F /* FTImportListTableViewCell.xib in Resources */,
 				BAF38FB72859ADF00067CA9F /* assets in Resources */,
 				E7E3EC4229A4922A004372B6 /* FTStickers.plist in Resources */,
 				BAF38FB82859ADF00067CA9F /* FTBackUpOptionsFooterView.xib in Resources */,
+				142C95532A9899BB00D14EF4 /* Leah Gaviota Outline.otf in Resources */,
 				BA8BA66029782EA200946CFE /* FTAdvanced.storyboard in Resources */,
 				BAF38FB92859ADF00067CA9F /* FTTooltipMessageViewController.xib in Resources */,
 				E7AE403F28755D4500C0F3EC /* Planner.plist in Resources */,
@@ -11231,6 +11291,7 @@
 				BA50E02A2959BF9400CDC0FD /* AppIcon.xcassets in Resources */,
 				BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */,
 				52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */,
+				142C95542A9899BB00D14EF4 /* Leah Gaviota Double.otf in Resources */,
 				E7AE404628755D4500C0F3EC /* themes_v8_fr.plist in Resources */,
 				E7AE403928755D4500C0F3EC /* themes_v8_zh-Hant.plist in Resources */,
 				BAF38FC72859ADF00067CA9F /* WhatsNewLocalizable.strings in Resources */,
@@ -11245,8 +11306,10 @@
 				BAF38FE22859ADF00067CA9F /* FTAudioPlayerController.xib in Resources */,
 				E7AE403628755A9800C0F3EC /* StockPapers.bundle in Resources */,
 				BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */,
+				142C954D2A9899BB00D14EF4 /* memorita.otf in Resources */,
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
+				142C954C2A9899BB00D14EF4 /* Alona Manhatan.otf in Resources */,
 				BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */,
 				E7AE404428755D4500C0F3EC /* themes_v8_ja.plist in Resources */,
 				BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */,
@@ -11258,6 +11321,7 @@
 				BAF38FF52859ADF00067CA9F /* InfoPlist.strings in Resources */,
 				BAF38FF62859ADF00067CA9F /* FTiOSShelfCategoryHeaderView.xib in Resources */,
 				E7AE403828755D4500C0F3EC /* themes_v8_it.plist in Resources */,
+				142C95502A9899BB00D14EF4 /* Catalina_Avalon_Sans_Inline.otf in Resources */,
 				14D772752A6E7D8900A8C3D1 /* Student_Preview.bundle in Resources */,
 				BAF38FF82859ADF00067CA9F /* FTDocumentEntity.storyboard in Resources */,
 				97BEB93D294215BA00147961 /* FTSideBar.plist in Resources */,
@@ -11297,6 +11361,7 @@
 				BAF3902F2859ADF00067CA9F /* FTEvernoteFooterView.xib in Resources */,
 				42A702FC293A158F00970A94 /* cover_line.png in Resources */,
 				E7AE403C28755D4500C0F3EC /* Modern.plist in Resources */,
+				142C95522A9899BB00D14EF4 /* Sketching Universe.otf in Resources */,
 				BAF390322859ADF00067CA9F /* FTOutlineTableCell.xib in Resources */,
 				BAF3903B2859ADF00067CA9F /* FTNewSettings.storyboard in Resources */,
 				BAF3903D2859ADF00067CA9F /* recognition-assets-en_US in Resources */,
@@ -11901,6 +11966,7 @@
 				47CE079F2A0A317A00E15028 /* FTUtils.m in Sources */,
 				BAF391052859ADF00067CA9F /* FTAccountInfoRequestOneDrive.swift in Sources */,
 				E7B3DFA5288921180045019F /* FTPenSizeView.swift in Sources */,
+				142C94F42A9886A400D14EF4 /* FTPDFRenderViewController+FancyTitles.swift in Sources */,
 				978D66EB286AD96D00B86704 /* Constants.m in Sources */,
 				BAF391062859ADF00067CA9F /* FirebaseMetricsService.swift in Sources */,
 				14F2E09D2A0118B60007D49D /* GetInspiredModel.swift in Sources */,
@@ -11928,6 +11994,7 @@
 				BAF3911C2859ADF00067CA9F /* FTZoomOverlayViewController_ZoomManager.swift in Sources */,
 				97A606D829BB3D3500B01E03 /* FTCoverDataSource.swift in Sources */,
 				E7ADB52A28818B98005E03B7 /* FTPenColorCircleView.swift in Sources */,
+				142C95112A988A1200D14EF4 /* FTFancyTitlesViewModel.swift in Sources */,
 				E7B3DFA32889205C0045019F /* FTPenSizeShortcutView.swift in Sources */,
 				97C73415294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift in Sources */,
 				E7B5A343299E3EBD0031A87E /* FTConvertToTextViewController+MenuHandler.swift in Sources */,
@@ -12266,6 +12333,7 @@
 				BAF3923A2859ADF00067CA9F /* FTWebdavPublishRequest.swift in Sources */,
 				BAF3923B2859ADF00067CA9F /* CITreeViewController.swift in Sources */,
 				BAF3923C2859ADF00067CA9F /* FTFiveMinJournalHelpTemplate.swift in Sources */,
+				142C95132A988A4B00D14EF4 /* FTFancyTitlesView.swift in Sources */,
 				BAF3923D2859ADF00067CA9F /* FTApplePencilActionConstants.swift in Sources */,
 				BAF3923E2859ADF00067CA9F /* URLRequestExtension.swift in Sources */,
 				BAF3923F2859ADF00067CA9F /* FTSettingsCommonTableViewCell.swift in Sources */,
@@ -14757,6 +14825,14 @@
 				minimumVersion = 0.2.3;
 			};
 		};
+		142C95142A988CEC00D14EF4 /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
@@ -14812,6 +14888,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAI;
+		};
+		142C95152A988CEC00D14EF4 /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 142C95142A988CEC00D14EF4 /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
 		};
 		478394A92A55250C00EEB75C /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;

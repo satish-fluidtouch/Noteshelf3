@@ -14,7 +14,7 @@ struct FTStickerCategoryItemView: View {
     var body: some View {
         VStack(alignment: .leading) {
             CategoryTitleHeaderView(titleName: stickerCategoryModel.title)
-            FTStickerSubCategoryView(stickerSubCategory: stickerCategoryModel.subcategories, model: stickerViewModel) { stickerInfo in
+            FTStickerSubCategoryView(stickerSubCategory: stickerCategoryModel.subcategories, model: stickerViewModel,stickerCategoryModel: stickerCategoryModel) { stickerInfo in
             }
         }
        

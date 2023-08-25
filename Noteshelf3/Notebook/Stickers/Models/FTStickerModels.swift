@@ -32,3 +32,10 @@ struct FTStickerSubCategory: Codable {
 struct FTStickerItem: Codable, Equatable {
     let image: String
 }
+struct FancytitleModel:Hashable{
+    var fontName:String
+    let selectedStyle: FTFancyStyles
+    let selectedColor: String
+    let selectedGradient: FTStyledGradient
+    let fontSize:CGFloat
+}

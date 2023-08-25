@@ -68,6 +68,37 @@ struct CategoryTitleHeaderView: View {
             .foregroundColor(Color.appColor(.black1))
     }
 }
+struct FancyStickerView: View {
+    let image: UIImage
+
+    var body: some View {
+            Image(uiImage: image)
+            .padding(.leading,10)
+
+    }
+}
+struct FancyStickerSearchBarView: View {
+    @Binding var searchText: String
+
+    var body: some View {
+        HStack {
+            TextField("Write something", text: $searchText)
+                .padding(.leading, 8)
+            Button(action: {
+                self.searchText = ""
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .opacity(searchText == "" ? 0 : 1)
+                    .foregroundColor(.gray).opacity(0.5)
+            }
+            .padding(.trailing, 8)
+        }
+        .frame(height: 36)
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(8)
+        .padding(.horizontal)
+    }
+}
 
 struct StickerCategoryTileView: View {
     let image: UIImage
