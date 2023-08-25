@@ -66,7 +66,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.back(toShelfButtonAction: FTNormalAction, with: shelfItemManagedObject.title)
         } else {
             if self.pdfDocument.isDirty == false {
-                self.back(toShelfButtonAction: FTDeleteAction, with: shelfItemManagedObject.title)
+                self.back(toShelfButtonAction: FTDeletePermanentlyAction, with: shelfItemManagedObject.title)
             } else {
                 self.showQuickNoteSaveControllerIfNeeded(sourceView: source)
             }

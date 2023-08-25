@@ -32,13 +32,13 @@ extension UITableViewCell {
     @objc func setStyledText(_ text : String,style : FTTableViewCellStyle)
     {
         let font = self.fontForStyle(style);
-        self.textLabel?.attributedText = NSAttributedString.init(string: text, attributes: [NSAttributedString.Key.kern : NSNumber.init(value: defaultKernValue),NSAttributedString.Key.font : font]);
+        self.textLabel?.attributedText = NSAttributedString.init(string: text, attributes: [NSAttributedString.Key.kern : NSNumber.init(value: defaultKernValue),NSAttributedString.Key.font : font, .foregroundColor: UIColor.label]);
     }
     
     func setStyledDetailText(_ text : String,style : FTTableViewCellStyle)
     {
         let font = self.fontForStyle(style);
-        self.detailTextLabel?.attributedText = NSAttributedString.init(string: text, attributes: [NSAttributedString.Key.kern : NSNumber.init(value: defaultKernValue),NSAttributedString.Key.font : font]);
+        self.detailTextLabel?.attributedText = NSAttributedString.init(string: text, attributes: [NSAttributedString.Key.kern : NSNumber.init(value: defaultKernValue),NSAttributedString.Key.font : font, .foregroundColor: UIColor.label]);
     }
 }
 

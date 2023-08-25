@@ -128,7 +128,7 @@ extension FTPDFRenderViewController
                 }
                 else {
                     self?.removeAnyPresentedController({
-                        let backAction = FTNotebookBackAction(rawValue: 0)
+                        let backAction: FTNotebookBackAction = FTNormalAction
                         self?.back(toShelfButtonAction: backAction, with: shelfItem.title)
                     })
                 }
