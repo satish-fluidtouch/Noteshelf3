@@ -47,7 +47,7 @@ class FTCloudDocumentConflictScreen : UIViewController,UITableViewDataSource,UIT
         self.conflictMessageLabel?.styleText = NSLocalizedString("ResolveConflictMessage", comment: "ResolveConflictMessage");
         self.tableView?.isEditing = true;
         #if targetEnvironment(macCatalyst)
-            self.tableView?.allowsSelectionDuringEditing = true
+            self.tableView?.allowsMultipleSelectionDuringEditing = true
         #endif
     }
     override func viewDidAppear(_ animated: Bool) {

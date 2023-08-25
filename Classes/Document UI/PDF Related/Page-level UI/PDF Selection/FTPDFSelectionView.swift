@@ -65,6 +65,7 @@ protocol FTPDFSelectionViewDelegate: FTTextInteractionDelegate {
     @objc optional func pdfInteractionShouldBegin(at point: CGPoint) -> Bool;
     @objc optional func pdfInteractionWillBegin();
     @objc optional func pdfInteractionDidEnd();
+    @objc optional func pdfSelectionView(_ view: FTPDFSelectionView,performAIAction selectedString:String);
 }
 
 #if targetEnvironment(macCatalyst)
@@ -571,7 +572,8 @@ class FTPDFSelectionView: UIView {
         if action == #selector(self.highlightSelection(_:))
             || action == #selector(self.strikeOutSelection(_:))
             || action == #selector(self.copyAction(_:))
-            || action == #selector(self.showDictionary(_:)) {
+            || action == #selector(self.showDictionary(_:))
+            || action == #selector(self.noteshelfAI(_:)) {
             guard let text = self.selectedText,!text.isEmpty else {
                 return false;
             }
@@ -984,6 +986,10 @@ extension FTPDFSelectionView: UIGestureRecognizerDelegate {
         let copyAction = UIMenuItem(title: NSLocalizedString("Copy", comment: "Copy"), action: #selector(self.copyAction(_:)));
         items.append(copyAction);
 
+        if FTNoteshelfAI.supportsNoteshelfAI {
+            let aiActionAction = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.noteshelfAI(_:)));
+            items.append(aiActionAction);
+        }
         UIMenuController.shared.menuItems = items;
     }
 
@@ -1017,6 +1023,12 @@ extension FTPDFSelectionView: UIGestureRecognizerDelegate {
     func copyAction(_ sender: Any?) {
         if let text = self.selectedText,!text.isEmpty {
             UIPasteboard.general.string = text;
+        }
+    }
+    
+    func noteshelfAI(_ sender: Any?) {
+        if let text = self.selectedText?.openAITrim(),!text.isEmpty {
+            self.delegate?.pdfSelectionView?(self, performAIAction: text);
         }
     }
 }
@@ -1112,6 +1124,14 @@ extension FTPDFSelectionView: UIContextMenuInteractionDelegate {
                 self?.copyAction(nil);
             }
             menuItems.append(copyAction)
+            
+            if FTNoteshelfAI.supportsNoteshelfAI {
+                let noteshelfAIAction = UIAction(title: "noteshelf.ai.noteshelfAI".aiLocalizedString) { [weak self] _ in
+                    self?.noteshelfAI(nil);
+                }
+                menuItems.append(noteshelfAIAction)
+            }
+
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: menuItems)
         }
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)

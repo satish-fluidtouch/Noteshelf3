@@ -65,6 +65,7 @@ extension UIViewController {
         view.isUserInteractionEnabled = false
     }
 
+    @MainActor
     func hideLoadingindicator() {
         if let overlayView = view.viewWithTag(UIViewController.loadingIndicatorTag) {
             overlayView.removeFromSuperview()

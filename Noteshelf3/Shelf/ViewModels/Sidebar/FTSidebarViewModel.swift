@@ -368,41 +368,39 @@ extension FTSidebarViewModel {
 extension FTSidebarViewModel {
     func configureUIOnViewLoad() {
         self.fetchSideBarData()
-        Task {
-            await self.configureMenuOptions()
+        self.configureMenuOptions()
+    }
+    private func configureMenuOptions() {
+        self.fetchSidebarMenuItems()
+    }
+    func updateUserCreatedCategories() {
+        self.fetchUserCreatedCategories()
+    }
+    func updateTags() {
+        self.fetchAllTags()
+    }
+    private func fetchUserCreatedCategories() {
+        userCreatedSidebarItems { [weak self] sidebarItems in
+            guard let self = self else { return }
+            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems)
+            self.buildSideMenuItems()
         }
     }
-    private func configureMenuOptions() async {
-        await self.fetchSidebarMenuItems()
-    }
-    func updateUserCreatedCategories() async {
-        await self.fetchUserCreatedCategories()
-    }
-    func updateTags() async {
-        await self.fetchAllTags()
-    }
-    private func fetchUserCreatedCategories() async {
-        let newlyCreatedSideBarItems = await userCreatedSidebarItems()
-        self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(newlyCreatedSideBarItems)
-        await self.buildSideMenuItems()
-    }
-    private func userCreatedSidebarItems() async -> [FTSideBarItem] {
-        return await withCheckedContinuation { continuation in
-          FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
+    private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
+        FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
             let newlyCreatedSidebarItems = collections.map { shelfItem -> FTSideBarItem in
-              let item = FTSideBarItem(shelfCollection: shelfItem)
-              item.id = shelfItem.uuid
-              item.isEditable = true
-              item.allowsItemDropping = true
-              item.type = .category
-              return item
+                let item = FTSideBarItem(shelfCollection: shelfItem)
+                item.id = shelfItem.uuid
+                item.isEditable = true
+                item.allowsItemDropping = true
+                item.type = .category
+                return item
             }
-            continuation.resume(returning: newlyCreatedSidebarItems)
-          }
+            onCompeltion(newlyCreatedSidebarItems)
         }
-      }
+    }
 
-    private func fetchAllTags() async {
+    private func fetchAllTags() {
         let allTags = FTCacheTagsProcessor.shared.cachedTags()
         var tags: [FTSideBarItem] = [FTSideBarItem]()
         tags = allTags.map { tag -> FTSideBarItem in
@@ -410,8 +408,7 @@ extension FTSidebarViewModel {
             let item = FTSideBarItem(id: tagItem.id, title: tagItem.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
             return item
         }
-        await self.buildGlobalTagsOptions(tags)
-        await self.buildSideMenuItems()
+        self.buildGlobalTagsOptions(tags)
     }
 
     func updateUnfiledCategory() {
@@ -422,24 +419,28 @@ extension FTSidebarViewModel {
         }
     }
 
-    private func fetchSidebarMenuItems() async {
-
-        // Fetching default/migrated categories for second s ection of side menu
-        let newlyCreatedSideBarItems = await userCreatedSidebarItems()
-        self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(newlyCreatedSideBarItems)
+    private func fetchSidebarMenuItems() {
 
         //First section items creation
         self.buildSystemMenuOptions()
+
+        // Fetching default/migrated categories for second section of side menu
+        userCreatedSidebarItems { [weak self] sidebarItems in
+            guard let self = self else { return }
+            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems)
+        }
+
+        //Assigning respective shelf item collections to top section UI items
         self.setCollectionToSystemType(.home, collection: FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection)
         self.setCollectionToSystemType(.starred, collection: FTNoteshelfDocumentProvider.shared.starredShelfItemCollection())
-
         FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
             self.setCollectionToSystemType(.trash, collection: trashCollection)
         }
         self.updateUnfiledCategory()
-        await self.buildMediaMenuOptions()
-        await self.fetchAllTags()
-        await self.buildSideMenuItems()
+
+        self.buildMediaMenuOptions()
+        self.fetchAllTags()
+        self.buildSideMenuItems()
     }
     static private func getTemplatesSideBarItem() -> FTSideBarItem {
         return FTSideBarItem(title: NSLocalizedString("Templates", comment: "Templates"),
@@ -478,15 +479,13 @@ extension FTSidebarViewModel {
         let trashSidebarItem = self.createSideBarItemWith(title: "Trash", type: .trash, allowsItemDropping: true, icon: .trash)
         systemItems.append(trashSidebarItem)
     }
-    @MainActor
+
     private func buildMediaMenuOptions() {
         let photos = FTSideBarItem(title: NSLocalizedString("Photo", comment: "Photo"), icon: FTIcon.photo, isEditable: true, isEditing: false, type: FTSideBarItemType.media, allowsItemDropping: false)
         let recording = FTSideBarItem(title: NSLocalizedString("Recording", comment: "Recording"), icon: FTIcon.audioNote, isEditable: true, isEditing: false, type: FTSideBarItemType.audio, allowsItemDropping: false)
-        //Removing bookmarks options from content section as its development yet to start
         let bookmarks = FTSideBarItem(title: NSLocalizedString("Bookmark", comment: "Bookmark"), icon: FTIcon.bookmark, isEditable: true, type: FTSideBarItemType.bookmark,allowsItemDropping: false)
         self.contentItems = [photos, recording, bookmarks]
     }
-    @MainActor
     private func buildGlobalTagsOptions(_ tags: [FTSideBarItem]) {
         var totalTagSidebarItems : [FTSideBarItem] = []
         let allTagsSidebarItem = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
@@ -495,7 +494,6 @@ extension FTSidebarViewModel {
         self.tags = totalTagSidebarItems
     }
 
-    @MainActor
     private func buildSideMenuItems(){
         self.menuItems = []
         self.menuItems = [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)]

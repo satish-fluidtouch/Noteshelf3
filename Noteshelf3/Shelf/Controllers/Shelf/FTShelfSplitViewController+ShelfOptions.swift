@@ -30,7 +30,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
             FTNotebookCreation().quickCreateNotebook(collection: collection, group: group) {[weak self] error, shelfItem in
                 loadingIndicatorView.hide()
                 if error != nil {
-                    self?.showAlertForError(error)
+                    runInMainThread {
+                        self?.showAlertForError(error)
+                    }
                 }else {
                     if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItem {
                         self?.showNotebookAskPasswordIfNeeded(notebookItem,
@@ -48,7 +50,9 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 FTNotebookCreation().createNewNotebookInside(collection: collection, group: group, notebookDetails: notebookDetails,mode: mode) { [weak self] error, shelfItemProtocol in
                     loadingIndicatorView.hide()
                     if error != nil {
-                        self?.showAlertForError(error)
+                        runInMainThread {
+                            self?.showAlertForError(error)
+                        }
                     }else {
                         if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItemProtocol {
                             self?.showNotebookAskPasswordIfNeeded(notebookItem,
@@ -382,11 +386,16 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         }
     }
 
+    //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
-        if !self.openingBookInProgress {
-            self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate, createWithAudio: false, pageIndex: pageIndex, onCompletion: nil)
-        }else {
-            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+        if !shelfItem.shelfCollection.isTrash  {
+            if !self.openingBookInProgress {
+                self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate,createWithAudio: false, pageIndex: pageIndex, onCompletion: nil)
+            }else {
+                NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+            }
+        } else {
+            UIAlertController.showAlert(withTitle: "", message: "trash.alert.cannotOpenNotebook".localized, from: self, withCompletionHandler: nil)
         }
     }
     
