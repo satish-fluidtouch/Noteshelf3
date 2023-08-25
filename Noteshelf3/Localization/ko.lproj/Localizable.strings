@@ -1237,6 +1237,8 @@
 "shelf.discover.digitalDiariesTitle" = "디지털 다이어리 및 플래너";
 "shelf.discover.focusModeDescription" = "집중적인 노트 작성을 위해 산만함으로부터 벗어나세요.";
 "shelf.discover.focusModeTitle" = "집중 모드";
+"shelf.discover.migrationDescription" = "모든 카테고리, 그룹 및 노트를 Noteshelf 3로 가져오세요.";
+"shelf.discover.migrationTitle" = "Noteshelf 2로 이동";
 "shelf.discover.tagsDescription" = "즉각적으로 노트를 정리하고 찾을 수 있습니다.";
 "shelf.discover.tagsTitle" = "태그 페이지 및 노트북";
 "shelf.discover.templatesDescription" = "학교, 직장, 일기 작성 등을 위한 수백 가지의 템플릿을 찾아보세요.";
@@ -1484,4 +1486,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM

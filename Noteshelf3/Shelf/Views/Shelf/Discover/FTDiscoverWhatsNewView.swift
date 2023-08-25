@@ -82,6 +82,7 @@ struct FTDiscoverWhatsNewView: View {
     private var discoverItemsDatasource: [FTDiscoverItemModel] {
         return [
             FTDiscoverItemModel(imageName: "whatsNew", title: "shelf.discover.whatsNewTitle", description: "shelf.discover.whatsNewDescription", url: URL(string: "https://medium.com/noteshelf/introducing-all-new-noteshelf-3-3a89f78fd240")),
+            FTDiscoverItemModel(imageName: "ns2ToNS3Migration", title: "shelf.discover.migrationTitle", description: "shelf.discover.migrationDescription", url: URL(string: "https://noteshelf-support.fluidtouch.biz/hc/en-us/articles/22064417946777-How-to-migrate-notes-from-Noteshelf-2-to-Noteshelf-3-")),
             FTDiscoverItemModel(imageName: "covers", title: "shelf.discover.coversTitle", description: "shelf.discover.coversDescription", url: URL(string: "https://medium.com/noteshelf/covers-that-match-your-style-4eec967cbfa")),
             FTDiscoverItemModel(imageName: "templates", title: "shelf.discover.templatesTitle", description: "shelf.discover.templatesDescription", url: URL(string: "https://medium.com/noteshelf/a-template-for-every-need-7292ca51294c")),
             FTDiscoverItemModel(imageName: "digitalDiaries", title: "shelf.discover.digitalDiariesTitle", description: "shelf.discover.digitalDiariesDescription", url: URL(string: "https://medium.com/noteshelf/digital-diaries-planners-and-more-1b0eb291db1c")),

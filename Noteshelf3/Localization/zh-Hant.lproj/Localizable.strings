@@ -1237,6 +1237,8 @@
 "shelf.discover.digitalDiariesTitle" = "數位日記和計劃器";
 "shelf.discover.focusModeDescription" = "專心筆記，無干擾。";
 "shelf.discover.focusModeTitle" = "專注模式";
+"shelf.discover.migrationDescription" = "將您的所有分類、群組和筆記帶到 Noteshelf 3。";
+"shelf.discover.migrationTitle" = "從Noteshelf 2遷移";
 "shelf.discover.tagsDescription" = "組織您的筆記並立即找到它們。";
 "shelf.discover.tagsTitle" = "標籤頁面和筆記本";
 "shelf.discover.templatesDescription" = "在學校、工作、日記等方面發現數百種模板。";
@@ -1484,4 +1486,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM

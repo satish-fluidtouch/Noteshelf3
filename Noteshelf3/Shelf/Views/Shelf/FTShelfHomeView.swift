@@ -28,13 +28,13 @@ struct FTShelfHomeView: FTShelfBaseView {
                         }
                         homeShelfItemsViewForGeometrySize(geometry.size)
                         if viewModel.shelfDidLoad {
-                            FTGetInspireView(viewmodel: FTGetInspiredViewModel())
+                            FTDiscoverWhatsNewView()
                                 .environmentObject(viewModel)
                                 .macOnlyPlainButtonStyle()
                                 .padding(.horizontal,gridHorizontalPadding)
                                 .padding(.top,40)
                                 .padding(.bottom,28)
-                            FTDiscoverWhatsNewView()
+                            FTGetInspireView(viewmodel: FTGetInspiredViewModel())
                                 .environmentObject(viewModel)
                                 .macOnlyPlainButtonStyle()
                                 .padding(.horizontal,gridHorizontalPadding)
