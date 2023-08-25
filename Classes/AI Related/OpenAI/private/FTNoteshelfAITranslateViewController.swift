@@ -121,6 +121,7 @@ extension FTNoteshelfAITranslateViewController: UITableViewDataSource,UITableVie
         if let optioncell = cell as? FTAITranslateTableViewCell, let aitoption = FTTranslateOption(rawValue: indexPath.row) {
             optioncell.contentView.backgroundColor = UIColor.appColor(.cellBackgroundColor);
             optioncell.textLabel?.text = aitoption.displayTitle;
+            optioncell.textLabel?.font = UIFont.systemFont(ofSize: 17);
         }
     }
     

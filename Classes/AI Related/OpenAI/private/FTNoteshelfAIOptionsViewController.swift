@@ -18,8 +18,8 @@ private class FTAIOptionTableViewCell: UITableViewCell {
         if let imgView = self.imageView {
             imgView.contentMode = .scaleAspectFit;
             var frame = imgView.frame;
-            frame.size.width = 24;
-            frame.size.height = 24;
+            frame.size.width = 20;
+            frame.size.height = 20;
             imgView.frame = frame;
         }
     }
@@ -53,7 +53,10 @@ extension FTNoteshelfAIOptionsViewController: UITableViewDataSource,UITableViewD
             let displayText = contentString?.openAIDisplayString ?? "";
             let attr = NSMutableAttributedString(string: aitoption.title(content: displayText));
             if !displayText.isEmpty {
-                let subString = NSAttributedString(string: " \"\(displayText)\"",attributes: [.foregroundColor:UIColor.gray]);
+                let subString = NSAttributedString(string: " \"\(displayText)\"",attributes: [
+                    .foregroundColor:UIColor.gray
+                    ,.font : UIFont.systemFont(ofSize: 17)
+                ]);
                 attr.append(subString);
             }
             optionCell.textLabel?.attributedText = attr;
