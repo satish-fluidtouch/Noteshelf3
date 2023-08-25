@@ -36,6 +36,7 @@
 @property (assign) BOOL isIntroScreen;
 @property (weak) id<FTPenAttributesProviderDelegate> penAttributesProvider;
 @property (assign) CGRect bounds;
+@property (strong) UITextRange * _Nullable selectedTextRange;
 
 -(void)waitUntilComplete;
 -(void)cancelCurrentStroke;
@@ -58,7 +59,7 @@
 
 -(void)updateLowResolutionImageBackgroundView;
 -(BOOL)isPDFTextSelected;
-
+-(NSString* _Nullable )selectedPDFString;
 @end
 
 @protocol FTLassoProtocol <NSObject>

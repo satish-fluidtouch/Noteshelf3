@@ -1197,7 +1197,6 @@
 "settings" = "Paramètres";
 "settings.about.copyrightmessage" = "Droits d'auteur © 2023 Noteshelf. Tous droits réservés.";
 "settings.about.description" = "Présentation de Noteshelf 3, une nouvelle version améliorée de votre application de prise de notes préférée.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "Identifiant d'utilisateur %@";
 "settings.about.version" = "VERSION %@ %@";
 "settings.useApplePencil" = "Utilisez Apple Pencil";
@@ -1439,6 +1438,7 @@
 "templatesStore.templatePreview.createNotebook" = "Créer un carnet";
 "templatesStore.templatePreview.inyourLibrary" = "Dans votre bibliothèque";
 "templatesStore.templatePreview.style" = "Style";
+"trash.alert.cannotOpenNotebook" = "Ce carnet ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
 "untitled" = "Sans titre";
@@ -1484,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

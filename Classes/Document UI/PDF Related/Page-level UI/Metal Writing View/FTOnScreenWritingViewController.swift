@@ -120,6 +120,12 @@ class FTOnScreenWritingViewController: UIViewController {
         }
     }
     
+    var selectedText: String? {
+        guard let range = self.selectedTextRange, !range.isEmpty else {
+            return nil;
+        }
+        return self.pdfSelectionView?.text(in: range);
+    }
     func hideWritingView() {
         self.metalView.isHidden = true;
     }
@@ -1098,6 +1104,10 @@ extension FTOnScreenWritingViewController: FTPDFSelectionViewDelegate {
 
     func pdfInteractionWillBegin() {
         (self.delegate as? FTTextInteractionDelegate)?.pdfInteractionWillBegin?();
+    }
+    
+    func pdfSelectionView(_ view: FTPDFSelectionView, performAIAction selectedString: String) {
+        (self.delegate as? FTTextInteractionDelegate)?.pdfSelectionView?(view, performAIAction: selectedString);
     }
 }
 

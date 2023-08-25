@@ -825,6 +825,10 @@ extension FTPageViewController: FTTextInteractionDelegate {
         self.endEditingActiveAnnotation(nil, refreshView: true);
     }
     
+    func pdfSelectionView(_ view: FTPDFSelectionView, performAIAction selectedString: String) {
+        self.startOpenAiForPage();
+    }
+
     func pdfInteractionShouldBegin(at point: CGPoint) -> Bool {
         if self.renderMode == FTRenderModeDefault,
            nil != self.annotation(type: .longPress, atPoint: point) {

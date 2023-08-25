@@ -86,15 +86,9 @@ extension FTShelfViewModel {
             item.showLoader()
         }
         let notebookName = shelfItemProtocol.displayTitle
-        if !self.collection.isTrash  {
-            FTCLSLog("Book: \(notebookName): Tapped")
-            if shelfItemProtocol.type == RKShelfItemType.pdfDocument {
-                delegate?.openNotebook(shelfItemProtocol, shelfItemDetails: getCurrentActiveShelfItem(), animate: true, isQuickCreate: getCurrentActiveShelfItem()?.isQuickCreated ?? false, pageIndex: nil)
-            }
-        }
-        else {
-            FTCLSLog("Book: \(notebookName): Inside trash")
-            // show toast or error
+        FTCLSLog("Book: \(notebookName): Tapped")
+        if shelfItemProtocol.type == RKShelfItemType.pdfDocument {
+            delegate?.openNotebook(shelfItemProtocol, shelfItemDetails: getCurrentActiveShelfItem(), animate: true, isQuickCreate: getCurrentActiveShelfItem()?.isQuickCreated ?? false, pageIndex: nil)
         }
     }
     func removeRecentItemsFromRecents(_ items:[FTShelfItemProtocol]) {

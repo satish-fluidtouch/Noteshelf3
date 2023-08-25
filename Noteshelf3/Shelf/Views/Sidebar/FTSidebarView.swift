@@ -68,10 +68,14 @@ struct FTSidebarView: View {
                             FTSidebarTopSectionView(viewModel: viewModel,delegate: viewModel.delegate)
                         }
                         else {
-                            let sidebarItemWidth = self.sidebarItemSizeBasinfAvailableWidth(geometry.size.width)
-                            self.getDisclousreGroupForSection(menuSection,availableWidth: sidebarItemWidth)
-                                .padding(.trailing,12)
-                                .padding(.leading,12)
+                            if !menuSection.items.isEmpty {
+                                let sidebarItemWidth = self.sidebarItemSizeBasinfAvailableWidth(geometry.size.width)
+                                self.getDisclousreGroupForSection(menuSection,availableWidth: sidebarItemWidth)
+                                    .padding(.trailing,12)
+                                    .padding(.leading,12)
+                            }else {
+                                EmptyView()
+                            }
                         }
                     }
                 }
@@ -92,21 +96,14 @@ struct FTSidebarView: View {
                     self.viewModel.configureUIOnViewLoad()
                 })
                 .onReceive(collectionAddedNotification, perform: { notification in
-                    Task {
-                        await viewModel.updateUserCreatedCategories()
-                    }
+                    viewModel.updateUserCreatedCategories()
                 })
                 .onReceive(collectionRemovedNotification, perform: { notification in
                     viewModel.updateCategoryBookMarksOnCategoryDeletion()
-                    Task {
-                        await viewModel.updateUserCreatedCategories()
-                    }
-
+                    viewModel.updateUserCreatedCategories()
                 })
                 .onReceive(collectionUpdatedNotification, perform: { notification in
-                    Task {
-                        await viewModel.updateUserCreatedCategories()
-                    }
+                    viewModel.updateUserCreatedCategories()
                 })
                 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: "refreshSideMenu")), perform: { notification in
                     updateTagItems(notification: notification)

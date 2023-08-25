@@ -31,6 +31,8 @@ private struct FabircKeys {
 
     static let Clouds = "Clouds"
     static let Layout = "Layout"
+    static let Premium = "Premium"
+
 }
 
 class FabricHelper: NSObject {
@@ -62,7 +64,7 @@ class FabricHelper: NSObject {
         keys[FabircKeys.Recognition] = FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO";
         keys[FabircKeys.RecognitionActivated] = FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO";
         keys[FabircKeys.Layout] = (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal";
-
+        keys[FabircKeys.Premium] = FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
         Crashlytics.crashlytics().setCustomValue(keys, forKey: "Startup Keys")
     }
 
