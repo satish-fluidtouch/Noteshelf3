@@ -490,6 +490,13 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     #endif
     }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    #if targetEnvironment(macCatalyst)
+        NotificationCenter.default.post(name: .shouldResignTextfieldNotification, object: nil)
+    #endif
+        return true
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.hideSuggestions = false
         expandButton?.isHidden = true
