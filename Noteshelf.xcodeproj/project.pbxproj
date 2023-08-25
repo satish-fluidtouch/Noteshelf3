@@ -3669,7 +3669,6 @@
 		BAA84E5A2873108600DE801B /* URL+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E5B2873108600DE801B /* UIDevice+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E5C2873108600DE801B /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		BAA84E5D2873108700DE801B /* FTSharedGroupID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSharedGroupID.swift; sourceTree = "<group>"; };
 		BAA84E5E2873108700DE801B /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E5F2873108800DE801B /* NSCalendar+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCalendar+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E602873108800DE801B /* FileManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -10114,7 +10113,6 @@
 			isa = PBXGroup;
 			children = (
 				BAA84E552873108400DE801B /* FTServerConfig.swift */,
-				BAA84E5D2873108700DE801B /* FTSharedGroupID.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
