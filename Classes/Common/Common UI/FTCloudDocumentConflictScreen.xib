@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14835.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14790.5"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTCloudDocumentConflictScreen" customModule="NS2_Beta" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTCloudDocumentConflictScreen" customModule="NS3_Beta" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="pFE-1C-aeB" id="BLp-eq-vdI"/>
                 <outlet property="conflictMessageLabel" destination="TjP-Z8-OuM" id="hug-za-dXy"/>
@@ -27,38 +27,46 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrJ-PQ-Yby">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFE-1C-aeB">
-                            <rect key="frame" x="8" y="5" width="49" height="34"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFE-1C-aeB">
+                            <rect key="frame" x="8" y="4" width="73" height="36"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                             <state key="normal" title="Cancel">
                                 <color key="titleColor" name="lightTitleColor_50"/>
                             </state>
+                            <buttonConfiguration key="configuration" style="plain" title="Cancel">
+                                <fontDescription key="titleFontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                <color key="baseForegroundColor" systemColor="labelColor"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="cancel:" destination="-1" eventType="touchUpInside" id="YrS-Bw-NmY"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ResolveConflict" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="al3-tU-P2P" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ResolveConflict" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="al3-tU-P2P" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
                             <rect key="frame" x="144" y="0.0" width="126" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="140" id="CME-LV-ePI"/>
                                 <constraint firstAttribute="height" constant="44" id="m9m-3f-qtW"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Bitter-Regular" family="Bitter" pointSize="18"/>
-                            <color key="textColor" name="lightTitleColor_50"/>
+                            <color key="textColor" name="black50"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOT-0S-klW">
-                            <rect key="frame" x="303" y="5" width="102" height="34"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOT-0S-klW">
+                            <rect key="frame" x="279.33333333333331" y="4" width="125.66666666666669" height="36"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
                             <state key="normal" title="Keep versions">
                                 <color key="titleColor" name="lightTitleColor_50"/>
                             </state>
+                            <buttonConfiguration key="configuration" style="plain" title="Keep versions">
+                                <fontDescription key="titleFontDescription" name="Avenir-Medium" family="Avenir" pointSize="16"/>
+                                <color key="baseForegroundColor" name="accent"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="keepVersions:" destination="-1" eventType="touchUpInside" id="M1D-oF-TQh"/>
                             </connections>
@@ -82,12 +90,12 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" name="cellSeparatorColor"/>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-Z8-OuM" customClass="FTStyledLabel" customModule="NS2_Beta" customModuleProvider="target">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TjP-Z8-OuM" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
                             <rect key="frame" x="7" y="1" width="400" height="60"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <string key="text">Modificationsarenotinsync.Choose which notes to  keep kncklsklcsklckasfklasjdkfljaslfjaslfjlasjflasjflasjflasjflajslfjaslfjalsfjl;asjfl;asjfl;asjfl;ajsl;fjasl;fj</string>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
-                            <color key="textColor" name="lightTitleColor_50"/>
+                            <color key="textColor" name="black50"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yb9-CC-3Ti" userLabel="Divider - bottom">
@@ -96,13 +104,13 @@
                             <color key="backgroundColor" name="cellSeparatorColor"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="62" id="ega-c6-4QI"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mk1-nI-oLF">
-                    <rect key="frame" x="0.0" y="106" width="414" height="630"/>
+                    <rect key="frame" x="0.0" y="106" width="414" height="610"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="gKs-Gm-pdS"/>
@@ -110,7 +118,8 @@
                     </connections>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" name="bgColor"/>
+            <viewLayoutGuide key="safeArea" id="hw5-gq-Sd3"/>
+            <color key="backgroundColor" name="formSheetBgColor"/>
             <constraints>
                 <constraint firstItem="mk1-nI-oLF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6XZ-41-r51"/>
                 <constraint firstItem="JrJ-PQ-Yby" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="OFU-BB-3tC"/>
@@ -127,7 +136,6 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="hw5-gq-Sd3"/>
             <point key="canvasLocation" x="423" y="104"/>
         </view>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConflictCell" rowHeight="105" id="pcs-j5-dAd">
@@ -145,14 +153,12 @@
                         <rect key="frame" x="129" y="24" width="215" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" name="headerColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhb-b5-lVr">
                         <rect key="frame" x="129" y="58" width="215" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" name="headerColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xct-ue-V6k">
@@ -160,23 +166,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" name="popoverBgColor"/>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="Vmh-Ad-TF2"/>
+            <color key="backgroundColor" name="popoverBgColor"/>
             <point key="canvasLocation" x="521" y="-484"/>
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="bgColor">
-            <color red="0.9882352941176471" green="0.9882352941176471" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="cellSeparatorColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="headerColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="formSheetBgColor">
+            <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="lightTitleColor_50">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="popoverBgColor">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

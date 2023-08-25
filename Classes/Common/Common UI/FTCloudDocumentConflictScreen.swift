@@ -150,7 +150,7 @@ class FTCloudDocumentConflictScreen : UIViewController,UITableViewDataSource,UIT
         dateFormatter.dateStyle = DateFormatter.Style.medium;
 
         cell?.setStyledDetailText(dateFormatter.string(from: fileVersion.modificationDate!), style: .defaultStyle);
-
+        cell?.backgroundColor = .appColor(.cellBackgroundColor)
         return cell!;
     }
     
