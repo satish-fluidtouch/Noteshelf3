@@ -34,11 +34,6 @@ struct FTShelfHomeView: FTShelfBaseView {
                                 .padding(.horizontal,gridHorizontalPadding)
                                 .padding(.top,40)
                                 .padding(.bottom,28)
-                            FTGetInspireView(viewmodel: FTGetInspiredViewModel())
-                                .environmentObject(viewModel)
-                                .macOnlyPlainButtonStyle()
-                                .padding(.horizontal,gridHorizontalPadding)
-                                .padding(.bottom,24)
                         }
                     }
                 }
