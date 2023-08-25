@@ -3,6 +3,16 @@
     {
       "filename" : "premium_bg_formsheet.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "premium_bg_formsheet_dark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
