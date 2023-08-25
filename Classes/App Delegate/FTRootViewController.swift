@@ -117,10 +117,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
-        weak var weakSelf = self;
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
             FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: {
-                weakSelf?.updateProvider({
+                [weak self] in
+                self?.addShelfToolbar();
+                self?.updateProvider({
                     //                    if !UserDefaults.standard.bool(forKey: "allNotes_tracked") {
                     //                        self.trackAllNotes()
                     //                    }
@@ -128,7 +129,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             });
             self.refreshStatusBarAppearnce();
         }
-        self.addShelfToolbar();
+        else {
+            self.addShelfToolbar();
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -170,7 +173,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
 
         func finalizeBlock() {
-            addShelfToolbar();
             self.view.isUserInteractionEnabled = true;
             self.rootContentViewController?.shelfViewDidMovedToFront();
             self.refreshStatusBarAppearnce();

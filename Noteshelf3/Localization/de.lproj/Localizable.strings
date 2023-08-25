@@ -635,7 +635,7 @@
 "PencilActionAlert" = "Diese Aktion überschreibt nur die systemweite Voreinstellung für diese App. Möchten Sie fortfahren?";
 "PencilActionChangeMessage" = "Gehe zu Einstellungen > Apple Pencil, um zu ändern.";
 "Pens" = "Stifte";
-"People" = "Smileys & People in German would be Smileys & Personen.";
+"People" = "Smileys & Personen";
 "People" = "Smileys & Menschen";
 "PeriodExceedsTweleveMonths" = "Der Begriff überschreitet 12 Monate! Bitte wählen Sie einen kürzeren Begriff.";
 "PeriodIsNotTweleveMonths" = "Sie müssen einen 12-Monats-Zeitraum auswählen, um dieses Tagebuch zu erstellen.";
@@ -1197,7 +1197,6 @@
 "settings" = "Einstellungen";
 "settings.about.copyrightmessage" = "Urheberrecht © 2023 Noteshelf. Alle Rechte vorbehalten.";
 "settings.about.description" = "Vorstellung von Noteshelf 3 - eine neue und verbesserte Version Ihrer bevorzugten Notiz-App.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "Benutzer-ID %@";
 "settings.about.version" = "VERSION %@ %@";
 "settings.useApplePencil" = "Verwende Apple Pencil";
@@ -1439,6 +1438,7 @@
 "templatesStore.templatePreview.createNotebook" = "Erstellen Sie ein Notizbuch";
 "templatesStore.templatePreview.inyourLibrary" = "In deiner Bibliothek";
 "templatesStore.templatePreview.style" = "Stil";
+"trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
 "untitled" = "Unbenannt";
@@ -1484,4 +1484,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Rakesh on 24 August 2023 at 3:50 PM

@@ -321,9 +321,13 @@ extension FTNewTextStyleViewController {
     }
     
     @IBAction func tappedOnFontName(_ sender: UIButton) {
-        let fontPicker: FTFontPickerViewController = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
+        let fontPicker = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
         fontPicker.delegate = self
+#if !targetEnvironment(macCatalyst)
         self.navigationController?.pushViewController(fontPicker, animated: true)
+#else
+        self.present(fontPicker, animated: true)
+#endif
     }
 
     private func handlefontSizeChange(value: Int){

@@ -9,6 +9,10 @@
 import Foundation
 import SwiftUI
 
+enum StickerType: Codable {
+    case staticSticker
+    case downloadedSticker
+}
 
 struct FTStickerContainerResponseModel : Codable {
     var stickers: [FTStickerCategory]
@@ -22,6 +26,7 @@ struct FTStickerCategory: Codable {
 struct FTStickerSubCategory: Codable {
     let title, image,filename: String
     let stickerItems: [FTStickerItem]
+    var type: StickerType? = .staticSticker
 }
 
 struct FTStickerItem: Codable, Equatable {
