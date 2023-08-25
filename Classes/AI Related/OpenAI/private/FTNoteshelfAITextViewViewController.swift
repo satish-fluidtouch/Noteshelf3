@@ -106,6 +106,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.textView?.layer.cornerRadius = 10.0
         self.supportsHandwriting = !UIDevice.isChinaRegion;
         let menuItem = UIDeferredMenuElement.uncached { items in
             var menuItems = [UIMenuElement]();

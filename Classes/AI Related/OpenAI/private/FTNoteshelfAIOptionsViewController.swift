@@ -32,6 +32,8 @@ class FTNoteshelfAIOptionsViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.aiTableView?.layer.cornerRadius = 10.0
+        self.aiTableView?.separatorInset = .zero;
         aiTableView?.register(FTAIOptionTableViewCell.self, forCellReuseIdentifier: FTAIOptionTableViewCell.cellIdentifier);
     }
 }
@@ -40,6 +42,7 @@ extension FTNoteshelfAIOptionsViewController: UITableViewDataSource,UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = FTAIOptionTableViewCell.cellIdentifier;
         let tableCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        tableCell.backgroundColor = UIColor.appColor(.cellBackgroundColor);
         return tableCell;
     }
     

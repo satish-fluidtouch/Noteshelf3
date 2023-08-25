@@ -105,6 +105,7 @@ class FTNoteshelfAITranslateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.aiTableView?.layer.cornerRadius = 10.0
         self.aiTableView?.register(FTAITranslateTableViewCell.self, forCellReuseIdentifier: FTAITranslateTableViewCell.cellIdentifier);
     }
 }
@@ -112,6 +113,7 @@ class FTNoteshelfAITranslateViewController: UIViewController {
 extension FTNoteshelfAITranslateViewController: UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: FTAITranslateTableViewCell.cellIdentifier, for: indexPath);
+        tableCell.backgroundColor = UIColor.appColor(.cellBackgroundColor);
         return tableCell;
     }
 

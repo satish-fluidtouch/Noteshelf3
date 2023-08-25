@@ -305,35 +305,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
-                                <rect key="frame" x="0.0" y="75" width="393" height="33.666666666666657"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCz-we-RCy">
-                                <rect key="frame" x="0.0" y="124.66666666666669" width="393" height="693.33333333333326"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lwm-AW-1KH">
+                                <rect key="frame" x="20" y="389.33333333333331" width="353" height="98.666666666666686"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="67"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vK5-Bb-DIu" userLabel="Message Lable">
+                                        <rect key="frame" x="160" y="83" width="33" height="15.666666666666671"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jIk-ps-3qg" firstAttribute="centerX" secondItem="lwm-AW-1KH" secondAttribute="centerX" id="Hki-73-qUp"/>
+                                    <constraint firstItem="vK5-Bb-DIu" firstAttribute="centerX" secondItem="jIk-ps-3qg" secondAttribute="centerX" id="Hrl-Kh-m8f"/>
+                                    <constraint firstItem="jIk-ps-3qg" firstAttribute="width" secondItem="lwm-AW-1KH" secondAttribute="width" id="TkC-B3-1je"/>
+                                    <constraint firstAttribute="bottom" secondItem="vK5-Bb-DIu" secondAttribute="bottom" id="rQp-GS-me6"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Jsq-hP-ijA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="jIk-ps-3qg" firstAttribute="top" secondItem="Jsq-hP-ijA" secondAttribute="top" constant="16" id="FXo-dR-CWx"/>
-                            <constraint firstItem="Jsq-hP-ijA" firstAttribute="bottom" secondItem="jCz-we-RCy" secondAttribute="bottom" id="FqY-s2-rq4"/>
-                            <constraint firstItem="jIk-ps-3qg" firstAttribute="width" secondItem="4c8-0r-k7e" secondAttribute="width" id="MpW-Qf-jM3"/>
-                            <constraint firstItem="jIk-ps-3qg" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="NJY-N1-d0y"/>
-                            <constraint firstItem="jCz-we-RCy" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="QEJ-OA-PVI"/>
-                            <constraint firstItem="jCz-we-RCy" firstAttribute="top" secondItem="jIk-ps-3qg" secondAttribute="bottom" constant="16" id="mmj-Oa-jGR"/>
-                            <constraint firstItem="jCz-we-RCy" firstAttribute="width" secondItem="jIk-ps-3qg" secondAttribute="width" id="ohq-vg-IBQ"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="height" relation="lessThanOrEqual" secondItem="Jsq-hP-ijA" secondAttribute="height" id="PXp-Hq-zfJ"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerY" secondItem="Jsq-hP-ijA" secondAttribute="centerY" id="iLH-8q-fLG"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="o1H-fj-ggW"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="width" secondItem="Jsq-hP-ijA" secondAttribute="width" constant="-40" id="wIA-BQ-vZA"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="messageView" destination="jCz-we-RCy" id="uyp-PZ-KJj"/>
+                        <outlet property="messageLabel" destination="vK5-Bb-DIu" id="cX7-UV-n4q"/>
                         <outlet property="titleLabel" destination="jIk-ps-3qg" id="LAh-9G-Mjt"/>
                     </connections>
                 </viewController>
