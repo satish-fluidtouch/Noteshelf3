@@ -1047,7 +1047,7 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
             }
 
             let page = self.filteredPages[indexPath.item];
-            FTCLSLog("In \(self.mode) mode with \(self.screenMode) state")
+            FTCLSLog("Finder - Mode: \(self.mode), Screen State: \(self.screenMode)")
             if  self.mode == .none {
                 let indexSelected: Int;
                 if self.mode == .none {
