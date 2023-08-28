@@ -264,7 +264,7 @@
 "DontBackup" = "不备份";
 "DontShowForThisBook" = "不要再为此笔记本发出警告";
 "DontShowHintAgain" = "不显示";
-"DoubleTapAction" = "双击动作 (Shuāngjī dòngzuò)";
+"DoubleTapAction" = "双击动作";
 "Download" = "下载";
 "Downloaded" = "已下载";
 "Downloading" = "下载中";
@@ -1185,7 +1185,7 @@
 "publishtoEvernote" = "发布到Evernote";
 "quickNoteSave.deleteQuickNote" = "删除快速笔记";
 "quickNoteSave.saveQuickNote" = "保存快速笔记";
-"quickNotesSave.quickNote" = "快速笔记 (Kuàisù bǐjì)";
+"quickNotesSave.quickNote" = "快速笔记";
 "quotes" = "引语";
 "removefromRecents" = "从最近删除";
 "reset" = "重置";
@@ -1490,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM
+// Last Synced by Rakesh on 28 August 2023 at 3:37 PM

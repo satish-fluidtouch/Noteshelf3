@@ -264,7 +264,7 @@
 "DontBackup" = "Ne sauvegardez pas.";
 "DontShowForThisBook" = "Ne pas avertir à nouveau pour ce bloc-notes";
 "DontShowHintAgain" = "Ne pas afficher";
-"DoubleTapAction" = "Action Double Tap";
+"DoubleTapAction" = "Action de double tap";
 "Download" = "Télécharger";
 "Downloaded" = "Déjà téléchargé";
 "Downloading" = "Téléchargement...";
@@ -1490,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM
+// Last Synced by Rakesh on 28 August 2023 at 3:37 PM
