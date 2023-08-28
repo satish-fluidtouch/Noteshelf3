@@ -20,15 +20,12 @@ protocol FTNotebookToolDelegate: AnyObject {
 }
 
 class FTNotebookToolsHeaderView: UIView {
-    @IBOutlet var shareLabel: FTCustomLabel?
-    @IBOutlet var presentLabel: FTCustomLabel?
-    @IBOutlet var gotoPageLabel: FTCustomLabel?
     @IBOutlet var numberOfPagesLabel: FTCustomLabel?
-    @IBOutlet var zoomLabel: FTCustomLabel?
     weak var del: FTNotebookToolDelegate?
     @IBOutlet var topStackview: UIStackView?
     @IBOutlet var bottomStackview: UIStackView?
-
+    @IBOutlet weak var macNumberOfPagesLabel: FTCustomLabel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         topStackview?.subviews.forEach({ eachView in
@@ -40,12 +37,9 @@ class FTNotebookToolsHeaderView: UIView {
     }
     
     func confiure(with page: FTPageProtocol) {
-        shareLabel?.text = "Share".localized
-        presentLabel?.text = "customizeToolbar.present".localized
-        gotoPageLabel?.text = "GoToPage".localized
         let pageNumberString = String(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), page.pageIndex() + 1, page.parentDocument?.pages().count ?? 0)
         numberOfPagesLabel?.text = pageNumberString
-        zoomLabel?.text = "ZoomBox".localized
+        macNumberOfPagesLabel?.text = pageNumberString
     }
     
     @IBAction func buttonTapped(_ sender: Any) {
