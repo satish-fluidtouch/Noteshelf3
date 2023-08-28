@@ -44,17 +44,20 @@ private class FTModalScaleUpPresentationController : UIPresentationController {
         }
     }
 
-    private var resetOnActiveTransform: CGAffineTransform?;
+//    private var resetOnActiveTransform: CGAffineTransform?;
     override func containerViewWillLayoutSubviews() {
         super.containerViewWillLayoutSubviews();
-        if(self.presentingViewController.view.window?.windowScene?.activationState != .foregroundActive) {
-            resetOnActiveTransform = self.presentingViewController.view.transform;
-            self.presentingViewController.view.transform = .identity;
-        }
-        else if let transform = resetOnActiveTransform {
-            self.presentingViewController.view.transform = transform;
-            resetOnActiveTransform = nil;
-        }
+//        self.presentingViewController.view.transform = FTScaleTransitionMode.big.transform;
+//        self.presentedViewController.view.transform = FTScaleTransitionMode.normal.transform;
+//
+//        if(self.presentingViewController.view.window?.windowScene?.activationState != .foregroundActive) {
+//            resetOnActiveTransform = self.presentingViewController.view.transform;
+//            self.presentingViewController.view.transform = .identity;
+//        }
+//        else if let transform = resetOnActiveTransform {
+//            self.presentingViewController.view.transform = transform;
+//            resetOnActiveTransform = nil;
+//        }
     }
 
     override func presentationTransitionWillBegin() {
@@ -211,7 +214,8 @@ private enum FTScaleTransitionMode {
         case .normal:
             return CGAffineTransform.identity;
         case .big:
-            return CGAffineTransformMakeScale(1.3, 1.3);
+            return CGAffineTransform.identity;
+//            return CGAffineTransformMakeScale(1.3, 1.3);
         }
     }
     
