@@ -70,7 +70,7 @@ struct FTShelfHomeView: FTShelfBaseView {
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
             return geometrySize > 800 ? 218 : (geometrySize > 420 ? 340 : 495)
         }else if !viewModel.shouldShowGetStartedInfo {
-            return geometrySize > 420 ? 96 : 220
+            return geometrySize > 600 ? 68 : (geometrySize < 400 ? 220 : 96)
         } else {
             return geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) ? 96 : 68
         }
