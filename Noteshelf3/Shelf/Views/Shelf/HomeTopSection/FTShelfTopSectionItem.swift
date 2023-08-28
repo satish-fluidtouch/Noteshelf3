@@ -38,7 +38,7 @@ struct FTShelfTopSectionItem: View {
 
     @ViewBuilder
     private var topSectionView: some View {
-        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 400 {
+        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 600 && !shelfViewModel.shouldShowGetStartedInfo || geometrySize < 400 {
             VStack(alignment: .leading){
                 gridcomponetImageView
                 VStack(alignment: .leading){
@@ -46,7 +46,7 @@ struct FTShelfTopSectionItem: View {
                 }
             }
             .frame(maxWidth: .infinity,alignment: .leading)
-            .frame(height: shelfViewModel.isInHomeMode ? 135.0 : 60.0)
+            .frame(height: shelfViewModel.isInHomeMode && shelfViewModel.shouldShowGetStartedInfo ? 135.0 : 60.0)
         }else{
             HStack{
                 gridcomponetImageView
@@ -79,8 +79,8 @@ extension FTShelfTopSectionItem{
         Image(isFirsttime ? type.largeiconName : type.iconName)
             .resizable()
             .scaledToFit()
-            .frame(width: isFirsttime  && shelfViewModel.isInHomeMode && geometrySize > 400 ? 64.0 : (shelfViewModel.isInHomeMode ? 48.0 : 36.0),
-                   height: isFirsttime  && shelfViewModel.isInHomeMode && geometrySize > 400  ? 64.0 : (shelfViewModel.isInHomeMode ? 48.0 : 36.0))
+            .frame(width: shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 400 ? 64.0 : (geometrySize < 400 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0),
+                   height: shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 400  ? 64.0 : (geometrySize < 400 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0))
     }
 }
 extension View {
