@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "このカテゴリ内のアイテムはゴミ箱に移動されます。";
 "shelf.deleteCategoryAlert.title" = "削除してもよろしいですか？";
 "shelf.deleteTagAlert.message" = "アイテムからタグが削除されます。";
+"shelf.discover.aiAssitedDescription" = "手書きメモを作成し、Noteshelf AIでその他の機能を利用する。";
+"shelf.discover.aiAssitedNotesTitle" = "AI支援ノート";
 "shelf.discover.coversDescription" = "美しいカバーで棚を個性化してください。";
 "shelf.discover.coversTitle" = "スタイルに合わせたカバー";
 "shelf.discover.customToolbarDescription" = "ツールバーを自分好みにカスタマイズし、お気に入りのツールを手軽に利用できるようにしましょう。";
@@ -1237,10 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "デジタルダイアリーズ＆プランナーズ";
 "shelf.discover.focusModeDescription" = "集中したノート取りのために、気を散らさずに行ってください。";
 "shelf.discover.focusModeTitle" = "フォーカスモード";
+"shelf.discover.getInspiredDescription" = "Noteshelf 3 で作成された美しい手書きノートを探索する。";
+"shelf.discover.getInspiredTitle" = "インスピレーションを得る";
 "shelf.discover.migrationDescription" = "Noteshelf 3 にすべてのカテゴリ、グループ、ノートを持ってきてください。";
 "shelf.discover.migrationTitle" = "ノートシェルフ2から移行";
-"shelf.discover.tagsDescription" = "メモを整理して瞬時に見つける。";
-"shelf.discover.tagsTitle" = "タグのページとノートブック";
+"shelf.discover.tagsDescription" = "瞬時に整理してメモを見つける。";
+"shelf.discover.tagsTitle" = "ノートを整理する";
 "shelf.discover.templatesDescription" = "学校、仕事、ジャーナリングなどのための数百のテンプレートを見つける。";
 "shelf.discover.templatesTitle" = "あらゆるニーズに対応するテンプレート";
 "shelf.discover.title" = "可能性を発見する";
@@ -1486,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM
+// Last Synced by Rakesh on 28 August 2023 at 3:37 PM

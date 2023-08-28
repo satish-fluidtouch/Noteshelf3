@@ -35,7 +35,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
                         if viewModel.showNewNoteView,
-                           geometry.size.width > 400,
+                           geometry.size.width > 300,
                            viewModel.canShowCreateNBButtons {
                             FTShelfTopSectionView()
                                 .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)

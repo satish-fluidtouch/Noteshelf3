@@ -9,8 +9,9 @@ import SwiftUI
 
 struct FTShelfTopSectionItem: View {
     var type: FTShelfHomeTopSectionModel
-    let isFirsttime:Bool
-    let isCompact:Bool
+    let isFirsttime: Bool
+    let geometrySize: CGFloat
+    
     @StateObject var shelfViewModel: FTShelfViewModel
     
     var body: some View {
@@ -37,7 +38,7 @@ struct FTShelfTopSectionItem: View {
 
     @ViewBuilder
     private var topSectionView: some View {
-        if isCompact && !isFirsttime ||  isCompact && isFirsttime && !shelfViewModel.isInHomeMode {
+        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 400 {
             VStack(alignment: .leading){
                 gridcomponetImageView
                 VStack(alignment: .leading){
@@ -45,6 +46,7 @@ struct FTShelfTopSectionItem: View {
                 }
             }
             .frame(maxWidth: .infinity,alignment: .leading)
+            .frame(height: shelfViewModel.isInHomeMode ? 135.0 : 60.0)
         }else{
             HStack{
                 gridcomponetImageView
@@ -52,7 +54,7 @@ struct FTShelfTopSectionItem: View {
                     gridcomponettitleAndDescription
                 }
             }
-            .frame(maxWidth: .infinity,alignment: .leading)
+            .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
         }
     }
 }
@@ -77,8 +79,8 @@ extension FTShelfTopSectionItem{
         Image(isFirsttime ? type.largeiconName : type.iconName)
             .resizable()
             .scaledToFit()
-            .frame(width: isFirsttime  && shelfViewModel.isInHomeMode ? 64.0 : 36.0,
-                   height: isFirsttime  && shelfViewModel.isInHomeMode ?  64.0 : 36.0)
+            .frame(width: isFirsttime  && shelfViewModel.isInHomeMode && geometrySize > 400 ? 64.0 : (shelfViewModel.isInHomeMode ? 48.0 : 36.0),
+                   height: isFirsttime  && shelfViewModel.isInHomeMode && geometrySize > 400  ? 64.0 : (shelfViewModel.isInHomeMode ? 48.0 : 36.0))
     }
 }
 extension View {
@@ -88,6 +90,6 @@ extension View {
 }
 struct PortraitGridItem_Previews: PreviewProvider {
     static var previews: some View {
-        FTShelfTopSectionItem(type: .quicknote, isFirsttime: true, isCompact: true, shelfViewModel: FTShelfViewModel(sidebarItemType: .home))
+        FTShelfTopSectionItem(type: .quicknote, isFirsttime: true, geometrySize: 400.0, shelfViewModel: FTShelfViewModel(sidebarItemType: .home))
     }
 }

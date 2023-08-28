@@ -264,7 +264,7 @@
 "DontBackup" = "不要備份";
 "DontShowForThisBook" = "請勿再對此筆記本發出警告";
 "DontShowHintAgain" = "不顯示";
-"DoubleTapAction" = "雙擊操作";
+"DoubleTapAction" = "雙擊動作";
 "Download" = "下載";
 "Downloaded" = "已下載";
 "Downloading" = "下載中...";
@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "此分類中的項目將被移至垃圾桶。";
 "shelf.deleteCategoryAlert.title" = "你确定要删除吗？";
 "shelf.deleteTagAlert.message" = "標籤將從項目中移除。";
+"shelf.discover.aiAssitedDescription" = "以手寫方式生成筆記和更多內容的Noteshelf AI";
+"shelf.discover.aiAssitedNotesTitle" = "AI輔助筆記";
 "shelf.discover.coversDescription" = "使用美麗的封面個性化您的書櫃。";
 "shelf.discover.coversTitle" = "以符合您的風格";
 "shelf.discover.customToolbarDescription" = "將工具列變成你自己的，使你所有喜愛的工具都近在手邊。";
@@ -1237,10 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "數位日記和計劃器";
 "shelf.discover.focusModeDescription" = "專心筆記，無干擾。";
 "shelf.discover.focusModeTitle" = "專注模式";
+"shelf.discover.getInspiredDescription" = "探索在Noteshelf 3中創建的美麗手寫筆記。";
+"shelf.discover.getInspiredTitle" = "受到啟發";
 "shelf.discover.migrationDescription" = "將您的所有分類、群組和筆記帶到 Noteshelf 3。";
 "shelf.discover.migrationTitle" = "從Noteshelf 2遷移";
-"shelf.discover.tagsDescription" = "組織您的筆記並立即找到它們。";
-"shelf.discover.tagsTitle" = "標籤頁面和筆記本";
+"shelf.discover.tagsDescription" = "保持有序，即時找到您的筆記。";
+"shelf.discover.tagsTitle" = "組織您的筆記";
 "shelf.discover.templatesDescription" = "在學校、工作、日記等方面發現數百種模板。";
 "shelf.discover.templatesTitle" = "每個需求的範本";
 "shelf.discover.title" = "發現可能性";
@@ -1486,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM
+// Last Synced by Rakesh on 28 August 2023 at 3:37 PM

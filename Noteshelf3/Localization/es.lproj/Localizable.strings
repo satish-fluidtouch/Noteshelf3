@@ -264,7 +264,7 @@
 "DontBackup" = "No hacer copia de seguridad";
 "DontShowForThisBook" = "No advertir nuevamente para este cuaderno";
 "DontShowHintAgain" = "No mostrar";
-"DoubleTapAction" = "Acción de Doble Toque";
+"DoubleTapAction" = "Acción de doble toque";
 "Download" = "Descargar";
 "Downloaded" = "Ya descargado";
 "Downloading" = "Descargando...";
@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "Los elementos de esta categoría serán movidos a la Papelera.";
 "shelf.deleteCategoryAlert.title" = "¿Estás seguro de que quieres eliminar?";
 "shelf.deleteTagAlert.message" = "Las etiquetas serán eliminadas de los elementos.";
+"shelf.discover.aiAssitedDescription" = "Generar notas manuscritas y más con Noteshelf AI";
+"shelf.discover.aiAssitedNotesTitle" = "Notas asistidas por AI";
 "shelf.discover.coversDescription" = "Personaliza tu estantería con hermosas cubiertas.";
 "shelf.discover.coversTitle" = "Fundas para combinar con tu estilo";
 "shelf.discover.customToolbarDescription" = "Haz que la barra de herramientas sea tuya con todas tus herramientas favoritas al alcance.";
@@ -1237,10 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "Agendas y planificadores digitales.";
 "shelf.discover.focusModeDescription" = "Ir sin distracciones para tomar notas enfocadas.";
 "shelf.discover.focusModeTitle" = "Modo de enfoque";
+"shelf.discover.getInspiredDescription" = "Explora hermosas notas escritas a mano creadas en Noteshelf 3.";
+"shelf.discover.getInspiredTitle" = "Inspirarse";
 "shelf.discover.migrationDescription" = "Lleva todas tus categorías, grupos y notas a Noteshelf 3.";
 "shelf.discover.migrationTitle" = "Emigrar de Noteshelf 2";
-"shelf.discover.tagsDescription" = "Organiza tus notas y encuéntralas al instante.";
-"shelf.discover.tagsTitle" = "Páginas y cuadernos de etiquetas";
+"shelf.discover.tagsDescription" = "Mantén organizado y encuentra tus notas al instante.";
+"shelf.discover.tagsTitle" = "Organice sus notas.";
 "shelf.discover.templatesDescription" = "Descubre cientos de plantillas para la escuela, el trabajo, la escritura de diarios y más.";
 "shelf.discover.templatesTitle" = "Una plantilla para cada necesidad.";
 "shelf.discover.title" = "Descubre lo que es posible.";
@@ -1486,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 11:58 AM
+// Last Synced by Rakesh on 28 August 2023 at 3:37 PM
