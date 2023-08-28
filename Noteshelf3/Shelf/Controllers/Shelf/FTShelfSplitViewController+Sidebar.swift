@@ -28,9 +28,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             }
             let secondaryViewController = getSecondaryViewControllerForHomeOption()
             self.updateRootVCToDetailNavController(rootVC: secondaryViewController)
-            if let detailNavVC = detailNavigationController {
-                detailNavVC.viewControllers.first?.title = "sidebar.topSection.home".localized
-            }
         }
     }
     
