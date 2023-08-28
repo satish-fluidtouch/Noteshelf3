@@ -68,9 +68,9 @@ struct FTShelfHomeView: FTShelfBaseView {
     private func showMinHeight(geometrySize: CGFloat) -> CGFloat {
         let isInPortrait = UIScreen.main.bounds.height > UIScreen.main.bounds.width
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 800 ? 218 : (geometrySize > 420 ? 340 : 495)
+            return geometrySize > 800 ? 218 : (geometrySize > 500 ? 340 : 495)
         }else if !viewModel.shouldShowGetStartedInfo {
-            return geometrySize > 600 ? 68 : (geometrySize < 400 ? 220 : 96)
+            return geometrySize > 700 ? 68 : (geometrySize < 500 ? 220 : 96)
         } else {
             return geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) ? 96 : 68
         }
