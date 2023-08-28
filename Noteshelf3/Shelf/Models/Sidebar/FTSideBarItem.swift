@@ -11,6 +11,9 @@ import SwiftUI
 import MobileCoreServices
 
 class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObject {
+    override var debugDescription: String {
+        return title + "-" + (shelfCollection?.title ?? "")
+    }
     var id: String = ""
     var title: String = ""
 
@@ -26,7 +29,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
     var type: FTSideBarItemType = .home
 
     var shelfCollection: FTShelfItemCollection?
-    
+
     var highlightColor: Color {
         if !self.isEditing && !self.highlighted {
             return Color.appColor(.sideBarSelectedTint)

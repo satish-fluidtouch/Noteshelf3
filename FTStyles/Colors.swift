@@ -62,7 +62,6 @@ public enum AssetsColor: String, CaseIterable {
     case starredSelectedBG
     case templatesBG
     case templatesSelectedBG
-    case templatesSubtitleTint
     case templatesTitleTint
     case trashBG
     case trashIconTint
@@ -72,6 +71,9 @@ public enum AssetsColor: String, CaseIterable {
     case unfiledSelectedBG
     case finderBgColor
     case moreTemplatesBorderTint
+    case templatesIconSelectedTint
+    case templatesIconTint
+    case templatesSelectedTitleTint
 
     //AccentNew
     case accentBg
