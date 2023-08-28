@@ -776,13 +776,13 @@ extension FTPDFRenderViewController {
                     text = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 }
                 if let enteredText = text, !enteredText.isEmpty {
-                    let save = FTNotebookBackAction(rawValue: 1) //Save action
+                    let save: FTNotebookBackAction = FTSaveAction //Save action
                     self.back(toShelfButtonAction: save, with: enteredText)
                 }
             })
             alertController.addAction(saveAction)
             let deleteAction = UIAlertAction.init(title: NSLocalizedString("quickNoteSave.deleteQuickNote", comment: "Delete Quick Note"), style: .destructive, handler: { _ in
-                let delete = FTNotebookBackAction(rawValue: 2) //Save action
+                let delete: FTNotebookBackAction = FTMoveToTrashAction //Save action
                 self.back(toShelfButtonAction: delete, with: self.shelfItemManagedObject.title)
             })
             alertController.addAction(deleteAction)
@@ -821,9 +821,9 @@ extension FTPDFRenderViewController {
 extension FTPDFRenderViewController: FTQuickNoteSaveDelegate {
     func didSaveQuickCreatedNote(quickNoteVc: FTQuickNoteSaveViewController, noteTitle: String) {
         self.dismiss(animated: false) {
-            var backAction = FTNotebookBackAction(rawValue: 1) //Save action
+            var backAction: FTNotebookBackAction = FTSaveAction //Save action
             if self.shelfItemManagedObject.title == noteTitle {
-                 backAction = FTNotebookBackAction(rawValue: 0) //Normal action
+                backAction = FTNormalAction //Normal action
             }
             //****************************** AutoBackup & AutoPublish
             if let shelfItem = self.shelfItemManagedObject.documentItem as? FTDocumentItemProtocol {
@@ -869,23 +869,34 @@ extension FTPDFRenderViewController: FTQuickNoteSaveDelegate {
     
     func didDeleteQuickCreatedNote(quickNoteVc: FTQuickNoteSaveViewController) {
         self.dismiss(animated: false) {
-            self.back(toShelfButtonAction: FTNotebookBackAction.init(rawValue: 2), with: self.shelfItemManagedObject.title)
+            self.back(toShelfButtonAction: FTNotebookBackAction.init(rawValue: 3), with: self.shelfItemManagedObject.title)
         }
     }
     
-    @objc func deleteShelfItem() {
+    @objc func deleteShelfItem(_ deletePermanently: Bool) {
         let shelfItem = self.shelfItemManagedObject.shelfItemProtocol
         runInMainThread { [weak self] in
-                FTNoteshelfDocumentProvider.shared.moveItemstoTrash([shelfItem],
-                                                                onCompletion:
-                { (error, movedItems) in
-                    if let item = movedItems.first
-                    {
+            if let item = shelfItem as? FTDocumentItemProtocol {
+                if deletePermanently {
+                    shelfItem.shelfCollection.removeShelfItem(shelfItem, onCompletion: { [weak self](error, removedItem) in
                         self?.updatePublishedRecord(item: item,
-                                                     isDeleted: true,
-                                                     isMoved: false)
-                    }
-            })
+                                                    isDeleted: true,
+                                                    isMoved: false)
+                    });
+                }
+                else {
+                    FTNoteshelfDocumentProvider.shared.moveItemstoTrash([shelfItem],
+                                                                        onCompletion:
+                                                                            { (error, movedItems) in
+                        if let item = movedItems.first
+                        {
+                            self?.updatePublishedRecord(item: item,
+                                                        isDeleted: true,
+                                                        isMoved: false)
+                        }
+                    })
+                }
+            }
         }
     }
     

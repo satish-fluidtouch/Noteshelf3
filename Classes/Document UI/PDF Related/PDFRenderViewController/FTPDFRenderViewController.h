@@ -26,9 +26,10 @@ typedef enum : NSInteger {
 }FTAddNewPageMode;
 
 typedef enum: NSInteger  {
-     FTNormalAction,
-     FTSaveAction,
-     FTDeleteAction,
+    FTNormalAction,
+    FTSaveAction,
+    FTDeletePermanentlyAction,
+    FTMoveToTrashAction
 }FTNotebookBackAction;
 
 

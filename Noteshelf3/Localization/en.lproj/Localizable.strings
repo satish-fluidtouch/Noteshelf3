@@ -1197,7 +1197,6 @@
 "settings" = "Settings";
 "settings.about.copyrightmessage" = "Copyright © 2023 Noteshelf. All rights reserved.";
 "settings.about.description" = "Introducing Noteshelf 3 a new and improved version of your favorite note-taking app.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "User ID %@";
 "settings.about.version" = "VERSION %@ %@";
 "settings.useApplePencil" = "Use Apple Pencil";
@@ -1230,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "The items within this category will be moved to the Trash.";
 "shelf.deleteCategoryAlert.title" = "Are you sure you want to delete?";
 "shelf.deleteTagAlert.message" = "Tags will be removed from the items.";
+"shelf.discover.aiAssitedDescription" = "Generate notes in handwriting and more with Noteshelf AI";
+"shelf.discover.aiAssitedNotesTitle" = "Ai-assited notes";
 "shelf.discover.coversDescription" = "Personalize your shelf with beautiful covers.";
 "shelf.discover.coversTitle" = "Covers to match your style";
 "shelf.discover.customToolbarDescription" = "Make the toolbar your own with all your favorite tools within reach.";
@@ -1238,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "Digital diaries & planners";
 "shelf.discover.focusModeDescription" = "Go distraction-free for focused note-taking.";
 "shelf.discover.focusModeTitle" = "Focus mode";
-"shelf.discover.tagsDescription" = "Organize your notes and find them in an instant.";
-"shelf.discover.tagsTitle" = "Tag pages & notebooks";
+"shelf.discover.getInspiredDescription" = "Explore beautiful handwritten notes created in Noteshelf 3.";
+"shelf.discover.getInspiredTitle" = "Get inspired";
+"shelf.discover.migrationDescription" = "Bring all your categories, groups and notes to Noteshelf 3.";
+"shelf.discover.migrationTitle" = "Migrate from Noteshelf 2";
+"shelf.discover.tagsDescription" = "Stay organized and find your notes in an instant.";
+"shelf.discover.tagsTitle" = "Organize your notes";
 "shelf.discover.templatesDescription" = "Discover 100s of templates for school, work, journaling and more.";
 "shelf.discover.templatesTitle" = "A template for every need";
 "shelf.discover.title" = "Discover what’s possible";
@@ -1439,6 +1444,7 @@
 "templatesStore.templatePreview.createNotebook" = "Create Notebook";
 "templatesStore.templatePreview.inyourLibrary" = "In your Library";
 "templatesStore.templatePreview.style" = "Style";
+"trash.alert.cannotOpenNotebook" = "This notebook cannot be opened as it has been deleted. To restore, long-press and select the option from the menu.";
 "trash.alert.title" = "Are you sure you want empty your Trash?";
 "unsplash.search.alertMessage" = "Enter text to search";
 "untitled" = "Untitled";
@@ -1484,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM

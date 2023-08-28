@@ -53,7 +53,7 @@ class FTSearchResultTitlesHeader: FTSearchResultHeader {
                     }
                 })
 
-                var categoryName = "\(shelfItem.shelfCollection?.title ?? "")"
+                var categoryName = "\(shelfItem.shelfCollection?.displayTitle ?? "")"
                 if let groupItem = shelfItem.parent{
                     categoryName = "\(categoryName) /"
                     categoryName = "\(categoryName) \(groupItem.title) ·"

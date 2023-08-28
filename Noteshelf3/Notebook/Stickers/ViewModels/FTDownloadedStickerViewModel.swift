@@ -15,64 +15,94 @@ final class FTDownloadedStickerViewModel: ObservableObject {
     lazy var fileStickerManager = FTStickersStorageManager()
     var error: Error?
 
-
-    func getDownloadedStickers() {
-        let filePaths = fileStickerManager.getDirectoryContent(directory: .library)
+    func validateAndGetDownloadedStickers(){
+        let filePaths = fileStickerManager.getDirectoryContent()
         filePaths.forEach { path in
-            let stickerItems = fetchDonwloadedStickerSubItems(filePath: path)
-            let title = getDownloadedStickerTitle(folderName: path)
-            let downloadedStickersPack = FTStickerSubCategory(title: title, image: "", filename: path, stickerItems: stickerItems)
-            downloadedStickers.append(downloadedStickersPack)
+            if let urlPath = fileStickerManager.fetchDownloadedStickerPath(filepath: path){
+                let stickerPathURL = urlPath.appendingPathComponent("stickers")
+                let metadataPathUrl = urlPath.appendingPathComponent("metadata.plist")
+                let thubnailImagePath = urlPath.appendingPathComponent("preview.jpg")
+
+                if  FileManager.default.fileExists(atPath: stickerPathURL.path) && FileManager.default.fileExists(atPath: metadataPathUrl.path) && FileManager.default.fileExists(atPath: thubnailImagePath.path) {
+                    let stickerItems = fetchDownloadedThumbnailStickers(filePath: path)
+                    do{
+                        let title = try getDownloadedStickerTitle(folderName: path)
+                        let downloadedStickersPack = FTStickerSubCategory(title: title, image: "", filename: path, stickerItems: stickerItems,type: .downloadedSticker)
+                        downloadedStickers.append(downloadedStickersPack)
+                    }catch{
+                        debugLog("No Downloaded Stickers Found")
+                    }
+                }
+            }
         }
     }
 
-    func getDownloadedStickerTitle(folderName: String) -> String{
-        let metadataPath = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: folderName).appendingPathComponent("metadata.plist")
-        do {
+    func getDownloadedStickerTitle(folderName: String) throws -> String{
+        if let metadataPath = fileStickerManager.fetchDownloadedStickerPath(filepath: folderName)?.appendingPathComponent("metadata.plist"){
             let infoPlistData = try Data(contentsOf: metadataPath)
             let decodedData = try PropertyListDecoder().decode([String: String].self, from: infoPlistData)
             var templatesFileName = "display_name_en"
-             let currentLocalization = FTCommonUtils.currentLanguage()
+            let currentLocalization = FTCommonUtils.currentLanguage()
             templatesFileName = "display_name_\(currentLocalization)"
 
-            guard let title = decodedData[templatesFileName] else {
-                fatalError("Key not found in metadata.")
+            if let title = decodedData[templatesFileName] {
+                return title
+            }else{
+                return ""
             }
-            return title
-        } catch {
-            fatalError("Error in data parsing \(error)")
         }
+        return ""
     }
 
     func getDownloadedStickerThumbnail(_ filename: String) -> UIImage? {
-        var docsURL = fileStickerManager.getDocumentPath(directory: .library)
-        docsURL = docsURL.appendingPathComponent(StickerConstants.downloadedStickerPathExtention)
+        if let docsURL = fileStickerManager.downloadedStickersPath()?
             .appendingPathComponent(filename)
             .appendingPathComponent("preview")
-            .appendingPathExtension("jpg")
-        do {
-            let data = try Data(contentsOf: docsURL)
-            return UIImage(data: data) ?? UIImage()
-        } catch {
-            print("Error loading data: \(error.localizedDescription)")
-            return nil
-        }
+            .appendingPathExtension("jpg"){
+           do {
+               let data = try Data(contentsOf: docsURL)
+               return UIImage(data: data) ?? UIImage()
+           } catch {
+               debugLog("Error loading data: \(error.localizedDescription)")
+               return nil
+           }
+       }
+        return nil
     }
 
-    func fetchDonwloadedStickerSubItems(filePath: String) -> [FTStickerItem] {
-        let downloadedStickerURL = fileStickerManager.fetchDownloadedStickerPath(fromDirectory: .library, filepath: filePath).appendingPathComponent("stickers")
-
-        var stickerItems = [FTStickerItem]()
-        do {
-            let subcontents = try FileManager.default.contentsOfDirectory(at:downloadedStickerURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-            subcontents.forEach { url in
-                let sticker = FTStickerItem(image: url.path)
-                stickerItems.append(sticker)
+    func fetchDownloadedThumbnailStickers(filePath: String) -> [FTStickerItem] {
+        if let downloadPath = fileStickerManager.fetchDownloadedStickerPath(filepath: filePath){
+             var downloadedStickerURL = downloadPath.appendingPathComponent("thumbnails")
+                if !FileManager.default.fileExists(atPath: downloadedStickerURL.path) {
+                    downloadedStickerURL = downloadPath.appendingPathComponent("stickers")
+                }
+                var stickerItems = [FTStickerItem]()
+                do {
+                    let subcontents = try FileManager.default.contentsOfDirectory(at:downloadedStickerURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+                    subcontents.forEach { url in
+                        let sticker = FTStickerItem(image: url.path)
+                        stickerItems.append(sticker)
+                    }
+                } catch {
+                    debugLog("Unable to load data from \(downloadedStickerURL.absoluteString)")
+                }
+                return stickerItems
             }
-        } catch {
-            print("Unable to load data from \(downloadedStickerURL.absoluteString)")
+        return []
+    }
+
+    func getStickerSubitem(subitem: FTStickerItem, fileName: String,type: StickerType) -> FTStickerItem {
+        if type == .downloadedSticker{
+            let imageName = subitem.image.lastPathComponent
+            let docsURL = fileStickerManager.downloadedStickersPath()?
+                .appendingPathComponent(fileName)
+                .appendingPathComponent("stickers")
+                .appendingPathComponent(imageName)
+            let newSubitem = FTStickerItem(image: docsURL?.path ?? "")
+            return newSubitem
+        }else{
+            return subitem
         }
-        return stickerItems
     }
 
     func removeDownloadedStickers(item: FTStickerSubCategory) throws {

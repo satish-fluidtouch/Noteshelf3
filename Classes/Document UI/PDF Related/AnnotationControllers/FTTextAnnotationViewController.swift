@@ -217,8 +217,14 @@ class FTTextAnnotationViewController: UIViewController {
                                                queue: nil) { [weak self] (notification) in
             self?.refreshView();
         }
-        
+       
         #if targetEnvironment(macCatalyst)
+        NotificationCenter.default.addObserver(forName: Notification.Name.shouldResignTextfieldNotification,
+                                               object: nil,
+                                               queue: nil) { [weak self] (notification) in
+            self?.forceEndEditing = true
+        }
+        
         let contextMenu = UIContextMenuInteraction.init(delegate: self)
         self.view.addInteraction(contextMenu)
         #endif
@@ -721,7 +727,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         #if targetEnvironment(macCatalyst)
-        return self.forceEndEditing ? true : false;
+        return self.forceEndEditing;
         #else
         return true
         #endif

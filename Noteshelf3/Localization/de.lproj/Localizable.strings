@@ -635,7 +635,7 @@
 "PencilActionAlert" = "Diese Aktion überschreibt nur die systemweite Voreinstellung für diese App. Möchten Sie fortfahren?";
 "PencilActionChangeMessage" = "Gehe zu Einstellungen > Apple Pencil, um zu ändern.";
 "Pens" = "Stifte";
-"People" = "Smileys & People in German would be Smileys & Personen.";
+"People" = "Smileys & Personen";
 "People" = "Smileys & Menschen";
 "PeriodExceedsTweleveMonths" = "Der Begriff überschreitet 12 Monate! Bitte wählen Sie einen kürzeren Begriff.";
 "PeriodIsNotTweleveMonths" = "Sie müssen einen 12-Monats-Zeitraum auswählen, um dieses Tagebuch zu erstellen.";
@@ -1197,7 +1197,6 @@
 "settings" = "Einstellungen";
 "settings.about.copyrightmessage" = "Urheberrecht © 2023 Noteshelf. Alle Rechte vorbehalten.";
 "settings.about.description" = "Vorstellung von Noteshelf 3 - eine neue und verbesserte Version Ihrer bevorzugten Notiz-App.";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "Benutzer-ID %@";
 "settings.about.version" = "VERSION %@ %@";
 "settings.useApplePencil" = "Verwende Apple Pencil";
@@ -1230,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "Die Elemente in dieser Kategorie werden in den Papierkorb verschoben.";
 "shelf.deleteCategoryAlert.title" = "Bist du sicher, dass du löschen möchtest?";
 "shelf.deleteTagAlert.message" = "Die Tags werden von den Elementen entfernt.";
+"shelf.discover.aiAssitedDescription" = "Generieren Sie handschriftliche Notizen und mehr mit Noteshelf AI.";
+"shelf.discover.aiAssitedNotesTitle" = "Künstlich-intelligente Notizen";
 "shelf.discover.coversDescription" = "Personalisieren Sie Ihr Regal mit wunderschönen Covern.";
 "shelf.discover.coversTitle" = "Passen Sie die Abdeckungen Ihrem Stil an.";
 "shelf.discover.customToolbarDescription" = "Machen Sie die Symbolleiste mit all Ihren bevorzugten Werkzeugen in Reichweite zu Ihrer eigenen.";
@@ -1238,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "Digitale Tagebücher und Planer";
 "shelf.discover.focusModeDescription" = "Gehen Sie ablenkungsfrei für konzentrierte Notizen.";
 "shelf.discover.focusModeTitle" = "Fokussierungsmodus";
-"shelf.discover.tagsDescription" = "Organisieren Sie Ihre Notizen und finden Sie sie sofort.";
-"shelf.discover.tagsTitle" = "Tagseiten und Notizbücher";
+"shelf.discover.getInspiredDescription" = "Erkunden Sie wunderschöne handschriftliche Notizen, die mit Noteshelf 3 erstellt wurden.";
+"shelf.discover.getInspiredTitle" = "Lassen Sie sich inspirieren.";
+"shelf.discover.migrationDescription" = "Bringen Sie alle Ihre Kategorien, Gruppen und Notizen zu Noteshelf 3.";
+"shelf.discover.migrationTitle" = "Aus Noteshelf 2 migrieren";
+"shelf.discover.tagsDescription" = "Bleiben Sie organisiert und finden Sie Ihre Notizen sofort.";
+"shelf.discover.tagsTitle" = "Organisieren Sie Ihre Notizen";
 "shelf.discover.templatesDescription" = "Entdecke Hunderte von Vorlagen für Schule, Arbeit, Tagebuch und mehr.";
 "shelf.discover.templatesTitle" = "Eine Vorlage für jeden Bedarf";
 "shelf.discover.title" = "Entdecke, was möglich ist.";
@@ -1439,6 +1444,7 @@
 "templatesStore.templatePreview.createNotebook" = "Erstellen Sie ein Notizbuch";
 "templatesStore.templatePreview.inyourLibrary" = "In deiner Bibliothek";
 "templatesStore.templatePreview.style" = "Stil";
+"trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
 "untitled" = "Unbenannt";
@@ -1484,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 22 August 2023 at 6:02 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM

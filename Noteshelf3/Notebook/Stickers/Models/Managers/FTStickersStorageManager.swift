@@ -11,7 +11,6 @@ class FTStickersStorageManager {
 
     enum DirectoryType {
         case document
-        case library
     }
     
     var recentStickersPlistUrl: URL? {
@@ -22,13 +21,17 @@ class FTStickersStorageManager {
     var documentPath: URL {
         fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
-    
-    var libraryPath: URL {
-        fileManager.urls(for: .libraryDirectory, in: .userDomainMask).first!
-    }
-    
+
     init(fileManager: FileManager = FileManager.default) {
         self.fileManager = fileManager
+    }
+
+    func downloadedStickersPath() -> URL? {
+        if let libraryPath = fileManager.urls(for: .libraryDirectory, in: .userDomainMask).last {
+            let downloadedStickersPath = libraryPath.appendingPathComponent(StickerConstants.downloadedStickerPathExtention)
+            return downloadedStickersPath
+        }
+        return nil
     }
     
     func saveRecentItem(directory: DirectoryType = .document, data: Data) {
@@ -75,50 +78,40 @@ class FTStickersStorageManager {
         }
         
     }
-    
-    func fetchDownloadedSticker(fromDirectory directory: DirectoryType = .document,
-                              filepath: String) -> UIImage?  {
-        let fileURL = getDocumentPath(directory: directory).appendingPathComponent(filepath)
-        do {
-            let data = try Data(contentsOf: fileURL)
-            return UIImage(data: data) ?? UIImage()
-        } catch {
-            print("Error loading data: \(error.localizedDescription)")
-            return nil
-        }
-    }
 
-    func fetchDownloadedStickerPath(fromDirectory directory: DirectoryType = .document,
-                              filepath: String) -> URL  {
-        let fileURL = getDocumentPath(directory: directory).appendingPathComponent(StickerConstants.downloadedStickerPathExtention).appending(path: filepath + "/")
-        return fileURL
+    func fetchDownloadedStickerPath(filepath: String) -> URL?  {
+        if let fileURL = downloadedStickersPath()?.appending(path: filepath + "/"){
+            return fileURL
+        }
+        return nil
     }
     
     func getDocumentPath(directory: DirectoryType) -> URL {
         switch directory {
         case .document:
             return documentPath
-        case .library:
-            return libraryPath
         }
     }
     
-    func getDirectoryContent(directory: DirectoryType, filePath: String = StickerConstants.downloadedStickerPathExtention) -> [String] {
-        let downloadedStickerURL = libraryPath.appendingPathComponent(filePath, isDirectory: true)
-        do {
-            let subpaths = try fileManager.contentsOfDirectory(at: downloadedStickerURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles )
-            return subpaths.map { $0.lastPathComponent }
-        } catch {
-            return []
+    func getDirectoryContent() -> [String] {
+        if let downloadedStickerURL = downloadedStickersPath() {
+            do {
+                let subpaths = try fileManager.contentsOfDirectory(at: downloadedStickerURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles )
+                return subpaths.map { $0.lastPathComponent }
+            } catch {
+                return []
+            }
         }
+        return []
     }
 
 
     func removeStickersFor(fileName: String) throws {
-        let downloadedStickerURL = libraryPath.appendingPathComponent(StickerConstants.downloadedStickerPathExtention, isDirectory: true)
-        let dest = downloadedStickerURL.appendingPathComponent(fileName)
-        if FileManager.default.fileExists(atPath: dest.path) {
-           try FileManager.default.removeItem(at: dest)
+        if let downloadedStickerURL = downloadedStickersPath() {
+            let dest = downloadedStickerURL.appendingPathComponent(fileName)
+            if FileManager.default.fileExists(atPath: dest.path) {
+                try FileManager.default.removeItem(at: dest)
+            }
         }
     }
 
