@@ -11,7 +11,7 @@ import UIKit
 class FTNoteshelfAITokensConsumedAlertViewController: UIViewController {
 
     @IBOutlet private weak var titleLabel: UILabel?;
-    @IBOutlet private weak var messageView: UITextView?;
+    @IBOutlet private weak var messageLabel: UILabel?;
     
     private var titleFont: UIFont {
         return UIFont.clearFaceFont(for: .medium, with: 28);
@@ -19,7 +19,8 @@ class FTNoteshelfAITokensConsumedAlertViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layer.cornerRadius = 10;
         self.titleLabel?.attributedText = "noteshelf.ai.tokenCompleteTitle".aiLocalizedString.appendBetalogo(font: self.titleFont);
-        self.messageView?.text = "noteshelf.ai.tokenCompleteMessage".aiLocalizedString;
+        self.messageLabel?.text = "noteshelf.ai.tokenCompleteMessage".aiLocalizedString;
     }
 }

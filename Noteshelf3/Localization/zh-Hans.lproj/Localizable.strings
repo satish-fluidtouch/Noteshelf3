@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "该类别内的项目将被移至回收站。";
 "shelf.deleteCategoryAlert.title" = "你确定要删除吗？";
 "shelf.deleteTagAlert.message" = "标签将从项目中移除。";
+"shelf.discover.aiAssitedDescription" = "使用Noteshelf AI生成手写笔记和更多内容";
+"shelf.discover.aiAssitedNotesTitle" = "AI辅助笔记";
 "shelf.discover.coversDescription" = "用漂亮的封面个性化您的书架。";
 "shelf.discover.coversTitle" = "与您的风格相匹配";
 "shelf.discover.customToolbarDescription" = "使工具栏成为您个人化的界面，随时使用您喜爱的工具。";
@@ -1237,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "数字日记和计划";
 "shelf.discover.focusModeDescription" = "专注记笔记，请保持无干扰状态。";
 "shelf.discover.focusModeTitle" = "专注模式";
-"shelf.discover.tagsDescription" = "整理你的笔记并立即找到它们。";
-"shelf.discover.tagsTitle" = "标签页面和笔记本";
+"shelf.discover.getInspiredDescription" = "在Noteshelf 3中探索美丽的手写笔记。";
+"shelf.discover.getInspiredTitle" = "获得灵感";
+"shelf.discover.migrationDescription" = "将您所有的分类、分组和笔记带到Noteshelf 3。";
+"shelf.discover.migrationTitle" = "从Noteshelf 2迁移";
+"shelf.discover.tagsDescription" = "保持有条理并即时找到您的笔记。";
+"shelf.discover.tagsTitle" = "组织您的笔记";
 "shelf.discover.templatesDescription" = "发现数百个适用于学校、工作、日记等场景的模板。";
 "shelf.discover.templatesTitle" = "适用于各种需求的模板";
 "shelf.discover.title" = "发现可能性";
@@ -1484,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM

@@ -49,15 +49,15 @@ class FTPaperPickerViewController: UIViewController {
     private var size: CGSize = .zero
     private var initialPreviewImage: UIImage?
     private var bottomPanelHeight: CGFloat {
-        if self.traitCollection.horizontalSizeClass == .regular {
-            if UIScreen.main.bounds.height > UIScreen.main.bounds.width {
-                return 340
-            }else {
+        #if targetEnvironment(macCatalyst)
+            return 340
+        #else
+            if self.traitCollection.horizontalSizeClass == .regular {
+                return  UIScreen.main.bounds.height > UIScreen.main.bounds.width ? 340 : 311
+            } else {
                 return 311
             }
-        } else {
-            return 311
-        }
+        #endif
     }
     override func viewDidLoad() {
         super.viewDidLoad()

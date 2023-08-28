@@ -291,18 +291,14 @@ class FTShelfMoreToolbarItem: NSMenuToolbarItem {
         self.itemMenu = menu;
     }
 }
-
-enum FTShelfSearchToolbarNotifiers: String {
-    case resignSearchToolbarItem
-    case updateRecentSearchText
+extension Notification.Name {
+    static let resignSearchToolbarItem = Notification.Name("resignSearchToolbarItem")
+    static let updateRecentSearchText = Notification.Name("updateRecentSearchText")
 }
 
 class FTShelfSearchToolbarItem: NSToolbarItem {
     private  var searchDelegate: FTShelfSearcharDelegate?
     static let identifier = NSToolbarItem.Identifier("NSToolbarItemSearch");
-    private weak var currentSearchBar: UISearchBar?
-    private weak var resignSearchToolbarObserver: NSObjectProtocol?
-    private weak var updateSearchToolbarObserver: NSObjectProtocol?
 
     convenience init() {
         let searchDel = FTShelfSearcharDelegate();
@@ -321,52 +317,32 @@ class FTShelfSearchToolbarItem: NSToolbarItem {
         searchBar.addConstraint(widthConstraint);
         searchDelegate = searchDel;
         searchDelegate?.toolbarItem = self
-        self.currentSearchBar = searchBar
-        self.addObservers()
-    }
-
-    deinit {
-        self.removeObservers()
-    }
-
-    private func removeObservers() {
-        if let observer = resignSearchToolbarObserver {
-            NotificationCenter.default.removeObserver(observer)
-            resignSearchToolbarObserver = nil
-        }
-        if let observer = updateSearchToolbarObserver {
-            NotificationCenter.default.removeObserver(observer)
-            updateSearchToolbarObserver = nil
-        }
-    }
-
-    private func addObservers() {
-        self.resignSearchToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(FTShelfSearchToolbarNotifiers.resignSearchToolbarItem.rawValue),
-                                                                                  object: nil,
-                                                                                  queue: nil) { [weak self] notification in
-            guard let self else {
-                return
-            }
-            self.currentSearchBar?.text = ""
-            self.currentSearchBar?.resignFirstResponder()
-        }
-
-        self.updateSearchToolbarObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name(FTShelfSearchToolbarNotifiers.updateRecentSearchText.rawValue),
-                                                                                  object: nil,
-                                                                                  queue: nil) { [weak self] notification in
-            guard let self else {
-                return
-            }
-            if let userInfo = notification.userInfo,
-               let searchText = userInfo["searchText"] as? String {
-                self.currentSearchBar?.text = searchText
-            }
-        }
+        searchDel.searchBar = searchBar;
     }
 }
 
 private class FTShelfSearcharDelegate: NSObject,UISearchBarDelegate, UISearchTextFieldDelegate {
     weak var toolbarItem: FTShelfSearchToolbarItem?;
+    weak var searchBar: UISearchBar?
+
+    @objc private func resignSearchToolbarItem(_ notification: Notification) {
+        self.searchBar?.text = ""
+        self.searchBar?.resignFirstResponder()
+    }
+
+    @objc private func updateRecentSearchText(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+           let searchText = userInfo["searchText"] as? String {
+            self.searchBar?.text = searchText
+        }
+    }
+
+    override init() {
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.resignSearchToolbarItem(_:)), name: .resignSearchToolbarItem, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRecentSearchText(_:)), name: .updateRecentSearchText, object: nil);
+    }
+
      func textFieldDidChangeSelection(_ textField: UITextField) {
          guard let toolbar = self.toolbarItem?.toolbar as? FTShelfToolbar, let searchDelegate = toolbar.searchActionDelegate, let searchTf = textField as? UISearchTextField else {
              return

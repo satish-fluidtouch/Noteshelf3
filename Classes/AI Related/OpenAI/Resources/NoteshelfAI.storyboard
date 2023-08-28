@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,8 +20,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9mi-hb-KiQ">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="176"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="176" id="hFR-CV-kOR"/>
+                                </constraints>
                                 <color key="sectionIndexBackgroundColor" name="cellBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Y6W-OH-hqX" id="q6G-yo-bwK"/>
@@ -34,7 +38,6 @@
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="HOw-Pm-SZp"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="ePb-5x-NLB"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uE7-Di-QTV"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="9mi-hb-KiQ" secondAttribute="bottom" id="zNF-we-VKA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EvG-Uv-fG8"/>
@@ -91,22 +94,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="361" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMR-oZ-UdA">
-                                <rect key="frame" x="121.66666666666669" y="6.6666666666666679" width="118" height="35"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Send Feedback">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
-                                </buttonConfiguration>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMR-oZ-UdA">
+                                <rect key="frame" x="133.66666666666666" y="9.3333333333333339" width="94" height="29.666666666666664"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Send Feedback">
+                                    <color key="titleColor" name="groupNotesCountTint"/>
+                                </state>
                                 <connections>
                                     <action selector="sendFeedback:" destination="xOW-95-GFB" eventType="touchUpInside" id="t9a-Zw-YIo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-PV-sFF">
-                                <rect key="frame" x="100.66666666666669" y="6.6666666666666679" width="160" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-PV-sFF">
+                                <rect key="frame" x="106.00000000000001" y="9.3333333333333339" width="149.33333333333337" height="29.666666666666664"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                <color key="tintColor" name="accent"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system" title="About NoteshelfAI">
-                                    <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="About NoteshelfAI">
+                                    <color key="titleColor" name="accent"/>
+                                    <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
+                                </state>
+                                <buttonConfiguration key="configuration" style="plain" title="About NoteshelfAI">
+                                    <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="13"/>
+                                    <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                    <color key="baseForegroundColor" name="accent"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="showNoteshelfAILearnmore:" destination="xOW-95-GFB" eventType="touchUpInside" id="476-gf-Gsk"/>
@@ -141,20 +154,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="798"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="754"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q84-gf-X3D">
-                                <rect key="frame" x="0.0" y="818" width="344" height="0.0"/>
+                                <rect key="frame" x="0.0" y="774" width="344" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="44"/>
                                         <color key="backgroundColor" name="accent"/>
-                                        <state key="normal" title="Button"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Add as Handwrite">
+                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                        </state>
                                         <buttonConfiguration key="configuration" style="plain" title="Add as Handwrite">
+                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
                                             <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
                                         </buttonConfiguration>
                                         <userDefinedRuntimeAttributes>
@@ -165,10 +183,15 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="118" y="0.0" width="108" height="0.0"/>
+                                        <rect key="frame" x="118" y="0.0" width="108" height="44"/>
                                         <color key="backgroundColor" name="accent"/>
-                                        <state key="normal" title="Button"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Add to page">
+                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                        </state>
                                         <buttonConfiguration key="configuration" style="plain" title="Add to page">
+                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
                                             <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
                                         </buttonConfiguration>
                                         <userDefinedRuntimeAttributes>
@@ -179,9 +202,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="236" y="0.0" width="108" height="0.0"/>
-                                        <state key="normal" title="Button"/>
+                                        <rect key="frame" x="236" y="0.0" width="108" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Copy To Clipboard">
+                                            <color key="titleColor" name="accent"/>
+                                        </state>
                                         <buttonConfiguration key="configuration" style="plain" title="Copy To Clipboard">
+                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
                                             <color key="baseForegroundColor" name="accent"/>
                                         </buttonConfiguration>
                                         <userDefinedRuntimeAttributes>
@@ -193,18 +221,24 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="7Gf-dp-a3r"/>
+                                    <constraint firstItem="K6O-bs-QgG" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="6Zz-xp-yTF"/>
+                                    <constraint firstAttribute="height" constant="44" id="7Gf-dp-a3r"/>
+                                    <constraint firstItem="YBF-iL-iDT" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="mLg-jZ-APk"/>
+                                    <constraint firstItem="us1-QN-E6H" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="ysi-28-NYa"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="354" y="818" width="39" height="0.0"/>
-                                <color key="backgroundColor" name="accentBg"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE">
+                                <rect key="frame" x="354" y="774" width="39" height="44"/>
+                                <color key="backgroundColor" name="sidebarBG"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="2yM-T8-1j6"/>
                                 </constraints>
-                                <color key="tintColor" name="accent"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system"/>
+                                <color key="tintColor" name="black70"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button" image="ellipsis" catalog="system"/>
+                                <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="13"/>
+                                </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
                                 </userDefinedRuntimeAttributes>
@@ -223,7 +257,7 @@
                             <constraint firstItem="7KU-f4-tjE" firstAttribute="leading" secondItem="Q84-gf-X3D" secondAttribute="trailing" constant="10" id="RZ6-Yw-y2i"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="width" secondItem="hOE-2Y-rer" secondAttribute="width" id="Ydg-Bd-Lr5"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="centerX" secondItem="hOE-2Y-rer" secondAttribute="centerX" id="cRw-cb-wI5"/>
-                            <constraint firstItem="7KU-f4-tjE" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" multiplier="0.780303" id="fL0-xY-zat"/>
+                            <constraint firstItem="7KU-f4-tjE" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="fL0-xY-zat"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="top" secondItem="hOE-2Y-rer" secondAttribute="top" id="lYr-9Q-KhH"/>
                         </constraints>
                     </view>
@@ -305,35 +339,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
-                                <rect key="frame" x="0.0" y="75" width="393" height="33.666666666666657"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCz-we-RCy">
-                                <rect key="frame" x="0.0" y="124.66666666666669" width="393" height="693.33333333333326"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lwm-AW-1KH">
+                                <rect key="frame" x="20" y="389.33333333333331" width="353" height="98.666666666666686"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="67"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vK5-Bb-DIu" userLabel="Message Lable">
+                                        <rect key="frame" x="160" y="83" width="33" height="15.666666666666671"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="jIk-ps-3qg" firstAttribute="centerX" secondItem="lwm-AW-1KH" secondAttribute="centerX" id="Hki-73-qUp"/>
+                                    <constraint firstItem="vK5-Bb-DIu" firstAttribute="centerX" secondItem="jIk-ps-3qg" secondAttribute="centerX" id="Hrl-Kh-m8f"/>
+                                    <constraint firstItem="jIk-ps-3qg" firstAttribute="width" secondItem="lwm-AW-1KH" secondAttribute="width" id="TkC-B3-1je"/>
+                                    <constraint firstAttribute="bottom" secondItem="vK5-Bb-DIu" secondAttribute="bottom" id="rQp-GS-me6"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Jsq-hP-ijA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="jIk-ps-3qg" firstAttribute="top" secondItem="Jsq-hP-ijA" secondAttribute="top" constant="16" id="FXo-dR-CWx"/>
-                            <constraint firstItem="Jsq-hP-ijA" firstAttribute="bottom" secondItem="jCz-we-RCy" secondAttribute="bottom" id="FqY-s2-rq4"/>
-                            <constraint firstItem="jIk-ps-3qg" firstAttribute="width" secondItem="4c8-0r-k7e" secondAttribute="width" id="MpW-Qf-jM3"/>
-                            <constraint firstItem="jIk-ps-3qg" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="NJY-N1-d0y"/>
-                            <constraint firstItem="jCz-we-RCy" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="QEJ-OA-PVI"/>
-                            <constraint firstItem="jCz-we-RCy" firstAttribute="top" secondItem="jIk-ps-3qg" secondAttribute="bottom" constant="16" id="mmj-Oa-jGR"/>
-                            <constraint firstItem="jCz-we-RCy" firstAttribute="width" secondItem="jIk-ps-3qg" secondAttribute="width" id="ohq-vg-IBQ"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="height" relation="lessThanOrEqual" secondItem="Jsq-hP-ijA" secondAttribute="height" id="PXp-Hq-zfJ"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerY" secondItem="Jsq-hP-ijA" secondAttribute="centerY" id="iLH-8q-fLG"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="o1H-fj-ggW"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="width" secondItem="Jsq-hP-ijA" secondAttribute="width" constant="-40" id="wIA-BQ-vZA"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="messageView" destination="jCz-we-RCy" id="uyp-PZ-KJj"/>
+                        <outlet property="messageLabel" destination="vK5-Bb-DIu" id="cX7-UV-n4q"/>
                         <outlet property="titleLabel" destination="jIk-ps-3qg" id="LAh-9G-Mjt"/>
                     </connections>
                 </viewController>
@@ -348,14 +388,20 @@
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="accentBg">
-            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="black70">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="cellBackgroundColor">
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="groupNotesCountTint">
+            <color red="0.015686274509803921" green="0.33333333333333331" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="panelBgColor">
             <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="sidebarBG">
+            <color red="1" green="0.98431372549019602" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
