@@ -49,15 +49,15 @@ class FTPaperPickerViewController: UIViewController {
     private var size: CGSize = .zero
     private var initialPreviewImage: UIImage?
     private var bottomPanelHeight: CGFloat {
-        if self.traitCollection.horizontalSizeClass == .regular {
-            if UIScreen.main.bounds.height > UIScreen.main.bounds.width {
-                return 340
-            }else {
+        #if targetEnvironment(macCatalyst)
+            return 340
+        #else
+            if self.traitCollection.horizontalSizeClass == .regular {
+                return  UIScreen.main.bounds.height > UIScreen.main.bounds.width ? 340 : 311
+            } else {
                 return 311
             }
-        } else {
-            return 311
-        }
+        #endif
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,19 +141,23 @@ class FTPaperPickerViewController: UIViewController {
 
         let orientationMenu = UIMenu(title: orientationLoclizdStrng,subtitle: menuSubTitle, image: UIImage(systemName: "ipad"),children: [
             UIAction(title: landscapeLoclizdStrng,image: UIImage(systemName: "ipad.landscape"),state: isLandscapeSelected, handler: { [weak self] _ in
-                let resizeThumbnail = self?.selectedPaperVariantsAndTheme.orientation != .landscape
-                self?.selectedPaperVariantsAndTheme.orientation = .landscape
-                self?.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
-                if let templateSizeMenu = self?.templateSizeButton?.menu {
-                    self?.templateSizeButton?.menu = self?.updateOrientationSubTitleInMenu(.landscape, menu: templateSizeMenu)
+                guard let self = self else { return }
+                let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != .landscape
+                self.selectedPaperVariantsAndTheme.orientation = .landscape
+                self.setAttributedTextToTemplateSizeButton(self.selectedPaperVariantsAndTheme.size)
+                self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
+                if let templateSizeMenu = self.templateSizeButton?.menu {
+                    self.templateSizeButton?.menu = self.updateOrientationSubTitleInMenu(.landscape, menu: templateSizeMenu)
                 }
             }),
             UIAction(title: portraitLoclizdStrng,image: UIImage(systemName: "ipad"),state: isPortraitSelected, handler: { [weak self] _ in
-                let resizeThumbnail = self?.selectedPaperVariantsAndTheme.orientation != .portrait
-                self?.selectedPaperVariantsAndTheme.orientation = .portrait
-                self?.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
-                if let templateSizeMenu = self?.templateSizeButton?.menu {
-                    self?.templateSizeButton?.menu = self?.updateOrientationSubTitleInMenu(.portrait, menu: templateSizeMenu)
+                guard let self = self else { return }
+                let resizeThumbnail = self.selectedPaperVariantsAndTheme.orientation != .portrait
+                self.selectedPaperVariantsAndTheme.orientation = .portrait
+                self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
+                self.setThumbnailToPreviewImageView(toResize: resizeThumbnail)
+                if let templateSizeMenu = self.templateSizeButton?.menu {
+                    self.templateSizeButton?.menu = self.updateOrientationSubTitleInMenu(.portrait, menu: templateSizeMenu)
                 }
             })
         ])
@@ -222,13 +226,16 @@ class FTPaperPickerViewController: UIViewController {
     private func setAttributedTextToTemplateSizeButton(_ templateSize: FTTemplateSize) {
         let aspectRatioImage = UIImage(systemName: "aspectratio")?.withConfiguration(UIImage.SymbolConfiguration(font: UIFont.appFont(for: .semibold, with: 13))).withTintColor(FTNewNotebook.Constants.SelectedAccent.tint)
         let chevronImage = UIImage(systemName: "chevron.down")?.withConfiguration(UIImage.SymbolConfiguration(font: UIFont.appFont(for: .semibold, with: 11))).withTintColor(FTNewNotebook.Constants.SelectedAccent.tint )
-        let title = templateSize.displayTitle
+        let sizeDisplayTitle = templateSize.displayTitle
 
         let aspectRatioimageAttachment = NSTextAttachment()
         aspectRatioimageAttachment.image = aspectRatioImage
         let chevronAttachment = NSTextAttachment()
         chevronAttachment.image = chevronImage
         let attributedString = NSMutableAttributedString(attachment: aspectRatioimageAttachment)
+        let orientation = templateSize == .mobile ? FTTemplateOrientation.portrait.title : self.selectedPaperVariantsAndTheme.orientation.title
+        let paperSizeWithOrientationTitle = sizeDisplayTitle + " (\(orientation))"
+        let title = (self.isRegularClass() && templateSize != .mobile) ? sizeDisplayTitle : paperSizeWithOrientationTitle
         let titleAttributedString = NSAttributedString(string: "  " + title + "  ",attributes: [.font: UIFont.appFont(for: .medium, with: 13), .foregroundColor : FTNewNotebook.Constants.SelectedAccent.tint])
         attributedString.append(titleAttributedString)
         let chevronString = NSAttributedString(attachment: chevronAttachment)

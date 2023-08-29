@@ -66,7 +66,12 @@ class FTShelfToolbar: NSToolbar {
         self.displayMode = .iconOnly
         self.windowScene = scene;
     }
-    
+
+    func getToolbarItem(with id: NSToolbarItem.Identifier) -> NSToolbarItem? {
+        let reqItem: NSToolbarItem? = self.items.first(where: { $0.itemIdentifier == id })
+        return reqItem
+    }
+
     func showBackButton(_ show: Bool) {
         let item = self.items.first(where: {$0.itemIdentifier == FTShelfBackToolbarItem.identifier});
         if show {
@@ -78,7 +83,22 @@ class FTShelfToolbar: NSToolbar {
             self.removeItem(at: index);
         }
     }
-    
+
+    // MARK: The reason to have following 2 functions(resignSearchToolbar, updateSearchText)
+    // As we donot get FTShelfSearchToolbarItem type from toolbar items. System is always giving us default type like - NSUIViewToolbarITem instead of our custom type, if we force to use, it gives EXC BAD exception.
+    func resignSearchToolbar() {
+        NotificationCenter.default.post(name: .resignSearchToolbarItem,
+                                        object: self,
+                                        userInfo: nil)
+    }
+
+    func updateSearchText(_ text: String) {
+        let userInfo = ["searchText": text]
+        NotificationCenter.default.post(name: .updateRecentSearchText,
+                                        object: self,
+                                        userInfo: userInfo)
+    }
+
     func switchMode(_ mode: FTShelfToolbarMode) {
         if(mode != self.sheflToolbarMode) {
             self.sheflToolbarMode = mode;
@@ -117,13 +137,6 @@ extension SceneDelegate {
         }
         get {
             return (self.toolbar as? FTShelfToolbar)?.searchActionDelegate
-        }
-    }
-
-    func initilizeToolbarForMac() {
-        if let scene = self.window?.windowScene {
-            let toolbar =  FTShelfToolbar(windwowScene: scene);
-            scene.titlebar?.toolbar = toolbar;
         }
     }
 }

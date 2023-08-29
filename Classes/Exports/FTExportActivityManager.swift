@@ -166,9 +166,12 @@ class FTExportActivityManager: NSObject {
             actController.modalPresentationStyle = .popover;
             actController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.none
             actController.popoverPresentationController?.sourceView = baseViewController.view;
-            let rect = CGRect(x: baseViewController.view.bounds.midX, y: baseViewController.view.bounds.height - 44 - 20, width: 1, height: 1);
-            actController.popoverPresentationController?.sourceRect = rect;
-            baseViewController.present(actController, animated: true, completion: nil);
+            var rect = CGRect(x: baseViewController.view.bounds.midX, y: baseViewController.view.bounds.height - 44 - 20, width: 1, height: 1)
+            if let shareFormatHostingVc = baseViewController as? FTShareFormatHostingController, shareFormatHostingVc.canShowSaveToCameraRollButton {
+                rect.origin.x += (0.5 * rect.origin.x)
+            }
+            actController.popoverPresentationController?.sourceRect = rect
+            baseViewController.present(actController, animated: true, completion: nil)
 #else
             let shareNavigationController = UINavigationController(rootViewController: self.activityViewController)
             shareNavigationController.modalPresentationStyle = .formSheet

@@ -164,6 +164,7 @@ public class FTCreateNotebookViewController: UIViewController {
         } else {
             // Removing Password
             passwordDetails = nil
+            self.newNotebookDetails?.passwordDetails = FTPasswordModel()
             updatePasswordStatus()
         }
      }
@@ -403,7 +404,6 @@ public class FTCreateNotebookViewController: UIViewController {
         if let createNotebookViewController = UIStoryboard.init(name: "FTNewNotebook", bundle: currentBundle).instantiateViewController(withIdentifier: "FTCreateNotebookViewController") as? FTCreateNotebookViewController {
             createNotebookViewController.delegate = viewController as? FTCreateNotebookDelegate
 #if targetEnvironment(macCatalyst)
-            createNotebookViewController.overrideUserInterfaceStyle = UIApplication.shared.uiColorScheme()
             createNotebookViewController.modalPresentationStyle = .formSheet;
             let navController = UINavigationController(rootViewController: createNotebookViewController);
             createNotebookViewController.title = "New Notebook";

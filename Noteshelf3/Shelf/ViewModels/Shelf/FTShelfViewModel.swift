@@ -27,7 +27,6 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func restoreShelfItem( items : [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void))
     func favoriteShelfItem(_ item: FTShelfItemProtocol,toPin: Bool)
     func showMoveItemsPopOverWith(selectedShelfItems: [FTShelfItemProtocol])
-    func showNewNotePopoverOnRect(_ rect: CGRect)
     func duplicateDocuments(_ items : [FTShelfItemProtocol], onCompletion: @escaping((Bool) -> Void))
     func renameDocuments(_ items : [FTShelfItemProtocol], onCompletion: @escaping(() -> Void))
     func showCoverViewOnShelfWith(models: [FTShelfItemViewModel])
@@ -144,23 +143,23 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var areAllItemsSelected: Bool {
         shelfItems.filter({ $0.isSelected }).count == shelfItems.count
     }
-    var navigationTitle: LocalizedStringKey {
+    var navigationTitle: String {
         get {
-            let title: LocalizedStringKey
+            let title: String
             if mode == .normal && collection.collectionType == .allNotes {
-                title = isInHomeMode ? (self.shouldShowGetStartedInfo ? "" : LocalizedStringKey("sidebar.topSection.home")): LocalizedStringKey(collection.displayTitle)
+                title = isInHomeMode ? (self.shouldShowGetStartedInfo ? "" : "sidebar.topSection.home".localized) : collection.displayTitle
             } else if mode == .normal && collection.collectionType != .allNotes {
                 if let groupItem = groupItem {
-                    title = LocalizedStringKey(groupItem.displayTitle)
+                    title = groupItem.displayTitle
                 } else {
-                    title = LocalizedStringKey(collection.displayTitle)
+                    title = collection.displayTitle
                 }
             } else {
                 let selectedCount = shelfItems.filter({ $0.isSelected }).count
                 if selectedCount > 0 {
-                    title = "\(selectedCount) Selected"
+                    title = String(format: "sidebar.allTags.navbar.selected".localized, String(describing: selectedCount))
                 } else {
-                    title = "Select Notes"
+                    title = "shelf.navmenu.selectNotes".localized
                 }
             }
             return title
@@ -683,7 +682,7 @@ extension FTShelfViewModel: FTPaperTemplateDelegate {
         let currentDevice = FTDeviceDataManager().getCurrentDevice()
         let templateSizeModel = FTTemplateSizeModel(size: currentDevice.displayName, portraitSize: currentDevice.dimension_port, landscapeSize: currentDevice.dimension_land)
         let basicTemplatesDataSource = FTBasicTemplatesDataSource.shared
-        let templateColor = FTTemplateColorModel(color: .custom, hex: isDarkTemplate ? UIColor.black.hexStringFromColor() : UIColor.white.hexStringFromColor())
+        let templateColor = FTTemplateColorModel(color: .custom, hex: isDarkTemplate ? UIColor(hexString: "#1D232F").hexStringFromColor() : UIColor.white.hexStringFromColor())
         let selectedPaperVariantsAndTheme =
         FTSelectedPaperVariantsAndTheme(templateColorModel:templateColor,
                                         lineHeight: basicTemplatesDataSource.getSavedLineHeightForMode(.quickCreate),

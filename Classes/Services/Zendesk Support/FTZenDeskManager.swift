@@ -327,7 +327,8 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Recognition": FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO",
             "Recog_Act": FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO",
             "Battery" : UIDevice.current.batteryStateString,
-            "Screens" : UIScreen.screensDescription
+            "Screens" : UIScreen.screensDescription,
+            "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
         ]
             return customFields
     }
@@ -382,7 +383,8 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Recog_Act": FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO",
             "LayoutType": (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal",
             "Battery": UIDevice.current.batteryStateString,
-            "Screens": UIScreen.screensDescription
+            "Screens": UIScreen.screensDescription,
+            "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
         ]
         return customFields
     }

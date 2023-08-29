@@ -1197,7 +1197,6 @@
 "settings" = "設定";
 "settings.about.copyrightmessage" = "著作権 © 2023 Noteshelf。全著作権所有。";
 "settings.about.description" = "お気に入りのノートテイキングアプリの新しい改良版、Noteshelf 3 をご紹介します。";
-"settings.about.toptitle" = "Noteshelf 3";
 "settings.about.userID" = "ユーザーID %@";
 "settings.about.version" = "バージョン %@ %@";
 "settings.useApplePencil" = "Apple Pencil を使用してください。";
@@ -1230,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "このカテゴリ内のアイテムはゴミ箱に移動されます。";
 "shelf.deleteCategoryAlert.title" = "削除してもよろしいですか？";
 "shelf.deleteTagAlert.message" = "アイテムからタグが削除されます。";
+"shelf.discover.aiAssitedDescription" = "手書きメモを作成し、Noteshelf AIでその他の機能を利用する。";
+"shelf.discover.aiAssitedNotesTitle" = "AI支援ノート";
 "shelf.discover.coversDescription" = "美しいカバーで棚を個性化してください。";
 "shelf.discover.coversTitle" = "スタイルに合わせたカバー";
 "shelf.discover.customToolbarDescription" = "ツールバーを自分好みにカスタマイズし、お気に入りのツールを手軽に利用できるようにしましょう。";
@@ -1238,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "デジタルダイアリーズ＆プランナーズ";
 "shelf.discover.focusModeDescription" = "集中したノート取りのために、気を散らさずに行ってください。";
 "shelf.discover.focusModeTitle" = "フォーカスモード";
-"shelf.discover.tagsDescription" = "メモを整理して瞬時に見つける。";
-"shelf.discover.tagsTitle" = "タグのページとノートブック";
+"shelf.discover.getInspiredDescription" = "Noteshelf 3 で作成された美しい手書きノートを探索する。";
+"shelf.discover.getInspiredTitle" = "インスピレーションを得る";
+"shelf.discover.migrationDescription" = "Noteshelf 3 にすべてのカテゴリ、グループ、ノートを持ってきてください。";
+"shelf.discover.migrationTitle" = "ノートシェルフ2から移行";
+"shelf.discover.tagsDescription" = "瞬時に整理してメモを見つける。";
+"shelf.discover.tagsTitle" = "ノートを整理する";
 "shelf.discover.templatesDescription" = "学校、仕事、ジャーナリングなどのための数百のテンプレートを見つける。";
 "shelf.discover.templatesTitle" = "あらゆるニーズに対応するテンプレート";
 "shelf.discover.title" = "可能性を発見する";
@@ -1399,7 +1404,7 @@
 "tags.contextualMenu.renameTag" = "タグ名変更 (Tagumei Henkō)";
 "tags.delete.alert.message" = "アイテムからタグが削除されます。";
 "tags.delete.alert.title" = "%@ タグを削除してもよろしいですか？";
-"templateSizes.currentDevice.thisDevice" = "（このデバイス）";
+"templateSizes.currentDevice.thisDevice" = "このデバイス";
 "templatepreview.addtofavorites" = "お気に入りに追加";
 "templatepreview.removefromfavorites" = "お気に入りから削除";
 "templatepreview.setasdefault" = "デフォルトに設定する";
@@ -1439,7 +1444,9 @@
 "templatesStore.templatePreview.createNotebook" = "ノートブックを作成する";
 "templatesStore.templatePreview.inyourLibrary" = "あなたの図書館";
 "templatesStore.templatePreview.style" = "スタイル";
+"trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
+"unsplash.search.alertMessage" = "検索するテキストを入力してください";
 "untitled" = "無題";
 "useSticker" = "ステッカーを使用する";
 "welcome.appleWatch" = "アップルウォッチ";
@@ -1483,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 August 2023 at 16:40
+// Last Synced by Rakesh on 28 August 2023 at 3:37 PM

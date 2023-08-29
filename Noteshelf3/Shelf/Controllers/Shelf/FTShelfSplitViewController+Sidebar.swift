@@ -13,14 +13,21 @@ import Reachability
 
 extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     func showHomeView() {
-        if detailNavigationController != nil {
-            detailNavigationController?.popToRootViewController(animated: false)
+
+        if !self.isRegularClass() { // In Compact modes, we are navigating to home on every tap on home option
+            showHomeDetailedVC()
+        } else if let detailController = self.detailController(), !detailController.isKind(of: FTShelfHomeViewController.self) { // In regular modes, avoiding refreshing shelf again if we are already in home.
+            showHomeDetailedVC()
+        } else if currentShelfViewModel == nil { // Executes when shifting from non collection types to home.
+            showHomeDetailedVC()
         }
-        let secondaryViewController = getSecondaryViewControllerForHomeOption()
-        detailNavigationController = UINavigationController(rootViewController: secondaryViewController)
-        if let detailNavVC = detailNavigationController {
-            detailNavVC.viewControllers.first?.title = "Home"
-            self.showDetailViewController(detailNavVC, sender: self)
+
+        func showHomeDetailedVC(){
+            if detailNavigationController != nil {
+                detailNavigationController?.popToRootViewController(animated: false)
+            }
+            let secondaryViewController = getSecondaryViewControllerForHomeOption()
+            self.updateRootVCToDetailNavController(rootVC: secondaryViewController)
         }
     }
     
@@ -43,9 +50,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         if let detailController = detailController(), detailController.isKind(of: FTShelfBookmarksViewController.self) {
             self.showDetailViewController(detailController, sender: self)
         } else {
-            let navigationController = UINavigationController(rootViewController: getBookmarkVC())
-            navigationController.navigationBar.prefersLargeTitles = true
-            self.showDetailViewController(navigationController, sender: self)
+            self.updateRootVCToDetailNavController(rootVC: getBookmarkVC())
         }
     }
     
@@ -65,9 +70,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             controller.selectedTag = (tag == "sidebar.allTags".localized) ? nil : FTTagModel(text: tag)
             self.showDetailViewController(detailController, sender: self)
         } else {
-            let navigationController = UINavigationController(rootViewController: getTagsVC(for: tag))
-            navigationController.navigationBar.prefersLargeTitles = true
-            self.showDetailViewController(navigationController, sender: self)
+            self.updateRootVCToDetailNavController(rootVC: getTagsVC(for: tag))
         }
     }
     
@@ -103,18 +106,25 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
              self.shelfItemCollection = selectedCollection
          }
      }
-     func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
-        if detailNavigationController != nil {
-             detailNavigationController?.popToRootViewController(animated: false)
+    func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
+        if !self.isRegularClass()  { // In Compact modes, on every tap of sidebar option we are navigating to respective detailed view
+            showCategoryDetaiedVC()
+        } else if (currentShelfViewModel?.collection.uuid != collection.uuid || currentShelfViewModel?.groupItem != nil) { // In regular modes, avoiding refreshing shelf again if current category is same as recent tapped category. Note: If shelf is showing group, even on tapping current category, we are popping to categories detailed view.
+            showCategoryDetaiedVC()
         }
-        let secondaryViewController = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
-        detailNavigationController = UINavigationController(rootViewController: secondaryViewController)
-        saveLastSelectedCollection(collection)
-        if let detailNavVC = detailNavigationController {
-            detailNavVC.viewControllers.first?.title = collection.title
-            self.showDetailViewController(detailNavVC, sender: self)
+
+        func showCategoryDetaiedVC() {
+            if detailNavigationController != nil {
+                detailNavigationController?.popToRootViewController(animated: false)
+            }
+            let secondaryViewController = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+            saveLastSelectedCollection(collection)
+            self.updateRootVCToDetailNavController(rootVC: secondaryViewController)
+            if let detailNavVC = detailNavigationController {
+                detailNavVC.viewControllers.first?.title = collection.displayTitle
+            }
         }
-     }
+    }
 
     func showSearchResultCollection(_ collection: FTShelfItemCollection) {
         self.saveLastSelectedCollection(collection)
@@ -128,9 +138,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         if let detailController = self.detailController(), detailController.isKind(of: FTStoreContainerViewController.self) {
             self.showDetailViewController(detailController, sender: self)
         } else {
-            let navigationController = UINavigationController(rootViewController: getTemplatesVC())
-            navigationController.navigationBar.prefersLargeTitles = true
-            self.showDetailViewController(navigationController, sender: self)
+            self.updateRootVCToDetailNavController(rootVC: getTemplatesVC())
         }
     }
 
@@ -138,9 +146,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         if let detailController = self.detailController(), detailController.isKind(of: FTShelfContentPhotoViewController.self) {
             self.showDetailViewController(detailController, sender: self)
         } else {
-            let navigationController = UINavigationController(rootViewController: getPhotosVC())
-            navigationController.navigationBar.prefersLargeTitles = true
-            self.showDetailViewController(navigationController, sender: self)
+            self.updateRootVCToDetailNavController(rootVC: getPhotosVC())
         }
     }
 
@@ -148,9 +154,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         if let detailController = self.detailController(), detailController.isKind(of: FTShelfContentAudioViewController.self)  {
             self.showDetailViewController(detailController, sender: self)
         } else {
-            let navigationController = UINavigationController(rootViewController: getAudioVC())
-            navigationController.navigationBar.prefersLargeTitles = true
-            self.showDetailViewController(navigationController, sender: self)
+            self.updateRootVCToDetailNavController(rootVC: getAudioVC())
         }
     }
     
@@ -164,7 +168,13 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
         return nil
     }
-
+    private func updateRootVCToDetailNavController(rootVC: UIViewController) {
+        self.detailNavigationController = UINavigationController(rootViewController: rootVC)
+        if let detailNavVC = detailNavigationController {
+            detailNavVC.navigationBar.prefersLargeTitles = true
+            self.showDetailViewController(detailNavVC, sender: self)
+        }
+    }
     private func getTemplatesVC() -> UIViewController {
         return FTStoreContainerViewController.templatesStoreViewController(delegate: self,premiumUser: FTIAPManager.shared.premiumUser)
     }
@@ -227,7 +237,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                             loadingIndicatorView.hide()
                             if let shelfItem, error == nil {
                                 if FTDeveloperOption.bookScaleAnim {
-                                    self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: nil)
+                                    self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
                                 }
                                 else {
                                     self?.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: false)
@@ -249,7 +259,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
         }
         var varients = FTBasicTemplatesDataSource.shared.getDefaultVariants()
         varients.isLandscape = isLandscape
-        let bgColor = isDark ? UIColor.black : UIColor.white
+        let bgColor = isDark ? UIColor(hexString: "#1D232F") : UIColor.white
         let lineColorHex = FTBasicThemeCategory.getCustomLineColorHex(bgHex: bgColor.hexStringFromColor())
         let dict = ["colorName": FTTemplateColor.custom.displayTitle,
                     "colorHex": bgColor.hexStringFromColor(),
@@ -257,9 +267,9 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     "verticalLineColor":  lineColorHex]
         let customThemeColor = FTThemeColors(dictionary: dict)
         let theme = FTStoreTemplatePaperTheme(url: url)
-        theme.customvariants = varients
         varients.selectedDevice = FTDeviceDataManager().getCurrentDevice()
         varients.selectedColor = customThemeColor
+        theme.customvariants = varients
         let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("shelf.newNotebook.creating", comment: "Creating"));
         FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection({ collection in
             if let coll = collection {
@@ -268,7 +278,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     loadingIndicatorView.hide()
                     if let shelfItem, error == nil {
                         if FTDeveloperOption.bookScaleAnim {
-                            self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: nil)
+                            self?.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
                         }
                         else {
                             self?.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: false)

@@ -28,6 +28,8 @@ extension FTNewTextStyleViewController : FTSystemFontPickerDelegate, UIFontPicke
                 self.textFontStyle?.fontName = fontFamily
             }
         }
+        self.shouldApplyAttributes = true
+        self.updateFontTraitsEnableStatus()
         applyFontChanges()
     }
 }

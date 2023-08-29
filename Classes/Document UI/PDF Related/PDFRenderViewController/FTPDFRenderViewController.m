@@ -1456,8 +1456,8 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                 callBack();
             }];
         }
-        else if(backAction == FTDeleteAction) {
-            [self deleteShelfItem];
+        else if(backAction == FTDeletePermanentlyAction || backAction == FTMoveToTrashAction) {
+            [self deleteShelfItem:(backAction == FTDeletePermanentlyAction)];
             callBack();
         }
         else {

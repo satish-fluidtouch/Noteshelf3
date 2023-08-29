@@ -69,7 +69,7 @@ class FTSafeAreazView: UIView {
 class FTNoteshelfAIViewController: UIViewController {
     private var currentToken : String = UUID().uuidString
 
-    public static var maxAllowedTokenCounter = 30;
+    public static var maxAllowedTokenCounter = 100;
     
     @IBOutlet private weak var textField: UITextField?;
     @IBOutlet private weak var textView: UITextView?;
@@ -128,7 +128,12 @@ class FTNoteshelfAIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
+        let defaultFont = UIFont.clearFaceFont(for: .medium, with: 20)
+        let attrTitle = "noteshelf.ai.noteshelfAI".aiLocalizedString.appendBetalogo(font: defaultFont);
+        let button = UIButton()
+        button.setAttributedTitle(attrTitle, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.navigationItem.titleView = button
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;
         updateContentView();
@@ -279,10 +284,14 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
 
 private extension FTNoteshelfAIViewController {
     var allTokensConsumed: Bool {
+#if DEBUG || ADHOC
+        return false;
+#else
         if FTNoteshelfAIViewController.maxAllowedTokenCounter <= UserDefaults.aiTokensConsumed {
             return true;
         }
         return false;
+#endif
     }
     
     func canExecuteAIAction() -> Bool {
@@ -358,7 +367,7 @@ private extension FTNoteshelfAIViewController {
     
     var contentToExecute: String? {
         if aiCommand == .generalQuestion {
-            return self.enteredContent;
+            return self.contentString?.appending(" \(self.enteredContent)");
         }
         if aiCommand != .langTranslate {
             if !self.enteredContent.isEmpty {

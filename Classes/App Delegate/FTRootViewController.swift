@@ -17,23 +17,6 @@ protocol FTOpenCloseDocumentProtocol : NSObjectProtocol {
     func closeDocument(shelfItemManagedObject:FTDocumentItemWrapperObject, animate: Bool, onCompletion : (() -> Void)?)
 }
 
-protocol FTRootViewControllerDelegate : NSObjectProtocol {
-    func showNotebookAskPasswordIfNeeded(_ shelfItem : FTShelfItemProtocol,
-                                         animate : Bool,
-                                         pin:String?,
-                                         addToRecent : Bool,
-                                         onCompletion : ((FTDocumentProtocol?, Bool) -> Void)?)
-
-    func importItemAndAutoScroll(_ item: FTImportItem,
-                                 shouldOpen: Bool,
-                                 completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
-
-    func shelfItems(_ sortOrder: FTShelfSortOrder,
-                    parent: FTGroupItemProtocol?,
-                    searchKey: String?,
-                    onCompletion completionBlock:@escaping (([FTShelfItemProtocol]) -> Void))
-}
-
 // iCloud Retry
 private var currentRetryCount = 1
 private var maxRetryCount = 5
@@ -134,10 +117,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
-        weak var weakSelf = self;
         if FTWhatsNewManger.canShowWelcomeScreen(onViewController: self) {
             FTGetstartedHostingViewcontroller.showWelcome(presenterController: self, onDismiss: {
-                weakSelf?.updateProvider({
+                [weak self] in
+                self?.addShelfToolbar();
+                self?.updateProvider({
                     //                    if !UserDefaults.standard.bool(forKey: "allNotes_tracked") {
                     //                        self.trackAllNotes()
                     //                    }
@@ -145,7 +129,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             });
             self.refreshStatusBarAppearnce();
         }
-        self.addShelfToolbar();
+        else {
+            self.addShelfToolbar();
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -187,7 +173,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
 
         func finalizeBlock() {
-            addShelfToolbar();
             self.view.isUserInteractionEnabled = true;
             self.rootContentViewController?.shelfViewDidMovedToFront();
             self.refreshStatusBarAppearnce();
@@ -588,7 +573,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     selfObject.isOpeningDocument = false
 
                     if selfObject.rootContentViewController != nil {
-                        selfObject.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: animate, pin: nil, addToRecent: true, isQuickCreate: false, onCompletion: {[weak self] (_, _) in
+                        selfObject.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: animate, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: {[weak self] (_, _) in
                             if !isPasswordEnabled{
                                 self?.removeLaunchScreen(true);
                             }
@@ -1148,7 +1133,7 @@ extension FTRootViewController
                         passcode: String?,
                         shouldAskforPasscode: Bool,
                         onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
-        self.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: false, pin: shouldAskforPasscode ? nil : passcode, addToRecent: addToRecent, isQuickCreate: false, onCompletion: onCompletion)
+        self.rootContentViewController?.showNotebookAskPasswordIfNeeded(shelfItem, animate: false, pin: shouldAskforPasscode ? nil : passcode, addToRecent: addToRecent, isQuickCreate: false, createWithAudio: false, onCompletion: onCompletion)
     }
 }
 
@@ -1538,10 +1523,6 @@ extension FTRootViewController {
         self.rootContentViewController?.shelfWillMovetoBack()
         
         let blockToCall : () -> Void = { [weak self] in
-            (document as? FTRecognitionHelper)?.recognitionHelper?.startPendingRecognition()
-            if FTVisionNotebookRecognitionHelper.supportsImageToTextRecognition() {
-                (document as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
-            }
             self?.docuemntViewController?.didCompleteDocumentPresentation();
             onCompletion?();
         };

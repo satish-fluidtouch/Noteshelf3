@@ -24,11 +24,18 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: 448)
+        var height: CGFloat = 448.0
+#if targetEnvironment(macCatalyst)
+        height -= 44.0
+#endif
+        self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: height)
     }
     
     override func viewDidLoad() {
-        let firstSection: [FTNoteBookSettings] = [.password, .addToSiri]
+        var firstSection: [FTNoteBookSettings] = [.password]
+#if !targetEnvironment(macCatalyst)
+        firstSection.append(.addToSiri)
+#endif
         var secondSection : [FTNoteBookSettings] = [.scrolling, .hideUiInPresentMode, .allowHyperLinks, .autoLock]
         if UIDevice.current.userInterfaceIdiom == .pad {
             secondSection.append(.stylus)
@@ -114,7 +121,7 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             updateToggleSwitch(uiSwitch: toggleSwitch, for: eachSetting)
             toggleSwitch.addAction(UIAction(handler: {[weak self] action in
                 self?.switchvalueChanged(for: eachSetting)
-            }), for: .touchUpInside)
+            }), for: .valueChanged)
             cell.accessoryView = toggleSwitch
         } else if eachSetting.cellType() == .disclosure {
             cell.accessoryType = .disclosureIndicator

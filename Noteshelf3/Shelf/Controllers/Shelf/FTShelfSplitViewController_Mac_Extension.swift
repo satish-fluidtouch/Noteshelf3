@@ -126,6 +126,18 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
             } else {
                 toolbar.switchMode(.shelf)
             }
+#if targetEnvironment(macCatalyst)
+            // To disable other tool items during search mode
+            if !self.checkIfGlobalSearchControllerExists() {
+                self.exitFromGlobalSearch()
+                if let addToolItem = toolbar.getToolbarItem(with: FTShelfAddToolbarItem.identifier) as? FTShelfAddToolbarItem {
+                    addToolItem.validate()
+                }
+                if let moreItem = toolbar.getToolbarItem(with: FTShelfMoreToolbarItem.identifier) as? FTShelfMoreToolbarItem {
+                    moreItem.validate()
+                }
+            }
+#endif
             toolbar.showBackButton(viewController.isRootViewController ? false : true)
         }
     }

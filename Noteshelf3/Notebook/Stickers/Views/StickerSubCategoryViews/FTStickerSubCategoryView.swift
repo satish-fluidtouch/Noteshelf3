@@ -29,6 +29,7 @@ struct FTStickerSubCategoryView: View {
                     NavigationLink(destination:FTStickerItemView(model: model, stickerSubCategory: stickersubcat)) {
                         StickerCategoryTileView(image: UIImage(named: stickersubcat.image) ?? UIImage(), title: stickersubcat.title)
                     }
+                    .macOnlyPlainButtonStyle()
                 }
             }
             .padding(.trailing,10)

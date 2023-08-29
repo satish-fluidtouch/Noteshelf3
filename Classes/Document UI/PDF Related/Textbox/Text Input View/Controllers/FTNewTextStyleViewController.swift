@@ -54,8 +54,8 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     private var selectedRange: NSRange?
     weak var parentVC: UIViewController?
     var iscomeFromTextPreset: Bool = false
-    private var fontSizeStepper: FTStepperView?
-    private var lineSpaceStepper: FTStepperView?
+    private weak var fontSizeStepper: FTStepperView?
+    private weak var lineSpaceStepper: FTStepperView?
 
     weak var delegate: FTEditStyleDelegate?
     var isModifyText: Bool = false
@@ -157,7 +157,6 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         applyFontChanges()
         self.loadColorCollectionView()
         txtFontSize?.text = "\(textFontStyle!.fontSize)"
-        self.fontSizeStepper?.updateInitialValue(textFontStyle?.fontSize ?? Int(0.0))
         NotificationCenter.default.addObserver(self, selector: #selector(changeText(_:)), name: UITextField.textDidChangeNotification, object: nil)
         if let attr = self.attributes {
             self.validateKeyboard(attributes: attr, scale: scale)
@@ -172,6 +171,13 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
             selectedTextRange = textAnnot.textInputView.selectedTextRange
         }
         self.configureTextFields(with: newStyle)
+        self.fontSizeStepper?.updateInitialValue(textFontStyle?.fontSize ?? Int(0.0))
+        self.updateFontTraitsEnableStatus()
+    }
+
+    internal func updateFontTraitsEnableStatus() {
+        self.btnBold?.isEnabled = self.canAddTrait(.traitBold)
+        self.btnItalic?.isEnabled = self.canAddTrait(.traitItalic)
     }
 
     private func configureTextFields(with style: FTTextStyleItem?) {
@@ -315,9 +321,13 @@ extension FTNewTextStyleViewController {
     }
     
     @IBAction func tappedOnFontName(_ sender: UIButton) {
-        let fontPicker: FTFontPickerViewController = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
+        let fontPicker = FTFontPickerViewController(nibName: "FTFontPickerViewController", bundle: Bundle(for: FTFontPickerViewController.self))
         fontPicker.delegate = self
+#if !targetEnvironment(macCatalyst)
         self.navigationController?.pushViewController(fontPicker, animated: true)
+#else
+        self.present(fontPicker, animated: true)
+#endif
     }
 
     private func handlefontSizeChange(value: Int){
@@ -354,6 +364,7 @@ extension FTNewTextStyleViewController {
                 self.textFontStyle?.strikeThrough = !(self.textFontStyle?.strikeThrough ?? false)
             }
             self.textFontStyle?.fontName = tempFont.fontName
+            self.shouldApplyAttributes = true
             self.applyFontChanges()
         }
     }

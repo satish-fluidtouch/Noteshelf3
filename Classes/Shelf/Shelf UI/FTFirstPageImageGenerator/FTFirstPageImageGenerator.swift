@@ -89,7 +89,7 @@ class FTFirstPageImageGenerator {
 extension FTNoteshelfDocument {
     func transparentThumbnail(isEncrypted: Bool) -> UIImage{
         var coverImage:UIImage!
-        if isEncrypted {
+        if isEncrypted || isPinEnabled() {
             coverImage = UIImage.init(named: "locked")!
         }
         else

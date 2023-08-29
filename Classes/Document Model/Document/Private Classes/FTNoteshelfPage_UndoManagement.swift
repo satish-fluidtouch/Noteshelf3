@@ -15,6 +15,7 @@ extension Notification.Name {
     static let didChangeOrderNotification = Notification.Name("FTDidChangeOrderNotification")
     static let willPerformUndoRedoActionNotification = Notification.Name.FTWillPerformUndoRedoAction;
     static let didUpdateAnnotationNotification = Notification.Name("FTDidUpdateAnnotationNotification")
+    static let shouldResignTextfieldNotification = Notification.Name("FTShouldResignTextfieldNotification")
     static let didReplaceAnnotationNotification = Notification.Name("FTDidReplaceAnnotationNotification")
 }
 

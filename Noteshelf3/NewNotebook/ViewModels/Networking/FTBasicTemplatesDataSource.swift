@@ -51,7 +51,7 @@ class FTBasicTemplatesDataSource: NSObject {
          } else {
              sizeModels.append(FTTemplateSizeModel(size: standardMobileDevice.displayName, portraitSize: standardMobileDevice.dimension_port, landscapeSize: standardMobileDevice.dimension_land))
          }
-         return UIDevice.current.isMac() ? sizeModels.reversed() : sizeModels
+         return sizeModels
      }
      func getDeviceModelForIPadOrMobile(_ size: FTTemplateSize) -> FTDeviceModel{
          let deviceManager = FTDeviceDataManager()

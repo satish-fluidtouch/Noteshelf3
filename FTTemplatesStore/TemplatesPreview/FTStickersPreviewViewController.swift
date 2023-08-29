@@ -47,10 +47,8 @@ class FTStickersPreviewViewController: UIViewController {
         }
     }
 
-    func downloadStickersPack() {
-
+    func downloadStickersPack() async throws {
         let storeServiceApi = FTStoreService()
-        Task {
             guard let templa = template as? DiscoveryItem else {
                 throw TemplateDownloadError.InvalidTemplate
             }
@@ -58,26 +56,15 @@ class FTStickersPreviewViewController: UIViewController {
                 throw TemplateDownloadError.InvalidTemplate
             }
 
-            let isDownloaded = FTTemplatesCache().stickerpackisExists(fileName: templa.fileName)
-            self.delegate?.didUpdateUIFor(sticker: isDownloaded)
-            if isDownloaded {
-                return
-            }
-            self.parent?.showingLoadingindicator()
-            do {
-                _ = try await storeServiceApi.downloadStickersFor(url: downloadUrl, fileName: templa.fileName)
-                self.parent?.hideLoadingindicator()
-                let alertVc = UIAlertController(title: "templatesStore.alert.success".localized, message: String(format: "templatesStore.stickerPreview.alert.successMessage".localized, templa.displayTitle), preferredStyle: .alert)
-                alertVc.addAction(UIAlertAction(title: "templatesStore.alert.ok".localized, style: .default))
-                self.present(alertVc, animated: true)
-                self.delegate?.didUpdateUIFor(sticker: true)
-
-            } catch {
-                UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
-                self.parent?.hideLoadingindicator()
-                self.delegate?.didUpdateUIFor(sticker: false)
-            }
+        let isDownloaded = FTTemplatesCache().stickerpackisExists(fileName: templa.fileName)
+        self.delegate?.didUpdateUIFor(sticker: isDownloaded)
+        if isDownloaded {
+            return
         }
+        _ = try await storeServiceApi.downloadStickersFor(url: downloadUrl, fileName: templa.fileName)
+        let alertVc = UIAlertController(title: "templatesStore.alert.success".localized, message: String(format: "templatesStore.stickerPreview.alert.successMessage".localized, templa.displayTitle), preferredStyle: .alert)
+        alertVc.addAction(UIAlertAction(title: "templatesStore.alert.ok".localized, style: .default))
+        self.present(alertVc, animated: true)
     }
 
     @IBAction func authorAction(_ sender: Any) {

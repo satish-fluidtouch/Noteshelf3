@@ -112,7 +112,7 @@ struct FTShelfItemView: View {
             })
                 .popover(item: $shelfItem.popoverType) { type in
                     if type == .getInfo {
-                        FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: shelfItem.title, location: shelfItem.model.URL.displayRelativePathWRTCollection().deletingLastPathComponent, modifiedDate: shelfItem.model.fileModificationDate.shelfShortStyleFormat() , createdDate: shelfItem.model.fileCreationDate.shelfItemCreatedDateFormat()))
+                        FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: shelfItem.title, location: shelfItemLocation, modifiedDate: shelfItem.model.fileModificationDate.shelfShortStyleFormat() , createdDate: shelfItem.model.fileCreationDate.shelfItemCreatedDateFormat()))
                             .frame(minWidth: 330,
                                    idealWidth: 330,
                                    maxWidth: .infinity,
@@ -180,5 +180,12 @@ struct FTShelfItemView: View {
     }
     private var landCoverCornerRadius: CGFloat {
         FTShelfItemProperties.Constants.Notebook.landCoverCornerRadius
+    }
+    private var shelfItemLocation: String {
+        var location: String = shelfItem.model.URL.displayRelativePathWRTCollection().deletingLastPathComponent
+        if shelfItem.model.shelfCollection.isUnfiledNotesShelfItemCollection {
+            location = location.replacingOccurrences(of: uncategorizedShefItemCollectionTitle, with: "sidebar.topSection.unfiled".localized)
+        }
+        return location
     }
 }

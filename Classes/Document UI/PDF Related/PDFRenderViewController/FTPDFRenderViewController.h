@@ -26,9 +26,10 @@ typedef enum : NSInteger {
 }FTAddNewPageMode;
 
 typedef enum: NSInteger  {
-     FTNormalAction,
-     FTSaveAction,
-     FTDeleteAction,
+    FTNormalAction,
+    FTSaveAction,
+    FTDeletePermanentlyAction,
+    FTMoveToTrashAction
 }FTNotebookBackAction;
 
 
@@ -78,6 +79,7 @@ FTEraserRackControllerDelegate> {}
 @property (weak) id textToolbarDelegate;
 @property (weak,readonly) FTZoomOverlayViewController *zoomOverlayController;
 
+@property (nullable, strong) NSString *currentSceneID;
 @property (strong) FTDocumentOpenToken *openDocToken;
 
 @property (assign,readonly) CGFloat contentScaleInNormalMode;

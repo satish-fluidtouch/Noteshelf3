@@ -24,6 +24,11 @@ class FTShelfBaseHostingController: UIHostingController<AnyView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+#if targetEnvironment(macCatalyst)
+        if let toolbar = self.splitViewController?.view.toolbar as? FTShelfToolbar {
+            self.observeShelfModelChanges(of: toolbar)
+        }
+#endif
     }
 
     override func viewWillAppear(_ animated: Bool) {

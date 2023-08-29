@@ -21,6 +21,7 @@ class FTStoreLibraryViewModel {
     private var libraryData: [FTTemplateStyle] = []
     var dataSource: StoreLibraryDatasource!
     var snapshot = StoreLibrarySnapshot()
+    var applySnapshotClosure: (() -> Void)?
 
     func loadLibraryTemplates() {
         Task {
@@ -38,15 +39,16 @@ class FTStoreLibraryViewModel {
         if libraryData.isEmpty {
             let type = FTStoreLibraryType.noRecords
             self.snapshot.appendSections([type])
-            self.snapshot.appendItems([type], toSection: type)
-
+            self.snapshot.appendItems([], toSection: type)
             self.dataSource.apply(self.snapshot, animatingDifferences: true)
+            self.applySnapshotClosure?()
             return
         }
         let type = FTStoreLibraryType.libraries
         self.snapshot.appendSections([type])
         self.snapshot.appendItems(libraryData, toSection: type)
         self.dataSource.apply(self.snapshot, animatingDifferences: true)
+        self.applySnapshotClosure?()
     }
 
     func items() -> [FTTemplateStyle] {

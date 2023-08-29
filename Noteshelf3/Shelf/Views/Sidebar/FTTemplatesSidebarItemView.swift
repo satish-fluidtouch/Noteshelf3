@@ -10,6 +10,7 @@ import SwiftUI
 struct FTTemplatesSidebarItemView: View {
     @ObservedObject var viewModel: FTSidebarViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @Environment(\.colorScheme) var colorScheme
 
     weak var delegate: FTSidebarViewDelegate?
     var body: some View {
@@ -27,7 +28,7 @@ struct FTTemplatesSidebarItemView: View {
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false
         }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false),sidebarItem:templatesSidebarItem,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)
-        .frame(height: 71)
+        .frame(height: 80)
         .environmentObject(viewModel)
     }
     private func getBGColorTemplateItem() -> Color {
@@ -48,6 +49,53 @@ struct FTTemplatesSidebarItemView: View {
         viewModel.sidebarItemOfType(.templates)
     }
     private var templatesView: some View {
+        VStack(alignment: .leading,spacing:10) {
+            HStack(alignment: .top, content: {
+                Image(icon: .templates)
+                    .foregroundColor(iconTintColor)
+                    .font(.appFont(for: .regular, with: 22))
+            })
+            .padding(.top,14)
+            .padding(.horizontal,12)
+            HStack(alignment: .top, content: {
+                Text("Templates")
+                    .frame(maxWidth: .infinity,alignment: .leading)
+                    .font(titleFont)
+                    .foregroundColor(titleTint)
+            })
+            .padding(.horizontal,12)
+            .padding(.bottom,10)
+        }
+        .frame(maxWidth: .infinity,maxHeight: 80)
+        .background(getBGColorTemplateItem())
+        .cornerRadius(16)
+        .if(templatesSidebarItem.type == viewModel.selectedSideBarItem?.type) { view in
+            view.shadow(color: templatesSidebarItem.type.shadowColor, radius: 12,x: 0,y:8)
+        }
+        .contentShape([.contextMenuPreview],RoundedRectangle(cornerRadius: 16))
+    }
+    private var titleFont: Font {
+        if let selectedSideBarItem = viewModel.selectedSideBarItem,selectedSideBarItem.type == templatesSidebarItem.type {
+            return Font.appFont(for: .medium, with: 17)
+        }
+        return Font.appFont(for: .regular, with: 17)
+    }
+    private var iconTintColor: Color {
+        if let selectedSideBarItem = viewModel.selectedSideBarItem,selectedSideBarItem.type == templatesSidebarItem.type {
+            return Color.appColor(.templatesIconSelectedTint)
+        }
+        return Color.appColor(.templatesIconTint)
+    }
+    private var titleTint: Color {
+        var color = Color.white
+        if let selectedSideBarItem = viewModel.selectedSideBarItem,selectedSideBarItem.type == templatesSidebarItem.type {
+            color = Color.white
+        } else {
+            color = (colorScheme == .dark) ? .white : .black
+        }
+        return color
+    }
+    private var templatesView1: some View {
         HStack(alignment:.center, spacing:0) {
                 ZStack(alignment: .bottomLeading) {
                     Image("templatePaperIcon")   
@@ -64,13 +112,8 @@ struct FTTemplatesSidebarItemView: View {
                         .foregroundColor(getTintColorForTopSectionItem().opacity(0.8))
                 }
         }
-        .frame(maxWidth: .infinity,maxHeight: 71, alignment: .leading)
-        .background(getBGColorTemplateItem())
-        .cornerRadius(16)
-        .if(templatesSidebarItem.type == viewModel.selectedSideBarItem?.type) { view in
-            view.shadow(color: templatesSidebarItem.type.shadowColor, radius: 12,x: 0,y:8)
-        }
-        .contentShape([.contextMenuPreview],RoundedRectangle(cornerRadius: 16))
+        .frame(maxWidth: .infinity,maxHeight: 80, alignment: .leading)
+
     }
 }
 struct FTTemplatesSidebarItemView_Previews: PreviewProvider {

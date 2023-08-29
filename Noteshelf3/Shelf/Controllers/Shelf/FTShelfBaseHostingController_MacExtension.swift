@@ -11,16 +11,32 @@ import Foundation
 #if targetEnvironment(macCatalyst)
 extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbarActionDelegate {
     func toolbar(_ toolbar: NSToolbar, canPerformAction item: NSToolbarItem) -> Bool {
-        if self.shelfViewModel.collection.isTrash, item.itemIdentifier == FTShelfEmptyTrashToolbarItem.identifier {
-            return !self.shelfViewModel.shelfItems.isEmpty;
+        var status = false
+        if self.isInTrash(), (item.itemIdentifier == FTShelfEmptyTrashToolbarItem.identifier || item.itemIdentifier == FTSelectToolbarItem.identifier) {
+            status = !self.shelfViewModel.shelfItems.isEmpty && !self.isInSearchMode()
+        } else if item.itemIdentifier == FTShelfAddToolbarItem.identifier {
+            status = self.toEnableAddToolbarItem()
+        } else if item.itemIdentifier == FTShelfMoreToolbarItem.identifier {
+            status = self.toEnableMoreToolbarItem()
         }
-        else if item.itemIdentifier == FTShelfAddToolbarItem.identifier {
-            return (shelfViewModel.collection.collectionType == .default
-                    || shelfViewModel.collection.collectionType == .allNotes)
-        }
-        return false
+        return status
     }
-    
+
+    private func toEnableMoreToolbarItem() -> Bool {
+        let status = (shelfViewModel.collection.collectionType == .default
+                      || shelfViewModel.collection.collectionType == .allNotes || shelfViewModel.collection.collectionType == .starred) && !self.isInSearchMode()
+        return status
+    }
+
+    private func toEnableAddToolbarItem() -> Bool {
+        var status = false
+        if !(shelfViewModel.collection.collectionType == .starred) {
+            status = (shelfViewModel.collection.collectionType == .default
+                      || shelfViewModel.collection.collectionType == .allNotes) && !self.isInSearchMode()
+        }
+        return status
+    }
+
     func toolbarDidBeginSearch(_ toolbarId: NSToolbar.Identifier, textField: UISearchTextField) {
         if let splitVc = self.splitViewController as? FTShelfSplitViewController, !splitVc.checkIfGlobalSearchControllerExists() {
             splitVc.navigateToGlobalSearch()
@@ -74,9 +90,13 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
         case FTHomeNavItemFilteredItemsModel.settings.menuIdenfier:
             self.shelfViewModel.delegate?.showSettings()
         case FTHomeNavItemFilteredItemsModel.selectNotes.menuIdenfier:
-            (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
-            self.shelfViewModel.mode = .selection
-            self.observeSelectModeChanges(of: toolbar)
+            if !self.shelfViewModel.shelfItems.isEmpty {
+                if let shelfToolbar = toolbar as? FTShelfToolbar {
+                    shelfToolbar.switchMode(.selectNotes)
+                    self.shelfViewModel.mode = .selection
+                    self.observeShelfModelChanges(of: shelfToolbar)
+                }
+            }
         default:
             break
         }
@@ -109,18 +129,22 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
         } else if item.itemIdentifier == FTSelectDoneToolbarItem.identifier {
             self.shelfViewModel.mode = .normal
         } else if item.itemIdentifier == FTSelectToolbarItem.identifier {
-            self.shelfViewModel.mode = .selection
-            (toolbar as? FTShelfToolbar)?.switchMode(.selectNotes)
-            self.observeSelectModeChanges(of: toolbar)
+           if !self.shelfViewModel.shelfItems.isEmpty {
+               self.shelfViewModel.mode = .selection
+               if let shelfToolbar = toolbar as? FTShelfToolbar {
+                   shelfToolbar.switchMode(.selectNotes)
+                   self.observeShelfModelChanges(of: shelfToolbar)
+               }
+            }
         }
     }
 
-    private func observeSelectModeChanges(of toolbar: NSToolbar) {
+    internal func observeShelfModelChanges(of toolbar: FTShelfToolbar) {
         self.shelfViewModel.objectWillChange
             .receive(on: DispatchQueue.main) // Receive the changes on the main thread
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                if let shelfToolBar = toolbar as? FTShelfToolbar, let selectNotesItem = shelfToolBar.items.first(where: { $0.itemIdentifier == FTSelectNotesToolbarItem.identifier }) as? FTSelectNotesToolbarItem {
+                if let selectNotesItem = toolbar.getToolbarItem(with: FTSelectNotesToolbarItem.identifier) as? FTSelectNotesToolbarItem {
                     if self.shelfViewModel.areAllItemsSelected {
                         selectNotesItem.title = "shelf.navBar.selectNone".localized
                     } else {
@@ -128,11 +152,18 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
                     }
                     if self.shelfViewModel.mode == .normal {
                         self.shelfViewModel.finalizeShelfItemsEdit()
-                        if self.shelfViewModel.collection.isTrash {
-                            (toolbar as? FTShelfToolbar)?.switchMode(.trash)
+                        if self.isInTrash() {
+                            toolbar.switchMode(.trash)
                         } else {
-                            (toolbar as? FTShelfToolbar)?.switchMode(.shelf)
+                            toolbar.switchMode(.shelf)
                         }
+                    }
+                } else if self.isInTrash() {
+                    if let emptyTrashitem = toolbar.getToolbarItem(with: FTShelfEmptyTrashToolbarItem.identifier) as? FTShelfEmptyTrashToolbarItem {
+                        emptyTrashitem.validate()
+                    }
+                    if let selectItem = toolbar.getToolbarItem(with: FTSelectToolbarItem.identifier) as? FTSelectToolbarItem {
+                        selectItem.validate()
                     }
                 }
             }
@@ -252,6 +283,22 @@ extension FTShelfBaseHostingController: FTMenuActionResponder {
     
     func sortByLastOpenedDate(_ sender: AnyObject?) {
         shelfViewModel.sortOption = .byLastOpenedDate;
+    }
+}
+
+// MARK: Helper functions
+extension FTShelfBaseHostingController {
+    private func isInSearchMode() -> Bool {
+        var status = false
+        if let splitVc = self.splitViewController as? FTShelfSplitViewController, splitVc.checkIfGlobalSearchControllerExists() {
+            status = true
+        }
+        return status
+    }
+
+    private func isInTrash() -> Bool {
+        let status = self.shelfViewModel.collection.isTrash
+        return status
     }
 }
 #endif

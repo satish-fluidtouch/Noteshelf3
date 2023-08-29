@@ -27,7 +27,7 @@ class FTEmojiCategoryHeaderView: UICollectionReusableView {
         addSubview(label)
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: leadingAnchor),
-            label.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 2)
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 15)
         ])
     }
     

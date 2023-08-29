@@ -30,14 +30,16 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
             FTNotebookCreation().quickCreateNotebook(collection: collection, group: group) {[weak self] error, shelfItem in
                 loadingIndicatorView.hide()
                 if error != nil {
-                    self?.showAlertForError(error)
+                    runInMainThread {
+                        self?.showAlertForError(error)
+                    }
                 }else {
                     if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItem {
                         self?.showNotebookAskPasswordIfNeeded(notebookItem,
                                                               animate: true,
                                                               pin: notebookDetails?.documentPin?.pin,
                                                               addToRecent: true,
-                                                              isQuickCreate: true,
+                                                              isQuickCreate: true, createWithAudio: false,
                                                               onCompletion: nil);
                     }
                     onCompletion(error,shelfItem)
@@ -48,14 +50,16 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 FTNotebookCreation().createNewNotebookInside(collection: collection, group: group, notebookDetails: notebookDetails,mode: mode) { [weak self] error, shelfItemProtocol in
                     loadingIndicatorView.hide()
                     if error != nil {
-                        self?.showAlertForError(error)
+                        runInMainThread {
+                            self?.showAlertForError(error)
+                        }
                     }else {
                         if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItemProtocol {
                             self?.showNotebookAskPasswordIfNeeded(notebookItem,
                                                                   animate: true,
                                                                   pin: notebookDetails.documentPin?.pin,
                                                                   addToRecent: true,
-                                                                  isQuickCreate: false,
+                                                                  isQuickCreate: false, createWithAudio: false,
                                                                   onCompletion: nil);
                         }
                         onCompletion(error,shelfItemProtocol)
@@ -273,45 +277,23 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                     controller.coverImagePreview = model.coverImage
                 }
             }
+#if !targetEnvironment(macCatalyst)
             self.present(controller, animated: true);
+#else
+            controller.modalPresentationStyle = .formSheet
+            let navController = UINavigationController(rootViewController: controller)
+            controller.title = "Covers"
+            let insetBy: CGFloat = 20
+            var preferedSize = self.view.frame.insetBy(dx: insetBy, dy: 0).size
+            if let size = self.view.window?.windowScene?.sizeRestrictions?.minimumSize {
+                preferedSize = CGSize(width: size.width - 2 * insetBy, height: size.height)
+            }
+            navController.navigationBar.isTranslucent = false
+            self.ftPresentFormsheet(vcToPresent: navController, contentSize: preferedSize)
+#endif
         }
     }
 
-    func showNewNotePopoverOnRect(_ rect: CGRect) {
-        //(AK): This is being removed in the new design
-
-        let shelfNewNoteViewModel = FTNewNotePopoverViewModel()
-        shelfNewNoteViewModel.delegate = currentShelfViewModel
-        let popOverHeight: CGFloat = self.traitCollection.isRegular ? 436 : 500
-        let controller = FTShelfNewNoteController(viewModel: shelfNewNoteViewModel
-                                                  , popOverHeight: popOverHeight
-                                                  , appState:getSizeClass()
-                                                  , shelfViewModel: currentShelfViewModel!
-                                                  ,delegate: self)
-        controller.view.backgroundColor = .clear
-        let alreadyCreatedSampleViewIfAny  = self.view.viewWithTag(101)
-        alreadyCreatedSampleViewIfAny?.removeFromSuperview()
-        let sampleView = UIView()
-        sampleView.backgroundColor = .red
-        sampleView.frame = rect
-        sampleView.alpha = 0.0
-        sampleView.tag = 101
-        self.view.addSubview(sampleView)
-        sampleView.sendSubviewToBack(self.view)
-
-        let navController = FTNavigationController(rootViewController: controller)
-        navController.modalPresentationStyle = self.traitCollection.isRegular ? .popover : .automatic
-        navController.popoverPresentationController?.sourceView = sampleView
-        navController.preferredContentSize = CGSize(width: 360, height: popOverHeight)
-        navController.isNavigationBarHidden = true
-        navController.presentationController?.delegate = self
-        if traitCollection.isRegular {
-            self.present(navController, animated: true)
-        }else {
-            self.ftPresentModally(controller, contentSize: CGSize(width: 360, height: popOverHeight), animated: true, completion: nil)
-        }
-
-    }
     func showMoveItemsPopOverWith(selectedShelfItems: [FTShelfItemProtocol]) {
         let shelfItemsViewModel = FTShelfItemsViewModel(selectedShelfItems: selectedShelfItems)
         shelfItemsViewModel.selectedShelfItemsForMove = selectedShelfItems
@@ -406,10 +388,14 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
 
     //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
-        if !self.openingBookInProgress {
-            self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate, pageIndex: pageIndex, onCompletion: nil)
-        }else {
-            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+        if !shelfItem.shelfCollection.isTrash  {
+            if !self.openingBookInProgress {
+                self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate,createWithAudio: false, pageIndex: pageIndex, onCompletion: nil)
+            }else {
+                NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+            }
+        } else {
+            UIAlertController.showAlert(withTitle: "", message: "trash.alert.cannotOpenNotebook".localized, from: self, withCompletionHandler: nil)
         }
     }
     
@@ -1301,10 +1287,13 @@ extension FTShelfSplitViewController {
                 if error == nil, let shelfItem {
                     self.currentShelfViewModel?.addObserversForShelfItems()
                     self.currentShelfViewModel?.setcurrentActiveShelfItemUsing(shelfItem, isQuickCreated: true)
-                    self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false) { _, success in
+                    self.showNotebookAskPasswordIfNeeded(shelfItem, animate: true, pin: nil, addToRecent: false, isQuickCreate: false, createWithAudio: true) { _, success in
+                        //For mac, audio note will be added at FTBookSessionRootViewController level.
+                        #if !targetEnvironment(macCatalyst)
                         if success, let rootController = self.parent as? FTRootViewController {
                             rootController.startRecordingOnAudioNotebook()
                         }
+                        #endif
                     }
                 }
             }

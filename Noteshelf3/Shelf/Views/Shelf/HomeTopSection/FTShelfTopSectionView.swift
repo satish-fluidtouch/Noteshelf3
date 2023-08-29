@@ -30,54 +30,35 @@ struct FTShelfTopSectionView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom , 28)
                     }
-
-                    if proxy.isCompact && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode{
+                    if proxy.width < 700 && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode || proxy.width < 400  {
                         Grid {
                             GridRow{
                                 getShelfDetailViewItem(.quicknote,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
-                            }
-                            GridRow{
-                                getShelfDetailViewItem(.newNotebook,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
-                            }
-                            GridRow{
-                                getShelfDetailViewItem(.importFile,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
-                            }
-                        }
-                    }else if (proxy.width > 500 && proxy.width < 700) && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode{
-                        Grid {
-                            GridRow{
-                                getShelfDetailViewItem(.quicknote,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
+                                                       shelfViewModel: shelfViewModel,
+                                                       geometrySize: proxy.width)
                                     .gridCellColumns(2)
                             }
                             GridRow{
                                 getShelfDetailViewItem(.newNotebook,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
+                                                       shelfViewModel: shelfViewModel,
+                                                       geometrySize: proxy.width)
                                 getShelfDetailViewItem(.importFile,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
+                                                       shelfViewModel: shelfViewModel,
+                                                       geometrySize: proxy.width)
                             }
                         }
                     }else{
-                        Grid(horizontalSpacing: 16) {
+                        Grid {
                             GridRow {
                                 getShelfDetailViewItem(.quicknote,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
+                                                       shelfViewModel: shelfViewModel,
+                                                       geometrySize: proxy.width)
                                 getShelfDetailViewItem(.newNotebook,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
+                                                       shelfViewModel: shelfViewModel,
+                                                       geometrySize: proxy.width)
                                 getShelfDetailViewItem(.importFile,
-                                                       isCompact: proxy.isCompact,
-                                                       shelfViewModel: shelfViewModel)
+                                                       shelfViewModel: shelfViewModel,
+                                                       geometrySize: proxy.width)
                             }
                         }
                     }
@@ -85,10 +66,9 @@ struct FTShelfTopSectionView: View {
             }
         }.macOnlyPlainButtonStyle()
     }
-    private func getShelfDetailViewItem(_ type: FTShelfHomeTopSectionModel,isCompact:Bool,shelfViewModel:FTShelfViewModel) -> some View {
+    private func getShelfDetailViewItem(_ type: FTShelfHomeTopSectionModel,shelfViewModel:FTShelfViewModel, geometrySize: CGFloat) -> some View {
         FTShelfTopSectionItem(type: type,
-                             isFirsttime: shelfViewModel.shouldShowGetStartedInfo,
-                             isCompact: isCompact,
+                             isFirsttime: shelfViewModel.shouldShowGetStartedInfo, geometrySize: geometrySize,
                              shelfViewModel: shelfViewModel)
     }
 }

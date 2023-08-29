@@ -46,6 +46,26 @@ extension NSUserActivity {
         let userInfo = self.userInfo?.description ?? "nil"
         return "♻️ \(super.description) - Type: \(type) Title: \(title) userinfo:\(userInfo)"
     }
+    
+    var createWithAudio: Bool {
+        get {
+            let createWithAudio = self.userInfo?[createWithAudioKey] as? Bool;
+            return createWithAudio ?? false
+        }
+        set {
+            self.userInfo?[createWithAudioKey] = newValue;
+        }
+    }
+    
+    var isQuickCreate: Bool {
+        get {
+            let isQuickCreate = self.userInfo?[quickCreateKey] as? Bool;
+            return isQuickCreate ?? false
+        }
+        set {
+            self.userInfo?[quickCreateKey] = newValue;
+        }
+    }
 }
 
 extension NSUserActivity {
