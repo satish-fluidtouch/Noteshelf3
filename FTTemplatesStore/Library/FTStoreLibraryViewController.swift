@@ -225,7 +225,7 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
                     try FileManager.default.removeItem(at: tempUrl)
                 }
                 try FileManager.default.copyItem(at: pdfUrl, to: tempUrl)
-                let isDark = style.title.lowercased() == "dark" ? true : false
+                let isDark = style.templateName.lowercased().contains("dark") ? true : false
                 let isLandscape = style.orientation == .landscape ? true : false
 
 

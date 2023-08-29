@@ -48,7 +48,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                 .detectOrientation($viewModel.orientation)
                 .shelfNavBarItems()
                 .allowsHitTesting(viewModel.allowHitTesting)
-                .navigationTitle(((geometry.size.width > 400 && viewModel.shouldShowGetStartedInfo) ? "" : viewModel.navigationTitle))
+                .navigationTitle(viewModel.navigationTitle)
 #if targetEnvironment(macCatalyst)
                 .navigationBarBackButtonHidden(true)
 #else
