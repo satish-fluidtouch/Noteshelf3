@@ -50,6 +50,8 @@ protocol FTTextToolBarDelegate: NSObjectProtocol {
     func didChangeFontTrait(_ trait: UIFontDescriptor.SymbolicTraits)
     func didToggleUnderline()
     func didToggleStrikeThrough()
+    func didSetDefaultStyle(_ info: FTTextStyleItem)
+    func textInputViewCurrentTextView() -> FTTextView?
 }
 
 class FTTextToolBarViewController: UIViewController {
@@ -62,13 +64,12 @@ class FTTextToolBarViewController: UIViewController {
     @IBOutlet private weak var btnNumberBullets: UIButton?
     @IBOutlet private weak var btnCheckBox: UIButton?
     @IBOutlet private weak var compactView: UIStackView?
-
     @IBOutlet weak var textModeSelectionBtn: FTTextToolbarButton!
+
     var btnInputItemBold: UIBarButtonItem?
     var btnInputItemItalic: UIBarButtonItem?
     var btnInputItemUnderLine: UIBarButtonItem?
     var btnInputItemStrikeThrough: UIBarButtonItem?
-    
     
     weak var toolBarDelegate: FTTextToolBarDelegate?
     weak var textSelectionDelegate: FTTextSelectionChangeDelegate?
@@ -526,6 +527,18 @@ extension FTTextToolBarViewController: FTEditStyleDelegate {
     
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool) {
         self.toolBarDelegate?.didSelectTextRange(range: range, txtRange: txtRange, canEdit: canEdit)
+    }
+
+    func didSetDefaultStyle(_ info: FTTextStyleItem) {
+        self.toolBarDelegate?.didSetDefaultStyle(info)
+    }
+
+    func textInputViewCurrentTextView() -> FTTextView? {
+        return self.toolBarDelegate?.currentTextInputView()
+    }
+
+    func rootViewController() -> UIViewController? {
+        return (self.toolBarDelegate as? FTTextAnnotationViewController)?.parent
     }
 }
 

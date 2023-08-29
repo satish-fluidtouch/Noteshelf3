@@ -132,6 +132,7 @@ class FTTextAnnotationViewController: UIViewController {
                 self.autocorrectionType = UITextAutocorrectionType.no
                 #if !targetEnvironment(macCatalyst)
                     _ = self.resignFirstResponder()
+//                (self.textInputView.inputAccessoryViewController as? FTTextInputAccerssoryViewController)?.dismissPopoverViews();
                 #endif
             }
         }
@@ -307,7 +308,7 @@ class FTTextAnnotationViewController: UIViewController {
                                    forAttribute: NSAttributedString.Key.foregroundColor.rawValue,
                                    in: NSRange(location: 0, length: 0))
         }
-        if let underlineValue = page?.parentDocument?.localMetadataCache?.byDefaultIsUnderline {
+        if let underlineValue = page?.parentDocument?.localMetadataCache?.defaultIsUnderline {
             textInputView.setValue(NSNumber.init(value: underlineValue),
                                    forAttribute: NSAttributedString.Key.underlineStyle.rawValue,
                                    in: NSRange(location: 0, length: 0))
@@ -883,10 +884,8 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     //    #endif
 }
 
-extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
-    
+extension FTTextAnnotationViewController: FTTextToolBarDelegate {
     func didSelectTextToolbarOption(_ option: FTTextToolBarOption) {
-        print("Selected \(option)")
         switch option {
         case .leftIndent:
             self.textInputAccessoryDidChangeIndent(.left)
@@ -914,7 +913,7 @@ extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
     func currentTextInputView() -> FTTextView {
         return textInputView
     }
-    
+
     func addTextInputView(_ inputController: UIViewController?) {
         textInputView.inputView = inputController?.view
         textInputView.reloadInputViews()
@@ -948,15 +947,28 @@ extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
     func didToggleStrikeThrough() {
         self.textInputAccessoryDidToggleStrikeThrough()
     }
-    
+
+    func didSetDefaultStyle(_ info: FTTextStyleItem) {
+    if let ann = self._annotation, let page = ann.associatedPage, let document = page.parentDocument {
+        if let defaultFont = UIFont(name: info.fontName, size: CGFloat(info.fontSize)) {
+                document.localMetadataCache?.defaultBodyFont = defaultFont
+                document.localMetadataCache?.defaultTextColor = UIColor(hexString: info.textColor)
+                document.localMetadataCache?.defaultIsUnderline = info.isUnderLined
+                document.localMetadataCache?.defaultIsStrikeThrough = info.strikeThrough
+                document.localMetadataCache?.defaultTextAlignment = info.alignment
+                document.localMetadataCache?.defaultAutoLineSpace = info.lineSpace
+                document.localMetadataCache?.defaultIsLineSpaceEnabled = info.isAutoLineSpace
+                document.saveDocument(completionHandler: nil)
+            }
+        }
+    }
+
+    func textInputViewCurrentTextView() -> FTTextView? {
+        return self.textInputView
+    }
 }
 
 extension FTTextAnnotationViewController {
-    
-    func textInputAccessoryDidChangeFavoriteFont(_ font: FTCustomFontInfo) {
-        
-    }
-    
     func textInputAccessoryDidChangeLineSpacing(_ lineSpace: CGFloat) {
         textInputView.setLineSpacing(lineSpace: lineSpace, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
         saveTextEntryAttributes()
@@ -1119,7 +1131,7 @@ extension FTTextAnnotationViewController {
                 var fontDescriptor = UIFontDescriptor()
                 fontDescriptor = fontDescriptor.withFamily(style.fontFamily)
                 fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.name: style.fontName])
-                var newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
+                let newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
                 
                 if style.isUnderLined {
                     textInputView.setValue(NSUnderlineStyle.single.rawValue, forAttribute: NSAttributedString.Key.underlineStyle.rawValue, in: selectedRange)
@@ -1229,7 +1241,7 @@ extension FTTextAnnotationViewController {
                 var fontDescriptor = UIFontDescriptor()
                 fontDescriptor = fontDescriptor.withFamily(fontInfo.fontName)
                 fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.name : fontInfo.fontName])
-                var newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(fontInfo.fontSize) * CGFloat(contentScale))
+                let newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(fontInfo.fontSize) * CGFloat(contentScale))
 //                if fontInfo.isBold {
 //                    newFont = newFont.addTrait(UIFontDescriptor.SymbolicTraits.traitBold)
 //                }
@@ -1268,18 +1280,6 @@ extension FTTextAnnotationViewController {
         saveTextEntryAttributes()
         validateKeyboard()
     }
-    
-    func textInputAccessoryDidSetDefaultFontInfo(_ font : FTCustomFontInfo) {
-        if let ann = self._annotation, let page = ann.associatedPage, let document = page.parentDocument {
-            if let defaultFont : UIFont = UIFont.init(name: font.fontStyle, size: font.fontSize) {
-                document.localMetadataCache?.defaultBodyFont = defaultFont
-                document.localMetadataCache?.defaultTextColor = font.textColor
-                document.localMetadataCache?.byDefaultIsUnderline = font.isUnderlined
-                document.saveDocument(completionHandler: nil);
-            }
-        }
-    }
-
 }
 
 extension FTTextAnnotationViewController : FTTouchEventProtocol

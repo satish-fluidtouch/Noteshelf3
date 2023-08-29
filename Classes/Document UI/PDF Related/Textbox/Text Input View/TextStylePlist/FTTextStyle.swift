@@ -31,10 +31,13 @@ class FTTextStyleItem: NSObject, Decodable {
     var allowsEdit: Bool = false
     var fontSize: Int = 16
     var textColor: String = "#000000"
-    var isUnderLined: Bool = false
-    var strikeThrough: Bool = false
+    var isUnderLined = false
+    var strikeThrough = false
+    var isDefault = false
+    var isAutoLineSpace = false
+    var lineSpace: Int = 0
     var fontId: String = UUID().uuidString
-    var isDefault: Bool = false
+    var alignment: Int = NSTextAlignment.left.rawValue // 0
 
     func dictionaryRepresentation() -> [String : Any] {
         var fontInfoDict : [String : Any] = [:]
@@ -49,14 +52,17 @@ class FTTextStyleItem: NSObject, Decodable {
         fontInfoDict["fontId"] = self.fontId
         fontInfoDict["allowsEdit"] = self.allowsEdit
         fontInfoDict["isDefault"] = self.isDefault
-        
+        fontInfoDict["isAutoLineSpace"] = self.isAutoLineSpace
+        fontInfoDict["lineSpace"] = self.lineSpace
+        fontInfoDict["alignment"] = self.alignment
+
         return fontInfoDict
     }
     
     override func isEqual(_ object: Any?) -> Bool {
         let lhs = self;
         if let rhs = object as? FTTextStyleItem {
-            let value = lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough
+            let value = lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough && lhs.isAutoLineSpace == rhs.isAutoLineSpace && lhs.lineSpace == rhs.lineSpace && lhs.alignment == rhs.alignment
             return value;
         }
         return false
@@ -65,37 +71,36 @@ class FTTextStyleItem: NSObject, Decodable {
     func isFullyEqual(_ object: Any?) -> Bool {
         let lhs = self;
         if let rhs = object as? FTTextStyleItem {
-            let value = lhs.displayName == rhs.displayName && lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough
+            let value = lhs.displayName == rhs.displayName && lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough && lhs.isAutoLineSpace == rhs.isAutoLineSpace && lhs.lineSpace == rhs.lineSpace && lhs.alignment == rhs.alignment
             return value;
         }
         return false
     }
     
     func textStyleFromAttributes(_ attributes: [NSAttributedString.Key : Any], scale: CGFloat) -> FTTextStyleItem {
-        var font = attributes[NSAttributedString.Key.font] as! UIFont;
-        let originalFont = attributes[NSAttributedString.Key(rawValue: "NSOriginalFont")] as? UIFont;
-        let fontColor = attributes[NSAttributedString.Key.foregroundColor] as? UIColor
-        let isUnderLined = attributes[NSAttributedString.Key.underlineStyle] as? Int
-        let isStrikeThrough = attributes[NSAttributedString.Key.strikethroughStyle] as? Int
-        let paragrapghStyle = attributes[NSAttributedString.Key.paragraphStyle]
-        
-        if(nil != originalFont) {
-            font = originalFont!;
+        if var font = attributes[NSAttributedString.Key.font] as? UIFont {
+            if let originalFont = attributes[NSAttributedString.Key(rawValue: "NSOriginalFont")] as? UIFont {
+                font = originalFont
+            }
+            let fontPointSize = font.pointSize/scale
+            self.fontFamily = font.familyName
+            self.fontName = font.fontName
+            self.fontSize = Int(fontPointSize)
         }
-        
-        let fontPointSize = font.pointSize/scale;
-        self.fontFamily = font.familyName
-        self.fontName = font.fontName
-        self.fontSize = Int(fontPointSize);
-        
-        if fontColor != nil {
-            self.textColor = fontColor?.hexStringFromColor() ?? "#000000"
+
+        if let fontColor = attributes[NSAttributedString.Key.foregroundColor] as? UIColor {
+            self.textColor = fontColor.hexString
         }
-        else {
-            self.textColor = UIColor.black.hexStringFromColor()
+        if let isUnderLined = attributes[NSAttributedString.Key.underlineStyle] as? Int {
+            self.isUnderLined = isUnderLined == 1
         }
-        self.isUnderLined = (isUnderLined != nil && isUnderLined == 1) ? true : false
-        self.strikeThrough = (isStrikeThrough != nil && isStrikeThrough == 1) ? true : false
+        if let isStrikeThrough = attributes[NSAttributedString.Key.strikethroughStyle] as? Int {
+            self.strikeThrough = isStrikeThrough == 1
+        }
+        if let paragrapghStyle = attributes[NSAttributedString.Key.paragraphStyle] as? NSParagraphStyle {
+            self.lineSpace = Int(paragrapghStyle.lineSpacing)
+            self.alignment = paragrapghStyle.alignment.rawValue
+        }
         return self
     }
     

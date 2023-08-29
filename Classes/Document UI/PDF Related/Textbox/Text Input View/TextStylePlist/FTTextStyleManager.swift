@@ -76,7 +76,7 @@ class FTTextStyleManager: NSObject {
             defaultStyles?.forEach({ style in
                 self.updateTextStyle(style)
             })
-            var updatedStyles = self.fetchTextStylesFromPlist()
+            let updatedStyles = self.fetchTextStylesFromPlist()
             
             var dict = [[String: Any]]()
             updatedStyles?.styles.forEach({ style in
@@ -208,6 +208,6 @@ class FTTextStyleManager: NSObject {
         })
         var mainDict = item.dictionaryRepresentation()
         mainDict[key_Styles] = dict
-        try? (mainDict as? NSDictionary)?.write(to: textStylePlistUrl)
+        (mainDict as NSDictionary).write(to: textStylePlistUrl, atomically: true)
     }
 }

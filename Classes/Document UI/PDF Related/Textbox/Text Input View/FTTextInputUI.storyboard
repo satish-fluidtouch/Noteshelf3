@@ -18,7 +18,7 @@
         <!--Text Style Compact View Controller-->
         <scene sceneID="0Zt-Pv-Yv7">
             <objects>
-                <viewController storyboardIdentifier="FTTextStyleCompactViewController" id="4yE-Sp-HUB" customClass="FTTextStyleCompactViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTTextStyleCompactViewController" id="4yE-Sp-HUB" customClass="FTTextStyleCompactViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yo8-as-fsn">
                         <rect key="frame" x="0.0" y="0.0" width="420" height="420"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -579,7 +579,7 @@
         <!--Text Color View Controller-->
         <scene sceneID="QaY-Q8-WT8">
             <objects>
-                <viewController storyboardIdentifier="FTTextColorViewController" id="cg3-2Y-ha9" customClass="FTTextColorViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTTextColorViewController" id="cg3-2Y-ha9" customClass="FTTextColorViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="chP-kS-123">
                         <rect key="frame" x="0.0" y="0.0" width="288" height="116"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -610,7 +610,7 @@
         <!--Text Tool Bar View Controller-->
         <scene sceneID="n3f-Hq-rzx">
             <objects>
-                <viewController storyboardIdentifier="FTTextToolBarViewController" id="biS-A9-cBe" customClass="FTTextToolBarViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTTextToolBarViewController" id="biS-A9-cBe" customClass="FTTextToolBarViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ZJ-aZ-FKA">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="200"/>
                         <subviews>
@@ -632,7 +632,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="mNu-Xx-GjJ" userLabel="Leading Stack View">
                                         <rect key="frame" x="8" y="4" width="149.5" height="40"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="1Xj-sB-O0o" userLabel="Body" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="1Xj-sB-O0o" userLabel="Body" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -662,7 +662,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6P9-e9-rY9">
                                                         <rect key="frame" x="0.0" y="0.0" width="38.5" height="40"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="ITu-4d-l1V" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="ITu-4d-l1V" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="38.5" height="40"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="44" id="fzE-hs-kZ7"/>
@@ -675,7 +675,7 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-SX-Ota" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-SX-Ota" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="55" y="0.0" width="21" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="CyQ-OG-Ime"/>
@@ -700,7 +700,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="1RX-jj-Eqf">
                                                 <rect key="frame" x="0.0" y="0.0" width="93" height="40"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="64T-Q2-gRQ" userLabel="Indent Right" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="64T-Q2-gRQ" userLabel="Indent Right" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="XdU-Ql-0GG"/>
@@ -721,7 +721,7 @@
                                                             <action selector="tappedOnRightIndentButton:" destination="biS-A9-cBe" eventType="touchUpInside" id="3ax-a2-Rnb"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="Dfz-Vg-CDb" userLabel="Indent Left" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="Dfz-Vg-CDb" userLabel="Indent Left" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="53" y="0.0" width="40" height="40"/>
                                                         <color key="tintColor" name="black1"/>
                                                         <state key="normal" image="decrease.indent" catalog="system">
@@ -748,7 +748,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="90c-Pa-LuD">
                                                 <rect key="frame" x="125" y="0.0" width="184" height="40"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="uCX-yF-2ZH" userLabel="Bullet" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="uCX-yF-2ZH" userLabel="Bullet" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="40" id="Idl-WN-zoa"/>
@@ -770,7 +770,7 @@
                                                             <action selector="tappedOnBulletsButton:" destination="biS-A9-cBe" eventType="touchUpInside" id="h8G-uF-cUW"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="V3Q-Sb-zRN" userLabel="NumberBullet" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="V3Q-Sb-zRN" userLabel="NumberBullet" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="48" y="0.0" width="40" height="40"/>
                                                         <color key="tintColor" name="black1"/>
                                                         <state key="normal" image="list.number" catalog="system">
@@ -788,7 +788,7 @@
                                                             <action selector="tappedOnNumberedBulletsButton:" destination="biS-A9-cBe" eventType="touchUpInside" id="jUj-cN-q9z"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="qGy-Qb-6vQ" userLabel="CheckBox" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="qGy-Qb-6vQ" userLabel="CheckBox" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="96" y="0.0" width="40" height="40"/>
                                                         <color key="tintColor" name="black1"/>
                                                         <state key="normal" image="checklist" catalog="system">
@@ -806,7 +806,7 @@
                                                             <action selector="tappedOnCheckMarkButton:" destination="biS-A9-cBe" eventType="touchUpInside" id="Ijo-eN-k5N"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="KRS-SA-l5H" userLabel="BGColor" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="KRS-SA-l5H" userLabel="BGColor" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                                         <rect key="frame" x="144" y="0.0" width="40" height="40"/>
                                                         <color key="tintColor" name="black1"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -857,31 +857,31 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Geh-hE-X7u" userLabel="compactView">
                                 <rect key="frame" x="0.0" y="10" width="768" height="34"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X3S-Lb-8Kp" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X3S-Lb-8Kp" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="141" height="34"/>
                                         <color key="tintColor" name="black1"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="textformat" catalog="system"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ER-0p-Wiu" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8ER-0p-Wiu" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="157" y="0.0" width="140.5" height="34"/>
                                         <color key="tintColor" name="black1"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="list.bullet" catalog="system"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7b-CG-XO6" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7b-CG-XO6" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="313.5" y="0.0" width="141" height="34"/>
                                         <color key="tintColor" name="black1"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="increase.indent" catalog="system"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6aF-Mr-Ig3" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6aF-Mr-Ig3" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="470.5" y="0.0" width="140.5" height="34"/>
                                         <color key="tintColor" name="black1"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="decrease.indent" catalog="system"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fgu-KW-5ca" customClass="FTTextToolbarButton" customModule="FTCommon" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fgu-KW-5ca" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="627" y="0.0" width="141" height="34"/>
                                         <color key="tintColor" name="black1"/>
                                         <state key="normal" title="Button"/>
@@ -943,7 +943,7 @@
         <!--Text Presets View Controller-->
         <scene sceneID="Y9X-E0-m5r">
             <objects>
-                <viewController storyboardIdentifier="FTTextPresetsViewController" id="jbB-mV-b4s" customClass="FTTextPresetsViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTTextPresetsViewController" id="jbB-mV-b4s" customClass="FTTextPresetsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h48-0i-GHb">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="522"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -960,7 +960,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="514"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTPresetsStyleCell" rowHeight="56" id="lRe-IF-rxu" customClass="FTPresetsStyleCell" customModule="FTCommon" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTPresetsStyleCell" rowHeight="56" id="lRe-IF-rxu" customClass="FTPresetsStyleCell" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="33" width="500" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lRe-IF-rxu" id="joL-A8-fS9">
@@ -1008,7 +1008,7 @@
                                             <outlet property="presetNameLbl" destination="d7g-Fz-lw4" id="mAp-Hn-9fe"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTAddNewTextStyleCell" rowHeight="56" id="wBd-AH-sHa" customClass="FTAddNewTextStyleCell" customModule="FTCommon" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTAddNewTextStyleCell" rowHeight="56" id="wBd-AH-sHa" customClass="FTAddNewTextStyleCell" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="89" width="500" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wBd-AH-sHa" id="1jv-Gu-5z1">
@@ -1018,7 +1018,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dvV-FD-H9d">
                                                     <rect key="frame" x="16" y="2" width="468" height="52"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Preset" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dU0-NM-3DH" customClass="FTCustomLabel" customModule="FTCommon" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Preset" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dU0-NM-3DH" customClass="FTCustomLabel" customModule="NS3_Beta" customModuleProvider="target">
                                                             <rect key="frame" x="55" y="18" width="401" height="17"/>
                                                             <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                             <color key="textColor" name="black1"/>
@@ -1106,7 +1106,7 @@
         <!--New Text Style View Controller-->
         <scene sceneID="eec-sM-zwL">
             <objects>
-                <viewController storyboardIdentifier="FTNewTextStyleViewController" id="pIS-75-pxU" customClass="FTNewTextStyleViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTNewTextStyleViewController" id="pIS-75-pxU" customClass="FTNewTextStyleViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hqG-ht-2iO">
                         <rect key="frame" x="0.0" y="0.0" width="321" height="530"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1123,10 +1123,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="530"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IVc-7B-Pa6" userLabel="contentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="321" height="514"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="321" height="547"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="IJK-kw-M9Q">
-                                                <rect key="frame" x="16" y="0.0" width="289" height="473.5"/>
+                                                <rect key="frame" x="16" y="0.0" width="289" height="506.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BOY-iO-PnE" userLabel="nameView">
                                                         <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
@@ -1570,6 +1570,16 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPA-AX-K3b">
+                                                        <rect key="frame" x="0.0" y="486" width="289" height="21"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Set as Default">
+                                                            <color key="baseForegroundColor" name="accent"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="setAsDefaultTapped:" destination="pIS-75-pxU" eventType="touchUpInside" id="Z5l-RV-7Ws"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </stackView>
@@ -1643,6 +1653,7 @@
                         <outlet property="presentStyleNameView" destination="BOY-iO-PnE" id="dfP-Ks-qDT"/>
                         <outlet property="presetNameLbl" destination="M1N-rw-Tyb" id="ZKV-eF-9iU"/>
                         <outlet property="separatorView" destination="E6Q-h3-Aw1" id="gkA-ta-ymE"/>
+                        <outlet property="setAsDefaultBtn" destination="tPA-AX-K3b" id="tPT-Sa-0Vw"/>
                         <outlet property="sizeLbl" destination="gdB-ND-L6Y" id="DWA-B7-VQf"/>
                         <outlet property="textAlignmentView" destination="ZSF-Pb-iXs" id="BM6-Fd-Hza"/>
                         <outlet property="traitStackViewHeightConstraint" destination="Kgn-hT-IwZ" id="k1i-4o-bXj"/>
@@ -1657,7 +1668,7 @@
         <!--Text Back Ground Color View Controller-->
         <scene sceneID="6a0-ET-G7u">
             <objects>
-                <viewController storyboardIdentifier="FTTextBackGroundColorViewController" id="x75-A8-tSD" customClass="FTTextBackGroundColorViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTTextBackGroundColorViewController" id="x75-A8-tSD" customClass="FTTextBackGroundColorViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LTq-iY-2Ud">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="540"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1674,7 +1685,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="500" height="540"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTTextAnnotationBackgroundCell" rowHeight="44" id="IDr-dM-EH4" customClass="FTTextAnnotationBackgroundCell" customModule="FTCommon" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTTextAnnotationBackgroundCell" rowHeight="44" id="IDr-dM-EH4" customClass="FTTextAnnotationBackgroundCell" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="33" width="500" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IDr-dM-EH4" id="fho-NM-hG8">

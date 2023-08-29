@@ -1373,14 +1373,28 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         //check for global font availability if present follow step 1,2,3 or skip these steps
         if let fontInfo = FTUserDefaults.defaultFontFontAll() {
-            let numberFormatter = NumberFormatter()
-            let number = numberFormatter.number(from: fontInfo["fontSize"]!)
-            let numberFloatValue = number?.floatValue ?? 10.0
-            if let defaultFont : UIFont = UIFont.init(name: fontInfo["fontStyle"]!, size: CGFloat(numberFloatValue)) {
-                self.localMetadataCache?.defaultBodyFont = defaultFont
-                self.localMetadataCache?.defaultTextColor = UIColor.init(hexString: fontInfo["textColor"]!)
-                self.localMetadataCache?.byDefaultIsUnderline = (fontInfo["isUnderlined"]! as NSString).boolValue
-                self.localMetadataCache?.saveMetadataCache()
+            if let size = fontInfo[FTFontStorage.fontSizeKey], let name = fontInfo[FTFontStorage.fontNameKey], let colorHex = fontInfo[FTFontStorage.textColorKey], let defaultUnderLine = fontInfo[FTFontStorage.isUnderlinedKey], let textAlignment = fontInfo[FTFontStorage.textAlignmentKey], let isLineSpaceEnabled = fontInfo[FTFontStorage.isLineSpaceEnabledKey], let lineSpace = fontInfo[FTFontStorage.lineSpaceKey], let strikeThrough = fontInfo[FTFontStorage.isStrikeThroughKey] {
+
+                let numberFormatter = NumberFormatter()
+                let sizeNum = numberFormatter.number(from: size)
+                let floatSize = CGFloat(sizeNum?.floatValue ?? 10.0)
+
+                let alignmentNum = numberFormatter.number(from: textAlignment)
+                let intAlignment = alignmentNum?.intValue ?? 0
+
+                let lineSpaceNum = numberFormatter.number(from: lineSpace)
+                let intLineSpace = lineSpaceNum?.intValue ?? 0
+
+                if let defaultFont = UIFont(name: name, size: floatSize) {
+                    self.localMetadataCache?.defaultBodyFont = defaultFont
+                    self.localMetadataCache?.defaultTextColor = UIColor(hexString: colorHex)
+                    self.localMetadataCache?.defaultIsUnderline = (defaultUnderLine as NSString).boolValue
+                    self.localMetadataCache?.defaultIsStrikeThrough = (strikeThrough as NSString).boolValue
+                    self.localMetadataCache?.defaultTextAlignment = intAlignment
+                    self.localMetadataCache?.defaultIsLineSpaceEnabled = (isLineSpaceEnabled as NSString).boolValue
+                    self.localMetadataCache?.defaultAutoLineSpace = intLineSpace
+                    self.localMetadataCache?.saveMetadataCache()
+                }
             }
         }
         #endif
