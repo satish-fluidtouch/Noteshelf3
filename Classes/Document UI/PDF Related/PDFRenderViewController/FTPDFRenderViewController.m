@@ -381,14 +381,20 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     [self configureShortcutActions];
     [self showToolbarShortcutControllerIfNeededWithMode:self.currentDeskMode];
     [self enableOrDisableNewPageCreationOptionsInsideDocument];
+#if TARGET_OS_MACCATALYST
+    // Fix for book opening glitch
+    [self prepareViewToShow:false];
+#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+#if !TARGET_OS_MACCATALYST
     if(self.isViewLoadingFirstime && [self bookScaleAnim]) {
         self.isViewLoadingFirstime = false;
         [self prepareViewToShow:false];
     }
+#endif
 }
 
 -(void)enableOrDisableNewPageCreationOptionsInsideDocument {

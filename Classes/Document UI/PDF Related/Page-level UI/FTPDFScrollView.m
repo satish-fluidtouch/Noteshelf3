@@ -212,10 +212,10 @@ parentViewController:(FTPageViewController*)controller
     
     UIImageView *pageIndView = [[UIImageView alloc] initWithFrame:bounds];
     pageIndView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-    pageIndView.backgroundColor=[UIColor whiteColor];
+    pageIndView.backgroundColor=[UIColor clearColor];
     self.pageIndexView = pageIndView;
     self.pageIndexView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.contentHolderView addSubview:self.pageIndexView];    
+    [self.contentHolderView addSubview:self.pageIndexView];
     [self updateThumnailbgColor];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.contentHolderView.bounds];
