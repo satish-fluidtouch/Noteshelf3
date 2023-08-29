@@ -122,5 +122,13 @@ private extension FTShelfBaseView {
     private var totalHorizontalPadding: CGFloat {
         FTShelfItemProperties.Constants.Notebook.totalHorizontalPadding
     }
-
+}
+extension FTShelfBaseView{
+     func showMinHeight(geometrySize: CGFloat) -> CGFloat {
+        if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
+            return geometrySize > 1023 ? 218 : (geometrySize > 530 && geometrySize < 1023 ? 340 : 495)
+        } else {
+            return geometrySize > 650 ? 68 : 96
+        }
+    }
 }

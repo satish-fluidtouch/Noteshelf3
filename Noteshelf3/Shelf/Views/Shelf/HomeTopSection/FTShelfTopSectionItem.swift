@@ -38,7 +38,7 @@ struct FTShelfTopSectionItem: View {
 
     @ViewBuilder
     private var topSectionView: some View {
-        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 600 && !shelfViewModel.shouldShowGetStartedInfo || geometrySize < 450 {
+        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 600 && !shelfViewModel.shouldShowGetStartedInfo || geometrySize < 450 && shelfViewModel.shouldShowGetStartedInfo {
             VStack(alignment: .leading){
                 gridcomponetImageView
                 VStack(alignment: .leading){
