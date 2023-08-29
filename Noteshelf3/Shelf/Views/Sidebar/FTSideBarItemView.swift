@@ -9,48 +9,17 @@ import FTStyles
 import SwiftUI
 import MobileCoreServices
 
-struct FTSideBarItemView: View {
-    @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
-    @ObservedObject var viewModel: FTSidebarViewModel
-    @ObservedObject var section: FTSidebarSection
-    @ObservedObject var item: FTSideBarItem
-    // alerts
-    @State private var showTrashAlert: Bool = false
-    @State private var alertInfo: TrashAlertInfo?
-
-    weak var delegate: FTSidebarViewDelegate?
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-
-    var body: some View {
-       // let _ = Self._printChanges()
-        FTSideBarItemContextMenuPreview(preview: {
-            SideBarItemView(viewModel: viewModel,
-                            section: section,
-                            item: item,
-                            delegate:delegate)
-        }, onAppearActon: {
-            shelfMenuOverlayInfo.isMenuShown = true
-        }, onDisappearActon: {
-            shelfMenuOverlayInfo.isMenuShown = false
-        }, cornerRadius: 10,alertInfo: $alertInfo, showTrashAlert: $showTrashAlert,sidebarItem:item,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)
-        .frame(height: 44)
-        .environmentObject(viewModel)
-        //.ignoresSafeArea()
-    }
-}
-
 struct SideBarItemView : View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
-    @ObservedObject var viewModel: FTSidebarViewModel
-    @ObservedObject var section: FTSidebarSection
-    @ObservedObject var item: FTSideBarItem
+    @EnvironmentObject var viewModel: FTSidebarViewModel
+    @EnvironmentObject var section: FTSidebarSection
+    @EnvironmentObject var item: FTSideBarItem
     // alerts
     @State private var showTrashAlert: Bool = false
     @State private var alertInfo: TrashAlertInfo?
 
-    weak var delegate: FTSidebarViewDelegate?
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    var viewWidth: CGFloat = 0.0
+    var viewWidth: CGFloat
     var body: some View {
         VStack(spacing:0) {
             HStack(alignment: .center) {
@@ -89,10 +58,10 @@ struct SideBarItemView : View {
                 }
             preview: {
                     HStack {
-                        SideBarItemView(viewModel: viewModel,
-                                          section: section,
-                                          item: item,
-                                          delegate:delegate)
+                        SideBarItemView(viewWidth: 0.0)
+                            .environmentObject(viewModel)
+                            .environmentObject(item)
+                            .environmentObject(section)
                         .frame(height: 44.0, alignment: .leading)
                         Spacer(minLength: 140)
                     }
@@ -114,7 +83,7 @@ struct SideBarItemView : View {
                     self.viewModel.endEditingActions()
                     self.viewModel.currentDraggedSidebarItem = nil
                     self.viewModel.selectedSideBarItem = item
-                    self.delegate?.didTapOnSidebarItem(item)
+                    self.viewModel.delegate?.didTapOnSidebarItem(item)
                 }
                 .background(RoundedRectangle(
                     cornerRadius: 10,
@@ -124,9 +93,10 @@ struct SideBarItemView : View {
                 .if(item.isEditable, transform: { view in
                     view.contextMenu(menuItems: {
                         FTSideBarItemContexualMenuButtons(showTrashAlert: $showTrashAlert,
-                                                          item: item,
                                                           alertInfo: $alertInfo,
-                                                          viewModel: viewModel.sidebarItemContexualMenuVM,longPressOptions: viewModel.getContextualOptionsForSideBarType(item.type))
+                                                          longPressOptions: viewModel.getContextualOptionsForSideBarType(item.type))
+                        .environmentObject(item)
+                        .environmentObject(viewModel.sidebarItemContexualMenuVM)
                     },preview: {
                         view
                         .frame(width: viewWidth)

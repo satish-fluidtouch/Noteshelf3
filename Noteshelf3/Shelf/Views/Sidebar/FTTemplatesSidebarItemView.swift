@@ -27,9 +27,11 @@ struct FTTemplatesSidebarItemView: View {
             shelfMenuOverlayInfo.isMenuShown = true
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false
-        }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false),sidebarItem:templatesSidebarItem,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)
+        }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false))
         .frame(height: 80)
         .environmentObject(viewModel)
+        .environmentObject(templatesSidebarItem)
+        .environmentObject(viewModel.sidebarItemContexualMenuVM)
     }
     private func getBGColorTemplateItem() -> Color {
         let templatesSidebarItem = templatesSidebarItem

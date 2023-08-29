@@ -10,10 +10,10 @@ import SwiftUI
 
 struct FTSideBarItemContexualMenuButtons: View {
     @Binding var showTrashAlert: Bool
-    @ObservedObject var item: FTSideBarItem
+    @EnvironmentObject var item: FTSideBarItem
     @Binding var alertInfo: TrashAlertInfo?
 
-    @ObservedObject var viewModel: FTSidebarItemContextualMenuVM
+    @EnvironmentObject var viewModel: FTSidebarItemContextualMenuVM
 
     var longPressOptions: [FTSidebarItemContextualOption] = []
     var body: some View {

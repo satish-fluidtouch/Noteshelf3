@@ -21,8 +21,8 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
     @Binding var alertInfo: TrashAlertInfo?
     @Binding var showTrashAlert: Bool
     @EnvironmentObject var sidebarModel: FTSidebarViewModel;
-    @ObservedObject var sidebarItem: FTSideBarItem;
-    @ObservedObject var contextualMenuViewModel: FTSidebarItemContextualMenuVM;
+    @EnvironmentObject var sidebarItem: FTSideBarItem;
+    @EnvironmentObject var contextualMenuViewModel: FTSidebarItemContextualMenuVM;
 
     func makeUIViewController(context: Context) -> UIHostingController<Content> {
         let host = UIHostingController(rootView: preview())

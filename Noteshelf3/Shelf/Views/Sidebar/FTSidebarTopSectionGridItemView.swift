@@ -15,7 +15,7 @@ struct FTSidebarTopSectionGridItemView: View {
     @State private var showTrashAlert: Bool = false
     @State private var alertInfo: TrashAlertInfo?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @ObservedObject var item: FTSideBarItem
+    @EnvironmentObject var item: FTSideBarItem
 
     var body: some View {
         FTSideBarItemContextMenuPreview(preview: {
@@ -25,9 +25,11 @@ struct FTSidebarTopSectionGridItemView: View {
             shelfMenuOverlayInfo.isMenuShown = true
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false
-        }, cornerRadius: 16,alertInfo: $alertInfo, showTrashAlert: $showTrashAlert,sidebarItem:item,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)
+        }, cornerRadius: 16,alertInfo: $alertInfo, showTrashAlert: $showTrashAlert)
         .frame(height: 80)
         .environmentObject(viewModel)
+        .environmentObject(item)
+        .environmentObject(viewModel.sidebarItemContexualMenuVM)
     }
     private var gridItemView: some View {
         VStack(alignment: .leading,spacing:10) {
@@ -120,6 +122,7 @@ struct FTSidebarTopSectionGridItemView: View {
 }
 struct FTSidebarTopSectionGridItemView_Previews: PreviewProvider {
     static var previews: some View {
-        FTSidebarTopSectionGridItemView(viewModel: FTSidebarViewModel(collection: nil), item: FTSideBarItem())
+        FTSidebarTopSectionGridItemView(viewModel: FTSidebarViewModel(collection: nil))
+            .environmentObject(FTSideBarItem())
     }
 }

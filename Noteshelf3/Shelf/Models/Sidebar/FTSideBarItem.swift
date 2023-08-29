@@ -9,7 +9,10 @@ import Foundation
 import FTStyles
 import SwiftUI
 import MobileCoreServices
-
+#if DEBUG
+// Intentionally adding DEBUG condition here to break the build when we do not remove this variable in beta/release
+private var FTSideBarItemCount = 0
+#endif
 class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObject {
     override var debugDescription: String {
         return title + "-" + (shelfCollection?.title ?? "")
@@ -28,7 +31,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     var type: FTSideBarItemType = .home
 
-    var shelfCollection: FTShelfItemCollection?
+    weak var shelfCollection: FTShelfItemCollection?
 
     var highlightColor: Color {
         if !self.isEditing && !self.highlighted {
@@ -73,7 +76,9 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     override init() {
         super.init()
+        FTSideBarItemCount += 1
         self.addObserverForCollectionChildrenCount()
+        print(">>>> FTSideBarItem INIT \(FTSideBarItemCount)")
     }
     func rename(newName: String) {
         self.title = newName
@@ -99,6 +104,9 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         }
     }
     deinit {
+        FTSideBarItemCount -= 1
+        print(">>>> FTSideBarItem DEINIT \(FTSideBarItemCount)")
+
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil)
     }
 }
