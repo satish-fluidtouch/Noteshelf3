@@ -492,6 +492,7 @@ extension FTSidebarViewModel {
         totalTagSidebarItems = [allTagsSidebarItem]
         totalTagSidebarItems += tags
         self.tags = totalTagSidebarItems
+        buildSideMenuItems()
     }
 
     private func buildSideMenuItems(){

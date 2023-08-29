@@ -489,7 +489,7 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
     }
     func presentChangeTemplateScreen(settingsController: FTNotebookMoreOptionsViewController) {
         settingsController.dismiss(animated: true) {
-            self.showPaperTemplateScreen(source: .addMenu)
+            self.showPaperTemplateScreen(source: .changeTemplate)
         }
     }
     

@@ -176,12 +176,14 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     private func showPlaceholderView() {
+        selectButtom?.isEnabled = false
         self.collectionView.isHidden = true
         self.emptyPlaceholderView?.frame = self.collectionView!.frame
         self.emptyPlaceholderView?.isHidden = false
     }
 
     private func hidePlaceholderView() {
+        selectButtom?.isEnabled = true
         self.collectionView.isHidden = false
         self.emptyPlaceholderView?.isHidden = true
     }
@@ -299,6 +301,10 @@ class FTShelfTagsViewController: UIViewController {
         if navigationItem.leftBarButtonItems?.count ?? 0 > 0 {
             navigationItem.leftBarButtonItems?.removeLast()
         }
+         #else
+         if let toolbar = self.view.toolbar as? FTShelfToolbar {
+             toolbar.switchMode(.tags)
+         }
 #endif
     }
 
@@ -382,24 +388,29 @@ class FTShelfTagsViewController: UIViewController {
                 Task {
                     try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: selectedItems, updateType: FTTagsUpdateType.remove)
                     loadingIndicatorViewController.hide {
-                        let selectedArraySet = Set(selectedItems.map { $0.id })
-                        // Use the filter function to create a new array without matching elements
-                        self.tagItems = self.tagItems.filter { !selectedArraySet.contains($0.id) }
-                        self.collectionView.reloadData()
-                        self.activateViewMode()
-                        if self.tagItems.isEmpty {
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-                        }
+                        reloadView()
                     }
                 }
             } else {
                 Task {
                     try await FTShelfTagsUpdateHandler.shared.updateTag(nil, for: selectedItems, updateType: .removeAll)
                     loadingIndicatorViewController.hide {
-                        self.activateViewMode()
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                        reloadView()
                     }
                 }
+            }
+
+            @MainActor
+            func reloadView() {
+                let selectedArraySet = Set(selectedItems.map { $0.id })
+                self.tagItems = self.tagItems.filter { !selectedArraySet.contains($0.id) }
+                self.collectionView.reloadData()
+                self.activateViewMode()
+                if self.tagItems.isEmpty {
+                    self.showPlaceholderView()
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                }
+
             }
         }
     }

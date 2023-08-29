@@ -39,7 +39,6 @@ extension FTStoreCustomViewController {
               let cell = collectionView.cellForItem(at: identifier) as? FTStoreCustomCollectionCell else {
             return nil
         }
-        cell.titleLabel?.isHidden = true
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
         return UITargetedPreview(view: cell.thumbnail!, parameters: parameters)
@@ -50,7 +49,6 @@ extension FTStoreCustomViewController {
               let cell = collectionView.cellForItem(at: identifier) as? FTStoreCustomCollectionCell else {
             return nil
         }
-        cell.titleLabel?.isHidden = false
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
         return UITargetedPreview(view: cell, parameters: parameters)
