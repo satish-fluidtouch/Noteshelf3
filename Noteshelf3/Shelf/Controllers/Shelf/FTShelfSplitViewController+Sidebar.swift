@@ -28,9 +28,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             }
             let secondaryViewController = getSecondaryViewControllerForHomeOption()
             self.updateRootVCToDetailNavController(rootVC: secondaryViewController)
-            if let detailNavVC = detailNavigationController {
-                detailNavVC.viewControllers.first?.title = "sidebar.topSection.home".localized
-            }
         }
     }
     
@@ -112,7 +109,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
         if !self.isRegularClass()  { // In Compact modes, on every tap of sidebar option we are navigating to respective detailed view
             showCategoryDetaiedVC()
-        } else if (currentShelfViewModel?.collection.title != collection.title || currentShelfViewModel?.groupItem != nil) { // In regular modes, avoiding refreshing shelf again if current category is same as recent tapped category. Note: If shelf is showing group, even on tapping current category, we are popping to categories detailed view.
+        } else if (currentShelfViewModel?.collection.uuid != collection.uuid || currentShelfViewModel?.groupItem != nil) { // In regular modes, avoiding refreshing shelf again if current category is same as recent tapped category. Note: If shelf is showing group, even on tapping current category, we are popping to categories detailed view.
             showCategoryDetaiedVC()
         }
 
@@ -262,7 +259,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
         }
         var varients = FTBasicTemplatesDataSource.shared.getDefaultVariants()
         varients.isLandscape = isLandscape
-        let bgColor = isDark ? UIColor.black : UIColor.white
+        let bgColor = isDark ? UIColor(hexString: "#1D232F") : UIColor.white
         let lineColorHex = FTBasicThemeCategory.getCustomLineColorHex(bgHex: bgColor.hexStringFromColor())
         let dict = ["colorName": FTTemplateColor.custom.displayTitle,
                     "colorHex": bgColor.hexStringFromColor(),
@@ -270,9 +267,9 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     "verticalLineColor":  lineColorHex]
         let customThemeColor = FTThemeColors(dictionary: dict)
         let theme = FTStoreTemplatePaperTheme(url: url)
-        theme.customvariants = varients
         varients.selectedDevice = FTDeviceDataManager().getCurrentDevice()
         varients.selectedColor = customThemeColor
+        theme.customvariants = varients
         let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("shelf.newNotebook.creating", comment: "Creating"));
         FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection({ collection in
             if let coll = collection {

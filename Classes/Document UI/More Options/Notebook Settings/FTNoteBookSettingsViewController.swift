@@ -121,7 +121,7 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             updateToggleSwitch(uiSwitch: toggleSwitch, for: eachSetting)
             toggleSwitch.addAction(UIAction(handler: {[weak self] action in
                 self?.switchvalueChanged(for: eachSetting)
-            }), for: .touchUpInside)
+            }), for: .valueChanged)
             cell.accessoryView = toggleSwitch
         } else if eachSetting.cellType() == .disclosure {
             cell.accessoryType = .disclosureIndicator
