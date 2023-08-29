@@ -451,9 +451,17 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
         if let fileUrl = info.url {
             let theme = FTStoreTemplatePaperTheme(url: fileUrl)
             theme.isCustom = info.isCustom
+            let bgColor = info.isDark ? UIColor(hexString: "#1D232F") : UIColor.white
+            let lineColorHex = FTBasicThemeCategory.getCustomLineColorHex(bgHex: bgColor.hexStringFromColor())
+            let dict = ["colorName": FTTemplateColor.custom.displayTitle,
+                        "colorHex": bgColor.hexStringFromColor(),
+                        "horizontalLineColor": lineColorHex,
+                        "verticalLineColor":  lineColorHex]
+            let customThemeColor = FTThemeColors(dictionary: dict)
             var variants = FTBasicTemplatesDataSource.shared.getDefaultVariants()
             variants.isLandscape = info.isLandscape
             variants.selectedDevice = FTDeviceDataManager().getCurrentDevice()
+            variants.selectedColor = customThemeColor
             theme.setPaperVariants(variants)
             self.addPaperTheme(theme)
         }

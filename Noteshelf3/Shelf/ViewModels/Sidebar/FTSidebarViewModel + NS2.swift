@@ -9,26 +9,24 @@
 import Foundation
 
 extension FTSidebarViewModel {
-    func fetchNS2Categories() async -> [FTSideBarItem] {
-        return await withCheckedContinuation { continuation in
-            // used this macro to make this work in Simulators, as we will not be having the NS2 app installed while debugging.
-            #if !DEBUG
-            guard FTDocumentMigration.supportsMigration() else {
-                continuation.resume(returning: [])
-                return
+    func fetchNS2Categories(completion:  @escaping  (([FTSideBarItem]) -> Void)) {
+        // used this macro to make this work in Simulators, as we will not be having the NS2 app installed while debugging.
+#if !DEBUG
+        guard FTDocumentMigration.supportsMigration() else {
+            completion([])
+            return
+        }
+#endif
+        FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
+            let newlyCreatedSidebarItems = collections.map { shelfItem -> FTSideBarItem in
+                let item = FTSideBarItem(shelfCollection: shelfItem)
+                item.id = shelfItem.uuid
+                item.isEditable = false
+                item.allowsItemDropping = false
+                item.type = .ns2Category
+                return item
             }
-            #endif
-            FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
-                let newlyCreatedSidebarItems = collections.map { shelfItem -> FTSideBarItem in
-                    let item = FTSideBarItem(shelfCollection: shelfItem)
-                    item.id = shelfItem.uuid
-                    item.isEditable = false
-                    item.allowsItemDropping = false
-                    item.type = .ns2Category
-                    return item
-                }
-                continuation.resume(returning: newlyCreatedSidebarItems)
-            }
+            completion(newlyCreatedSidebarItems)
         }
     }
 }

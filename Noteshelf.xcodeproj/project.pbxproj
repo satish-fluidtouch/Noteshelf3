@@ -88,7 +88,6 @@
 		09F81DC4291544ED0040E023 /* FTToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F81DC3291544ED0040E023 /* FTToolbarView.swift */; };
 		1408AB7B2A14F9A500EF4B6D /* FTSettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */; };
 		14126F092A8CDBE500C3F903 /* FTStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14126F082A8CDBE500C3F903 /* FTStepperView.swift */; };
-		141FDB5F2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141FDB5E2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift */; };
 		142DB8892A72855C00469B5E /* FTStickerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142DB8882A72855C00469B5E /* FTStickerModels.swift */; };
 		143570522A42D37D0088B4EB /* FTWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143570512A42D37D0088B4EB /* FTWelcomeView.swift */; };
 		143570542A42D4080088B4EB /* FTGetStartedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */; };
@@ -122,26 +121,18 @@
 		146E2BDB2A0A634D004A9B3A /* FTHandWritingHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146E2BDA2A0A634C004A9B3A /* FTHandWritingHostingController.swift */; };
 		149B1B0E2A0BBA0600247F73 /* FTSettingsBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149B1B0D2A0BBA0600247F73 /* FTSettingsBaseTableViewCell.swift */; };
 		149B649A2A714C0A0086926F /* Stickers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 149B64992A714C0A0086926F /* Stickers.xcassets */; };
-		14ADBFA82A665795000FA417 /* GetInspiredThumbnail.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 14ADBFA72A665795000FA417 /* GetInspiredThumbnail.bundle */; };
 		14AF7DA52A03B4AD00C835AB /* FTGeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF7DA42A03B4AD00C835AB /* FTGeneralSettingsView.swift */; };
 		14AF7DA72A03B4E400C835AB /* FTGeneralSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF7DA62A03B4E400C835AB /* FTGeneralSettingsModel.swift */; };
 		14BD6E592A272E07007655D2 /* FTNewNoteTopSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6E582A272E07007655D2 /* FTNewNoteTopSectionView.swift */; };
 		14BD6E5B2A272E29007655D2 /* FTNewNoteItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BD6E5A2A272E29007655D2 /* FTNewNoteItemView.swift */; };
-		14BF48B02A13447B002B09A9 /* GetInspired.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14BF48AF2A13447B002B09A9 /* GetInspired.plist */; };
-		14BF48B22A134EC3002B09A9 /* FTGetInspiredViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF48B12A134EC3002B09A9 /* FTGetInspiredViewModel.swift */; };
 		14BF48BA2A139E9C002B09A9 /* FTEvernoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8052E38220D9CC7000EDD0E /* FTEvernoteSettingsViewController.swift */; };
 		14BF48BB2A139EDB002B09A9 /* FTEvernoteFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */; };
 		14C1D22029FBAEA60004D609 /* FTShelfSelectAndSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C1D21F29FBAEA60004D609 /* FTShelfSelectAndSettingsView.swift */; };
 		14C76ADC2A092DBA004251B5 /* FTWrittingAndStylusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C76AD92A092DBA004251B5 /* FTWrittingAndStylusModel.swift */; };
-		14D7726D2A6E7CF600A8C3D1 /* BulletJournal_Preview.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 14D7726C2A6E7CF600A8C3D1 /* BulletJournal_Preview.bundle */; };
-		14D772732A6E7D5F00A8C3D1 /* Business_Preview.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 14D772722A6E7D5F00A8C3D1 /* Business_Preview.bundle */; };
-		14D772752A6E7D8900A8C3D1 /* Student_Preview.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 14D772742A6E7D8900A8C3D1 /* Student_Preview.bundle */; };
 		14E202B32A2F06A800E88F60 /* FTGeneralSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E202B22A2F06A800E88F60 /* FTGeneralSettingsViewModel.swift */; };
 		14E385E92A305D9B00843F56 /* FTGeneralViewHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E385E82A305D9B00843F56 /* FTGeneralViewHostingController.swift */; };
 		14E385EB2A305E2700843F56 /* FTAboutNoteShelfViewHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E385EA2A305E2700843F56 /* FTAboutNoteShelfViewHostingController.swift */; };
 		14E976882A17534700382189 /* FTSettings_Accounts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14E976872A17534700382189 /* FTSettings_Accounts.storyboard */; };
-		14F2E09B2A0118590007D49D /* FTGetInspireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2E09A2A0118590007D49D /* FTGetInspireView.swift */; };
-		14F2E09D2A0118B60007D49D /* GetInspiredModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F2E09C2A0118B60007D49D /* GetInspiredModel.swift */; };
 		3D663C4D28F9652A00024B3D /* FTRefreshPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D663C4A28F9652900024B3D /* FTRefreshPageView.xib */; };
 		3D663C4F28F9652A00024B3D /* FTRefreshPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D663C4B28F9652A00024B3D /* FTRefreshPageView.swift */; };
 		3DA82FF528E30224001E2D88 /* FTWebClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA82FF328E30224001E2D88 /* FTWebClipViewController.swift */; };
@@ -2589,7 +2580,6 @@
 		09FF73EB20316FFA0034A3B3 /* FTWatchRecordingProvider_Private.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider_Private.swift; sourceTree = "<group>"; };
 		1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingsAboutView.swift; sourceTree = "<group>"; };
 		14126F082A8CDBE500C3F903 /* FTStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStepperView.swift; sourceTree = "<group>"; };
-		141FDB5E2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetinspirePDFviewer.swift; sourceTree = "<group>"; };
 		142DB8882A72855C00469B5E /* FTStickerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickerModels.swift; sourceTree = "<group>"; };
 		143570512A42D37D0088B4EB /* FTWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWelcomeView.swift; sourceTree = "<group>"; };
 		143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetStartedItemViewModel.swift; sourceTree = "<group>"; };
@@ -2623,24 +2613,16 @@
 		146E2BDA2A0A634C004A9B3A /* FTHandWritingHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTHandWritingHostingController.swift; sourceTree = "<group>"; };
 		149B1B0D2A0BBA0600247F73 /* FTSettingsBaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSettingsBaseTableViewCell.swift; sourceTree = "<group>"; };
 		149B64992A714C0A0086926F /* Stickers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Stickers.xcassets; sourceTree = "<group>"; };
-		14ADBFA72A665795000FA417 /* GetInspiredThumbnail.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GetInspiredThumbnail.bundle; sourceTree = "<group>"; };
 		14AF7DA42A03B4AD00C835AB /* FTGeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGeneralSettingsView.swift; sourceTree = "<group>"; };
 		14AF7DA62A03B4E400C835AB /* FTGeneralSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGeneralSettingsModel.swift; sourceTree = "<group>"; };
 		14BD6E582A272E07007655D2 /* FTNewNoteTopSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNewNoteTopSectionView.swift; sourceTree = "<group>"; };
 		14BD6E5A2A272E29007655D2 /* FTNewNoteItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNewNoteItemView.swift; sourceTree = "<group>"; };
-		14BF48AF2A13447B002B09A9 /* GetInspired.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GetInspired.plist; sourceTree = "<group>"; };
-		14BF48B12A134EC3002B09A9 /* FTGetInspiredViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetInspiredViewModel.swift; sourceTree = "<group>"; };
 		14C1D21F29FBAEA60004D609 /* FTShelfSelectAndSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSelectAndSettingsView.swift; sourceTree = "<group>"; };
 		14C76AD92A092DBA004251B5 /* FTWrittingAndStylusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWrittingAndStylusModel.swift; sourceTree = "<group>"; };
-		14D7726C2A6E7CF600A8C3D1 /* BulletJournal_Preview.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BulletJournal_Preview.bundle; sourceTree = "<group>"; };
-		14D772722A6E7D5F00A8C3D1 /* Business_Preview.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Business_Preview.bundle; sourceTree = "<group>"; };
-		14D772742A6E7D8900A8C3D1 /* Student_Preview.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Student_Preview.bundle; sourceTree = "<group>"; };
 		14E202B22A2F06A800E88F60 /* FTGeneralSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGeneralSettingsViewModel.swift; sourceTree = "<group>"; };
 		14E385E82A305D9B00843F56 /* FTGeneralViewHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGeneralViewHostingController.swift; sourceTree = "<group>"; };
 		14E385EA2A305E2700843F56 /* FTAboutNoteShelfViewHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAboutNoteShelfViewHostingController.swift; sourceTree = "<group>"; };
 		14E976872A17534700382189 /* FTSettings_Accounts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTSettings_Accounts.storyboard; sourceTree = "<group>"; };
-		14F2E09A2A0118590007D49D /* FTGetInspireView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetInspireView.swift; sourceTree = "<group>"; };
-		14F2E09C2A0118B60007D49D /* GetInspiredModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInspiredModel.swift; sourceTree = "<group>"; };
 		182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentedControl.swift; sourceTree = "<group>"; };
 		18482FDC25021C3400BEAAC5 /* FTPixabayClipartFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPixabayClipartFilter.swift; sourceTree = "<group>"; };
 		18482FDD25021C3400BEAAC5 /* ClipartTagFilter.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = ClipartTagFilter.plist; sourceTree = "<group>"; };
@@ -3696,7 +3678,6 @@
 		BAA84E5A2873108600DE801B /* URL+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E5B2873108600DE801B /* UIDevice+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E5C2873108600DE801B /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		BAA84E5D2873108700DE801B /* FTSharedGroupID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSharedGroupID.swift; sourceTree = "<group>"; };
 		BAA84E5E2873108700DE801B /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E5F2873108800DE801B /* NSCalendar+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCalendar+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E602873108800DE801B /* FileManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -5834,17 +5815,6 @@
 			path = ReusableViews;
 			sourceTree = "<group>";
 		};
-		14ADBFA92A665836000FA417 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				14ADBFA72A665795000FA417 /* GetInspiredThumbnail.bundle */,
-				14D7726C2A6E7CF600A8C3D1 /* BulletJournal_Preview.bundle */,
-				14D772722A6E7D5F00A8C3D1 /* Business_Preview.bundle */,
-				14D772742A6E7D8900A8C3D1 /* Student_Preview.bundle */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		14C99FBA29F7B9CC0034AAA2 /* HomeTopSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -5854,19 +5824,6 @@
 				1449D16D29F8261200C7EC49 /* WidthThresholdReader.swift */,
 			);
 			path = HomeTopSection;
-			sourceTree = "<group>";
-		};
-		14F2E0992A01183A0007D49D /* GetInspired */ = {
-			isa = PBXGroup;
-			children = (
-				14ADBFA92A665836000FA417 /* Resources */,
-				14F2E09A2A0118590007D49D /* FTGetInspireView.swift */,
-				141FDB5E2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift */,
-				14F2E09C2A0118B60007D49D /* GetInspiredModel.swift */,
-				14BF48B12A134EC3002B09A9 /* FTGetInspiredViewModel.swift */,
-				14BF48AF2A13447B002B09A9 /* GetInspired.plist */,
-			);
-			path = GetInspired;
 			sourceTree = "<group>";
 		};
 		18482FDB25021C3400BEAAC5 /* Filter */ = {
@@ -8165,7 +8122,6 @@
 			isa = PBXGroup;
 			children = (
 				9741222E2A73E041002D3DDB /* Discover */,
-				14F2E0992A01183A0007D49D /* GetInspired */,
 				14C99FBA29F7B9CC0034AAA2 /* HomeTopSection */,
 				97F60C07291E0B400050C3F3 /* New Note */,
 				97F60C05291E0A940050C3F3 /* Move Formsheet */,
@@ -10154,7 +10110,6 @@
 			isa = PBXGroup;
 			children = (
 				BAA84E552873108400DE801B /* FTServerConfig.swift */,
-				BAA84E5D2873108700DE801B /* FTSharedGroupID.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -11212,11 +11167,9 @@
 				E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */,
 				52B34DFF29E5684400360F10 /* Montserrat-SemiBold.otf in Resources */,
 				52B34E0029E5684400360F10 /* Montserrat-ExtraBold.ttf in Resources */,
-				14ADBFA82A665795000FA417 /* GetInspiredThumbnail.bundle in Resources */,
 				52B34E0129E5684400360F10 /* Montserrat-ExtraLight.otf in Resources */,
 				E7AC024E2A14E46B009AE92A /* FTPenTypeCollectionViewCell.xib in Resources */,
 				52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */,
-				14D7726D2A6E7CF600A8C3D1 /* BulletJournal_Preview.bundle in Resources */,
 				52BBD4FA29E95BC9003088AE /* Inter-Regular.ttf in Resources */,
 				52BBD4FB29E95BC9003088AE /* Inter-Medium.ttf in Resources */,
 				52BBD4FC29E95BC9003088AE /* Inter-Light.ttf in Resources */,
@@ -11318,11 +11271,9 @@
 				BAF38FEF2859ADF00067CA9F /* FTExport.storyboard in Resources */,
 				E7A912EC2861F20D00BACD79 /* Localizable.strings in Resources */,
 				BAF38FF12859ADF00067CA9F /* FTDeveloperOptions.storyboard in Resources */,
-				14BF48B02A13447B002B09A9 /* GetInspired.plist in Resources */,
 				BAF38FF52859ADF00067CA9F /* InfoPlist.strings in Resources */,
 				BAF38FF62859ADF00067CA9F /* FTiOSShelfCategoryHeaderView.xib in Resources */,
 				E7AE403828755D4500C0F3EC /* themes_v8_it.plist in Resources */,
-				14D772752A6E7D8900A8C3D1 /* Student_Preview.bundle in Resources */,
 				BAF38FF82859ADF00067CA9F /* FTDocumentEntity.storyboard in Resources */,
 				97BEB93D294215BA00147961 /* FTSideBar.plist in Resources */,
 				5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */,
@@ -11338,7 +11289,6 @@
 				BAF390042859ADF00067CA9F /* FTImageResizeViewController.xib in Resources */,
 				BAF390082859ADF00067CA9F /* Settings.bundle in Resources */,
 				42D689EC28B7998600EA1925 /* FTAudioTrackHeaderView.xib in Resources */,
-				14D772732A6E7D5F00A8C3D1 /* Business_Preview.bundle in Resources */,
 				BAF390092859ADF00067CA9F /* default_cover_image.png in Resources */,
 				BAF3900B2859ADF00067CA9F /* FTInfoTipView.xib in Resources */,
 				BAF3900C2859ADF00067CA9F /* FTShelfItemDragPreview.xib in Resources */,
@@ -11967,7 +11917,6 @@
 				E7B3DFA5288921180045019F /* FTPenSizeView.swift in Sources */,
 				978D66EB286AD96D00B86704 /* Constants.m in Sources */,
 				BAF391062859ADF00067CA9F /* FirebaseMetricsService.swift in Sources */,
-				14F2E09D2A0118B60007D49D /* GetInspiredModel.swift in Sources */,
 				BAF391082859ADF00067CA9F /* FTAudioAnnotation_SQLiteHelper.swift in Sources */,
 				BA2D9131285CB1BE001BB495 /* FTSelectNotebookForBackupViewController.swift in Sources */,
 				0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */,
@@ -12318,7 +12267,6 @@
 				BAF3922F2859ADF00067CA9F /* FTAppConfigHelper.m in Sources */,
 				BAF392302859ADF00067CA9F /* FTPageViewController_AnnotationEditing.swift in Sources */,
 				972B52E02A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift in Sources */,
-				14F2E09B2A0118590007D49D /* FTGetInspireView.swift in Sources */,
 				BAF392312859ADF00067CA9F /* Constants.swift in Sources */,
 				BAF392322859ADF00067CA9F /* FTSnappingView.swift in Sources */,
 				BAF392332859ADF00067CA9F /* FTCustomAlertViewController.swift in Sources */,
@@ -12376,7 +12324,6 @@
 				97BE883B2931DB01007C1E2D /* FTShelfViewModel+ShelfUpdateHandlers.swift in Sources */,
 				BA50E0332959CB2900CDC0FD /* FTShelfPagePreviewController.swift in Sources */,
 				E7A05A232934C71100D758C0 /* FTPageResultSectionCell.swift in Sources */,
-				141FDB5F2A67E97200ECAB02 /* FTGetinspirePDFviewer.swift in Sources */,
 				BAF392652859ADF00067CA9F /* FTEraserView.swift in Sources */,
 				BAF392662859ADF00067CA9F /* FTCloudBackupStatusInfo.swift in Sources */,
 				BAF392672859ADF00067CA9F /* FTRemoteMessagePopupController.swift in Sources */,
@@ -12551,7 +12498,6 @@
 				973653E12A851D4200FD4326 /* FTMigrationMessageView.swift in Sources */,
 				97F60BFC291D32A30050C3F3 /* FTGrouping.swift in Sources */,
 				BAF393052859ADF00067CA9F /* NetworkError.swift in Sources */,
-				14BF48B22A134EC3002B09A9 /* FTGetInspiredViewModel.swift in Sources */,
 				BAF393062859ADF00067CA9F /* FTCloudBackupIgnoreList.swift in Sources */,
 				BAF393072859ADF00067CA9F /* NSMutableAttributedString+Extension.swift in Sources */,
 				E7A05A262934CE4200D758C0 /* FTShelfViewModel+SearchHandler.swift in Sources */,
@@ -13550,9 +13496,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.0.1;
-				APP_VERSION_MAC = 1.0.1;
-				BUILD_VERSION_NO = 130;
+				APP_VERSION = 1.0.2;
+				APP_VERSION_MAC = 1.0.2;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -13576,7 +13521,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -13591,6 +13536,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
+				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
@@ -13617,10 +13564,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -13639,7 +13586,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -13672,10 +13618,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -13690,7 +13636,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -13725,11 +13670,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -13744,7 +13689,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -13780,10 +13724,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -13802,7 +13746,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -13835,10 +13778,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -13853,7 +13796,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -13888,11 +13830,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -13907,7 +13849,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -13970,10 +13911,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -13992,7 +13933,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -14022,10 +13962,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -14040,7 +13980,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -14072,10 +14011,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -14090,7 +14029,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -14122,10 +14060,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -14144,7 +14082,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -14175,10 +14112,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -14193,7 +14130,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -14225,10 +14161,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 8;
+				DYLIB_CURRENT_VERSION = 12;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -14243,7 +14179,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -14266,15 +14201,13 @@
 			baseConfigurationReference = 0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APP_ICON_SET = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				BUILD_VERSION_NO = 2;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Entitlements-Dev.entitlements";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				ENABLE_MODULE_VERIFIER = YES;
@@ -14302,7 +14235,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Third Party\"/**",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -14322,8 +14254,8 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelfwidgetcreatenewnotebook-dev";
-				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelfwidgetopennotebook-dev";
+				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelf3widgetcreatenewnotebook-dev";
+				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelf3widgetopennotebook-dev";
 				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
@@ -14341,7 +14273,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Prod";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				BUILD_VERSION_NO = 2;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -14365,7 +14296,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Entitlements-AppStore.entitlements";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
@@ -14391,7 +14322,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Third Party\"/**",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -14409,8 +14339,8 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TODAY_SCHEME_NEW_NOTEBOOK = noteshelfwidgetcreatenewnotebook;
-				TODAY_SCHEME_OPEN_NOTEBOOK = noteshelfwidgetopennotebook;
+				TODAY_SCHEME_NEW_NOTEBOOK = noteshelf3widgetcreatenewnotebook;
+				TODAY_SCHEME_OPEN_NOTEBOOK = noteshelf3widgetopennotebook;
 				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
@@ -14425,16 +14355,14 @@
 			baseConfigurationReference = BA50E027295981E000CDC0FD /* Noteshelf-beta.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				APP_ICON_SET = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Beta";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				BUILD_VERSION_NO = 2;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Entitlements-Beta.entitlements";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				ENABLE_MODULE_VERIFIER = YES;
@@ -14460,7 +14388,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Third Party\"/**",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				OTHER_CPLUSPLUSFLAGS = (
@@ -14478,8 +14405,8 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
-				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelfwidgetcreatenewnotebook-dev";
-				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelfwidgetopennotebook-dev";
+				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelf3widgetcreatenewnotebook-beta";
+				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelf3widgetopennotebook-beta";
 				VALIDATE_WORKSPACE = NO;
 				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
@@ -14493,9 +14420,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.0.1;
-				APP_VERSION_MAC = 1.0.1;
-				BUILD_VERSION_NO = 130;
+				APP_VERSION = 1.0.2;
+				APP_VERSION_MAC = 1.0.2;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14520,7 +14446,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -14537,6 +14463,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
+				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
@@ -14555,9 +14483,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.0.1;
-				APP_VERSION_MAC = 1.0.1;
-				BUILD_VERSION_NO = 130;
+				APP_VERSION = 1.0.2;
+				APP_VERSION_MAC = 1.0.2;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14582,7 +14509,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				"DEBUG_INFORMATION_FORMAT[sdk=macosx*]" = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -14597,6 +14524,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
+				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
@@ -14625,7 +14554,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Noteshelf ActionDebug.entitlements";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -14643,7 +14572,6 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-D NOTESHELF_ACTION -D DEBUG";
@@ -14674,7 +14602,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Noteshelf Action.entitlements";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -14691,7 +14619,6 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-D NOTESHELF_ACTION";
@@ -14722,7 +14649,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Noteshelf ActionBeta.entitlements";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -14739,7 +14666,6 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_SWIFT_FLAGS = "-D NOTESHELF_ACTION -D BETA";

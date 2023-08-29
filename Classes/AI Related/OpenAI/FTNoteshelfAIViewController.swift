@@ -128,7 +128,12 @@ class FTNoteshelfAIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
+        let defaultFont = UIFont.clearFaceFont(for: .medium, with: 20)
+        let attrTitle = "noteshelf.ai.noteshelfAI".aiLocalizedString.appendBetalogo(font: defaultFont);
+        let button = UIButton()
+        button.setAttributedTitle(attrTitle, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        self.navigationItem.titleView = button
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;
         updateContentView();

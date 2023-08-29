@@ -708,7 +708,7 @@ extension FTShelfViewModel: FTPaperTemplateDelegate {
         let currentDevice = FTDeviceDataManager().getCurrentDevice()
         let templateSizeModel = FTTemplateSizeModel(size: currentDevice.displayName, portraitSize: currentDevice.dimension_port, landscapeSize: currentDevice.dimension_land)
         let basicTemplatesDataSource = FTBasicTemplatesDataSource.shared
-        let templateColor = FTTemplateColorModel(color: .custom, hex: isDarkTemplate ? UIColor.black.hexStringFromColor() : UIColor.white.hexStringFromColor())
+        let templateColor = FTTemplateColorModel(color: .custom, hex: isDarkTemplate ? UIColor(hexString: "#1D232F").hexStringFromColor() : UIColor.white.hexStringFromColor())
         let selectedPaperVariantsAndTheme =
         FTSelectedPaperVariantsAndTheme(templateColorModel:templateColor,
                                         lineHeight: basicTemplatesDataSource.getSavedLineHeightForMode(.quickCreate),

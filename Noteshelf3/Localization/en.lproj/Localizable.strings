@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "The items within this category will be moved to the Trash.";
 "shelf.deleteCategoryAlert.title" = "Are you sure you want to delete?";
 "shelf.deleteTagAlert.message" = "Tags will be removed from the items.";
+"shelf.discover.aiAssitedDescription" = "Generate notes in handwriting and more with Noteshelf AI";
+"shelf.discover.aiAssitedNotesTitle" = "AI-assisted notes";
 "shelf.discover.coversDescription" = "Personalize your shelf with beautiful covers.";
 "shelf.discover.coversTitle" = "Covers to match your style";
 "shelf.discover.customToolbarDescription" = "Make the toolbar your own with all your favorite tools within reach.";
@@ -1237,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "Digital diaries & planners";
 "shelf.discover.focusModeDescription" = "Go distraction-free for focused note-taking.";
 "shelf.discover.focusModeTitle" = "Focus mode";
-"shelf.discover.tagsDescription" = "Organize your notes and find them in an instant.";
-"shelf.discover.tagsTitle" = "Tag pages & notebooks";
+"shelf.discover.getInspiredDescription" = "Explore beautiful handwritten notes created in Noteshelf 3.";
+"shelf.discover.getInspiredTitle" = "Get inspired";
+"shelf.discover.migrationDescription" = "Bring all your categories, groups and notes to Noteshelf 3.";
+"shelf.discover.migrationTitle" = "Migrate from Noteshelf 2";
+"shelf.discover.tagsDescription" = "Stay organized and find your notes in an instant.";
+"shelf.discover.tagsTitle" = "Organize your notes";
 "shelf.discover.templatesDescription" = "Discover 100s of templates for school, work, journaling and more.";
 "shelf.discover.templatesTitle" = "A template for every need";
 "shelf.discover.title" = "Discover what’s possible";
@@ -1484,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM

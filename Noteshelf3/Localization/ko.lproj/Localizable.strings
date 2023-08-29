@@ -264,7 +264,7 @@
 "DontBackup" = "백업하지 마세요.";
 "DontShowForThisBook" = "이 노트북에 대해 다시 경고하지 마십시오.";
 "DontShowHintAgain" = "보여 주지 마세요";
-"DoubleTapAction" = "더블탭 액션";
+"DoubleTapAction" = "더블탭 동작";
 "Download" = "다운로드";
 "Downloaded" = "이미 다운로드됨";
 "Downloading" = "다운로드 중...";
@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "이 카테고리 내의 항목은 휴지통으로 이동됩니다.";
 "shelf.deleteCategoryAlert.title" = "삭제하시겠습니까?";
 "shelf.deleteTagAlert.message" = "항목에서 태그가 제거됩니다.";
+"shelf.discover.aiAssitedDescription" = "필기로 메모를 작성하고 더 많은 기능으로 메모를 생성하세요.";
+"shelf.discover.aiAssitedNotesTitle" = "AI 지원 노트";
 "shelf.discover.coversDescription" = "아름다운 커버로 선반을 개인화하세요.";
 "shelf.discover.coversTitle" = "당신의 스타일에 맞는 커버";
 "shelf.discover.customToolbarDescription" = "툴바를 마음대로 꾸며서 자주 사용하는 도구들을 손에 닿게 만드세요.";
@@ -1237,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "디지털 다이어리 및 플래너";
 "shelf.discover.focusModeDescription" = "집중적인 노트 작성을 위해 산만함으로부터 벗어나세요.";
 "shelf.discover.focusModeTitle" = "집중 모드";
-"shelf.discover.tagsDescription" = "즉각적으로 노트를 정리하고 찾을 수 있습니다.";
-"shelf.discover.tagsTitle" = "태그 페이지 및 노트북";
+"shelf.discover.getInspiredDescription" = "Noteshelf 3에서 만들어진 아름다운 필기 노트를 탐색하세요.";
+"shelf.discover.getInspiredTitle" = "영감을 얻다";
+"shelf.discover.migrationDescription" = "모든 카테고리, 그룹 및 노트를 Noteshelf 3로 가져오세요.";
+"shelf.discover.migrationTitle" = "Noteshelf 2로 이동";
+"shelf.discover.tagsDescription" = "즉시 정리하고 노트를 찾으세요.";
+"shelf.discover.tagsTitle" = "메모 정리";
 "shelf.discover.templatesDescription" = "학교, 직장, 일기 작성 등을 위한 수백 가지의 템플릿을 찾아보세요.";
 "shelf.discover.templatesTitle" = "모든 필요에 대한 템플릿";
 "shelf.discover.title" = "가능한 것을 발견하세요.";
@@ -1484,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM

@@ -264,7 +264,7 @@
 "DontBackup" = "Nicht sichern";
 "DontShowForThisBook" = "Dieses Notebook nicht erneut warnen'";
 "DontShowHintAgain" = "Nicht anzeigen";
-"DoubleTapAction" = "Doppeltippen Aktion";
+"DoubleTapAction" = "Doppeltippen-Aktion";
 "Download" = "Herunterladen";
 "Downloaded" = "Bereits heruntergeladen.";
 "Downloading" = "Herunterladen...";
@@ -1229,6 +1229,8 @@
 "shelf.deleteCategoryAlert.message" = "Die Elemente in dieser Kategorie werden in den Papierkorb verschoben.";
 "shelf.deleteCategoryAlert.title" = "Bist du sicher, dass du löschen möchtest?";
 "shelf.deleteTagAlert.message" = "Die Tags werden von den Elementen entfernt.";
+"shelf.discover.aiAssitedDescription" = "Generieren Sie handschriftliche Notizen und mehr mit Noteshelf AI.";
+"shelf.discover.aiAssitedNotesTitle" = "KI-unterstützte Notizen";
 "shelf.discover.coversDescription" = "Personalisieren Sie Ihr Regal mit wunderschönen Covern.";
 "shelf.discover.coversTitle" = "Passen Sie die Abdeckungen Ihrem Stil an.";
 "shelf.discover.customToolbarDescription" = "Machen Sie die Symbolleiste mit all Ihren bevorzugten Werkzeugen in Reichweite zu Ihrer eigenen.";
@@ -1237,8 +1239,12 @@
 "shelf.discover.digitalDiariesTitle" = "Digitale Tagebücher und Planer";
 "shelf.discover.focusModeDescription" = "Gehen Sie ablenkungsfrei für konzentrierte Notizen.";
 "shelf.discover.focusModeTitle" = "Fokussierungsmodus";
-"shelf.discover.tagsDescription" = "Organisieren Sie Ihre Notizen und finden Sie sie sofort.";
-"shelf.discover.tagsTitle" = "Tagseiten und Notizbücher";
+"shelf.discover.getInspiredDescription" = "Erkunden Sie wunderschöne handschriftliche Notizen, die mit Noteshelf 3 erstellt wurden.";
+"shelf.discover.getInspiredTitle" = "Lassen Sie sich inspirieren.";
+"shelf.discover.migrationDescription" = "Bringen Sie alle Ihre Kategorien, Gruppen und Notizen zu Noteshelf 3.";
+"shelf.discover.migrationTitle" = "Aus Noteshelf 2 migrieren";
+"shelf.discover.tagsDescription" = "Bleiben Sie organisiert und finden Sie Ihre Notizen sofort.";
+"shelf.discover.tagsTitle" = "Organisieren Sie Ihre Notizen";
 "shelf.discover.templatesDescription" = "Entdecke Hunderte von Vorlagen für Schule, Arbeit, Tagebuch und mehr.";
 "shelf.discover.templatesTitle" = "Eine Vorlage für jeden Bedarf";
 "shelf.discover.title" = "Entdecke, was möglich ist.";
@@ -1484,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 24 August 2023 at 3:50 PM
+// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM

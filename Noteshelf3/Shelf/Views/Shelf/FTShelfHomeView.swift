@@ -19,7 +19,7 @@ struct FTShelfHomeView: FTShelfBaseView {
         GeometryReader { geometry in
                 ScrollView(.vertical) {
                     VStack(alignment: .center,spacing:0) {
-                        if geometry.size.width > 400 && viewModel.canShowCreateNBButtons {
+                        if geometry.size.width > 300 && viewModel.canShowCreateNBButtons {
                             FTShelfTopSectionView()
                                 .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                 .padding(.horizontal,gridHorizontalPadding)
@@ -28,17 +28,12 @@ struct FTShelfHomeView: FTShelfBaseView {
                         }
                         homeShelfItemsViewForGeometrySize(geometry.size)
                         if viewModel.shelfDidLoad {
-                            FTGetInspireView(viewmodel: FTGetInspiredViewModel())
+                            FTDiscoverWhatsNewView()
                                 .environmentObject(viewModel)
                                 .macOnlyPlainButtonStyle()
                                 .padding(.horizontal,gridHorizontalPadding)
                                 .padding(.top,40)
                                 .padding(.bottom,28)
-                            FTDiscoverWhatsNewView()
-                                .environmentObject(viewModel)
-                                .macOnlyPlainButtonStyle()
-                                .padding(.horizontal,gridHorizontalPadding)
-                                .padding(.bottom,24)
                         }
                     }
                 }
@@ -53,7 +48,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                 .detectOrientation($viewModel.orientation)
                 .shelfNavBarItems()
                 .allowsHitTesting(viewModel.allowHitTesting)
-                .navigationTitle(((geometry.size.width > 400 && viewModel.shouldShowGetStartedInfo) ? "" : viewModel.navigationTitle))
+                .navigationTitle(viewModel.navigationTitle)
 #if targetEnvironment(macCatalyst)
                 .navigationBarBackButtonHidden(true)
 #else
@@ -73,19 +68,11 @@ struct FTShelfHomeView: FTShelfBaseView {
     private func showMinHeight(geometrySize: CGFloat) -> CGFloat {
         let isInPortrait = UIScreen.main.bounds.height > UIScreen.main.bounds.width
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            if geometrySize < 540 {
-                return geometrySize > 465 ? 416 : 456
-            } else if geometrySize > 540 && geometrySize < 800 {
-                return geometrySize > 600 ? 292 : 396
-            } else{
-                return isInPortrait ? 193 : 189
-            }
+            return geometrySize > 800 ? 218 : (geometrySize > 500 ? 340 : 495)
+        }else if !viewModel.shouldShowGetStartedInfo {
+            return geometrySize > 700 ? 68 : (geometrySize < 500 ? 220 : 96)
         } else {
-            if geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) {
-                return 96
-            } else {
-                return 68
-            }
+            return geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) ? 96 : 68
         }
     }
 

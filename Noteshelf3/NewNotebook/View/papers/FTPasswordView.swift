@@ -173,7 +173,7 @@ struct FTPasswordView: View {
 
     func toEnableSave() -> Bool {
         var toEnableSave = false
-        if !self.pwd.isEmpty && !self.confirmPwd.isEmpty {
+        if !self.pwd.isEmpty && !self.confirmPwd.isEmpty && !self.hint.isEmpty {
             toEnableSave = true
         }
         return toEnableSave

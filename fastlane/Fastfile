@@ -132,7 +132,7 @@ platform :mac do
                       upload_to_testflight(skip_waiting_for_build_processing: true,
                                            app_identifier: app_identifier,
                                            app_platform:"osx",
-        				   ipa: "build/NS3 Beta.ipa",
+                                           pkg: "build/NS3 Beta.pkg",
                                            changelog: releaseNotes)
 
                       notification(subtitle: "✅ Catalyst Finished Uploading",
@@ -175,7 +175,7 @@ platform :mac do
 
                       upload_to_testflight(skip_waiting_for_build_processing: true,
                                            app_platform:"osx",
-        				   ipa: "build/Noteshelf 3.ipa",
+                                           pkg: "build/Noteshelf 3.pkg",
                                            app_identifier: app_identifier,
                                            changelog: releaseNotes)
 

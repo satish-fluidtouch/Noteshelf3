@@ -397,7 +397,21 @@ extension FTSidebarViewModel {
                 item.type = .category
                 return item
             }
-            onCompeltion(newlyCreatedSidebarItems)
+
+            FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
+                let NS2Items = collections.map { shelfItem -> FTSideBarItem in
+                    let item = FTSideBarItem(shelfCollection: shelfItem)
+                    item.id = shelfItem.uuid
+                    item.isEditable = false
+                    item.allowsItemDropping = false
+                    item.type = .ns2Category
+                    return item
+                }
+                self.ns2categoriesItems.removeAll()
+                self.ns2categoriesItems.append(contentsOf: NS2Items)
+                onCompeltion(newlyCreatedSidebarItems)
+            }
+//            onCompeltion(newlyCreatedSidebarItems)
         }
     }
 
@@ -423,7 +437,6 @@ extension FTSidebarViewModel {
     private func fetchSidebarMenuItems() {
 
         // Fetching ns2 categories
-        self.ns2categoriesItems = await fetchNS2Categories()
 
         //First section items creation
         self.buildSystemMenuOptions()
@@ -440,11 +453,18 @@ extension FTSidebarViewModel {
         FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
             self.setCollectionToSystemType(.trash, collection: trashCollection)
         }
+        fetchNS2Categories { [weak self] items in
+            guard let self else { return }
+            self.ns2categoriesItems.removeAll()
+            self.ns2categoriesItems.append(contentsOf: items)
+            //TODO: To be refactored
+            self.buildSideMenuItems()
+        }
         self.updateUnfiledCategory()
 
         self.buildMediaMenuOptions()
         self.fetchAllTags()
-        self.buildSideMenuItems()
+
     }
     static private func getTemplatesSideBarItem() -> FTSideBarItem {
         return FTSideBarItem(title: NSLocalizedString("Templates", comment: "Templates"),
