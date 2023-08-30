@@ -32,7 +32,7 @@ class FTShelfTagsViewController: UIViewController {
 
     var selectedTag: FTTagModel? {
         didSet {
-            if searchTag != selectedTag?.text || (selectedTag == nil && searchTag == "sidebar.allTags".localized) {
+            if searchTag != selectedTag?.text || (selectedTag == nil && searchTag == "sidebar.allTags".localized) || self.tagItems.isEmpty {
                 loadtagsBooksAndPages()
             }
             searchTag = selectedTag?.text

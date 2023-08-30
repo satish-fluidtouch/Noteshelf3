@@ -400,6 +400,11 @@ extension FTSidebarViewModel {
         }
     }
 
+    private func allTagsSidebarItem() -> FTSideBarItem {
+        let allTags = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+        return allTags
+    }
+
     private func fetchAllTags() {
         let allTags = FTCacheTagsProcessor.shared.cachedTags()
         var tags: [FTSideBarItem] = [FTSideBarItem]()
@@ -408,7 +413,13 @@ extension FTSidebarViewModel {
             let item = FTSideBarItem(id: tagItem.id, title: tagItem.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
             return item
         }
-        self.buildGlobalTagsOptions(tags)
+        self.tags.removeAll()
+        self.tags.append(allTagsSidebarItem())
+        self.tags += tags
+        if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
+            tagsSection.items = self.tags
+        }
+        setSideBarItemSelection()
     }
 
     func updateUnfiledCategory() {
@@ -437,9 +448,8 @@ extension FTSidebarViewModel {
             self.setCollectionToSystemType(.trash, collection: trashCollection)
         }
         self.updateUnfiledCategory()
-
+        self.tags = [allTagsSidebarItem()]
         self.buildMediaMenuOptions()
-        self.fetchAllTags()
         self.buildSideMenuItems()
     }
     static private func getTemplatesSideBarItem() -> FTSideBarItem {
@@ -485,14 +495,6 @@ extension FTSidebarViewModel {
         let recording = FTSideBarItem(title: NSLocalizedString("Recording", comment: "Recording"), icon: FTIcon.audioNote, isEditable: true, isEditing: false, type: FTSideBarItemType.audio, allowsItemDropping: false)
         let bookmarks = FTSideBarItem(title: NSLocalizedString("Bookmark", comment: "Bookmark"), icon: FTIcon.bookmark, isEditable: true, type: FTSideBarItemType.bookmark,allowsItemDropping: false)
         self.contentItems = [photos, recording, bookmarks]
-    }
-    private func buildGlobalTagsOptions(_ tags: [FTSideBarItem]) {
-        var totalTagSidebarItems : [FTSideBarItem] = []
-        let allTagsSidebarItem = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
-        totalTagSidebarItems = [allTagsSidebarItem]
-        totalTagSidebarItems += tags
-        self.tags = totalTagSidebarItems
-        buildSideMenuItems()
     }
 
     private func buildSideMenuItems(){
