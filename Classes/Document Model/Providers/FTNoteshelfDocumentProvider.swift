@@ -968,8 +968,8 @@ extension FTNoteshelfDocumentProvider {
                 try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
                 let collection = (self.localShelfCollectionRoot?.ns3Collection as? FTShelfCacheProtocol)?.addItemToCache(destinationURL)
                 if let collectionTitle = collection?.title {
-                    let collection = self.localShelfCollectionRoot?.ns3Collection.collection(withTitle: collectionTitle)
-                    _ = (collection as? FTShelfCacheProtocol)?.addItemToCache(destinationURL)
+                    let collection = self.localShelfCollectionRoot?.ns3Collection.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal
+                    _ = collection?.addItemsToCache([destinationURL])
                 } else {
 //                    let document = FTDocumentItem(fileURL: destinationURL)
 //                    document.isDownloaded = true
@@ -979,9 +979,7 @@ extension FTNoteshelfDocumentProvider {
 
             // Fetch FTDocumentItemProtocol, from the destination
             let relativePath = destinationURL.relativePathWRTCollection()
-            //TODO: wait here, unti completes
-            getShelfItemDetails(relativePath: relativePath) { [weak self] (collection, groupNotebookView, item) in
-            }
+
             return destinationURL
         } catch {
             debugLog(">>>>> Migration Failure \(error)")

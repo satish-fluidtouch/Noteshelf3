@@ -55,9 +55,9 @@ final class FTDocumentMigration {
     }
 
     static func showNS3MigrationFailureAlert(on controller: UIViewController) {
-        let alert = UIAlertController(title: "migration.failure.alert.title".localized, message: "migration.failure.alert.message".localized, preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "migration.failure.message".localized, message: nil, preferredStyle: UIAlertController.Style.alert)
 
-        let action = UIAlertAction(title: "migration.alert.action.button".localized, style: UIAlertAction.Style.cancel)
+        let action = UIAlertAction(title: "OK".localized, style: UIAlertAction.Style.cancel)
         alert.addAction(action)
         controller.present(alert, animated: true)
     }

@@ -547,20 +547,18 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     }
     
     //MARK:- Private Cache Mgmt -
-    fileprivate func buildCache(_ items: [Foundation.URL]?) {
+    fileprivate func buildCache(_ items: [URL]?) {
         self.childrens.removeAll();
         self.hashTable.removeAll();
-        if(nil != items && items!.isEmpty == false) {
-            self.addItemsToCache(items! as [AnyObject]);
+        if let items, !items.isEmpty {
+            self.addItemsToCache(items);
         }
     }
-    
-    fileprivate func addItemsToCache(_ items: [AnyObject]) {
-        guard let metadataItems = items as? [Foundation.URL] else {
-            return
-        }
+
+    // Removed fileprivate URL to build this for NS2 to NS3 Migration
+    func addItemsToCache(_ items: [URL]) {
         var addedItems = [AnyObject]();
-        for eachItem in metadataItems {
+        for eachItem in items {
             let fileURL = eachItem;
             //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
             if(fileURL.pathExtension == FTFileExtension.sortIndex) {

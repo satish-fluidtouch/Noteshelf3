@@ -229,7 +229,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             let item = FTShelfItemCollectionLocal(fileURL:fileItemURL);
             item.parent = self
             self.shelfCollections.append(item);
-            
+            collectionItem = item
         }
         objc_sync_exit(self);
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
