@@ -352,7 +352,9 @@ struct GroupNotebookView: View {
                             .foregroundColor(Color.appColor(.black20))
                             .frame(width: 16, height: 16, alignment: Alignment.center)
                             .font(Font.appFont(for: .medium, with: 12))
-                            .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .topLeading)
+                            .if(shelfViewModel.displayStlye == .List, transform: { view in
+                                view.scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .bottom)
+                            })
                             .padding(.bottom, 4)
                     }
                 }

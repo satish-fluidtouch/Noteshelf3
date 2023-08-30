@@ -30,7 +30,7 @@ struct FTShelfTopSectionView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom , 28)
                     }
-                    if proxy.width < 700 && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode || proxy.width < 400  {
+                    if proxy.width < 935 && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode || proxy.width < 400  {
                         Grid {
                             GridRow{
                                 getShelfDetailViewItem(.quicknote,

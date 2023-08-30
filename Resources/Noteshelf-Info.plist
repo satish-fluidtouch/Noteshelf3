@@ -296,10 +296,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This will enable you to connect Wacom.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Used to connect a bluetooth stylus to Noteshelf.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Used to capture and annotate photos in Noteshelf.</string>
 	<key>NSFaceIDUsageDescription</key>

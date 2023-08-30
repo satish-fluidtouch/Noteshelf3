@@ -181,7 +181,11 @@ class FTNoteshelfDocumentProvider: NSObject {
     }
 
     func ns2Shelfs(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
-        self.currentNS2Collection()?.shelfs { items in
+        guard let ns2Collection = self.currentNS2Collection() else {
+            completion([])
+            return
+        }
+        ns2Collection.shelfs { items in
             completion(items)
         }
     }

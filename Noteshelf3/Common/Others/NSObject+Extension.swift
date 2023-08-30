@@ -6,6 +6,8 @@
 //  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
 //
 
+import UIKit
+
 extension NSObject {
     enum FTNoteshelfSessionID: Int {
         case openNotebook, openGroup, openShelf, openContent, openTag;

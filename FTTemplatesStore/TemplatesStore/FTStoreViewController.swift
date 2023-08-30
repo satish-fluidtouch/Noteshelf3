@@ -153,6 +153,7 @@ extension FTStoreViewController: UITableViewDelegate {
 
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
                                                                     FTStoreHeader.reuseIdentifier) as! FTStoreHeader
+            view.seeAllButton.isHidden = false
             if sectionItem.sectionType == FTStoreSectionType.stickers.rawValue {
                 view.seeAllButton.isHidden = true
             }
