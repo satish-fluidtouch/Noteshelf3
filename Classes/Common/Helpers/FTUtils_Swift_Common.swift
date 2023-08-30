@@ -14,6 +14,10 @@ extension FTUtils {
         FTSharedGroupID.getAppGroupID()
     }
 
+    @objc class func getNS2GroupId() -> String {
+        FTSharedGroupID.getNS2AppGroupID()
+    }
+
     class func getAppVersionInfo() -> String {
         var versionString = String(format: NSLocalizedString("VersionNumber", comment: "VERSION %@"), appVersion())
         let buildNumber = appBuildVersion()

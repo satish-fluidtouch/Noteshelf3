@@ -25,10 +25,10 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
 
     var downloadStatusChangedItems = FTHashTable();
     var timer : Timer?
-
+    weak var parent: FTShelfCollectionLocal?
     var childrens = [FTShelfItemProtocol]();
     var URL : Foundation.URL;
-    var uuid : String = FTUtils.getUUID();
+    var uuid : String = FTCommonUtils.getUUID();
     var type : RKShelfItemType {
         return RKShelfItemType.shelfCollection;
     };
@@ -820,9 +820,8 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     }
 
     func isNS2Collection() -> Bool {
-        var belongs: Bool = false
-        //TODO: Check Items for NS2 or NS3
-        return belongs
+        let belongs = self.parent?.belongsToNS2()
+        return belongs ?? false
     }
 }
 

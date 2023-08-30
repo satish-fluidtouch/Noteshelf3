@@ -16,36 +16,22 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
 {
     fileprivate var shelfCollections = [FTShelfItemCollection]();
 
-    fileprivate var localDocumentsURL: URL;
+    fileprivate var localDocumentsURL: URL
+    fileprivate let isNS2Collection: Bool
 
     fileprivate var query : FTLocalQueryGather?;
 
     fileprivate var tempCompletionBlock : (([FTShelfItemCollection])->Void)? = nil;
 
-    override init(){
-        self.localDocumentsURL = Self.userFolderURL();
-        super.init()
-    }
-    static func userFolderURL() -> URL
-    {
-        let noteshelfURL = FTUtils.noteshelfDocumentsDirectory();
-        let systemURL = noteshelfURL.appendingPathComponent("User Documents");
-        let fileManger = FileManager();
-        var isDir = ObjCBool.init(false);
-        if(!fileManger.fileExists(atPath: systemURL.path, isDirectory: &isDir) || !isDir.boolValue) {
-            try? fileManger.createDirectory(at: systemURL, withIntermediateDirectories: true, attributes: nil);
-        }
-        return systemURL;
+    required init(rootURL: URL, isNS2Collection: Bool) {
+        self.localDocumentsURL = rootURL
+        self.isNS2Collection = isNS2Collection
     }
 
-    class func collection() -> FTShelfCollection {
-        FTShelfCollectionLocal()
-    }
-
+    @available(*, deprecated, message: "must be initialized directly")
     static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
     {
-        let provider = Self.collection();
-        onCompletion(provider);
+        fatalError("must be initialized directly")
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -85,7 +71,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
 
     // TODO: (AK) To be checked like Cloud
     func belongsToNS2() -> Bool {
-        false
+        isNS2Collection
     }
 
     func collection(withTitle title : String) -> FTShelfItemCollection?
@@ -240,8 +226,10 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         let fileItemURL = fileURL;
         var collectionItem = self.collectionForURL(fileItemURL);
         if(nil == collectionItem) {
-            collectionItem = FTShelfItemCollectionLocal.init(fileURL:fileItemURL);
-            self.shelfCollections.append(collectionItem!);
+            let item = FTShelfItemCollectionLocal(fileURL:fileItemURL);
+            item.parent = self
+            self.shelfCollections.append(item);
+            
         }
         objc_sync_exit(self);
         if(ENABLE_SHELF_RPOVIDER_LOGS) {

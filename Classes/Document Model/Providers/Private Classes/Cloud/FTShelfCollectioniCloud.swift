@@ -31,8 +31,8 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
         #endif
     }
 
-    required init(iCloudRootURL: URL, isNS2Collection: Bool) {
-        self.iCloudDocumentsURL = iCloudRootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
+    required init(rootURL: URL, isNS2Collection: Bool) {
+        self.iCloudDocumentsURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
         self.isNS2Collection = isNS2Collection
     }
 

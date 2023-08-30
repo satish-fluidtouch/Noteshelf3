@@ -9,7 +9,7 @@
 import UIKit
 import FTCommon
 
-class FTShelfCollectioniCloudRoot: NSObject {
+final class FTShelfCollectioniCloudRoot: NSObject {
     private class MetadataContainer {
         internal init(ns2booksMetadata: [NSMetadataItem], ns2ShelfsMetadata: [NSMetadataItem], ns2IndexMetadata: [NSMetadataItem], ns3booksMetadata: [NSMetadataItem], ns3ShelfsMetadata: [NSMetadataItem]) {
             self.ns2booksMetadata = ns2booksMetadata
@@ -46,8 +46,8 @@ class FTShelfCollectioniCloudRoot: NSObject {
         }
         //TODO: (AK) Think about a refactor for passing the Boolean or always compare the URL
         // Passing the boolean is a bit effective as we are injecting from the initializer
-        self.ns3Collection = FTShelfCollectioniCloud(iCloudRootURL: icloudRootURL, isNS2Collection: false)
-        self.ns2Collection = FTShelfCollectioniCloud(iCloudRootURL: productionCloudURL, isNS2Collection: true)
+        self.ns3Collection = FTShelfCollectioniCloud(rootURL: icloudRootURL, isNS2Collection: false)
+        self.ns2Collection = FTShelfCollectioniCloud(rootURL: productionCloudURL, isNS2Collection: true)
 
         super.init()
     }
