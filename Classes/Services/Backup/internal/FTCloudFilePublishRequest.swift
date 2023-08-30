@@ -161,7 +161,7 @@ fileprivate extension FTCloudBackup {
         UserDefaults.standard.setValue(info, forKey: contentPrepareKey)
     }
         
-    private func resetIfNeeded() -> Bool {
+    private func resetIfNeeded() {
         let info = prepareContentInfo;
         let lastTime = info[String.lastTime]?.doubleValue ?? 0;
         let currentTime = Date.timeIntervalSinceReferenceDate;
