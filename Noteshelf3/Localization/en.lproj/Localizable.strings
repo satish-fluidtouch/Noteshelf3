@@ -1230,7 +1230,7 @@
 "shelf.deleteCategoryAlert.title" = "Are you sure you want to delete?";
 "shelf.deleteTagAlert.message" = "Tags will be removed from the items.";
 "shelf.discover.aiAssitedDescription" = "Generate notes in handwriting and more with Noteshelf AI";
-"shelf.discover.aiAssitedNotesTitle" = "Ai-assited notes";
+"shelf.discover.aiAssitedNotesTitle" = "AI-assisted notes";
 "shelf.discover.coversDescription" = "Personalize your shelf with beautiful covers.";
 "shelf.discover.coversTitle" = "Covers to match your style";
 "shelf.discover.customToolbarDescription" = "Make the toolbar your own with all your favorite tools within reach.";
@@ -1490,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM
+// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM

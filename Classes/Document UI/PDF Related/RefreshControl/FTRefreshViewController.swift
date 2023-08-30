@@ -48,8 +48,8 @@ class FTRefreshViewController: UIViewController {
     private var refreshPageViewHeight: CGFloat = 352
     private var refreshPageViewWidth: CGFloat = 392
     private var currentSize = CGSize.zero
-
-   private var currentOffsetValue: CGFloat {
+    private var scrollContentSizeListner : NSKeyValueObservation?;
+    private var currentOffsetValue: CGFloat {
         if let _scrollView = self.scrollView {
             switch scrollDirection {
             case .left,.right:
@@ -66,11 +66,20 @@ class FTRefreshViewController: UIViewController {
     //MARK:- System methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.scrollContentSizeListner = self.scrollView?.observe(\.contentSize, changeHandler: { [weak self] (_, _) in
+            guard let self = self else { return }
+                self.updateFrame();
+        });
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateUI()
+    }
+    
+    deinit {
+        self.scrollContentSizeListner?.invalidate();
+        self.scrollContentSizeListner = nil;
     }
 
     override func viewDidLayoutSubviews() {

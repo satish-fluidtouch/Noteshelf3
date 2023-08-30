@@ -264,7 +264,7 @@
 "DontBackup" = "백업하지 마세요.";
 "DontShowForThisBook" = "이 노트북에 대해 다시 경고하지 마십시오.";
 "DontShowHintAgain" = "보여 주지 마세요";
-"DoubleTapAction" = "더블탭 액션";
+"DoubleTapAction" = "더블탭 동작";
 "Download" = "다운로드";
 "Downloaded" = "이미 다운로드됨";
 "Downloading" = "다운로드 중...";
@@ -1490,4 +1490,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 25 August 2023 at 4:05 PM
+// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
