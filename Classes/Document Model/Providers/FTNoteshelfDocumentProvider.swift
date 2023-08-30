@@ -966,6 +966,10 @@ extension FTNoteshelfDocumentProvider {
                 // TODO: Take control if required
                 let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
                 destinationURL = parentURL.appendingPathComponent(uniqueName);
+            } else {
+                if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                }
             }
 
             if providerMode == .cloud {
