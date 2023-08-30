@@ -1047,6 +1047,7 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
             }
 
             let page = self.filteredPages[indexPath.item];
+            FTCLSLog("Finder - Mode: \(self.mode), Screen State: \(self.screenMode)")
             if  self.mode == .none {
                 let indexSelected: Int;
                 if self.mode == .none {
@@ -1096,9 +1097,6 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                 }
                 self.updateSelectAllUI();
                 self.updateSelectionTitle()
-                if(!self.collectionView.indexPathsForVisibleItems.contains(indexPath)) {
-                    self.collectionView.scrollToItem(at: indexPath, at: UICollectionView.ScrollPosition(), animated: true);
-                }
             }
         }
     }

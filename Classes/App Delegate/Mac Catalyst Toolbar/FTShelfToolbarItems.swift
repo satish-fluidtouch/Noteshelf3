@@ -308,12 +308,12 @@ class FTShelfSearchToolbarItem: NSToolbarItem {
 
         let barButton = UIBarButtonItem(customView: searchBar);
         self.init(itemIdentifier: Self.identifier, barButtonItem: barButton);
-
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = "Search".localized
         self.label = "Search"
         self.toolTip = "Search"
         self.isBordered = true;
-
-        let widthConstraint = NSLayoutConstraint(item: searchBar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 180.0)
+        let widthConstraint = NSLayoutConstraint(item: searchBar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 220.0)
         searchBar.addConstraint(widthConstraint);
         searchDelegate = searchDel;
         searchDelegate?.toolbarItem = self
