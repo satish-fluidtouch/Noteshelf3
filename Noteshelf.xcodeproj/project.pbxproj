@@ -63,7 +63,6 @@
 		09C7145B2A407D7D00E69E4A /* FTNotebookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7145A2A407D7D00E69E4A /* FTNotebookCoverView.swift */; };
 		09C7145D2A40826B00E69E4A /* FTNotebookViewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7145C2A40826B00E69E4A /* FTNotebookViewList.swift */; };
 		09C7145F2A4082BF00E69E4A /* FTGroupViewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7145E2A4082BF00E69E4A /* FTGroupViewList.swift */; };
-		09C714612A408B0000E69E4A /* FTGroupTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C714602A408B0000E69E4A /* FTGroupTitleView.swift */; };
 		09C714672A42E80C00E69E4A /* FTContextMenuRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C714662A42E80C00E69E4A /* FTContextMenuRepresentation.swift */; };
 		09CDCAB22A4AA2A4000340FB /* SceneDelegate_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDCAB12A4AA2A4000340FB /* SceneDelegate_Mac_Extension.swift */; };
 		09CDCABA2A4AFB3E000340FB /* FTShelfToolbarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDCAB92A4AFB3E000340FB /* FTShelfToolbarItems.swift */; };
@@ -2479,7 +2478,6 @@
 		09C7145A2A407D7D00E69E4A /* FTNotebookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookCoverView.swift; sourceTree = "<group>"; };
 		09C7145C2A40826B00E69E4A /* FTNotebookViewList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookViewList.swift; sourceTree = "<group>"; };
 		09C7145E2A4082BF00E69E4A /* FTGroupViewList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGroupViewList.swift; sourceTree = "<group>"; };
-		09C714602A408B0000E69E4A /* FTGroupTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGroupTitleView.swift; sourceTree = "<group>"; };
 		09C714662A42E80C00E69E4A /* FTContextMenuRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTContextMenuRepresentation.swift; sourceTree = "<group>"; };
 		09C77752231E6611009739C5 /* FTWhiteboardDisplayManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhiteboardDisplayManager.swift; sourceTree = "<group>"; };
 		09CDCAB12A4AA2A4000340FB /* SceneDelegate_Mac_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate_Mac_Extension.swift; sourceTree = "<group>"; };
@@ -5307,7 +5305,6 @@
 				09C7145A2A407D7D00E69E4A /* FTNotebookCoverView.swift */,
 				09C7145C2A40826B00E69E4A /* FTNotebookViewList.swift */,
 				09C7145E2A4082BF00E69E4A /* FTGroupViewList.swift */,
-				09C714602A408B0000E69E4A /* FTGroupTitleView.swift */,
 				972B53212A45CB7A001158D9 /* FTNotebookShadowView.swift */,
 			);
 			path = private;
@@ -12534,7 +12531,6 @@
 				BAF393432859ADF00067CA9F /* FTCloudPublishRequest.swift in Sources */,
 				BAF393442859ADF00067CA9F /* FTOneDriveMoveTask.swift in Sources */,
 				BAF393452859ADF00067CA9F /* FTShelfItemCollection.swift in Sources */,
-				09C714612A408B0000E69E4A /* FTGroupTitleView.swift in Sources */,
 				E7E3EC3E29A4897E004372B6 /* FTStickersListTableViewCell.swift in Sources */,
 				BA111C3A2988E75C001E854F /* UIFont+Helper.swift in Sources */,
 				97A606D629BB368A00B01E03 /* FTTemplateInfoModel.swift in Sources */,

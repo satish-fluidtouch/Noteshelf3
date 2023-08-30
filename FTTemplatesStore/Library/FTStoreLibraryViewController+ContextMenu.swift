@@ -40,7 +40,6 @@ extension FTStoreLibraryViewController {
               let cell = collectionView.cellForItem(at: identifier) as? FTStoreLibraryCollectionCell else {
             return nil
         }
-        cell.titleLabel?.isHidden = true
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
         return UITargetedPreview(view: cell.thumbnail!, parameters: parameters)
@@ -51,7 +50,6 @@ extension FTStoreLibraryViewController {
               let cell = collectionView.cellForItem(at: identifier) as? FTStoreLibraryCollectionCell else {
             return nil
         }
-        cell.titleLabel?.isHidden = false
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
         return UITargetedPreview(view: cell, parameters: parameters)

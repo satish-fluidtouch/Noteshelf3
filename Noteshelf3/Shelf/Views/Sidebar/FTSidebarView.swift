@@ -68,14 +68,10 @@ struct FTSidebarView: View {
                             FTSidebarTopSectionView(viewModel: viewModel,delegate: viewModel.delegate)
                         }
                         else {
-                            if !menuSection.items.isEmpty {
-                                let sidebarItemWidth = self.sidebarItemSizeBasinfAvailableWidth(geometry.size.width)
-                                self.getDisclousreGroupForSection(menuSection,availableWidth: sidebarItemWidth)
-                                    .padding(.trailing,12)
-                                    .padding(.leading,12)
-                            }else {
-                                EmptyView()
-                            }
+                            let sidebarItemWidth = self.sidebarItemSizeBasinfAvailableWidth(geometry.size.width)
+                            self.getDisclousreGroupForSection(menuSection,availableWidth: sidebarItemWidth)
+                                .padding(.trailing,12)
+                                .padding(.leading,12)
                         }
                     }
                 }
@@ -219,14 +215,10 @@ struct FTSidebarView: View {
 
                 viewModel.setSideBarItemSelection()
             } else {
-                Task {
-                    await viewModel.updateTags()
-                }
+                viewModel.updateTags()
             }
         } else {
-            Task {
-                await viewModel.updateTags()
-            }
+            viewModel.updateTags()
         }
     }
 }
