@@ -28,7 +28,7 @@ protocol FTShortcutActions: AnyObject {
     // Share
     func shareNotebookAsPDF()
     func sharePageAsPng()
-    func savePageAsPhoto(completion: @escaping (Bool, Error?) -> Void)
+    func savePageAsPhoto()
 }
 
 enum FTCommand: Equatable {
@@ -66,15 +66,6 @@ class FTShortcutExecuter: FTShortcutCommand {
 
    init(receiver: FTShortcutActions) {
         self.receiver = receiver
-    }
-
-    func execute(type: FTCommand, completion: @escaping (Bool, Error?) -> Void) {
-        switch type {
-        case .savePageAsPhoto:
-            self.receiver?.savePageAsPhoto(completion: completion)
-        default:
-            break
-        }
     }
 
     func execute(type: FTCommand, onCompletion: (()->())? = nil) {
@@ -119,6 +110,9 @@ class FTShortcutExecuter: FTShortcutCommand {
 
         case .sharePageAsPng:
             self.receiver?.sharePageAsPng()
+
+        case .savePageAsPhoto:
+            self.receiver?.savePageAsPhoto()
 
         default:
             break
@@ -229,9 +223,10 @@ extension FTPDFRenderViewController: FTShortcutActions {
         }
     }
 
-    func savePageAsPhoto(completion: @escaping (Bool, Error?) -> Void) {
+    func savePageAsPhoto() {
         let coordinator = self.getShareInfo(using: .currentPage)
-        let properties = FTExportProperties.getSavedProperties()
+        let properties = FTExportProperties()
+        properties.exportFormat = kExportFormatImage
         coordinator?.beginShare(properties, option: .currentPage,type: .savetoCameraRoll)
     }
 }

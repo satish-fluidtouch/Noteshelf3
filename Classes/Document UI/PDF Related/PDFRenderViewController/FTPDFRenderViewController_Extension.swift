@@ -410,11 +410,6 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
             if let thumbnailable = page as? FTThumbnailable {
                 self.bookMarkAction(page:thumbnailable)
             }
-        case .saveToLibrary:
-            self.savePageAsPhoto { success, error in
-                let toastConfig = FTToastConfiguration(title: "Saved to Library", subTitle: "Page \(page.pageIndex())")
-                FTToastHostController.showToast(from: self, toastConfig: toastConfig)
-            }
         case .saveAsTemplate:
             controller.dismiss(animated: true) {[weak self] in
                 self?.savePageAsTemplate(with: page)
