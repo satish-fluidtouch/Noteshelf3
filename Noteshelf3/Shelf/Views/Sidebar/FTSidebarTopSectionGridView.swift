@@ -33,13 +33,20 @@ struct FTSidebarTopSectionGridView: View {
         viewModel.sidebarItemOfType(type)
     }
     private func gridItemFor(_ sideBarItem: FTSideBarItem) -> some View {
-        Button {
+        FTAnimateButton {
             viewModel.endEditingActions()
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
         } label: {
             FTSidebarTopSectionGridItemView(viewModel: viewModel, item: sideBarItem)
         }
+//        Button {
+//            viewModel.endEditingActions()
+//            viewModel.selectedSideBarItem = sideBarItem
+//            delegate?.didTapOnSidebarItem(sideBarItem)
+//        } label: {
+//            FTSidebarTopSectionGridItemView(viewModel: viewModel, item: sideBarItem)
+//        }
     }
 }
 

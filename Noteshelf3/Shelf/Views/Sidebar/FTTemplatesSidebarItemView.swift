@@ -15,7 +15,14 @@ struct FTTemplatesSidebarItemView: View {
     weak var delegate: FTSidebarViewDelegate?
     var body: some View {
         FTSideBarItemContextMenuPreview(preview: {
-            Button {
+//            Button {
+//                viewModel.endEditingActions()
+//                viewModel.selectedSideBarItem = templatesSidebarItem
+//                delegate?.didTapOnSidebarItem(templatesSidebarItem)
+//            } label: {
+//                templatesView
+//            }
+            FTAnimateButton {
                 viewModel.endEditingActions()
                 viewModel.selectedSideBarItem = templatesSidebarItem
                 delegate?.didTapOnSidebarItem(templatesSidebarItem)

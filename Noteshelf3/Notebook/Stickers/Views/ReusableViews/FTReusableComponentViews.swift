@@ -130,3 +130,35 @@ class FTNSItemProviderImage: NSObject, NSItemProviderWriting {
     }
 }
 
+struct FTAnimateButton<Label: View>: View {
+    @State private var isBouncing: Bool = false
+    private let animationDuration: Double = 0.1
+    private let action: () -> Void
+    private let label: Label
+
+    init(action: @escaping () -> Void, @ViewBuilder label: @escaping () -> Label) {
+        self.action = action
+        self.label = label()
+    }
+
+    var body: some View {
+        Button(action: {
+            toggleStateWithAnimation()
+        }) {
+            label
+        }
+        .buttonStyle(.plain)
+        .scaleEffect(isBouncing ? 0.95 : 1.0)
+    }
+    private func toggleStateWithAnimation() {
+        withAnimation {
+            isBouncing.toggle()
+            self.action()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+            withAnimation {
+                isBouncing = false
+            }
+        }
+    }
+}

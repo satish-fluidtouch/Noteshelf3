@@ -147,6 +147,18 @@ struct FTShareContentView: View {
     }
 
     private var shareButton : some View {
+        FTAnimateButton {
+            self.viewModel.handleShareAction()
+        } label: {
+            Text(viewModel.share)
+                .appFont(for: .medium, with: 15.0)
+                .padding(FTSpacing.extraLarge)
+                .frame(height: 36)
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
+                .foregroundColor(Color.white)
+        }
+/*
         Button(action: {
             self.viewModel.handleShareAction()
         }) {
@@ -158,15 +170,16 @@ struct FTShareContentView: View {
                 .contentShape(Rectangle())
                 .foregroundColor(Color.white)
         }
+ */
         .background(Color.appColor(.accent)).cornerRadius(10)
     }
 
     @ViewBuilder
     var footerView: some View {
         HStack(spacing: 16.0){
-            Button(action: {
+            FTAnimateButton {
                 self.viewModel.handleAddCameraRollAction()
-            }) {
+            } label: {
                 Text(viewModel.saveToCameraroll)
                     .appFont(for: .medium, with: 15.0)
                     .padding(FTSpacing.extraLarge)
@@ -175,13 +188,27 @@ struct FTShareContentView: View {
                     .contentShape(Rectangle())
                     .foregroundColor(Color.appColor(.accent))
             }
-                .border(Color.appColor(.accent),
-                        width:1.0,
-                        cornerRadius: 10)
-                .buttonStyle(PlainButtonStyle())
+            .border(Color.appColor(.accent),
+                    width:1.0,
+                    cornerRadius: 10)
+            .buttonStyle(PlainButtonStyle())
 
-            shareButton
-        }
+        shareButton
+    }
+
+/*
+ Button(action: {
+     self.viewModel.handleAddCameraRollAction()
+ }) {
+     Text(viewModel.saveToCameraroll)
+         .appFont(for: .medium, with: 15.0)
+         .padding(FTSpacing.extraLarge)
+         .frame(height: 36)
+         .frame(maxWidth: .infinity)
+         .contentShape(Rectangle())
+         .foregroundColor(Color.appColor(.accent))
+ }
+ */
     }
 
     @ToolbarContentBuilder
