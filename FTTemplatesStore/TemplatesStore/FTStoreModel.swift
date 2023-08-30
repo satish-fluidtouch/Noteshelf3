@@ -8,7 +8,9 @@
 import Foundation
 import FTCommon
 
-let baseUrl = isInChinaRegion() ? "https://ops-dra.agcstorage.link/v0/noteshelf-data-hdmvw/store/v5/" : "https://noteshelf2-store-dev-env.s3.amazonaws.com/ns3/store/v5/"
+let baseUrl = isInChinaRegion() ? "https://ops-dra.agcstorage.link/v0/noteshelf-data-hdmvw/store/v5/" :
+"https://noteshelf3-public.s3.amazonaws.com/store/v1/"
+//"https://noteshelf2-store-dev-env.s3.amazonaws.com/ns3/store/v5/"
 
 let previewImageExtention = "/preview.jpg"
 

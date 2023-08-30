@@ -233,7 +233,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     }
                     if let coll = collection {
                         let fileName = url.lastPathComponent.deletingPathExtension;
-                        _ = self.startImporting(url.path, title: fileName, isImageSource: false, collection: coll, groupItem: nil) { [weak self] (shelfItem, error) in
+                        _ = self.startImporting(url.path, title: fileName, isImageSource: false, isTemplate: true, collection: coll, groupItem: nil) { [weak self] (shelfItem, error) in
                             loadingIndicatorView.hide()
                             if let shelfItem, error == nil {
                                 if FTDeveloperOption.bookScaleAnim {
