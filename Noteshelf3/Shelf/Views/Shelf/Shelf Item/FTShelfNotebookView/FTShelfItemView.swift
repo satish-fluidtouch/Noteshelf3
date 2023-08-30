@@ -55,10 +55,15 @@ struct FTShelfItemView: View {
             .onTapGesture(perform: {
                 if(self.shelfViewModel.mode == .selection) {
                     groupItem.isSelected.toggle();
+                    // Track Event
+                    track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                 }
                 else {
                     self.shelfViewModel.delegate?.setLastOpenedGroup(groupItem.model.URL)
                     self.shelfViewModel.groupViewOpenDelegate?.didTapOnShelfItem(groupItem.model);
+                    // Track Event
+                    track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+
                 }
             })
             .onDrop(of: [.content],
@@ -97,9 +102,12 @@ struct FTShelfItemView: View {
             .onTapGesture {
                 if(shelfViewModel.mode == .selection) {
                     shelfItem.isSelected.toggle()
+                    // Track Event
+                    track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                 }
                 else {
                     shelfViewModel.openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+                    track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                 }
             }
             .if(shelfViewModel.fadeDraggedShelfItem == shelfItem, transform: { view in

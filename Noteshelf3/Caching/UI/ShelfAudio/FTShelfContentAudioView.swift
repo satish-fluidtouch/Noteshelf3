@@ -57,22 +57,27 @@ struct FTShelfContentAudioView: View {
                             .frame(width: size.width, height: size.width)
                             .clipped()
                             .overlay(alignment: .bottomLeading) {
-                                    gradient
+                                gradient
                                     .blur(radius: 20) /// blur the overlay
                                     .padding(-20) /// expand the blur a bit to cover the edges
                                     .clipped() // prevent blur overflow
                             }
                             .onTapGesture {
                                 viewModel.onSelect?(audio)
+                                track(EventName.shelf_recording_page_tap, screenName: ScreenName.shelf_recordings)
                             }
                             .contextMenu {
                                 Button {
                                     viewModel.openInNewWindow?(audio)
+                                    track(EventName.shelf_recording_openinnewwindow_tap, screenName: ScreenName.shelf_recordings)
                                 } label: {
                                     Text("OpenInNewWindow".localized)
                                 }
                             } preview: {
                                 FTAudioPreviewPageView(audio: audio)
+                                    .onAppear {
+                                        track(EventName.shelf_recording_page_longpress, screenName: ScreenName.shelf_recordings)
+                                    }
                             }
                     }
                 }
@@ -116,7 +121,6 @@ struct FTShelfAudioItemView: View {
                 VStack(spacing: 4) {
                     Image(systemName: "volume.2.fill")
                         .font(.title)
-//                    Text(audio.audioTitle)
                     Text(audio.duration)
                 }
                 .appFont(for: .medium, with: 10)

@@ -20,7 +20,6 @@ enum FTShelfItemContexualOption {
     case addToStarred
     case removeFromStarred
     case getInfo
-    case shareViaICloud
     case share
     case trash
     case restore
@@ -50,8 +49,6 @@ enum FTShelfItemContexualOption {
             title = NSLocalizedString("shelfItem.contexualMenu.removeFromStarred", comment: "Remove from Starred")
         case .getInfo:
             title = NSLocalizedString("shelfItem.contexualMenu.getInfo", comment: "Get Info")
-        case .shareViaICloud:
-            title = NSLocalizedString("shelfItem.contexualMenu.shareViaICloud", comment: "Share via iCloud")
         case .share:
             title = NSLocalizedString("share", comment: "share")
         case .trash:
@@ -87,8 +84,6 @@ enum FTShelfItemContexualOption {
             icon = FTIcon.removeFromFavorites
         case .getInfo:
             icon = FTIcon.infoCircle
-        case .shareViaICloud:
-            icon = FTIcon.shareViaICloud
         case .share:
             icon = FTIcon.share
         case .trash:

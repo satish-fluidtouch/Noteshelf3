@@ -14,12 +14,14 @@ struct FTSideBarItemContexualMenuButtons: View {
     @Binding var alertInfo: TrashAlertInfo?
 
     @ObservedObject var viewModel: FTSidebarItemContextualMenuVM
+    @ObservedObject var sidebarViewModel: FTSidebarViewModel
 
     var longPressOptions: [FTSidebarItemContextualOption] = []
     var body: some View {
             ForEach(longPressOptions,id: \.self) { menuOption in
                 Button(role: menuOption.isDestructiveOption ? .destructive : nil) {
-
+                    let eventName = sidebarViewModel.eventNameForLongPressOptions(item: item, option: menuOption)
+                    track(eventName, screenName: ScreenName.sidebar)
                     if menuOption == .trashCategory || menuOption == .emptyTrash || menuOption == .deleteTag {
                         showTrashAlert = true
                         setAlertInfoForOption(menuOption)

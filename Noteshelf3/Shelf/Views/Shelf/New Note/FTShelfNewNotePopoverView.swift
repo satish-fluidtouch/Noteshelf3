@@ -21,6 +21,7 @@ struct FTShelfNewNotePopoverView: View {
     weak var delegate: FTShelfNewNoteDelegate?
     weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var shelfViewModel: FTShelfViewModel
 
     var body: some View {
         VStack {
@@ -46,7 +47,7 @@ struct FTShelfNewNotePopoverView: View {
             VStack {
                 VStack {
                     VStack(spacing:16.0) {
-                        FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate)
+                        FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate, shelfViewModel: shelfViewModel)
                             .padding(.top,10)
                         LazyVGrid(columns: gridItemLayout(), spacing: 0.0, content: {
                             newNoteSection
@@ -113,9 +114,13 @@ struct FTShelfNewNotePopoverView: View {
         if option.newNoteOption != .appleWatch { // only incase of watch recordings we are showing the recordings inside popover itself.
             viewDelegate?.dismissPopover()
         }
+
+        // Track Event
+        shelfViewModel.trackEventForAddMenuoption(option: option.newNoteOption)
         switch option.newNoteOption {
         case .newNotebook:
             viewModel.delegate?.showNewNotebookPopover()
+            track(EventName.shelf_addmenu_tap, screenName: ScreenName.shelf)
         case .photoLibrary:
             delegate?.didTapPhotoLibrary()
         case .takePhoto:

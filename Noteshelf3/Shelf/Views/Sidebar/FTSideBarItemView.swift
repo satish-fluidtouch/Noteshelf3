@@ -126,11 +126,15 @@ struct SideBarItemView : View {
                         FTSideBarItemContexualMenuButtons(showTrashAlert: $showTrashAlert,
                                                           item: item,
                                                           alertInfo: $alertInfo,
-                                                          viewModel: viewModel.sidebarItemContexualMenuVM,longPressOptions: viewModel.getContextualOptionsForSideBarType(item.type))
+                                                          viewModel: viewModel.sidebarItemContexualMenuVM,
+                                                          sidebarViewModel: viewModel,
+                                                          longPressOptions: viewModel.getContextualOptionsForSideBarType(item.type))
                     },preview: {
                         view
                         .frame(width: viewWidth)
                         .onAppear {
+                            let eventName = viewModel.eventNameForlongpress(item: item)
+                            track(eventName, screenName: ScreenName.sidebar)
                             shelfMenuOverlayInfo.isMenuShown = true;
                         }
                         .onDisappear {

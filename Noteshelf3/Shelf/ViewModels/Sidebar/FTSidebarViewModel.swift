@@ -534,6 +534,7 @@ extension FTSidebarViewModel {
         }
     }
 }
+
 //MARK: Sidebar Sections open/close status maintainance And Categories/Tags user defined order maintainance logic
 extension FTSidebarViewModel {
     func getSideBarStatusForSection(_ section: FTSidebarSection)-> Bool {
@@ -665,5 +666,67 @@ class FTBookmarkedCategoryItem {
             }
         }
         return items;
+    }
+}
+
+extension FTSidebarViewModel {
+     func eventNameForlongpress(item: FTSideBarItem) -> String {
+        let eventMapping: [FTSideBarItemType: String] = [
+            .home: EventName.sidebar_home_longpress,
+            .templates: EventName.sidebar_templates_longpress,
+            .unCategorized: EventName.sidebar_unfiled_longpress,
+            .trash: EventName.sidebar_trash_longpress,
+            .category: EventName.sidebar_category_longpress,
+            .starred: EventName.sidebar_starred_longpress,
+            .media: EventName.sidebar_photo_longpress,
+            .audio: EventName.sidebar_recording_longpress,
+            .bookmark: EventName.sidebar_bookmark_longpress,
+            .tag:  EventName.sidebar_tag_longpress
+        ]
+
+        if let event = eventMapping[item.type] {
+            return event
+        }
+        return ""
+    }
+
+     func eventNameForLongPressOptions(item: FTSideBarItem, option: FTSidebarItemContextualOption) -> String {
+        let eventMapping: [FTSideBarItemType: [FTSidebarItemContextualOption: String]] = [
+            .home: [.openInNewWindow: EventName.home_openinnewwindow_tap],
+            .templates: [.openInNewWindow: EventName.templates_openinnewwindow_tap],
+            .unCategorized: [.openInNewWindow: EventName.unfliled_openinnewwindow_tap],
+            .trash: [.emptyTrash: EventName.trash_emptytrash_tap],
+            .category: [
+                .openInNewWindow: EventName.category_openinnewwindow_tap,
+                .renameCategory: EventName.cateogry_rename_tap,
+                .trashCategory: EventName.category_trash_tap
+            ],
+            .starred: [.openInNewWindow: EventName.starred_openinnewwindow_tap],
+            .media: [.openInNewWindow: EventName.sidebar_photo_openinnewwindow_tap],
+            .audio: [.openInNewWindow: EventName.sidebar_recording_openinnewindow_tap],
+            .tag: [
+                .renameTag: EventName.sidebar_tag_rename_tap,
+                .deleteTag: EventName.sidebar_tag_delete_tap
+            ],
+            .bookmark: [.openInNewWindow: EventName.sidebar_bookmark_openinnewwindow_tap]
+        ]
+
+        if let event = eventMapping[item.type]?[option] {
+            return event
+        }
+
+        return ""
+    }
+
+    func eventNameForSections(section: FTSidebarSection, isExpand: Bool) -> String {
+        let eventMapping: [FTSidebarSectionType: String] = [
+            .categories: isExpand ? EventName.sidebar_categories_expand : EventName.sidebar_categories_collapse,
+            .media: isExpand ? EventName.sidebar_content_expand : EventName.sidebar_content_collapse,
+            .tags: isExpand ? EventName.sidebar_tags_expand : EventName.sidebar_tags_collapse
+]
+        if let event = eventMapping[section.type] {
+            return event
+        }
+        return ""
     }
 }

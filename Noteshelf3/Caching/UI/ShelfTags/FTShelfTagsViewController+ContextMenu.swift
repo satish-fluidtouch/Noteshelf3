@@ -15,7 +15,7 @@ extension FTShelfTagsViewController {
         if indexPath.section == 0 {
             return nil
         }
-
+        track(EventName.shelf_tag_page_longpress, screenName: ScreenName.shelf_tags)
         let cell = collectionView.cellForItem(at: indexPath)!
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
@@ -24,20 +24,24 @@ extension FTShelfTagsViewController {
             let openNewWindowAction = UIAction(title: "sidebar.allTags.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 self.openInNewWindow()
+                track(EventName.shelf_tag_page_openinnewwindow_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(openNewWindowAction)
 #endif
             let editAction = UIAction(title: "sidebar.allTags.contextualMenu.editTags".localized, image: UIImage(systemName: "tag"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 self.contextMenuSelectedIndexPath = indexPath as IndexPath
-                self.editTagsAction(nil)
+                self.edittagsOperation()
+                track(EventName.shelf_tag_page_edittags_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(editAction)
 
             let removeTagsAction = UIAction(title: removeTagsTitle, image: UIImage(systemName: "tag.slash"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 self.contextMenuSelectedIndexPath = indexPath as IndexPath
-                    self.removeTagsAction(nil)
+                self.removeTagsOperation()
+                track(EventName.shelf_tag_page_removetags_tap, screenName: ScreenName.shelf_tags)
+
             }
             removeTagsAction.attributes = .destructive
             actions.append(removeTagsAction)
@@ -83,7 +87,6 @@ extension FTShelfTagsViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-//        contextMenuSelectedIndexPath = nil
         if let identifier = configuration.identifier as? IndexPath {
             if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfTagsPageCell {
                 let parameters = UIPreviewParameters()

@@ -23,6 +23,8 @@ struct FTSidebarTopSectionGridItemView: View {
                 .ignoresSafeArea()
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true
+            let eventName = viewModel.eventNameForlongpress(item: item)
+            track(eventName, screenName: ScreenName.sidebar)
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false
         }, cornerRadius: 16,alertInfo: $alertInfo, showTrashAlert: $showTrashAlert,sidebarItem:item,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)

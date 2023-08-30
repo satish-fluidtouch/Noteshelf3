@@ -25,6 +25,8 @@ struct FTTemplatesSidebarItemView: View {
             .ignoresSafeArea()
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true
+            let eventName = viewModel.eventNameForlongpress(item: templatesSidebarItem)
+            track(eventName, screenName: ScreenName.sidebar)
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false
         }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false),sidebarItem:templatesSidebarItem,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)

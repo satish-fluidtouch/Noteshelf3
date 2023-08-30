@@ -58,6 +58,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                         if shelfViewModel.canShowNewNoteNavOption {
                             Button {
                                 showingPopover = true
+                                track(EventName.shelf_addmenu_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                             } label: {
                                 Image(icon: .plus)
                                     .font(Font.appFont(for: .regular , with: 15.5))
@@ -74,6 +75,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             Button {
                                 if !shelfMenuOverlayInfo.isMenuShown {
                                     shelfViewModel.searchTapped()
+                                    let locationName = shelfViewModel.shelfLocation()
+                                    track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
                                 }
                             } label: {
                                 Image(icon: .search)
@@ -96,6 +99,9 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                 if idiom == .phone {
                                     shelfViewModel.compactDelegate?.didChangeSelectMode(shelfViewModel.mode)
                                 }
+                                // Track Event
+                                track(EventName.shelf_select_done_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+
                             } label: {
                                 Text(NSLocalizedString("done", comment: "Done"))
                                     .appFont(for: .regular, with: 17)
@@ -106,6 +112,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                         ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                             if shelfViewModel.areAllItemsSelected {
                                 Button {
+                                    // Track Event
+                                    track(EventName.shelf_select_selectnone_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                                     shelfViewModel.deselectAllItems()
                                 } label: {
                                     Text(NSLocalizedString("shelf.navBar.selectNone", comment: "Select None"))
@@ -115,6 +123,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                 .frame(height: 44)
                             } else {
                                 Button {
+                                    // Track Event
+                                    track(EventName.shelf_select_selectall_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                                     shelfViewModel.selectAllItems()
                                 } label: {
                                     Text(NSLocalizedString("shelf.navBar.selectAll", comment: "Select All"))

@@ -86,6 +86,8 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
                             _contextualMenuViewModel.sideBarItem = _sidebarItem
                             _contextualMenuViewModel.performAction = menuOption
                         }
+                        let eventName = _sidebarModel.eventNameForLongPressOptions(item: _sidebarItem, option: menuOption)
+                        track(eventName, screenName: ScreenName.sidebar)
                     }
                     actions.append(action1);
                    // elements.append(UIMenu(title: "", options: .displayInline, children: actions));
@@ -124,11 +126,12 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
         func contextMenuInteraction(_ interaction: UIContextMenuInteraction, previewForDismissingMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
             return targettedPreview(interaction);
         }
+
         private func setAlertInfoForOption(_ option: FTSidebarItemContextualOption) {
             if option == .emptyTrash {
                 self.representView.alertInfo = TrashAlertInfo(title: NSLocalizedString("trash.alert.title", comment: "Are you sure you want empty your Trash?"),
-                                           message: "",
-                                           type: TrashAlertInfo.TrashType.emptyTrash(item: self.representView.sidebarItem))
+                                                              message: "",
+                                                              type: TrashAlertInfo.TrashType.emptyTrash(item: self.representView.sidebarItem))
             } else if option == .trashCategory {
                 let title = String(format: "shelf.deleteCategoryAlert.title".localized, "\"\(self.representView.sidebarItem.title)\"")
                 let message = NSLocalizedString("shelf.deleteCategoryAlert.message", comment: "The items in this category will be placed in the Trash.")
@@ -137,10 +140,9 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
                 let title = String(format: "tags.delete.alert.title".localized, "\"\(self.representView.sidebarItem.title)\"")
                 let message = "tags.delete.alert.message".localized
                 self.representView.alertInfo = TrashAlertInfo(title: title,
-                                           message: message,
-                                           type: TrashAlertInfo.TrashType.tags(item: self.representView.sidebarItem))
+                                                              message: message,
+                                                              type: TrashAlertInfo.TrashType.tags(item: self.representView.sidebarItem))
             }
         }
     }
-
 }

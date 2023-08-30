@@ -15,13 +15,17 @@ struct FTShelfTopSectionItem: View {
     
     var body: some View {
         Button {
+            let locationName = shelfViewModel.isInHomeMode ? "Home" : shelfViewModel.collection.displayTitle
             switch type {
             case .quicknote:
                 shelfViewModel.quickCreateNewNotebook()
+                track(EventName.shelf_quicknote_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             case .newNotebook:
                 shelfViewModel.delegate?.showNewBookPopverOnShelf()
+                track(EventName.shelf_newnotebook_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             case .importFile:
                 shelfViewModel.delegate?.didClickImportNotebook()
+                track(EventName.shelf_importfile_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             }
         } label: {
             topSectionView

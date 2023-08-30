@@ -51,6 +51,7 @@ struct FTEditableView: View {
                             .if(!showEditableField) { view in
                                 view.onTapGesture {
                                     showEditableField = true
+                                    track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
                                 }
                             }
                         }

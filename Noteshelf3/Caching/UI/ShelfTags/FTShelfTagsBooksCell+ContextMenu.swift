@@ -12,6 +12,7 @@ import UIKit
 extension FTShelfTagsBooksCell {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        track(EventName.shelf_tag_book_longpress, screenName: ScreenName.shelf_tags)
         let cell = collectionView.cellForItem(at: indexPath)!
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
@@ -20,6 +21,7 @@ extension FTShelfTagsBooksCell {
             let openNewWindowAction = UIAction(title: "sidebar.allTags.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 self.delegate?.openItemInNewWindow()
+                track(EventName.shelf_tag_book_openinnewwindow_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(openNewWindowAction)
 #endif
@@ -27,6 +29,7 @@ extension FTShelfTagsBooksCell {
                 guard let self = self else { return }
                 self.contextMenuSelectedIndexPath = indexPath as IndexPath
                 self.delegate?.editTags()
+                track(EventName.shelf_tag_book_edittags_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(editAction)
 
@@ -34,6 +37,7 @@ extension FTShelfTagsBooksCell {
                 guard let self = self else { return }
                 self.contextMenuSelectedIndexPath = indexPath as IndexPath
                 self.delegate?.removeTags()
+                track(EventName.shelf_tag_book_removetags_tap, screenName: ScreenName.shelf_tags)
             }
             removeTagsAction.attributes = .destructive
             actions.append(removeTagsAction)

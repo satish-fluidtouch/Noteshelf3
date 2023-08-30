@@ -42,6 +42,8 @@ struct FTGroupListView: View {
         }, onAppearActon: {
             print("contextual menu appeared")
             shelfMenuOverlayInfo.isMenuShown = true;
+            // Track event
+            track(EventName.shelf_group_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
         }, onDisappearActon: {
             print("contextual menu disappeared")
             if !isAnyNBActionPopoverShown {

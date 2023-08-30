@@ -11,6 +11,7 @@ import SwiftUI
 struct FTNewNoteTopSectionView: View {
     @ObservedObject var viewModel: FTNewNotePopoverViewModel
     weak var delegate: FTShelfNewNoteDelegate?
+    @ObservedObject var shelfViewModel: FTShelfViewModel
 //    weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
     @Environment(\.dismiss) var dismiss
 
@@ -21,6 +22,7 @@ struct FTNewNoteTopSectionView: View {
                     .gridCellColumns(2)
                     .onTapGesture {
                         self.dismiss()
+                        track(EventName.shelf_addmenu_quicknote_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                             viewModel.delegate?.quickCreateNewNotebook()
                         }
@@ -29,6 +31,7 @@ struct FTNewNoteTopSectionView: View {
             GridRow{
                 getShelfPopOverItemView(.newNotebook)
                     .onTapGesture {
+                        track(EventName.shelf_addmenu_newnotebook_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                         self.dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
                             viewModel.delegate?.showNewNotebookPopover()
@@ -36,6 +39,7 @@ struct FTNewNoteTopSectionView: View {
                     }
                 getShelfPopOverItemView(.importFromFiles)
                     .onTapGesture {
+                        track(EventName.shelf_addmenu_importfile_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                         self.dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
                         delegate?.didClickImportNotebook()
@@ -50,6 +54,6 @@ struct FTNewNoteTopSectionView: View {
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        FTNewNoteTopSectionView(viewModel: FTNewNotePopoverViewModel())
+        FTNewNoteTopSectionView(viewModel: FTNewNotePopoverViewModel(), shelfViewModel: FTShelfViewModel(sidebarItemType: .home))
     }
 }

@@ -32,18 +32,14 @@ struct FTGroupItemView: View {
                 return FTNotebookShape(raidus: 10)
             }, onAppearActon: {
                 shelfMenuOverlayInfo.isMenuShown = true;
+                // Track event
+                track(EventName.shelf_group_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
             }, onDisappearActon: {
                 shelfMenuOverlayInfo.isMenuShown = false;
             },shelfItem: groupItem)
             .frame(width: groupItemWidth-24)
             titleView
         }
-        //.background(Color.red)
-        .if(shelfViewModel.mode == .selection, transform: { view in
-            view.onTapGesture {
-                groupItem.isSelected.toggle()
-            }
-        })
     }
 
     @ViewBuilder private var coverView: some View {

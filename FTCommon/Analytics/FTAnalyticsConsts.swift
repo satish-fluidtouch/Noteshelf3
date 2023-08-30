@@ -1,0 +1,41 @@
+//
+//  FTAnalytics_Extention.swift
+//  Noteshelf3
+//
+//  Created by Siva on 23/08/23.
+//  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
+//
+
+import Foundation
+
+public struct ScreenName {
+}
+
+public struct EventName {
+
+}
+
+// FTParameters Events & Values
+struct EventParameterKey {
+    static let location = "location"
+    static let title = "title"
+    static let count = "count"
+    static let origin = "origin"
+    static let toggle = "toggle"
+    static let source = "source"
+    static let status = "status"
+    static let swipe = "swipe"
+}
+
+struct EventParameterValue {
+    static let unSplash = "Unsplash"
+    static let photoLibrary = "PhotoLibrary"
+    static let remote = "Remote"
+    static let on = "on"
+    static let off = "off"
+    static let success = "success"
+    static let fail = "fail"
+    static let audio = "audio"
+    static let scan = "scan"
+    static let browse = "browse"
+}

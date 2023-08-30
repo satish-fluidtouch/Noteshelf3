@@ -75,16 +75,19 @@ class FTIAPViewController: UIViewController {
     }
 
     @IBAction func purchaseAction(_ sender: Any) {
+        track(EventName.premium_purchase_tap, screenName: ScreenName.iap)
         if let product = viewModel.getProduct(at: 0), !self.viewModel.purchase(product: product) {
             self.showAlert(withMessage: "iap.purchaseNotAllowed".localized)
         }
     }
 
     @IBAction func restoreAction(_ sender: Any) {
+        track(EventName.premium_restorepurchase_tap, screenName: ScreenName.iap)
         viewModel.restorePurchases()
     }
 
     @IBAction func privacyAction(_ sender: Any) {
+        track(EventName.premium_privacy_tap, screenName: ScreenName.iap)
         if let privacyURL = URL(string: "https://www.noteshelf.net/privacy.html") {
             let safariController = SFSafariViewController(url: privacyURL);
             safariController.modalPresentationStyle = .fullScreen
@@ -94,6 +97,7 @@ class FTIAPViewController: UIViewController {
     }
         
     @IBAction func closeAction(_ sender: Any) {
+        track(EventName.premium_close_tap, screenName: ScreenName.iap)
         self.dismiss(animated: true)
     }
     private func setTitleToPurchaseButton(title:String) {

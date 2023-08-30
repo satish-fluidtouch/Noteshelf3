@@ -56,6 +56,8 @@ extension FTShelfViewModel {
                 FTShelfDraggedItemProvider.shared.draggedNotebook = nil
                 self?.resetShelfModeTo(.normal)
             })
+            // Track Event
+            track(EventName.shelf_book_addtogroup, params: [EventParameterKey.location: self.shelfLocation()], screenName: ScreenName.shelf)
         } else {
             let destinationShelfItem = destinationShelfItem
             let sourceShelfItem = dragItem
@@ -69,6 +71,8 @@ extension FTShelfViewModel {
                 self?.addObserversForShelfItems()
                 self?.resetShelfModeTo(.normal)
             })
+            // Track Event
+            track(EventName.shelf_book_creategroup, params: [EventParameterKey.location: self.shelfLocation()], screenName: ScreenName.shelf)
         }
     }
     func openRecentCreatedShelfItem(_ item: FTShelfItemViewModel, animate: Bool = true, isQuickCreatedBook: Bool = false){

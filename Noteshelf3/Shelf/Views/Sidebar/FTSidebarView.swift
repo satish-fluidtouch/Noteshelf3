@@ -142,11 +142,15 @@ struct FTSidebarView: View {
             isExpanded: Binding<Bool>(
                 get: { self.viewModel.getSideBarStatusForSection(menuSection)},
                 set: { isExpanding in
+                    var eventName = ""
                     if isExpanding {
+                        eventName = viewModel.eventNameForSections(section: menuSection, isExpand: true)
                         self.viewModel.updateSideBarSectionStatus( menuSection, status: true)
                     } else {
+                        eventName = viewModel.eventNameForSections(section: menuSection, isExpand: false)
                         self.viewModel.updateSideBarSectionStatus( menuSection, status: false)
                     }
+                    track(eventName, screenName: ScreenName.sidebar)
                 }
             )
         ) {

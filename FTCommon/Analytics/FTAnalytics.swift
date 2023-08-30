@@ -18,7 +18,7 @@ import FirebaseCore
 import FirebaseCrashlytics
 
 
-func track(_ event: String, params: [String: Any]? = nil, screenName: String? = nil,shouldLog: Bool = true) {
+public func track(_ event: String, params: [String: Any]? = nil, screenName: String? = nil,shouldLog: Bool = true) {
     #if !targetEnvironment(macCatalyst)
     FTMetrics.shared.track(event: event, params: params,screeName: screenName)
     #endif
@@ -27,7 +27,7 @@ func track(_ event: String, params: [String: Any]? = nil, screenName: String? = 
     }
 }
 
-func setScreenName(_ screenName: String, screenClass: String?) {
+public func setScreenName(_ screenName: String, screenClass: String?) {
     #if !targetEnvironment(macCatalyst)
     FTMetrics.shared.trackScreen(with: screenName, screenClass: screenClass)
     #endif
