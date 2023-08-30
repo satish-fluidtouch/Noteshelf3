@@ -14,6 +14,9 @@ import UIKit
 extension FTShelfBookmarksViewController {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = true
+        }
         let cell = collectionView.cellForItem(at: indexPath)!
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
@@ -76,6 +79,9 @@ extension FTShelfBookmarksViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = false
+        }
         if let identifier = configuration.identifier as? IndexPath {
             if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfBookmarkPageCell {
                 let parameters = UIPreviewParameters()

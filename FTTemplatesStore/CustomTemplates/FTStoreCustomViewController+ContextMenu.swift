@@ -15,6 +15,7 @@ extension FTStoreCustomViewController {
         if sectionType == .noRecords {
             return nil
         }
+        self.delegate?.customController(self, menuShown: true)
         let identifier = indexPath as NSIndexPath
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
             let delete = UIAction(title: "templatesStore.custom.alert.remove".localized, image: UIImage(systemName: "trash")) { [weak self] _ in
@@ -45,6 +46,7 @@ extension FTStoreCustomViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        self.delegate?.customController(self, menuShown: false)
         guard let identifier = configuration.identifier as? IndexPath,
               let cell = collectionView.cellForItem(at: identifier) as? FTStoreCustomCollectionCell else {
             return nil
