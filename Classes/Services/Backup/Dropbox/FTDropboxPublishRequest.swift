@@ -43,7 +43,7 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
                                               backUpProgressType: .uploadingContent)
             }
             guard let relativePath = self.relativePath, let uploadPath = self.uploadFilePath else {
-                self.publishFailedWithError(NSError(domain: "NSCloudBackup", code: 102, userInfo: nil))
+                self.publishFailedWithError(FTCloudBackupErrorCode.invalidInput.error);
                 return
             }
             let parentPath = URL(fileURLWithPath: relativePath).deletingLastPathComponent().path
@@ -196,7 +196,7 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
             loadMetadateForFile(atPath: relativePath)
         }
         else {
-            completionBlock(NSError(domain: "NSCloudBackup", code: 102, userInfo: nil))
+            completionBlock(FTCloudBackupErrorCode.invalidInput.error)
         }
     }
     

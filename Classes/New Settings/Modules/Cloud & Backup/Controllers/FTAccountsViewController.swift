@@ -243,9 +243,10 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if isAutoBackUpEnabled() && section == 1 {
-            guard let footerView = Bundle.main.loadNibNamed("FTBackupFooterView", owner: nil, options: nil)?.first as? FTBackupFooterView else{
+            guard let footerView = Bundle.main.loadNibNamed("FTBackupFooterView", owner: nil, options: nil)?.first as? FTBackupFooterView else {
                 return nil
             }
+            footerView.setBackupFormat(FTUserDefaults.backupFormat)
             footerView.isHidden = !self.isAutoBackUpOn
             footerView.infoView.backgroundColor = UIColor.appColor(.cellBackgroundColor)
             return footerView
@@ -281,6 +282,9 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 } else {
                     heightRequired += verticalSpace
                 }
+                if FTUserDefaults.backupFormat != .noteshelf {
+                    heightRequired += FTBackupFooterView.warning_View_Height;
+                }
             }
             if self.checkIfIgnoredItemsExists() { // to show more info button
                 heightRequired += 44.0 + verticalSpace // height of more info button 44
@@ -306,7 +310,9 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 cell.backUpOptionImageview.image = self.getCloudBackupIcon()
                 cell.rightSideDetailLabel?.addCharacterSpacing(kernValue: -0.41)
             case CellIdentifiers.backUpFormatOptions.rawValue:
-                text = "Backup Format".localized;
+                if let formatCell = cell as? FTSettingsBackupFormatTableViewCell {
+                    formatCell.delegate = self;
+                }
             case CellIdentifiers.notebooks.rawValue:
                 text = FTAutoBackUpSection.notebooks.localized()
                 self.updateBackUpFraction(cell: cell)
@@ -325,6 +331,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         (cell as? FTSettingsCommonTableViewCell)?.populateCell(image: nil, name: text, showLinkView: false)
         return cell
     }
+    
     private func updateBackUpFraction(cell: FTSettingsBaseTableViewCell) {
         let noteBooksBackedUp = FTCloudBackUpManager.shared.fetchCloudBackUpItemsCount()
         let options = FTFetchShelfItemOptions()
@@ -595,6 +602,18 @@ private class FTTableHeaderView: UIView {
                                , height: 16.0);
             frame.origin.y = previousSize.height - frame.height - bottomOffset;
             self.headerLabel?.frame = frame;
+        }
+    }
+}
+
+extension FTAccountsViewController: FTSettingsBackupFormatTableViewCellDelegate {
+    func tableViewCell(_ cell: FTSettingsBackupFormatTableViewCell,didChangeFormat format: FTCloudBackupFormat) {
+        if let footer = self.tableView?.footerView(forSection: 1) as? FTBackupFooterView {
+            UIView.setAnimationsEnabled(false)
+            self.tableView?.beginUpdates()
+            footer.setBackupFormat(format);
+            self.tableView?.endUpdates()
+            UIView.setAnimationsEnabled(true)
         }
     }
 }

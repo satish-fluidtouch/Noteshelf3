@@ -17,6 +17,7 @@ import Foundation
     case packageNeedsUpgrade
     case invalidInput
     case temporaryByPass
+    case passwordEnabled
 }
 
 @objcMembers class FTBackupIgnoreEntry : NSObject
@@ -47,13 +48,11 @@ import Foundation
             return false;
         });
         
-        if(filteredItems.count > 0) {
-            let item = filteredItems.first;
-            let index = self.ignoreItemsList.index(of: item!);
-            if(index != nil) {
-                self.ignoreItemsList.remove(at: index!);
-                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "FTCloudBackupDidChangeIgnoreList"), object: nil);
-            }
+        if filteredItems.count > 0
+            , let item = filteredItems.first
+            ,let index = self.ignoreItemsList.firstIndex(of: item) {
+            self.ignoreItemsList.remove(at: index);
+            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "FTCloudBackupDidChangeIgnoreList"), object: nil);
         }
     }
     

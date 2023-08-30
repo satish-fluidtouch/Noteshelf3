@@ -44,16 +44,34 @@ import UIKit
 
         let packageURL = self.sourceFileURL;
         if FileManager().fileExists(atPath: self.sourceFileURL.path) {
-            let nbkExporter = self.contentGeneratorFor(self.exportFormat, fileURL: packageURL);
+            if self.exportFormat == kExportFormatPDF,packageURL.isPinEnabledForDocument() {
+                localError = FTCloudBackupErrorCode.passwordEnabled.error;
+                FTCloudBackupPublisher.recordSyncLog(localError?.localizedDescription ?? "")
+                FTLogError("File not backedup as PDF", attributes: localError?.userInfo)
+                completion(localError,nil);
+                return;
+            }
+            guard !self.refObject.hasCrashedPreviouslyWhileUploading() else {
+                localError = FTCloudBackupErrorCode.contentPrepareFailedPresviously.error;
+                FTCloudBackupPublisher.recordSyncLog(localError?.localizedDescription ?? "")
+                FTLogError("File not backedup as PDF", attributes: localError?.userInfo)
+                completion(localError,nil);
+                return;
+            }
+            self.refObject.markAsPreparingContent();
             let shelfItem = FTDocumentItem(fileURL: packageURL);
             shelfItem.isDownloaded = true;
             let itemToImport = FTItemToExport(shelfItem: shelfItem);
-
-            nbkExporter.generateContent(forItem: itemToImport, onCompletion: {(exportItem,error,cancelled) in
+            let nbkExporter = self.contentGeneratorFor(self.exportFormat, fileURL: packageURL);
+            nbkExporter.generateContent(forItem: itemToImport, onCompletion: {[weak self] (exportItem,error,cancelled) in
+                self?.refObject.resetPrepareContent();
                 if nil != error {
-                    localError = NSError(domain: "NSCloudBackUp", code: 1001, userInfo: [
-                        NSLocalizedDescriptionKey: NSLocalizedString("Failedtocreatebackup", comment: "Failed to create backup file. Check remaining space on your device.")
-                    ])
+                    if error?.domain == "FTContentGenerator", error?.code == 1003 {
+                        localError = FTCloudBackupErrorCode.storageFull.error;
+                    }
+                    else {
+                        localError = error;
+                    }
                     FTLogError("Archive Failed", attributes: localError?.userInfo)
                     completion(localError, nil);
                 }
@@ -63,9 +81,7 @@ import UIKit
             });
         }
         else {
-            localError = NSError(domain: "NSCloudBackUp", code: 1002, userInfo: [
-                NSLocalizedDescriptionKey: "Package Not present"
-            ])
+            localError = FTCloudBackupErrorCode.fileNotAvailable.error
             FTCloudBackupPublisher.recordSyncLog("File not found while preparing upload content.")
             FTLogError("File not found while preparing upload content.", attributes: localError?.userInfo)
             completion(localError, nil)
@@ -78,24 +94,37 @@ import UIKit
         ignoreEntry.uuid = refObject.uuid
         ignoreEntry.ignoreType = .none
 
-        if ((error as NSError?)?.domain == NSCocoaErrorDomain) && (error as NSError?)?.code == NSFileReadNoSuchFileError {
-            ignoreEntry.ignoreType = .fileNotAvailable
-            ignoreEntry.hideFromUser = true
-        } else if ((error as NSError?)?.domain == "NSCloudBackUp") && (error as NSError?)?.code == 1002 {
-            ignoreEntry.ignoreType = .fileNotAvailable
-            ignoreEntry.hideFromUser = true
-        } else if ((error as NSError?)?.domain == "NSCloudBackUp") && (error as NSError?)?.code == 1003 {
-            ignoreEntry.ignoreType = .packageNeedsUpgrade
-        }
-        else if ((error as NSError?)?.domain == "NSCloudBackUp") && (error as NSError?)?.code == 102 {
-            ignoreEntry.ignoreType = .invalidInput
-            ignoreEntry.ignoreReason = "\(ignoreEntry.title ?? "") - Path not valid or operaion cancelled"
-            ignoreEntry.hideFromUser = true
+        if let nserror = error as? NSError {
+            if nserror.domain == NSCocoaErrorDomain, nserror.code == NSFileReadNoSuchFileError {
+                ignoreEntry.ignoreType = .fileNotAvailable
+                ignoreEntry.hideFromUser = true
+            } else if nserror.isError(.fileNotAvailable) {
+                ignoreEntry.ignoreType = .fileNotAvailable
+                ignoreEntry.hideFromUser = true
+            } else if nserror.isError(.packageNeedsUpgrade) {
+                ignoreEntry.ignoreType = .packageNeedsUpgrade
+            }
+            else if nserror.isError(.passwordEnabled) {
+                ignoreEntry.ignoreType = .passwordEnabled
+                ignoreEntry.ignoreReason = nserror.localizedDescription;
+            }
+            else if nserror.isError(.contentPrepareFailedPresviously) {
+                ignoreEntry.ignoreType = .temporaryByPass;
+                ignoreEntry.ignoreReason = nserror.localizedDescription;
+                ignoreEntry.hideFromUser = true;
+            }
+            else if nserror.isError(.invalidInput) {
+                ignoreEntry.ignoreType = .invalidInput
+                ignoreEntry.ignoreReason = "\(ignoreEntry.title ?? "") - Path not valid or operaion cancelled"
+                ignoreEntry.hideFromUser = true
+            }
         }
         return ignoreEntry
     }
-    
-    private func contentGeneratorFor(_ backUpFormatType: RKExportFormat,fileURL : URL) -> FTContentGeneratorProtocol {
+}
+
+private extension FTCloudFilePublishRequest {
+    func contentGeneratorFor(_ backUpFormatType: RKExportFormat,fileURL : URL) -> FTContentGeneratorProtocol {
         if backUpFormatType == kExportFormatPDF {
             let target = FTExportTarget();
             target.properties.exportFormat = backUpFormatType;
@@ -106,5 +135,52 @@ import UIKit
         else {
             return FTNBKContentGenerator();
         }
+    }
+}
+
+fileprivate extension String {
+    static let counterKey = "counter";
+    static let lastTime = "lastTime";
+}
+
+fileprivate extension FTCloudBackup {
+    var contentPrepareKey: String {
+        let key = "cloud_content_prepare_\(self.uuid)";
+        return key;
+    }
+    
+    private var prepareContentInfo: [String:NSNumber] {
+        let info = UserDefaults.standard.object(forKey: contentPrepareKey) as? [String:NSNumber] ?? [String:NSNumber]();
+        return info;
+    }
+    
+    func markAsPreparingContent() {
+        var info = prepareContentInfo;
+        info[String.counterKey] = NSNumber(value:(info[String.counterKey]?.intValue ?? 0) + 1);
+        info[String.lastTime] = NSNumber(value: Date.timeIntervalSinceReferenceDate);
+        UserDefaults.standard.setValue(info, forKey: contentPrepareKey)
+    }
+        
+    private func resetIfNeeded() -> Bool {
+        let info = prepareContentInfo;
+        let lastTime = info[String.lastTime]?.doubleValue ?? 0;
+        let currentTime = Date.timeIntervalSinceReferenceDate;
+        if(currentTime - lastTime >= 24*60*60) {
+            self.resetPrepareContent();
+        }
+    }
+    
+    func resetPrepareContent() {
+        UserDefaults.standard.removeObject(forKey: contentPrepareKey);
+    }
+    
+    func hasCrashedPreviouslyWhileUploading() -> Bool {
+        self.resetIfNeeded();
+        let info = self.prepareContentInfo;
+        let counter = info[String.counterKey]?.intValue ?? 0;
+        if counter >= 2 {
+            return true;
+        }
+        return false;
     }
 }

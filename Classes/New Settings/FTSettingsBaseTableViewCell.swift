@@ -67,8 +67,13 @@ class FTSettingsBaseTableViewCell: UITableViewCell {
     }
 }
 
-class FTSettingsBckupFormatTableViewCell: FTSettingsBaseTableViewCell {
+protocol FTSettingsBackupFormatTableViewCellDelegate: AnyObject {
+    func tableViewCell(_ cell: FTSettingsBackupFormatTableViewCell,didChangeFormat format: FTCloudBackupFormat);
+}
+
+class FTSettingsBackupFormatTableViewCell: FTSettingsBaseTableViewCell {
     @IBOutlet weak var formatOptions: UIButton?;
+    weak var delegate: FTSettingsBackupFormatTableViewCellDelegate?;
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -80,8 +85,13 @@ class FTSettingsBckupFormatTableViewCell: FTSettingsBaseTableViewCell {
             let currentItem = FTUserDefaults.backupFormat;
             FTCloudBackupFormat.allCases.forEach { eachItem  in
                 let action = UIAction(title: eachItem.displayTitle,state: (eachItem == currentItem) ? .on : .off) { action in
-                    FTUserDefaults.backupFormat = eachItem;
-                    self?.formatOptions?.setTitle(eachItem.displayTitle, for: .normal);
+                    if FTUserDefaults.backupFormat != eachItem {
+                        FTUserDefaults.backupFormat = eachItem;
+                        self?.formatOptions?.setTitle(eachItem.displayTitle, for: .normal);
+                        if let weakSelf = self {
+                            self?.delegate?.tableViewCell(weakSelf, didChangeFormat: eachItem);
+                        }
+                    }
                 }
                 menuItems.append(action);
             }

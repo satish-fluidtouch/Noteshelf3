@@ -410,15 +410,15 @@
                                             <outlet property="rightSideDetailLabel" destination="TjD-oX-erK" id="kTN-QD-qYA"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellBackUpFormatOptions" rowHeight="54" id="JUZ-eP-asc" customClass="FTSettingsBckupFormatTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellBackUpFormatOptions" rowHeight="54" id="JUZ-eP-asc" customClass="FTSettingsBackupFormatTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="16" y="433.5" width="772" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JUZ-eP-asc" id="Bag-e2-XBK">
                                             <rect key="frame" x="0.0" y="0.0" width="772" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="googleDrive" translatesAutoresizingMaskIntoConstraints="NO" id="6jQ-ag-Tk6">
-                                                    <rect key="frame" x="16" y="11.5" width="30" height="30"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backup_format_icon" translatesAutoresizingMaskIntoConstraints="NO" id="6jQ-ag-Tk6">
+                                                    <rect key="frame" x="16" y="12" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="4tv-Pk-eM4"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="bm1-F7-dnh"/>
@@ -433,21 +433,32 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="fontStyle">
                                                             <integer key="value" value="1"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="BackUpTo"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="BackupFormat"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shc-Ar-U4P">
-                                                    <rect key="frame" x="681" y="9.5" width="75" height="35"/>
+                                                    <rect key="frame" x="669" y="9.5" width="75" height="35"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevron" translatesAutoresizingMaskIntoConstraints="NO" id="2f4-Px-5qG">
+                                                    <rect key="frame" x="736" y="16" width="20" height="22"/>
+                                                    <color key="tintColor" name="imageTintColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="E7d-N9-dhA"/>
+                                                        <constraint firstAttribute="height" constant="22" id="vy0-da-2mH"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstItem="shc-Ar-U4P" firstAttribute="trailing" secondItem="2f4-Px-5qG" secondAttribute="leading" constant="8" id="3mq-RA-GLq"/>
                                                 <constraint firstItem="lyY-Cc-Ucn" firstAttribute="centerY" secondItem="Bag-e2-XBK" secondAttribute="centerY" id="7Ry-0I-eaj"/>
-                                                <constraint firstAttribute="trailing" secondItem="shc-Ar-U4P" secondAttribute="trailing" constant="16" id="BQo-Qv-8XU"/>
+                                                <constraint firstAttribute="trailing" secondItem="2f4-Px-5qG" secondAttribute="trailing" constant="16" id="7WX-5g-Kyz"/>
+                                                <constraint firstItem="2f4-Px-5qG" firstAttribute="centerY" secondItem="Bag-e2-XBK" secondAttribute="centerY" id="IU5-4l-0p5"/>
                                                 <constraint firstItem="shc-Ar-U4P" firstAttribute="centerY" secondItem="Bag-e2-XBK" secondAttribute="centerY" id="PIh-dY-Lvk"/>
                                                 <constraint firstItem="lyY-Cc-Ucn" firstAttribute="leading" secondItem="6jQ-ag-Tk6" secondAttribute="trailing" constant="16" id="hS6-4r-saQ"/>
+                                                <constraint firstItem="6jQ-ag-Tk6" firstAttribute="centerY" secondItem="Bag-e2-XBK" secondAttribute="centerY" id="jUN-Db-wjh"/>
                                                 <constraint firstItem="6jQ-ag-Tk6" firstAttribute="leading" secondItem="Bag-e2-XBK" secondAttribute="leading" constant="16" id="kNC-TS-yK6"/>
                                                 <constraint firstItem="shc-Ar-U4P" firstAttribute="width" relation="lessThanOrEqual" secondItem="Bag-e2-XBK" secondAttribute="width" multiplier="0.5" id="pjv-ec-f4N"/>
                                             </constraints>
@@ -866,11 +877,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OVf-z0-wR5"/>
+        <segue reference="cjO-3t-Rat"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Notebooks" width="30" height="30"/>
         <image name="autoBackup" width="30" height="30"/>
+        <image name="backup_format_icon" width="30" height="30"/>
         <image name="backupwifi" width="30" height="30"/>
         <image name="currentIndicator" width="6" height="6"/>
         <image name="en-error-red" width="22" height="22"/>

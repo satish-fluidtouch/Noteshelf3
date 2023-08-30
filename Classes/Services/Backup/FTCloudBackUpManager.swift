@@ -226,11 +226,11 @@ enum FTCloudBackupFormat: Int,CaseIterable {
     var displayTitle: String {
         switch self {
         case .noteshelf:
-            return ".noteshelf";
+            return "Noteshelf";
         case .pdf:
-            return ".pdf";
+            return "PDF";
         case .both:
-            return ".noteshelf and .pdf";
+            return "Noteshelf and PDF";
         }
     }
     

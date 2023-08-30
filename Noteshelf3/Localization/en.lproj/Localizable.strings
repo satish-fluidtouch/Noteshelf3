@@ -1487,6 +1487,12 @@
 "welcome.zoombox" = "ZOOM BOX";
 "widgets" = "Widgets";
 "work" = "Work";
+"cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
+"cloud.backup.error.fileNotFound" = "File not found";
+"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
+"cloud.backup.error.filePasswordProtected" = "Book is password protected. Could not be backuped";
+"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
+"cloud.backup.pdfFormatWarning" = "Note : Password protected PDFs cannot be backed up.";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
