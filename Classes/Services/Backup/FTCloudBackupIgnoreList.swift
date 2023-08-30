@@ -20,6 +20,9 @@ import Foundation
     case passwordEnabled
 }
 
+extension FTCloudBackupIgnoreList {
+    static let changeList = Notification.Name(rawValue: "FTCloudBackupDidChangeIgnoreList");
+}
 @objcMembers class FTBackupIgnoreEntry : NSObject
 {
     var title : String?;
@@ -36,7 +39,7 @@ import Foundation
     func addToIgnoreList(_ ignoreEntry : FTBackupIgnoreEntry)
     {
         self.ignoreItemsList.append(ignoreEntry);
-        NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "FTCloudBackupDidChangeIgnoreList"), object: nil);
+        NotificationCenter.default.post(name: FTCloudBackupIgnoreList.changeList, object: nil);
     }
     
     func remove(fromIgnoreList shelfItemUUID : String)
@@ -52,7 +55,7 @@ import Foundation
             , let item = filteredItems.first
             ,let index = self.ignoreItemsList.firstIndex(of: item) {
             self.ignoreItemsList.remove(at: index);
-            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "FTCloudBackupDidChangeIgnoreList"), object: nil);
+            NotificationCenter.default.post(name: FTCloudBackupIgnoreList.changeList, object: nil);
         }
     }
     
@@ -63,7 +66,7 @@ import Foundation
     func clearIgnoreList()
     {
         self.ignoreItemsList.removeAll();
-        NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "FTCloudBackupDidChangeIgnoreList"), object: nil);
+        NotificationCenter.default.post(name: FTCloudBackupIgnoreList.changeList, object: nil);
     }
     
     func ignoreListIds() -> [String]

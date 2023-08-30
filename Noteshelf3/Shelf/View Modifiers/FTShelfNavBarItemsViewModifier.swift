@@ -33,7 +33,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                        if shelfViewModel.hasEvernotePublishError() {
+                        if FTENPublishManager.shared.errorUIHelper.hasError ?? false {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {
@@ -44,7 +44,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                         }
 
-                        if shelfViewModel.hasDropboxPublishError() {
+                        if FTCloudBackUpManager.shared.activeCloudBackUpManager?.errorUIHelper.hasError ?? false {
                             Button {
                                 self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
                             } label: {
