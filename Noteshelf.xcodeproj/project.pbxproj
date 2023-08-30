@@ -650,8 +650,6 @@
 		BA169E2C2984076C00765F5C /* FTShelfContentAudioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C07A8C29839213007B8D2C /* FTShelfContentAudioViewController.swift */; };
 		BA1963532A9609FF000C47FA /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */; };
 		BA1963552A96148A000C47FA /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */; };
-		BA1963622A963C5B000C47FA /* FTDocumentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */; };
-		BA1963632A963C5B000C47FA /* FTDocumentFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA19636A2A977214000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */; };
 		BA19636B2A977220000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */; };
 		BA2D8EB52859F6F7001BB495 /* FTShelfSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D8EB42859F6F7001BB495 /* FTShelfSplitViewController.swift */; };
@@ -735,6 +733,8 @@
 		BA8BA66029782EA200946CFE /* FTAdvanced.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8080E6921F194F900F73164 /* FTAdvanced.storyboard */; };
 		BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA66C29794C6400946CFE /* GoogleSignIn */; };
 		BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA67229795F4A00946CFE /* GoogleAPIClientForREST_Drive */; };
+		BA8E56772A9F456100DB6E05 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
+		BA8E56782A9F456100DB6E05 /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA909A34298BE75B00260538 /* libiink.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA111BE529880094001E854F /* libiink.xcframework */; };
 		BA909A36298BE75D00260538 /* libMyScriptEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD1F54F298BC17100B16B2B /* libMyScriptEngine.xcframework */; };
 		BA996116291BCCCC0020B7B0 /* FTShelfContentAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA996115291BCCCC0020B7B0 /* FTShelfContentAudioView.swift */; };
@@ -2038,27 +2038,6 @@
 			remoteGlobalIDString = BAA84E1428730F5800DE801B;
 			remoteInfo = FTStyles;
 		};
-		BA19635C2A963C2E000C47FA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8B0CA0511A1DF53400375014;
-			remoteInfo = FTDocumentFramework;
-		};
-		BA19635E2A963C2E000C47FA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8B0CA05C1A1DF53400375014;
-			remoteInfo = FTDocumentFrameworkTests;
-		};
-		BA1963602A963C43000C47FA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B0CA0501A1DF53400375014;
-			remoteInfo = FTDocumentFramework;
-		};
 		BAA84E1B28730F5800DE801B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2155,14 +2134,14 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 				BAB258B5295B1B3B0072AEBB /* Noteshelf Action.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		BAF3959A2859ADF10067CA9F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2172,9 +2151,9 @@
 			files = (
 				BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */,
 				BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */,
+				BA8E56782A9F456100DB6E05 /* FTDocumentFramework.xcframework in CopyFiles */,
 				BAF0DD742A6FE676006D293B /* FTTemplatesStore.framework in CopyFiles */,
 				BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */,
-				BA1963632A963C5B000C47FA /* FTDocumentFramework.framework in CopyFiles */,
 				BAA84E4D2873105500DE801B /* FTCommon.framework in CopyFiles */,
 				BAA84E1E28730F5800DE801B /* FTStyles.framework in CopyFiles */,
 			);
@@ -3478,7 +3457,6 @@
 		BA11637E227ACAD500CCC153 /* FTDocumentView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTDocumentView.storyboard; sourceTree = "<group>"; };
 		BA1265452302CDB500AD4647 /* FTPageProtocol_Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageProtocol_Additions.swift; sourceTree = "<group>"; };
 		BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNSiCloudManager.swift; sourceTree = "<group>"; };
-		BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FTDocumentFramework.xcodeproj; path = ../../../FTDocumentFramework/FTDocumentFramework.xcodeproj; sourceTree = "<group>"; };
 		BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfCollectioniCloudRoot.swift; sourceTree = "<group>"; };
 		BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeveloperOptionsViewController.swift; sourceTree = "<group>"; };
 		BA2D8EB42859F6F7001BB495 /* FTShelfSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController.swift; sourceTree = "<group>"; };
@@ -4295,6 +4273,7 @@
 				BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */,
 				BA3F7FB8299E2F51003964C6 /* libMyScriptMath.xcframework in Frameworks */,
 				BA3F7FB7299E2F51003964C6 /* libMyScriptAnalyzer.xcframework in Frameworks */,
+				BA8E56772A9F456100DB6E05 /* FTDocumentFramework.xcframework in Frameworks */,
 				BA3F7FB6299E2F51003964C6 /* libMyScript2D.xcframework in Frameworks */,
 				BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */,
 				BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */,
@@ -4305,7 +4284,6 @@
 				BAA84E4C2873105500DE801B /* FTCommon.framework in Frameworks */,
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
 				70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */,
-				BA1963622A963C5B000C47FA /* FTDocumentFramework.framework in Frameworks */,
 				BA3F7FB9299E2F51003964C6 /* libMyScriptShape.xcframework in Frameworks */,
 				BA3F7FB2299E2F51003964C6 /* libMyScriptPrediction.xcframework in Frameworks */,
 				DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */,
@@ -8405,7 +8383,6 @@
 		B86B7B2F24B6DB9100B57783 /* FTDocumentFramework */ = {
 			isa = PBXGroup;
 			children = (
-				BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */,
 				BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */,
 			);
 			path = FTDocumentFramework;
@@ -8481,15 +8458,6 @@
 				BA11637E227ACAD500CCC153 /* FTDocumentView.storyboard */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		BA1963572A963C2E000C47FA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */,
-				BA19635F2A963C2E000C47FA /* FTDocumentFrameworkTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */ = {
@@ -10924,7 +10892,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				BA1963612A963C43000C47FA /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
@@ -11036,12 +11003,6 @@
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = BA1963572A963C2E000C47FA /* Products */;
-					ProjectRef = BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
@@ -11054,23 +11015,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = FTDocumentFramework.framework;
-			remoteRef = BA19635C2A963C2E000C47FA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		BA19635F2A963C2E000C47FA /* FTDocumentFrameworkTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = FTDocumentFrameworkTests.xctest;
-			remoteRef = BA19635E2A963C2E000C47FA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BAA84E1328730F5800DE801B /* Resources */ = {
@@ -13301,11 +13245,6 @@
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
 			targetProxy = 5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */;
-		};
-		BA1963612A963C43000C47FA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FTDocumentFramework;
-			targetProxy = BA1963602A963C43000C47FA /* PBXContainerItemProxy */;
 		};
 		BAA84E1C28730F5800DE801B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
