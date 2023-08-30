@@ -128,7 +128,7 @@ extension FTShelfBaseView{
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
             return geometrySize > 1023 ? 218 : (geometrySize > 530 && geometrySize < 1023 ? 340 : 495)
         } else {
-            return geometrySize > 650 ? 68 : 96
+            return geometrySize > 680 ? 68 : 96
         }
     }
 }
