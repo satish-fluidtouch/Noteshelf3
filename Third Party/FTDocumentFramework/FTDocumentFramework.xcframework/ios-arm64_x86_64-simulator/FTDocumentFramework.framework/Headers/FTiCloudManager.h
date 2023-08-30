@@ -19,8 +19,8 @@ typedef NS_ENUM(NSInteger, FTiCloudActionType)
 
 @interface FTiCloudManager : NSObject
 @property (nonatomic,assign) FTiCloudActionType messageTypeToShow;
-@property (nonnull, strong) NSUserDefaults *defaultUserDefaults; //Set from outside to have customization. By default [NSUserDefaults standardUserDefaults]
-+ (instancetype _Nonnull)sharedManager;
+@property (strong) NSUserDefaults *defaultUserDefaults; //Set from outside to have customization. By default [NSUserDefaults standardUserDefaults]
++ (nonnull instancetype)sharedManager;
 
 - (nullable NSURL*)iCloudRootURL;
 
