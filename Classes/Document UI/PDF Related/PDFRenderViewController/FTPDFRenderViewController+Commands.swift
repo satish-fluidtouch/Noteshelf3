@@ -157,6 +157,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
             page.bookmarkColor = "C69C3C"
         }
         (page as? FTNoteshelfPage)?.isDirty = true
+        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
     }
 
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?) {
