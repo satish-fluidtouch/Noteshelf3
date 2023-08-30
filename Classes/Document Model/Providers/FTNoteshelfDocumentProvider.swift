@@ -949,31 +949,37 @@ extension FTNoteshelfDocumentProvider {
                 // TODO: Take control if required
                 let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
                 destinationURL = parentURL.appendingPathComponent(uniqueName);
-            } else {
-                if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
-                }
             }
 
             if providerMode == .cloud {
+                if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                }
                 try FileManager().setUbiquitous(true,
                                                 itemAt: url,
                                                 destinationURL: destinationURL);
             } else {
                 // TODO: Take control if required
                 // Create the parent directory if required
-                if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                guard let collectionTitle = destinationURL.path.collectionName()?.deletingPathExtension else {
+                    throw FTMigrationError.moveToNS3Error
                 }
-                try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
-                let collection = (self.localShelfCollectionRoot?.ns3Collection as? FTShelfCacheProtocol)?.addItemToCache(destinationURL)
-                if let collectionTitle = collection?.title {
-                    let collection = self.localShelfCollectionRoot?.ns3Collection.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal
-                    _ = collection?.addItemsToCache([destinationURL])
+                let localProvider = self.localShelfCollectionRoot?.ns3Collection
+
+                if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
+                    if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                        try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                    }
+                    try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                    _ = collection.addItemsToCache([destinationURL])
                 } else {
-//                    let document = FTDocumentItem(fileURL: destinationURL)
-//                    document.isDownloaded = true
-//                    return destinationURL
+                    localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
+                        if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                            try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                        }
+                        try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                        _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
+                    })
                 }
             }
 

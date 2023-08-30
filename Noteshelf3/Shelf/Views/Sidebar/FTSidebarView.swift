@@ -44,9 +44,8 @@ struct FTSidebarView: View {
     @State private var reloadView: Bool = false
 
     weak var delegate: FTSidebarViewDelegate?
-    private let collectionAddedNotification = NotificationCenter.default.publisher(for: NSNotification.Name.collectionAdded)
-    private let collectionRemovedNotification = NotificationCenter.default.publisher(for: NSNotification.Name.collectionRemoved)
-    private let collectionUpdatedNotification = NotificationCenter.default.publisher(for: NSNotification.Name.collectionUpdated)
+    private let collectionAddedUpdatedNotification = NotificationCenter.default.publisher(for: FTCategoryItemsDidUpdateNotification)
+
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
@@ -91,14 +90,7 @@ struct FTSidebarView: View {
                 .onFirstAppear(perform: {
                     self.viewModel.configureUIOnViewLoad()
                 })
-                .onReceive(collectionAddedNotification, perform: { notification in
-                    viewModel.updateUserCreatedCategories()
-                })
-                .onReceive(collectionRemovedNotification, perform: { notification in
-                    viewModel.updateCategoryBookMarksOnCategoryDeletion()
-                    viewModel.updateUserCreatedCategories()
-                })
-                .onReceive(collectionUpdatedNotification, perform: { notification in
+                .onReceive(collectionAddedUpdatedNotification, perform: { notification in
                     viewModel.updateUserCreatedCategories()
                 })
                 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: "refreshSideMenu")), perform: { notification in
