@@ -86,24 +86,6 @@ class FTNotebookOptionTag: FTNotebookMoreOption {
     }
 }
 
-class FTNotebookOptionSaveToLibrary: FTNotebookMoreOption {
-    var type: FTNotebookMoreOptionType {
-        return .basic
-    }
-    
-    var imageIcon: FTIcon {
-        return .saveToPhoto
-    }
-    
-    var identifier: String {
-           return "saveToLibrary"
-       }
-    
-    var localizedTitle: String {
-        return NSLocalizedString("Save to Photo Library", comment: "Save to libray")
-    }
-}
-
 class FTNotebookOptionSaveAsTemplate: FTNotebookMoreOption {
     var type: FTNotebookMoreOptionType {
         return .basic

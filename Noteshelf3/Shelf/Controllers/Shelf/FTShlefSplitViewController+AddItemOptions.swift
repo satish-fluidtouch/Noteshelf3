@@ -266,11 +266,12 @@ extension FTShelfSplitViewController {
     }
     
     func startImporting(_ filePath : String,
-                                    title : String,
-                                    isImageSource:Bool,
-                                    collection:FTShelfItemCollection?,
-                                    groupItem:FTGroupItemProtocol?,
-                                    onCompletion : ((FTShelfItemProtocol?,Error?) -> Void)?) -> Progress
+                        title : String,
+                        isImageSource:Bool,
+                        isTemplate: Bool = false,
+                        collection:FTShelfItemCollection?,
+                        groupItem:FTGroupItemProtocol?,
+                        onCompletion : ((FTShelfItemProtocol?,Error?) -> Void)?) -> Progress
     {
         let progress = Progress();
         progress.totalUnitCount = 1;
@@ -286,6 +287,7 @@ extension FTShelfSplitViewController {
         if let cont = self.rootViewController?.presentedViewController, !cont.isBeingDismissed {
             controller = cont;
         }*/
+        info.isTemplate = isTemplate
         info.rootViewController = self
         info.inputFileURL = URL.init(fileURLWithPath: filePath);
         info.overlayStyle = .clearWhite
