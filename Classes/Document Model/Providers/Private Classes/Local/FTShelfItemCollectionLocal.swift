@@ -95,7 +95,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
             
             self.tempCompletionBlock = completionBlock;
             self.query = FTLocalQueryGather(rootURL: self.URL,
-                                            extensionsToListen: [FTFileExtension.ns3, FTFileExtension.ns2, groupExtension],
+                                            extensionsToListen: [FTFileExtension.ns3, FTFileExtension.ns2, FTFileExtension.group],
                                             skipSubFolder : false,
                                             delegate: self);
             self.query?.startQuery();
@@ -161,7 +161,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         func moveItem()
         {
             if let item = itemsToMove.first {
-                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == groupExtension, toCollection.isTrash {
+                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
                     self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
                         movedItems.append(contentsOf: moved)
                         itemsToMove.removeFirst();
@@ -563,7 +563,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         for eachItem in metadataItems {
             let fileURL = eachItem;
             //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
-            if(fileURL.pathExtension == sortIndexExtension) {
+            if(fileURL.pathExtension == FTFileExtension.sortIndex) {
                 self.indexPlistContent?.handleSortIndexFileUpdates(nil)
             }
             else {
@@ -767,7 +767,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     fileprivate func isGroup(_ url:Foundation.URL) -> Bool
     {
         let fileItemURL = url.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == groupExtension)
+        if(fileItemURL.pathExtension == FTFileExtension.group)
         {
             return true;
         }
@@ -821,9 +821,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
 
     func isNS2Collection() -> Bool {
         var belongs: Bool = false
-        if let ns2ProdLocalURL = userProdFolderURL(), self.URL.path.hasPrefix(ns2ProdLocalURL.urlByDeleteingPrivate().path) {
-            belongs =  true;
-        }
+        //TODO: Check Items for NS2 or NS3
         return belongs
     }
 }

@@ -174,7 +174,7 @@ private extension FTSidebarViewModel {
     }
     func isGroup(_ fileURL: Foundation.URL) -> Bool {
         let fileItemURL = fileURL.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == groupExtension) {
+        if(fileItemURL.pathExtension == FTFileExtension.group) {
             return true;
         }
         return false;

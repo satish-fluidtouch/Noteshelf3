@@ -81,13 +81,3 @@ extension URL {
         return false;
     }
 }
-
-extension NSURL
-{
-    static func noteshelfDocumentsDirectory() -> URL
-    {
-        let docURL = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID());
-        let noteURL = docURL!.appendingPathComponent("Noteshelf.nsdata", isDirectory: true);
-        return noteURL;
-    }
-}

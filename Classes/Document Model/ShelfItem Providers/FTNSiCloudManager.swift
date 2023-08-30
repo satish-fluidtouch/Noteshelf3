@@ -9,21 +9,12 @@
 import UIKit
 import FTDocumentFramework
 
-class FTNSiCloudManager {
-    static let shared = FTNSiCloudManager()
+class FTNSiCloudManager: FTiCloudManager {
     private(set) var nsProductionURL: URL?
-    private init() {}
+    private override init() {}
 
-    //Objective-C automatically sgeesting the async version of override like below, we may need to change build settings to avoid this.
-    // for now, I'm avaoiding override and created a similar method like below
-    /*
-    override func updateiCloudStatus(with containerID: String?) async -> Bool {
-        let available = await super.updateiCloudStatus(with: containerID)
-        return available
-    }
-     */
-    func configureiCloudStatus(completionBlock: @escaping ((Bool) -> Void)) {
-        FTiCloudManager.shared().updateiCloudStatus(iCloudContainerID.ns3) { available in
+    override func updateiCloudStatus(_ containerID: String!, withCompletionHandler completionBlock: ((Bool) -> Void)!) {
+        super.updateiCloudStatus(containerID, withCompletionHandler: { available in
 #if !NOTESHELF_ACTION
             if FTDocumentMigration.supportsMigration() {
                 DispatchQueue.global().async {
@@ -34,17 +25,17 @@ class FTNSiCloudManager {
                 }
             }
             else {
-                completionBlock(available && FTiCloudManager.shared().iCloudOn());
+                completionBlock(available && self.iCloudOn());
             }
 #else
             completionBlock(available);
 #endif
-        }
+        })
     }
 
     var cloudURLSToListen: [URL] {
         var urlsToListen = [URL]()
-        if FTiCloudManager.shared().iCloudOn(), let cloudURL = FTiCloudManager.shared().iCloudRootURL() {
+        if self.iCloudOn(), let cloudURL = self.iCloudRootURL() {
             urlsToListen.append(cloudURL);
         }
         if let nsProductionURL {
@@ -54,7 +45,7 @@ class FTNSiCloudManager {
     }
 }
 
-private extension FTNSiCloudManager {
+extension FTNSiCloudManager {
     struct iCloudContainerID {
         static let ns2: String = "iCloud.com.fluidtouch.noteshelf"
 

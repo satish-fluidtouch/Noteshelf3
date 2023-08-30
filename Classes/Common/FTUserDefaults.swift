@@ -9,10 +9,6 @@
 import Foundation
 import FTCommon
 
-let shelfExtension = "shelf";
-let groupExtension = "group";
-let sortIndexExtension = "nsindex"
-
 let NotebookPathKey = "notebookPath"
 let LastSelectedCollectionKey = "LAST_SELECTED_COLLECTION"
 let LastOpenedDocumentKey = "LAST_OPENED_DOCUMENT"

@@ -68,7 +68,7 @@ extension NSObject {
         if let collectionName = docPath.collectionName() {
             userInfo[LastSelectedCollectionKey] = collectionName;
         }
-        if docPath.deletingLastPathComponent.pathExtension == groupExtension {
+        if docPath.deletingLastPathComponent.pathExtension == FTFileExtension.group {
             userInfo[LastOpenedGroupKey] = docPath.deletingLastPathComponent
         }
         if let _docPin = docPin {

@@ -29,7 +29,8 @@ protocol FTShelfCollection: NSObjectProtocol {
                      title: String,
                      onCompletion : @escaping ((NSError?, FTShelfItemCollection?) -> Void));
 
-    func ns2Shelfs(_ onCompletion : @escaping (([FTShelfItemCollection]) -> Void))
+    // TODO: (AK) Think about a refactor
+    func belongsToNS2() -> Bool
 }
 
 extension FTShelfCollection {

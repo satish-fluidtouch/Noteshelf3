@@ -131,7 +131,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             });
         } else {
             self.navigationController?.dismiss(animated: true, completion: {
-                FTiCloudManager.shared().setiCloud(on: !wasiCloudOn);
+                FTNSiCloudManager.shared().setiCloud(on: !wasiCloudOn);
             });
         }
     }

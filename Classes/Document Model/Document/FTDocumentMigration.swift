@@ -54,8 +54,16 @@ final class FTDocumentMigration {
         controller.present(alert, animated: true)
     }
 
+    static func showNS3MigrationFailureAlert(on controller: UIViewController) {
+        let alert = UIAlertController(title: "migration.failure.alert.title".localized, message: "migration.failure.alert.message".localized, preferredStyle: UIAlertController.Style.alert)
+
+        let action = UIAlertAction(title: "migration.alert.action.button".localized, style: UIAlertAction.Style.cancel)
+        alert.addAction(action)
+        controller.present(alert, animated: true)
+    }
+
     static func performNS2toNs3Migration(shelfItem: FTShelfItemProtocol,
-                                         onCompletion: ((_ documentItem: FTDocumentItemProtocol?, _ error: Error?) -> Void)?) {
+                                         onCompletion: ((_ url: URL?, _ error: Error?) -> Void)?) {
         do {
             let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory()).appending(path: "NS3Migration")
             if(!FileManager().fileExists(atPath: temporaryDirectory.path)) {
@@ -74,10 +82,10 @@ final class FTDocumentMigration {
             FTDocumentFactory.prepareForImportingAtURL(documentTemporaryLocation) { error, document in
                 if let fileURL = document?.URL {
                     do {
-                        _ = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: shelfItem.URL.relativePathWRTCollection())
+                        let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: shelfItem.URL.relativePathWRTCollection())
 
                         // TODO: Pass the document
-                        onCompletion?(nil, nil)
+                        onCompletion?(migratedURL, nil)
                     } catch {
                         onCompletion?(nil, FTMigrationError.unableToCreateDocument)
                     }
@@ -113,11 +121,15 @@ extension FTDocumentMigration {
     }
 
     static func isNS2AppInstalled() -> Bool {
+        #if DEBUG
+        return true
+        #else
         guard let ns2URL = URL(string: ns2URLScheme) else {
             return false
         }
         let canOpen = UIApplication.shared.canOpenURL(ns2URL)
         return canOpen
+        #endif
     }
 
     static func isNS2iCloudTurnedOn() -> Bool {

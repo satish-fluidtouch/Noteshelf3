@@ -58,7 +58,8 @@ class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSear
 // MARK: - FTShelfItemCollection -
 extension FTShelfItemCollectionICloud: FTShelfItemCollection {
     func isNS2Collection() -> Bool {
-        let belongs = self.parent?.belongsToNS2DocumentsFolder(self.URL)
+        //TODO: (AK) Think about a refactor
+        let belongs = self.parent?.belongsToNS2()
         return belongs ?? false
     }
 
@@ -140,7 +141,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         func moveItem()
         {
             if let item = itemsToMove.first {
-                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == groupExtension, toCollection.isTrash {
+                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
                     self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
                         movedItems.append(contentsOf: moved)
                         itemsToMove.removeFirst();
@@ -845,7 +846,7 @@ extension FTShelfItemCollectionICloud {
 
     fileprivate func isGroup(_ fileURL: Foundation.URL) -> Bool {
         let fileItemURL = fileURL.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == groupExtension) {
+        if(fileItemURL.pathExtension == FTFileExtension.group) {
             return true;
         }
         return false;
@@ -857,7 +858,7 @@ extension FTShelfItemCollectionICloud {
         let collectionName = self.URL.lastPathComponent;
 
         var collectionURL = fileURL;
-        while((collectionURL.pathExtension != shelfExtension) && !belongs) {
+        while((collectionURL.pathExtension != FTFileExtension.shelf) && !belongs) {
             collectionURL = collectionURL.deletingLastPathComponent();
             if(collectionURL.lastPathComponent == collectionName) {
                 belongs = true;

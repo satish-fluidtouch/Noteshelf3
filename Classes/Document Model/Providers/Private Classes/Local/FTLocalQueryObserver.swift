@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FTCommon
 
 protocol FTLocalQueryGatherDelegate: AnyObject {
     func ftLocalQueryGather(_ query : FTLocalQueryGather,didFinishGathering results:[URL]?);
@@ -17,19 +18,16 @@ class FTLocalQueryGather {
     fileprivate var extToListen : [String] = [String]()
     fileprivate var skipSubFolder = true;
     
-    fileprivate weak var delegate : FTLocalQueryGatherDelegate!;
-    fileprivate var ns2ProdLocalURL: URL?
+    fileprivate weak var delegate : FTLocalQueryGatherDelegate?;
 
     init(rootURL: URL,
          extensionsToListen exts: [String],
          skipSubFolder : Bool,
-         delegate: FTLocalQueryGatherDelegate,
-         ns2ProdLocalURL: URL? = nil) {
+         delegate: FTLocalQueryGatherDelegate) {
         self.rootURL = rootURL;
         self.extToListen = exts;
         self.delegate = delegate;
         self.skipSubFolder = skipSubFolder;
-        self.ns2ProdLocalURL = ns2ProdLocalURL
     }
     
     deinit
@@ -48,15 +46,12 @@ class FTLocalQueryGather {
         }
         
         var urls = self.contentsOfURL(self.directoryURLToSearch(), skipsSubFolder: skipSubFolder);
-        if let ns2ProdURL = self.ns2ProdLocalURL {
-            urls.append(contentsOf:self.contentsOfURL(ns2ProdURL, skipsSubFolder: skipSubFolder))
-        }
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
             t2 = Date.timeIntervalSinceReferenceDate;
             debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Gathering : \(String(describing: self.rootURL)) time taken to gather:\(t2-t1)");
         }
         
-        self.delegate.ftLocalQueryGather(self, didFinishGathering: urls);
+        self.delegate?.ftLocalQueryGather(self, didFinishGathering: urls);
         
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
             let t3 = Date.timeIntervalSinceReferenceDate;
@@ -102,7 +97,7 @@ private extension FTLocalQueryGather {
         var notebookUrlList: [URL] = [URL]()
         if(!skipsSubFolder) {
             filteredURLS.enumerated().forEach({ (_,eachURL) in
-                if(eachURL.pathExtension == groupExtension) {
+                if(eachURL.pathExtension == FTFileExtension.group) {
                     let dirContents = self.contentsOfURL(eachURL,skipsSubFolder: skipsSubFolder);
                     notebookUrlList.append(contentsOf: dirContents);
                 }

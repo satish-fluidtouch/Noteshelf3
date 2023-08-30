@@ -9,10 +9,6 @@
 import UIKit
 
 class FTShelfCollectionRecent: NSObject,FTShelfCollection {
-    func ns2Shelfs(_ onCompletion: @escaping (([FTShelfItemCollection]) -> Void)) {
-        onCompletion([])
-    }
-
     var recentShelfItemCollection : FTShelfItemCollectionRecent?;
     var favoritesShelfItemCollection : FTShelfItemCollectionRecent?;
     fileprivate(set) var shelfCollections = [FTShelfItemCollection]();
@@ -32,6 +28,10 @@ class FTShelfCollectionRecent: NSObject,FTShelfCollection {
         collection.shelfCollections.append(collection.favoritesShelfItemCollection!);
         
         onCompletion(collection);
+    }
+
+    func belongsToNS2() -> Bool {
+        false
     }
     
     func shelfs(_ onCompletion : @escaping (([FTShelfItemCollection])->Void))

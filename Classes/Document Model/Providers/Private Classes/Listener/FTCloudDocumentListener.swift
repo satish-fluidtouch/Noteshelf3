@@ -10,12 +10,12 @@ import Foundation
 import FTCommon
 import FTDocumentFramework
 
-private let fileExtensionsToListen = [shelfExtension,
+private let fileExtensionsToListen = [FTFileExtension.shelf,
                                       FTFileExtension.ns3,
                                       FTFileExtension.ns2,
                                       "m4a",
                                       "plist",
-                                      sortIndexExtension]
+                                      FTFileExtension.sortIndex]
 
 class FTCloudDocumentListener: FTDocumentListener {
 
@@ -83,19 +83,14 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
 
         guard let listeners = listeners, let items = results as? [NSMetadataItem] else { return }
 
-        let shelfsMetadata = filterShelfs(with: items)
-        let booksMetadata = filterBooks(with: items)
         let audioMetadata = filterAudioRelatedFiles(with: items)
-        let indexMetadata = filterIndexFiles(with: items)
 
         for listener in listeners {
             if listener.canHandleAudio == true {
                 listener.addMetadataItemsToCache(audioMetadata, isBuildingCache: true);
                 listener.didEndFetchingInitialData()
             } else {
-                listener.addMetadataItemsToCache(shelfsMetadata, isBuildingCache: true);
-                listener.addMetadataItemsToCache(booksMetadata, isBuildingCache: true);
-                listener.addMetadataItemsToCache(indexMetadata, isBuildingCache: true);
+                listener.addMetadataItemsToCache(items, isBuildingCache: true)
                 listener.didEndFetchingInitialData()
             }
         }
@@ -110,18 +105,13 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
     func ftiCloudQueryObserver(_ query: FTiCloudQueryObserver, didAddedItems results: [AnyObject]) {
 
         guard let listeners = listeners, let items = results as? [NSMetadataItem] else { return }
-
-        let shelfsMetadata = filterShelfs(with: items)
-        let booksMetadata = filterBooks(with: items)
         let audioMetadata = filterAudioRelatedFiles(with: items)
-        let indexMetadata = filterIndexFiles(with: items)
+
         for listener in listeners {
             if listener.canHandleAudio {
                 listener.addMetadataItemsToCache(audioMetadata, isBuildingCache: false);
             } else {
-                listener.addMetadataItemsToCache(shelfsMetadata, isBuildingCache: false);
-                listener.addMetadataItemsToCache(booksMetadata, isBuildingCache: false);
-                listener.addMetadataItemsToCache(indexMetadata, isBuildingCache: false);
+                listener.addMetadataItemsToCache(items, isBuildingCache: false)
             }
         }
     }
@@ -129,18 +119,13 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
     func ftiCloudQueryObserver(_ query: FTiCloudQueryObserver, didUpdatedItems results: [AnyObject]) {
         guard let listeners = listeners, let items = results as? [NSMetadataItem] else { return }
 
-        let shelfsMetadata = filterShelfs(with: items)
-        let booksMetadata = filterBooks(with: items)
         let audioMetadata = filterAudioRelatedFiles(with: items)
-        let indexMetadata = filterIndexFiles(with: items)
 
         for listener in listeners {
             if listener.canHandleAudio {
                 listener.updateMetadataItemsInCache(audioMetadata)
             } else {
-                listener.updateMetadataItemsInCache(shelfsMetadata)
-                listener.updateMetadataItemsInCache(booksMetadata)
-                listener.updateMetadataItemsInCache(indexMetadata)
+                listener.updateMetadataItemsInCache(items)
             }
         }
     }
@@ -159,21 +144,13 @@ extension FTCloudDocumentListener: FTiCloudQueryObserverDelegate {
 fileprivate extension FTCloudDocumentListener {
 
     func filterIndexFiles(with metadataItems: [NSMetadataItem]) -> [NSMetadataItem] {
-        return metadataItems.filter({ $0.URL().pathExtension == sortIndexExtension })
-    }
-
-    func filterShelfs(with metadataItems: [NSMetadataItem]) -> [NSMetadataItem] {
-        return metadataItems.filter({ $0.URL().pathExtension == shelfExtension })
-    }
-
-    func filterBooks(with metadataItems: [NSMetadataItem]) -> [NSMetadataItem] {
-        return metadataItems.filter({ $0.URL().isSuportedBookExtension })
+        return metadataItems.filter({ $0.URL().pathExtension == FTFileExtension.sortIndex })
     }
 
     func filterAudioRelatedFiles(with metadataItems: [NSMetadataItem]?) -> [NSMetadataItem] {
         return metadataItems?.filter({
-                $0.URL().deletingLastPathComponent().lastPathComponent == "Audio Recordings" &&
-                ( $0.URL().pathExtension == "plist" || $0.URL().pathExtension == "m4a")
+            $0.URL().deletingLastPathComponent().lastPathComponent == "Audio Recordings" &&
+            ( $0.URL().pathExtension == "plist" || $0.URL().pathExtension == "m4a")
         }) ?? [NSMetadataItem]()
     }
 }

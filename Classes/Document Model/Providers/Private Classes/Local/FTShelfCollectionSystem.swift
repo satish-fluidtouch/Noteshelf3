@@ -18,8 +18,8 @@ class FTShelfItemCollectionSystem: FTShelfItemCollectionLocal {
 
 class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting {
 
-    func ns2Shelfs(_ onCompletion: @escaping (([FTShelfItemCollection]) -> Void)) {
-        onCompletion([])
+    func belongsToNS2() -> Bool {
+        false
     }
 
     static func TrashCollectionURL() -> URL
@@ -76,7 +76,7 @@ class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDel
         else {
             self.tempCompletionBlock = onCompletion;
             self.query = FTLocalQueryGather(rootURL: self.localDocumentsURL,
-                                            extensionsToListen: [shelfExtension],
+                                            extensionsToListen: [FTFileExtension.shelf],
                                             skipSubFolder : true,
                                             delegate: self);
             self.query?.startQuery();

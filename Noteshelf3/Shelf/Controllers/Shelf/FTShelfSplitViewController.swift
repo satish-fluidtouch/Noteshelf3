@@ -696,13 +696,13 @@ extension FTShelfSplitViewController {
 
         FTDocumentMigration.showNS3MigrationAlert(on: self, onCopyAction: {
             let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText:"migration.progress.text".localized);
-            FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedShelfItem, error in
+            FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedURL, error in
                 runInMainThread {
                     loadingIndicatorViewController.hide()
-                    if let migratedShelfItem {
-                        self.showOpenNowAlertForMigratedBook(shelfItem: migratedShelfItem)
+                    if let migratedURL {
+                        self.showOpenNowAlertForMigratedBook(migratedURL: migratedURL)
                     } else {
-                        self.handleNotebookOpenError(for: shelfItem, error: nil)
+                        FTDocumentMigration.showNS3MigrationFailureAlert(on: self)
                     }
                 }
             }
@@ -712,18 +712,9 @@ extension FTShelfSplitViewController {
                                         userInfo: nil)
     }
 
-    private func showOpenNowAlertForMigratedBook(shelfItem: FTShelfItemProtocol) {
+    private func showOpenNowAlertForMigratedBook(migratedURL: URL) {
         FTDocumentMigration.showNS3MigrationSuccessAlert(on: self) {
-            self.openNotebookAndAskPasswordIfNeeded(shelfItem,
-                                                    animate: true,
-                                                    presentWithAnimation: true,
-                                                    pin: nil,
-                                                    addToRecent: true,
-                                                    isQuickCreate: false,
-                                                    createWithAudio: false,
-                                                    pageIndex: nil) { doc, isSuccess in
-
-            }
+        // TODO: (AK) move to the collection or Gorup
         }
     }
 }

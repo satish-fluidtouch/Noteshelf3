@@ -89,7 +89,7 @@ extension FTNoteshelfDocumentProvider {
             onCompletion(nil);
         } else {
             shelfItems.removeFirst();
-            if(eachitem?.URL.pathExtension == groupExtension) {
+            if(eachitem?.URL.pathExtension == FTFileExtension.group) {
                 let fromGroupItem = eachitem as! FTGroupItemProtocol;
                 let groupItem = toCollection.groupItemWithName(title: eachitem!.displayTitle);
                 if(nil == groupItem) {

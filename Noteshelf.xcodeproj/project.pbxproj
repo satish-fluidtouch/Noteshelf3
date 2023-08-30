@@ -652,6 +652,8 @@
 		BA1963552A96148A000C47FA /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */; };
 		BA1963622A963C5B000C47FA /* FTDocumentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */; };
 		BA1963632A963C5B000C47FA /* FTDocumentFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA19635D2A963C2E000C47FA /* FTDocumentFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BA19636A2A977214000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */; };
+		BA19636B2A977220000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */; };
 		BA2D8EB52859F6F7001BB495 /* FTShelfSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D8EB42859F6F7001BB495 /* FTShelfSplitViewController.swift */; };
 		BA2D90B5285C4416001BB495 /* FTFormsheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D90A5285C4415001BB495 /* FTFormsheet.swift */; };
 		BA2D90B6285C4416001BB495 /* FTDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2D90A8285C4415001BB495 /* FTDocumentPicker.swift */; };
@@ -3477,6 +3479,7 @@
 		BA1265452302CDB500AD4647 /* FTPageProtocol_Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageProtocol_Additions.swift; sourceTree = "<group>"; };
 		BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNSiCloudManager.swift; sourceTree = "<group>"; };
 		BA1963562A963C2E000C47FA /* FTDocumentFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FTDocumentFramework.xcodeproj; path = ../../../FTDocumentFramework/FTDocumentFramework.xcodeproj; sourceTree = "<group>"; };
+		BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfCollectioniCloudRoot.swift; sourceTree = "<group>"; };
 		BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeveloperOptionsViewController.swift; sourceTree = "<group>"; };
 		BA2D8EB42859F6F7001BB495 /* FTShelfSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController.swift; sourceTree = "<group>"; };
 		BA2D90A5285C4415001BB495 /* FTFormsheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTFormsheet.swift; sourceTree = "<group>"; };
@@ -5038,6 +5041,7 @@
 			children = (
 				09AB9D9A1E7C0FE70041A0F5 /* FTQueryObserveriCloud.swift */,
 				09AB9D9B1E7C0FE70041A0F5 /* FTShelfCollectioniCloud.swift */,
+				BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */,
 				099094D51E810FBF0027FDDD /* FTShelfItemCollectionICloud.swift */,
 			);
 			path = Cloud;
@@ -11742,6 +11746,7 @@
 				42B2F34728A13BF2002430C5 /* FTFinderTabHostingController.swift in Sources */,
 				BAF390632859ADF00067CA9F /* FTTouch.m in Sources */,
 				BAF390642859ADF00067CA9F /* FTHorizontalTransitionDelegate.swift in Sources */,
+				BA19636A2A977214000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */,
 				BAF390662859ADF00067CA9F /* FTGestureHelpViewController.swift in Sources */,
 				BAF390672859ADF00067CA9F /* FTSiriShortcutManager.swift in Sources */,
 				09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */,
@@ -13190,6 +13195,7 @@
 				4209FEAB295C629D00ACC02E /* StoreTemplateGenerator.swift in Sources */,
 				4209FE94295C615C00ACC02E /* FTPrivateProtocols.swift in Sources */,
 				4209FE8E295C612100ACC02E /* FTTemplateInfo.swift in Sources */,
+				BA19636B2A977220000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */,
 				4209FEBB295C640000ACC02E /* PDFPage_Extension.swift in Sources */,
 				4209FEA0295C61F200ACC02E /* FTCheckedTemplateFormat.swift in Sources */,
 				4209FED0295C797500ACC02E /* FTShareItemsModel.swift in Sources */,

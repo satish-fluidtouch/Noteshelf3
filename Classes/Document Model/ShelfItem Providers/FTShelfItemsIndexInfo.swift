@@ -30,7 +30,7 @@ extension FTSortIndexContainerProtocol {
     }
 }
 
-private let plistName = "shelfItemsIndex." + sortIndexExtension
+private let plistName = "shelfItemsIndex." + FTFileExtension.sortIndex
 class FTSortingIndexPlistContent: NSObject {
     
     private(set) weak var parent: FTSortIndexContainerProtocol?
