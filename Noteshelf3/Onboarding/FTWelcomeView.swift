@@ -10,25 +10,25 @@ import SwiftUI
 
 struct FTWelcomeView: View {
     @State private var xoffset: CGFloat = 0
-    private let itemSize: CGFloat = 180
+    private let itemSize: CGFloat = 240
     weak var delegate: FTGetstartedHostingViewcontroller?
     @ObservedObject var viewModel: FTGetStartedItemViewModel
     var source: FTSourceScreen
     @Environment(\.dismiss) var dismiss
     var body: some View {
         VStack(alignment: .center, spacing: 0){
-            Spacer(minLength: 60)
+            Spacer(minLength: 55)
 
             headerView
 
-            VStack(spacing: -30){
+            VStack(spacing: -44){
                 gridLeftToRight
                 gridRightToLeft
             }
 
             footerView
 
-            Spacer(minLength: 60)
+            Spacer(minLength: 55)
                 .onAppear {
                     withAnimation(.linear(duration: 200).repeatForever(autoreverses: false)) {
                         xoffset = -itemSize * CGFloat((viewModel.getstartedList.count * 2))
@@ -111,11 +111,11 @@ struct GridItemView: View {
                                     .multilineTextAlignment(.center)
                                     .lineLimit(2)
                                     .frame(height: 60, alignment: .center)
-                                    .padding(.top, 80)
+                                    .padding(.top, 120)
                                     .padding(.horizontal, 23)
                             }
                     }
-                    .padding(.trailing, -45)
+                    .padding(.trailing, -54)
                 }
             }
             .rotationEffect(angle)

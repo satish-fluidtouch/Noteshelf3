@@ -19,7 +19,7 @@ struct FTShelfHomeView: FTShelfBaseView {
         GeometryReader { geometry in
                 ScrollView(.vertical) {
                     VStack(alignment: .center,spacing:0) {
-                        if geometry.size.width > 300 && viewModel.canShowCreateNBButtons {
+                        if geometry.size.width > 450 && viewModel.canShowCreateNBButtons || viewModel.shouldShowGetStartedInfo {
                             FTShelfTopSectionView()
                                 .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                 .padding(.horizontal,gridHorizontalPadding)
@@ -62,17 +62,6 @@ struct FTShelfHomeView: FTShelfBaseView {
                     self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
                 }
                 .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
-        }
-    }
-
-    private func showMinHeight(geometrySize: CGFloat) -> CGFloat {
-        let isInPortrait = UIScreen.main.bounds.height > UIScreen.main.bounds.width
-        if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 800 ? 218 : (geometrySize > 500 ? 340 : 495)
-        }else if !viewModel.shouldShowGetStartedInfo {
-            return geometrySize > 700 ? 68 : (geometrySize < 500 ? 220 : 96)
-        } else {
-            return geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) ? 96 : 68
         }
     }
 
