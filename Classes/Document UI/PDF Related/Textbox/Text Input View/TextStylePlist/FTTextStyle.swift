@@ -34,10 +34,7 @@ class FTTextStyleItem: NSObject, Decodable {
     var isUnderLined = false
     var strikeThrough = false
     var isDefault = false
-    var isAutoLineSpace = false
-    var lineSpace: Int = 0
     var fontId: String = UUID().uuidString
-    var alignment: Int = NSTextAlignment.left.rawValue // 0
 
     func dictionaryRepresentation() -> [String : Any] {
         var fontInfoDict : [String : Any] = [:]
@@ -52,9 +49,6 @@ class FTTextStyleItem: NSObject, Decodable {
         fontInfoDict["fontId"] = self.fontId
         fontInfoDict["allowsEdit"] = self.allowsEdit
         fontInfoDict["isDefault"] = self.isDefault
-        fontInfoDict["isAutoLineSpace"] = self.isAutoLineSpace
-        fontInfoDict["lineSpace"] = self.lineSpace
-        fontInfoDict["alignment"] = self.alignment
 
         return fontInfoDict
     }
@@ -62,7 +56,7 @@ class FTTextStyleItem: NSObject, Decodable {
     override func isEqual(_ object: Any?) -> Bool {
         let lhs = self;
         if let rhs = object as? FTTextStyleItem {
-            let value = lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough && lhs.isAutoLineSpace == rhs.isAutoLineSpace && lhs.lineSpace == rhs.lineSpace && lhs.alignment == rhs.alignment
+            let value = lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough
             return value;
         }
         return false
@@ -71,7 +65,7 @@ class FTTextStyleItem: NSObject, Decodable {
     func isFullyEqual(_ object: Any?) -> Bool {
         let lhs = self;
         if let rhs = object as? FTTextStyleItem {
-            let value = lhs.displayName == rhs.displayName && lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough && lhs.isAutoLineSpace == rhs.isAutoLineSpace && lhs.lineSpace == rhs.lineSpace && lhs.alignment == rhs.alignment
+            let value = lhs.displayName == rhs.displayName && lhs.fontName == rhs.fontName && lhs.fontFamily == rhs.fontFamily &&  lhs.fontSize == rhs.fontSize && lhs.textColor.replacingOccurrences(of: "#", with: "") == rhs.textColor.replacingOccurrences(of: "#", with: "") && lhs.isUnderLined == rhs.isUnderLined && lhs.strikeThrough == rhs.strikeThrough
             return value;
         }
         return false
@@ -97,10 +91,6 @@ class FTTextStyleItem: NSObject, Decodable {
         if let isStrikeThrough = attributes[NSAttributedString.Key.strikethroughStyle] as? Int {
             self.strikeThrough = isStrikeThrough == 1
         }
-        if let paragrapghStyle = attributes[NSAttributedString.Key.paragraphStyle] as? NSParagraphStyle {
-            self.lineSpace = Int(paragrapghStyle.lineSpacing)
-            self.alignment = paragrapghStyle.alignment.rawValue
-        }
         return self
     }
     
@@ -112,8 +102,8 @@ class FTTextStyleItem: NSObject, Decodable {
         return comps.prefix(2).map({$0.prefix(1)}).joined(separator: "")
     }
 }
-class FTTextPresetViewModel: NSObject {
 
+class FTTextPresetViewModel: NSObject {
     let reset = "Reset".localized
     let navPresettitle = "shelf.notebook.textstyle.Presets".localized
     let done = "done".localized

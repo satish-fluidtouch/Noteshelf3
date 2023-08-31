@@ -23,16 +23,10 @@
 			<false/>
 			<key>strikeThrough</key>
 			<false/>
-			<key>isAutoLineSpace</key>
-			<false/>
-			<key>lineSpace</key>
-			<integer>0</integer>
 			<key>isDefault</key>
 			<true/>
 			<key>fontId</key>
 			<string>a6d5632e-328d-4550-ac1f-3ff6a9dc7885</string>
-			<key>alignment</key>
-			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>displayName</key>
@@ -51,16 +45,10 @@
 			<false/>
 			<key>strikeThrough</key>
 			<false/>
-			<key>isAutoLineSpace</key>
-			<false/>
-			<key>lineSpace</key>
-			<integer>0</integer>
 			<key>isDefault</key>
 			<true/>
 			<key>fontId</key>
 			<string>b6b7fdac-5cf0-4b36-bfd3-05fcbd7930f4</string>
-			<key>alignment</key>
-			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>displayName</key>
@@ -79,45 +67,33 @@
 			<false/>
 			<key>strikeThrough</key>
 			<false/>
-			<key>isAutoLineSpace</key>
-			<false/>
-			<key>lineSpace</key>
-			<integer>0</integer>
 			<key>isDefault</key>
 			<true/>
 			<key>fontId</key>
 			<string>f642d7a2-d5ce-4a94-bca2-41679e12f5e7</string>
-			<key>alignment</key>
-			<integer>0</integer>
 		</dict>
-		<dict>
-			<key>displayName</key>
-			<string>Body</string>
-			<key>fontFamily</key>
-			<string>Helvetica Neue</string>
-			<key>fontName</key>
-			<string>HelveticaNeue</string>
-			<key>fontSize</key>
-			<integer>16</integer>
-			<key>allowsEdit</key>
-			<false/>
-			<key>textColor</key>
-			<string>#000000</string>
-			<key>isUnderLined</key>
-			<false/>
-			<key>strikeThrough</key>
-			<false/>
-			<key>isAutoLineSpace</key>
-			<false/>
-			<key>lineSpace</key>
-			<integer>0</integer>
-			<key>isDefault</key>
-			<true/>
-			<key>fontId</key>
-			<string>164deebc-acf9-4ea1-9b3a-b15f08568f1a</string>
-			<key>alignment</key>
-			<integer>0</integer>
-		</dict>
+        <dict>
+            <key>displayName</key>
+            <string>Body</string>
+            <key>fontFamily</key>
+            <string>Helvetica Neue</string>
+            <key>fontName</key>
+            <string>HelveticaNeue</string>
+            <key>fontSize</key>
+            <integer>16</integer>
+            <key>allowsEdit</key>
+            <false/>
+            <key>textColor</key>
+            <string>#000000</string>
+            <key>isUnderLined</key>
+            <false/>
+            <key>strikeThrough</key>
+            <false/>
+            <key>isDefault</key>
+            <true/>
+            <key>fontId</key>
+            <string>164deebc-acf9-4ea1-9b3a-b15f08568f1a</string>
+        </dict>
 		<dict>
 			<key>displayName</key>
 			<string>Caption</string>
@@ -135,16 +111,10 @@
 			<false/>
 			<key>strikeThrough</key>
 			<false/>
-			<key>isAutoLineSpace</key>
-			<false/>
-			<key>lineSpace</key>
-			<integer>0</integer>
 			<key>isDefault</key>
 			<true/>
 			<key>fontId</key>
 			<string>44b5b02d-41b0-420d-9b9a-050f96820a8e</string>
-			<key>alignment</key>
-			<integer>0</integer>
 		</dict>
 	</array>
 </dict>

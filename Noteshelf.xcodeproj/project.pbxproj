@@ -153,7 +153,6 @@
 		3DD2398A290A5718006E3AC3 /* FTTextToolBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD23988290A55F5006E3AC3 /* FTTextToolBarViewController.swift */; };
 		3DD2398D290A68BC006E3AC3 /* FTTextPresetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD2398B290A68BC006E3AC3 /* FTTextPresetsViewController.swift */; };
 		3DD23993290A6C07006E3AC3 /* FTTextBackGroundColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD23991290A6C07006E3AC3 /* FTTextBackGroundColorViewController.swift */; };
-		3DD23997290A8BF2006E3AC3 /* FTTextStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DD23995290A8BF2006E3AC3 /* FTTextStyle.plist */; };
 		3DD2399B290A97E6006E3AC3 /* FTTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD23999290A97E6006E3AC3 /* FTTextStyle.swift */; };
 		3DD2399F290AA5ED006E3AC3 /* FTTextStyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD2399D290AA5ED006E3AC3 /* FTTextStyleManager.swift */; };
 		3DF1B34328EAB5D800018AA5 /* FTClipAnnotation_SQLiteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF1B34128EAB5D800018AA5 /* FTClipAnnotation_SQLiteHelper.swift */; };
@@ -1168,7 +1167,7 @@
 		BAF391E22859ADF00067CA9F /* FTTooltipMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED06532E1F7A5A1D002D17E1 /* FTTooltipMessageViewController.swift */; };
 		BAF391E32859ADF00067CA9F /* FTDiagnosisHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0919475D1E430A9C008538F6 /* FTDiagnosisHandler.swift */; };
 		BAF391E42859ADF00067CA9F /* FTMidnightDiaryTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97617EEF264A6B0600B5D250 /* FTMidnightDiaryTemplateFormat.swift */; };
-		BAF391E52859ADF00067CA9F /* FTDefaultTextStyleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED60EF761F738807003DA6B1 /* FTDefaultTextStyleManager.swift */; };
+		BAF391E52859ADF00067CA9F /* FTDefaultTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED60EF761F738807003DA6B1 /* FTDefaultTextStyle.swift */; };
 		BAF391E62859ADF00067CA9F /* FTWebdavManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978755E725DAB4F600CB766F /* FTWebdavManager.swift */; };
 		BAF391E72859ADF00067CA9F /* FTResizableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424F2FE127B4DF87001903E3 /* FTResizableView.swift */; };
 		BAF391EB2859ADF00067CA9F /* FTLegalTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8525F24F62D0C00EF893A /* FTLegalTemplateFormat.swift */; };
@@ -1828,6 +1827,7 @@
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
+		E75E67BD2A9F7442009F5B2E /* FTTextStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */; };
 		E76023392A4EC45000B16084 /* FTSearchSuggestionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */; };
 		E760233B2A4EFBA100B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
 		E760233C2A4F003E00B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
@@ -2790,7 +2790,6 @@
 		3DD23988290A55F5006E3AC3 /* FTTextToolBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextToolBarViewController.swift; sourceTree = "<group>"; };
 		3DD2398B290A68BC006E3AC3 /* FTTextPresetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextPresetsViewController.swift; sourceTree = "<group>"; };
 		3DD23991290A6C07006E3AC3 /* FTTextBackGroundColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextBackGroundColorViewController.swift; sourceTree = "<group>"; };
-		3DD23995290A8BF2006E3AC3 /* FTTextStyle.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		3DD23999290A97E6006E3AC3 /* FTTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextStyle.swift; sourceTree = "<group>"; };
 		3DD2399D290AA5ED006E3AC3 /* FTTextStyleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextStyleManager.swift; sourceTree = "<group>"; };
 		3DF1B34128EAB5D800018AA5 /* FTClipAnnotation_SQLiteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClipAnnotation_SQLiteHelper.swift; sourceTree = "<group>"; };
@@ -3861,6 +3860,7 @@
 		E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEvernoteFooterView.swift; sourceTree = "<group>"; };
 		E75BAE272769BE840084043F /* FTEvernoteFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTEvernoteFooterView.xib; sourceTree = "<group>"; };
 		E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBaseHostingController_MacExtension.swift; sourceTree = "<group>"; };
+		E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		E75FCB2826C0EB5700E5FF75 /* FTGlobalSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTGlobalSearch.storyboard; sourceTree = "<group>"; };
 		E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchSuggestionHelper.swift; sourceTree = "<group>"; };
 		E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
@@ -4109,7 +4109,7 @@
 		ED5EFBC024DBEEA3000DE610 /* FTPasswordSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTPasswordSettings.storyboard; sourceTree = "<group>"; };
 		ED5FAF822417B7EB000A9569 /* FTBookOpeningSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTBookOpeningSpinner.swift; sourceTree = "<group>"; };
 		ED60EF731F738469003DA6B1 /* DefaultCustomColors.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DefaultCustomColors.plist; sourceTree = "<group>"; };
-		ED60EF761F738807003DA6B1 /* FTDefaultTextStyleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDefaultTextStyleManager.swift; sourceTree = "<group>"; };
+		ED60EF761F738807003DA6B1 /* FTDefaultTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDefaultTextStyle.swift; sourceTree = "<group>"; };
 		ED64446B24A0F22E00C997D4 /* FTShelfItemsIndexInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemsIndexInfo.swift; sourceTree = "<group>"; };
 		ED696C6522362E7700613BFF /* FTOutlineSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutlineSearchViewController.swift; sourceTree = "<group>"; };
 		ED696C682236316700613BFF /* FTOutlineTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTOutlineTableCell.xib; sourceTree = "<group>"; };
@@ -6890,6 +6890,7 @@
 		3DAC23AD290FA4E70084E626 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				14126F082A8CDBE500C3F903 /* FTStepperView.swift */,
 				3DAC23AE290FA5210084E626 /* FTPresetsStyleCell.swift */,
 				3DAC23B4290FCE0B0084E626 /* FTAddNewTextStyleCell.swift */,
 				3DAA689C2911041900848434 /* FTTextColorCollectionView.swift */,
@@ -6909,9 +6910,8 @@
 				3DD2398B290A68BC006E3AC3 /* FTTextPresetsViewController.swift */,
 				3DD23991290A6C07006E3AC3 /* FTTextBackGroundColorViewController.swift */,
 				3DAC23BB290FE4170084E626 /* FTNewTextStyleViewController.swift */,
-				14126F082A8CDBE500C3F903 /* FTStepperView.swift */,
-				3DAA68B12911578A00848434 /* FTNewTextStyleViewController_Extension.swift */,
 				3DC46A88294735D90080BA57 /* FTTextStyleCompactViewController.swift */,
+				3DAA68B12911578A00848434 /* FTNewTextStyleViewController_Extension.swift */,
 				3DAB581F29519BE30098282A /* FTTextColorViewController.swift */,
 			);
 			path = Controllers;
@@ -6920,7 +6920,7 @@
 		3DD23994290A8BC6006E3AC3 /* TextStylePlist */ = {
 			isa = PBXGroup;
 			children = (
-				3DD23995290A8BF2006E3AC3 /* FTTextStyle.plist */,
+				E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */,
 				3DD23999290A97E6006E3AC3 /* FTTextStyle.swift */,
 				3DD2399D290AA5ED006E3AC3 /* FTTextStyleManager.swift */,
 				3DAC161E2938AED20090F23A /* FTTextInputAcessoryViewProtocol.swift */,
@@ -10477,7 +10477,7 @@
 			isa = PBXGroup;
 			children = (
 				ED60EF731F738469003DA6B1 /* DefaultCustomColors.plist */,
-				ED60EF761F738807003DA6B1 /* FTDefaultTextStyleManager.swift */,
+				ED60EF761F738807003DA6B1 /* FTDefaultTextStyle.swift */,
 				8BBAE17124FE14DC0007931A /* FTFontPickerViewController.swift */,
 				8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */,
 				3DAC3FCE29192543009B7BC7 /* FTColorPickerViewController.swift */,
@@ -11139,7 +11139,6 @@
 				BAF38F892859ADF00067CA9F /* FTRefresh.storyboard in Resources */,
 				BAF38F8A2859ADF00067CA9F /* FTShelf_iOS13.storyboard in Resources */,
 				BAF38F8B2859ADF00067CA9F /* FTConvertToTextCell.xib in Resources */,
-				3DD23997290A8BF2006E3AC3 /* FTTextStyle.plist in Resources */,
 				BAF38F8F2859ADF00067CA9F /* FTCommon.storyboard in Resources */,
 				BAF38F902859ADF00067CA9F /* FTGlobalSearch.storyboard in Resources */,
 				E7AE403E28755D4500C0F3EC /* themes_v8_ko.plist in Resources */,
@@ -11230,6 +11229,7 @@
 				BAF390122859ADF00067CA9F /* FTDefaults.plist in Resources */,
 				E7B3096F2A1607A900E860DC /* FTPenRack.plist in Resources */,
 				BAF390132859ADF00067CA9F /* FTShelfCollectionReusableView.xib in Resources */,
+				E75E67BD2A9F7442009F5B2E /* FTTextStyle.plist in Resources */,
 				BAF390152859ADF00067CA9F /* Scanner.storyboard in Resources */,
 				BAF3901B2859ADF00067CA9F /* WhatsNew.xcassets in Resources */,
 				BAF3901C2859ADF00067CA9F /* FTTargets.storyboard in Resources */,
@@ -12100,7 +12100,7 @@
 				52C01E132A00F4880038C21A /* FTFinderHelper.swift in Sources */,
 				BAF391E32859ADF00067CA9F /* FTDiagnosisHandler.swift in Sources */,
 				BAF391E42859ADF00067CA9F /* FTMidnightDiaryTemplateFormat.swift in Sources */,
-				BAF391E52859ADF00067CA9F /* FTDefaultTextStyleManager.swift in Sources */,
+				BAF391E52859ADF00067CA9F /* FTDefaultTextStyle.swift in Sources */,
 				BAF391E62859ADF00067CA9F /* FTWebdavManager.swift in Sources */,
 				BAF391E72859ADF00067CA9F /* FTResizableView.swift in Sources */,
 				42A971D628B73D8900EDAC90 /* FTMediaViewController+ContextMenu.swift in Sources */,

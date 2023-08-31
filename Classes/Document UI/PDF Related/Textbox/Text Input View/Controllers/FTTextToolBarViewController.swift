@@ -50,7 +50,7 @@ protocol FTTextToolBarDelegate: NSObjectProtocol {
     func didChangeFontTrait(_ trait: UIFontDescriptor.SymbolicTraits)
     func didToggleUnderline()
     func didToggleStrikeThrough()
-    func didSetDefaultStyle(_ info: FTTextStyleItem)
+    func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
     func textInputViewCurrentTextView() -> FTTextView?
 }
 
@@ -511,6 +511,12 @@ extension FTTextToolBarViewController: FTTextBackGroundColorDelegate {
     }
 }
 
+extension FTTextToolBarViewController: FTDefaultTextStyleDelegate {
+    func didSetDefaultStyle(_ info: FTDefaultTextStyleItem) {
+        self.toolBarDelegate?.didSetDefaultStyle(info)
+    }
+}
+
 extension FTTextToolBarViewController: FTEditStyleDelegate {
     func didChangeStyle(_ style: FTTextStyleItem?) {
         guard let _style = style else { return }
@@ -527,10 +533,6 @@ extension FTTextToolBarViewController: FTEditStyleDelegate {
     
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool) {
         self.toolBarDelegate?.didSelectTextRange(range: range, txtRange: txtRange, canEdit: canEdit)
-    }
-
-    func didSetDefaultStyle(_ info: FTTextStyleItem) {
-        self.toolBarDelegate?.didSetDefaultStyle(info)
     }
 
     func textInputViewCurrentTextView() -> FTTextView? {

@@ -37,15 +37,14 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
         self.didHighLightSelectedStyle(attr: self.attributes, scale: scale)
         let shadowColor = UIColor(hexString: "#000000")
         self.view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 60.0, spread: 0)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didTextAnnotationBoxResign), name: ftDidTextAnnotationResignNotifier, object: nil)
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // To fix presets screen dismissal when keyboard is dismissed
-    @objc private func keyboardWillHide(notification: Notification) {
+    @objc func didTextAnnotationBoxResign() {
         self.dismiss(animated: true)
     }
 
@@ -99,8 +98,8 @@ extension FTTextPresetsViewController {
         let textToolBarVC = (delegate as? FTTextToolBarViewController)
         textToolBarVC?.textHighLightSyleDelegate = textPresetsVC as? any FTStyleSelectionDelegate
         textPresetsVC.iscomeFromTextPreset = true
-        if textStyle != nil {
-            textPresetsVC.textFontStyle = textStyle
+        if let style = textStyle {
+            textPresetsVC.textFontStyle = style
         }
         let shadowColor = UIColor(hexString: "#000000")
         textPresetsVC.view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 60.0, spread: 0)

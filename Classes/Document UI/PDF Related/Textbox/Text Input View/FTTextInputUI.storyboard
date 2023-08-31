@@ -20,17 +20,17 @@
             <objects>
                 <viewController storyboardIdentifier="FTTextStyleCompactViewController" id="4yE-Sp-HUB" customClass="FTTextStyleCompactViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yo8-as-fsn">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="420"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bf6-bA-0Ur">
-                                <rect key="frame" x="23" y="0.0" width="375" height="420"/>
+                                <rect key="frame" x="23" y="0.0" width="375" height="480"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Gb-7f-czU">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="480"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JV2-Pb-a3Z">
-                                                <rect key="frame" x="0.0" y="16" width="375" height="356.5"/>
+                                                <rect key="frame" x="0.0" y="16" width="375" height="408.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jRD-WV-2Ul">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -495,6 +495,20 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </stackView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3i-Qn-wcX">
+                                                        <rect key="frame" x="0.0" y="349" width="375" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="JZW-rl-FmH"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Set as Default">
+                                                            <color key="baseForegroundColor" name="accent"/>
+                                                        </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="setAsDefaultTapped:" destination="4yE-Sp-HUB" eventType="touchUpInside" id="BrT-RZ-egr"/>
+                                                            <action selector="setAsDefaultTapped:" destination="pIS-75-pxU" eventType="touchUpInside" id="wgE-jn-hGI"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" name="popoverBgColor"/>
                                                 <constraints>
@@ -502,15 +516,18 @@
                                                     <constraint firstItem="fTD-bk-ny0" firstAttribute="leading" secondItem="jRD-WV-2Ul" secondAttribute="leading" id="4j4-J2-47M"/>
                                                     <constraint firstItem="X5a-j3-XUH" firstAttribute="top" secondItem="dcE-6w-AkC" secondAttribute="bottom" constant="14" id="5Jm-vc-T8o"/>
                                                     <constraint firstItem="dcE-6w-AkC" firstAttribute="trailing" secondItem="fTD-bk-ny0" secondAttribute="trailing" id="5Kq-8V-lNW"/>
-                                                    <constraint firstAttribute="bottom" secondItem="X5a-j3-XUH" secondAttribute="bottom" constant="16" id="8ar-1c-fBP"/>
                                                     <constraint firstItem="dcE-6w-AkC" firstAttribute="height" secondItem="jRD-WV-2Ul" secondAttribute="height" id="E6n-eo-Ef9"/>
                                                     <constraint firstAttribute="trailing" secondItem="jRD-WV-2Ul" secondAttribute="trailing" id="HaT-ta-fFM"/>
                                                     <constraint firstItem="fTD-bk-ny0" firstAttribute="trailing" secondItem="jRD-WV-2Ul" secondAttribute="trailing" id="IHy-sC-OCe"/>
                                                     <constraint firstItem="dcE-6w-AkC" firstAttribute="leading" secondItem="fTD-bk-ny0" secondAttribute="leading" id="J0G-wd-W5N"/>
                                                     <constraint firstItem="fTD-bk-ny0" firstAttribute="top" secondItem="jRD-WV-2Ul" secondAttribute="bottom" constant="8" id="Ugz-of-bHR"/>
+                                                    <constraint firstAttribute="bottom" secondItem="g3i-Qn-wcX" secondAttribute="bottom" constant="16" id="eZd-Sc-1HS"/>
+                                                    <constraint firstItem="g3i-Qn-wcX" firstAttribute="trailing" secondItem="X5a-j3-XUH" secondAttribute="trailing" id="fe8-zC-bfs"/>
+                                                    <constraint firstItem="g3i-Qn-wcX" firstAttribute="leading" secondItem="X5a-j3-XUH" secondAttribute="leading" id="gKy-ea-wYV"/>
                                                     <constraint firstItem="jRD-WV-2Ul" firstAttribute="leading" secondItem="JV2-Pb-a3Z" secondAttribute="leading" id="gT3-n4-EgX"/>
                                                     <constraint firstItem="jRD-WV-2Ul" firstAttribute="top" secondItem="JV2-Pb-a3Z" secondAttribute="top" id="lBB-tQ-NRQ"/>
                                                     <constraint firstItem="X5a-j3-XUH" firstAttribute="trailing" secondItem="dcE-6w-AkC" secondAttribute="trailing" id="nsg-5L-hVb"/>
+                                                    <constraint firstItem="X5a-j3-XUH" firstAttribute="bottom" secondItem="g3i-Qn-wcX" secondAttribute="top" constant="-8" id="rTc-HE-g4r"/>
                                                     <constraint firstItem="dcE-6w-AkC" firstAttribute="top" secondItem="fTD-bk-ny0" secondAttribute="bottom" constant="8" id="xaH-0X-yYl"/>
                                                 </constraints>
                                             </view>
@@ -545,10 +562,11 @@
                             <constraint firstItem="xyY-Bi-sUq" firstAttribute="top" secondItem="Bf6-bA-0Ur" secondAttribute="top" id="LSK-Xv-K7x"/>
                         </constraints>
                     </view>
-                    <size key="freeformSize" width="420" height="420"/>
+                    <size key="freeformSize" width="420" height="480"/>
                     <connections>
                         <outlet property="autoLineHeightSeparatorView" destination="Dl7-MF-JRt" id="vXA-QD-33V"/>
                         <outlet property="autoLineHeightStepperView" destination="XUt-sz-xyH" id="del-rl-igH"/>
+                        <outlet property="autoLineHeightSwitch" destination="9e7-6M-5H7" id="A7u-3B-4Ru"/>
                         <outlet property="autoLineHeightView" destination="X5a-j3-XUH" id="w4r-Nx-vNe"/>
                         <outlet property="autolineHeightLbl" destination="ahM-5f-eaU" id="6QQ-KV-Yib"/>
                         <outlet property="btnBold" destination="kAZ-lS-cN9" id="5BJ-Dy-aSb"/>
@@ -574,7 +592,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTO-PC-FJC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1246" y="321"/>
+            <point key="canvasLocation" x="1245.75" y="321"/>
         </scene>
         <!--Text Color View Controller-->
         <scene sceneID="QaY-Q8-WT8">
@@ -1635,6 +1653,7 @@
                         <outlet property="autoLineHeightLbl" destination="Rgh-HL-2UV" id="eeH-H5-B87"/>
                         <outlet property="autoLineHeightSeparatorView" destination="7qt-id-pUf" id="0Bl-OW-NoB"/>
                         <outlet property="autoLineHeightStepperView" destination="saC-dD-oIn" id="hM5-Im-yaJ"/>
+                        <outlet property="autoLineHeightSwitch" destination="ey3-Hp-Prt" id="nYP-fx-Lpm"/>
                         <outlet property="autoLineHeightView" destination="dG9-Gf-n1L" id="gNV-iy-TsY"/>
                         <outlet property="btnBold" destination="vcD-cP-a7L" id="ITg-q7-fP5"/>
                         <outlet property="btnCentreAlignment" destination="RiG-pQ-B7d" id="8Ub-Br-CAN"/>
@@ -1692,11 +1711,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="460" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="textboxColorImage" translatesAutoresizingMaskIntoConstraints="NO" id="W65-Nv-tnf">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W65-Nv-tnf">
                                                     <rect key="frame" x="16" y="11" width="22" height="22"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBb-4S-jx2" customClass="FTCustomLabel" customModule="FTCommon">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBb-4S-jx2" customClass="FTCustomLabel" customModule="FTCommon">
                                                     <rect key="frame" x="54" y="14" width="37" height="17"/>
                                                     <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                     <color key="textColor" name="black1"/>
@@ -1782,7 +1801,6 @@
         <image name="textStyleEdit" width="37" height="40"/>
         <image name="text_input_keyboard_sel" width="28" height="28"/>
         <image name="text_presets_more" width="3" height="13"/>
-        <image name="textboxColorImage" width="22" height="22"/>
         <image name="textformat" catalog="system" width="128" height="78"/>
         <image name="tooliconBgcolor" width="28" height="28"/>
         <image name="tooliconStyleOn" width="28" height="28"/>

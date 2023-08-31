@@ -17,8 +17,9 @@ private let TEXT_TOP_KNOB_WIDTH = 24
 private let TEXT_TOP_KNOB_HEIGHT = 8
 private let TEXT_TOP_KNOB_TAG = 101
 
+let ftDidTextAnnotationResignNotifier = Notification.Name("FTDidTextboxResignResponder")
+
 enum FTKnobPosition : Int{
-    
     case FTKnobPositionNone = -1
     case FTKnobPositionLeft = 100
     case FTKnobPositionRight
@@ -132,6 +133,7 @@ class FTTextAnnotationViewController: UIViewController {
                 self.autocorrectionType = UITextAutocorrectionType.no
                 #if !targetEnvironment(macCatalyst)
                     _ = self.resignFirstResponder()
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "FTDidTextboxResignResponder"), object: nil)
 //                (self.textInputView.inputAccessoryViewController as? FTTextInputAccerssoryViewController)?.dismissPopoverViews();
                 #endif
             }
@@ -312,6 +314,21 @@ class FTTextAnnotationViewController: UIViewController {
             textInputView.setValue(NSNumber.init(value: underlineValue),
                                    forAttribute: NSAttributedString.Key.underlineStyle.rawValue,
                                    in: NSRange(location: 0, length: 0))
+        }
+        if let strikeThrough = page?.parentDocument?.localMetadataCache?.defaultIsStrikeThrough {
+            textInputView.setValue(NSNumber.init(value: strikeThrough),
+                                   forAttribute: NSAttributedString.Key.strikethroughStyle.rawValue,
+                                   in: NSRange(location: 0, length: 0))
+        }
+        if let alignment = page?.parentDocument?.localMetadataCache?.defaultTextAlignment, let lineSpace = page?.parentDocument?.localMetadataCache?.defaultAutoLineSpace  {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = CGFloat(lineSpace)
+            paragraphStyle.alignment = NSTextAlignment(rawValue: alignment) ?? .left
+            textInputView.setValueFor(paragraphStyle, forAttribute: NSAttributedString.Key.paragraphStyle.rawValue, in: NSRange(location: 0, length: 0))
+        }
+
+        if let isAutoLineSpaceEnabled = page?.parentDocument?.localMetadataCache?.defaultIsLineSpaceEnabled {
+            textInputView.setValueFor(NSNumber.init(value: isAutoLineSpaceEnabled), forAttribute: FTFontStorage.isLineSpaceEnabledKey, in: NSRange(location: 0, length: 0))
         }
         textView.scale = self.zoomScale
 
@@ -948,7 +965,7 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
         self.textInputAccessoryDidToggleStrikeThrough()
     }
 
-    func didSetDefaultStyle(_ info: FTTextStyleItem) {
+    func didSetDefaultStyle(_ info: FTDefaultTextStyleItem) {
     if let ann = self._annotation, let page = ann.associatedPage, let document = page.parentDocument {
         if let defaultFont = UIFont(name: info.fontName, size: CGFloat(info.fontSize)) {
                 document.localMetadataCache?.defaultBodyFont = defaultFont

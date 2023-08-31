@@ -13,12 +13,15 @@ import FTCommon
 let maxFontSize: Int = 100
 let defaultFontSize: Int = 16
 
-protocol FTEditStyleDelegate: NSObjectProtocol {
+protocol FTDefaultTextStyleDelegate: NSObjectProtocol {
+    func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
+}
+
+protocol FTEditStyleDelegate: FTDefaultTextStyleDelegate {
     func didChangeStyle(_ style: FTTextStyleItem?)
     func didTapOnAlignmentStyle(_ style: NSTextAlignment)
     func didChangeLineSpacing(lineSpace: CGFloat)
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool)
-    func didSetDefaultStyle(_ info: FTTextStyleItem)
     func textInputViewCurrentTextView() -> FTTextView?
     func rootViewController() -> UIViewController?
 }
@@ -53,7 +56,8 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     @IBOutlet private weak var fontSizeStepperView: UIView?
     @IBOutlet weak var lineHeightLbl: UILabel?
     @IBOutlet weak var autoLineHeightLbl: FTCustomLabel?
-    @IBOutlet weak var setAsDefaultBtn: UIButton?
+    @IBOutlet private weak var setAsDefaultBtn: UIButton?
+    @IBOutlet private weak var autoLineHeightSwitch: UISwitch?
 
     private var selectedTextRange: UITextRange?
     private var selectedRange: NSRange?
@@ -61,18 +65,27 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     var iscomeFromTextPreset: Bool = false
     private weak var fontSizeStepper: FTStepperView?
     private weak var lineSpaceStepper: FTStepperView?
-    var defaultTextStyleManager = FTDefaultTextStyleManager()
-    fileprivate var favoriteFonts: [FTTextStyleItem]!
-
-    weak var delegate: FTEditStyleDelegate?
-    var isModifyText: Bool = false
-    var textFontStyle: FTTextStyleItem?
     private var newStyle: FTTextStyleItem?
+    private var currentLineSpace: Int = 0
+    private var currentAlignment: NSTextAlignment = .left
+
+    var isModifyText: Bool = false
+    var textFontStyle = FTTextStyleItem()
     var collectionView: FTTextColorCollectionView?
-     var attributes:[NSAttributedString.Key : Any]?
+    var attributes:[NSAttributedString.Key : Any]?
     var shouldApplyAttributes: Bool = false
     var scale: CGFloat = 1.0
-  
+    weak var delegate: FTEditStyleDelegate?
+
+    private var isAutoLineSpaceEnabled = false {
+        didSet {
+            self.autoLineHeightStepperView?.isHidden = isAutoLineSpaceEnabled
+            self.autoLineHeightSeparatorView?.isHidden = isAutoLineSpaceEnabled
+            self.autoLineHeightSwitch?.isOn = isAutoLineSpaceEnabled
+            self.lineSpacingStackViewHeightConstraint?.constant = isAutoLineSpaceEnabled ? 44 : 88.5
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loadStepperView()
@@ -81,8 +94,17 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         self.navigationController?.navigationBar.tintColor = .clear
         let shadowColor = UIColor(hexString: "#000000")
         self.view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 60.0, spread: 0)
+        NotificationCenter.default.addObserver(self, selector: #selector(didTextAnnotationBoxResign), name: ftDidTextAnnotationResignNotifier, object: nil)
     }
-      
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func didTextAnnotationBoxResign() {
+        self.dismiss(animated: true)
+    }
+    
     class func showAsPopover(fromSourceView sourceView: UIView,
                              overViewController viewController: UIViewController,
                              delegate: FTEditStyleDelegate,
@@ -124,29 +146,23 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        if let style = textFontStyle {
-            var shouldUpdate = false
-            if self.isMovingFromParent {
-                if newStyle == nil {
-                    FTTextStyleManager.shared.insertNewTextStyle(style)
+        var shouldUpdate = false
+        if self.isMovingFromParent {
+            if newStyle == nil {
+                FTTextStyleManager.shared.insertNewTextStyle(textFontStyle)
+                shouldUpdate = true
+            } else {
+                if !newStyle!.isFullyEqual(textFontStyle) {
+                    FTTextStyleManager.shared.updateTextStyle(textFontStyle)
                     shouldUpdate = true
-                } else {
-                    if !newStyle!.isFullyEqual(style) {
-                        FTTextStyleManager.shared.updateTextStyle(style)
-                        shouldUpdate = true
-                    }
-                }
-            }
-            if shouldUpdate {
-                if let presetVC = self.navigationController?.children.first as? FTTextPresetsViewController {
-                    presetVC.updateTextStylesList()
                 }
             }
         }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        if shouldUpdate {
+            if let presetVC = self.navigationController?.children.first as? FTTextPresetsViewController {
+                presetVC.updateTextStylesList()
+            }
+        }
     }
     
     private func updateUI() {
@@ -157,13 +173,14 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
 
         self.textAlignmentView?.isHidden = !isModifyText
         self.autoLineHeightView?.isHidden = !isModifyText
+        self.setAsDefaultBtn?.isHidden = !isModifyText
         self.presentStyleNameView?.isHidden = isModifyText
         self.separatorView?.isHidden = !isModifyText
         self.fontName?.adjustsFontSizeToFitWidth = true
         updateNewTextStyleValue()
         applyFontChanges()
         self.loadColorCollectionView()
-        txtFontSize?.text = "\(textFontStyle!.fontSize)"
+        txtFontSize?.text = "\(textFontStyle.fontSize)"
         NotificationCenter.default.addObserver(self, selector: #selector(changeText(_:)), name: UITextField.textDidChangeNotification, object: nil)
         if let attr = self.attributes {
             self.validateKeyboard(attributes: attr, scale: scale)
@@ -178,14 +195,12 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
             selectedTextRange = textAnnot.textInputView.selectedTextRange
         }
         self.configureTextFields(with: newStyle)
-        self.fontSizeStepper?.updateInitialValue(textFontStyle?.fontSize ?? Int(0.0))
+        self.fontSizeStepper?.updateInitialValue(textFontStyle.fontSize)
         self.updateFontTraitsEnableStatus()
     }
 
     func updateSetAsDefualtTitle() {
-        var title = "SetAsDefault".localized
-//        defaultTextStyleManager.customFontInfo.isEqual(newStyle)
-        self.setAsDefaultBtn?.setTitle(title, for: .normal)
+        self.setAsDefaultBtn?.setTitle("SetAsDefault".localized, for: .normal)
     }
 
     internal func updateFontTraitsEnableStatus() {
@@ -206,57 +221,48 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     }
 
     private func updateNewTextStyleValue() {
-        guard let fontId = textFontStyle?.fontId else { return }
-        newStyle = FTTextStyleManager.shared.fetchTextStyleForId(fontId)
+        newStyle = FTTextStyleManager.shared.fetchTextStyleForId(textFontStyle.fontId)
     }
     
     private func loadColorCollectionView() {
         let layout = FTTextColorsFlowLayout()
         collectionView = FTTextColorCollectionView.init(frame: .zero, collectionViewLayout: layout)
         collectionView?.textColorDelegate = self
-        collectionView?.selectedColor = self.textFontStyle?.textColor
+        collectionView?.selectedColor = self.textFontStyle.textColor
         collectionView?.addFullConstraints(self.colorView)
         collectionView?.layoutSubviews()
     }
     
     func applyFontChanges(_ canApplyStyle: Bool = true) {
-        if textFontStyle == nil {
-            textFontStyle = FTTextStyleItem()
-        }
-        if let item = textFontStyle {
-            let fontAttribute = NSMutableAttributedString(string: item.fontFamily)
-            self.fontName?.attributedText = fontAttribute.getFormattedAttributedStringFrom(style: item)
-            let styleNameAttribute = NSMutableAttributedString(string: item.displayName)
-            self.txtStyleName?.attributedText = styleNameAttribute.getFormattedAttributedStringFrom(style: item)
+            let fontAttribute = NSMutableAttributedString(string: textFontStyle.fontFamily)
+            self.fontName?.attributedText = fontAttribute.getFormattedAttributedStringFrom(style: textFontStyle)
+            let styleNameAttribute = NSMutableAttributedString(string: textFontStyle.displayName)
+            self.txtStyleName?.attributedText = styleNameAttribute.getFormattedAttributedStringFrom(style: textFontStyle)
             self.txtStyleName?.textColor = UIColor.appColor(.accent)
             updateTraitButtonsSelectionState()
-        }
-        
+
         if canApplyStyle && isModifyText && shouldApplyAttributes {
             self.delegate?.didChangeStyle(textFontStyle)
         }
     }
     
     @objc func applyAttributesStyle() {
-        self.txtFontSize?.text = "\(textFontStyle!.fontSize)"
+        self.txtFontSize?.text = "\(textFontStyle.fontSize)"
         self.applyFontChanges(false)
     }
     
     private func reloadColorsCollectionIfRequired() {
-        if let item = textFontStyle {
-            if self.collectionView?.selectedColor?.replacingOccurrences(of: "#", with: "") != item.textColor.replacingOccurrences(of: "#", with: "") {
-               // self.collectionView?.reloadSections(IndexSet(integer: 0))
-                self.collectionView?.selectedColor = item.textColor
-                self.collectionView?.updateSelectedColor()
-            } else {
-                self.collectionView?.updateSelectedColor()
-            }
+        if self.collectionView?.selectedColor?.replacingOccurrences(of: "#", with: "") != textFontStyle.textColor.replacingOccurrences(of: "#", with: "") {
+            // self.collectionView?.reloadSections(IndexSet(integer: 0))
+            self.collectionView?.selectedColor = textFontStyle.textColor
+            self.collectionView?.updateSelectedColor()
+        } else {
+            self.collectionView?.updateSelectedColor()
         }
     }
     
     private func updateTraitButtonsSelectionState() {
-        guard let style = textFontStyle else { return }
-        if let tempFont = UIFont.init(name: style.fontName, size: CGFloat(style.fontSize)) {
+        if let tempFont = UIFont.init(name: textFontStyle.fontName, size: CGFloat(textFontStyle.fontSize)) {
             if tempFont.isItalicTrait() {
                 btnItalic?.backgroundColor = UIColor.appColor(.accentBg)
                 btnItalic?.layer.cornerRadius = 8.0
@@ -271,14 +277,14 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
                 btnBold?.backgroundColor = UIColor.clear
             }
             
-            if style.isUnderLined {
+            if textFontStyle.isUnderLined {
                 btnUnderline?.backgroundColor = UIColor.appColor(.accentBg)
                 btnUnderline?.layer.cornerRadius = 8.0
             } else {
                 btnUnderline?.backgroundColor = UIColor.clear
             }
             
-            if style.strikeThrough {
+            if textFontStyle.strikeThrough {
                 btnStrikeThrough?.backgroundColor = UIColor.appColor(.accentBg)
                 btnStrikeThrough?.layer.cornerRadius = 8.0
             } else {
@@ -319,12 +325,12 @@ extension FTNewTextStyleViewController {
         guard let txtField = notification.object as? UITextField else { return }
         if txtField == txtFontSize {
             if let value = Int(txtField.text ?? "\(defaultFontSize)") {
-                self.textFontStyle?.fontSize = value
+                self.textFontStyle.fontSize = value
             }
         }
         if txtField == txtStyleName {
             if let value = txtField.text {
-                self.textFontStyle?.displayName = value
+                self.textFontStyle.displayName = value
             }
         }
         self.applyFontChanges()
@@ -344,9 +350,8 @@ extension FTNewTextStyleViewController {
     }
 
     private func handlefontSizeChange(value: Int) {
-        textFontStyle?.fontSize = Int(value)
+        textFontStyle.fontSize = Int(value)
         txtFontSize?.text = "\(value)"
-        defaultTextStyleManager.textStyleInfo.fontSize = value
         if isModifyText {
             shouldApplyAttributes = true
         }
@@ -354,8 +359,7 @@ extension FTNewTextStyleViewController {
     }
 
     @IBAction func tappedOnFontTraits(_ sender: UIButton) {
-        guard let style = textFontStyle else { return }
-        if var tempFont = UIFont.init(name: style.fontName, size: CGFloat(style.fontSize)) {
+        if var tempFont = UIFont.init(name: textFontStyle.fontName, size: CGFloat(textFontStyle.fontSize)) {
             if sender.tag == 0 {
                 if self.canAddTrait(.traitBold) {
                     if tempFont.isBoldTrait() {
@@ -373,13 +377,11 @@ extension FTNewTextStyleViewController {
                     }
                 }
             } else if sender.tag == 2 {
-                self.textFontStyle?.isUnderLined = !(self.textFontStyle?.isUnderLined ?? false)
-                defaultTextStyleManager.textStyleInfo.isUnderLined = self.textFontStyle?.isUnderLined ?? false
+                self.textFontStyle.isUnderLined = !(self.textFontStyle.isUnderLined)
             } else if sender.tag == 3 {
-                self.textFontStyle?.strikeThrough = !(self.textFontStyle?.strikeThrough ?? false)
-                defaultTextStyleManager.textStyleInfo.strikeThrough = self.textFontStyle?.strikeThrough ?? false
+                self.textFontStyle.strikeThrough = !(self.textFontStyle.strikeThrough)
             }
-            self.textFontStyle?.fontName = tempFont.fontName
+            self.textFontStyle.fontName = tempFont.fontName
             self.shouldApplyAttributes = true
             self.applyFontChanges()
         }
@@ -394,47 +396,49 @@ extension FTNewTextStyleViewController {
         } else if sender.tag == 2 {
             align = .right
         }
-        defaultTextStyleManager.textStyleInfo.alignment = align.rawValue
+        self.currentAlignment = align
         self.delegate?.didTapOnAlignmentStyle(align)
         highLightBackgroundForTextAlignmentButtons(alignment: align)
     }
 
     private func handleLineSpaceChange(value: Int){
         lblLineSpace?.text = "\(value) pt"
-        defaultTextStyleManager.textStyleInfo.lineSpace = value
+        self.currentLineSpace = value
         self.delegate?.didChangeLineSpacing(lineSpace: CGFloat(value))
     }
     
     @IBAction func tappedOnAutoLineHeightSwitch(_ sender: UISwitch) {
         let isOn = sender.isOn
-        self.autoLineHeightStepperView?.isHidden = isOn
-        self.autoLineHeightSeparatorView?.isHidden = isOn
+        self.isAutoLineSpaceEnabled = isOn
         if isOn {
             self.delegate?.didChangeLineSpacing(lineSpace: 0.0)
+            self.currentLineSpace = 0
         }
-        let value = isOn ? 44 : 88.5
-        self.lineSpacingStackViewHeightConstraint?.constant = value
     }
 
     @IBAction func setAsDefaultTapped(_ sender: Any) {
-        self.delegate?.didSetDefaultStyle(self.defaultTextStyleManager.textStyleInfo)
-        self.resetCustomInfo()
-        let alertController = UIAlertController.init(title: "", message: "SetAsDefaultMessage".localized, preferredStyle: UIAlertController.Style.alert)
-        let action1 = UIAlertAction.init(title: "No".localized, style: .cancel, handler: { (_) in
+        let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
+        self.delegate?.didSetDefaultStyle(defaultStyleItem)
+        let alertController = UIAlertController(title: "", message: "SetAsDefaultMessage".localized, preferredStyle: UIAlertController.Style.alert)
+        let action1 = UIAlertAction(title: "No".localized, style: .cancel, handler: { (_) in
         })
         alertController.addAction(action1)
 
         let action2 = UIAlertAction.init(title: "Yes".localized, style: UIAlertAction.Style.default, handler: { (_) in
             var fontInfoDict: [String: String] = [:]
-            fontInfoDict[FTFontStorage.fontNameKey] = self.defaultTextStyleManager.textStyleInfo.fontName
-            fontInfoDict[FTFontStorage.fontStyleKey] = self.defaultTextStyleManager.textStyleInfo.fontFamily
-            fontInfoDict[FTFontStorage.fontSizeKey] = String(self.defaultTextStyleManager.textStyleInfo.fontSize)
-            fontInfoDict[FTFontStorage.textColorKey] = self.defaultTextStyleManager.textStyleInfo.textColor
-            fontInfoDict[FTFontStorage.isUnderlinedKey] = self.defaultTextStyleManager.textStyleInfo.isUnderLined ? "1" : "0"
-            fontInfoDict[FTFontStorage.isLineSpaceEnabledKey] = self.defaultTextStyleManager.textStyleInfo.isAutoLineSpace ? "1" : "0"
-            fontInfoDict[FTFontStorage.lineSpaceKey] = String(self.defaultTextStyleManager.textStyleInfo.lineSpace)
-            fontInfoDict[FTFontStorage.isStrikeThroughKey] = self.defaultTextStyleManager.textStyleInfo.strikeThrough ? "1" : "0"
-            fontInfoDict[FTFontStorage.textAlignmentKey] = String(self.defaultTextStyleManager.textStyleInfo.alignment)
+            defaultStyleItem.alignment = self.currentAlignment.rawValue
+            defaultStyleItem.isAutoLineSpace = self.isAutoLineSpaceEnabled
+            defaultStyleItem.lineSpace = self.currentLineSpace
+
+            fontInfoDict[FTFontStorage.fontNameKey] = defaultStyleItem.fontName
+            fontInfoDict[FTFontStorage.fontStyleKey] = defaultStyleItem.fontFamily
+            fontInfoDict[FTFontStorage.fontSizeKey] = String(defaultStyleItem.fontSize)
+            fontInfoDict[FTFontStorage.textColorKey] = defaultStyleItem.textColor
+            fontInfoDict[FTFontStorage.isUnderlinedKey] = defaultStyleItem.isUnderLined ? "1" : "0"
+            fontInfoDict[FTFontStorage.isLineSpaceEnabledKey] = defaultStyleItem.isAutoLineSpace ? "1" : "0"
+            fontInfoDict[FTFontStorage.lineSpaceKey] = String(defaultStyleItem.lineSpace)
+            fontInfoDict[FTFontStorage.isStrikeThroughKey] = defaultStyleItem.strikeThrough ? "1" : "0"
+            fontInfoDict[FTFontStorage.textAlignmentKey] = String(defaultStyleItem.alignment)
             FTUserDefaults.saveDefaultFontForAll(fontInfoDict)
         })
         alertController.addAction(action2)
@@ -446,13 +450,6 @@ extension FTNewTextStyleViewController {
             }
         } else {
             controller?.present(alertController, animated: true, completion: nil)
-        }
-    }
-
-    private func resetCustomInfo() {
-        if let tempFont = UIFont(name: self.defaultTextStyleManager.textStyleInfo.fontName, size: CGFloat(self.defaultTextStyleManager.textStyleInfo.fontSize)) {
-            self.defaultTextStyleManager.textStyleInfo.fontName = tempFont.fontName
-            self.defaultTextStyleManager.textStyleInfo.fontFamily = tempFont.familyName
         }
     }
 }
@@ -472,35 +469,34 @@ extension FTNewTextStyleViewController: FTTextSelectionChangeDelegate {
             }
 
             let fontPointSize = font.pointSize/scale
-            textFontStyle?.fontFamily = font.familyName
-            textFontStyle?.fontName = font.fontName
-            textFontStyle?.fontSize = Int(fontPointSize)
-
-            defaultTextStyleManager.textStyleInfo.displayName = font.familyName
-            defaultTextStyleManager.textStyleInfo.fontName = font.fontName
-            defaultTextStyleManager.textStyleInfo.fontSize = Int(fontPointSize)
+            textFontStyle.fontFamily = font.familyName
+            textFontStyle.fontName = font.fontName
+            textFontStyle.fontSize = Int(fontPointSize)
         }
         if let fontColor = attributes[NSAttributedString.Key.foregroundColor] as? UIColor {
-            textFontStyle?.textColor = fontColor.hexString
-            defaultTextStyleManager.textStyleInfo.textColor = fontColor.hexString
+            textFontStyle.textColor = fontColor.hexString
         }
         if let isUnderLined = attributes[NSAttributedString.Key.underlineStyle] as? Int {
-            textFontStyle?.isUnderLined = (isUnderLined == 1)
+            textFontStyle.isUnderLined = (isUnderLined == 1)
         }
         if let isStrikeThrough = attributes[NSAttributedString.Key.strikethroughStyle] as? Int {
-            textFontStyle?.strikeThrough = (isStrikeThrough == 1)
+            textFontStyle.strikeThrough = (isStrikeThrough == 1)
         }
 
         if let paragrapghStyle = attributes[NSAttributedString.Key.paragraphStyle] as? NSParagraphStyle {
             let lineSpace = Int(paragrapghStyle.lineSpacing)
-            lineSpaceStepper?.updateInitialValue(Int(lineSpace))
-            lblLineSpace?.text = "\(Int(lineSpace)) pt"
+            lineSpaceStepper?.updateInitialValue(lineSpace)
+            self.currentLineSpace = lineSpace
+            lblLineSpace?.text = "\(lineSpace) pt"
            let alignment = paragrapghStyle.alignment
             highLightBackgroundForTextAlignmentButtons(alignment: alignment)
-            textFontStyle?.lineSpace = lineSpace
-            textFontStyle?.alignment = alignment.rawValue
+            self.currentAlignment = alignment
         }
 
+        let isLineSpaceAttrKey = NSAttributedString.Key(rawValue: FTFontStorage.isLineSpaceEnabledKey)
+        if let isLineSpaceEnabled = attributes[isLineSpaceAttrKey] as? Int {
+            self.isAutoLineSpaceEnabled = (isLineSpaceEnabled == 1)
+        }
         reloadColorsCollectionIfRequired()
 
         self.classForCoder.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.applyAttributesStyle), object: self)
