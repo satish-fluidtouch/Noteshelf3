@@ -79,7 +79,7 @@ class FTTextStyleManager: NSObject {
             let updatedStyles = self.fetchTextStylesFromPlist()
             
             var dict = [[String: Any]]()
-            updatedStyles?.styles.forEach({ style in
+            updatedStyles.styles.forEach({ style in
                 dict.append(style.dictionaryRepresentation())
             })
             
@@ -88,14 +88,14 @@ class FTTextStyleManager: NSObject {
             if let ver =  NSDictionary(contentsOfFile: pathNew)?.value(forKey: key_Version) as? Int{
                 newVersion = ver
             }
-            var mainDict = updatedStyles?.dictionaryRepresentation()
-            mainDict?[key_Styles] = dict
-            mainDict?[key_Version] = newVersion
-            try? (mainDict as? NSDictionary)?.write(to: textStylePlistUrl)
+            var mainDict = updatedStyles.dictionaryRepresentation()
+            mainDict[key_Styles] = dict
+            mainDict[key_Version] = newVersion
+            try? (mainDict as NSDictionary).write(to: textStylePlistUrl)
         }
     }
     
-    func fetchTextStylesFromPlist() -> FTTextStyle? {
+    func fetchTextStylesFromPlist() -> FTTextStyle {
         let path = textStylePlistUrl
         do {
             let data = try Data(contentsOf: path)
@@ -104,8 +104,8 @@ class FTTextStyleManager: NSObject {
             return textStyles
         } catch {
             print("Local Filtering File Read Error::",error.localizedDescription)
+            fatalError("Programmer error, unable to find text styles")
         }
-        return nil
     }
     
     private func fetchResourceTextStylesFromPlist() -> FTTextStyle? {
@@ -124,7 +124,7 @@ class FTTextStyleManager: NSObject {
     func insertNewTextStyle(_ style: FTTextStyleItem) {
         let textItem = self.fetchTextStylesFromPlist()
         var dict = [[String: Any]]()
-        textItem?.styles.forEach({ item in
+        textItem.styles.forEach({ item in
             dict.append(item.dictionaryRepresentation())
         })
         
@@ -133,11 +133,12 @@ class FTTextStyleManager: NSObject {
         }
         
         if style.displayName == key_Default_Style_Name {
-            if let filteredStyles = textItem?.styles.filter({$0.displayName.contains(key_Default_Style_Name)}), filteredStyles.count > 0 {
+            let filteredStyles = textItem.styles.filter({$0.displayName.contains(key_Default_Style_Name)})
+            if !filteredStyles.isEmpty {
                 for (idx,_) in filteredStyles.enumerated() {
                     let modifiedDisplayName = "\(key_Default_Style_Name) \(idx + 1)"
-                    let matchedItems = textItem?.styles.filter({$0.displayName.contains(modifiedDisplayName)})
-                    if matchedItems?.isEmpty ?? false {
+                    let matchedItems = textItem.styles.filter({$0.displayName.contains(modifiedDisplayName)})
+                    if matchedItems.isEmpty {
                         style.displayName = modifiedDisplayName
                         break
                     }
@@ -145,50 +146,48 @@ class FTTextStyleManager: NSObject {
             }
         }
         dict.append(style.dictionaryRepresentation())
-        var mainDict = textItem?.dictionaryRepresentation()
-        mainDict?[key_Styles] = dict
-        try? (mainDict as? NSDictionary)?.write(to: textStylePlistUrl)
+        var mainDict = textItem.dictionaryRepresentation()
+        mainDict[key_Styles] = dict
+        try? (mainDict as NSDictionary).write(to: textStylePlistUrl)
     }
     
     func fetchTextStyleForId(_ id: String) -> FTTextStyleItem? {
-        let styles = self.fetchTextStylesFromPlist()?.styles
-        let filteredStyle = styles?.filter({$0.fontId == id}).first
+        let styles = self.fetchTextStylesFromPlist().styles
+        let filteredStyle = styles.filter({$0.fontId == id}).first
         return filteredStyle
     }
     
     func updateTextStyle(_ style: FTTextStyleItem) {
         let textItem = self.fetchTextStylesFromPlist()
-        var styles = textItem?.styles
-        if let updatedIndex = styles?.firstIndex(where: {$0.fontId == style.fontId}) {
+        if let updatedIndex = textItem.styles.firstIndex(where: {$0.fontId == style.fontId}) {
             if updatedIndex != NSNotFound {
-                styles?.remove(at: updatedIndex)
+                textItem.styles.remove(at: updatedIndex)
             }
-            styles?.insert(style, at: updatedIndex)
+            textItem.styles.insert(style, at: updatedIndex)
         }
         var dict = [[String: Any]]()
-        styles?.forEach({ item in
+        textItem.styles.forEach({ item in
             dict.append(item.dictionaryRepresentation())
         })
-        var mainDict = textItem?.dictionaryRepresentation()
-        mainDict?[key_Styles] = dict
-        try? (mainDict as? NSDictionary)?.write(to: textStylePlistUrl)
+        var mainDict = textItem.dictionaryRepresentation()
+        mainDict[key_Styles] = dict
+        try? (mainDict as NSDictionary).write(to: textStylePlistUrl)
     }
     
     func deleteTextStyle(_ style: FTTextStyleItem) {
         let textItem = self.fetchTextStylesFromPlist()
-        var styles = textItem?.styles
-        if let updatedIndex = styles?.firstIndex(where: {$0.fontId == style.fontId}) {
+        if let updatedIndex = textItem.styles.firstIndex(where: {$0.fontId == style.fontId}) {
             if updatedIndex != NSNotFound {
-                styles?.remove(at: updatedIndex)
+                textItem.styles.remove(at: updatedIndex)
             }
         }
         var dict = [[String: Any]]()
-        styles?.forEach({ item in
+        textItem.styles.forEach({ item in
             dict.append(item.dictionaryRepresentation())
         })
-        var mainDict = textItem?.dictionaryRepresentation()
-        mainDict?[key_Styles] = dict
-        try? (mainDict as? NSDictionary)?.write(to: textStylePlistUrl)
+        var mainDict = textItem.dictionaryRepresentation()
+        mainDict[key_Styles] = dict
+        try? (mainDict as NSDictionary).write(to: textStylePlistUrl)
     }
     
     func resetPresetTextStyles() {

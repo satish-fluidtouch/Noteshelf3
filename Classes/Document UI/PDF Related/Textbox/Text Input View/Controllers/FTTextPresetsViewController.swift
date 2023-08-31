@@ -20,13 +20,13 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     @IBOutlet weak var presetTableView: UITableView?
     
-    var textStyle: FTTextStyle?
+    var textStyle = FTTextStyleManager.shared.fetchTextStylesFromPlist()
     weak var delegate: FTTextPresetSelectedDelegate?
     var lastSelectedIndex: Int?
     var attributes: [NSAttributedString.Key: Any]?
     var scale: CGFloat = 1.0
     private let viewmodel = FTTextPresetViewModel()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         addItemsInNavigationBar()
@@ -57,7 +57,6 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
         guard let textPresetsVC = storyboard.instantiateViewController(withIdentifier: "FTTextPresetsViewController") as? FTTextPresetsViewController else {
             fatalError("FTTextPresetsViewController not found")
         }
-        
         textPresetsVC.ftPresentationDelegate.source = sourceView
         textPresetsVC.delegate = delegate
         textPresetsVC.scale = scale
@@ -87,7 +86,16 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
 }
 
 extension FTTextPresetsViewController {
-    private func navigateToNewStyleVC(_ textStyle: FTTextStyleItem? = nil) {
+    private func navigateToNewStyleVC(_ textStyle: FTTextStyleItem? = nil, mode: FTTextStyleScreenMode) {
+        let textPresetsVC = self.fetchPreparedNewStyleVcToSow()
+        textPresetsVC.textStyleMode = mode
+        if let style = textStyle {
+            textPresetsVC.textFontStyle = style
+        }
+        self.navigationController?.pushViewController(textPresetsVC, animated: true)
+    }
+
+    private func fetchPreparedNewStyleVcToSow() -> FTNewTextStyleViewController {
         let storyboard = UIStoryboard.init(name: "FTTextInputUI", bundle: nil)
         guard let textPresetsVC = storyboard.instantiateViewController(withIdentifier: "FTNewTextStyleViewController") as? FTNewTextStyleViewController else {
             fatalError("FTTextPresetsViewController not found")
@@ -97,13 +105,19 @@ extension FTTextPresetsViewController {
         textPresetsVC.attributes = attributes
         let textToolBarVC = (delegate as? FTTextToolBarViewController)
         textToolBarVC?.textHighLightSyleDelegate = textPresetsVC as? any FTStyleSelectionDelegate
-        textPresetsVC.iscomeFromTextPreset = true
-        if let style = textStyle {
-            textPresetsVC.textFontStyle = style
-        }
         let shadowColor = UIColor(hexString: "#000000")
         textPresetsVC.view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 60.0, spread: 0)
-        self.navigationController?.pushViewController(textPresetsVC, animated: true)
+        return textPresetsVC
+    }
+
+    private func presentNewStyleVcAsFormsheet(mode: FTTextStyleScreenMode) {
+        let textPresetsVC = self.fetchPreparedNewStyleVcToSow()
+        textPresetsVC.textStyleMode = mode
+        let presentingVc = self.presentingViewController ?? self
+        self.dismiss(animated: true) {
+            self.delegate?.dismissKeyboard()
+            presentingVc.ftPresentFormsheet(vcToPresent: textPresetsVC,hideNavBar: false)
+        }
     }
 
     @objc func didTappedOnEdit(sender: UIBarButtonItem) {
@@ -146,16 +160,14 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? textStyle?.styles.count ?? 0 : 1
+        return section == 0 ? textStyle.styles.count : 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FTPresetsStyleCell", for: indexPath)
-            guard let styles = textStyle else { return cell }
-
             if let presetCell = cell as? FTPresetsStyleCell {
-                let style = styles.styles[indexPath.row]
+                let style = textStyle.styles[indexPath.row]
                 presetCell.updatePresetWithStyle(style)
             }
             return cell
@@ -166,19 +178,32 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let selectedStyle = textStyle?.styles[indexPath.row] else {return}
-
-        if !tableView.isEditing && indexPath.section == 0 {
-            self.delegate?.didSelectedPresetStyleId(selectedStyle)
-            self.dismiss(animated: true)
+        if textStyle.styles.count < indexPath.row {
             return
         }
-        if indexPath.section == 0 {
-            navigateToNewStyleVC(selectedStyle)
+
+        var selectedStyle = textStyle.styles[indexPath.row]
+        var isAddMode = false
+        if tableView.cellForRow(at: indexPath) is FTAddNewTextStyleCell {
+            isAddMode = true
+            if let index = lastSelectedIndex {
+                selectedStyle = textStyle.styles[index]
+            }
         }
-      
-        if indexPath.section == 1 {
-            navigateToNewStyleVC()
+
+        if tableView.isEditing {
+            if indexPath.section == 0 {
+                self.navigateToNewStyleVC(selectedStyle, mode: .presetEdit)
+            } else if isAddMode {
+                self.navigateToNewStyleVC(selectedStyle, mode: .presetEditAdd)
+            }
+        } else {
+            if indexPath.section == 0 {
+                self.delegate?.didSelectedPresetStyleId(selectedStyle)
+                self.dismiss(animated: true)
+            } else if isAddMode {
+                self.presentNewStyleVcAsFormsheet(mode: .presetXclusiveAdd)
+            }
         }
     }
     
@@ -191,9 +216,8 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if indexPath.section == 0 {
-            guard let styles = textStyle else { return .none }
-            let style = styles.styles[indexPath.row]
+        if indexPath.section == 0, indexPath.row < textStyle.styles.count {
+            let style = textStyle.styles[indexPath.row]
             if style.isDefault {
                 return .none
             }
@@ -208,11 +232,10 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if destinationIndexPath.section == 0 &&  sourceIndexPath.section == 0 {
-            guard let textStyleItem = textStyle else { return }
-            let style = textStyleItem.styles[sourceIndexPath.row]
-            textStyleItem.styles.remove(at: sourceIndexPath.row)
-            textStyleItem.styles.insert(style, at: destinationIndexPath.row)
-            FTTextStyleManager.shared.updateOrderOfStyles(textStyleItem)
+            let style = textStyle.styles[sourceIndexPath.row]
+            textStyle.styles.remove(at: sourceIndexPath.row)
+            textStyle.styles.insert(style, at: destinationIndexPath.row)
+            FTTextStyleManager.shared.updateOrderOfStyles(textStyle)
         }else{
             presetTableView?.reloadData()
         }
@@ -224,12 +247,11 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            if let style = textStyle?.styles[indexPath.row] {
-                FTTextStyleManager.shared.deleteTextStyle(style)
-                self.textStyle?.styles.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                self.delegate?.reloadStylesStackView()
-            }
+            let style = textStyle.styles[indexPath.row]
+            FTTextStyleManager.shared.deleteTextStyle(style)
+            self.textStyle.styles.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self.delegate?.reloadStylesStackView()
         }
     }
     
@@ -238,18 +260,18 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let selectedStyle = textStyle?.styles[indexPath.row] else {return nil}
+        let selectedStyle = textStyle.styles[indexPath.row]
         if selectedStyle.isDefault {
             return nil
         }
         let editAction = UIContextualAction(style: .normal, title: viewmodel.editpreset) { action, vw, success in
-            self.navigateToNewStyleVC(selectedStyle)
+            self.navigateToNewStyleVC(selectedStyle, mode: .presetEdit)
         }
         editAction.backgroundColor = UIColor.appColor(.accent)
        
         let deleteAction = UIContextualAction(style: .destructive, title:  viewmodel.deletepreset) { action, vw, success in
             FTTextStyleManager.shared.deleteTextStyle(selectedStyle)
-            self.textStyle?.styles.remove(at: indexPath.row)
+            self.textStyle.styles.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
             self.delegate?.reloadStylesStackView()
         }
@@ -266,8 +288,7 @@ extension FTTextPresetsViewController: FTStyleSelectionDelegate {
     func didHighLightSelectedStyle(attr: [NSAttributedString.Key : Any]?, scale: CGFloat) {
         guard let attributes = attr else { return }
         let style = FTTextStyleItem().textStyleFromAttributes(attributes, scale: scale)
-        let styles = textStyle?.styles
-        if let index = styles?.firstIndex(where: {$0.isEqual(style)}) {
+        if let index =  textStyle.styles.firstIndex(where: {$0.isEqual(style)}) {
             if let idx = lastSelectedIndex {
                 if let cell = self.presetTableView?.cellForRow(at: IndexPath(item: idx, section: 0)) {
                     cell.isSelected = false

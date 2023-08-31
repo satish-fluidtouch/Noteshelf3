@@ -114,19 +114,13 @@ class FTTextStyleCompactViewController: UIInputViewController {
         loadTextStyles()
     }
     
-    private func fetchStyles() -> FTTextStyle? {
-        guard let textStyles = FTTextStyleManager.shared.fetchTextStylesFromPlist() else {
-            return nil
-        }
+    private func fetchStyles() -> FTTextStyle {
+        let textStyles = FTTextStyleManager.shared.fetchTextStylesFromPlist()
         return textStyles
     }
     
     private func loadTextStyles() {
-        
-        guard let textStyles = fetchStyles() else {
-            return
-        }
-        
+         let textStyles = fetchStyles()
         let styles = textStyles.styles.prefix(Int(3))
         if styles.count > 0 {
             stylesStackView?.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -219,9 +213,7 @@ class FTTextStyleCompactViewController: UIInputViewController {
     
     func didHighLightSelectedStyle(attr: [NSAttributedString.Key : Any]?, scale: CGFloat) {
         guard let attributes = attr else { return }
-        guard let textStyles = fetchStyles() else {
-            return
-        }
+        let textStyles = fetchStyles() 
         let styles = textStyles.styles.prefix(3)
         let style = FTTextStyleItem().textStyleFromAttributes(attributes, scale: scale)
         if let index = styles.firstIndex(where: {$0.isEqual(style)}) {
@@ -255,9 +247,7 @@ class FTTextStyleCompactViewController: UIInputViewController {
 //MARK:- Action Handlers
 extension FTTextStyleCompactViewController {
     @objc func didSelectedStyle(_ sender: UIButton) {
-        guard let textStyles = fetchStyles() else {
-            return
-        }
+        let textStyles = fetchStyles()
         highLightSelectedStyle(sender)
         let style = textStyles.styles[sender.tag]
         self.delegate?.didSelectFontStyle(style)

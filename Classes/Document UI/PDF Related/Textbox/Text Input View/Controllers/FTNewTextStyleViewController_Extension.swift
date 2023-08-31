@@ -38,7 +38,7 @@ extension FTNewTextStyleViewController : FTSystemFontPickerDelegate, UIFontPicke
 extension FTNewTextStyleViewController: FTTextColorCollectionViewDelegate {
     func didSelectTextColor(_ colorStr: String) {
         self.textFontStyle.textColor = colorStr
-        if isModifyText {
+        if self.textStyleMode == .defaultView {
             shouldApplyAttributes = true
         }
         applyFontChanges()

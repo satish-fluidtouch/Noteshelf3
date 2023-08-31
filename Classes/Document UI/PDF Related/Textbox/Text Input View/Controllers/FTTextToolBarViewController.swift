@@ -120,25 +120,16 @@ class FTTextToolBarViewController: UIViewController {
 //MARK:- Private methods
 
 extension FTTextToolBarViewController {
-    
     private func loadTextStyles() {
-        
-            updateElementsInTextInputAccessoryView()
-        
-        guard let textStyles = fetchStyles() else {
-            return
-        }
-        
+        updateElementsInTextInputAccessoryView()
+         let textStyles = fetchStyles()
         var showCount = textStyles.styles.count
-        
         if showCount >= 5 {
             showCount = 5
         }
-        
         if showCount < 2 {
             showCount = 2
         }
-        
         let styles = textStyles.styles.prefix(Int(showCount))
         if styles.count > 0 {
             textStyleView?.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -219,9 +210,7 @@ extension FTTextToolBarViewController {
         self.attributes = attributes
         self.scale = scale
         if let attr = attributes {
-            guard let textStyles = fetchStyles() else {
-                return
-            }
+            let textStyles = fetchStyles() 
             //Highlight select font style in preset View controller
             self.textHighLightSyleDelegate?.didHighLightSelectedStyle(attr: attr, scale: scale)
             
@@ -301,10 +290,8 @@ extension FTTextToolBarViewController {
         textBackGroundColorBtn?.applyTintColorTo(withColor: colorToSet)
     }
     
-    private func fetchStyles() -> FTTextStyle? {
-        guard let textStyles = FTTextStyleManager.shared.fetchTextStylesFromPlist() else {
-            return nil
-        }
+    private func fetchStyles() -> FTTextStyle {
+        let textStyles = FTTextStyleManager.shared.fetchTextStylesFromPlist()
         return textStyles
     }
     
@@ -396,9 +383,7 @@ extension FTTextToolBarViewController {
 extension FTTextToolBarViewController {
     
     @objc func didSelectedStyle(_ sender: UIButton) {
-        guard let textStyles = fetchStyles() else {
-            return
-        }
+         let textStyles = fetchStyles()
         resetBackgroundColorForTextStyles()
         sender.isSelected = true
         let style = textStyles.styles[sender.tag]
