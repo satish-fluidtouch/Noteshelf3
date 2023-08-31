@@ -16,6 +16,7 @@ import FTNewNotebook
 extension Notification.Name {
     static let didChangeCurrentPageNotification = Notification.Name(rawValue: "didChangeCurrentPageNotification")
     static let validationFinderButtonNotification = Notification.Name(rawValue: "validationFinderButtonNotification")
+    static let shouldReloadFinderNotification = Notification.Name(rawValue: "shouldReloadFinderNotification")
 }
 
 fileprivate typealias FinderDataSource = UICollectionViewDiffableDataSource<FTFinderSectionType, AnyHashable>
@@ -756,7 +757,10 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.handlePageRecognitionUpdate(_:)), name: NSNotification.Name(rawValue: FTRecognitionInfoDidUpdateNotification), object: nil)
-        
+
+        NotificationCenter.default.addObserver(forName: .shouldReloadFinderNotification, object: nil, queue: nil) { [weak self] (notification) in
+            self?.reloadData()
+        }
         NotificationCenter.default.addObserver(forName: .didChangeCurrentPageNotification, object: nil, queue: nil) { [weak self] (notification) in
             var currentSessionID = ""
             if let sessionIdentifier = self?.view.window?.windowScene?.session.persistentIdentifier {

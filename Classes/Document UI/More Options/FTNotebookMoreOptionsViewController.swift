@@ -12,7 +12,6 @@ import FTCommon
 
 enum FTNotebookBasicOption: String {
     case bookMark
-    case saveToLibrary
     case saveAsTemplate
     case present
     case zoomBox
@@ -231,8 +230,6 @@ extension FTNotebookMoreOptionsViewController: UITableViewDelegate, UITableViewD
             self.delegate?.didTapBasicOption(option: .customizeToolBar, with: page, controller: self)
         case is FTNotebookOptionTag:
             self.performSegue(withIdentifier: "showTags", sender: nil)
-        case is FTNotebookOptionSaveToLibrary:
-            self.delegate?.didTapBasicOption(option: .saveToLibrary, with: page, controller: self)
         case is FTNotebookOptionPresentMode:
             self.delegate?.didTapBasicOption(option: .present, with: page, controller: self)
         case is FTNotebookOptionSettings:

@@ -35,7 +35,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
                         if viewModel.showNewNoteView,
-                           geometry.size.width > 300,
+                           geometry.size.width > 300 , (!viewModel.isInHomeMode && geometry.size.width > 450),
                            viewModel.canShowCreateNBButtons {
                             FTShelfTopSectionView()
                                 .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)
@@ -103,17 +103,6 @@ struct FTShelfView: View,FTShelfBaseView {
             return FTNoResultsView(noResultsImageName: "noUnCategorizedIcon",
                                    title: NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes"),
                                    description: NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here."))
-        }
-    }
-    
-    private func showMinHeight(geometrySize:CGFloat) -> CGFloat{
-        let isInPortrait = UIScreen.main.bounds.height > UIScreen.main.bounds.width
-        if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 800 ? 218 : (geometrySize > 500 ? 340 : 495)
-        }else if !viewModel.shouldShowGetStartedInfo {
-            return geometrySize > 700 ? 68 : (geometrySize < 500 ? 220 : 96)
-        } else {
-            return geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) ? 96 : 68
         }
     }
 }
