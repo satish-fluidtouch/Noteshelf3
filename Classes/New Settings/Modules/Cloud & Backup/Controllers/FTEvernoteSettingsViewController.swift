@@ -168,7 +168,7 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
 
     // MARK: - UITableViewDelegate
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-         return FTSettingsConstants.rowHeight
+         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
