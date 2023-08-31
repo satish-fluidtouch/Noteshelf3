@@ -339,6 +339,12 @@ extension FTTabViewController: FTShelfTagsPageDelegate, FTShelfBookmarksPageDele
 
 // MARK: - FTStoreContainerDelegate
 extension FTTabViewController: FTStoreContainerDelegate {
+    func storeController(_ controller: UIViewController, menuShown isMenuShown: Bool) {
+        if let splitContorller = controller.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = true;
+        }
+    }
+
     func createNotebookFor(url: URL, onCompletion: @escaping ((Error?) -> Void)) {
 
     }

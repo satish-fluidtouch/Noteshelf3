@@ -19,6 +19,7 @@ public protocol FTStoreContainerDelegate: AnyObject {
     func createNotebookForTemplate(url: URL, isLandscape: Bool, isDark: Bool)
     func createNotebookForDairy(fileName: String, title: String, startDate: Date, endDate: Date, coverImage: UIImage, isLandScape: Bool)
     func storeController(_ controller: UIViewController,showIAPAlert feature: String?);
+    func storeController(_ controller: UIViewController,menuShown isMenuShown: Bool);
 }
 
 public class FTStoreContainerViewController: UIViewController {
@@ -230,6 +231,10 @@ extension FTStoreContainerViewController: FTSegmentedControlDelegate {
 }
 
 extension FTStoreContainerViewController: FTStoreLibraryDelegate {
+    public func libraryController(_ contmroller: UIViewController, menuShown isMenuShown: Bool) {
+        self.delegate?.storeController(self, menuShown: isMenuShown)
+    }
+
     public func libraryController(_ contmroller: UIViewController, showIAPAlert feature: String?) {
         self.delegate?.storeController(contmroller, showIAPAlert: feature);
     }
@@ -250,6 +255,10 @@ extension FTStoreContainerViewController: FTStoreLibraryDelegate {
 }
 
 extension FTStoreContainerViewController: FTStoreCustomDelegate {
+    public func customController(_ contmroller: UIViewController, menuShown isMenuShown: Bool) {
+        self.delegate?.storeController(self, menuShown: isMenuShown)
+    }
+
     public func customController(_ contmroller: UIViewController, showIAPAlert feature: String?) {
         self.delegate?.storeController(contmroller, showIAPAlert: feature);
     }
