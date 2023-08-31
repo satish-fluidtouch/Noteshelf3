@@ -154,17 +154,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="754"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="798"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q84-gf-X3D">
-                                <rect key="frame" x="0.0" y="774" width="344" height="44"/>
+                                <rect key="frame" x="0.0" y="818" width="344" height="0.0"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="0.0"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -183,7 +183,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="118" y="0.0" width="108" height="44"/>
+                                        <rect key="frame" x="118" y="0.0" width="108" height="0.0"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -202,7 +202,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="236" y="0.0" width="108" height="44"/>
+                                        <rect key="frame" x="236" y="0.0" width="108" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Copy To Clipboard">
@@ -222,13 +222,13 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="K6O-bs-QgG" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="6Zz-xp-yTF"/>
-                                    <constraint firstAttribute="height" constant="44" id="7Gf-dp-a3r"/>
+                                    <constraint firstAttribute="height" id="7Gf-dp-a3r"/>
                                     <constraint firstItem="YBF-iL-iDT" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="mLg-jZ-APk"/>
                                     <constraint firstItem="us1-QN-E6H" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="ysi-28-NYa"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE">
-                                <rect key="frame" x="354" y="774" width="39" height="44"/>
+                                <rect key="frame" x="354" y="818" width="39" height="0.0"/>
                                 <color key="backgroundColor" name="sidebarBG"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="2yM-T8-1j6"/>
