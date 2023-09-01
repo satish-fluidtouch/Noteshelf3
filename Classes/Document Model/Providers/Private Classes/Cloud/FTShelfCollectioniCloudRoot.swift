@@ -11,21 +11,21 @@ import FTCommon
 
 final class FTShelfCollectioniCloudRoot: NSObject {
     private class MetadataContainer {
-        internal init(ns2booksMetadata: [NSMetadataItem], ns2ShelfsMetadata: [NSMetadataItem], ns2IndexMetadata: [NSMetadataItem], ns3booksMetadata: [NSMetadataItem], ns3ShelfsMetadata: [NSMetadataItem]) {
+        internal init(ns2booksMetadata: [NSMetadataItem], ns2ShelfsMetadata: [NSMetadataItem], ns3IndexMetadata: [NSMetadataItem], ns3booksMetadata: [NSMetadataItem], ns3ShelfsMetadata: [NSMetadataItem]) {
             self.ns2booksMetadata = ns2booksMetadata
             self.ns2ShelfsMetadata = ns2ShelfsMetadata
-            self.ns2IndexMetadata = ns2IndexMetadata
+            self.ns3IndexMetadata = ns3IndexMetadata
             self.ns3booksMetadata = ns3booksMetadata
             self.ns3ShelfsMetadata = ns3ShelfsMetadata
         }
 
         let ns2booksMetadata: [NSMetadataItem]
         let ns2ShelfsMetadata: [NSMetadataItem]
-        let ns2IndexMetadata: [NSMetadataItem]
 
         // NS3 Meta data items
         let ns3booksMetadata: [NSMetadataItem]
         let ns3ShelfsMetadata: [NSMetadataItem]
+        let ns3IndexMetadata: [NSMetadataItem]
 
     }
 
@@ -73,7 +73,7 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         // NS2
         self.ns2Collection.addMetadataItemsToCache(metadata.ns2ShelfsMetadata, isBuildingCache: isBuildingCache)
         self.ns2Collection.addMetadataItemsToCache(metadata.ns2booksMetadata, isBuildingCache: isBuildingCache)
-        self.ns2Collection.addMetadataItemsToCache(metadata.ns2IndexMetadata, isBuildingCache: isBuildingCache)
+        self.ns2Collection.addMetadataItemsToCache(metadata.ns3IndexMetadata, isBuildingCache: isBuildingCache)
 
         // NS3
         self.ns3Collection.addMetadataItemsToCache(metadata.ns3ShelfsMetadata, isBuildingCache: isBuildingCache)
@@ -85,7 +85,7 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         // NS2
         self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2ShelfsMetadata)
         self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2booksMetadata)
-        self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2IndexMetadata)
+        self.ns2Collection.removeMetadataItemsFromCache(metadata.ns3IndexMetadata)
 
         // NS3
         self.ns3Collection.removeMetadataItemsFromCache(metadata.ns3ShelfsMetadata)
@@ -98,11 +98,11 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         // NS2
         self.ns2Collection.updateMetadataItemsInCache(metadata.ns2ShelfsMetadata)
         self.ns2Collection.updateMetadataItemsInCache(metadata.ns2booksMetadata)
-        self.ns2Collection.updateMetadataItemsInCache(metadata.ns2IndexMetadata)
 
         // NS3
         self.ns3Collection.updateMetadataItemsInCache(metadata.ns3ShelfsMetadata)
         self.ns3Collection.updateMetadataItemsInCache(metadata.ns3booksMetadata)
+        self.ns3Collection.updateMetadataItemsInCache(metadata.ns3IndexMetadata)
 
     }
 }
@@ -113,20 +113,17 @@ private extension FTShelfCollectioniCloudRoot {
         // NS2 Meta data items
         var ns2booksMetadata = [NSMetadataItem]()
         var ns2ShelfsMetadata = [NSMetadataItem]()
-        var ns2IndexMetadata = [NSMetadataItem]()
 
         // NS3 Meta data items
         var ns3booksMetadata = [NSMetadataItem]()
         var ns3ShelfsMetadata = [NSMetadataItem]()
+        var ns3IndexMetadata = [NSMetadataItem]()
 
         for metadata in metadataItems {
             if ns2Collection.belongsToDocumentsFolder(metadata.URL()) {
                 switch metadata.URL().pathExtension {
                 case FTFileExtension.shelf:
                     ns2ShelfsMetadata.append(metadata)
-
-                case FTFileExtension.sortIndex:
-                    ns2IndexMetadata.append(metadata)
 
                 case FTFileExtension.ns2:
                     ns2booksMetadata.append(metadata)
@@ -142,6 +139,9 @@ private extension FTShelfCollectioniCloudRoot {
                 case FTFileExtension.ns3:
                     ns3booksMetadata.append(metadata)
 
+                case FTFileExtension.sortIndex:
+                    ns3IndexMetadata.append(metadata)
+
                 default:
                     debugLog("🌤️ Unhandled NS3 metadata item for \(metadata.URL().pathExtension)")
                 }
@@ -152,7 +152,7 @@ private extension FTShelfCollectioniCloudRoot {
 
         return MetadataContainer(ns2booksMetadata: ns2booksMetadata,
                                  ns2ShelfsMetadata: ns2ShelfsMetadata,
-                                 ns2IndexMetadata: ns2IndexMetadata,
+                                 ns3IndexMetadata: ns3IndexMetadata,
                                  ns3booksMetadata: ns3booksMetadata,
                                  ns3ShelfsMetadata: ns3ShelfsMetadata)
     }

@@ -45,11 +45,4 @@ public extension URL {
         }
         return false
     }
-
-    var isNS3Book: Bool {
-        if self.pathExtension == FTFileExtension.ns3 {
-            return true
-        }
-        return false
-    }
 }
