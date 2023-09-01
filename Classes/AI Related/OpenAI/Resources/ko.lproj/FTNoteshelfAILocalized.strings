@@ -46,3 +46,6 @@
 "noteshelf.ai.translateToKorean" = "한국어로 번역하기";
 "noteshelf.ai.translateToChineseSimplified" = "중국어(간체)로 번역하기";
 "noteshelf.ai.translateToChineseTraditional" = "중국어(번체)로 번역하기";
+
+"noteshelf.ai.noteshelfAILearnMore" = "가능한 것을 발견하세요.";
+"noteshelf.ai.noteshelfAIError" = "서버에 연결할 수 없습니다. 나중에 다시 시도하세요.";

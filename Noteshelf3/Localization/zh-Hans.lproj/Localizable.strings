@@ -710,31 +710,31 @@
 "ResetColorsTitle" = "重置颜色";
 "ResetColorsWarning" = "这将重置颜色调色板为出厂默认设置。";
 "ResetToDefault" = "恢复默认";
-"Resize" = "录音";
+"Resize" = "调整大小";
 "ResolveConflict" = "录音";
 "ResolveConflictMessage" = "录音进行中...";
 "Restore" = "恢复页面";
 "ResultsFor" = "结果为%@";
 "RetakeKey" = "3指向右滑动/向左滑动";
 "Right" = "发布以添加新页面";
-"Rotate" = "稍后提醒";
-"Rotate Page" = "删除";
+"Rotate" = "旋转";
+"Rotate Page" = "旋转页面";
 "Rotating" = "从最近删除";
 "SampleNotebook" = "重命名";
-"SaveAsTemplate" = "重命名%d个笔记本";
+"SaveAsTemplate" = "另存为模板";
 "SaveForFutureUse" = "重命名标签";
 "SaveImageChangesConfirmation" = "重命名...\n%d 的 %d";
 "SaveKey" = "必需";
 "SaveQuickNote" = "需要密码才能打开此笔记本";
 "Saving" = "需要支持双击的苹果铅笔。";
-"Scan" = "请更新您的应用程序到最新版本以打开此文档。";
-"ScanDocument" = "复位";
-"ScanDocument" = "重置";
+"Scan" = "扫描";
+"ScanDocument" = "扫描文件";
+"ScanDocument" = "扫描文件";
 "ScannerUnavailable" = "你想将你的颜色调色板重置为出厂设置吗？";
 "SchoolWorkApp" = "重置颜色";
-"Screenshot" = "这将恢复颜色调色板到出厂默认设置。";
-"Scrolling" = "恢复默认";
-"Search" = "调整大小";
+"Screenshot" = "截图";
+"Scrolling" = "滚动";
+"Search" = "搜索";
 "SearchPapersCovers" = "修改不同步。选择要保留的文档。";
 "SearchText" = "恢复";
 "SearchTitles" = "%@的结果";
@@ -768,7 +768,7 @@
 "SettingOptionTheme" = "外貌";
 "SettingShowDateOnShelf" = "在书架上显示日期";
 "Settings" = "设置";
-"SettingsApplePencil" = "苹果铅笔";
+"SettingsApplePencil" = "Apple铅笔";
 "SettingsGeneral" = "通用";
 "SettingsNoteShelfHelp" = "笔记架帮助";
 "SettingsRateOnTheAppstore" = "在App Store上评分";
@@ -864,7 +864,7 @@
 "Title&PageNo" = "标题和页码";
 "TransparentBand" = "透明带";
 "Trash" = "垃圾";
-"Trash" = "垃圾";
+"Trash" = "垃圾箱";
 "Travel" = "旅行与地点";
 "Travel" = "旅行与地点";
 "TurnOffAutoBackup" = "关闭自动备份";
@@ -953,6 +953,12 @@
 "bujoessentials" = "笔记本要点";
 "cancel" = "取消";
 "clipart404" = "服务器繁忙，请稍后重试。";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "创建备份文件失败。请检查设备上的剩余空间。";
+"cloud.backup.error.fileNotFound" = "文件未找到";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "注意：密码保护的笔记本无法备份为PDF。";
 "color.added" = "颜色添加";
 "color.deleted" = "颜色已删除";
 "color.editColor" = "编辑颜色";
@@ -985,7 +991,7 @@
 "customizeToolbar.pen" = "笔";
 "customizeToolbar.photo" = "照片";
 "customizeToolbar.pixabay" = "Pixabay";
-"customizeToolbar.present" = "现在";
+"customizeToolbar.present" = "演示";
 "customizeToolbar.readOnlyMode" = "只读模式";
 "customizeToolbar.resetConfirmation" = "您确定要重置为默认工具栏吗？";
 "customizeToolbar.rotatePage" = "旋转页面";
@@ -1191,7 +1197,7 @@
 "reset" = "重置";
 "save" = "重命名群组";
 "school" = "学校";
-"search.tryNewSearch" = "解决冲突";
+"search.tryNewSearch" = "尝试新的搜索";
 "seeAll" = "重新拍摄";
 "selectColor" = "选择颜色";
 "settings" = "设置";
@@ -1379,6 +1385,7 @@
 "sidebar.allTags.toolbar.removeTags" = "删除标签";
 "sidebar.allTags.toolbar.share" = "分享";
 "sidebar.bookmark" = "书签";
+"sidebar.bookmarks" = "书签";
 "sidebar.bookmarks.alert.message" = "您确定要删除此页的书签吗？";
 "sidebar.bookmarks.bookmark" = "书签";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "在新窗口中打开";
@@ -1388,7 +1395,9 @@
 "sidebar.bookmarks.page" = "页 %@";
 "sidebar.contextualMenu.deleteTag" = "删除标签";
 "sidebar.photo" = "照片";
+"sidebar.photos" = "照片";
 "sidebar.recording" = "记录";
+"sidebar.recordings" = "记录";
 "sidebar.topSection.home" = "家";
 "sidebar.topSection.starred" = "标记";
 "sidebar.topSection.unfiled" = "未归档";
@@ -1490,4 +1499,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
