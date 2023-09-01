@@ -46,3 +46,6 @@
 "noteshelf.ai.translateToKorean" = "Translate to Korean";
 "noteshelf.ai.translateToChineseSimplified" = "Translate to Chinese Simplified";
 "noteshelf.ai.translateToChineseTraditional" = "Translate to Chinese Traditional";
+
+"noteshelf.ai.noteshelfAILearnMore" = "See more";
+"noteshelf.ai.noteshelfAIError" = "Could not connect to server. Please try again later.";//CouldNotConnectToServer
