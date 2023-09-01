@@ -33,7 +33,12 @@ final class FTShelfCollectioniCloudRoot: NSObject {
     let ns2Collection: FTShelfCollectioniCloud
 
     // FTMetadataCachingProtocol
-    var listenerDelegate: FTQueryListenerProtocol?
+    weak var listenerDelegate: FTQueryListenerProtocol? {
+        didSet {
+            self.ns2Collection.listenerDelegate = listenerDelegate;
+            self.ns3Collection.listenerDelegate = listenerDelegate;
+        }
+    }
 
     override init() {
         guard let icloudRootURL = FTNSiCloudManager.shared().iCloudRootURL() else {
@@ -52,6 +57,7 @@ final class FTShelfCollectioniCloudRoot: NSObject {
         super.init()
     }
 }
+
 // MARK: - FTMetadataCachingProtocol
 extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
     var canHandleAudio: Bool {
@@ -73,11 +79,11 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         // NS2
         self.ns2Collection.addMetadataItemsToCache(metadata.ns2ShelfsMetadata, isBuildingCache: isBuildingCache)
         self.ns2Collection.addMetadataItemsToCache(metadata.ns2booksMetadata, isBuildingCache: isBuildingCache)
-        self.ns2Collection.addMetadataItemsToCache(metadata.ns3IndexMetadata, isBuildingCache: isBuildingCache)
 
         // NS3
         self.ns3Collection.addMetadataItemsToCache(metadata.ns3ShelfsMetadata, isBuildingCache: isBuildingCache)
         self.ns3Collection.addMetadataItemsToCache(metadata.ns3booksMetadata, isBuildingCache: isBuildingCache)
+        self.ns3Collection.addMetadataItemsToCache(metadata.ns3IndexMetadata, isBuildingCache: isBuildingCache)
     }
     
     func removeMetadataItemsFromCache(_ metadataItems: [NSMetadataItem]) {
@@ -85,12 +91,11 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         // NS2
         self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2ShelfsMetadata)
         self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2booksMetadata)
-        self.ns2Collection.removeMetadataItemsFromCache(metadata.ns3IndexMetadata)
 
         // NS3
         self.ns3Collection.removeMetadataItemsFromCache(metadata.ns3ShelfsMetadata)
         self.ns3Collection.removeMetadataItemsFromCache(metadata.ns3booksMetadata)
-
+        self.ns3Collection.removeMetadataItemsFromCache(metadata.ns3IndexMetadata)
     }
     
     func updateMetadataItemsInCache(_ metadataItems: [NSMetadataItem]) {
@@ -103,7 +108,6 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         self.ns3Collection.updateMetadataItemsInCache(metadata.ns3ShelfsMetadata)
         self.ns3Collection.updateMetadataItemsInCache(metadata.ns3booksMetadata)
         self.ns3Collection.updateMetadataItemsInCache(metadata.ns3IndexMetadata)
-
     }
 }
 
