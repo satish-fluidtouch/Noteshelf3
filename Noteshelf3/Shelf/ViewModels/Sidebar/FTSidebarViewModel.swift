@@ -464,6 +464,8 @@ extension FTSidebarViewModel {
         FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
             self.setCollectionToSystemType(.trash, collection: trashCollection)
         }
+        self.tags = [allTagsSidebarItem()]
+        self.buildMediaMenuOptions()
         fetchNS2Categories { [weak self] items in
             guard let self else { return }
             self.ns2categoriesItems.removeAll()
@@ -472,8 +474,6 @@ extension FTSidebarViewModel {
             self.buildSideMenuItems()
         }
         self.updateUnfiledCategory()
-        self.tags = [allTagsSidebarItem()]
-        self.buildMediaMenuOptions()
     }
     static private func getTemplatesSideBarItem() -> FTSideBarItem {
         return FTSideBarItem(title: NSLocalizedString("Templates", comment: "Templates"),

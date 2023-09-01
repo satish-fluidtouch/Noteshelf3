@@ -13,15 +13,15 @@ extension FTShelfViewModel {
     func getContexualOptionsForShelfItem(_ item: FTShelfItemViewModel) -> [[FTShelfItemContexualOption]] {
         if self.mode == .selection {
             let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
-
-            if self.hasNS2BookItemAmongSelectedShelfItems(selectedShelfItems + [item]) {
-                return [[.migrate]]
-            }
             if selectedShelfItems.count > 1 {
-                if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
-                    return [[.rename],[.duplicate,.move,.share],[.trash]]
-                }else {
-                    return [[.rename,.changeCover, .tags,],[.duplicate,.move,.share,],[.trash]]
+                if item.model.shelfCollection.isTrash {
+                    return [[.restore],[.delete]]
+                } else {
+                    if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
+                        return [[.rename],[.duplicate,.move,.share],[.trash]]
+                    }else {
+                        return [[.rename,.changeCover, .tags,],[.duplicate,.move,.share,],[.trash]]
+                    }
                 }
             }else {
                 if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
@@ -32,11 +32,7 @@ extension FTShelfViewModel {
             }
         }
         else {
-            if self.hasNS2BookItemAmongSelectedShelfItems([item]) {
-                return [[.migrate]]
-            } else {
-                return contexualMenuOptionsInNormalModeForShelfItem(item)
-            }
+            return contexualMenuOptionsInNormalModeForShelfItem(item)
         }
     }
     func performContexualMenuOperation(_ option: FTShelfItemContexualOption){
@@ -87,8 +83,6 @@ extension FTShelfViewModel {
             self.showEnclosingFolderFor(shelfItem.model)
         case .removeFromRecents:
             self.removeRecentItemsFromRecents([shelfItem.model])
-        case .migrate:
-            self.delegate?.migrateBookToNS3(shelfItem: shelfItem.model)
         }
     }
     func favoriteOrUnFavoriteShelfItem(_ item: FTShelfItemViewModel){
