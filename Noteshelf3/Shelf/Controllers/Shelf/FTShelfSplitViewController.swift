@@ -720,7 +720,38 @@ extension FTShelfSplitViewController {
 
     private func showOpenNowAlertForMigratedBook(migratedURL: URL) {
         FTDocumentMigration.showNS3MigrationSuccessAlert(on: self) {
-        // TODO: (AK) move to the collection or Gorup
+            let relativePath = migratedURL.relativePathWRTCollection()
+            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, _ in
+                // Check for collection and select on the sidebar
+                if let collection {
+                    self?.navigateToLocation(collection: collection, group: group)
+                } else {
+                    FTLogError("Migration Navigate colleciton nil")
+                }
+            }
         }
+    }
+
+    private func navigateToLocation(collection: FTShelfItemCollection, group: FTGroupItemProtocol?) {
+        var controllers = [UIViewController]()
+
+        // Build Category Controller
+        self.saveLastSelectedCollection(collection)
+        self.shelfItemCollection = collection
+        self.sideMenuController?.selectSideMenuCollection(collection)
+        let categoryControllers = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+        controllers.append(categoryControllers)
+
+        // Build Group Controllers
+        if let group {
+            var reqParents:  [FTGroupItemProtocol] = []
+            reqParents.append(group)
+            reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
+            for parent in reqParents.reversed() {
+                let groupController = getSecondaryViewControllerWith(collection: collection, groupItem: parent)
+                controllers.append(groupController)
+            }
+        }
+        detailNavigationController?.setViewControllers(controllers, animated: false)
     }
 }

@@ -983,9 +983,6 @@ extension FTNoteshelfDocumentProvider {
                 }
             }
 
-            // Fetch FTDocumentItemProtocol, from the destination
-            let relativePath = destinationURL.relativePathWRTCollection()
-
             return destinationURL
         } catch {
             debugLog(">>>>> Migration Failure \(error)")
