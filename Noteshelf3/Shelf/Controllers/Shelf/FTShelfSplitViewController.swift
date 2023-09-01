@@ -688,9 +688,18 @@ extension FTShelfSplitViewController: MFMailComposeViewControllerDelegate {
 // MARK: Migration
 extension FTShelfSplitViewController {
     func migrateBookToNS3(shelfItem: FTShelfItemProtocol) {
+        defer {
+            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+        }
+
         guard shelfItem.URL.isNS2Book else { return }
         guard shelfItem.URL.downloadStatus() != .notDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
+            return
+        }
+
+        guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: 1) else {
+            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
             return
         }
 
@@ -707,9 +716,6 @@ extension FTShelfSplitViewController {
                 }
             }
         })
-        NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader,
-                                        object: shelfItem,
-                                        userInfo: nil)
     }
 
     private func showOpenNowAlertForMigratedBook(migratedURL: URL) {
