@@ -168,6 +168,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
                 else {
                     navController = UINavigationController(rootViewController:helpCenter)
                     navController?.delegate = self
+                    navController?.isModalInPresentation = true
                     if let navController = navController {
                         controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
                     }
@@ -193,6 +194,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
                let helpCenter = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
                let navController = UINavigationController(rootViewController:helpCenter)
                navController.delegate = self
+               navController.isModalInPresentation = true
                controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
            }
            else{
@@ -220,6 +222,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
          if MFMailComposeViewController.canSendMail() {
              let mailComposerViewController = MFMailComposeViewController()
              mailComposerViewController.mailComposeDelegate = self;
+             mailComposerViewController.isModalInPresentation = true
              mailComposerViewController.setSubject(subject);
              mailComposerViewController.addSupportMailID();
              controller.present(mailComposerViewController, animated: true);
@@ -248,6 +251,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
 
                 let helpCenter = RequestUi.buildRequestUi(with: [requestConfig])
                 let navController = UINavigationController(rootViewController:helpCenter)
+                navController.isModalInPresentation = true
                 controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
             }
             else{
