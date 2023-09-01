@@ -41,7 +41,7 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
     private func getSecondaryRootViewController() -> UIViewController? {
         if let detailControlelr = self.viewController(for: .secondary) {
             if let navController = detailControlelr as? UINavigationController {
-                return navController.rootViewController;
+                return navController.children.last;
             }
             else {
                 return detailControlelr;
@@ -137,8 +137,9 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
                     moreItem.validate()
                 }
             }
-#endif
             toolbar.showBackButton(viewController.isRootViewController ? false : true)
+#endif
+
         }
     }
 
