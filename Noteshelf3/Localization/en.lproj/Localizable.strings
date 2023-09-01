@@ -953,6 +953,12 @@
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
 "clipart404" = "Server Busy, Please try again later.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
+"cloud.backup.error.fileNotFound" = "File not found";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Note : Password protected notebooks cannot be backed up as PDFs";
 "color.added" = "Color added";
 "color.deleted" = "Color deleted";
 "color.editColor" = "Edit Color";
@@ -1379,6 +1385,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Remove Tags";
 "sidebar.allTags.toolbar.share" = "Share";
 "sidebar.bookmark" = "Bookmark";
+"sidebar.bookmarks" = "Bookmarks";
 "sidebar.bookmarks.alert.message" = "Are you sure you want to remove Bookmark for this page?";
 "sidebar.bookmarks.bookmark" = "Bookmark";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "Open in New Window";
@@ -1388,7 +1395,9 @@
 "sidebar.bookmarks.page" = "page %@";
 "sidebar.contextualMenu.deleteTag" = "Delete Tag";
 "sidebar.photo" = "Photo";
+"sidebar.photos" = "Photos";
 "sidebar.recording" = "Recording";
+"sidebar.recordings" = "Recordings";
 "sidebar.topSection.home" = "Home";
 "sidebar.topSection.starred" = "Starred";
 "sidebar.topSection.unfiled" = "Unfiled";
@@ -1490,4 +1499,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
