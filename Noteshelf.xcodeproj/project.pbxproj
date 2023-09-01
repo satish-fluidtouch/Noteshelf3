@@ -321,9 +321,10 @@
 		473C1FA229CC2B6E003BD6BB /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		473C1FA329CC2B6F003BD6BB /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
 		473CD5302A8CA0F0007A01BB /* FTNetworkPathMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E77CE2882A86648400092774 /* FTNetworkPathMonitor.swift */; };
+		473DB6152AA1F025006DBBA6 /* FTTemplatesAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473DB6142AA1F025006DBBA6 /* FTTemplatesAnalytics.swift */; };
+		473DB6162AA1F110006DBBA6 /* FTAnalyticsConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4747C3F82A95EB3C00B1AB59 /* FTAnalyticsConsts.swift */; };
 		4744E4732A28B18C00A9795A /* FTModalScaleUpPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E4722A28B18C00A9795A /* FTModalScaleUpPresentationController.swift */; };
 		4747C4092A95EC2A00B1AB59 /* FTAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4747C3F52A95EB3C00B1AB59 /* FTAnalytics.swift */; };
-		4747C40C2A95EC3400B1AB59 /* FTAnalyticsConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4747C3F82A95EB3C00B1AB59 /* FTAnalyticsConsts.swift */; };
 		4747C40F2A95EC3A00B1AB59 /* FTTrackableEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4747C3F72A95EB3C00B1AB59 /* FTTrackableEvents.swift */; };
 		4747C4132A95EC4A00B1AB59 /* FTEventsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4747C3F42A95EB3C00B1AB59 /* FTEventsTracker.m */; };
 		4747C4162A95EC5200B1AB59 /* FTMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4747C4002A95EB6D00B1AB59 /* FTMetrics.swift */; };
@@ -2903,6 +2904,7 @@
 		472BDF8329E7E9FF001BE43A /* FTDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDataCache.swift; sourceTree = "<group>"; };
 		473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 		4738DC191E2CF3AA004E62E6 /* FormSheetPresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSheetPresentationManager.swift; sourceTree = "<group>"; };
+		473DB6142AA1F025006DBBA6 /* FTTemplatesAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplatesAnalytics.swift; sourceTree = "<group>"; };
 		473EA5E71FB4193E00D7614F /* FTThemeableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThemeableButton.swift; sourceTree = "<group>"; };
 		473EA5EF1FB45A3400D7614F /* FTThemeableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThemeableLabel.swift; sourceTree = "<group>"; };
 		473EA5F11FB460A000D7614F /* ActionLabel_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionLabel_Extension.swift; sourceTree = "<group>"; };
@@ -7565,6 +7567,7 @@
 				52550F0D2A70FCC100E7A1E7 /* FTStoreTemplateContextPreview.swift */,
 				4766F6A92A8DFB6E00F8FA27 /* FTNetwork.swift */,
 				52550ECA2A70FCC000E7A1E7 /* FTTemplatesStore.storyboard */,
+				473DB6142AA1F025006DBBA6 /* FTTemplatesAnalytics.swift */,
 				52550ED12A70FCC000E7A1E7 /* Assets.xcassets */,
 				52550EDB2A70FCC000E7A1E7 /* TemplatesStore */,
 				52550F0A2A70FCC100E7A1E7 /* Templates */,
@@ -11533,6 +11536,7 @@
 				E7B77CDE29B0657B0013E794 /* FTImagePicker.swift in Sources */,
 				E7B77CF129B06C1A0013E794 /* UIWindow+Extension.swift in Sources */,
 				E7B77CEF29B06A960013E794 /* UIAlertController+Extension.swift in Sources */,
+				473DB6162AA1F110006DBBA6 /* FTAnalyticsConsts.swift in Sources */,
 				4744E4732A28B18C00A9795A /* FTModalScaleUpPresentationController.swift in Sources */,
 				BAA84E682873108800DE801B /* FTCommonUserDefaults.swift in Sources */,
 				47CE07992A0A248D00E15028 /* FTPrintPageRenderer.swift in Sources */,
@@ -11661,6 +11665,7 @@
 				52550F262A70FCC100E7A1E7 /* FTLibraryHeaderView.swift in Sources */,
 				52550F2B2A70FCC100E7A1E7 /* FTStoreLibraryCollectionCell.swift in Sources */,
 				52550F292A70FCC100E7A1E7 /* FTStoreLibraryHandler.swift in Sources */,
+				473DB6152AA1F025006DBBA6 /* FTTemplatesAnalytics.swift in Sources */,
 				52550F282A70FCC100E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -11864,8 +11869,6 @@
 				BAF391052859ADF00067CA9F /* FTAccountInfoRequestOneDrive.swift in Sources */,
 				E7B3DFA5288921180045019F /* FTPenSizeView.swift in Sources */,
 				978D66EB286AD96D00B86704 /* Constants.m in Sources */,
-				BAF391062859ADF00067CA9F /* FirebaseMetricsService.swift in Sources */,
-				14F2E09D2A0118B60007D49D /* GetInspiredModel.swift in Sources */,
 				BAF391082859ADF00067CA9F /* FTAudioAnnotation_SQLiteHelper.swift in Sources */,
 				BA2D9131285CB1BE001BB495 /* FTSelectNotebookForBackupViewController.swift in Sources */,
 				0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */,
@@ -12608,7 +12611,6 @@
 				BAF393962859ADF00067CA9F /* FTPressurePenEngine+UniversalSettings.swift in Sources */,
 				BAF393972859ADF00067CA9F /* FTDocumentProtocol.swift in Sources */,
 				52C98BE82A0E3D8C00070F4A /* FTOutLineCell.swift in Sources */,
-				4747C40C2A95EC3400B1AB59 /* FTAnalyticsConsts.swift in Sources */,
 				BAF393982859ADF00067CA9F /* NSDataValueConverter.m in Sources */,
 				BAF3939A2859ADF00067CA9F /* FTCenterContentScrollView.swift in Sources */,
 				BAF3939C2859ADF00067CA9F /* FTRightTextFieldTableViewCell.swift in Sources */,

@@ -694,11 +694,11 @@ extension FTSidebarViewModel {
         let eventMapping: [FTSideBarItemType: [FTSidebarItemContextualOption: String]] = [
             .home: [.openInNewWindow: EventName.home_openinnewwindow_tap],
             .templates: [.openInNewWindow: EventName.templates_openinnewwindow_tap],
-            .unCategorized: [.openInNewWindow: EventName.unfliled_openinnewwindow_tap],
+            .unCategorized: [.openInNewWindow: EventName.unfiled_openinnewwindow_tap],
             .trash: [.emptyTrash: EventName.trash_emptytrash_tap],
             .category: [
                 .openInNewWindow: EventName.category_openinnewwindow_tap,
-                .renameCategory: EventName.cateogry_rename_tap,
+                .renameCategory: EventName.category_rename_tap,
                 .trashCategory: EventName.category_trash_tap
             ],
             .starred: [.openInNewWindow: EventName.starred_openinnewwindow_tap],

@@ -16,9 +16,9 @@ public struct EventName {
 }
 
 // FTParameters Events & Values
-struct EventParameterKey {
-    static let location = "location"
-    static let title = "title"
+public struct EventParameterKey {
+    public static let location = "location"
+    public static let title = "title"
     static let count = "count"
     static let origin = "origin"
     static let toggle = "toggle"
@@ -27,7 +27,7 @@ struct EventParameterKey {
     static let swipe = "swipe"
 }
 
-struct EventParameterValue {
+public struct EventParameterValue {
     static let unSplash = "Unsplash"
     static let photoLibrary = "PhotoLibrary"
     static let remote = "Remote"

@@ -55,11 +55,11 @@ extension EventName {
     // Sidebar Longpress Actions
     static let home_openinnewwindow_tap =  "home_openinnewwindow_tap"
     static let starred_openinnewwindow_tap = "starred_openinnewwindow_tap"
-    static let unfliled_openinnewwindow_tap = "unfliled_openinnewwindow_tap"
+    static let unfiled_openinnewwindow_tap = "unfiled_openinnewwindow_tap"
     static let trash_emptytrash_tap = "trash_emptytrash_tap"
     static let templates_openinnewwindow_tap = "templates_openinnewwindow_tap"
     static let category_openinnewwindow_tap = "category_openinnewwindow_tap"
-    static let cateogry_rename_tap = "cateogry_rename_tap"
+    static let category_rename_tap = "category_rename_tap"
     static let category_trash_tap = "category_trash_tap"
 
     static let sidebar_photo_openinnewwindow_tap = "sidebar_photo_openinnewwindow_tap"
