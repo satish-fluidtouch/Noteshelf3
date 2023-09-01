@@ -30,12 +30,12 @@ final class FTShelfCollectioniCloudRoot: NSObject {
     }
 
     let ns3Collection: FTShelfCollectioniCloud
-    let ns2Collection: FTShelfCollectioniCloud
+    let ns2Collection: FTShelfCollectioniCloud?
 
     // FTMetadataCachingProtocol
     weak var listenerDelegate: FTQueryListenerProtocol? {
         didSet {
-            self.ns2Collection.listenerDelegate = listenerDelegate;
+            self.ns2Collection?.listenerDelegate = listenerDelegate;
             self.ns3Collection.listenerDelegate = listenerDelegate;
         }
     }
@@ -45,14 +45,14 @@ final class FTShelfCollectioniCloudRoot: NSObject {
             fatalError("iCloud Container not found")
         }
 
-        // TODO: (AK) put identifier in a proper place
-        guard let productionCloudURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf") else {
-            fatalError("production Container not found")
+        if let productionCloudURL = FTNSiCloudManager.shared().nsProductionURL {
+            self.ns2Collection = FTShelfCollectioniCloud(rootURL: productionCloudURL, isNS2Collection: true)
+        } else {
+            self.ns2Collection = nil
         }
         //TODO: (AK) Think about a refactor for passing the Boolean or always compare the URL
         // Passing the boolean is a bit effective as we are injecting from the initializer
         self.ns3Collection = FTShelfCollectioniCloud(rootURL: icloudRootURL, isNS2Collection: false)
-        self.ns2Collection = FTShelfCollectioniCloud(rootURL: productionCloudURL, isNS2Collection: true)
 
         super.init()
     }
@@ -65,20 +65,20 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
     }
     
     func willBeginFetchingInitialData() {
-        self.ns2Collection.willBeginFetchingInitialData()
+        self.ns2Collection?.willBeginFetchingInitialData()
         self.ns3Collection.willBeginFetchingInitialData()
     }
     
     func didEndFetchingInitialData() {
-        self.ns2Collection.didEndFetchingInitialData()
+        self.ns2Collection?.didEndFetchingInitialData()
         self.ns3Collection.didEndFetchingInitialData()
     }
     
     func addMetadataItemsToCache(_ metadataItems: [NSMetadataItem], isBuildingCache: Bool) {
         let metadata = filterAndUpdate(metadataItems: metadataItems)
         // NS2
-        self.ns2Collection.addMetadataItemsToCache(metadata.ns2ShelfsMetadata, isBuildingCache: isBuildingCache)
-        self.ns2Collection.addMetadataItemsToCache(metadata.ns2booksMetadata, isBuildingCache: isBuildingCache)
+        self.ns2Collection?.addMetadataItemsToCache(metadata.ns2ShelfsMetadata, isBuildingCache: isBuildingCache)
+        self.ns2Collection?.addMetadataItemsToCache(metadata.ns2booksMetadata, isBuildingCache: isBuildingCache)
 
         // NS3
         self.ns3Collection.addMetadataItemsToCache(metadata.ns3ShelfsMetadata, isBuildingCache: isBuildingCache)
@@ -89,8 +89,8 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
     func removeMetadataItemsFromCache(_ metadataItems: [NSMetadataItem]) {
         let metadata = filterAndUpdate(metadataItems: metadataItems)
         // NS2
-        self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2ShelfsMetadata)
-        self.ns2Collection.removeMetadataItemsFromCache(metadata.ns2booksMetadata)
+        self.ns2Collection?.removeMetadataItemsFromCache(metadata.ns2ShelfsMetadata)
+        self.ns2Collection?.removeMetadataItemsFromCache(metadata.ns2booksMetadata)
 
         // NS3
         self.ns3Collection.removeMetadataItemsFromCache(metadata.ns3ShelfsMetadata)
@@ -101,8 +101,8 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
     func updateMetadataItemsInCache(_ metadataItems: [NSMetadataItem]) {
         let metadata = filterAndUpdate(metadataItems: metadataItems)
         // NS2
-        self.ns2Collection.updateMetadataItemsInCache(metadata.ns2ShelfsMetadata)
-        self.ns2Collection.updateMetadataItemsInCache(metadata.ns2booksMetadata)
+        self.ns2Collection?.updateMetadataItemsInCache(metadata.ns2ShelfsMetadata)
+        self.ns2Collection?.updateMetadataItemsInCache(metadata.ns2booksMetadata)
 
         // NS3
         self.ns3Collection.updateMetadataItemsInCache(metadata.ns3ShelfsMetadata)
@@ -124,7 +124,8 @@ private extension FTShelfCollectioniCloudRoot {
         var ns3IndexMetadata = [NSMetadataItem]()
 
         for metadata in metadataItems {
-            if ns2Collection.belongsToDocumentsFolder(metadata.URL()) {
+            if let colection = ns2Collection,
+               colection.belongsToDocumentsFolder(metadata.URL()) {
                 switch metadata.URL().pathExtension {
                 case FTFileExtension.shelf:
                     ns2ShelfsMetadata.append(metadata)

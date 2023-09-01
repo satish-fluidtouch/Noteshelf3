@@ -1102,16 +1102,11 @@
 "lineHeight.standard" = "標準";
 "lineHeight.wide" = "ワイド";
 "lockwithfaceIDandPasscode" = "%@とパスコードでロック";
-"migration.alert.cancel" = "キャンセル";
-"migration.alert.copy" = "コピー";
-"migration.alert.message" = "これにより、新しいノートブックのコピーが作成され、コピーされた内容が含まれます。";
-"migration.alert.open" = "開く";
-"migration.alert.title" = "この本をNS3に移行しますか？";
-"migration.alert.yes" = "はい";
-"migration.failure.message" = "現時点ではこの本を移行することができません。サポートにお問い合わせください。";
+"migration.alert.migrate" = "移行";
+"migration.alert.open" = "場所に移動する";
+"migration.alert.title" = "このノートブックのコピーをNoteshelf 3に移行しますか？";
 "migration.progress.text" = "移行";
-"migration.success.alert.message" = "ノートブックを開きますか？";
-"migration.success.alert.title" = "正常に「Unfiled」に移行しました。";
+"migration.success.alert.message" = "成功しました！移行されたノートブックは次の場所に配置されました：%@";
 "months" = "月";
 "more" = "もっと";
 "more.globalsettings.caps" = "グローバル設定";
@@ -1267,7 +1262,7 @@
 "shelf.home.seeAll" = "すべてを見る";
 "shelf.home.seeAllNotes" = "すべてのノートを見る";
 "shelf.importfile.description" = "FilesアプリからPDFと画像を追加";
-"shelf.migration.Description" = "新しいバージョンのNoteshelfに書籍を移行するには、それをタップするか長押しして、メニューから移行オプションを選択してください。";
+"shelf.migration.Description" = "ここでそれぞれのノートブックをタップして、Noteshelf 3 にコピーを移行してください。移行されたノートブックはNoteshelf 3 のカテゴリとグループで利用できます。カテゴリ全体を移行する機能は近日公開予定です！";
 "shelf.migration.headerMessage" = "Noteshelf 3にノートを移行";
 "shelf.navBar.deselectAll" = "すべて選択解除";
 "shelf.navBar.select" = "選択";
@@ -1499,4 +1494,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 1 September 2023 at 19:24

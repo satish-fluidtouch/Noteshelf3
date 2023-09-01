@@ -30,27 +30,29 @@ final class FTDocumentMigration {
 
     static func showNS3MigrationAlert(on controller: UIViewController,
                                       onCopyAction: (() -> Void)?) {
-        let alert = UIAlertController(title: "migration.alert.title".localized, message: "migration.alert.message".localized, preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "migration.alert.title".localized, message: nil, preferredStyle: UIAlertController.Style.alert)
 
-        let copy = UIAlertAction(title: "migration.alert.copy".localized, style: UIAlertAction.Style.default) { _ in
+        let copy = UIAlertAction(title: "migration.alert.migrate".localized, style: UIAlertAction.Style.cancel) { _ in
             onCopyAction?()
         }
-        let cancel = UIAlertAction(title: "migration.alert.cancel".localized, style: UIAlertAction.Style.cancel)
-        alert.addAction(copy)
+        let cancel = UIAlertAction(title: "cancel".localized, style: UIAlertAction.Style.default)
         alert.addAction(cancel)
+        alert.addAction(copy)
         controller.present(alert, animated: true)
     }
 
     static func showNS3MigrationSuccessAlert(on controller: UIViewController,
+                                             relativePath: String,
                                              onOpenAction: (() -> Void)?) {
-        let alert = UIAlertController(title: "migration.success.alert.title".localized, message: "migration.success.alert.message".localized, preferredStyle: UIAlertController.Style.alert)
+        let title = String(format: NSLocalizedString("migration.success.alert.message", comment: ""), relativePath)
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertController.Style.alert)
 
-        let open = UIAlertAction(title: "migration.alert.open".localized, style: UIAlertAction.Style.default) { _ in
+        let open = UIAlertAction(title: "migration.alert.open".localized, style: UIAlertAction.Style.cancel) { _ in
             onOpenAction?()
         }
-        let cancel = UIAlertAction(title: "migration.alert.cancel".localized, style: UIAlertAction.Style.cancel)
-        alert.addAction(open)
+        let cancel = UIAlertAction(title: "cancel".localized, style: UIAlertAction.Style.default)
         alert.addAction(cancel)
+        alert.addAction(open)
         controller.present(alert, animated: true)
     }
 

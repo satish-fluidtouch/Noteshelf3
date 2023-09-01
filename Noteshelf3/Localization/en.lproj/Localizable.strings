@@ -1102,16 +1102,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Wide";
 "lockwithfaceIDandPasscode" = "Lock with %@ & Passcode";
-"migration.alert.cancel" = "Cancel";
-"migration.alert.copy" = "Copy";
-"migration.alert.message" = "This will create a copy of the new notebook, with copied contents.";
-"migration.alert.open" = "Open";
-"migration.alert.title" = "Would you like to migrate this book to NS3?";
-"migration.alert.yes" = "Yes";
-"migration.failure.message" = "Unable to migrate this book for now. Please contact support.";
+"migration.alert.migrate" = "Migrate";
+"migration.alert.open" = "Go to Location";
+"migration.alert.title" = "Would you like to migrate a copy of this notebook to Noteshelf 3? ";
 "migration.progress.text" = "Migrating";
-"migration.success.alert.message" = "Would you like to open the notebook?";
-"migration.success.alert.title" = "Successfully migrated to Unfiled";
+"migration.success.alert.message" = "Success! Your migrated notebook has been placed in: %@";
 "months" = "Months";
 "more" = "More";
 "more.globalsettings.caps" = "GLOBAL SETTINGS";
@@ -1267,7 +1262,7 @@
 "shelf.home.seeAll" = "See All";
 "shelf.home.seeAllNotes" = "See All Notes";
 "shelf.importfile.description" = "Add PDFs and images from your Files app";
-"shelf.migration.Description" = "To migrate your book to the new version of Noteshelf, tap on it or long press and choose the migration option from the menu.";
+"shelf.migration.Description" = "Simply tap on any notebook here to migrate a copy of it to Noteshelf 3. Migrated notebooks will be available in the Noteshelf 3 categories and groups. Ability to migrate entire categories is coming soon!";
 "shelf.migration.headerMessage" = "Migrate your notebooks to Noteshelf 3";
 "shelf.navBar.deselectAll" = "Deselect All";
 "shelf.navBar.select" = "Select";
@@ -1499,4 +1494,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 1 September 2023 at 19:24

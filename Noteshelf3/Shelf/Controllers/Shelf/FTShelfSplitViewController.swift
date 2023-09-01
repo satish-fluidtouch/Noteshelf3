@@ -723,7 +723,8 @@ extension FTShelfSplitViewController {
     }
 
     private func showOpenNowAlertForMigratedBook(migratedURL: URL) {
-        FTDocumentMigration.showNS3MigrationSuccessAlert(on: self) {
+        let displayPath = migratedURL.displayRelativePathWRTCollection().deletingLastPathComponent
+        FTDocumentMigration.showNS3MigrationSuccessAlert(on: self, relativePath: displayPath) {
             let relativePath = migratedURL.relativePathWRTCollection()
             FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, _ in
                 // Check for collection and select on the sidebar

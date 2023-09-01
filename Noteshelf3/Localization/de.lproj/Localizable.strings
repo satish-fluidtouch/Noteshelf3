@@ -1102,16 +1102,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Weit";
 "lockwithfaceIDandPasscode" = "Sperren mit %@ & Passwort'";
-"migration.alert.cancel" = "Abbrechen";
-"migration.alert.copy" = "Kopieren";
-"migration.alert.message" = "Dies erstellt eine Kopie des neuen Notizbuchs mit kopierten Inhalten.";
-"migration.alert.open" = "Öffnen";
-"migration.alert.title" = "Möchten Sie dieses Buch in NS3 migrieren?";
-"migration.alert.yes" = "Ja";
-"migration.failure.message" = "Aktuell nicht möglich, dieses Buch zu migrieren. Bitte wenden Sie sich an den Support.";
+"migration.alert.migrate" = "Migrieren";
+"migration.alert.open" = "Gehe zu Standort";
+"migration.alert.title" = "Möchten Sie eine Kopie dieses Notizbuches nach Noteshelf 3 migrieren?";
 "migration.progress.text" = "Umzug";
-"migration.success.alert.message" = "Möchtest du das Notizbuch öffnen?";
-"migration.success.alert.title" = "Erfolgreich zu Unfiled migriert.";
+"migration.success.alert.message" = "Erfolg! Ihr migriertes Notizbuch wurde platziert in: %@";
 "months" = "Monate";
 "more" = "Mehr";
 "more.globalsettings.caps" = "GLOBALE EINSTELLUNGEN";
@@ -1267,7 +1262,7 @@
 "shelf.home.seeAll" = "Alle anzeigen";
 "shelf.home.seeAllNotes" = "Alle Notizen anzeigen";
 "shelf.importfile.description" = "Fügen Sie PDFs und Bilder von Ihrer Dateien-App hinzu.";
-"shelf.migration.Description" = "Um Ihr Buch auf die neue Version von Noteshelf zu migrieren, tippen Sie darauf oder halten Sie es gedrückt und wählen Sie die Migrationsoption im Menü aus.";
+"shelf.migration.Description" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung. Die Möglichkeit, ganze Kategorien zu migrieren, kommt bald!";
 "shelf.migration.headerMessage" = "Migrieren Sie Ihre Notizbücher zu Noteshelf 3";
 "shelf.navBar.deselectAll" = "Abwählen";
 "shelf.navBar.select" = "Auswählen";
@@ -1499,4 +1494,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 1 September 2023 at 19:24

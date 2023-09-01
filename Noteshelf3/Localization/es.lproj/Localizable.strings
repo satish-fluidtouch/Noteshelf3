@@ -1102,16 +1102,11 @@
 "lineHeight.standard" = "Estándar";
 "lineHeight.wide" = "Ancho";
 "lockwithfaceIDandPasscode" = "Candado con %@ y código de acceso'";
-"migration.alert.cancel" = "Cancelar";
-"migration.alert.copy" = "Copiar";
-"migration.alert.message" = "Esto creará una copia del nuevo cuaderno, con el contenido copiado.";
-"migration.alert.open" = "Abrir";
-"migration.alert.title" = "¿Te gustaría migrar este libro a NS3?";
-"migration.alert.yes" = "Sí";
-"migration.failure.message" = "No se puede migrar este libro por ahora. Por favor, contacta al soporte.";
+"migration.alert.migrate" = "Migrar";
+"migration.alert.open" = "Ir a ubicación";
+"migration.alert.title" = "¿Te gustaría migrar una copia de este cuaderno a Noteshelf 3?";
 "migration.progress.text" = "Migrando";
-"migration.success.alert.message" = "¿Te gustaría abrir el cuaderno?";
-"migration.success.alert.title" = "Migrado exitosamente a Sin clasificar";
+"migration.success.alert.message" = "¡Éxito! Tu cuaderno migrado ha sido colocado en: %@";
 "months" = "Meses";
 "more" = "Más";
 "more.globalsettings.caps" = "CONFIGURACIÓN GLOBAL";
@@ -1267,7 +1262,7 @@
 "shelf.home.seeAll" = "Ver todo";
 "shelf.home.seeAllNotes" = "Ver todas las notas";
 "shelf.importfile.description" = "Añade PDFs e imágenes desde tu aplicación de Archivos";
-"shelf.migration.Description" = "Para migrar tu libro a la nueva versión de Noteshelf, tócalo o mantén presionado y elige la opción de migración del menú.";
+"shelf.migration.Description" = "Simplemente toca cualquier cuaderno aquí para migrar una copia a Noteshelf 3. Los cuadernos migrados estarán disponibles en las categorías y grupos de Noteshelf 3. ¡Próximamente estará disponible la capacidad de migrar categorías completas!";
 "shelf.migration.headerMessage" = "Migra tus cuadernos a Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Deseleccionar todo";
 "shelf.navBar.select" = "Seleccionar";
@@ -1499,4 +1494,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 1 September 2023 at 19:24

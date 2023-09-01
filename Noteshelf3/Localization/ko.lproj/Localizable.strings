@@ -1102,16 +1102,11 @@
 "lineHeight.standard" = "표준";
 "lineHeight.wide" = "넓은";
 "lockwithfaceIDandPasscode" = "%@와 패스코드로 잠금'";
-"migration.alert.cancel" = "취소 (Chwiso)";
-"migration.alert.copy" = "복사";
-"migration.alert.message" = "이것은 새 노트북의 사본을 생성하며, 복사된 내용이 포함됩니다.";
-"migration.alert.open" = "열다";
-"migration.alert.title" = "이 책을 NS3로 이동하시겠습니까?";
-"migration.alert.yes" = "네";
-"migration.failure.message" = "지금은 이 책을 이동할 수 없습니다. 지원팀에 문의하세요.";
+"migration.alert.migrate" = "이주하다";
+"migration.alert.open" = "장소로 이동";
+"migration.alert.title" = "이 노트북의 사본을 Noteshelf 3로 이전하시겠습니까?";
 "migration.progress.text" = "이동";
-"migration.success.alert.message" = "노트북을 열고 싶으세요?";
-"migration.success.alert.title" = "성공적으로 Unfiled로 이동했습니다.";
+"migration.success.alert.message" = "성공! 이주된 노트북이 다음 위치에 배치되었습니다: %@";
 "months" = "달";
 "more" = "더";
 "more.globalsettings.caps" = "전역 설정";
@@ -1267,7 +1262,7 @@
 "shelf.home.seeAll" = "모두 보기";
 "shelf.home.seeAllNotes" = "모든 노트 보기";
 "shelf.importfile.description" = "파일 앱에서 PDF 및 이미지 추가'";
-"shelf.migration.Description" = "새 버전의 Noteshelf로 책을 이동하려면 해당 책을 탭하거나 길게 누른 후 메뉴에서 이동 옵션을 선택하세요.";
+"shelf.migration.Description" = "Noteshelf 3로 복사본을 이동하려면 여기에 있는 어떤 노트북이라도 간단히 탭하세요. 이동된 노트북은 Noteshelf 3의 카테고리와 그룹에서 사용할 수 있습니다. 전체 카테고리를 이동할 수 있는 기능은 곧 제공됩니다!";
 "shelf.migration.headerMessage" = "노트북을 Noteshelf 3로 이동하세요.";
 "shelf.navBar.deselectAll" = "모두 선택 해제";
 "shelf.navBar.select" = "선택";
@@ -1499,4 +1494,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 1 September 2023 at 19:24

@@ -693,16 +693,16 @@ extension FTNoteshelfDocumentProvider {
             self.cloudDocumentListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
         }
 
-        FTShelfCollectioniCloud.shelfCollection({ cloudCollection in
-
+        if let cloudDocumentListener {
+            let cloudCollection = FTShelfCollectioniCloudRoot()
             if let shelfListener = cloudCollection as? FTMetadataCachingProtocol {
-                self.cloudDocumentListener?.addListener(shelfListener)
+                cloudDocumentListener.addListener(shelfListener)
             }
             let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: FTNSiCloudManager.shared().iCloudRootURL()!)
-            self.cloudDocumentListener?.addListener(cloudWatchCollection)
+            cloudDocumentListener.addListener(cloudWatchCollection)
 
-            self.cloudDocumentListener?.startQuery {
-                cloudCollection.shelfs({ (cloudCollections) in
+                cloudDocumentListener.startQuery {
+                    cloudCollection.ns3Collection.shelfs({ (cloudCollections) in
                     self.localShelfCollectionRoot?.ns3Collection.shelfs({ (_) in
                         let bgTask = startBackgroundTask()
                         self.moveCollectionToLocal(collections: cloudCollections,
@@ -730,8 +730,7 @@ extension FTNoteshelfDocumentProvider {
                     });
                 })
             }
-        })
-
+        }
     }
 }
 

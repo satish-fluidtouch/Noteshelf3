@@ -1102,16 +1102,11 @@
 "lineHeight.standard" = "标准";
 "lineHeight.wide" = "宽";
 "lockwithfaceIDandPasscode" = "使用%@和密码锁定";
-"migration.alert.cancel" = "取消";
-"migration.alert.copy" = "复制";
-"migration.alert.message" = "这将创建一个新笔记本的副本，包含复制的内容。";
-"migration.alert.open" = "打开";
-"migration.alert.title" = "你想将这本书迁移到NS3吗？";
-"migration.alert.yes" = "是的";
-"migration.failure.message" = "暂时无法迁移此书籍。请联系支持。";
+"migration.alert.migrate" = "迁移";
+"migration.alert.open" = "前往位置";
+"migration.alert.title" = "您想将此笔记本的副本迁移到Noteshelf 3吗？";
 "migration.progress.text" = "迁移";
-"migration.success.alert.message" = "你想打开笔记本吗？";
-"migration.success.alert.title" = "成功迁移到未分类";
+"migration.success.alert.message" = "成功！您的迁移笔记已放置在：%@";
 "months" = "月份";
 "more" = "更多";
 "more.globalsettings.caps" = "全局设置";
@@ -1267,7 +1262,7 @@
 "shelf.home.seeAll" = "查看全部";
 "shelf.home.seeAllNotes" = "查看所有笔记";
 "shelf.importfile.description" = "从您的文件应用中添加PDF和图片";
-"shelf.migration.Description" = "将您的笔记本迁移到新版本的Noteshelf，请点击或长按它，并在菜单中选择迁移选项。";
+"shelf.migration.Description" = "只需点击这里的任何笔记本，即可将其副本迁移到Noteshelf 3。迁移后的笔记本将在Noteshelf 3的分类和分组中可用。迁移整个分类的功能即将推出！";
 "shelf.migration.headerMessage" = "将您的笔记迁移到Noteshelf 3";
 "shelf.navBar.deselectAll" = "取消选择全部";
 "shelf.navBar.select" = "选择";
@@ -1499,4 +1494,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 1 September 2023 at 19:24
