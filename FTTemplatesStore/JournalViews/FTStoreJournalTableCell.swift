@@ -67,7 +67,12 @@ private extension FTStoreJournalTableCell {
 // MARK: - UICollectionViewDelegate
 extension FTStoreJournalTableCell: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let items = self.templatesStoreInfo.discoveryItems
+        var items = self.templatesStoreInfo.discoveryItems
+        // Update sectionType to track events
+        var item = items[indexPath.row]
+        item.sectionType = templatesStoreInfo.sectionType
+        items[indexPath.row] = item
+
         FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
 
     }

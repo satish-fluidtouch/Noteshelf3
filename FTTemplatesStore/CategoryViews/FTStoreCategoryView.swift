@@ -11,7 +11,7 @@ struct FTStoreCategoryView: View {
     var templateInfo: StoreInfo
 
     var body: some View {
-        let items = templateInfo.discoveryItems
+        var items = templateInfo.discoveryItems
 
         let topRows = items.enumerated().filter { element in
             return element.offset%2 == 0
@@ -41,6 +41,11 @@ struct FTStoreCategoryView: View {
                         .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.appColor(.accentBorder), lineWidth: 1))
                         .font(Font.appFont(for: .medium, with: 16))
                         .onTapGesture {
+                            // Update sectionType to track events
+                            var item = items[index]
+                            item.sectionType = templateInfo.sectionType
+                            items[index] = item
+                            
                             FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
                         }
                     }
@@ -65,6 +70,11 @@ struct FTStoreCategoryView: View {
                         .font(Font.appFont(for: .medium, with: 16))
 
                         .onTapGesture {
+                            // Update sectionType to track events
+                            var item = items[index]
+                            item.sectionType = templateInfo.sectionType
+                            items[index] = item
+
                             FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
                         }
                     }
