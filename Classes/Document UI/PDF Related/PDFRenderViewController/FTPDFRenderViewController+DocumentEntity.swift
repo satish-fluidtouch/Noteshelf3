@@ -277,28 +277,49 @@ extension FTPDFRenderViewController: FTAddMenuSelectImageProtocal {
 //MARK:- TagsViewControllerDelegate
 extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
     func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
-        
-    }
-
-    func didUnSelectTag(tag: FTTagModel) async throws {
 
     }
 
     func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
-        controller.navigationController?.popViewController(animated: true)
+        controller.dismiss(animated: true, completion: nil)
     }
 
     func didAddTag(tag: FTTagModel) async throws {
-        
+        if let item = self.currentShelfTagsItem() {
+            try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: [item], updateType: .add)
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        }
     }
 
-    func didDeleteTag(tag: FTTagModel) async throws {
-
+    func didUnSelectTag(tag: FTTagModel) async throws {
+        if let item = self.currentShelfTagsItem() {
+            try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: [item], updateType: .remove)
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        }
     }
 
     func didRenameTag(tag: FTTagModel, renamedTag: FTTagModel) async throws {
-
+        if let item = self.currentShelfTagsItem(), let currentDocument = item.document {
+            try await FTShelfTagsUpdateHandler.shared.renameTag(tag: tag, with: renamedTag, for: currentDocument)
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        }
     }
+
+    func didDeleteTag(tag: FTTagModel) async throws {
+        if let item = self.currentShelfTagsItem(), let currentDocument = item.document {
+            try await FTShelfTagsUpdateHandler.shared.deleteTag(tag: tag, for: currentDocument)
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        }
+    }
+
+    private func currentShelfTagsItem() -> FTShelfTagsItem? {
+        if let page = self.currentlyVisiblePage() as? FTThumbnailable {
+            let item = FTShelfTagsItem(shelfItem: self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol, type: .page, page: page, pageIndex: page.pageIndex())
+            return item
+        }
+        return nil
+    }
+
 }
 
 //Mark:- WebclipControllerDelegate

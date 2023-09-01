@@ -219,14 +219,10 @@ struct FTSidebarView: View {
 
                 viewModel.setSideBarItemSelection()
             } else {
-                Task {
-                    await viewModel.updateTags()
-                }
+                viewModel.updateTags()
             }
         } else {
-            Task {
-                await viewModel.updateTags()
-            }
+            viewModel.updateTags()
         }
     }
 }

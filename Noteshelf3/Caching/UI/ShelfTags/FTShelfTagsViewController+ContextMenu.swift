@@ -16,6 +16,10 @@ extension FTShelfTagsViewController {
             return nil
         }
         track(EventName.shelf_tag_page_longpress, screenName: ScreenName.shelf_tags)
+
+        if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = true;
+        }
         let cell = collectionView.cellForItem(at: indexPath)!
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
@@ -87,6 +91,10 @@ extension FTShelfTagsViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = false;
+        }
+
         if let identifier = configuration.identifier as? IndexPath {
             if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfTagsPageCell {
                 let parameters = UIPreviewParameters()

@@ -40,7 +40,7 @@ struct FTShelfItemView: View {
     func groupView() -> some View {
         if(shelfViewModel.displayStlye == .List) {
             FTGroupListView(shelfItemWidth: shelfItemWidth,
-                            shelfItemHeight: shelfItemHeight, isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
+                            shelfItemHeight: shelfItemHeight)
         }
         else {
             FTGroupItemView(groupItemWidth: shelfItemWidth,

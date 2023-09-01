@@ -15,9 +15,6 @@ struct FTGroupItemView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State var popoverType: FTNotebookPopoverType?
-
-    @State var showShelfItemDetails: Bool = false
 
     var groupItemWidth: CGFloat = 212
     var groupItemHeight: CGFloat = 334

@@ -15,6 +15,7 @@ public enum Source {
     case addMenu
     case finder
     case settings
+    case changeTemplate
 }
 
 public class FTTemplateInfo: NSObject {
@@ -50,8 +51,9 @@ public class FTDairyTemplateInfo: FTTemplateInfo {
 }
 
 public protocol FTStoreLibraryDelegate:NSObjectProtocol, FTThemeUpdateURL {
-     func libraryController(_ contmroller: UIViewController,didSelectTemplate info: FTTemplateInfo);
+    func libraryController(_ contmroller: UIViewController,didSelectTemplate info: FTTemplateInfo);
     func libraryController(_ contmroller: UIViewController,showIAPAlert feature: String?);
+    func libraryController(_ contmroller: UIViewController,menuShown isMenuShown: Bool);
 }
 
 class FTStoreLibraryViewController: UIViewController {
@@ -151,7 +153,7 @@ class FTStoreLibraryViewController: UIViewController {
             }
             
             cell.prepareCellWith(style: item as! FTTemplateStyle, sourceType: self?.sourceType ?? .none)
-            if self?.sourceType == .settings || self?.sourceType == .shelf, let style = item as? FTTemplateStyle, style.type == FTDiscoveryItemType.diary.rawValue {
+            if self?.sourceType == .settings || self?.sourceType == .shelf || self?.sourceType == .changeTemplate, let style = item as? FTTemplateStyle, style.type == FTDiscoveryItemType.diary.rawValue {
                 cell.thumbnail?.alpha = 0.2
             } else {
                 cell.thumbnail?.alpha = 1
@@ -242,11 +244,11 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         let item = viewModel.itemAt(index: indexPath.row)
-        if let style = item, sourceType == .settings || sourceType == .shelf, style.type == FTDiscoveryItemType.diary.rawValue {
+        if let style = item, sourceType == .settings || sourceType == .changeTemplate || sourceType == .shelf, style.type == FTDiscoveryItemType.diary.rawValue {
             return false
         }
-     return true
-   }
+        return true
+    }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let item = viewModel.itemAt(index: indexPath.row) {

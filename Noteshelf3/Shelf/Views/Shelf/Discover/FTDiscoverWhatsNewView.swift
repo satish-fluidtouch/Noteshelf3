@@ -18,8 +18,7 @@ struct FTDiscoverItemModel: Identifiable {
     var eventTrackName: String
 }
 struct FTDiscoverWhatsNewView: View {
-
-    @State private var isExpanded:Bool = true
+    @AppStorage("discoverIsExpanded") var isExpanded: Bool = false
     @EnvironmentObject var sheflViewModel: FTShelfViewModel
 
     var body: some View {

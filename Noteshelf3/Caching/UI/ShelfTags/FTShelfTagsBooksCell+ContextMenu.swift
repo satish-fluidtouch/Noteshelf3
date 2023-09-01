@@ -13,6 +13,9 @@ extension FTShelfTagsBooksCell {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         track(EventName.shelf_tag_book_longpress, screenName: ScreenName.shelf_tags)
+        if let splitContorller = self.parentVC?.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = true;
+        }
         let cell = collectionView.cellForItem(at: indexPath)!
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
@@ -83,7 +86,9 @@ extension FTShelfTagsBooksCell {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-//        contextMenuSelectedIndexPath = nil
+        if let splitContorller = self.parentVC?.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = false
+        }
         if let identifier = configuration.identifier as? IndexPath {
             if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfTagsPageCell {
                 let parameters = UIPreviewParameters()
