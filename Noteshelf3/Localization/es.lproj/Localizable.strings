@@ -1408,7 +1408,7 @@
 "stickies" = "Notas adhesivas";
 "stickynotes" = "Notas adhesivas";
 "stylus.goto.settings" = "Ir a Configuración/Apple Pencil.";
-"stylus.switch.fullscreen" = "Cambiar a pantalla completa";
+"stylus.switch.focusmode" = "Cambiar a Modo de Enfoque";
 "tags.contextualMenu.deleteTag" = "Eliminar etiqueta";
 "tags.contextualMenu.renameTag" = "Cambiar nombre de etiqueta";
 "tags.delete.alert.message" = "La etiqueta será eliminada de los elementos a los que está adjunta.";

@@ -1408,7 +1408,7 @@
 "stickies" = "便條";
 "stickynotes" = "便利貼";
 "stylus.goto.settings" = "前往「設定/Apple Pencil」";
-"stylus.switch.fullscreen" = "切換至全螢幕";
+"stylus.switch.focusmode" = "切換至專注模式";
 "tags.contextualMenu.deleteTag" = "刪除標籤";
 "tags.contextualMenu.renameTag" = "重命名標籤";
 "tags.delete.alert.message" = "標籤將從附有該標籤的項目中刪除。";
