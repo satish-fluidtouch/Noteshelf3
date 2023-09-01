@@ -491,10 +491,10 @@ extension FTSidebarViewModel {
     }
 
     private func buildMediaMenuOptions() {
-        let photos = FTSideBarItem(title: NSLocalizedString("Photo", comment: "Photo"), icon: FTIcon.photo, isEditable: true, isEditing: false, type: FTSideBarItemType.media, allowsItemDropping: false)
-        let recording = FTSideBarItem(title: NSLocalizedString("Recording", comment: "Recording"), icon: FTIcon.audioNote, isEditable: true, isEditing: false, type: FTSideBarItemType.audio, allowsItemDropping: false)
-        let bookmarks = FTSideBarItem(title: NSLocalizedString("Bookmark", comment: "Bookmark"), icon: FTIcon.bookmark, isEditable: true, type: FTSideBarItemType.bookmark,allowsItemDropping: false)
-        self.contentItems = [photos, recording, bookmarks]
+        let photos = FTSideBarItem(title: NSLocalizedString("sidebar.photos", comment: "Photos"), icon: FTIcon.photo, isEditable: true, isEditing: false, type: FTSideBarItemType.media, allowsItemDropping: false)
+        let recordings = FTSideBarItem(title: NSLocalizedString("sidebar.recordings", comment: "Recordings"), icon: FTIcon.audioNote, isEditable: true, isEditing: false, type: FTSideBarItemType.audio, allowsItemDropping: false)
+        let bookmarks = FTSideBarItem(title: NSLocalizedString("sidebar.bookmarks", comment: "Bookmarks"), icon: FTIcon.bookmark, isEditable: true, type: FTSideBarItemType.bookmark,allowsItemDropping: false)
+        self.contentItems = [photos, recordings, bookmarks]
     }
 
     private func buildSideMenuItems(){

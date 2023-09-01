@@ -710,31 +710,31 @@
 "ResetColorsTitle" = "リセットカラー";
 "ResetColorsWarning" = "これにより、カラーパレットが工場出荷時のデフォルトにリセットされます。";
 "ResetToDefault" = "デフォルトにリセット";
-"Resize" = "録音";
+"Resize" = "サイズ変更";
 "ResolveConflict" = "記録";
 "ResolveConflictMessage" = "録音中...";
 "Restore" = "復元ページ";
 "ResultsFor" = "%@の結果";
 "RetakeKey" = "3本指で右にスワイプ/左にスワイプ";
 "Right" = "新しいページを追加するには、リリースしてください。";
-"Rotate" = "後でお知らせ";
-"Rotate Page" = "削除";
+"Rotate" = "回転す";
+"Rotate Page" = "ページを回転する";
 "Rotating" = "最近から削除";
 "SampleNotebook" = "改名";
-"SaveAsTemplate" = "%d ノートブックの名前を変更";
+"SaveAsTemplate" = "テンプレートとして保存する";
 "SaveForFutureUse" = "タグの名前を変更";
 "SaveImageChangesConfirmation" = "名前を変更中...\n%d のうち %d";
 "SaveKey" = "必要";
 "SaveQuickNote" = "このノートブックを開くためにパスワードが必要です。";
 "Saving" = "ダブルタップに対応したApple Pencilが必要です。";
-"Scan" = "この文書を開くために最新バージョンのアプリにアップデートしてください。";
-"ScanDocument" = "リセット";
-"ScanDocument" = "リセット";
+"Scan" = "スキャン";
+"ScanDocument" = "文書をスキャン";
+"ScanDocument" = "文書をスキャン";
 "ScannerUnavailable" = "カラーパレットを工場出荷時のデフォルト設定にリセットしますか？";
 "SchoolWorkApp" = "カラーをリセット";
-"Screenshot" = "これによりカラーパレットが工場出荷時のデフォルトにリセットされます。";
-"Scrolling" = "デフォルトにリセット";
-"Search" = "リサイズ";
+"Screenshot" = "スクリーンショット";
+"Scrolling" = "スクロール";
+"Search" = "検索";
 "SearchPapersCovers" = "変更は同期されていません。保持するドキュメントを選択してください。";
 "SearchText" = "リストア";
 "SearchTitles" = "「'%@'の結果」";
@@ -953,6 +953,12 @@
 "bujoessentials" = "ブジョエッセンシャルズ";
 "cancel" = "キャンセル";
 "clipart404" = "サーバーがビジーです。後でもう一度お試しください。";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
+"cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
 "color.added" = "カラーが追加されました。";
 "color.deleted" = "色削除";
 "color.editColor" = "色の編集 (Iro no henshū)";
@@ -985,7 +991,7 @@
 "customizeToolbar.pen" = "ペン";
 "customizeToolbar.photo" = "フォト";
 "customizeToolbar.pixabay" = "ピクサベイ";
-"customizeToolbar.present" = "プレゼント";
+"customizeToolbar.present" = "プレゼ";
 "customizeToolbar.readOnlyMode" = "読み取り専用モード";
 "customizeToolbar.resetConfirmation" = "デフォルトのツールバーにリセットしてもよろしいですか？";
 "customizeToolbar.rotatePage" = "ページを回転させる";
@@ -1191,7 +1197,7 @@
 "reset" = "リセット";
 "save" = "グループ名変更";
 "school" = "学校";
-"search.tryNewSearch" = "紛争の解決";
+"search.tryNewSearch" = "新しい検索を試してください";
 "seeAll" = "再受験";
 "selectColor" = "色を選択してください";
 "settings" = "設定";
@@ -1379,6 +1385,7 @@
 "sidebar.allTags.toolbar.removeTags" = "タグを削除する";
 "sidebar.allTags.toolbar.share" = "共有";
 "sidebar.bookmark" = "ブックマーク";
+"sidebar.bookmarks" = "ブックマーク";
 "sidebar.bookmarks.alert.message" = "このページのブックマークを削除しますか？";
 "sidebar.bookmarks.bookmark" = "ブックマーク";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "新しいウィンドウで開く";
@@ -1388,7 +1395,9 @@
 "sidebar.bookmarks.page" = "ページ %@";
 "sidebar.contextualMenu.deleteTag" = "タグを削除";
 "sidebar.photo" = "写真";
+"sidebar.photos" = "写真";
 "sidebar.recording" = "記録";
+"sidebar.recordings" = "録音";
 "sidebar.topSection.home" = "ホーム";
 "sidebar.topSection.starred" = "星付き";
 "sidebar.topSection.unfiled" = "未整理";
@@ -1399,7 +1408,7 @@
 "stickies" = "付箋";
 "stickynotes" = "付箋";
 "stylus.goto.settings" = "設定/Apple Pencilに移動";
-"stylus.switch.fullscreen" = "フルスクリーンに切り替える";
+"stylus.switch.focusmode" = "フォーカスモードに切り替える";
 "tags.contextualMenu.deleteTag" = "タグを削除";
 "tags.contextualMenu.renameTag" = "タグ名変更 (Tagumei Henkō)";
 "tags.delete.alert.message" = "アイテムからタグが削除されます。";
@@ -1490,4 +1499,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
