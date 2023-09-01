@@ -10,9 +10,16 @@ import UIKit
 import FTStyles
 import FTCommon
 
+enum FTPresetStyleMode: String {
+    case select
+    case edit
+    case reorder
+}
+
 protocol FTTextPresetSelectedDelegate: NSObjectProtocol {
     func didSelectedPresetStyleId(_ style: FTTextStyleItem)
     func reloadStylesStackView()
+    func rootViewController() -> UIViewController?
     func dismissKeyboard()
 }
 
@@ -27,10 +34,14 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
     var scale: CGFloat = 1.0
     private let viewmodel = FTTextPresetViewModel()
 
+    private var presetMode: FTPresetStyleMode = .select {
+        didSet {
+            self.configureUIItems(with: presetMode)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        addItemsInNavigationBar()
-        updateTextStylesList()
         self.presetTableView?.allowsSelectionDuringEditing = true;
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.backgroundColor = UIColor.appColor(.popoverBgColor)
@@ -38,6 +49,11 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
         let shadowColor = UIColor(hexString: "#000000")
         self.view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 60.0, spread: 0)
         NotificationCenter.default.addObserver(self, selector: #selector(didTextAnnotationBoxResign), name: ftDidTextAnnotationResignNotifier, object: nil)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateTextStylesList()
     }
 
     deinit {
@@ -61,6 +77,7 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
         textPresetsVC.delegate = delegate
         textPresetsVC.scale = scale
         textPresetsVC.attributes = attributes
+        textPresetsVC.presetMode = .select
         let textToolBarVC = (delegate as? FTTextToolBarViewController)
         textToolBarVC?.textHighLightSyleDelegate = textPresetsVC
         viewController.ftPresentPopover(vcToPresent: textPresetsVC, contentSize: CGSize(width: 320, height: 416))
@@ -70,31 +87,9 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
         textStyle = FTTextStyleManager.shared.fetchTextStylesFromPlist()
         self.presetTableView?.reloadData()
     }
-    
-    private func addItemsInNavigationBar() {
-        self.title = viewmodel.navPresettitle
-        if self.presentingViewController?.isRegularClass() ?? false {
-            let editBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(didTappedOnEdit(sender:)))
-
-            let resetBarButtonItem = UIBarButtonItem(title: viewmodel.reset, style: .plain, target: self, action: #selector(didTappedOnResetButton(sender:)))
-            resetBarButtonItem.tintColor = UIColor.appColor(.darkRed)
-            
-            navigationItem.leftBarButtonItem = editBarButtonItem
-            navigationItem.rightBarButtonItem = resetBarButtonItem
-        }
-    }
 }
 
 extension FTTextPresetsViewController {
-    private func navigateToNewStyleVC(_ textStyle: FTTextStyleItem? = nil, mode: FTTextStyleScreenMode) {
-        let textPresetsVC = self.fetchPreparedNewStyleVcToSow()
-        textPresetsVC.textStyleMode = mode
-        if let style = textStyle {
-            textPresetsVC.textFontStyle = style
-        }
-        self.navigationController?.pushViewController(textPresetsVC, animated: true)
-    }
-
     private func fetchPreparedNewStyleVcToSow() -> FTNewTextStyleViewController {
         let storyboard = UIStoryboard.init(name: "FTTextInputUI", bundle: nil)
         guard let textPresetsVC = storyboard.instantiateViewController(withIdentifier: "FTNewTextStyleViewController") as? FTNewTextStyleViewController else {
@@ -110,37 +105,75 @@ extension FTTextPresetsViewController {
         return textPresetsVC
     }
 
-    private func presentNewStyleVcAsFormsheet(mode: FTTextStyleScreenMode) {
-        let textPresetsVC = self.fetchPreparedNewStyleVcToSow()
-        textPresetsVC.textStyleMode = mode
-        let presentingVc = self.presentingViewController ?? self
-        self.dismiss(animated: true) {
-            self.delegate?.dismissKeyboard()
-            presentingVc.ftPresentFormsheet(vcToPresent: textPresetsVC,hideNavBar: false)
+    private func handleNewStyleVcPresentation(style: FTTextStyleItem? = nil, mode: FTTextStyleScreenMode) {
+        let newStyleVc = self.fetchPreparedNewStyleVcToSow()
+        newStyleVc.textStyleMode = mode
+        if let txtSTyle = style {
+            newStyleVc.textFontStyle = txtSTyle
+        }
+        if let navVc = self.navigationController {
+            if navVc.modalPresentationStyle == .formSheet {
+                navVc.pushViewController(newStyleVc, animated: true)
+            } else { // popover
+                var presentingVc = self.presentingViewController ?? self
+                if let rootVc = self.delegate?.rootViewController() {
+                    presentingVc = rootVc
+                }
+                self.dismiss(animated: true) {
+                    self.delegate?.dismissKeyboard()
+                    self.navigationController?.pushViewController(newStyleVc, animated: false) // silent push
+                    let navVc = self.navigationController
+                    presentingVc.ftPresentFormsheet(vcToPresent: navVc!,hideNavBar: false, completion: {
+                        self.presetMode = .edit
+                    })
+                }
+            }
         }
     }
 
     @objc func didTappedOnEdit(sender: UIBarButtonItem) {
-        let presentingVc = self.presentingViewController ?? self
-        self.dismiss(animated: true) {
+        if self.presetMode == .select {
+            var presentingVc = self.presentingViewController ?? self
+            if let rootVc = self.delegate?.rootViewController() {
+                presentingVc = rootVc
+            }
+            self.dismiss(animated: true) {
+                self.delegate?.dismissKeyboard()
+                self.presetMode = .reorder
+                presentingVc.ftPresentFormsheet(vcToPresent: self,animated: false, hideNavBar: false)
+            }
+        } else if self.presetMode == .edit {
+            self.presetMode = .reorder
+            self.presetTableView?.reloadData()
+        }
+    }
+
+    private func configureUIItems(with mode: FTPresetStyleMode) {
+        self.navigationItem.rightBarButtonItems = []
+        self.navigationItem.leftBarButtonItems = []
+        if mode == .select {
+            self.title = viewmodel.navPresettitle
             self.presetTableView?.isEditing = true
             self.presetTableView?.dragInteractionEnabled = true
+            // nav items
+            let editBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(didTappedOnEdit(sender:)))
+            let resetBarButtonItem = UIBarButtonItem(title: viewmodel.reset, style: .plain, target: self, action: #selector(didTappedOnResetButton(sender:)))
+            resetBarButtonItem.tintColor = UIColor.appColor(.darkRed)
+            self.navigationItem.leftBarButtonItem = editBarButtonItem
+            self.navigationItem.rightBarButtonItem = resetBarButtonItem
+        } else {
             self.title = self.viewmodel.navReordertitle
-
+            self.presetTableView?.isEditing = true
+            self.presetTableView?.dragInteractionEnabled = true
+            // nav items
             let doneButtonItem  = UIBarButtonItem(title: self.viewmodel.done, style: .plain, target: self, action: #selector(self.tappedOnDoneBtn(sender:)))
             doneButtonItem.tintColor = UIColor.appColor(.accent)
             self.navigationItem.rightBarButtonItems = [doneButtonItem]
-            self.navigationItem.leftBarButtonItems = []
-            self.delegate?.dismissKeyboard()
-            presentingVc.ftPresentFormsheet(vcToPresent: self,hideNavBar: false)
         }
     }
 
     @objc func tappedOnDoneBtn(sender: UIBarButtonItem) {
-        self.addItemsInNavigationBar()
         self.delegate?.reloadStylesStackView()
-        self.presetTableView?.isEditing = false
-        self.presetTableView?.dragInteractionEnabled = false
         self.dismiss(animated: true)
     }
     
@@ -152,7 +185,6 @@ extension FTTextPresetsViewController {
         }
     }
 }
-
 
 extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -181,28 +213,15 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
         if textStyle.styles.count < indexPath.row {
             return
         }
-
-        var selectedStyle = textStyle.styles[indexPath.row]
-        var isAddMode = false
-        if tableView.cellForRow(at: indexPath) is FTAddNewTextStyleCell {
-            isAddMode = true
-            if let index = lastSelectedIndex {
-                selectedStyle = textStyle.styles[index]
-            }
-        }
-
-        if tableView.isEditing {
-            if indexPath.section == 0 {
-                self.navigateToNewStyleVC(selectedStyle, mode: .presetEdit)
-            } else if isAddMode {
-                self.navigateToNewStyleVC(selectedStyle, mode: .presetEditAdd)
-            }
-        } else {
-            if indexPath.section == 0 {
+        if indexPath.section == 1, tableView.cellForRow(at: indexPath) is FTAddNewTextStyleCell { // Add New Preset
+            self.handleNewStyleVcPresentation(mode: .presetAdd)
+        } else if !tableView.isEditing { // in popover mode(selection mode)
+            let selectedStyle = textStyle.styles[indexPath.row]
+            if self.presetMode == .select {
                 self.delegate?.didSelectedPresetStyleId(selectedStyle)
                 self.dismiss(animated: true)
-            } else if isAddMode {
-                self.presentNewStyleVcAsFormsheet(mode: .presetXclusiveAdd)
+            } else {
+                self.handleNewStyleVcPresentation(style: selectedStyle, mode: .presetEdit)
             }
         }
     }
@@ -225,7 +244,14 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
         }
         return .none
     }
-    
+
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 0 && self.presetMode == .reorder {
+            return false
+        }
+        return true
+    }
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section == 0 ? true : false
     }
@@ -265,7 +291,7 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
             return nil
         }
         let editAction = UIContextualAction(style: .normal, title: viewmodel.editpreset) { action, vw, success in
-            self.navigateToNewStyleVC(selectedStyle, mode: .presetEdit)
+            self.handleNewStyleVcPresentation(style: selectedStyle, mode: .presetEdit)
         }
         editAction.backgroundColor = UIColor.appColor(.accent)
        

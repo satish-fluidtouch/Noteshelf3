@@ -42,6 +42,7 @@ extension FTNewTextStyleViewController: FTTextColorCollectionViewDelegate {
             shouldApplyAttributes = true
         }
         applyFontChanges()
+        self.reloadColorsCollectionIfRequired()
     }
 }
 

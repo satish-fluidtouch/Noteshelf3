@@ -15,22 +15,24 @@ let defaultFontSize: Int = 16
 
 enum FTTextStyleScreenMode: String {
     case defaultView
-    case presetXclusiveAdd
     case presetEdit
-    case presetEditAdd // To add preset in edit screen
+    case presetAdd
 }
 
 protocol FTDefaultTextStyleDelegate: NSObjectProtocol {
     func didSetDefaultStyle(_ info: FTDefaultTextStyleItem)
 }
 
-protocol FTEditStyleDelegate: FTDefaultTextStyleDelegate {
+protocol FTRootControllerInfo: NSObjectProtocol {
+    func rootViewController() -> UIViewController?
+}
+
+protocol FTEditStyleDelegate: FTDefaultTextStyleDelegate, FTRootControllerInfo {
     func didChangeStyle(_ style: FTTextStyleItem?)
     func didTapOnAlignmentStyle(_ style: NSTextAlignment)
     func didChangeLineSpacing(lineSpace: CGFloat)
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool)
     func textInputViewCurrentTextView() -> FTTextView?
-    func rootViewController() -> UIViewController?
 }
 
 class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
@@ -80,6 +82,7 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     var shouldApplyAttributes: Bool = false
     var scale: CGFloat = 1.0
     weak var delegate: FTEditStyleDelegate?
+    internal var textStyleMode: FTTextStyleScreenMode = .defaultView
 
     private var isAutoLineSpaceEnabled = false {
         didSet {
@@ -87,27 +90,6 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
             self.autoLineHeightSeparatorView?.isHidden = isAutoLineSpaceEnabled
             self.autoLineHeightSwitch?.isOn = isAutoLineSpaceEnabled
             self.lineSpacingStackViewHeightConstraint?.constant = isAutoLineSpaceEnabled ? 44 : 88.5
-        }
-    }
-
-    var textStyleMode: FTTextStyleScreenMode = .defaultView {
-        didSet {
-            let isDefaultMode = (textStyleMode == .defaultView)
-            self.textAlignmentView?.isHidden = !isDefaultMode
-            self.autoLineHeightView?.isHidden = !isDefaultMode
-            self.setAsDefaultBtn?.isHidden = !isDefaultMode
-            self.presentStyleNameView?.isHidden = isDefaultMode
-            self.separatorView?.isHidden = !isDefaultMode
-            self.txtStyleName?.isEnabled = !isDefaultMode
-            self.txtFontSize?.isEnabled = !isDefaultMode
-            self.setAsDefaultBtn?.isHidden = !isDefaultMode
-            if !isDefaultMode {
-                self.traitStackViewHeightConstraint?.constant = 88.5
-                self.lineSpacingStackViewHeightConstraint?.constant = 0
-            }
-            if let superView = self.txtFontSize?.superview {
-                superView.backgroundColor = !isDefaultMode ? UIColor.appColor(.accentBg) : .clear
-            }
         }
     }
 
@@ -155,6 +137,7 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         }
         self.loadColorCollectionView()
         self.txtFontSize?.text = "\(textFontStyle.fontSize)"
+        self.fontSizeStepper?.updateInitialValue(textFontStyle.fontSize)
         if let pdfVC = parentVC as? FTPDFRenderViewController, let textAnnot = pdfVC.activeAnnotationController() as? FTTextAnnotationViewController {
             self.selectedRange = textAnnot.textInputView.selectedRange
             self.selectedTextRange = textAnnot.textInputView.selectedTextRange
@@ -172,16 +155,7 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
 
     private func updateNavigationBar() {
         var title = "Font/text style"
-        if self.textStyleMode == .presetXclusiveAdd {
-            title = "New".localized
-            let cancelBtn = UIBarButtonItem(title: "Cancel".localized, style: .plain, target: self, action: #selector(self.tappedOnCancelBtn(sender:)))
-            cancelBtn.tintColor = UIColor.appColor(.accent)
-            self.navigationItem.leftBarButtonItems = [cancelBtn]
-
-            let addBtn = UIBarButtonItem(title: "Add".localized, style: .plain, target: self, action: #selector(self.tappedOnAddBtn(sender:)))
-            addBtn.tintColor = UIColor.appColor(.accent)
-            self.navigationItem.rightBarButtonItems = [addBtn]
-        } else if self.textStyleMode == .presetEdit {
+        if self.textStyleMode == .presetEdit {
             title = "Edit".localized
         }
         self.title = title
@@ -193,45 +167,41 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
 
     // Inserting new style
     @objc func tappedOnAddBtn(sender: UIBarButtonItem) {
-        self.handlePresetAddition(completion: nil)
+        self.handlePresetAddition()
     }
 
-    private func handlePresetAddition(completion: ((Bool) -> Void)?) {
-        let existingStyles = FTTextStyleManager.shared.fetchTextStylesFromPlist().styles
-        let isEqualToExistingStyle = existingStyles.contains { existingStyle in
-            self.textFontStyle.isFullyEqual(existingStyle)
-        }
-        if !isEqualToExistingStyle {
-            textFontStyle.fontId = UUID().uuidString
-            textFontStyle.isDefault = false
-            FTTextStyleManager.shared.insertNewTextStyle(textFontStyle)
-            if self.textStyleMode == .presetXclusiveAdd {
-                self.dismiss(animated: true, completion: {
-                    showAddStyleToast()
-                    completion?(true)
-                })
-            } else if self.textStyleMode == .presetEditAdd {
-                showAddStyleToast()
-                completion?(true)
-            }
-        } else {
-            let toastConfig = FTToastConfiguration(title: "Text Style already exists", subTitle: "style name: \(self.textFontStyle.displayName)")
-            FTToastHostController.showToast(from: self, toastConfig: toastConfig)
-            completion?(false)
-        }
-
-        func showAddStyleToast() {
-            let toastConfig = FTToastConfiguration(title: "New Text style is added", subTitle: "")
-            FTToastHostController.showToast(from: self, toastConfig: toastConfig)
-        }
+    private func handlePresetAddition() {
+        textFontStyle.fontId = UUID().uuidString
+        textFontStyle.isDefault = false
+        FTTextStyleManager.shared.insertNewTextStyle(textFontStyle)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateNavigationBar()
+        self.updateUIChanges(with: self.textStyleMode)
         self.navigationController?.navigationBar.backgroundColor = UIColor.appColor(.popoverBgColor)
         runInMainThread(0.2) {
             self.reloadColorsCollectionIfRequired()
+        }
+    }
+
+    private func updateUIChanges(with mode: FTTextStyleScreenMode) {
+        let isDefaultMode = (textStyleMode == .defaultView)
+        self.textAlignmentView?.isHidden = !isDefaultMode
+        self.autoLineHeightView?.isHidden = !isDefaultMode
+        self.setAsDefaultBtn?.isHidden = !isDefaultMode
+        self.presentStyleNameView?.isHidden = isDefaultMode
+        self.separatorView?.isHidden = !isDefaultMode
+        self.txtStyleName?.isEnabled = !isDefaultMode
+        self.txtFontSize?.isEnabled = !isDefaultMode
+        self.setAsDefaultBtn?.isHidden = !isDefaultMode
+        if !isDefaultMode {
+            self.traitStackViewHeightConstraint?.constant = 88.5
+            self.lineSpacingStackViewHeightConstraint?.constant = 0
+        }
+        if let superView = self.txtFontSize?.superview {
+            superView.backgroundColor = !isDefaultMode ? UIColor.appColor(.accentBg) : .clear
         }
     }
 
@@ -247,10 +217,9 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
                     FTTextStyleManager.shared.updateTextStyle(textFontStyle)
                     shouldUpdate = true
                 }
-            } else if self.textStyleMode == .presetEditAdd {
-                self.handlePresetAddition { status in
-                    shouldUpdate = status
-                }
+            } else if self.textStyleMode == .presetAdd {
+                self.handlePresetAddition()
+                shouldUpdate = true
             }
             if shouldUpdate {
                 if let presetVC = self.navigationController?.children.first as? FTTextPresetsViewController {
@@ -269,13 +238,13 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         guard let textStyleVC = storyboard.instantiateViewController(withIdentifier: "FTNewTextStyleViewController") as? FTNewTextStyleViewController else {
             fatalError("FTNewTextStyleViewController not found")
         }
-        textStyleVC.textStyleMode = .defaultView
         textStyleVC.delegate = delegate
         textStyleVC.scale = scale
         textStyleVC.attributes = attributes
         textStyleVC.parentVC = viewController
         (delegate as? FTTextToolBarViewController)?.textSelectionDelegate = textStyleVC
         textStyleVC.ftPresentationDelegate.source = sourceView
+        textStyleVC.textStyleMode = .defaultView
         viewController.ftPresentPopover(vcToPresent: textStyleVC, contentSize: CGSize(width: 320, height: 480))
     }
 
@@ -311,7 +280,7 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         self.applyFontChanges(false)
     }
     
-    private func reloadColorsCollectionIfRequired() {
+    internal func reloadColorsCollectionIfRequired() {
         if self.collectionView?.selectedColor?.replacingOccurrences(of: "#", with: "") != textFontStyle.textColor.replacingOccurrences(of: "#", with: "") {
             // self.collectionView?.reloadSections(IndexSet(integer: 0))
             self.collectionView?.selectedColor = textFontStyle.textColor

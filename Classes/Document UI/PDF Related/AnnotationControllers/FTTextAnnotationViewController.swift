@@ -983,6 +983,10 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
     func textInputViewCurrentTextView() -> FTTextView? {
         return self.textInputView
     }
+
+    func rootViewController() -> UIViewController? {
+        return (self.delegate as? FTPageViewController)?.parent
+    }
 }
 
 extension FTTextAnnotationViewController {

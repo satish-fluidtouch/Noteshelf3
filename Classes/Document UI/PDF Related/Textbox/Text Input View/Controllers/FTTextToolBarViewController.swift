@@ -38,7 +38,7 @@ protocol FTStyleSelectionDelegate: NSObjectProtocol {
     func didHighLightSelectedStyle(attr: [NSAttributedString.Key : Any]?, scale: CGFloat)
 }
 
-protocol FTTextToolBarDelegate: NSObjectProtocol {
+protocol FTTextToolBarDelegate: FTRootControllerInfo {
     func didSelectTextToolbarOption(_ option: FTTextToolBarOption)
     func didSelectFontStyle(_ style: FTTextStyleItem)
     func didChangeBackgroundColor(_ color: UIColor)
@@ -525,7 +525,7 @@ extension FTTextToolBarViewController: FTEditStyleDelegate {
     }
 
     func rootViewController() -> UIViewController? {
-        return (self.toolBarDelegate as? FTTextAnnotationViewController)?.parent
+        return self.toolBarDelegate?.rootViewController()
     }
 }
 
@@ -553,6 +553,12 @@ extension FTTextToolBarViewController: FTTextStyleCompactDelegate {
     
     func changeBackgroundColor(_ color: UIColor) {
         self.toolBarDelegate?.didChangeBackgroundColor(color)
+    }
+
+    func dismissKeyBoard() {
+//        if let textView = self.textInputViewCurrentTextView() {
+//            textView.resignFirstResponder()
+//        }
     }
 }
 

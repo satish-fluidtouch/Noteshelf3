@@ -9,11 +9,12 @@
 import UIKit
 import FTCommon
 
-protocol FTTextStyleCompactDelegate: FTDefaultTextStyleDelegate {
+protocol FTTextStyleCompactDelegate: FTDefaultTextStyleDelegate, FTRootControllerInfo {
     func didSelectFontStyle(_ style: FTTextStyleItem)
     func didChangeAlignmentStyle(_ style: NSTextAlignment)
     func changeLineSpacing(_ lineSpace: CGFloat)
     func changeBackgroundColor(_ color: UIColor)
+    func dismissKeyBoard()
 }
 
 protocol FTTextColorUpdateDelegate: NSObjectProtocol {
@@ -373,12 +374,21 @@ extension FTTextStyleCompactViewController {
 }
 
 extension FTTextStyleCompactViewController: FTTextPresetSelectedDelegate {
+    func rootViewController() -> UIViewController? {
+        return self.delegate?.rootViewController()
+    }
+
     func reloadStylesStackView() {
         loadTextStyles()
     }
     
     func didSelectedPresetStyleId(_ style: FTTextStyleItem) {
         print(style)
+    }
+
+    override func dismissKeyboard() {
+//        self.view.endEditing(true)
+        self.delegate?.dismissKeyBoard()
     }
 }
 
