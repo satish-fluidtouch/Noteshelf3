@@ -173,10 +173,6 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         return numRows
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44.0
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let cellIdentifier = cellIdentifierForIndexpath(indexPath)
@@ -271,7 +267,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             if isAutoBackUpEnabled() {
                 heightRequired = 50.0 // default height
                 if let _ = self.fetchLoggedInAccount() {
-                    heightRequired += 70.0 + verticalSpace // to show login info
+                    heightRequired += 80.0 + verticalSpace // to show login info
                 }
                 let errorMsg = self.getBackuperrorMessage()
                 if !errorMsg.isEmpty {

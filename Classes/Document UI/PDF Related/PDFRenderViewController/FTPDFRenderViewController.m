@@ -2905,6 +2905,9 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                 }
             }
             break;
+        case FTApplePencilInteractionTypeDistractionFree:
+            [[NSNotificationCenter defaultCenter] postNotificationName:FTToggleToolbarModeNotificationName object:nil];
+            break;
         default:
             break;
     }

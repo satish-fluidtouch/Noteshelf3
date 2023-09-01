@@ -1408,7 +1408,7 @@
 "stickies" = "付箋";
 "stickynotes" = "付箋";
 "stylus.goto.settings" = "設定/Apple Pencilに移動";
-"stylus.switch.fullscreen" = "フルスクリーンに切り替える";
+"stylus.switch.focusmode" = "フォーカスモードに切り替える";
 "tags.contextualMenu.deleteTag" = "タグを削除";
 "tags.contextualMenu.renameTag" = "タグ名変更 (Tagumei Henkō)";
 "tags.delete.alert.message" = "アイテムからタグが削除されます。";

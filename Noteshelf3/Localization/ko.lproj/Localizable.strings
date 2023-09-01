@@ -1408,7 +1408,7 @@
 "stickies" = "스티키";
 "stickynotes" = "스티키 노트";
 "stylus.goto.settings" = "설정으로 가기/Apple Pencil";
-"stylus.switch.fullscreen" = "전체 화면으로 전환";
+"stylus.switch.focusmode" = "전환하여 집중 모드로 변경";
 "tags.contextualMenu.deleteTag" = "태그 삭제";
 "tags.contextualMenu.renameTag" = "태그 이름 바꾸기";
 "tags.delete.alert.message" = "태그는 태그가 연결된 항목에서 제거될 것입니다.";

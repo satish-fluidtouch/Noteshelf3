@@ -169,7 +169,11 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
             onCompletion()
         }
         else {
-            self.currentShelfViewModel?.reloadItems(animate: true) {
+            if let currentViewM = self.currentShelfViewModel {
+                currentViewM.reloadItems(animate: true) {
+                    onCompletion()
+                }
+            } else {
                 onCompletion()
             }
         }

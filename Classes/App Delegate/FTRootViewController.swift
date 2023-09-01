@@ -1218,15 +1218,6 @@ extension FTRootViewController: UIPencilInteractionDelegate {
                 }
             }
             docController.didReceivePencilInteraction(action);
-
-            //Tracking
-            var params: [String:Any] = ["action":action.title()]
-            if(action == FTApplePencilInteractionType.systemDefault) {
-                params["type"] = "system"
-            } else {
-                params["type"] = "user"
-            }
-            track("pencil_double_tap", params: params)
         }
     }
 }

@@ -177,7 +177,6 @@ class FTUserDefaults : NSObject
     }
     
     class func setApplePencilDoubleTapAction(_ value : FTApplePencilInteractionType) {
-        track("double_tap_setting", params: ["setting":value.title()])
         UserDefaults.standard.set(value.rawValue, forKey: ApplePencilDoubleTapActionKey);
         UserDefaults.standard.synchronize();
     }
