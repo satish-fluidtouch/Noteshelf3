@@ -140,6 +140,7 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
     }
 
     internal func observeShelfModelChanges(of toolbar: FTShelfToolbar) {
+   // TODO: Refactor needed - Shelf items to be observed - Narayana
         self.shelfViewModel.objectWillChange
             .receive(on: DispatchQueue.main) // Receive the changes on the main thread
             .sink { [weak self] _ in
@@ -156,6 +157,11 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
                             toolbar.switchMode(.trash)
                         } else {
                             toolbar.switchMode(.shelf)
+                            if let groupItem = self.shelfViewModel.groupItem {
+                                toolbar.showBackButton(true)
+                            } else {
+                                toolbar.showBackButton(false)
+                            }
                         }
                     }
                 } else if self.isInTrash() {

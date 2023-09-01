@@ -147,6 +147,7 @@ struct FTShelfItemsView: View {
             .padding(.trailing,24)
             .padding(.leading,24)
             .padding(.bottom,24)
+            .macOnlyPlainButtonStyle()
         }
         .background(Color.appColor(.formSheetBgColor))
     }
