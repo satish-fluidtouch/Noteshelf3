@@ -39,7 +39,7 @@ enum FTNotesehlfAIAction: Int {
     }
 }
 
-class FTNotesehlfAIButton: UIButton {
+class FTNoteshelfAIButton: UIButton {
     @IBInspectable var hasBorder: Bool = false {
         didSet {
             if hasBorder != oldValue {
@@ -83,9 +83,9 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView?;
     @IBOutlet private weak var stackView: UIStackView?;
     @IBOutlet private weak var moreButton: UIButton?;
-    @IBOutlet private weak var clipboardButton: FTNotesehlfAIButton?;
-    @IBOutlet private weak var addAsHandwrite: FTNotesehlfAIButton?;
-    @IBOutlet private weak var addToPageButton: FTNotesehlfAIButton?;
+    @IBOutlet private weak var clipboardButton: FTNoteshelfAIButton?;
+    @IBOutlet private weak var addAsHandwrite: FTNoteshelfAIButton?;
+    @IBOutlet private weak var addToPageButton: FTNoteshelfAIButton?;
 
     weak var delegate: FTNoteshelfAITextViewViewControllerDelegate?;
     var supportsHandwriting = false {
