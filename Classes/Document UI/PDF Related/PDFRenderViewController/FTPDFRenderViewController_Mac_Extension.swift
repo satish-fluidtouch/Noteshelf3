@@ -113,11 +113,9 @@ extension FTPDFRenderViewController {
             self.executer.execute(type: .sharePageAsPng)
 
         case .savePageAsPhoto:
-            self.executer.execute(type: .savePageAsPhoto) { status, error in
-                if nil == error, status {
+            self.executer.execute(type: .savePageAsPhoto) {
                     let config = FTToastConfiguration(title: "shortcut.toast.savePageAsPhoto".localized)
                     FTToastHostController.showToast(from: self, toastConfig: config)
-                }
             }
 
         default:
