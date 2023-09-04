@@ -78,7 +78,6 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         super.init()
         FTSideBarItemCount += 1
         self.addObserverForCollectionChildrenCount()
-        print(">>>> FTSideBarItem INIT \(FTSideBarItemCount)")
     }
     func rename(newName: String) {
         self.title = newName
@@ -105,8 +104,6 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
     }
     deinit {
         FTSideBarItemCount -= 1
-        print(">>>> FTSideBarItem DEINIT \(FTSideBarItemCount)")
-
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil)
     }
 }

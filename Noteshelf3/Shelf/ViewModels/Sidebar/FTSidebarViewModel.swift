@@ -85,7 +85,6 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         self.selectedShelfItemCollection = collection
         self.addObserverForContextualOperations()
         FTSidebarViewModelCount += 1
-        print(">>>> FTSidebarViewModel INIT \(FTSidebarViewModelCount)")
     }
     init(selectedSideBarItemType: FTSideBarItemType, selectedTag:String = "") {
         super.init()
@@ -93,11 +92,9 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         self.lastSelectedTag = selectedTag
         self.addObserverForContextualOperations()
         FTSidebarViewModelCount += 1
-        print(">>>> FTSidebarViewModel INIT \(FTSidebarViewModelCount)")
     }
     deinit {
         FTSidebarViewModelCount -= 1
-        print(">>>> FTSidebarViewModel DEINIT \(FTSidebarViewModelCount)")
     }
 
     func shouldShowNumberOfNotebooksCountFor(item: FTSideBarItem) -> Bool {
