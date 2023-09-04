@@ -326,7 +326,9 @@ extension FTAddDocumentEntitiesViewController: FTPHPickerDelegate {
 extension FTAddDocumentEntitiesViewController: FTStickerdelegate {
     func didTapSticker(with image: UIImage) {
         self.delegate?.didFinishPickingUIImages([image], source: FTInsertImageSourceSticker)
-        self.dismiss(animated: true)
+        if let navVc = self.presentingViewController{
+            navVc.dismiss(animated: true)
+        }
     }
 
     func dismiss() {
