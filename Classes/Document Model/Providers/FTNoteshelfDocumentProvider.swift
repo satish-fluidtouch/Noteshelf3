@@ -702,7 +702,7 @@ extension FTNoteshelfDocumentProvider {
             cloudDocumentListener.addListener(cloudWatchCollection)
 
                 cloudDocumentListener.startQuery {
-                    cloudCollection.ns3Collection.shelfs({ (cloudCollections) in
+                    cloudCollection.ns3Collection?.shelfs({ (cloudCollections) in
                     self.localShelfCollectionRoot?.ns3Collection.shelfs({ (_) in
                         let bgTask = startBackgroundTask()
                         self.moveCollectionToLocal(collections: cloudCollections,
