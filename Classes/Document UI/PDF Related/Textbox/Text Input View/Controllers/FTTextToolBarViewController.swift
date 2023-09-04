@@ -46,6 +46,7 @@ protocol FTTextToolBarDelegate: FTRootControllerInfo {
     func addTextInputView(_ inputController: UIViewController?)
     func didChangeTextAlignmentStyle(style: NSTextAlignment)
     func didChangeLineSpacing(lineSpace: CGFloat)
+    func didAutoLineSpaceStatusChanged(_ status: Bool)
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool)
     func didChangeFontTrait(_ trait: UIFontDescriptor.SymbolicTraits)
     func didToggleUnderline()
@@ -515,7 +516,11 @@ extension FTTextToolBarViewController: FTEditStyleDelegate {
     func didChangeLineSpacing(lineSpace: CGFloat) {
         self.toolBarDelegate?.didChangeLineSpacing(lineSpace: lineSpace)
     }
-    
+
+    func didAutoLineSpaceStatusChanged(_ status: Bool) {
+        self.toolBarDelegate?.didAutoLineSpaceStatusChanged(status)
+    }
+
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool) {
         self.toolBarDelegate?.didSelectTextRange(range: range, txtRange: txtRange, canEdit: canEdit)
     }

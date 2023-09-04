@@ -100,8 +100,6 @@ extension FTTextPresetsViewController {
         textPresetsVC.attributes = attributes
         let textToolBarVC = (delegate as? FTTextToolBarViewController)
         textToolBarVC?.textHighLightSyleDelegate = textPresetsVC as? any FTStyleSelectionDelegate
-        let shadowColor = UIColor(hexString: "#000000")
-        textPresetsVC.view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 60.0, spread: 0)
         return textPresetsVC
     }
 
@@ -121,11 +119,11 @@ extension FTTextPresetsViewController {
                 }
                 self.dismiss(animated: true) {
                     self.delegate?.dismissKeyboard()
-                    self.navigationController?.pushViewController(newStyleVc, animated: false) // silent push
-                    let navVc = self.navigationController
-                    presentingVc.ftPresentFormsheet(vcToPresent: navVc!,hideNavBar: false, completion: {
-                        self.presetMode = .edit
-                    })
+                    navVc.pushViewController(newStyleVc, animated: false) {
+                        presentingVc.ftPresentFormsheet(vcToPresent: navVc,hideNavBar: false, completion: {
+                            self.presetMode = .edit
+                        })
+                    }
                 }
             }
         }

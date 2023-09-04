@@ -133,8 +133,7 @@ class FTTextAnnotationViewController: UIViewController {
                 self.autocorrectionType = UITextAutocorrectionType.no
                 #if !targetEnvironment(macCatalyst)
                     _ = self.resignFirstResponder()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "FTDidTextboxResignResponder"), object: nil)
-//                (self.textInputView.inputAccessoryViewController as? FTTextInputAccerssoryViewController)?.dismissPopoverViews();
+                NotificationCenter.default.post(name: ftDidTextAnnotationResignNotifier, object: nil)
                 #endif
             }
         }
@@ -943,7 +942,11 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
     func didChangeLineSpacing(lineSpace: CGFloat) {
         self.textInputAccessoryDidChangeLineSpacing(lineSpace)
     }
-    
+
+    func didAutoLineSpaceStatusChanged(_ status: Bool) {
+        self.textInputAccessoryDidChangeAutoLineSpace(status)
+    }
+
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool) {
         if canEdit {
             self.allowsEdit()
@@ -990,6 +993,16 @@ extension FTTextAnnotationViewController: FTTextToolBarDelegate {
 }
 
 extension FTTextAnnotationViewController {
+    func textInputAccessoryDidChangeAutoLineSpace(_ status: Bool) {
+        textInputView.setAutoLineSpace(status: status, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
+        if status {
+            self.textInputAccessoryDidChangeLineSpacing(0)
+        } else {
+            saveTextEntryAttributes()
+            validateKeyboard()
+        }
+    }
+
     func textInputAccessoryDidChangeLineSpacing(_ lineSpace: CGFloat) {
         textInputView.setLineSpacing(lineSpace: lineSpace, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
         saveTextEntryAttributes()
@@ -1178,7 +1191,7 @@ extension FTTextAnnotationViewController {
                 var fontDescriptor = UIFontDescriptor()
                 fontDescriptor = fontDescriptor.withFamily(style.fontFamily)
                 fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.name: style.fontName])
-                var newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
+                let newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
                 
                 if style.isUnderLined {
                     textInputView.setValue(NSUnderlineStyle.single.rawValue, forAttribute: NSAttributedString.Key.underlineStyle.rawValue, in: selectedRange)

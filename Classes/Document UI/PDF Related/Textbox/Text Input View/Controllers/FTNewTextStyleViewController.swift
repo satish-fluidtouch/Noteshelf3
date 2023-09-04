@@ -31,6 +31,7 @@ protocol FTEditStyleDelegate: FTDefaultTextStyleDelegate, FTRootControllerInfo {
     func didChangeStyle(_ style: FTTextStyleItem?)
     func didTapOnAlignmentStyle(_ style: NSTextAlignment)
     func didChangeLineSpacing(lineSpace: CGFloat)
+    func didAutoLineSpaceStatusChanged(_ status: Bool)
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool)
     func textInputViewCurrentTextView() -> FTTextView?
 }
@@ -99,8 +100,6 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         self.initInfoLabels()
         self.updateUI()
         self.addObservers()
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.navigationBar.tintColor = .clear
     }
 
     private func loadStepperView(){
@@ -440,9 +439,9 @@ extension FTNewTextStyleViewController {
         let isOn = sender.isOn
         self.isAutoLineSpaceEnabled = isOn
         if isOn {
-            self.delegate?.didChangeLineSpacing(lineSpace: 0.0)
             self.currentLineSpace = 0
         }
+        self.delegate?.didAutoLineSpaceStatusChanged(isOn)
     }
 
     @IBAction func setAsDefaultTapped(_ sender: Any) {

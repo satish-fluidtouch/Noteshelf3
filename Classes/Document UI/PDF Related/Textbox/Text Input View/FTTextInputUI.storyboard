@@ -495,10 +495,10 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3i-Qn-wcX">
-                                                        <rect key="frame" x="0.0" y="344" width="375" height="44"/>
+                                                        <rect key="frame" x="0.0" y="348" width="375" height="40"/>
                                                         <color key="backgroundColor" name="accent"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="44" id="JZW-rl-FmH"/>
+                                                            <constraint firstAttribute="height" constant="40" id="JZW-rl-FmH"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Set as Default">
@@ -1252,16 +1252,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preset Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWT-ea-pGr" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                <rect key="frame" x="16" y="12" width="105" height="20"/>
+                                                                <rect key="frame" x="16" y="12" width="101.5" height="20"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" name="black1"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Style" textAlignment="right" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UPU-9i-TPI">
-                                                                <rect key="frame" x="133" y="0.0" width="140" height="44"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="140" id="uGW-wz-Csk"/>
-                                                                </constraints>
+                                                                <rect key="frame" x="130" y="0.0" width="143.5" height="44"/>
                                                                 <color key="textColor" name="accent"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
@@ -1694,11 +1691,10 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G52-gh-h4V">
-                                                <rect key="frame" x="16" y="470" width="289" height="44"/>
+                                                <rect key="frame" x="16" y="484" width="289" height="40"/>
                                                 <color key="backgroundColor" name="accent"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="65R-ke-IjB"/>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="ehP-GM-out"/>
+                                                    <constraint firstAttribute="height" constant="40" id="65R-ke-IjB"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Set as Default">
