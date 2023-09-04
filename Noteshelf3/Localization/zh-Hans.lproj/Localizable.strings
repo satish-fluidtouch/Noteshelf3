@@ -1408,7 +1408,7 @@
 "stickies" = "粘贴便签";
 "stickynotes" = "便签";
 "stylus.goto.settings" = "去设置/Apple Pencil";
-"stylus.switch.fullscreen" = "切换到全屏";
+"stylus.switch.focusmode" = "切换到专注模式";
 "tags.contextualMenu.deleteTag" = "删除标签";
 "tags.contextualMenu.renameTag" = "重命名标签";
 "tags.delete.alert.message" = "标签将从附着的项目中移除。";

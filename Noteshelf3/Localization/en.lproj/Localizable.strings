@@ -1408,7 +1408,7 @@
 "stickies" = "Stickies";
 "stickynotes" = "Sticky Notes";
 "stylus.goto.settings" = "Go to Settings/Apple Pencil";
-"stylus.switch.fullscreen" = "Switch to full screen";
+"stylus.switch.focusmode" = "Switch to Focus Mode";
 "tags.contextualMenu.deleteTag" = "Delete Tag";
 "tags.contextualMenu.renameTag" = "Rename Tag";
 "tags.delete.alert.message" = "The tag will be removed from the items the tag is attached to.";
