@@ -1496,6 +1496,13 @@
 "welcome.zoombox" = "放大盒";
 "widgets" = "小工具";
 "work" = "工作";
+"cloud.backup.error.failedToCreateBackup" = "無法建立備份檔案。請檢查您的設備剩餘空間。";
+"cloud.backup.error.fileNotFound" = "檔案未找到";
+"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
+"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
+"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
+"cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
+"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.

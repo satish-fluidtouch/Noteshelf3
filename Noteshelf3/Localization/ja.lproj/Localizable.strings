@@ -1496,6 +1496,13 @@
 "welcome.zoombox" = "ズームボックス";
 "widgets" = "ウィジェット";
 "work" = "仕事";
+"cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
+"cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
+"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
+"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
+"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
+"cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
+"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.

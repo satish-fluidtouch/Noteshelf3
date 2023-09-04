@@ -1496,6 +1496,13 @@
 "welcome.zoombox" = "BOÎTE DE ZOOM";
 "widgets" = "Widgets";
 "work" = "Travail";
+"cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
+"cloud.backup.error.fileNotFound" = "Fichier non trouvé";
+"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
+"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
+"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
+"cloud.backup.pdfFormatWarning" = "Note: Les cahiers protégés par mot de passe ne peuvent pas être sauvegardés au format PDF.";
+"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.

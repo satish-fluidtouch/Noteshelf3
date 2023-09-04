@@ -30,7 +30,7 @@ class FTErrorInfoViewController: UIViewController {
         self.infoLabel?.isHidden = true;
         let rightNavItem = FTNavBarButtonItem(type: .right, title: "done".localized, delegate: self)
         self.navigationItem.rightBarButtonItem = rightNavItem
-        self.title = "backup.error".localized;
+        self.title = "cloud.backup.errors".localized;
     }
 
     private func getIgnoredItemsErrorMessage() -> String {

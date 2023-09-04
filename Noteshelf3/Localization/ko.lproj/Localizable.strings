@@ -1496,6 +1496,13 @@
 "welcome.zoombox" = "줌 박스";
 "widgets" = "위젯";
 "work" = "일";
+"cloud.backup.error.failedToCreateBackup" = "백업 파일 생성 실패. 기기의 남은 공간을 확인하세요.";
+"cloud.backup.error.fileNotFound" = "파일을 찾을 수 없음";
+"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
+"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
+"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
+"cloud.backup.pdfFormatWarning" = "참고: 비밀번호로 보호된 책은 PDF로 백업할 수 없습니다.";
+"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.

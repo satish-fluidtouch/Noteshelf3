@@ -1496,6 +1496,13 @@
 "welcome.zoombox" = "ZOOM BOX";
 "widgets" = "Widgets";
 "work" = "Arbeit";
+"cloud.backup.error.failedToCreateBackup" = "Fehler beim Erstellen der Sicherungsdatei. Überprüfen Sie den verbleibenden Speicherplatz auf Ihrem Gerät.";
+"cloud.backup.error.fileNotFound" = "Datei nicht gefunden";
+"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
+"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
+"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
+"cloud.backup.pdfFormatWarning" = "Hinweis: Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
+"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.

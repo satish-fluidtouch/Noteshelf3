@@ -1499,9 +1499,10 @@
 "cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
 "cloud.backup.error.fileNotFound" = "File not found";
 "cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Book is password protected. Could not be backuped";
+"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
 "cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "Note : Password protected PDFs cannot be backed up.";
+"cloud.backup.pdfFormatWarning" = "Note : Password protected notebooks cannot be backed up as PDFs";
+"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
