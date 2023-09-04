@@ -88,5 +88,15 @@ class FTErrorInfoTableViewCell: UITableViewCell {
         let displayPath = URL(fileURLWithPath: ignoreEntry.relativePath).relativePathWithOutExtension().deletingLastPathComponent;
         self.pathLabel?.text = displayPath
         self.errorLabel?.text = ignoreEntry.ignoreReason;
+        
+        if let image = UIImage(systemName: "exclamationmark.triangle.fill") {
+            var config = UIImage.SymbolConfiguration(paletteColors: [
+                UIColor.white
+                ,UIColor.appColor(.secondaryAccent)
+            ])
+            // Apply a configuration that scales to the system font point size of 42.
+            config = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 20)))
+            self.errorImageView?.image = image.applyingSymbolConfiguration(config)
+        }
     }
 }
