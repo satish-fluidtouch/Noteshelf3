@@ -48,7 +48,7 @@ struct FTNotebookItemView: View {
                         .ignoresSafeArea()
                 }, notebookShape: {
                     let shape: FTNotebookShape;
-                    if shelfItem.coverImage.needEqualCorners {
+                    if shelfItem.coverImage.needEqualCorners || shelfViewModel.isNS2Collection {
                         shape = FTNotebookShape(raidus: leftCornerRadius);
                     }
                     else {

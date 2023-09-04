@@ -63,7 +63,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     convenience init(shelfCollection: FTShelfItemCollection) {
         self.init()
-        self.title = NSLocalizedString(shelfCollection.displayTitle, comment: "collection name")
+        self.title = shelfCollection.displayTitle
         self.icon = FTIcon.folder
         self.isEditing = false
         self.type = .category

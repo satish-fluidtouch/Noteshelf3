@@ -8,6 +8,8 @@
 
 import Foundation
 extension FileManager {
+
+    @discardableResult
     func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false) throws -> Bool {
         let fileCoorinator = NSFileCoordinator.init(filePresenter: nil)
         var copyError: NSError?
@@ -37,6 +39,7 @@ extension FileManager {
         return true
     }
 
+    @discardableResult
     func coordinatedMove(fromURL: URL, toURL: URL) throws -> Bool {
         let fileCoorinator = NSFileCoordinator.init(filePresenter: nil);
         var moveError: NSError?

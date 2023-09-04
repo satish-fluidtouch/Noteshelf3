@@ -323,7 +323,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Clouds Used": self.cloudUsed(),
             "Device": "Mac" /* [FTUtils deviceModelFriendlyName], */,
             "iOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
-            "iCloud": FTiCloudManager.shared().iCloudOn() ? "YES" : "NO",
+            "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
             "Lang": FTUtils.currentLanguage(),
             "Locale": NSLocale.current.identifier,
@@ -375,7 +375,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Clouds Used": self.cloudUsed(),
             "Device": FTUtils.deviceModelFriendlyName(),
             "iOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
-            "iCloud": FTiCloudManager.shared().iCloudOn() ? "YES" : "NO",
+            "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
             "ENPublish": UserDefaults.standard.bool(forKey: "EvernotePubUsed") ? "YES" : "NO",
             "Apple Pencil": UserDefaults.standard.bool(forKey: "isUsingApplePencil") ? "YES" : "NO",
@@ -439,7 +439,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         } catch {
         }
         for eachItem in contents ?? [] {
-            if eachItem.hasSuffix(shelfExtension) {
+            if eachItem.hasSuffix(FTFileExtension.shelf) {
                 hasMigratedContents = true
                 break
             }

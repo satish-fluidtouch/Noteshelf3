@@ -13,21 +13,19 @@ struct FTShelfSelectAndSettingsView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    let sortOptions = FTShelfSortOrder.supportedSortOptions()
+    var sortOptions: [FTShelfSortOrder] {
+        let sortOptions : [FTShelfSortOrder]
+        if viewModel.isNS2Collection {
+            sortOptions = FTShelfSortOrder.supportedSortOptionsForNS2Books()
+        } else {
+            sortOptions =  FTShelfSortOrder.supportedSortOptions()
+        }
+        return sortOptions
+    }
     
     var body: some View {
         Menu(content: {
-            VStack{
-                getMoreSectionitem(.selectNotes, viewmodel: viewModel)
-                .disabled(viewModel.shelfItems.isEmpty)
-                Divider()
-                sortView
-                Divider()
-                FTShelfDisplayStyleView()
-                    .environmentObject(viewModel)
-                Divider()
-                getMoreSectionitem(.settings,viewmodel: viewModel)
-            }
+            menuView
         }, label: {
             Image(icon: .ellipsis)
                 .foregroundColor(Color.appColor(.accent))
@@ -70,7 +68,23 @@ struct FTShelfSelectAndSettingsView: View {
         }
         
     }
-    
+    private var menuView: some View {
+        return VStack {
+            if viewModel.canShowNotebookUpdateOptions {
+                getMoreSectionitem(.selectNotes, viewmodel: viewModel)
+                    .disabled(viewModel.shelfItems.isEmpty)
+                Divider()
+            }
+            sortView
+            Divider()
+            FTShelfDisplayStyleView()
+                .environmentObject(viewModel)
+            if viewModel.canShowNotebookUpdateOptions {
+                Divider()
+                getMoreSectionitem(.settings,viewmodel: viewModel)
+            }
+        }
+    }
     private func getMoreSectionitem(_ type: FTHomeNavItemFilteredItemsModel,viewmodel:FTShelfViewModel) -> some View {
         FTMoreItemView(type: type,viewModel:viewmodel)
     }

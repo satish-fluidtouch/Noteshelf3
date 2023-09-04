@@ -15,12 +15,14 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
     weak var listenerDelegate: FTQueryListenerProtocol?
 
     fileprivate var shelfCollections = [FTShelfItemCollection]();
-    fileprivate var iCloudDocumentsURL: URL!;
+    fileprivate let iCloudDocumentsURL: URL
+    fileprivate let isNS2Collection: Bool
+
     fileprivate var hashTable = FTHashTable();
 
     //Temporary
     fileprivate var isInitialGatheringCompleted: Bool = false
-    fileprivate var tempCompletionBlock: (([FTShelfItemCollection]) -> Void)?;
+    fileprivate var tempCompletionBlock = [(([FTShelfItemCollection]) -> Void)]();
     fileprivate var orphanMetadataItems = [NSMetadataItem]();
     deinit {
         hashTable.removeAll()
@@ -29,29 +31,9 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
         #endif
     }
 
-#if DEBUG || BETA
-    private var productionContainerURL: URL?;
-#endif
-
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
-    {
-        let provider = FTShelfCollectioniCloud();
-        let icloudRootURL = FTiCloudManager.shared().iCloudRootURL();
-        provider.iCloudDocumentsURL = icloudRootURL?.appendingPathComponent("Documents").urlByDeleteingPrivate();
-
-#if DEBUG || BETA
-      //  provider.productionContainerURL = FileManager().url(forUbiquityContainerIdentifier: "iCloud.com.fluidtouch.noteshelf")?.appendingPathComponent("Documents").urlByDeleteingPrivate();
-#endif
-
-        DispatchQueue.main.async(execute: {
-            onCompletion(provider);
-        });
-
-        if(ENABLE_SHELF_RPOVIDER_LOGS) {
-             #if DEBUG
-            debugPrint("\(self.classForCoder): Container Available");
-            #endif
-        }
+    required init(rootURL: URL, isNS2Collection: Bool) {
+        self.iCloudDocumentsURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
+        self.isNS2Collection = isNS2Collection
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -68,7 +50,7 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
                 onCompletion(self.shelfCollections);
             })
         } else {
-            tempCompletionBlock = onCompletion
+            tempCompletionBlock.append(onCompletion)
         }
         objc_sync_exit(self);
     }
@@ -97,6 +79,10 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
 
 // MARK: - FTShelfCollection -
 extension FTShelfCollectioniCloud: FTShelfCollection {
+    // TODO: (AK) Think about a refactor
+    func belongsToNS2() -> Bool {
+        isNS2Collection
+    }
 
     func createShelf(_ title: String, onCompletion: @escaping ((NSError?, FTShelfItemCollection?) -> Void)) {
         self.disableUpdates()
@@ -117,7 +103,7 @@ extension FTShelfCollectioniCloud: FTShelfCollection {
         self.disableUpdates()
         self.shelfs { items in
             let name = self.uniqueFileName(title+".shelf", inItems: items);
-            let destURL = self.iCloudDocumentsURL!.appendingPathComponent(name)
+            let destURL = self.iCloudDocumentsURL.appendingPathComponent(name)
             DispatchQueue.global().async(execute: {
                 let fileCoordinator = NSFileCoordinator(filePresenter: nil);
                 fileCoordinator.coordinate(writingItemAt: collection.URL, options: NSFileCoordinator.WritingOptions.forMoving, writingItemAt: destURL, options: NSFileCoordinator.WritingOptions.forReplacing, error: nil, byAccessor: { newURL1, newURL2 in
@@ -178,11 +164,10 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
     func didEndFetchingInitialData() {
         
         isInitialGatheringCompleted = true
-        
-        if nil != tempCompletionBlock {
-            self.shelfs(self.tempCompletionBlock!)
-            tempCompletionBlock = nil
+        self.tempCompletionBlock.forEach { eachBlock in
+            self.shelfs(eachBlock);
         }
+        self.tempCompletionBlock.removeAll();
     }
     
     func addMetadataItemsToCache(_ metadataItems: [NSMetadataItem], isBuildingCache: Bool) {
@@ -190,7 +175,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
 
         for eachItem in metadataItems {
                 let fileURL = eachItem.URL();
-                if(fileURL.pathExtension == shelfExtension) {
+                if(fileURL.pathExtension == FTFileExtension.shelf) {
                     if(eachItem.downloadStatus() == NSMetadataUbiquitousItemDownloadingStatusNotDownloaded) {
                         try? FileManager().startDownloadingUbiquitousItem(at: fileURL);
                     }
@@ -226,7 +211,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                         #endif
                     }
                 }
-                else if(fileURL.pathExtension == sortIndexExtension) {
+                else if(fileURL.pathExtension == FTFileExtension.sortIndex) {
                     if(self.belongsToDocumentsFolder(fileURL)) {
                        if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionICloud {
                             itemCollection.handleSortIndexFileUpdates(eachItem)
@@ -252,7 +237,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
         for eachItem in metadataItems {
             autoreleasepool {
                 let fileURL = eachItem.URL();
-                if fileURL.pathExtension == shelfExtension {
+                if fileURL.pathExtension == FTFileExtension.shelf {
                     
                     let shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemCollection;
                     updatedDocumentURLs.append(fileURL as URL);
@@ -288,7 +273,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
         for eachItem in metadataItems {
             autoreleasepool {
                 let fileURL = eachItem.URL();
-                if fileURL.pathExtension == shelfExtension {
+                if fileURL.pathExtension == FTFileExtension.shelf {
                     var shelfItem = self.hashTable.itemFromHashTable(eachItem) as? FTShelfItemCollection;
                     if(nil == shelfItem) {
                         shelfItem = self.collectionForURL(fileURL);
@@ -308,7 +293,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                         #endif
                     }
                 }
-                else if(fileURL.pathExtension == sortIndexExtension) {
+                else if(fileURL.pathExtension == FTFileExtension.sortIndex) {
                     if(self.belongsToDocumentsFolder(fileURL)) {
                         if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionICloud {
                             itemCollection.handleSortIndexFileUpdates(eachItem)
@@ -354,7 +339,7 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
         if(!self.belongsToDocumentsFolder(fileURL)) {
             return nil;
         }
-        if(fileURL.pathExtension != shelfExtension) {
+        if(fileURL.pathExtension != FTFileExtension.shelf) {
             assert(false, "Only shelfs needs to be passed: Use addShelfItemToCache");
         }
 
@@ -362,9 +347,11 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
         let fileItemURL = fileURL;
         var collectionItem = self.collectionForURL(fileItemURL);
         if(nil == collectionItem) {
-            collectionItem = FTShelfItemCollectionICloud(fileURL: fileItemURL);
-            (collectionItem as? FTShelfItemCollectionICloud)?.parent = self
-            self.shelfCollections.append(collectionItem!);
+            let item = FTShelfItemCollectionICloud(fileURL: fileItemURL);
+            item.parent = self
+            self.shelfCollections.append(item);
+
+            collectionItem = item
         }
         objc_sync_exit(self);
         return collectionItem;
@@ -376,11 +363,11 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
             return nil;
         }
 
-        if(fileURL.pathExtension == shelfExtension) {
+        if(fileURL.pathExtension == FTFileExtension.shelf) {
             assert(false, "Only shelf items needs to be passed: Use addItemToCache");
         }
         if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionICloud {
-            _ = itemCollection.addItemsToCache([item], isBuildingCache: isBuildingCache)
+            itemCollection.addItemsToCache([item], isBuildingCache: isBuildingCache)
             return itemCollection
         } else {
             orphanMetadataItems.append(item)
@@ -410,12 +397,7 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
     func removeItemFromCache(_ fileURL: URL, shelfItem: FTDiskItemProtocol) {
         objc_sync_enter(self);
         (shelfItem as? FTSortIndexContainerProtocol)?.indexCache?.handleDeletionUpdate()
-        let index = self.shelfCollections.index(where: { eachItem -> Bool in
-            if(eachItem.uuid == shelfItem.uuid) {
-                return true;
-            }
-            return false;
-        });
+        let index = self.shelfCollections.firstIndex(where: { $0.uuid == shelfItem.uuid });
         if(nil != index) {
             self.shelfCollections.remove(at: index!);
         }
@@ -423,7 +405,7 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
     }
 
     func moveItemInCache(_ item: FTDiskItemProtocol, toURL: URL) -> Bool {
-        if(!self.belongsToDocumentsFolder(toURL) || (toURL.pathExtension != shelfExtension)) {
+        if(!self.belongsToDocumentsFolder(toURL) || (toURL.pathExtension != FTFileExtension.shelf)) {
             return false;
         }
         objc_sync_enter(self);
@@ -446,14 +428,14 @@ extension FTShelfCollectioniCloud {
 
     fileprivate func collectionForURL(_ url: URL) -> FTShelfItemCollection? {
         var collectionURL : URL? = url;
-        if url.pathExtension != shelfExtension {
+        if url.pathExtension != FTFileExtension.shelf {
             collectionURL = url.collectionURL();
         }
-        if collectionURL?.pathExtension == shelfExtension {
+        if collectionURL?.pathExtension == FTFileExtension.shelf {
             let item = self.shelfCollections.first { item -> Bool in
                 return item.URL == collectionURL
             }
-            return item;
+            return item
         } else {
             let params = ["Path" : url.path]
             FTLogError("Location Issue", attributes: params)
@@ -469,22 +451,16 @@ extension FTShelfCollectioniCloud {
         return itemCollection.first
     }
 
-    fileprivate func belongsToDocumentsFolder(_ url: URL) -> Bool {
-        if(url.urlByDeleteingPrivate().path.hasPrefix(self.iCloudDocumentsURL!.path)) {
+    func belongsToDocumentsFolder(_ url: URL) -> Bool {
+        if(url.urlByDeleteingPrivate().path.hasPrefix(self.iCloudDocumentsURL.path)) {
             return true;
         }
-#if DEBUG || BETA
-        if let prodURL = self.productionContainerURL?.urlByDeleteingPrivate(), url.urlByDeleteingPrivate().path.hasPrefix(prodURL.path) {
-            return true;
-        }
-#endif
-        
         return false;
     }
 
     // MARK: - Private Shelf Create
     fileprivate func createNewShelf(_ shelfName: String, onCompletion : @escaping (NSError?, FTShelfItemCollection?) -> Void) {
-        let defaultCollectionURL = self.iCloudDocumentsURL!.appendingPathComponent(shelfName);
+        let defaultCollectionURL = self.iCloudDocumentsURL.appendingPathComponent(shelfName);
         DispatchQueue.global().async(execute: {
 
             let fileManager = FileManager();

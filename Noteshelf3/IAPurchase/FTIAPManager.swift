@@ -15,7 +15,7 @@ public typealias ProductIdentifier = String
 
 extension FTPremiumUser {    
     func addObsrversIfNeeded() {
-        self.shelfItemDidAddedRemoved(nil)
+        self.updateNoOfBooks(nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemAdded, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemRemoved, object: nil);
     }
@@ -24,10 +24,19 @@ extension FTPremiumUser {
         guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
             return;
         }
+
+        if let collection = notification?.object as? FTShelfItemCollection
+            ,collection.isNS2Collection() {
+            return;
+        }
         self.updateNoOfBooks(nil);
     }
     
     func updateNoOfBooks(_ onCompletion: (() -> ())?) {
+        guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
+            onCompletion?();
+            return;
+        }
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { allItems in
             FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
                 trashCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in

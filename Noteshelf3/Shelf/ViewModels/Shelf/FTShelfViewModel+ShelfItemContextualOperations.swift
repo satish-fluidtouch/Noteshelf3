@@ -13,19 +13,15 @@ extension FTShelfViewModel {
     func getContexualOptionsForShelfItem(_ item: FTShelfItemViewModel) -> [[FTShelfItemContexualOption]] {
         if self.mode == .selection {
             let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
-
-            if self.hasNS2BookItemAmongSelectedShelfItems(selectedShelfItems + [item]) {
+            if selectedShelfItems.count > 1 {
                 if item.model.shelfCollection.isTrash {
                     return [[.restore],[.delete]]
                 } else {
-                    return [[.move],[.trash]]
-                }
-            }
-            if selectedShelfItems.count > 1 {
-                if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
-                    return [[.rename],[.duplicate,.move,.share],[.trash]]
-                }else {
-                    return [[.rename,.changeCover, .tags,],[.duplicate,.move,.share,],[.trash]]
+                    if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
+                        return [[.rename],[.duplicate,.move,.share],[.trash]]
+                    }else {
+                        return [[.rename,.changeCover, .tags,],[.duplicate,.move,.share,],[.trash]]
+                    }
                 }
             }else {
                 if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
@@ -36,15 +32,7 @@ extension FTShelfViewModel {
             }
         }
         else {
-            if self.hasNS2BookItemAmongSelectedShelfItems([item]) {
-                if item.model.shelfCollection.isTrash {
-                    return [[.restore],[.delete]]
-                } else {
-                    return [[.move],[.trash]]
-                }
-            } else {
-                return contexualMenuOptionsInNormalModeForShelfItem(item)
-            }
+            return contexualMenuOptionsInNormalModeForShelfItem(item)
         }
     }
     func performContexualMenuOperation(_ option: FTShelfItemContexualOption){

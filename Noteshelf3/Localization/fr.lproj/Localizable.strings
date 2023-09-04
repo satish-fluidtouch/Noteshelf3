@@ -1087,6 +1087,7 @@
 "iap.termsnconditions" = "Termes et conditions";
 "iap.title" = "Obtenez l'expérience complète avec Noteshelf Premium";
 "iap.upgradeNow" = "Mettez à jour maintenant.";
+"icloud.sync.issue.message" = "Impossible d'accéder à iCloud. Veuillez vous assurer qu'iCloud est activé dans les paramètres.";
 "iconlabels" = "Étiquettes d'icônes";
 "import" = "Importer";
 "importedFiles" = "Fichiers importés";
@@ -1102,16 +1103,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Large";
 "lockwithfaceIDandPasscode" = "Verrouiller avec %@ et code secret";
-"migration.alert.cancel" = "Annuler";
-"migration.alert.copy" = "Copier";
-"migration.alert.message" = "Cela créera une copie du nouveau carnet, avec les contenus copiés.";
-"migration.alert.open" = "Ouvrir";
-"migration.alert.title" = "Voulez-vous migrer ce livre vers NS3 ?";
-"migration.alert.yes" = "Oui";
-"migration.failure.message" = "Impossible de migrer ce livre pour le moment. Veuillez contacter le support.";
+"migration.alert.migrate" = "Migrer";
+"migration.alert.open" = "Aller à l'emplacement.";
+"migration.alert.title" = "Souhaitez-vous migrer une copie de ce cahier vers Noteshelf 3 ?";
 "migration.progress.text" = "Migration";
-"migration.success.alert.message" = "Voulez-vous ouvrir le carnet ?";
-"migration.success.alert.title" = "Migration réussie vers Non classé";
+"migration.success.alert.message" = "Succès ! Votre carnet migré a été placé dans : %@";
 "months" = "Mois";
 "more" = "Plus";
 "more.globalsettings.caps" = "PARAMÈTRES GLOBAUX";
@@ -1195,6 +1191,7 @@
 "quotes" = "Citations";
 "removefromRecents" = "Supprimer des récents";
 "reset" = "Réinitialiser";
+"retry" = "Retenter";
 "save" = "Renommer le groupe";
 "school" = "École";
 "search.tryNewSearch" = "Essayez une nouvelle recherche";
@@ -1267,7 +1264,7 @@
 "shelf.home.seeAll" = "Voir tout";
 "shelf.home.seeAllNotes" = "Voir toutes les notes.";
 "shelf.importfile.description" = "Ajouter des PDF et des images depuis votre application Fichiers";
-"shelf.migration.Description" = "Pour migrer votre livre vers la nouvelle version de Noteshelf, appuyez dessus ou maintenez-le enfoncé et choisissez l'option de migration dans le menu.";
+"shelf.migration.Description" = "Il suffit de toucher n'importe quel carnet ici pour en faire une copie dans Noteshelf 3. Les carnets migrés seront disponibles dans les catégories et groupes de Noteshelf 3. La possibilité de migrer des catégories entières arrive bientôt !";
 "shelf.migration.headerMessage" = "Migrez vos carnets vers Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Désélectionner tout.";
 "shelf.navBar.select" = "Sélectionner";
@@ -1499,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 4 September 2023 at 17:28

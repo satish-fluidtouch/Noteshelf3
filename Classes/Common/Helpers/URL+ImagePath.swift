@@ -31,17 +31,6 @@ extension URL {
         }
     }
      */
-
-    func localRelativePathWRTDocuments() -> String
-    {
-        if(self.isCloudItem()) {
-            return self.path;
-        }
-        else {
-            let noteshelfURL = NSURL.noteshelfDocumentsDirectory().urlByDeleteingPrivate();
-            return self.urlByDeleteingPrivate().path.replacingOccurrences(of: noteshelfURL.path, with: "");
-        }
-    }
     
     func isUbiquitousFileExists() -> Bool
     {
@@ -90,15 +79,5 @@ extension URL {
         }
          */
         return false;
-    }
-}
-
-extension NSURL
-{
-    static func noteshelfDocumentsDirectory() -> URL
-    {
-        let docURL = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTSharedGroupID.getAppGroupID());
-        let noteURL = docURL!.appendingPathComponent("Noteshelf.nsdata", isDirectory: true);
-        return noteURL;
     }
 }
