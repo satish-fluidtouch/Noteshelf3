@@ -12,7 +12,6 @@ import FTCommon
 
 enum FTPresetStyleMode: String {
     case select
-    case edit
     case reorder
 }
 
@@ -120,29 +119,33 @@ extension FTTextPresetsViewController {
                 self.dismiss(animated: true) {
                     self.delegate?.dismissKeyboard()
                     navVc.pushViewController(newStyleVc, animated: false) {
-                        presentingVc.ftPresentFormsheet(vcToPresent: navVc,hideNavBar: false, completion: {
-                            self.presetMode = .edit
-                        })
+                    #if !targetEnvironment(macCatalyst)
+                        presentBlock()
+                    #else
+                        runInMainThread(0.6) { // to check for better fix in mac to avoid auto dismissal
+                            presentBlock()
+                        }
+                    #endif
                     }
+                }
+                func presentBlock() {
+                    presentingVc.ftPresentFormsheet(vcToPresent: navVc,hideNavBar: false, completion: {
+                        self.presetMode = .reorder
+                    })
                 }
             }
         }
     }
 
     @objc func didTappedOnEdit(sender: UIBarButtonItem) {
-        if self.presetMode == .select {
-            var presentingVc = self.presentingViewController ?? self
-            if let rootVc = self.delegate?.rootViewController() {
-                presentingVc = rootVc
-            }
-            self.dismiss(animated: true) {
-                self.delegate?.dismissKeyboard()
-                self.presetMode = .reorder
-                presentingVc.ftPresentFormsheet(vcToPresent: self,animated: false, hideNavBar: false)
-            }
-        } else if self.presetMode == .edit {
+        var presentingVc = self.presentingViewController ?? self
+        if let rootVc = self.delegate?.rootViewController() {
+            presentingVc = rootVc
+        }
+        self.dismiss(animated: true) {
+            self.delegate?.dismissKeyboard()
             self.presetMode = .reorder
-            self.presetTableView?.reloadData()
+            presentingVc.ftPresentFormsheet(vcToPresent: self,animated: false, hideNavBar: false)
         }
     }
 
