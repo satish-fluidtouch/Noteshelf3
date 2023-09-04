@@ -635,11 +635,11 @@ extension FTShelfItemCollectionICloud {
                 }
             }
         }
-        runInMainThread({
-            if (!updatedItems.isEmpty) {
+        if (!updatedItems.isEmpty) {
+            runInMainThread({
                 NotificationCenter.default.post(name: Notification.Name.shelfItemUpdated, object: self, userInfo: [FTShelfItemsKey: updatedItems]);
-            }
-        });
+            });
+        }
     }
 }
 

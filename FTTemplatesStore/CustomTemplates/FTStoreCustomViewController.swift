@@ -171,6 +171,8 @@ extension FTStoreCustomViewController: UICollectionViewDelegate, UICollectionVie
                 } catch let error {
                     UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
                 }
+            // Track Event
+            FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_custom_template_tap, params: nil, screenName: ScreenName.templatesStore))
         }
 
     }

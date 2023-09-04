@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 import ZipArchive
+import FTCommon
 
 class FTStickersPreviewViewController: UIViewController {
     var template: TemplateInfo!
@@ -61,6 +62,9 @@ class FTStickersPreviewViewController: UIViewController {
         if isDownloaded {
             return
         }
+        // Track Event
+        FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_sticker_download_tap, params: [EventParameterKey.title: templa.fileName], screenName: ScreenName.templatesStore))
+
         _ = try await storeServiceApi.downloadStickersFor(url: downloadUrl, fileName: templa.fileName)
         let alertVc = UIAlertController(title: "templatesStore.alert.success".localized, message: String(format: "templatesStore.stickerPreview.alert.successMessage".localized, templa.displayTitle), preferredStyle: .alert)
         alertVc.addAction(UIAlertAction(title: "templatesStore.alert.ok".localized, style: .default))

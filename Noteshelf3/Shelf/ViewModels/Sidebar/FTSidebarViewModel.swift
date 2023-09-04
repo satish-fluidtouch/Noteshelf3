@@ -18,6 +18,10 @@ protocol FTCategoryDropDelegate: AnyObject {
     func favoriteShelfItem(_ item: FTShelfItemProtocol, toPin: Bool)
     func endDragAndDropOperation()
 }
+#if DEBUG
+// Intentionally adding DEBUG condition here to break the build when we do not remove this variable in beta/release
+private var FTSidebarViewModelCount = 0
+#endif
 class FTSidebarViewModel: NSObject, ObservableObject {
 
     //MARK: Delegates
@@ -44,7 +48,6 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     private var contentItems: [FTSideBarItem] = []
     private var newCollectionAddedOrUpdated: Bool = false
     private var cancellables = [AnyCancellable]()
-    private var cancellables1 = [AnyCancellable]()
     private var tags: [FTSideBarItem] = []
     private var selectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
@@ -69,9 +72,10 @@ class FTSidebarViewModel: NSObject, ObservableObject {
                              type: .category,
                              allowsItemDropping: true)
     }()
-   weak var selectedShelfItemCollection: FTShelfItemCollection! {
+   weak var selectedShelfItemCollection: FTShelfItemCollection? {
         set {
-            selectedSideBarItem = menuItems.flatMap({$0.items}).first(where: {$0.shelfCollection?.uuid == newValue.uuid}) ?? FTSideBarItem(shelfCollection: newValue)
+            selectedSideBarItem = menuItems.flatMap({$0.items})
+                .first(where: {$0.shelfCollection?.uuid == newValue?.uuid})
         }
         get {
             selectedSideBarItem?.shelfCollection ?? FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
@@ -81,12 +85,17 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         super.init()
         self.selectedShelfItemCollection = collection
         self.addObserverForContextualOperations()
+        FTSidebarViewModelCount += 1
     }
     init(selectedSideBarItemType: FTSideBarItemType, selectedTag:String = "") {
         super.init()
         self.selectedSideBarItemType = selectedSideBarItemType
         self.lastSelectedTag = selectedTag
         self.addObserverForContextualOperations()
+        FTSidebarViewModelCount += 1
+    }
+    deinit {
+        FTSidebarViewModelCount -= 1
     }
 
     func shouldShowNumberOfNotebooksCountFor(item: FTSideBarItem) -> Bool {
@@ -145,7 +154,11 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     func sidebarItemOfType(_ type: FTSideBarItemType) -> FTSideBarItem {
-        (self.menuItems.flatMap({$0.items}).first(where: {$0.type == type}) ?? FTSideBarItem(shelfCollection: FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection))
+        guard let matchedItem = self.menuItems.flatMap({$0.items}).first(where: {$0.type == type}) else {
+            debugLog("⚠️ Unable to find the passed item \(type.displayTitle) falling back to all notes")
+            return FTSideBarItem(shelfCollection: FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection)
+        }
+        return matchedItem
     }
 }
 private extension FTSidebarViewModel {
@@ -159,17 +172,18 @@ private extension FTSidebarViewModel {
                     self.performContexualMenuOperation(option)
                 }
             }
-            .store(in: &cancellables1)
+            .store(in: &cancellables)
     }
     func addObservers() {
-        self.cancellables.removeAll()
-        self.menuItems.forEach({ [weak self] in
-            let itemCancellable = $0.objectWillChange.sink(receiveValue: { self?.objectWillChange.send() })
-            $0.items.forEach({ [weak self] in
-                let menuItemCancellable = $0.objectWillChange.sink(receiveValue: { self?.objectWillChange.send() })
-                self?.cancellables.append(menuItemCancellable)
+        self.menuItems.forEach({ menuItem in
+            menuItem.objectWillChange
+                .sink(receiveValue: { [weak self] in self?.objectWillChange.send()})
+                .store(in: &cancellables)
+
+            menuItem.items.forEach({ eachItem in
+                eachItem.objectWillChange.sink(receiveValue: { [weak self] in self?.objectWillChange.send() })
+                    .store(in: &cancellables)
             })
-            self?.cancellables.append(itemCancellable)
         })
     }
     func isGroup(_ fileURL: Foundation.URL) -> Bool {
@@ -369,11 +383,9 @@ extension FTSidebarViewModel {
 extension FTSidebarViewModel {
     func configureUIOnViewLoad() {
         self.fetchSideBarData()
-        self.configureMenuOptions()
-    }
-    private func configureMenuOptions() {
         self.fetchSidebarMenuItems()
     }
+
     func updateUserCreatedCategories() {
         self.fetchUserCreatedCategories()
     }
@@ -455,7 +467,8 @@ extension FTSidebarViewModel {
         // Fetching default/migrated categories for second section of side menu
         userCreatedSidebarItems { [weak self] sidebarItems in
             guard let self = self else { return }
-            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems)
+            self.categoriesItems.removeAll()
+            self.categoriesItems.append(contentsOf: self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems))
         }
 
         //Assigning respective shelf item collections to top section UI items
@@ -521,8 +534,8 @@ extension FTSidebarViewModel {
     }
 
     private func buildSideMenuItems(){
-        self.menuItems = []
-        self.menuItems = [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)]
+        self.menuItems.removeAll()
+        self.menuItems.append(contentsOf: [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)])
         self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))
         if !ns2categoriesItems.isEmpty {
             self.menuItems.append(FTSidebarSection(type: .ns2Categories, items: self.ns2categoriesItems,supportsRearrangeOfItems: false))
@@ -563,6 +576,7 @@ extension FTSidebarViewModel {
         }
     }
 }
+
 //MARK: Sidebar Sections open/close status maintainance And Categories/Tags user defined order maintainance logic
 extension FTSidebarViewModel {
     func getSideBarStatusForSection(_ section: FTSidebarSection)-> Bool {
@@ -694,5 +708,64 @@ class FTBookmarkedCategoryItem {
             }
         }
         return items;
+    }
+}
+
+extension FTSidebarViewModel {
+     func trackEventForlongpress(item: FTSideBarItem) {
+        let eventMapping: [FTSideBarItemType: String] = [
+            .home: EventName.sidebar_home_longpress,
+            .templates: EventName.sidebar_templates_longpress,
+            .unCategorized: EventName.sidebar_unfiled_longpress,
+            .trash: EventName.sidebar_trash_longpress,
+            .category: EventName.sidebar_category_longpress,
+            .starred: EventName.sidebar_starred_longpress,
+            .media: EventName.sidebar_photo_longpress,
+            .audio: EventName.sidebar_recording_longpress,
+            .bookmark: EventName.sidebar_bookmark_longpress,
+            .tag:  EventName.sidebar_tag_longpress
+        ]
+
+        if let event = eventMapping[item.type] {
+            track(event, screenName: ScreenName.sidebar)
+        }
+    }
+
+     func trackEventForLongPressOptions(item: FTSideBarItem, option: FTSidebarItemContextualOption) {
+        let eventMapping: [FTSideBarItemType: [FTSidebarItemContextualOption: String]] = [
+            .home: [.openInNewWindow: EventName.home_openinnewwindow_tap],
+            .templates: [.openInNewWindow: EventName.templates_openinnewwindow_tap],
+            .unCategorized: [.openInNewWindow: EventName.unfiled_openinnewwindow_tap],
+            .trash: [.emptyTrash: EventName.trash_emptytrash_tap],
+            .category: [
+                .openInNewWindow: EventName.category_openinnewwindow_tap,
+                .renameCategory: EventName.category_rename_tap,
+                .trashCategory: EventName.category_trash_tap
+            ],
+            .starred: [.openInNewWindow: EventName.starred_openinnewwindow_tap],
+            .media: [.openInNewWindow: EventName.sidebar_photo_openinnewwindow_tap],
+            .audio: [.openInNewWindow: EventName.sidebar_recording_openinnewindow_tap],
+            .tag: [
+                .renameTag: EventName.sidebar_tag_rename_tap,
+                .deleteTag: EventName.sidebar_tag_delete_tap
+            ],
+            .bookmark: [.openInNewWindow: EventName.sidebar_bookmark_openinnewwindow_tap]
+        ]
+
+        if let event = eventMapping[item.type]?[option] {
+            track(event, screenName: ScreenName.sidebar)
+        }
+
+     }
+
+    func trackEventForSections(section: FTSidebarSection, isExpand: Bool) {
+        let eventMapping: [FTSidebarSectionType: String] = [
+            .categories: isExpand ? EventName.sidebar_categories_expand : EventName.sidebar_categories_collapse,
+            .media: isExpand ? EventName.sidebar_content_expand : EventName.sidebar_content_collapse,
+            .tags: isExpand ? EventName.sidebar_tags_expand : EventName.sidebar_tags_collapse
+]
+        if let event = eventMapping[section.type] {
+            track(event, screenName: ScreenName.sidebar)
+        }
     }
 }

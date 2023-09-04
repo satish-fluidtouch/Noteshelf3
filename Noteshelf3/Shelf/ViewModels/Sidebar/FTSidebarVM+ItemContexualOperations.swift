@@ -28,6 +28,7 @@ extension FTSidebarViewModel {
         }
         return contextualOptions
     }
+
     func performContexualMenuOperation(_ option: FTSidebarItemContextualOption) {
         guard let item = sidebarItemContexualMenuVM.sideBarItem else {
             fatalError("longpressed sidebaritem missing")
@@ -43,4 +44,5 @@ extension FTSidebarViewModel {
             print("Shows individual confirmation alerts")
         }
     }
+
 }

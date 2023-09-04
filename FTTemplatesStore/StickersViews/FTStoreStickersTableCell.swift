@@ -68,7 +68,9 @@ private extension FTStoreStickersTableCell {
 // MARK: - UICollectionViewDelegate
 extension FTStoreStickersTableCell: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let items = self.templatesStoreInfo.discoveryItems
+        var items = self.templatesStoreInfo.discoveryItems
+        // Update sectionType to track events
+        items[indexPath.row].sectionType = templatesStoreInfo.sectionType
         FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
 
     }
