@@ -100,7 +100,7 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
     }
 
     func selectSideMenuCollection(_ collection: FTShelfItemCollection) {
-        if self.viewModel.selectedShelfItemCollection.uuid != collection.uuid {
+        if self.viewModel.selectedShelfItemCollection?.uuid != collection.uuid {
             self.viewModel.selectedShelfItemCollection = collection
         }
     }
@@ -172,6 +172,7 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
 
     func didTapOnUpgradeNow() {
         self.delegate?.didTapOnUpgradeNow()
+        track(EventName.sidebar_premium_tap, screenName: ScreenName.sidebar)
     }
     
     func emptyTrash(_ collection: FTShelfItemCollection, showConfirmationAlert: Bool, onCompletion: @escaping ((Bool) -> Void)) {
@@ -188,5 +189,35 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
             self.delegate?.saveLastSelectedCollection(item.shelfCollection)
         }
         self.didSelectBarItem(item)
+        track(eventNameFor(item: item), screenName: ScreenName.sidebar)
+        
     }
+
+    private func eventNameFor(item: FTSideBarItem) -> String {
+        let eventMapping: [FTSideBarItemType: String] = [
+            .home: EventName.sidebar_home_tap,
+            .templates: EventName.sidebar_templates_tap,
+            .unCategorized: EventName.sidebar_unflied_tap,
+            .trash: EventName.sidebar_trash_tap,
+            .category: EventName.sidebar_category_tap,
+            .starred: EventName.sidebar_starred_tap,
+            .media: EventName.sidebar_photo_tap,
+            .audio: EventName.sidebar_recording_tap,
+            .bookmark: EventName.sidebar_bookmark_tap
+        ]
+
+        if let event = eventMapping[item.type] {
+            return event
+        }
+
+        if item.type == .tag {
+            if item.title == "shelf.sidebar.allTags".localized {
+                return EventName.sidebar_alltags_tap
+            } else {
+                return EventName.sidebar_tag_tap
+            }
+        }
+        return ""
+    }
+
 }

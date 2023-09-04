@@ -57,6 +57,9 @@ extension FTShelfViewModel {
         let shelfItemViewModels = self.getShelfItemsForContexualMenuOperations().1
         self.currentDraggedItem = nil
 
+        // Track Event
+        trackEventForContexualOption(option: option, item: shelfItem)
+
         switch option {
         case .openInNewWindow:
             self.openShelfItemInNewWindow(shelfItem.model)
@@ -81,8 +84,6 @@ extension FTShelfViewModel {
             }
         case .getInfo:
             shelfItemContextualMenuViewModel.shelfItem?.popoverType = .getInfo
-        case .shareViaICloud:
-            print("sharing shelf item via iCloud")
         case .share:
             self.shareShelfItems(selectedItems)
         case .trash:

@@ -71,6 +71,7 @@ struct DiscoveryItem: Codable, Hashable {
     var link: String?
     var previewToken: String?
     var fileToken: String?
+    var sectionType: Int?
 
     enum CodingKeys: String, CodingKey {
         case displayTitle
@@ -83,6 +84,7 @@ struct DiscoveryItem: Codable, Hashable {
         case link
         case previewToken
         case fileToken
+        case sectionType
     }
 
     var templateUrl: URL {
@@ -271,6 +273,7 @@ protocol TemplateInfo {
     var link: String? { get }
     var previewToken: String? { get }
     var fileToken: String? { get }
+    var sectionType: Int? { get }
 }
 
 // MARK: - Extentions

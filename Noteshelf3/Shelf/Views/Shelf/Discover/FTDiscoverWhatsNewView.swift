@@ -23,8 +23,14 @@ struct FTDiscoverWhatsNewView: View {
 
     var body: some View {
         VStack(alignment: .leading){
-            DisclosureGroup(isExpanded: $isExpanded) {
-                ScrollView(.horizontal,showsIndicators: false) {
+            DisclosureGroup(isExpanded: Binding<Bool>(
+                get: { isExpanded},
+                set: { isExpanding in
+                    isExpanded = isExpanding
+                    let eventName = isExpanding ? EventName.discover_expand : EventName.discover_collapse
+                    track(eventName, screenName: ScreenName.shelf)
+                }
+            )) {  ScrollView(.horizontal,showsIndicators: false) {
                     HStack(alignment: .top, spacing:0){
                         ForEach(discoverItemsDatasource){ item in
                             VStack(alignment: .leading,spacing:0){
@@ -64,7 +70,7 @@ struct FTDiscoverWhatsNewView: View {
                             .padding(.bottom,24)
                             .shadow(color: Color.appColor(.black16), radius:4, x: 0, y: 2)
                             .onTapGesture {
-                                track("discover_blog_tap", params:["title":"\(item.eventTrackName)"], screenName: "Shelf")
+                                track(EventName.discover_blog_tap, params:[EventParameterKey.title:"\(item.eventTrackName)"], screenName: ScreenName.shelf)
                                 self.sheflViewModel.delegate?.openDiscoveryItemsURL(item.url)
                             }
                         }

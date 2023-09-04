@@ -271,8 +271,10 @@ class FTShelfTagsViewController: UIViewController {
     @IBAction func selectAction(_ sender: Any) {
         if viewState == .edit {
             activateViewMode()
+            track(EventName.shelf_tag_select_done_tap, screenName: ScreenName.shelf_tags)
         } else {
             activeEditMode()
+            track(EventName.shelf_tag_select_tap, screenName: ScreenName.shelf_tags)
         }
         clearContextMenuIndex()
         self.collectionView.reloadData()
@@ -355,6 +357,11 @@ class FTShelfTagsViewController: UIViewController {
 
    @objc func selectAndDeselect() {
         let selectAll = shouldSelectAll
+       if selectAll {
+           track(EventName.shelf_tag_select_selectall_tap, screenName: ScreenName.shelf_tags)
+       } else {
+           track(EventName.shelf_tag_select_selectnone_tap, screenName: ScreenName.shelf_tags)
+       }
         selectOrDeselectAllBooks(shouldSelect: selectAll)
         selectOrDeselectAllPages(shouldSelect: selectAll)
         updateSelectAllTitle()
@@ -367,18 +374,18 @@ class FTShelfTagsViewController: UIViewController {
         }
     }
 
-    @IBAction func shareAction(_ sender: Any) {
+    func shareOperation() {
         self.createDocumentForSelectedPages()
     }
 
-    @IBAction func editTagsAction(_ sender: Any?) {
+    func edittagsOperation() {
         let selectedItems = self.selectedItems()
         let tags = self.commonTagsFor(items: selectedItems)
         let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
         FTTagsViewController.presentTagsController(onController: self, tags: sortedArray)
     }
 
-    @IBAction func removeTagsAction(_ sender: Any?) {
+    func removeTagsOperation() {
         let selectedItems = self.selectedItems()
 
         UIAlertController.showDeleteDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
@@ -413,6 +420,21 @@ class FTShelfTagsViewController: UIViewController {
 
             }
         }
+    }
+
+    @IBAction private func shareAction(_ sender: Any) {
+        shareOperation()
+        track(EventName.shelf_tag_select_share_tap, screenName: ScreenName.shelf_tags)
+    }
+
+    @IBAction private func editTagsAction(_ sender: Any?) {
+        edittagsOperation()
+        track(EventName.shelf_tag_select_edittags_tap, screenName: ScreenName.shelf_tags)
+    }
+
+    @IBAction func removeTagsAction(_ sender: Any?) {
+        removeTagsOperation()
+        track(EventName.shelf_tag_select_removetags_tap, screenName: ScreenName.shelf_tags)
     }
 }
 
@@ -465,6 +487,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 return false
             }
         }
+        track(EventName.shelf_tag_select_page_tap, screenName: ScreenName.shelf_tags)
         return true
     }
 
@@ -476,6 +499,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 let item = pages[indexPath.row]
                 if let shelf = item.shelfItem {
                     self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex ?? 0)
+                    track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                 }
             }
         }
@@ -697,11 +721,11 @@ extension FTShelfTagsViewController: FTShelfTagsAndBooksDelegate {
     }
 
     func editTags() {
-        self.editTagsAction(nil)
+        self.edittagsOperation()
     }
 
     func removeTags() {
-        self.removeTagsAction(nil)
+        self.removeTagsOperation()
     }
 
     func openItemInNewWindow() {
