@@ -18,10 +18,7 @@ protocol FTCategoryDropDelegate: AnyObject {
     func favoriteShelfItem(_ item: FTShelfItemProtocol, toPin: Bool)
     func endDragAndDropOperation()
 }
-#if DEBUG
-// Intentionally adding DEBUG condition here to break the build when we do not remove this variable in beta/release
-private var FTSidebarViewModelCount = 0
-#endif
+
 class FTSidebarViewModel: NSObject, ObservableObject {
 
     //MARK: Delegates
@@ -85,17 +82,14 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         super.init()
         self.selectedShelfItemCollection = collection
         self.addObserverForContextualOperations()
-        FTSidebarViewModelCount += 1
     }
     init(selectedSideBarItemType: FTSideBarItemType, selectedTag:String = "") {
         super.init()
         self.selectedSideBarItemType = selectedSideBarItemType
         self.lastSelectedTag = selectedTag
         self.addObserverForContextualOperations()
-        FTSidebarViewModelCount += 1
     }
     deinit {
-        FTSidebarViewModelCount -= 1
     }
 
     func shouldShowNumberOfNotebooksCountFor(item: FTSideBarItem) -> Bool {
