@@ -710,31 +710,31 @@
 "ResetColorsTitle" = "Ripristina colori";
 "ResetColorsWarning" = "Questo re-imposterà le tavolozze dei colori ai valori predefiniti di fabbrica.";
 "ResetToDefault" = "Ripristina predefiniti";
-"Resize" = "Registra audio";
+"Resize" = "Ridimensionare";
 "ResolveConflict" = "Registrazione";
 "ResolveConflictMessage" = "Registrazione in corso...";
 "Restore" = "Recupera pagine";
 "ResultsFor" = "Risultati per %@";
 "RetakeKey" = "3-finger right swipe/left swipe:  Sfoglia a destra con 3 dita/sfoglia a sinistra con 3 dita";
 "Right" = "Rilascia per aggiungere nuova pagina";
-"Rotate" = "Ricordamelo più tardi";
-"Rotate Page" = "Rimuovi";
+"Rotate" = "Ruota";
+"Rotate Page" = "Ruota la pagina";
 "Rotating" = "Rimuovi dai Recenti";
 "SampleNotebook" = "Rinomina";
-"SaveAsTemplate" = "Rinomina %d Quaderni.";
+"SaveAsTemplate" = "Salva come modello";
 "SaveForFutureUse" = "Rinomina tag";
 "SaveImageChangesConfirmation" = "Rinominazione...\n%d di %d";
 "SaveKey" = "Richiesto";
 "SaveQuickNote" = "Richiedi una password per aprire questo quaderno";
 "Saving" = "Richiede una Apple Pencil che supporti il doppio tocco.";
-"Scan" = "Si prega di aggiornare l'app all'ultima versione per aprire questo documento.";
-"ScanDocument" = "Ripristina";
-"ScanDocument" = "Ripristina";
+"Scan" = "Scansiona";
+"ScanDocument" = "Scansiona documento";
+"ScanDocument" = "Scansiona documento";
 "ScannerUnavailable" = "Desideri ripristinare le tue palette di colori ai valori predefiniti di fabbrica?";
 "SchoolWorkApp" = "Ripristina colori";
-"Screenshot" = "Questo reimposterà le palette di colori ai valori predefiniti di fabbrica.";
-"Scrolling" = "Ripristina predefiniti";
-"Search" = "Ridimensiona";
+"Screenshot" = "Screenshot";
+"Scrolling" = "Scorrimento";
+"Search" = "Cerca";
 "SearchPapersCovers" = "Le modifiche non sono sincronizzate. Scegli quali documenti mantenere.";
 "SearchText" = "Ripristina";
 "SearchTitles" = "Risultati per '%@'";
@@ -863,8 +863,8 @@
 "Title" = "Titolo";
 "Title&PageNo" = "Titolo e Numero di Pagina";
 "TransparentBand" = "Banda trasparente";
-"Trash" = "Spazzatura";
-"Trash" = "Spazzatura";
+"Trash" = "Cestino";
+"Trash" = "Cestino";
 "Travel" = "Viaggi e Luoghi";
 "Travel" = "Viaggi e Luoghi";
 "TurnOffAutoBackup" = "Disattiva il backup automatico";
@@ -953,6 +953,12 @@
 "bujoessentials" = "Essenziali per Bujo";
 "cancel" = "Annulla";
 "clipart404" = "Server occupato, riprova più tardi.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "Impossibile creare il file di backup. Controlla lo spazio disponibile sul tuo dispositivo.";
+"cloud.backup.error.fileNotFound" = "File non trovato";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Nota: I quaderni protetti da password non possono essere esportati in formato PDF.";
 "color.added" = "Colore aggiunto";
 "color.deleted" = "Colore eliminato";
 "color.editColor" = "Modifica colore";
@@ -985,7 +991,7 @@
 "customizeToolbar.pen" = "Penna";
 "customizeToolbar.photo" = "Foto";
 "customizeToolbar.pixabay" = "Pixabay";
-"customizeToolbar.present" = "Presente";
+"customizeToolbar.present" = "Presentare";
 "customizeToolbar.readOnlyMode" = "Modalità di sola lettura";
 "customizeToolbar.resetConfirmation" = "Sei sicuro di voler ripristinare la barra degli strumenti predefinita?";
 "customizeToolbar.rotatePage" = "Ruotare pagina";
@@ -1126,7 +1132,7 @@
 "newnotebook.webclip.webclipinfo" = "Trascina e rilascia dal tuo browser nel tuo notebook o scrivi l'indirizzo web qui sotto.";
 "nintetyClockwise" = "In senso orario di 90°";
 "nintetyCounterClockwise" = "Contro orario di 90°";
-"notebook.addnew.newpage" = "NUOVA PAGINA";
+"notebook.addnew.newpage" = "Nuova Pagina";
 "notebook.eraserRack.NavTitle" = "Cancella";
 "notebook.lassoRack.NavTitle" = "Laccio";
 "notebook.restoring" = "Ripristino...";
@@ -1191,7 +1197,7 @@
 "reset" = "Ripristina";
 "save" = "Rinomina Gruppo";
 "school" = "Scuola";
-"search.tryNewSearch" = "Risolvere conflitto";
+"search.tryNewSearch" = "Prova una nuova ricerca";
 "seeAll" = "Riprendi";
 "selectColor" = "SELEZIONA COLORE";
 "settings" = "Impostazioni";
@@ -1379,6 +1385,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Rimuovi tag";
 "sidebar.allTags.toolbar.share" = "Condividi";
 "sidebar.bookmark" = "Segnalibro";
+"sidebar.bookmarks" = "Segnalibri";
 "sidebar.bookmarks.alert.message" = "Sei sicuro di voler rimuovere il segnalibro per questa pagina?";
 "sidebar.bookmarks.bookmark" = "Segnalibro";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "Apri in una nuova finestra";
@@ -1388,7 +1395,9 @@
 "sidebar.bookmarks.page" = "pagina %@";
 "sidebar.contextualMenu.deleteTag" = "Elimina tag";
 "sidebar.photo" = "Foto";
+"sidebar.photos" = "Foto";
 "sidebar.recording" = "Registrazione";
+"sidebar.recordings" = "Registrazioni";
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Segnalato";
 "sidebar.topSection.unfiled" = "Non classificato";
@@ -1399,7 +1408,7 @@
 "stickies" = "Appunti";
 "stickynotes" = "Appunti adesivi";
 "stylus.goto.settings" = "Vai su Impostazioni/Apple Pencil";
-"stylus.switch.fullscreen" = "Passa a schermo intero.";
+"stylus.switch.focusmode" = "Passa alla modalità di focus";
 "tags.contextualMenu.deleteTag" = "Elimina tag";
 "tags.contextualMenu.renameTag" = "Rinomina Tag";
 "tags.delete.alert.message" = "Il tag verrà rimosso dagli elementi a cui è collegato.";
@@ -1490,4 +1499,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM

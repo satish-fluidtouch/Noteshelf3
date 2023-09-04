@@ -15,6 +15,7 @@ extension FTStoreLibraryViewController {
         if sectionType == .noRecords {
             return nil
         }
+        self.delegate?.libraryController(self, menuShown: true)
         let identifier = indexPath as NSIndexPath
         contextMenuSelectedIndexPath = indexPath as IndexPath
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
@@ -46,6 +47,7 @@ extension FTStoreLibraryViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        self.delegate?.libraryController(self, menuShown: false)
         guard let identifier = configuration.identifier as? IndexPath,
               let cell = collectionView.cellForItem(at: identifier) as? FTStoreLibraryCollectionCell else {
             return nil

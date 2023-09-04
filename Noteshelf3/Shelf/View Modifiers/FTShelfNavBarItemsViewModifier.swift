@@ -33,7 +33,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                        if FTENPublishManager.shared.errorUIHelper.hasError ?? false {
+                        if FTENPublishManager.shared.errorUIHelper.hasError {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {

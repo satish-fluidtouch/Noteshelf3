@@ -440,7 +440,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 return UICollectionViewCell()
             }
             cell.delegate = self
-            cell.prepareCellWith(books: generateBooks(), viewState: viewState)
+            cell.prepareCellWith(books: generateBooks(), viewState: viewState, parentVC: self)
             return cell
         } else if indexPath.section == 1 {
             let pages = generatePages()

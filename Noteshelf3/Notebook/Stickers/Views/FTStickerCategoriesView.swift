@@ -100,12 +100,10 @@ struct FTStickerCategoriesView: View {
                 
                 .padding(.leading,10)
                 .padding(.bottom,20)
-                .onAppear {
+                .onFirstAppear {
                     viewModel.getRecents()
                     viewModel.getStickers()
-                }
-                .onFirstAppear {
-                     downloadedViewModel.validateAndGetDownloadedStickers()
+                    downloadedViewModel.validateAndGetDownloadedStickers()
                 }
             }
             .environmentObject(viewModel)

@@ -710,31 +710,31 @@
 "ResetColorsTitle" = "重置顏色";
 "ResetColorsWarning" = "這將將顏色調色板重設為出廠預設值。";
 "ResetToDefault" = "恢復預設";
-"Resize" = "錄音";
+"Resize" = "調整大小";
 "ResolveConflict" = "錄音";
 "ResolveConflictMessage" = "錄音進行中...";
 "Restore" = "恢復頁面";
 "ResultsFor" = "結果為 %@";
 "RetakeKey" = "3-指右滑/左滑";
 "Right" = "發布以添加新頁面";
-"Rotate" = "稍後提醒";
-"Rotate Page" = "移除";
+"Rotate" = "旋轉";
+"Rotate Page" = "旋轉頁面";
 "Rotating" = "從最近刪除";
 "SampleNotebook" = "重新命名";
-"SaveAsTemplate" = "重新命名%d個筆記本";
+"SaveAsTemplate" = "另存為模板";
 "SaveForFutureUse" = "重命名標籤";
 "SaveImageChangesConfirmation" = "重命名... %d 的 %d";
 "SaveKey" = "要求";
 "SaveQuickNote" = "需要密碼才能打開這個筆記本";
 "Saving" = "需要支援雙擊的蘋果筆。";
-"Scan" = "請更新您的應用程式至最新版本以開啟此文件。";
-"ScanDocument" = "重置";
-"ScanDocument" = "重設";
+"Scan" = "扫描";
+"ScanDocument" = "掃描文件";
+"ScanDocument" = "掃描文件";
 "ScannerUnavailable" = "您想將您的色板重設為出廠預設值嗎？";
 "SchoolWorkApp" = "重置顏色";
-"Screenshot" = "這將將顏色調色板重置為出廠預設值。";
-"Scrolling" = "重置为默认";
-"Search" = "調整大小";
+"Screenshot" = "截圖";
+"Scrolling" = "滾動";
+"Search" = "搜索";
 "SearchPapersCovers" = "修改不同步。選擇要保留的文件。";
 "SearchText" = "還原";
 "SearchTitles" = "「%@」的搜尋結果";
@@ -768,7 +768,7 @@
 "SettingOptionTheme" = "外觀";
 "SettingShowDateOnShelf" = "在書架上顯示日期";
 "Settings" = "設定";
-"SettingsApplePencil" = "蘋果鉛筆";
+"SettingsApplePencil" = "Apple铅笔";
 "SettingsGeneral" = "將軍";
 "SettingsNoteShelfHelp" = "筆記架助手";
 "SettingsRateOnTheAppstore" = "應用商店評分";
@@ -864,7 +864,7 @@
 "Title&PageNo" = "標題與頁碼";
 "TransparentBand" = "透明帶";
 "Trash" = "垃圾";
-"Trash" = "垃圾";
+"Trash" = "垃圾箱";
 "Travel" = "旅遊與地點";
 "Travel" = "旅行與地點";
 "TurnOffAutoBackup" = "關閉自動備份";
@@ -953,6 +953,12 @@
 "bujoessentials" = "筆記必需品";
 "cancel" = "取消";
 "clipart404" = "服務器繁忙，請稍後再試。";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "無法建立備份檔案。請檢查您的設備剩餘空間。";
+"cloud.backup.error.fileNotFound" = "檔案未找到";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
 "color.added" = "添加顏色";
 "color.deleted" = "顏色已刪除";
 "color.editColor" = "編輯顏色";
@@ -985,7 +991,7 @@
 "customizeToolbar.pen" = "筆";
 "customizeToolbar.photo" = "照片";
 "customizeToolbar.pixabay" = "像素灣";
-"customizeToolbar.present" = "目前";
+"customizeToolbar.present" = "演示";
 "customizeToolbar.readOnlyMode" = "唯讀模式";
 "customizeToolbar.resetConfirmation" = "您確定要重設為預設工具列嗎？";
 "customizeToolbar.rotatePage" = "旋轉頁面";
@@ -1191,7 +1197,7 @@
 "reset" = "重設";
 "save" = "重命名群組";
 "school" = "學校";
-"search.tryNewSearch" = "解決衝突";
+"search.tryNewSearch" = "嘗試新的搜索";
 "seeAll" = "重新拍攝";
 "selectColor" = "選擇顏色";
 "settings" = "設定";
@@ -1199,7 +1205,7 @@
 "settings.about.description" = "介紹Noteshelf 3 您最喜愛的筆記應用程式的新版和改進版。";
 "settings.about.userID" = "用戶ID %@";
 "settings.about.version" = "版本 %@ %@";
-"settings.useApplePencil" = "使用蘋果鉛筆";
+"settings.useApplePencil" = "使用Apple铅笔";
 "shapes" = "形狀";
 "share" = "分享";
 "share.savetoCameraRoll" = "保存到相機膠卷";
@@ -1379,6 +1385,7 @@
 "sidebar.allTags.toolbar.removeTags" = "刪除標籤";
 "sidebar.allTags.toolbar.share" = "分享";
 "sidebar.bookmark" = "書籤";
+"sidebar.bookmarks" = "書籤";
 "sidebar.bookmarks.alert.message" = "您確定要刪除此頁的書籤嗎？";
 "sidebar.bookmarks.bookmark" = "書籤";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "在新視窗中打開";
@@ -1388,7 +1395,9 @@
 "sidebar.bookmarks.page" = "頁面 %@";
 "sidebar.contextualMenu.deleteTag" = "刪除標籤";
 "sidebar.photo" = "照片";
+"sidebar.photos" = "照片";
 "sidebar.recording" = "錄音";
+"sidebar.recordings" = "錄製";
 "sidebar.topSection.home" = "家";
 "sidebar.topSection.starred" = "標記";
 "sidebar.topSection.unfiled" = "未歸檔";
@@ -1399,7 +1408,7 @@
 "stickies" = "便條";
 "stickynotes" = "便利貼";
 "stylus.goto.settings" = "前往「設定/Apple Pencil」";
-"stylus.switch.fullscreen" = "切換至全螢幕";
+"stylus.switch.focusmode" = "切換至專注模式";
 "tags.contextualMenu.deleteTag" = "刪除標籤";
 "tags.contextualMenu.renameTag" = "重命名標籤";
 "tags.delete.alert.message" = "標籤將從附有該標籤的項目中刪除。";
@@ -1490,4 +1499,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
