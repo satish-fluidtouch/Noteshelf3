@@ -25,11 +25,19 @@ extension FTCloudBackupIgnoreList {
 }
 @objcMembers class FTBackupIgnoreEntry : NSObject
 {
-    var title : String?;
+    private(set) var title : String;
+    private(set) var relativePath: String;
+    
     var uuid : String!;
     var ignoreType = FTBackupIgnoreType.none;
     var ignoreReason : String = "";
     var hideFromUser = false;
+    
+    required init(title inTitle: String,relativePath path: String) {
+        title = inTitle;
+        relativePath = path;
+        super.init();
+    }
 }
 
 @objcMembers class FTCloudBackupIgnoreList : NSObject

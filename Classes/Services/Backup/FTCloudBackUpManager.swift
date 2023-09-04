@@ -156,7 +156,7 @@ class FTCloudBackUpManager : NSObject {
             }
             for item in items {
                 if let backupItem = item.value as? FTCloudBackup {
-                    let backupItemURL = rootURL.appendingPathComponent(backupItem.filePath)
+                    let backupItemURL = rootURL.appendingPathComponent(backupItem.relativeFilePath)
                     if !(FileManager.default.fileExists(atPath: backupItemURL.path)) {
                         reqItemsCount -= 1
                     }

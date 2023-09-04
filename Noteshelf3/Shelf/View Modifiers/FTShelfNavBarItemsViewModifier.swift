@@ -11,6 +11,8 @@ import SwiftUI
 struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @StateObject var backUpError: FTCloudBackupENPublishError = FTCloudBackupENPublishError(type: .cloudBackup);
+    @StateObject var enPublishError: FTCloudBackupENPublishError = FTCloudBackupENPublishError(type: .enPublish);
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State private var showingPopover:Bool = false
@@ -33,7 +35,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                        if FTENPublishManager.shared.errorUIHelper.hasError {
+                        if enPublishError.hasError {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {
@@ -44,7 +46,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                         }
 
-                        if FTCloudBackUpManager.shared.activeCloudBackUpManager?.errorUIHelper.hasError ?? false {
+                        if backUpError.hasError {
                             Button {
                                 self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
                             } label: {

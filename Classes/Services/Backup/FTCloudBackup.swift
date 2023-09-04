@@ -24,7 +24,7 @@ class FTCloudBackupFileInfo: NSObject {
 @objc open class FTCloudBackup: NSObject {
     var backupInfo: [String: Any]?
     var uuid: String = UUID().uuidString
-    var filePath: String = ""
+    var relativeFilePath: String = ""
     var lastUpdated: NSNumber?
     var lastBackupDate: NSNumber?
     var isDirty: Bool = false
@@ -53,7 +53,7 @@ class FTCloudBackupFileInfo: NSObject {
             self.uuid = UUID
         }
         if let path = dict[FTBackUpPackagePathKey] as? String {
-            self.filePath = path
+            self.relativeFilePath = path
         }
         if let updated = dict[FTBackUpLastUpdatedKey] as? NSNumber {
             self.lastUpdated = updated
@@ -69,7 +69,7 @@ class FTCloudBackupFileInfo: NSObject {
         var dictInfo = [String: Any]()
         dictInfo[FTBackUpGUIDKey] = self.uuid
         dictInfo[FTBackUpIsDirtyKey] = self.isDirty
-        dictInfo[FTBackUpPackagePathKey] = filePath
+        dictInfo[FTBackUpPackagePathKey] = relativeFilePath
         
         if(nil != self.lastUpdated) {
             dictInfo[FTBackUpLastUpdatedKey] = self.lastUpdated

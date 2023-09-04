@@ -17,10 +17,6 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
 }
 
 @objcMembers class FTENPublishManager: NSObject, FTBasePublishRequestDelegate {
-    lazy var errorUIHelper: FTCloudBackupENPublishError = {
-        return FTCloudBackupENPublishError(type: .enPublish);
-    }()
-
     var shouldCancelPublishing = false
     private var currentlyPublingNotebookId: String?
     private var publishInProgress = false

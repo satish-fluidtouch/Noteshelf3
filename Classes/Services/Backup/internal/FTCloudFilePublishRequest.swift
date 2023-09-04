@@ -13,7 +13,7 @@ import UIKit
     
     var relativePath: String? {
         if let rootName = cloudRootName() {
-            var relativePath = (rootName as NSString).appendingPathComponent(refObject.filePath)
+            var relativePath = (rootName as NSString).appendingPathComponent(refObject.relativeFilePath)
             let componenets = (relativePath as NSString).pathComponents
             var componentsWithNoExtension: [String] = []
             for eachComp in componenets {
@@ -89,10 +89,9 @@ import UIKit
     }
     
     func canBypassError(_ error: Error?) -> FTBackupIgnoreEntry {
-        let ignoreEntry = FTBackupIgnoreEntry()
-        ignoreEntry.title = URL(fileURLWithPath: refObject.filePath.lastPathComponent).deletingPathExtension().path
+        let title = refObject.relativeFilePath.lastPathComponent.deletingPathExtension;
+        let ignoreEntry = FTBackupIgnoreEntry(title: title, relativePath: refObject.relativeFilePath);
         ignoreEntry.uuid = refObject.uuid
-        ignoreEntry.ignoreType = .none
 
         if let nserror = error as? NSError {
             if nserror.domain == NSCocoaErrorDomain, nserror.code == NSFileReadNoSuchFileError {

@@ -29,10 +29,6 @@ typealias FTGenericCompletionBlockWithStatus = ((Bool) -> Void)
 }
 
 class FTCloudBackupPublisher: NSObject {
-    lazy var errorUIHelper: FTCloudBackupENPublishError = {
-        return FTCloudBackupENPublishError(type: .cloudBackup);
-    }()
-    
     var backupEntryDictionary = [String: Any]()
     var ignoreList = FTCloudBackupIgnoreList()
     var backUpFilePath: String {
@@ -143,7 +139,7 @@ class FTCloudBackupPublisher: NSObject {
         getNextPublishRequest { request in
             self.currentPublishRequest = request;
             if let currentRequest = self.currentPublishRequest {
-                FTCloudBackupPublisher.recordSyncLog("Publish Start:\(currentRequest.refObject.filePath.lastPathComponent)")
+                FTCloudBackupPublisher.recordSyncLog("Publish Start:\(currentRequest.refObject.relativeFilePath.lastPathComponent)")
 
                 currentRequest.refObject.isDirty = false
                 currentRequest.refObject.errorDescription = nil
@@ -180,9 +176,9 @@ class FTCloudBackupPublisher: NSObject {
                             }
                             if !isIgnored,
                                 (lastBackupDate < lastUpdatedDate && currentTime - lastUpdatedDate > 60)
-                                || refObject.filePath != eachItem.URL.relativePathWRTCollection() {
+                                || refObject.relativeFilePath != eachItem.URL.relativePathWRTCollection() {
                                 self.ignoreList.remove(fromIgnoreList: docId);
-                                refObject.filePath = eachItem.URL.relativePathWRTCollection();
+                                refObject.relativeFilePath = eachItem.URL.relativePathWRTCollection();
                                 refObject.lastUpdated = autobackupItem.lastUpdated;
                                 request = self.publishRequest(forItem: refObject,itemURL: eachItem.URL);
                                 break;
@@ -362,7 +358,7 @@ class FTCloudBackupPublisher: NSObject {
             ignoreList.remove(fromIgnoreList: guid)
             publishQueue.async(execute: {
                 if let guid = oldShelfItem.documentUUID, let entry = self.backupEntryDictionary[guid] as? FTCloudBackup {
-                    entry.filePath = newShelfItem.relativePath
+                    entry.relativeFilePath = newShelfItem.relativePath
                     self.backupEntryDictionary[newShelfItem.documentUUID] = entry
                     self.backupEntryDictionary.removeValue(forKey: guid)
                 }
