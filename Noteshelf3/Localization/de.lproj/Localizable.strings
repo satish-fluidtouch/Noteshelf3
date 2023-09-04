@@ -1087,6 +1087,7 @@
 "iap.termsnconditions" = "Allgemeine Geschäftsbedingungen";
 "iap.title" = "Holen Sie sich das volle Erlebnis mit Noteshelf Premium";
 "iap.upgradeNow" = "Jetzt aktualisieren";
+"icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
 "importedFiles" = "Importierte Dateien";
@@ -1190,6 +1191,7 @@
 "quotes" = "Zitate";
 "removefromRecents" = "Aus Verlauf entfernen.";
 "reset" = "Zurücksetzen";
+"retry" = "Erneut versuchen";
 "save" = "Gruppe umbenennen";
 "school" = "Schule";
 "search.tryNewSearch" = "Versuchen Sie es mit einer neuen Suche";
@@ -1494,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 1 September 2023 at 19:24
+// Last Synced by Akshay on 4 September 2023 at 17:28

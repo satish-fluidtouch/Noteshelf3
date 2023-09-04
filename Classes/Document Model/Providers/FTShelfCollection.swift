@@ -10,8 +10,6 @@ import Foundation
 
 protocol FTShelfCollection: NSObjectProtocol {
 
-    static func shelfCollection(_ onCompletion : @escaping ((FTShelfCollection) -> Void));
-
     func collection(withTitle title: String) -> FTShelfItemCollection?;
     func refreshShelfCollection(onCompletion : @escaping (() -> Void));
 
@@ -64,4 +62,7 @@ extension FTShelfCollection {
         assert(false, "renameShelf:title:onCompletion: is not supported by default")
     }
 
+    func belongsToNS2() -> Bool {
+        false
+    }
 }

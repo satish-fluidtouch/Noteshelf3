@@ -10,6 +10,13 @@ import Foundation
 import FTDocumentFramework
 import FTCommon
 
+class FTShelfCallback: NSObject {
+    var tempCompletionBlock : (([FTShelfItemProtocol]) -> Void)?
+    var tempParent: FTGroupItemProtocol?;
+    var tempSearchKey : String?
+    var tempSorOrder = FTShelfSortOrder.byName;
+}
+
 class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,
     FTShelfItemSorting,FTShelfItemSearching,FTUniqueNameProtocol,FTShelfItemDocumentStatusChangePublisher
 {
@@ -41,10 +48,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
 
     fileprivate var query : FTLocalQueryGather?;
     
-    fileprivate var tempCompletionBlock : (([FTShelfItemProtocol]) -> Void)?;
-    fileprivate var tempParent : FTGroupItemProtocol?;
-    fileprivate var tempSearchKey : String?;
-    fileprivate var tempSorOrder = FTShelfSortOrder.byName;
+    fileprivate var tempCompletionBlock = [FTShelfCallback]();
 
     fileprivate var executionQueue = DispatchQueue.init(label: "com.fluidtouch.localShelfItemCollection");
 
@@ -89,11 +93,13 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         }
         else {
             objc_sync_enter(self);
-            self.tempParent = parent;
-            self.tempSearchKey = searchKey;
-            self.tempSorOrder = sortOrder;
-            
-            self.tempCompletionBlock = completionBlock;
+            let tempCallback = FTShelfCallback();
+            tempCallback.tempParent = parent;
+            tempCallback.tempSearchKey = searchKey;
+            tempCallback.tempSorOrder = sortOrder;
+            tempCallback.tempCompletionBlock = completionBlock;
+            self.tempCompletionBlock.append(tempCallback);
+
             self.query = FTLocalQueryGather(rootURL: self.URL,
                                             extensionsToListen: [FTFileExtension.ns3, FTFileExtension.ns2, FTFileExtension.group],
                                             skipSubFolder : false,
@@ -537,13 +543,13 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     func ftLocalQueryGather(_ query: FTLocalQueryGather, didFinishGathering results: [Foundation.URL]?)
     {
         self.buildCache(results);
-        if (self.tempCompletionBlock != nil) {
-            self.shelfItems(self.tempSorOrder, parent: self.tempParent, searchKey: self.tempSearchKey, onCompletion: self.tempCompletionBlock!);
-            
-            self.tempCompletionBlock = nil;
-            self.tempParent = nil;
-            self.tempSearchKey = nil;
+        self.tempCompletionBlock.forEach { eachItem in
+            self.shelfItems(eachItem.tempSorOrder
+                            , parent: eachItem.tempParent
+                            , searchKey: eachItem.tempSearchKey
+                            , onCompletion: eachItem.tempCompletionBlock!);
         }
+        self.tempCompletionBlock.removeAll();
     }
     
     //MARK:- Private Cache Mgmt -

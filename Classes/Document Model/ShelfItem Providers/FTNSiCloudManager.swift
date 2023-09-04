@@ -50,7 +50,7 @@ extension FTNSiCloudManager {
         static let ns2: String = "iCloud.com.fluidtouch.noteshelf"
 
 #if DEBUG
-        static let ns3: String = "iCloud.com.fluidtouch.noteshelf-dev"
+        static let ns3: String = "iCloud.com.fluidtouch.noteshelf3-dev"
 #elseif BETA
         static let ns3: String = "iCloud.com.fluidtouch.noteshelf3-beta"
 #else

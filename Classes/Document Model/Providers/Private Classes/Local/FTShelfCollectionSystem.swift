@@ -17,11 +17,6 @@ class FTShelfItemCollectionSystem: FTShelfItemCollectionLocal {
 }
 
 class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting {
-
-    func belongsToNS2() -> Bool {
-        false
-    }
-
     static func TrashCollectionURL() -> URL
     {
         return self.systenFolderURL().appendingPathComponent(trashCollectionTitle);
@@ -43,21 +38,17 @@ class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDel
     fileprivate var localDocumentsURL : URL!;
     fileprivate var query : FTLocalQueryGather?;
     
-    fileprivate var tempCompletionBlock : (([FTShelfItemCollection])->Void)? = nil;
-    
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
-    {
-        let systemURL = self.systenFolderURL();
+    fileprivate var tempCompletionBlock = [(([FTShelfItemCollection]) -> Void)]();
+
+    override init() {
+        let systemURL = Self.systenFolderURL();
         let fileManger = FileManager();
         let trashShelfURL = systemURL.appendingPathComponent(trashCollectionTitle);
         var isDir = ObjCBool.init(false);
         if(!fileManger.fileExists(atPath: trashShelfURL.path, isDirectory: &isDir) || !isDir.boolValue) {
             try? fileManger.createDirectory(at: trashShelfURL, withIntermediateDirectories: true, attributes: nil);
         }
-        
-        let provider = FTShelfCollectionSystem();
-        provider.localDocumentsURL =  systemURL;
-        onCompletion(provider);
+        self.localDocumentsURL =  systemURL;
     }
     
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -74,7 +65,7 @@ class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDel
             onCompletion(self.shelfCollections);
         }
         else {
-            self.tempCompletionBlock = onCompletion;
+            self.tempCompletionBlock.append(onCompletion);
             self.query = FTLocalQueryGather(rootURL: self.localDocumentsURL,
                                             extensionsToListen: [FTFileExtension.shelf],
                                             skipSubFolder : true,
@@ -134,10 +125,10 @@ class FTShelfCollectionSystem : NSObject,FTShelfCollection,FTLocalQueryGatherDel
     //MARK:- FTLocalQueryGatherDelegate
     func ftLocalQueryGather(_ query: FTLocalQueryGather, didFinishGathering results: [URL]?) {
         self.buildCache(results);
-        if(tempCompletionBlock != nil) {
-            self.shelfs(self.tempCompletionBlock!);
-            self.tempCompletionBlock = nil;
+        self.tempCompletionBlock.forEach { eachBlock in
+            self.shelfs(eachBlock);
         }
+        self.tempCompletionBlock.removeAll();
     }
     
     //MARK:- Cache Mgmt -

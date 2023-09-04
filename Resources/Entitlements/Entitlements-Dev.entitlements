@@ -9,7 +9,7 @@
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
 		<string>iCloud.com.fluidtouch.noteshelf</string>
-		<string>iCloud.com.fluidtouch.noteshelf-dev</string>
+		<string>iCloud.com.fluidtouch.noteshelf3-dev</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
@@ -23,10 +23,10 @@
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
 		<string>iCloud.com.fluidtouch.noteshelf</string>
-		<string>iCloud.com.fluidtouch.noteshelf-dev</string>
+		<string>iCloud.com.fluidtouch.noteshelf3-dev</string>
 	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
-	<string>CNTLGGQX2J.com.fluidtouch.noteshelf-dev</string>
+	<string>CNTLGGQX2J.com.fluidtouch.noteshelf3-dev</string>
 	<key>com.apple.developer.user-fonts</key>
 	<array>
 		<string>app-usage</string>
@@ -35,7 +35,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.fluidtouch.noteshelf-dev</string>
+		<string>group.com.fluidtouch.noteshelf3-dev</string>
 		<string>group.com.fluidtouch.noteshelf</string>
 	</array>
 	<key>com.apple.security.device.audio-input</key>

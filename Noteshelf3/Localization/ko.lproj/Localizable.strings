@@ -1087,6 +1087,7 @@
 "iap.termsnconditions" = "약관";
 "iap.title" = "Noteshelf Premium으로 완전한 경험을 얻으십시오";
 "iap.upgradeNow" = "지금 업그레이드";
+"icloud.sync.issue.message" = "iCloud에 연결할 수 없습니다. 설정에서 iCloud가 켜져 있는지 확인하세요.";
 "iconlabels" = "아이콘 라벨";
 "import" = "가져오기";
 "importedFiles" = "가져온 파일";
@@ -1190,6 +1191,7 @@
 "quotes" = "명언";
 "removefromRecents" = "최근목록에서 제거";
 "reset" = "리셋";
+"retry" = "재시도";
 "save" = "그룹 이름 변경";
 "school" = "학교";
 "search.tryNewSearch" = "새로 검색해 보세요";
@@ -1494,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 1 September 2023 at 19:24
+// Last Synced by Akshay on 4 September 2023 at 17:28

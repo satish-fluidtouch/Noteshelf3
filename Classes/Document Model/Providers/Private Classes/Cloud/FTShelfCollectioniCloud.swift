@@ -22,7 +22,7 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
 
     //Temporary
     fileprivate var isInitialGatheringCompleted: Bool = false
-    fileprivate var tempCompletionBlock: (([FTShelfItemCollection]) -> Void)?;
+    fileprivate var tempCompletionBlock = [(([FTShelfItemCollection]) -> Void)]();
     fileprivate var orphanMetadataItems = [NSMetadataItem]();
     deinit {
         hashTable.removeAll()
@@ -34,12 +34,6 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
     required init(rootURL: URL, isNS2Collection: Bool) {
         self.iCloudDocumentsURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
         self.isNS2Collection = isNS2Collection
-    }
-
-    @available(*, deprecated, message: "must be initialized directly")
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
-    {
-        fatalError("must be initialized directly")
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -56,7 +50,7 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
                 onCompletion(self.shelfCollections);
             })
         } else {
-            tempCompletionBlock = onCompletion
+            tempCompletionBlock.append(onCompletion)
         }
         objc_sync_exit(self);
     }
@@ -170,11 +164,10 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
     func didEndFetchingInitialData() {
         
         isInitialGatheringCompleted = true
-        
-        if nil != tempCompletionBlock {
-            self.shelfs(self.tempCompletionBlock!)
-            tempCompletionBlock = nil
+        self.tempCompletionBlock.forEach { eachBlock in
+            self.shelfs(eachBlock);
         }
+        self.tempCompletionBlock.removeAll();
     }
     
     func addMetadataItemsToCache(_ metadataItems: [NSMetadataItem], isBuildingCache: Bool) {
