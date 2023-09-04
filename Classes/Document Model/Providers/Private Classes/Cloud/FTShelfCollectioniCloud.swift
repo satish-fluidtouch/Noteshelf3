@@ -336,11 +336,13 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                 (collection as? FTShelfItemCollectionICloud)?.addItemsToCache(addedItems)
             }
         }
-        runInMainThread({
-            if (!updatedDocumentURLs.isEmpty) {
-                NotificationCenter.default.post(name: Notification.Name.collectionUpdated, object: self, userInfo: [FTShelfItemsKey: updatedDocumentURLs]);
-            }
-        });
+        if (!updatedDocumentURLs.isEmpty) {
+            runInMainThread({
+                NotificationCenter.default.post(name: .collectionUpdated,
+                                                object: self,
+                                                userInfo: [FTShelfItemsKey: updatedDocumentURLs]);
+            });
+        }
     }
 }
 

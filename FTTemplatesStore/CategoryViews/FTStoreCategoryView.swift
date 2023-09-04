@@ -25,52 +25,13 @@ struct FTStoreCategoryView: View {
             VStack(alignment: .leading) {
                 HStack {
                     ForEach(topRows,id: \.element) { (index, item) in
-                        HStack{
-                            let image = UIImage(named: item.fileName, in: storeBundle, with: nil)
-                            Image(uiImage: image!)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 40,height: 40)
-                            Text(item.title)
-                                .lineLimit(3)
-                                .multilineTextAlignment(.leading)
-                        }
-                        .padding()
-                        .background(Color.appColor(.black5))
-                        .cornerRadius(16)
-                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.appColor(.accentBorder), lineWidth: 1))
-                        .font(Font.appFont(for: .medium, with: 16))
-                        .onTapGesture {
-                            // Update sectionType to track events
-                            items[index].sectionType = templateInfo.sectionType
-                            FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
-                        }
+                        configureRowViewWith(item: item, items: items, index: index)
                     }
                 }
 
                 HStack {
                     ForEach(bottomRows,id: \.element) { (index, item) in
-                        HStack{
-                            let image = UIImage(named: item.fileName, in: storeBundle, with: nil)
-                            Image(uiImage: image!)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 40,height: 40)
-                            Text(item.title)
-                                .lineLimit(3)
-                                .multilineTextAlignment(.leading)
-                        }
-                        .padding()
-                        .background(Color.appColor(.black5))
-                        .cornerRadius(16)
-                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.appColor(.accentBorder), lineWidth: 1))
-                        .font(Font.appFont(for: .medium, with: 16))
-
-                        .onTapGesture {
-                            // Update sectionType to track events
-                            items[index].sectionType = templateInfo.sectionType
-                            FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
-                        }
+                        configureRowViewWith(item: item, items: items, index: index)
                     }
                 }
             }
@@ -79,4 +40,29 @@ struct FTStoreCategoryView: View {
             .background(.clear)
         }
     }
+
+    private func configureRowViewWith(item: DiscoveryItem, items: [DiscoveryItem], index: Int) -> some View {
+        HStack{
+          let image = UIImage(named: item.fileName, in: storeBundle, with: nil)
+          Image(uiImage: image!)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 40,height: 40)
+          Text(item.title)
+            .lineLimit(3)
+            .multilineTextAlignment(.leading)
+        }
+        .padding()
+        .background(Color.appColor(.black5))
+        .cornerRadius(16)
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.appColor(.accentBorder), lineWidth: 1))
+        .font(Font.appFont(for: .medium, with: 16))
+        .onTapGesture {
+            var _items = items
+            // Update sectionType to track events
+            _items[index].sectionType = templateInfo.sectionType
+            FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: _items, selectedIndex: index))
+        }
+      }
+
 }

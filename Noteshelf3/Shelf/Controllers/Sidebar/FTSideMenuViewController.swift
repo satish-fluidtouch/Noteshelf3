@@ -100,7 +100,7 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
     }
 
     func selectSideMenuCollection(_ collection: FTShelfItemCollection) {
-        if self.viewModel.selectedShelfItemCollection.uuid != collection.uuid {
+        if self.viewModel.selectedShelfItemCollection?.uuid != collection.uuid {
             self.viewModel.selectedShelfItemCollection = collection
         }
     }

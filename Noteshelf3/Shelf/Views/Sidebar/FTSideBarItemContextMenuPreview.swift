@@ -21,8 +21,8 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
     @Binding var alertInfo: TrashAlertInfo?
     @Binding var showTrashAlert: Bool
     @EnvironmentObject var sidebarModel: FTSidebarViewModel;
-    @ObservedObject var sidebarItem: FTSideBarItem;
-    @ObservedObject var contextualMenuViewModel: FTSidebarItemContextualMenuVM;
+    @EnvironmentObject var sidebarItem: FTSideBarItem;
+    @EnvironmentObject var contextualMenuViewModel: FTSidebarItemContextualMenuVM;
 
     func makeUIViewController(context: Context) -> UIHostingController<Content> {
         let host = UIHostingController(rootView: preview())
@@ -86,8 +86,7 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
                             _contextualMenuViewModel.sideBarItem = _sidebarItem
                             _contextualMenuViewModel.performAction = menuOption
                         }
-                        let eventName = _sidebarModel.eventNameForLongPressOptions(item: _sidebarItem, option: menuOption)
-                        track(eventName, screenName: ScreenName.sidebar)
+                        _sidebarModel.trackEventForLongPressOptions(item: _sidebarItem, option: menuOption)
                     }
                     actions.append(action1);
                    // elements.append(UIMenu(title: "", options: .displayInline, children: actions));

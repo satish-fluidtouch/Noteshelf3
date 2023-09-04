@@ -25,13 +25,14 @@ struct FTTemplatesSidebarItemView: View {
             .ignoresSafeArea()
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true
-            let eventName = viewModel.eventNameForlongpress(item: templatesSidebarItem)
-            track(eventName, screenName: ScreenName.sidebar)
+            viewModel.trackEventForlongpress(item: templatesSidebarItem)
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false
-        }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false),sidebarItem:templatesSidebarItem,contextualMenuViewModel: viewModel.sidebarItemContexualMenuVM)
+        }, cornerRadius: 16,alertInfo: .constant(nil), showTrashAlert: .constant(false))
         .frame(height: 80)
         .environmentObject(viewModel)
+        .environmentObject(templatesSidebarItem)
+        .environmentObject(viewModel.sidebarItemContexualMenuVM)
     }
     private func getBGColorTemplateItem() -> Color {
         let templatesSidebarItem = templatesSidebarItem

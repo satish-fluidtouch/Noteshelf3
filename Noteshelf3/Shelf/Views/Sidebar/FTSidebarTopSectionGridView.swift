@@ -38,7 +38,9 @@ struct FTSidebarTopSectionGridView: View {
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
         } label: {
-            FTSidebarTopSectionGridItemView(viewModel: viewModel, item: sideBarItem)
+            FTSidebarTopSectionGridItemView(viewModel: viewModel)
+                .environmentObject(sideBarItem)
+
         }
     }
 }
