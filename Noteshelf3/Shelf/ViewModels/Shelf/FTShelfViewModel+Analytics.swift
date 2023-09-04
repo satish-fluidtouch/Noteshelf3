@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FTCommon
 
 extension FTShelfViewModel {
     func shelfLocation() -> String {

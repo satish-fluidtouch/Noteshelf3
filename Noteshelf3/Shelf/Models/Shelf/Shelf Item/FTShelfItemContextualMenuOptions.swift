@@ -30,35 +30,35 @@ enum FTShelfItemContexualOption {
         let title: String
         switch self {
         case .showEnclosingFolder:
-            title = NSLocalizedString("shelfItem.contexualMenu.showEnclosingFolder", comment: "Show Enclosing Folder")
+            title = "shelfItem.contexualMenu.showEnclosingFolder".localized
         case .openInNewWindow:
-            title = NSLocalizedString("shelfItem.contexualMenu.openInNewWindow", comment: "Open in New Window")
+            title = "shelfItem.contexualMenu.openInNewWindow".localized
         case .rename:
-            title = NSLocalizedString("shelfItem.contexualMenu.rename", comment: "Rename")
+            title = "shelfItem.contexualMenu.rename".localized
         case .changeCover:
-            title = NSLocalizedString("shelfItem.contexualMenu.changeCover", comment: "Change Cover")
+            title = "shelfItem.contexualMenu.changeCover".localized
         case .tags:
-            title = NSLocalizedString("shelfItem.contexualMenu.tags", comment: "Tags")
+            title = "shelfItem.contexualMenu.tags".localized
         case .duplicate:
-            title = NSLocalizedString("duplicate", comment: "Duplicate")
+            title = "duplicate".localized
         case .move:
-            title = NSLocalizedString("move", comment: "Move")
+            title = "move".localized
         case .addToStarred:
-            title = NSLocalizedString("shelfItem.contexualMenu.addToStarred", comment: "Add to Starred")
+            title = "shelfItem.contexualMenu.addToStarred".localized
         case .removeFromStarred:
-            title = NSLocalizedString("shelfItem.contexualMenu.removeFromStarred", comment: "Remove from Starred")
+            title = "shelfItem.contexualMenu.removeFromStarred".localized
         case .getInfo:
-            title = NSLocalizedString("shelfItem.contexualMenu.getInfo", comment: "Get Info")
+            title = "shelfItem.contexualMenu.getInfo".localized
         case .share:
-            title = NSLocalizedString("share", comment: "share")
+            title = "share".localized
         case .trash:
-            title = NSLocalizedString("Trash", comment: "Trash")
+            title = "Trash".localized
         case .restore:
-            title = NSLocalizedString("shelf.bottomBar.restore", comment: "Restore")
+            title = "shelf.bottomBar.restore".localized
         case .delete:
-            title = NSLocalizedString("delete", comment: "Delete")
+            title = "delete".localized
         case .removeFromRecents:
-            title = NSLocalizedString("RemoveFromRecents", comment: "Remove from Recents")
+            title = "RemoveFromRecents".localized
         }
         return title
     }

@@ -42,10 +42,7 @@ struct FTStoreCategoryView: View {
                         .font(Font.appFont(for: .medium, with: 16))
                         .onTapGesture {
                             // Update sectionType to track events
-                            var item = items[index]
-                            item.sectionType = templateInfo.sectionType
-                            items[index] = item
-                            
+                            items[index].sectionType = templateInfo.sectionType
                             FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
                         }
                     }
@@ -71,10 +68,7 @@ struct FTStoreCategoryView: View {
 
                         .onTapGesture {
                             // Update sectionType to track events
-                            var item = items[index]
-                            item.sectionType = templateInfo.sectionType
-                            items[index] = item
-
+                            items[index].sectionType = templateInfo.sectionType
                             FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
                         }
                     }

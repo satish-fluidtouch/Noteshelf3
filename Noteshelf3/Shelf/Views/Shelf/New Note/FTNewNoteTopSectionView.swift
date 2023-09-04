@@ -11,7 +11,7 @@ import SwiftUI
 struct FTNewNoteTopSectionView: View {
     @ObservedObject var viewModel: FTNewNotePopoverViewModel
     weak var delegate: FTShelfNewNoteDelegate?
-    @ObservedObject var shelfViewModel: FTShelfViewModel
+    @EnvironmentObject var shelfViewModel: FTShelfViewModel
 //    weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
     @Environment(\.dismiss) var dismiss
 
@@ -54,6 +54,6 @@ struct FTNewNoteTopSectionView: View {
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        FTNewNoteTopSectionView(viewModel: FTNewNotePopoverViewModel(), shelfViewModel: FTShelfViewModel(sidebarItemType: .home))
+        FTNewNoteTopSectionView(viewModel: FTNewNotePopoverViewModel())
     }
 }

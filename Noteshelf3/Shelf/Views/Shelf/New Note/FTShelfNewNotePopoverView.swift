@@ -47,7 +47,7 @@ struct FTShelfNewNotePopoverView: View {
             VStack {
                 VStack {
                     VStack(spacing:16.0) {
-                        FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate, shelfViewModel: shelfViewModel)
+                        FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate)
                             .padding(.top,10)
                         LazyVGrid(columns: gridItemLayout(), spacing: 0.0, content: {
                             newNoteSection
