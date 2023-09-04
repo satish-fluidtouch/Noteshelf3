@@ -160,21 +160,6 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         self.title = title
     }
 
-    @objc func tappedOnCancelBtn(sender: UIBarButtonItem) {
-        self.dismiss(animated: true)
-    }
-
-    // Inserting new style
-    @objc func tappedOnAddBtn(sender: UIBarButtonItem) {
-        self.handlePresetAddition()
-    }
-
-    private func handlePresetAddition() {
-        textFontStyle.fontId = UUID().uuidString
-        textFontStyle.isDefault = false
-        FTTextStyleManager.shared.insertNewTextStyle(textFontStyle)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateNavigationBar()
@@ -217,7 +202,9 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
                     shouldUpdate = true
                 }
             } else if self.textStyleMode == .presetAdd {
-                self.handlePresetAddition()
+                textFontStyle.fontId = UUID().uuidString
+                textFontStyle.isDefault = false
+                FTTextStyleManager.shared.insertNewTextStyle(textFontStyle)
                 shouldUpdate = true
             }
             if shouldUpdate {
