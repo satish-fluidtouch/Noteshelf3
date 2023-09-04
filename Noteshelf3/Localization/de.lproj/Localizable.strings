@@ -1408,7 +1408,7 @@
 "stickies" = "Klebezettel";
 "stickynotes" = "Haftnotizen";
 "stylus.goto.settings" = "Gehe zu Einstellungen/Apple Pencil";
-"stylus.switch.fullscreen" = "Vollbildmodus umschalten";
+"stylus.switch.focusmode" = "Wechsel zum Fokusmodus";
 "tags.contextualMenu.deleteTag" = "Tag löschen";
 "tags.contextualMenu.renameTag" = "Tag umbenennen";
 "tags.delete.alert.message" = "Das Etikett wird von den Gegenständen entfernt, an die das Etikett angebracht ist.";

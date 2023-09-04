@@ -339,7 +339,7 @@ private extension FTNoteshelfAIViewController {
                 return;
             }
             if let inerror = error {
-                FTMetrics.shared.track(event: "AI Error", params: ["detail":inerror.localizedDescription], screeName: nil);
+                track("AI Error", params: ["detail":inerror.localizedDescription], screenName: nil)
                 self?.textViewController?.insertText("noteshelf.ai.noteshelfAIError".aiLocalizedString);
             }
             else {
