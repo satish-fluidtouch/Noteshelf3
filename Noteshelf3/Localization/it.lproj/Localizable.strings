@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Questo colore è già nella tua tavolozza.";
 "ColorByAuthor" = "da %@";
 "Colors" = "Colori";
-"ColourLoversAddHeader" = "Aggiungi scegliendo colori individuali o un'intera palette.";
-"ColourLoversEditHeader" = "Tocca un colore dalla tavolozza per selezionare.";
 "Confirm" = "Conferma";
 "ConflictDocModifiedOn" = "Modificato il %@";
 "Connect" = "Collegare";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Impossibile accedere a Box.";
 "UnableToAccessDropbox" = "Impossibile accedere a Dropbox.";
 "UnableToAccessWeLink" = "Impossibile accedere a WeLink";
-"UnableToConnectToColourLovers" = "Impossibile connettersi a COLOURlovers.com.";
 "UnableToConnectToTheWebDAVServer" = "Impossibile connettersi al server WebDAV. Riprova più tardi.";
 "UnableToLocateTheServer" = "Impossibile individuare il server. Controlla l'URL del server e riprova.";
 "UnableToauthenticate" = "Impossibile autenticare.";
@@ -1496,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 September 2023 at 17:28
+// Last Synced by Akshay on 5 September 2023 at 15:19
