@@ -32,11 +32,11 @@ enum SocialMediaTypes:CaseIterable{
     var url:String{
         switch self{
         case .facebook:
-            return "https://www.facebook.com"
+            return "https://www.facebook.com/noteshelf"
         case .instagram:
             return "https://www.instagram.com/noteshelfapp/"
         case .twitter:
-            return "https://www.twitter.com"
+            return "https://twitter.com/noteshelf"
         case .medium:
             return "https://medium.com/noteshelf"
         case .youtube:
