@@ -671,6 +671,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                 
                 //Add the document to new group by removing from previous group
                 if(currentGroup?.uuid != newGroupItem?.uuid) {
+                    self.hashTable.removeItemFromHashTable(item.URL);
                     if(currentGroup != nil) {
                         currentGroup?.removeChild(item);
                         if(currentGroup!.childrens.isEmpty) {
@@ -691,6 +692,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                     else {
                         self.addChild(item);
                     }
+                    self.hashTable.addItemToHashTable(item, forKey: toURL);
                 }
                 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 //Recent:

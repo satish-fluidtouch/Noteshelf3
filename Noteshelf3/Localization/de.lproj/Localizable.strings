@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Diese Farbe ist bereits in Ihrer Palette.";
 "ColorByAuthor" = "von %@";
 "Colors" = "Farben";
-"ColourLoversAddHeader" = "Hinzufügen durch Auswahl einzelner Farben oder einer kompletten Palette.";
-"ColourLoversEditHeader" = "Tippen Sie auf eine Farbe aus der Palette, um sie auszuwählen.";
 "Confirm" = "Bestätigen";
 "ConflictDocModifiedOn" = "Geändert am %@";
 "Connect" = "Verbinden";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Auf Box kann nicht zugegriffen werden.";
 "UnableToAccessDropbox" = "Auf Dropbox kann nicht zugegriffen werden.";
 "UnableToAccessWeLink" = "Kein Zugriff auf WeLink";
-"UnableToConnectToColourLovers" = "Kann keine Verbindung zu COLOURlovers.com herstellen.";
 "UnableToConnectToTheWebDAVServer" = "Es konnte keine Verbindung zum WebDAV-Server hergestellt werden. Bitte versuchen Sie es später erneut.";
 "UnableToLocateTheServer" = "Der Server konnte nicht gefunden werden. Überprüfen Sie die Server-URL und versuchen Sie es erneut.";
 "UnableToauthenticate" = "Nicht authentifizierbar";
@@ -1496,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 September 2023 at 17:28
+// Last Synced by Akshay on 5 September 2023 at 15:19

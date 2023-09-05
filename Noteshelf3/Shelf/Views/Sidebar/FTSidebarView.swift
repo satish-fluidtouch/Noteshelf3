@@ -141,7 +141,7 @@ struct FTSidebarView: View {
             )
         ) {
             VStack(spacing:2.0){
-                ForEach(menuSection.items, id:\.self) { item in
+                ForEach(menuSection.items, id:\.id) { item in
                     if item.isEditing {
                         getEditableViewForSideBarItem(item, withPlaceHolder:item.title,editableField: true) { newTitle in
                             item.isEditing = false
