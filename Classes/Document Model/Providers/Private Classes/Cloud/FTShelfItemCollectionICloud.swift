@@ -57,6 +57,11 @@ class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSear
 
 // MARK: - FTShelfItemCollection -
 extension FTShelfItemCollectionICloud: FTShelfItemCollection {
+    func isNS2Collection() -> Bool {
+        //TODO: (AK) Think about a refactor
+        let belongs = self.parent?.belongsToNS2()
+        return belongs ?? false
+    }
 
     func shelfItemCollection(for metadata: NSMetadataItem) -> FTShelfItemProtocol? {
         return self.hashTable.itemFromHashTable(metadata) as? FTShelfItemProtocol
@@ -66,22 +71,22 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                     parent: FTGroupItemProtocol?,
                     searchKey: String?,
                     onCompletion completionBlock:@escaping (([FTShelfItemProtocol]) -> Void)) {
-            self.executionQueue.async {
-                objc_sync_enter(self);
-                var shelfItems = self.childrens;
-                if let parent = parent {
-                    shelfItems = parent.childrens;
-                }
-
-                if let searchKey = searchKey, !searchKey.isEmpty {
-                    shelfItems = self.searchShelfItems(shelfItems, skipGroupItems: false, searchKey: searchKey);
-                }
-                shelfItems = self.sortItems(shelfItems, sortOrder: sortOrder);
-                objc_sync_exit(self);
-                DispatchQueue.main.async {
-                    completionBlock(shelfItems);
-                }
+        self.executionQueue.async {
+            objc_sync_enter(self);
+            var shelfItems = self.childrens;
+            if let parent = parent {
+                shelfItems = parent.childrens;
             }
+            
+            if let searchKey = searchKey, !searchKey.isEmpty {
+                shelfItems = self.searchShelfItems(shelfItems, skipGroupItems: false, searchKey: searchKey);
+            }
+            shelfItems = self.sortItems(shelfItems, sortOrder: sortOrder);
+            objc_sync_exit(self);
+            DispatchQueue.main.async {
+                completionBlock(shelfItems);
+            }
+        }
     }
 
     func addShelfItemForDocument(_ path: Foundation.URL,
@@ -136,7 +141,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         func moveItem()
         {
             if let item = itemsToMove.first {
-                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == groupExtension, toCollection.isTrash {
+                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
                     self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
                         movedItems.append(contentsOf: moved)
                         itemsToMove.removeFirst();
@@ -630,11 +635,11 @@ extension FTShelfItemCollectionICloud {
                 }
             }
         }
-        runInMainThread({
-            if (!updatedItems.isEmpty) {
+        if (!updatedItems.isEmpty) {
+            runInMainThread({
                 NotificationCenter.default.post(name: Notification.Name.shelfItemUpdated, object: self, userInfo: [FTShelfItemsKey: updatedItems]);
-            }
-        });
+            });
+        }
     }
 }
 
@@ -813,7 +818,7 @@ private extension FTShelfItemCollectionICloud {
     }
     
     func addBookItemForURL(_ url: Foundation.URL) -> FTShelfItemProtocol {
-        var shelfItem: FTDocumentItemProtocol?;
+        let shelfItem: FTDocumentItemProtocol;
         if(self.docBelongsToGroup(url)) {
             let groupURL = url.deletingLastPathComponent().urlByDeleteingPrivate()
             var groupItem = self.groupItemForURL(groupURL);
@@ -822,12 +827,12 @@ private extension FTShelfItemCollectionICloud {
                 groupItem = self.addGroupItemForURL(groupURL)
             }
             shelfItem = FTDocumentItem(fileURL: url);
-            groupItem?.addChild(shelfItem!);
+            groupItem?.addChild(shelfItem);
         } else {
             shelfItem = FTDocumentItem(fileURL: url);
-            self.addChild(shelfItem!);
+            self.addChild(shelfItem);
         }
-        return shelfItem!;
+        return shelfItem;
     }
 }
 
@@ -841,7 +846,7 @@ extension FTShelfItemCollectionICloud {
 
     fileprivate func isGroup(_ fileURL: Foundation.URL) -> Bool {
         let fileItemURL = fileURL.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == groupExtension) {
+        if(fileItemURL.pathExtension == FTFileExtension.group) {
             return true;
         }
         return false;
@@ -853,7 +858,7 @@ extension FTShelfItemCollectionICloud {
         let collectionName = self.URL.lastPathComponent;
 
         var collectionURL = fileURL;
-        while((collectionURL.pathExtension != shelfExtension) && !belongs) {
+        while((collectionURL.pathExtension != FTFileExtension.shelf) && !belongs) {
             collectionURL = collectionURL.deletingLastPathComponent();
             if(collectionURL.lastPathComponent == collectionName) {
                 belongs = true;

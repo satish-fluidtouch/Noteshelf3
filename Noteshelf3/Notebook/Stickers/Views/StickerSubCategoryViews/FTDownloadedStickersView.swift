@@ -61,7 +61,7 @@ struct FTDownloadedStickersView: View {
             }
         }
         .padding(.trailing,10)
-        .onAppear{
+        .onFirstAppear{
             stickerCategoryViewModel.menuItems.append("downloadedStickers".localized)
         }
     }

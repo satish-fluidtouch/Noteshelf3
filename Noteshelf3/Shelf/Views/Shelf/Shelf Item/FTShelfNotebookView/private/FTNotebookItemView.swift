@@ -48,7 +48,7 @@ struct FTNotebookItemView: View {
                         .ignoresSafeArea()
                 }, notebookShape: {
                     let shape: FTNotebookShape;
-                    if shelfItem.coverImage.needEqualCorners {
+                    if shelfItem.coverImage.needEqualCorners || shelfViewModel.isNS2Collection {
                         shape = FTNotebookShape(raidus: leftCornerRadius);
                     }
                     else {
@@ -58,6 +58,8 @@ struct FTNotebookItemView: View {
                 }, onAppearActon: {
                     shelfMenuOverlayInfo.isMenuShown = true;
                     hideShadow = true
+                    // Track event
+                    track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                 }, onDisappearActon: {
                     hideShadow = false
                     if !isAnyNBActionPopoverShown {
@@ -86,13 +88,7 @@ struct FTNotebookItemView: View {
                     .frame(height: 60)
             })
             .frame(height: titleRectHeight,alignment:.bottom)
-        })
-        .if(shelfViewModel.mode == .selection, transform: { view in
-            view.onTapGesture {
-                shelfItem.isSelected.toggle()
-            }
-        })
-            
+        })            
     }
     
     private var viewSize: CGSize {

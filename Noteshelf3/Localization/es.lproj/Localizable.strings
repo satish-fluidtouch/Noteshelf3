@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Este color ya está en tu paleta.";
 "ColorByAuthor" = "por %@";
 "Colors" = "Colores";
-"ColourLoversAddHeader" = "Agregar seleccionando colores individuales o una paleta completa.";
-"ColourLoversEditHeader" = "Toque un color de la paleta para seleccionar.";
 "Confirm" = "Confirmar";
 "ConflictDocModifiedOn" = "Modificado en %@";
 "Connect" = "Conectar";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "No se puede acceder a Box.";
 "UnableToAccessDropbox" = "No se puede acceder a Dropbox.";
 "UnableToAccessWeLink" = "No se puede acceder a WeLink";
-"UnableToConnectToColourLovers" = "No se puede conectar a COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "No se puede conectar al servidor WebDAV. Por favor, inténtalo de nuevo más tarde.";
 "UnableToLocateTheServer" = "No se puede encontrar el servidor. Verifique la URL del servidor y vuelva a intentarlo.";
 "UnableToauthenticate" = "No se puede autenticar.";
@@ -1087,6 +1084,7 @@
 "iap.termsnconditions" = "Términos y condiciones.";
 "iap.title" = "Obtén la experiencia completa con Noteshelf Premium";
 "iap.upgradeNow" = "Actualiza ahora.";
+"icloud.sync.issue.message" = "No se puede conectar con iCloud. Asegúrate de que iCloud esté activado en la configuración.";
 "iconlabels" = "Etiquetas de iconos";
 "import" = "Importar";
 "importedFiles" = "Archivos importados";
@@ -1102,16 +1100,11 @@
 "lineHeight.standard" = "Estándar";
 "lineHeight.wide" = "Ancho";
 "lockwithfaceIDandPasscode" = "Candado con %@ y código de acceso'";
-"migration.alert.cancel" = "Cancelar";
-"migration.alert.copy" = "Copiar";
-"migration.alert.message" = "Esto creará una copia del nuevo cuaderno, con el contenido copiado.";
-"migration.alert.open" = "Abrir";
-"migration.alert.title" = "¿Te gustaría migrar este libro a NS3?";
-"migration.alert.yes" = "Sí";
-"migration.failure.message" = "No se puede migrar este libro por ahora. Por favor, contacta al soporte.";
+"migration.alert.migrate" = "Migrar";
+"migration.alert.open" = "Ir a ubicación";
+"migration.alert.title" = "¿Te gustaría migrar una copia de este cuaderno a Noteshelf 3?";
 "migration.progress.text" = "Migrando";
-"migration.success.alert.message" = "¿Te gustaría abrir el cuaderno?";
-"migration.success.alert.title" = "Migrado exitosamente a Sin clasificar";
+"migration.success.alert.message" = "¡Éxito! Tu cuaderno migrado ha sido colocado en: %@";
 "months" = "Meses";
 "more" = "Más";
 "more.globalsettings.caps" = "CONFIGURACIÓN GLOBAL";
@@ -1195,6 +1188,7 @@
 "quotes" = "Citas";
 "removefromRecents" = "Eliminar de Recientes";
 "reset" = "Restablecer";
+"retry" = "Reintentar";
 "save" = "Renombrar grupo";
 "school" = "Escuela";
 "search.tryNewSearch" = "Prueba una nueva búsqueda";
@@ -1267,7 +1261,7 @@
 "shelf.home.seeAll" = "Ver todo";
 "shelf.home.seeAllNotes" = "Ver todas las notas";
 "shelf.importfile.description" = "Añade PDFs e imágenes desde tu aplicación de Archivos";
-"shelf.migration.Description" = "Para migrar tu libro a la nueva versión de Noteshelf, tócalo o mantén presionado y elige la opción de migración del menú.";
+"shelf.migration.Description" = "Simplemente toca cualquier cuaderno aquí para migrar una copia a Noteshelf 3. Los cuadernos migrados estarán disponibles en las categorías y grupos de Noteshelf 3. ¡Próximamente estará disponible la capacidad de migrar categorías completas!";
 "shelf.migration.headerMessage" = "Migra tus cuadernos a Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Deseleccionar todo";
 "shelf.navBar.select" = "Seleccionar";
@@ -1506,4 +1500,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 5 September 2023 at 15:19

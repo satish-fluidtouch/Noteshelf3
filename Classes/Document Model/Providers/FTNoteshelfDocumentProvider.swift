@@ -22,7 +22,6 @@ enum FTShelfProviderMode: Int {
 }
 
 private var systemShelfCollection: FTShelfCollection!;
-private var migrationShelfCollection: FTShelfCollection!;
 
 class FTNoteshelfDocumentProvider: NSObject {
     static let shared = FTNoteshelfDocumentProvider()
@@ -32,8 +31,9 @@ class FTNoteshelfDocumentProvider: NSObject {
     fileprivate var categorizedShelfs: [FTShelfCategoryCollection] = [FTShelfCategoryCollection]()
     fileprivate var newcategorizedShelfs: [FTShelfCategoryCollection] = [FTShelfCategoryCollection]()
     //Shelf Related
-    fileprivate var cloudShelfCollection: FTShelfCollection?;
-    fileprivate var localShelfCollection: FTShelfCollection!;
+    fileprivate var cloudShelfCollectionRoot: FTShelfCollectioniCloudRoot?;
+    fileprivate var localShelfCollectionRoot: FTShelfCollectionLocalRoot?;
+
     fileprivate var recentShelfCollection: FTShelfCollection?;
 
     ///iCloud Metadata Listener
@@ -58,10 +58,11 @@ class FTNoteshelfDocumentProvider: NSObject {
                 }
                 self.providerMode = provider.providerMode
 
-                self.localShelfCollection = provider.localShelfCollection
+                self.localShelfCollectionRoot = provider.localShelfCollectionRoot
                 self.recentShelfCollection = provider.recentShelfCollection
-                self.cloudShelfCollection = provider.cloudShelfCollection
+                self.cloudShelfCollectionRoot = provider.cloudShelfCollectionRoot
                 self.cloudDocumentListener = provider.cloudDocumentListener
+
 
                 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 self.localWatchRecordingCollection = provider.localWatchRecordingCollection
@@ -88,39 +89,19 @@ class FTNoteshelfDocumentProvider: NSObject {
     }
     
     func updateProviderForNoteShelfAction(_ onCompletion :((_ isUpdated: Bool) -> Void)?) {
-        FTiCloudManager.shared().defaultUserDefaults = FTUserDefaults.defaults()
+        FTNSiCloudManager.shared().defaultUserDefaults = FTUserDefaults.defaults()
         if(FTUserDefaults.defaults().iCloudOn) {
             updateProviderIfRequired(onCompletion)
         } else {
             let documentProvider = FTNoteshelfDocumentProvider();
             documentProvider.prepareSystemDefaultCollections {
-                FTShelfCollectionLocal.shelfCollection({ localCollection in
-                    if(localCollection != nil) {
-                        self.localShelfCollection = localCollection;
-                        self.providerMode = .local;
-                    }
-                    onCompletion?(true)
-                })
+                self.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
+                self.providerMode = .local
+                onCompletion?(true)
             }
         }
     }
-    
-    func updateProviderForSiri(_ onCompletion :((_ isUpdated: Bool) -> Void)?) {
-        if(FTiCloudManager.shared().iCloudOn()) {
-            updateProviderIfRequired(onCompletion)
-        } else {
-            let documentProvider = FTNoteshelfDocumentProvider();
-            documentProvider.prepareSystemDefaultCollections {
-                FTShelfCollectionLocal.shelfCollection({ localCollection in
-                    if(localCollection != nil) {
-                        self.localShelfCollection = localCollection;
-                        self.providerMode = .local;
-                    }
-                    onCompletion?(true)
-                })
-            }
-        }
-    }
+
     func resetProviderCache() {
         self.categorizedShelfs.removeAll();
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
@@ -135,47 +116,41 @@ class FTNoteshelfDocumentProvider: NSObject {
     fileprivate static func documentProvider(_ onCompletion : @escaping ((FTNoteshelfDocumentProvider) -> Void)) {
         let documentProvider = FTNoteshelfDocumentProvider();
         documentProvider.prepareSystemDefaultCollections {
-            FTShelfCollectionLocal.shelfCollection({ localCollection in
-                if(localCollection != nil) {
-                    documentProvider.localShelfCollection = localCollection;
-                    documentProvider.providerMode = .local;
+                documentProvider.localShelfCollectionRoot = FTShelfCollectionLocalRoot()
+                documentProvider.providerMode = .local;
 
-                    #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                    documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
-                    #endif
-                }
-                FTiCloudManager.shared().updateiCloudStatus(completionHandler: { (_) in
-                    if(FTiCloudManager.shared().iCloudOn() && FTiCloudManager.shared().iCloudRootURL() != nil) {
-                        FTShelfCollectioniCloud.shelfCollection({ (cloudCollection) in
-                            if(cloudCollection != nil) {
-                                let queryListener = FTCloudDocumentListener()
-                                documentProvider.cloudDocumentListener = queryListener
-                                documentProvider.providerMode = .cloud;
+                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
+                #endif
+                FTNSiCloudManager.shared().updateiCloudStatus(FTNSiCloudManager.iCloudContainerID.ns3, withCompletionHandler: { available in
+                    if available {
+                        let rootCloudShelfCollection = FTShelfCollectioniCloudRoot()
+                        let queryListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
+                        documentProvider.cloudDocumentListener = queryListener
+                        if FTNSiCloudManager.shared().iCloudOn() {
+                            documentProvider.providerMode = .cloud;
+                        }
 
-                                documentProvider.cloudShelfCollection = cloudCollection;
+                        documentProvider.cloudShelfCollectionRoot = rootCloudShelfCollection
+                        queryListener.addListener(rootCloudShelfCollection)
 
-                                //Add Shelf Collections Listener
-                                if let shelfListener = cloudCollection as? FTMetadataCachingProtocol {
-                                    queryListener.addListener(shelfListener)
-                                }
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                        if let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() {
+                            let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: cloudURL)
+                            documentProvider.cloudWatchRecordingCollection = cloudWatchCollection
 
-                                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                                let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: FTiCloudManager.shared().iCloudRootURL())
-                                documentProvider.cloudWatchRecordingCollection = cloudWatchCollection
-
-                                //Add Audio recordings Listener
-                                if let audioListener = documentProvider.cloudWatchRecordingCollection as? FTMetadataCachingProtocol {
-                                    queryListener.addListener(audioListener)
-                                }
-                                #endif
+                            //Add Audio recordings Listener
+                            if let audioListener = documentProvider.cloudWatchRecordingCollection as? FTMetadataCachingProtocol {
+                                queryListener.addListener(audioListener)
                             }
-                            onCompletion(documentProvider);
-                        });
-                    } else {
+                        }
+#endif
                         onCompletion(documentProvider);
                     }
-                });
-            });
+                    else {
+                        onCompletion(documentProvider);
+                    }
+                })
         }
     }
 
@@ -186,38 +161,14 @@ class FTNoteshelfDocumentProvider: NSObject {
         self.cloudObserver?.invalidate();
         self.cloudObserver = nil;
     }
-    
-    private func shelfsForiOS12(_ completion : @escaping (([FTShelfCategoryCollection]) -> Void)) {
-        var categoryCollection = [FTShelfCategoryCollection]();
 
-        let shelfsCompletionBlock: (([FTShelfItemCollection]) -> Void)  = { items in
-            if !items.isEmpty {
-                let providerSpecificCategoryCollection = FTShelfCategoryCollection(categories: self.sortedCollections(items));
-                categoryCollection.append(providerSpecificCategoryCollection);
-            }
-            migrationShelfCollection.shelfs({ migratedShelfs in
-                if !migratedShelfs.isEmpty {
-                    let migratedCategoryCollection = FTShelfCategoryCollection(categories: self.sortedCollections(migratedShelfs));
-                    categoryCollection.append(migratedCategoryCollection);
-                }
-                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                systemShelfCollection.shelfs({ systemsShelfs in
-                    if !systemsShelfs.isEmpty {
-                        let systemCategoryCollection = FTShelfCategoryCollection(categories: (self.sortedCollections(systemsShelfs)));
-                        categoryCollection.append(systemCategoryCollection);
-                    }
-                    completion(categoryCollection);
-                });
-                #else
-                completion(categoryCollection);
-                #endif
-            });
+    func ns2Shelfs(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
+        guard let ns2Collection = self.currentNS2Collection() else {
+            completion([])
+            return
         }
-
-        if providerMode == .cloud {
-            self.fetchCloudCollections(shelfsCompletionBlock);
-        } else {
-            self.currentCollection().shelfs(shelfsCompletionBlock);
+        ns2Collection.shelfs { items in
+            completion(items)
         }
     }
 
@@ -231,16 +182,14 @@ class FTNoteshelfDocumentProvider: NSObject {
                 
                 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 if let recentShelfCat = self.recentShelfCollection as? FTShelfCollectionRecent {
-                    if let favoritesShelfCollection = recentShelfCat.favoritesShelfItemCollection {
-                        let category = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("sidebar.topSection.starred", comment: "Starred"), type: .starred, categories: [favoritesShelfCollection]);
-                        categoryCollection.append(category);
-                    }
-                    
-                    if let recentShelfCollection = recentShelfCat.recentShelfItemCollection {
-                        let category = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("Recents", comment: "Recents"), type: .recent, categories: [recentShelfCollection]);
-                        category.type = .recent;
-                        categoryCollection.append(category);
-                    }
+                    let favoritesShelfCollection = recentShelfCat.favoritesShelfItemCollection
+                    let starredCategory = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("sidebar.topSection.starred", comment: "Starred"), type: .starred, categories: [favoritesShelfCollection]);
+                    categoryCollection.append(starredCategory);
+
+                    let recentShelfCollection = recentShelfCat.recentShelfItemCollection
+                    let recentsCategory = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("Recents", comment: "Recents"), type: .recent, categories: [recentShelfCollection]);
+                    recentsCategory.type = .recent;
+                    categoryCollection.append(recentsCategory);
                 }
                 #endif
                 self.categorizedShelfs = categoryCollection
@@ -262,9 +211,7 @@ class FTNoteshelfDocumentProvider: NSObject {
             let allNotes = self.allNotesShelfItemCollection
             shelfItemCollection.append(allNotes)
             if let recentShelfCat = self.recentShelfCollection as? FTShelfCollectionRecent {
-                if let recentShelfCollection = recentShelfCat.favoritesShelfItemCollection {
-                    shelfItemCollection.append(recentShelfCollection)
-                }
+                    shelfItemCollection.append(recentShelfCat.favoritesShelfItemCollection)
             }
             #endif
             let userCollections = shelfs.filter {$0.type == .user}
@@ -298,7 +245,18 @@ class FTNoteshelfDocumentProvider: NSObject {
     }
     
     fileprivate func fetchCloudCollections(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
-        guard let listener = cloudDocumentListener, let cloudcollection = cloudShelfCollection else {
+        guard let listener = cloudDocumentListener, let cloudcollection = cloudShelfCollectionRoot?.ns3Collection else {
+            completion([FTShelfItemCollection]());
+            return
+        }
+
+        listener.startQuery {
+            cloudcollection.shelfs(completion);
+        }
+    }
+
+    fileprivate func fetchNS2CloudCollections(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
+        guard let listener = cloudDocumentListener, let cloudcollection = cloudShelfCollectionRoot?.ns2Collection else {
             completion([FTShelfItemCollection]());
             return
         }
@@ -315,8 +273,6 @@ class FTNoteshelfDocumentProvider: NSObject {
     func renameShelf(_ collection: FTShelfItemCollection, title: String, onCompletion: @escaping ((NSError?, FTShelfItemCollection?) -> Void)) {
         if(collection.collectionType == .system || collection.collectionType == .allNotes) {
             systemShelfCollection.renameShelf(collection, title: title, onCompletion: onCompletion);
-        } else if(collection.collectionType == .migrated) {
-            migrationShelfCollection.renameShelf(collection, title: title, onCompletion: onCompletion);
         } else {
             self.currentCollection().renameShelf(collection, title: title, onCompletion: onCompletion);
         }
@@ -326,14 +282,30 @@ class FTNoteshelfDocumentProvider: NSObject {
         return self.currentCollection().documentsDirectory();
     }
 
+
+    fileprivate func currentNS2Collection() -> FTShelfCollection? {
+#if !NOTESHELF_ACTION
+        switch FTDocumentMigration.getNS2MigrationDataSource() {
+        case .cloud:
+            return self.cloudShelfCollectionRoot?.ns2Collection
+        case .local:
+            return self.localShelfCollectionRoot?.ns2Collection
+        case .doesNotSupport:
+            return nil
+        }
+#else
+        return nil
+#endif
+    }
+
     fileprivate func currentCollection() -> FTShelfCollection {
         var collection: FTShelfCollection!;
         if let mode = self.providerMode {
             switch mode {
             case .local:
-                collection = self.localShelfCollection;
+                collection = self.localShelfCollectionRoot?.ns3Collection;
             case .cloud:
-                collection = self.cloudShelfCollection;
+                collection = self.cloudShelfCollectionRoot?.ns3Collection;
             }
         }
         guard let validcollection = collection else { fatalError("Collection should not be nil") }
@@ -368,27 +340,61 @@ extension FTNoteshelfDocumentProvider {
         
         let shelfsCompletionBlock: (([FTShelfItemCollection]) -> Void)  = { items in
             shelfCollections.append(contentsOf: self.sortedCollections(items))
-            
-            migrationShelfCollection.shelfs({ migratedShelfs in
-                shelfCollections.append(contentsOf: self.sortedCollections(migratedShelfs))
-                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                systemShelfCollection.shelfs({ systemsShelfs in
-                    shelfCollections.append(contentsOf: self.sortedCollections(systemsShelfs))
-                    shelfCollections.insert(self.allNotesShelfItemCollection, at: 0)
-                    completion(shelfCollections);
-                });
-                #else
+#if !NOTESHELF_ACTION
+            systemShelfCollection.shelfs({ systemsShelfs in
+                shelfCollections.append(contentsOf: self.sortedCollections(systemsShelfs))
+                shelfCollections.insert(self.allNotesShelfItemCollection, at: 0)
                 completion(shelfCollections);
-                #endif
             });
+#else
+            completion(shelfCollections);
+#endif
         }
-        
+
+#if !NOTESHELF_ACTION
+        if FTDocumentMigration.supportsMigration() {
+            //if ns2 cloud or ns3 cloud
+            if providerMode == .local {
+                self.currentCollection().shelfs { items in
+                    if FTDocumentMigration.getNS2MigrationDataSource() == .cloud {
+                        self.fetchNS2CloudCollections { _ in
+                            completion(items);
+                        }
+                    }
+                    else{
+                        completion(items);
+                    }
+                }
+            }
+            else {
+                self.fetchCloudCollections { items in
+                    if FTDocumentMigration.getNS2MigrationDataSource() == .local {
+                        self.currentNS2Collection()?.shelfs({ _ in
+                            completion(items);
+                        })
+                    }
+                    else{
+                        completion(items);
+                    }
+                }
+            }
+        }
+        else {
+            if providerMode == .cloud {
+                self.fetchCloudCollections(shelfsCompletionBlock);
+            } else {
+                self.currentCollection().shelfs(shelfsCompletionBlock);
+            }
+        }
+#else
         if providerMode == .cloud {
             self.fetchCloudCollections(shelfsCompletionBlock);
         } else {
             self.currentCollection().shelfs(shelfsCompletionBlock);
         }
+#endif
     }
+
     func uncategorizedNotesCollection(_ onCompletion : @escaping ((FTShelfItemCollection?) -> Void)){
         if let uncategorizedShelf = self.currentCollection().collection(withTitle: uncategorizedShefItemCollectionTitle) {
             onCompletion(uncategorizedShelf)
@@ -410,9 +416,7 @@ extension FTNoteshelfDocumentProvider {
     func starredShelfItemCollection() -> FTShelfItemCollection? {
         var starredCollection: FTShelfItemCollection?
         if let recentShelfCat = self.recentShelfCollection as? FTShelfCollectionRecent {
-            if let favoritedShelfCollection = recentShelfCat.favoritesShelfItemCollection {
-                starredCollection = favoritedShelfCollection
-            }
+            starredCollection = recentShelfCat.favoritesShelfItemCollection
         }
         return starredCollection
     }
@@ -430,9 +434,9 @@ extension FTNoteshelfDocumentProvider {
     @discardableResult func addShelfItemToList(_ shelfItem: FTShelfItemProtocol, mode: FTRecentItemType) -> NSError? {
         if mode == .recent {
             (shelfItem as? FTDocumentItemProtocol)?.updateLastOpenedDate();
-            return (self.recentShelfCollection as? FTShelfCollectionRecent)?.recentShelfItemCollection?.addShelfItemToList(shelfItem.URL);
+            return (self.recentShelfCollection as? FTShelfCollectionRecent)?.recentShelfItemCollection.addShelfItemToList(shelfItem.URL);
         } else {
-            let error = (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection?.addShelfItemToList(shelfItem.URL);
+            let error = (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection.addShelfItemToList(shelfItem.URL);
             return error;
         }
     }
@@ -444,9 +448,9 @@ extension FTNoteshelfDocumentProvider {
         }
         if(!urls.isEmpty) {
             if mode == .recent {
-                (self.recentShelfCollection as? FTShelfCollectionRecent)?.recentShelfItemCollection?.removeShelfItemFromList(urls);
+                (self.recentShelfCollection as? FTShelfCollectionRecent)?.recentShelfItemCollection.removeShelfItemFromList(urls);
             } else {
-                (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection?.removeShelfItemFromList(urls);
+                (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection.removeShelfItemFromList(urls);
             }
         }
     }
@@ -514,9 +518,7 @@ extension FTNoteshelfDocumentProvider
             self.moveItemstoTrash(items, onCompletion: { (error, _) in
                 if(nil == error) {
                     var currentCollection = self.currentCollection();
-                    if(collection.collectionType == .migrated) {
-                        currentCollection = migrationShelfCollection;
-                    } else if(collection.collectionType == .system) {
+                    if(collection.collectionType == .system) {
                         currentCollection = systemShelfCollection;
                     }
                     currentCollection.deleteShelf(collection, onCompletion: onCompletion);
@@ -595,52 +597,15 @@ extension FTNoteshelfDocumentProvider
 // MARK: - System Default Providers -
 extension FTNoteshelfDocumentProvider {
     fileprivate func prepareSystemDefaultCollections(_ onCompletion  : @escaping () -> Void) {
-        self.prepareSystemCollection {
-            self.prepareMigrationCollection {
-                self.prepareRecentCollection {
-                    onCompletion();
-                }
-            }
-        }
-    }
-
-    private func prepareRecentCollection(_ onCompletion  : @escaping () -> Void) {
-        #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        if(nil == self.recentShelfCollection) {
-            FTShelfCollectionRecent.shelfCollection({ collection in
-                self.recentShelfCollection = collection;
-                onCompletion();
-            });
-        } else {
-            onCompletion();
-        }
-        #else
-            onCompletion();
-        #endif
-    }
-
-    private func prepareMigrationCollection(_ onCompletion  : @escaping () -> Void)
-    {
-        if(nil == migrationShelfCollection) {
-            FTShelfCollectionMigration.shelfCollection({ migrationCollection in
-                migrationShelfCollection = migrationCollection;
-                onCompletion();
-            });
-        } else {
-            onCompletion();
-        }
-    }
-
-    private func prepareSystemCollection(_ onCompletion  : @escaping () -> Void) {
         if(nil == systemShelfCollection) {
-            FTShelfCollectionSystem.shelfCollection({ systemCollection in
-                systemShelfCollection = systemCollection;
-                onCompletion();
-            });
-        } else {
-            onCompletion();
+            systemShelfCollection = FTShelfCollectionSystem()
         }
-
+#if !NOTESHELF_ACTION
+        if(nil == self.recentShelfCollection) {
+            self.recentShelfCollection = FTShelfCollectionRecent();
+        }
+#endif
+        onCompletion();
     }
 }
 
@@ -649,11 +614,11 @@ extension FTNoteshelfDocumentProvider {
 extension FTNoteshelfDocumentProvider {
     func moveContentsFromLocalToiCloud(onCompletion completion :@escaping ((Bool, Error?) -> Void)) {
         self.resetProviderCache();
-        guard let icloudShelfCollection = cloudShelfCollection  as? FTShelfCollectioniCloud else { completion(false, nil); return }
+        guard let icloudShelfCollection = cloudShelfCollectionRoot?.ns3Collection  as? FTShelfCollectioniCloud else { completion(false, nil); return }
 
         self.shelfs({ [weak self] (_) in
             self?.cloudDocumentListener?.forceDisableUpdates();
-            self?.localShelfCollection.shelfs({ (collections) in
+            self?.localShelfCollectionRoot?.ns3Collection.shelfs({ (collections) in
                 let bgTask = startBackgroundTask()
                 self?.moveCollectionToCloud(collections: collections,
                                             toCloud: icloudShelfCollection,
@@ -682,52 +647,54 @@ extension FTNoteshelfDocumentProvider {
 // MARK: - Move from Cloud to Local -
 extension FTNoteshelfDocumentProvider {
     func moveContentsFromCloudToLocal(onCompletion completion :@escaping ((Bool) -> Void)) {
+        guard let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() else {
+            return;
+        }
         self.resetProviderCache();
-        if self.cloudDocumentListener == nil {
-            self.cloudDocumentListener = FTCloudDocumentListener()
+        if let cloudDocumentListener {
+            cloudDocumentListener.disableUpdates();
         }
 
-        FTShelfCollectioniCloud.shelfCollection({ collection in
+        let _cloudDocumentListner = FTCloudDocumentListener(rootURLs: [cloudURL]);
 
-            guard let cloudCollection = collection else { return }
+        let ns3Collection = FTShelfCollectioniCloud(rootURL: cloudURL, isNS2Collection: false);
+        _cloudDocumentListner.addListener(ns3Collection)
 
-            if let shelfListener = cloudCollection as? FTMetadataCachingProtocol {
-                self.cloudDocumentListener?.addListener(shelfListener)
-            }
-            let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: FTiCloudManager.shared().iCloudRootURL())
-            self.cloudDocumentListener?.addListener(cloudWatchCollection)
+        let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: FTNSiCloudManager.shared().iCloudRootURL()!)
+        _cloudDocumentListner.addListener(cloudWatchCollection)
 
-            self.cloudDocumentListener?.startQuery {
-                cloudCollection.shelfs({ (cloudCollections) in
-                    self.localShelfCollection.shelfs({ (_) in
-                        let bgTask = startBackgroundTask()
-                        self.moveCollectionToLocal(collections: cloudCollections,
-                                                   toLocal: self.localShelfCollection,
-                                                   onCompletion: { error in
-                                                    if(nil != error) {
-                                                        endBackgroundTask(bgTask)
-                                                        (error! as NSError).showAlert(from: Application.visibleViewController)
-                                                        self.cloudDocumentListener = nil
-                                                        completion(false);
-                                                    } else {
-                                                        self.moveAudioContentsFromiCloudToLocal(cloudWatchCollection: cloudWatchCollection, onCompletion: { error in
-                                                            endBackgroundTask(bgTask)
-                                                            if(nil != error) {
-                                                                (error! as NSError).showAlert(from: Application.visibleViewController)
-                                                                self.cloudDocumentListener = nil
-                                                                completion(false);
-                                                            } else {
-                                                                self.cloudDocumentListener = nil
-                                                                completion(true);
-                                                            }
-                                                        });
-                                                    }
-                        });
+        _cloudDocumentListner.startQuery {
+            ns3Collection.shelfs({ (cloudCollections) in
+                self.localShelfCollectionRoot?.ns3Collection.shelfs({ (_) in
+                    let bgTask = startBackgroundTask()
+                    self.moveCollectionToLocal(collections: cloudCollections,
+                                               toLocal: self.localShelfCollectionRoot!.ns3Collection,
+                                               onCompletion: { error in
+                        if(nil != error) {
+                            endBackgroundTask(bgTask)
+                            (error! as NSError).showAlert(from: Application.visibleViewController)
+                            _cloudDocumentListner.stopQuery();
+                            self.cloudDocumentListener?.enableUpdates();
+                            completion(false);
+                        } else {
+                            self.moveAudioContentsFromiCloudToLocal(cloudWatchCollection: cloudWatchCollection, onCompletion: { error in
+                                endBackgroundTask(bgTask)
+                                if(nil != error) {
+                                    (error! as NSError).showAlert(from: Application.visibleViewController)
+                                    _cloudDocumentListner.stopQuery();
+                                    self.cloudDocumentListener?.enableUpdates();
+                                    completion(false);
+                                } else {
+                                    _cloudDocumentListner.stopQuery();
+                                    self.cloudDocumentListener?.enableUpdates();
+                                    completion(true);
+                                }
+                            });
+                        }
                     });
-                })
-            }
-        })
-
+                });
+            })
+        }
     }
 }
 
@@ -923,6 +890,73 @@ extension FTNoteshelfDocumentProvider {
     
     func disableCloudUpdates() {
         self.cloudDocumentListener?.disableUpdates()
+    }
+}
+
+// MARK: Migration to NS3
+extension FTNoteshelfDocumentProvider {
+
+    func migrateNS2BookToNS3(url: URL, relativePath: String) throws -> URL? {
+        var destinationURL = self.currentCollection().documentsDirectory().appending(path: relativePath)
+
+        // Change Destination Path extesion to `ns3`
+        destinationURL = destinationURL.pathExtesnionChangedToNS3()
+
+        do {
+            // Path until final location
+            let parentURL = destinationURL.deletingLastPathComponent()
+
+            // Change to unique name if required
+            if(FileManager().fileExists(atPath: destinationURL.path)) {
+
+                // TODO: Take control if required
+                let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+                destinationURL = parentURL.appendingPathComponent(uniqueName);
+            }
+
+            if providerMode == .cloud {
+                if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                }
+                try FileManager().setUbiquitous(true,
+                                                itemAt: url,
+                                                destinationURL: destinationURL);
+            } else {
+                // TODO: Take control if required
+                // Create the parent directory if required
+                guard let collectionTitle = destinationURL.path.collectionName()?.deletingPathExtension else {
+                    throw FTMigrationError.moveToNS3Error
+                }
+                let localProvider = self.localShelfCollectionRoot?.ns3Collection
+
+                if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
+                    if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                        try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                    }
+                    try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                    _ = collection.addItemsToCache([destinationURL])
+                } else {
+                    localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
+                        if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                            try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                        }
+                        try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                        _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
+                    })
+                }
+            }
+
+            return destinationURL
+        } catch {
+            debugLog(">>>>> Migration Failure \(error)")
+            throw FTMigrationError.moveToNS3Error
+        }
+    }
+}
+
+extension URL {
+    func pathExtesnionChangedToNS3() -> URL {
+        return self.deletingPathExtension().appendingPathExtension(FTFileExtension.ns3)
     }
 }
 #endif

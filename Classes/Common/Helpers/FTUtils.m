@@ -88,6 +88,17 @@ CG_EXTERN void dbSharedSessionUnlink(void)
     return url;
 }
 
++ (NSURL* _Nonnull)ns2ApplicationDocumentsDirectory
+{
+    NSURL *url = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:[self getNS2GroupId]];
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION && !NOTESHELF_ACTION
+    if(nil == url) {
+        FTLogError(@"Share group ID issue", @{@"Group ID": [self  getNS2GroupId]});
+    }
+#endif
+    return url;
+}
+
 +(NSURL* _Nonnull)noteshelfDocumentsDirectory
 {
     NSURL *noteURL = [self noteshelfDocumentsDirectoryInSharedLoc];
@@ -99,9 +110,27 @@ CG_EXTERN void dbSharedSessionUnlink(void)
     return noteURL;
 }
 
++(NSURL* _Nonnull)ns2DocumentsDirectory
+{
+    NSURL *noteURL = [self ns2DocumentsDirectoryInSharedLoc];
+    BOOL isDir = NO;
+    if((nil != noteURL) && ![[NSFileManager defaultManager] fileExistsAtPath:noteURL.path isDirectory:&isDir] && !isDir)
+    {
+        [[NSFileManager defaultManager] createDirectoryAtURL:noteURL withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    return noteURL;
+}
+
 +(NSURL* _Nonnull )noteshelfDocumentsDirectoryInSharedLoc
 {
     NSURL *docURL = [self applicationDocumentsDirectory];    
+    NSURL *noteURL = [docURL URLByAppendingPathComponent:noteshelfDocuments() isDirectory:YES];
+    return noteURL;
+}
+
++(NSURL* _Nonnull )ns2DocumentsDirectoryInSharedLoc
+{
+    NSURL *docURL = [self ns2ApplicationDocumentsDirectory];
     NSURL *noteURL = [docURL URLByAppendingPathComponent:noteshelfDocuments() isDirectory:YES];
     return noteURL;
 }

@@ -7,10 +7,15 @@
 //
 
 import Foundation
+import FTCommon
 
 extension FTUtils {
     @objc class func getGroupId() -> String {
         FTSharedGroupID.getAppGroupID()
+    }
+
+    @objc class func getNS2GroupId() -> String {
+        FTSharedGroupID.getNS2AppGroupID()
     }
 
     class func getAppVersionInfo() -> String {

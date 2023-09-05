@@ -72,15 +72,20 @@ struct FTShelfContentPhotosView: View  {
                             }
                             .onTapGesture {
                                 viewModel.onSelect?(media)
+                                track(EventName.shelf_photo_page_tap, screenName: ScreenName.shelf_photos)
                             }
                             .contextMenu {
                                 Button {
                                     viewModel.openInNewWindow?(media)
+                                    track(EventName.shelf_photo_openinnewwindow_tap, screenName: ScreenName.shelf_photos)
                                 } label: {
                                     Text("OpenInNewWindow".localized)
                                 }
                             } preview: {
                                 FTMediaPreviewPageView(media: media)
+                                    .onAppear {
+                                        track(EventName.shelf_photo_page_longpress, screenName: ScreenName.shelf_photos)
+                                    }
                             }
                     }
                 }

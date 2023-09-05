@@ -504,6 +504,9 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
                     try await FTStoreLibraryHandler.shared.saveIntoLibrary(style: style, title: template.title)
                     updateFavorateStatus()
                 }
+                // Track Event
+                FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_addtolibrary_tap, params: [EventParameterKey.title: style.templateName], screenName: ScreenName.templatesStore))
+
             }
         }
     }
@@ -555,6 +558,8 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
                         UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
                     }
                 }
+                // Track Event
+                FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: style.templateName], screenName: ScreenName.templatesStore))
             }
         }
     }

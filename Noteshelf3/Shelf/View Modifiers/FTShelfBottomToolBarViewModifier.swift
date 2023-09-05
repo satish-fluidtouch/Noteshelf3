@@ -27,6 +27,8 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
                             Spacer()
                             Button {
                                 viewModel.delegate?.shareShelfItems()
+                                // Track Event
+                                shelfViewModel.trackEventForShelfBottombar(option: FTShelfBottomBarOption.share)
                             } label: {
                                 self.getBottomToolBarLabelWith(icon: .share, title:FTShelfBottomBarOption.share.displayTitle)
                             }.disabled(!shelfViewModel.shouldSupportBottomBarOption(.share))
@@ -38,6 +40,8 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
 
                             Button {
                                 viewModel.delegate?.moveShelfItems()
+                                // Track Event
+                                shelfViewModel.trackEventForShelfBottombar(option: FTShelfBottomBarOption.move)
                             } label: {
                                 self.getBottomToolBarLabelWith(icon: .folder, title:FTShelfBottomBarOption.move.displayTitle)
                             }.disabled(!shelfViewModel.shouldSupportBottomBarOption(.move))
@@ -49,6 +53,8 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
 
                             Button {
                                 viewModel.delegate?.trashShelfItems()
+                                // Track Event
+                                shelfViewModel.trackEventForShelfBottombar(option: FTShelfBottomBarOption.trash)
                             } label: {
                                 self.getBottomToolBarLabelWith(icon: .trash, title:FTShelfBottomBarOption.trash.displayTitle)
                             }.disabled(!shelfViewModel.shouldSupportBottomBarOption(.trash))
@@ -79,6 +85,8 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
                                 Spacer()
                                 Button {
                                     viewModel.delegate?.restoreShelfItems()
+                                    // Track Event
+                                    shelfViewModel.trackEventForShelfBottombar(option: FTShelfBottomBarOption.restore)
                                 } label: {
                                     self.getBottomToolBarLabelWith(icon: .restore, title:FTShelfBottomBarOption.restore.displayTitle)
                                 }.disabled(shelfViewModel.disableBottomBarItems)
@@ -90,6 +98,8 @@ struct FTShelfBottomToolBarViewModifier: ViewModifier {
 
                                 Button {
                                     viewModel.delegate?.deleteShelfItems()
+                                    // Track Event
+                                    shelfViewModel.trackEventForShelfBottombar(option: FTShelfBottomBarOption.delete)
                                 } label: {
                                     self.getBottomToolBarLabelWith(icon: .trash, title:FTShelfBottomBarOption.delete.displayTitle)
                                 }.disabled(shelfViewModel.disableBottomBarItems)

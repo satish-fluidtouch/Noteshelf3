@@ -8,29 +8,22 @@
 
 import Foundation
 import FTCommon
-
-#if !targetEnvironment(macCatalyst)
 import GoogleSignIn
 import FirebaseAnalytics
-#endif
 import Firebase
 import FirebaseCore
 import FirebaseCrashlytics
 
 
-func track(_ event: String, params: [String: Any]? = nil, screenName: String? = nil,shouldLog: Bool = true) {
-    #if !targetEnvironment(macCatalyst)
+ func track(_ event: String, params: [String: Any]? = nil, screenName: String? = nil,shouldLog: Bool = true) {
     FTMetrics.shared.track(event: event, params: params,screeName: screenName)
-    #endif
     if shouldLog {
         FTCLSLog(event + (params?.description ?? ""))
     }
 }
 
-func setScreenName(_ screenName: String, screenClass: String?) {
-    #if !targetEnvironment(macCatalyst)
+ func setScreenName(_ screenName: String, screenClass: String?) {
     FTMetrics.shared.trackScreen(with: screenName, screenClass: screenClass)
-    #endif
 }
 
 @objc extension Crashlytics {
@@ -47,8 +40,7 @@ class FTAnalytics: NSObject {
                      with launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
 
         configureFirebase(with:launchOptions)
-        #if !targetEnvironment(macCatalyst)
-//        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+//        AppDelegate.application(application, didFinishLaunchingWithOptions: launchOptions)
         #if DEBUG
             FTMetrics.start(with: [.firebase], loglevel: FTMetricsLogLevel.debug)
         #else
@@ -57,7 +49,6 @@ class FTAnalytics: NSObject {
         if let userid = UserDefaults.standard.object(forKey: "USER_ID_FOR_CRASH") as? String {
             FTMetrics.shared.setUserId(userId: userid)
         }
-        #endif
         clearEventsIfNeeded()
     }
 }
@@ -86,27 +77,20 @@ private extension FTAnalytics {
             fatalError("Invalid Firebase configuration file.")
         }
         FirebaseApp.configure(options: options)
-
-        #if !targetEnvironment(macCatalyst)
         Analytics.setUserID(UserDefaults.standard.string(forKey: "USER_ID_FOR_CRASH"))
-        #endif
     }
 
 }
 
 func startPerfTracking(event: String, params: [String: Any]? = nil, shouldLog: Bool = true) {
-    #if !targetEnvironment(macCatalyst)
     FTMetrics.shared.startTrackingPerformance(for: event, params: params)
-    #endif
     if shouldLog {
         FTCLSLog("PERF: Start" + event + (params?.description ?? ""))
     }
 }
 
 func stopPerfTracking(event: String, params: [String: Any]? = nil, shouldLog: Bool = true) {
-    #if !targetEnvironment(macCatalyst)
     FTMetrics.shared.stopTrackingPerformance(for: event, params: params)
-    #endif
     if shouldLog {
         FTCLSLog("PERF: Stop" + event + (params?.description ?? ""))
     }

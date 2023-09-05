@@ -39,15 +39,18 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
     }
 
     private func getSecondaryRootViewController() -> UIViewController? {
-        if let detailControlelr = self.viewController(for: .secondary) {
-            if let navController = detailControlelr as? UINavigationController {
-                return navController.children.last;
-            }
-            else {
-                return detailControlelr;
-            }
+        guard let detailController = self.viewController(for: .secondary) else {
+            return nil
         }
-        return nil;
+        if let navController = detailController as? UINavigationController {
+            if let _ = navController.children.first(where: { $0 is FTShelfViewControllerNew }) {
+                return navController.children.last
+            } else {
+                return navController.rootViewController
+            }
+        } else {
+            return detailController
+        }
     }
 }
 
@@ -126,7 +129,6 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
             } else {
                 toolbar.switchMode(.shelf)
             }
-#if targetEnvironment(macCatalyst)
             // To disable other tool items during search mode
             if !self.checkIfGlobalSearchControllerExists() {
                 self.exitFromGlobalSearch()
@@ -138,8 +140,6 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
                 }
             }
             toolbar.showBackButton(viewController.isRootViewController ? false : true)
-#endif
-
         }
     }
 

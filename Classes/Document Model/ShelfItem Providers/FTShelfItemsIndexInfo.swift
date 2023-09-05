@@ -30,7 +30,7 @@ extension FTSortIndexContainerProtocol {
     }
 }
 
-private let plistName = "shelfItemsIndex." + sortIndexExtension
+private let plistName = "shelfItemsIndex." + FTFileExtension.sortIndex
 class FTSortingIndexPlistContent: NSObject {
     
     private(set) weak var parent: FTSortIndexContainerProtocol?
@@ -195,17 +195,10 @@ private class FTIndexDocument: UIDocument {
         NotificationCenter.default.addObserver(self, selector: #selector(didChangeDocumentState(_:)), name: UIDocument.stateChangedNotification, object: self)
     }
     @objc func didChangeDocumentState(_ notification: Notification) {
-        print(self.documentState)
-        switch self.documentState {
-        case .inConflict:
-            debugLog("documentState :: Conflict")
+        if self.documentState == .inConflict {
             self.resolveConflictsIfNeeded {
                 
             }
-        case .progressAvailable:
-            debugLog("documentState :: Progress")
-        default:
-            debugLog("documentState :: Default")
         }
     }
     

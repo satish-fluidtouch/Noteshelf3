@@ -7,10 +7,7 @@
 //
 
 import UIKit
-
-#if !targetEnvironment(macCatalyst)
 import FirebaseAnalytics
-#endif
 
 private let SHOW_INSTANCE_COUNTER = false;
 private var instance_Counter = Int(0);

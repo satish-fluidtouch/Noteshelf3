@@ -339,6 +339,10 @@ extension FTTabViewController: FTShelfTagsPageDelegate, FTShelfBookmarksPageDele
 
 // MARK: - FTStoreContainerDelegate
 extension FTTabViewController: FTStoreContainerDelegate {
+    func trackEvent(event: String, params: [String : Any]?, screenName: String?) {
+        track(event, params: params, screenName: screenName)
+    }
+
     func storeController(_ controller: UIViewController, menuShown isMenuShown: Bool) {
         if let splitContorller = controller.splitViewController as? FTShelfSplitViewController {
             splitContorller.shelfMenuDisplayInfo.isMenuShown = true;

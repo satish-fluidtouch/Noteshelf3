@@ -7,7 +7,6 @@
 //
 
 import Foundation
-#if !targetEnvironment(macCatalyst)
 import Firebase
 import FirebaseAnalytics
 
@@ -62,4 +61,3 @@ extension FirebaseMetricsService: FTPerformanceMetrics {
 //        trace?.stop()
     }
 }
-#endif

@@ -88,7 +88,7 @@ struct FTStickerCategoriesView: View {
                     case 5:
                         selection = viewModel.menuItems[5]
                     default:
-                        selection = viewModel.menuItems[6]
+                        selection = viewModel.menuItems[0]
                     }
                 }
                 

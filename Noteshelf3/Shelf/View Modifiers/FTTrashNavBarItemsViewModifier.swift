@@ -17,6 +17,9 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarLeading) {
                         Button {
                             shelfViewModel.emptyTrash()
+                            // Track Event
+                            track(EventName.shelf_select_trash_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+
                         } label: {
                             Text(NSLocalizedString("shelf.emptyTrash", comment: "Empty Trash"))
                                 .appFont(for: .regular, with: 17)
@@ -47,6 +50,8 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                             Button {
                                 shelfViewModel.mode = .normal
                                 shelfViewModel.finalizeShelfItemsEdit()
+                                // Track Event
+                                track(EventName.shelf_select_done_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                             } label: {
                                 Text(NSLocalizedString("done", comment: "Done"))
                                     .appFont(for: .regular, with: 17)
@@ -58,6 +63,8 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                             if shelfViewModel.areAllItemsSelected {
                                 Button {
                                     shelfViewModel.deselectAllItems()
+                                    // Track Event
+                                    track(EventName.shelf_select_selectnone_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                                 } label: {
                                     Text(NSLocalizedString("shelf.navBar.selectNone", comment: "Select None"))
                                         .appFont(for: .regular, with: 17)
@@ -67,6 +74,8 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                             } else {
                                 Button {
                                     shelfViewModel.selectAllItems()
+                                    // Track Event
+                                    track(EventName.shelf_select_selectall_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                                 } label: {
                                     Text(NSLocalizedString("shelf.navBar.selectAll", comment: "Select All"))
                                         .appFont(for: .regular, with: 17)
