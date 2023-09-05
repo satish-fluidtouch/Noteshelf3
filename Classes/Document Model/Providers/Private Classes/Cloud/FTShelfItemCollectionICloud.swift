@@ -71,22 +71,22 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                     parent: FTGroupItemProtocol?,
                     searchKey: String?,
                     onCompletion completionBlock:@escaping (([FTShelfItemProtocol]) -> Void)) {
-            self.executionQueue.async {
-                objc_sync_enter(self);
-                var shelfItems = self.childrens;
-                if let parent = parent {
-                    shelfItems = parent.childrens;
-                }
-
-                if let searchKey = searchKey, !searchKey.isEmpty {
-                    shelfItems = self.searchShelfItems(shelfItems, skipGroupItems: false, searchKey: searchKey);
-                }
-                shelfItems = self.sortItems(shelfItems, sortOrder: sortOrder);
-                objc_sync_exit(self);
-                DispatchQueue.main.async {
-                    completionBlock(shelfItems);
-                }
+        self.executionQueue.async {
+            objc_sync_enter(self);
+            var shelfItems = self.childrens;
+            if let parent = parent {
+                shelfItems = parent.childrens;
             }
+            
+            if let searchKey = searchKey, !searchKey.isEmpty {
+                shelfItems = self.searchShelfItems(shelfItems, skipGroupItems: false, searchKey: searchKey);
+            }
+            shelfItems = self.sortItems(shelfItems, sortOrder: sortOrder);
+            objc_sync_exit(self);
+            DispatchQueue.main.async {
+                completionBlock(shelfItems);
+            }
+        }
     }
 
     func addShelfItemForDocument(_ path: Foundation.URL,
@@ -635,11 +635,11 @@ extension FTShelfItemCollectionICloud {
                 }
             }
         }
-        runInMainThread({
-            if (!updatedItems.isEmpty) {
+        if (!updatedItems.isEmpty) {
+            runInMainThread({
                 NotificationCenter.default.post(name: Notification.Name.shelfItemUpdated, object: self, userInfo: [FTShelfItemsKey: updatedItems]);
-            }
-        });
+            });
+        }
     }
 }
 

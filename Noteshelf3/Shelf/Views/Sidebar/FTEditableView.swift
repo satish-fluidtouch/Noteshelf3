@@ -10,7 +10,7 @@ import SwiftUI
 import FTCommon
 
 struct FTEditableView: View {
-    @ObservedObject var item: FTSideBarItem
+    @EnvironmentObject var item: FTSideBarItem
     var placeHolder: String
     var onButtonSubmit: (_ title:String)-> Void?
     let useTextfieldForEditing: Bool = false
@@ -51,6 +51,7 @@ struct FTEditableView: View {
                             .if(!showEditableField) { view in
                                 view.onTapGesture {
                                     showEditableField = true
+                                    track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
                                 }
                             }
                         }

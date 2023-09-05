@@ -20,6 +20,7 @@ public protocol FTStoreContainerDelegate: AnyObject {
     func createNotebookForDairy(fileName: String, title: String, startDate: Date, endDate: Date, coverImage: UIImage, isLandScape: Bool)
     func storeController(_ controller: UIViewController,showIAPAlert feature: String?);
     func storeController(_ controller: UIViewController,menuShown isMenuShown: Bool);
+    func trackEvent(event: String, params: [String : Any]?, screenName: String?)
 }
 
 public class FTStoreContainerViewController: UIViewController {
@@ -87,12 +88,19 @@ public class FTStoreContainerViewController: UIViewController {
         let menu = UIMenu(title: "", options: .displayInline, children: [
             UIAction(title: "templatesStore.custom.import.importFromFiles".localized, handler: {[weak self] _ in
                 self?.customTemplateImportManager.actionStream.send(.files)
+                // Track Event
+                self?.delegate?.trackEvent(event: EventName.custom_import_fromfiles_tap, params: nil, screenName: ScreenName.templatesStore)
             }),
             UIAction(title: "templatesStore.custom.import.photoLibrary".localized, handler: {[weak self] _ in
                 self?.customTemplateImportManager.actionStream.send(.photoLibrary)
+                // Track Event
+                self?.delegate?.trackEvent(event: EventName.custom_import_photolibrary_tap, params: nil, screenName: ScreenName.templatesStore)
+
             }),
             UIAction(title: "templatesStore.custom.import.takePhoto".localized, handler: { [weak self] _ in
                 self?.customTemplateImportManager.actionStream.send(.takePhoto)
+                // Track Event
+                self?.delegate?.trackEvent(event: EventName.custom_import_takephoto_tap, params: nil, screenName: ScreenName.templatesStore)
             })
         ])
         let rightBarButton = UIBarButtonItem(title: "templatesStore.custom.import".localized, menu: menu)
@@ -119,12 +127,14 @@ private extension FTStoreContainerViewController {
          } else if segmentControl.selectedIndex == 1 {
              self.add(storeFavouriteViewController)
              storeFavouriteViewController.view.frame = view.bounds
+             self.delegate?.trackEvent(event: EventName.templates_library_tap, params: nil, screenName: ScreenName.templatesStore)
          } else if segmentControl.selectedIndex == 2 {
              let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
              let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreCustomViewController") as! FTStoreCustomViewController
              viewController.delegate = self;
              self.add(viewController)
              viewController.view.frame = view.bounds
+             self.delegate?.trackEvent(event: EventName.templates_custom_tap, params: nil, screenName: ScreenName.templatesStore)
          }
     }
 
@@ -196,6 +206,8 @@ extension FTStoreContainerViewController {
                     })
             case .showUpgradeAlert(controller: let controller, feature: let feature):
                 self.delegate?.storeController(controller, showIAPAlert: feature);
+            case .track(let event, params: let params, screenName: let screenName):
+                self.delegate?.trackEvent(event: event, params: params, screenName: screenName)
             }
         }.store(in: &FTStoreContainerHandler.shared.cancellables)
     }

@@ -5,6 +5,8 @@
 //  Created by Amar on 16/08/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
+/*
+Decommissioning this file, as we no longer handling the NS1 books in NS3
 
 import UIKit
 import FTCommon
@@ -17,10 +19,6 @@ class FTShelfItemCollectionMigration: FTShelfItemCollectionLocal {
 
 class FTShelfCollectionMigration : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting
 {
-    func belongsToNS2() -> Bool {
-        false
-    }
-
     fileprivate var shelfCollections = [FTShelfItemCollection]();
     fileprivate var localDocumentsURL : URL!;
     fileprivate var query : FTLocalQueryGather?;
@@ -53,7 +51,7 @@ class FTShelfCollectionMigration : NSObject,FTShelfCollection,FTLocalQueryGather
     
     static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
     {
-        let migratedFolderURL = self.migratedFolderURL();
+        let migratedFolderURL = Self.migratedFolderURL();
         let provider = FTShelfCollectionMigration();
         provider.localDocumentsURL = migratedFolderURL;
         provider.processMigratedShelfCollection { (success) in
@@ -369,3 +367,4 @@ class FTShelfCollectionMigration : NSObject,FTShelfCollection,FTLocalQueryGather
         return hasMigratedDocs;
     }
 }
+*/

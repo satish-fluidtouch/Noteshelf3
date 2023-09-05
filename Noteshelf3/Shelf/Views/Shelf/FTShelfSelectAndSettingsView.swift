@@ -32,6 +32,9 @@ struct FTShelfSelectAndSettingsView: View {
                 .font(Font.appFont(for: .regular , with: 15.5))
         })
         .onTapGesture {
+            //Track Event
+            let locationName = viewModel.shelfLocation()
+            track(EventName.shelf_more_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
             if(!shelfMenuOverlayInfo.isMenuShown) {
                 shelfMenuOverlayInfo.isMenuShown = true;
             }
@@ -41,6 +44,9 @@ struct FTShelfSelectAndSettingsView: View {
     var sortView: some View{
         ForEach(sortOptions, id: \.displayTitle) { sortOption in
             Button(action: {
+                //Track Event
+                viewModel.trackEventForSortOrder(sortOrder: sortOption)
+                
                 shelfMenuOverlayInfo.isMenuShown = false
                 withAnimation {
                     viewModel.sortOption = sortOption;
@@ -92,15 +98,21 @@ struct FTMoreItemView:View{
     var body: some View{
         Button {
             shelfMenuOverlayInfo.isMenuShown = false
+            var eventName = ""
             switch type {
             case .selectNotes:
+                eventName = EventName.shelf_more_selectnotes_tap
                 if idiom == .phone {
                     viewModel.compactDelegate?.didChangeSelectMode(.selection)
                 }
                 viewModel.mode = .selection
             case .settings:
                 viewModel.delegate?.showSettings()
+                eventName = EventName.shelf_more_settings_tap
             }
+            //Track Event
+            track(eventName, params: [EventParameterKey.location: viewModel.shelfLocation()], screenName: ScreenName.shelf)
+
         } label: {
             Label {
                 Text(type.displayTitle)
@@ -167,6 +179,9 @@ private struct FTShelfDisplayStyleView : View {
     var body: some View {
         ForEach(displayOptions, id: \.displayTitle) { newValue in
             Button(action: {
+                //Track Event
+               viewModel.trackEventForSupportedStyles(style: newValue)
+
                 shelfMenuOverlayInfo.isMenuShown = false
                 withAnimation {
                     viewModel.displayStlye = newValue;

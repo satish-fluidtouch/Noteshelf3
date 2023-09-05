@@ -9,31 +9,22 @@
 import UIKit
 
 class FTShelfCollectionRecent: NSObject,FTShelfCollection {
-    var recentShelfItemCollection : FTShelfItemCollectionRecent?;
-    var favoritesShelfItemCollection : FTShelfItemCollectionRecent?;
-    fileprivate(set) var shelfCollections = [FTShelfItemCollection]();
+    let recentShelfItemCollection : FTShelfItemCollectionRecent;
+    let favoritesShelfItemCollection : FTShelfItemCollectionRecent;
+    var shelfCollections = [FTShelfItemCollection]();
 
-    static func shelfCollection(_ onCompletion : @escaping ((FTShelfCollection) -> Void))
-    {
-        let collection = FTShelfCollectionRecent();
-        
+    override init() {
         //Recent
         let urlRecent = NSURL.init(string: "Recent.shelf")! as URL;
-        collection.recentShelfItemCollection = FTShelfItemCollectionRecent.init(fileURL:urlRecent);
-        collection.shelfCollections.append(collection.recentShelfItemCollection!);
+        self.recentShelfItemCollection = FTShelfItemCollectionRecent.init(fileURL:urlRecent);
+        self.shelfCollections.append(recentShelfItemCollection);
         
         //Favorites
         let urlFavorites = NSURL.init(string: "Starred.shelf")! as URL;
-        collection.favoritesShelfItemCollection = FTShelfItemCollectionFavorites.init(fileURL:urlFavorites);
-        collection.shelfCollections.append(collection.favoritesShelfItemCollection!);
-        
-        onCompletion(collection);
+        self.favoritesShelfItemCollection = FTShelfItemCollectionFavorites.init(fileURL:urlFavorites);
+        self.shelfCollections.append(favoritesShelfItemCollection);
     }
 
-    func belongsToNS2() -> Bool {
-        false
-    }
-    
     func shelfs(_ onCompletion : @escaping (([FTShelfItemCollection])->Void))
     {
         onCompletion(self.shelfCollections);

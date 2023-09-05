@@ -55,7 +55,7 @@ class FTCloudDocumentListener: FTDocumentListener {
         }
     }
 
-    fileprivate func stopQuery() {
+    func stopQuery() {
         query?.stopQuery()
     }
 

@@ -21,17 +21,11 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
 
     fileprivate var query : FTLocalQueryGather?;
 
-    fileprivate var tempCompletionBlock : (([FTShelfItemCollection])->Void)? = nil;
+    fileprivate var tempCompletionBlock = [(([FTShelfItemCollection])->Void)]();
 
     required init(rootURL: URL, isNS2Collection: Bool) {
         self.localDocumentsURL = rootURL
         self.isNS2Collection = isNS2Collection
-    }
-
-    @available(*, deprecated, message: "must be initialized directly")
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection) -> Void))
-    {
-        fatalError("must be initialized directly")
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -59,7 +53,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             #endif
         }
         else {            
-            self.tempCompletionBlock = onCompletion;
+            self.tempCompletionBlock.append(onCompletion);
             self.query = FTLocalQueryGather(rootURL: self.localDocumentsURL,
                                             extensionsToListen: [FTFileExtension.shelf],
                                             skipSubFolder : true,
@@ -69,7 +63,6 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         objc_sync_exit(self);
     }
 
-    // TODO: (AK) To be checked like Cloud
     func belongsToNS2() -> Bool {
         isNS2Collection
     }
@@ -173,10 +166,10 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     //MARK:- FTLocalQueryGatherDelegate
     func ftLocalQueryGather(_ query: FTLocalQueryGather, didFinishGathering results: [URL]?) {
         self.buildCache(results);
-        if(tempCompletionBlock != nil) {
-            self.shelfs(self.tempCompletionBlock!);
-            self.tempCompletionBlock = nil;
+        tempCompletionBlock.forEach { eachBlock in
+            self.shelfs(eachBlock);
         }
+        tempCompletionBlock.removeAll();
     }
     
     //MARK:- Cache Mgmt -

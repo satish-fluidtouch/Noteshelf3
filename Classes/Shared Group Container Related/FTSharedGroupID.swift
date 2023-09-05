@@ -11,7 +11,7 @@ import UIKit
 public class FTSharedGroupID {
     public static func getAppGroupID() -> String {
         #if DEBUG
-        return "group.com.fluidtouch.noteshelf-dev"
+        return "group.com.fluidtouch.noteshelf3-dev"
         #elseif BETA
         return "group.com.fluidtouch.noteshelf3-beta"
         #else

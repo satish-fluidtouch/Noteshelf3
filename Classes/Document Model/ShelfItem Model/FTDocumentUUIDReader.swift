@@ -14,6 +14,7 @@ class FTDocumentUUIDReader: NSObject {
     private var operationQueue = OperationQueue();
         
     override init() {
+        operationQueue.name = "com.fluidtouch.documentuuid.reader"
         operationQueue.maxConcurrentOperationCount = 3;
         operationQueue.qualityOfService = QualityOfService.background;
     }

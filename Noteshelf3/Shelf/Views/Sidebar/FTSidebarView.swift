@@ -110,11 +110,11 @@ struct FTSidebarView: View {
                                                editableField: Bool = false,
                                                onSubmit: @escaping (_ newTitle: String) -> Void) -> some View{
         HStack(spacing:0) {
-            FTEditableView(item: item,
-                           placeHolder: placeHolder,
+            FTEditableView(placeHolder: placeHolder,
                            onButtonSubmit:  onSubmit ,
                            showEditableField: editableField,
                            newTitle: item.title)
+            .environmentObject(item)
         }
         .frame(height: 44.0, alignment: .leading)
         .background(Color.clear)
@@ -132,8 +132,10 @@ struct FTSidebarView: View {
                 set: { isExpanding in
                     if isExpanding {
                         self.viewModel.updateSideBarSectionStatus( menuSection, status: true)
+                        self.viewModel.trackEventForSections(section: menuSection, isExpand: true)
                     } else {
                         self.viewModel.updateSideBarSectionStatus( menuSection, status: false)
+                        self.viewModel.trackEventForSections(section: menuSection, isExpand: false)
                     }
                 }
             )
@@ -148,11 +150,10 @@ struct FTSidebarView: View {
                             }
                         }
                     } else {
-                        SideBarItemView(viewModel: viewModel,
-                                          section: menuSection,
-                                          item: item,
-                                        delegate: viewModel.delegate,
-                                          viewWidth:availableWidth)
+                        SideBarItemView(viewWidth: availableWidth)
+                            .environmentObject(viewModel)
+                            .environmentObject(menuSection)
+                            .environmentObject(item)
                         .if(menuSection.supportsRearrangeOfItems, transform: { view in
                             view.onDrag {
                                 self.viewModel.currentDraggedSidebarItem = item
@@ -179,7 +180,8 @@ struct FTSidebarView: View {
                 }
             }
         } label: {
-            SidebarSectionHeader(section: menuSection)
+            SidebarSectionHeader()
+                .environmentObject(menuSection)
                 .padding(.bottom, 8)
                 .padding(.trailing,10)
                 .padding(.leading,8)
@@ -215,7 +217,7 @@ struct FTSidebarView: View {
     }
 }
 struct SidebarSectionHeader: View {
-    @ObservedObject var section: FTSidebarSection
+    @EnvironmentObject var section: FTSidebarSection
     //TODO: Check
     var body: some View {
         HStack {

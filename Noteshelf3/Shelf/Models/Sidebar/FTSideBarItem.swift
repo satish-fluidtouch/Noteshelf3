@@ -28,7 +28,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     var type: FTSideBarItemType = .home
 
-    var shelfCollection: FTShelfItemCollection?
+    weak var shelfCollection: FTShelfItemCollection?
 
     var highlightColor: Color {
         if !self.isEditing && !self.highlighted {

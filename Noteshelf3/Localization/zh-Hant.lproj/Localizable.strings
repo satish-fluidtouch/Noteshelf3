@@ -1087,6 +1087,7 @@
 "iap.termsnconditions" = "條款和條件";
 "iap.title" = "使用Noteshelf Premium享受完整體驗";
 "iap.upgradeNow" = "立即升級";
+"icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
 "iconlabels" = "圖示標籤";
 "import" = "導入";
 "importedFiles" = "進口的文件";
@@ -1190,6 +1191,7 @@
 "quotes" = "名言";
 "removefromRecents" = "從最近移除";
 "reset" = "重設";
+"retry" = "重試";
 "save" = "重命名群組";
 "school" = "學校";
 "search.tryNewSearch" = "嘗試新的搜索";
@@ -1494,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 1 September 2023 at 19:24
+// Last Synced by Akshay on 4 September 2023 at 17:28

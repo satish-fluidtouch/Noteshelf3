@@ -7,11 +7,7 @@
 //
 
 import UIKit
-
-#if !targetEnvironment(macCatalyst)
 import FirebaseAnalytics
-#endif
-
 
 extension FTPageProtocol
 {
