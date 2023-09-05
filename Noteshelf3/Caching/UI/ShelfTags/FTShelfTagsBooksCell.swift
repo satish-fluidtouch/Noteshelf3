@@ -115,6 +115,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
                 return false
             }
         }
+        track(EventName.shelf_tag_select_book_tap, screenName: ScreenName.shelf_tags)
         return true
     }
 
@@ -124,6 +125,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
             let item = self.books[indexPath.row]
             if let shelf = item.shelfItem {
                 self.delegate?.openNotebook(shelfItem: shelf, page: 0)
+                track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
             }
         }
 

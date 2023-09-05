@@ -1087,6 +1087,7 @@
 "iap.termsnconditions" = "Termini e condizioni";
 "iap.title" = "Ottieni l'esperienza completa con Noteshelf Premium";
 "iap.upgradeNow" = "Aggiorna ora";
+"icloud.sync.issue.message" = "Impossibile connettersi a iCloud. Assicurati che iCloud sia attivato nelle impostazioni.";
 "iconlabels" = "Etichette delle icone";
 "import" = "Importa";
 "importedFiles" = "File importati";
@@ -1102,16 +1103,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Ampio";
 "lockwithfaceIDandPasscode" = "Blocca con %@ e codice di accesso";
-"migration.alert.cancel" = "Annulla";
-"migration.alert.copy" = "Copia";
-"migration.alert.message" = "Questo creerà una copia del nuovo quaderno, con i contenuti copiati.";
-"migration.alert.open" = "Aperto";
-"migration.alert.title" = "Vuoi migrare questo libro su NS3?";
-"migration.alert.yes" = "Sì";
-"migration.failure.message" = "Non è possibile migrare questo libro al momento. Contattare l'assistenza.";
+"migration.alert.migrate" = "Migrazione";
+"migration.alert.open" = "Vai alla posizione";
+"migration.alert.title" = "Vuoi migrare una copia di questo quaderno su Noteshelf 3?";
 "migration.progress.text" = "Migrando";
-"migration.success.alert.message" = "Vuoi aprire il quaderno?";
-"migration.success.alert.title" = "Migrato con successo in Non archiviato";
+"migration.success.alert.message" = "Successo! Il tuo notebook migrato è stato posizionato in: %@";
 "months" = "Mesi";
 "more" = "Più";
 "more.globalsettings.caps" = "IMPOSTAZIONI GLOBALI";
@@ -1195,6 +1191,7 @@
 "quotes" = "Citazioni";
 "removefromRecents" = "Rimuovi dai Recenti";
 "reset" = "Ripristina";
+"retry" = "Ritentare";
 "save" = "Rinomina Gruppo";
 "school" = "Scuola";
 "search.tryNewSearch" = "Prova una nuova ricerca";
@@ -1267,7 +1264,7 @@
 "shelf.home.seeAll" = "Vedi tutto";
 "shelf.home.seeAllNotes" = "Vedi tutte le note";
 "shelf.importfile.description" = "Aggiungi PDF e immagini dalla tua app File.";
-"shelf.migration.Description" = "Per migrare il tuo libro alla nuova versione di Noteshelf, toccalo o tieni premuto e scegli l'opzione di migrazione dal menu.";
+"shelf.migration.Description" = "Basta toccare su qualsiasi quaderno qui per migrarne una copia su Noteshelf 3. I quaderni migrati saranno disponibili nelle categorie e gruppi di Noteshelf 3. La possibilità di migrare intere categorie verrà presto introdotta!";
 "shelf.migration.headerMessage" = "Migra i tuoi appunti su Noteshelf 3";
 "shelf.navBar.deselectAll" = "Deseleziona tutto";
 "shelf.navBar.select" = "Seleziona";
@@ -1499,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 4 September 2023 at 17:28

@@ -152,6 +152,10 @@ class  FTShelfItemCollectionRecent: NSObject,FTShelfItemCollection,FTShelfItemSo
         let paths = NSURL.urlPaths(items);
         self.recentCollectionLocal?.updateQuery(searchPaths: paths);
     }
+
+    func isNS2Collection() -> Bool {
+        return false
+    }
 }
 
 extension FTShelfItemCollectionRecent

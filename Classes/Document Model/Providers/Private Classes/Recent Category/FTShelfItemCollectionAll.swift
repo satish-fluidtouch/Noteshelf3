@@ -74,6 +74,10 @@ class FTShelfItemCollectionAll: NSObject, FTShelfItemCollection, FTShelfItemSort
            unfiledShelf?.moveShelfItems(shelfItems, toGroup: toGroup, toCollection: unfiledShelf, onCompletion: block)
         }
     }
+
+    func isNS2Collection() -> Bool {
+        return false
+    }
 }
 extension FTShelfItemCollectionAll {
     func canPerformDrop() -> Bool {

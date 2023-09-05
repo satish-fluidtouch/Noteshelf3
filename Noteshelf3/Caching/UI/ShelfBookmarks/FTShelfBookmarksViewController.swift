@@ -153,6 +153,7 @@ extension FTShelfBookmarksViewController: UICollectionViewDataSource, UICollecti
         let item = self.bookmarkItems[indexPath.row]
         if let shelf = item.shelfItem {
             self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex ?? 0)
+            track(EventName.shelf_bookmark_page_tap, screenName: ScreenName.shelf_bookmarks)
         }
     }
 

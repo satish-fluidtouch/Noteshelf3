@@ -41,12 +41,12 @@ extension FTShelfItemProtocol
         return true;
     }
         
-    func getParentsOfShelfItemTillRootParent() -> [FTShelfItemProtocol] {
-        var parents: [FTShelfItemProtocol] = [FTShelfItemProtocol]()
-       if let parent = self.parent {
-           parents.append(parent)
-        parents.append(contentsOf: parent.getParentsOfShelfItemTillRootParent())
-       }
+    func getParentsOfShelfItemTillRootParent() -> [FTGroupItemProtocol] {
+        var parents: [FTGroupItemProtocol] = [FTGroupItemProtocol]()
+        if let parent = self.parent {
+            parents.append(parent)
+            parents.append(contentsOf: parent.getParentsOfShelfItemTillRootParent())
+        }
        return parents
    }
 

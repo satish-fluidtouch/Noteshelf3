@@ -16,15 +16,15 @@ protocol FTShelfViewDelegate: AnyObject {
 }
 
 struct FTShelfView: View,FTShelfBaseView {
-    
+
     @EnvironmentObject var viewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    
+
     var body: some View {
-        
+
         //    debugPrintChanges()
         // let _ = Self._printChanges()
         GeometryReader { geometry in
@@ -43,7 +43,14 @@ struct FTShelfView: View,FTShelfBaseView {
                                 .padding(.top,10)
                                 .environmentObject(viewModel)
 
+                        } else if viewModel.shouldShowNS3MigrationHeader {
+                            FTMigrationMessageView(viewModel: viewModel)
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal,gridHorizontalPadding)
+                                .padding(.bottom,8)
+                                .padding(.top,20)
                         }
+                        
                         shelfGridView(items: viewModel.shelfItems, size: geometry.size)
                             .padding(.top,20)
                     }
@@ -88,7 +95,7 @@ struct FTShelfView: View,FTShelfBaseView {
             }
         }
     }
-    
+
     //MARK: Views
     private func emptyShelfItemsView() -> some View {
         if viewModel.collection.isTrash {

@@ -691,43 +691,72 @@ extension FTShelfSplitViewController: MFMailComposeViewControllerDelegate {
 
 // MARK: Migration
 extension FTShelfSplitViewController {
-    private func migrateBookToNS3(shelfItem: FTShelfItemProtocol) {
+    func migrateBookToNS3(shelfItem: FTShelfItemProtocol) {
+        defer {
+            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+        }
+
         guard shelfItem.URL.isNS2Book else { return }
         guard shelfItem.URL.downloadStatus() != .notDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }
 
+        guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: 1) else {
+            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
+            return
+        }
+
         FTDocumentMigration.showNS3MigrationAlert(on: self, onCopyAction: {
             let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText:"migration.progress.text".localized);
-            FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedShelfItem, error in
+            FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedURL, error in
                 runInMainThread {
                     loadingIndicatorViewController.hide()
-                    if let migratedShelfItem {
-                        self.showOpenNowAlertForMigratedBook(shelfItem: migratedShelfItem)
+                    if let migratedURL {
+                        self.showOpenNowAlertForMigratedBook(migratedURL: migratedURL)
                     } else {
-                        self.handleNotebookOpenError(for: shelfItem, error: nil)
+                        FTDocumentMigration.showNS3MigrationFailureAlert(on: self)
                     }
                 }
             }
         })
-        NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader,
-                                        object: shelfItem,
-                                        userInfo: nil)
     }
 
-    private func showOpenNowAlertForMigratedBook(shelfItem: FTShelfItemProtocol) {
-        FTDocumentMigration.showNS3MigrationSuccessAlert(on: self) {
-            self.openNotebookAndAskPasswordIfNeeded(shelfItem,
-                                                    animate: true,
-                                                    presentWithAnimation: true,
-                                                    pin: nil,
-                                                    addToRecent: true,
-                                                    isQuickCreate: false,
-                                                    createWithAudio: false,
-                                                    pageIndex: nil) { doc, isSuccess in
-
+    private func showOpenNowAlertForMigratedBook(migratedURL: URL) {
+        let displayPath = migratedURL.displayRelativePathWRTCollection().deletingLastPathComponent
+        FTDocumentMigration.showNS3MigrationSuccessAlert(on: self, relativePath: displayPath) {
+            let relativePath = migratedURL.relativePathWRTCollection()
+            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, _ in
+                // Check for collection and select on the sidebar
+                if let collection {
+                    self?.navigateToLocation(collection: collection, group: group)
+                } else {
+                    FTLogError("Migration Navigate colleciton nil")
+                }
             }
         }
+    }
+
+    private func navigateToLocation(collection: FTShelfItemCollection, group: FTGroupItemProtocol?) {
+        var controllers = [UIViewController]()
+
+        // Build Category Controller
+        self.saveLastSelectedCollection(collection)
+        self.shelfItemCollection = collection
+        self.sideMenuController?.selectSideMenuCollection(collection)
+        let categoryControllers = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+        controllers.append(categoryControllers)
+
+        // Build Group Controllers
+        if let group {
+            var reqParents:  [FTGroupItemProtocol] = []
+            reqParents.append(group)
+            reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
+            for parent in reqParents.reversed() {
+                let groupController = getSecondaryViewControllerWith(collection: collection, groupItem: parent)
+                controllers.append(groupController)
+            }
+        }
+        detailNavigationController?.setViewControllers(controllers, animated: false)
     }
 }

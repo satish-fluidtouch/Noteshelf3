@@ -16,7 +16,7 @@ class FTWatchRecordingCollection_Cloud: FTWatchRecordingCollection, FTWatchRecor
     internal var watchRecordings = FTHashTable();
     internal var watchRecordingsNoFile = FTHashTable();
 
-    fileprivate var cloudURL: URL!;
+    fileprivate let cloudURL: URL;
 
     init(cloudURL: URL) {
         self.cloudURL = cloudURL
@@ -384,7 +384,7 @@ extension FTWatchRecordingCollection_Cloud {
 
 extension FTWatchRecordingCollection_Cloud {
     func rootURL() -> URL {
-        return self.cloudURL!.appendingPathComponent("Documents").appendingPathComponent("Audio Recordings");
+        return self.cloudURL.appendingPathComponent("Documents").appendingPathComponent("Audio Recordings");
     }
 
     internal func createFolderIfNeeded() -> Error? {

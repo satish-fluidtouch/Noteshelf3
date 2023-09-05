@@ -44,9 +44,8 @@ struct FTSidebarView: View {
     @State private var reloadView: Bool = false
 
     weak var delegate: FTSidebarViewDelegate?
-    private let collectionAddedNotification = NotificationCenter.default.publisher(for: NSNotification.Name.collectionAdded)
-    private let collectionRemovedNotification = NotificationCenter.default.publisher(for: NSNotification.Name.collectionRemoved)
-    private let collectionUpdatedNotification = NotificationCenter.default.publisher(for: NSNotification.Name.collectionUpdated)
+    private let collectionAddedUpdatedNotification = NotificationCenter.default.publisher(for: FTCategoryItemsDidUpdateNotification)
+
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
@@ -91,14 +90,7 @@ struct FTSidebarView: View {
                 .onFirstAppear(perform: {
                     self.viewModel.configureUIOnViewLoad()
                 })
-                .onReceive(collectionAddedNotification, perform: { notification in
-                    viewModel.updateUserCreatedCategories()
-                })
-                .onReceive(collectionRemovedNotification, perform: { notification in
-                    viewModel.updateCategoryBookMarksOnCategoryDeletion()
-                    viewModel.updateUserCreatedCategories()
-                })
-                .onReceive(collectionUpdatedNotification, perform: { notification in
+                .onReceive(collectionAddedUpdatedNotification, perform: { notification in
                     viewModel.updateUserCreatedCategories()
                 })
                 .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: "refreshSideMenu")), perform: { notification in
@@ -118,11 +110,11 @@ struct FTSidebarView: View {
                                                editableField: Bool = false,
                                                onSubmit: @escaping (_ newTitle: String) -> Void) -> some View{
         HStack(spacing:0) {
-            FTEditableView(item: item,
-                           placeHolder: placeHolder,
+            FTEditableView(placeHolder: placeHolder,
                            onButtonSubmit:  onSubmit ,
                            showEditableField: editableField,
                            newTitle: item.title)
+            .environmentObject(item)
         }
         .frame(height: 44.0, alignment: .leading)
         .background(Color.clear)
@@ -140,8 +132,10 @@ struct FTSidebarView: View {
                 set: { isExpanding in
                     if isExpanding {
                         self.viewModel.updateSideBarSectionStatus( menuSection, status: true)
+                        self.viewModel.trackEventForSections(section: menuSection, isExpand: true)
                     } else {
                         self.viewModel.updateSideBarSectionStatus( menuSection, status: false)
+                        self.viewModel.trackEventForSections(section: menuSection, isExpand: false)
                     }
                 }
             )
@@ -156,11 +150,10 @@ struct FTSidebarView: View {
                             }
                         }
                     } else {
-                        SideBarItemView(viewModel: viewModel,
-                                          section: menuSection,
-                                          item: item,
-                                        delegate: viewModel.delegate,
-                                          viewWidth:availableWidth)
+                        SideBarItemView(viewWidth: availableWidth)
+                            .environmentObject(viewModel)
+                            .environmentObject(menuSection)
+                            .environmentObject(item)
                         .if(menuSection.supportsRearrangeOfItems, transform: { view in
                             view.onDrag {
                                 self.viewModel.currentDraggedSidebarItem = item
@@ -187,7 +180,8 @@ struct FTSidebarView: View {
                 }
             }
         } label: {
-            SidebarSectionHeader(section: menuSection)
+            SidebarSectionHeader()
+                .environmentObject(menuSection)
                 .padding(.bottom, 8)
                 .padding(.trailing,10)
                 .padding(.leading,8)
@@ -223,10 +217,13 @@ struct FTSidebarView: View {
     }
 }
 struct SidebarSectionHeader: View {
-    @ObservedObject var section: FTSidebarSection
+    @EnvironmentObject var section: FTSidebarSection
     //TODO: Check
     var body: some View {
         HStack {
+            if section.type == .ns2Categories {
+                Image("ns2_migration_logo")
+            }
             Text(section.title)
                 .font(.clearFaceFont(for: .medium, with: 22))
                 .fontWeight(.heavy)

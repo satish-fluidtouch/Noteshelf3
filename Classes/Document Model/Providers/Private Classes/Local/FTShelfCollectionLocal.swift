@@ -15,31 +15,19 @@ import ZipArchive
 class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,FTShelfItemSorting
 {
     fileprivate var shelfCollections = [FTShelfItemCollection]();
-    fileprivate var localDocumentsURL : URL!;
+
+    fileprivate var localDocumentsURL: URL
+    fileprivate let isNS2Collection: Bool
+
     fileprivate var query : FTLocalQueryGather?;
 
-    fileprivate var tempCompletionBlock : (([FTShelfItemCollection])->Void)? = nil;
+    fileprivate var tempCompletionBlock = [(([FTShelfItemCollection])->Void)]();
 
-    fileprivate static func userFolderURL() -> URL
-    {
-        let noteshelfURL = FTUtils.noteshelfDocumentsDirectory();
-        let systemURL = noteshelfURL.appendingPathComponent("User Documents");
-        let fileManger = FileManager();
-        var isDir = ObjCBool.init(false);
-        if(!fileManger.fileExists(atPath: systemURL.path, isDirectory: &isDir) || !isDir.boolValue) {
-            try? fileManger.createDirectory(at: systemURL, withIntermediateDirectories: true, attributes: nil);
-        }
-        return systemURL;
+    required init(rootURL: URL, isNS2Collection: Bool) {
+        self.localDocumentsURL = rootURL
+        self.isNS2Collection = isNS2Collection
     }
 
-    static func shelfCollection(_ onCompletion: @escaping ((FTShelfCollection?) -> Void))
-    {
-        let noteshelfURL = self.userFolderURL();
-        let provider = FTShelfCollectionLocal();
-        provider.localDocumentsURL =  noteshelfURL;
-        onCompletion(provider);
-    }
-    
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
     {
         self.query = nil;
@@ -65,16 +53,20 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             #endif
         }
         else {            
-            self.tempCompletionBlock = onCompletion;
+            self.tempCompletionBlock.append(onCompletion);
             self.query = FTLocalQueryGather(rootURL: self.localDocumentsURL,
-                                            extensionsToListen: [shelfExtension],
+                                            extensionsToListen: [FTFileExtension.shelf],
                                             skipSubFolder : true,
                                             delegate: self);
             self.query?.startQuery();
         }
         objc_sync_exit(self);
     }
-    
+
+    func belongsToNS2() -> Bool {
+        isNS2Collection
+    }
+
     func collection(withTitle title : String) -> FTShelfItemCollection?
     {
         if(nil == self.query) {
@@ -174,10 +166,10 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     //MARK:- FTLocalQueryGatherDelegate
     func ftLocalQueryGather(_ query: FTLocalQueryGather, didFinishGathering results: [URL]?) {
         self.buildCache(results);
-        if(tempCompletionBlock != nil) {
-            self.shelfs(self.tempCompletionBlock!);
-            self.tempCompletionBlock = nil;
+        tempCompletionBlock.forEach { eachBlock in
+            self.shelfs(eachBlock);
         }
+        tempCompletionBlock.removeAll();
     }
     
     //MARK:- Cache Mgmt -
@@ -199,14 +191,14 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         for eachItem in urls {
             let fileURL = eachItem;
             //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
-            if(fileURL.pathExtension == shelfExtension) {
+            if(fileURL.pathExtension == FTFileExtension.shelf) {
                 var shelfItem = self.collectionForURL(fileURL);
                 if(shelfItem == nil) {
                     shelfItem = self.addItemToCache(fileURL) as? FTShelfItemCollection;
                 }
                 updatedDocumentURLs.append(fileURL);
             }
-            else if(fileURL.pathExtension == sortIndexExtension) {
+            else if(fileURL.pathExtension == FTFileExtension.sortIndex) {
                if let itemCollection = collectionForURL(fileURL) as? FTShelfItemCollectionLocal {
                     itemCollection.handleSortIndexFileUpdates(fileURL)
                }
@@ -227,8 +219,10 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         let fileItemURL = fileURL;
         var collectionItem = self.collectionForURL(fileItemURL);
         if(nil == collectionItem) {
-            collectionItem = FTShelfItemCollectionLocal.init(fileURL:fileItemURL);
-            self.shelfCollections.append(collectionItem!);
+            let item = FTShelfItemCollectionLocal(fileURL:fileItemURL);
+            item.parent = self
+            self.shelfCollections.append(item);
+            collectionItem = item
         }
         objc_sync_exit(self);
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
@@ -270,7 +264,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         }
         return true;
     }
-    
+
     //MARK:- private Methods -
     fileprivate func collectionForURL(_ url : URL) -> FTShelfItemCollection?
     {
