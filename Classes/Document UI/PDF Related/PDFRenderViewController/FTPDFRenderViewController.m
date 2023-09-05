@@ -1180,6 +1180,9 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     if (self.pageLayoutType == FTPageLayoutHorizontal) {
+        if (self.previousVisiblePageIndex == -1) {
+            self.previousVisiblePageIndex = 0;
+        }
         [self handlePageChange];
     }
     [self loadVisiblePages];
