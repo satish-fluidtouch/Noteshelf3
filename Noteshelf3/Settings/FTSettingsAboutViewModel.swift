@@ -8,14 +8,14 @@
 
 import Foundation
 
-enum SocialMediaTypes:CaseIterable{
-    case facebook
+enum SocialMediaTypes: CaseIterable{
     case instagram
     case twitter
+    case facebook
     case medium
     case youtube
 
-    var icon:String{
+    var icon: String{
         switch self{
         case .facebook:
             return "followfb"
@@ -29,7 +29,7 @@ enum SocialMediaTypes:CaseIterable{
             return "followYoutube"
         }
     }
-    var url:String{
+    var url: String{
         switch self{
         case .facebook:
             return "https://www.facebook.com/noteshelf"
@@ -56,19 +56,19 @@ class FTSettingsAboutViewModel: ObservableObject {
         let buildVersion = "(\(appBuildVersion()))"
         return String(format: NSLocalizedString("settings.about.version", comment: "Version %@ %@ "), appVersion(),buildVersion)
     }
-    var userid:String{
+    var userid: String{
         guard let userid:String = UserDefaults.standard.object(forKey: "USER_ID_FOR_CRASH") as? String else {
             fatalError("No user id found")
         }
         return String(format: NSLocalizedString("settings.about.userID", comment: "User ID %@"), userid)
     }
-    var copyrightMessage:String{
+    var copyrightMessage: String{
         return "settings.about.copyrightmessage".localized
     }
-    var visitWebsite:String{
+    var visitWebsite: String{
         return "AboutVisitNoteshelfWebsite".localized
     }
-    var welcomeTourText:String{
+    var welcomeTourText: String{
         return "Welcome Tour".localized
     }
 }
