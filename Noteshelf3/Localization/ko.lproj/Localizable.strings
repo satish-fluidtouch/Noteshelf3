@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "이 색은 이미 팔레트에 있습니다.";
 "ColorByAuthor" = "@%에서";
 "Colors" = "색상";
-"ColourLoversAddHeader" = "개별 색상 또는 전체 팔레트를 선택하여 추가하세요.";
-"ColourLoversEditHeader" = "팔레트에서 색상을 탭하여 선택하세요.";
 "Confirm" = "확인";
 "ConflictDocModifiedOn" = "%@에서 수정됨";
 "Connect" = "연결";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "박스에 액세스할 수 없음";
 "UnableToAccessDropbox" = "드롭박스에 접근할 수 없습니다.";
 "UnableToAccessWeLink" = "WeLink에 접근할 수 없음";
-"UnableToConnectToColourLovers" = "COLOURlovers.com에 연결할 수 없습니다.";
 "UnableToConnectToTheWebDAVServer" = "WebDAV 서버에 연결할 수 없습니다. 나중에 다시 시도하세요.";
 "UnableToLocateTheServer" = "서버를 찾을 수 없습니다. 서버 URL을 확인하고 다시 시도하세요.";
 "UnableToauthenticate" = "인증할 수 없음";
@@ -1496,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 September 2023 at 17:28
+// Last Synced by Akshay on 5 September 2023 at 15:19

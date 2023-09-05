@@ -224,7 +224,6 @@ class FTShelfItemViewDropDelegate: NSObject, DropDelegate {
     }
     
     func dropUpdated(info: DropInfo) -> DropProposal? {
-        print("Drop updated",info.location)
         let supportedUTTypes = FTDragAndDropHelper.supportedTypesForDrop()
         viewModel.highlightItem = nil
         var currentDraggedShelfItem: FTShelfItemProtocol?

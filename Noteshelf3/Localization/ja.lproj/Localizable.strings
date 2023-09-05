@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "この色はすでにあなたのパレットにあります。";
 "ColorByAuthor" = "「%@によって」";
 "Colors" = "色";
-"ColourLoversAddHeader" = "個々の色または全体のパレットを選択して追加してください。";
-"ColourLoversEditHeader" = "パレットから色をタップして選択してください。";
 "Confirm" = "確認";
 "ConflictDocModifiedOn" = "%@で変更済み";
 "Connect" = "接続";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "ボックスにアクセスできません";
 "UnableToAccessDropbox" = "ドロップボックスにアクセスできません。";
 "UnableToAccessWeLink" = "WeLinkにアクセスできません。";
-"UnableToConnectToColourLovers" = "COLOURlovers.comに接続できません";
 "UnableToConnectToTheWebDAVServer" = "WebDAVサーバーに接続できません。後でもう一度お試しください。";
 "UnableToLocateTheServer" = "サーバーを見つけることができません。サーバーのURLを確認し、再試行してください。";
 "UnableToauthenticate" = "認証できません";
@@ -1496,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 September 2023 at 17:28
+// Last Synced by Akshay on 5 September 2023 at 15:19

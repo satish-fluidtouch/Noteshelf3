@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "這個顏色已經在你的調色板上";
 "ColorByAuthor" = "透過%@";
 "Colors" = "顏色";
-"ColourLoversAddHeader" = "通過選擇個別顏色或整個調色板來添加。";
-"ColourLoversEditHeader" = "從調色板中點擊一個顏色以進行選擇。";
 "Confirm" = "確認";
 "ConflictDocModifiedOn" = "修改於 %@";
 "Connect" = "連接";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "無法存取Box";
 "UnableToAccessDropbox" = "無法存取Dropbox";
 "UnableToAccessWeLink" = "無法訪問 WeLink";
-"UnableToConnectToColourLovers" = "無法連接到COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "無法連接到 WebDAV 伺服器。請稍後再試。";
 "UnableToLocateTheServer" = "無法找到伺服器。請檢查伺服器網址並再試一次。";
 "UnableToauthenticate" = "無法驗證";
@@ -1496,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 September 2023 at 17:28
+// Last Synced by Akshay on 5 September 2023 at 15:19

@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "This color is already on your palette";
 "ColorByAuthor" = "by %@";
 "Colors" = "Colors";
-"ColourLoversAddHeader" = "Add by choosing individual colors or an entire palette.";
-"ColourLoversEditHeader" = "Tap a color from the palette to select.";
 "Confirm" = "Confirm";
 "ConflictDocModifiedOn" = "Modified on %@";
 "Connect" = "Connect";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Unable to access Box";
 "UnableToAccessDropbox" = "Unable to access Dropbox";
 "UnableToAccessWeLink" = "Unable to access WeLink";
-"UnableToConnectToColourLovers" = "Unable to connect to COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "Unable to connect to the WebDAV server. Please try again later.";
 "UnableToLocateTheServer" = "Unable to locate the server. Check the server URL and try again.";
 "UnableToauthenticate" = "Unable to authenticate";
@@ -1496,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 September 2023 at 17:28
+// Last Synced by Akshay on 5 September 2023 at 15:19
