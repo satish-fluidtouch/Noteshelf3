@@ -64,10 +64,7 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         #if DEBUG
             //print("✅ Query Updates enabled")
         #endif
-
-        if(!self.queryPaused) {
-            self.query?.enableUpdates();
-        }
+        self.query?.enableUpdates();
     }
 
     func disableUpdates() {
@@ -76,24 +73,6 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         #endif
 
         self.query?.disableUpdates();
-    }
-
-    func forceDisableUpdates() {
-        #if DEBUG
-            //print("🔴🔴🔴🔴 Force Query Updates disabled")
-        #endif
-
-        self.queryPaused = true;
-        self.disableUpdates();
-    }
-
-    func forceEnableUpdates() {
-        #if DEBUG
-            //print("✅✅✅✅ Force Query Updates enabled")
-        #endif
-
-        self.queryPaused = false;
-        self.enableUpdates();
     }
 
     // MARK: - Notifications

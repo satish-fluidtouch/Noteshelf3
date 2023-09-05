@@ -66,14 +66,6 @@ class FTCloudDocumentListener: FTDocumentListener {
     func disableUpdates() {
         query?.disableUpdates()
     }
-
-    func forceDisableUpdates() {
-        query?.forceDisableUpdates()
-    }
-
-    func forceEnableUpdates() {
-        query?.forceEnableUpdates()
-    }
 }
 
 // MARK: - FTiCloudQueryObserverDelegate
