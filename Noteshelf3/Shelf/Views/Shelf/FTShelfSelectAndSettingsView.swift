@@ -79,10 +79,8 @@ struct FTShelfSelectAndSettingsView: View {
             Divider()
             FTShelfDisplayStyleView()
                 .environmentObject(viewModel)
-            if viewModel.canShowNotebookUpdateOptions {
-                Divider()
-                getMoreSectionitem(.settings,viewmodel: viewModel)
-            }
+            Divider()
+            getMoreSectionitem(.settings,viewmodel: viewModel)
         }
     }
     private func getMoreSectionitem(_ type: FTHomeNavItemFilteredItemsModel,viewmodel:FTShelfViewModel) -> some View {
