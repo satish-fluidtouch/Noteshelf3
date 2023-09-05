@@ -41,20 +41,26 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
 
     let autoBackUpNotes: String = FTAutoBackUpSection.autoBackUpNotebooks.localized()
 
+    private func updateBackupFooterView(_ footer: FTBackupFooterView) {
+        footer.isHidden = !self.isAutoBackUpOn
+        if isAutoBackUpOn {
+            footer.isHidden = false
+            footer.infoView.isHidden = true
+            footer.errorInfoBtn.isHidden = true
+            footer.activityIndicator.isHidden = false
+            if self.checkIfIgnoredItemsExists() {
+                footer.errorInfoBtn.isHidden = false
+            }
+            self.updateBackUpInfoIfLoggedIn()
+        }
+    }
+    
     private var isAutoBackUpOn: Bool = false {
         didSet {
             if let footer = self.tableView?.footerView(forSection: 1) as? FTBackupFooterView {
-                if isAutoBackUpOn {
-                    footer.isHidden = false
-                    footer.infoView.isHidden = true
-                    footer.errorInfoBtn.isHidden = true
-                    footer.activityIndicator.isHidden = false
-                    if self.checkIfIgnoredItemsExists() {
-                        footer.errorInfoBtn.isHidden = false
-                    }
-                    self.updateBackUpInfoIfLoggedIn()
-                } else {
-                    footer.isHidden = true
+                updateBackupFooterView(footer);
+                if !isAutoBackUpOn,oldValue != isAutoBackUpOn {
+                    self.tableView?.reloadData();
                 }
             }
         }
@@ -245,6 +251,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             footerView.setBackupFormat(FTUserDefaults.backupFormat)
             footerView.isHidden = !self.isAutoBackUpOn
             footerView.infoView.backgroundColor = UIColor.appColor(.cellBackgroundColor)
+            self.updateBackupFooterView(footerView);
             return footerView
         }
         return nil

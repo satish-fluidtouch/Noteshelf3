@@ -44,6 +44,7 @@ class FTCloudBackupENPublishError: NSObject,ObservableObject {
             self?.updateHasError();
         };
         UserDefaults.standard.addObserver(self, forKeyPath: type.userDefaultsErrorKey, options: [.new], context: nil);
+        self.updateHasError();
     }
     
     private func updateHasError() {
@@ -68,7 +69,7 @@ class FTCloudBackupENPublishError: NSObject,ObservableObject {
     }
 
     deinit {
-        UserDefaults.standard.removeObserver(self, forKeyPath: BACKUP_ERROR);
+        UserDefaults.standard.removeObserver(self, forKeyPath: self.errorTrackType.userDefaultsErrorKey);
         if let observer = self.ignoreListObserver {
             NotificationCenter.default.removeObserver(observer)
         }
