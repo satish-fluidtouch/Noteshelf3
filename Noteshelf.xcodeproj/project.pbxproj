@@ -749,6 +749,7 @@
 		BA8E567B2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8E56792A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift */; };
 		BA909A34298BE75B00260538 /* libiink.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA111BE529880094001E854F /* libiink.xcframework */; };
 		BA909A36298BE75D00260538 /* libMyScriptEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD1F54F298BC17100B16B2B /* libMyScriptEngine.xcframework */; };
+		BA94E7922AA85F7C001887A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8140D4223266E8E0053FC86 /* Assets.xcassets */; };
 		BA996116291BCCCC0020B7B0 /* FTShelfContentAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA996115291BCCCC0020B7B0 /* FTShelfContentAudioView.swift */; };
 		BA996118291BCD1B0020B7B0 /* FTShelfContentAudioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA996117291BCD1B0020B7B0 /* FTShelfContentAudioViewModel.swift */; };
 		BAA3C79328DDD527005B10E6 /* FTImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA3C79228DDD527005B10E6 /* FTImageProcessor.swift */; };
@@ -11283,6 +11284,7 @@
 				5288FB4E2A559C3B00EBC37C /* themes_v8_ko.plist in Resources */,
 				5288FB462A559C3300EBC37C /* themes_v8_en.plist in Resources */,
 				5288FB502A559D4600EBC37C /* StockCovers.bundle in Resources */,
+				BA94E7922AA85F7C001887A1 /* Assets.xcassets in Resources */,
 				5288FB4F2A559CC800EBC37C /* StockPapers.bundle in Resources */,
 				5288FB4D2A559C3B00EBC37C /* themes_v8_ja.plist in Resources */,
 				5288FB472A559C3B00EBC37C /* themes_v8_it.plist in Resources */,
