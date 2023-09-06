@@ -617,14 +617,14 @@ extension FTNoteshelfDocumentProvider {
         guard let icloudShelfCollection = cloudShelfCollectionRoot?.ns3Collection  as? FTShelfCollectioniCloud else { completion(false, nil); return }
 
         self.shelfs({ [weak self] (_) in
-            self?.cloudDocumentListener?.forceDisableUpdates();
+            self?.cloudDocumentListener?.disableUpdates();
             self?.localShelfCollectionRoot?.ns3Collection.shelfs({ (collections) in
                 let bgTask = startBackgroundTask()
                 self?.moveCollectionToCloud(collections: collections,
                                             toCloud: icloudShelfCollection,
                                             onCompletion: { error in
                                                 if(nil != error) {
-                                                    self?.cloudDocumentListener?.forceEnableUpdates();
+                                                    self?.cloudDocumentListener?.enableUpdates();
                                                     endBackgroundTask(bgTask)
                                                     completion(false, error);
                                                 } else {
@@ -635,7 +635,7 @@ extension FTNoteshelfDocumentProvider {
                                                         } else {
                                                             completion(true, nil);
                                                         }
-                                                        self?.cloudDocumentListener?.forceEnableUpdates();
+                                                        self?.cloudDocumentListener?.enableUpdates();
                                                     });
                                                 }
                 });
