@@ -748,6 +748,7 @@
 		BA8E567B2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8E56792A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift */; };
 		BA909A34298BE75B00260538 /* libiink.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA111BE529880094001E854F /* libiink.xcframework */; };
 		BA909A36298BE75D00260538 /* libMyScriptEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD1F54F298BC17100B16B2B /* libMyScriptEngine.xcframework */; };
+		BA94E7922AA85F7C001887A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8140D4223266E8E0053FC86 /* Assets.xcassets */; };
 		BA996116291BCCCC0020B7B0 /* FTShelfContentAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA996115291BCCCC0020B7B0 /* FTShelfContentAudioView.swift */; };
 		BA996118291BCD1B0020B7B0 /* FTShelfContentAudioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA996117291BCD1B0020B7B0 /* FTShelfContentAudioViewModel.swift */; };
 		BAA3C79328DDD527005B10E6 /* FTImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA3C79228DDD527005B10E6 /* FTImageProcessor.swift */; };
@@ -1817,8 +1818,6 @@
 		BAFC3FA62A8F619600D8FD71 /* FTTagCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476450172924E24200B6113B /* FTTagCollectionCell.xib */; };
 		C8054ADD23350C4B0083BB04 /* FTSharedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860737123276B48009658F1 /* FTSharedAction.swift */; };
 		C8054ADE23350C530083BB04 /* FTImportStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860736D23275E5D009658F1 /* FTImportStorageManager.swift */; };
-		C8140D4323266E8E0053FC86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8140D4223266E8E0053FC86 /* Assets.xcassets */; };
-		C85AFDE82331F5E500D25D5F /* BEMCheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E322C772017472700F5F685 /* BEMCheckBox.m */; };
 		C85AFDED2331FF3B00D25D5F /* BEMAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E322C752017472700F5F685 /* BEMAnimationManager.m */; };
 		C85AFDEF2331FF4000D25D5F /* BEMCheckBoxGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E322C792017472700F5F685 /* BEMCheckBoxGroup.m */; };
 		C85AFDF02331FF4300D25D5F /* BEMPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E322C7B2017472700F5F685 /* BEMPathManager.m */; };
@@ -11278,15 +11277,14 @@
 			files = (
 				5288FB492A559C3B00EBC37C /* themes_v8_es.plist in Resources */,
 				5288FB4C2A559C3B00EBC37C /* themes_v8_zh-Hant.plist in Resources */,
-				C8140D4323266E8E0053FC86 /* Assets.xcassets in Resources */,
 				5288FB4B2A559C3B00EBC37C /* themes_v8_zh-Hans.plist in Resources */,
 				5288FB4E2A559C3B00EBC37C /* themes_v8_ko.plist in Resources */,
 				5288FB462A559C3300EBC37C /* themes_v8_en.plist in Resources */,
 				5288FB502A559D4600EBC37C /* StockCovers.bundle in Resources */,
+				BA94E7922AA85F7C001887A1 /* Assets.xcassets in Resources */,
 				5288FB4F2A559CC800EBC37C /* StockPapers.bundle in Resources */,
 				5288FB4D2A559C3B00EBC37C /* themes_v8_ja.plist in Resources */,
 				5288FB472A559C3B00EBC37C /* themes_v8_it.plist in Resources */,
-				C8140D4323266E8E0053FC86 /* Assets.xcassets in Resources */,
 				ED988627244DDCE600F4AE39 /* InfoPlist.strings in Resources */,
 				5288FB482A559C3B00EBC37C /* themes_v8_fr.plist in Resources */,
 				52941CA72A84F2A90022243D /* Localizable.strings in Resources */,
@@ -13180,7 +13178,6 @@
 				42CA19C22988F3B300810234 /* PDFDocument+Extension.swift in Sources */,
 				4209FEBF295C682300ACC02E /* FTDocumentCreateInfo.swift in Sources */,
 				4209FEA6295C624A00ACC02E /* FTURLReadThumbnailManager.swift in Sources */,
-				C85AFDE82331F5E500D25D5F /* BEMCheckBox.m in Sources */,
 				4209FE9C295C619D00ACC02E /* FTSelectedVariants.swift in Sources */,
 				4209FECA295C70F300ACC02E /* UIImage+.swift in Sources */,
 				BA1963552A96148A000C47FA /* FTNSiCloudManager.swift in Sources */,
@@ -13192,7 +13189,6 @@
 				4209FE5E295C5CA800ACC02E /* FTCustomSortingCache.swift in Sources */,
 				47CE079D2A0A317800E15028 /* FTUtils.m in Sources */,
 				5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */,
-				C85AFDE82331F5E500D25D5F /* BEMCheckBox.m in Sources */,
 				C85AFDEF2331FF4000D25D5F /* BEMCheckBoxGroup.m in Sources */,
 				4209FEB0295C630F00ACC02E /* FTLogger.swift in Sources */,
 				4209FE93295C614F00ACC02E /* FTDateInfo.swift in Sources */,
