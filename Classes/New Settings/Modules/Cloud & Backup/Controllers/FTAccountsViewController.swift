@@ -223,7 +223,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 }
             }else if indexPath.section == 3{
                 if cellIdentifier == CellIdentifiers.backUpOnWifi.rawValue{
-                    cell.switch?.isOn = true
+                    let isbackupOverWifi = FTCloudBackUpManager.shared.isCloudBackupOverWifiOnly()
+                    cell.switch?.isOn = isbackupOverWifi
                     cell.switch?.addTarget(self, action: #selector(FTAccountsViewController.toggleBackupOnWiFiOnly(_:)), for: .valueChanged)
                 }
             }

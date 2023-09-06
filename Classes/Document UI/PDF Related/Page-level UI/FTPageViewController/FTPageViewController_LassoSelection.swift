@@ -625,16 +625,6 @@ extension FTPageViewController: FTFavoriteColorNotifier {
 extension FTPageViewController: FTColorEyeDropperPickerDelegate {
     func colorPicker(picker: FTColorEyeDropperPickerController,didPickColor color:UIColor) {
         self.updateLassoColor(color.hexString)
-        if let shortcutVm = self.penShortcutViewModel {
-            if let editIndex = shortcutVm.presetEditIndex {
-                shortcutVm.updatePresetColor(hex: color.hexString, index: editIndex)
-                NotificationCenter.default.post(name: .PresetColorUpdate, object: nil, userInfo: ["type": FTColorToastType.edit.rawValue])
-            } else {
-                shortcutVm.addSelectedColorToPresets()
-                NotificationCenter.default.post(name: .PresetColorUpdate, object: nil, userInfo: ["type": FTColorToastType.add.rawValue])
-            }
-            shortcutVm.updateCurrentColors()
-        }
         self.penShortcutViewModel = nil
     }
 }
