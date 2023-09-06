@@ -1447,6 +1447,9 @@
 "templatesStore.templatePreview.createNotebook" = "創建筆記本";
 "templatesStore.templatePreview.inyourLibrary" = "在您的圖書館";
 "templatesStore.templatePreview.style" = "風格";
+"text.font.setAsDefault.menuTitle" = "設為預設：";
+"text.font.setAsDefault.thisAndFutureBooks" = "這本和所有未來的筆記本";
+"text.font.setAsDefault.thisBook" = "這個筆記本";
 "trash.alert.cannotOpenNotebook" = "這個筆記本無法打開，因為它已被刪除。要恢復，請長按並從菜單選擇該選項。";
 "trash.alert.title" = "您確定要清空垃圾桶嗎？";
 "unsplash.search.alertMessage" = "輸入要搜索的文字";
@@ -1493,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 6 September 2023 at 6:35 PM

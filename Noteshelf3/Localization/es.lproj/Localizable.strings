@@ -1447,6 +1447,9 @@
 "templatesStore.templatePreview.createNotebook" = "Crear cuaderno";
 "templatesStore.templatePreview.inyourLibrary" = "En tu biblioteca";
 "templatesStore.templatePreview.style" = "Estilo";
+"text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
+"text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
+"text.font.setAsDefault.thisBook" = "Esta libreta";
 "trash.alert.cannotOpenNotebook" = "Esta libreta no se puede abrir ya que ha sido eliminada. Para restaurar, mantén presionado y selecciona la opción del menú.";
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
 "unsplash.search.alertMessage" = "Introducir texto para buscar'";
@@ -1493,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 6 September 2023 at 6:35 PM

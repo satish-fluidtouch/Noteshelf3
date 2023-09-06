@@ -1447,6 +1447,9 @@
 "templatesStore.templatePreview.createNotebook" = "Crea quaderno";
 "templatesStore.templatePreview.inyourLibrary" = "Nella tua libreria";
 "templatesStore.templatePreview.style" = "Stile";
+"text.font.setAsDefault.menuTitle" = "Imposta come predefinito per:";
+"text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri quaderni";
+"text.font.setAsDefault.thisBook" = "Questo quaderno";
 "trash.alert.cannotOpenNotebook" = "Questo quaderno non può essere aperto poiché è stato eliminato. Per ripristinare, premi a lungo e seleziona l'opzione dal menu.";
 "trash.alert.title" = "Sei sicuro di voler svuotare il Cestino?";
 "unsplash.search.alertMessage" = "Inserisci il testo da cercare";
@@ -1493,4 +1496,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 6 September 2023 at 6:35 PM
