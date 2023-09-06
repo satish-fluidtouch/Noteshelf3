@@ -267,7 +267,7 @@ class FTShelfMoreToolbarItem: NSMenuToolbarItem {
         if let shelfToolbar = self.toolbar as? FTShelfToolbar {
 
             if shelfToolbar.sheflToolbarMode != .ns2 {
-                menuitems.append(UIMenu.menuFor(.selectNotes,onAction: { [weak self] (homeNavitem,identifier) in
+                menuitems.append(UIMenu.menuFor(.selectNotes,onAction: { (homeNavitem,identifier) in
                     shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
                 }))
             }
