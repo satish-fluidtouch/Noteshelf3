@@ -107,7 +107,6 @@ class FTTextPresetViewModel: NSObject {
     let reset = "Reset".localized
     let navPresettitle = "shelf.notebook.textstyle.Presets".localized
     let done = "done".localized
-    let navReordertitle = "shelf.notebook.textstyle.Reorder".localized
     let resetAlertdes = "shelf.notebook.textstyle.resetdescrption".localized
     let alertCancel = "shelf.alert.cancel".localized
     let resetAlert = "Reset".localized

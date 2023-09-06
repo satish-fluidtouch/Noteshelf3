@@ -496,13 +496,13 @@
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3i-Qn-wcX">
                                                         <rect key="frame" x="0.0" y="349" width="375" height="40"/>
-                                                        <color key="backgroundColor" name="accent"/>
+                                                        <color key="backgroundColor" name="cellBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="JZW-rl-FmH"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Set as Default">
-                                                            <color key="baseForegroundColor" name="createNotebookButtonTint"/>
+                                                            <color key="baseForegroundColor" name="accent"/>
                                                         </buttonConfiguration>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1688,13 +1688,13 @@
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G52-gh-h4V">
                                                         <rect key="frame" x="0.0" y="486" width="289" height="40"/>
-                                                        <color key="backgroundColor" name="accent"/>
+                                                        <color key="backgroundColor" name="cellBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="23B-dN-MRN"/>
                                                         </constraints>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="Set as Default">
-                                                            <color key="baseForegroundColor" name="createNotebookButtonTint"/>
+                                                            <color key="baseForegroundColor" name="accent"/>
                                                         </buttonConfiguration>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1835,9 +1835,6 @@
         </namedColor>
         <namedColor name="cellBackgroundColor">
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="createNotebookButtonTint">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="gray75">
             <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>

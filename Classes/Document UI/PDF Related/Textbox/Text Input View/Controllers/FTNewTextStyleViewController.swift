@@ -433,12 +433,12 @@ extension FTNewTextStyleViewController {
 
     @IBAction func setAsDefaultTapped(_ sender: Any) {
         let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
-        let menu = UIMenu(title: "", children: [
-            UIAction(title: "This notebook only", handler: { [weak self] _ in
+        let menu = UIMenu(title: "Set as default for:", children: [
+            UIAction(title: "This notebook", handler: { [weak self] _ in
                 guard let self else { return }
                 self.delegate?.didSetDefaultStyle(defaultStyleItem)
             }),
-            UIAction(title: "This notebook and future creating books", handler: { [weak self] _ in
+            UIAction(title: "This and all future notebooks", handler: { [weak self] _ in
                 guard let self else { return }
                 self.delegate?.didSetDefaultStyle(defaultStyleItem)
 

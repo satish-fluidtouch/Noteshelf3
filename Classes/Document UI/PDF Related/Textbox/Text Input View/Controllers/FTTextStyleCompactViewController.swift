@@ -332,6 +332,7 @@ extension FTTextStyleCompactViewController {
     @objc func applyAttributesStyle() {
         self.txtFontSize?.text = "\(textFontStyle.fontSize)"
         self.applyFontChanges(false)
+        self.updateFontTraitsEnableStatus()
         self.didHighLightSelectedStyle(attr: self.attributes, scale: self.scale)
     }
     
@@ -345,13 +346,13 @@ extension FTTextStyleCompactViewController {
 
     @IBAction func setAsDefaultTapped(_ sender: Any) {
         let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
-        let menu = UIMenu(title: "", children: [
-            UIAction(title: "This notebook only", handler: { [weak self] _ in
-                guard let self = self else { return }
+        let menu = UIMenu(title: "Set as default for: ", children: [
+            UIAction(title: "This notebook", handler: { [weak self] _ in
+                guard let self else { return }
                 self.delegate?.didSetDefaultStyle(defaultStyleItem)
             }),
-            UIAction(title: "This notebook and future creating books", handler: { [weak self] _ in
-                guard let self = self else { return }
+            UIAction(title: "This and all future notebooks", handler: { [weak self] _ in
+                guard let self else { return }
                 self.delegate?.didSetDefaultStyle(defaultStyleItem)
 
                 var fontInfoDict: [String: String] = [:]
@@ -417,6 +418,11 @@ extension FTTextStyleCompactViewController  {
         }
         return testFont.canAddTrait(trait)
     }
+
+    internal func updateFontTraitsEnableStatus() {
+        self.btnBold?.isEnabled = self.canAddTrait(.traitBold)
+        self.btnItalic?.isEnabled = self.canAddTrait(.traitItalic)
+    }
 }
 
 extension FTTextStyleCompactViewController: FTTextSelectionChangeDelegate {
@@ -465,7 +471,6 @@ extension FTTextStyleCompactViewController: FTTextSelectionChangeDelegate {
         if let isLineSpaceEnabled = attributes[isLineSpaceAttrKey] as? Int {
             self.isAutoLineSpaceEnabled = (isLineSpaceEnabled == 1)
         }
-
         self.classForCoder.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.applyAttributesStyle), object: self)
         perform(#selector(self.applyAttributesStyle), with: self, afterDelay: 0.5, inModes: [.default])
     }

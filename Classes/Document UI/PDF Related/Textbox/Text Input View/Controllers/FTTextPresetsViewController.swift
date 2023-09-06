@@ -105,8 +105,9 @@ extension FTTextPresetsViewController {
     private func handleNewStyleVcPresentation(style: FTTextStyleItem? = nil, mode: FTTextStyleScreenMode) {
         let newStyleVc = self.fetchPreparedNewStyleVcToSow()
         newStyleVc.textStyleMode = mode
-        if let txtSTyle = style {
-            newStyleVc.textFontStyle = txtSTyle
+        if let txtStyle = style {
+            newStyleVc.textFontStyle = txtStyle
+            newStyleVc.attributes = nil
         }
         if let navVc = self.navigationController {
             if navVc.modalPresentationStyle == .formSheet {
@@ -152,18 +153,17 @@ extension FTTextPresetsViewController {
     private func configureUIItems(with mode: FTPresetStyleMode) {
         self.navigationItem.rightBarButtonItems = []
         self.navigationItem.leftBarButtonItems = []
+        self.title = viewmodel.navPresettitle
         if mode == .select {
-            self.title = viewmodel.navPresettitle
-            self.presetTableView?.isEditing = true
-            self.presetTableView?.dragInteractionEnabled = true
+            self.presetTableView?.isEditing = false
+            self.presetTableView?.dragInteractionEnabled = false
             // nav items
-            let editBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: self, action: #selector(didTappedOnEdit(sender:)))
+            let editBarButtonItem = UIBarButtonItem(title: self.viewmodel.editpreset, style: .plain, target: self, action: #selector(didTappedOnEdit(sender:)))
             let resetBarButtonItem = UIBarButtonItem(title: viewmodel.reset, style: .plain, target: self, action: #selector(didTappedOnResetButton(sender:)))
             resetBarButtonItem.tintColor = UIColor.appColor(.darkRed)
             self.navigationItem.leftBarButtonItem = editBarButtonItem
             self.navigationItem.rightBarButtonItem = resetBarButtonItem
         } else {
-            self.title = self.viewmodel.navReordertitle
             self.presetTableView?.isEditing = true
             self.presetTableView?.dragInteractionEnabled = true
             // nav items
@@ -215,14 +215,19 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
             return
         }
         if indexPath.section == 1, tableView.cellForRow(at: indexPath) is FTAddNewTextStyleCell { // Add New Preset
-            self.handleNewStyleVcPresentation(mode: .presetAdd)
-        } else if !tableView.isEditing { // in popover mode(selection mode)
+            runInMainThread(0.001) { // to have highlight visible
+                self.handleNewStyleVcPresentation(mode: .presetAdd)
+            }
+        } else if self.presetMode == .select, !tableView.isEditing { // in popover mode(selection mode)
             let selectedStyle = textStyle.styles[indexPath.row]
-            if self.presetMode == .select {
-                self.delegate?.didSelectedPresetStyleId(selectedStyle)
-                self.dismiss(animated: true)
-            } else {
-                self.handleNewStyleVcPresentation(style: selectedStyle, mode: .presetEdit)
+            self.delegate?.didSelectedPresetStyleId(selectedStyle)
+            self.dismiss(animated: true)
+        } else if self.presetMode == .reorder, tableView.isEditing {
+            let selectedStyle = textStyle.styles[indexPath.row]
+            if !selectedStyle.isDefault {
+                runInMainThread(0.001) { // to have highlight visible
+                    self.handleNewStyleVcPresentation(style: selectedStyle, mode: .presetEdit)
+                }
             }
         }
     }
@@ -247,10 +252,14 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
     }
 
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0 && self.presetMode == .reorder {
-            return false
+        var status = true
+        if indexPath.section == 0 {
+            let selectedStyle = textStyle.styles[indexPath.row]
+            if selectedStyle.isDefault {
+                status = false
+            }
         }
-        return true
+        return status
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
