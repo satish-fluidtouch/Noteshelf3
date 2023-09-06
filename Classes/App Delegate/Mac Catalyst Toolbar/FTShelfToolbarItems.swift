@@ -258,39 +258,38 @@ class FTShelfMoreToolbarItem: NSMenuToolbarItem {
         self.isEnabled = canPerform
     }
 
+    func updateMenu() {
+        self.rebuildMenu()
+    }
+
     private func rebuildMenu() {
-        var menuitems = [UIMenuElement]();
-        menuitems.append(UIMenu.menuFor(.selectNotes,onAction: { [weak self] (homeNavitem,identifier) in
-            if let shelfToolbar = self?.toolbar as? FTShelfToolbar {
-                shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
+        var menuitems = [UIMenuElement]()
+        if let shelfToolbar = self.toolbar as? FTShelfToolbar {
+
+            if shelfToolbar.sheflToolbarMode != .ns2 {
+                menuitems.append(UIMenu.menuFor(.selectNotes,onAction: { [weak self] (homeNavitem,identifier) in
+                    shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
+                }))
             }
-        }));
-                         
-        menuitems.append(UIMenu.sortByOptionsMenu(onAction: { [weak self] (sortOrder,identifier) in
-            if let shelfToolbar = self?.toolbar as? FTShelfToolbar {
+
+            menuitems.append(UIMenu.sortByOptionsMenu(mode: shelfToolbar.sheflToolbarMode, onAction: { [weak self] (sortOrder,identifier) in
                 shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
-            }
-            FTUserDefaults.setSortOrder(sortOrder)
-            self?.rebuildMenu();
-        }));
-                         
-        menuitems.append(UIMenu.displayOptionsMenu(onAction: { [weak self] (displayStyle,identifier) in
-            if let shelfToolbar = self?.toolbar as? FTShelfToolbar {
+                FTUserDefaults.setSortOrder(sortOrder)
+                self?.rebuildMenu()
+            }));
+
+            menuitems.append(UIMenu.displayOptionsMenu(onAction: { [weak self] (displayStyle,identifier) in
                 shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
-            }
-            FTShelfDisplayStyle.displayStyle = displayStyle
-            self?.rebuildMenu();
-        }));
-                         
-//        menuitems.append(UIMenu.menuFor(.settings,onAction: { [weak self] (homeNavitem,identifier) in
-//            if let shelfToolbar = self?.toolbar as? FTShelfToolbar {
-//                shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
-//            }
-//        }));
-        let menu = UIMenu(title: "",children: menuitems);
-        self.itemMenu = menu;
+                FTShelfDisplayStyle.displayStyle = displayStyle
+                self?.rebuildMenu()
+            }))
+
+            let menu = UIMenu(title: "",children: menuitems)
+            self.itemMenu = menu
+        }
     }
 }
+
 extension Notification.Name {
     static let resignSearchToolbarItem = Notification.Name("resignSearchToolbarItem")
     static let updateRecentSearchText = Notification.Name("updateRecentSearchText")
