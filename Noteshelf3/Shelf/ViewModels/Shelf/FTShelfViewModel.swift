@@ -179,9 +179,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var canShowStarredIconOnNB: Bool {
         return !(collection.isTrash)
     }
-    var currentSelectedSideBarItemType : FTSideBarItemType {
-        self.selectedSideBarItem?.type ?? .home
-    }
     var supportsDragAndDrop: Bool {
         !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash || isNS2Collection)
     }
