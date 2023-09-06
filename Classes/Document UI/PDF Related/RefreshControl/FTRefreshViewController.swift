@@ -176,15 +176,15 @@ extension FTRefreshViewController {
                     let threshold = (refreshPageViewWidth * multiplyFactor)
                     if currentOffset > threshold {
                         scrollView?.setContentOffset(CGPoint(x: -refreshPageViewWidth, y: 0), animated: true)
-                    } else {
+                    } else if currentOffsetValue < 0 {
                         scrollView?.setContentOffset(.zero, animated: true)
                     }
                 }
             } else if self.scrollDirection == .right {
                 let avoidSnapping = trans.x > previousTranslation.x
                 previousTranslation = trans
-                if currentOffsetValue > 0.0 {
-                    let contentSize = _scrollView.contentSize
+                let contentSize = _scrollView.contentSize
+                if currentOffsetValue > contentSize.width - scrollView!.frame.width {
                     if avoidSnapping {
                         scrollView?.setContentOffset(CGPoint(x: contentSize.width - _scrollView.frame.width, y: 0), animated: true)
                         return
@@ -192,7 +192,7 @@ extension FTRefreshViewController {
                     let threshold =  contentSize.width - scrollView!.frame.width + (refreshPageViewWidth * multiplyFactor)
                     if (currentOffsetValue) > threshold {
                         scrollView?.setContentOffset(CGPoint(x: contentSize.width - scrollView!.frame.width + refreshPageViewWidth , y: 0), animated: true)
-                    } else {
+                    } else if currentOffsetValue > contentSize.width - _scrollView.frame.width {
                         scrollView?.setContentOffset(CGPoint(x: contentSize.width - _scrollView.frame.width, y: 0), animated: true)
                     }
                 }
