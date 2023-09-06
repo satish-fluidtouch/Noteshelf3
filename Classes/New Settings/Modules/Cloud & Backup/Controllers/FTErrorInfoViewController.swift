@@ -10,31 +10,15 @@ import FTCommon
 
 // MARK: This is developed for showing back error message for ignored books
 class FTErrorInfoViewController: UIViewController {
-    @IBOutlet private weak var infoLabel: UILabel?
+    @IBOutlet private weak var tableView: UITableView!
+    internal let ignoredItems = FTCloudBackUpManager.shared.activeCloudBackUpManager?.ignoreList.ignoredItemsForUIDisplay() ?? []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.infoLabel?.text = self.getIgnoredItemsErrorMessage()
+        self.title = "Errors"
+        self.tableView.isHidden = ignoredItems.isEmpty
         let rightNavItem = FTNavBarButtonItem(type: .right, title: "done".localized, delegate: self)
         self.navigationItem.rightBarButtonItem = rightNavItem
-    }
-
-    private func getIgnoredItemsErrorMessage() -> String {
-        var errorMsg = ""
-        if let ignoredNotebooks = FTCloudBackUpManager.shared.activeCloudBackUpManager?.ignoreList.ignoredItemsForUIDisplay(), !ignoredNotebooks.isEmpty {
-            var arrayError: [String] = []
-            for ignoreEntry in ignoredNotebooks where ignoreEntry.hideFromUser == false {
-                let message = ignoreEntry.ignoreReason
-                arrayError.append(message)
-            }
-            for (index,msg) in arrayError.enumerated() {
-                errorMsg.append(msg)
-                if index != arrayError.count - 1 {
-                    errorMsg.append("\n")
-                }
-            }
-        }
-        return errorMsg
     }
 }
 
@@ -43,5 +27,19 @@ extension FTErrorInfoViewController: FTBarButtonItemDelegate {
         if type == .right {
             self.dismiss(animated: true)
         }
+    }
+}
+
+extension FTErrorInfoViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ignoredItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTErrorInfoTableViewCell", for: indexPath) as? FTErrorInfoTableViewCell else {
+            fatalError("Programmer error, unable to find FTErrorInfoTableViewCell")
+        }
+        cell.configureErrorInfo(with: ignoredItems[indexPath.row])
+        return cell
     }
 }

@@ -1834,6 +1834,7 @@
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E74BB38F28D1BE15004E398A /* FTShortcutContentHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74BB38E28D1BE15004E398A /* FTShortcutContentHolderView.swift */; };
+		E74ECA6A2AA754C8006E5E23 /* FTErrorInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74ECA692AA754C8006E5E23 /* FTErrorInfoTableViewCell.swift */; };
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
@@ -3869,6 +3870,7 @@
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
 		E74BB38E28D1BE15004E398A /* FTShortcutContentHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutContentHolderView.swift; sourceTree = "<group>"; };
+		E74ECA692AA754C8006E5E23 /* FTErrorInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTErrorInfoTableViewCell.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
@@ -4800,6 +4802,7 @@
 				E765250D27574FB500ABBAEC /* FTBackUpOptionsFooterView.xib */,
 				E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */,
 				E75BAE272769BE840084043F /* FTEvernoteFooterView.xib */,
+				E74ECA692AA754C8006E5E23 /* FTErrorInfoTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -12635,6 +12638,7 @@
 				BAF393AD2859ADF00067CA9F /* FTSearchResultBook.swift in Sources */,
 				972B54042A4EB7BE001158D9 /* FTShareBasePreviewView.swift in Sources */,
 				BAF393AF2859ADF00067CA9F /* FTCustomCoverStyleProtocol.swift in Sources */,
+				E74ECA6A2AA754C8006E5E23 /* FTErrorInfoTableViewCell.swift in Sources */,
 				BAF393B02859ADF00067CA9F /* FTBackupOptionsViewController.swift in Sources */,
 				972B54002A4D893B001158D9 /* FTSharePreviewItemViewModel.swift in Sources */,
 				BAF393B22859ADF00067CA9F /* FTLocalMetadataCache.swift in Sources */,
