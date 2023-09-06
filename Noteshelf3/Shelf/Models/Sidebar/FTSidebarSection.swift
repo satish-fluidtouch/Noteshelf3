@@ -16,10 +16,6 @@ class FTSidebarSection: FTSectionDisplayable, FTSideMenuDeletable, Identifiable,
         type.displayTitle ?? ""
     }
 
-    var canShowAddItem: Bool {
-        type.showAddNewOption
-    }
-
     var supportsRearrangeOfItems: Bool = false
 
     @Published var items: [FTSideBarItem] = []

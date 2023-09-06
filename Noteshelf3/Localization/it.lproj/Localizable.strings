@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Questo colore è già nella tua tavolozza.";
 "ColorByAuthor" = "da %@";
 "Colors" = "Colori";
-"ColourLoversAddHeader" = "Aggiungi scegliendo colori individuali o un'intera palette.";
-"ColourLoversEditHeader" = "Tocca un colore dalla tavolozza per selezionare.";
 "Confirm" = "Conferma";
 "ConflictDocModifiedOn" = "Modificato il %@";
 "Connect" = "Collegare";
@@ -710,31 +708,31 @@
 "ResetColorsTitle" = "Ripristina colori";
 "ResetColorsWarning" = "Questo re-imposterà le tavolozze dei colori ai valori predefiniti di fabbrica.";
 "ResetToDefault" = "Ripristina predefiniti";
-"Resize" = "Registra audio";
+"Resize" = "Ridimensionare";
 "ResolveConflict" = "Registrazione";
 "ResolveConflictMessage" = "Registrazione in corso...";
 "Restore" = "Recupera pagine";
 "ResultsFor" = "Risultati per %@";
 "RetakeKey" = "3-finger right swipe/left swipe:  Sfoglia a destra con 3 dita/sfoglia a sinistra con 3 dita";
 "Right" = "Rilascia per aggiungere nuova pagina";
-"Rotate" = "Ricordamelo più tardi";
-"Rotate Page" = "Rimuovi";
+"Rotate" = "Ruota";
+"Rotate Page" = "Ruota la pagina";
 "Rotating" = "Rimuovi dai Recenti";
 "SampleNotebook" = "Rinomina";
-"SaveAsTemplate" = "Rinomina %d Quaderni.";
+"SaveAsTemplate" = "Salva come modello";
 "SaveForFutureUse" = "Rinomina tag";
 "SaveImageChangesConfirmation" = "Rinominazione...\n%d di %d";
 "SaveKey" = "Richiesto";
 "SaveQuickNote" = "Richiedi una password per aprire questo quaderno";
 "Saving" = "Richiede una Apple Pencil che supporti il doppio tocco.";
-"Scan" = "Si prega di aggiornare l'app all'ultima versione per aprire questo documento.";
-"ScanDocument" = "Ripristina";
-"ScanDocument" = "Ripristina";
+"Scan" = "Scansiona";
+"ScanDocument" = "Scansiona documento";
+"ScanDocument" = "Scansiona documento";
 "ScannerUnavailable" = "Desideri ripristinare le tue palette di colori ai valori predefiniti di fabbrica?";
 "SchoolWorkApp" = "Ripristina colori";
-"Screenshot" = "Questo reimposterà le palette di colori ai valori predefiniti di fabbrica.";
-"Scrolling" = "Ripristina predefiniti";
-"Search" = "Ridimensiona";
+"Screenshot" = "Screenshot";
+"Scrolling" = "Scorrimento";
+"Search" = "Cerca";
 "SearchPapersCovers" = "Le modifiche non sono sincronizzate. Scegli quali documenti mantenere.";
 "SearchText" = "Ripristina";
 "SearchTitles" = "Risultati per '%@'";
@@ -863,8 +861,8 @@
 "Title" = "Titolo";
 "Title&PageNo" = "Titolo e Numero di Pagina";
 "TransparentBand" = "Banda trasparente";
-"Trash" = "Spazzatura";
-"Trash" = "Spazzatura";
+"Trash" = "Cestino";
+"Trash" = "Cestino";
 "Travel" = "Viaggi e Luoghi";
 "Travel" = "Viaggi e Luoghi";
 "TurnOffAutoBackup" = "Disattiva il backup automatico";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Impossibile accedere a Box.";
 "UnableToAccessDropbox" = "Impossibile accedere a Dropbox.";
 "UnableToAccessWeLink" = "Impossibile accedere a WeLink";
-"UnableToConnectToColourLovers" = "Impossibile connettersi a COLOURlovers.com.";
 "UnableToConnectToTheWebDAVServer" = "Impossibile connettersi al server WebDAV. Riprova più tardi.";
 "UnableToLocateTheServer" = "Impossibile individuare il server. Controlla l'URL del server e riprova.";
 "UnableToauthenticate" = "Impossibile autenticare.";
@@ -953,6 +950,12 @@
 "bujoessentials" = "Essenziali per Bujo";
 "cancel" = "Annulla";
 "clipart404" = "Server occupato, riprova più tardi.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "Impossibile creare il file di backup. Controlla lo spazio disponibile sul tuo dispositivo.";
+"cloud.backup.error.fileNotFound" = "File non trovato";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Nota: I quaderni protetti da password non possono essere esportati in formato PDF.";
 "color.added" = "Colore aggiunto";
 "color.deleted" = "Colore eliminato";
 "color.editColor" = "Modifica colore";
@@ -985,7 +988,7 @@
 "customizeToolbar.pen" = "Penna";
 "customizeToolbar.photo" = "Foto";
 "customizeToolbar.pixabay" = "Pixabay";
-"customizeToolbar.present" = "Presente";
+"customizeToolbar.present" = "Presentare";
 "customizeToolbar.readOnlyMode" = "Modalità di sola lettura";
 "customizeToolbar.resetConfirmation" = "Sei sicuro di voler ripristinare la barra degli strumenti predefinita?";
 "customizeToolbar.rotatePage" = "Ruotare pagina";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "Termini e condizioni";
 "iap.title" = "Ottieni l'esperienza completa con Noteshelf Premium";
 "iap.upgradeNow" = "Aggiorna ora";
+"icloud.sync.issue.message" = "Impossibile connettersi a iCloud. Assicurati che iCloud sia attivato nelle impostazioni.";
 "iconlabels" = "Etichette delle icone";
 "import" = "Importa";
 "importedFiles" = "File importati";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Ampio";
 "lockwithfaceIDandPasscode" = "Blocca con %@ e codice di accesso";
-"migration.alert.cancel" = "Annulla";
-"migration.alert.copy" = "Copia";
-"migration.alert.message" = "Questo creerà una copia del nuovo quaderno, con i contenuti copiati.";
-"migration.alert.open" = "Aperto";
-"migration.alert.title" = "Vuoi migrare questo libro su NS3?";
-"migration.alert.yes" = "Sì";
-"migration.failure.message" = "Non è possibile migrare questo libro al momento. Contattare l'assistenza.";
+"migration.alert.migrate" = "Migrazione";
+"migration.alert.open" = "Vai alla posizione";
+"migration.alert.title" = "Vuoi migrare una copia di questo quaderno su Noteshelf 3?";
 "migration.progress.text" = "Migrando";
-"migration.success.alert.message" = "Vuoi aprire il quaderno?";
-"migration.success.alert.title" = "Migrato con successo in Non archiviato";
+"migration.success.alert.message" = "Successo! Il tuo notebook migrato è stato posizionato in: %@";
 "months" = "Mesi";
 "more" = "Più";
 "more.globalsettings.caps" = "IMPOSTAZIONI GLOBALI";
@@ -1126,7 +1125,7 @@
 "newnotebook.webclip.webclipinfo" = "Trascina e rilascia dal tuo browser nel tuo notebook o scrivi l'indirizzo web qui sotto.";
 "nintetyClockwise" = "In senso orario di 90°";
 "nintetyCounterClockwise" = "Contro orario di 90°";
-"notebook.addnew.newpage" = "NUOVA PAGINA";
+"notebook.addnew.newpage" = "Nuova Pagina";
 "notebook.eraserRack.NavTitle" = "Cancella";
 "notebook.lassoRack.NavTitle" = "Laccio";
 "notebook.restoring" = "Ripristino...";
@@ -1189,9 +1188,10 @@
 "quotes" = "Citazioni";
 "removefromRecents" = "Rimuovi dai Recenti";
 "reset" = "Ripristina";
+"retry" = "Ritentare";
 "save" = "Rinomina Gruppo";
 "school" = "Scuola";
-"search.tryNewSearch" = "Risolvere conflitto";
+"search.tryNewSearch" = "Prova una nuova ricerca";
 "seeAll" = "Riprendi";
 "selectColor" = "SELEZIONA COLORE";
 "settings" = "Impostazioni";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "Vedi tutto";
 "shelf.home.seeAllNotes" = "Vedi tutte le note";
 "shelf.importfile.description" = "Aggiungi PDF e immagini dalla tua app File.";
-"shelf.migration.Description" = "Per migrare il tuo libro alla nuova versione di Noteshelf, toccalo o tieni premuto e scegli l'opzione di migrazione dal menu.";
+"shelf.migration.Description" = "Basta toccare su qualsiasi quaderno qui per migrarne una copia su Noteshelf 3. I quaderni migrati saranno disponibili nelle categorie e gruppi di Noteshelf 3. La possibilità di migrare intere categorie verrà presto introdotta!";
 "shelf.migration.headerMessage" = "Migra i tuoi appunti su Noteshelf 3";
 "shelf.navBar.deselectAll" = "Deseleziona tutto";
 "shelf.navBar.select" = "Seleziona";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Rimuovi tag";
 "sidebar.allTags.toolbar.share" = "Condividi";
 "sidebar.bookmark" = "Segnalibro";
+"sidebar.bookmarks" = "Segnalibri";
 "sidebar.bookmarks.alert.message" = "Sei sicuro di voler rimuovere il segnalibro per questa pagina?";
 "sidebar.bookmarks.bookmark" = "Segnalibro";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "Apri in una nuova finestra";
@@ -1388,7 +1389,9 @@
 "sidebar.bookmarks.page" = "pagina %@";
 "sidebar.contextualMenu.deleteTag" = "Elimina tag";
 "sidebar.photo" = "Foto";
+"sidebar.photos" = "Foto";
 "sidebar.recording" = "Registrazione";
+"sidebar.recordings" = "Registrazioni";
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Segnalato";
 "sidebar.topSection.unfiled" = "Non classificato";
@@ -1399,7 +1402,7 @@
 "stickies" = "Appunti";
 "stickynotes" = "Appunti adesivi";
 "stylus.goto.settings" = "Vai su Impostazioni/Apple Pencil";
-"stylus.switch.fullscreen" = "Passa a schermo intero.";
+"stylus.switch.focusmode" = "Passa alla modalità di focus";
 "tags.contextualMenu.deleteTag" = "Elimina tag";
 "tags.contextualMenu.renameTag" = "Rinomina Tag";
 "tags.delete.alert.message" = "Il tag verrà rimosso dagli elementi a cui è collegato.";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Akshay on 5 September 2023 at 15:19

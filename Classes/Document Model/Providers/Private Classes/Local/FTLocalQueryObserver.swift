@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FTCommon
 
 protocol FTLocalQueryGatherDelegate: AnyObject {
     func ftLocalQueryGather(_ query : FTLocalQueryGather,didFinishGathering results:[URL]?);
@@ -17,7 +18,7 @@ class FTLocalQueryGather {
     fileprivate var extToListen : [String] = [String]()
     fileprivate var skipSubFolder = true;
     
-    fileprivate weak var delegate : FTLocalQueryGatherDelegate!;
+    fileprivate weak var delegate : FTLocalQueryGatherDelegate?;
 
     init(rootURL: URL,
          extensionsToListen exts: [String],
@@ -44,13 +45,13 @@ class FTLocalQueryGather {
             t1 = Date.timeIntervalSinceReferenceDate;
         }
         
-        let urls = self.contentsOfURL(self.directoryURLToSearch(), skipsSubFolder: skipSubFolder);
+        var urls = self.contentsOfURL(self.directoryURLToSearch(), skipsSubFolder: skipSubFolder);
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
             t2 = Date.timeIntervalSinceReferenceDate;
             debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Gathering : \(String(describing: self.rootURL)) time taken to gather:\(t2-t1)");
         }
         
-        self.delegate.ftLocalQueryGather(self, didFinishGathering: urls);
+        self.delegate?.ftLocalQueryGather(self, didFinishGathering: urls);
         
         if(ENABLE_SHELF_RPOVIDER_LOGS) {
             let t3 = Date.timeIntervalSinceReferenceDate;
@@ -96,7 +97,7 @@ private extension FTLocalQueryGather {
         var notebookUrlList: [URL] = [URL]()
         if(!skipsSubFolder) {
             filteredURLS.enumerated().forEach({ (_,eachURL) in
-                if(eachURL.pathExtension == groupExtension) {
+                if(eachURL.pathExtension == FTFileExtension.group) {
                     let dirContents = self.contentsOfURL(eachURL,skipsSubFolder: skipsSubFolder);
                     notebookUrlList.append(contentsOf: dirContents);
                 }

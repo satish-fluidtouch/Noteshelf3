@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "This color is already on your palette";
 "ColorByAuthor" = "by %@";
 "Colors" = "Colors";
-"ColourLoversAddHeader" = "Add by choosing individual colors or an entire palette.";
-"ColourLoversEditHeader" = "Tap a color from the palette to select.";
 "Confirm" = "Confirm";
 "ConflictDocModifiedOn" = "Modified on %@";
 "Connect" = "Connect";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Unable to access Box";
 "UnableToAccessDropbox" = "Unable to access Dropbox";
 "UnableToAccessWeLink" = "Unable to access WeLink";
-"UnableToConnectToColourLovers" = "Unable to connect to COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "Unable to connect to the WebDAV server. Please try again later.";
 "UnableToLocateTheServer" = "Unable to locate the server. Check the server URL and try again.";
 "UnableToauthenticate" = "Unable to authenticate";
@@ -953,6 +950,12 @@
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
 "clipart404" = "Server Busy, Please try again later.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
+"cloud.backup.error.fileNotFound" = "File not found";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Note : Password protected notebooks cannot be backed up as PDFs";
 "color.added" = "Color added";
 "color.deleted" = "Color deleted";
 "color.editColor" = "Edit Color";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "Terms and Conditions";
 "iap.title" = "Get the full experience with Noteshelf Premium";
 "iap.upgradeNow" = "Upgrade now";
+"icloud.sync.issue.message" = "Unable to reach iCloud. Please make sure iCloud is turned on in settings.";
 "iconlabels" = "Icon Labels";
 "import" = "Import";
 "importedFiles" = "Imported Files";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Wide";
 "lockwithfaceIDandPasscode" = "Lock with %@ & Passcode";
-"migration.alert.cancel" = "Cancel";
-"migration.alert.copy" = "Copy";
-"migration.alert.message" = "This will create a copy of the new notebook, with copied contents.";
-"migration.alert.open" = "Open";
-"migration.alert.title" = "Would you like to migrate this book to NS3?";
-"migration.alert.yes" = "Yes";
-"migration.failure.message" = "Unable to migrate this book for now. Please contact support.";
+"migration.alert.migrate" = "Migrate";
+"migration.alert.open" = "Go to Location";
+"migration.alert.title" = "Would you like to migrate a copy of this notebook to Noteshelf 3? ";
 "migration.progress.text" = "Migrating";
-"migration.success.alert.message" = "Would you like to open the notebook?";
-"migration.success.alert.title" = "Successfully migrated to Unfiled";
+"migration.success.alert.message" = "Success! Your migrated notebook has been placed in: %@";
 "months" = "Months";
 "more" = "More";
 "more.globalsettings.caps" = "GLOBAL SETTINGS";
@@ -1189,6 +1188,7 @@
 "quotes" = "Quotes";
 "removefromRecents" = "Remove from Recents";
 "reset" = "Reset";
+"retry" = "Retry";
 "save" = "Save";
 "school" = "School";
 "search.tryNewSearch" = "Try a new search";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "See All";
 "shelf.home.seeAllNotes" = "See All Notes";
 "shelf.importfile.description" = "Add PDFs and images from your Files app";
-"shelf.migration.Description" = "To migrate your book to the new version of Noteshelf, tap on it or long press and choose the migration option from the menu.";
+"shelf.migration.Description" = "Simply tap on any notebook here to migrate a copy of it to Noteshelf 3. Migrated notebooks will be available in the Noteshelf 3 categories and groups. Ability to migrate entire categories is coming soon!";
 "shelf.migration.headerMessage" = "Migrate your notebooks to Noteshelf 3";
 "shelf.navBar.deselectAll" = "Deselect All";
 "shelf.navBar.select" = "Select";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Remove Tags";
 "sidebar.allTags.toolbar.share" = "Share";
 "sidebar.bookmark" = "Bookmark";
+"sidebar.bookmarks" = "Bookmarks";
 "sidebar.bookmarks.alert.message" = "Are you sure you want to remove Bookmark for this page?";
 "sidebar.bookmarks.bookmark" = "Bookmark";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "Open in New Window";
@@ -1388,7 +1389,9 @@
 "sidebar.bookmarks.page" = "page %@";
 "sidebar.contextualMenu.deleteTag" = "Delete Tag";
 "sidebar.photo" = "Photo";
+"sidebar.photos" = "Photos";
 "sidebar.recording" = "Recording";
+"sidebar.recordings" = "Recordings";
 "sidebar.topSection.home" = "Home";
 "sidebar.topSection.starred" = "Starred";
 "sidebar.topSection.unfiled" = "Unfiled";
@@ -1399,7 +1402,7 @@
 "stickies" = "Stickies";
 "stickynotes" = "Sticky Notes";
 "stylus.goto.settings" = "Go to Settings/Apple Pencil";
-"stylus.switch.fullscreen" = "Switch to full screen";
+"stylus.switch.focusmode" = "Switch to Focus Mode";
 "tags.contextualMenu.deleteTag" = "Delete Tag";
 "tags.contextualMenu.renameTag" = "Rename Tag";
 "tags.delete.alert.message" = "The tag will be removed from the items the tag is attached to.";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Akshay on 5 September 2023 at 15:19

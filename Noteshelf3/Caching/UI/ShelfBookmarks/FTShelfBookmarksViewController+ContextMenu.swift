@@ -14,6 +14,10 @@ import UIKit
 extension FTShelfBookmarksViewController {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        track(EventName.shelf_bookmark_page_longpress, screenName: ScreenName.shelf_bookmarks)
+        if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = true
+        }
         let cell = collectionView.cellForItem(at: indexPath)!
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
@@ -22,6 +26,8 @@ extension FTShelfBookmarksViewController {
                 guard let self = self else { return }
                 let item = self.bookmarkItems[indexPath.row]
                 self.openItemInNewWindow(item.shelfItem!, pageIndex: item.pageIndex)
+                track(EventName.shelf_bookmark_openinnewwindow_tap, screenName: ScreenName.shelf_bookmarks)
+
             }
             actions.append(openNewWindowAction)
 
@@ -30,6 +36,7 @@ extension FTShelfBookmarksViewController {
                 UIAlertController.showDeleteDialog(with: "sidebar.bookmarks.alert.message".localized, message: "", from: self) {
                     let item = self.bookmarkItems[indexPath.row]
                     self.removeBookmarkForItem(item: item, at: indexPath)
+                    track(EventName.shelf_bookmark_remove_tap, screenName: ScreenName.shelf_bookmarks)
                 }
             }
             removeBookmarkAction.attributes = .destructive
@@ -76,6 +83,9 @@ extension FTShelfBookmarksViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = false
+        }
         if let identifier = configuration.identifier as? IndexPath {
             if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfBookmarkPageCell {
                 let parameters = UIPreviewParameters()

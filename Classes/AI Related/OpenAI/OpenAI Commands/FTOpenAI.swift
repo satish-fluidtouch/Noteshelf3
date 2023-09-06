@@ -24,6 +24,7 @@ class FTOpenAI: NSObject {
         var messages = [Chat]();
         messages.append(Chat(role: .user, content: commandString));
         
+        var targettedError: Error?;
         let query = ChatQuery(model: .gpt3_5Turbo, messages: messages,temperature: 0.2)
         openAI.chatsStream(query: query) { partialResult in
             switch partialResult {
@@ -33,12 +34,16 @@ class FTOpenAI: NSObject {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
+                    targettedError = error;
                     onUpdate("",error,command.commandToken);
                 }
             }
         } completion: { error in
             DispatchQueue.main.async {
-                onCompletion(error,command.commandToken);
+                if nil != error {
+                    targettedError = error;
+                }
+                onCompletion(targettedError,command.commandToken);
             }
         };
     }

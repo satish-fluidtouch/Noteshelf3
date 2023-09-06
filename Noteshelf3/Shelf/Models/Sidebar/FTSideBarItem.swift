@@ -28,7 +28,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     var type: FTSideBarItemType = .home
 
-    var shelfCollection: FTShelfItemCollection?
+    weak var shelfCollection: FTShelfItemCollection?
 
     var highlightColor: Color {
         if !self.isEditing && !self.highlighted {
@@ -60,7 +60,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     convenience init(shelfCollection: FTShelfItemCollection) {
         self.init()
-        self.title = NSLocalizedString(shelfCollection.displayTitle, comment: "collection name")
+        self.title = shelfCollection.displayTitle
         self.icon = FTIcon.folder
         self.isEditing = false
         self.type = .category

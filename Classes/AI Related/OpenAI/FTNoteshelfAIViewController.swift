@@ -338,7 +338,13 @@ private extension FTNoteshelfAIViewController {
             guard let curToken = self?.currentToken, curToken == token else {
                 return;
             }
-            self?.textViewController?.insertText(string);
+            if let inerror = error {
+                track("AI Error", params: ["detail":inerror.localizedDescription], screenName: nil)
+                self?.textViewController?.insertText("noteshelf.ai.noteshelfAIError".aiLocalizedString);
+            }
+            else {
+                self?.textViewController?.insertText(string);
+            }
         } onCompletion: { [weak self] (error,token) in
             guard let curToken = self?.currentToken, curToken == token else {
                 return;

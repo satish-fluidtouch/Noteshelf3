@@ -32,7 +32,7 @@ class FTShelfTagsViewController: UIViewController {
 
     var selectedTag: FTTagModel? {
         didSet {
-            if searchTag != selectedTag?.text || (selectedTag == nil && searchTag == "sidebar.allTags".localized) {
+            if searchTag != selectedTag?.text || (selectedTag == nil && searchTag == "sidebar.allTags".localized) || self.tagItems.isEmpty {
                 loadtagsBooksAndPages()
             }
             searchTag = selectedTag?.text
@@ -176,12 +176,14 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     private func showPlaceholderView() {
+        selectButtom?.isEnabled = false
         self.collectionView.isHidden = true
         self.emptyPlaceholderView?.frame = self.collectionView!.frame
         self.emptyPlaceholderView?.isHidden = false
     }
 
     private func hidePlaceholderView() {
+        selectButtom?.isEnabled = true
         self.collectionView.isHidden = false
         self.emptyPlaceholderView?.isHidden = true
     }
@@ -269,8 +271,10 @@ class FTShelfTagsViewController: UIViewController {
     @IBAction func selectAction(_ sender: Any) {
         if viewState == .edit {
             activateViewMode()
+            track(EventName.shelf_tag_select_done_tap, screenName: ScreenName.shelf_tags)
         } else {
             activeEditMode()
+            track(EventName.shelf_tag_select_tap, screenName: ScreenName.shelf_tags)
         }
         clearContextMenuIndex()
         self.collectionView.reloadData()
@@ -299,6 +303,10 @@ class FTShelfTagsViewController: UIViewController {
         if navigationItem.leftBarButtonItems?.count ?? 0 > 0 {
             navigationItem.leftBarButtonItems?.removeLast()
         }
+         #else
+         if let toolbar = self.view.toolbar as? FTShelfToolbar {
+             toolbar.switchMode(.tags)
+         }
 #endif
     }
 
@@ -349,6 +357,11 @@ class FTShelfTagsViewController: UIViewController {
 
    @objc func selectAndDeselect() {
         let selectAll = shouldSelectAll
+       if selectAll {
+           track(EventName.shelf_tag_select_selectall_tap, screenName: ScreenName.shelf_tags)
+       } else {
+           track(EventName.shelf_tag_select_selectnone_tap, screenName: ScreenName.shelf_tags)
+       }
         selectOrDeselectAllBooks(shouldSelect: selectAll)
         selectOrDeselectAllPages(shouldSelect: selectAll)
         updateSelectAllTitle()
@@ -361,18 +374,18 @@ class FTShelfTagsViewController: UIViewController {
         }
     }
 
-    @IBAction func shareAction(_ sender: Any) {
+    func shareOperation() {
         self.createDocumentForSelectedPages()
     }
 
-    @IBAction func editTagsAction(_ sender: Any?) {
+    func edittagsOperation() {
         let selectedItems = self.selectedItems()
         let tags = self.commonTagsFor(items: selectedItems)
         let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
         FTTagsViewController.presentTagsController(onController: self, tags: sortedArray)
     }
 
-    @IBAction func removeTagsAction(_ sender: Any?) {
+    func removeTagsOperation() {
         let selectedItems = self.selectedItems()
 
         UIAlertController.showDeleteDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
@@ -382,26 +395,46 @@ class FTShelfTagsViewController: UIViewController {
                 Task {
                     try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: selectedItems, updateType: FTTagsUpdateType.remove)
                     loadingIndicatorViewController.hide {
-                        let selectedArraySet = Set(selectedItems.map { $0.id })
-                        // Use the filter function to create a new array without matching elements
-                        self.tagItems = self.tagItems.filter { !selectedArraySet.contains($0.id) }
-                        self.collectionView.reloadData()
-                        self.activateViewMode()
-                        if self.tagItems.isEmpty {
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-                        }
+                        reloadView()
                     }
                 }
             } else {
                 Task {
                     try await FTShelfTagsUpdateHandler.shared.updateTag(nil, for: selectedItems, updateType: .removeAll)
                     loadingIndicatorViewController.hide {
-                        self.activateViewMode()
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                        reloadView()
                     }
                 }
             }
+
+            @MainActor
+            func reloadView() {
+                let selectedArraySet = Set(selectedItems.map { $0.id })
+                self.tagItems = self.tagItems.filter { !selectedArraySet.contains($0.id) }
+                self.collectionView.reloadData()
+                self.activateViewMode()
+                if self.tagItems.isEmpty {
+                    self.showPlaceholderView()
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                }
+
+            }
         }
+    }
+
+    @IBAction private func shareAction(_ sender: Any) {
+        shareOperation()
+        track(EventName.shelf_tag_select_share_tap, screenName: ScreenName.shelf_tags)
+    }
+
+    @IBAction private func editTagsAction(_ sender: Any?) {
+        edittagsOperation()
+        track(EventName.shelf_tag_select_edittags_tap, screenName: ScreenName.shelf_tags)
+    }
+
+    @IBAction func removeTagsAction(_ sender: Any?) {
+        removeTagsOperation()
+        track(EventName.shelf_tag_select_removetags_tap, screenName: ScreenName.shelf_tags)
     }
 }
 
@@ -429,7 +462,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 return UICollectionViewCell()
             }
             cell.delegate = self
-            cell.prepareCellWith(books: generateBooks(), viewState: viewState)
+            cell.prepareCellWith(books: generateBooks(), viewState: viewState, parentVC: self)
             return cell
         } else if indexPath.section == 1 {
             let pages = generatePages()
@@ -454,6 +487,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 return false
             }
         }
+        track(EventName.shelf_tag_select_page_tap, screenName: ScreenName.shelf_tags)
         return true
     }
 
@@ -465,6 +499,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 let item = pages[indexPath.row]
                 if let shelf = item.shelfItem {
                     self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex ?? 0)
+                    track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                 }
             }
         }
@@ -686,11 +721,11 @@ extension FTShelfTagsViewController: FTShelfTagsAndBooksDelegate {
     }
 
     func editTags() {
-        self.editTagsAction(nil)
+        self.edittagsOperation()
     }
 
     func removeTags() {
-        self.removeTagsAction(nil)
+        self.removeTagsOperation()
     }
 
     func openItemInNewWindow() {

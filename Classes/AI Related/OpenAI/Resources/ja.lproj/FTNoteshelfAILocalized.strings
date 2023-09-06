@@ -46,3 +46,6 @@
 "noteshelf.ai.translateToKorean" = "韓国語に翻訳する";
 "noteshelf.ai.translateToChineseSimplified" = "簡体字中国語に翻訳する";
 "noteshelf.ai.translateToChineseTraditional" = "繁体字中国語に翻訳する";
+
+"noteshelf.ai.noteshelfAILearnMore" = "可能性を発見する";
+"noteshelf.ai.noteshelfAIError" = "サーバーに接続できませんでした。後でもう一度お試しください。";

@@ -7,9 +7,7 @@
 //
 
 import UIKit
-#if !targetEnvironment(macCatalyst)
 import FirebaseAnalytics
-#endif
 import FirebaseCrashlytics
 import FTStyles
 import FTTemplatesStore

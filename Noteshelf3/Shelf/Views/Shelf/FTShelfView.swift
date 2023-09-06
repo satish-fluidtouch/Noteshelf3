@@ -16,15 +16,15 @@ protocol FTShelfViewDelegate: AnyObject {
 }
 
 struct FTShelfView: View,FTShelfBaseView {
-    
+
     @EnvironmentObject var viewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    
+
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    
+
     var body: some View {
-        
+
         //    debugPrintChanges()
         // let _ = Self._printChanges()
         GeometryReader { geometry in
@@ -35,7 +35,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
                         if viewModel.showNewNoteView,
-                           geometry.size.width > 300,
+                           geometry.size.width > 300 , (!viewModel.isInHomeMode && geometry.size.width > 450),
                            viewModel.canShowCreateNBButtons {
                             FTShelfTopSectionView()
                                 .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)
@@ -43,7 +43,14 @@ struct FTShelfView: View,FTShelfBaseView {
                                 .padding(.top,10)
                                 .environmentObject(viewModel)
 
+                        } else if viewModel.shouldShowNS3MigrationHeader {
+                            FTMigrationMessageView(viewModel: viewModel)
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal,gridHorizontalPadding)
+                                .padding(.bottom,8)
+                                .padding(.top,20)
                         }
+                        
                         shelfGridView(items: viewModel.shelfItems, size: geometry.size)
                             .padding(.top,20)
                     }
@@ -88,7 +95,7 @@ struct FTShelfView: View,FTShelfBaseView {
             }
         }
     }
-    
+
     //MARK: Views
     private func emptyShelfItemsView() -> some View {
         if viewModel.collection.isTrash {
@@ -103,17 +110,6 @@ struct FTShelfView: View,FTShelfBaseView {
             return FTNoResultsView(noResultsImageName: "noUnCategorizedIcon",
                                    title: NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes"),
                                    description: NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here."))
-        }
-    }
-    
-    private func showMinHeight(geometrySize:CGFloat) -> CGFloat{
-        let isInPortrait = UIScreen.main.bounds.height > UIScreen.main.bounds.width
-        if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 800 ? 218 : (geometrySize > 500 ? 340 : 495)
-        }else if !viewModel.shouldShowGetStartedInfo {
-            return geometrySize > 700 ? 68 : (geometrySize < 500 ? 220 : 96)
-        } else {
-            return geometrySize < 600 || (isInPortrait && viewModel.isSidebarOpen) ? 96 : 68
         }
     }
 }

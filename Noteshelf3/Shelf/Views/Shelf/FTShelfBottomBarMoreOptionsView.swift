@@ -19,6 +19,8 @@ struct FTShelfBottomBarMoreOptionsView: View {
             let options = shelfViewModel.getMoreOptionsBasedOnCurrentCollection()
             ForEach(options, id: \.self) { option in
                 Button(action: {
+                    // Track Event
+                    shelfViewModel.trackEventForShelfBottombar(option: option)
                     switch option {
                     case .createGroup:
                         toolBarViewModel.delegate?.createGroup()

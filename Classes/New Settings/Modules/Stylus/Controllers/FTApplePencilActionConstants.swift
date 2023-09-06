@@ -29,22 +29,7 @@ import UIKit
         case .showColors:
             return NSLocalizedString("OptionColorPalette", comment: "Show Colors");
         case .distractionFree:
-            return "stylus.switch.fullscreen".localized
-        }
-    }
-
-    func title() -> String {
-        switch self {
-        case .systemDefault:
-            return "Default"
-        case .previousTool:
-            return "Previous Tool"
-        case .eraser:
-            return "Eraser"
-        case .showColors:
-            return "Show Colors"
-        case .distractionFree:
-            return "Full Screen"
+            return "stylus.switch.focusmode".localized
         }
     }
 };

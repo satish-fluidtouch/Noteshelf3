@@ -220,6 +220,16 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
  }
 
 extension FTShelfSplitViewController: FTStoreContainerDelegate {
+    func trackEvent(event: String, params: [String : Any]?, screenName: String?) {
+        track(event, params: params, screenName: screenName)
+    }
+
+    func storeController(_ controller: UIViewController, menuShown isMenuShown: Bool) {
+        if let splitContorller = controller.splitViewController as? FTShelfSplitViewController {
+            splitContorller.shelfMenuDisplayInfo.isMenuShown = isMenuShown;
+        }
+    }
+
     func createNotebookFor(url: URL, onCompletion: @escaping ((Error?) -> Void)) {
         if(!FTDeveloperOption.bookScaleAnim) {
             self.presentedViewController?.dismiss(animated: true)
@@ -233,7 +243,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                     }
                     if let coll = collection {
                         let fileName = url.lastPathComponent.deletingPathExtension;
-                        _ = self.startImporting(url.path, title: fileName, isImageSource: false, collection: coll, groupItem: nil) { [weak self] (shelfItem, error) in
+                        _ = self.startImporting(url.path, title: fileName, isImageSource: false, isTemplate: true, collection: coll, groupItem: nil) { [weak self] (shelfItem, error) in
                             loadingIndicatorView.hide()
                             if let shelfItem, error == nil {
                                 if FTDeveloperOption.bookScaleAnim {

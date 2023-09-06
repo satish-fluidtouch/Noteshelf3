@@ -9,8 +9,6 @@ import Foundation
 import Combine
 
 enum FTStoreActions {
-//    case showPreviewFor(templates: [TemplateInfo], selectedIndex: Int, type: FTStoreSectionType)
-//    case navigateToCategory(template: TemplateInfo)
     case didTapOnDiscoveryItem(items: [TemplateInfo], selectedIndex: Int)
 }
 

@@ -78,6 +78,9 @@ protocol FTShelfItemCollection: FTDiskItemProtocol, FTDroppable {
                          inGroup: FTGroupItemProtocol?,
                          shelfItemsToGroup items: [FTShelfItemProtocol]?,
                          onCompletion block: @escaping (NSError?, FTGroupItemProtocol?) -> Void);
+
+    // For NS3 Migration
+    func isNS2Collection() -> Bool
 }
 
 extension FTShelfItemCollection {
@@ -127,7 +130,7 @@ extension FTShelfItemCollection //for searching
 
         let items = self.childrens;
         for eachItem in items {
-            if((eachItem.URL.pathExtension == groupExtension) && (eachItem.title == titleToSearch)) {
+            if((eachItem.URL.pathExtension == FTFileExtension.group) && (eachItem.title == titleToSearch)) {
                 group = eachItem as? FTGroupItemProtocol;
                 break;
             }

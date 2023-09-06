@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 extension String
 {
@@ -30,7 +31,7 @@ extension String
         var collectionName : String?;
         let paths = self.components(separatedBy: "/")
         for eachItem in paths {
-            if eachItem.pathExtension.lowercased() == shelfExtension {
+            if eachItem.pathExtension.lowercased() == FTFileExtension.shelf {
                 collectionName = eachItem;
                 break;
             }
@@ -44,7 +45,7 @@ extension String
         let paths = self.components(separatedBy: "/")
         for eachItem in paths
         {
-            if eachItem.pathExtension.lowercased() == groupExtension {
+            if eachItem.pathExtension.lowercased() == FTFileExtension.group {
                 groupPath.append(eachItem);
             }
         }

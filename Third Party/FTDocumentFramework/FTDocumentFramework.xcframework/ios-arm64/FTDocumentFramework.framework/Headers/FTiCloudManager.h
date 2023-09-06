@@ -20,9 +20,9 @@ typedef NS_ENUM(NSInteger, FTiCloudActionType)
 @interface FTiCloudManager : NSObject
 @property (nonatomic,assign) FTiCloudActionType messageTypeToShow;
 @property (strong) NSUserDefaults *defaultUserDefaults; //Set from outside to have customization. By default [NSUserDefaults standardUserDefaults]
-+ (instancetype)sharedManager;
++ (nonnull instancetype)sharedManager;
 
-- (NSURL*)iCloudRootURL;
+- (nullable NSURL*)iCloudRootURL;
 
 - (BOOL)iCloudOn;
 - (BOOL)iCloudWasOn;
@@ -30,8 +30,7 @@ typedef NS_ENUM(NSInteger, FTiCloudActionType)
 - (void)setiCloudWasOn:(BOOL)on;
 - (BOOL)iCloudPrompted;
 - (void)setiCloudPrompted:(BOOL)prompted;
-- (void)initializeiCloudAccessWithCompletion:(void (^)(BOOL available))completionBlock;
-- (void)updateiCloudStatusWithCompletionHandler:(void (^)(BOOL available))completionBlock;
+- (void)updateiCloudStatus:(NSString *)containerID withCompletionHandler:(void (^)(BOOL available))completionBlock;
 
 - (void)moveItemsFromiCloud:(FTDocumentProvider *)iCloudProvider
                     toLocal:(FTDocumentProvider *)localProvider

@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "這個顏色已經在你的調色板上";
 "ColorByAuthor" = "透過%@";
 "Colors" = "顏色";
-"ColourLoversAddHeader" = "通過選擇個別顏色或整個調色板來添加。";
-"ColourLoversEditHeader" = "從調色板中點擊一個顏色以進行選擇。";
 "Confirm" = "確認";
 "ConflictDocModifiedOn" = "修改於 %@";
 "Connect" = "連接";
@@ -710,31 +708,31 @@
 "ResetColorsTitle" = "重置顏色";
 "ResetColorsWarning" = "這將將顏色調色板重設為出廠預設值。";
 "ResetToDefault" = "恢復預設";
-"Resize" = "錄音";
+"Resize" = "調整大小";
 "ResolveConflict" = "錄音";
 "ResolveConflictMessage" = "錄音進行中...";
 "Restore" = "恢復頁面";
 "ResultsFor" = "結果為 %@";
 "RetakeKey" = "3-指右滑/左滑";
 "Right" = "發布以添加新頁面";
-"Rotate" = "稍後提醒";
-"Rotate Page" = "移除";
+"Rotate" = "旋轉";
+"Rotate Page" = "旋轉頁面";
 "Rotating" = "從最近刪除";
 "SampleNotebook" = "重新命名";
-"SaveAsTemplate" = "重新命名%d個筆記本";
+"SaveAsTemplate" = "另存為模板";
 "SaveForFutureUse" = "重命名標籤";
 "SaveImageChangesConfirmation" = "重命名... %d 的 %d";
 "SaveKey" = "要求";
 "SaveQuickNote" = "需要密碼才能打開這個筆記本";
 "Saving" = "需要支援雙擊的蘋果筆。";
-"Scan" = "請更新您的應用程式至最新版本以開啟此文件。";
-"ScanDocument" = "重置";
-"ScanDocument" = "重設";
+"Scan" = "扫描";
+"ScanDocument" = "掃描文件";
+"ScanDocument" = "掃描文件";
 "ScannerUnavailable" = "您想將您的色板重設為出廠預設值嗎？";
 "SchoolWorkApp" = "重置顏色";
-"Screenshot" = "這將將顏色調色板重置為出廠預設值。";
-"Scrolling" = "重置为默认";
-"Search" = "調整大小";
+"Screenshot" = "截圖";
+"Scrolling" = "滾動";
+"Search" = "搜索";
 "SearchPapersCovers" = "修改不同步。選擇要保留的文件。";
 "SearchText" = "還原";
 "SearchTitles" = "「%@」的搜尋結果";
@@ -768,7 +766,7 @@
 "SettingOptionTheme" = "外觀";
 "SettingShowDateOnShelf" = "在書架上顯示日期";
 "Settings" = "設定";
-"SettingsApplePencil" = "蘋果鉛筆";
+"SettingsApplePencil" = "Apple铅笔";
 "SettingsGeneral" = "將軍";
 "SettingsNoteShelfHelp" = "筆記架助手";
 "SettingsRateOnTheAppstore" = "應用商店評分";
@@ -864,7 +862,7 @@
 "Title&PageNo" = "標題與頁碼";
 "TransparentBand" = "透明帶";
 "Trash" = "垃圾";
-"Trash" = "垃圾";
+"Trash" = "垃圾箱";
 "Travel" = "旅遊與地點";
 "Travel" = "旅行與地點";
 "TurnOffAutoBackup" = "關閉自動備份";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "無法存取Box";
 "UnableToAccessDropbox" = "無法存取Dropbox";
 "UnableToAccessWeLink" = "無法訪問 WeLink";
-"UnableToConnectToColourLovers" = "無法連接到COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "無法連接到 WebDAV 伺服器。請稍後再試。";
 "UnableToLocateTheServer" = "無法找到伺服器。請檢查伺服器網址並再試一次。";
 "UnableToauthenticate" = "無法驗證";
@@ -953,6 +950,12 @@
 "bujoessentials" = "筆記必需品";
 "cancel" = "取消";
 "clipart404" = "服務器繁忙，請稍後再試。";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "無法建立備份檔案。請檢查您的設備剩餘空間。";
+"cloud.backup.error.fileNotFound" = "檔案未找到";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
 "color.added" = "添加顏色";
 "color.deleted" = "顏色已刪除";
 "color.editColor" = "編輯顏色";
@@ -985,7 +988,7 @@
 "customizeToolbar.pen" = "筆";
 "customizeToolbar.photo" = "照片";
 "customizeToolbar.pixabay" = "像素灣";
-"customizeToolbar.present" = "目前";
+"customizeToolbar.present" = "演示";
 "customizeToolbar.readOnlyMode" = "唯讀模式";
 "customizeToolbar.resetConfirmation" = "您確定要重設為預設工具列嗎？";
 "customizeToolbar.rotatePage" = "旋轉頁面";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "條款和條件";
 "iap.title" = "使用Noteshelf Premium享受完整體驗";
 "iap.upgradeNow" = "立即升級";
+"icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
 "iconlabels" = "圖示標籤";
 "import" = "導入";
 "importedFiles" = "進口的文件";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "標準";
 "lineHeight.wide" = "寬闊";
 "lockwithfaceIDandPasscode" = "使用%@和密碼鎖";
-"migration.alert.cancel" = "取消";
-"migration.alert.copy" = "複製";
-"migration.alert.message" = "這將建立一個新筆記本的副本，其內容將被複製。";
-"migration.alert.open" = "開放";
-"migration.alert.title" = "您想將此書籍遷移到NS3嗎？";
-"migration.alert.yes" = "是";
-"migration.failure.message" = "目前無法遷移此書。請聯繫支援。";
+"migration.alert.migrate" = "遷移";
+"migration.alert.open" = "前往位置";
+"migration.alert.title" = "您是否想要將此筆記本的副本遷移到 Noteshelf 3？";
 "migration.progress.text" = "遷移";
-"migration.success.alert.message" = "你要打開筆記本嗎？";
-"migration.success.alert.title" = "成功遷移到未歸檔";
+"migration.success.alert.message" = "成功！您的遷移筆記本已放置在：%@";
 "months" = "月份";
 "more" = "更多";
 "more.globalsettings.caps" = "全球設定";
@@ -1189,9 +1188,10 @@
 "quotes" = "名言";
 "removefromRecents" = "從最近移除";
 "reset" = "重設";
+"retry" = "重試";
 "save" = "重命名群組";
 "school" = "學校";
-"search.tryNewSearch" = "解決衝突";
+"search.tryNewSearch" = "嘗試新的搜索";
 "seeAll" = "重新拍攝";
 "selectColor" = "選擇顏色";
 "settings" = "設定";
@@ -1199,7 +1199,7 @@
 "settings.about.description" = "介紹Noteshelf 3 您最喜愛的筆記應用程式的新版和改進版。";
 "settings.about.userID" = "用戶ID %@";
 "settings.about.version" = "版本 %@ %@";
-"settings.useApplePencil" = "使用蘋果鉛筆";
+"settings.useApplePencil" = "使用Apple铅笔";
 "shapes" = "形狀";
 "share" = "分享";
 "share.savetoCameraRoll" = "保存到相機膠卷";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "查看全部";
 "shelf.home.seeAllNotes" = "查看所有筆記";
 "shelf.importfile.description" = "從您的檔案應用程式中添加 PDF 和圖片";
-"shelf.migration.Description" = "將您的書籍遷移到新版本的Noteshelf中，請點擊或長按書籍，然後從菜單中選擇遷移選項。";
+"shelf.migration.Description" = "只需點擊此處的任何筆記本，即可將其複製到Noteshelf 3中。移轉後的筆記本將在Noteshelf 3的分類和群組中可用。整個分類的移轉功能即將推出！";
 "shelf.migration.headerMessage" = "遷移您的筆記本到Noteshelf 3";
 "shelf.navBar.deselectAll" = "取消選擇所有";
 "shelf.navBar.select" = "選擇";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "刪除標籤";
 "sidebar.allTags.toolbar.share" = "分享";
 "sidebar.bookmark" = "書籤";
+"sidebar.bookmarks" = "書籤";
 "sidebar.bookmarks.alert.message" = "您確定要刪除此頁的書籤嗎？";
 "sidebar.bookmarks.bookmark" = "書籤";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "在新視窗中打開";
@@ -1388,7 +1389,9 @@
 "sidebar.bookmarks.page" = "頁面 %@";
 "sidebar.contextualMenu.deleteTag" = "刪除標籤";
 "sidebar.photo" = "照片";
+"sidebar.photos" = "照片";
 "sidebar.recording" = "錄音";
+"sidebar.recordings" = "錄製";
 "sidebar.topSection.home" = "家";
 "sidebar.topSection.starred" = "標記";
 "sidebar.topSection.unfiled" = "未歸檔";
@@ -1399,7 +1402,7 @@
 "stickies" = "便條";
 "stickynotes" = "便利貼";
 "stylus.goto.settings" = "前往「設定/Apple Pencil」";
-"stylus.switch.fullscreen" = "切換至全螢幕";
+"stylus.switch.focusmode" = "切換至專注模式";
 "tags.contextualMenu.deleteTag" = "刪除標籤";
 "tags.contextualMenu.renameTag" = "重命名標籤";
 "tags.delete.alert.message" = "標籤將從附有該標籤的項目中刪除。";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Akshay on 5 September 2023 at 15:19

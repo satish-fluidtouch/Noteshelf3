@@ -190,7 +190,7 @@ class FTGroupItem : NSObject,FTGroupItemProtocol, FTShelfItemSorting
 
         let items = self.childrens;
         for eachItem in items {
-            if((eachItem.URL.pathExtension == groupExtension) && (eachItem.title == titleToSearch)) {
+            if((eachItem.URL.pathExtension == FTFileExtension.group) && (eachItem.title == titleToSearch)) {
                 group = eachItem as? FTGroupItemProtocol;
                 break;
             }

@@ -16,9 +16,6 @@ protocol FTQueryListenerProtocol: AnyObject {
 
     func enableUpdates()
     func disableUpdates()
-    //Should be used only for Force File operations
-    func forceEnableUpdates()
-    func forceDisableUpdates()
 }
 
 protocol FTMetadataCachingProtocol: AnyObject {

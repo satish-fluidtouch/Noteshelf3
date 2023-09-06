@@ -111,8 +111,24 @@ private extension FTStoreViewController {
                     } else if item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.sticker.rawValue || item.type == FTDiscoveryItemType.diary.rawValue {
                         self.presentTemplatePreviewFor(templates: items, selectedIndex: index)
                     }
+                trackEventForTappingDiscoveryItem(item: item)
             }
         }.store(in: &FTStoreActionManager.shared.cancellables)
+
+    }
+
+    private func trackEventForTappingDiscoveryItem(item: DiscoveryItem) {
+        let eventMapping: [FTStoreSectionType: String] = [
+            .banner: EventName.templates_banner_tap,
+            .category: EventName.templates_category_tap,
+            .templates: EventName.templates_template_tap,
+            .stickers: EventName.templates_sticker_tap,
+            .journals: EventName.templates_diaries_tap
+        ]
+
+        if let type = FTStoreSectionType(rawValue: item.sectionType ?? 99), let event = eventMapping[type] {
+            FTStoreContainerHandler.shared.actionStream.send(.track(event: event, params: [EventParameterKey.title: item.fileName], screenName: ScreenName.templatesStore))
+        }
 
     }
 
@@ -153,6 +169,7 @@ extension FTStoreViewController: UITableViewDelegate {
 
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
                                                                     FTStoreHeader.reuseIdentifier) as! FTStoreHeader
+            view.seeAllButton.isHidden = false
             if sectionItem.sectionType == FTStoreSectionType.stickers.rawValue {
                 view.seeAllButton.isHidden = true
             }
