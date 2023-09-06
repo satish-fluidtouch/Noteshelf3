@@ -820,43 +820,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="M5a-Gn-6NJ">
-                                <rect key="frame" x="44" y="44" width="680" height="980"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="M5a-Gn-6NJ">
+                                <rect key="frame" x="20" y="20" width="728" height="1004"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="GlN-dm-17q" customClass="FTErrorInfoTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="55.5" width="680" height="24.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTErrorInfoTableViewCell" id="GlN-dm-17q" customClass="FTErrorInfoTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="55.5" width="696" height="24.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GlN-dm-17q" id="Gzw-QB-Q7P">
-                                            <rect key="frame" x="0.0" y="0.0" width="680" height="24.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="696" height="24.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kQj-q1-UL8">
                                                     <rect key="frame" x="20" y="1.5" width="22" height="22"/>
+                                                    <color key="tintColor" name="destructiveRed"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="22" id="D4R-Z1-jFb"/>
                                                         <constraint firstAttribute="height" constant="22" id="Szo-Ng-9GJ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="TeF-Gt-Se5">
-                                                    <rect key="frame" x="58" y="12" width="606" height="0.5"/>
+                                                    <rect key="frame" x="58" y="12" width="622" height="0.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prc-o1-U9R">
-                                                            <rect key="frame" x="0.0" y="0.0" width="606" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="622" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cew-5J-a8I">
-                                                            <rect key="frame" x="0.0" y="0.5" width="606" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <rect key="frame" x="0.0" y="0.5" width="622" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" name="black50"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h39-7O-y8y">
-                                                            <rect key="frame" x="0.0" y="0.5" width="606" height="0.0"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <rect key="frame" x="0.0" y="0.5" width="622" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" name="destructiveRed"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -872,6 +874,7 @@
                                                 <constraint firstItem="kQj-q1-UL8" firstAttribute="centerY" secondItem="Gzw-QB-Q7P" secondAttribute="centerY" id="xQS-1K-h7f"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="cellBackgroundColor"/>
                                         <connections>
                                             <outlet property="bookLocationLabel" destination="Cew-5J-a8I" id="Vqg-r5-5MM"/>
                                             <outlet property="bookTitleLabel" destination="prc-o1-U9R" id="ffS-JH-Pw3"/>
@@ -889,9 +892,9 @@
                         <color key="backgroundColor" name="formSheetBgColor"/>
                         <constraints>
                             <constraint firstItem="DlR-o5-4Yk" firstAttribute="top" secondItem="M5a-Gn-6NJ" secondAttribute="bottom" id="S6T-Jy-pov"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="M5a-Gn-6NJ" secondAttribute="trailing" constant="24" id="bq6-0P-uPZ"/>
-                            <constraint firstItem="M5a-Gn-6NJ" firstAttribute="top" secondItem="CDf-uN-goC" secondAttribute="bottom" constant="24" id="pge-2l-9Al"/>
-                            <constraint firstItem="M5a-Gn-6NJ" firstAttribute="leading" secondItem="j1k-wY-TkV" secondAttribute="leadingMargin" constant="24" id="t30-La-azh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="M5a-Gn-6NJ" secondAttribute="trailing" id="bq6-0P-uPZ"/>
+                            <constraint firstItem="M5a-Gn-6NJ" firstAttribute="top" secondItem="CDf-uN-goC" secondAttribute="bottom" id="pge-2l-9Al"/>
+                            <constraint firstItem="M5a-Gn-6NJ" firstAttribute="leading" secondItem="j1k-wY-TkV" secondAttribute="leadingMargin" id="t30-La-azh"/>
                         </constraints>
                     </view>
                     <connections>
@@ -921,6 +924,9 @@
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="black80">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.80000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -929,6 +935,9 @@
         </namedColor>
         <namedColor name="chevronColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="destructiveRed">
+            <color red="0.86274509803921573" green="0.070588235294117646" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="formSheetBgColor">
             <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -939,9 +948,6 @@
         <namedColor name="lightTitleColor_50">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

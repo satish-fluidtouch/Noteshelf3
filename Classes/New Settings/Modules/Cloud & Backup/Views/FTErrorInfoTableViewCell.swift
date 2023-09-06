@@ -15,7 +15,9 @@ class FTErrorInfoTableViewCell: UITableViewCell {
     @IBOutlet private weak var errorLabel: UILabel?
 
     func configureErrorInfo(with item: FTBackupIgnoreEntry) {
+        self.errorImgIndicator?.image = UIImage(systemName: "exclamationmark.circle.fill")
         self.bookTitleLabel?.text = item.title
+        self.bookLocationLabel?.text = "Sample location"
         self.errorLabel?.text = item.ignoreReason
     }
 }
