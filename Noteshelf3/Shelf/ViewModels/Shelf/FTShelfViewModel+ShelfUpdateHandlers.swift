@@ -46,6 +46,7 @@ extension FTShelfViewModel {
                     if let items = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
                         items.forEach { (eachItem) in
                             if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
+                                parent.isUpdated = true
                                 parent.resetCachedDates()
                                 parent.invalidateTop3Notebooks()
                             }

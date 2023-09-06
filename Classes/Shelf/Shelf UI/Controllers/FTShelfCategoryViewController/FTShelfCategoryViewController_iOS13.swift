@@ -707,7 +707,7 @@ extension FTShelfCategoryViewController_iOS13: UITableViewDragDelegate {
         var userInfo = userActivity.userInfo ?? [AnyHashable : Any]();
         let docPath = sourceURL.relativePathWRTCollection();
         userInfo[LastOpenedDocumentKey] = docPath
-        if docPath.deletingLastPathComponent.pathExtension == groupExtension {
+        if docPath.deletingLastPathComponent.pathExtension == FTFileExtension.group {
             userInfo[LastOpenedGroupKey] = docPath.deletingLastPathComponent
         }
 

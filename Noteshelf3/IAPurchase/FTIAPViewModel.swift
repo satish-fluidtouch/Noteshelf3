@@ -57,7 +57,9 @@ class FTIAPViewModel {
                     switch result {
                     case .success(_):
                         FTIAPurchaseHelper.shared.isPremiumUser = true
+                        track(EventName.premium_success, screenName: ScreenName.iap)
                     case .failure(let error): self.delegate?.showIAPRelatedError(error)
+                        track(EventName.premium_failed, screenName: ScreenName.iap)
                     }
                 }
             }

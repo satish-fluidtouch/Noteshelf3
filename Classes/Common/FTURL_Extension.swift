@@ -22,7 +22,7 @@ extension URL
         var relativePaths = [String]();
 
         var eachComponent = urlComponents.last;
-        while let lastComp = eachComponent, !lastComp.hasSuffix(shelfExtension)  {
+        while let lastComp = eachComponent, !lastComp.hasSuffix(FTFileExtension.shelf)  {
             relativePaths.insert(eachComponent!, at: 0);
             urlComponents.removeLast();
             eachComponent = urlComponents.last;
@@ -41,7 +41,7 @@ extension URL
         var relativePaths = [String]();
         
         var eachComponent = urlComponents.last;
-        while let lastComp = eachComponent, !lastComp.hasSuffix(shelfExtension)  {
+        while let lastComp = eachComponent, !lastComp.hasSuffix(FTFileExtension.shelf)  {
             relativePaths.insert(eachComponent!.deletingPathExtension, at: 0);
             urlComponents.removeLast();
             eachComponent = urlComponents.last;
@@ -56,7 +56,7 @@ extension URL
         var relativePaths = [String]();
 
         var eachComponent = urlComponents.last;
-        while let lastComp = eachComponent, !lastComp.hasSuffix(shelfExtension) {
+        while let lastComp = eachComponent, !lastComp.hasSuffix(FTFileExtension.shelf) {
             let comp = lastComp.deletingPathExtension;
             relativePaths.insert(comp, at: 0);
             urlComponents.removeLast();
@@ -73,7 +73,7 @@ extension URL
     func collectionURL() -> URL?
     {
         var newURl = self
-        while newURl.lastPathComponent != "..", newURl.pathExtension != shelfExtension {
+        while newURl.lastPathComponent != "..", newURl.pathExtension != FTFileExtension.shelf {
             newURl = newURl.deletingLastPathComponent();
         }
         if(newURl.lastPathComponent == ".."){

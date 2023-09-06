@@ -37,6 +37,8 @@ struct FTGroupListView: View {
             return FTNotebookShape(raidus: 10);
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true;
+            // Track event
+            track(EventName.shelf_group_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
         }, onDisappearActon: {
             shelfMenuOverlayInfo.isMenuShown = false;
         }, shelfItem: groupItem)

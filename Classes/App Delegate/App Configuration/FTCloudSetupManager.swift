@@ -21,7 +21,7 @@ final class FTCloudSetupManager {
     }
 
     private static func configureCloudDrives() {
-        FTiCloudManager.shared().defaultUserDefaults = FTUserDefaults.defaults()
+        FTNSiCloudManager.shared().defaultUserDefaults = FTUserDefaults.defaults()
         
         //Dropbox setup
         DropboxClientsManager.setupWithAppKey(dropboxAppKey)

@@ -93,6 +93,19 @@ final class FTDocumentCache {
 
     @objc func shelfItemDidRemove(_ notification: Notification) {
         cacheLog(.info, "shelfItemDidRemove", notification.userInfo, notification.object)
+        guard let shelfItemCollection = notification.object as? FTShelfItemCollection else {
+            return
+        }
+
+        // Ignore the items which are updated in Trash
+        if shelfItemCollection is FTShelfItemCollectionSystem {
+            return
+        }
+
+        guard !shelfItemCollection.isNS2Collection() else {
+            return
+        }
+
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
@@ -102,18 +115,29 @@ final class FTDocumentCache {
             } catch {
 
             }
-            runInMainThread {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+            if !items.isEmpty {
+                runInMainThread {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                }
             }
         }
     }
 
     @objc func shelfitemDidUpdate(_ notification: Notification) {
-        // Ignore the items which are updated in Trash
-        if notification.object is FTShelfItemCollectionSystem {
+        guard let shelfItemCollection = notification.object as? FTShelfItemCollection else {
             return
         }
-        cacheLog(.info, "shelfitemDidUpdate", notification.userInfo, notification.object)
+
+        // Ignore the items which are updated in Trash
+        if shelfItemCollection is FTShelfItemCollectionSystem {
+            return
+        }
+
+        guard !shelfItemCollection.isNS2Collection() else {
+            return
+        }
+
+        cacheLog(.info, "shelfitemDidUpdate", notification.userInfo, shelfItemCollection.URL)
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
@@ -123,12 +147,16 @@ final class FTDocumentCache {
                     do {
                         try self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
                     } catch {
-
+                        cacheLog(.error, item.URL)
                     }
+                } else {
+                    cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
                 }
             }
-            runInMainThread {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+            if !items.isEmpty {
+                runInMainThread {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                }
             }
         }
     }

@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "这个颜色已经在您的调色板上了";
 "ColorByAuthor" = "由% @";
 "Colors" = "颜色";
-"ColourLoversAddHeader" = "通过选择单个颜色或整个调色板添加。";
-"ColourLoversEditHeader" = "从调色板中选择一个颜色。";
 "Confirm" = "确认";
 "ConflictDocModifiedOn" = "修改于 %@";
 "Connect" = "连接";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "无法访问 Box";
 "UnableToAccessDropbox" = "无法访问Dropbox";
 "UnableToAccessWeLink" = "无法访问 WeLink";
-"UnableToConnectToColourLovers" = "无法连接到COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "无法连接到WebDAV服务器。请稍后再试。";
 "UnableToLocateTheServer" = "无法找到服务器。请检查服务器网址并重试。";
 "UnableToauthenticate" = "无法验证";
@@ -1087,6 +1084,7 @@
 "iap.termsnconditions" = "条款和条件";
 "iap.title" = "通过Noteshelf Premium获得完整体验";
 "iap.upgradeNow" = "立即升级";
+"icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
 "iconlabels" = "图标标签";
 "import" = "导入";
 "importedFiles" = "导入的文件";
@@ -1102,16 +1100,11 @@
 "lineHeight.standard" = "标准";
 "lineHeight.wide" = "宽";
 "lockwithfaceIDandPasscode" = "使用%@和密码锁定";
-"migration.alert.cancel" = "取消";
-"migration.alert.copy" = "复制";
-"migration.alert.message" = "这将创建一个新笔记本的副本，包含复制的内容。";
-"migration.alert.open" = "打开";
-"migration.alert.title" = "你想将这本书迁移到NS3吗？";
-"migration.alert.yes" = "是的";
-"migration.failure.message" = "暂时无法迁移此书籍。请联系支持。";
+"migration.alert.migrate" = "迁移";
+"migration.alert.open" = "前往位置";
+"migration.alert.title" = "您想将此笔记本的副本迁移到Noteshelf 3吗？";
 "migration.progress.text" = "迁移";
-"migration.success.alert.message" = "你想打开笔记本吗？";
-"migration.success.alert.title" = "成功迁移到未分类";
+"migration.success.alert.message" = "成功！您的迁移笔记已放置在：%@";
 "months" = "月份";
 "more" = "更多";
 "more.globalsettings.caps" = "全局设置";
@@ -1195,6 +1188,7 @@
 "quotes" = "引语";
 "removefromRecents" = "从最近删除";
 "reset" = "重置";
+"retry" = "重试";
 "save" = "重命名群组";
 "school" = "学校";
 "search.tryNewSearch" = "尝试新的搜索";
@@ -1267,7 +1261,7 @@
 "shelf.home.seeAll" = "查看全部";
 "shelf.home.seeAllNotes" = "查看所有笔记";
 "shelf.importfile.description" = "从您的文件应用中添加PDF和图片";
-"shelf.migration.Description" = "将您的笔记本迁移到新版本的Noteshelf，请点击或长按它，并在菜单中选择迁移选项。";
+"shelf.migration.Description" = "只需点击这里的任何笔记本，即可将其副本迁移到Noteshelf 3。迁移后的笔记本将在Noteshelf 3的分类和分组中可用。迁移整个分类的功能即将推出！";
 "shelf.migration.headerMessage" = "将您的笔记迁移到Noteshelf 3";
 "shelf.navBar.deselectAll" = "取消选择全部";
 "shelf.navBar.select" = "选择";
@@ -1499,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 1 September 2023 at 2:15 PM
+// Last Synced by Akshay on 5 September 2023 at 15:19
