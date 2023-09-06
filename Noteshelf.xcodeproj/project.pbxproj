@@ -9960,7 +9960,6 @@
 			children = (
 				E7B332DC2860804F002C5BBE /* Controllers */,
 				E7B332C72860804F002C5BBE /* ViewModels */,
-				E7B332D42860804F002C5BBE /* Resources */,
 				E7B332D62860804F002C5BBE /* Models */,
 				E7B332D82860804F002C5BBE /* View */,
 			);
@@ -9975,13 +9974,6 @@
 				F3AC478028807DF1001A2511 /* Networking */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		E7B332D42860804F002C5BBE /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		E7B332D62860804F002C5BBE /* Models */ = {
