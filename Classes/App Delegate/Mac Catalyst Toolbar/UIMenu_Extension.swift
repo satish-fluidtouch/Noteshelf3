@@ -30,13 +30,16 @@ extension UIMenu {
     }
     
     
-    static func sortByOptionsMenu(onAction:((FTShelfSortOrder,UIAction.Identifier?) -> ())?)  -> UIMenuElement {
+    static func sortByOptionsMenu(mode: FTShelfToolbarMode = .shelf
+                                  , onAction:((FTShelfSortOrder,UIAction.Identifier?) -> ())?)  -> UIMenuElement {
         var items = [UIMenuElement]()
         
-        let styles = FTShelfSortOrder.supportedSortOptions();
+        var styles = FTShelfSortOrder.supportedSortOptions()
+        if mode == .ns2 {
+            styles = FTShelfSortOrder.supportedSortOptionsForNS2Books()
+        }
         styles.forEach { eachStyle in
             let menuItem = UIAction(title: eachStyle.displayTitle
-//                                    , image: UIImage(named: eachStyle.iconName)
                                     , identifier: eachStyle.menuIdentifier
                                     , attributes: .standard
                                     , state: (eachStyle == FTUserDefaults.sortOrder()) ? .on : .off) { _ in
