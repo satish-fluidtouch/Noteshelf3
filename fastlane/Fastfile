@@ -22,7 +22,7 @@ platform :ios do
         app_identifier = "com.fluidtouch.noteshelf3-beta"
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
-        sh("git", "checkout", branch)
+        sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
         
@@ -63,7 +63,7 @@ platform :ios do
 
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
-        sh("git", "checkout", branch)
+        sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
 
@@ -110,7 +110,7 @@ platform :mac do
 
          reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
-        sh("git", "checkout", branch)
+        sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
 
@@ -157,7 +157,7 @@ platform :mac do
 
          reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
-        sh("git", "checkout", branch)
+        sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
 
