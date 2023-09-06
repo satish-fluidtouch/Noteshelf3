@@ -430,11 +430,21 @@ extension FTShelfSplitViewController {
         }
         //----------- Migration for NS3 ------------------- //
 
+        let downloadStatus = shelfItem.URL.downloadStatus();
+        if downloadStatus != .downloaded {
+            if downloadStatus == .notDownloaded {
+                NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+                self.downloadShelfItem(shelfItem)
+            }
+            onCompletion?(nil, false)
+            return
+        }
+
         func openDoc(_ pin: String?) {
             openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
             onCompletion?(nil,true);
         }
-        
+
         if let documentPin = pin {
             openDoc(documentPin)
         }
@@ -495,16 +505,7 @@ extension FTShelfSplitViewController {
                     }
                 }
                 else if(inError.isNotDownloadedError) {
-                    do {
-                        if(CloudBookDownloadDebuggerLog) {
-                            FTCLSLog("Book: \(notebookName): Download Requested")
-                        }
-                        _ = try FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
-                    }
-                    catch let nserror as NSError {
-                        FTCLSLog("Book: \(notebookName): Download Failed :\(nserror.description)")
-                        FTLogError("Notebook download failed", attributes: nserror.userInfo)
-                    }
+                    self?.downloadShelfItem(shelfItem)
                 }
                 else if inError.isNotExistError {
                     runInMainThread {
@@ -557,7 +558,18 @@ extension FTShelfSplitViewController {
         }
     }
 #endif
-    
+    private func downloadShelfItem(_ shelfItem: FTShelfItemProtocol) {
+        do {
+            if(CloudBookDownloadDebuggerLog) {
+                FTCLSLog("Book: \(shelfItem.displayTitle): Download Requested")
+            }
+            _ = try FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
+        }
+        catch let nserror as NSError {
+            FTCLSLog("Book: \(shelfItem.displayTitle): Download Failed :\(nserror.description)")
+            FTLogError("Notebook download failed", attributes: nserror.userInfo)
+        }
+    }
     func handleNotebookOpenError(for shelfItem: FTShelfItemProtocol, error: NSError?) {
         FTLogError("Open Notebook Failed", attributes: error?.userInfo);
         runInMainThread {
