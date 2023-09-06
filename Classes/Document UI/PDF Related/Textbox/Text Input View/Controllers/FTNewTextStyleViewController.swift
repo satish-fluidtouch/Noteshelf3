@@ -433,39 +433,33 @@ extension FTNewTextStyleViewController {
 
     @IBAction func setAsDefaultTapped(_ sender: Any) {
         let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
-        self.delegate?.didSetDefaultStyle(defaultStyleItem)
-        let alertController = UIAlertController(title: "", message: "SetAsDefaultMessage".localized, preferredStyle: UIAlertController.Style.alert)
-        let action1 = UIAlertAction(title: "No".localized, style: .cancel, handler: { (_) in
-        })
-        alertController.addAction(action1)
+        let menu = UIMenu(title: "", children: [
+            UIAction(title: "This notebook only", handler: { [weak self] _ in
+                guard let self else { return }
+                self.delegate?.didSetDefaultStyle(defaultStyleItem)
+            }),
+            UIAction(title: "This notebook and future creating books", handler: { [weak self] _ in
+                guard let self else { return }
+                self.delegate?.didSetDefaultStyle(defaultStyleItem)
 
-        let action2 = UIAlertAction.init(title: "Yes".localized, style: UIAlertAction.Style.default, handler: { (_) in
-            var fontInfoDict: [String: String] = [:]
-            defaultStyleItem.alignment = self.currentAlignment.rawValue
-            defaultStyleItem.isAutoLineSpace = self.isAutoLineSpaceEnabled
-            defaultStyleItem.lineSpace = self.currentLineSpace
+                var fontInfoDict: [String: String] = [:]
+                defaultStyleItem.alignment = self.currentAlignment.rawValue
+                defaultStyleItem.isAutoLineSpace = self.isAutoLineSpaceEnabled
+                defaultStyleItem.lineSpace = self.currentLineSpace
 
-            fontInfoDict[FTFontStorage.fontNameKey] = defaultStyleItem.fontName
-            fontInfoDict[FTFontStorage.fontStyleKey] = defaultStyleItem.fontFamily
-            fontInfoDict[FTFontStorage.fontSizeKey] = String(defaultStyleItem.fontSize)
-            fontInfoDict[FTFontStorage.textColorKey] = defaultStyleItem.textColor
-            fontInfoDict[FTFontStorage.isUnderlinedKey] = defaultStyleItem.isUnderLined ? "1" : "0"
-            fontInfoDict[FTFontStorage.isLineSpaceEnabledKey] = defaultStyleItem.isAutoLineSpace ? "1" : "0"
-            fontInfoDict[FTFontStorage.lineSpaceKey] = String(defaultStyleItem.lineSpace)
-            fontInfoDict[FTFontStorage.isStrikeThroughKey] = defaultStyleItem.strikeThrough ? "1" : "0"
-            fontInfoDict[FTFontStorage.textAlignmentKey] = String(defaultStyleItem.alignment)
-            FTUserDefaults.saveDefaultFontForAll(fontInfoDict)
-        })
-        alertController.addAction(action2)
-
-        let controller = self.delegate?.rootViewController()
-        if self.isRegularClass() {
-            self.dismiss(animated: true) {
-                controller?.present(alertController, animated: true, completion: nil)
-            }
-        } else {
-            controller?.present(alertController, animated: true, completion: nil)
-        }
+                fontInfoDict[FTFontStorage.fontNameKey] = defaultStyleItem.fontName
+                fontInfoDict[FTFontStorage.fontStyleKey] = defaultStyleItem.fontFamily
+                fontInfoDict[FTFontStorage.fontSizeKey] = String(defaultStyleItem.fontSize)
+                fontInfoDict[FTFontStorage.textColorKey] = defaultStyleItem.textColor
+                fontInfoDict[FTFontStorage.isUnderlinedKey] = defaultStyleItem.isUnderLined ? "1" : "0"
+                fontInfoDict[FTFontStorage.isLineSpaceEnabledKey] = defaultStyleItem.isAutoLineSpace ? "1" : "0"
+                fontInfoDict[FTFontStorage.lineSpaceKey] = String(defaultStyleItem.lineSpace)
+                fontInfoDict[FTFontStorage.isStrikeThroughKey] = defaultStyleItem.strikeThrough ? "1" : "0"
+                fontInfoDict[FTFontStorage.textAlignmentKey] = String(defaultStyleItem.alignment)
+                FTUserDefaults.saveDefaultFontForAll(fontInfoDict)
+            }),
+        ])
+        (sender as? UIButton)?.menu = menu
     }
 }
 

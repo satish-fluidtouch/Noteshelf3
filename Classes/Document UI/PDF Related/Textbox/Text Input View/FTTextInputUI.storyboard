@@ -30,7 +30,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="420"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JV2-Pb-a3Z">
-                                                <rect key="frame" x="0.0" y="16" width="375" height="408.5"/>
+                                                <rect key="frame" x="0.0" y="16" width="375" height="396.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jRD-WV-2Ul">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -494,8 +494,8 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3i-Qn-wcX">
-                                                        <rect key="frame" x="0.0" y="348" width="375" height="40"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3i-Qn-wcX">
+                                                        <rect key="frame" x="0.0" y="349" width="375" height="40"/>
                                                         <color key="backgroundColor" name="accent"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="JZW-rl-FmH"/>
@@ -506,9 +506,8 @@
                                                         </buttonConfiguration>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                <integer key="value" value="16"/>
+                                                                <integer key="value" value="10"/>
                                                             </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="NO"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="setAsDefaultTapped:" destination="4yE-Sp-HUB" eventType="touchUpInside" id="BrT-RZ-egr"/>
@@ -526,8 +525,9 @@
                                                     <constraint firstItem="fTD-bk-ny0" firstAttribute="trailing" secondItem="jRD-WV-2Ul" secondAttribute="trailing" id="IHy-sC-OCe"/>
                                                     <constraint firstItem="dcE-6w-AkC" firstAttribute="leading" secondItem="fTD-bk-ny0" secondAttribute="leading" id="J0G-wd-W5N"/>
                                                     <constraint firstItem="fTD-bk-ny0" firstAttribute="top" secondItem="jRD-WV-2Ul" secondAttribute="bottom" constant="8" id="Ugz-of-bHR"/>
-                                                    <constraint firstAttribute="bottom" secondItem="X5a-j3-XUH" secondAttribute="bottom" constant="68" id="YVc-Wn-grf"/>
+                                                    <constraint firstItem="g3i-Qn-wcX" firstAttribute="top" secondItem="X5a-j3-XUH" secondAttribute="bottom" constant="8" id="Z7T-cX-UEz"/>
                                                     <constraint firstItem="g3i-Qn-wcX" firstAttribute="leading" secondItem="JV2-Pb-a3Z" secondAttribute="leading" id="ceM-sA-bPs"/>
+                                                    <constraint firstAttribute="bottom" secondItem="g3i-Qn-wcX" secondAttribute="bottom" constant="8" id="fwt-Mf-fTA"/>
                                                     <constraint firstItem="jRD-WV-2Ul" firstAttribute="leading" secondItem="JV2-Pb-a3Z" secondAttribute="leading" id="gT3-n4-EgX"/>
                                                     <constraint firstItem="jRD-WV-2Ul" firstAttribute="top" secondItem="JV2-Pb-a3Z" secondAttribute="top" id="lBB-tQ-NRQ"/>
                                                     <constraint firstAttribute="trailing" secondItem="g3i-Qn-wcX" secondAttribute="trailing" id="ml9-Zc-hO1"/>
@@ -564,7 +564,6 @@
                             <constraint firstItem="Bf6-bA-0Ur" firstAttribute="centerX" secondItem="xyY-Bi-sUq" secondAttribute="centerX" id="Dty-TS-ZTp"/>
                             <constraint firstItem="Bf6-bA-0Ur" firstAttribute="bottom" secondItem="xyY-Bi-sUq" secondAttribute="bottom" id="E61-Ox-49Q"/>
                             <constraint firstItem="xyY-Bi-sUq" firstAttribute="top" secondItem="Bf6-bA-0Ur" secondAttribute="top" id="LSK-Xv-K7x"/>
-                            <constraint firstItem="xyY-Bi-sUq" firstAttribute="bottom" secondItem="g3i-Qn-wcX" secondAttribute="bottom" constant="16" id="ls0-ta-NMf"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="420" height="420"/>
@@ -1243,10 +1242,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="530"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4XW-Xe-TX7" userLabel="contentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="321" height="523.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="321" height="541.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="zeJ-Wf-hfA">
-                                                <rect key="frame" x="16" y="0.0" width="289" height="473.5"/>
+                                                <rect key="frame" x="16" y="0.0" width="289" height="525.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJM-lx-QEN" userLabel="nameView">
                                                         <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
@@ -1687,38 +1686,35 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G52-gh-h4V">
+                                                        <rect key="frame" x="0.0" y="486" width="289" height="40"/>
+                                                        <color key="backgroundColor" name="accent"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="23B-dN-MRN"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="Set as Default">
+                                                            <color key="baseForegroundColor" name="createNotebookButtonTint"/>
+                                                        </buttonConfiguration>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="setAsDefaultTapped:" destination="Iue-Dq-dRY" eventType="touchUpInside" id="Y9p-aw-tH0"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G52-gh-h4V">
-                                                <rect key="frame" x="16" y="484" width="289" height="40"/>
-                                                <color key="backgroundColor" name="accent"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="65R-ke-IjB"/>
-                                                </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="Set as Default">
-                                                    <color key="baseForegroundColor" name="createNotebookButtonTint"/>
-                                                </buttonConfiguration>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="16"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="NO"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="setAsDefaultTapped:" destination="Iue-Dq-dRY" eventType="touchUpInside" id="Y9p-aw-tH0"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="zeJ-Wf-hfA" firstAttribute="leading" secondItem="4XW-Xe-TX7" secondAttribute="leading" constant="16" id="EUO-d9-1Ny"/>
                                             <constraint firstItem="zeJ-Wf-hfA" firstAttribute="top" secondItem="4XW-Xe-TX7" secondAttribute="top" id="OIb-ry-XgO"/>
                                             <constraint firstAttribute="trailing" secondItem="zeJ-Wf-hfA" secondAttribute="trailing" constant="16" id="aYX-I2-7Y3"/>
-                                            <constraint firstAttribute="bottom" secondItem="zeJ-Wf-hfA" secondAttribute="bottom" constant="50" id="eaq-Xo-lRW"/>
-                                            <constraint firstAttribute="trailing" secondItem="G52-gh-h4V" secondAttribute="trailing" constant="16" id="fHD-Ho-9wQ"/>
-                                            <constraint firstItem="G52-gh-h4V" firstAttribute="leading" secondItem="4XW-Xe-TX7" secondAttribute="leading" constant="16" id="uh2-py-3zp"/>
+                                            <constraint firstAttribute="bottom" secondItem="zeJ-Wf-hfA" secondAttribute="bottom" constant="16" id="eaq-Xo-lRW"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -1744,7 +1740,6 @@
                             <constraint firstItem="YH3-9j-7r4" firstAttribute="bottom" secondItem="yLE-cW-id9" secondAttribute="bottom" id="80z-k0-1SZ"/>
                             <constraint firstItem="YH3-9j-7r4" firstAttribute="trailing" secondItem="yLE-cW-id9" secondAttribute="trailing" id="VKp-Kq-GWj"/>
                             <constraint firstItem="WM2-Rs-Obc" firstAttribute="top" secondItem="YH3-9j-7r4" secondAttribute="top" constant="-44" id="btH-1Z-vXI"/>
-                            <constraint firstItem="YH3-9j-7r4" firstAttribute="bottom" secondItem="G52-gh-h4V" secondAttribute="bottom" constant="16" id="eHx-yC-dF5"/>
                             <constraint firstItem="yLE-cW-id9" firstAttribute="top" secondItem="PKd-SW-iJP" secondAttribute="top" id="ezq-qu-Rij"/>
                             <constraint firstItem="YH3-9j-7r4" firstAttribute="bottom" secondItem="WM2-Rs-Obc" secondAttribute="bottom" id="nc3-5i-tJ9"/>
                         </constraints>
@@ -1866,10 +1861,10 @@
             <color red="1" green="1" blue="1" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
