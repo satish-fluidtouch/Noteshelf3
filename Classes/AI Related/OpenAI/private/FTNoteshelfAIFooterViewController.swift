@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 enum FTAIFooterMode: Int {
     case noteshelfAiBeta,sendFeedback;
@@ -27,7 +28,9 @@ class FTNoteshelfAIFooterViewController: UIViewController {
         self.footermode = .noteshelfAiBeta;
         
         let defaultFont = UIFont.systemFont(ofSize: 13);
-        let attrTitle = "noteshelf.ai.noteshelfAI".aiLocalizedString.appendBetalogo(font: defaultFont);
+        let attrTitle = NSAttributedString(string: "noteshelf.ai.noteshelfAILearnMore".aiLocalizedString, attributes: [.font: defaultFont]);
+//        let attrTitle = "noteshelf.ai.noteshelfAILearnMore".aiLocalizedString.appendBetalogo(font: defaultFont);
+        
         self.learnMore?.setAttributedTitle(attrTitle, for: .normal);
         self.learnMore?.configuration?.imagePadding = 5;
 
@@ -35,13 +38,17 @@ class FTNoteshelfAIFooterViewController: UIViewController {
     }
     
     @IBAction func showNoteshelfAILearnmore(_ sender: Any?) {
+        let openAIURL = "https://medium.com/noteshelf/introducing-noteshelf-ai-beta-b629dea9964b"; //"https://noteshelf-support.fluidtouch.biz/hc/en-us/articles/21713907764505"
+        if let url = URL(string: openAIURL) {
 #if targetEnvironment(macCatalyst)
-        if let url = URL(string: "https://noteshelf-support.fluidtouch.biz/hc/en-us/articles/21713907764505") {
             UIApplication.shared.open(url);
-        }
 #else
-        FTZenDeskManager.shared.showArticle("21713907764505", in: self.parent ?? self, completion: nil);
+            //            FTZenDeskManager.shared.showArticle("21713907764505", in: self.parent ?? self, completion: nil);
+            let safariController = SFSafariViewController(url: url);
+            safariController.modalPresentationStyle = .overFullScreen
+            (self.parent ?? self).present(safariController, animated: true);
 #endif
+        }
     }
 
     @IBAction func sendFeedback(_ sender: Any?) {

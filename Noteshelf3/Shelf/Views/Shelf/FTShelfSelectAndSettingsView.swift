@@ -13,27 +13,28 @@ struct FTShelfSelectAndSettingsView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    let sortOptions = FTShelfSortOrder.supportedSortOptions()
+    var sortOptions: [FTShelfSortOrder] {
+        let sortOptions : [FTShelfSortOrder]
+        if viewModel.isNS2Collection {
+            sortOptions = FTShelfSortOrder.supportedSortOptionsForNS2Books()
+        } else {
+            sortOptions =  FTShelfSortOrder.supportedSortOptions()
+        }
+        return sortOptions
+    }
     
     var body: some View {
         Menu(content: {
-            VStack{
-                getMoreSectionitem(.selectNotes, viewmodel: viewModel)
-                .disabled(viewModel.shelfItems.isEmpty)
-                Divider()
-                sortView
-                Divider()
-                FTShelfDisplayStyleView()
-                    .environmentObject(viewModel)
-                Divider()
-                getMoreSectionitem(.settings,viewmodel: viewModel)
-            }
+            menuView
         }, label: {
             Image(icon: .ellipsis)
                 .foregroundColor(Color.appColor(.accent))
                 .font(Font.appFont(for: .regular , with: 15.5))
         })
         .onTapGesture {
+            //Track Event
+            let locationName = viewModel.shelfLocation()
+            track(EventName.shelf_more_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
             if(!shelfMenuOverlayInfo.isMenuShown) {
                 shelfMenuOverlayInfo.isMenuShown = true;
             }
@@ -43,6 +44,9 @@ struct FTShelfSelectAndSettingsView: View {
     var sortView: some View{
         ForEach(sortOptions, id: \.displayTitle) { sortOption in
             Button(action: {
+                //Track Event
+                viewModel.trackEventForSortOrder(sortOrder: sortOption)
+                
                 shelfMenuOverlayInfo.isMenuShown = false
                 withAnimation {
                     viewModel.sortOption = sortOption;
@@ -64,7 +68,21 @@ struct FTShelfSelectAndSettingsView: View {
         }
         
     }
-    
+    private var menuView: some View {
+        return VStack {
+            if viewModel.canShowNotebookUpdateOptions {
+                getMoreSectionitem(.selectNotes, viewmodel: viewModel)
+                    .disabled(viewModel.shelfItems.isEmpty)
+                Divider()
+            }
+            sortView
+            Divider()
+            FTShelfDisplayStyleView()
+                .environmentObject(viewModel)
+            Divider()
+            getMoreSectionitem(.settings,viewmodel: viewModel)
+        }
+    }
     private func getMoreSectionitem(_ type: FTHomeNavItemFilteredItemsModel,viewmodel:FTShelfViewModel) -> some View {
         FTMoreItemView(type: type,viewModel:viewmodel)
     }
@@ -78,15 +96,21 @@ struct FTMoreItemView:View{
     var body: some View{
         Button {
             shelfMenuOverlayInfo.isMenuShown = false
+            var eventName = ""
             switch type {
             case .selectNotes:
+                eventName = EventName.shelf_more_selectnotes_tap
                 if idiom == .phone {
                     viewModel.compactDelegate?.didChangeSelectMode(.selection)
                 }
                 viewModel.mode = .selection
             case .settings:
                 viewModel.delegate?.showSettings()
+                eventName = EventName.shelf_more_settings_tap
             }
+            //Track Event
+            track(eventName, params: [EventParameterKey.location: viewModel.shelfLocation()], screenName: ScreenName.shelf)
+
         } label: {
             Label {
                 Text(type.displayTitle)
@@ -153,6 +177,9 @@ private struct FTShelfDisplayStyleView : View {
     var body: some View {
         ForEach(displayOptions, id: \.displayTitle) { newValue in
             Button(action: {
+                //Track Event
+               viewModel.trackEventForSupportedStyles(style: newValue)
+
                 shelfMenuOverlayInfo.isMenuShown = false
                 withAnimation {
                     viewModel.displayStlye = newValue;

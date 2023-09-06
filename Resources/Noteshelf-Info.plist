@@ -256,7 +256,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>21</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>INAlternativeAppNames</key>
@@ -289,16 +289,13 @@
 		<string>msauth</string>
 		<string>msauthv2</string>
 		<string>msauthv3</string>
+		<string>com.fluidtouch.noteshelf</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This will enable you to connect Wacom.</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Used to connect a bluetooth stylus to Noteshelf.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Used to capture and annotate photos in Noteshelf.</string>
 	<key>NSFaceIDUsageDescription</key>

@@ -15,6 +15,7 @@ public enum FTStoreContainerActions {
     case createNotebookForDairy(fileName: String, title: String, startDate: Date, endDate: Date, coverImage: UIImage, isLandScape: Bool)
     case createNotebookFor(url: URL)
     case showUpgradeAlert(controller: UIViewController,feature: String?)
+    case track(event: String, params: [String: Any]?, screenName: String?)
 }
 
 public final class FTStoreContainerHandler {

@@ -18,14 +18,11 @@ struct FTGroupListView: View {
 
     @EnvironmentObject var groupItem: FTGroupItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
-    @Binding var isAnyNBActionPopoverShown: Bool
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     var body: some View {
         VStack {
             Spacer()
-
-
         FTShelfItemContextMenuPreview(preview: {
             contentView
                 .padding(.horizontal, listGridViewHorizontalPadding)
@@ -35,18 +32,15 @@ struct FTGroupListView: View {
                             .cornerRadius(10, corners: .allCorners)
                     }
                 })
-
-                //.ignoresSafeArea()
+                .ignoresSafeArea()
         }, notebookShape: {
             return FTNotebookShape(raidus: 10);
         }, onAppearActon: {
-            print("contextual menu appeared")
             shelfMenuOverlayInfo.isMenuShown = true;
+            // Track event
+            track(EventName.shelf_group_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
         }, onDisappearActon: {
-            print("contextual menu disappeared")
-            if !isAnyNBActionPopoverShown {
-                shelfMenuOverlayInfo.isMenuShown = false;
-            }
+            shelfMenuOverlayInfo.isMenuShown = false;
         }, shelfItem: groupItem)
             Spacer()
             Divider()
@@ -72,7 +66,7 @@ struct FTGroupListView: View {
                                         coverViewPurpose:.shelf)
                     .environmentObject(groupItem)
                     .frame(width: 52,height: shelfItemHeight,alignment: .center)
-                    FTGroupTitleView()
+                    titleView
                 }
                 Image(icon: FTIcon.rightArrow)
                     .font(Font.appFont(for: .regular, with: 17))
@@ -82,7 +76,26 @@ struct FTGroupListView: View {
             }
             .contentShape(RoundedRectangle(cornerRadius: 10))
     }
-    
+    @ViewBuilder private var titleView: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(alignment: .top) {
+                Text(groupItem.title)
+                    .appFont(for: .medium, with: 16)
+                    .foregroundColor(.primary)
+                    .fixedSize(horizontal: false, vertical: false)
+                    .lineLimit(2)
+                Spacer()
+            }
+            HStack(alignment: .top) {
+                Text(groupItem.noOfNotes)
+                    .fontWeight(.regular)
+                    .appFont(for: .regular, with: 13)
+                    .foregroundColor(Color.appColor(.groupNotesCountTint))
+                Spacer()
+            }
+        }
+        .frame(height: 60)
+    }
     private var coverSize: CGSize {
         let height = shelfItemHeight - 16;
         return CGSize(width: 52, height: height)

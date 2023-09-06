@@ -285,7 +285,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     fileprivate func showIcloudMessage() {
-        let messageType = FTiCloudManager.shared().messageTypeToShow;
+        let messageType = FTNSiCloudManager.shared().messageTypeToShow;
         weak var weakSelf = self;
         switch messageType {
         case .kiCloudStartUsingMessageAction:
@@ -296,7 +296,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             laterAction.accessibilityLabel = "iCloudLater";
             controller.addAction(laterAction);
             let useIcloudAction = UIAlertAction(title: NSLocalizedString("UseiCloud", comment: "Use iCloud"), style: .default, handler: { _ in
-                FTiCloudManager.shared().setiCloud(on: true);
+                FTNSiCloudManager.shared().setiCloud(on: true);
                 weakSelf?.updateProvider(nil);
             });
             controller.addAction(useIcloudAction);
@@ -317,7 +317,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         case .kiCloudUserTurnedOffAction:
             let controller = UIAlertController(title: NSLocalizedString("iCloudUserTurnedOff", comment: "iCloudUserTurnedOff"), message: NSLocalizedString("iCloudUserTurnedOffMessage", comment: "iCloudUserTurnedOffMessage"), preferredStyle: UIAlertController.Style.alert);
             let continueAction = UIAlertAction(title: NSLocalizedString("ContinueUsingICloud", comment: "ContinueUKeep using iCloudsingICloud"), style: .cancel, handler: { _ in
-                FTiCloudManager.shared().setiCloud(on: true);
+                FTNSiCloudManager.shared().setiCloud(on: true);
                 weakSelf?.updateProvider(nil);
             });
             controller.addAction(continueAction);
@@ -365,7 +365,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 FTNoteshelfDocumentProvider.shared.moveContentsFromLocalToiCloud(onCompletion: { (_, error) in                    (error as NSError?)?.showAlert(from: self.view.window?.visibleViewController)
                     FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
 
-                    FTiCloudManager.shared().setiCloudWas(on: true);
+                    FTNSiCloudManager.shared().setiCloudWas(on: true);
                     loadingIndicatorViewController.hide();
                     self.view.isUserInteractionEnabled = true;
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
@@ -1218,15 +1218,6 @@ extension FTRootViewController: UIPencilInteractionDelegate {
                 }
             }
             docController.didReceivePencilInteraction(action);
-
-            //Tracking
-            var params: [String:Any] = ["action":action.title()]
-            if(action == FTApplePencilInteractionType.systemDefault) {
-                params["type"] = "system"
-            } else {
-                params["type"] = "user"
-            }
-            track("pencil_double_tap", params: params)
         }
     }
 }

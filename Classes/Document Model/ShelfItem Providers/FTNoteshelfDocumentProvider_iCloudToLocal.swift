@@ -71,7 +71,7 @@ extension FTNoteshelfDocumentProvider {
         } else {
             shelfItems.removeFirst();
 
-            if(eachShelfItem!.URL.pathExtension == groupExtension) {
+            if(eachShelfItem!.URL.pathExtension == FTFileExtension.group) {
                 let groupItem = eachShelfItem as! FTGroupItemProtocol;
                 let destinationURL = toCollection.URL.appendingPathComponent(groupItem.URL.lastPathComponent);
                 if(FileManager().fileExists(atPath: destinationURL.path)) {

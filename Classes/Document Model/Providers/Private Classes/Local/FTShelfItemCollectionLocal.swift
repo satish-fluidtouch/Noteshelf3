@@ -10,6 +10,13 @@ import Foundation
 import FTDocumentFramework
 import FTCommon
 
+class FTShelfCallback: NSObject {
+    var tempCompletionBlock : (([FTShelfItemProtocol]) -> Void)?
+    var tempParent: FTGroupItemProtocol?;
+    var tempSearchKey : String?
+    var tempSorOrder = FTShelfSortOrder.byName;
+}
+
 class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGatherDelegate,FTShelfCacheProtocol,
     FTShelfItemSorting,FTShelfItemSearching,FTUniqueNameProtocol,FTShelfItemDocumentStatusChangePublisher
 {
@@ -25,10 +32,10 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
 
     var downloadStatusChangedItems = FTHashTable();
     var timer : Timer?
-
+    weak var parent: FTShelfCollectionLocal?
     var childrens = [FTShelfItemProtocol]();
     var URL : Foundation.URL;
-    var uuid : String = FTUtils.getUUID();
+    var uuid : String = FTCommonUtils.getUUID();
     var type : RKShelfItemType {
         return RKShelfItemType.shelfCollection;
     };
@@ -41,10 +48,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
 
     fileprivate var query : FTLocalQueryGather?;
     
-    fileprivate var tempCompletionBlock : (([FTShelfItemProtocol]) -> Void)?;
-    fileprivate var tempParent : FTGroupItemProtocol?;
-    fileprivate var tempSearchKey : String?;
-    fileprivate var tempSorOrder = FTShelfSortOrder.byName;
+    fileprivate var tempCompletionBlock = [FTShelfCallback]();
 
     fileprivate var executionQueue = DispatchQueue.init(label: "com.fluidtouch.localShelfItemCollection");
 
@@ -89,13 +93,15 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         }
         else {
             objc_sync_enter(self);
-            self.tempParent = parent;
-            self.tempSearchKey = searchKey;
-            self.tempSorOrder = sortOrder;
-            
-            self.tempCompletionBlock = completionBlock;
+            let tempCallback = FTShelfCallback();
+            tempCallback.tempParent = parent;
+            tempCallback.tempSearchKey = searchKey;
+            tempCallback.tempSorOrder = sortOrder;
+            tempCallback.tempCompletionBlock = completionBlock;
+            self.tempCompletionBlock.append(tempCallback);
+
             self.query = FTLocalQueryGather(rootURL: self.URL,
-                                            extensionsToListen: [FTFileExtension.ns3, groupExtension],
+                                            extensionsToListen: [FTFileExtension.ns3, FTFileExtension.ns2, FTFileExtension.group],
                                             skipSubFolder : false,
                                             delegate: self);
             self.query?.startQuery();
@@ -161,7 +167,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         func moveItem()
         {
             if let item = itemsToMove.first {
-                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == groupExtension, toCollection.isTrash {
+                if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
                     self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
                         movedItems.append(contentsOf: moved)
                         itemsToMove.removeFirst();
@@ -537,33 +543,31 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     func ftLocalQueryGather(_ query: FTLocalQueryGather, didFinishGathering results: [Foundation.URL]?)
     {
         self.buildCache(results);
-        if (self.tempCompletionBlock != nil) {
-            self.shelfItems(self.tempSorOrder, parent: self.tempParent, searchKey: self.tempSearchKey, onCompletion: self.tempCompletionBlock!);
-            
-            self.tempCompletionBlock = nil;
-            self.tempParent = nil;
-            self.tempSearchKey = nil;
+        self.tempCompletionBlock.forEach { eachItem in
+            self.shelfItems(eachItem.tempSorOrder
+                            , parent: eachItem.tempParent
+                            , searchKey: eachItem.tempSearchKey
+                            , onCompletion: eachItem.tempCompletionBlock!);
         }
+        self.tempCompletionBlock.removeAll();
     }
     
     //MARK:- Private Cache Mgmt -
-    fileprivate func buildCache(_ items: [Foundation.URL]?) {
+    fileprivate func buildCache(_ items: [URL]?) {
         self.childrens.removeAll();
         self.hashTable.removeAll();
-        if(nil != items && items!.isEmpty == false) {
-            self.addItemsToCache(items! as [AnyObject]);
+        if let items, !items.isEmpty {
+            self.addItemsToCache(items);
         }
     }
-    
-    fileprivate func addItemsToCache(_ items: [AnyObject]) {
-        guard let metadataItems = items as? [Foundation.URL] else {
-            return
-        }
+
+    // Removed fileprivate URL to build this for NS2 to NS3 Migration
+    func addItemsToCache(_ items: [URL]) {
         var addedItems = [AnyObject]();
-        for eachItem in metadataItems {
+        for eachItem in items {
             let fileURL = eachItem;
             //Check if the document reference is present in documentMetadataItemHashTable.If the reference is found, its already added to cache. We just need to update the document with this metadataItem
-            if(fileURL.pathExtension == sortIndexExtension) {
+            if(fileURL.pathExtension == FTFileExtension.sortIndex) {
                 self.indexPlistContent?.handleSortIndexFileUpdates(nil)
             }
             else {
@@ -667,6 +671,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                 
                 //Add the document to new group by removing from previous group
                 if(currentGroup?.uuid != newGroupItem?.uuid) {
+                    self.hashTable.removeItemFromHashTable(item.URL);
                     if(currentGroup != nil) {
                         currentGroup?.removeChild(item);
                         if(currentGroup!.childrens.isEmpty) {
@@ -687,6 +692,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                     else {
                         self.addChild(item);
                     }
+                    self.hashTable.addItemToHashTable(item, forKey: toURL);
                 }
                 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 //Recent:
@@ -767,7 +773,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     fileprivate func isGroup(_ url:Foundation.URL) -> Bool
     {
         let fileItemURL = url.urlByDeleteingPrivate();
-        if(fileItemURL.pathExtension == groupExtension)
+        if(fileItemURL.pathExtension == FTFileExtension.group)
         {
             return true;
         }
@@ -817,6 +823,11 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         rootURL = rootURL.urlByDeleteingPrivate()
         let destFileName = FileManager.uniqueFileName(name, inFolder: rootURL);
         onCompletion(destFileName);
+    }
+
+    func isNS2Collection() -> Bool {
+        let belongs = self.parent?.belongsToNS2()
+        return belongs ?? false
     }
 }
 

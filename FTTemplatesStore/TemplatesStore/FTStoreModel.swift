@@ -8,7 +8,9 @@
 import Foundation
 import FTCommon
 
-let baseUrl = isInChinaRegion() ? "https://ops-dra.agcstorage.link/v0/noteshelf-data-hdmvw/store/v5/" : "https://noteshelf2-store-dev-env.s3.amazonaws.com/ns3/store/v5/"
+let baseUrl = isInChinaRegion() ? "https://ops-dra.agcstorage.link/v0/noteshelf-data-hdmvw/store/v5/" :
+"https://noteshelf3-public.s3.amazonaws.com/store/v1/"
+//"https://noteshelf2-store-dev-env.s3.amazonaws.com/ns3/store/v5/"
 
 let previewImageExtention = "/preview.jpg"
 
@@ -69,6 +71,7 @@ struct DiscoveryItem: Codable, Hashable {
     var link: String?
     var previewToken: String?
     var fileToken: String?
+    var sectionType: Int?
 
     enum CodingKeys: String, CodingKey {
         case displayTitle
@@ -81,6 +84,7 @@ struct DiscoveryItem: Codable, Hashable {
         case link
         case previewToken
         case fileToken
+        case sectionType
     }
 
     var templateUrl: URL {
@@ -269,6 +273,7 @@ protocol TemplateInfo {
     var link: String? { get }
     var previewToken: String? { get }
     var fileToken: String? { get }
+    var sectionType: Int? { get }
 }
 
 // MARK: - Extentions

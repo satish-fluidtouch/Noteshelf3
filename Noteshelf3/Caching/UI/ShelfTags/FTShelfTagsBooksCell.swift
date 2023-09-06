@@ -15,16 +15,17 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     private var books = [FTShelfTagsItem]()
     private var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
-    
+    weak var parentVC: UIViewController?
+
     override class func awakeFromNib() {
         super.awakeFromNib()
 
     }
 
-    func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState) {
+    func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState, parentVC: UIViewController) {
         self.books = books
         self.viewState = viewState
-        
+        self.parentVC = parentVC
         let layout = FTShelfPagesLayout()
         layout.scrollDirection = .horizontal
         self.collectionView.collectionViewLayout = layout
@@ -114,6 +115,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
                 return false
             }
         }
+        track(EventName.shelf_tag_select_book_tap, screenName: ScreenName.shelf_tags)
         return true
     }
 
@@ -123,6 +125,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
             let item = self.books[indexPath.row]
             if let shelf = item.shelfItem {
                 self.delegate?.openNotebook(shelfItem: shelf, page: 0)
+                track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
             }
         }
 

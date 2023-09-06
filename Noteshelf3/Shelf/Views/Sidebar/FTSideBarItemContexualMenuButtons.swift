@@ -10,16 +10,17 @@ import SwiftUI
 
 struct FTSideBarItemContexualMenuButtons: View {
     @Binding var showTrashAlert: Bool
-    @ObservedObject var item: FTSideBarItem
+    @EnvironmentObject var item: FTSideBarItem
     @Binding var alertInfo: TrashAlertInfo?
 
-    @ObservedObject var viewModel: FTSidebarItemContextualMenuVM
+    @EnvironmentObject var viewModel: FTSidebarItemContextualMenuVM
+    @EnvironmentObject var sidebarViewModel: FTSidebarViewModel
 
     var longPressOptions: [FTSidebarItemContextualOption] = []
     var body: some View {
             ForEach(longPressOptions,id: \.self) { menuOption in
                 Button(role: menuOption.isDestructiveOption ? .destructive : nil) {
-
+                    sidebarViewModel.trackEventForLongPressOptions(item: item, option: menuOption)
                     if menuOption == .trashCategory || menuOption == .emptyTrash || menuOption == .deleteTag {
                         showTrashAlert = true
                         setAlertInfoForOption(menuOption)

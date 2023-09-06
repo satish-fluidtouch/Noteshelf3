@@ -15,9 +15,6 @@ struct FTGroupItemView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State var popoverType: FTNotebookPopoverType?
-
-    @State var showShelfItemDetails: Bool = false
 
     var groupItemWidth: CGFloat = 212
     var groupItemHeight: CGFloat = 334
@@ -32,18 +29,14 @@ struct FTGroupItemView: View {
                 return FTNotebookShape(raidus: 10)
             }, onAppearActon: {
                 shelfMenuOverlayInfo.isMenuShown = true;
+                // Track event
+                track(EventName.shelf_group_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
             }, onDisappearActon: {
                 shelfMenuOverlayInfo.isMenuShown = false;
             },shelfItem: groupItem)
             .frame(width: groupItemWidth-24)
             titleView
         }
-        //.background(Color.red)
-        .if(shelfViewModel.mode == .selection, transform: { view in
-            view.onTapGesture {
-                groupItem.isSelected.toggle()
-            }
-        })
     }
 
     @ViewBuilder private var coverView: some View {

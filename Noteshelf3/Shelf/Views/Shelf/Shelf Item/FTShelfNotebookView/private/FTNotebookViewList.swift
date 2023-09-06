@@ -42,6 +42,8 @@ struct FTNotebookViewList : View {
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true;
             hideShadow = true
+            // Track event
+            track(EventName.shelf_book_longpress, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
         }, onDisappearActon: {
             if !isAnyNBActionPopoverShown {
                 shelfMenuOverlayInfo.isMenuShown = false;

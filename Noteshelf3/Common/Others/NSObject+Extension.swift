@@ -6,6 +6,8 @@
 //  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
 //
 
+import UIKit
+
 extension NSObject {
     enum FTNoteshelfSessionID: Int {
         case openNotebook, openGroup, openShelf, openContent, openTag;
@@ -68,7 +70,7 @@ extension NSObject {
         if let collectionName = docPath.collectionName() {
             userInfo[LastSelectedCollectionKey] = collectionName;
         }
-        if docPath.deletingLastPathComponent.pathExtension == groupExtension {
+        if docPath.deletingLastPathComponent.pathExtension == FTFileExtension.group {
             userInfo[LastOpenedGroupKey] = docPath.deletingLastPathComponent
         }
         if let _docPin = docPin {

@@ -42,7 +42,7 @@ struct FTStickerSegmentedView: View {
         .onChange(of: viewModel.recentStickerItems, perform: { newValue in
             selection = viewModel.menuItems[0]
         })
-        .onAppear{
+        .onFirstAppear{
             selection = viewModel.menuItems[0]
         }
     }

@@ -131,7 +131,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             });
         } else {
             self.navigationController?.dismiss(animated: true, completion: {
-                FTiCloudManager.shared().setiCloud(on: !wasiCloudOn);
+                FTNSiCloudManager.shared().setiCloud(on: !wasiCloudOn);
             });
         }
     }
@@ -171,10 +171,6 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             numRows = 1
         }
         return numRows
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -219,7 +215,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 }
             }else if indexPath.section == 3{
                 if cellIdentifier == CellIdentifiers.backUpOnWifi.rawValue{
-                    cell.switch?.isOn = true
+                    let isbackupOverWifi = FTCloudBackUpManager.shared.isCloudBackupOverWifiOnly()
+                    cell.switch?.isOn = isbackupOverWifi
                     cell.switch?.addTarget(self, action: #selector(FTAccountsViewController.toggleBackupOnWiFiOnly(_:)), for: .valueChanged)
                 }
             }
@@ -271,7 +268,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             if isAutoBackUpEnabled() {
                 heightRequired = 50.0 // default height
                 if let _ = self.fetchLoggedInAccount() {
-                    heightRequired += 70.0 + verticalSpace // to show login info
+                    heightRequired += 80.0 + verticalSpace // to show login info
                 }
                 let errorMsg = self.getBackuperrorMessage()
                 if !errorMsg.isEmpty {

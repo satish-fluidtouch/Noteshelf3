@@ -46,3 +46,6 @@
 "noteshelf.ai.translateToKorean" = "Traducir al coreano";
 "noteshelf.ai.translateToChineseSimplified" = "Traducir al chino simplificado";
 "noteshelf.ai.translateToChineseTraditional" = "Traducir al chino tradicional";
+
+"noteshelf.ai.noteshelfAILearnMore" = "Descubre lo que es posible.";
+"noteshelf.ai.noteshelfAIError" = "No se pudo conectar al servidor. Por favor, inténtalo de nuevo más tarde.";

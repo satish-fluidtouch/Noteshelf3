@@ -16,13 +16,17 @@ struct FTShelfTopSectionItem: View {
     
     var body: some View {
         Button {
+            let locationName = shelfViewModel.isInHomeMode ? "Home" : shelfViewModel.collection.displayTitle
             switch type {
             case .quicknote:
                 shelfViewModel.quickCreateNewNotebook()
+                track(EventName.shelf_quicknote_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             case .newNotebook:
                 shelfViewModel.delegate?.showNewBookPopverOnShelf()
+                track(EventName.shelf_newnotebook_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             case .importFile:
                 shelfViewModel.delegate?.didClickImportNotebook()
+                track(EventName.shelf_importfile_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             }
         } label: {
             topSectionView
@@ -38,7 +42,7 @@ struct FTShelfTopSectionItem: View {
 
     @ViewBuilder
     private var topSectionView: some View {
-        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 600 && !shelfViewModel.shouldShowGetStartedInfo || geometrySize < 400 {
+        if  !shelfViewModel.isInHomeMode && geometrySize < 600 || geometrySize < 600 && !shelfViewModel.shouldShowGetStartedInfo || geometrySize < 450 && shelfViewModel.shouldShowGetStartedInfo {
             VStack(alignment: .leading){
                 gridcomponetImageView
                 VStack(alignment: .leading){
@@ -54,7 +58,7 @@ struct FTShelfTopSectionItem: View {
                     gridcomponettitleAndDescription
                 }
             }
-            .frame(maxWidth: .infinity,alignment: .leading)
+            .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .leading)
         }
     }
 }

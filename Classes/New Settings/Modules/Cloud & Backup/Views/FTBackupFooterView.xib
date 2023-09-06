@@ -34,7 +34,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6On-CY-TRk">
                             <rect key="frame" x="24" y="30" width="359" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="35" id="t76-B7-MGd"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="t76-B7-MGd"/>
                             </constraints>
                             <attributedString key="attributedText">
                                 <fragment content="  ">

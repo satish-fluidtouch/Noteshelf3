@@ -69,6 +69,9 @@ class FTStoreCustomPreviewViewController: UIViewController {
             catch {
                 UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
             }
+            // Track Event
+            FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.customtemplate_importandcreate_tap, params: nil, screenName: ScreenName.templatesStore))
+
         }
     }
 

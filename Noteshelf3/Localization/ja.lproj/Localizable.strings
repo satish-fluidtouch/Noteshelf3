@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "この色はすでにあなたのパレットにあります。";
 "ColorByAuthor" = "「%@によって」";
 "Colors" = "色";
-"ColourLoversAddHeader" = "個々の色または全体のパレットを選択して追加してください。";
-"ColourLoversEditHeader" = "パレットから色をタップして選択してください。";
 "Confirm" = "確認";
 "ConflictDocModifiedOn" = "%@で変更済み";
 "Connect" = "接続";
@@ -710,31 +708,31 @@
 "ResetColorsTitle" = "リセットカラー";
 "ResetColorsWarning" = "これにより、カラーパレットが工場出荷時のデフォルトにリセットされます。";
 "ResetToDefault" = "デフォルトにリセット";
-"Resize" = "録音";
+"Resize" = "サイズ変更";
 "ResolveConflict" = "記録";
 "ResolveConflictMessage" = "録音中...";
 "Restore" = "復元ページ";
 "ResultsFor" = "%@の結果";
 "RetakeKey" = "3本指で右にスワイプ/左にスワイプ";
 "Right" = "新しいページを追加するには、リリースしてください。";
-"Rotate" = "後でお知らせ";
-"Rotate Page" = "削除";
+"Rotate" = "回転す";
+"Rotate Page" = "ページを回転する";
 "Rotating" = "最近から削除";
 "SampleNotebook" = "改名";
-"SaveAsTemplate" = "%d ノートブックの名前を変更";
+"SaveAsTemplate" = "テンプレートとして保存する";
 "SaveForFutureUse" = "タグの名前を変更";
 "SaveImageChangesConfirmation" = "名前を変更中...\n%d のうち %d";
 "SaveKey" = "必要";
 "SaveQuickNote" = "このノートブックを開くためにパスワードが必要です。";
 "Saving" = "ダブルタップに対応したApple Pencilが必要です。";
-"Scan" = "この文書を開くために最新バージョンのアプリにアップデートしてください。";
-"ScanDocument" = "リセット";
-"ScanDocument" = "リセット";
+"Scan" = "スキャン";
+"ScanDocument" = "文書をスキャン";
+"ScanDocument" = "文書をスキャン";
 "ScannerUnavailable" = "カラーパレットを工場出荷時のデフォルト設定にリセットしますか？";
 "SchoolWorkApp" = "カラーをリセット";
-"Screenshot" = "これによりカラーパレットが工場出荷時のデフォルトにリセットされます。";
-"Scrolling" = "デフォルトにリセット";
-"Search" = "リサイズ";
+"Screenshot" = "スクリーンショット";
+"Scrolling" = "スクロール";
+"Search" = "検索";
 "SearchPapersCovers" = "変更は同期されていません。保持するドキュメントを選択してください。";
 "SearchText" = "リストア";
 "SearchTitles" = "「'%@'の結果」";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "ボックスにアクセスできません";
 "UnableToAccessDropbox" = "ドロップボックスにアクセスできません。";
 "UnableToAccessWeLink" = "WeLinkにアクセスできません。";
-"UnableToConnectToColourLovers" = "COLOURlovers.comに接続できません";
 "UnableToConnectToTheWebDAVServer" = "WebDAVサーバーに接続できません。後でもう一度お試しください。";
 "UnableToLocateTheServer" = "サーバーを見つけることができません。サーバーのURLを確認し、再試行してください。";
 "UnableToauthenticate" = "認証できません";
@@ -953,6 +950,12 @@
 "bujoessentials" = "ブジョエッセンシャルズ";
 "cancel" = "キャンセル";
 "clipart404" = "サーバーがビジーです。後でもう一度お試しください。";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
+"cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
 "color.added" = "カラーが追加されました。";
 "color.deleted" = "色削除";
 "color.editColor" = "色の編集 (Iro no henshū)";
@@ -985,7 +988,7 @@
 "customizeToolbar.pen" = "ペン";
 "customizeToolbar.photo" = "フォト";
 "customizeToolbar.pixabay" = "ピクサベイ";
-"customizeToolbar.present" = "プレゼント";
+"customizeToolbar.present" = "プレゼ";
 "customizeToolbar.readOnlyMode" = "読み取り専用モード";
 "customizeToolbar.resetConfirmation" = "デフォルトのツールバーにリセットしてもよろしいですか？";
 "customizeToolbar.rotatePage" = "ページを回転させる";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "利用規約";
 "iap.title" = "Noteshelf Premium で完全なエクスペリエンスを手に入れましょう";
 "iap.upgradeNow" = "今すぐアップグレード";
+"icloud.sync.issue.message" = "iCloud に接続できません。 設定でiCloudがオンになっていることをご確認ください。";
 "iconlabels" = "アイコンラベル";
 "import" = "インポート";
 "importedFiles" = "インポートされたファイル";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "標準";
 "lineHeight.wide" = "ワイド";
 "lockwithfaceIDandPasscode" = "%@とパスコードでロック";
-"migration.alert.cancel" = "キャンセル";
-"migration.alert.copy" = "コピー";
-"migration.alert.message" = "これにより、新しいノートブックのコピーが作成され、コピーされた内容が含まれます。";
-"migration.alert.open" = "開く";
-"migration.alert.title" = "この本をNS3に移行しますか？";
-"migration.alert.yes" = "はい";
-"migration.failure.message" = "現時点ではこの本を移行することができません。サポートにお問い合わせください。";
+"migration.alert.migrate" = "移行";
+"migration.alert.open" = "場所に移動する";
+"migration.alert.title" = "このノートブックのコピーをNoteshelf 3に移行しますか？";
 "migration.progress.text" = "移行";
-"migration.success.alert.message" = "ノートブックを開きますか？";
-"migration.success.alert.title" = "正常に「Unfiled」に移行しました。";
+"migration.success.alert.message" = "成功しました！移行されたノートブックは次の場所に配置されました：%@";
 "months" = "月";
 "more" = "もっと";
 "more.globalsettings.caps" = "グローバル設定";
@@ -1189,9 +1188,10 @@
 "quotes" = "引用";
 "removefromRecents" = "最近削除";
 "reset" = "リセット";
+"retry" = "リトライ";
 "save" = "グループ名変更";
 "school" = "学校";
-"search.tryNewSearch" = "紛争の解決";
+"search.tryNewSearch" = "新しい検索を試してください";
 "seeAll" = "再受験";
 "selectColor" = "色を選択してください";
 "settings" = "設定";
@@ -1230,7 +1230,7 @@
 "shelf.deleteCategoryAlert.title" = "削除してもよろしいですか？";
 "shelf.deleteTagAlert.message" = "アイテムからタグが削除されます。";
 "shelf.discover.aiAssitedDescription" = "手書きメモを作成し、Noteshelf AIでその他の機能を利用する。";
-"shelf.discover.aiAssitedNotesTitle" = "AI支援ノート";
+"shelf.discover.aiAssitedNotesTitle" = "AI支援メモ";
 "shelf.discover.coversDescription" = "美しいカバーで棚を個性化してください。";
 "shelf.discover.coversTitle" = "スタイルに合わせたカバー";
 "shelf.discover.customToolbarDescription" = "ツールバーを自分好みにカスタマイズし、お気に入りのツールを手軽に利用できるようにしましょう。";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "すべてを見る";
 "shelf.home.seeAllNotes" = "すべてのノートを見る";
 "shelf.importfile.description" = "FilesアプリからPDFと画像を追加";
-"shelf.migration.Description" = "新しいバージョンのNoteshelfに書籍を移行するには、それをタップするか長押しして、メニューから移行オプションを選択してください。";
+"shelf.migration.Description" = "ここでそれぞれのノートブックをタップして、Noteshelf 3 にコピーを移行してください。移行されたノートブックはNoteshelf 3 のカテゴリとグループで利用できます。カテゴリ全体を移行する機能は近日公開予定です！";
 "shelf.migration.headerMessage" = "Noteshelf 3にノートを移行";
 "shelf.navBar.deselectAll" = "すべて選択解除";
 "shelf.navBar.select" = "選択";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "タグを削除する";
 "sidebar.allTags.toolbar.share" = "共有";
 "sidebar.bookmark" = "ブックマーク";
+"sidebar.bookmarks" = "ブックマーク";
 "sidebar.bookmarks.alert.message" = "このページのブックマークを削除しますか？";
 "sidebar.bookmarks.bookmark" = "ブックマーク";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "新しいウィンドウで開く";
@@ -1388,7 +1389,9 @@
 "sidebar.bookmarks.page" = "ページ %@";
 "sidebar.contextualMenu.deleteTag" = "タグを削除";
 "sidebar.photo" = "写真";
+"sidebar.photos" = "写真";
 "sidebar.recording" = "記録";
+"sidebar.recordings" = "録音";
 "sidebar.topSection.home" = "ホーム";
 "sidebar.topSection.starred" = "星付き";
 "sidebar.topSection.unfiled" = "未整理";
@@ -1399,7 +1402,7 @@
 "stickies" = "付箋";
 "stickynotes" = "付箋";
 "stylus.goto.settings" = "設定/Apple Pencilに移動";
-"stylus.switch.fullscreen" = "フルスクリーンに切り替える";
+"stylus.switch.focusmode" = "フォーカスモードに切り替える";
 "tags.contextualMenu.deleteTag" = "タグを削除";
 "tags.contextualMenu.renameTag" = "タグ名変更 (Tagumei Henkō)";
 "tags.delete.alert.message" = "アイテムからタグが削除されます。";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 28 August 2023 at 3:37 PM
+// Last Synced by Akshay on 5 September 2023 at 15:19
