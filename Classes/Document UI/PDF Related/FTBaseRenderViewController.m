@@ -130,7 +130,11 @@
             break;
         case kDeskModeClipboard: // Lasso
         {
-            [FTLassoRackViewController showPopOverWithPresentingController:self sourceView:sourceView sourceRect: sourceView.bounds arrowDirections: UIPopoverArrowDirectionAny];
+            UIViewController *controller = [FTLassoRackViewController showPopOverWithPresentingController:self sourceView:sourceView sourceRect: sourceView.bounds arrowDirections: UIPopoverArrowDirectionAny];
+            if([controller isKindOfClass:[FTLassoRackViewController class]]) {
+                FTLassoRackViewController *lassoVc = (FTLassoRackViewController *)controller;
+                lassoVc.delegate = self;
+            }
         }
             break;
         default:

@@ -597,7 +597,6 @@
 "PageCreated" = "Seite erstellt";
 "PageCreatedOn" = "Erstellt am %@";
 "PageDimensions" = "Abmessungen";
-"PageFromClipBoard" = "Einfügen aus der Zwischenablage'";
 "PageFromClipboard" = "Seite vom Zwischenablage";
 "PageFromPhoto" = "Fotountergrund";
 "PageFromTemplate" = "Vorlage auswählen";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Passwörter stimmen nicht überein.";
 "Paste" = "Einfügen";
 "PasteBelow" = "Unterhalb einfügen";
+"PasteFromClipBoard" = "Einfügen aus der Zwischenablage'";
 "Pause" = "Pause";
 "PencilActionAlert" = "Diese Aktion überschreibt nur die systemweite Voreinstellung für diese App. Möchten Sie fortfahren?";
 "PencilActionChangeMessage" = "Gehe zu Einstellungen > Apple Pencil, um zu ändern.";
@@ -1498,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:13 PM
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

@@ -597,7 +597,6 @@
 "PageCreated" = "Page créée";
 "PageCreatedOn" = "Créé le %@";
 "PageDimensions" = "Dimensions";
-"PageFromClipBoard" = "Coller depuis le presse-papiers";
 "PageFromClipboard" = "Page du presse-papiers";
 "PageFromPhoto" = "Arrière-plan de la photo";
 "PageFromTemplate" = "Sélectionner un modèle.";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Les mots de passe ne correspondent pas.";
 "Paste" = "Coller";
 "PasteBelow" = "Coller ci-dessous";
+"PasteFromClipBoard" = "Coller depuis le presse-papiers";
 "Pause" = "Pause";
 "PencilActionAlert" = "Cette action remplacera le paramètre par défaut du système uniquement pour cette application. Souhaitez-vous continuer ?";
 "PencilActionChangeMessage" = "Aller dans Paramètres > Apple Pencil pour modifier";
@@ -1498,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:13 PM
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

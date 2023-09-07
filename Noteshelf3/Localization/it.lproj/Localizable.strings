@@ -597,7 +597,6 @@
 "PageCreated" = "Pagina creata";
 "PageCreatedOn" = "Creato il %@";
 "PageDimensions" = "Dimensioni";
-"PageFromClipBoard" = "Incolla dagli appunti";
 "PageFromClipboard" = "Pagina dagli appunti.";
 "PageFromPhoto" = "Sfondo fotografico";
 "PageFromTemplate" = "Seleziona modello";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Le password non corrispondono";
 "Paste" = "Incolla";
 "PasteBelow" = "Incolla sotto";
+"PasteFromClipBoard" = "Incolla dagli appunti";
 "Pause" = "Pausa";
 "PencilActionAlert" = "Questa azione sovrascriverà solo l'impostazione predefinita del sistema per questa app. Vuoi procedere?";
 "PencilActionChangeMessage" = "Vai su Impostazioni > Apple Pencil per cambiare.";
@@ -1498,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:13 PM
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

@@ -597,7 +597,6 @@
 "PageCreated" = "페이지 생성";
 "PageCreatedOn" = "%@에서 생성";
 "PageDimensions" = "크기";
-"PageFromClipBoard" = "클립보드에서 붙여넣기";
 "PageFromClipboard" = "클립보드에서 페이지";
 "PageFromPhoto" = "사진 배경";
 "PageFromTemplate" = "템플릿 선택";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "비밀번호가 일치하지 않습니다.";
 "Paste" = "붙여넣기";
 "PasteBelow" = "아래에 붙여넣기";
+"PasteFromClipBoard" = "클립보드에서 붙여넣기";
 "Pause" = "일시정지";
 "PencilActionAlert" = "이 동작은 시스템 기본 설정을 이 앱에만 덮어씁니다. 계속하시겠습니까?";
 "PencilActionChangeMessage" = "설정으로 이동 > Apple Pencil로 변경";
@@ -1498,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:13 PM
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

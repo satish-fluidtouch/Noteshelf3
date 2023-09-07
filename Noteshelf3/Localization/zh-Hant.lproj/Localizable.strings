@@ -597,7 +597,6 @@
 "PageCreated" = "頁面已建立";
 "PageCreatedOn" = "在%@上創建";
 "PageDimensions" = "尺寸";
-"PageFromClipBoard" = "從剪貼簿貼上";
 "PageFromClipboard" = "剪貼簿的頁面";
 "PageFromPhoto" = "照片背景";
 "PageFromTemplate" = "選擇模板";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "密碼不相符";
 "Paste" = "粘贴";
 "PasteBelow" = "貼在下方";
+"PasteFromClipBoard" = "從剪貼簿貼上";
 "Pause" = "暫停";
 "PencilActionAlert" = "此操作僅對此應用程式覆蓋系統預設值。是否要繼續？";
 "PencilActionChangeMessage" = "前往「設定」>「Apple Pencil」進行更改";
@@ -1498,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:13 PM
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

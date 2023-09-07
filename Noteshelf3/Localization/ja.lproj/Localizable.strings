@@ -597,7 +597,6 @@
 "PageCreated" = "作成された";
 "PageCreatedOn" = "%@で作成";
 "PageDimensions" = "寸法";
-"PageFromClipBoard" = "クリップボードから貼り付ける";
 "PageFromClipboard" = "クリップボードからのページ";
 "PageFromPhoto" = "写真の背景";
 "PageFromTemplate" = "テンプレートを選択する";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "パスワードが一致しません。";
 "Paste" = "貼り付け";
 "PasteBelow" = "以下に貼り付け";
+"PasteFromClipBoard" = "クリップボードから貼り付ける";
 "Pause" = "一時停止";
 "PencilActionAlert" = "このアクションは、このアプリに対してのみシステムのデフォルトを上書きします。続行しますか？";
 "PencilActionChangeMessage" = "設定に移動して、Apple Pencilを変更してください。";
@@ -1498,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:13 PM
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM
