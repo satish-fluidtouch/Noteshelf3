@@ -257,26 +257,30 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTNoteshelfDocumentProvider.shared.updateProviderIfRequired { isUpdated in
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
-                let collectionName = self.lastSelectedCollectionName();
-                self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
-                    NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
-                    if let isInNonCollectionMode = self.isInNonCollectionMode(),
-                       isInNonCollectionMode {
-                        let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
-                        self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
-                                       lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
-                                       lastSelectedTag: (self.lastSelectedTag() ?? ""))
-                    } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
-                        self.showShelf(updateWithLastSelected: collection);
-                    } else {
-                        // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
-                        self.showShelf(isInNonCollectionMode: true,
-                                       lastSelectedSideBarContentType: .home,
-                                       lastSelectedTag: "")
-                    }
+                NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
+                if let isInNonCollectionMode = self.isInNonCollectionMode(),
+                   isInNonCollectionMode {
+                    let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
+                    self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
+                                   lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
+                                   lastSelectedTag: (self.lastSelectedTag() ?? ""))
                     self.showIcloudMessage();
                     onCompletion?(true);
-                });
+                } else {
+                    let collectionName = self.lastSelectedCollectionName();
+                    self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
+                        if collectionName == collectionToShow?.title, let collection = collectionToShow {
+                            self.showShelf(updateWithLastSelected: collection);
+                        } else {
+                            // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
+                            self.showShelf(isInNonCollectionMode: true,
+                                           lastSelectedSideBarContentType: .home,
+                                           lastSelectedTag: "")
+                        }
+                        self.showIcloudMessage();
+                        onCompletion?(true);
+                    });
+                }
             }
             else {
                 onCompletion?(false);
