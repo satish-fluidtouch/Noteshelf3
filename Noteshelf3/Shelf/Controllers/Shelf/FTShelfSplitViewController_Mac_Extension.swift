@@ -26,8 +26,13 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
             else {
                 self.hide(.primary)
             }
-        }
-        else if let actionDelegate = self.getSecondaryRootViewController() as? FTToolbarActionDelegate {
+        } else if item.itemIdentifier == FTShelfBackToolbarItem.identifier {
+            if self.checkIfGlobalSearchControllerExists() {
+                self.exitFromGlobalSearch()
+            } else {
+                self.detailNavigationController?.popViewController(animated: true)
+            }
+        } else if let actionDelegate = self.getSecondaryRootViewController() as? FTToolbarActionDelegate {
             actionDelegate.toolbar(toolbar, toolbarItem: item);
         }
     }
@@ -137,7 +142,6 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
             }
             // To disable other tool items during search mode
             if !self.checkIfGlobalSearchControllerExists() {
-                self.exitFromGlobalSearch()
                 if let addToolItem = toolbar.getToolbarItem(with: FTShelfAddToolbarItem.identifier) as? FTShelfAddToolbarItem {
                     addToolItem.validate()
                 }
