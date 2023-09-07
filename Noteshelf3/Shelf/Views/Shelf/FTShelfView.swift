@@ -29,8 +29,12 @@ struct FTShelfView: View,FTShelfBaseView {
         // let _ = Self._printChanges()
         GeometryReader { geometry in
             ZStack {
-                if viewModel.canShowNoItemsView && viewModel.showNoShelfItemsView {
-                    emptyShelfItemsView()
+                if viewModel.showNoShelfItemsView {
+                    VStack {
+                        Spacer()
+                        emptyShelfItemsView()
+                        Spacer()
+                    }.ignoresSafeArea()
                 }
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
@@ -106,10 +110,14 @@ struct FTShelfView: View,FTShelfBaseView {
             return FTNoResultsView(noResultsImageName: "noFavoritesIcon",
                                    title: NSLocalizedString("shelf.starred.noStarredTitle", comment: "No starred notes"),
                                    description: NSLocalizedString("shelf.starred.noStarredDescription", comment: "Star your important notes to access them all in one place"))
-        } else { // isUnfiledNotesShelfItemCollection
+        } else if viewModel.collection.isUnfiledNotesShelfItemCollection {
             return FTNoResultsView(noResultsImageName: "noUnCategorizedIcon",
                                    title: NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes"),
                                    description: NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here."))
+        } else {
+            return FTNoResultsView(noResultsImageName: "noCategoryItems",
+                                   title: NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty"),
+                                   description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
         }
     }
 }

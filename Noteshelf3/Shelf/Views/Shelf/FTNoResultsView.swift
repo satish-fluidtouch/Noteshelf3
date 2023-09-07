@@ -19,7 +19,7 @@ struct FTNoResultsView: View {
             Image(uiImage: UIImage(named: noResultsImageName)!)
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 64, height: 64, alignment: Alignment.center)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 16)
 
             Text(title)
                 .fontWeight(.semibold)
@@ -32,6 +32,8 @@ struct FTNoResultsView: View {
                 .appFont(for: .regular, with: 15)
                 .frame(width: 234, alignment: .center)
                 .multilineTextAlignment(.center)
+                .lineSpacing(0)
+                .kerning(-0.41)
                 .padding(.bottom,8)
                 .foregroundColor(Color.appColor(.black70))
 
