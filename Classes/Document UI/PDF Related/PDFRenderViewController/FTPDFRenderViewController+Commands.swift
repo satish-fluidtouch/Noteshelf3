@@ -162,8 +162,8 @@ extension FTPDFRenderViewController: FTShortcutActions {
     func deletePageAction(page: FTThumbnailable) {
         let confirmMsg = String(format: "customizeToolbar.deletePageConfirmation".localized, page.pageIndex() + 1)
         let alertController = UIAlertController(title: confirmMsg, message: "", preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: "customizeToolbar.deletePage".localized, style: .destructive, handler: { (action) in
-            _ = (self.pdfDocument as? FTThumbnailableCollection)?.deletePages([page])
+        let deleteAction = UIAlertAction(title: "customizeToolbar.deletePage".localized, style: .destructive, handler: { [weak self] action in
+            _ = (self?.pdfDocument as? FTThumbnailableCollection)?.deletePages([page])
             NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
         })
         alertController.addAction(deleteAction)
