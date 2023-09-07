@@ -21,7 +21,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane ios beta
 ```
 
-Push a new beta build to TestFlight
+NS3 Beta iOS
 
 ### ios release
 
@@ -29,7 +29,7 @@ Push a new beta build to TestFlight
 [bundle exec] fastlane ios release
 ```
 
-Push a new beta build to AppStore
+Noteshelf 3 iOS
 
 ----
 
@@ -42,7 +42,7 @@ Push a new beta build to AppStore
 [bundle exec] fastlane mac beta
 ```
 
-
+NS3 Beta macOS
 
 ### mac release
 
@@ -50,7 +50,7 @@ Push a new beta build to AppStore
 [bundle exec] fastlane mac release
 ```
 
-
+Noteshelf 3 macOS
 
 ----
 
