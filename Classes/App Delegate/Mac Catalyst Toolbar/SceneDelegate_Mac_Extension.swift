@@ -47,7 +47,7 @@ protocol FTSearchToolbarActionDelegate: NSObjectProtocol {
 }
 
 public enum FTShelfToolbarMode: Int {
-    case shelf,trash,selectNotes,templatePreview,content, tags;
+    case shelf,trash,ns2, selectNotes,templatePreview,content, tags;
 }
 
 class FTShelfToolbar: NSToolbar {
@@ -114,6 +114,9 @@ class FTShelfToolbar: NSToolbar {
                 }
             }
         }
+        if let moreItem = self.getToolbarItem(with: FTShelfMoreToolbarItem.identifier) as? FTShelfMoreToolbarItem {
+            moreItem.updateMenu()
+        }
     }
 }
 
@@ -158,6 +161,12 @@ class FTShelfToolbarDelegate: NSObject, NSToolbarDelegate {
                     , FTShelfAddToolbarItem.identifier
                     , FTShelfMoreToolbarItem.identifier
                     , FTShelfSearchToolbarItem.identifier
+                ]
+            case .ns2:
+                items = [
+                    FTShelfToogleSidebarToolbarItem.identifier
+                    , NSToolbarItem.Identifier.flexibleSpace
+                    , FTShelfMoreToolbarItem.identifier
                 ]
             case .trash:
                 items = [
