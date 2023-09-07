@@ -597,7 +597,6 @@
 "PageCreated" = "页面创建";
 "PageCreatedOn" = "创建于 %@";
 "PageDimensions" = "尺寸";
-"PageFromClipBoard" = "从剪贴板粘贴";
 "PageFromClipboard" = "剪贴板页面";
 "PageFromPhoto" = "照片背景";
 "PageFromTemplate" = "选择模板";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "密码不匹配";
 "Paste" = "粘贴";
 "PasteBelow" = "粘贴到下方";
+"PasteFromClipBoard" = "从剪贴板粘贴";
 "Pause" = "暂停";
 "PencilActionAlert" = "此操作仅会覆盖系统默认设置，仅适用于此应用。您是否要继续？";
 "PencilActionChangeMessage" = "前往“设置”>“Apple Pencil”进行更改";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "基本工具";
 "customizeToolbar.bookmark" = "书签";
 "customizeToolbar.currentToolbar" = "在工具栏";
+"customizeToolbar.deletePage" = "删除页面";
+"customizeToolbar.deletePageConfirmation" = "您确定要删除本笔记本的第%d页吗？";
 "customizeToolbar.duplicatePage" = "重复页面";
 "customizeToolbar.emojis" = "表情符号";
 "customizeToolbar.eraser" = "橡皮";
@@ -1447,6 +1449,9 @@
 "templatesStore.templatePreview.createNotebook" = "创建笔记本";
 "templatesStore.templatePreview.inyourLibrary" = "在您的图书馆";
 "templatesStore.templatePreview.style" = "风格";
+"text.font.setAsDefault.menuTitle" = "设置为默认：";
+"text.font.setAsDefault.thisAndFutureBooks" = "这本和所有未来的笔记本";
+"text.font.setAsDefault.thisBook" = "这个笔记本";
 "trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾桶吗？";
 "unsplash.search.alertMessage" = "输入要搜索的文本";
@@ -1493,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM
