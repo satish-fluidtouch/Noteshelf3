@@ -152,8 +152,9 @@ extension FTPDFRenderViewController {
             FTShapesRackViewController.setRackType(penTypeRack: FTRackData(type: .shape, userActivity: activity))
             FTShapesRackViewController.showPopOver(presentingController: self, sourceView: toolbarItem)
         case .deskModeClipboard:
-            FTLassoRackViewController.showPopOver(presentingController: self
-                                                , sourceView: toolbarItem);
+            let lassoVc = FTLassoRackViewController.showPopOver(presentingController: self
+                                                , sourceView: toolbarItem)
+            (lassoVc as? FTLassoRackViewController)?.delegate = self
         default:
             break;
         }
