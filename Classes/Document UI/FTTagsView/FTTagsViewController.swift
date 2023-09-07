@@ -174,14 +174,14 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
                 tagsView?.items = self.tagsList
                 self.tagsView?.refresh()
                 track("tag_action", params: ["isAdded" : true])
-                Task {
+                Task.detached(operation: {
                     do {
                         try await self.delegate?.didAddTag(tag: item)
-                        self.performDidAddTag(tag: item.text)
+                        await self.performDidAddTag(tag: item.text)
                     } catch {
-
+                        
                     }
-                }
+                })
             }
         }
     }
@@ -194,27 +194,27 @@ extension FTTagsViewController: TagsViewDelegate {
         // Update page tags based on Select and Unselect
         if item.isSelected {
             item.isSelected = false
-            Task {
+            Task.detached(operation: {
                 do {
                     try await self.delegate?.didUnSelectTag(tag: item)
                     let docIds = FTCacheTagsProcessor.shared.documentIdsForTag(tag: item)
                     if docIds.isEmpty {
-                        self.performDidDeleteTag(tag: item.text)
+                        await self.performDidDeleteTag(tag: item.text)
                     }
                 } catch {
 
                 }
-            }
+            })
             track("tag_action", params: ["isAdded" : false])
         } else {
             item.isSelected = true
-            Task {
+            Task.detached(operation: {
                 do {
                     try await self.delegate?.didAddTag(tag: item)
                 } catch {
 
                 }
-            }
+            })
             track("tag_action", params: ["isAdded" : true])
         }
         self.tagsList[indexPath.row] = item
@@ -238,14 +238,14 @@ extension FTTagsViewController: TagsViewDelegate {
             self.tagsView?.refresh()
             self.performDidRenameTag(tag: oldTag.text, renamedTag: renamedTag)
 
-            Task {
+            Task.detached(operation: {
                 do {
                     try await self.delegate?.didRenameTag(tag: oldTag, renamedTag: FTTagModel(id: tag.id, text: renamedTag, isSelected: tag.isSelected))
                 }
                 catch {
                     print(error)
                 }
-            }
+            })
         }
     }
 
@@ -265,14 +265,14 @@ extension FTTagsViewController: TagsViewDelegate {
                 self.tagsView?.isHidden = false
             }
             //Remove tag from All Pages from All books
-            Task {
+            Task.detached(operation: {
                 do {
                     try await self.delegate?.didDeleteTag(tag: tag)
-                    self.performDidDeleteTag(tag: tag.text)
+                    await self.performDidDeleteTag(tag: tag.text)
                 } catch {
 
                 }
-            }
+            })
             track("Tag_Delete")
         }
     }

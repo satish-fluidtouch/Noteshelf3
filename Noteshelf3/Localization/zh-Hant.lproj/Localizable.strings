@@ -597,7 +597,6 @@
 "PageCreated" = "頁面已建立";
 "PageCreatedOn" = "在%@上創建";
 "PageDimensions" = "尺寸";
-"PageFromClipBoard" = "從剪貼簿貼上";
 "PageFromClipboard" = "剪貼簿的頁面";
 "PageFromPhoto" = "照片背景";
 "PageFromTemplate" = "選擇模板";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "密碼不相符";
 "Paste" = "粘贴";
 "PasteBelow" = "貼在下方";
+"PasteFromClipBoard" = "從剪貼簿貼上";
 "Pause" = "暫停";
 "PencilActionAlert" = "此操作僅對此應用程式覆蓋系統預設值。是否要繼續？";
 "PencilActionChangeMessage" = "前往「設定」>「Apple Pencil」進行更改";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "基本工具";
 "customizeToolbar.bookmark" = "書籤";
 "customizeToolbar.currentToolbar" = "在工具欄上";
+"customizeToolbar.deletePage" = "刪除頁面";
+"customizeToolbar.deletePageConfirmation" = "您確定要刪除此筆記本的第 %d 頁嗎？";
 "customizeToolbar.duplicatePage" = "重複頁面";
 "customizeToolbar.emojis" = "表情符號";
 "customizeToolbar.eraser" = "橡皮擦";
@@ -1218,6 +1220,8 @@
 "shelf.bottomBar.delete" = "刪除";
 "shelf.bottomBar.restore" = "還原";
 "shelf.bottomBar.trash" = "垃圾";
+"shelf.category.noCategoryItemsDescription" = "點擊上方的選項以創建新的筆記或移動現有筆記。";
+"shelf.category.noCategoryItemsTitle" = "這個類別是空的";
 "shelf.category.unCategorized" = "未分類";
 "shelf.changeCover" = "更換封面";
 "shelf.createGroup" = "建立群組";
@@ -1287,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "大小";
 "shelf.notebook.textstyle.textLineHeight" = "行高";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行高";
+"shelf.ns2Category.noCategoryItemsTitle" = "此分類下無任何項目";
 "shelf.paperPicker.choosePaper" = "選擇紙張";
 "shelf.paperPicker.orientation" = "定位";
 "shelf.quickCreateSettings.NavTitle" = "快速筆記";
@@ -1496,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 6 September 2023 at 6:35 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

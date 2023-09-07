@@ -1184,14 +1184,15 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             coverInfo.isCover = true
             coverInfo.insertAt = 0
             var inputFileurl: URL?
+            //NS2 cover size will be (136,180), hence resizing to NS3 cover size to show on shelf
+            let coverSizeImage = self.shelfImage?.resizedImage(portraitCoverSize) // used to show thumbnail on shelf
             if let shelfImage {
                 let newSize = CGSize(width: shelfImage.size.width * 2, height: shelfImage.size.height * 2)
-                let resizedImage = shelfImage.resizedImage(newSize)
-                let path = FTPDFFileGenerator().generatePDFFile(withImage: resizedImage)
+                let pdfSizeImage = shelfImage.resizedImage(newSize)//used to show cover inside notebook
+                let path = FTPDFFileGenerator().generateCoverPDFFile(withImages: [pdfSizeImage, coverSizeImage ?? shelfImage])
                 inputFileurl = Foundation.URL(fileURLWithPath: path)
             }
-            //NS2 cover size will be (136,180), hence resizing to NS3 cover size to show on shelf
-            self.shelfImage = self.shelfImage?.resizedImage(portraitCoverSize)
+            self.shelfImage = coverSizeImage
             if let url = inputFileurl, FileManager().fileExists(atPath: url.path) {
                 coverInfo.inputFileURL = url
                 self.insertFileFromInfo(coverInfo, onCompletion: { (success, error) in

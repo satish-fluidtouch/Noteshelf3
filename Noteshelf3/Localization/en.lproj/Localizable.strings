@@ -597,7 +597,6 @@
 "PageCreated" = "Page Created";
 "PageCreatedOn" = "Created on %@";
 "PageDimensions" = "Dimensions";
-"PageFromClipBoard" = "Paste from Clipboard";
 "PageFromClipboard" = "Page from Clipboard";
 "PageFromPhoto" = "Photo Background";
 "PageFromTemplate" = "Select Template";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Passwords don't match";
 "Paste" = "Paste";
 "PasteBelow" = "Paste Below";
+"PasteFromClipBoard" = "Paste from Clipboard";
 "Pause" = "Pause";
 "PencilActionAlert" = "This action will override the system default only for this app. Would you like to proceed?";
 "PencilActionChangeMessage" = "Go to Settings > Apple Pencil to change";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "BASIC TOOLS";
 "customizeToolbar.bookmark" = "Bookmark";
 "customizeToolbar.currentToolbar" = "ON TOOLBAR";
+"customizeToolbar.deletePage" = "Delete page";
+"customizeToolbar.deletePageConfirmation" = "Are you sure you want to delete page %d of this notebook?";
 "customizeToolbar.duplicatePage" = "Duplicate Page";
 "customizeToolbar.emojis" = "Emojis";
 "customizeToolbar.eraser" = "Eraser";
@@ -1218,6 +1220,8 @@
 "shelf.bottomBar.delete" = "Delete";
 "shelf.bottomBar.restore" = "Restore";
 "shelf.bottomBar.trash" = "Trash";
+"shelf.category.noCategoryItemsDescription" = "Tap on the options above to create new notes or move existing ones.";
+"shelf.category.noCategoryItemsTitle" = "This category is empty";
 "shelf.category.unCategorized" = "Uncategorized";
 "shelf.changeCover" = "Change Cover";
 "shelf.createGroup" = "Create Group";
@@ -1287,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "Size";
 "shelf.notebook.textstyle.textLineHeight" = "Line Height";
 "shelf.notebook.textstyle.textautoLineHeight" = "Auto Line Height";
+"shelf.ns2Category.noCategoryItemsTitle" = "No items in this category";
 "shelf.paperPicker.choosePaper" = "Choose Paper";
 "shelf.paperPicker.orientation" = "Orientation";
 "shelf.quickCreateSettings.NavTitle" = "Quick Note";
@@ -1496,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 6 September 2023 at 6:35 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

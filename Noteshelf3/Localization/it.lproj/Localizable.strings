@@ -597,7 +597,6 @@
 "PageCreated" = "Pagina creata";
 "PageCreatedOn" = "Creato il %@";
 "PageDimensions" = "Dimensioni";
-"PageFromClipBoard" = "Incolla dagli appunti";
 "PageFromClipboard" = "Pagina dagli appunti.";
 "PageFromPhoto" = "Sfondo fotografico";
 "PageFromTemplate" = "Seleziona modello";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Le password non corrispondono";
 "Paste" = "Incolla";
 "PasteBelow" = "Incolla sotto";
+"PasteFromClipBoard" = "Incolla dagli appunti";
 "Pause" = "Pausa";
 "PencilActionAlert" = "Questa azione sovrascriverà solo l'impostazione predefinita del sistema per questa app. Vuoi procedere?";
 "PencilActionChangeMessage" = "Vai su Impostazioni > Apple Pencil per cambiare.";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "STRUMENTI DI BASE";
 "customizeToolbar.bookmark" = "Segnalibro";
 "customizeToolbar.currentToolbar" = "SULLA BARRA DEGLI STRUMENTI";
+"customizeToolbar.deletePage" = "Elimina pagina";
+"customizeToolbar.deletePageConfirmation" = "Sei sicuro di voler eliminare la pagina %d di questo quaderno?";
 "customizeToolbar.duplicatePage" = "Duplica pagina.";
 "customizeToolbar.emojis" = "Emoticon";
 "customizeToolbar.eraser" = "Cancellino";
@@ -1218,6 +1220,8 @@
 "shelf.bottomBar.delete" = "Elimina";
 "shelf.bottomBar.restore" = "Ripristina";
 "shelf.bottomBar.trash" = "Spazzatura";
+"shelf.category.noCategoryItemsDescription" = "Tocca sulle opzioni sopra per creare nuove note o spostarne di esistenti.";
+"shelf.category.noCategoryItemsTitle" = "Questa categoria è vuota.";
 "shelf.category.unCategorized" = "Non categorizzato";
 "shelf.changeCover" = "Cambia copertina";
 "shelf.createGroup" = "Crea gruppo";
@@ -1287,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "Dimensione";
 "shelf.notebook.textstyle.textLineHeight" = "Altezza riga";
 "shelf.notebook.textstyle.textautoLineHeight" = "Altezza linea automatica";
+"shelf.ns2Category.noCategoryItemsTitle" = "Nessun elemento in questa categoria.";
 "shelf.paperPicker.choosePaper" = "Scegli carta";
 "shelf.paperPicker.orientation" = "Orientamento";
 "shelf.quickCreateSettings.NavTitle" = "Nota rapida";
@@ -1496,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 6 September 2023 at 6:35 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

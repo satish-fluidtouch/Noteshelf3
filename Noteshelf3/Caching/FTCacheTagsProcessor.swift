@@ -324,6 +324,19 @@ extension FTCacheTagsProcessor {
         return sortedArray
     }
 
+    func commonTagsFor(pages: NSSet) -> [String] {
+        var commonTags: Set<String> = []
+        for (index, pickedPage) in pages.enumerated() {
+            if let page = pickedPage as? FTDocumentPage {
+                commonTags = index == 0 ? Set.init(page.tags.map{$0}) : commonTags.intersection(Set.init(page.tags.map{$0}))
+            } else if let page = pickedPage as? FTPageTagsProtocol {
+                commonTags = index == 0 ? Set.init(page.tags().map{$0}) : commonTags.intersection(Set.init(page.tags().map{$0}))
+            }
+        }
+        return Array(commonTags)
+    }
+
+
     func tagsModelForTags(tags: [String]) -> [FTTagModel] {
         var selectedTagsList: [FTTagModel] = []
         let allTags = cachedTags()

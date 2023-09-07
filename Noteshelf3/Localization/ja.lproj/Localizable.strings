@@ -597,7 +597,6 @@
 "PageCreated" = "作成された";
 "PageCreatedOn" = "%@で作成";
 "PageDimensions" = "寸法";
-"PageFromClipBoard" = "クリップボードから貼り付ける";
 "PageFromClipboard" = "クリップボードからのページ";
 "PageFromPhoto" = "写真の背景";
 "PageFromTemplate" = "テンプレートを選択する";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "パスワードが一致しません。";
 "Paste" = "貼り付け";
 "PasteBelow" = "以下に貼り付け";
+"PasteFromClipBoard" = "クリップボードから貼り付ける";
 "Pause" = "一時停止";
 "PencilActionAlert" = "このアクションは、このアプリに対してのみシステムのデフォルトを上書きします。続行しますか？";
 "PencilActionChangeMessage" = "設定に移動して、Apple Pencilを変更してください。";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "基本ツール";
 "customizeToolbar.bookmark" = "ブックマーク";
 "customizeToolbar.currentToolbar" = "ツールバー上";
+"customizeToolbar.deletePage" = "ページを削除する";
+"customizeToolbar.deletePageConfirmation" = "このノートのページ %d を削除してもよろしいですか？";
 "customizeToolbar.duplicatePage" = "重複ページ";
 "customizeToolbar.emojis" = "絵文字";
 "customizeToolbar.eraser" = "消しゴム";
@@ -1218,6 +1220,8 @@
 "shelf.bottomBar.delete" = "削除";
 "shelf.bottomBar.restore" = "リストア";
 "shelf.bottomBar.trash" = "ゴミ";
+"shelf.category.noCategoryItemsDescription" = "上記のオプションをタップして新しいメモを作成するか、既存のメモを移動してください。";
+"shelf.category.noCategoryItemsTitle" = "このカテゴリーは空です。";
 "shelf.category.unCategorized" = "未分類";
 "shelf.changeCover" = "カバーを変更";
 "shelf.createGroup" = "グループを作成";
@@ -1287,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "サイズ";
 "shelf.notebook.textstyle.textLineHeight" = "行の高さ";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行間";
+"shelf.ns2Category.noCategoryItemsTitle" = "このカテゴリーにはアイテムがありません。";
 "shelf.paperPicker.choosePaper" = "用紙を選択してください";
 "shelf.paperPicker.orientation" = "オリエンテーション";
 "shelf.quickCreateSettings.NavTitle" = "クイックノート";
@@ -1496,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 6 September 2023 at 6:35 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

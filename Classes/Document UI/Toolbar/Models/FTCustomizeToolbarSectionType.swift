@@ -66,6 +66,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case tag
     case rotatePage
     case duplicatePage
+    case deletePage
 
     // Share and Save
     case savePageAsPhoto
@@ -120,6 +121,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_rotatePage"
         case .duplicatePage:
             name = "desk_tool_duplicatePage"
+        case .deletePage:
+            name = "desk_tool_deletePage"
 
         case .savePageAsPhoto:
             name = "desk_tool_saveAsPhoto"
@@ -217,7 +220,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "customizeToolbar.rotatePage".localized
         case .duplicatePage:
             str = "customizeToolbar.duplicatePage".localized
-
+        case .deletePage:
+            str = "customizeToolbar.deletePage".localized
+            
         case .savePageAsPhoto:
             str = "customizeToolbar.savePageAsPhoto".localized
         case .sharePageAsPng:
