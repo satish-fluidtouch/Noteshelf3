@@ -167,9 +167,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
             return title
         }
     }
-    var canShowNoItemsView: Bool {
-        return (collection.isTrash || collection.isStarred || collection.isUnfiledNotesShelfItemCollection)
-    }
     var showNewNoteView: Bool {
         return (collection.isAllNotesShelfItemCollection || collection.isMigratedCollection || collection.isDefaultCollection)
     }
