@@ -157,7 +157,9 @@ struct FTSettingsAboutView: View {
             }
             .if(selectedStyle != nil, transform: { view in
                 view.fullScreenCover(isPresented: $showWebview) {
-                    SafariView(url:URL(string: selectedStyle!.url)!)
+                    if let selectedStyle = selectedStyle, let url = URL(string: selectedStyle.url) {
+                        SafariView(url: url)
+                    }
                 }
             })
                 Text(viewModel.copyrightMessage)

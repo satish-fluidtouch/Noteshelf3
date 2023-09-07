@@ -1,6 +1,6 @@
 
 "ADDALLCAPS" = "Alle Großbuchstaben hinzufügen";
-"AboutNoteshelf" = "Über Noteshelf.";
+"AboutNoteshelf" = "Über Noteshelf";
 "AboutOptionRateOnAppStore" = "Bewerten Sie uns im App Store";
 "AboutOptionWhatsNew" = "Was gibt's Neues";
 "AboutVisitNoteshelfWebsite" = "Besuchen Sie die Noteshelf-Website.";
@@ -24,7 +24,7 @@
 "AddToNewNotebook" = "Neues Notizbuch hinzufügen";
 "AddToNewPage" = "Zu neuer Seite hinzufügen.";
 "AddToNotebook" = "Zum Notizbuch hinzufügen";
-"AddToSiri" = "Hinzufügen zu Siri";
+"AddToSiri" = "zu Siri hinzufügen";
 "Added!" = "Hinzugefügt!";
 "AddedToSiri" = "Zu Siri hinzugefügt";
 "AdonitTempDeprecationInfo" = "Entschuldigung! Der Adonit Stylus ist vorübergehend nicht verfügbar. Wir arbeiten mit Adonit zusammen, um ihn wieder anzubieten.";
@@ -55,7 +55,7 @@
 "AudioNote" = "Audio-Notiz";
 "AudioPopoverEmptyMessage" = "Keine Audioaufnahmen in diesem Notizbuch.";
 "AudioRecord_Permission_Message" = "Bitte aktivieren Sie das Mikrofon über Ihre Geräteeinstellungen -> Datenschutz -> Mikrofon -> Noteshelf.";
-"AudioRecordings" = "Audiomitschnitte";
+"AudioRecordings" = "Audioaufnahmen";
 "AudioRecoring_Message" = "Kann das Notizbuch nicht schließen, während eine Audioaufnahme läuft.";
 "AudioRecoring_Progress_Message" = "Diese Operation kann nicht durchgeführt werden, da eine Tonaufnahme läuft.";
 "Auto-minimize" = "Automatisch verkleinern";
@@ -77,7 +77,7 @@
 "BackupNotSelected" = "Nicht für Backup ausgewählt";
 "BackupNotebooks" = "Notizbücher zur Sicherung";
 "BackupOff" = "Aus";
-"BackupOnWiFiOnly" = "Nur WLAN-Backup.";
+"BackupOnWiFiOnly" = "Nur WLAN-Backup";
 "BackupTo" = "Sicherungskopie zu %@";
 "BackupToWebDAV" = "Sichern auf WebDAV";
 "BackupUpToDate" = "Sicherung aktuell";
@@ -88,7 +88,7 @@
 "Body" = "Körper";
 "BookAddedMessageSingular" = "%d Notizbuch wurde zur Kategorie '%@' hinzugefügt.";
 "BookNotExistMessage" = "Notizbuch existiert nicht mehr.";
-"Bookmark" = "Lesezeichen.";
+"Bookmark" = "Lesezeichen";
 "BookmarkName" = "Lesezeichenname (optional)";
 "BookmarkPage" = "Lesezeichen setzen.";
 "BookmarkPlaceholder" = "Verwenden Sie die farbcodierten Lesezeichen, um Ihre Notizen zu organisieren und schnell darauf zuzugreifen.";
@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Diese Farbe ist bereits in Ihrer Palette.";
 "ColorByAuthor" = "von %@";
 "Colors" = "Farben";
-"ColourLoversAddHeader" = "Hinzufügen durch Auswahl einzelner Farben oder einer kompletten Palette.";
-"ColourLoversEditHeader" = "Tippen Sie auf eine Farbe aus der Palette, um sie auszuwählen.";
 "Confirm" = "Bestätigen";
 "ConflictDocModifiedOn" = "Geändert am %@";
 "Connect" = "Verbinden";
@@ -710,31 +708,31 @@
 "ResetColorsTitle" = "Farben zurücksetzen";
 "ResetColorsWarning" = "Dies setzt die Farbpaletten auf die werkseitigen Standardeinstellungen zurück.";
 "ResetToDefault" = "Auf Standard zurücksetzen";
-"Resize" = "Audio aufnehmen";
+"Resize" = "Größe ändern";
 "ResolveConflict" = "Aufnahme";
 "ResolveConflictMessage" = "Aufnahme läuft...";
 "Restore" = "Wiederherstellen";
 "ResultsFor" = "Ergebnisse für %@";
 "RetakeKey" = "3-Finger Rechts-Wischen/Links-Wischen";
 "Right" = "Freigeben, um eine neue Seite hinzuzufügen.";
-"Rotate" = "Später erinnern";
-"Rotate Page" = "Entfernen";
+"Rotate" = "Drehen";
+"Rotate Page" = "Seite drehen";
 "Rotating" = "Aus Verlauf entfernen";
 "SampleNotebook" = "Umbenennen";
-"SaveAsTemplate" = "Umbenenne %d Notizbücher'";
+"SaveAsTemplate" = "Als Vorlage speichern";
 "SaveForFutureUse" = "Tag umbenennen";
 "SaveImageChangesConfirmation" = "Umbenennen...\n%d von %d'";
 "SaveKey" = "Erforderlich";
 "SaveQuickNote" = "Benötigen Sie ein Passwort, um dieses Notizbuch zu öffnen";
 "Saving" = "Erfordert einen Apple Pencil mit Doppeltipp-Unterstützung.";
-"Scan" = "Bitte aktualisieren Sie Ihre App auf die neueste Version, um dieses Dokument zu öffnen.";
-"ScanDocument" = "Zurücksetzen";
-"ScanDocument" = "Zurücksetzen";
+"Scan" = "Scannen";
+"ScanDocument" = "Dokument scannen";
+"ScanDocument" = "Dokument scannen";
 "ScannerUnavailable" = "Möchten Sie Ihre Farbpaletten auf die Werkseinstellungen zurücksetzen?";
 "SchoolWorkApp" = "Farben zurücksetzen";
-"Screenshot" = "Dies wird die Farbpaletten auf die werkseitigen Standardeinstellungen zurücksetzen.";
-"Scrolling" = "Zurücksetzen auf Standard";
-"Search" = "Größe ändern";
+"Screenshot" = "Bildschirmfoto";
+"Scrolling" = "Scrollen";
+"Search" = "Suche";
 "SearchPapersCovers" = "Änderungen sind nicht synchron. Wählen Sie aus, welche Dokumente beibehalten werden sollen.";
 "SearchText" = "Wiederherstellen";
 "SearchTitles" = "Ergebnisse für '%@'";
@@ -766,11 +764,11 @@
 "SettingOptionCoverTemplate" = "Kostenlose Umschläge & Papier-Vorlagen";
 "SettingOptionHandwriting" = "Handschrift";
 "SettingOptionTheme" = "Aussehen";
-"SettingShowDateOnShelf" = "Zeige das Datum im Regal";
+"SettingShowDateOnShelf" = "Änderungsdatum unter Notizbüchern anzeigen";
 "Settings" = "Einstellungen";
-"SettingsApplePencil" = "Apfelstift";
+"SettingsApplePencil" = "Apple Pencil";
 "SettingsGeneral" = "Allgemein";
-"SettingsNoteShelfHelp" = "Notizenregal Hilfe";
+"SettingsNoteShelfHelp" = "Noteshelf-Hilfe";
 "SettingsRateOnTheAppstore" = "Bewertung im App Store.";
 "Setup" = "Einrichtung";
 "ShapesToolTip" = "Zeichnen und in geometrische Formen umwandeln";
@@ -863,8 +861,8 @@
 "Title" = "Titel";
 "Title&PageNo" = "Titel & Seitennummer.";
 "TransparentBand" = "Transparentes Band";
-"Trash" = "Müll";
-"Trash" = "Müll";
+"Trash" = "Papierkorb";
+"Trash" = "Papierkorb";
 "Travel" = "Reisen & Orte";
 "Travel" = "Reisen & Orte";
 "TurnOffAutoBackup" = "Deaktiviere automatische Sicherung.";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Auf Box kann nicht zugegriffen werden.";
 "UnableToAccessDropbox" = "Auf Dropbox kann nicht zugegriffen werden.";
 "UnableToAccessWeLink" = "Kein Zugriff auf WeLink";
-"UnableToConnectToColourLovers" = "Kann keine Verbindung zu COLOURlovers.com herstellen.";
 "UnableToConnectToTheWebDAVServer" = "Es konnte keine Verbindung zum WebDAV-Server hergestellt werden. Bitte versuchen Sie es später erneut.";
 "UnableToLocateTheServer" = "Der Server konnte nicht gefunden werden. Überprüfen Sie die Server-URL und versuchen Sie es erneut.";
 "UnableToauthenticate" = "Nicht authentifizierbar";
@@ -953,6 +950,12 @@
 "bujoessentials" = "Bujo Grundlagen";
 "cancel" = "Abbrechen";
 "clipart404" = "Server beschäftigt, bitte versuchen Sie es später erneut.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "Fehler beim Erstellen der Sicherungsdatei. Überprüfen Sie den verbleibenden Speicherplatz auf Ihrem Gerät.";
+"cloud.backup.error.fileNotFound" = "Datei nicht gefunden";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Hinweis: Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
 "color.added" = "Farbe hinzugefügt";
 "color.deleted" = "Farbe gelöscht";
 "color.editColor" = "Farbe bearbeiten";
@@ -985,7 +988,7 @@
 "customizeToolbar.pen" = "Stift";
 "customizeToolbar.photo" = "Foto";
 "customizeToolbar.pixabay" = "Pixabay";
-"customizeToolbar.present" = "Gegenwart";
+"customizeToolbar.present" = "Präsentieren";
 "customizeToolbar.readOnlyMode" = "Nur-Lese-Modus";
 "customizeToolbar.resetConfirmation" = "Bist du sicher, dass du die Symbolleiste auf Standard zurücksetzen möchtest?";
 "customizeToolbar.rotatePage" = "Seite drehen";
@@ -1064,10 +1067,10 @@
 "iCloudNotAvailableInfo-Mac" = "Bitte erlauben Sie %@ den Zugriff auf iCloud in den Systemeinstellungen -> Internetaccounts -> iCloud Drive -> Optionen -> Dokumente.";
 "iCloudUserTurnedOff" = "iCloud ausgeschaltet";
 "iCloudUserTurnedOffMessage" = "Eine Kopie Ihrer Dokumente bleibt in iCloud gespeichert. Was möchten Sie mit den Dokumenten tun, die sich derzeit auf diesem Gerät befinden?";
-"iap.bannerTitle" = "Premium-Upgrade'";
+"iap.bannerTitle" = "Premium-Upgrade";
 "iap.booklimitReachedMessage" = "Entleeren Sie Ihren Papierkorb, um sicherzustellen, dass gelöschte Notizbücher nicht zu Ihrem Kontingent gezählt werden, oder entsperren Sie die vollständige App für unbegrenzte Notizbücher.";
 "iap.booklimitReachedTitle" = "Sie haben das kostenlose Notizbuch-Limit erreicht.";
-"iap.booksleft" = "%@ Notizen übrig'";
+"iap.booksleft" = "%@ Notizen übrig";
 "iap.featureLimitMessage" = "Diese Funktion ist gesperrt. Freischalten durch ein Upgrade jetzt.";
 "iap.featureLimitTitle" = "Jetzt aktualisieren.";
 "iap.message" = "Erhalten Sie Zugang zu unbegrenzten Notizen, Handschrifterkennung und Suche sowie digitalen Tagebüchern mit Noteshelf Premium.";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "Allgemeine Geschäftsbedingungen";
 "iap.title" = "Holen Sie sich das volle Erlebnis mit Noteshelf Premium";
 "iap.upgradeNow" = "Jetzt aktualisieren";
+"icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
 "importedFiles" = "Importierte Dateien";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Weit";
 "lockwithfaceIDandPasscode" = "Sperren mit %@ & Passwort'";
-"migration.alert.cancel" = "Abbrechen";
-"migration.alert.copy" = "Kopieren";
-"migration.alert.message" = "Dies erstellt eine Kopie des neuen Notizbuchs mit kopierten Inhalten.";
-"migration.alert.open" = "Öffnen";
-"migration.alert.title" = "Möchten Sie dieses Buch in NS3 migrieren?";
-"migration.alert.yes" = "Ja";
-"migration.failure.message" = "Aktuell nicht möglich, dieses Buch zu migrieren. Bitte wenden Sie sich an den Support.";
+"migration.alert.migrate" = "Migrieren";
+"migration.alert.open" = "Gehe zu Standort";
+"migration.alert.title" = "Möchten Sie eine Kopie dieses Notizbuches nach Noteshelf 3 migrieren?";
 "migration.progress.text" = "Umzug";
-"migration.success.alert.message" = "Möchtest du das Notizbuch öffnen?";
-"migration.success.alert.title" = "Erfolgreich zu Unfiled migriert.";
+"migration.success.alert.message" = "Erfolg! Ihr migriertes Notizbuch wurde platziert in: %@";
 "months" = "Monate";
 "more" = "Mehr";
 "more.globalsettings.caps" = "GLOBALE EINSTELLUNGEN";
@@ -1126,7 +1125,7 @@
 "newnotebook.webclip.webclipinfo" = "Ziehen und ablegen Sie aus Ihrem Browser in Ihr Notizbuch oder geben Sie die Webadresse unten ein.";
 "nintetyClockwise" = "Im Uhrzeigersinn 90°";
 "nintetyCounterClockwise" = "Gegen den Uhrzeigersinn um 90°";
-"notebook.addnew.newpage" = "NEUE SEITE";
+"notebook.addnew.newpage" = "Neue Seite";
 "notebook.eraserRack.NavTitle" = "Radiergummi";
 "notebook.lassoRack.NavTitle" = "Lasso";
 "notebook.restoring" = "Wiederherstellen...";
@@ -1137,10 +1136,10 @@
 "notebook.share.pdf" = "PDF";
 "notebook.share.text" = "Teilen...";
 "notebookSetting.customizeToolbar" = "Anpassen der Symbolleiste";
-"notebookSettings.addToSiri" = "Siri hinzufügen";
+"notebookSettings.addToSiri" = "zu Siri hinzufügen";
 "notebookSettings.allowHyperlinks" = "Erlaube Hyperlinks";
 "notebookSettings.autoBackup" = "Auto-Sicherung";
-"notebookSettings.disableAutoLock" = "Deaktiviere Auto-Sperre";
+"notebookSettings.disableAutoLock" = "Deaktivieren Sie die automatische Sperre";
 "notebookSettings.hideAppUIInPresentMode" = "App-Benutzeroberfläche im Präsentationsmodus ausblenden";
 "notebookSettings.password" = "Passwort";
 "notebookSettings.password.info" = "Beachten Sie, dass es keine Möglichkeit gibt, dieses Notizbuch wiederherzustellen, wenn Sie Ihr Passwort vergessen. Stellen Sie sicher, Hinweise einzurichten, um Datenverlust zu verhindern.";
@@ -1189,9 +1188,10 @@
 "quotes" = "Zitate";
 "removefromRecents" = "Aus Verlauf entfernen.";
 "reset" = "Zurücksetzen";
+"retry" = "Erneut versuchen";
 "save" = "Gruppe umbenennen";
 "school" = "Schule";
-"search.tryNewSearch" = "Konflikt lösen";
+"search.tryNewSearch" = "Versuchen Sie es mit einer neuen Suche";
 "seeAll" = "Wiederholen";
 "selectColor" = "FARBE AUSWÄHLEN";
 "settings" = "Einstellungen";
@@ -1217,7 +1217,7 @@
 "shelf.bottomBar.Move" = "Bewegen";
 "shelf.bottomBar.delete" = "Löschen";
 "shelf.bottomBar.restore" = "Wiederherstellen";
-"shelf.bottomBar.trash" = "Müll";
+"shelf.bottomBar.trash" = "Papierkorb";
 "shelf.category.unCategorized" = "Nicht kategorisiert";
 "shelf.changeCover" = "Ändere Titel";
 "shelf.createGroup" = "Gruppe erstellen";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "Alle anzeigen";
 "shelf.home.seeAllNotes" = "Alle Notizen anzeigen";
 "shelf.importfile.description" = "Fügen Sie PDFs und Bilder von Ihrer Dateien-App hinzu.";
-"shelf.migration.Description" = "Um Ihr Buch auf die neue Version von Noteshelf zu migrieren, tippen Sie darauf oder halten Sie es gedrückt und wählen Sie die Migrationsoption im Menü aus.";
+"shelf.migration.Description" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung. Die Möglichkeit, ganze Kategorien zu migrieren, kommt bald!";
 "shelf.migration.headerMessage" = "Migrieren Sie Ihre Notizbücher zu Noteshelf 3";
 "shelf.navBar.deselectAll" = "Abwählen";
 "shelf.navBar.select" = "Auswählen";
@@ -1334,10 +1334,10 @@
 "shelf.trash.noTrashTitle" = "Ihr Papierkorb ist leer.";
 "shelf.view.gallery" = "Galerie";
 "shelf.view.icons" = "Symbole";
-"shelf.view.largeNotebooks" = "Große Notebooks";
+"shelf.view.largeNotebooks" = "Große Notizbücher";
 "shelf.view.list" = "Liste";
 "shelf.view.smallNotebooks" = "Kleine Notizbücher";
-"shelfItem.contexualMenu.addToStarred" = "Zu Starred hinzufügen.";
+"shelfItem.contexualMenu.addToStarred" = "Zu Starred hinzufügen";
 "shelfItem.contexualMenu.changeCover" = "Ändere Titelbild";
 "shelfItem.contexualMenu.getInfo" = "Information erhalten";
 "shelfItem.contexualMenu.getInfo.NavTtile" = "INFO";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Entferne Tags";
 "sidebar.allTags.toolbar.share" = "Teilen";
 "sidebar.bookmark" = "Lesezeichen";
+"sidebar.bookmarks" = "Lesezeichen";
 "sidebar.bookmarks.alert.message" = "Sind Sie sicher, dass Sie das Lesezeichen für diese Seite entfernen möchten?";
 "sidebar.bookmarks.bookmark" = "Lesezeichen";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "In neuem Fenster öffnen";
@@ -1388,7 +1389,9 @@
 "sidebar.bookmarks.page" = "Seite %@";
 "sidebar.contextualMenu.deleteTag" = "Tag löschen";
 "sidebar.photo" = "Foto";
+"sidebar.photos" = "Fotos";
 "sidebar.recording" = "Aufnahme";
+"sidebar.recordings" = "Andaufnahmen";
 "sidebar.topSection.home" = "Zuhause";
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
@@ -1399,7 +1402,7 @@
 "stickies" = "Klebezettel";
 "stickynotes" = "Haftnotizen";
 "stylus.goto.settings" = "Gehe zu Einstellungen/Apple Pencil";
-"stylus.switch.fullscreen" = "Vollbildmodus umschalten";
+"stylus.switch.focusmode" = "Wechsel zum Fokusmodus";
 "tags.contextualMenu.deleteTag" = "Tag löschen";
 "tags.contextualMenu.renameTag" = "Tag umbenennen";
 "tags.delete.alert.message" = "Das Etikett wird von den Gegenständen entfernt, an die das Etikett angebracht ist.";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Akshay on 5 September 2023 at 15:19

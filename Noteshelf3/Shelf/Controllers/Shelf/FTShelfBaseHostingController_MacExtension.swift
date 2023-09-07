@@ -140,6 +140,7 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
     }
 
     internal func observeShelfModelChanges(of toolbar: FTShelfToolbar) {
+   // TODO: Refactor needed - Shelf items to be observed - Narayana
         self.shelfViewModel.objectWillChange
             .receive(on: DispatchQueue.main) // Receive the changes on the main thread
             .sink { [weak self] _ in
@@ -156,6 +157,7 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
                             toolbar.switchMode(.trash)
                         } else {
                             toolbar.switchMode(.shelf)
+                            toolbar.showBackButton(toShowBackButton())
                         }
                     }
                 } else if self.isInTrash() {
@@ -168,6 +170,16 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
                 }
             }
             .store(in: &selectNoteCancellable)
+    }
+
+    private func toShowBackButton() -> Bool {
+        var status = false
+        if let _ = self.shelfViewModel.groupItem {
+            status = true
+        } else if let navVc = self.navigationController, self.shelfViewModel.collection.isAllNotesShelfItemCollection, navVc.children.last is FTShelfViewControllerNew { // When in Home notes(while seeing all notes at once) - when in pushed
+            status = true
+        }
+        return status
     }
 
     private func showPlusOption(toolbarItem: NSToolbarItem) {

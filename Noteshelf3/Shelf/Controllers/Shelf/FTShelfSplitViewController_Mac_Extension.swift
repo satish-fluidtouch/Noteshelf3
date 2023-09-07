@@ -39,15 +39,18 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
     }
 
     private func getSecondaryRootViewController() -> UIViewController? {
-        if let detailControlelr = self.viewController(for: .secondary) {
-            if let navController = detailControlelr as? UINavigationController {
-                return navController.rootViewController;
-            }
-            else {
-                return detailControlelr;
-            }
+        guard let detailController = self.viewController(for: .secondary) else {
+            return nil
         }
-        return nil;
+        if let navController = detailController as? UINavigationController {
+            if let _ = navController.children.first(where: { $0 is FTShelfViewControllerNew }) {
+                return navController.children.last
+            } else {
+                return navController.rootViewController
+            }
+        } else {
+            return detailController
+        }
     }
 }
 
@@ -119,14 +122,19 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
                 toolbar.switchMode(.templatePreview)
             } else if self.checkIfShelfContentViewControllerExists(from: navigationController) {
                 toolbar.switchMode(.content)
-            } else if let shelfController = viewController as? FTShelfViewControllerNew, let shelfItem = shelfController.shelfItemCollection {
-                toolbar.switchMode(shelfItem.isTrash ? .trash : .shelf)
+            } else if let shelfController = viewController as? FTShelfViewControllerNew, let collection = shelfController.shelfItemCollection {
+                if collection.isNS2Collection() {
+                    toolbar.switchMode(.ns2)
+                } else if collection.isTrash {
+                    toolbar.switchMode(.trash)
+                } else {
+                    toolbar.switchMode(.shelf)
+                }
             } else if navigationController.rootViewController is FTShelfTagsViewController {
                 toolbar.switchMode(.tags)
             } else {
                 toolbar.switchMode(.shelf)
             }
-#if targetEnvironment(macCatalyst)
             // To disable other tool items during search mode
             if !self.checkIfGlobalSearchControllerExists() {
                 self.exitFromGlobalSearch()
@@ -137,7 +145,6 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
                     moreItem.validate()
                 }
             }
-#endif
             toolbar.showBackButton(viewController.isRootViewController ? false : true)
         }
     }

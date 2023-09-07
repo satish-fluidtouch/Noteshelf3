@@ -786,7 +786,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" name="sidebarBG"/>
+                        <color key="backgroundColor" name="globalSearchBgColor"/>
                         <constraints>
                             <constraint firstItem="jty-lc-JuI" firstAttribute="top" secondItem="bFC-F8-UAV" secondAttribute="bottom" constant="24" id="0Ek-B6-kPd">
                                 <variation key="heightClass=regular-widthClass=regular" constant="32"/>
@@ -830,7 +830,7 @@
         <namedColor name="black70">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="sidebarBG">
+        <namedColor name="globalSearchBgColor">
             <color red="0.94117647058823528" green="0.93333333333333335" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>

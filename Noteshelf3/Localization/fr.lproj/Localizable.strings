@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Cette couleur est déjà dans votre palette";
 "ColorByAuthor" = "par %@";
 "Colors" = "Couleurs";
-"ColourLoversAddHeader" = "Ajouter en choisissant des couleurs individuelles ou une palette entière.";
-"ColourLoversEditHeader" = "Sélectionnez une couleur dans la palette.";
 "Confirm" = "Confirmer";
 "ConflictDocModifiedOn" = "Modifié le %@";
 "Connect" = "Connect";
@@ -710,31 +708,31 @@
 "ResetColorsTitle" = "Réinitialiser les couleurs";
 "ResetColorsWarning" = "Cela réinitialisera les palettes de couleurs aux paramètres d'usine.";
 "ResetToDefault" = "Réinitialiser par défaut";
-"Resize" = "Enregistrer l'audio";
+"Resize" = "Redimensionner";
 "ResolveConflict" = "Enregistrement";
 "ResolveConflictMessage" = "Enregistrement en cours...";
 "Restore" = "Récupérer les pages";
 "ResultsFor" = "Résultats pour %@";
 "RetakeKey" = "3-finger right swipe/left swipe - Balayage à droite/gauche à trois doigts";
 "Right" = "Publier pour ajouter une nouvelle page";
-"Rotate" = "Rappelle-moi plus tard";
-"Rotate Page" = "Supprimer";
+"Rotate" = "Faire pivote";
+"Rotate Page" = "Faire pivoter la page";
 "Rotating" = "Supprimer des récents";
 "SampleNotebook" = "Renommer";
-"SaveAsTemplate" = "Renommer %d Carnets";
+"SaveAsTemplate" = "Enregistrer en tant que modèle";
 "SaveForFutureUse" = "Renommer le tag";
 "SaveImageChangesConfirmation" = "Renommage...\n%d sur %d";
 "SaveKey" = "Requis";
 "SaveQuickNote" = "Exiger un mot de passe pour ouvrir ce carnet";
 "Saving" = "Nécessite un Apple Pencil avec double-tap.";
-"Scan" = "Veuillez mettre à jour votre application vers la dernière version pour ouvrir ce document.";
-"ScanDocument" = "Réinitialiser";
-"ScanDocument" = "Réinitialiser";
+"Scan" = "Scanner";
+"ScanDocument" = "Scanner le document";
+"ScanDocument" = "Scanner le document";
 "ScannerUnavailable" = "Souhaitez-vous réinitialiser vos palettes de couleurs aux paramètres d'usine ?";
 "SchoolWorkApp" = "Réinitialiser les couleurs";
-"Screenshot" = "Cela réinitialisera les palettes de couleurs aux paramètres par défaut de l'usine.";
-"Scrolling" = "Réinitialiser par défaut";
-"Search" = "Redimensionner";
+"Screenshot" = "Capture d'écran";
+"Scrolling" = "Défilement";
+"Search" = "Rechercher";
 "SearchPapersCovers" = "Les modifications ne sont pas synchronisées. Choisissez quels documents conserver.";
 "SearchText" = "Restaurer";
 "SearchTitles" = "Résultats pour '%@'";
@@ -863,8 +861,8 @@
 "Title" = "Titre";
 "Title&PageNo" = "Titre et numéro de page.";
 "TransparentBand" = "Bande transparente";
-"Trash" = "Déchets";
-"Trash" = "Déchets";
+"Trash" = "Corbeille";
+"Trash" = "Corbeille";
 "Travel" = "Voyages et lieux";
 "Travel" = "Voyages et lieux";
 "TurnOffAutoBackup" = "Désactiver la sauvegarde automatique";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "Impossible d'accéder à Box";
 "UnableToAccessDropbox" = "Impossible d'accéder à Dropbox.";
 "UnableToAccessWeLink" = "Impossible d'accéder à WeLink";
-"UnableToConnectToColourLovers" = "Impossible de se connecter à COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "Impossible de se connecter au serveur WebDAV. Veuillez réessayer ultérieurement.";
 "UnableToLocateTheServer" = "Impossible de localiser le serveur. Vérifiez l'URL du serveur et réessayez.";
 "UnableToauthenticate" = "Impossible d'authentifier";
@@ -953,6 +950,12 @@
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
 "clipart404" = "Serveur occupé, veuillez réessayer plus tard.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
+"cloud.backup.error.fileNotFound" = "Fichier non trouvé";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Note: Les cahiers protégés par mot de passe ne peuvent pas être sauvegardés au format PDF.";
 "color.added" = "Couleur ajoutée";
 "color.deleted" = "Couleur supprimée";
 "color.editColor" = "Modifier la couleur";
@@ -985,7 +988,7 @@
 "customizeToolbar.pen" = "Stylo";
 "customizeToolbar.photo" = "Photo";
 "customizeToolbar.pixabay" = "Pixabay";
-"customizeToolbar.present" = "Présent";
+"customizeToolbar.present" = "Présenter";
 "customizeToolbar.readOnlyMode" = "Mode lecture seule";
 "customizeToolbar.resetConfirmation" = "Êtes-vous sûr de vouloir réinitialiser la barre d'outils par défaut ?";
 "customizeToolbar.rotatePage" = "Faire pivoter la page";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "Termes et conditions";
 "iap.title" = "Obtenez l'expérience complète avec Noteshelf Premium";
 "iap.upgradeNow" = "Mettez à jour maintenant.";
+"icloud.sync.issue.message" = "Impossible d'accéder à iCloud. Veuillez vous assurer qu'iCloud est activé dans les paramètres.";
 "iconlabels" = "Étiquettes d'icônes";
 "import" = "Importer";
 "importedFiles" = "Fichiers importés";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "Standard";
 "lineHeight.wide" = "Large";
 "lockwithfaceIDandPasscode" = "Verrouiller avec %@ et code secret";
-"migration.alert.cancel" = "Annuler";
-"migration.alert.copy" = "Copier";
-"migration.alert.message" = "Cela créera une copie du nouveau carnet, avec les contenus copiés.";
-"migration.alert.open" = "Ouvrir";
-"migration.alert.title" = "Voulez-vous migrer ce livre vers NS3 ?";
-"migration.alert.yes" = "Oui";
-"migration.failure.message" = "Impossible de migrer ce livre pour le moment. Veuillez contacter le support.";
+"migration.alert.migrate" = "Migrer";
+"migration.alert.open" = "Aller à l'emplacement.";
+"migration.alert.title" = "Souhaitez-vous migrer une copie de ce cahier vers Noteshelf 3 ?";
 "migration.progress.text" = "Migration";
-"migration.success.alert.message" = "Voulez-vous ouvrir le carnet ?";
-"migration.success.alert.title" = "Migration réussie vers Non classé";
+"migration.success.alert.message" = "Succès ! Votre carnet migré a été placé dans : %@";
 "months" = "Mois";
 "more" = "Plus";
 "more.globalsettings.caps" = "PARAMÈTRES GLOBAUX";
@@ -1126,7 +1125,7 @@
 "newnotebook.webclip.webclipinfo" = "Faites glisser-déposer à partir de votre navigateur dans votre carnet ou saisissez l'adresse web ci-dessous.";
 "nintetyClockwise" = "Dans le sens des aiguilles d'une montre de 90°";
 "nintetyCounterClockwise" = "Dans le sens inverse des aiguilles d'une montre de 90°";
-"notebook.addnew.newpage" = "NOUVELLE PAGE";
+"notebook.addnew.newpage" = "Nouvelle page";
 "notebook.eraserRack.NavTitle" = "Effaceur";
 "notebook.lassoRack.NavTitle" = "Lasso";
 "notebook.restoring" = "Restauration...";
@@ -1189,9 +1188,10 @@
 "quotes" = "Citations";
 "removefromRecents" = "Supprimer des récents";
 "reset" = "Réinitialiser";
+"retry" = "Retenter";
 "save" = "Renommer le groupe";
 "school" = "École";
-"search.tryNewSearch" = "Résoudre le conflit";
+"search.tryNewSearch" = "Essayez une nouvelle recherche";
 "seeAll" = "Reprendre";
 "selectColor" = "SÉLECTIONNER LA COULEUR";
 "settings" = "Paramètres";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "Voir tout";
 "shelf.home.seeAllNotes" = "Voir toutes les notes.";
 "shelf.importfile.description" = "Ajouter des PDF et des images depuis votre application Fichiers";
-"shelf.migration.Description" = "Pour migrer votre livre vers la nouvelle version de Noteshelf, appuyez dessus ou maintenez-le enfoncé et choisissez l'option de migration dans le menu.";
+"shelf.migration.Description" = "Il suffit de toucher n'importe quel carnet ici pour en faire une copie dans Noteshelf 3. Les carnets migrés seront disponibles dans les catégories et groupes de Noteshelf 3. La possibilité de migrer des catégories entières arrive bientôt !";
 "shelf.migration.headerMessage" = "Migrez vos carnets vers Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Désélectionner tout.";
 "shelf.navBar.select" = "Sélectionner";
@@ -1336,9 +1336,9 @@
 "shelf.view.icons" = "Icônes";
 "shelf.view.largeNotebooks" = "Grands cahiers";
 "shelf.view.list" = "Liste";
-"shelf.view.smallNotebooks" = "Petits carnets";
+"shelf.view.smallNotebooks" = "Petits cahiers";
 "shelfItem.contexualMenu.addToStarred" = "Ajouter aux favoris";
-"shelfItem.contexualMenu.changeCover" = "Changer la couverture.";
+"shelfItem.contexualMenu.changeCover" = "Changer la couverture";
 "shelfItem.contexualMenu.getInfo" = "Obtenir des informations";
 "shelfItem.contexualMenu.getInfo.NavTtile" = "INFORMATION";
 "shelfItem.contexualMenu.openInNewWindow" = "Ouvrir dans une nouvelle fenêtre.";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Supprimer les tags";
 "sidebar.allTags.toolbar.share" = "Partager";
 "sidebar.bookmark" = "Marque-page";
+"sidebar.bookmarks" = "Marque-pages";
 "sidebar.bookmarks.alert.message" = "Êtes-vous sûr de vouloir supprimer le signet de cette page ?";
 "sidebar.bookmarks.bookmark" = "Signet";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "Ouvrir dans une nouvelle fenêtre.";
@@ -1388,9 +1389,11 @@
 "sidebar.bookmarks.page" = "page %@";
 "sidebar.contextualMenu.deleteTag" = "Supprimer le tag";
 "sidebar.photo" = "Photo";
+"sidebar.photos" = "Photos";
 "sidebar.recording" = "Enregistrement";
+"sidebar.recordings" = "Enregistrements";
 "sidebar.topSection.home" = "Maison";
-"sidebar.topSection.starred" = "Etoilé'";
+"sidebar.topSection.starred" = "Etoilé";
 "sidebar.topSection.unfiled" = "Non classé";
 "speechbubbles" = "Bulles de dialogue";
 "stickers.alert.error" = "Erreur";
@@ -1399,7 +1402,7 @@
 "stickies" = "Notes collantes";
 "stickynotes" = "Notes adhésives";
 "stylus.goto.settings" = "Aller dans Paramètres/Apple Pencil";
-"stylus.switch.fullscreen" = "Passer en plein écran.";
+"stylus.switch.focusmode" = "Basculer en mode de focus";
 "tags.contextualMenu.deleteTag" = "Supprimer le tag";
 "tags.contextualMenu.renameTag" = "Renommer le tag";
 "tags.delete.alert.message" = "L'étiquette sera retirée des articles auxquels elle est attachée.";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Akshay on 5 September 2023 at 15:19

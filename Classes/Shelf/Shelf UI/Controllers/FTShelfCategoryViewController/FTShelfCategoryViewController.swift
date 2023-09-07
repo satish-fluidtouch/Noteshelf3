@@ -401,7 +401,7 @@ extension FTShelfCategoryViewController
         }
         
         var title = NSLocalizedString("DeleteCategoryConfirmation", comment: "Would you like to delete Shelf?");
-        if(FTiCloudManager.shared().iCloudOn()) {
+        if(FTNSiCloudManager.shared().iCloudOn()) {
             title = NSLocalizedString("DeleteCategoryConfirmationCloud", comment: "Would you like to delete Shelf?");
         }
         

@@ -88,7 +88,7 @@ struct FTStickerCategoriesView: View {
                     case 5:
                         selection = viewModel.menuItems[5]
                     default:
-                        selection = viewModel.menuItems[6]
+                        selection = viewModel.menuItems[0]
                     }
                 }
                 
@@ -100,12 +100,10 @@ struct FTStickerCategoriesView: View {
                 
                 .padding(.leading,10)
                 .padding(.bottom,20)
-                .onAppear {
+                .onFirstAppear {
                     viewModel.getRecents()
                     viewModel.getStickers()
-                }
-                .onFirstAppear {
-                     downloadedViewModel.validateAndGetDownloadedStickers()
+                    downloadedViewModel.validateAndGetDownloadedStickers()
                 }
             }
             .environmentObject(viewModel)

@@ -168,6 +168,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
                 else {
                     navController = UINavigationController(rootViewController:helpCenter)
                     navController?.delegate = self
+                    navController?.isModalInPresentation = true
                     if let navController = navController {
                         controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
                     }
@@ -193,6 +194,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
                let helpCenter = ZDKHelpCenterUi.buildHelpCenterOverviewUi(withConfigs: [hcConfig])
                let navController = UINavigationController(rootViewController:helpCenter)
                navController.delegate = self
+               navController.isModalInPresentation = true
                controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
            }
            else{
@@ -220,6 +222,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
          if MFMailComposeViewController.canSendMail() {
              let mailComposerViewController = MFMailComposeViewController()
              mailComposerViewController.mailComposeDelegate = self;
+             mailComposerViewController.isModalInPresentation = true
              mailComposerViewController.setSubject(subject);
              mailComposerViewController.addSupportMailID();
              controller.present(mailComposerViewController, animated: true);
@@ -248,6 +251,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
 
                 let helpCenter = RequestUi.buildRequestUi(with: [requestConfig])
                 let navController = UINavigationController(rootViewController:helpCenter)
+                navController.isModalInPresentation = true
                 controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false)
             }
             else{
@@ -319,7 +323,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Clouds Used": self.cloudUsed(),
             "Device": "Mac" /* [FTUtils deviceModelFriendlyName], */,
             "iOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
-            "iCloud": FTiCloudManager.shared().iCloudOn() ? "YES" : "NO",
+            "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
             "Lang": FTUtils.currentLanguage(),
             "Locale": NSLocale.current.identifier,
@@ -371,7 +375,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Clouds Used": self.cloudUsed(),
             "Device": FTUtils.deviceModelFriendlyName(),
             "iOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
-            "iCloud": FTiCloudManager.shared().iCloudOn() ? "YES" : "NO",
+            "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
             "ENPublish": UserDefaults.standard.bool(forKey: "EvernotePubUsed") ? "YES" : "NO",
             "Apple Pencil": UserDefaults.standard.bool(forKey: "isUsingApplePencil") ? "YES" : "NO",
@@ -435,7 +439,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         } catch {
         }
         for eachItem in contents ?? [] {
-            if eachItem.hasSuffix(shelfExtension) {
+            if eachItem.hasSuffix(FTFileExtension.shelf) {
                 hasMigratedContents = true
                 break
             }

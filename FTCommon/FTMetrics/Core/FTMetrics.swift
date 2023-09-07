@@ -18,7 +18,6 @@ public enum FTMetricsLogLevel:Int {
     case none
     case debug
 }
-#if !targetEnvironment(macCatalyst)
 public final class FTMetrics: NSObject {
     //Public
     @objc public static let shared = FTMetrics()
@@ -199,4 +198,3 @@ private extension FTMetrics {
         }
     }
 }
-#endif

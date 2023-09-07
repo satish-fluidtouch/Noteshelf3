@@ -12,7 +12,6 @@ protocol FTSectionDisplayable {
     var id: String { get }
     var title: String { get }
     var items: [FTSideBarItem] { get }
-    var canShowAddItem: Bool { get }
     var type: FTSidebarSectionType { get }
     var isCreating: Bool { get set }
     var supportsRearrangeOfItems:Bool { get set}

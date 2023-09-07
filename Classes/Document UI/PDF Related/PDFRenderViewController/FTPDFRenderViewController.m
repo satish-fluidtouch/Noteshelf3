@@ -158,9 +158,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         }
 
         self.currentPageIndexToBeShown = currentPageIndex;
-        //When resuming the page number to last opened state, unnecessarily increaing counter for vertical layout
-        self.previousVisiblePageIndex = (self.pageLayoutType == FTPageLayoutVertical ? -1 : 0);
-        
+
         self.finderSearchOptions = [[FTFinderSearchOptions alloc] init];
         if(documentInfo.documentSearchResults != nil) {
             self.finderSearchOptions.documentSearchResults = documentInfo.documentSearchResults;
@@ -196,7 +194,9 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     self.mainScrollView = scrollView;
     
     [self updatePageLayout];
-    
+
+    self.previousVisiblePageIndex = (self.pageLayoutType == FTPageLayoutVertical ? -1 : 0);
+
     self.previousDeskMode = -1;
     self.currentDeskMode = -1;
     
@@ -2904,6 +2904,9 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                     }
                 }
             }
+            break;
+        case FTApplePencilInteractionTypeDistractionFree:
+            [[NSNotificationCenter defaultCenter] postNotificationName:FTToggleToolbarModeNotificationName object:nil];
             break;
         default:
             break;

@@ -15,42 +15,29 @@ struct FTShelfTopSectionItem: View {
     @StateObject var shelfViewModel: FTShelfViewModel
     
     var body: some View {
-
-//        Button {
-//            switch type {
-//            case .quicknote:
-//                shelfViewModel.quickCreateNewNotebook()
-//            case .newNotebook:
-//                shelfViewModel.delegate?.showNewBookPopverOnShelf()
-//            case .importFile:
-//                shelfViewModel.delegate?.didClickImportNotebook()
-//            }
-//        } label: {
-//            topSectionView
-//                .padding()
-//                .macOnlyTapAreaFixer()
-//        }
-
-        FTAnimateButton {
+        Button {
+            let locationName = shelfViewModel.isInHomeMode ? "Home" : shelfViewModel.collection.displayTitle
             switch type {
             case .quicknote:
                 shelfViewModel.quickCreateNewNotebook()
+                track(EventName.shelf_quicknote_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             case .newNotebook:
                 shelfViewModel.delegate?.showNewBookPopverOnShelf()
+                track(EventName.shelf_newnotebook_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             case .importFile:
                 shelfViewModel.delegate?.didClickImportNotebook()
+                track(EventName.shelf_importfile_tap, params: [EventParameterKey.location: locationName] ,screenName: ScreenName.shelf)
             }
         } label: {
             topSectionView
                 .padding()
                 .macOnlyTapAreaFixer()
-                .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
-                .cornerRadius(16)
-                .border(Color.appColor(.accentBorder),
-                        width:1.0,
-                        cornerRadius: 16)
-
         }
+        .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
+        .cornerRadius(16)
+        .border(Color.appColor(.accentBorder),
+                width:1.0,
+                cornerRadius: 16)
     }
 
     @ViewBuilder

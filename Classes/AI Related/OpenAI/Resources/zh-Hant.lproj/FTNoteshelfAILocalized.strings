@@ -46,3 +46,6 @@
 "noteshelf.ai.translateToKorean" = "翻譯成韓語";
 "noteshelf.ai.translateToChineseSimplified" = "翻譯成繁體中文";
 "noteshelf.ai.translateToChineseTraditional" = "翻譯成繁體中文";
+
+"noteshelf.ai.noteshelfAILearnMore" = "發現可能性";
+"noteshelf.ai.noteshelfAIError" = "無法連接到伺服器。請稍後再試。";

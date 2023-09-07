@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTDocumentFramework
 
 typealias FTocumentCloseCallBack = (Bool)->();
 typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Error?)->());

@@ -11,6 +11,9 @@ import Foundation
 public struct FTFileExtension {
     public static let ns2 = "ns"
     public static let ns3 = "ns3"
+    public static let shelf = "shelf"
+    public static let group = "group"
+    public static let sortIndex = "nsindex"
 }
 
 public extension FileManager {

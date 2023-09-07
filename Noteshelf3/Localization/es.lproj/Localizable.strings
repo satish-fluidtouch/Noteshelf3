@@ -164,8 +164,6 @@
 "ColorAlreadyAdded" = "Este color ya está en tu paleta.";
 "ColorByAuthor" = "por %@";
 "Colors" = "Colores";
-"ColourLoversAddHeader" = "Agregar seleccionando colores individuales o una paleta completa.";
-"ColourLoversEditHeader" = "Toque un color de la paleta para seleccionar.";
 "Confirm" = "Confirmar";
 "ConflictDocModifiedOn" = "Modificado en %@";
 "Connect" = "Conectar";
@@ -710,31 +708,31 @@
 "ResetColorsTitle" = "Restablecer colores";
 "ResetColorsWarning" = "Esto restablecerá las paletas de color a los valores predeterminados de fábrica.";
 "ResetToDefault" = "Restablecer a predeterminado";
-"Resize" = "Grabar audio";
+"Resize" = "Cambiar tamaño";
 "ResolveConflict" = "Grabación";
 "ResolveConflictMessage" = "Grabando en curso...'";
 "Restore" = "Recuperar páginas";
 "ResultsFor" = "Resultados para %@";
 "RetakeKey" = "Deslizar hacia la derecha/Deslizar hacia la izquierda con tres dedos";
 "Right" = "Publicar para agregar nueva página.";
-"Rotate" = "Más tarde";
-"Rotate Page" = "Eliminar";
+"Rotate" = "Rotar";
+"Rotate Page" = "Rotar la página";
 "Rotating" = "Eliminar de Recientes";
 "SampleNotebook" = "Renombrar";
-"SaveAsTemplate" = "Cambiar nombre de %d cuadernos.";
+"SaveAsTemplate" = "Guardar como plantilla";
 "SaveForFutureUse" = "Cambiar nombre de etiqueta";
 "SaveImageChangesConfirmation" = "Cambiando el nombre...\n%d de %d'";
 "SaveKey" = "Necesario.";
 "SaveQuickNote" = "Requerir contraseña para abrir este cuaderno";
 "Saving" = "Requiere un Apple Pencil que admita el doble toque.";
-"Scan" = "Por favor, actualiza tu aplicación a la última versión para abrir este documento.";
-"ScanDocument" = "Restablecer";
-"ScanDocument" = "Reiniciar";
+"Scan" = "Escaneo";
+"ScanDocument" = "Escaneo de documento.";
+"ScanDocument" = "Escaneo de documento.";
 "ScannerUnavailable" = "¿Te gustaría restablecer tus paletas de colores a los valores predeterminados de fábrica?";
 "SchoolWorkApp" = "Restablecer colores";
-"Screenshot" = "Esto restablecerá las paletas de colores a los ajustes de fábrica.";
-"Scrolling" = "Restablecer a predeterminado";
-"Search" = "Redimensionar";
+"Screenshot" = "Captura de pantalla";
+"Scrolling" = "Desplazamiento";
+"Search" = "Buscar";
 "SearchPapersCovers" = "Las modificaciones no están sincronizadas. Elige qué documentos mantener.'";
 "SearchText" = "Restaurar";
 "SearchTitles" = "Resultados para '%@'";
@@ -863,8 +861,8 @@
 "Title" = "Título";
 "Title&PageNo" = "Título y Número de Página.";
 "TransparentBand" = "Banda transparente";
-"Trash" = "Basura";
-"Trash" = "Basura";
+"Trash" = "Papelera";
+"Trash" = "Papelera";
 "Travel" = "Viajes y lugares";
 "Travel" = "Viajes y Lugares";
 "TurnOffAutoBackup" = "Desactivar la copia de seguridad automática";
@@ -875,7 +873,6 @@
 "UnableToAccessBox" = "No se puede acceder a Box.";
 "UnableToAccessDropbox" = "No se puede acceder a Dropbox.";
 "UnableToAccessWeLink" = "No se puede acceder a WeLink";
-"UnableToConnectToColourLovers" = "No se puede conectar a COLOURlovers.com";
 "UnableToConnectToTheWebDAVServer" = "No se puede conectar al servidor WebDAV. Por favor, inténtalo de nuevo más tarde.";
 "UnableToLocateTheServer" = "No se puede encontrar el servidor. Verifique la URL del servidor y vuelva a intentarlo.";
 "UnableToauthenticate" = "No se puede autenticar.";
@@ -953,6 +950,12 @@
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
 "clipart404" = "Servidor ocupado, por favor inténtelo de nuevo más tarde.";
+"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.failedToCreateBackup" = "No se pudo crear el archivo de respaldo. Verifique el espacio restante en su dispositivo.";
+"cloud.backup.error.fileNotFound" = "Archivo no encontrado";
+"cloud.backup.error.filePasswordProtected" = "";
+"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.pdfFormatWarning" = "Nota: Los cuadernos protegidos con contraseña no se pueden respaldar como PDF.";
 "color.added" = "Color añadido";
 "color.deleted" = "Color eliminado";
 "color.editColor" = "Editar color";
@@ -985,7 +988,7 @@
 "customizeToolbar.pen" = "Pluma";
 "customizeToolbar.photo" = "Foto";
 "customizeToolbar.pixabay" = "Pixabay";
-"customizeToolbar.present" = "Presente";
+"customizeToolbar.present" = "Presentar";
 "customizeToolbar.readOnlyMode" = "Modo de solo lectura";
 "customizeToolbar.resetConfirmation" = "¿Estás seguro de que deseas restablecer la barra de herramientas predeterminada?";
 "customizeToolbar.rotatePage" = "Rotar página";
@@ -1081,6 +1084,7 @@
 "iap.termsnconditions" = "Términos y condiciones.";
 "iap.title" = "Obtén la experiencia completa con Noteshelf Premium";
 "iap.upgradeNow" = "Actualiza ahora.";
+"icloud.sync.issue.message" = "No se puede conectar con iCloud. Asegúrate de que iCloud esté activado en la configuración.";
 "iconlabels" = "Etiquetas de iconos";
 "import" = "Importar";
 "importedFiles" = "Archivos importados";
@@ -1096,16 +1100,11 @@
 "lineHeight.standard" = "Estándar";
 "lineHeight.wide" = "Ancho";
 "lockwithfaceIDandPasscode" = "Candado con %@ y código de acceso'";
-"migration.alert.cancel" = "Cancelar";
-"migration.alert.copy" = "Copiar";
-"migration.alert.message" = "Esto creará una copia del nuevo cuaderno, con el contenido copiado.";
-"migration.alert.open" = "Abrir";
-"migration.alert.title" = "¿Te gustaría migrar este libro a NS3?";
-"migration.alert.yes" = "Sí";
-"migration.failure.message" = "No se puede migrar este libro por ahora. Por favor, contacta al soporte.";
+"migration.alert.migrate" = "Migrar";
+"migration.alert.open" = "Ir a ubicación";
+"migration.alert.title" = "¿Te gustaría migrar una copia de este cuaderno a Noteshelf 3?";
 "migration.progress.text" = "Migrando";
-"migration.success.alert.message" = "¿Te gustaría abrir el cuaderno?";
-"migration.success.alert.title" = "Migrado exitosamente a Sin clasificar";
+"migration.success.alert.message" = "¡Éxito! Tu cuaderno migrado ha sido colocado en: %@";
 "months" = "Meses";
 "more" = "Más";
 "more.globalsettings.caps" = "CONFIGURACIÓN GLOBAL";
@@ -1126,7 +1125,7 @@
 "newnotebook.webclip.webclipinfo" = "Arrastra y suelta desde tu navegador en tu cuaderno o escribe la dirección web a continuación.";
 "nintetyClockwise" = "En el sentido de las agujas del reloj 90°.";
 "nintetyCounterClockwise" = "Girar 90° en sentido contrario a las agujas del reloj.";
-"notebook.addnew.newpage" = "NUEVA PÁGINA";
+"notebook.addnew.newpage" = "Nueva Pagina";
 "notebook.eraserRack.NavTitle" = "Borrador";
 "notebook.lassoRack.NavTitle" = "Lazo";
 "notebook.restoring" = "Restaurando...";
@@ -1189,9 +1188,10 @@
 "quotes" = "Citas";
 "removefromRecents" = "Eliminar de Recientes";
 "reset" = "Restablecer";
+"retry" = "Reintentar";
 "save" = "Renombrar grupo";
 "school" = "Escuela";
-"search.tryNewSearch" = "Resolver conflicto";
+"search.tryNewSearch" = "Prueba una nueva búsqueda";
 "seeAll" = "Repetir.";
 "selectColor" = "SELECCIONAR COLOR";
 "settings" = "Ajustes";
@@ -1261,7 +1261,7 @@
 "shelf.home.seeAll" = "Ver todo";
 "shelf.home.seeAllNotes" = "Ver todas las notas";
 "shelf.importfile.description" = "Añade PDFs e imágenes desde tu aplicación de Archivos";
-"shelf.migration.Description" = "Para migrar tu libro a la nueva versión de Noteshelf, tócalo o mantén presionado y elige la opción de migración del menú.";
+"shelf.migration.Description" = "Simplemente toca cualquier cuaderno aquí para migrar una copia a Noteshelf 3. Los cuadernos migrados estarán disponibles en las categorías y grupos de Noteshelf 3. ¡Próximamente estará disponible la capacidad de migrar categorías completas!";
 "shelf.migration.headerMessage" = "Migra tus cuadernos a Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Deseleccionar todo";
 "shelf.navBar.select" = "Seleccionar";
@@ -1379,6 +1379,7 @@
 "sidebar.allTags.toolbar.removeTags" = "Eliminar etiquetas";
 "sidebar.allTags.toolbar.share" = "Compartir";
 "sidebar.bookmark" = "Marcador";
+"sidebar.bookmarks" = "Marcadores";
 "sidebar.bookmarks.alert.message" = "¿Estás seguro/a de que quieres eliminar el marcador de esta página?";
 "sidebar.bookmarks.bookmark" = "Marcador";
 "sidebar.bookmarks.contextualMenu.openInNewWindow" = "Abrir en una nueva ventana";
@@ -1388,7 +1389,9 @@
 "sidebar.bookmarks.page" = "página %@";
 "sidebar.contextualMenu.deleteTag" = "Eliminar etiqueta";
 "sidebar.photo" = "Foto";
+"sidebar.photos" = "Fotos";
 "sidebar.recording" = "Grabación";
+"sidebar.recordings" = "Grabaciones";
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Destacado";
 "sidebar.topSection.unfiled" = "Desordenado.";
@@ -1399,7 +1402,7 @@
 "stickies" = "Notas adhesivas";
 "stickynotes" = "Notas adhesivas";
 "stylus.goto.settings" = "Ir a Configuración/Apple Pencil.";
-"stylus.switch.fullscreen" = "Cambiar a pantalla completa";
+"stylus.switch.focusmode" = "Cambiar a Modo de Enfoque";
 "tags.contextualMenu.deleteTag" = "Eliminar etiqueta";
 "tags.contextualMenu.renameTag" = "Cambiar nombre de etiqueta";
 "tags.delete.alert.message" = "La etiqueta será eliminada de los elementos a los que está adjunta.";
@@ -1490,4 +1493,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 29 August 2023 at 10:42 AM
+// Last Synced by Akshay on 5 September 2023 at 15:19

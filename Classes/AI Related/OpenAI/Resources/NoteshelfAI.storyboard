@@ -154,17 +154,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="754"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="798"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q84-gf-X3D">
-                                <rect key="frame" x="0.0" y="774" width="344" height="44"/>
+                                <rect key="frame" x="0.0" y="818" width="344" height="0.0"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="108" height="0.0"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -182,8 +182,8 @@
                                             <action selector="addAsHandwrite:" destination="eyF-S8-pnK" eventType="touchUpInside" id="lNB-q0-TsQ"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="118" y="0.0" width="108" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="118" y="0.0" width="108" height="0.0"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -201,8 +201,8 @@
                                             <action selector="addToPage:" destination="eyF-S8-pnK" eventType="touchUpInside" id="XMc-MQ-4Kq"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNotesehlfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="236" y="0.0" width="108" height="44"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="236" y="0.0" width="108" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Copy To Clipboard">
@@ -222,13 +222,13 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="K6O-bs-QgG" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="6Zz-xp-yTF"/>
-                                    <constraint firstAttribute="height" constant="44" id="7Gf-dp-a3r"/>
+                                    <constraint firstAttribute="height" id="7Gf-dp-a3r"/>
                                     <constraint firstItem="YBF-iL-iDT" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="mLg-jZ-APk"/>
                                     <constraint firstItem="us1-QN-E6H" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="ysi-28-NYa"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE">
-                                <rect key="frame" x="354" y="774" width="39" height="44"/>
+                                <rect key="frame" x="354" y="818" width="39" height="0.0"/>
                                 <color key="backgroundColor" name="sidebarBG"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="2yM-T8-1j6"/>
@@ -340,7 +340,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lwm-AW-1KH">
-                                <rect key="frame" x="20" y="389.33333333333331" width="353" height="98.666666666666686"/>
+                                <rect key="frame" x="20" y="366.33333333333331" width="353" height="144.33333333333331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="67"/>
@@ -354,12 +354,32 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zP6-xc-nMX" userLabel="Send Feedback" customClass="FTNoteshelfButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="116.33333333333334" y="114.6666666666667" width="120.33333333333334" height="29.666666666666671"/>
+                                        <color key="backgroundColor" name="premium_bg"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Send feebback">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="plain" title="Send feedback">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="13"/>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="sendFeedbackTapped:" destination="Bz4-aN-P0u" eventType="touchUpInside" id="ggJ-tR-CwK"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="jIk-ps-3qg" firstAttribute="centerX" secondItem="lwm-AW-1KH" secondAttribute="centerX" id="Hki-73-qUp"/>
                                     <constraint firstItem="vK5-Bb-DIu" firstAttribute="centerX" secondItem="jIk-ps-3qg" secondAttribute="centerX" id="Hrl-Kh-m8f"/>
                                     <constraint firstItem="jIk-ps-3qg" firstAttribute="width" secondItem="lwm-AW-1KH" secondAttribute="width" id="TkC-B3-1je"/>
-                                    <constraint firstAttribute="bottom" secondItem="vK5-Bb-DIu" secondAttribute="bottom" id="rQp-GS-me6"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -373,8 +393,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="messageLabel" destination="vK5-Bb-DIu" id="cX7-UV-n4q"/>
-                        <outlet property="titleLabel" destination="jIk-ps-3qg" id="LAh-9G-Mjt"/>
+                        <outlet property="messageLabel" destination="vK5-Bb-DIu" id="jmr-wF-hTg"/>
+                        <outlet property="sendFeedback" destination="zP6-xc-nMX" id="H0m-ad-bJq"/>
+                        <outlet property="titleLabel" destination="jIk-ps-3qg" id="hFX-cp-J8t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Akv-gH-sWe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -399,6 +420,9 @@
         </namedColor>
         <namedColor name="panelBgColor">
             <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="premium_bg">
+            <color red="0.9100000262260437" green="0.70999997854232788" blue="0.27000001072883606" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="sidebarBG">
             <color red="1" green="0.98431372549019602" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
