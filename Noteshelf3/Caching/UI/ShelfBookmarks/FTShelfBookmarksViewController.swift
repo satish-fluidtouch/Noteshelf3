@@ -95,13 +95,13 @@ class FTShelfBookmarksViewController: UIViewController {
     }
 
     func removeBookmarkForItem(item: FTBookmarksItem, at indexPath: IndexPath) {
-        Task {
+        Task.detached(operation: {
             try await self.removeBookmarForItem(item: item)
-            self.bookmarkItems.remove(at: indexPath.row)
-            self.collectionView?.reloadData()
-            if self.bookmarkItems.isEmpty {
-                self.showPlaceholderView()
-            }
+        })
+        self.bookmarkItems.remove(at: indexPath.row)
+        self.collectionView?.reloadData()
+        if self.bookmarkItems.isEmpty {
+            self.showPlaceholderView()
         }
     }
 
@@ -118,9 +118,6 @@ class FTShelfBookmarksViewController: UIViewController {
                     }
                 }
                 _ = await document.saveAndClose()
-                if let doc = item.shelfItem, let docUUID = doc.documentUUID {
-                    try FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: docUUID)
-                }
             }
         } catch {
             cacheLog(.error, error, item.shelfItem!.URL.lastPathComponent)

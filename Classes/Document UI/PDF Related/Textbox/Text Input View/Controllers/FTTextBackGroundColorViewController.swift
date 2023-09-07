@@ -40,8 +40,17 @@ class FTTextBackGroundColorViewController: UIViewController, FTCustomPresentable
     override func viewDidLoad() {
         super.viewDidLoad()
         selectDefaultItem()
+        NotificationCenter.default.addObserver(self, selector: #selector(didTextAnnotationBoxResign), name: ftDidTextAnnotationResignNotifier, object: nil)
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func didTextAnnotationBoxResign() {
+        self.dismiss(animated: true)
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.preferredContentSize = CGSize(width: 248, height: 308)
@@ -71,7 +80,7 @@ class FTTextBackGroundColorViewController: UIViewController, FTCustomPresentable
     }
     
     private func getSelectedColorIndex() -> Int {
-        if var color = UserDefaults.standard.value(forKey: "text_background_color") as? String {
+        if let color = UserDefaults.standard.value(forKey: "text_background_color") as? String {
             var index = colors.firstIndex(where: {$0.color.replacingOccurrences(of: "#", with: "") == color })
             if index == nil || index == NSNotFound {
                 index = colors.count - 1
