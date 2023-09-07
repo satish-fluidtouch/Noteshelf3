@@ -597,7 +597,6 @@
 "PageCreated" = "Seite erstellt";
 "PageCreatedOn" = "Erstellt am %@";
 "PageDimensions" = "Abmessungen";
-"PageFromClipBoard" = "Einfügen aus der Zwischenablage'";
 "PageFromClipboard" = "Seite vom Zwischenablage";
 "PageFromPhoto" = "Fotountergrund";
 "PageFromTemplate" = "Vorlage auswählen";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Passwörter stimmen nicht überein.";
 "Paste" = "Einfügen";
 "PasteBelow" = "Unterhalb einfügen";
+"PasteFromClipBoard" = "Einfügen aus der Zwischenablage'";
 "Pause" = "Pause";
 "PencilActionAlert" = "Diese Aktion überschreibt nur die systemweite Voreinstellung für diese App. Möchten Sie fortfahren?";
 "PencilActionChangeMessage" = "Gehe zu Einstellungen > Apple Pencil, um zu ändern.";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "GRUNDWERKZEUGE";
 "customizeToolbar.bookmark" = "Lesezeichen";
 "customizeToolbar.currentToolbar" = "IN DER SYMBOLLEISTE";
+"customizeToolbar.deletePage" = "Seite löschen";
+"customizeToolbar.deletePageConfirmation" = "Bist du sicher, dass du Seite %d dieses Notizbuches löschen möchtest?";
 "customizeToolbar.duplicatePage" = "Doppelte Seite";
 "customizeToolbar.emojis" = "Emojis";
 "customizeToolbar.eraser" = "Radiergummi";
@@ -1447,6 +1449,9 @@
 "templatesStore.templatePreview.createNotebook" = "Erstellen Sie ein Notizbuch";
 "templatesStore.templatePreview.inyourLibrary" = "In deiner Bibliothek";
 "templatesStore.templatePreview.style" = "Stil";
+"text.font.setAsDefault.menuTitle" = "Standard festlegen für:";
+"text.font.setAsDefault.thisAndFutureBooks" = "Dies und alle zukünftigen Notizbücher";
+"text.font.setAsDefault.thisBook" = "Dieses Notizbuch";
 "trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
@@ -1493,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

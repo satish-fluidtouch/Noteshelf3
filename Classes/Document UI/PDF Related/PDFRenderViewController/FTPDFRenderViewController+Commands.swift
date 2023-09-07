@@ -14,6 +14,7 @@ protocol FTShortcutActions: AnyObject {
     func addPage()
     func rotatePage(angle: UInt)
     func bookMarkAction(page: FTThumbnailable)
+    func deletePageAction(page: FTThumbnailable)
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?)
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet)
 
@@ -44,6 +45,7 @@ enum FTCommand: Equatable {
     case addPage
     case rotatePage(angle: UInt)
     case bookmark(page: FTThumbnailable)
+    case deletePage(page: FTThumbnailable)
     case duplicatePage(pages: [FTThumbnailable])
     case tag(source: Any, controller: UIViewController, pages: NSSet)
 
@@ -78,6 +80,9 @@ class FTShortcutExecuter: FTShortcutCommand {
 
         case .bookmark(let page):
             self.receiver?.bookMarkAction(page: page)
+
+        case .deletePage(let page):
+            self.receiver?.deletePageAction(page: page)
 
         case .duplicatePage(let pages):
             self.receiver?.duplicateAction(pages: pages, onCompletion: onCompletion)
@@ -154,6 +159,18 @@ extension FTPDFRenderViewController: FTShortcutActions {
         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
     }
 
+    func deletePageAction(page: FTThumbnailable) {
+        let confirmMsg = String(format: "customizeToolbar.deletePageConfirmation".localized, page.pageIndex() + 1)
+        let alertController = UIAlertController(title: confirmMsg, message: "", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "customizeToolbar.deletePage".localized, style: .destructive, handler: { [weak self] action in
+            _ = (self?.pdfDocument as? FTThumbnailableCollection)?.deletePages([page])
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+        })
+        alertController.addAction(deleteAction)
+        alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?) {
         _ = (self.pdfDocument as? FTThumbnailableCollection)?.duplicatePages(pages, onCompletion: { copiedPages in
             onCompletion?()
@@ -162,7 +179,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
 
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet) {
         if self.pdfDocument is FTThumbnailableCollection {
-            let tags = FTCacheTagsProcessor.shared.tagsFor(pages)
+            let tags = FTCacheTagsProcessor.shared.commonTagsFor(pages: pages)
             let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
             FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: sortedArray)
         }

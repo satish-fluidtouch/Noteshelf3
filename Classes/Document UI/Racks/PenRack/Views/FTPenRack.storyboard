@@ -14,7 +14,7 @@
         <array key="Aeonik-Regular.otf">
             <string>Aeonik-Regular</string>
         </array>
-        <array key="Clearface-Serial-Medium.ttf">
+        <array key="clearface-serial-medium-regular (1).ttf">
             <string>Clearface-Serial-Medium-Regular</string>
         </array>
     </customFonts>
@@ -22,13 +22,13 @@
         <!--FTEraserRackViewController-->
         <scene sceneID="1EI-LW-2jN">
             <objects>
-                <viewController storyboardIdentifier="FTEraserRackViewController" automaticallyAdjustsScrollViewInsets="NO" id="EuF-YO-h0j" userLabel="FTEraserRackViewController" customClass="FTEraserRackViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTEraserRackViewController" automaticallyAdjustsScrollViewInsets="NO" id="EuF-YO-h0j" userLabel="FTEraserRackViewController" customClass="FTEraserRackViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qO4-qp-9Qr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="479"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ERASER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cg1-E4-0LF">
-                                <rect key="frame" x="149" y="18" width="78" height="44"/>
+                                <rect key="frame" x="149" y="18" width="77.5" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Ovg-4W-Dt6"/>
                                 </constraints>
@@ -39,7 +39,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="3LB-vq-HmP" userLabel="Eraser View">
                                 <rect key="frame" x="54" y="62" width="268" height="136"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6R-rU-Srt" userLabel="smallSizeView" customClass="FTEraserSizeView" customModule="FTCommon" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6R-rU-Srt" userLabel="smallSizeView" customClass="FTEraserSizeView" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="58" width="42" height="20"/>
                                         <subviews>
                                             <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZHS-oU-8mO" userLabel="sizeButton">
@@ -76,7 +76,7 @@
                                             <outlet property="sizeButton" destination="ZHS-oU-8mO" id="2dV-77-DrI"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lnE-fn-chk" userLabel="mediumSizeView" customClass="FTEraserSizeView" customModule="FTCommon" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lnE-fn-chk" userLabel="mediumSizeView" customClass="FTEraserSizeView" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="74" y="52" width="42" height="32"/>
                                         <subviews>
                                             <button opaque="NO" tag="34" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJ3-c3-zlf" userLabel="sizeButton">
@@ -113,7 +113,7 @@
                                             <outlet property="sizeButton" destination="fJ3-c3-zlf" id="ohJ-YC-oYd"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1w-8m-Rn7" userLabel="largeSizeView" customClass="FTEraserSizeView" customModule="FTCommon" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1w-8m-Rn7" userLabel="largeSizeView" customClass="FTEraserSizeView" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="148" y="44" width="15.5" height="48"/>
                                         <subviews>
                                             <button opaque="NO" tag="44" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2al-fl-mxT" userLabel="sizeButton">
@@ -150,7 +150,7 @@
                                             <outlet property="sizeButton" destination="2al-fl-mxT" id="53f-xn-s0O"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zi2-WY-Lrh" userLabel="autosizeView" customClass="FTEraserSizeView" customModule="FTCommon" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zi2-WY-Lrh" userLabel="autosizeView" customClass="FTEraserSizeView" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="196" y="32" width="72" height="72"/>
                                         <subviews>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azS-ao-Ekk" userLabel="sizeButton" customClass="FTCustomButton" customModule="FTCommon">
@@ -434,19 +434,19 @@
         <!--Pen Rack View Controller-->
         <scene sceneID="2q5-rj-bgF">
             <objects>
-                <viewController storyboardIdentifier="FTPenRackViewController" id="naB-wt-Kem" customClass="FTPenRackViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTPenRackViewController" id="naB-wt-Kem" customClass="FTPenRackViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ca2-4Z-x7z">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calligraphic Pen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vya-3X-2qC">
-                                <rect key="frame" x="327" y="16" width="146" height="23"/>
+                                <rect key="frame" x="329" y="16" width="143" height="24"/>
                                 <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rkL-jS-Yc8">
-                                <rect key="frame" x="16" y="71" width="768" height="110"/>
+                                <rect key="frame" x="16" y="72" width="768" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="110" id="IXR-pW-FLT"/>
@@ -474,7 +474,7 @@
                                 </connections>
                             </collectionView>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="E6y-Ta-Hd5">
-                                <rect key="frame" x="16" y="181" width="768" height="92"/>
+                                <rect key="frame" x="16" y="182" width="768" height="92"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOk-iw-2Uv" userLabel="Convert To Shape View">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -598,7 +598,7 @@
         <!--Shapes Rack View Controller-->
         <scene sceneID="Btg-Bs-55P">
             <objects>
-                <viewController storyboardIdentifier="FTShapesRackViewController" id="Ap5-4A-AS7" customClass="FTShapesRackViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTShapesRackViewController" id="Ap5-4A-AS7" customClass="FTShapesRackViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aEa-L5-xpr">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -622,7 +622,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="shapeCell" id="gpb-kk-SIe" customClass="FTShapeCollectionViewCell" customModule="FTCommon" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="shapeCell" id="gpb-kk-SIe" customClass="FTShapeCollectionViewCell" customModule="NS3_Beta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ahF-WB-kui">
@@ -711,19 +711,19 @@
         <!--Lasso Rack View Controller-->
         <scene sceneID="JBy-8I-pMn">
             <objects>
-                <viewController storyboardIdentifier="FTLassoRackViewController" id="36Y-XK-vru" customClass="FTLassoRackViewController" customModule="FTCommon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTLassoRackViewController" id="36Y-XK-vru" customClass="FTLassoRackViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iPv-qk-7bF">
                         <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lasso" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5e-0F-PdH">
-                                <rect key="frame" x="373" y="18" width="53.5" height="23"/>
+                                <rect key="frame" x="375" y="18" width="50.5" height="24"/>
                                 <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jas-bT-NMg">
-                                <rect key="frame" x="16" y="51" width="768" height="148"/>
+                                <rect key="frame" x="16" y="52" width="768" height="148"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="BXX-xE-eoV">
                                         <rect key="frame" x="268" y="0.0" width="232" height="148"/>
@@ -820,14 +820,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3f3-8S-Fgz">
-                                <rect key="frame" x="0.0" y="209" width="800" height="1"/>
+                                <rect key="frame" x="0.0" y="210" width="800" height="1"/>
                                 <color key="backgroundColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="0.050000000000000003" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="TNn-Ne-dJV"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fg6-g4-lTt">
-                                <rect key="frame" x="16" y="226" width="768" height="188"/>
+                                <rect key="frame" x="16" y="227" width="768" height="236"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7E-rg-MKK">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
@@ -969,6 +969,30 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2d0-qs-Vcf">
+                                        <rect key="frame" x="0.0" y="192" width="768" height="44"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paste from Clipboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIB-Z3-qPM" customClass="FTCustomLabel" customModule="FTCommon">
+                                                <rect key="frame" x="16" y="12" width="162" height="20"/>
+                                                <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="17"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="PasteFromClipBoard"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" name="white60"/>
+                                        <constraints>
+                                            <constraint firstItem="CIB-Z3-qPM" firstAttribute="centerY" secondItem="2d0-qs-Vcf" secondAttribute="centerY" id="AQy-4V-29b"/>
+                                            <constraint firstAttribute="height" constant="44" id="Wfr-uR-1gg"/>
+                                            <constraint firstItem="CIB-Z3-qPM" firstAttribute="leading" secondItem="2d0-qs-Vcf" secondAttribute="leading" constant="16" id="pLI-iL-vU9"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -997,6 +1021,7 @@
                         <outlet property="handwritingSwitch" destination="3vq-aT-fS7" id="RCM-Et-lTU"/>
                         <outlet property="lassoBackgroundView" destination="tAq-lr-mxY" id="c77-BE-Fu4"/>
                         <outlet property="lassoImageView" destination="w0e-Jp-h9K" id="bSZ-Qy-WbR"/>
+                        <outlet property="pasteFromClipboardView" destination="2d0-qs-Vcf" id="Q3c-RK-8Jc"/>
                         <outlet property="photosSwitch" destination="vjd-wr-5v8" id="Fob-L5-QRn"/>
                         <outlet property="shapesSwitch" destination="Wm3-bB-Ya7" id="KBt-xQ-ZXp"/>
                         <outlet property="squareBackgroundView" destination="ESU-xl-FWH" id="i7D-KI-aPK"/>
@@ -1031,10 +1056,10 @@
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

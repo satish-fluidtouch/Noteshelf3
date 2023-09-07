@@ -597,7 +597,6 @@
 "PageCreated" = "Pagina creata";
 "PageCreatedOn" = "Creato il %@";
 "PageDimensions" = "Dimensioni";
-"PageFromClipBoard" = "Incolla dagli appunti";
 "PageFromClipboard" = "Pagina dagli appunti.";
 "PageFromPhoto" = "Sfondo fotografico";
 "PageFromTemplate" = "Seleziona modello";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Le password non corrispondono";
 "Paste" = "Incolla";
 "PasteBelow" = "Incolla sotto";
+"PasteFromClipBoard" = "Incolla dagli appunti";
 "Pause" = "Pausa";
 "PencilActionAlert" = "Questa azione sovrascriverà solo l'impostazione predefinita del sistema per questa app. Vuoi procedere?";
 "PencilActionChangeMessage" = "Vai su Impostazioni > Apple Pencil per cambiare.";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "STRUMENTI DI BASE";
 "customizeToolbar.bookmark" = "Segnalibro";
 "customizeToolbar.currentToolbar" = "SULLA BARRA DEGLI STRUMENTI";
+"customizeToolbar.deletePage" = "Elimina pagina";
+"customizeToolbar.deletePageConfirmation" = "Sei sicuro di voler eliminare la pagina %d di questo quaderno?";
 "customizeToolbar.duplicatePage" = "Duplica pagina.";
 "customizeToolbar.emojis" = "Emoticon";
 "customizeToolbar.eraser" = "Cancellino";
@@ -1447,6 +1449,9 @@
 "templatesStore.templatePreview.createNotebook" = "Crea quaderno";
 "templatesStore.templatePreview.inyourLibrary" = "Nella tua libreria";
 "templatesStore.templatePreview.style" = "Stile";
+"text.font.setAsDefault.menuTitle" = "Imposta come predefinito per:";
+"text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri quaderni";
+"text.font.setAsDefault.thisBook" = "Questo quaderno";
 "trash.alert.cannotOpenNotebook" = "Questo quaderno non può essere aperto poiché è stato eliminato. Per ripristinare, premi a lungo e seleziona l'opzione dal menu.";
 "trash.alert.title" = "Sei sicuro di voler svuotare il Cestino?";
 "unsplash.search.alertMessage" = "Inserisci il testo da cercare";
@@ -1493,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

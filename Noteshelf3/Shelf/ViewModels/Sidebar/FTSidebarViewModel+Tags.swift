@@ -9,26 +9,27 @@
 import Foundation
 extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, toNewTitle newTitle: String) {
-        Task {
+        Task.detached(operation: {
             do {
                 try await FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(id: tag.id, text: tag.title), with: FTTagModel(id: tag.id, text: newTitle), for: nil)
-                await didUpdateRenameTag(tag: tag.title, with: newTitle)
+                await self.didUpdateRenameTag(tag: tag.title, with: newTitle)
                 tag.title = newTitle
             } catch {
 
             }
-        }
+        })
     }
 
     func deleteTag(_ tag: FTSideBarItem) {
-        Task {
+
+        Task.detached(operation: {
             do {
                 try await FTShelfTagsUpdateHandler.shared.deleteTag(tag: FTTagModel(text: tag.title), for: nil)
-                await updateShelfTagsAndSideMenu()
+                await self.updateShelfTagsAndSideMenu()
             } catch {
 
             }
-        }
+        })
     }
 
     @MainActor
