@@ -3325,6 +3325,11 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     }];
 }
 
+#pragma mark - FTLassoRackDelegate
+-(void)pasteFromClipBoard {
+    [self paste:nil];
+}
+
 -(CGFloat)zoomModeMaxZoomScale
 {
     return 6.0f;
