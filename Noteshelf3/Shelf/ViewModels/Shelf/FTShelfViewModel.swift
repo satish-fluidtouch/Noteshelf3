@@ -106,10 +106,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var canShowCreateNBButtons: Bool = true
     
     // MARK: Normal Variables
-    var collection: FTShelfItemCollection {
+    var collection: FTShelfItemCollection! {
         didSet {
             reset()
-            reloadShelfItems = true // on change in current collection in sidebar bar we are reloading the shelf
         }
     }
     weak var groupItem: FTGroupItemProtocol?

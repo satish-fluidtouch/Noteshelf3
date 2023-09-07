@@ -71,9 +71,8 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
         set {
-            selectedSideBarItem = menuItems.flatMap({$0.items})
-                .first(where: {$0.shelfCollection?.uuid == newValue?.uuid})
-        }
+            selectedSideBarItem?.shelfCollection = newValue
+         }
         get {
             selectedSideBarItem?.shelfCollection ?? FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
         }
@@ -542,6 +541,10 @@ extension FTSidebarViewModel {
         self.setSideBarItemSelection()
     }
      func setSideBarItemSelection(){
+        if let collection = selectedShelfItemCollection {
+             selectedSideBarItem = menuItems.flatMap({$0.items})
+                .first(where: {$0.shelfCollection?.uuid == collection.uuid})
+        }
         if let selectedSideBarItem = self.selectedSideBarItem {
             let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
             if collectionTypes.contains(where: {$0 == selectedSideBarItem.type}) {

@@ -332,14 +332,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         loadingIndicatorViewController.hide();
                         self.view.isUserInteractionEnabled = true;
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
-                            weakSelf?.shelfCollection(title: self.lastSelectedCollectionName(), pickDefault: false, onCompeltion: { (collection) in
-                                if let collection {
-                                    weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = collection;
-                                    weakSelf?.refreshShelfCollection(setToDefault:false, onCompletion: nil);
-                                }
-                                else {
-                                    weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
-                                }
+                            weakSelf?.shelfCollection(title: nil, pickDefault: true, onCompeltion: { (collection) in
+                                weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = collection;
+                                weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
                             });
                         }
                     });
@@ -350,7 +345,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             let deleteFromLocal = UIAlertAction.init(title: NSLocalizedString("DeleteALocalCopy",comment:"Delete on my iPad"), style: .destructive, handler: { (_) in
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
-                weakSelf?.refreshShelfCollection(setToDefault: true,onCompletion: nil);
+                weakSelf?.refreshShelfCollection(setToDefault: false,onCompletion: nil);
             });
             controller.addAction(deleteFromLocal);
 
@@ -369,15 +364,15 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     loadingIndicatorViewController.hide();
                     self.view.isUserInteractionEnabled = true;
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
-                        weakSelf?.shelfCollection(title: self.lastSelectedCollectionName(), pickDefault: true, onCompeltion: { collectionToShow in
-                            if let collectionToShow {
-                                weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = collectionToShow;
-                                weakSelf?.refreshShelfCollection(setToDefault: false,onCompletion: nil);
-                            }
-                            else {
-                                weakSelf?.refreshShelfCollection(setToDefault: true,onCompletion: nil);
-                            }
-                        });
+//                        weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { collectionToShow in
+//                            if let collectionToShow {
+//                                weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = collectionToShow;
+//                                weakSelf?.refreshShelfCollection(setToDefault: true,onCompletion: nil);
+//                            }
+//                            else {
+                                self.refreshShelfCollection(setToDefault: true,onCompletion: nil);
+                            //}
+                        //});
                     }
                 });
             };
@@ -427,6 +422,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
         else {
             self.rootContentViewController?.shelfItemCollection = collection
+            self.rootContentViewController?.currentShelfViewModel?.collection = collection
             //TODO : This is taken from NS2Dev, need to refresh side bar.
 //            self.rootContentViewController?.refreshCategoryController();
         }

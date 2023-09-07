@@ -44,7 +44,11 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
     
-    internal var shelfItemCollection: FTShelfItemCollection! = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
+    internal var shelfItemCollection: FTShelfItemCollection! = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection {
+        didSet {
+            self.sideMenuController?.selectSideMenuCollection(shelfItemCollection)
+        }
+    }
     private var lastSelectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
     private var isInNonCollectionMode: Bool = false
