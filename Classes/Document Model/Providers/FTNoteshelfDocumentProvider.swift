@@ -123,6 +123,13 @@ class FTNoteshelfDocumentProvider: NSObject {
                 documentProvider.localWatchRecordingCollection = FTWatchRecordingCollection_Local()
                 #endif
                 FTNSiCloudManager.shared().updateiCloudStatus(FTNSiCloudManager.iCloudContainerID.ns3, withCompletionHandler: { available in
+
+                    // Early exit from the provider creation, when the cloud drive is off inside device settings and iCloud is still on inside the application.
+                    if(FTNSiCloudManager.shared().iCloudOn() && FTNSiCloudManager.shared().iCloudRootURL() == nil) {
+                        onCompletion(documentProvider);
+                        return
+                    }
+
                     if available {
                         let rootCloudShelfCollection = FTShelfCollectioniCloudRoot()
                         let queryListener = FTCloudDocumentListener(rootURLs: FTNSiCloudManager.shared().cloudURLSToListen)
