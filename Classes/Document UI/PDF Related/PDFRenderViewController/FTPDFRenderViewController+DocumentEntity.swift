@@ -492,8 +492,8 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
             return;
         }
         Task {
+            let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.parent ?? self, withText: "");
             do {
-                let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.parent ?? self, withText: "");
                 let generator = FTAutoTemplateGenerator.autoTemplateGenerator(theme:reqTheme,generationType :FTGenrationType.template)
                 let docInfo = try await generator.generate()
                 docInfo.rootViewController = self;
@@ -504,11 +504,13 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
                     let pagesAdded = await insertNewPage(docInfo: docInfo)
                     if(pagesAdded > 0) {
                         self.refreshUIforInsertedPages(at: UInt(newPageIndex), count: UInt(pagesAdded), forceReLayout: true);
+                        self.pdfDocument.isDirty = true
                     }
                 }
                 else {
                     try await changePageTemplate(docInfo: docInfo, currentPage: curPage)
                     loadingIndicatorViewController.hide()
+                    self.pdfDocument.isDirty = true
                     NotificationCenter.default.post(name: NSNotification.Name.FTPageDidChangePageTemplate, object: curPage);
                 }
                 loadingIndicatorViewController.hide();
@@ -516,6 +518,7 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
                 if(!(error.domain == FTDocumentCreateErrorDomain && error.code == FTDocumentCreateErrorCode.cancelled.rawValue)) {
                     error.showAlert(from: self)
                 }
+                loadingIndicatorViewController.hide();
             }
         }
     }
