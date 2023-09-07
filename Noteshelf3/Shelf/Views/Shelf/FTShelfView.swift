@@ -98,6 +98,10 @@ struct FTShelfView: View,FTShelfBaseView {
 
     //MARK: Views
     private func emptyShelfItemsView() -> some View {
+        if viewModel.collection.isNS2Collection() {
+            return FTNoResultsView(noResultsImageName: "noNS2CategoryItems",
+                                   title: NSLocalizedString("shelf.ns2Category.noCategoryItemsTitle", comment: "No items in this category"))
+        } else {
             if viewModel.collection.isTrash {
                 return FTNoResultsView(noResultsImageName: "noTrashItems",
                                        title: NSLocalizedString("shelf.trash.noTrashTitle", comment: "shelf.trash.noTrashTitle"),
@@ -115,6 +119,7 @@ struct FTShelfView: View,FTShelfBaseView {
                                        title: NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty"),
                                        description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
             }
+        }
     }
 }
 

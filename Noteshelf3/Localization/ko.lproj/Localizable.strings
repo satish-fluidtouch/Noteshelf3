@@ -1291,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "크기";
 "shelf.notebook.textstyle.textLineHeight" = "줄 간격";
 "shelf.notebook.textstyle.textautoLineHeight" = "자동 줄 높이";
+"shelf.ns2Category.noCategoryItemsTitle" = "이 카테고리에는 항목이 없습니다.";
 "shelf.paperPicker.choosePaper" = "용지 선택";
 "shelf.paperPicker.orientation" = "방향";
 "shelf.quickCreateSettings.NavTitle" = "짧은 메모";
@@ -1500,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 7 September 2023 at 3:14 PM
+// Last Synced by Ramakrishna on 7 September 2023 at 5:55 PM

@@ -1291,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "Size";
 "shelf.notebook.textstyle.textLineHeight" = "Line Height";
 "shelf.notebook.textstyle.textautoLineHeight" = "Auto Line Height";
+"shelf.ns2Category.noCategoryItemsTitle" = "No items in this category";
 "shelf.paperPicker.choosePaper" = "Choose Paper";
 "shelf.paperPicker.orientation" = "Orientation";
 "shelf.quickCreateSettings.NavTitle" = "Quick Note";
@@ -1500,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 7 September 2023 at 3:14 PM
+// Last Synced by Ramakrishna on 7 September 2023 at 5:55 PM

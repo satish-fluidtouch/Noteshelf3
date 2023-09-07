@@ -1291,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "大小";
 "shelf.notebook.textstyle.textLineHeight" = "行高";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行高";
+"shelf.ns2Category.noCategoryItemsTitle" = "此分類下無任何項目";
 "shelf.paperPicker.choosePaper" = "選擇紙張";
 "shelf.paperPicker.orientation" = "定位";
 "shelf.quickCreateSettings.NavTitle" = "快速筆記";
@@ -1500,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 7 September 2023 at 3:14 PM
+// Last Synced by Ramakrishna on 7 September 2023 at 5:55 PM
