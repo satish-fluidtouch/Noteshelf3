@@ -99,7 +99,7 @@ struct FTShelfView: View,FTShelfBaseView {
     //MARK: Views
     private func emptyShelfItemsView() -> some View {
         if viewModel.collection.isNS2Collection() {
-            return FTNoResultsView(noResultsImageName: "noNS2CategoryItems",
+            return FTNoResultsView(noResultsImageName: "nons2CategoryItems",
                                    title: NSLocalizedString("shelf.ns2Category.noCategoryItemsTitle", comment: "No items in this category"))
         } else {
             if viewModel.collection.isTrash {
