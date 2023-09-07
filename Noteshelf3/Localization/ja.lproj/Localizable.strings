@@ -597,7 +597,6 @@
 "PageCreated" = "作成された";
 "PageCreatedOn" = "%@で作成";
 "PageDimensions" = "寸法";
-"PageFromClipBoard" = "クリップボードから貼り付ける";
 "PageFromClipboard" = "クリップボードからのページ";
 "PageFromPhoto" = "写真の背景";
 "PageFromTemplate" = "テンプレートを選択する";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "パスワードが一致しません。";
 "Paste" = "貼り付け";
 "PasteBelow" = "以下に貼り付け";
+"PasteFromClipBoard" = "クリップボードから貼り付ける";
 "Pause" = "一時停止";
 "PencilActionAlert" = "このアクションは、このアプリに対してのみシステムのデフォルトを上書きします。続行しますか？";
 "PencilActionChangeMessage" = "設定に移動して、Apple Pencilを変更してください。";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "基本ツール";
 "customizeToolbar.bookmark" = "ブックマーク";
 "customizeToolbar.currentToolbar" = "ツールバー上";
+"customizeToolbar.deletePage" = "ページを削除する";
+"customizeToolbar.deletePageConfirmation" = "このノートのページ %d を削除してもよろしいですか？";
 "customizeToolbar.duplicatePage" = "重複ページ";
 "customizeToolbar.emojis" = "絵文字";
 "customizeToolbar.eraser" = "消しゴム";
@@ -1447,6 +1449,9 @@
 "templatesStore.templatePreview.createNotebook" = "ノートブックを作成する";
 "templatesStore.templatePreview.inyourLibrary" = "あなたの図書館";
 "templatesStore.templatePreview.style" = "スタイル";
+"text.font.setAsDefault.menuTitle" = "デフォルトに設定します:";
+"text.font.setAsDefault.thisAndFutureBooks" = "このノートおよびすべての将来のノート";
+"text.font.setAsDefault.thisBook" = "このノートブック";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
@@ -1493,4 +1498,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 7 September 2023 at 12:42 PM

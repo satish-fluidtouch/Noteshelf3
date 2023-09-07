@@ -108,10 +108,7 @@
         case kDeskModeEraser:
         {
             UIViewController *controller = [FTEraserRackViewController showPopOverWithPresentingController:self sourceView:sourceView sourceRect: sourceView.bounds arrowDirections: UIPopoverArrowDirectionAny];
-            if([controller isKindOfClass:[FTEraserRackViewController class]]) {
-                FTEraserRackViewController *eraserVc = (FTEraserRackViewController *)controller;
-                eraserVc.eraserDelegate = self;
-            }
+            ((FTEraserRackViewController *)controller).eraserDelegate = self;
         }
             break;
    
@@ -130,7 +127,8 @@
             break;
         case kDeskModeClipboard: // Lasso
         {
-            [FTLassoRackViewController showPopOverWithPresentingController:self sourceView:sourceView sourceRect: sourceView.bounds arrowDirections: UIPopoverArrowDirectionAny];
+            UIViewController *controller = [FTLassoRackViewController showPopOverWithPresentingController:self sourceView:sourceView sourceRect: sourceView.bounds arrowDirections: UIPopoverArrowDirectionAny];
+            ((FTLassoRackViewController *)controller).delegate = self;
         }
             break;
         default:

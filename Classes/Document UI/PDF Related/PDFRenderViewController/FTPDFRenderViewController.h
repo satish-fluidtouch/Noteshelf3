@@ -52,13 +52,14 @@ typedef enum: NSInteger  {
 
 @protocol FTPenRackSelectDelegate;
 @protocol FTEraserRackControllerDelegate;
+@protocol FTLassoRackDelegate;
 @class FTScrollViewPageOffset;
 @class FTLaserStrokeStorage;
 @class FTShortcutExecuter;
 @protocol FTFinderNotifier;
 
 #if !TARGET_OS_MACCATALYST
-@interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate> {
+@interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate, FTLassoRackDelegate> {
 }
 #else
 @interface FTPDFRenderViewController : FTBaseRenderViewController
@@ -68,7 +69,7 @@ FTDeskToolbarDelegate,
 FTAudioListViewControllerDelegtes,
 FTApplePencilInteractionProtocol,
 FTPenRackSelectDelegate,
-FTEraserRackControllerDelegate> {}
+FTEraserRackControllerDelegate, FTLassoRackDelegate> {}
 #endif
 
 @property (strong) FTScrollViewPageOffset *contentOffsetPercentage; //internal

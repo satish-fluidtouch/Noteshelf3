@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol FTLassoRackDelegate: NSObjectProtocol {
+    @objc optional func pasteFromClipBoard()
+}
+
 @objcMembers public class FTLassoRackViewController: FTBasePenRackViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var lassoBackgroundView: UIButton!
@@ -18,6 +22,9 @@ import UIKit
     @IBOutlet private weak var textBoxesSwitch: UISwitch!
     @IBOutlet private weak var photosSwitch: UISwitch!
     @IBOutlet private weak var shapesSwitch: UISwitch!
+    @IBOutlet private weak var pasteFromClipboardView: UIView?
+
+    weak var delegate: FTLassoRackDelegate?
 
     override class var identifier: String {
         return "FTLassoRackViewController"
@@ -32,6 +39,7 @@ import UIKit
         self.titleLabel.text =  "notebook.lassoRack.NavTitle".localized
         self.initPreferences()
         self.updateSelectionType()
+        self.configurePasteOptionIfNeeded()
     }
 
     private func initPreferences() {
@@ -52,6 +60,27 @@ import UIKit
         }
     }
 
+    private func configurePasteOptionIfNeeded() {
+        self.pasteFromClipboardView?.isHidden = true
+        if UIPasteboard.canPasteContent() {
+            self.pasteFromClipboardView?.isHidden = false
+            let pasteViewHeight = self.pasteFromClipboardView?.frame.height ?? 0.0
+            if let navVc = self.navigationController {
+                navVc.preferredContentSize.height += (pasteViewHeight + 8.0)
+            } else {
+                self.preferredContentSize.height += (pasteViewHeight + 8.0)
+            }
+            let gesture = UITapGestureRecognizer(target: self, action: #selector(pasteFromClipBoard))
+            self.pasteFromClipboardView?.addGestureRecognizer(gesture)
+        }
+    }
+
+    @objc func pasteFromClipBoard() {
+        self.dismiss(animated: true, completion: {
+            self.delegate?.pasteFromClipBoard?()
+        })
+    }
+    
     @IBAction func lassoTapped(_ sender: UIButton) {
         self.squareBackgroundView.backgroundColor = .clear
         self.squareBackgroundView.removeShadow()
