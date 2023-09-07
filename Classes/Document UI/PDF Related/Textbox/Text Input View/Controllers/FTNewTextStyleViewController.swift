@@ -10,7 +10,6 @@ import UIKit
 import FTStyles
 import FTCommon
 
-let maxFontSize: Int = 100
 let defaultFontSize: Int = 16
 
 enum FTTextStyleScreenMode: String {

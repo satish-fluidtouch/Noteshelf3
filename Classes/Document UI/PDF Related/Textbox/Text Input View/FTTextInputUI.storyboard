@@ -185,7 +185,7 @@
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </stackView>
-                                                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="16" maximumValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="RP6-zQ-PfM">
+                                                                    <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="16" minimumValue="1" maximumValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="RP6-zQ-PfM">
                                                                         <rect key="frame" x="262" y="8" width="100" height="28"/>
                                                                         <color key="backgroundColor" name="accentBg"/>
                                                                         <constraints>
@@ -1338,16 +1338,16 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxJ-kk-MLF" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                        <rect key="frame" x="16" y="12" width="94.5" height="20"/>
+                                                                        <rect key="frame" x="16" y="12" width="86.5" height="20"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="1NR-8W-g3L">
-                                                                        <rect key="frame" x="121" y="8" width="48" height="28"/>
+                                                                    <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="1NR-8W-g3L">
+                                                                        <rect key="frame" x="113" y="8" width="64" height="28"/>
                                                                         <subviews>
-                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="16" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v9L-xq-wD4">
-                                                                                <rect key="frame" x="8" y="0.0" width="12" height="28"/>
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="16" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v9L-xq-wD4">
+                                                                                <rect key="frame" x="0.0" y="6" width="33" height="17"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <color key="textColor" name="black1"/>
                                                                                 <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
@@ -1357,7 +1357,7 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWW-2u-2tF">
-                                                                                <rect key="frame" x="26" y="0.0" width="14" height="28"/>
+                                                                                <rect key="frame" x="35" y="6" width="29" height="17"/>
                                                                                 <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                                 <color key="textColor" name="black1"/>
                                                                                 <nil key="highlightedColor"/>
@@ -1366,9 +1366,9 @@
                                                                         <color key="backgroundColor" name="accentBg"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="28" id="AqX-Hj-rez"/>
-                                                                            <constraint firstAttribute="width" constant="48" id="Nb4-Ko-Lng"/>
+                                                                            <constraint firstAttribute="width" constant="64" id="Nb4-Ko-Lng"/>
                                                                         </constraints>
-                                                                        <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="8" bottom="0.0" trailing="8"/>
+                                                                        <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                                 <integer key="value" value="9"/>
@@ -1858,10 +1858,10 @@
             <color red="1" green="1" blue="1" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

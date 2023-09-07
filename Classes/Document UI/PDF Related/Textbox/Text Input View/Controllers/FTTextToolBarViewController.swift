@@ -138,7 +138,7 @@ extension FTTextToolBarViewController {
                 let button = FTTextToolbarButton(type: .custom)
                 button.tag = idx
                 var attributeText = NSMutableAttributedString(string: item.textStyleShortName())
-                attributeText = attributeText.getFormattedAttributedStringFrom(style: item, defaultFont: 16)
+                attributeText = attributeText.getFormattedAttributedStringFrom(style: item, defaultFont: 16, toPreviewDefault: true)
                 button.isPointerInteractionEnabled = true
                 button.addTarget(self, action:#selector(didSelectedStyle(_:)), for: .touchUpInside)
 

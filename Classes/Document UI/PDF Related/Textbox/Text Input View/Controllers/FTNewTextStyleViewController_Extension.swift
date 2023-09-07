@@ -57,7 +57,7 @@ extension FTNewTextStyleViewController: UITextFieldDelegate {
                     let updatedText = text.replacingCharacters(in: textRange,
                                                                with: string)
                     let size = Int(updatedText) ?? defaultFontSize
-                    if size > maxFontSize {
+                    if size > Int(StepperValueCapturedIn.fontsize.maxSupportValue) {
                         canAllow = false
                     }
                 }

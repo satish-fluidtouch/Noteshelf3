@@ -12,6 +12,18 @@ import UIKit
 enum StepperValueCapturedIn{
     case fontsize
     case lineHeight
+
+    var minSupportValue: CGFloat {
+        var value: CGFloat = 1.0
+        if self == .lineHeight {
+            value = 0.0
+        }
+        return value
+    }
+
+    var maxSupportValue: CGFloat {
+        return 1000.0
+    }
 }
 
 protocol FTStepperViewDelegate: AnyObject {
@@ -105,12 +117,14 @@ class FTStepperView: UIView {
     }
 
     @objc func stepperIncrementBtnTapped() {
-        value += 1
-        updateValue(value: value)
+        if value < self.valueCaptureAt.maxSupportValue {
+            value += 1
+            updateValue(value: value)
+        }
     }
 
     @objc func stepperDecrementBtnTapped() {
-        if value > 0 {
+        if value > self.valueCaptureAt.minSupportValue {
             value -= 1
             updateValue(value: value)
         }
@@ -121,6 +135,8 @@ class FTStepperView: UIView {
         let stepper =  UIStepper()
         addSubview(stepper)
         self.iOSStepper = stepper
+        self.iOSStepper?.minimumValue = self.valueCaptureAt.minSupportValue
+        self.iOSStepper?.maximumValue = self.valueCaptureAt.maxSupportValue
         self.iOSStepper?.addTarget(self, action: #selector(tappedonStepper(_:)), for: .valueChanged)
     }
     @objc func tappedonStepper(_ sender: UIStepper) {
