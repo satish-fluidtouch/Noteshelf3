@@ -141,7 +141,12 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
                     FTToastHostController.showToast(from: self, toastConfig: config)
                 }
             }
-            
+
+        case .deletePage:
+            if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
+                self.executer.execute(type: .deletePage(page: page))
+            }
+
         case .tag:
             if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
                 let pagesSet = NSSet(array: [page])
