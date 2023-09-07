@@ -1220,6 +1220,8 @@
 "shelf.bottomBar.delete" = "削除";
 "shelf.bottomBar.restore" = "リストア";
 "shelf.bottomBar.trash" = "ゴミ";
+"shelf.category.noCategoryItemsDescription" = "上記のオプションをタップして新しいメモを作成するか、既存のメモを移動してください。";
+"shelf.category.noCategoryItemsTitle" = "このカテゴリーは空です。";
 "shelf.category.unCategorized" = "未分類";
 "shelf.changeCover" = "カバーを変更";
 "shelf.createGroup" = "グループを作成";
@@ -1289,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "サイズ";
 "shelf.notebook.textstyle.textLineHeight" = "行の高さ";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行間";
+"shelf.ns2Category.noCategoryItemsTitle" = "このカテゴリーにはアイテムがありません。";
 "shelf.paperPicker.choosePaper" = "用紙を選択してください";
 "shelf.paperPicker.orientation" = "オリエンテーション";
 "shelf.quickCreateSettings.NavTitle" = "クイックノート";
@@ -1498,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:42 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

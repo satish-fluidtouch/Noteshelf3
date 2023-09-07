@@ -8,29 +8,9 @@
 
 import Foundation
 
-enum FTTextInputIndent : Int
-{
+enum FTTextInputIndent: Int {
     case right
     case left
-}
-
-protocol FTTextInputAccessoryDelegate : FTTraitCollectionOverridable
-{
-    func textInputAccessoryDidChangeTextAlignment(_ textAlignment : NSTextAlignment);
-    func textInputAccessoryDidChangeIndent(_ indent : FTTextInputIndent);
-    func textInputAccessoryDidChangeStyle(_ styleFont : UIFont);
-    func textInputAccessoryDidChangeTextSize(_ textSize : CGFloat);
-    func textInputAccessoryDidChangeBullet(_ bulletStyle : FTBulletType);
-    func textInputAccessoryDidToggleUnderline();
-    func textInputAccessoryDidChangeFontTrait(_ trait : UIFontDescriptor.SymbolicTraits);
-
-    func textInputAccessoryDidChangeFontFamily(_ fontFamily:String);
-    func textInputAccessoryDidChangeFontFamilyStyle(_ fontFamilyStyle:String);
-    func textInputAccessoryDidChangeColor(_ backgroundColor : UIColor);
-    func textInputAccessoryDidChangeTextColor(_ textColor : UIColor);
-    func textInputAccessoryDidChangeFavoriteFont(_ font : FTCustomFontInfo)
-    func textInputAccessoryDidSetDefaultFontInfo(_ font : FTCustomFontInfo)
-
 }
 
 enum FTTextInputAccessoryViewType {

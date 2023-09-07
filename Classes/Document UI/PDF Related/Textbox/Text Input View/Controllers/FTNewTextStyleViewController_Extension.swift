@@ -10,9 +10,10 @@ import UIKit
 
 extension FTNewTextStyleViewController  {
     func canAddTrait(_ trait : UIFontDescriptor.SymbolicTraits) -> Bool {
-        guard let style = textFontStyle else { return false }
-        let testFont = UIFont.init(name: style.fontName, size: CGFloat(style.fontSize))
-        return testFont!.canAddTrait(trait)
+        guard let testFont = UIFont.init(name: self.textFontStyle.fontName, size: CGFloat(self.textFontStyle.fontSize)) else {
+            return false
+        }
+        return testFont.canAddTrait(trait)
     }
 }
 
@@ -21,11 +22,11 @@ extension FTNewTextStyleViewController : FTSystemFontPickerDelegate, UIFontPicke
     func didPickFontFromSystemFontPicker(_ viewController : FTFontPickerViewController?, selectedFontDescriptor: UIFontDescriptor) {
         if let fontFamily = selectedFontDescriptor.object(forKey: .family) as? String, let displayName = selectedFontDescriptor.object(forKey: .visibleName) as? String {
             if let _ = selectedFontDescriptor.object(forKey: .face) as? String, let fontName = selectedFontDescriptor.object(forKey: .name) as? String {
-                self.textFontStyle?.fontName = fontName
-                self.textFontStyle?.fontFamily = fontFamily
+                self.textFontStyle.fontName = fontName
+                self.textFontStyle.fontFamily = fontFamily
             } else {
-                self.textFontStyle?.fontFamily = displayName
-                self.textFontStyle?.fontName = fontFamily
+                self.textFontStyle.fontFamily = displayName
+                self.textFontStyle.fontName = fontFamily
             }
         }
         self.shouldApplyAttributes = true
@@ -36,11 +37,12 @@ extension FTNewTextStyleViewController : FTSystemFontPickerDelegate, UIFontPicke
 
 extension FTNewTextStyleViewController: FTTextColorCollectionViewDelegate {
     func didSelectTextColor(_ colorStr: String) {
-        self.textFontStyle?.textColor = colorStr
-        if isModifyText {
+        self.textFontStyle.textColor = colorStr
+        if self.textStyleMode == .defaultView {
             shouldApplyAttributes = true
         }
         applyFontChanges()
+        self.reloadColorsCollectionIfRequired()
     }
 }
 
@@ -55,7 +57,7 @@ extension FTNewTextStyleViewController: UITextFieldDelegate {
                     let updatedText = text.replacingCharacters(in: textRange,
                                                                with: string)
                     let size = Int(updatedText) ?? defaultFontSize
-                    if size > maxFontSize {
+                    if size > Int(StepperValueCapturedIn.fontsize.maxSupportValue) {
                         canAllow = false
                     }
                 }

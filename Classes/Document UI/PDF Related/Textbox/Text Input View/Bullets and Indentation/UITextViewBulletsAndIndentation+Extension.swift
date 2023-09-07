@@ -194,7 +194,11 @@ extension UITextView {
                 self.setValue(style, forAttribute: NSAttributedString.Key.paragraphStyle.rawValue, in: range)
             })
     }
-    
+
+    func setAutoLineSpace(status: Bool, forEditing editingRange: NSRange) {
+        self.setValue(NSNumber.init(value: status), forAttribute: FTFontStorage.isLineSpaceEnabledKey, in: editingRange)
+    }
+
     func setLineSpacing(lineSpace: CGFloat, forEditing editingRange: NSRange) {
         let paragraphRange = self.paragraphRange(for: editingRange)
 

@@ -1220,6 +1220,8 @@
 "shelf.bottomBar.delete" = "Supprimer";
 "shelf.bottomBar.restore" = "Restaurer";
 "shelf.bottomBar.trash" = "Déchets";
+"shelf.category.noCategoryItemsDescription" = "Appuyez sur les options ci-dessus pour créer de nouvelles notes ou déplacer celles existantes.";
+"shelf.category.noCategoryItemsTitle" = "Cette catégorie est vide.";
 "shelf.category.unCategorized" = "Non classé";
 "shelf.changeCover" = "Changer la couverture.";
 "shelf.createGroup" = "Créer un groupe.";
@@ -1289,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "Taille";
 "shelf.notebook.textstyle.textLineHeight" = "Hauteur de ligne";
 "shelf.notebook.textstyle.textautoLineHeight" = "Hauteur de ligne automatique";
+"shelf.ns2Category.noCategoryItemsTitle" = "Aucun élément dans cette catégorie.";
 "shelf.paperPicker.choosePaper" = "Choisir le papier";
 "shelf.paperPicker.orientation" = "Orientation";
 "shelf.quickCreateSettings.NavTitle" = "Note rapide";
@@ -1498,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:42 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

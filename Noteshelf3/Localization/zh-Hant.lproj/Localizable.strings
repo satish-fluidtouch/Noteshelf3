@@ -1220,6 +1220,8 @@
 "shelf.bottomBar.delete" = "刪除";
 "shelf.bottomBar.restore" = "還原";
 "shelf.bottomBar.trash" = "垃圾";
+"shelf.category.noCategoryItemsDescription" = "點擊上方的選項以創建新的筆記或移動現有筆記。";
+"shelf.category.noCategoryItemsTitle" = "這個類別是空的";
 "shelf.category.unCategorized" = "未分類";
 "shelf.changeCover" = "更換封面";
 "shelf.createGroup" = "建立群組";
@@ -1289,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "大小";
 "shelf.notebook.textstyle.textLineHeight" = "行高";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行高";
+"shelf.ns2Category.noCategoryItemsTitle" = "此分類下無任何項目";
 "shelf.paperPicker.choosePaper" = "選擇紙張";
 "shelf.paperPicker.orientation" = "定位";
 "shelf.quickCreateSettings.NavTitle" = "快速筆記";
@@ -1498,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:42 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM
