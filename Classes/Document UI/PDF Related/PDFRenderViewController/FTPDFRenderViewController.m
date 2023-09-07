@@ -2161,6 +2161,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     clipInfo.clipString = clipUrlString;
     [firstPageController addAnnotationWithInfo:clipInfo];
     [indicator hide:nil];
+    self.pdfDocument.isDirty = true;
 }
 
 -(void)insertImages:(NSArray<UIImage *> *)pictures
@@ -2298,6 +2299,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         }];
         if (info.count > 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.pdfDocument.isDirty = true;
                 completionBlock(info,frameInfo,nil);
             });
         }
