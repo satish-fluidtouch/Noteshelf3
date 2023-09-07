@@ -1,125 +1,187 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-#default_platform(:ios)
 
+#--------------------------------------#
+# (AK) These lanes can be further simplified with sub lanes creation, eventually number of lines will be reduced.
+# But,
+# I'm keeping these lanes as independent as possible to make this understandable by anyone.
+#--------------------------------------#
+
+##############################################################
+#####################   iOS   ################################
+##############################################################
 platform :ios do
-    desc "Push a new beta build to TestFlight"
+    desc "NS3 Beta iOS"
     lane :beta do |options|
 
         app_identifier = "com.fluidtouch.noteshelf3-beta"
+
+        # Step 1
+
+        # 1. Reset the repo
+        # 2. Switch the branch or fallback to develop
+        # 3. Take latest Pull
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
-        
+
+
+        # Step 2
+
+        # 1. Fetch the latest build number from Appstore Connect
+        # 2. Increment the build number
         build_number = latest_testflight_build_number(app_identifier: app_identifier) + 1
-        releaseNotes = changelog_from_git_commits(pretty: "- %s", date_format: "short")
         increment_build_number({ build_number: build_number })
 
-        
+        # Step 3
+
+        # 1. Prepare release note with the branch name and the git commits
+        releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
+
+        # Step 4
+
+        # 1. Build app with the configuration
         build_app(workspace: "Noteshelf.xcworkspace",
                   scheme: "Noteshelf3",
                   configuration: "Beta",
                   output_directory: "build",
                   silent: true,
                   clean: true,
-                  export_options: "beta_export_options.plist",
+                  export_options: "fastlane/export_options.plist",
                   silent: true)
-                  
-                  notification(subtitle: "🛠️ Finished Building", message: "Ready to upload...")
 
-                  upload_to_testflight(skip_waiting_for_build_processing: true,
-                                       app_platform:"ios",
-                                       ipa: "build/NS3 Beta.ipa",
-                                       app_identifier: app_identifier,
-                                       changelog: releaseNotes)
+        # Step 5
+        # 1. send a local terminal notification
+        notification(subtitle: "🛠️ NS3 Beta Finished Building", message: "Ready to upload...")
 
-                  notification(subtitle: "✅ Finished Uploading", message: "Uploaded successfully")
-                  slack(message: "✅ iOS app Finished Uploading",
-                        default_payloads: [:git_branch, :git_author],
-                        payload: {
-                        "Build Number" => build_number,
-                        "Release Notes" => releaseNotes
-                        })
+        # Step 6
+        # 1. Upload the ipa to testflight
+        upload_to_testflight(skip_waiting_for_build_processing: false,
+                            app_platform:"ios",
+                            ipa: "build/NS3 Beta.ipa",
+                            app_identifier: app_identifier,
+                            changelog: releaseNotes)
+
+        # Step 7
+        # 1. send a local terminal notifier
+        # 2. send a slack message
+        notification(title: "NS3 Beta", subtitle: "✅ iOS Finished Uploading", message: "Uploaded successfully")
+        slack(message: "✅ NS3 Beta iOS Finished Uploading",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number,
+              "Release Notes" => releaseNotes
+              })
     end
 
-    desc "Push a new beta build to AppStore"
+    desc "Noteshelf 3 iOS"
     lane :release do |options|
         app_identifier = "com.fluidtouch.noteshelf3"
 
+        # Step 1
+
+        # 1. Reset the repo
+        # 2. Switch the branch or fallback to develop
+        # 3. Take latest Pull
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
 
+
+        # Step 2
+
+        # 1. Fetch the latest build number from Appstore Connect
+        # 2. Increment the build number
         build_number = latest_testflight_build_number(app_identifier: app_identifier) + 1
-        releaseNotes = changelog_from_git_commits(pretty: "- %s", date_format: "short")
         increment_build_number({ build_number: build_number })
 
+        # Step 3
 
+        # 1. Prepare release note with the branch name and the git commits
+        releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
+
+        # Step 4
+
+        # 1. Build app with the configuration
         build_app(workspace: "Noteshelf.xcworkspace",
                   scheme: "Noteshelf3",
                   output_directory: "build",
                   silent: true,
                   clean: true,
                   configuration: "Release",
-                  export_options: "beta_export_options.plist",
+                  export_options: "fastlane/export_options.plist",
                   silent: true)
 
-                  notification(subtitle: "🛠️ Finished Building", message: "Ready to upload...")
+        # Step 5
+        # 1. send a local terminal notification
+        notification(title: "Noteshelf 3", subtitle: "🛠️ iOS Finished Building", message: "Ready to upload...")
 
-                  upload_to_testflight(skip_waiting_for_build_processing: true,
-                                       app_platform:"ios",
-                                       ipa: "build/Noteshelf 3.ipa",
-                                       app_identifier: app_identifier,
-                                       changelog: releaseNotes)
+        # Step 6
+        # 1. Upload the ipa to testflight
+        upload_to_testflight(skip_waiting_for_build_processing: false,
+                             app_platform:"ios",
+                             ipa: "build/Noteshelf 3.ipa",
+                             app_identifier: app_identifier,
+                             changelog: releaseNotes)
 
-                  notification(subtitle: "✅ Finished Uploading", message: "Uploaded successfully")
-                  slack(message: "✅ iOS app Finished Uploading",
-                        default_payloads: [:git_branch, :git_author],
-                        payload: {
-                        "Build Number" => build_number,
-                        "Release Notes" => releaseNotes
-                        })
+        # Step 7
+        # 1. send a local terminal notifier
+        # 2. send a slack message
+        notification(title: "Noteshelf 3", subtitle: "✅ iOS Finished Uploading", message: "Uploaded successfully")
+        slack(message: "✅ Noteshelf 3 iOS Finished Uploading",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number,
+              "Release Notes" => releaseNotes
+              })
     end
     
     error do |lane, exception|
         notification(subtitle: "⛔️ Error", message: exception.to_s)
+        slack(message: exception.to_s)
     end
 end
 
+##############################################################
+#####################   MAC   ################################
+##############################################################
 platform :mac do
+    desc "NS3 Beta macOS"
     lane :beta do |options|
 
         app_identifier = "com.fluidtouch.noteshelf3-beta"
 
-         reset_git_repo(force: true, disregard_gitignore: false)
+        # Step 1
+
+        # 1. Reset the repo
+        # 2. Switch the branch or fallback to develop
+        # 3. Take latest Pull
+        reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
 
+        # Step 2
 
-        build_number = latest_testflight_build_number(app_identifier: app_identifier,
-                                                      platform: "osx") + 1
-        releaseNotes = changelog_from_git_commits(pretty: "- %s", date_format: "short")
+        # 1. Fetch the latest build number from Appstore Connect
+        # 2. Increment the build number
+        build_number = latest_testflight_build_number(app_identifier: app_identifier, platform: "osx") + 1
         increment_build_number({ build_number: build_number })
-        
+
+        # Step 3
+
+        # 1. Prepare release note with the branch name and the git commits
+        releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
+
+        # Step 4
+
+        # 1. Build app with the configuration
         build_mac_app(workspace: "Noteshelf.xcworkspace",
                       scheme: "Noteshelf3",
                       output_directory: "build",
@@ -128,44 +190,64 @@ platform :mac do
                       destination: 'platform=macOS,arch=x86_64,variant=Mac Catalyst',
                       installer_cert_name: '3rd Party Mac Developer Installer: Fluid Touch Pte. Ltd. (CNTLGGQX2J)',
                       configuration: "Beta",
-                      export_options: "beta_export_options_mac.plist",
+                      export_options: "fastlane/export_options_mac.plist",
                       silent: true)
-                      
-                      notification(subtitle: "🛠️ Catalyst Finished Building",
-                                   message: "Catalyst Ready to upload...")
 
-                      upload_to_testflight(skip_waiting_for_build_processing: true,
-                                           app_identifier: app_identifier,
-                                           app_platform:"osx",
-                                           pkg: "build/NS3 Beta.pkg",
-                                           changelog: releaseNotes)
+        # Step 5
+        # 1. send a local terminal notification
+        notification(title: "NS3 Beta", subtitle: "🛠️ macOS Finished Building", message: "Ready to upload...")
 
-                      notification(subtitle: "✅ Catalyst Finished Uploading",
-                                   message: "Catalyst Uploaded successfully")
+        # Step 6
+        # 1. Upload the ipa to testflight
+        upload_to_testflight(skip_waiting_for_build_processing: false,
+                             app_identifier: app_identifier,
+                             app_platform:"osx",
+                             pkg: "build/NS3 Beta.pkg",
+                             changelog: releaseNotes)
 
-                      slack(message: "✅ Mac app Finished Uploading",
-                            default_payloads: [:git_branch, :git_author],
-                            payload: {
-                            "Build Number" => build_number,
-                            "Release Notes" => releaseNotes
-                            })
+        # Step 7
+        # 1. send a local terminal notifier
+        # 2. send a slack message
+        notification(title: "NS3 Beta", subtitle: "✅ macOS Finished Uploading", message: "Uploaded successfully")
+        slack(message: "✅ NS3 Beta macOS Finished Uploading",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number,
+              "Release Notes" => releaseNotes
+              })
 
     end
 
+    desc "Noteshelf 3 macOS"
     lane :release do |options|
         app_identifier = "com.fluidtouch.noteshelf3"
 
-         reset_git_repo(force: true, disregard_gitignore: false)
+        # Step 1
+
+        # 1. Reset the repo
+        # 2. Switch the branch or fallback to develop
+        # 3. Take latest Pull
+        reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
 
-        build_number = latest_testflight_build_number(app_identifier: app_identifier,
-                                                      platform: "osx") + 1
-        releaseNotes = "Release Notes from Fastlane"
+        # Step 2
+
+        # 1. Fetch the latest build number from Appstore Connect
+        # 2. Increment the build number
+        build_number = latest_testflight_build_number(app_identifier: app_identifier, platform: "osx") + 1
         increment_build_number({ build_number: build_number })
 
+        # Step 3
+
+        # 1. Prepare release note with the branch name and the git commits
+        releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
+
+        # Step 4
+
+        # 1. Build app with the configuration
         build_mac_app(workspace: "Noteshelf.xcworkspace",
                       scheme: "Noteshelf3",
                       output_directory: "build",
@@ -174,25 +256,31 @@ platform :mac do
                       destination: 'platform=macOS,arch=x86_64,variant=Mac Catalyst',
                       installer_cert_name: '3rd Party Mac Developer Installer: Fluid Touch Pte. Ltd. (CNTLGGQX2J)',
                       configuration: "Release",
-                      export_options: "beta_export_options_mac.plist",
+                      export_options: "fastlane/export_options_mac.plist",
                       silent: true)
 
-                      notification(subtitle: "🛠️ Catalyst Finished Building",
-                                   message: "Catalyst Ready to upload...")
+        # Step 5
+        # 1. send a local terminal notification
+        notification(title: "Noteshelf 3", subtitle: "🛠️ macOS Finished Building", message: "Ready to upload...")
 
-                      upload_to_testflight(skip_waiting_for_build_processing: true,
-                                           app_platform:"osx",
-                                           pkg: "build/Noteshelf 3.pkg",
-                                           app_identifier: app_identifier,
-                                           changelog: releaseNotes)
+        # Step 6
+        # 1. Upload the ipa to testflight
+        upload_to_testflight(skip_waiting_for_build_processing: false,
+                            app_platform:"osx",
+                            pkg: "build/Noteshelf 3.pkg",
+                            app_identifier: app_identifier,
+                            changelog: releaseNotes)
 
-                      notification(subtitle: "✅ Mac Finished Uploading", message: "Catalyst Uploaded successfully")
-                      slack(message: "✅ Mac app Finished Uploading",
-                            default_payloads: [:git_branch, :git_author],
-                            payload: {
-                            "Build Number" => build_number,
-                            "Release Notes" => releaseNotes
-                            })
+        # Step 7
+        # 1. send a local terminal notifier
+        # 2. send a slack message
+        notification(title: "Noteshelf 3", subtitle: "✅ macOS Finished Uploading", message: "Uploaded successfully")
+        slack(message: "✅ Noteshelf 3 macOS Finished Uploading",
+            default_payloads: [:lane, :git_branch, :git_author],
+            payload: {
+            "Build Number" => build_number,
+            "Release Notes" => releaseNotes
+            })
 
     end
 
