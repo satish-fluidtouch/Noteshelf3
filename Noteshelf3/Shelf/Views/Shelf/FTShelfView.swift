@@ -30,11 +30,7 @@ struct FTShelfView: View,FTShelfBaseView {
         GeometryReader { geometry in
             ZStack {
                 if viewModel.showNoShelfItemsView {
-                    VStack {
-                        Spacer()
                         emptyShelfItemsView()
-                        Spacer()
-                    }.ignoresSafeArea()
                 }
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
@@ -102,23 +98,27 @@ struct FTShelfView: View,FTShelfBaseView {
 
     //MARK: Views
     private func emptyShelfItemsView() -> some View {
-        if viewModel.collection.isTrash {
-            return FTNoResultsView(noResultsImageName: "noTrashItems",
-                                   title: NSLocalizedString("shelf.trash.noTrashTitle", comment: "shelf.trash.noTrashTitle"),
-                                   description: NSLocalizedString("shelf.trash.noTrashDescrption", comment: "Deleted notes will remain here for 30 days."))
-        } else if viewModel.collection.isStarred{
-            return FTNoResultsView(noResultsImageName: "noFavoritesIcon",
-                                   title: NSLocalizedString("shelf.starred.noStarredTitle", comment: "No starred notes"),
-                                   description: NSLocalizedString("shelf.starred.noStarredDescription", comment: "Star your important notes to access them all in one place"))
-        } else if viewModel.collection.isUnfiledNotesShelfItemCollection {
-            return FTNoResultsView(noResultsImageName: "noUnCategorizedIcon",
-                                   title: NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes"),
-                                   description: NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here."))
-        } else {
-            return FTNoResultsView(noResultsImageName: "noCategoryItems",
-                                   title: NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty"),
-                                   description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
-        }
+        return VStack {
+            Spacer()
+            if viewModel.collection.isTrash {
+                 FTNoResultsView(noResultsImageName: "noTrashItems",
+                                       title: NSLocalizedString("shelf.trash.noTrashTitle", comment: "shelf.trash.noTrashTitle"),
+                                       description: NSLocalizedString("shelf.trash.noTrashDescrption", comment: "Deleted notes will remain here for 30 days."))
+            } else if viewModel.collection.isStarred{
+                 FTNoResultsView(noResultsImageName: "noFavoritesIcon",
+                                       title: NSLocalizedString("shelf.starred.noStarredTitle", comment: "No starred notes"),
+                                       description: NSLocalizedString("shelf.starred.noStarredDescription", comment: "Star your important notes to access them all in one place"))
+            } else if viewModel.collection.isUnfiledNotesShelfItemCollection {
+                 FTNoResultsView(noResultsImageName: "noUnCategorizedIcon",
+                                       title: NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes"),
+                                       description: NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here."))
+            } else {
+                 FTNoResultsView(noResultsImageName: "noCategoryItems",
+                                       title: NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty"),
+                                       description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
+            }
+            Spacer()
+        }.ignoresSafeArea()
     }
 }
 
