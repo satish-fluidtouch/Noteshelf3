@@ -45,7 +45,7 @@ struct FTSideBarItemContexualMenuButtons: View {
     }
     private func setAlertInfoForOption(_ option: FTSidebarItemContextualOption) {
         if option == .emptyTrash {
-            alertInfo = TrashAlertInfo(title: NSLocalizedString("trash.alert.title", comment: "Are you sure you want empty your Trash?"),
+            alertInfo = TrashAlertInfo(title: "trash.alert.title".localized,
                                        message: "",
                                        type: TrashAlertInfo.TrashType.emptyTrash(item: item))
         } else if option == .trashCategory {

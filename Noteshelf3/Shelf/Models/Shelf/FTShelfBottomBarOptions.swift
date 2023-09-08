@@ -38,7 +38,7 @@ enum FTShelfBottomBarOption {
         case .restore:
             title = NSLocalizedString("shelf.bottomBar.restore", comment: "Delete")
         case .tags:
-            title = "Tags"//NSLocalizedString("shelf.bottomBar.restore", comment: "Tags")
+            title = "Tags".localized
         case .trash:
             title = NSLocalizedString("shelf.bottomBar.trash", comment: "Trash")
     }

@@ -22,7 +22,7 @@ struct FTPixabayItem: Codable {
     }
 
     func asOpenMediaLibrary() -> FTMediaLibraryModel {
-        let openClipart = FTMediaLibraryModel(id: String(self.id), title: "Pixabay", clipartDescription: "Pixabay", tags: self.tags, width: previewWidth, height: previewHeight)
+        let openClipart = FTMediaLibraryModel(id: String(self.id), title: "customizeToolbar.pixabay".localized, clipartDescription: "customizeToolbar.pixabay".localized, tags: self.tags, width: previewWidth, height: previewHeight)
         openClipart.urls = FTOpenClipartURL(png_thumb: self.webformatURL, png_full_lossy: self.largeImageURL)
         return openClipart
     }

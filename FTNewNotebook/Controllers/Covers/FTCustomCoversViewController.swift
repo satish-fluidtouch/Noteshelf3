@@ -30,7 +30,7 @@ class FTCustomCoversViewController: FTCoversHeaderController {
         super.viewDidLoad()
         self.view.shapeTopCorners()
         self.configureNavigationItems(with: "CustomCover".localized)
-        self.customInfoLabel?.text = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers"
+        self.customInfoLabel?.text = "theams.unsplashDescription".localized
         // To fix the issue of initial variant selection based on selected cover
         // TODO: (Narayana) // To check for better fix
         runInMainThread(0.1) {

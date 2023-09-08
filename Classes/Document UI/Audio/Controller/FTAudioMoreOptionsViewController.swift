@@ -22,17 +22,17 @@ enum FTAudioMoreOption: String, CaseIterable {
         let title: String
         switch self {
         case .jumpToPage:
-            title = "Jump to Page"
+            title = "audiooption.jumptoPage"
         case .rename:
             title = "Rename"
         case .goToRecording:
-            title = "Go to Recording"
+            title = "audiooption.gotoRecording"
         case .share:
             title = "Share"
         case .delete:
             title = "Trash"
         case .speed:
-            title = "Speed"
+            title = "audiooption.speed"
         case .close:
             title = "Close"
         }

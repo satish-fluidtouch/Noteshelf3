@@ -16,13 +16,13 @@ enum FTDefaultCustomType: String, CaseIterable {
         let title: String
         switch self {
         case .unsplash:
-            title = "Unsplash"
+            title = "customizeToolbar.unsplash"
         case .camera:
-            title = "Camera".localized
+            title = "Camera"
         case .photoLibrary:
-            title = "PhotoLibrary".localized
+            title = "PhotoLibrary"
         }
-        return title
+        return title.localized
     }
 
     var image: UIImage? {

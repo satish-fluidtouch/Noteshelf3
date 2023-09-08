@@ -714,7 +714,7 @@
 "Restore" = "Recuperar páginas";
 "ResultsFor" = "Resultados para %@";
 "RetakeKey" = "Deslizar hacia la derecha/Deslizar hacia la izquierda con tres dedos";
-"Right" = "Publicar para agregar nueva página.";
+"Right" = "Derecho";
 "Rotate" = "Rotar";
 "Rotate Page" = "Rotar la página";
 "Rotating" = "Eliminar de Recientes";
@@ -944,9 +944,14 @@
 "appearance.darkTheme" = "Tema oscuro";
 "appearance.lightTheme" = "Tema claro";
 "appearance.useSystemTheme" = "Usar modo claro / oscuro del sistema.";
+"audiooption.gotoRecording" = "Ir a la grabación";
+"audiooption.jumptoPage" = "Ir a la página";
+"audiooption.speed" = "Velocidad";
 "backup_file_create_failed" = "No se pudo crear el archivo de respaldo. Por favor, inténtalo de nuevo más tarde.";
 "backup_unknown_error" = "Se produjo un error al realizar la copia de seguridad. Por favor, inténtalo de nuevo más tarde.";
+"backupoptions.signoutfrom" = "Cerrar sesión de %@";
 "banners" = "Banderas";
+"bookmark.removebookMark" = "Eliminar marcador";
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
 "clipart404" = "Servidor ocupado, por favor inténtelo de nuevo más tarde.";
@@ -955,6 +960,7 @@
 "cloud.backup.error.fileNotFound" = "Archivo no encontrado";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "Nota: Los cuadernos protegidos con contraseña no se pueden respaldar como PDF.";
 "color.added" = "Color añadido";
 "color.deleted" = "Color eliminado";
@@ -1012,7 +1018,7 @@
 "customtemplate.title" = "TÍTULO";
 "customtemplate.titleplaceholder" = "Sin título";
 "days" = "Días";
-"delete" = "Eliminar";
+"delete" = "Borrar";
 "done" = "Hecho";
 "downloadedStickers" = "Pegatinas descargadas";
 "duplicate" = "Duplicar";
@@ -1028,11 +1034,14 @@
 "finder.bookmark.description" = "Páginas favoritas y mantener una vista general de cuadernos grandes y PDFs.";
 "finder.bookmarks" = "Marcadores";
 "finder.clear.recents" = "¿Quieres borrar lo reciente?";
+"finder.downloadPermissionText" = "El cuaderno seleccionado aún no se ha descargado. ¿Desea descargar el cuaderno y mover las páginas?";
 "finder.duplicate" = "Duplicar";
 "finder.fullscreen" = "Pantalla completa.";
 "finder.importDocument" = "Importar documento";
 "finder.media" = "Medios";
+"finder.media.allcontent" = "Todo el contenido";
 "finder.media.nocontent" = "Agrega imágenes, PDF, grabaciones de audio y más a tu cuaderno.";
+"finder.media.sticker" = "Etiqueta";
 "finder.more" = "Más";
 "finder.outline" = "Esquema";
 "finder.outline.description" = "El contorno de los PDF importados y las páginas añadidas aparecerán aquí. Añade páginas al contorno a través del menú 􀍠 en la barra de navegación del cuaderno.";
@@ -1046,7 +1055,7 @@
 "finder.search.contains" = "Contiene";
 "finder.selectPages" = "SELECCIONAR PÁGINAS";
 "finder.share" = "Compartir";
-"finder.tabbar.content" = "Contenido.";
+"finder.tabbar.content" = "Contenido";
 "finder.tag" = "Etiqueta";
 "foodanddrink" = "Comida y bebida.";
 "gesture.activeFocusMode.subTitle" = "Toque individual con 4 dedos.";
@@ -1058,6 +1067,8 @@
 "getInspired.student" = "Notas de estudio.";
 "globalSearch.page" = "página";
 "globalSearch.recentlySearched" = "Recientemente buscado";
+"groupitem.noteText" = "nota";
+"groupitem.notesText" = "notas";
 "headers" = "Encabezados";
 "highlighterRack.flat" = "Marcador plano";
 "highlighterRack.round" = "Resaltador circular";
@@ -1076,8 +1087,12 @@
 "iap.featureLimitMessage" = "Esta función está bloqueada. Desbloquea actualizando ahora.";
 "iap.featureLimitTitle" = "Actualiza ahora";
 "iap.message" = "Obtén acceso a notas ilimitadas, reconocimiento de escritura y búsqueda, y diarios digitales con Noteshelf Premium.";
+"iap.noProductIDsFound" = "No se encontraron identificadores de productos de compra en la aplicación.";
+"iap.noProductsFound" = "No se encontraron compras dentro de la aplicación.";
 "iap.onetimepurchase" = "COMPRA ÚNICA. PARA SIEMPRE.";
+"iap.paymentWasCancelled" = "El proceso de compra en la aplicación fue cancelado.";
 "iap.privacy" = "Política de privacidad";
+"iap.productRequestFailed" = "No se pueden obtener los productos disponibles para la compra dentro de la aplicación en este momento.";
 "iap.purchase" = "Actualización para %@";
 "iap.purchaseNotAllowed" = "Las compras dentro de la aplicación no están permitidas en este dispositivo.";
 "iap.restorePurchase" = "Restaurar compras";
@@ -1097,6 +1112,7 @@
 "labels" = "Etiquetas";
 "lasso.select.textbox" = "Cajas de texto";
 "lettering" = "Caligrafía";
+"librarystore.removefromLibrary" = "Eliminar de la biblioteca.";
 "lineHeight.extraNarrow" = "Extra Estrecho";
 "lineHeight.narrow" = "Estrecho";
 "lineHeight.standard" = "Estándar";
@@ -1191,7 +1207,7 @@
 "removefromRecents" = "Eliminar de Recientes";
 "reset" = "Restablecer";
 "retry" = "Reintentar";
-"save" = "Renombrar grupo";
+"save" = "Guardar";
 "school" = "Escuela";
 "search.tryNewSearch" = "Prueba una nueva búsqueda";
 "seeAll" = "Repetir.";
@@ -1285,6 +1301,7 @@
 "shelf.newnotebook.description" = "Un cuaderno en blanco con papel y portada personalizados.";
 "shelf.notebook.textstyle.Presets" = "Ajustes preestablecidos";
 "shelf.notebook.textstyle.Reorder" = "Reordenar";
+"shelf.notebook.textstyle.grid" = "Cuadrícula";
 "shelf.notebook.textstyle.newpreset" = "Nuevo preset.";
 "shelf.notebook.textstyle.presetname" = "Nombre predefinido";
 "shelf.notebook.textstyle.resetdescrption" = "¿Estás seguro/a de que quieres restablecer los estilos predeterminados?";
@@ -1399,7 +1416,7 @@
 "sidebar.recordings" = "Grabaciones";
 "sidebar.topSection.home" = "Casa";
 "sidebar.topSection.starred" = "Destacado";
-"sidebar.topSection.unfiled" = "Desordenado.";
+"sidebar.topSection.unfiled" = "Desordenado";
 "speechbubbles" = "Burbujas de diálogo";
 "stickers.alert.error" = "Error";
 "stickers.alert.ok" = "Ok.";
@@ -1455,6 +1472,8 @@
 "text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
+"texttoolbar.fontselectionTitle" = "SELECCIONAR FUENTE";
+"theams.unsplashDescription" = "Seleccionar de Unsplash, tomar una foto o seleccionar de tu Biblioteca de Fotos para crear tus portadas personalizadas.";
 "trash.alert.cannotOpenNotebook" = "Esta libreta no se puede abrir ya que ha sido eliminada. Para restaurar, mantén presionado y selecciona la opción del menú.";
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
 "unsplash.search.alertMessage" = "Introducir texto para buscar'";
@@ -1501,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
