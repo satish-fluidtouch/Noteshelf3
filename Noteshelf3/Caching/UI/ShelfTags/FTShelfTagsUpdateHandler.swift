@@ -21,7 +21,7 @@ class FTShelfTagsUpdateHandler: NSObject {
     static let shared = FTShelfTagsUpdateHandler()
     
     func updateTag(_ tag: FTTagModel?, for items: [FTShelfTagsItem], updateType type: FTTagsUpdateType) async throws {
-        for case var item in items where (item.shelfItem?.documentUUID != nil) {
+        for case let item in items where (item.shelfItem?.documentUUID != nil) {
             do {
                 var document: FTNoteshelfDocument!
                 var isOpen = false
@@ -59,13 +59,13 @@ class FTShelfTagsUpdateHandler: NSObject {
                         }
                     }
                 }
+                if let doc = item.shelfItem, let docUUID = doc.documentUUID {
+                    try FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: docUUID)
+                }
                 if item.document == nil {
                     _ = await document.saveAndClose()
                 } else {
                     _ = await document.save(completionHandler: nil)
-                }
-                if let doc = item.shelfItem, let docUUID = doc.documentUUID {
-                    try FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: docUUID)
                 }
             } catch {
                 cacheLog(.error, error, item.shelfItem!.URL.lastPathComponent)
@@ -83,16 +83,19 @@ class FTShelfTagsUpdateHandler: NSObject {
        let filteredDocuments = items.filter { item in
            return docIdsForTag.contains(item.documentUUID ?? "")
        }
-
-       for case let doc in filteredDocuments where doc.documentUUID != nil {
-           guard let documentUUID = doc.documentUUID else { continue }
-           if let currentDoc = document, await documentUUID == currentDoc.documentUUID {
-               try await FTCacheTagsProcessor.shared.deleteTags(tags: [tag], for: currentDoc)
-           } else {
-               let doc = await FTNoteshelfDocument(fileURL: doc.URL)
-               try await FTCacheTagsProcessor.shared.deleteTags(tags: [tag], for: doc)
-           }
-       }
+        if let topViewController = await UIApplication.shared.topViewController() {
+            let loadingIndicatorViewController = await FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: topViewController, withText: "")
+            for case let doc in filteredDocuments where doc.documentUUID != nil {
+                guard let documentUUID = doc.documentUUID else { continue }
+                if let currentDoc = document, await documentUUID == currentDoc.documentUUID {
+                    try await FTCacheTagsProcessor.shared.deleteTags(tags: [tag], for: currentDoc)
+                } else {
+                    let doc = await FTNoteshelfDocument(fileURL: doc.URL)
+                    try await FTCacheTagsProcessor.shared.deleteTags(tags: [tag], for: doc)
+                }
+            }
+            await loadingIndicatorViewController.hide()
+        }
 
     }
 
@@ -107,15 +110,18 @@ class FTShelfTagsUpdateHandler: NSObject {
         let filteredDocuments = items.filter { item in
             return docIdsForTag.contains(item.documentUUID ?? "")
         }
-
-        for case let doc in filteredDocuments where doc.documentUUID != nil {
-            guard let documentUUID = doc.documentUUID else { continue }
-            if let currentDoc = document, await documentUUID == currentDoc.documentUUID {
-            try await FTCacheTagsProcessor.shared.renameTag(tag, with: newTag, for: currentDoc)
-            } else {
-                let noteDoc = await FTNoteshelfDocument(fileURL: doc.URL)
-                try await FTCacheTagsProcessor.shared.renameTag(tag, with: newTag, for: noteDoc)
+        if let topViewController = await UIApplication.shared.topViewController() {
+            let loadingIndicatorViewController = await FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: topViewController, withText: "")
+            for case let doc in filteredDocuments where doc.documentUUID != nil {
+                guard let documentUUID = doc.documentUUID else { continue }
+                if let currentDoc = document, await documentUUID == currentDoc.documentUUID {
+                    try await FTCacheTagsProcessor.shared.renameTag(tag, with: newTag, for: currentDoc)
+                } else {
+                    let noteDoc = await FTNoteshelfDocument(fileURL: doc.URL)
+                    try await FTCacheTagsProcessor.shared.renameTag(tag, with: newTag, for: noteDoc)
+                }
             }
+            await loadingIndicatorViewController.hide()
         }
     }
 

@@ -1220,6 +1220,8 @@
 "shelf.bottomBar.delete" = "Delete";
 "shelf.bottomBar.restore" = "Restore";
 "shelf.bottomBar.trash" = "Trash";
+"shelf.category.noCategoryItemsDescription" = "Tap on the options above to create new notes or move existing ones.";
+"shelf.category.noCategoryItemsTitle" = "This category is empty";
 "shelf.category.unCategorized" = "Uncategorized";
 "shelf.changeCover" = "Change Cover";
 "shelf.createGroup" = "Create Group";
@@ -1289,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "Size";
 "shelf.notebook.textstyle.textLineHeight" = "Line Height";
 "shelf.notebook.textstyle.textautoLineHeight" = "Auto Line Height";
+"shelf.ns2Category.noCategoryItemsTitle" = "No items in this category";
 "shelf.paperPicker.choosePaper" = "Choose Paper";
 "shelf.paperPicker.orientation" = "Orientation";
 "shelf.quickCreateSettings.NavTitle" = "Quick Note";
@@ -1498,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 12:42 PM
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

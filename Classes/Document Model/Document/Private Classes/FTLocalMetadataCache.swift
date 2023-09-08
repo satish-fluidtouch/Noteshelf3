@@ -21,43 +21,92 @@ class FTLocalMetadataCache : NSObject,FTDocumentLocalMetadataCacheProtocol
     }
     
     //MARK:- FTDocumentLocalMetadataCacheProtocol -
-    var defaultBodyFont : UIFont {
+    var defaultBodyFont: UIFont {
         get {
             var font : UIFont?
-            if let value = self.localMetadataCache["fontStyle"] as? String,
-                let fontSizeStr = self.localMetadataCache["fontSize"] as? NSString {
-                font = UIFont.init(name: value, size: CGFloat(fontSizeStr.floatValue));
+            if let value = self.localMetadataCache[FTFontStorage.fontStyleKey] as? String,
+               let fontSizeStr = self.localMetadataCache[FTFontStorage.fontSizeKey] as? NSString {
+                font = UIFont(name: value, size: CGFloat(fontSizeStr.floatValue));
             }
             return font ?? UIFont.defaultTextFont()
         }
         set {
-            self.localMetadataCache["fontStyle"] = newValue.fontName;
-            self.localMetadataCache["fontSize"] = String(format: "%.0f", newValue.pointSize)
+            self.localMetadataCache[FTFontStorage.fontStyleKey] = newValue.fontName;
+            self.localMetadataCache[FTFontStorage.fontSizeKey] = String(format: "%.0f", newValue.pointSize)
         }
     }
     
-    var defaultTextColor : UIColor {
+    var defaultTextColor: UIColor {
         get {
-            let value = self.localMetadataCache["textColor"] as? String;
-            return (value != nil) ? UIColor(hexString: value) : UIColor(hexString: "000000");
-        }
-        set {
-            self.localMetadataCache["textColor"] = newValue.hexStringFromColor()
-        }
-    }
-    
-    var byDefaultIsUnderline : Bool {
-        get {
-            if let value = self.localMetadataCache["isUnderlined"] as? NSNumber {
-                return value.boolValue;
+            guard let value = self.localMetadataCache[FTFontStorage.textColorKey] as? String else {
+                return UIColor.black
             }
-            return false;
+            return UIColor(hexString: value)
         }
         set {
-            self.localMetadataCache["isUnderlined"] = NSNumber.init(value: newValue)
+            self.localMetadataCache[FTFontStorage.textColorKey] = newValue.hexStringFromColor()
         }
     }
-    
+
+    var defaultIsUnderline: Bool {
+        get {
+            if let value = self.localMetadataCache[FTFontStorage.isUnderlinedKey] as? NSNumber {
+                return value.boolValue
+            }
+            return false
+        }
+        set {
+            self.localMetadataCache[FTFontStorage.isUnderlinedKey] = NSNumber.init(value: newValue)
+        }
+    }
+
+    var defaultIsStrikeThrough: Bool {
+        get {
+            if let value = self.localMetadataCache[FTFontStorage.isStrikeThroughKey] as? NSNumber {
+                return value.boolValue
+            }
+            return false
+        }
+        set {
+            self.localMetadataCache[FTFontStorage.isStrikeThroughKey] = NSNumber.init(value: newValue)
+        }
+    }
+
+    var defaultTextAlignment: Int {
+        get {
+            guard let value = self.localMetadataCache[FTFontStorage.textAlignmentKey] as? NSNumber else {
+                return 0
+            }
+            return value.intValue
+        } set {
+            self.localMetadataCache[FTFontStorage.textAlignmentKey] = NSNumber(value: newValue as Int)
+            self.saveMetadataCache()
+        }
+    }
+
+    var defaultAutoLineSpace: Int {
+        get {
+            guard let value = self.localMetadataCache[FTFontStorage.lineSpaceKey] as? NSNumber else {
+                return 0
+            }
+            return value.intValue
+        } set {
+            self.localMetadataCache[FTFontStorage.lineSpaceKey] = NSNumber(value: newValue as Int)
+            self.saveMetadataCache()
+        }
+    }
+
+    var defaultIsLineSpaceEnabled: Bool {
+        get {
+            if let value = self.localMetadataCache[FTFontStorage.isLineSpaceEnabledKey] as? NSNumber {
+                return value.boolValue
+            }
+            return false
+        } set {
+            self.localMetadataCache[FTFontStorage.isLineSpaceEnabledKey] = NSNumber.init(value: newValue)
+        }
+    }
+
     var lastViewedPageIndex : Int {
         get {
             let value = self.localMetadataCache["lastViewedPageIndex"] as? NSNumber;

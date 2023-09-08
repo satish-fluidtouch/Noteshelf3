@@ -17,8 +17,9 @@ private let TEXT_TOP_KNOB_WIDTH = 24
 private let TEXT_TOP_KNOB_HEIGHT = 8
 private let TEXT_TOP_KNOB_TAG = 101
 
+let ftDidTextAnnotationResignNotifier = Notification.Name("FTDidTextboxResignResponder")
+
 enum FTKnobPosition : Int{
-    
     case FTKnobPositionNone = -1
     case FTKnobPositionLeft = 100
     case FTKnobPositionRight
@@ -132,6 +133,7 @@ class FTTextAnnotationViewController: UIViewController {
                 self.autocorrectionType = UITextAutocorrectionType.no
                 #if !targetEnvironment(macCatalyst)
                     _ = self.resignFirstResponder()
+                NotificationCenter.default.post(name: ftDidTextAnnotationResignNotifier, object: nil)
                 #endif
             }
         }
@@ -307,10 +309,25 @@ class FTTextAnnotationViewController: UIViewController {
                                    forAttribute: NSAttributedString.Key.foregroundColor.rawValue,
                                    in: NSRange(location: 0, length: 0))
         }
-        if let underlineValue = page?.parentDocument?.localMetadataCache?.byDefaultIsUnderline {
+        if let underlineValue = page?.parentDocument?.localMetadataCache?.defaultIsUnderline {
             textInputView.setValue(NSNumber.init(value: underlineValue),
                                    forAttribute: NSAttributedString.Key.underlineStyle.rawValue,
                                    in: NSRange(location: 0, length: 0))
+        }
+        if let strikeThrough = page?.parentDocument?.localMetadataCache?.defaultIsStrikeThrough {
+            textInputView.setValue(NSNumber.init(value: strikeThrough),
+                                   forAttribute: NSAttributedString.Key.strikethroughStyle.rawValue,
+                                   in: NSRange(location: 0, length: 0))
+        }
+        if let alignment = page?.parentDocument?.localMetadataCache?.defaultTextAlignment, let lineSpace = page?.parentDocument?.localMetadataCache?.defaultAutoLineSpace  {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = CGFloat(lineSpace)
+            paragraphStyle.alignment = NSTextAlignment(rawValue: alignment) ?? .left
+            textInputView.setValueFor(paragraphStyle, forAttribute: NSAttributedString.Key.paragraphStyle.rawValue, in: NSRange(location: 0, length: 0))
+        }
+
+        if let isAutoLineSpaceEnabled = page?.parentDocument?.localMetadataCache?.defaultIsLineSpaceEnabled {
+            textInputView.setValueFor(NSNumber.init(value: isAutoLineSpaceEnabled), forAttribute: FTFontStorage.isLineSpaceEnabledKey, in: NSRange(location: 0, length: 0))
         }
         textView.scale = self.zoomScale
 
@@ -883,10 +900,8 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     //    #endif
 }
 
-extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
-    
+extension FTTextAnnotationViewController: FTTextToolBarDelegate {
     func didSelectTextToolbarOption(_ option: FTTextToolBarOption) {
-        print("Selected \(option)")
         switch option {
         case .leftIndent:
             self.textInputAccessoryDidChangeIndent(.left)
@@ -914,7 +929,7 @@ extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
     func currentTextInputView() -> FTTextView {
         return textInputView
     }
-    
+
     func addTextInputView(_ inputController: UIViewController?) {
         textInputView.inputView = inputController?.view
         textInputView.reloadInputViews()
@@ -927,7 +942,11 @@ extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
     func didChangeLineSpacing(lineSpace: CGFloat) {
         self.textInputAccessoryDidChangeLineSpacing(lineSpace)
     }
-    
+
+    func didAutoLineSpaceStatusChanged(_ status: Bool) {
+        self.textInputAccessoryDidChangeAutoLineSpace(status)
+    }
+
     func didSelectTextRange(range: NSRange?, txtRange: UITextRange?, canEdit: Bool) {
         if canEdit {
             self.allowsEdit()
@@ -948,15 +967,42 @@ extension FTTextAnnotationViewController:  FTTextToolBarDelegate {
     func didToggleStrikeThrough() {
         self.textInputAccessoryDidToggleStrikeThrough()
     }
-    
+
+    func didSetDefaultStyle(_ info: FTDefaultTextStyleItem) {
+    if let ann = self._annotation, let page = ann.associatedPage, let document = page.parentDocument {
+        if let defaultFont = UIFont(name: info.fontName, size: CGFloat(info.fontSize)) {
+                document.localMetadataCache?.defaultBodyFont = defaultFont
+                document.localMetadataCache?.defaultTextColor = UIColor(hexString: info.textColor)
+                document.localMetadataCache?.defaultIsUnderline = info.isUnderLined
+                document.localMetadataCache?.defaultIsStrikeThrough = info.strikeThrough
+                document.localMetadataCache?.defaultTextAlignment = info.alignment
+                document.localMetadataCache?.defaultAutoLineSpace = info.lineSpace
+                document.localMetadataCache?.defaultIsLineSpaceEnabled = info.isAutoLineSpace
+                document.saveDocument(completionHandler: nil)
+            }
+        }
+    }
+
+    func textInputViewCurrentTextView() -> FTTextView? {
+        return self.textInputView
+    }
+
+    func rootViewController() -> UIViewController? {
+        return (self.delegate as? FTPageViewController)?.parent
+    }
 }
 
 extension FTTextAnnotationViewController {
-    
-    func textInputAccessoryDidChangeFavoriteFont(_ font: FTCustomFontInfo) {
-        
+    func textInputAccessoryDidChangeAutoLineSpace(_ status: Bool) {
+        textInputView.setAutoLineSpace(status: status, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
+        if status {
+            self.textInputAccessoryDidChangeLineSpacing(0)
+        } else {
+            saveTextEntryAttributes()
+            validateKeyboard()
+        }
     }
-    
+
     func textInputAccessoryDidChangeLineSpacing(_ lineSpace: CGFloat) {
         textInputView.setLineSpacing(lineSpace: lineSpace, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
         saveTextEntryAttributes()
@@ -1119,7 +1165,7 @@ extension FTTextAnnotationViewController {
                 var fontDescriptor = UIFontDescriptor()
                 fontDescriptor = fontDescriptor.withFamily(style.fontFamily)
                 fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.name: style.fontName])
-                var newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
+                let newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
                 
                 if style.isUnderLined {
                     textInputView.setValue(NSUnderlineStyle.single.rawValue, forAttribute: NSAttributedString.Key.underlineStyle.rawValue, in: selectedRange)
@@ -1145,7 +1191,7 @@ extension FTTextAnnotationViewController {
                 var fontDescriptor = UIFontDescriptor()
                 fontDescriptor = fontDescriptor.withFamily(style.fontFamily)
                 fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.name: style.fontName])
-                var newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
+                let newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(style.fontSize) * CGFloat(contentScale))
                 
                 if style.isUnderLined {
                     textInputView.setValue(NSUnderlineStyle.single.rawValue, forAttribute: NSAttributedString.Key.underlineStyle.rawValue, in: selectedRange)
@@ -1229,7 +1275,7 @@ extension FTTextAnnotationViewController {
                 var fontDescriptor = UIFontDescriptor()
                 fontDescriptor = fontDescriptor.withFamily(fontInfo.fontName)
                 fontDescriptor = fontDescriptor.addingAttributes([UIFontDescriptor.AttributeName.name : fontInfo.fontName])
-                var newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(fontInfo.fontSize) * CGFloat(contentScale))
+                let newFont = UIFont(descriptor: fontDescriptor, size: CGFloat(fontInfo.fontSize) * CGFloat(contentScale))
 //                if fontInfo.isBold {
 //                    newFont = newFont.addTrait(UIFontDescriptor.SymbolicTraits.traitBold)
 //                }
@@ -1268,18 +1314,6 @@ extension FTTextAnnotationViewController {
         saveTextEntryAttributes()
         validateKeyboard()
     }
-    
-    func textInputAccessoryDidSetDefaultFontInfo(_ font : FTCustomFontInfo) {
-        if let ann = self._annotation, let page = ann.associatedPage, let document = page.parentDocument {
-            if let defaultFont : UIFont = UIFont.init(name: font.fontStyle, size: font.fontSize) {
-                document.localMetadataCache?.defaultBodyFont = defaultFont
-                document.localMetadataCache?.defaultTextColor = font.textColor
-                document.localMetadataCache?.byDefaultIsUnderline = font.isUnderlined
-                document.saveDocument(completionHandler: nil);
-            }
-        }
-    }
-
 }
 
 extension FTTextAnnotationViewController : FTTouchEventProtocol

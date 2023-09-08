@@ -71,6 +71,11 @@ extension FTPDFRenderViewController {
             let config = FTToastConfiguration(title: "shortcut.toast.addPage".localized)
             FTToastHostController.showToast(from: self, toastConfig: config)
 
+        case .deletePage:
+            if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
+                self.executer.execute(type: .deletePage(page: page))
+            }
+
         case .duplicatePage:
             if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
                 self.executer.execute(type: .duplicatePage(pages: [page])) {
