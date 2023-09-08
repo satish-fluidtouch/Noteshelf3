@@ -189,7 +189,9 @@ extension FTShelfItemCollection //for searching
             return NSLocalizedString("sidebar.topSection.starred", comment: self.title);
         }
         else if self.title == uncategorizedShefItemCollectionTitle {
-            return NSLocalizedString("sidebar.topSection.unfiled", comment: "Unfiled");
+            let localisationKey = isNS2Collection() ? "Uncategorized" : "sidebar.topSection.unfiled"
+            let comment = isNS2Collection() ? "Uncategorized" : "Unfiled"
+            return NSLocalizedString(localisationKey, comment: comment);
         }
         return self.title;
     }

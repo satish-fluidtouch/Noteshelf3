@@ -26,8 +26,13 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
             else {
                 self.hide(.primary)
             }
-        }
-        else if let actionDelegate = self.getSecondaryRootViewController() as? FTToolbarActionDelegate {
+        } else if item.itemIdentifier == FTShelfBackToolbarItem.identifier {
+            if self.checkIfGlobalSearchControllerExists() {
+                self.exitFromGlobalSearch()
+            } else {
+                self.detailNavigationController?.popViewController(animated: true)
+            }
+        } else if let actionDelegate = self.getSecondaryRootViewController() as? FTToolbarActionDelegate {
             actionDelegate.toolbar(toolbar, toolbarItem: item);
         }
     }
@@ -122,8 +127,14 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
                 toolbar.switchMode(.templatePreview)
             } else if self.checkIfShelfContentViewControllerExists(from: navigationController) {
                 toolbar.switchMode(.content)
-            } else if let shelfController = viewController as? FTShelfViewControllerNew, let shelfItem = shelfController.shelfItemCollection {
-                toolbar.switchMode(shelfItem.isTrash ? .trash : .shelf)
+            } else if let shelfController = viewController as? FTShelfViewControllerNew, let collection = shelfController.shelfItemCollection {
+                if collection.isNS2Collection() {
+                    toolbar.switchMode(.ns2)
+                } else if collection.isTrash {
+                    toolbar.switchMode(.trash)
+                } else {
+                    toolbar.switchMode(.shelf)
+                }
             } else if navigationController.rootViewController is FTShelfTagsViewController {
                 toolbar.switchMode(.tags)
             } else {
@@ -131,7 +142,6 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
             }
             // To disable other tool items during search mode
             if !self.checkIfGlobalSearchControllerExists() {
-                self.exitFromGlobalSearch()
                 if let addToolItem = toolbar.getToolbarItem(with: FTShelfAddToolbarItem.identifier) as? FTShelfAddToolbarItem {
                     addToolItem.validate()
                 }

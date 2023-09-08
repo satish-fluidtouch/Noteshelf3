@@ -18,6 +18,16 @@ public extension String {
         return NSLocalizedString(self, comment: "Localized String")
     }
 
+    var localizedEnglish: String {
+        let bundle = Bundle.main
+        if let path = bundle.path(forResource: "en", ofType: "lproj") {
+            let localizedBundle = Bundle(path: path)
+            return NSLocalizedString(self, tableName: "Localizable", bundle: localizedBundle ?? bundle, value: "", comment: "")
+        } else {
+            return NSLocalizedString(self, tableName: "Localizable", bundle: bundle, value: "", comment: "")
+        }
+    }
+
     func containsWhitespaceAndNewlines() -> Bool {
         return rangeOfCharacter(from: .whitespacesAndNewlines) != nil
     }

@@ -550,7 +550,14 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         if items.count == 1 {
             originalTitle = items[0].displayTitle
         }
-        let headerTitle = NSLocalizedString("NotebookTitle", comment: "Notebook Title");
+        let headerTitle: String
+        if items.filter({$0 is FTGroupItemProtocol}).isEmpty { // only notebooks
+            headerTitle = NSLocalizedString("NotebookTitle", comment: "Notebook Title")
+        } else if items.filter({$0 is FTGroupItemProtocol}).count == items.count { //only groups
+            headerTitle = NSLocalizedString("GroupTitle", comment: "Group Title");
+        } else { // combination of notebooks and groups
+            headerTitle = NSLocalizedString("Title", comment: "Title");
+        }
 
         self.showAlertOn(viewController: self, title: headerTitle, message: "", textfieldPlaceHolder: originalTitle, textfiledValue: originalTitle, submitButtonTitle: NSLocalizedString("Rename", comment: "Rename"), cancelButtonTitle: NSLocalizedString("Cancel", comment: "Cancel")) { title in
 

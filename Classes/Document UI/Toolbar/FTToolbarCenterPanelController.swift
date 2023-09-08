@@ -58,6 +58,8 @@ class FTToolbarCenterPanelController: UIViewController {
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         FTCustomizeToolbarController.showCustomizeToolbarScreen(controller: self)
+        // Track Event
+        track(EventName.toolbar_longpress)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

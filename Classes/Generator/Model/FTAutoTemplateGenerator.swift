@@ -198,7 +198,7 @@ private class FTAutoStoreTemplateGenerator: NSObject, FTAutoTemplateGeneratorPro
             let safeAreaInsets = try await FTSafeAreaInsetsController.safeAreaInset(isLandscape: theme.customvariants!.isLandscape)
             let generator = FTStoreTemplateGenerator.init(safeAreaInsets: safeAreaInsets, theme: theme)
             let docInfo = FTDocumentInputInfo()
-            docInfo.inputFileURL = generator.generate()
+            docInfo.inputFileURL = theme.themeTemplateURL()
             docInfo.isTemplate = true
             docInfo.footerOption = self.theme.footerOption
             let postProcessInfo = FTPostProcessInfo()
