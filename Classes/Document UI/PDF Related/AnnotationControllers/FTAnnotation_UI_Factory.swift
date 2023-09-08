@@ -141,7 +141,7 @@ let kAudioRecIconSize : CGSize = CGSize.init(width: audioRecordSize, height: aud
             ,NSAttributedString.Key.font:defaultFont
             ,NSAttributedString.Key.foregroundColor:defaultColor];
         
-        if let isUnderline = self.localmetadataCache?.byDefaultIsUnderline, isUnderline {
+        if let isUnderline = self.localmetadataCache?.defaultIsUnderline, isUnderline {
             attrs[NSAttributedString.Key.underlineStyle] = NSNumber.init(value: NSUnderlineStyle.single.rawValue);
         }
         
