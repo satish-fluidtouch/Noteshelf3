@@ -257,7 +257,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTNoteshelfDocumentProvider.shared.updateProviderIfRequired { isUpdated in
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
-                NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
                 if let isInNonCollectionMode = self.isInNonCollectionMode(),
                    isInNonCollectionMode {
                     let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
@@ -281,6 +280,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         onCompletion?(true);
                     });
                 }
+                NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
             }
             else {
                 onCompletion?(false);
