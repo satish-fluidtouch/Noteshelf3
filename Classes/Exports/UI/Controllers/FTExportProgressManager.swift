@@ -26,7 +26,7 @@ enum FTExportType {
 class FTExportProgressManager: NSObject {
     private var state = ExportState.notStarted;
     var exportTarget : FTExportTarget!
-    var targetShareButton: UIView?
+    var targetShareButton: Any?
     var exportType = FTExportType.shareAsTemplate
     var exportItems : [FTExportItem]?
     weak var delegate : FTExportActivityDelegate?

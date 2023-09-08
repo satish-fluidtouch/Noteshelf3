@@ -175,10 +175,10 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.showShareOptions(with: source)
             
         case .shareNotebookAsPDF:
-            self.executer.execute(type: .shareNoteBookAsPDF)
+            self.executer.execute(type: .shareNoteBookAsPDF(source: source))
             
         case .sharePageAsPng:
-            self.executer.execute(type: .sharePageAsPng)
+            self.executer.execute(type: .sharePageAsPng(source: source))
             
         case .savePageAsPhoto:
             self.executer.execute(type: .savePageAsPhoto)

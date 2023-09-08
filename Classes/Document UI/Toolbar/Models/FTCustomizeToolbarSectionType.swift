@@ -233,6 +233,71 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         return str
     }
 
+    func localizedEnglish() -> String {
+        var str: String = ""
+        switch self {
+            // Basic
+        case .pen:
+            str = "customizeToolbar.pen".localizedEnglish
+        case .highlighter:
+            str = "customizeToolbar.highlighter".localizedEnglish
+        case .eraser:
+            str = "customizeToolbar.eraser".localizedEnglish
+        case .shapes:
+            str = "customizeToolbar.shapes".localizedEnglish
+        case .lasso:
+            str = "customizeToolbar.lasso".localizedEnglish
+        case .textMode:
+            str = "customizeToolbar.textBox".localizedEnglish
+        case .presenter:
+            str = "customizeToolbar.present".localizedEnglish
+        case .zoomBox:
+            str = "customizeToolbarzoombox".localizedEnglish
+        case .hand:
+            str = "customizeToolbar.readOnlyMode".localizedEnglish
+        case .openAI:
+            str = "noteshelf.ai.noteshelfAI".aiLocalizedString
+        case .share:
+            str = "customizeToolbar.share".localizedEnglish
+
+            // Media
+        case .photo:
+            str = "customizeToolbar.photo".localizedEnglish
+        case .audio:
+            str = "customizeToolbar.audio".localizedEnglish
+        case .stickers:
+            str = "customizeToolbar.stickers".localizedEnglish
+        case .unsplash:
+            str = "Unsplash"
+        case .pixabay:
+            str = "Pixabay"
+        case .emojis:
+            str = "customizeToolbar.emojis".localizedEnglish
+
+            // Shortcuts
+        case .page:
+            str = "customizeToolbar.page".localizedEnglish
+        case .bookmark:
+            str = "customizeToolbar.bookmark".localizedEnglish
+        case .tag:
+            str = "customizeToolbar.tag".localizedEnglish
+        case .rotatePage:
+            str = "customizeToolbar.rotatePage".localizedEnglish
+        case .duplicatePage:
+            str = "customizeToolbar.duplicatePage".localizedEnglish
+        case .deletePage:
+            str = "customizeToolbar.deletePage".localizedEnglish
+
+        case .savePageAsPhoto:
+            str = "customizeToolbar.savePageAsPhoto".localizedEnglish
+        case .sharePageAsPng:
+            str = "customizeToolbar.sharePageAsPng".localizedEnglish
+        case .shareNotebookAsPDF:
+            str = "customizeToolbar.shareNotebookAsPDF".localizedEnglish
+        }
+        return str
+    }
+
     var toolMode: FTDeskCenterPanelToolMode {
         var mode: FTDeskCenterPanelToolMode = .shortcut
         if self == .pen || self == .highlighter || self == .eraser || self == .shapes || self == .textMode || self == .presenter || self == .lasso || self == .hand {

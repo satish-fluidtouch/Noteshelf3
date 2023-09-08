@@ -174,13 +174,24 @@ extension FTDocumentCache {
     }
 
     func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
-        try cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
-        try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+        var catchError: Error?
+         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { error in
+             catchError = error
+            if error == nil {
+                do {
+                    try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+                } catch {
+                    catchError = error
+                }
+            }
+        })
+        if let catchError = catchError {
+            throw catchError
+        }
     }
 }
 
 private extension FTDocumentCache {
-
     func cacheShelfItemIfRequired(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
         let destinationURL = cachedLocation(for: documentUUID)
         if fileManager.fileExists(atPath: destinationURL.path) {
@@ -189,6 +200,20 @@ private extension FTDocumentCache {
         } else {
             let isCopied = try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL)
             cacheLog(.success, "Copy", isCopied, destinationURL.lastPathComponent)
+        }
+    }
+
+    func cacheShelfItemIfRequired(url: URL, documentUUID: String, forceUpdate: Bool = false, onCompletion: ((Error?) ->())?) {
+        var forceUpdate = forceUpdate
+        let destinationURL = cachedLocation(for: documentUUID)
+        var fileAction = "Copy"
+        if fileManager.fileExists(atPath: destinationURL.path) {
+            fileAction = "Replace"
+            forceUpdate = true
+        }
+        fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: forceUpdate) { error in
+            cacheLog( (error == nil) ? .success : .error, fileAction, (error == nil), destinationURL.lastPathComponent)
+            onCompletion?(error);
         }
     }
 

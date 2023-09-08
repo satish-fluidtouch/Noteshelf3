@@ -191,5 +191,14 @@ extension EventName {
     static let shelf_recording_page_longpress = "shelf_recording_page_longpress"
     static let shelf_recording_openinnewwindow_tap = "shelf_recording_openinnewwindow_tap"
 
+// Custom Toolbar
+    static let toolbar_longpress = "toolbar_longpress"
+    static let toolbar_more_customizetoolbar_tap = "toolbar_more_customizetoolbar_tap"
+    static let customizetoolbar_reset_tap = "customizetoolbar_reset_tap"
+    static let customizetoolbar_done_tap = "customizetoolbar_done_tap"
+    static let customizetoolbar_tool_add = "customizetoolbar_tool_add"
+    static let customizetoolbar_tool_remove = "customizetoolbar_tool_remove"
+    static let customizetoolbar_tool_reorder = "customizetoolbar_tool_reorder"
+
 
 }
