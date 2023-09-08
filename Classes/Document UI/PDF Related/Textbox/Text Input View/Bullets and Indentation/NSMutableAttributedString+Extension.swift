@@ -116,7 +116,7 @@ extension NSMutableAttributedString {
         return mutableString
     }
     
-    func getFormattedAttributedStringFrom(style: FTTextStyleItem, defaultFont: CGFloat? = nil) -> NSMutableAttributedString{
+    func getFormattedAttributedStringFrom(style: FTTextStyleItem, defaultFont: CGFloat? = nil, toPreviewDefault: Bool = false) -> NSMutableAttributedString{
         let range = NSRange(location: 0, length: self.length)
        
         var fontSize = defaultFont == nil ? CGFloat(style.fontSize) : defaultFont ?? 16
@@ -127,7 +127,10 @@ extension NSMutableAttributedString {
             self.addAttribute(.font, value: font, range: range)
         }
        
-        let color = UIColor.appColor(.black1)
+        var color = UIColor(hexString: style.textColor)
+        if toPreviewDefault {
+            color = UIColor.appColor(.black1)
+        }
         self.addAttribute(.foregroundColor, value: color, range: range)
        
         if style.isUnderLined {
