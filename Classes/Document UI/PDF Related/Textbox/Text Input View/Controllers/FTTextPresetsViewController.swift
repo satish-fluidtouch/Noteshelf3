@@ -24,7 +24,7 @@ enum FTPresetStyleMode: String {
 
 extension FTTextPresetSelectedDelegate {
     func dismissKeyboard() {
-        print("Required delegate should implement if needed")
+        debugLog("Required delegate should implement if needed")
     }
 }
 
