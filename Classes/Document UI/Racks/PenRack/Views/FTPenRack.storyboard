@@ -14,7 +14,7 @@
         <array key="Aeonik-Regular.otf">
             <string>Aeonik-Regular</string>
         </array>
-        <array key="clearface-serial-medium-regular (1).ttf">
+        <array key="Clearface-Serial-Medium.ttf">
             <string>Clearface-Serial-Medium-Regular</string>
         </array>
     </customFonts>
@@ -972,9 +972,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2d0-qs-Vcf">
                                         <rect key="frame" x="0.0" y="192" width="768" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paste from Clipboard" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIB-Z3-qPM" customClass="FTCustomLabel" customModule="FTCommon">
-                                                <rect key="frame" x="16" y="12" width="162" height="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paste from Clipboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIB-Z3-qPM" customClass="FTCustomLabel" customModule="FTCommon">
+                                                <rect key="frame" x="303" y="12" width="162" height="20"/>
                                                 <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="17"/>
+                                                <color key="textColor" name="accent"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="PasteFromClipBoard"/>
@@ -984,8 +985,8 @@
                                         <color key="backgroundColor" name="white60"/>
                                         <constraints>
                                             <constraint firstItem="CIB-Z3-qPM" firstAttribute="centerY" secondItem="2d0-qs-Vcf" secondAttribute="centerY" id="AQy-4V-29b"/>
+                                            <constraint firstItem="CIB-Z3-qPM" firstAttribute="centerX" secondItem="2d0-qs-Vcf" secondAttribute="centerX" id="Auc-o1-Pf7"/>
                                             <constraint firstAttribute="height" constant="44" id="Wfr-uR-1gg"/>
-                                            <constraint firstItem="CIB-Z3-qPM" firstAttribute="leading" secondItem="2d0-qs-Vcf" secondAttribute="leading" constant="16" id="pLI-iL-vU9"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
