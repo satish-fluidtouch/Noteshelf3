@@ -9,7 +9,7 @@
 import Foundation
 extension FileManager {
 
-    func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false, onCOmpletion: ((Error?)->())?) {
+    func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false, onCompletion: ((Error?)->())?) {
         let document = FTNoteshelfDocument(fileURL: fromURL);
         let fileCoorinator = NSFileCoordinator.init(filePresenter: document)
         let readIntent = NSFileAccessIntent.readingIntent(with: fromURL,options: .withoutChanges);
@@ -17,7 +17,7 @@ extension FileManager {
         fileCoorinator.coordinate(with: [readIntent,writeIntent]
                                   , queue: OperationQueue()) { error in
             if error != nil {
-                onCOmpletion?(error)
+                onCompletion?(error)
             }
             else {
                 var catchError: Error?
@@ -30,7 +30,7 @@ extension FileManager {
                 } catch {
                     catchError = error
                 }
-                onCOmpletion?(catchError)
+                onCompletion?(catchError)
             }
         }
     }
