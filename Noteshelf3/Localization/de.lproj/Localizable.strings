@@ -24,7 +24,7 @@
 "AddToNewNotebook" = "Neues Notizbuch hinzufügen";
 "AddToNewPage" = "Zu neuer Seite hinzufügen.";
 "AddToNotebook" = "Zum Notizbuch hinzufügen";
-"AddToSiri" = "zu Siri hinzufügen";
+"AddToSiri" = "Zu Siri hinzufügen";
 "Added!" = "Hinzugefügt!";
 "AddedToSiri" = "Zu Siri hinzugefügt";
 "AdonitTempDeprecationInfo" = "Entschuldigung! Der Adonit Stylus ist vorübergehend nicht verfügbar. Wir arbeiten mit Adonit zusammen, um ihn wieder anzubieten.";
@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "Verwenden Sie den System-Licht-/Dunkelmodus.";
 "backup_file_create_failed" = "Konnte die Sicherungsdatei nicht erstellen. Bitte versuchen Sie es später erneut.";
 "backup_unknown_error" = "Beim Erstellen einer Sicherungskopie ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
+"backupoptions.signoutfrom" = "Abmelden von %@";
 "banners" = "Banner";
 "bujoessentials" = "Bujo Grundlagen";
 "cancel" = "Abbrechen";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "Datei nicht gefunden";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "Hinweis: Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
 "color.added" = "Farbe hinzugefügt";
 "color.deleted" = "Farbe gelöscht";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "Favorisierte Seiten und behalten Sie den Überblick über große Notizbücher und PDFs.";
 "finder.bookmarks" = "Lesezeichen";
 "finder.clear.recents" = "Möchten Sie Verlauf löschen?";
+"finder.downloadPermissionText" = "Ausgewähltes Notebook ist noch nicht heruntergeladen. Möchten Sie das Notebook herunterladen und die Seiten verschieben?";
 "finder.duplicate" = "Duplikat";
 "finder.fullscreen" = "Vollbild";
 "finder.importDocument" = "Dokument importieren";
 "finder.media" = "Medien";
+"finder.media.allcontent" = "Alle Inhalte";
 "finder.media.nocontent" = "Fügen Sie Bilder, PDFs, Audioaufnahmen und mehr zu Ihrem Notizbuch hinzu.";
+"finder.media.sticker" = "Aufkleber";
 "finder.more" = "Mehr";
 "finder.outline" = "Gliederung";
 "finder.outline.description" = "Der Umriss der importierten PDFs und hinzugefügten Seiten wird hier angezeigt. Fügen Sie Seiten über das Menü auf der Navigationsleiste des Notizbuchs zur Übersicht hinzu.";
@@ -1097,6 +1102,7 @@
 "labels" = "Etiketten";
 "lasso.select.textbox" = "Textfelder";
 "lettering" = "Schriftzug";
+"librarystore.removefromLibrary" = "Aus Bibliothek entfernen";
 "lineHeight.extraNarrow" = "Extra schmal";
 "lineHeight.narrow" = "Schmal";
 "lineHeight.standard" = "Standard";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "Aus Verlauf entfernen.";
 "reset" = "Zurücksetzen";
 "retry" = "Erneut versuchen";
-"save" = "Gruppe umbenennen";
+"save" = "Speichern";
 "school" = "Schule";
 "search.tryNewSearch" = "Versuchen Sie es mit einer neuen Suche";
 "seeAll" = "Wiederholen";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "Ein leeres Notizbuch mit individuellem Papier und Einband.";
 "shelf.notebook.textstyle.Presets" = "Voreinstellungen";
 "shelf.notebook.textstyle.Reorder" = "Umsortieren";
+"shelf.notebook.textstyle.grid" = "Raster";
 "shelf.notebook.textstyle.newpreset" = "Neue Voreinstellung";
 "shelf.notebook.textstyle.presetname" = "Voreingestellter Name.";
 "shelf.notebook.textstyle.resetdescrption" = "Sind Sie sicher, dass Sie auf die Standardstile zurücksetzen möchten?";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "Standard festlegen für:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Dies und alle zukünftigen Notizbücher";
 "text.font.setAsDefault.thisBook" = "Dieses Notizbuch";
+"theams.unsplashDescription" = "Wählen Sie aus Unsplash aus, machen Sie ein Foto oder wählen Sie aus Ihrer Fotobibliothek, um Ihre individuellen Cover zu erstellen.";
 "trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "ZOOM BOX";
 "widgets" = "Widgets";
 "work" = "Arbeit";
-"cloud.backup.error.failedToCreateBackup" = "Fehler beim Erstellen der Sicherungsdatei. Überprüfen Sie den verbleibenden Speicherplatz auf Ihrem Gerät.";
-"cloud.backup.error.fileNotFound" = "Datei nicht gefunden";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "Hinweis: Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

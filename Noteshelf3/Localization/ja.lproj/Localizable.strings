@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "システムのライト/ダークモードを使用する";
 "backup_file_create_failed" = "バックアップファイルを作成できません。後でもう一度お試しください。";
 "backup_unknown_error" = "バックアップ中にエラーが発生しました。後でもう一度お試しください。";
+"backupoptions.signoutfrom" = "%@からサインアウト";
 "banners" = "バナー";
 "bujoessentials" = "ブジョエッセンシャルズ";
 "cancel" = "キャンセル";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
 "color.added" = "カラーが追加されました。";
 "color.deleted" = "色削除";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "お気に入りのページと、大きなノートやPDFの概要を保持します。";
 "finder.bookmarks" = "ブックマーク";
 "finder.clear.recents" = "最近の履歴を消去しますか。";
+"finder.downloadPermissionText" = "選択されたノートブックはまだダウンロードされていません。ノートブックをダウンロードしてページを移動しますか？";
 "finder.duplicate" = "複製";
 "finder.fullscreen" = "フルスクリーン";
 "finder.importDocument" = "ドキュメントのインポート";
 "finder.media" = "メディア";
+"finder.media.allcontent" = "すべてのコンテンツ";
 "finder.media.nocontent" = "あなたのノートに画像、PDF、音声録音などを追加してください。";
+"finder.media.sticker" = "ステッカー";
 "finder.more" = "もっと";
 "finder.outline" = "アウトライン";
 "finder.outline.description" = "インポートされたPDFや追加されたページのアウトラインはここに表示されます。ノートブックのナビゲーションバーの􀍠メニューからアウトラインにページを追加してください。";
@@ -1097,6 +1102,7 @@
 "labels" = "ラベル";
 "lasso.select.textbox" = "テキストボックス";
 "lettering" = "レタリング";
+"librarystore.removefromLibrary" = "ライブラリから削除";
 "lineHeight.extraNarrow" = "超狭";
 "lineHeight.narrow" = "狭い (せまい)";
 "lineHeight.standard" = "標準";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "最近削除";
 "reset" = "リセット";
 "retry" = "リトライ";
-"save" = "グループ名変更";
+"save" = "保存";
 "school" = "学校";
 "search.tryNewSearch" = "新しい検索を試してください";
 "seeAll" = "再受験";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "カスタム用紙とカバー付きの空白ノート";
 "shelf.notebook.textstyle.Presets" = "プリセット";
 "shelf.notebook.textstyle.Reorder" = "並べ替え";
+"shelf.notebook.textstyle.grid" = "グリッド";
 "shelf.notebook.textstyle.newpreset" = "新しいプリセット";
 "shelf.notebook.textstyle.presetname" = "プリセット名";
 "shelf.notebook.textstyle.resetdescrption" = "デフォルトのスタイルにリセットしてもよろしいですか？";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "デフォルトに設定します:";
 "text.font.setAsDefault.thisAndFutureBooks" = "このノートおよびすべての将来のノート";
 "text.font.setAsDefault.thisBook" = "このノートブック";
+"theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "ズームボックス";
 "widgets" = "ウィジェット";
 "work" = "仕事";
-"cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
-"cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

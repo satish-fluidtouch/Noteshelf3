@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "Usa la modalità di luce / scuro del sistema";
 "backup_file_create_failed" = "Impossibile creare il file di backup. Riprova più tardi.";
 "backup_unknown_error" = "Si è verificato un errore durante il backup. Riprova più tardi.";
+"backupoptions.signoutfrom" = "Esci da %@";
 "banners" = "Bandiere";
 "bujoessentials" = "Essenziali per Bujo";
 "cancel" = "Annulla";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "File non trovato";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "Nota: I quaderni protetti da password non possono essere esportati in formato PDF.";
 "color.added" = "Colore aggiunto";
 "color.deleted" = "Colore eliminato";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "Pagine preferite e tenere traccia di quaderni e PDF di grandi dimensioni.";
 "finder.bookmarks" = "Segnalibri";
 "finder.clear.recents" = "Vuoi cancellare i recenti?";
+"finder.downloadPermissionText" = "Il quaderno selezionato non è ancora scaricato. Vuoi scaricare il quaderno e spostare le pagine?";
 "finder.duplicate" = "Duplicato";
 "finder.fullscreen" = "Schermo intero";
 "finder.importDocument" = "Importa documento";
 "finder.media" = "Media";
+"finder.media.allcontent" = "Tutto il contenuto";
 "finder.media.nocontent" = "Aggiungi immagini, PDF, registrazioni audio e altro al tuo quaderno.";
+"finder.media.sticker" = "Etichetta";
 "finder.more" = "Più";
 "finder.outline" = "Contorno";
 "finder.outline.description" = "Il contorno dei PDF importati e delle pagine aggiunte apparirà qui. Aggiungi pagine al contorno tramite il menu 􀍠 nella barra di navigazione del Notebook.";
@@ -1097,6 +1102,7 @@
 "labels" = "Etichette";
 "lasso.select.textbox" = "Caselle di testo";
 "lettering" = "Scrittura";
+"librarystore.removefromLibrary" = "Rimuovi dalla libreria";
 "lineHeight.extraNarrow" = "Extra Stretto";
 "lineHeight.narrow" = "Stretto";
 "lineHeight.standard" = "Standard";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "Rimuovi dai Recenti";
 "reset" = "Ripristina";
 "retry" = "Ritentare";
-"save" = "Rinomina Gruppo";
+"save" = "Salva";
 "school" = "Scuola";
 "search.tryNewSearch" = "Prova una nuova ricerca";
 "seeAll" = "Riprendi";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "Un quaderno vuoto con carta e copertina personalizzate.";
 "shelf.notebook.textstyle.Presets" = "Impostazioni predefinite";
 "shelf.notebook.textstyle.Reorder" = "Riordina";
+"shelf.notebook.textstyle.grid" = "Griglia";
 "shelf.notebook.textstyle.newpreset" = "Nuova impostazione";
 "shelf.notebook.textstyle.presetname" = "Nome preimpostato";
 "shelf.notebook.textstyle.resetdescrption" = "Sei sicuro di voler ripristinare gli stili predefiniti?";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "Imposta come predefinito per:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri quaderni";
 "text.font.setAsDefault.thisBook" = "Questo quaderno";
+"theams.unsplashDescription" = "Seleziona da Unsplash, scatta una foto o seleziona dalla tua Libreria di foto per creare le tue copertine personalizzate.";
 "trash.alert.cannotOpenNotebook" = "Questo quaderno non può essere aperto poiché è stato eliminato. Per ripristinare, premi a lungo e seleziona l'opzione dal menu.";
 "trash.alert.title" = "Sei sicuro di voler svuotare il Cestino?";
 "unsplash.search.alertMessage" = "Inserisci il testo da cercare";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "SCATOLA ZOOM";
 "widgets" = "Widget";
 "work" = "Lavoro";
-"cloud.backup.error.failedToCreateBackup" = "Impossibile creare il file di backup. Controlla lo spazio disponibile sul tuo dispositivo.";
-"cloud.backup.error.fileNotFound" = "File non trovato";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "Nota: I quaderni protetti da password non possono essere esportati in formato PDF.";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

@@ -113,7 +113,7 @@
 "ButtonTwoPress" = "버튼 2 누르기";
 "ButtonsPosition" = "버튼 위치";
 "Camera" = "카메라";
-"Cancel" = "취소 (Chwiso)";
+"Cancel" = "취소";
 "CancelInspirationDownload" = "다운로드를 취소하시겠습니까?";
 "CancelKey" = "취소 (Choiso)";
 "CannotChangeToDiaryTemplate" = "페이지를 디지털 다이어리로 변경할 수 없습니다.";
@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "시스템 라이트 / 다크 모드 사용";
 "backup_file_create_failed" = "백업 파일을 생성할 수 없습니다. 나중에 다시 시도해주세요.";
 "backup_unknown_error" = "백업 중에 오류가 발생했습니다. 나중에 다시 시도하세요.";
+"backupoptions.signoutfrom" = "%@에서 로그아웃 하시겠습니까?";
 "banners" = "배너";
 "bujoessentials" = "부조 필수품";
 "cancel" = "취소";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "파일을 찾을 수 없음";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "참고: 비밀번호로 보호된 책은 PDF로 백업할 수 없습니다.";
 "color.added" = "색상 추가";
 "color.deleted" = "색상 삭제";
@@ -995,7 +997,7 @@
 "customizeToolbar.resetConfirmation" = "기본 도구 모음으로 재설정하시겠습니까?";
 "customizeToolbar.rotatePage" = "페이지 회전";
 "customizeToolbar.savePageAsPhoto" = "페이지를 사진으로 저장하기'";
-"customizeToolbar.shapes" = "형태";
+"customizeToolbar.shapes" = "모양";
 "customizeToolbar.share" = "공유";
 "customizeToolbar.shareAndSave" = "공유 및 저장";
 "customizeToolbar.shareNotebookAsPDF" = "PDF로 노트북 공유";
@@ -1012,7 +1014,7 @@
 "customtemplate.title" = "제목";
 "customtemplate.titleplaceholder" = "제목없음";
 "days" = "일";
-"delete" = "삭제 (chosah)";
+"delete" = "삭제";
 "done" = "끝";
 "downloadedStickers" = "다운로드된 스티커";
 "duplicate" = "중복";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "즐겨찾는 페이지 및 대형 노트북과 PDF 파일을 개요로 유지하세요.";
 "finder.bookmarks" = "즐겨찾기";
 "finder.clear.recents" = "최근 기록을 지우시겠습니까?";
+"finder.downloadPermissionText" = "선택한 노트북은 아직 다운로드되지 않았습니다. 노트북을 다운로드하고 페이지를 이동하시겠습니까?";
 "finder.duplicate" = "중복";
 "finder.fullscreen" = "전체 화면";
 "finder.importDocument" = "문서 가져오기";
 "finder.media" = "미디어";
+"finder.media.allcontent" = "모든 내용";
 "finder.media.nocontent" = "노트북에 이미지, PDF, 오디오 녹음 등을 추가하세요.";
+"finder.media.sticker" = "스티커";
 "finder.more" = "더";
 "finder.outline" = "개요";
 "finder.outline.description" = "PDF 파일의 개요와 추가된 페이지가 여기에 표시됩니다. 노트북의 탐색 막대에서 메뉴를 통해 개요에 페이지를 추가하세요.";
@@ -1097,6 +1102,7 @@
 "labels" = "라벨";
 "lasso.select.textbox" = "텍스트 상자";
 "lettering" = "레터링";
+"librarystore.removefromLibrary" = "도서관에서 제거";
 "lineHeight.extraNarrow" = "초 좁은";
 "lineHeight.narrow" = "좁다";
 "lineHeight.standard" = "표준";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "최근목록에서 제거";
 "reset" = "리셋";
 "retry" = "재시도";
-"save" = "그룹 이름 변경";
+"save" = "저장";
 "school" = "학교";
 "search.tryNewSearch" = "새로 검색해 보세요";
 "seeAll" = "재응시";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "커스텀 종이와 표지가 있는 빈 노트북";
 "shelf.notebook.textstyle.Presets" = "사전 설정";
 "shelf.notebook.textstyle.Reorder" = "재정렬";
+"shelf.notebook.textstyle.grid" = "그리드";
 "shelf.notebook.textstyle.newpreset" = "새로운 프리셋";
 "shelf.notebook.textstyle.presetname" = "프리셋 이름";
 "shelf.notebook.textstyle.resetdescrption" = "기본 스타일로 재설정하시겠습니까?";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "다음에 대해 기본값으로 설정:";
 "text.font.setAsDefault.thisAndFutureBooks" = "이와 이후의 모든 노트북";
 "text.font.setAsDefault.thisBook" = "이 노트북";
+"theams.unsplashDescription" = "Unsplash에서 선택, 사진 촬영 또는 사진 라이브러리에서 선택하여 사용자 정의 표지 만들기";
 "trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "줌 박스";
 "widgets" = "위젯";
 "work" = "일";
-"cloud.backup.error.failedToCreateBackup" = "백업 파일 생성 실패. 기기의 남은 공간을 확인하세요.";
-"cloud.backup.error.fileNotFound" = "파일을 찾을 수 없음";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "참고: 비밀번호로 보호된 책은 PDF로 백업할 수 없습니다.";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

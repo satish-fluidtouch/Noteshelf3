@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "Utilisez le mode clair/sombre du système";
 "backup_file_create_failed" = "Impossible de créer le fichier de sauvegarde. Veuillez réessayer ultérieurement.";
 "backup_unknown_error" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
+"backupoptions.signoutfrom" = "Déconnexion de %@.";
 "banners" = "Bannières";
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "Fichier non trouvé";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "Note: Les cahiers protégés par mot de passe ne peuvent pas être sauvegardés au format PDF.";
 "color.added" = "Couleur ajoutée";
 "color.deleted" = "Couleur supprimée";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "Pages favorites et gardez une vue d'ensemble des grands cahiers et PDF.";
 "finder.bookmarks" = "Marque-pages";
 "finder.clear.recents" = "Voulez-vous effacer les récents ?";
+"finder.downloadPermissionText" = "Le cahier sélectionné n'est pas encore téléchargé. Souhaitez-vous le télécharger et déplacer les pages ?";
 "finder.duplicate" = "Dupliquer";
 "finder.fullscreen" = "Plein écran.";
 "finder.importDocument" = "Importer le document";
 "finder.media" = "Média";
+"finder.media.allcontent" = "Tout le contenu";
 "finder.media.nocontent" = "Ajoutez des images, des PDF, des enregistrements audio et plus encore à votre carnet de notes.";
+"finder.media.sticker" = "Autocollant";
 "finder.more" = "Plus";
 "finder.outline" = "Contour";
 "finder.outline.description" = "Le contour des PDF importés et des pages ajoutées apparaîtra ici. Ajoutez des pages au contour via le menu 􀍠 de la barre de navigation du carnet.";
@@ -1097,6 +1102,7 @@
 "labels" = "Étiquettes";
 "lasso.select.textbox" = "Boîtes de texte";
 "lettering" = "Calligraphie";
+"librarystore.removefromLibrary" = "Supprimer de la bibliothèque";
 "lineHeight.extraNarrow" = "Extra étroit";
 "lineHeight.narrow" = "Étroit";
 "lineHeight.standard" = "Standard";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "Supprimer des récents";
 "reset" = "Réinitialiser";
 "retry" = "Retenter";
-"save" = "Renommer le groupe";
+"save" = "Enregistrer";
 "school" = "École";
 "search.tryNewSearch" = "Essayez une nouvelle recherche";
 "seeAll" = "Reprendre";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "Un carnet vierge avec du papier et une couverture personnalisés.";
 "shelf.notebook.textstyle.Presets" = "Préréglages";
 "shelf.notebook.textstyle.Reorder" = "Réorganiser";
+"shelf.notebook.textstyle.grid" = "Grille";
 "shelf.notebook.textstyle.newpreset" = "Nouveau préréglage";
 "shelf.notebook.textstyle.presetname" = "Nom prédéfini";
 "shelf.notebook.textstyle.resetdescrption" = "Êtes-vous sûr(e) de vouloir réinitialiser les styles par défaut ?";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "Définir par défaut pour:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Ceci et tous les futurs cahiers";
 "text.font.setAsDefault.thisBook" = "Ce cahier.";
+"theams.unsplashDescription" = "Choisissez depuis Unsplash, prenez une photo ou sélectionnez depuis votre bibliothèque de photos pour créer vos couvertures personnalisées.";
 "trash.alert.cannotOpenNotebook" = "Ce carnet ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "BOÎTE DE ZOOM";
 "widgets" = "Widgets";
 "work" = "Travail";
-"cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
-"cloud.backup.error.fileNotFound" = "Fichier non trouvé";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "Note: Les cahiers protégés par mot de passe ne peuvent pas être sauvegardés au format PDF.";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

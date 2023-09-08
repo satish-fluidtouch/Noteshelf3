@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "Use System Light / Dark Mode";
 "backup_file_create_failed" = "Unable to create the backup file. Please try again later.";
 "backup_unknown_error" = "An error occured while backing up. Please try again later.";
+"backupoptions.signoutfrom" = "Sign out from %@";
 "banners" = "Banners";
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "File not found";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "Errors";
 "cloud.backup.pdfFormatWarning" = "Note : Password protected notebooks cannot be backed up as PDFs";
 "color.added" = "Color added";
 "color.deleted" = "Color deleted";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "Favorite pages and keep an overview of large notebooks and PDFs.";
 "finder.bookmarks" = "Bookmarks";
 "finder.clear.recents" = "Do you want to clear recents";
+"finder.downloadPermissionText" = "Selected Notebook is not downloaded yet. Do you wish to download the notebook and move the pages?";
 "finder.duplicate" = "Duplicate";
 "finder.fullscreen" = "Full Screen";
 "finder.importDocument" = "Import Document";
 "finder.media" = "Media";
+"finder.media.allcontent" = "All Content";
 "finder.media.nocontent" = "Add images, PDFs, audio recordings and more to your notebook.";
+"finder.media.sticker" = "Sticker";
 "finder.more" = "More";
 "finder.outline" = "Outline";
 "finder.outline.description" = "The outline of imported PDFs and pages added will appear here. Add pages to the Outline via the 􀍠 menu on the Notebook’s navigation bar.";
@@ -1097,6 +1102,7 @@
 "labels" = "Labels";
 "lasso.select.textbox" = "Text Boxes";
 "lettering" = "Lettering";
+"librarystore.removefromLibrary" = "Remove from library";
 "lineHeight.extraNarrow" = "Extra Narrow";
 "lineHeight.narrow" = "Narrow";
 "lineHeight.standard" = "Standard";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "A blank notebook with custom paper & cover";
 "shelf.notebook.textstyle.Presets" = "Presets";
 "shelf.notebook.textstyle.Reorder" = "Reorder";
+"shelf.notebook.textstyle.grid" = "Grid";
 "shelf.notebook.textstyle.newpreset" = "New Preset";
 "shelf.notebook.textstyle.presetname" = "Preset Name";
 "shelf.notebook.textstyle.resetdescrption" = "Are you sure, You want to reset to default styles";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "Set as default for: ";
 "text.font.setAsDefault.thisAndFutureBooks" = "This and all future notebooks";
 "text.font.setAsDefault.thisBook" = "This notebook";
+"theams.unsplashDescription" = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers";
 "trash.alert.cannotOpenNotebook" = "This notebook cannot be opened as it has been deleted. To restore, long-press and select the option from the menu.";
 "trash.alert.title" = "Are you sure you want empty your Trash?";
 "unsplash.search.alertMessage" = "Enter text to search";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "ZOOM BOX";
 "widgets" = "Widgets";
 "work" = "Work";
-"cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
-"cloud.backup.error.fileNotFound" = "File not found";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "Note : Password protected notebooks cannot be backed up as PDFs";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

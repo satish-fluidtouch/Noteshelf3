@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "使用系统的浅色/深色模式";
 "backup_file_create_failed" = "无法创建备份文件。请稍后重试。";
 "backup_unknown_error" = "备份时发生错误。请稍后重试。";
+"backupoptions.signoutfrom" = "退出 %@";
 "banners" = "横幅";
 "bujoessentials" = "笔记本要点";
 "cancel" = "取消";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "文件未找到";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "注意：密码保护的笔记本无法备份为PDF。";
 "color.added" = "颜色添加";
 "color.deleted" = "颜色已删除";
@@ -995,7 +997,7 @@
 "customizeToolbar.resetConfirmation" = "您确定要重置为默认工具栏吗？";
 "customizeToolbar.rotatePage" = "旋转页面";
 "customizeToolbar.savePageAsPhoto" = "保存页面为照片";
-"customizeToolbar.shapes" = "形状 (Xíngzhuàng)";
+"customizeToolbar.shapes" = "形状";
 "customizeToolbar.share" = "分享";
 "customizeToolbar.shareAndSave" = "分享并保存";
 "customizeToolbar.shareNotebookAsPDF" = "将笔记本转换为PDF";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "收藏页面并保持对大型笔记本和PDF的概览。";
 "finder.bookmarks" = "书签";
 "finder.clear.recents" = "你想要清除最近的内容吗？";
+"finder.downloadPermissionText" = "选定的笔记本尚未下载。您是否希望下载笔记本并移动页面？";
 "finder.duplicate" = "重复";
 "finder.fullscreen" = "全屏";
 "finder.importDocument" = "导入文档";
 "finder.media" = "媒体";
+"finder.media.allcontent" = "所有内容";
 "finder.media.nocontent" = "将图像、PDF、音频录音等添加到您的笔记本。";
+"finder.media.sticker" = "贴纸";
 "finder.more" = "更多";
 "finder.outline" = "轮廓";
 "finder.outline.description" = "导入的PDF和添加的页面的大纲将显示在这里。通过笔记本导航栏上的􀍠菜单向大纲添加页面。";
@@ -1097,6 +1102,7 @@
 "labels" = "标签";
 "lasso.select.textbox" = "文本框";
 "lettering" = "字体";
+"librarystore.removefromLibrary" = "从图书馆中删除";
 "lineHeight.extraNarrow" = "极窄";
 "lineHeight.narrow" = "窄";
 "lineHeight.standard" = "标准";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "从最近删除";
 "reset" = "重置";
 "retry" = "重试";
-"save" = "重命名群组";
+"save" = "保存";
 "school" = "学校";
 "search.tryNewSearch" = "尝试新的搜索";
 "seeAll" = "重新拍摄";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "一个带有定制纸和封面的空白笔记本";
 "shelf.notebook.textstyle.Presets" = "预设";
 "shelf.notebook.textstyle.Reorder" = "重新排序";
+"shelf.notebook.textstyle.grid" = "网格";
 "shelf.notebook.textstyle.newpreset" = "新预设";
 "shelf.notebook.textstyle.presetname" = "预设名称";
 "shelf.notebook.textstyle.resetdescrption" = "你确定要重置为默认样式吗";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "设置为默认：";
 "text.font.setAsDefault.thisAndFutureBooks" = "这本和所有未来的笔记本";
 "text.font.setAsDefault.thisBook" = "这个笔记本";
+"theams.unsplashDescription" = "从Unsplash选择，拍照或从照片库中选择以创建您的自定义封面。";
 "trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾桶吗？";
 "unsplash.search.alertMessage" = "输入要搜索的文本";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "缩放框";
 "widgets" = "小部件";
 "work" = "工作";
-"cloud.backup.error.failedToCreateBackup" = "创建备份文件失败。请检查设备上的剩余空间。";
-"cloud.backup.error.fileNotFound" = "文件未找到";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "注意：密码保护的笔记本无法备份为PDF。";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM

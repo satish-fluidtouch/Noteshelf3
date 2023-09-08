@@ -946,6 +946,7 @@
 "appearance.useSystemTheme" = "使用系統的淺色/暗色模式";
 "backup_file_create_failed" = "無法建立備份檔案。請稍後再試。";
 "backup_unknown_error" = "備份時發生錯誤。請稍後再試。";
+"backupoptions.signoutfrom" = "從%@登出";
 "banners" = "橫幅";
 "bujoessentials" = "筆記必需品";
 "cancel" = "取消";
@@ -955,6 +956,7 @@
 "cloud.backup.error.fileNotFound" = "檔案未找到";
 "cloud.backup.error.filePasswordProtected" = "";
 "cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.errors" = "";
 "cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
 "color.added" = "添加顏色";
 "color.deleted" = "顏色已刪除";
@@ -1028,11 +1030,14 @@
 "finder.bookmark.description" = "收藏頁面並對大型筆記本和PDF保持概覽。";
 "finder.bookmarks" = "書籤";
 "finder.clear.recents" = "你想清除最近的紀錄嗎？";
+"finder.downloadPermissionText" = "所選筆記本尚未下載。您是否希望下載筆記本並移動頁面？";
 "finder.duplicate" = "重複";
 "finder.fullscreen" = "全螢幕";
 "finder.importDocument" = "導入文件";
 "finder.media" = "媒體";
+"finder.media.allcontent" = "所有內容";
 "finder.media.nocontent" = "將圖像、PDF、音頻錄音和其他內容添加到您的筆記本。";
+"finder.media.sticker" = "貼紙";
 "finder.more" = "更多 (Gèng duō)";
 "finder.outline" = "大綱";
 "finder.outline.description" = "進口PDF的輪廓和添加的頁面將顯示在這裡。通過筆記本導航欄上的􀍠菜單將頁面添加到輪廓中。";
@@ -1097,6 +1102,7 @@
 "labels" = "標籤";
 "lasso.select.textbox" = "文本框";
 "lettering" = "字體設計";
+"librarystore.removefromLibrary" = "從圖書館中移除";
 "lineHeight.extraNarrow" = "超窄";
 "lineHeight.narrow" = "窄";
 "lineHeight.standard" = "標準";
@@ -1191,7 +1197,7 @@
 "removefromRecents" = "從最近移除";
 "reset" = "重設";
 "retry" = "重試";
-"save" = "重命名群組";
+"save" = "保存";
 "school" = "學校";
 "search.tryNewSearch" = "嘗試新的搜索";
 "seeAll" = "重新拍攝";
@@ -1285,6 +1291,7 @@
 "shelf.newnotebook.description" = "具有自定義紙張和封面的空白筆記本";
 "shelf.notebook.textstyle.Presets" = "預設";
 "shelf.notebook.textstyle.Reorder" = "重新排序";
+"shelf.notebook.textstyle.grid" = "網格";
 "shelf.notebook.textstyle.newpreset" = "新預設";
 "shelf.notebook.textstyle.presetname" = "預設名稱";
 "shelf.notebook.textstyle.resetdescrption" = "你確定要重設為預設樣式嗎";
@@ -1455,6 +1462,7 @@
 "text.font.setAsDefault.menuTitle" = "設為預設：";
 "text.font.setAsDefault.thisAndFutureBooks" = "這本和所有未來的筆記本";
 "text.font.setAsDefault.thisBook" = "這個筆記本";
+"theams.unsplashDescription" = "從Unsplash選擇、拍照或從您的照片庫中選擇來創建您的自定封面。";
 "trash.alert.cannotOpenNotebook" = "這個筆記本無法打開，因為它已被刪除。要恢復，請長按並從菜單選擇該選項。";
 "trash.alert.title" = "您確定要清空垃圾桶嗎？";
 "unsplash.search.alertMessage" = "輸入要搜索的文字";
@@ -1498,14 +1506,7 @@
 "welcome.zoombox" = "放大盒";
 "widgets" = "小工具";
 "work" = "工作";
-"cloud.backup.error.failedToCreateBackup" = "無法建立備份檔案。請檢查您的設備剩餘空間。";
-"cloud.backup.error.fileNotFound" = "檔案未找到";
-"cloud.backup.error.packageNeedsUpgrade" = "Package Needs Upgrade";
-"cloud.backup.error.filePasswordProtected" = "Notebook is password protected. Could not be backuped";
-"cloud.backup.error.contentPreviouslyCrashed" = "Previous upload failed due to crash.";
-"cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
-"cloud.backup.errors" = "Errors";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 7 September 2023 at 7:10 PM
+// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM
