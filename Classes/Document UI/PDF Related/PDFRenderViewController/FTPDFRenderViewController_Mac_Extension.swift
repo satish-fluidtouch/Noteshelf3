@@ -112,10 +112,10 @@ extension FTPDFRenderViewController {
             self.showShareOptions(with: toolbarItem)
 
         case .shareNotebookAsPDF:
-            self.executer.execute(type: .shareNoteBookAsPDF)
+            self.executer.execute(type: .shareNoteBookAsPDF(source: toolbarItem))
 
         case .sharePageAsPng:
-            self.executer.execute(type: .sharePageAsPng)
+            self.executer.execute(type: .sharePageAsPng(source: toolbarItem))
 
         case .savePageAsPhoto:
             self.executer.execute(type: .savePageAsPhoto) {

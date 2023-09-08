@@ -21,7 +21,7 @@ class FTExportActivityManager: NSObject {
     var exportFormat : RKExportFormat = kExportFormatNBK;
     var exportItems : [FTExportItem]?
     var baseViewController : UIViewController?
-    var targetShareButton : UIView?
+    var targetShareButton: Any?
     weak var delegate : FTExportActivityDelegate?
     private var activityViewController : UIActivityViewController!
     
@@ -165,12 +165,17 @@ class FTExportActivityManager: NSObject {
 #if targetEnvironment(macCatalyst)
             actController.modalPresentationStyle = .popover;
             actController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.none
-            actController.popoverPresentationController?.sourceView = baseViewController.view;
-            var rect = CGRect(x: baseViewController.view.bounds.midX, y: baseViewController.view.bounds.height - 44 - 20, width: 1, height: 1)
-            if let shareFormatHostingVc = baseViewController as? FTShareFormatHostingController, shareFormatHostingVc.canShowSaveToCameraRollButton {
-                rect.origin.x += (0.5 * rect.origin.x)
+            // To have popover visible on top(during shortcut action from toolbar)
+            if let item = self.targetShareButton as? NSToolbarItem {
+                actController.popoverPresentationController?.sourceItem = item
+            } else {
+                actController.popoverPresentationController?.sourceView = baseViewController.view;
+                var rect = CGRect(x: baseViewController.view.bounds.midX, y: baseViewController.view.bounds.height - 44 - 20, width: 1, height: 1)
+                if let shareFormatHostingVc = baseViewController as? FTShareFormatHostingController, shareFormatHostingVc.canShowSaveToCameraRollButton {
+                    rect.origin.x += (0.5 * rect.origin.x)
+                }
+                actController.popoverPresentationController?.sourceRect = rect
             }
-            actController.popoverPresentationController?.sourceRect = rect
             baseViewController.present(actController, animated: true, completion: nil)
 #else
             let shareNavigationController = UINavigationController(rootViewController: self.activityViewController)
