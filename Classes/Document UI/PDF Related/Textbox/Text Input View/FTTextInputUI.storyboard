@@ -654,30 +654,58 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="mNu-Xx-GjJ" userLabel="Leading Stack View">
                                         <rect key="frame" x="8" y="4" width="149.5" height="40"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="1Xj-sB-O0o" userLabel="Body" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zui-KA-2os">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="1Xj-sB-O0o" userLabel="Body">
+                                                        <rect key="frame" x="-8" y="-5" width="55" height="51"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" name="black1"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" image="textStyleEdit">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <state key="selected" image="tooliconStyleOn"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="textStyleEdit" cornerStyle="medium">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </buttonConfiguration>
+                                                    </button>
+                                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="V1z-oy-lJ8" userLabel="Body">
+                                                        <rect key="frame" x="-8" y="-5" width="55" height="51"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" name="black1"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" image="textStyleEdit">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </state>
+                                                        <state key="selected" image="tooliconStyleOn"/>
+                                                        <buttonConfiguration key="configuration" style="plain" image="textStyleEditUnderLine" cornerStyle="medium">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
+                                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
+                                                            </preferredSymbolConfiguration>
+                                                        </buttonConfiguration>
+                                                    </button>
+                                                </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="9sg-Hb-04U"/>
-                                                    <constraint firstAttribute="width" constant="40" id="dcP-GG-Ygk"/>
+                                                    <constraint firstItem="1Xj-sB-O0o" firstAttribute="height" secondItem="zui-KA-2os" secondAttribute="height" multiplier="1.275" id="2E4-K5-Uhf"/>
+                                                    <constraint firstItem="V1z-oy-lJ8" firstAttribute="centerX" secondItem="zui-KA-2os" secondAttribute="centerX" id="3Ut-02-dko"/>
+                                                    <constraint firstItem="V1z-oy-lJ8" firstAttribute="height" secondItem="zui-KA-2os" secondAttribute="height" multiplier="1.275" id="C0o-5c-UJ3"/>
+                                                    <constraint firstItem="1Xj-sB-O0o" firstAttribute="width" secondItem="zui-KA-2os" secondAttribute="width" multiplier="1.375" id="GNJ-o2-ihi"/>
+                                                    <constraint firstItem="V1z-oy-lJ8" firstAttribute="width" secondItem="zui-KA-2os" secondAttribute="width" multiplier="1.375" id="Ya1-xq-1BM"/>
+                                                    <constraint firstItem="1Xj-sB-O0o" firstAttribute="centerX" secondItem="zui-KA-2os" secondAttribute="centerX" id="dFA-8M-RPz"/>
+                                                    <constraint firstAttribute="height" constant="40" id="gpr-qc-AlD"/>
+                                                    <constraint firstAttribute="width" constant="40" id="rN1-c9-ebQ"/>
+                                                    <constraint firstItem="1Xj-sB-O0o" firstAttribute="centerY" secondItem="zui-KA-2os" secondAttribute="centerY" id="v5L-PY-ZD9"/>
+                                                    <constraint firstItem="V1z-oy-lJ8" firstAttribute="centerY" secondItem="zui-KA-2os" secondAttribute="centerY" id="w97-0d-zoh"/>
                                                 </constraints>
-                                                <color key="tintColor" name="black1"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" image="textStyleEdit">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
-                                                    </preferredSymbolConfiguration>
-                                                </state>
-                                                <state key="selected" image="tooliconStyleOn"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="textStyleEdit" cornerStyle="medium">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
-                                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="19"/>
-                                                    </preferredSymbolConfiguration>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="tappedOnTextModifyStyleButton:" destination="biS-A9-cBe" eventType="touchUpInside" id="DGd-Mb-Xf3"/>
-                                                </connections>
-                                            </button>
+                                            </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ovj-mc-re0">
                                                 <rect key="frame" x="74" y="0.0" width="75.5" height="40"/>
                                                 <subviews>
@@ -954,7 +982,8 @@
                         <outlet property="textBackGroundColorBtn" destination="KRS-SA-l5H" id="m0u-lJ-U7a"/>
                         <outlet property="textBulletsStackView" destination="90c-Pa-LuD" id="JHS-74-67G"/>
                         <outlet property="textIndentStackView" destination="1RX-jj-Eqf" id="zfL-nI-GVG"/>
-                        <outlet property="textModeSelectionBtn" destination="1Xj-sB-O0o" id="UgF-LI-2UU"/>
+                        <outlet property="textStyleEditUnderlineView" destination="V1z-oy-lJ8" id="B3o-h7-QpH"/>
+                        <outlet property="textStyleEditView" destination="zui-KA-2os" id="bCu-Af-WqD"/>
                         <outlet property="textStyleView" destination="6P9-e9-rY9" id="a1e-Pd-ZS3"/>
                     </connections>
                 </viewController>
@@ -1808,7 +1837,8 @@
         <image name="text.aligncenter" catalog="system" width="128" height="99"/>
         <image name="text.alignleft" catalog="system" width="128" height="99"/>
         <image name="text.alignright" catalog="system" width="128" height="99"/>
-        <image name="textStyleEdit" width="37" height="40"/>
+        <image name="textStyleEdit" width="52" height="40"/>
+        <image name="textStyleEditUnderLine" width="52" height="40"/>
         <image name="text_input_keyboard_sel" width="28" height="28"/>
         <image name="text_presets_more" width="3" height="13"/>
         <image name="textformat" catalog="system" width="128" height="78"/>
