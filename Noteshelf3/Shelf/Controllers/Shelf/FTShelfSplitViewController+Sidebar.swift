@@ -12,6 +12,12 @@ import FTNewNotebook
 import Reachability
 
 extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
+    func didCurrentCollectionRenamed(_ collection: FTShelfItemCollection) {
+        if currentShelfViewModel?.collection.uuid == collection.uuid {
+            detailNavigationController?.viewControllers.first?.title = collection.displayTitle
+        }
+    }
+
     func showHomeView() {
 
         if !self.isRegularClass() { // In Compact modes, we are navigating to home on every tap on home option

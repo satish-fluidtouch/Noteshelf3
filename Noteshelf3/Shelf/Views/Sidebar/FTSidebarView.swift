@@ -29,6 +29,7 @@ protocol FTSidebarViewDelegate: AnyObject {
     func didTapOnUpgradeNow();
     func didTapOnSettings()
     func didTapOnSidebarItem(_ item: FTSideBarItem)
+    func didSidebarItemRenamed(_ item: FTSideBarItem)
     func emptyTrash(_ collection: FTShelfItemCollection, showConfirmationAlert: Bool, onCompletion: @escaping ((Bool) -> Void))
 }
 struct FTSidebarView: View {

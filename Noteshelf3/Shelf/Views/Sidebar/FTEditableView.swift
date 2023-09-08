@@ -25,14 +25,15 @@ struct FTEditableView: View {
                 Label {
                     HStack {
                         if showEditableField {
-                            TextField(placeHolder, text: $newTitle)
+                            TextField(placeHolder, text: $item.title)
                                 .font(.appFont(for: .regular, with: 17))
                                 .focused($titleIsFocused)
                                 .foregroundColor(.appColor(.black1))
                                 .onSubmit {
                                     showEditableField = false
+                                    newTitle = item.title
                                     self.onButtonSubmit(newTitle)
-                                    newTitle = ""
+                                    //newTitle = ""
                                 }
                                 .onAppear {
                                     runInMainThread(0.2) {
@@ -77,8 +78,9 @@ struct FTEditableView: View {
             }
         .onReceive(keyboardHideNotification) { _ in
             showEditableField = false
+            newTitle = item.title
             self.onButtonSubmit(newTitle)
-            newTitle = ""
+            //newTitle = ""
         }
     }
     func titleBinding(_ title: String) -> Binding<String> {

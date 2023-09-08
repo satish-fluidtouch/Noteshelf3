@@ -21,6 +21,9 @@ struct FTSideBarItemContexualMenuButtons: View {
             ForEach(longPressOptions,id: \.self) { menuOption in
                 Button(role: menuOption.isDestructiveOption ? .destructive : nil) {
                     sidebarViewModel.trackEventForLongPressOptions(item: item, option: menuOption)
+                    #if targetEnvironment(macCatalyst)
+                    hideKeyboard() // dismissing edit action on sidebar item if any
+                    #endif
                     if menuOption == .trashCategory || menuOption == .emptyTrash || menuOption == .deleteTag {
                         showTrashAlert = true
                         setAlertInfoForOption(menuOption)

@@ -163,6 +163,13 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         }
         return matchedItem
     }
+    func endEditingOfActiveSidebarItem(){
+        for item in menuItems.flatMap({$0.items}) where item.isEditing {
+            debugLog("editing item new title \(item.title)")
+            item.isEditing = false
+            self.renameSideBarItem(item, toNewTitle: item.title)
+        }
+    }
 }
 private extension FTSidebarViewModel {
     func setSidebarItemTypeForCollection(_ collection: FTShelfItemCollection?){
@@ -315,9 +322,9 @@ extension FTSidebarViewModel {
         if title != shelfCollection.displayTitle {
             FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: title) { [weak self](error,shelfCollection) in
                 if let _ = error {
-                } else if let shelfCollection = shelfCollection {
-                    let currentShelfItem = self?.menuItems.compactMap({ $0.items.first(where: { $0.id == shelfCollection.uuid })}).first
-                    self?.newCollectionAddedOrUpdated = true
+                } else if let shelfCollection = shelfCollection, self?.selectedShelfItemCollection?.uuid == shelfCollection.uuid {
+                    self?.selectedShelfItemCollection = shelfCollection
+                    self?.delegate?.didSidebarItemRenamed(category)
                     //TODO: Check for EN
 //                    shelfCollection.shelfItems(.none,
 //                                          parent: nil,
