@@ -9,6 +9,32 @@
 import Foundation
 extension FileManager {
 
+    func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false, onCOmpletion: ((Error?)->())?) {
+        let document = FTNoteshelfDocument(fileURL: fromURL);
+        let fileCoorinator = NSFileCoordinator.init(filePresenter: document)
+        let readIntent = NSFileAccessIntent.readingIntent(with: fromURL,options: .withoutChanges);
+        let writeIntent = NSFileAccessIntent.writingIntent(with: toURL,options: .forReplacing);
+        fileCoorinator.coordinate(with: [readIntent,writeIntent]
+                                  , queue: OperationQueue()) { error in
+            if error != nil {
+                onCOmpletion?(error)
+            }
+            else {
+                var catchError: Error?
+                do {
+                    if force {
+                        _ = try? self.removeItem(at: writeIntent.url)
+                    }
+                    _ = try self.copyItem(at: readIntent.url, to: writeIntent.url)
+
+                } catch {
+                    catchError = error
+                }
+                onCOmpletion?(catchError)
+            }
+        }
+    }
+    
     @discardableResult
     func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false) throws -> Bool {
         let fileCoorinator = NSFileCoordinator.init(filePresenter: nil)
