@@ -532,6 +532,8 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
         settingsController.dismiss(animated: false) { [weak self] in
             guard let self = self else { return }
             FTCustomizeToolbarController.showCustomizeToolbarScreen(controller: self)
+            // Track Event
+            track(EventName.toolbar_more_customizetoolbar_tap)
         }
     }
 

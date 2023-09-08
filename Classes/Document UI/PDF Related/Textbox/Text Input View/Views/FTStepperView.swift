@@ -117,14 +117,14 @@ class FTStepperView: UIView {
     }
 
     @objc func stepperIncrementBtnTapped() {
-        if value < self.valueCaptureAt.maxSupportValue {
+        if value < self.valueCaptureAt.maxSupportValue.toInt {
             value += 1
             updateValue(value: value)
         }
     }
 
     @objc func stepperDecrementBtnTapped() {
-        if value > self.valueCaptureAt.minSupportValue {
+        if value > self.valueCaptureAt.minSupportValue.toInt {
             value -= 1
             updateValue(value: value)
         }

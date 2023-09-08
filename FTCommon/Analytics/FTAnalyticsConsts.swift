@@ -19,6 +19,7 @@ public struct EventName {
 public struct EventParameterKey {
     public static let location = "location"
     public static let title = "title"
+    public static let tool = "tool"
     static let count = "count"
     static let origin = "origin"
     static let toggle = "toggle"
