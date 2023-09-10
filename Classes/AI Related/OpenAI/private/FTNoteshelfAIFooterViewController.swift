@@ -41,18 +41,16 @@ class FTNoteshelfAIFooterViewController: UIViewController {
         self.learnMore?.setAttributedTitle(attrTitle, for: .normal);
         self.learnMore?.configuration?.imagePadding = 5;
 
-//        let attributedTitle = NSAttributedString(string: "noteshelf.ai.handwriteMessage".aiLocalizedString,
-//                                                 attributes: [.font: UIFont.systemFont(ofSize: 13)])
-//        self.bePremiumUser?.setAttributedTitle(attributedTitle, for: .normal);
-        self.bePremiumUser?.configuration?.title = "noteshelf.ai.handwriteMessage".aiLocalizedString;
-//        self.bePremiumUser?.configuration?.baseForegroundColor = UIColor.appColor(.secondaryAccent);
-        self.bePremiumUser?.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        self.bePremiumUser?.titleLabel?.textAlignment = .center
-        self.bePremiumUser?.titleLabel?.minimumScaleFactor = 0.5;
-        
-        
+        let style = NSMutableParagraphStyle();
+        style.alignment = .center;
+        let _attrTitle = NSAttributedString(string: "noteshelf.ai.handwriteMessage".aiLocalizedString, attributes: [
+            .font: defaultFont
+            ,.paragraphStyle : style
+        ]);
+        self.bePremiumUser?.setAttributedTitle(_attrTitle, for: .normal);
+                
         self.sendFeedback?.configuration?.title = "noteshelf.ai.sendFeedback".aiLocalizedString;
-        self.sendFeedback?.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        self.sendFeedback?.titleLabel?.font = defaultFont
     }
     
     @IBAction func showNoteshelfAILearnmore(_ sender: Any?) {
