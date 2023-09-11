@@ -1598,10 +1598,10 @@ extension FTFinderViewController {
         }
 
         func showAlert(_ pages: NSSet) {
-            let alert = UIAlertController(title: "", message: NSLocalizedString("DeletePagePasswordProtectedAlert",comment:"This is a password..."), preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "", message: "DeletePagePasswordProtectedAlert".localized, preferredStyle: UIAlertController.Style.alert)
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("MoveToTrash", comment: "Move To Trash"), style: UIAlertAction.Style.default, handler: { (action) in
-                self.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
+            alert.addAction(UIAlertAction(title: "MoveToTrash".localized, style: UIAlertAction.Style.default, handler: { [weak self] action in
+                self?.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
                     if error == nil, let weakSelf = self {
                         weakSelf.deletePagesPermanantly(from: weakSelf.document,
                                                         pages: pages,
@@ -1609,14 +1609,14 @@ extension FTFinderViewController {
                     }
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("DeletePermanently",comment:"Delete Permanently"), style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
+            alert.addAction(UIAlertAction(title: "DeletePermanently".localized, style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
                 if let weakSelf = self {
                     weakSelf.deletePagesPermanantly(from: weakSelf.document,
                                                     pages: pages,
                                                     indexes: indexSet)
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel",comment:"Cancel"), style: UIAlertAction.Style.destructive, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel".localized, style: UIAlertAction.Style.destructive, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
 
