@@ -769,7 +769,8 @@ extension FTPDFRenderViewController {
 
             let alertController = UIAlertController.init(title: headerTitle, message: nil, preferredStyle: .alert)
             weak var weakAlertController = alertController
-            let saveAction = UIAlertAction.init(title: NSLocalizedString("save", comment: "Save"), style: .default, handler: { _ in
+            let saveAction = UIAlertAction(title: NSLocalizedString("save", comment: "Save"), style: .default, handler: { [weak self] _ in
+                guard let self else { return }
                 var text = weakAlertController?.textFields?.first?.text
                 if(nil != text) {
                     text = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -780,13 +781,14 @@ extension FTPDFRenderViewController {
                 }
             })
             alertController.addAction(saveAction)
-            let deleteAction = UIAlertAction.init(title: NSLocalizedString("quickNoteSave.deleteQuickNote", comment: "Delete Quick Note"), style: .destructive, handler: { _ in
+            let deleteAction = UIAlertAction(title: NSLocalizedString("quickNoteSave.deleteQuickNote", comment: "Delete Quick Note"), style: .destructive, handler: { [weak self] _ in
+                guard let self else { return }
                 let delete: FTNotebookBackAction = FTMoveToTrashAction //Save action
                 self.back(toShelfButtonAction: delete, with: self.shelfItemManagedObject.title)
             })
             alertController.addAction(deleteAction)
 
-            let cancelAction = UIAlertAction.init(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
                 alertController.dismiss(animated: true)
             })
             alertController.addAction(cancelAction)
