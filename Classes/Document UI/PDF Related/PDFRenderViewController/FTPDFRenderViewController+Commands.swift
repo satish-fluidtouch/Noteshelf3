@@ -160,20 +160,44 @@ extension FTPDFRenderViewController: FTShortcutActions {
     }
 
     func deletePageAction(page: FTThumbnailable) {
-        let confirmMsg = String(format: "customizeToolbar.deletePageConfirmation".localized, page.pageIndex() + 1)
-        let alertController = UIAlertController(title: confirmMsg, message: "", preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: "customizeToolbar.deletePage".localized, style: .destructive, handler: { [weak self] action in
-            if let doc = self?.pdfDocument as? FTThumbnailableCollection {
-                if doc.documentPages().count == 1 {
-                    (doc as? FTDocumentProtocol)?.insertPageAtIndex(1)
+        guard let doc = self.pdfDocument else { return }
+        let isPinEnabled = doc.isPinEnabled()
+        let alert = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: (isPinEnabled ? .destructive : .cancel), handler: nil)
+
+        let moveToTrashAction = UIAlertAction(title: "MoveToTrash".localized, style: (isPinEnabled ? .default : .destructive), handler: { (action) in
+            if let document = doc as? FTThumbnailableCollection, document.documentPages().count == 1 {
+                doc.insertPageAtIndex(1)
+            }
+            self.movePagestoTrash(from: doc, pages: [page]) { [weak self] (error, _) in
+                if error == nil, let weakSelf = self, let document = doc as? FTThumbnailableCollection {
+                    weakSelf.deletePagesPermanantly(from: document,
+                                                    pages: [page])
                 }
-                _ = doc.deletePages([page])
-                NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
             }
         })
-        alertController.addAction(deleteAction)
-        alertController.addAction(UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+
+        if isPinEnabled {
+            alert.message = "DeletePagePasswordProtectedAlert".localized
+            // let delete Permanently Action
+            let deletePermanentAction = UIAlertAction(title: "DeletePermanently".localized, style: .default,  handler: { [weak self] (action) in
+                if let document = doc as? FTThumbnailableCollection, document.documentPages().count == 1 {
+                    doc.insertPageAtIndex(1)
+                }
+                if let weakSelf = self, let document = doc as? FTThumbnailableCollection {
+                    weakSelf.deletePagesPermanantly(from: document,
+                                                    pages: [page])
+                }
+            })
+            alert.addAction(deletePermanentAction)
+            alert.addAction(moveToTrashAction)
+            alert.addAction(cancelAction)
+        } else {
+            alert.title = String(format: "customizeToolbar.deletePageConfirmation".localized, page.pageIndex() + 1)
+            alert.addAction(cancelAction)
+            alert.addAction(moveToTrashAction)
+        }
+        self.present(alert, animated: true, completion: nil)
     }
 
     func duplicateAction(pages: [FTThumbnailable], onCompletion: (()->())?) {
@@ -251,6 +275,51 @@ extension FTPDFRenderViewController: FTShortcutActions {
         let properties = FTExportProperties()
         properties.exportFormat = kExportFormatImage
         coordinator?.beginShare(properties, option: .currentPage,type: .savetoCameraRoll)
+    }
+}
+
+// MARK: Delete page helper functions
+extension FTPDFRenderViewController {
+    internal func movePagestoTrash(from doc:FTDocumentProtocol,  pages: NSSet, completion: @escaping (Error?, FTShelfItemProtocol?) -> ()) {
+        let copiedPages = pages.allObjects as! [FTPageProtocol]
+        let pagesToCopy = copiedPages.sorted(by: { (p1, p2) -> Bool in
+            return (p1.pageIndex() < p2.pageIndex())
+        })
+
+        let info = FTDocumentInputInfo()
+        info.rootViewController = self
+        info.overlayStyle = FTCoverStyle.clearWhite
+        info.coverTemplateImage = FTPDFExportView.snapshot(forPage: pagesToCopy[0],
+                                                           size: portraitCoverSize,
+                                                           screenScale: 2.0,
+                                                           shouldRenderBackground: true)
+        info.isNewBook = true
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(FTUtils.getUUID())
+        _ = doc.createDocumentAtTemporaryURL(url,
+                                             purpose: .trashRecovery,
+                                             fromPages: pagesToCopy,
+                                             documentInfo: info)
+        { (_, error) in
+            if(nil == error) {
+                let title = doc.URL.deletingPathExtension().lastPathComponent;
+                FTNoteshelfDocumentProvider.shared.addDocumentAtURLToTrash(url,
+                                                                           title: title)
+                { (error, shelfItem) in
+                    completion(error, shelfItem)
+                }
+            } else {
+                completion(error, nil)
+            }
+        }
+    }
+
+    internal func deletePagesPermanantly(from document: FTThumbnailableCollection, pages: NSSet) {
+        DispatchQueue.main.async {
+            document.deletePages(Array(pages) as! [FTThumbnailable])
+            document.saveDocument(completionHandler: { [weak self] (_) in
+                NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+            })
+        }
     }
 }
 
