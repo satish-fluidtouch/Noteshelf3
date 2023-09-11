@@ -14,6 +14,6 @@ class FTBookmarkColorFooter: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         removeBookmarkButton?.layer.cornerRadius = 10
-        removeBookmarkButton?.titleLabel?.text = "Remove Bookmark"
+        removeBookmarkButton?.titleLabel?.text = "bookmark.removebookMark".localized
     }
 }

@@ -53,6 +53,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         }
         self.textField?.delegate = self
         self.textField?.layer.cornerRadius = 10.0
+        self.textField?.placeholder = "AddTag".localized
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 34))
         textField?.leftView = paddingView
         textField?.leftViewMode = .always

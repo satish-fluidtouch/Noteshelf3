@@ -120,7 +120,7 @@ private let USE_DEFAULT_COLOR = true;
         self.textView?.layer.borderColor = UIColor.label.withAlphaComponent(0.2).cgColor
         self.textView?.layer.cornerRadius = 10.0
         self.textView?.layer.masksToBounds = true
-        self.textView?.addDoneButton(title: "Done", target: self, selector: #selector(tapDone(sender:)))
+        self.textView?.addDoneButton(title: "Done".localized, target: self, selector: #selector(tapDone(sender:)))
     }
 
     private func configureCopyBtn() {
