@@ -336,10 +336,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         loadingIndicatorViewController.hide();
                         self.view.isUserInteractionEnabled = true;
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
-                            weakSelf?.shelfCollection(title: nil, pickDefault: true, onCompeltion: { (collection) in
-                                weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = collection;
-                                weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
-                            });
+                            self.refreshShelfCollection(setToDefault: true, onCompletion: nil)
                         }
                     });
                 }
@@ -368,15 +365,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     loadingIndicatorViewController.hide();
                     self.view.isUserInteractionEnabled = true;
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
-//                        weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { collectionToShow in
-//                            if let collectionToShow {
-//                                weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = collectionToShow;
-//                                weakSelf?.refreshShelfCollection(setToDefault: true,onCompletion: nil);
-//                            }
-//                            else {
-                                self.refreshShelfCollection(setToDefault: true,onCompletion: nil);
-                            //}
-                        //});
+                            self.refreshShelfCollection(setToDefault: true,onCompletion: nil);
                     }
                 });
             };
@@ -427,8 +416,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         else {
             self.rootContentViewController?.shelfItemCollection = collection
             self.rootContentViewController?.currentShelfViewModel?.collection = collection
-            //TODO : This is taken from NS2Dev, need to refresh side bar.
-//            self.rootContentViewController?.refreshCategoryController();
         }
         configureSceneNotifications()
         return
