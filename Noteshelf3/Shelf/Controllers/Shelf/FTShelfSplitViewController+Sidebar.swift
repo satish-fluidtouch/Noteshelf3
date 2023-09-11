@@ -13,8 +13,9 @@ import Reachability
 
 extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     func didCurrentCollectionRenamed(_ collection: FTShelfItemCollection) {
-        if currentShelfViewModel?.collection.uuid == collection.uuid {
-            detailNavigationController?.viewControllers.first?.title = collection.displayTitle
+        if currentShelfViewModel?.collection.uuid == collection.uuid,let shelfParentVC = detailNavigationController?.viewControllers.first as? FTShelfViewControllerNew {
+            shelfParentVC.shelfViewModel.collection = collection
+            shelfParentVC.title = collection.displayTitle
         }
     }
 
