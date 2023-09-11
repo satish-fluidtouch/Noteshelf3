@@ -769,7 +769,7 @@ extension FTPDFRenderViewController {
 
             let alertController = UIAlertController.init(title: headerTitle, message: nil, preferredStyle: .alert)
             weak var weakAlertController = alertController
-            let saveAction = UIAlertAction.init(title: NSLocalizedString("Save", comment: "Save"), style: .default, handler: { _ in
+            let saveAction = UIAlertAction.init(title: NSLocalizedString("save", comment: "Save"), style: .default, handler: { _ in
                 var text = weakAlertController?.textFields?.first?.text
                 if(nil != text) {
                     text = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
