@@ -483,7 +483,7 @@ extension FTNewTextStyleViewController: FTTextSelectionChangeDelegate {
             let fontPointSize = font.pointSize/scale
             textFontStyle.fontFamily = font.familyName
             textFontStyle.fontName = font.fontName
-            textFontStyle.fontSize = Int(fontPointSize)
+            textFontStyle.fontSize = Int(round(fontPointSize))
         }
         if let fontColor = attributes[NSAttributedString.Key.foregroundColor] as? UIColor {
             textFontStyle.textColor = fontColor.hexString
