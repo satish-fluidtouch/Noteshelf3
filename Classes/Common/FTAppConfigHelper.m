@@ -107,11 +107,11 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
 -(NSString *)showiRateKey
 {
     /*
-     DEBUG      :   dev_should_enable_irate_appversion
-     BETA      :   beta_should_enable_irate_appversion
-     RELEASE    :   prod_should_enable_irate_appversion
+     DEBUG      :   dev_enable_irate_appversion
+     BETA      :   beta_enable_irate_appversion
+     RELEASE    :   prod_enable_irate_appversion
      */
-    NSString *key = [NSString stringWithFormat:@"%@_should_enable_irate_%@",appEnviromentPrefix(),[appVersion() stringByReplacingOccurrencesOfString:@"." withString:@"_"]];
+    NSString *key = [NSString stringWithFormat:@"%@_enable_irate_%@",appEnviromentPrefix(),[appVersion() stringByReplacingOccurrencesOfString:@"." withString:@"_"]];
     return key;
 }
 

@@ -49,3 +49,5 @@
 
 "noteshelf.ai.noteshelfAILearnMore" = "Entdecke, was möglich ist.";
 "noteshelf.ai.noteshelfAIError" = "Konnte keine Verbindung zum Server herstellen. Bitte versuchen Sie es später erneut.";
+
+"noteshelf.ai.handwriteMessage" = "Noteshelf AI wird Ihre Handschrift nur verstehen können, wenn Sie ein Premium-Benutzer sind.";

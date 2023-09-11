@@ -71,9 +71,13 @@ class FTCustomizeToolbarController: UITableViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(emptyTrashAction)
         self.present(alertController, animated: true, completion: nil)
+        // Track Event
+        track(EventName.customizetoolbar_reset_tap)
     }
 
     @objc func doneTapped(sender: UIButton) {
+        // Track Event
+        track(EventName.customizetoolbar_done_tap)
         self.dismiss(animated: true)
     }
 
@@ -149,6 +153,8 @@ class FTCustomizeToolbarController: UITableViewController {
             self.dataSource.removeDisplayTool(itemToMove, from: reqSection)
             self.dataSource.insertTool(itemToMove, at: to.row, in: reqSection.type)
             self.saveCurrentToolsAndNotify()
+            // Track Event
+            track(EventName.customizetoolbar_tool_reorder, params: [EventParameterKey.tool: itemToMove.localizedEnglish()])
         } else {
             self.tableView.reloadData()
         }
@@ -175,6 +181,9 @@ class FTCustomizeToolbarController: UITableViewController {
                 }
             }
             self.saveCurrentToolsAndNotify()
+            // Track Event
+            track(EventName.customizetoolbar_tool_add, params: [EventParameterKey.tool: editItem.localizedEnglish()])
+
         } else if editingStyle == .delete && indexPath.section == 0 {
             currentToolTypes.remove(at: indexPath.row)
             self.dataSource.removeDisplayTool(editItem, from: editStartSection)
@@ -187,6 +196,9 @@ class FTCustomizeToolbarController: UITableViewController {
                 tableView.insertRows(at: [IndexPath(item: index, section: destSectionType.rawValue)], with: .automatic)
             }
             self.saveCurrentToolsAndNotify()
+            // Track Event
+            track(EventName.customizetoolbar_tool_remove, params: [EventParameterKey.tool: editItem.localizedEnglish()])
+
         }
     }
 

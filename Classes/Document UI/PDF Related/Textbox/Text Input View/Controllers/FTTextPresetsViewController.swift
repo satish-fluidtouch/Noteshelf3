@@ -15,11 +15,17 @@ enum FTPresetStyleMode: String {
     case reorder
 }
 
-protocol FTTextPresetSelectedDelegate: NSObjectProtocol {
+@objc protocol FTTextPresetSelectedDelegate: NSObjectProtocol {
     func didSelectedPresetStyleId(_ style: FTTextStyleItem)
     func reloadStylesStackView()
     func rootViewController() -> UIViewController?
-    func dismissKeyboard()
+    @objc optional func dismissKeyboard()
+}
+
+extension FTTextPresetSelectedDelegate {
+    func dismissKeyboard() {
+        debugLog("Required delegate should implement if needed")
+    }
 }
 
 class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {

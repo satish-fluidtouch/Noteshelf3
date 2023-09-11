@@ -170,7 +170,7 @@ struct FTSidebarView: View {
                     }
                 }
                 if menuSection.type == .categories {
-                    getEditableViewForSideBarItem(viewModel.newItem,withPlaceHolder:"New Category") { newTitle in
+                    getEditableViewForSideBarItem(viewModel.newItem,withPlaceHolder:"NewCategory".localized) { newTitle in
                         if !newTitle.isEmpty {
                             viewModel.addNewCategoryWithTitle(newTitle)
                             viewModel.newItem.title = ""

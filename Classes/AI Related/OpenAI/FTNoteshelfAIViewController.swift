@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class FTNoteshelfAI {
     static var supportsNoteshelfAI: Bool {
@@ -71,11 +72,14 @@ class FTNoteshelfAIViewController: UIViewController {
 
     public static var maxAllowedTokenCounter = 100;
     
+    @IBOutlet private weak var footerHeightConstraint: NSLayoutConstraint?;
+
     @IBOutlet private weak var textField: UITextField?;
     @IBOutlet private weak var textView: UITextView?;
     @IBOutlet private weak var contentView: UIView?;
     @IBOutlet private weak var footerView: UIView?;
-    
+    var premiumCancellableEvent: AnyCancellable?;
+
     private weak var delegate: FTNoteshelfAIDelegate?;
     
     private weak var footerVC: FTNoteshelfAIFooterViewController?;
@@ -143,6 +147,34 @@ class FTNoteshelfAIViewController: UIViewController {
                 break;
             }
         }
+        self.updateFooterHeight();
+        if !FTIAPManager.shared.premiumUser.isPremiumUser {
+            premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
+                self?.updateFooterHeight();
+            }
+        }
+    }
+
+    deinit{
+        self.premiumCancellableEvent?.cancel();
+        self.premiumCancellableEvent = nil;
+    }
+
+    private func updateFooterHeight() {
+        var height: CGFloat = FTIAPManager.shared.premiumUser.isPremiumUser ? 48 : 77;
+        if let mode = self.footerVC?.footermode {
+            if mode == .sendFeedback {
+                height = 48;
+            }
+            self.footerVC?.footermode = mode;
+        }
+        self.footerHeightConstraint?.constant = height;
+        self.view.layoutIfNeeded()
+    }
+    
+    private func setFooterMode(_ mode: FTAIFooterMode) {
+        self.footerVC?.footermode = mode;
+        self.updateFooterHeight();
     }
     
     private func updateContentView() {
@@ -153,7 +185,7 @@ class FTNoteshelfAIViewController: UIViewController {
         var controller: UIViewController?;
         
         self.textField?.placeholder = self.aiCommand.placeholderMessage;
-        self.footerVC?.footermode = .noteshelfAiBeta;
+        self.setFooterMode(.noteshelfAiBeta);
                 
         if aiCommand == .none {
             self.reset();
@@ -363,7 +395,7 @@ private extension FTNoteshelfAIViewController {
             }
             self?.textViewController?.supportsHandwriting = supportHandwrite;
             self?.textViewController?.showActionOptions(error == nil);
-            self?.footerVC?.footermode = .sendFeedback;
+            self?.setFooterMode(.sendFeedback);
         }
     }
     

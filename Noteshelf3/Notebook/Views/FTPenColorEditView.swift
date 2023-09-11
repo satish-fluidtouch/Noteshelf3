@@ -98,10 +98,10 @@ struct FTPenColorEditView: View {
 
     private var segmentControl: some View {
         Picker("", selection: $viewModel.colorEditSegment) {
-            Text("Presets")
+            Text("shelf.notebook.textstyle.Presets".localized)
                 .tag(FTPenColorSegment.presets)
                 .font(.appFont(for: .medium, with: 13.0))
-            Text("Grid")
+            Text("shelf.notebook.textstyle.grid".localized)
                 .tag(FTPenColorSegment.grid)
                 .font(.appFont(for: .medium, with: 13.0))
         }

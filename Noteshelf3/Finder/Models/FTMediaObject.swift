@@ -48,9 +48,9 @@ public enum FTMediaType: String {
         case .audio:
             title = "Recording"
         case .allMedia:
-            title = "All Content"
+            title = "finder.media.allcontent"
         case .sticker:
-            title = "Sticker"
+            title = "finder.media.sticker"
         case .webclip:
             title = "newnotebook.webclip.title"
 

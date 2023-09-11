@@ -89,13 +89,13 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
     func emptyTrash(_ collection: FTShelfItemCollection, showConfirmationAlert: Bool, onCompletion: @escaping ((Bool) -> Void)) {
         if showConfirmationAlert {
-            let alertController = UIAlertController(title: "Are you sure you want empty your Trash?", message: nil, preferredStyle: UIAlertController.Style.alert)
-            let emptyTrashAction = UIAlertAction(title: "Empty Trash", style: .destructive) { _ in
+            let alertController = UIAlertController(title: "trash.alert.title".localized, message: nil, preferredStyle: UIAlertController.Style.alert)
+            let emptyTrashAction = UIAlertAction(title: "shelf.emptyTrash".localized, style: .destructive) { _ in
                 FTNoteshelfDocumentProvider.emptyTrashCollection(collection, onController: self) {
                     onCompletion(true)
                 }
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+            let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default)
             alertController.addAction(cancelAction)
             alertController.addAction(emptyTrashAction)
             self.present(alertController, animated: true, completion: nil)
