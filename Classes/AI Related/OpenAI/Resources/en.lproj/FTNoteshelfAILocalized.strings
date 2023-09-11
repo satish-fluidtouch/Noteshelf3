@@ -49,3 +49,5 @@
 
 "noteshelf.ai.noteshelfAILearnMore" = "Discover what’s possible";
 "noteshelf.ai.noteshelfAIError" = "Could not connect to server. Please try again later.";//CouldNotConnectToServer
+
+"noteshelf.ai.handwriteMessage" = "Noteshelf AI will be able to understand your handwriting only if you are a Premium user.";
