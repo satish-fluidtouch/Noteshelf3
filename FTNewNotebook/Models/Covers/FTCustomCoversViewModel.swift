@@ -16,7 +16,7 @@ enum FTDefaultCustomType: String, CaseIterable {
         let title: String
         switch self {
         case .unsplash:
-            title = "customizeToolbar.unsplash"
+            title = "Unsplash"
         case .camera:
             title = "Camera"
         case .photoLibrary:

@@ -92,8 +92,8 @@ class AddMenuDataManager {
 
     func fetchAttachmentItems() -> [AttachmentItem] {
         let webClipItem = AttachmentItem(image: UIImage(systemName: "macwindow"), name:"newnotebook.webclip.title".localized, type: .webClip)
-        let unsplashItem = AttachmentItem(image: UIImage(named: folderPrefix + "addmenu_unsplash"), name:"customizeToolbar.unsplash".localized, showDiscloser: true, type: .unsplash)
-        let pixabayItem = AttachmentItem(image: UIImage(named: folderPrefix + "addmenu_pixabay"), name:"customizeToolbar.pixabay".localized, showDiscloser: true, type: .pixabay)
+        let unsplashItem = AttachmentItem(image: UIImage(named: folderPrefix + "addmenu_unsplash"), name:"Unsplash", showDiscloser: true, type: .unsplash)
+        let pixabayItem = AttachmentItem(image: UIImage(named: folderPrefix + "addmenu_pixabay"), name:"Pixabay".localized, showDiscloser: true, type: .pixabay)
         return [webClipItem, unsplashItem, pixabayItem]
     }
 }

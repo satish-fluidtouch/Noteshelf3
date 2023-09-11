@@ -10,7 +10,7 @@ import FTNewNotebook
 
 extension FTUnSplashItem {
     func asOpenClipart1() -> FTMediaLibraryModel {
-        let openClipart = FTMediaLibraryModel(id: self.id, title: "customizeToolbar.unsplash".localized, clipartDescription: "UnSplash", user: user, width: width, height: height, unSplashTags: tags)
+        let openClipart = FTMediaLibraryModel(id: self.id, title: "Unsplash", clipartDescription: "UnSplash", user: user, width: width, height: height, unSplashTags: tags)
         openClipart.urls = FTOpenClipartURL(png_thumb: self.urls?.small ?? "", png_full_lossy: self.urls?.regular  ?? "")
         openClipart.links = FTOpenClipartResultLinks(download_location: links?.downloadLocation ?? "")
         return openClipart

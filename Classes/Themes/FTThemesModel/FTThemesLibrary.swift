@@ -115,7 +115,6 @@ extension FTThemesLibrary {
                 return self._defaultTheme(defaultMode: defaultMode)
             }
             theme.isCustom = themeInfo.isCustom
-           // theme.displayName = themeInfo.themeDisplayName
             theme.hasCover = themeInfo.hasCover
             if let paperTheme = theme as? FTPaperThemeable ,themeType == .papers{
                 paperTheme.setPaperVariants(themeInfo.variants)

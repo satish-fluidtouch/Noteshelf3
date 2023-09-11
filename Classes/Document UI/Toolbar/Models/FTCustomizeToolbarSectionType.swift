@@ -203,9 +203,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .stickers:
             str = "customizeToolbar.stickers".localized
         case .unsplash:
-            str = "customizeToolbar.unsplash".localized
+            str = "Unsplash"
         case .pixabay:
-            str = "customizeToolbar.pixabay".localized
+            str = "Pixabay"
         case .emojis:
             str = "customizeToolbar.emojis".localized
 

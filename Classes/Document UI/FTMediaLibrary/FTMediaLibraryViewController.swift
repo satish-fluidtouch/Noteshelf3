@@ -60,9 +60,9 @@ class FTMediaLibraryViewController: UIViewController, FTPopoverPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         if mediaSource == .pixabay {
-            self.titleLabel.text = "customizeToolbar.pixabay".localized
+            self.titleLabel.text = "Pixabay"
         } else {
-            self.titleLabel.text = "customizeToolbar.unsplash".localized
+            self.titleLabel.text = "Unsplash"
         }
         if shouldHideBackButton {
             backButton.isHidden = true
