@@ -322,7 +322,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Sizes": "Free:\(self.freeDiskSpace())",
             "Clouds Used": self.cloudUsed(),
             "Device": "Mac" /* [FTUtils deviceModelFriendlyName], */,
-            "iOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
+            "macOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
             "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
             "Lang": FTUtils.currentLanguage(),
@@ -343,7 +343,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         var string: String?
         if let value = customFields["User ID"],
            let value1 = customFields["App Version"],
-           let value2 = customFields["iOS"],
+           let value2 = customFields["macOS"],
            let value3 = customFields["Device"],
            let value4 = customFields["Sizes"],
            let value5 = customFields["Clouds Used"],
@@ -353,8 +353,9 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            let value9 = customFields["Locale"],
            let value10 = customFields["HasMigratedItems"],
            let value11 = customFields["Battery"],
-           let value12 = customFields["Screens"] {
-            string = "User ID: \(value) | Version: \(value1) | macOS: \(value2) | Device: \(value3) | Free: \(value4) | Cloud: \(value5) | iCloud: \(value6) | Autobackup: \(value7) | Lang: \(value8) | Locale: \(value9) | HasMigratedItems : \(value10) | Battery: \(value11) | Screens: \(value12)"
+           let value12 = customFields["Screens"],
+           let value13 = customFields["Premium"] {
+            string = "User ID: \(value) | Version: \(value1) | Premium: \(value13) | macOS: \(value2) | Device: \(value3) | Free: \(value4) | Cloud: \(value5) | iCloud: \(value6) | Autobackup: \(value7) | Lang: \(value8) | Locale: \(value9) | HasMigratedItems : \(value10) | Battery: \(value11) | Screens: \(value12)"
         }
         return string ?? ""
     }
@@ -414,8 +415,9 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            let recognition = customFields["Recognition"],
            let recog_Act = customFields["Recog_Act"],
            let layoutType = customFields["LayoutType"],
-           let battery = customFields["Battery"] {
-            string = "User ID: \(userId) | Version: \(version) | iOS: \(iOS) | Device: \(Device) | Stylus: \(stylus) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | HasMigratedItems : \(hasMigratedItems) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription)"
+           let battery = customFields["Battery"],
+           let premium = customFields["Premium"]{
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | iOS: \(iOS) | Device: \(Device) | Stylus: \(stylus) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | HasMigratedItems : \(hasMigratedItems) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription)"
         }
         return string ?? ""
     }
