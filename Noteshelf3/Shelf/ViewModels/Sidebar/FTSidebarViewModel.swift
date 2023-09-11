@@ -75,15 +75,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
        didSet {
-           let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
-           if selectedSideBarItem != nil,
-              collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}),
-              selectedSideBarItem?.shelfCollection?.uuid == selectedShelfItemCollection?.uuid {
-               selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
-           } else {
-               selectedSideBarItem = menuItems.flatMap({$0.items})
-                   .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
-           }
+           updateSidebarItemSelection()
        }
     }
     init(collection: FTShelfItemCollection? = nil) {
@@ -172,6 +164,19 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     }
 }
 private extension FTSidebarViewModel {
+    func updateSidebarItemSelection(){
+        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
+        if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
+            if selectedSideBarItem != nil,
+               selectedSideBarItem?.shelfCollection != nil,
+               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
+                selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
+            } else {
+                selectedSideBarItem = menuItems.flatMap({$0.items})
+                    .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
+            }
+        }
+    }
     func setSidebarItemTypeForCollection(_ collection: FTShelfItemCollection?){
         if let collection {
             if collection.isStarred {
