@@ -17,7 +17,7 @@
                BlueprintIdentifier = "BAB689A72862E7A400FACF11"
                BuildableName = "GenerateLocalization"
                BlueprintName = "GenerateLocalization"
-               ReferencedContainer = "container:Noteshelf.xcodeproj">
+               ReferencedContainer = "container:Noteshelf3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -53,7 +53,7 @@
             BlueprintIdentifier = "BAB689A72862E7A400FACF11"
             BuildableName = "GenerateLocalization"
             BlueprintName = "GenerateLocalization"
-            ReferencedContainer = "container:Noteshelf.xcodeproj">
+            ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -44,7 +44,7 @@ platform :ios do
         # Step 4
 
         # 1. Build app with the configuration
-        build_app(workspace: "Noteshelf.xcworkspace",
+        build_app(workspace: "Noteshelf3.xcworkspace",
                   scheme: "Noteshelf3",
                   configuration: "Beta",
                   output_directory: "build",
@@ -108,7 +108,7 @@ platform :ios do
         # Step 4
 
         # 1. Build app with the configuration
-        build_app(workspace: "Noteshelf.xcworkspace",
+        build_app(workspace: "Noteshelf3.xcworkspace",
                   scheme: "Noteshelf3",
                   output_directory: "build",
                   silent: true,

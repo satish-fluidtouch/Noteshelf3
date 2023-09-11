@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C8140D30232667B60053FC86"
-               BuildableName = "Noteshelf Action.appex"
-               BlueprintName = "Noteshelf Action"
-               ReferencedContainer = "container:Noteshelf.xcodeproj">
+               BuildableName = "Noteshelf3 Action.appex"
+               BlueprintName = "Noteshelf3 Action"
+               ReferencedContainer = "container:Noteshelf3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C8140D30232667B60053FC86"
-            BuildableName = "Noteshelf Action.appex"
-            BlueprintName = "Noteshelf Action"
-            ReferencedContainer = "container:Noteshelf.xcodeproj">
+            BuildableName = "Noteshelf3 Action.appex"
+            BlueprintName = "Noteshelf3 Action"
+            ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
