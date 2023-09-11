@@ -148,7 +148,11 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     }
 
     @objc func didTextAnnotationBoxResign() {
-        self.dismiss(animated: true)
+        // TODO: // Narayana - fix to be optimized, as of now when FTextView is resigned (by end editing)
+        // we are dismissing the controller shown as popover over keyboard(using mode)
+        if self.textStyleMode == .defaultView {
+            self.dismiss(animated: true)
+        }
     }
 
     private func updateNavigationBar() {

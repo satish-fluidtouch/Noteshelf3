@@ -66,7 +66,11 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
     }
 
     @objc func didTextAnnotationBoxResign() {
-        self.dismiss(animated: true)
+        // TODO: // Narayana - fix to be optimized, as of now when FTextView is resigned (by end editing)
+        // we are dismissing the controller shown as popover over keyboard(using mode)
+        if self.presetMode == .select {
+            self.dismiss(animated: true)
+        }
     }
 
     class func showAsPopover(fromSourceView sourceView: UIView,
