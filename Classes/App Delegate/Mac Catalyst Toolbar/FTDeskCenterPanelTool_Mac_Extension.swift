@@ -57,6 +57,7 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.emojis.toolbarIdentifier
             ,FTDeskCenterPanelTool.stickers.toolbarIdentifier
             ,FTDeskCenterPanelTool.page.toolbarIdentifier
+            ,FTDeskCenterPanelTool.deletePage.toolbarIdentifier
             ,FTDeskCenterPanelTool.bookmark.toolbarIdentifier
             ,FTDeskCenterPanelTool.tag.toolbarIdentifier
             ,FTDeskCenterPanelTool.rotatePage.toolbarIdentifier

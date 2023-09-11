@@ -49,3 +49,5 @@
 
 "noteshelf.ai.noteshelfAILearnMore" = "可能性を発見する";
 "noteshelf.ai.noteshelfAIError" = "サーバーに接続できませんでした。後でもう一度お試しください。";
+
+"noteshelf.ai.handwriteMessage" = "Noteshelf AIは、あなたがプレミアムユーザーである場合にのみ、あなたの手書きを理解することができます。";

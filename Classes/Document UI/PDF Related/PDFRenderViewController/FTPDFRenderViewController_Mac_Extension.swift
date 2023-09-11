@@ -71,6 +71,11 @@ extension FTPDFRenderViewController {
             let config = FTToastConfiguration(title: "shortcut.toast.addPage".localized)
             FTToastHostController.showToast(from: self, toastConfig: config)
 
+        case .deletePage:
+            if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
+                self.executer.execute(type: .deletePage(page: page))
+            }
+
         case .duplicatePage:
             if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
                 self.executer.execute(type: .duplicatePage(pages: [page])) {
@@ -107,10 +112,10 @@ extension FTPDFRenderViewController {
             self.showShareOptions(with: toolbarItem)
 
         case .shareNotebookAsPDF:
-            self.executer.execute(type: .shareNoteBookAsPDF)
+            self.executer.execute(type: .shareNoteBookAsPDF(source: toolbarItem))
 
         case .sharePageAsPng:
-            self.executer.execute(type: .sharePageAsPng)
+            self.executer.execute(type: .sharePageAsPng(source: toolbarItem))
 
         case .savePageAsPhoto:
             self.executer.execute(type: .savePageAsPhoto) {
@@ -152,8 +157,9 @@ extension FTPDFRenderViewController {
             FTShapesRackViewController.setRackType(penTypeRack: FTRackData(type: .shape, userActivity: activity))
             FTShapesRackViewController.showPopOver(presentingController: self, sourceView: toolbarItem)
         case .deskModeClipboard:
-            FTLassoRackViewController.showPopOver(presentingController: self
-                                                , sourceView: toolbarItem);
+            let lassoVc = FTLassoRackViewController.showPopOver(presentingController: self
+                                                , sourceView: toolbarItem)
+            (lassoVc as? FTLassoRackViewController)?.delegate = self
         default:
             break;
         }

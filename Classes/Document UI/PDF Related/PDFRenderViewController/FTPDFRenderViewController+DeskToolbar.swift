@@ -141,7 +141,12 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
                     FTToastHostController.showToast(from: self, toastConfig: config)
                 }
             }
-            
+
+        case .deletePage:
+            if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
+                self.executer.execute(type: .deletePage(page: page))
+            }
+
         case .tag:
             if let page = self.firstPageController()?.pdfPage as? FTThumbnailable {
                 let pagesSet = NSSet(array: [page])
@@ -170,10 +175,10 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             self.showShareOptions(with: source)
             
         case .shareNotebookAsPDF:
-            self.executer.execute(type: .shareNoteBookAsPDF)
+            self.executer.execute(type: .shareNoteBookAsPDF(source: source))
             
         case .sharePageAsPng:
-            self.executer.execute(type: .sharePageAsPng)
+            self.executer.execute(type: .sharePageAsPng(source: source))
             
         case .savePageAsPhoto:
             self.executer.execute(type: .savePageAsPhoto)

@@ -597,7 +597,6 @@
 "PageCreated" = "Page créée";
 "PageCreatedOn" = "Créé le %@";
 "PageDimensions" = "Dimensions";
-"PageFromClipBoard" = "Coller depuis le presse-papiers";
 "PageFromClipboard" = "Page du presse-papiers";
 "PageFromPhoto" = "Arrière-plan de la photo";
 "PageFromTemplate" = "Sélectionner un modèle.";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Les mots de passe ne correspondent pas.";
 "Paste" = "Coller";
 "PasteBelow" = "Coller ci-dessous";
+"PasteFromClipBoard" = "Coller depuis le presse-papiers";
 "Pause" = "Pause";
 "PencilActionAlert" = "Cette action remplacera le paramètre par défaut du système uniquement pour cette application. Souhaitez-vous continuer ?";
 "PencilActionChangeMessage" = "Aller dans Paramètres > Apple Pencil pour modifier";
@@ -979,6 +979,8 @@
 "customizeToolbar.basicTools" = "OUTILS DE BASE";
 "customizeToolbar.bookmark" = "Marque-page";
 "customizeToolbar.currentToolbar" = "SUR LA BARRE D'OUTILS";
+"customizeToolbar.deletePage" = "Supprimer la page";
+"customizeToolbar.deletePageConfirmation" = "Êtes-vous sûr de vouloir supprimer la page %d de ce cahier?";
 "customizeToolbar.duplicatePage" = "Page en double";
 "customizeToolbar.emojis" = "Émoticônes";
 "customizeToolbar.eraser" = "Gomme";
@@ -1218,6 +1220,8 @@
 "shelf.bottomBar.delete" = "Supprimer";
 "shelf.bottomBar.restore" = "Restaurer";
 "shelf.bottomBar.trash" = "Déchets";
+"shelf.category.noCategoryItemsDescription" = "Appuyez sur les options ci-dessus pour créer de nouvelles notes ou déplacer celles existantes.";
+"shelf.category.noCategoryItemsTitle" = "Cette catégorie est vide.";
 "shelf.category.unCategorized" = "Non classé";
 "shelf.changeCover" = "Changer la couverture.";
 "shelf.createGroup" = "Créer un groupe.";
@@ -1287,6 +1291,7 @@
 "shelf.notebook.textstyle.size" = "Taille";
 "shelf.notebook.textstyle.textLineHeight" = "Hauteur de ligne";
 "shelf.notebook.textstyle.textautoLineHeight" = "Hauteur de ligne automatique";
+"shelf.ns2Category.noCategoryItemsTitle" = "Aucun élément dans cette catégorie.";
 "shelf.paperPicker.choosePaper" = "Choisir le papier";
 "shelf.paperPicker.orientation" = "Orientation";
 "shelf.quickCreateSettings.NavTitle" = "Note rapide";
@@ -1447,6 +1452,9 @@
 "templatesStore.templatePreview.createNotebook" = "Créer un carnet";
 "templatesStore.templatePreview.inyourLibrary" = "Dans votre bibliothèque";
 "templatesStore.templatePreview.style" = "Style";
+"text.font.setAsDefault.menuTitle" = "Définir par défaut pour:";
+"text.font.setAsDefault.thisAndFutureBooks" = "Ceci et tous les futurs cahiers";
+"text.font.setAsDefault.thisBook" = "Ce cahier.";
 "trash.alert.cannotOpenNotebook" = "Ce carnet ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
@@ -1493,4 +1501,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Narayana on 7 September 2023 at 7:10 PM

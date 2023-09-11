@@ -106,7 +106,9 @@ final class FTShortcutsToolsSection: FTToolbarSection {
         .bookmark,
         .tag,
         .rotatePage,
-        .duplicatePage]
+        .duplicatePage,
+        .deletePage
+    ]
 
     var displayTools: [FTDeskCenterPanelTool] = []
 
