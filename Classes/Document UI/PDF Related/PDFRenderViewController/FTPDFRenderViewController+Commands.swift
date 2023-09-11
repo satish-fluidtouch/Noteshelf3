@@ -165,11 +165,11 @@ extension FTPDFRenderViewController: FTShortcutActions {
         let alert = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.alert)
         let cancelAction = UIAlertAction(title: "Cancel".localized, style: (isPinEnabled ? .destructive : .cancel), handler: nil)
 
-        let moveToTrashAction = UIAlertAction(title: "MoveToTrash".localized, style: (isPinEnabled ? .default : .destructive), handler: { (action) in
+        let moveToTrashAction = UIAlertAction(title: "MoveToTrash".localized, style: (isPinEnabled ? .default : .destructive), handler: { [weak self] action in
             if let document = doc as? FTThumbnailableCollection, document.documentPages().count == 1 {
                 doc.insertPageAtIndex(1)
             }
-            self.movePagestoTrash(from: doc, pages: [page]) { [weak self] (error, _) in
+            self?.movePagestoTrash(from: doc, pages: [page]) { [weak self] (error, _) in
                 if error == nil, let weakSelf = self, let document = doc as? FTThumbnailableCollection {
                     weakSelf.deletePagesPermanantly(from: document,
                                                     pages: [page])
