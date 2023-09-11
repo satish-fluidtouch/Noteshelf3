@@ -49,3 +49,5 @@
 
 "noteshelf.ai.noteshelfAILearnMore" = "發現可能性";
 "noteshelf.ai.noteshelfAIError" = "無法連接到伺服器。請稍後再試。";
+
+"noteshelf.ai.handwriteMessage" = "只有您是高級用戶，Noteshelf AI 才能理解您的手寫筆記。";

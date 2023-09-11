@@ -7,15 +7,21 @@
 //
 
 import Foundation
-
+import FTCommon
 final class FTiRateManager: NSObject {
     static func configureiRate(delegate : iRateDelegate?) {
         iRate.sharedInstance()?.delegate = delegate
-        iRate.sharedInstance()?.promptAtLaunch = FTAppConfigHelper.sharedAppConfig().shouldShowiRate();
-        iRate.sharedInstance()?.eventsUntilPrompt = 5
-        iRate.sharedInstance()?.daysUntilPrompt = 0
-        iRate.sharedInstance()?.usesUntilPrompt = 30
-        iRate.sharedInstance()?.updateLastVersionReviewedDate()
+        if FTIAPManager.shared.premiumUser.isPremiumUser {
+            iRate.sharedInstance()?.promptAtLaunch = FTAppConfigHelper.sharedAppConfig().shouldShowiRate();
+            iRate.sharedInstance()?.eventsUntilPrompt = 5
+            iRate.sharedInstance()?.daysUntilPrompt = 0
+            iRate.sharedInstance()?.usesUntilPrompt = 30
+            iRate.sharedInstance()?.updateLastVersionReviewedDate()
+        }
+        else {
+            iRate.sharedInstance()?.promptAtLaunch = false;
+            reset();
+        }
     }
 
     static func reset() {
@@ -28,16 +34,29 @@ final class FTiRateManager: NSObject {
     }
 
     @objc class func logEvent() {
-        iRate.sharedInstance()?.logEvent(true)
+        if FTIAPManager.shared.premiumUser.isPremiumUser {
+            iRate.sharedInstance()?.logEvent(true)
+        }
     }
 
     static func checkForApplicationForegroundActions() {
-        if iRate.sharedInstance().usesCount >= 1 {
-            //Assuming it is not using in our app, so just avoiding error here
-            if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
-                FTPermissionManager.askForSiriPermission(onController: rootViewController, shouldForce:false, completion:nil)
+#if !targetEnvironment(macCatalyst)
+        runInMainThread {
+            if !FTIAPManager.shared.premiumUser.isPremiumUser {
+                iRate.sharedInstance()?.promptAtLaunch = false;
+                reset();
+            }
+            else {
+                iRate.sharedInstance()?.promptAtLaunch = FTAppConfigHelper.sharedAppConfig().shouldShowiRate();
             }
         }
+//        if iRate.sharedInstance().usesCount >= 1 {
+//            //Assuming it is not using in our app, so just avoiding error here
+//            if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+//                FTPermissionManager.askForSiriPermission(onController: rootViewController, shouldForce:false, completion:nil)
+//            }
+//        }
+#endif
     }
 }
 

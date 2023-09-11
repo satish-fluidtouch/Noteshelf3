@@ -49,3 +49,5 @@
 
 "noteshelf.ai.noteshelfAILearnMore" = "가능한 것을 발견하세요.";
 "noteshelf.ai.noteshelfAIError" = "서버에 연결할 수 없습니다. 나중에 다시 시도하세요.";
+
+"noteshelf.ai.handwriteMessage" = "노트셀프 AI는 당신이 프리미엄 사용자인 경우에만 당신의 필기를 이해할 수 있습니다.";
