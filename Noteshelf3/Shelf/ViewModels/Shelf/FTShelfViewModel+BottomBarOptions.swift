@@ -156,6 +156,9 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
         self.delegate?.renameDocuments(items, onCompletion: { [weak self] in
             self?.addObserversForShelfItems()
             self?.resetShelfModeTo(.normal)
+            #if targetEnvironment(macCatalyst)
+            self?.reloadItems()
+            #endif
         })
     }
     func duplicateShelfItems(){
