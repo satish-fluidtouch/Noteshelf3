@@ -8,16 +8,38 @@
 
 import UIKit
 
+class FTCloudBackupFileInfo: NSObject {
+    func info() -> [String: String]? {
+        fatalError("\(self.className) should override this info() method");
+    }
+    func updte(with info: [String:String]) {
+        fatalError("\(self.className) should override this updte(with:) method");
+    }
+    
+    func resetProperties() {
+        fatalError("\(self.className) should override this resetProperties() method");
+    }
+}
+
 @objc open class FTCloudBackup: NSObject {
     var backupInfo: [String: Any]?
     var uuid: String = UUID().uuidString
-    var filePath: String = ""
+    var relativeFilePath: String = ""
     var lastUpdated: NSNumber?
     var lastBackupDate: NSNumber?
     var isDirty: Bool = false
     var errorDescription: String?
     
+    private(set) var pdfFileInfo = FTCloudBackupFileInfo();
+    private(set) var nsFileInfo = FTCloudBackupFileInfo();
+    
+    class func fileInfo() -> FTCloudBackupFileInfo {
+        return FTCloudBackupFileInfo();
+    }
+    
     @objc init(withDict dict: [String: Any]) {
+        pdfFileInfo = Self.fileInfo();
+        nsFileInfo = Self.fileInfo();
         super.init()
         self.backupInfo = dict;
         self.updateWithDict(dict)
@@ -31,7 +53,7 @@ import UIKit
             self.uuid = UUID
         }
         if let path = dict[FTBackUpPackagePathKey] as? String {
-            self.filePath = path
+            self.relativeFilePath = path
         }
         if let updated = dict[FTBackUpLastUpdatedKey] as? NSNumber {
             self.lastUpdated = updated
@@ -47,7 +69,7 @@ import UIKit
         var dictInfo = [String: Any]()
         dictInfo[FTBackUpGUIDKey] = self.uuid
         dictInfo[FTBackUpIsDirtyKey] = self.isDirty
-        dictInfo[FTBackUpPackagePathKey] = filePath
+        dictInfo[FTBackUpPackagePathKey] = relativeFilePath
         
         if(nil != self.lastUpdated) {
             dictInfo[FTBackUpLastUpdatedKey] = self.lastUpdated
@@ -63,5 +85,30 @@ import UIKit
     
     func resetProperties() {
         self.isDirty = false
+        self.pdfFileInfo.resetProperties();
+        self.nsFileInfo.resetProperties()
+    }
+        
+    func cloudFileInfo(_ backUpType: RKExportFormat) -> FTCloudBackupFileInfo? {
+        var item: FTCloudBackupFileInfo?
+        if backUpType == kExportFormatNBK {
+            item = self.nsFileInfo;
+        }
+        else if backUpType == kExportFormatPDF {
+            item = self.pdfFileInfo;
+        }
+        return item;
+    }
+}
+
+extension RKExportFormat {
+    var cloudFileInfoKey: String {
+        if self == kExportFormatNBK {
+            return "nsbook";
+        }
+        else if self == kExportFormatPDF {
+            return "pdf";
+        }
+        fatalError("\(self) not supported yet")
     }
 }

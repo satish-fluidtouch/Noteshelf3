@@ -8,35 +8,64 @@
 
 import UIKit
 
-class FTGoogleDriveBackupEntry: FTCloudBackup {
+class FTGDBackupFileInfo: FTCloudBackupFileInfo {
     var googleDriveFileId: String?
     var googleDriveParentId: String?
     var relativePath: String?
+    
+    override func info() -> [String: String]? {
+        if let gFileID = googleDriveFileId {
+            var info = [String: String]();
+            info["googleDriveID"] = gFileID;
+            info["googleDriveParentID"] = self.googleDriveParentId ?? "";
+            info["relativePath"] = self.relativePath ?? "";
+            return info;
+        }
+        return nil;
+    }
+    
+    override func updte(with info: [String:String]) {
+        self.googleDriveFileId = info["googleDriveID"];
+        self.googleDriveParentId = info["googleDriveParentID"];
+        self.relativePath = info["relativePath"];
+    }
+    
+    override func resetProperties() {
+        self.googleDriveFileId = nil;
+    }
+}
 
+class FTGoogleDriveBackupEntry: FTCloudBackup {
+    override class func fileInfo() -> FTCloudBackupFileInfo {
+        return FTGDBackupFileInfo();
+    }
+    
     override init(withDict dict: [String: Any]) {
         super.init(withDict: dict);
-        let googleDriveInfo = dict["googleDriveInfo"] as? [String : String];
-        if(nil != googleDriveInfo) {
-            self.googleDriveFileId = googleDriveInfo!["googleDriveID"];
-            self.googleDriveParentId = googleDriveInfo!["googleDriveParentID"];
-            self.relativePath = googleDriveInfo!["relativePath"];
+        let driveInfo = dict["googleDriveInfo"];
+        if let singleFormatInfo = driveInfo as? [String: String] {
+            self.nsFileInfo.updte(with: singleFormatInfo);
+        }
+        else if let multiFormatInfo = driveInfo as? [String : [String: String]] {
+            if let pdfInfo = multiFormatInfo[kExportFormatPDF.cloudFileInfoKey] {
+                self.pdfFileInfo.updte(with: pdfInfo);
+            }
+            if let bookInfo = multiFormatInfo[kExportFormatNBK.cloudFileInfoKey] {
+                self.nsFileInfo.updte(with: bookInfo);
+            }
         }
     }
     
     override func representation() -> [String : Any] {
         var info = super.representation();
-        var googleDriveInfo = [String : String]();
-        if(nil != self.googleDriveFileId) {
-            googleDriveInfo["googleDriveID"] = self.googleDriveFileId;
-            googleDriveInfo["googleDriveParentID"] = self.googleDriveParentId;
-            googleDriveInfo["relativePath"] = self.relativePath;
+        var googleDriveInfo = [String : [String: String]]();
+        if let pdfInfo = self.pdfFileInfo.info() {
+            googleDriveInfo[kExportFormatPDF.cloudFileInfoKey] = pdfInfo;
+        }
+        if let nsBookInfo = self.pdfFileInfo.info() {
+            googleDriveInfo[kExportFormatNBK.cloudFileInfoKey] = nsBookInfo;
         }
         info["googleDriveInfo"] = googleDriveInfo;
         return info;
-    }
-    
-    override func resetProperties() {
-        super.resetProperties();
-        self.googleDriveFileId = nil;
     }
 }

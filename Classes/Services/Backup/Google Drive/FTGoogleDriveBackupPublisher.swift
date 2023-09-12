@@ -41,13 +41,9 @@ class FTGoogleDriveBackupPublisher: FTCloudBackupPublisher {
         let entry = FTGoogleDriveBackupEntry.init(withDict: inDict)
         return entry
     }
-    override func publishRequest(forItem inItem: FTCloudBackup?) -> FTCloudPublishRequest? {
-        var request: FTGoogleDrivePublishRequest?
-        if let item = inItem {
-            request = FTGoogleDrivePublishRequest(backupEntry: item, delegate: self)
-            request?.delegate = self;
-            request?.refObject = item;
-        }
-        return request
+    
+    override func publishRequest(forItem inItem: FTCloudBackup, itemURL: URL) -> FTCloudPublishRequest? {
+        let request = FTGoogleDrivePublishRequest(backupEntry: inItem, delegate: self,sourceFile:itemURL);
+        return request;
     }
 }

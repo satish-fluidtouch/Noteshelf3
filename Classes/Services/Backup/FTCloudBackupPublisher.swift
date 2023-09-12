@@ -29,8 +29,8 @@ typealias FTGenericCompletionBlockWithStatus = ((Bool) -> Void)
 }
 
 class FTCloudBackupPublisher: NSObject {
-    var backupEntryDictionary: [String: Any]!
-    var ignoreList: FTCloudBackupIgnoreList!
+    var backupEntryDictionary = [String: Any]()
+    var ignoreList = FTCloudBackupIgnoreList()
     var backUpFilePath: String {
         let libraryPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
         let backUpEntryPath = libraryPath.appendingPathComponent("BackUpEntry.plist").path
@@ -52,7 +52,6 @@ class FTCloudBackupPublisher: NSObject {
         self.init()
         backupEntryDictionary = [String : Any]()
         self.delegate = delegate
-        ignoreList = FTCloudBackupIgnoreList()
         loadData()
     }
 
@@ -61,11 +60,8 @@ class FTCloudBackupPublisher: NSObject {
         block(false)
     }
     
-    func publishRequest(forItem inItem: FTCloudBackup?) -> FTCloudPublishRequest? {
-        var request: FTCloudPublishRequest?
-        if let item = inItem {
-            request = FTCloudPublishRequest(backupEntry: item, delegate: self)
-        }
+    func publishRequest(forItem inItem: FTCloudBackup,itemURL: URL) -> FTCloudPublishRequest? {
+        let request = FTCloudPublishRequest(backupEntry: inItem, delegate: self,sourceFile:itemURL)
         return request
     }
 
@@ -143,7 +139,7 @@ class FTCloudBackupPublisher: NSObject {
         getNextPublishRequest { request in
             self.currentPublishRequest = request;
             if let currentRequest = self.currentPublishRequest {
-                FTCloudBackupPublisher.recordSyncLog("Publish Start:\(currentRequest.refObject.filePath.lastPathComponent)")
+                FTCloudBackupPublisher.recordSyncLog("Publish Start:\(currentRequest.refObject.relativeFilePath.lastPathComponent)")
 
                 currentRequest.refObject.isDirty = false
                 currentRequest.refObject.errorDescription = nil
@@ -180,11 +176,11 @@ class FTCloudBackupPublisher: NSObject {
                             }
                             if !isIgnored,
                                 (lastBackupDate < lastUpdatedDate && currentTime - lastUpdatedDate > 60)
-                                || refObject.filePath != eachItem.URL.relativePathWRTCollection() {
+                                || refObject.relativeFilePath != eachItem.URL.relativePathWRTCollection() {
                                 self.ignoreList.remove(fromIgnoreList: docId);
-                                refObject.filePath = eachItem.URL.relativePathWRTCollection();
+                                refObject.relativeFilePath = eachItem.URL.relativePathWRTCollection();
                                 refObject.lastUpdated = autobackupItem.lastUpdated;
-                                request = self.publishRequest(forItem: refObject);
+                                request = self.publishRequest(forItem: refObject,itemURL: eachItem.URL);
                                 break;
                             }
                         }
@@ -193,7 +189,7 @@ class FTCloudBackupPublisher: NSObject {
                             if let refObject = self.backupItem(docId) {
                                 self.ignoreList.remove(fromIgnoreList: docId);
                                 refObject.lastUpdated = autobackupItem.lastUpdated;
-                                request = self.publishRequest(forItem: refObject);
+                                request = self.publishRequest(forItem: refObject,itemURL: eachItem.URL);
                                 break;
                             }
                         }
@@ -362,7 +358,7 @@ class FTCloudBackupPublisher: NSObject {
             ignoreList.remove(fromIgnoreList: guid)
             publishQueue.async(execute: {
                 if let guid = oldShelfItem.documentUUID, let entry = self.backupEntryDictionary[guid] as? FTCloudBackup {
-                    entry.filePath = newShelfItem.relativePath
+                    entry.relativeFilePath = newShelfItem.relativePath
                     self.backupEntryDictionary[newShelfItem.documentUUID] = entry
                     self.backupEntryDictionary.removeValue(forKey: guid)
                 }
@@ -423,30 +419,27 @@ extension FTCloudBackupPublisher: FTCloudPublishRequestDelegate {
 
     @objc func didComplete(publishRequest request: FTCloudPublishRequest,
                            error: Error?) {
-        if let inError = error as NSError?
-            {
-              request.refObject.errorDescription = inError.localizedDescription;
-              request.refObject.isDirty = true;
-              self.publishDidFail(inError);
-              return;
-            }
-        if (request.refObject != nil) {
-            request.refObject.errorDescription = nil
-            request.refObject.lastBackupDate = request.refObject.lastUpdated ?? NSNumber(value: Date.timeIntervalSinceReferenceDate);
-
-            let notificationKey = String(format: FTBackUpDidCompletePublishNotificationFormat, request.refObject.uuid)
-            var userInfo: [String: NSNumber] = [:]
-            if let backupDate = request.refObject.lastBackupDate {
-                userInfo[FTBackUpLastBackedUpDateKey] = backupDate
-            }
-            
-            DispatchQueue.main.async(execute: {
-                NotificationCenter.default.post(
-                    name: NSNotification.Name(notificationKey),
-                    object: nil,
-                    userInfo: userInfo)
-            })
+        if let inError = error as NSError? {
+            request.refObject.errorDescription = inError.localizedDescription;
+            request.refObject.isDirty = true;
+            self.publishDidFail(inError);
+            return;
         }
+        request.refObject.errorDescription = nil
+        request.refObject.lastBackupDate = request.refObject.lastUpdated ?? NSNumber(value: Date.timeIntervalSinceReferenceDate);
+        
+        let notificationKey = String(format: FTBackUpDidCompletePublishNotificationFormat, request.refObject.uuid)
+        var userInfo: [String: NSNumber] = [:]
+        if let backupDate = request.refObject.lastBackupDate {
+            userInfo[FTBackUpLastBackedUpDateKey] = backupDate
+        }
+        
+        DispatchQueue.main.async(execute: {
+            NotificationCenter.default.post(
+                name: NSNotification.Name(notificationKey),
+                object: nil,
+                userInfo: userInfo)
+        })
         publishQueue.async(execute: {
             self.saveData()
             self.publishNextRequest()
@@ -456,32 +449,30 @@ extension FTCloudBackupPublisher: FTCloudPublishRequestDelegate {
     @objc func didComplete(publishRequest request: FTCloudPublishRequest,
                            ignoreEntry: FTBackupIgnoreEntry) {
         ignoreList.addToIgnoreList(ignoreEntry)
-        if (request.refObject != nil) {
-            if ignoreEntry.ignoreType == .packageNotAvailable {
-                request.refObject.resetProperties()
-            } else {
-                request.refObject.errorDescription = ignoreEntry.ignoreReason
-                request.refObject.isDirty = true
-            }
-            
-            let notificationKey = String(format: FTBackUpDidCompletePublishNotificationFormat, request.refObject.uuid)
-            var lastBackupDate = request.refObject.lastBackupDate
-            if nil == lastBackupDate {
-                lastBackupDate = request.refObject.lastUpdated
-            }
-            var userInfo: [AnyHashable : Any]?
-            if lastBackupDate != nil, let lastBackupDate = request.refObject.lastBackupDate {
-                userInfo = [
-                    FTBackUpLastBackedUpDateKey: lastBackupDate
-                ]
-            }
-            DispatchQueue.main.async(execute: {
-                NotificationCenter.default.post(
-                    name: NSNotification.Name(notificationKey),
-                    object: nil,
-                    userInfo: userInfo)
-            })
+        if ignoreEntry.ignoreType == .packageNotAvailable {
+            request.refObject.resetProperties()
+        } else {
+            request.refObject.errorDescription = ignoreEntry.ignoreReason
+            request.refObject.isDirty = true
         }
+        
+        let notificationKey = String(format: FTBackUpDidCompletePublishNotificationFormat, request.refObject.uuid)
+        var lastBackupDate = request.refObject.lastBackupDate
+        if nil == lastBackupDate {
+            lastBackupDate = request.refObject.lastUpdated
+        }
+        var userInfo: [AnyHashable : Any]?
+        if lastBackupDate != nil, let lastBackupDate = request.refObject.lastBackupDate {
+            userInfo = [
+                FTBackUpLastBackedUpDateKey: lastBackupDate
+            ]
+        }
+        DispatchQueue.main.async(execute: {
+            NotificationCenter.default.post(
+                name: NSNotification.Name(notificationKey),
+                object: nil,
+                userInfo: userInfo)
+        })
         self.publishQueue.async(execute: {
             self.saveData()
             self.publishNextRequest()
