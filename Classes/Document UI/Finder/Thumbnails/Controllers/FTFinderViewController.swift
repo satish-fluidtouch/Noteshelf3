@@ -1143,10 +1143,15 @@ extension FTFinderViewController{
     }
 
     var minimumInterItemSpacing: CGFloat {
+        let spacing: CGFloat
         if mode == .selectPages {
-            return 10
+            spacing = 10
+        } else if self.isRegularFinder {
+            spacing = 40
+        } else {
+            spacing = 24
         }
-        return self.isRegularFinder ? 40 : 24
+        return spacing
     }
     
     private var bookMarkContentInsets: UIEdgeInsets {
