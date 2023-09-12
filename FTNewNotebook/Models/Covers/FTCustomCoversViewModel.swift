@@ -18,11 +18,11 @@ enum FTDefaultCustomType: String, CaseIterable {
         case .unsplash:
             title = "Unsplash"
         case .camera:
-            title = "Camera".localized
+            title = "Camera"
         case .photoLibrary:
-            title = "PhotoLibrary".localized
+            title = "PhotoLibrary"
         }
-        return title
+        return title.localized
     }
 
     var image: UIImage? {

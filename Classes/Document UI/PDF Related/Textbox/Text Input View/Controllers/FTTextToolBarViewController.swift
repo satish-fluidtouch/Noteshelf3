@@ -65,7 +65,8 @@ class FTTextToolBarViewController: UIViewController {
     @IBOutlet private weak var btnNumberBullets: UIButton?
     @IBOutlet private weak var btnCheckBox: UIButton?
     @IBOutlet private weak var compactView: UIStackView?
-    @IBOutlet weak var textModeSelectionBtn: FTTextToolbarButton!
+    @IBOutlet private weak var textStyleEditView: UIView?
+    @IBOutlet private weak var textStyleEditUnderlineView: UIButton?
 
     var btnInputItemBold: UIBarButtonItem?
     var btnInputItemItalic: UIBarButtonItem?
@@ -100,8 +101,21 @@ class FTTextToolBarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         switchMode()
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapOnTextEditStyle))
+        self.textStyleEditView?.addGestureRecognizer(gesture)
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let color = self.attributes?[NSAttributedString.Key.foregroundColor] as? UIColor {
+            self.updateUnderlineTint(color)
+        }
+    }
+
+    func updateUnderlineTint(_ color: UIColor) {
+        self.textStyleEditUnderlineView?.tintColor = color
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
@@ -109,7 +123,12 @@ class FTTextToolBarViewController: UIViewController {
             self.currentSize = currentFrameSize
         }
     }
-    
+
+    @objc func tapOnTextEditStyle() {
+        guard let presentingVC = parentVC, let editView = self.textStyleEditView else { return }
+        FTNewTextStyleViewController.showAsPopover(fromSourceView: editView, overViewController: presentingVC, delegate: self, attributes: self.attributes, scale: self.scale)
+    }
+
     func switchMode() {
         rootToolsView?.isHidden = isRegular ? false : true
         compactView?.isHidden = isRegular ? true : false
@@ -251,6 +270,9 @@ extension FTTextToolBarViewController {
             let isBold = font.isBoldTrait()
             let isItalic = font.isItalicTrait()
             updateKeyboardInputAssistantItemsSelectionState(canBold: isBold, canItalic: isItalic, canUnderLine: isUnderLineText, canStrike: isStrikeThroughText)
+        }
+        if let color = self.attributes?[NSAttributedString.Key.foregroundColor] as? UIColor {
+            self.updateUnderlineTint(color)
         }
     }
     
@@ -422,11 +444,6 @@ extension FTTextToolBarViewController {
         FTTextPresetsViewController.showAsPopover(fromSourceView: sender, overViewController: presentingVC, delegate: self, attributes: self.attributes, scale: self.scale)
     }
     
-    @IBAction func tappedOnTextModifyStyleButton(_ sender: UIButton) {
-        guard let presentingVC = parentVC else { return }
-        FTNewTextStyleViewController.showAsPopover(fromSourceView: sender, overViewController: presentingVC, delegate: self, attributes: self.attributes, scale: self.scale)
-    }
-    
     @IBAction func tappedOnTextHighLightColorButton(_ sender: UIButton) {
         guard let presentingVC = parentVC else { return }
         FTTextBackGroundColorViewController.showAsPopover(fromSourceView: sender, overViewController: presentingVC, delegate: self)
@@ -507,6 +524,7 @@ extension FTTextToolBarViewController: FTEditStyleDelegate {
     func didChangeStyle(_ style: FTTextStyleItem?) {
         guard let _style = style else { return }
         self.toolBarDelegate?.didSelectFontStyle(_style)
+        self.updateUnderlineTint(UIColor(hexString: _style.textColor))
     }
     
     func didTapOnAlignmentStyle(_ style: NSTextAlignment) {
@@ -558,12 +576,6 @@ extension FTTextToolBarViewController: FTTextStyleCompactDelegate {
     
     func changeBackgroundColor(_ color: UIColor) {
         self.toolBarDelegate?.didChangeBackgroundColor(color)
-    }
-
-    func dismissKeyBoard() {
-//        if let textView = self.textInputViewCurrentTextView() {
-//            textView.resignFirstResponder()
-//        }
     }
 }
 

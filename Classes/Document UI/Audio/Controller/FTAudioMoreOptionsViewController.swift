@@ -19,24 +19,24 @@ enum FTAudioMoreOption: String, CaseIterable {
     case close
     
     func title() -> String {
-        let title: String
+        let localizedKey: String
         switch self {
         case .jumpToPage:
-            title = "Jump to Page"
+            localizedKey = "audiooption.jumptoPage"
         case .rename:
-            title = "Rename"
+            localizedKey = "Rename"
         case .goToRecording:
-            title = "Go to Recording"
+            localizedKey = "audiooption.gotoRecording"
         case .share:
-            title = "Share"
+            localizedKey = "Share"
         case .delete:
-            title = "Trash"
+            localizedKey = "Trash"
         case .speed:
-            title = "Speed"
+            localizedKey = "audiooption.speed"
         case .close:
-            title = "Close"
+            localizedKey = "Close"
         }
-        return title.localized
+        return localizedKey.localized
     }
     
     func image() -> UIImage? {

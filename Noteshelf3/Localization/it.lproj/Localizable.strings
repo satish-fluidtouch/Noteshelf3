@@ -714,7 +714,7 @@
 "Restore" = "Recupera pagine";
 "ResultsFor" = "Risultati per %@";
 "RetakeKey" = "3-finger right swipe/left swipe:  Sfoglia a destra con 3 dita/sfoglia a sinistra con 3 dita";
-"Right" = "Rilascia per aggiungere nuova pagina";
+"Right" = "Destra";
 "Rotate" = "Ruota";
 "Rotate Page" = "Ruota la pagina";
 "Rotating" = "Rimuovi dai Recenti";
@@ -944,10 +944,14 @@
 "appearance.darkTheme" = "Tema scuro";
 "appearance.lightTheme" = "Tema chiaro.";
 "appearance.useSystemTheme" = "Usa la modalità di luce / scuro del sistema";
+"audiooption.gotoRecording" = "Vai alla registrazione";
+"audiooption.jumptoPage" = "Vai alla pagina";
+"audiooption.speed" = "Velocità";
 "backup_file_create_failed" = "Impossibile creare il file di backup. Riprova più tardi.";
 "backup_unknown_error" = "Si è verificato un errore durante il backup. Riprova più tardi.";
 "backupoptions.signoutfrom" = "Esci da %@";
 "banners" = "Bandiere";
+"bookmark.removebookMark" = "Rimuovi segnalibro";
 "bujoessentials" = "Essenziali per Bujo";
 "cancel" = "Annulla";
 "clipart404" = "Server occupato, riprova più tardi.";
@@ -1063,6 +1067,8 @@
 "getInspired.student" = "Appunti di studio";
 "globalSearch.page" = "pagina";
 "globalSearch.recentlySearched" = "Ricerche recenti";
+"groupitem.noteText" = "nota";
+"groupitem.notesText" = "Appunti";
 "headers" = "Intestazioni";
 "highlighterRack.flat" = "Evidenziatore piatto";
 "highlighterRack.round" = "Evidenziatore tondo";
@@ -1081,8 +1087,12 @@
 "iap.featureLimitMessage" = "Questa funzione è bloccata. Sblocca effettuando l'aggiornamento ora.";
 "iap.featureLimitTitle" = "Aggiorna ora";
 "iap.message" = "Ottieni accesso a note illimitate, riconoscimento della grafia e ricerca, e diari digitali con Noteshelf Premium.";
+"iap.noProductIDsFound" = "Non sono stati trovati identificatori di prodotto per acquisti in-app.";
+"iap.noProductsFound" = "Nessun acquisto in-app trovato.";
 "iap.onetimepurchase" = "ACQUISTO UNICO. TUTTO TUO.";
+"iap.paymentWasCancelled" = "Il processo di acquisto in-app è stato annullato.";
 "iap.privacy" = "Informativa sulla privacy";
+"iap.productRequestFailed" = "Impossibile recuperare i prodotti disponibili per l'acquisto in-app al momento.";
 "iap.purchase" = "Aggiornamento per %@";
 "iap.purchaseNotAllowed" = "Gli acquisti in-app non sono consentiti su questo dispositivo";
 "iap.restorePurchase" = "Ripristina acquisti";
@@ -1462,6 +1472,7 @@
 "text.font.setAsDefault.menuTitle" = "Imposta come predefinito per:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri quaderni";
 "text.font.setAsDefault.thisBook" = "Questo quaderno";
+"texttoolbar.fontselectionTitle" = "SELEZIONA CARATTERE";
 "theams.unsplashDescription" = "Seleziona da Unsplash, scatta una foto o seleziona dalla tua Libreria di foto per creare le tue copertine personalizzate.";
 "trash.alert.cannotOpenNotebook" = "Questo quaderno non può essere aperto poiché è stato eliminato. Per ripristinare, premi a lungo e seleziona l'opzione dal menu.";
 "trash.alert.title" = "Sei sicuro di voler svuotare il Cestino?";
@@ -1509,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM
+// Last Synced by Rakesh on 8 September 2023 at 7:08 PM

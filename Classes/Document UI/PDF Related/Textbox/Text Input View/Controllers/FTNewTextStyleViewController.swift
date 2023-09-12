@@ -148,7 +148,11 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
     }
 
     @objc func didTextAnnotationBoxResign() {
-        self.dismiss(animated: true)
+        // TODO: // Narayana - fix to be optimized, as of now when FTextView is resigned (by end editing)
+        // we are dismissing the controller shown as popover over keyboard(using mode)
+        if self.textStyleMode == .defaultView {
+            self.dismiss(animated: true)
+        }
     }
 
     private func updateNavigationBar() {
@@ -479,7 +483,7 @@ extension FTNewTextStyleViewController: FTTextSelectionChangeDelegate {
             let fontPointSize = font.pointSize/scale
             textFontStyle.fontFamily = font.familyName
             textFontStyle.fontName = font.fontName
-            textFontStyle.fontSize = Int(fontPointSize)
+            textFontStyle.fontSize = Int(round(fontPointSize))
         }
         if let fontColor = attributes[NSAttributedString.Key.foregroundColor] as? UIColor {
             textFontStyle.textColor = fontColor.hexString

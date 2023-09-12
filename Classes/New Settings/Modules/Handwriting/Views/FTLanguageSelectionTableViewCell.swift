@@ -32,7 +32,8 @@ class FTLanguageSelectionTableViewCell: FTSettingsBaseTableViewCell {
 
         if language.languageCode == FTLanguageResourceManager.shared.currentLanguageCode && language.resourceStatus == .downloaded {
             self.downloadButton?.isHidden = false
-            self.downloadButton?.setImage(UIImage(named: "checkBlack"), for: UIControl.State.normal)
+            self.downloadButton?.imageView?.tintColor = .appColor(.black1)
+            self.downloadButton?.setImage(UIImage(icon: FTIcon.checkmark), for: UIControl.State.normal)
         } else {
             self.downloadButton?.setImage(UIImage(named: "iclouddownload"), for: UIControl.State.normal)
         }

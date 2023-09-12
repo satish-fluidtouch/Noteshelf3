@@ -14,7 +14,6 @@ protocol FTTextStyleCompactDelegate: FTDefaultTextStyleDelegate, FTRootControlle
     func didChangeAlignmentStyle(_ style: NSTextAlignment)
     func changeLineSpacing(_ lineSpace: CGFloat)
     func changeBackgroundColor(_ color: UIColor)
-    func dismissKeyBoard()
 }
 
 protocol FTTextColorUpdateDelegate: NSObjectProtocol {
@@ -387,11 +386,6 @@ extension FTTextStyleCompactViewController: FTTextPresetSelectedDelegate {
     
     func didSelectedPresetStyleId(_ style: FTTextStyleItem) {
         print(style)
-    }
-
-    override func dismissKeyboard() {
-//        self.view.endEditing(true)
-        self.delegate?.dismissKeyBoard()
     }
 }
 

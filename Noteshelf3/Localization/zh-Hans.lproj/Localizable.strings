@@ -714,7 +714,7 @@
 "Restore" = "恢复页面";
 "ResultsFor" = "结果为%@";
 "RetakeKey" = "3指向右滑动/向左滑动";
-"Right" = "发布以添加新页面";
+"Right" = "正确";
 "Rotate" = "旋转";
 "Rotate Page" = "旋转页面";
 "Rotating" = "从最近删除";
@@ -944,10 +944,14 @@
 "appearance.darkTheme" = "暗黑主题";
 "appearance.lightTheme" = "明亮主题";
 "appearance.useSystemTheme" = "使用系统的浅色/深色模式";
+"audiooption.gotoRecording" = "转到录音";
+"audiooption.jumptoPage" = "跳转至页面";
+"audiooption.speed" = "速度";
 "backup_file_create_failed" = "无法创建备份文件。请稍后重试。";
 "backup_unknown_error" = "备份时发生错误。请稍后重试。";
 "backupoptions.signoutfrom" = "退出 %@";
 "banners" = "横幅";
+"bookmark.removebookMark" = "移除书签";
 "bujoessentials" = "笔记本要点";
 "cancel" = "取消";
 "clipart404" = "服务器繁忙，请稍后重试。";
@@ -1063,6 +1067,8 @@
 "getInspired.student" = "学习笔记";
 "globalSearch.page" = "页面";
 "globalSearch.recentlySearched" = "最近搜索";
+"groupitem.noteText" = "笔记";
+"groupitem.notesText" = "注释";
 "headers" = "标题";
 "highlighterRack.flat" = "扁平荧光笔";
 "highlighterRack.round" = "圆形荧光笔";
@@ -1081,8 +1087,12 @@
 "iap.featureLimitMessage" = "此功能已锁定。立即升级解锁。";
 "iap.featureLimitTitle" = "立即升级";
 "iap.message" = "获取无限笔记、手写识别和搜索以及Noteshelf高级版的数字日记。";
+"iap.noProductIDsFound" = "找不到任何应用内购买产品标识符。";
+"iap.noProductsFound" = "没有发现应用内购买。";
 "iap.onetimepurchase" = "一次购买。永久拥有。";
+"iap.paymentWasCancelled" = "应用内购买流程已取消。";
 "iap.privacy" = "隐私政策";
+"iap.productRequestFailed" = "当前无法获取可用的应用内购买产品。";
 "iap.purchase" = "升级为 %@";
 "iap.purchaseNotAllowed" = "此设备不允许应用内购买";
 "iap.restorePurchase" = "恢复购买";
@@ -1462,6 +1472,7 @@
 "text.font.setAsDefault.menuTitle" = "设置为默认：";
 "text.font.setAsDefault.thisAndFutureBooks" = "这本和所有未来的笔记本";
 "text.font.setAsDefault.thisBook" = "这个笔记本";
+"texttoolbar.fontselectionTitle" = "选择字体";
 "theams.unsplashDescription" = "从Unsplash选择，拍照或从照片库中选择以创建您的自定义封面。";
 "trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾桶吗？";
@@ -1509,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM
+// Last Synced by Rakesh on 8 September 2023 at 7:08 PM

@@ -15,11 +15,17 @@ enum FTPresetStyleMode: String {
     case reorder
 }
 
-protocol FTTextPresetSelectedDelegate: NSObjectProtocol {
+@objc protocol FTTextPresetSelectedDelegate: NSObjectProtocol {
     func didSelectedPresetStyleId(_ style: FTTextStyleItem)
     func reloadStylesStackView()
     func rootViewController() -> UIViewController?
-    func dismissKeyboard()
+    @objc optional func dismissKeyboard()
+}
+
+extension FTTextPresetSelectedDelegate {
+    func dismissKeyboard() {
+        debugLog("Required delegate should implement if needed")
+    }
 }
 
 class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
@@ -60,7 +66,11 @@ class FTTextPresetsViewController: UIViewController, FTPopoverPresentable {
     }
 
     @objc func didTextAnnotationBoxResign() {
-        self.dismiss(animated: true)
+        // TODO: // Narayana - fix to be optimized, as of now when FTextView is resigned (by end editing)
+        // we are dismissing the controller shown as popover over keyboard(using mode)
+        if self.presetMode == .select {
+            self.dismiss(animated: true)
+        }
     }
 
     class func showAsPopover(fromSourceView sourceView: UIView,

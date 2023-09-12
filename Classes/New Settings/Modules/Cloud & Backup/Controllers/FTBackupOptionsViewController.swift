@@ -61,7 +61,7 @@ class FTBackupOptionsViewController: FTCloudBackUpViewController, UITableViewDat
                 footerView.isHidden = true
             } else {
                 footerView.isHidden = false
-                footerView.signoutBtn.setTitle("Sign Out from \(cloudBackUp)", for: .normal)
+                footerView.signoutBtn.setTitle(String(format: NSLocalizedString("backupoptions.signoutfrom", comment: "Sign Out from %@ "), cloudBackUp), for: .normal)
             }
             return footerView
         }

@@ -32,12 +32,12 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <viewLayoutGuide key="safeArea" id="CEu-rT-Sgh"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="HOw-Pm-SZp"/>
-                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="ePb-5x-NLB"/>
-                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uE7-Di-QTV"/>
+                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="centerX" secondItem="CEu-rT-Sgh" secondAttribute="centerX" id="ePb-5x-NLB"/>
+                            <constraint firstItem="9mi-hb-KiQ" firstAttribute="top" secondItem="CEu-rT-Sgh" secondAttribute="top" id="uE7-Di-QTV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EvG-Uv-fG8"/>
@@ -68,13 +68,13 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="CLa-Oj-Tjg"/>
+                        <viewLayoutGuide key="safeArea" id="sry-uq-ySX"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Q9H-hI-SUp" firstAttribute="width" secondItem="d7f-dy-Vtr" secondAttribute="width" id="6iY-bo-9jD"/>
-                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="top" secondItem="CLa-Oj-Tjg" secondAttribute="top" id="Mbv-cb-oBa"/>
-                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="centerX" secondItem="CLa-Oj-Tjg" secondAttribute="centerX" id="SfA-Dk-jcm"/>
-                            <constraint firstItem="CLa-Oj-Tjg" firstAttribute="bottom" secondItem="Q9H-hI-SUp" secondAttribute="bottom" id="hrA-bP-85u"/>
+                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="top" secondItem="sry-uq-ySX" secondAttribute="top" id="Mbv-cb-oBa"/>
+                            <constraint firstItem="Q9H-hI-SUp" firstAttribute="centerX" secondItem="sry-uq-ySX" secondAttribute="centerX" id="SfA-Dk-jcm"/>
+                            <constraint firstItem="sry-uq-ySX" firstAttribute="bottom" secondItem="Q9H-hI-SUp" secondAttribute="bottom" id="hrA-bP-85u"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PEw-Vg-qy7"/>
@@ -91,11 +91,11 @@
             <objects>
                 <viewController id="xOW-95-GFB" customClass="FTNoteshelfAIFooterViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fln-aR-HVO">
-                        <rect key="frame" x="0.0" y="0.0" width="361" height="48"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="80"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMR-oZ-UdA">
-                                <rect key="frame" x="133.66666666666666" y="9.3333333333333339" width="94" height="29.666666666666664"/>
+                                <rect key="frame" x="203" y="26" width="94" height="28"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Send Feedback">
@@ -105,38 +105,56 @@
                                     <action selector="sendFeedback:" destination="xOW-95-GFB" eventType="touchUpInside" id="t9a-Zw-YIo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-PV-sFF">
-                                <rect key="frame" x="106.00000000000001" y="9.3333333333333339" width="149.33333333333337" height="29.666666666666664"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                <color key="tintColor" name="accent"/>
-                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="About NoteshelfAI">
-                                    <color key="titleColor" name="accent"/>
-                                    <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
-                                </state>
-                                <buttonConfiguration key="configuration" style="plain" title="About NoteshelfAI">
-                                    <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="13"/>
-                                    <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                    <color key="baseForegroundColor" name="accent"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="showNoteshelfAILearnmore:" destination="xOW-95-GFB" eventType="touchUpInside" id="476-gf-Gsk"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ppJ-hS-gV8">
+                                <rect key="frame" x="0.0" y="1.6666666666666643" width="500" height="77"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-PV-sFF">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="29.666666666666668"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                        <color key="tintColor" name="accent"/>
+                                        <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="About NoteshelfAI">
+                                            <color key="titleColor" name="accent"/>
+                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="plain" title="About NoteshelfAI">
+                                            <imageReference key="image" image="info.circle" catalog="system" symbolScale="default"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="13"/>
+                                            <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                            <color key="baseForegroundColor" name="accent"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="showNoteshelfAILearnmore:" destination="xOW-95-GFB" eventType="touchUpInside" id="476-gf-Gsk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="Ny7-Hv-AT4">
+                                        <rect key="frame" x="0.0" y="31.666666666666668" width="500" height="45.333333333333329"/>
+                                        <color key="tintColor" name="accent"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Noteshelf AI will be able to understand your handwriting only if you are a Premium user.">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
+                                            <color key="baseForegroundColor" name="accent"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="bePremiumButtonAction:" destination="xOW-95-GFB" eventType="touchUpInside" id="OXX-RZ-TYO"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Awl-t4-fzt"/>
+                        <viewLayoutGuide key="safeArea" id="Ifq-NA-i25"/>
                         <constraints>
-                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="centerY" secondItem="xhT-PV-sFF" secondAttribute="centerY" id="8it-sJ-dYM"/>
-                            <constraint firstItem="xhT-PV-sFF" firstAttribute="centerX" secondItem="Fln-aR-HVO" secondAttribute="centerX" id="F7Y-E1-neN"/>
-                            <constraint firstItem="xhT-PV-sFF" firstAttribute="centerY" secondItem="Fln-aR-HVO" secondAttribute="centerY" id="JRC-c9-Hmq"/>
-                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="centerX" secondItem="xhT-PV-sFF" secondAttribute="centerX" id="LFW-CG-pbf"/>
-                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="bottom" secondItem="xhT-PV-sFF" secondAttribute="bottom" id="NuM-Gh-cCs"/>
-                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="top" secondItem="xhT-PV-sFF" secondAttribute="top" id="UZd-ek-gF7"/>
+                            <constraint firstItem="ppJ-hS-gV8" firstAttribute="width" secondItem="Fln-aR-HVO" secondAttribute="width" id="Mdy-rW-7QR"/>
+                            <constraint firstItem="ppJ-hS-gV8" firstAttribute="centerX" secondItem="Ifq-NA-i25" secondAttribute="centerX" id="Q6p-ka-nve"/>
+                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="centerY" secondItem="Fln-aR-HVO" secondAttribute="centerY" id="i4V-a8-orx"/>
+                            <constraint firstItem="AMR-oZ-UdA" firstAttribute="centerX" secondItem="Ifq-NA-i25" secondAttribute="centerX" id="nIf-U3-yCB"/>
+                            <constraint firstItem="ppJ-hS-gV8" firstAttribute="centerY" secondItem="Fln-aR-HVO" secondAttribute="centerY" id="tVv-1a-644"/>
                         </constraints>
                     </view>
+                    <size key="freeformSize" width="500" height="80"/>
                     <connections>
+                        <outlet property="bePremiumUser" destination="Ny7-Hv-AT4" id="rPh-LG-szG"/>
                         <outlet property="learnMore" destination="xhT-PV-sFF" id="kGc-MC-c6f"/>
                         <outlet property="sendFeedback" destination="AMR-oZ-UdA" id="UjT-Fk-xQ0"/>
                     </connections>
@@ -247,16 +265,16 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="MnQ-Rb-6zd"/>
+                        <viewLayoutGuide key="safeArea" id="zQR-sH-Wh6"/>
                         <constraints>
                             <constraint firstItem="7KU-f4-tjE" firstAttribute="centerY" secondItem="Q84-gf-X3D" secondAttribute="centerY" id="0oq-Qm-Tus"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="top" constant="-20" id="6ih-cM-RWb"/>
-                            <constraint firstItem="Q84-gf-X3D" firstAttribute="leading" secondItem="MnQ-Rb-6zd" secondAttribute="leading" id="CeK-Jm-qJx"/>
-                            <constraint firstItem="MnQ-Rb-6zd" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="bottom" id="Fjw-KG-mm4"/>
-                            <constraint firstItem="MnQ-Rb-6zd" firstAttribute="trailing" secondItem="7KU-f4-tjE" secondAttribute="trailing" id="Mw1-nW-3gO"/>
+                            <constraint firstItem="Q84-gf-X3D" firstAttribute="leading" secondItem="zQR-sH-Wh6" secondAttribute="leading" id="CeK-Jm-qJx"/>
+                            <constraint firstItem="zQR-sH-Wh6" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="bottom" id="Fjw-KG-mm4"/>
+                            <constraint firstItem="zQR-sH-Wh6" firstAttribute="trailing" secondItem="7KU-f4-tjE" secondAttribute="trailing" id="Mw1-nW-3gO"/>
                             <constraint firstItem="7KU-f4-tjE" firstAttribute="leading" secondItem="Q84-gf-X3D" secondAttribute="trailing" constant="10" id="RZ6-Yw-y2i"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="width" secondItem="hOE-2Y-rer" secondAttribute="width" id="Ydg-Bd-Lr5"/>
-                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="centerX" secondItem="hOE-2Y-rer" secondAttribute="centerX" id="cRw-cb-wI5"/>
+                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="centerX" secondItem="zQR-sH-Wh6" secondAttribute="centerX" id="cRw-cb-wI5"/>
                             <constraint firstItem="7KU-f4-tjE" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="fL0-xY-zat"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="top" secondItem="hOE-2Y-rer" secondAttribute="top" id="lYr-9Q-KhH"/>
                         </constraints>
@@ -307,23 +325,24 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="8MX-3N-UlA"/>
+                        <viewLayoutGuide key="safeArea" id="7Uu-6C-X2x"/>
                         <color key="backgroundColor" name="panelBgColor"/>
                         <constraints>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="width" secondItem="Lzk-hw-Us3" secondAttribute="width" id="Dd3-hj-6el"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="bottom" secondItem="i6i-wZ-1px" secondAttribute="top" id="Ens-Va-8BJ"/>
-                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="centerX" secondItem="8MX-3N-UlA" secondAttribute="centerX" id="MUO-mP-WTG"/>
-                            <constraint firstItem="V6w-21-mVm" firstAttribute="centerX" secondItem="8MX-3N-UlA" secondAttribute="centerX" id="XmG-bO-phS"/>
-                            <constraint firstItem="i6i-wZ-1px" firstAttribute="centerX" secondItem="8MX-3N-UlA" secondAttribute="centerX" id="YXw-qT-0lG"/>
+                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="MUO-mP-WTG"/>
+                            <constraint firstItem="V6w-21-mVm" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="XmG-bO-phS"/>
+                            <constraint firstItem="i6i-wZ-1px" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="YXw-qT-0lG"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="top" secondItem="Lzk-hw-Us3" secondAttribute="bottom" constant="16" id="dbQ-AR-A7P"/>
                             <constraint firstItem="Lzk-hw-Us3" firstAttribute="width" secondItem="mE6-0L-BUy" secondAttribute="width" constant="-32" id="e4O-mB-uxx"/>
-                            <constraint firstItem="i6i-wZ-1px" firstAttribute="bottom" secondItem="8MX-3N-UlA" secondAttribute="bottom" id="hjm-WV-6Ks"/>
+                            <constraint firstItem="i6i-wZ-1px" firstAttribute="bottom" secondItem="7Uu-6C-X2x" secondAttribute="bottom" id="hjm-WV-6Ks"/>
                             <constraint firstItem="i6i-wZ-1px" firstAttribute="width" secondItem="Lzk-hw-Us3" secondAttribute="width" id="sEF-ga-GLI"/>
-                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="top" secondItem="8MX-3N-UlA" secondAttribute="top" constant="16" id="w93-Qa-ZnV"/>
+                            <constraint firstItem="Lzk-hw-Us3" firstAttribute="top" secondItem="7Uu-6C-X2x" secondAttribute="top" constant="16" id="w93-Qa-ZnV"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="contentView" destination="V6w-21-mVm" id="ZLu-jk-9lj"/>
+                        <outlet property="footerHeightConstraint" destination="wRT-mR-stq" id="HU5-U6-Pcc"/>
                         <outlet property="textField" destination="Lzk-hw-Us3" id="ckN-e8-pPE"/>
                     </connections>
                 </viewController>
@@ -340,7 +359,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lwm-AW-1KH">
-                                <rect key="frame" x="20" y="366.33333333333331" width="353" height="144.33333333333331"/>
+                                <rect key="frame" x="20" y="354" width="353" height="144.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="67"/>
@@ -383,13 +402,13 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Jsq-hP-ijA"/>
+                        <viewLayoutGuide key="safeArea" id="lMG-n3-hX4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="lwm-AW-1KH" firstAttribute="height" relation="lessThanOrEqual" secondItem="Jsq-hP-ijA" secondAttribute="height" id="PXp-Hq-zfJ"/>
-                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerY" secondItem="Jsq-hP-ijA" secondAttribute="centerY" id="iLH-8q-fLG"/>
-                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerX" secondItem="Jsq-hP-ijA" secondAttribute="centerX" id="o1H-fj-ggW"/>
-                            <constraint firstItem="lwm-AW-1KH" firstAttribute="width" secondItem="Jsq-hP-ijA" secondAttribute="width" constant="-40" id="wIA-BQ-vZA"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="height" relation="lessThanOrEqual" secondItem="4c8-0r-k7e" secondAttribute="height" id="PXp-Hq-zfJ"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerY" secondItem="4c8-0r-k7e" secondAttribute="centerY" id="iLH-8q-fLG"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="centerX" secondItem="lMG-n3-hX4" secondAttribute="centerX" id="o1H-fj-ggW"/>
+                            <constraint firstItem="lwm-AW-1KH" firstAttribute="width" secondItem="4c8-0r-k7e" secondAttribute="width" constant="-40" id="wIA-BQ-vZA"/>
                         </constraints>
                     </view>
                     <connections>

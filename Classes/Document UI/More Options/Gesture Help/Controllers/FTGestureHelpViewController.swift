@@ -34,7 +34,7 @@ class FTGestureHelpViewController: UIViewController, UITableViewDataSource, FTCu
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.configureNavigationBar(hideBackButton: true, title: NSLocalizedString("Gestures", comment: "Gestures"))
+        self.configureNavigationBar(hideBackButton: true, title: "Gesture".localized)
     }
     
     // MARK: - Table view data source

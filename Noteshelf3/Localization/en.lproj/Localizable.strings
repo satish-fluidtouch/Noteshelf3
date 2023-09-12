@@ -944,10 +944,14 @@
 "appearance.darkTheme" = "Dark Theme";
 "appearance.lightTheme" = "Light Theme";
 "appearance.useSystemTheme" = "Use System Light / Dark Mode";
+"audiooption.gotoRecording" = "Go to Recording";
+"audiooption.jumptoPage" = "Jump to Page";
+"audiooption.speed" = "Speed";
 "backup_file_create_failed" = "Unable to create the backup file. Please try again later.";
 "backup_unknown_error" = "An error occured while backing up. Please try again later.";
 "backupoptions.signoutfrom" = "Sign out from %@";
 "banners" = "Banners";
+"bookmark.removebookMark" = "Remove Bookmark";
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
 "clipart404" = "Server Busy, Please try again later.";
@@ -1063,6 +1067,8 @@
 "getInspired.student" = "Study Notes";
 "globalSearch.page" = "page";
 "globalSearch.recentlySearched" = "Recently Searched";
+"groupitem.noteText" = "note";
+"groupitem.notesText" = "notes";
 "headers" = "Headers";
 "highlighterRack.flat" = "Flat Highlighter";
 "highlighterRack.round" = "Round Highlighter";
@@ -1081,8 +1087,12 @@
 "iap.featureLimitMessage" = "This feature is locked. Unlock by upgrading now";
 "iap.featureLimitTitle" = "Upgrade now";
 "iap.message" = "Get access to unlimited notes, handwriting recognition and search, and digital diaries with Noteshelf Premium.";
+"iap.noProductIDsFound" = "No In-App Purchase product identifiers were found.";
+"iap.noProductsFound" = "No In-App Purchases were found.";
 "iap.onetimepurchase" = "ONE-TIME PURCHASE. YOURS FOREVER.";
+"iap.paymentWasCancelled" = "In-App Purchase process was cancelled.";
 "iap.privacy" = "Privacy Policy";
+"iap.productRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
 "iap.purchase" = "Upgrade for %@";
 "iap.purchaseNotAllowed" = "In-App Purchases are not allowed in this device";
 "iap.restorePurchase" = "Restore Purchases";
@@ -1462,6 +1472,7 @@
 "text.font.setAsDefault.menuTitle" = "Set as default for: ";
 "text.font.setAsDefault.thisAndFutureBooks" = "This and all future notebooks";
 "text.font.setAsDefault.thisBook" = "This notebook";
+"texttoolbar.fontselectionTitle" = "Select Font";
 "theams.unsplashDescription" = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers";
 "trash.alert.cannotOpenNotebook" = "This notebook cannot be opened as it has been deleted. To restore, long-press and select the option from the menu.";
 "trash.alert.title" = "Are you sure you want empty your Trash?";
@@ -1509,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM
+// Last Synced by Rakesh on 8 September 2023 at 7:08 PM

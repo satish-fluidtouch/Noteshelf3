@@ -365,11 +365,11 @@ extension FTNoteshelfDocumentProvider {
                 self.currentCollection().shelfs { items in
                     if FTDocumentMigration.getNS2MigrationDataSource() == .cloud {
                         self.fetchNS2CloudCollections { _ in
-                            completion(items);
+                            shelfsCompletionBlock(items);
                         }
                     }
                     else{
-                        completion(items);
+                        shelfsCompletionBlock(items);
                     }
                 }
             }
@@ -377,11 +377,11 @@ extension FTNoteshelfDocumentProvider {
                 self.fetchCloudCollections { items in
                     if FTDocumentMigration.getNS2MigrationDataSource() == .local {
                         self.currentNS2Collection()?.shelfs({ _ in
-                            completion(items);
+                            shelfsCompletionBlock(items);
                         })
                     }
                     else{
-                        completion(items);
+                        shelfsCompletionBlock(items);
                     }
                 }
             }

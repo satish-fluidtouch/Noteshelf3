@@ -71,7 +71,7 @@ class AddMenuDataManager {
         items.append([importDocItem])
 
         if FTPasteBoardManager.shared.isUrlValid() {
-            let insertFromClipboard = PageItem(image: UIImage(systemName: "clipboard"), name: "Insert from Clipboard", type: .inserFromclipboard)
+            let insertFromClipboard = PageItem(image: UIImage(systemName: "clipboard"), name: "InsertFromClipboard".localized, type: .inserFromclipboard)
             items.append([insertFromClipboard])
         }
         return items

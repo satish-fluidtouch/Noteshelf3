@@ -230,11 +230,17 @@ extension FTIAPManager: SKProductsRequestDelegate {
 // MARK: - FTIAPHelperError Localized Error Descriptions
 extension FTIAPManager.FTIAPHelperError: LocalizedError {
     var errorDescription: String? {
+        let message: String
         switch self {
-        case .noProductIDsFound: return "No In-App Purchase product identifiers were found."
-        case .noProductsFound: return "No In-App Purchases were found."
-        case .productRequestFailed: return "Unable to fetch available In-App Purchase products at the moment."
-        case .paymentWasCancelled: return "In-App Purchase process was cancelled."
+        case .noProductIDsFound:
+            message = "iap.noProductIDsFound"
+        case .noProductsFound:
+            message = "iap.noProductsFound"
+        case .productRequestFailed:
+            message = "iap.productRequestFailed"
+        case .paymentWasCancelled:
+            message = "iap.paymentWasCancelled"
         }
+        return message.localized
     }
 }

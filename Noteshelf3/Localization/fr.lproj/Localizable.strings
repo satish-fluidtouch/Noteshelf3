@@ -714,7 +714,7 @@
 "Restore" = "Récupérer les pages";
 "ResultsFor" = "Résultats pour %@";
 "RetakeKey" = "3-finger right swipe/left swipe - Balayage à droite/gauche à trois doigts";
-"Right" = "Publier pour ajouter une nouvelle page";
+"Right" = "Droit";
 "Rotate" = "Faire pivote";
 "Rotate Page" = "Faire pivoter la page";
 "Rotating" = "Supprimer des récents";
@@ -944,10 +944,14 @@
 "appearance.darkTheme" = "Thème sombre";
 "appearance.lightTheme" = "Thème clair.";
 "appearance.useSystemTheme" = "Utilisez le mode clair/sombre du système";
+"audiooption.gotoRecording" = "Aller à l'enregistrement";
+"audiooption.jumptoPage" = "Aller à la page";
+"audiooption.speed" = "Vitesse";
 "backup_file_create_failed" = "Impossible de créer le fichier de sauvegarde. Veuillez réessayer ultérieurement.";
 "backup_unknown_error" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
 "backupoptions.signoutfrom" = "Déconnexion de %@.";
 "banners" = "Bannières";
+"bookmark.removebookMark" = "Supprimer le signet";
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
 "clipart404" = "Serveur occupé, veuillez réessayer plus tard.";
@@ -1063,6 +1067,8 @@
 "getInspired.student" = "Notes d'étude";
 "globalSearch.page" = "page";
 "globalSearch.recentlySearched" = "Récemment recherché";
+"groupitem.noteText" = "note";
+"groupitem.notesText" = "notes";
 "headers" = "En-têtes";
 "highlighterRack.flat" = "Surligneur plat";
 "highlighterRack.round" = "Surligneur rond";
@@ -1081,8 +1087,12 @@
 "iap.featureLimitMessage" = "Cette fonctionnalité est verrouillée. Débloquez-la en effectuant une mise à niveau maintenant.";
 "iap.featureLimitTitle" = "Mettez à niveau maintenant.";
 "iap.message" = "Accédez à des notes illimitées, à la reconnaissance de l'écriture manuscrite et à la recherche, ainsi qu'à des journaux numériques avec Noteshelf Premium.";
+"iap.noProductIDsFound" = "Aucun identifiant de produit d'achat intégré n'a été trouvé.";
+"iap.noProductsFound" = "Aucun achat intégré n'a été trouvé.";
 "iap.onetimepurchase" = "ACHAT UNIQUE. À JAMAIS À TOI.";
+"iap.paymentWasCancelled" = "Le processus d'achat intégré a été annulé.";
 "iap.privacy" = "Politique de confidentialité";
+"iap.productRequestFailed" = "Impossible de récupérer les produits d'achat intégré disponibles pour le moment.";
 "iap.purchase" = "Mise à niveau pour %@";
 "iap.purchaseNotAllowed" = "Les achats intégrés ne sont pas autorisés sur cet appareil.";
 "iap.restorePurchase" = "Restaurer les achats.";
@@ -1462,6 +1472,7 @@
 "text.font.setAsDefault.menuTitle" = "Définir par défaut pour:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Ceci et tous les futurs cahiers";
 "text.font.setAsDefault.thisBook" = "Ce cahier.";
+"texttoolbar.fontselectionTitle" = "SÉLECTIONNER LA POLICE";
 "theams.unsplashDescription" = "Choisissez depuis Unsplash, prenez une photo ou sélectionnez depuis votre bibliothèque de photos pour créer vos couvertures personnalisées.";
 "trash.alert.cannotOpenNotebook" = "Ce carnet ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
@@ -1509,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 8 September 2023 at 3:50 PM
+// Last Synced by Rakesh on 8 September 2023 at 7:08 PM

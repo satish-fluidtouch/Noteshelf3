@@ -19,7 +19,7 @@ extension FTStoreLibraryViewController {
         let identifier = indexPath as NSIndexPath
         contextMenuSelectedIndexPath = indexPath as IndexPath
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
-            let delete = UIAction(title: "Remove from library", image: UIImage(systemName: "trash")) { [weak self] _ in
+            let delete = UIAction(title: "librarystore.removefromLibrary".localized, image: UIImage(systemName: "trash")) { [weak self] _ in
                 Task {
                     if let item = self?.viewModel.itemAt(index: indexPath.row) {
                         do {
