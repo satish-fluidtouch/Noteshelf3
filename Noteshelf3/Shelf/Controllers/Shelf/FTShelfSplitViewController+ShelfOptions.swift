@@ -419,13 +419,13 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     }
     func deleteItems(_ items : [FTShelfItemProtocol],  shouldEmptyTrash:Bool, onCompletion: @escaping((Bool) -> Void))
     {
-        let alertTitle = shouldEmptyTrash ? "Are you sure you want empty your Trash?" : "Are you sure you want to delete?"
-        let deleteButtonTitle = shouldEmptyTrash ? "Empty Trash" : "Delete"
-        let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: UIAlertController.Style.alert)
-        let emptyTrashAction = UIAlertAction(title: deleteButtonTitle, style: .destructive) { _ in
+        let alertTitle = shouldEmptyTrash ? "trash.alert.title" : "shelf.deleteCategoryAlert.title"
+        let deleteButtonTitle = shouldEmptyTrash ? "shelf.emptyTrash" : "shelf.alerts.delete"
+        let alertController = UIAlertController(title: alertTitle.localized, message: nil, preferredStyle: UIAlertController.Style.alert)
+        let emptyTrashAction = UIAlertAction(title: deleteButtonTitle.localized, style: .destructive) { _ in
             deleteShelfItems()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default)
         alertController.addAction(cancelAction)
         alertController.addAction(emptyTrashAction)
         alertController.preferredAction = cancelAction

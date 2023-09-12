@@ -28,13 +28,16 @@ class FTBookmarkViewController: UIViewController, FTPopoverPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.register(FTBookmarkColorCell.self, forCellWithReuseIdentifier: "FTBookmarkColorCell")
+        headerTitle?.text = "Bookmark".localized
         headerTitle?.font = UIFont.clearFaceFont(for: .medium, with: 20)
+
         if let page = pages.first {
             if(!page.bookmarkColor.isEmpty) {
                 self.currentBookmarkColor = page.bookmarkColor
             }
         }
         self.collectionView?.reloadData()
+        textField?.placeholder = "untitled".localized
         textField?.layer.borderColor = UIColor.appColor(.black20).cgColor
         textField?.layer.borderWidth = 1
     }

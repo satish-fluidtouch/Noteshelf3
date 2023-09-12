@@ -1648,7 +1648,7 @@
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" name="accentBg"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
                                                                             <constraint firstItem="2ou-gV-Opn" firstAttribute="top" secondItem="S0R-Wj-tn8" secondAttribute="top" id="40y-jZ-pRq"/>
                                                                             <constraint firstAttribute="trailing" secondItem="2ou-gV-Opn" secondAttribute="trailing" id="71O-Eb-oeJ"/>
@@ -1721,10 +1721,11 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="23B-dN-MRN"/>
                                                         </constraints>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="Set as Default">
-                                                            <color key="baseForegroundColor" name="accent"/>
-                                                        </buttonConfiguration>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Set as Default">
+                                                            <color key="titleColor" name="accent"/>
+                                                        </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                 <integer key="value" value="10"/>

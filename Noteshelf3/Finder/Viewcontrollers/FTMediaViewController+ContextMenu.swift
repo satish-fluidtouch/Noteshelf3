@@ -51,7 +51,7 @@ extension FTMediaViewController {
             self?.performContextMenuOperation(.edit, indexPath: indexPath, mediaItem: mediaItem)
         }
         
-        let openInNewWindowAction = UIAction(title: NSLocalizedString("Open in New Window", comment: "Open in New Window"),
+        let openInNewWindowAction = UIAction(title: NSLocalizedString("OpenInNewWindow", comment: "Open in New Window"),
                                     image: UIImage(systemName: "rectangle.badge.plus", withConfiguration: configuration),
                                     identifier: nil,
                                     discoverabilityTitle: nil,
