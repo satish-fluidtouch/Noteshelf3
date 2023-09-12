@@ -155,7 +155,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             if (error == nil) {
                 let hcConfig = HelpCenterUiConfiguration()
                 hcConfig.groupType = .category
-                hcConfig.groupIds = [360003610373, 360003570274]
+                hcConfig.groupIds = [22023798601881]
                 hcConfig.showContactOptions = false
                 hcConfig.showContactOptionsOnEmptySearch = false;
                 
@@ -187,7 +187,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            if (error == nil) {
                let hcConfig = HelpCenterUiConfiguration()
                hcConfig.groupType = .category
-               hcConfig.groupIds = [360003610373, 360003570274]
+               hcConfig.groupIds = [22023798601881]
                hcConfig.showContactOptions = false
                hcConfig.showContactOptionsOnEmptySearch = false;
                
