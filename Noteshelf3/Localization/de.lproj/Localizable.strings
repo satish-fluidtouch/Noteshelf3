@@ -959,7 +959,7 @@
 "cloud.backup.error.failedToCreateBackup" = "Fehler beim Erstellen der Sicherungsdatei. Überprüfen Sie den verbleibenden Speicherplatz auf Ihrem Gerät.";
 "cloud.backup.error.fileNotFound" = "Datei nicht gefunden";
 "cloud.backup.error.filePasswordProtected" = "Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
-"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.error.packageNeedsUpgrade" = "Nicht möglich, aufgrund eines Fehlers eine Sicherungskopie zu erstellen.";
 "cloud.backup.errors" = "Fehler";
 "cloud.backup.pdfFormatWarning" = "Hinweis: Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
 "color.added" = "Farbe hinzugefügt";
@@ -1520,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

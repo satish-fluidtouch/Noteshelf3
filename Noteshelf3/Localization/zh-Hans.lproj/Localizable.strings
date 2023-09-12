@@ -959,7 +959,7 @@
 "cloud.backup.error.failedToCreateBackup" = "创建备份文件失败。请检查设备上的剩余空间。";
 "cloud.backup.error.fileNotFound" = "文件未找到";
 "cloud.backup.error.filePasswordProtected" = "密码保护的笔记本无法备份为PDF。";
-"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.error.packageNeedsUpgrade" = "由于错误无法备份";
 "cloud.backup.errors" = "错误";
 "cloud.backup.pdfFormatWarning" = "注意：密码保护的笔记本无法备份为PDF。";
 "color.added" = "颜色添加";
@@ -1520,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

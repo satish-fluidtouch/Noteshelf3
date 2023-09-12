@@ -959,7 +959,7 @@
 "cloud.backup.error.failedToCreateBackup" = "Impossibile creare il file di backup. Controlla lo spazio disponibile sul tuo dispositivo.";
 "cloud.backup.error.fileNotFound" = "File non trovato";
 "cloud.backup.error.filePasswordProtected" = "I quaderni protetti da password non possono essere esportati in formato PDF.";
-"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.error.packageNeedsUpgrade" = "Impossibile eseguire il backup a causa di un errore.";
 "cloud.backup.errors" = "Errore";
 "cloud.backup.pdfFormatWarning" = "Nota: I quaderni protetti da password non possono essere esportati in formato PDF.";
 "color.added" = "Colore aggiunto";
@@ -1520,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

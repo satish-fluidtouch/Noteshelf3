@@ -959,7 +959,7 @@
 "cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
 "cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
 "cloud.backup.error.filePasswordProtected" = "パスワードで保護されたノートブックはPDFとしてバックアップできません。";
-"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.error.packageNeedsUpgrade" = "エラーのためバックアップできません";
 "cloud.backup.errors" = "エラー";
 "cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
 "color.added" = "カラーが追加されました。";
@@ -1520,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

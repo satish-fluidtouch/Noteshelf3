@@ -959,7 +959,7 @@
 "cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
 "cloud.backup.error.fileNotFound" = "File not found";
 "cloud.backup.error.filePasswordProtected" = "Password protected notebooks cannot be backed up as PDFs";
-"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.error.packageNeedsUpgrade" = "Unable to backup due to an error";
 "cloud.backup.errors" = "Errors";
 "cloud.backup.pdfFormatWarning" = "Note : Password protected notebooks cannot be backed up as PDFs";
 "color.added" = "Color added";
@@ -1520,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
