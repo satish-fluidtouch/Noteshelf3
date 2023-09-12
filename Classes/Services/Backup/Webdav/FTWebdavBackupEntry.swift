@@ -38,6 +38,10 @@ class FTWebDavBackupFileInfo: FTCloudBackupFileInfo {
 }
 
 class FTWebdavBackupEntry : FTCloudBackup {
+    override class func fileInfo() -> FTCloudBackupFileInfo {
+        return FTWebDavBackupFileInfo();
+    }
+
     override init(withDict dict: [String: Any]) {
         super.init(withDict: dict);
         if let webdavInfo = dict["webdav"] {
