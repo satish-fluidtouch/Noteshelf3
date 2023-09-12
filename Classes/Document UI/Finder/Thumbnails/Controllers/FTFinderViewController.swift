@@ -189,7 +189,11 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             isRegular = splitVc.isRegularClass()
         }
         if isRegular {
-            self.cellSize = CGSize(width: 210, height: 208);
+            if mode == .selectPages {
+                self.cellSize = CGSize(width: 152, height: 204);
+            } else {
+                self.cellSize = CGSize(width: 210, height: 208);
+            }
         }
         else {
             self.cellSize = CGSize(width: 144, height: 176);
@@ -1139,7 +1143,15 @@ extension FTFinderViewController{
     }
 
     var minimumInterItemSpacing: CGFloat {
-        return self.isRegularFinder ? 40 : 24
+        let spacing: CGFloat
+        if mode == .selectPages {
+            spacing = 10
+        } else if self.isRegularFinder {
+            spacing = 40
+        } else {
+            spacing = 24
+        }
+        return spacing
     }
     
     private var bookMarkContentInsets: UIEdgeInsets {
@@ -1213,6 +1225,9 @@ extension FTFinderViewController{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         let sectionIdentfier = dataSource.sectionIdentifier(for: section)
         if (screenMode == .fullScreen || (screenMode == .normal && !self.isRegularClass())) && sectionIdentfier == .thumbnails {
+            return self.horizontalSpacing()
+        }
+        if mode == .selectPages {
             return self.horizontalSpacing()
         }
         return .zero
