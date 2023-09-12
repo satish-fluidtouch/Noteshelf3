@@ -22,6 +22,8 @@ class FTCloudBackUpManager : NSObject {
         self.setCurrentBackUpCloud(self.currentBackUpCloudType())
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidUpdatedNotification(_:)), name: .shelfItemAdded, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidUpdatedNotification(_:)), name: .shelfItemUpdated, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleAppDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleAppWillResignActive), name: UIApplication.willResignActiveNotification, object: nil);
     }
 
     @objc private func shelfItemDidUpdatedNotification(_ notification: NSNotification) {
@@ -107,12 +109,12 @@ class FTCloudBackUpManager : NSObject {
     }
     
     // MARK:- Active / resign -
-    func handleAppDidBecomeActive() {
+    @objc func handleAppDidBecomeActive() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(startPublish), object: nil)
         perform(#selector(startPublish), with: nil, afterDelay: 1)
     }
 
-    func handleAppWillResignActive() {
+    @objc func handleAppWillResignActive() {
         cancelPublish()
     }
     
