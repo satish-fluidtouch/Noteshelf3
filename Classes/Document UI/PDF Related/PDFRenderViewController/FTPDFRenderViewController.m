@@ -606,6 +606,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 -(void)updateContentSize
 {
     id currentScrollViewDel = self.mainScrollView.scrollViewDelegate;
+    self.mainScrollView.contentInset = UIEdgeInsetsZero;
     self.mainScrollView.scrollViewDelegate = nil;
     [self.pageLayoutHelper updateContentSizeWithPageCount:self.numberOfPages];
     self.mainScrollView.scrollViewDelegate = currentScrollViewDel;
