@@ -763,7 +763,22 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.handlePageRecognitionUpdate(_:)), name: NSNotification.Name(rawValue: FTRecognitionInfoDidUpdateNotification), object: nil)
 
         NotificationCenter.default.addObserver(forName: .shouldReloadFinderNotification, object: nil, queue: nil) { [weak self] (notification) in
-            self?.reloadData()
+            guard let self else {
+                return
+            }
+            var arrSelectedPages = Array(self.selectedPages)
+            if self.mode == .edit, !arrSelectedPages.isEmpty {
+                let pages = self.document.documentPages()
+                arrSelectedPages = arrSelectedPages.filter { reqPage in
+                    return pages.contains { page in
+                        return (reqPage as? FTThumbnailable)?.uuid == page.uuid
+                    }
+                }
+                self.selectedPages.removeAllObjects()
+                self.selectedPages.addObjects(from: arrSelectedPages)
+                self.updateSelectAllUI()
+            }
+            self.reloadData()
         }
         NotificationCenter.default.addObserver(forName: .didChangeCurrentPageNotification, object: nil, queue: nil) { [weak self] (notification) in
             var currentSessionID = ""
