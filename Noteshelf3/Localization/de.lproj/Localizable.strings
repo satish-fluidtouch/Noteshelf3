@@ -955,12 +955,12 @@
 "bujoessentials" = "Bujo Grundlagen";
 "cancel" = "Abbrechen";
 "clipart404" = "Server beschäftigt, bitte versuchen Sie es später erneut.";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "Beim Erstellen einer Sicherungskopie ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
 "cloud.backup.error.failedToCreateBackup" = "Fehler beim Erstellen der Sicherungsdatei. Überprüfen Sie den verbleibenden Speicherplatz auf Ihrem Gerät.";
 "cloud.backup.error.fileNotFound" = "Datei nicht gefunden";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
-"cloud.backup.errors" = "";
+"cloud.backup.error.filePasswordProtected" = "Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
+"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.errors" = "Fehler";
 "cloud.backup.pdfFormatWarning" = "Hinweis: Passwortgeschützte Notizbücher können nicht als PDFs gesichert werden.";
 "color.added" = "Farbe hinzugefügt";
 "color.deleted" = "Farbe gelöscht";

@@ -955,12 +955,12 @@
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
 "clipart404" = "Servidor ocupado, por favor inténtelo de nuevo más tarde.";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "Se produjo un error al realizar la copia de seguridad. Por favor, inténtalo de nuevo más tarde.";
 "cloud.backup.error.failedToCreateBackup" = "No se pudo crear el archivo de respaldo. Verifique el espacio restante en su dispositivo.";
 "cloud.backup.error.fileNotFound" = "Archivo no encontrado";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
-"cloud.backup.errors" = "";
+"cloud.backup.error.filePasswordProtected" = "Los cuadernos protegidos con contraseña no se pueden respaldar como PDF.";
+"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.errors" = "Error";
 "cloud.backup.pdfFormatWarning" = "Nota: Los cuadernos protegidos con contraseña no se pueden respaldar como PDF.";
 "color.added" = "Color añadido";
 "color.deleted" = "Color eliminado";

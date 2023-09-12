@@ -955,12 +955,12 @@
 "bujoessentials" = "ブジョエッセンシャルズ";
 "cancel" = "キャンセル";
 "clipart404" = "サーバーがビジーです。後でもう一度お試しください。";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "バックアップ中にエラーが発生しました。後でもう一度お試しください。";
 "cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
 "cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
-"cloud.backup.errors" = "";
+"cloud.backup.error.filePasswordProtected" = "パスワードで保護されたノートブックはPDFとしてバックアップできません。";
+"cloud.backup.error.packageNeedsUpgrade" = "Package needs upgrade";
+"cloud.backup.errors" = "エラー";
 "cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
 "color.added" = "カラーが追加されました。";
 "color.deleted" = "色削除";
