@@ -17,7 +17,7 @@
                BlueprintIdentifier = "BAA84E1428730F5800DE801B"
                BuildableName = "FTStyles.framework"
                BlueprintName = "FTStyles"
-               ReferencedContainer = "container:Noteshelf.xcodeproj">
+               ReferencedContainer = "container:Noteshelf3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -52,7 +52,7 @@
             BlueprintIdentifier = "BAA84E1428730F5800DE801B"
             BuildableName = "FTStyles.framework"
             BlueprintName = "FTStyles"
-            ReferencedContainer = "container:Noteshelf.xcodeproj">
+            ReferencedContainer = "container:Noteshelf3.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

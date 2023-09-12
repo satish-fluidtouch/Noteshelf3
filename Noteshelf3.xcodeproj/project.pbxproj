@@ -782,7 +782,7 @@
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
-		BAB258B5295B1B3B0072AEBB /* Noteshelf Action.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2140,7 +2140,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BAB258B5295B1B3B0072AEBB /* Noteshelf Action.appex in Embed Foundation Extensions */,
+				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 1;
@@ -3760,7 +3760,7 @@
 		C80BD764221673DC007EEC3F /* FTBackupInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackupInfoTableViewCell.swift; sourceTree = "<group>"; };
 		C80BD76622168242007EEC3F /* FTCustomPresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCustomPresentable.swift; sourceTree = "<group>"; };
 		C80DB46321F837B60021DB93 /* FTProgressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTProgressTableViewCell.swift; sourceTree = "<group>"; };
-		C8140D31232667B60053FC86 /* Noteshelf Action.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf Action.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf3 Action.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8140D33232667B60053FC86 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C8140D38232667B60053FC86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8140D4223266E8E0053FC86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -5950,7 +5950,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C8140D31232667B60053FC86 /* Noteshelf Action.appex */,
+				C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */,
 				BAF395B12859ADF10067CA9F /* NS3 Dev.app */,
 				BAA84E1528730F5800DE801B /* FTStyles.framework */,
 				BAA84E442873105500DE801B /* FTCommon.framework */,
@@ -10904,9 +10904,9 @@
 			productReference = BAF395B12859ADF10067CA9F /* NS3 Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C8140D30232667B60053FC86 /* Noteshelf Action */ = {
+		C8140D30232667B60053FC86 /* Noteshelf3 Action */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C8140D3C232667B60053FC86 /* Build configuration list for PBXNativeTarget "Noteshelf Action" */;
+			buildConfigurationList = C8140D3C232667B60053FC86 /* Build configuration list for PBXNativeTarget "Noteshelf3 Action" */;
 			buildPhases = (
 				C8140D2D232667B60053FC86 /* Sources */,
 				C8140D2E232667B60053FC86 /* Frameworks */,
@@ -10919,12 +10919,12 @@
 				5283D3A72A5E7AA000C6C125 /* PBXTargetDependency */,
 				BAF0DD652A6FE48E006D293B /* PBXTargetDependency */,
 			);
-			name = "Noteshelf Action";
+			name = "Noteshelf3 Action";
 			packageProductDependencies = (
 				5288FB442A553F5100EBC37C /* ZipArchive */,
 			);
 			productName = "Noteshelf Action";
-			productReference = C8140D31232667B60053FC86 /* Noteshelf Action.appex */;
+			productReference = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -10965,7 +10965,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Noteshelf" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Noteshelf3" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
@@ -10998,7 +10998,7 @@
 			projectRoot = "";
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
-				C8140D30232667B60053FC86 /* Noteshelf Action */,
+				C8140D30232667B60053FC86 /* Noteshelf3 Action */,
 				BAB689A72862E7A400FACF11 /* GenerateLocalization */,
 				BAA84E1428730F5800DE801B /* FTStyles */,
 				BAA84E432873105500DE801B /* FTCommon */,
@@ -13255,7 +13255,7 @@
 		};
 		BAB258B7295B1B400072AEBB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C8140D30232667B60053FC86 /* Noteshelf Action */;
+			target = C8140D30232667B60053FC86 /* Noteshelf3 Action */;
 			targetProxy = BAB258B6295B1B400072AEBB /* PBXContainerItemProxy */;
 		};
 		BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */ = {
@@ -14680,7 +14680,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Noteshelf" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Noteshelf3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
@@ -14690,7 +14690,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C8140D3C232667B60053FC86 /* Build configuration list for PBXNativeTarget "Noteshelf Action" */ = {
+		C8140D3C232667B60053FC86 /* Build configuration list for PBXNativeTarget "Noteshelf3 Action" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C8140D3D232667B60053FC86 /* Debug */,
