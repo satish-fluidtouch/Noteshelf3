@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTTemplatesSidebarItemView: View {
     @ObservedObject var viewModel: FTSidebarViewModel
@@ -15,20 +16,14 @@ struct FTTemplatesSidebarItemView: View {
     weak var delegate: FTSidebarViewDelegate?
     var body: some View {
         FTSideBarItemContextMenuPreview(preview: {
-//            Button {
-//                viewModel.endEditingActions()
-//                viewModel.selectedSideBarItem = templatesSidebarItem
-//                delegate?.didTapOnSidebarItem(templatesSidebarItem)
-//            } label: {
-//                templatesView
-//            }
-            FTAnimateButton {
+            Button {
                 viewModel.endEditingActions()
                 viewModel.selectedSideBarItem = templatesSidebarItem
                 delegate?.didTapOnSidebarItem(templatesSidebarItem)
             } label: {
                 templatesView
             }
+            .buttonInteractionStyle(scaleValue: 0.99)
             .ignoresSafeArea()
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true

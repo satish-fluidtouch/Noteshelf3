@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SafariServices
+import FTCommon
 
 struct FTSettingsAboutView: View {
 
@@ -153,6 +154,7 @@ struct FTSettingsAboutView: View {
                             showWebview = true
 #endif
                         }
+                        .buttonInteractionStyle(scaleValue: 0.98)
                 }
             }
             .if(selectedStyle != nil, transform: { view in

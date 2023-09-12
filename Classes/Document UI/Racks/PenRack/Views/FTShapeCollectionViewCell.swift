@@ -30,6 +30,11 @@ class FTShapeCollectionViewCell: UICollectionViewCell {
     func select() {
         self.bgView.backgroundColor = UIColor.appColor(.white100)
         self.bgView.addShadow(cornerRadius: self.bgView.frame.height/2.0, color: UIColor.label.withAlphaComponent(0.12), offset: CGSize(width: 0.0, height: 4.0), opacity: 1.0, shadowRadius: 8.0)
+        UIView.animate(withDuration: 0.2) {
+            self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.8, y: 1.0) : .identity
+            self.bgView.backgroundColor = UIColor.appColor(.white100)
+            self.bgView.addShadow(cornerRadius: self.bgView.frame.height/2.0, color: UIColor.label.withAlphaComponent(0.12), offset: CGSize(width: 0.0, height: 4.0), opacity: 1.0, shadowRadius: 8.0)
+        }
     }
     
     func deSelect() {

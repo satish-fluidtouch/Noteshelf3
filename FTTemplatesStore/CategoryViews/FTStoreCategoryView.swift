@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTStoreCategoryView: View {
     var templateInfo: StoreInfo
 
     var body: some View {
-        var items = templateInfo.discoveryItems
+        let items = templateInfo.discoveryItems
 
         let topRows = items.enumerated().filter { element in
             return element.offset%2 == 0
@@ -63,6 +64,7 @@ struct FTStoreCategoryView: View {
             _items[index].sectionType = templateInfo.sectionType
             FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: _items, selectedIndex: index))
         }
+        .buttonInteractionStyle(scaleValue: 0.98)
       }
 
 }

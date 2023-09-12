@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTStickerSegmentedView: View {
     @EnvironmentObject private var viewModel: FTStickerCategoriesViewModel
@@ -32,6 +33,7 @@ struct FTStickerSegmentedView: View {
                                     proxy.scrollTo(item,anchor: .center)
                                 }
                             }
+                            .buttonInteractionStyle(scaleValue: 0.98)
                     }
                 }
                 .padding(5)

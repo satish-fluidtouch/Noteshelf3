@@ -1997,8 +1997,6 @@
 		E7D87C9B29CEF59A00E1FD1E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D87C9A29CEF59A00E1FD1E /* UIFont+Extension.swift */; };
 		E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */; };
 		E7E3EC3C29A4882F004372B6 /* FTAddMenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7E3EC3A29A4882E004372B6 /* FTAddMenuItemCell.xib */; };
-		E7E3EC3E29A4897E004372B6 /* FTStickersListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3EC3D29A4897E004372B6 /* FTStickersListTableViewCell.swift */; };
-		E7E3EC4029A48C92004372B6 /* FTStickersListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3EC3F29A48C92004372B6 /* FTStickersListCollectionViewCell.swift */; };
 		E7E3EC4229A4922A004372B6 /* FTStickers.plist in Resources */ = {isa = PBXBuildFile; fileRef = E7E3EC4129A4922A004372B6 /* FTStickers.plist */; };
 		E7ECA3C329C04CCC00703BB7 /* FTUnSplashModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897DD4924BD60DF0016DFE2 /* FTUnSplashModel.swift */; };
 		E7F479D328857FBD00577D1E /* FTRackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F479D228857FBD00577D1E /* FTRackData.swift */; };
@@ -4055,8 +4053,6 @@
 		E7D87C9A29CEF59A00E1FD1E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAddMenuItemCell.swift; sourceTree = "<group>"; };
 		E7E3EC3A29A4882E004372B6 /* FTAddMenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTAddMenuItemCell.xib; sourceTree = "<group>"; };
-		E7E3EC3D29A4897E004372B6 /* FTStickersListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersListTableViewCell.swift; sourceTree = "<group>"; };
-		E7E3EC3F29A48C92004372B6 /* FTStickersListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersListCollectionViewCell.swift; sourceTree = "<group>"; };
 		E7E3EC4129A4922A004372B6 /* FTStickers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = FTStickers.plist; sourceTree = "<group>"; };
 		E7F479D228857FBD00577D1E /* FTRackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRackData.swift; sourceTree = "<group>"; };
 		E7F479D8288589D700577D1E /* FTRackDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRackDataManager.swift; sourceTree = "<group>"; };
@@ -9693,8 +9689,6 @@
 		E746A99429A487BD009B95B4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				E7E3EC3D29A4897E004372B6 /* FTStickersListTableViewCell.swift */,
-				E7E3EC3F29A48C92004372B6 /* FTStickersListCollectionViewCell.swift */,
 				09953EB81F1F2C1C00753F70 /* FTPhotoAlbumTableViewCell.swift */,
 				09953EB91F1F2C1C00753F70 /* FTPhotoCollectionViewCell.swift */,
 				E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */,
@@ -12441,7 +12435,6 @@
 				BAF393072859ADF00067CA9F /* NSMutableAttributedString+Extension.swift in Sources */,
 				E7A05A262934CE4200D758C0 /* FTShelfViewModel+SearchHandler.swift in Sources */,
 				E7A56ADD2967FD6100DE5FAE /* FTGlobalSettingsOptions.swift in Sources */,
-				E7E3EC4029A48C92004372B6 /* FTStickersListCollectionViewCell.swift in Sources */,
 				BAF393082859ADF00067CA9F /* FTTile.m in Sources */,
 				BAF393092859ADF00067CA9F /* FTENSyncUtilities.swift in Sources */,
 				BAF3930A2859ADF00067CA9F /* FTArrowUtility.swift in Sources */,
@@ -12523,7 +12516,6 @@
 				BAF393432859ADF00067CA9F /* FTCloudPublishRequest.swift in Sources */,
 				BAF393442859ADF00067CA9F /* FTOneDriveMoveTask.swift in Sources */,
 				BAF393452859ADF00067CA9F /* FTShelfItemCollection.swift in Sources */,
-				E7E3EC3E29A4897E004372B6 /* FTStickersListTableViewCell.swift in Sources */,
 				BA111C3A2988E75C001E854F /* UIFont+Helper.swift in Sources */,
 				97A606D629BB368A00B01E03 /* FTTemplateInfoModel.swift in Sources */,
 				09DEFBDB2A725EC200F41C1E /* FTStrokeGlyphInfo.swift in Sources */,

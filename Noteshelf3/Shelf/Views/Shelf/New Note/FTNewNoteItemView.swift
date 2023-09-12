@@ -14,6 +14,7 @@ struct FTNewNoteItemView:View{
     let type: FTNewNotePopoverOptions
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject  var delegate:FTShelfViewModel
+    @ObservedObject var viewModel: FTNewNotePopoverViewModel
 
     var body: some View{
         VStack(alignment: .leading){
@@ -59,13 +60,37 @@ struct FTNewNoteItemView:View{
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(Color.appColor(.accentBorder), lineWidth: 1.0)
                 )
+                .onTapGesture {
+                    switch type {
+                    case .quickNote:
+                        self.dismiss()
+                        track(EventName.shelf_addmenu_quicknote_tap, params: [EventParameterKey.location: delegate.shelfLocation()], screenName: ScreenName.shelf)
+                        runInMainThread(0.01) {
+                            viewModel.delegate?.quickCreateNewNotebook()
+                        }
+                    case .newNotebook:
+                        track(EventName.shelf_addmenu_newnotebook_tap, params: [EventParameterKey.location: delegate.shelfLocation()], screenName: ScreenName.shelf)
+                        self.dismiss()
+                        runInMainThread(0.01){
+                            viewModel.delegate?.showNewNotebookPopover()
+                        }
+                    case .importFromFiles:
+                        track(EventName.shelf_addmenu_importfile_tap, params: [EventParameterKey.location: delegate.shelfLocation()], screenName: ScreenName.shelf)
+                        self.dismiss()
+                        runInMainThread(0.01){
+                            delegate.delegate?.didClickImportNotebook()
+                        }
+                    default:
+                        break
+                    }
+                }
             }
-
         }
     }
+
     struct FTNewNoteItemView_Previews: PreviewProvider {
         static var previews: some View {
-            FTNewNoteItemView(type: .quickNote)
+            FTNewNoteItemView(type: .quickNote, viewModel: FTNewNotePopoverViewModel())
         }
     }
 

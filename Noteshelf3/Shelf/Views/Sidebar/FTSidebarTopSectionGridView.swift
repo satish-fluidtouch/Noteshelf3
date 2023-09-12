@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTSidebarTopSectionGridView: View {
 
@@ -27,28 +28,21 @@ struct FTSidebarTopSectionGridView: View {
             GridRow{
                 FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate).gridCellColumns(2)
             }
-        }
+        }.macOnlyPlainButtonStyle()
     }
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }
     private func gridItemFor(_ sideBarItem: FTSideBarItem) -> some View {
-        FTAnimateButton {
+        Button {
             viewModel.endEditingActions()
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
         } label: {
             FTSidebarTopSectionGridItemView(viewModel: viewModel)
                 .environmentObject(sideBarItem)
-
         }
-//        Button {
-//            viewModel.endEditingActions()
-//            viewModel.selectedSideBarItem = sideBarItem
-//            delegate?.didTapOnSidebarItem(sideBarItem)
-//        } label: {
-//            FTSidebarTopSectionGridItemView(viewModel: viewModel, item: sideBarItem)
-//        }
+        .buttonInteractionStyle(scaleValue: 0.98)
     }
 }
 

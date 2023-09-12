@@ -53,4 +53,11 @@ class FTDefaultCustomCoverSectionCell: FTTraitCollectionViewCell {
             self.imgHeightConstraint?.constant = FTCovers.Panel.CoverSize.compact.height
         }
     }
+    override open var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.1) {
+                self.transform = self.isSelected ? CGAffineTransform(scaleX: 0.98, y: 1.0) : .identity
+            }
+        }
+    }
 }

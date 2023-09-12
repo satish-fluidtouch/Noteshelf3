@@ -7,12 +7,12 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTNewNoteTopSectionView: View {
     @ObservedObject var viewModel: FTNewNotePopoverViewModel
     weak var delegate: FTShelfNewNoteDelegate?
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
-//    weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
@@ -20,36 +20,17 @@ struct FTNewNoteTopSectionView: View {
             GridRow {
                 getShelfPopOverItemView(.quickNote)
                     .gridCellColumns(2)
-                    .onTapGesture {
-                        self.dismiss()
-                        track(EventName.shelf_addmenu_quicknote_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                            viewModel.delegate?.quickCreateNewNotebook()
-                        }
-                    }
             }
             GridRow{
                 getShelfPopOverItemView(.newNotebook)
-                    .onTapGesture {
-                        track(EventName.shelf_addmenu_newnotebook_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                        self.dismiss()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
-                            viewModel.delegate?.showNewNotebookPopover()
-                        }
-                    }
                 getShelfPopOverItemView(.importFromFiles)
-                    .onTapGesture {
-                        track(EventName.shelf_addmenu_importfile_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                        self.dismiss()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
-                        delegate?.didClickImportNotebook()
-                    }
-                }
             }
         }
+        .macOnlyPlainButtonStyle()
     }
     private func getShelfPopOverItemView(_ type: FTNewNotePopoverOptions) -> some View {
-        FTNewNoteItemView(type: type)
+        FTNewNoteItemView(type: type, viewModel: viewModel)
+            .buttonInteractionStyle(scaleValue: 0.99)
     }
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {

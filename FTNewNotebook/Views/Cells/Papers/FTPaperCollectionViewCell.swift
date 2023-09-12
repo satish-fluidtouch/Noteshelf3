@@ -20,6 +20,13 @@ class FTPaperCollectionViewCell: UICollectionViewCell {
             setBorderAndSelectionToThumbnail()
         }
     }
+    override open var isHighlighted: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.1) {
+                self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.98, y: 1.0) : .identity
+            }
+        }
+    }
     func configureCellWith(title: String?, thumbnailColorHex:String){
         self.thumbnailColorHex = thumbnailColorHex
         let color = UIColor(hexWithAlphaString: thumbnailColorHex)

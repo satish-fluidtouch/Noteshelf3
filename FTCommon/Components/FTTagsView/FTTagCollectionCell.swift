@@ -18,8 +18,9 @@ class FTTagCollectionCell: UICollectionViewCell {
         didSet {
             if isSelected {
                 // Apply the tapping effect
-                contentView.backgroundColor = UIColor.black
-                self.label.textColor = .white
+                UIView.animate(withDuration: 0.3) {
+                    self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.8, y: 1.0) : .identity
+                }
             } else {
                 // Remove the tapping effect
                 contentView.backgroundColor = configuration.tagBgColor

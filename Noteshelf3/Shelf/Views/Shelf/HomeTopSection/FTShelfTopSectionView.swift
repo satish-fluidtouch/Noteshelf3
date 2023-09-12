@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfTopSectionView: View {
 
@@ -13,7 +14,7 @@ struct FTShelfTopSectionView: View {
     
     var body: some View {
         VStack{
-            WidthThresholdReader(widthThreshold: 550) { proxy in
+            GeometryReader { proxy in
                 VStack(alignment: .center,spacing: 0){
                     if shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode{
                         Text("shefl.home.getStartedwithNoteShelf".localized)
@@ -30,21 +31,21 @@ struct FTShelfTopSectionView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.bottom , 28)
                     }
-                    if proxy.width < 935 && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode || proxy.width < 400  {
+                    if proxy.size.width < 935 && shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode || proxy.size.width < 400  {
                         Grid {
                             GridRow{
                                 getShelfDetailViewItem(.quicknote,
                                                        shelfViewModel: shelfViewModel,
-                                                       geometrySize: proxy.width)
+                                                       geometrySize: proxy.size.width)
                                     .gridCellColumns(2)
                             }
                             GridRow{
                                 getShelfDetailViewItem(.newNotebook,
                                                        shelfViewModel: shelfViewModel,
-                                                       geometrySize: proxy.width)
+                                                       geometrySize: proxy.size.width)
                                 getShelfDetailViewItem(.importFile,
                                                        shelfViewModel: shelfViewModel,
-                                                       geometrySize: proxy.width)
+                                                       geometrySize: proxy.size.width)
                             }
                         }
                     }else{
@@ -52,13 +53,13 @@ struct FTShelfTopSectionView: View {
                             GridRow {
                                 getShelfDetailViewItem(.quicknote,
                                                        shelfViewModel: shelfViewModel,
-                                                       geometrySize: proxy.width)
+                                                       geometrySize: proxy.size.width)
                                 getShelfDetailViewItem(.newNotebook,
                                                        shelfViewModel: shelfViewModel,
-                                                       geometrySize: proxy.width)
+                                                       geometrySize: proxy.size.width)
                                 getShelfDetailViewItem(.importFile,
                                                        shelfViewModel: shelfViewModel,
-                                                       geometrySize: proxy.width)
+                                                       geometrySize: proxy.size.width)
                             }
                         }
                     }
@@ -70,6 +71,7 @@ struct FTShelfTopSectionView: View {
         FTShelfTopSectionItem(type: type,
                              isFirsttime: shelfViewModel.shouldShowGetStartedInfo, geometrySize: geometrySize,
                              shelfViewModel: shelfViewModel)
+        .buttonInteractionStyle(scaleValue: 0.99)
     }
 }
 

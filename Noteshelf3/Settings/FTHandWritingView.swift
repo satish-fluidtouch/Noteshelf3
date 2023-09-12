@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTHandWritingView: View {
     @Environment(\.dismiss) var dismiss
@@ -86,6 +87,7 @@ struct FTHandWritingView: View {
                                 Image(selecteStyle == style ? selecteStyle.selectedModeImageName : style.normalModeImageName)
                                     .frame(width: 85,height: 97)
                             })
+                            .buttonInteractionStyle(scaleValue: 0.98)
                         }
                     }
                     .padding(.vertical,32)

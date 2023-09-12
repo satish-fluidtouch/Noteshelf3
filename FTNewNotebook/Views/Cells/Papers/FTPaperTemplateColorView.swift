@@ -7,12 +7,13 @@
 
 import UIKit
 import FTStyles
+import FTCommon
 
 protocol FTPaperTemplateCustomColorDelegate: NSObject {
     func didSelectCustomColor(_ color:UIColor?)
 }
 
-final class FTPaperTemplateColorButton: UIButton {
+final class FTPaperTemplateColorButton: FTUIkitInteractionButton {
     var templateColor: FTTemplateColorModel?
 
     override init(frame: CGRect) {
