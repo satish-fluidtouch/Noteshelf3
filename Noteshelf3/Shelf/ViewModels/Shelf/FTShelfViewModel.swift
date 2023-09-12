@@ -106,7 +106,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var canShowCreateNBButtons: Bool = true
     
     // MARK: Normal Variables
-    var collection: FTShelfItemCollection! {
+    var collection: FTShelfItemCollection {
         didSet {
             reset()
         }
@@ -461,7 +461,7 @@ extension FTShelfViewModel {
 extension FTShelfViewModel {
     
     @MainActor
-    func fetchShelfItems(animate: Bool = true) async {
+    func fetchShelfItems(animate: Bool = true)  {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
                               , searchKey: nil) { [weak self] items in
