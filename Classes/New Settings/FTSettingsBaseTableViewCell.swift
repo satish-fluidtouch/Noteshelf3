@@ -78,7 +78,7 @@ class FTSettingsBackupFormatTableViewCell: FTSettingsBaseTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.formatOptions?.setTitle(FTUserDefaults.backupFormat.displayTitle, for: .normal);
+        self.setTitle(FTUserDefaults.backupFormat.displayTitle);
 
         let menuItem = UIDeferredMenuElement.uncached({ [weak self] items in
             var menuItems = [UIMenuElement]();
@@ -87,7 +87,7 @@ class FTSettingsBackupFormatTableViewCell: FTSettingsBaseTableViewCell {
                 let action = UIAction(title: eachItem.displayTitle,state: (eachItem == currentItem) ? .on : .off) { action in
                     if FTUserDefaults.backupFormat != eachItem {
                         FTUserDefaults.backupFormat = eachItem;
-                        self?.formatOptions?.setTitle(eachItem.displayTitle, for: .normal);
+                        self?.setTitle(eachItem.displayTitle);
                         if let weakSelf = self {
                             self?.delegate?.tableViewCell(weakSelf, didChangeFormat: eachItem);
                         }
@@ -100,5 +100,11 @@ class FTSettingsBackupFormatTableViewCell: FTSettingsBaseTableViewCell {
         
         self.formatOptions?.menu = UIMenu(children: [menuItem]);
         self.formatOptions?.showsMenuAsPrimaryAction = true;
+    }
+    
+    private func setTitle(_ title:String) {
+        let font = UIFont.appFont(for: .regular, with: 17);
+        let attr = NSAttributedString(string: title,attributes: [.font:font]);
+        self.formatOptions?.setAttributedTitle(attr, for: .normal);
     }
 }
