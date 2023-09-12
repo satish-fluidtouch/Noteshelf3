@@ -79,12 +79,15 @@ extension FTShelfTopSectionItem{
                 .font(Font.appFont(for: .regular, with: 13))
         }
     }
+    @ViewBuilder
     var gridcomponetImageView: some View {
         Image(isFirsttime ? type.largeiconName : type.iconName)
             .resizable()
             .scaledToFit()
-            .frame(width: shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 400 ? 64.0 : (geometrySize < 400 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0),
-                   height: shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 400  ? 64.0 : (geometrySize < 400 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0))
+            .frame(width: imageSize(),height: imageSize())
+    }
+    private func imageSize() -> CGFloat{
+        return shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 500 ? 64.0 : (geometrySize < 500 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0)
     }
 }
 extension View {

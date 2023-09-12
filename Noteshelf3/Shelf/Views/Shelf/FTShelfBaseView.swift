@@ -126,7 +126,7 @@ private extension FTShelfBaseView {
 extension FTShelfBaseView{
      func showMinHeight(geometrySize: CGFloat) -> CGFloat {
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 1023 ? 218 : (geometrySize > 530 && geometrySize < 1023 ? 340 : 495)
+            return geometrySize > 1023 ? 126 : (geometrySize < 500 ? 330 : 222)
         } else {
             return geometrySize > 680 ? 68 : 96
         }

@@ -34,9 +34,11 @@ struct FTShelfView: View,FTShelfBaseView {
                 }
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
-                        if viewModel.showNewNoteView,
-                           geometry.size.width > 300 , (!viewModel.isInHomeMode && geometry.size.width > 450),
+                        if viewModel.showNewNoteView , (!viewModel.isInHomeMode && geometry.size.width > 300),
                            viewModel.canShowCreateNBButtons {
+
+                            FTShelfGetStartedDescription()
+
                             FTShelfTopSectionView()
                                 .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)
                                 .padding(.horizontal,gridHorizontalPadding)
