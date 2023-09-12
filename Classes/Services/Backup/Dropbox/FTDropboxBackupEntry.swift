@@ -8,35 +8,64 @@
 
 import UIKit
 
-@objcMembers class FTDropboxBackupEntry: FTCloudBackup {
+class FTDBBackupFileInfo: FTCloudBackupFileInfo {
     var rev: String?
     var dropboxPath: String?
 
+    override func info() -> [String: String]? {
+        if let dbPath = self.dropboxPath, let rev = self.rev {
+            var info = [String: String]();
+            info["dropBoxPath"] = dbPath;
+            info["revision"] = rev;
+            return info;
+        }
+        return nil;
+    }
+    
+    override func updte(with info: [String:String]) {
+        self.dropboxPath = info["dropboxPath"];
+        self.rev = info["revision"];
+    }
+    
+    override func resetProperties() {
+        self.rev = nil
+        self.dropboxPath = nil
+    }
+}
+
+@objcMembers class FTDropboxBackupEntry: FTCloudBackup {
+    override class func fileInfo() -> FTCloudBackupFileInfo {
+        return FTDBBackupFileInfo();
+    }
+    
     override init(withDict dict: [String: Any]) {
         super.init(withDict: dict);
-      
-        if let dropboxInfo = dict["dropbox"] as? [String : Any] {
-            self.dropboxPath = dropboxInfo["dropboxPath"] as? String
-            self.rev = dropboxInfo["revision"] as? String
+        
+        let driveInfo = dict["dropbox"];
+        if let singleFormatInfo = driveInfo as? [String: String] {
+            self.nsFileInfo.updte(with: singleFormatInfo);
+        }
+        else if let multiFormatInfo = driveInfo as? [String : [String: String]] {
+            if let pdfInfo = multiFormatInfo[kExportFormatPDF.cloudFileInfoKey] {
+                self.pdfFileInfo.updte(with: pdfInfo);
+            }
+            if let bookInfo = multiFormatInfo[kExportFormatNBK.cloudFileInfoKey] {
+                self.nsFileInfo.updte(with: bookInfo);
+            }
         }
     }
     
     override func representation() -> [String : Any] {
         var dict = super.representation()
-        var dropboxInfo: [String : Any] = [:]
-        if let path = self.dropboxPath {
-            dropboxInfo["dropBoxPath"] = path
+        
+        var dropboxInfo = [String : [String: String]]();
+        if let pdfInfo = self.pdfFileInfo.info() {
+            dropboxInfo[kExportFormatPDF.cloudFileInfoKey] = pdfInfo;
         }
-        if let revValue = self.rev {
-            dropboxInfo["revision"] = revValue
+        if let nsBookInfo = self.pdfFileInfo.info() {
+            dropboxInfo[kExportFormatNBK.cloudFileInfoKey] = nsBookInfo;
         }
-        dict["dropbox"] = dropboxInfo
+        dict["dropbox"] = dropboxInfo;
         return dict
-    }
-    
-    override func resetProperties() {
-        super.resetProperties()
-        self.rev = nil
-        self.dropboxPath = nil
     }
 }

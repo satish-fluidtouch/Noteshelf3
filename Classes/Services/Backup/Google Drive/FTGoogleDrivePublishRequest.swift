@@ -10,7 +10,15 @@ import UIKit
 import GoogleSignIn
 import GoogleAPIClientForREST_Drive
 
-class FTGoogleDrivePublishRequest: FTCloudPublishRequest {
+class FTGoogleDrivePublishRequest: FTCloudMultiFormatPublishRequest {
+    override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
+        let request = FTGoogleDriveFilePublishRequest(backupEntry: self.refObject,delegate: self,sourceFile: self.sourceFileURL);
+        request.exportFormat = format;
+        return request;
+    }
+}
+
+private class FTGoogleDriveFilePublishRequest: FTCloudFilePublishRequest {
     fileprivate var uploadPath : URL?;
     fileprivate var currentProgress : Progress?;
     fileprivate var isCancelled = false;
@@ -43,34 +51,37 @@ class FTGoogleDrivePublishRequest: FTCloudPublishRequest {
                     pathToUpload = (relativePath as NSString).deletingLastPathComponent;
                     name = (relativePath as NSString).lastPathComponent
                 }
-                if let googleDriveBackUpEntry = weakSelf.refObject as? FTGoogleDriveBackupEntry {
-                    
+                if let driveInfo = weakSelf.fileInfo {
                     var currentRelativePath: String
-                    if let path = googleDriveBackUpEntry.relativePath {
+                    if let path = driveInfo.relativePath {
                         currentRelativePath = path
                     } else {
                         currentRelativePath = pathToUpload
                     }
                     
                     if currentRelativePath.isEqual(pathToUpload) {
-                        weakSelf.uploadFile(fileName: name, fileId: googleDriveBackUpEntry.googleDriveFileId ?? "",
-                                            folderId: googleDriveBackUpEntry.googleDriveParentId ?? "", relativePath: pathToUpload) { (inFile, error) in
+                        weakSelf.uploadFile(fileName: name
+                                            , fileId: driveInfo.googleDriveFileId ?? "",
+                                            folderId: driveInfo.googleDriveParentId ?? ""
+                                            , relativePath: pathToUpload) { (inFile, error) in
                                                 if error == nil, let file = inFile {
-                                                    googleDriveBackUpEntry.googleDriveFileId = file.identifier
-                                                    googleDriveBackUpEntry.googleDriveParentId = file.parents?.first
-                                                    googleDriveBackUpEntry.relativePath = pathToUpload
+                                                    driveInfo.googleDriveFileId = file.identifier
+                                                    driveInfo.googleDriveParentId = file.parents?.first
+                                                    driveInfo.relativePath = pathToUpload
                                                     weakSelf.publishFinishedWith(error: error);
                                                 } else {
                                                     weakSelf.publishFinishedWith(error: error);
                                                 }
                         }
                     } else {
-                        weakSelf.moveFile(fileName: name, fileId: googleDriveBackUpEntry.googleDriveFileId ?? "",
-                                          parentId: googleDriveBackUpEntry.googleDriveParentId ?? "", relativePath: pathToUpload) { (file, error) in
+                        weakSelf.moveFile(fileName: name
+                                          , fileId: driveInfo.googleDriveFileId ?? ""
+                                          , parentId: driveInfo.googleDriveParentId ?? ""
+                                          , relativePath: pathToUpload) { (file, error) in
                                             if error == nil {
-                                                googleDriveBackUpEntry.googleDriveFileId = file?.identifier
-                                                googleDriveBackUpEntry.googleDriveParentId = file?.parents?[0]
-                                                googleDriveBackUpEntry.relativePath = pathToUpload
+                                                driveInfo.googleDriveFileId = file?.identifier
+                                                driveInfo.googleDriveParentId = file?.parents?[0]
+                                                driveInfo.relativePath = pathToUpload
                                                 weakSelf.publishFinishedWith(error: error);
                                             } else {
                                                 weakSelf.publishFinishedWith(error: error);
@@ -285,5 +296,11 @@ class FTGoogleDrivePublishRequest: FTCloudPublishRequest {
         }
         
         return finalName;
+    }
+}
+
+private extension FTGoogleDriveFilePublishRequest {
+    var fileInfo: FTGDBackupFileInfo? {
+        return self.refObject.cloudFileInfo(self.exportFormat) as? FTGDBackupFileInfo
     }
 }

@@ -1322,7 +1322,12 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
             if(shouldClose) {
                 [[FTNoteshelfDocumentManager shared] saveAndCloseWithDocument:documentToSave
                                                                         token:self.openDocToken
-                                                                 onCompletion:onCompletionBlock];
+                                                                 onCompletion:^(BOOL success) {
+                    [[FTCloudBackUpManager shared] startPublish];
+                    if(nil != onCompletionBlock) {
+                        onCompletionBlock(success);
+                    }
+                }];
             }
             else {
                 [documentToSave saveDocumentWithCompletionHandler:onCompletionBlock];
@@ -1455,7 +1460,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
             if (loadingIndicator) {
                 [loadingIndicator hide:nil];
             }
-            
             [[FTENPublishManager shared] startPublishing];
         };
         if(backAction == FTSaveAction) {

@@ -9,8 +9,8 @@ import UIKit
 import OpenAI
 
 class FTOpenAI: NSObject {
-    private static let OPEN_API_TOKEN_OLD = "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";
-    private static let OPEN_API_TOKEN = "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";
+    private static let OPEN_API_TOKEN = "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";
+//    private static let OPEN_API_TOKEN = "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";
 
     private lazy var openAI: OpenAI = {
         return OpenAI(apiToken: FTOpenAI.OPEN_API_TOKEN);
