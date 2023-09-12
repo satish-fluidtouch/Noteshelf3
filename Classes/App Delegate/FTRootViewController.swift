@@ -257,18 +257,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTNoteshelfDocumentProvider.shared.updateProviderIfRequired { isUpdated in
             if(isUpdated || nil == self.rootContentViewController) {
                 FTMobileCommunicationManager.shared.startWatchSession()
-                if let isInNonCollectionMode = self.isInNonCollectionMode(),
-                   isInNonCollectionMode {
-                    let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
-                    self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
-                                   lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
-                                   lastSelectedTag: (self.lastSelectedTag() ?? ""))
-                    self.showIcloudMessage();
-                    onCompletion?(true);
-                } else {
                     let collectionName = self.lastSelectedCollectionName();
                     self.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
-                        if collectionName == collectionToShow?.title, let collection = collectionToShow {
+                        NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
+                        if let isInNonCollectionMode = self.isInNonCollectionMode(),
+                           isInNonCollectionMode {
+                            let lastSelectedContentTypeRawString = (self.lastSelectedNonCollectionType() ?? "home")
+                            self.showShelf(isInNonCollectionMode: isInNonCollectionMode,
+                                           lastSelectedSideBarContentType: FTSideBarItemType(rawValue: lastSelectedContentTypeRawString) ?? .home,
+                                           lastSelectedTag: (self.lastSelectedTag() ?? ""))
+                        } else if collectionName == collectionToShow?.title, let collection = collectionToShow {
                             self.showShelf(updateWithLastSelected: collection);
                         } else {
                             // if collection from user activity is nil we are showing "Home" now instead of "All Notes" collection
@@ -279,8 +277,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         self.showIcloudMessage();
                         onCompletion?(true);
                     });
-                }
-                NotificationCenter.default.post(name: .didChangeUnfiledCategoryLocation, object: nil);
             }
             else {
                 onCompletion?(false);
@@ -336,7 +332,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         loadingIndicatorViewController.hide();
                         self.view.isUserInteractionEnabled = true;
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
-                            self.refreshShelfCollection(setToDefault: true, onCompletion: nil)
+                            weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
+                                weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
+                                weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
+                            });
                         }
                     });
                 }
@@ -365,7 +364,10 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     loadingIndicatorViewController.hide();
                     self.view.isUserInteractionEnabled = true;
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
-                            self.refreshShelfCollection(setToDefault: true,onCompletion: nil);
+                        weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
+                            weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
+                            weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
+                        });
                     }
                 });
             };
