@@ -186,11 +186,8 @@ class FTGlobalSettingsController: UITableViewController {
             #if targetEnvironment(macCatalyst)
             FTDiagnosisHandler.sharedDiagnosisHandler().sendSystemLog(onViewController: self);
             FTCLSLog("UI: Send Log");
-            #elseif BETA
-            FTZenDeskManager.shared.showSupportContactUsScreen(controller: self)
-            FTCLSLog("UI: Feeback Support");
             #else
-            FTZenDeskManager.shared.showSupportContactUsScreen(controller: self)
+            FTZenDeskManager.shared.showSupportHelpCenterScreen(controller: self)
             FTCLSLog("UI: Knowledge Base");
             #endif
 

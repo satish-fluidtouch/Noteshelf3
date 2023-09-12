@@ -189,7 +189,11 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             isRegular = splitVc.isRegularClass()
         }
         if isRegular {
-            self.cellSize = CGSize(width: 210, height: 208);
+            if mode == .selectPages {
+                self.cellSize = CGSize(width: 152, height: 204);
+            } else {
+                self.cellSize = CGSize(width: 210, height: 208);
+            }
         }
         else {
             self.cellSize = CGSize(width: 144, height: 176);
@@ -1139,7 +1143,15 @@ extension FTFinderViewController{
     }
 
     var minimumInterItemSpacing: CGFloat {
-        return self.isRegularFinder ? 40 : 24
+        let spacing: CGFloat
+        if mode == .selectPages {
+            spacing = 10
+        } else if self.isRegularFinder {
+            spacing = 40
+        } else {
+            spacing = 24
+        }
+        return spacing
     }
     
     private var bookMarkContentInsets: UIEdgeInsets {
@@ -1213,6 +1225,9 @@ extension FTFinderViewController{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         let sectionIdentfier = dataSource.sectionIdentifier(for: section)
         if (screenMode == .fullScreen || (screenMode == .normal && !self.isRegularClass())) && sectionIdentfier == .thumbnails {
+            return self.horizontalSpacing()
+        }
+        if mode == .selectPages {
             return self.horizontalSpacing()
         }
         return .zero
@@ -1598,10 +1613,10 @@ extension FTFinderViewController {
         }
 
         func showAlert(_ pages: NSSet) {
-            let alert = UIAlertController(title: "", message: NSLocalizedString("DeletePagePasswordProtectedAlert",comment:"This is a password..."), preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "", message: "DeletePagePasswordProtectedAlert".localized, preferredStyle: UIAlertController.Style.alert)
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("MoveToTrash", comment: "Move To Trash"), style: UIAlertAction.Style.default, handler: { (action) in
-                self.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
+            alert.addAction(UIAlertAction(title: "MoveToTrash".localized, style: UIAlertAction.Style.default, handler: { [weak self] action in
+                self?.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
                     if error == nil, let weakSelf = self {
                         weakSelf.deletePagesPermanantly(from: weakSelf.document,
                                                         pages: pages,
@@ -1609,14 +1624,14 @@ extension FTFinderViewController {
                     }
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("DeletePermanently",comment:"Delete Permanently"), style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
+            alert.addAction(UIAlertAction(title: "DeletePermanently".localized, style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
                 if let weakSelf = self {
                     weakSelf.deletePagesPermanantly(from: weakSelf.document,
                                                     pages: pages,
                                                     indexes: indexSet)
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel",comment:"Cancel"), style: UIAlertAction.Style.destructive, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel".localized, style: UIAlertAction.Style.destructive, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
 
