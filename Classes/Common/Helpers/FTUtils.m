@@ -17,7 +17,7 @@
         #import "Noteshelf-Swift.h"
     #endif
 #else
-#import "Noteshelf_Action-Swift.h"
+#import "Noteshelf3_Action-Swift.h"
 #endif
 
 #import "NSString_Backup_Additions.h"
