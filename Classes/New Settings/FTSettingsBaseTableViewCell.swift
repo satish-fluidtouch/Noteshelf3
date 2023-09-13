@@ -66,3 +66,45 @@ class FTSettingsBaseTableViewCell: UITableViewCell {
         self.selectedBackgroundView = backgroundView;
     }
 }
+
+protocol FTSettingsBackupFormatTableViewCellDelegate: AnyObject {
+    func tableViewCell(_ cell: FTSettingsBackupFormatTableViewCell,didChangeFormat format: FTCloudBackupFormat);
+}
+
+class FTSettingsBackupFormatTableViewCell: FTSettingsBaseTableViewCell {
+    @IBOutlet weak var formatOptions: UIButton?;
+    weak var delegate: FTSettingsBackupFormatTableViewCellDelegate?;
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.setTitle(FTUserDefaults.backupFormat.displayTitle);
+
+        let menuItem = UIDeferredMenuElement.uncached({ [weak self] items in
+            var menuItems = [UIMenuElement]();
+            let currentItem = FTUserDefaults.backupFormat;
+            FTCloudBackupFormat.allCases.forEach { eachItem  in
+                let action = UIAction(title: eachItem.displayTitle,state: (eachItem == currentItem) ? .on : .off) { action in
+                    if FTUserDefaults.backupFormat != eachItem {
+                        FTUserDefaults.backupFormat = eachItem;
+                        self?.setTitle(eachItem.displayTitle);
+                        if let weakSelf = self {
+                            self?.delegate?.tableViewCell(weakSelf, didChangeFormat: eachItem);
+                        }
+                    }
+                }
+                menuItems.append(action);
+            }
+            items(menuItems)
+        });
+        
+        self.formatOptions?.menu = UIMenu(children: [menuItem]);
+        self.formatOptions?.showsMenuAsPrimaryAction = true;
+    }
+    
+    private func setTitle(_ title:String) {
+        let font = UIFont.appFont(for: .regular, with: 17);
+        let attr = NSAttributedString(string: title,attributes: [.font:font]);
+        self.formatOptions?.setAttributedTitle(attr, for: .normal);
+    }
+}

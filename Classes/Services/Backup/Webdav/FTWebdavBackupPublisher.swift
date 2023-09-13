@@ -41,13 +41,9 @@ class FTWebdavBackupPublisher : FTCloudBackupPublisher {
         let entry = FTWebdavBackupEntry(withDict: inDict)
         return entry
     }
-    override func publishRequest(forItem inItem: FTCloudBackup?) -> FTCloudPublishRequest? {
-        var request: FTWebdavPublishRequest?
-        if let item = inItem {
-            request = FTWebdavPublishRequest(backupEntry: item, delegate: self)
-            request?.delegate = self;
-            request?.refObject = item;
-        }
-        return request
+    
+    override func publishRequest(forItem inItem: FTCloudBackup, itemURL: URL) -> FTCloudPublishRequest? {
+        let request = FTWebdavPublishRequest(backupEntry: inItem, delegate: self,sourceFile:itemURL);
+        return request;
     }
 }

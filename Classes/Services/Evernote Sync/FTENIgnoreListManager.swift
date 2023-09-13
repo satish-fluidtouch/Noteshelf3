@@ -32,8 +32,11 @@ class FTENIgnoreEntry: NSObject {
     }
 }
 
-class FTENIgnoreListManager {
-    
+extension FTENIgnoreListManager {
+    static let changeList = Notification.Name(rawValue: "FTENPublishDidChangeIgnoreList");
+}
+
+class FTENIgnoreListManager: NSObject {
     private var ignoredNotebooksArray = [FTENIgnoreEntry]()
     static let shared = FTENIgnoreListManager()
     
@@ -68,6 +71,7 @@ class FTENIgnoreListManager {
     }
     // MARK: Private
     private func postNotification() {
+        NotificationCenter.default.post(name: FTENIgnoreListManager.changeList, object: self);
         Crashlytics.crashlytics().setCustomValue(ignoredNotebooksArray.count, forKey: "en_ignored_books")
     }
 }
