@@ -122,6 +122,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                     propertyInfoPlist!.setObject(self.documentUUID, forKey: DOCUMENT_ID_KEY);
                 }
             }
+            self.URL.setDocumentUUID(self.documentUUID)
         }
     };
     
