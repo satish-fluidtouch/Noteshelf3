@@ -34,7 +34,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 }
                 ScrollView(.vertical) {
                     VStack(alignment: .center, spacing:0) {
-                        if viewModel.showNewNoteView , (!viewModel.isInHomeMode && geometry.size.width > 300),
+                        if viewModel.showNewNoteView , (!viewModel.isInHomeMode && geometry.size.width > 450),
                            viewModel.canShowCreateNBButtons {
 
                             FTShelfGetStartedDescription()

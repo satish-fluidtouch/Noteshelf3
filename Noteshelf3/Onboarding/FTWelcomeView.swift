@@ -10,18 +10,25 @@ import SwiftUI
 
 struct FTWelcomeView: View {
     @State private var xoffset: CGFloat = 0
-    private let itemSize: CGFloat = 240
     weak var delegate: FTGetstartedHostingViewcontroller?
     @ObservedObject var viewModel: FTGetStartedItemViewModel
-    var source: FTSourceScreen
     @Environment(\.dismiss) var dismiss
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+
+    var source: FTSourceScreen
+    private var itemSize: CGFloat {
+        //Sizes are added to match the figma sizes. Note that the values are not taken from the figma file because the values are not giving the occurate result.
+        return (idiom == .phone ? 192 : 240)
+    }
+
     var body: some View {
         VStack(alignment: .center, spacing: 0){
             Spacer(minLength: 55)
 
             headerView
 
-            VStack(spacing: -44){
+            //Just because we apply - values here . in the image we have in builted shadow with more space . so we are adding - values here
+            VStack(spacing: idiom == .phone ? -30 : -44){
                 gridLeftToRight
                 gridRightToLeft
             }
@@ -47,15 +54,14 @@ struct FTWelcomeView: View {
             .padding(.bottom,16)
         Text(viewModel.headerTopTitle)
             .foregroundColor(.black)
-            .font(.clearFaceFont(for: .regular, with: 52))
-
+            .font(.clearFaceFont(for: .regular, with: idiom == .phone ? 36 : 52))
         HStack{
             Text(viewModel.headerbottomfirstTitle)
             Text(viewModel.headerbottomsecondTitle)
                 .italic(true)
         }
         .foregroundColor(.black)
-        .font(.clearFaceFont(for: .regular, with: 52))
+        .font(.clearFaceFont(for: .regular, with: idiom == .phone ? 36 : 52))
         .multilineTextAlignment(.center)
         .padding(.bottom,36)
     }
@@ -93,6 +99,7 @@ struct GridItemView: View {
     let itemSize: CGFloat
     let getStartedItems:[FTGetStartedViewItems]
     let angle: Angle
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -111,11 +118,12 @@ struct GridItemView: View {
                                     .multilineTextAlignment(.center)
                                     .lineLimit(2)
                                     .frame(height: 60, alignment: .center)
-                                    .padding(.top, 120)
+                                    .padding(.top, idiom == .phone ? 90 : 120)
                                     .padding(.horizontal, 23)
                             }
                     }
-                    .padding(.trailing, -54)
+                    //Just because we apply - values here . in the image we have in builted shadow with more space . so we are adding - values here
+                    .padding(.trailing, idiom == .phone ? -42 : -54)
                 }
             }
             .rotationEffect(angle)

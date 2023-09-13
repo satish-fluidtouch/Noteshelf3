@@ -85,6 +85,7 @@ struct FTShelfGetStartedDescription: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.bottom , 28)
+            .padding(.horizontal,16)
         }
     }
 }
