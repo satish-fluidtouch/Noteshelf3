@@ -1,45 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "icon.pdf",
+      "filename" : "desk_tool_deletePage _iphone.pdf",
       "idiom" : "iphone"
     },
     {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "icon-1.pdf",
-      "idiom" : "iphone"
-    },
-    {
-      "filename" : "icon 1.pdf",
+      "filename" : "desk_tool_deletePage.pdf",
       "idiom" : "ipad"
     },
     {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "icon-1 1.pdf",
-      "idiom" : "ipad"
-    },
-    {
-      "filename" : "icon (8) 1.pdf",
-      "idiom" : "mac"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "icon-1 2.pdf",
+      "filename" : "desk_tool_deletePage _mac.pdf",
       "idiom" : "mac"
     }
   ],
@@ -48,6 +18,6 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "template"
   }
 }
