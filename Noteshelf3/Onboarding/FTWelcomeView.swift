@@ -20,6 +20,9 @@ struct FTWelcomeView: View {
         //Sizes are added to match the figma sizes. Note that the values are not taken from the figma file because the values are not giving the occurate result.
         return (idiom == .phone ? 192 : 240)
     }
+    private var fontSize: CGFloat {
+        return idiom == .phone ? 36 : 52
+    }
 
     var body: some View {
         VStack(alignment: .center, spacing: 0){
@@ -52,16 +55,17 @@ struct FTWelcomeView: View {
             .scaledToFit()
             .frame(height: 48.0)
             .padding(.bottom,16)
-        Text(viewModel.headerTopTitle)
-            .foregroundColor(.black)
-            .font(.clearFaceFont(for: .regular, with: idiom == .phone ? 36 : 52))
-        HStack{
-            Text(viewModel.headerbottomfirstTitle)
-            Text(viewModel.headerbottomsecondTitle)
-                .italic(true)
+        VStack{
+            Text(viewModel.headerTopTitle)
+                .font(.clearFaceFont(for: .regular, with: fontSize))
+            HStack{
+                Text(viewModel.headerbottomfirstTitle)
+                    .font(.clearFaceFont(for: .regular, with: fontSize))
+                Text(viewModel.headerbottomsecondTitle)
+                    .font(.clearFaceFont(for: .regularItalic, with: fontSize))
+            }
         }
         .foregroundColor(.black)
-        .font(.clearFaceFont(for: .regular, with: idiom == .phone ? 36 : 52))
         .multilineTextAlignment(.center)
         .padding(.bottom,36)
     }
