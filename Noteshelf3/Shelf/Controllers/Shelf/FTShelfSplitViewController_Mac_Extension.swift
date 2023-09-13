@@ -49,10 +49,10 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
         }
         if let navController = detailController as? UINavigationController {
             if let _ = navController.children.first(where: { $0 is FTShelfViewControllerNew }) {
-                return navController.children.last
-            } else {
-                return navController.rootViewController
+                let filteredChildren = navController.children.filter { !$0.isKind(of: FTGlobalSearchController.self) }
+                return filteredChildren.last // for second level and groups
             }
+            return navController.rootViewController // for templates and first level shelf items
         } else {
             return detailController
         }
