@@ -38,7 +38,7 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
     }
 
     func toolbarDidBeginSearch(_ toolbarId: NSToolbar.Identifier, textField: UISearchTextField) {
-        if let splitVc = self.splitViewController as? FTShelfSplitViewController, !splitVc.checkIfGlobalSearchControllerExists() {
+        if let splitVc = self.splitViewController as? FTShelfSplitViewController {
             splitVc.navigateToGlobalSearch()
             self.delegate = splitVc.globalSearchController
             runInMainThread(0.1) {
@@ -52,7 +52,11 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
     }
 
     func didChangeText(_ toolbarId: NSToolbar.Identifier, textField: UISearchTextField) {
-        self.delegate?.textFieldDidChangeSelection(textField: textField)
+        // Some times - view may not be ready during second level searches inside groups, or followed by results
+        // Fixed with globalSearchVc.isViewLoaded
+        if let globalSearchVc = self.delegate as? FTGlobalSearchController, globalSearchVc.isViewLoaded {
+            self.delegate?.textFieldDidChangeSelection(textField: textField)
+        }
     }
 
     func didTapSearchClear(_ toolbarId: NSToolbar.Identifier, textField: UISearchTextField) {
