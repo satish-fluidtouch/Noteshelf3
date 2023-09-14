@@ -94,6 +94,7 @@ class SceneDelegate: FTSceneDelegate {
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         scene.logCLS(key: "enter foreground");
+        FTiRateManager.checkForApplicationForegroundActions();
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {

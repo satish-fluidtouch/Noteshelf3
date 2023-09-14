@@ -11,12 +11,12 @@ import Foundation
 class FTShareCoordinator: NSObject {
     private let shelfItems: [FTShelfItemProtocol]
     private let pages: [FTPageProtocol]?
-    private let sourceView: UIView?
+    private let sourceView: Any?
     private var exportManager: FTExportProgressManager?
 
     weak var presentingVc: UIViewController!
 
-    init(shelfItems: [FTShelfItemProtocol], pages: [FTPageProtocol]? = [], presentingController: UIViewController, sourceView: UIView? = nil) {
+    init(shelfItems: [FTShelfItemProtocol], pages: [FTPageProtocol]? = [], presentingController: UIViewController, sourceView: Any? = nil) {
         self.shelfItems = shelfItems
         self.pages = pages
         self.presentingVc = presentingController

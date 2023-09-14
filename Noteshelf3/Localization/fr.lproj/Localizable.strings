@@ -597,7 +597,6 @@
 "PageCreated" = "Page créée";
 "PageCreatedOn" = "Créé le %@";
 "PageDimensions" = "Dimensions";
-"PageFromClipBoard" = "Coller depuis le presse-papiers";
 "PageFromClipboard" = "Page du presse-papiers";
 "PageFromPhoto" = "Arrière-plan de la photo";
 "PageFromTemplate" = "Sélectionner un modèle.";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "Les mots de passe ne correspondent pas.";
 "Paste" = "Coller";
 "PasteBelow" = "Coller ci-dessous";
+"PasteFromClipBoard" = "Coller depuis le presse-papiers";
 "Pause" = "Pause";
 "PencilActionAlert" = "Cette action remplacera le paramètre par défaut du système uniquement pour cette application. Souhaitez-vous continuer ?";
 "PencilActionChangeMessage" = "Aller dans Paramètres > Apple Pencil pour modifier";
@@ -714,7 +714,7 @@
 "Restore" = "Récupérer les pages";
 "ResultsFor" = "Résultats pour %@";
 "RetakeKey" = "3-finger right swipe/left swipe - Balayage à droite/gauche à trois doigts";
-"Right" = "Publier pour ajouter une nouvelle page";
+"Right" = "Droit";
 "Rotate" = "Faire pivote";
 "Rotate Page" = "Faire pivoter la page";
 "Rotating" = "Supprimer des récents";
@@ -944,17 +944,23 @@
 "appearance.darkTheme" = "Thème sombre";
 "appearance.lightTheme" = "Thème clair.";
 "appearance.useSystemTheme" = "Utilisez le mode clair/sombre du système";
+"audiooption.gotoRecording" = "Aller à l'enregistrement";
+"audiooption.jumptoPage" = "Aller à la page";
+"audiooption.speed" = "Vitesse";
 "backup_file_create_failed" = "Impossible de créer le fichier de sauvegarde. Veuillez réessayer ultérieurement.";
 "backup_unknown_error" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
+"backupoptions.signoutfrom" = "Déconnexion de %@.";
 "banners" = "Bannières";
+"bookmark.removebookMark" = "Supprimer le signet";
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
 "clipart404" = "Serveur occupé, veuillez réessayer plus tard.";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
 "cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
 "cloud.backup.error.fileNotFound" = "Fichier non trouvé";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.error.filePasswordProtected" = "Les cahiers protégés par mot de passe ne peuvent pas être sauvegardés au format PDF.";
+"cloud.backup.error.packageNeedsUpgrade" = "Impossible de sauvegarder en raison d'une erreur.";
+"cloud.backup.errors" = "Erreurs";
 "cloud.backup.pdfFormatWarning" = "Note: Les cahiers protégés par mot de passe ne peuvent pas être sauvegardés au format PDF.";
 "color.added" = "Couleur ajoutée";
 "color.deleted" = "Couleur supprimée";
@@ -979,6 +985,8 @@
 "customizeToolbar.basicTools" = "OUTILS DE BASE";
 "customizeToolbar.bookmark" = "Marque-page";
 "customizeToolbar.currentToolbar" = "SUR LA BARRE D'OUTILS";
+"customizeToolbar.deletePage" = "Supprimer la page";
+"customizeToolbar.deletePageConfirmation" = "Êtes-vous sûr de vouloir supprimer la page %d de ce cahier?";
 "customizeToolbar.duplicatePage" = "Page en double";
 "customizeToolbar.emojis" = "Émoticônes";
 "customizeToolbar.eraser" = "Gomme";
@@ -1026,11 +1034,14 @@
 "finder.bookmark.description" = "Pages favorites et gardez une vue d'ensemble des grands cahiers et PDF.";
 "finder.bookmarks" = "Marque-pages";
 "finder.clear.recents" = "Voulez-vous effacer les récents ?";
+"finder.downloadPermissionText" = "Le cahier sélectionné n'est pas encore téléchargé. Souhaitez-vous le télécharger et déplacer les pages ?";
 "finder.duplicate" = "Dupliquer";
 "finder.fullscreen" = "Plein écran.";
 "finder.importDocument" = "Importer le document";
 "finder.media" = "Média";
+"finder.media.allcontent" = "Tout le contenu";
 "finder.media.nocontent" = "Ajoutez des images, des PDF, des enregistrements audio et plus encore à votre carnet de notes.";
+"finder.media.sticker" = "Autocollant";
 "finder.more" = "Plus";
 "finder.outline" = "Contour";
 "finder.outline.description" = "Le contour des PDF importés et des pages ajoutées apparaîtra ici. Ajoutez des pages au contour via le menu 􀍠 de la barre de navigation du carnet.";
@@ -1056,6 +1067,8 @@
 "getInspired.student" = "Notes d'étude";
 "globalSearch.page" = "page";
 "globalSearch.recentlySearched" = "Récemment recherché";
+"groupitem.noteText" = "note";
+"groupitem.notesText" = "notes";
 "headers" = "En-têtes";
 "highlighterRack.flat" = "Surligneur plat";
 "highlighterRack.round" = "Surligneur rond";
@@ -1074,8 +1087,12 @@
 "iap.featureLimitMessage" = "Cette fonctionnalité est verrouillée. Débloquez-la en effectuant une mise à niveau maintenant.";
 "iap.featureLimitTitle" = "Mettez à niveau maintenant.";
 "iap.message" = "Accédez à des notes illimitées, à la reconnaissance de l'écriture manuscrite et à la recherche, ainsi qu'à des journaux numériques avec Noteshelf Premium.";
+"iap.noProductIDsFound" = "Aucun identifiant de produit d'achat intégré n'a été trouvé.";
+"iap.noProductsFound" = "Aucun achat intégré n'a été trouvé.";
 "iap.onetimepurchase" = "ACHAT UNIQUE. À JAMAIS À TOI.";
+"iap.paymentWasCancelled" = "Le processus d'achat intégré a été annulé.";
 "iap.privacy" = "Politique de confidentialité";
+"iap.productRequestFailed" = "Impossible de récupérer les produits d'achat intégré disponibles pour le moment.";
 "iap.purchase" = "Mise à niveau pour %@";
 "iap.purchaseNotAllowed" = "Les achats intégrés ne sont pas autorisés sur cet appareil.";
 "iap.restorePurchase" = "Restaurer les achats.";
@@ -1095,6 +1112,7 @@
 "labels" = "Étiquettes";
 "lasso.select.textbox" = "Boîtes de texte";
 "lettering" = "Calligraphie";
+"librarystore.removefromLibrary" = "Supprimer de la bibliothèque";
 "lineHeight.extraNarrow" = "Extra étroit";
 "lineHeight.narrow" = "Étroit";
 "lineHeight.standard" = "Standard";
@@ -1189,7 +1207,7 @@
 "removefromRecents" = "Supprimer des récents";
 "reset" = "Réinitialiser";
 "retry" = "Retenter";
-"save" = "Renommer le groupe";
+"save" = "Enregistrer";
 "school" = "École";
 "search.tryNewSearch" = "Essayez une nouvelle recherche";
 "seeAll" = "Reprendre";
@@ -1218,6 +1236,8 @@
 "shelf.bottomBar.delete" = "Supprimer";
 "shelf.bottomBar.restore" = "Restaurer";
 "shelf.bottomBar.trash" = "Déchets";
+"shelf.category.noCategoryItemsDescription" = "Appuyez sur les options ci-dessus pour créer de nouvelles notes ou déplacer celles existantes.";
+"shelf.category.noCategoryItemsTitle" = "Cette catégorie est vide.";
 "shelf.category.unCategorized" = "Non classé";
 "shelf.changeCover" = "Changer la couverture.";
 "shelf.createGroup" = "Créer un groupe.";
@@ -1281,12 +1301,14 @@
 "shelf.newnotebook.description" = "Un carnet vierge avec du papier et une couverture personnalisés.";
 "shelf.notebook.textstyle.Presets" = "Préréglages";
 "shelf.notebook.textstyle.Reorder" = "Réorganiser";
+"shelf.notebook.textstyle.grid" = "Grille";
 "shelf.notebook.textstyle.newpreset" = "Nouveau préréglage";
 "shelf.notebook.textstyle.presetname" = "Nom prédéfini";
 "shelf.notebook.textstyle.resetdescrption" = "Êtes-vous sûr(e) de vouloir réinitialiser les styles par défaut ?";
 "shelf.notebook.textstyle.size" = "Taille";
 "shelf.notebook.textstyle.textLineHeight" = "Hauteur de ligne";
 "shelf.notebook.textstyle.textautoLineHeight" = "Hauteur de ligne automatique";
+"shelf.ns2Category.noCategoryItemsTitle" = "Aucun élément dans cette catégorie.";
 "shelf.paperPicker.choosePaper" = "Choisir le papier";
 "shelf.paperPicker.orientation" = "Orientation";
 "shelf.quickCreateSettings.NavTitle" = "Note rapide";
@@ -1447,6 +1469,11 @@
 "templatesStore.templatePreview.createNotebook" = "Créer un carnet";
 "templatesStore.templatePreview.inyourLibrary" = "Dans votre bibliothèque";
 "templatesStore.templatePreview.style" = "Style";
+"text.font.setAsDefault.menuTitle" = "Définir par défaut pour:";
+"text.font.setAsDefault.thisAndFutureBooks" = "Ceci et tous les futurs cahiers";
+"text.font.setAsDefault.thisBook" = "Ce cahier.";
+"texttoolbar.fontselectionTitle" = "SÉLECTIONNER LA POLICE";
+"theams.unsplashDescription" = "Choisissez depuis Unsplash, prenez une photo ou sélectionnez depuis votre bibliothèque de photos pour créer vos couvertures personnalisées.";
 "trash.alert.cannotOpenNotebook" = "Ce carnet ne peut pas être ouvert car il a été supprimé. Pour restaurer, maintenez longuement et sélectionnez l'option dans le menu.";
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
@@ -1493,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

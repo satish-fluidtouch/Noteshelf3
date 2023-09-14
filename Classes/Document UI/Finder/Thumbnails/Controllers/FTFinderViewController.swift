@@ -189,7 +189,11 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             isRegular = splitVc.isRegularClass()
         }
         if isRegular {
-            self.cellSize = CGSize(width: 210, height: 208);
+            if mode == .selectPages {
+                self.cellSize = CGSize(width: 152, height: 204);
+            } else {
+                self.cellSize = CGSize(width: 210, height: 208);
+            }
         }
         else {
             self.cellSize = CGSize(width: 144, height: 176);
@@ -757,26 +761,42 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.handlePageRecognitionUpdate(_:)), name: NSNotification.Name(rawValue: FTRecognitionInfoDidUpdateNotification), object: nil)
-
-        NotificationCenter.default.addObserver(forName: .shouldReloadFinderNotification, object: nil, queue: nil) { [weak self] (notification) in
-            self?.reloadData()
-        }
-        NotificationCenter.default.addObserver(forName: .didChangeCurrentPageNotification, object: nil, queue: nil) { [weak self] (notification) in
-            var currentSessionID = ""
-            if let sessionIdentifier = self?.view.window?.windowScene?.session.persistentIdentifier {
-                currentSessionID = sessionIdentifier
-            }
-            guard let `self` = self, let sessionID = notification.object as? String, sessionID == currentSessionID else {
-                return
-            }
-            self.reloadData()
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFinderReloadNotifier(_:)), name: .shouldReloadFinderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCurrentPageChangeNotifier(_:)), name:  .didChangeCurrentPageNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.willShowHideKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.willShowHideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.reloadData), name: NSNotification.Name("FTDocumentGetReloaded"), object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.reloadData), name: NSNotification.Name.FTPageDidChangePageTemplate, object: nil)
     }
-    
+
+    @objc private func handleFinderReloadNotifier(_ notification: Notification) {
+        if var arrSelectedPages = Array(self.selectedPages) as? [FTThumbnailable] {
+            if self.mode == .edit, !arrSelectedPages.isEmpty {
+                let pages = self.document.documentPages()
+                arrSelectedPages = arrSelectedPages.filter { reqPage in
+                    return pages.contains { page in
+                        return reqPage.uuid == page.uuid
+                    }
+                }
+                self.selectedPages.removeAllObjects()
+                self.selectedPages.addObjects(from: arrSelectedPages)
+                self.updateSelectAllUI()
+            }
+        }
+        self.reloadData()
+    }
+
+    @objc private func handleCurrentPageChangeNotifier(_ notification: Notification) {
+        var currentSessionID = ""
+        if let sessionIdentifier = self.view.window?.windowScene?.session.persistentIdentifier {
+            currentSessionID = sessionIdentifier
+        }
+        guard let sessionID = notification.object as? String, sessionID == currentSessionID else {
+            return
+        }
+        self.reloadData()
+    }
+
     func didTapOnSegmentControl(_segmentControl: FTFinderSegmentControl) {
         if let segmentType = FTFinderSectionType(rawValue: _segmentControl.selectedSegmentIndex) {
             updateSegmentData(for: segmentType);
@@ -1139,7 +1159,15 @@ extension FTFinderViewController{
     }
 
     var minimumInterItemSpacing: CGFloat {
-        return self.isRegularFinder ? 40 : 24
+        let spacing: CGFloat
+        if mode == .selectPages {
+            spacing = 10
+        } else if self.isRegularFinder {
+            spacing = 40
+        } else {
+            spacing = 24
+        }
+        return spacing
     }
     
     private var bookMarkContentInsets: UIEdgeInsets {
@@ -1213,6 +1241,9 @@ extension FTFinderViewController{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         let sectionIdentfier = dataSource.sectionIdentifier(for: section)
         if (screenMode == .fullScreen || (screenMode == .normal && !self.isRegularClass())) && sectionIdentfier == .thumbnails {
+            return self.horizontalSpacing()
+        }
+        if mode == .selectPages {
             return self.horizontalSpacing()
         }
         return .zero
@@ -1598,10 +1629,10 @@ extension FTFinderViewController {
         }
 
         func showAlert(_ pages: NSSet) {
-            let alert = UIAlertController(title: "", message: NSLocalizedString("DeletePagePasswordProtectedAlert",comment:"This is a password..."), preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "", message: "DeletePagePasswordProtectedAlert".localized, preferredStyle: UIAlertController.Style.alert)
 
-            alert.addAction(UIAlertAction(title: NSLocalizedString("MoveToTrash", comment: "Move To Trash"), style: UIAlertAction.Style.default, handler: { (action) in
-                self.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
+            alert.addAction(UIAlertAction(title: "MoveToTrash".localized, style: UIAlertAction.Style.default, handler: { [weak self] action in
+                self?.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
                     if error == nil, let weakSelf = self {
                         weakSelf.deletePagesPermanantly(from: weakSelf.document,
                                                         pages: pages,
@@ -1609,14 +1640,14 @@ extension FTFinderViewController {
                     }
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("DeletePermanently",comment:"Delete Permanently"), style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
+            alert.addAction(UIAlertAction(title: "DeletePermanently".localized, style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
                 if let weakSelf = self {
                     weakSelf.deletePagesPermanantly(from: weakSelf.document,
                                                     pages: pages,
                                                     indexes: indexSet)
                 }
             }))
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel",comment:"Cancel"), style: UIAlertAction.Style.destructive, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel".localized, style: UIAlertAction.Style.destructive, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
 

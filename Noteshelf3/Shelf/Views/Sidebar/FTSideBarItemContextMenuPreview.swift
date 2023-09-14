@@ -128,7 +128,7 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
 
         private func setAlertInfoForOption(_ option: FTSidebarItemContextualOption) {
             if option == .emptyTrash {
-                self.representView.alertInfo = TrashAlertInfo(title: NSLocalizedString("trash.alert.title", comment: "Are you sure you want empty your Trash?"),
+                self.representView.alertInfo = TrashAlertInfo(title: "trash.alert.title".localized,
                                                               message: "",
                                                               type: TrashAlertInfo.TrashType.emptyTrash(item: self.representView.sidebarItem))
             } else if option == .trashCategory {

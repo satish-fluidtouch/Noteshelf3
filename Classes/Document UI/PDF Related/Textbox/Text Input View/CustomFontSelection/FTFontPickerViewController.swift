@@ -23,7 +23,8 @@ public class FTFontPickerViewController: UIViewController, UIFontPickerViewContr
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.titleLbl.text = "SELECT FONT"
+        self.titleLbl.text = "texttoolbar.fontselectionTitle".localized
+        self.titleLbl.font = .clearFaceFont(for: .medium, with: 20.0)
         self.configureSystemFontPicker()
         if self.navigationController != nil {
             self.closeBtn.isHidden = true

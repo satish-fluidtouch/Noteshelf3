@@ -93,7 +93,7 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
     };
     
     override var allowsLocking: Bool {
-        return true
+        return false
     }
 
     private var _drawingPoints: [CGPoint] = []

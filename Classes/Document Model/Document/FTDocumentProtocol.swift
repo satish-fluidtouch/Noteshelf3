@@ -139,10 +139,13 @@ protocol FTDocumentProtocolInternal: NSObjectProtocol {
     var zoomPanelAutoAdvanceEnabled : Bool {get set};
     var zoomPanelLineHeightGuideEnabled : Bool {get set};
     
-    var defaultBodyFont : UIFont {get set};
-    var defaultTextColor : UIColor {get set};
-    var byDefaultIsUnderline : Bool {get set};
-    
+    var defaultBodyFont: UIFont {get set}
+    var defaultTextColor: UIColor {get set}
+    var defaultIsUnderline: Bool {get set}
+    var defaultIsStrikeThrough: Bool {get set}
+    var defaultTextAlignment: Int {get set}
+    var defaultAutoLineSpace: Int {get set}
+    var defaultIsLineSpaceEnabled: Bool {get set}
     func zoomOrigin(for pageIndex: Int) -> CGPoint;
     func setZoomOrigin(_ point:CGPoint,for index: Int);
 }

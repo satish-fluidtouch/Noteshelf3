@@ -26,7 +26,7 @@ extension FTNoteshelfPage : FTPageProtocolPDFExport {
             switch(eachAnnotation.annotationType) {
             case .stroke:
                 strokes.append(eachAnnotation)
-            case .image,.sticky:
+            case .image, .sticky, .sticker, .webclip:
                 imageAnnotations.append(eachAnnotation)
             case .text:
                 textAnnotations.append(eachAnnotation)

@@ -167,9 +167,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
             return title
         }
     }
-    var canShowNoItemsView: Bool {
-        return (collection.isTrash || collection.isStarred || collection.isUnfiledNotesShelfItemCollection)
-    }
     var showNewNoteView: Bool {
         return (collection.isAllNotesShelfItemCollection || collection.isMigratedCollection || collection.isDefaultCollection)
     }
@@ -178,9 +175,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     }
     var canShowStarredIconOnNB: Bool {
         return !(collection.isTrash)
-    }
-    var currentSelectedSideBarItemType : FTSideBarItemType {
-        self.selectedSideBarItem?.type ?? .home
     }
     var supportsDragAndDrop: Bool {
         !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash || isNS2Collection)

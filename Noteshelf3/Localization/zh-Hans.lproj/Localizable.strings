@@ -597,7 +597,6 @@
 "PageCreated" = "页面创建";
 "PageCreatedOn" = "创建于 %@";
 "PageDimensions" = "尺寸";
-"PageFromClipBoard" = "从剪贴板粘贴";
 "PageFromClipboard" = "剪贴板页面";
 "PageFromPhoto" = "照片背景";
 "PageFromTemplate" = "选择模板";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "密码不匹配";
 "Paste" = "粘贴";
 "PasteBelow" = "粘贴到下方";
+"PasteFromClipBoard" = "从剪贴板粘贴";
 "Pause" = "暂停";
 "PencilActionAlert" = "此操作仅会覆盖系统默认设置，仅适用于此应用。您是否要继续？";
 "PencilActionChangeMessage" = "前往“设置”>“Apple Pencil”进行更改";
@@ -714,7 +714,7 @@
 "Restore" = "恢复页面";
 "ResultsFor" = "结果为%@";
 "RetakeKey" = "3指向右滑动/向左滑动";
-"Right" = "发布以添加新页面";
+"Right" = "正确";
 "Rotate" = "旋转";
 "Rotate Page" = "旋转页面";
 "Rotating" = "从最近删除";
@@ -944,17 +944,23 @@
 "appearance.darkTheme" = "暗黑主题";
 "appearance.lightTheme" = "明亮主题";
 "appearance.useSystemTheme" = "使用系统的浅色/深色模式";
+"audiooption.gotoRecording" = "转到录音";
+"audiooption.jumptoPage" = "跳转至页面";
+"audiooption.speed" = "速度";
 "backup_file_create_failed" = "无法创建备份文件。请稍后重试。";
 "backup_unknown_error" = "备份时发生错误。请稍后重试。";
+"backupoptions.signoutfrom" = "退出 %@";
 "banners" = "横幅";
+"bookmark.removebookMark" = "移除书签";
 "bujoessentials" = "笔记本要点";
 "cancel" = "取消";
 "clipart404" = "服务器繁忙，请稍后重试。";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "备份时发生错误。请稍后重试。";
 "cloud.backup.error.failedToCreateBackup" = "创建备份文件失败。请检查设备上的剩余空间。";
 "cloud.backup.error.fileNotFound" = "文件未找到";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.error.filePasswordProtected" = "密码保护的笔记本无法备份为PDF。";
+"cloud.backup.error.packageNeedsUpgrade" = "由于错误无法备份";
+"cloud.backup.errors" = "错误";
 "cloud.backup.pdfFormatWarning" = "注意：密码保护的笔记本无法备份为PDF。";
 "color.added" = "颜色添加";
 "color.deleted" = "颜色已删除";
@@ -979,6 +985,8 @@
 "customizeToolbar.basicTools" = "基本工具";
 "customizeToolbar.bookmark" = "书签";
 "customizeToolbar.currentToolbar" = "在工具栏";
+"customizeToolbar.deletePage" = "删除页面";
+"customizeToolbar.deletePageConfirmation" = "您确定要删除本笔记本的第%d页吗？";
 "customizeToolbar.duplicatePage" = "重复页面";
 "customizeToolbar.emojis" = "表情符号";
 "customizeToolbar.eraser" = "橡皮";
@@ -993,7 +1001,7 @@
 "customizeToolbar.resetConfirmation" = "您确定要重置为默认工具栏吗？";
 "customizeToolbar.rotatePage" = "旋转页面";
 "customizeToolbar.savePageAsPhoto" = "保存页面为照片";
-"customizeToolbar.shapes" = "形状 (Xíngzhuàng)";
+"customizeToolbar.shapes" = "形状";
 "customizeToolbar.share" = "分享";
 "customizeToolbar.shareAndSave" = "分享并保存";
 "customizeToolbar.shareNotebookAsPDF" = "将笔记本转换为PDF";
@@ -1026,11 +1034,14 @@
 "finder.bookmark.description" = "收藏页面并保持对大型笔记本和PDF的概览。";
 "finder.bookmarks" = "书签";
 "finder.clear.recents" = "你想要清除最近的内容吗？";
+"finder.downloadPermissionText" = "选定的笔记本尚未下载。您是否希望下载笔记本并移动页面？";
 "finder.duplicate" = "重复";
 "finder.fullscreen" = "全屏";
 "finder.importDocument" = "导入文档";
 "finder.media" = "媒体";
+"finder.media.allcontent" = "所有内容";
 "finder.media.nocontent" = "将图像、PDF、音频录音等添加到您的笔记本。";
+"finder.media.sticker" = "贴纸";
 "finder.more" = "更多";
 "finder.outline" = "轮廓";
 "finder.outline.description" = "导入的PDF和添加的页面的大纲将显示在这里。通过笔记本导航栏上的􀍠菜单向大纲添加页面。";
@@ -1056,6 +1067,8 @@
 "getInspired.student" = "学习笔记";
 "globalSearch.page" = "页面";
 "globalSearch.recentlySearched" = "最近搜索";
+"groupitem.noteText" = "笔记";
+"groupitem.notesText" = "注释";
 "headers" = "标题";
 "highlighterRack.flat" = "扁平荧光笔";
 "highlighterRack.round" = "圆形荧光笔";
@@ -1074,8 +1087,12 @@
 "iap.featureLimitMessage" = "此功能已锁定。立即升级解锁。";
 "iap.featureLimitTitle" = "立即升级";
 "iap.message" = "获取无限笔记、手写识别和搜索以及Noteshelf高级版的数字日记。";
+"iap.noProductIDsFound" = "找不到任何应用内购买产品标识符。";
+"iap.noProductsFound" = "没有发现应用内购买。";
 "iap.onetimepurchase" = "一次购买。永久拥有。";
+"iap.paymentWasCancelled" = "应用内购买流程已取消。";
 "iap.privacy" = "隐私政策";
+"iap.productRequestFailed" = "当前无法获取可用的应用内购买产品。";
 "iap.purchase" = "升级为 %@";
 "iap.purchaseNotAllowed" = "此设备不允许应用内购买";
 "iap.restorePurchase" = "恢复购买";
@@ -1095,6 +1112,7 @@
 "labels" = "标签";
 "lasso.select.textbox" = "文本框";
 "lettering" = "字体";
+"librarystore.removefromLibrary" = "从图书馆中删除";
 "lineHeight.extraNarrow" = "极窄";
 "lineHeight.narrow" = "窄";
 "lineHeight.standard" = "标准";
@@ -1189,7 +1207,7 @@
 "removefromRecents" = "从最近删除";
 "reset" = "重置";
 "retry" = "重试";
-"save" = "重命名群组";
+"save" = "保存";
 "school" = "学校";
 "search.tryNewSearch" = "尝试新的搜索";
 "seeAll" = "重新拍摄";
@@ -1218,6 +1236,8 @@
 "shelf.bottomBar.delete" = "删除";
 "shelf.bottomBar.restore" = "恢复";
 "shelf.bottomBar.trash" = "垃圾";
+"shelf.category.noCategoryItemsDescription" = "点击上面的选项来创建新的笔记或移动现有的笔记。";
+"shelf.category.noCategoryItemsTitle" = "这个类别为空";
 "shelf.category.unCategorized" = "未分类";
 "shelf.changeCover" = "修改封面";
 "shelf.createGroup" = "创建群组";
@@ -1281,12 +1301,14 @@
 "shelf.newnotebook.description" = "一个带有定制纸和封面的空白笔记本";
 "shelf.notebook.textstyle.Presets" = "预设";
 "shelf.notebook.textstyle.Reorder" = "重新排序";
+"shelf.notebook.textstyle.grid" = "网格";
 "shelf.notebook.textstyle.newpreset" = "新预设";
 "shelf.notebook.textstyle.presetname" = "预设名称";
 "shelf.notebook.textstyle.resetdescrption" = "你确定要重置为默认样式吗";
 "shelf.notebook.textstyle.size" = "尺寸";
 "shelf.notebook.textstyle.textLineHeight" = "行高";
 "shelf.notebook.textstyle.textautoLineHeight" = "自动行高";
+"shelf.ns2Category.noCategoryItemsTitle" = "此类别中没有项目";
 "shelf.paperPicker.choosePaper" = "选择纸张";
 "shelf.paperPicker.orientation" = "方向";
 "shelf.quickCreateSettings.NavTitle" = "快速笔记";
@@ -1447,6 +1469,11 @@
 "templatesStore.templatePreview.createNotebook" = "创建笔记本";
 "templatesStore.templatePreview.inyourLibrary" = "在您的图书馆";
 "templatesStore.templatePreview.style" = "风格";
+"text.font.setAsDefault.menuTitle" = "设置为默认：";
+"text.font.setAsDefault.thisAndFutureBooks" = "这本和所有未来的笔记本";
+"text.font.setAsDefault.thisBook" = "这个笔记本";
+"texttoolbar.fontselectionTitle" = "选择字体";
+"theams.unsplashDescription" = "从Unsplash选择，拍照或从照片库中选择以创建您的自定义封面。";
 "trash.alert.cannotOpenNotebook" = "此笔记本已被删除，无法打开。要恢复，请长按并从菜单中选择该选项。";
 "trash.alert.title" = "你确定要清空垃圾桶吗？";
 "unsplash.search.alertMessage" = "输入要搜索的文本";
@@ -1493,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

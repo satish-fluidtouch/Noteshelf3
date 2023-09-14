@@ -56,6 +56,7 @@ extension FTPDFRenderViewController {
             if let dataOfImage = imageData, let image = UIImage(data: dataOfImage) {
                 self.insert([image], center: CGPoint.zero, droppedPoint: .zero, source: FTInsertImageSourceInsertFrom)
             }
+            self.pdfDocument.isDirty = true
             progress.completedUnitCount += 1;
             onCompletion(true,nil);
 
@@ -103,13 +104,13 @@ extension FTPDFRenderViewController {
                     info.insertAt = atIndex;
                     info.isTemplate = false;
                     FTCLSLog("Inserting PDF File");
-                    
                     weakSelf?.pdfDocument.insertFile(info,
-                                                     onCompletion: { (error, success) in
+                                                     onCompletion: { [weak self] (error, success) in
                                                         //                                                    progress.completedUnitCount += 1;
                                                         if(nil != error) {
                                                             FTLogError("Insertion Error", attributes: error?.userInfo)
                                                         }
+                                                        self?.pdfDocument.isDirty = true
                                                         onCompletion(success,error);
                     });
                 }
@@ -439,6 +440,7 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
         let reqItem = self.shelfItemManagedObject.documentItemProtocol
         let item = FTItemToExport(shelfItem: reqItem)
         target.itemsToExport = [item]
+        target.notebook = page.parentDocument
         target.pages = [page]
         target.properties = FTExportProperties.getSavedProperties()
         let exportManager = FTExportProgressManager()
@@ -530,6 +532,8 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
         settingsController.dismiss(animated: false) { [weak self] in
             guard let self = self else { return }
             FTCustomizeToolbarController.showCustomizeToolbarScreen(controller: self)
+            // Track Event
+            track(EventName.toolbar_more_customizetoolbar_tap)
         }
     }
 
@@ -765,7 +769,8 @@ extension FTPDFRenderViewController {
 
             let alertController = UIAlertController.init(title: headerTitle, message: nil, preferredStyle: .alert)
             weak var weakAlertController = alertController
-            let saveAction = UIAlertAction.init(title: NSLocalizedString("Save", comment: "Save"), style: .default, handler: { _ in
+            let saveAction = UIAlertAction(title: NSLocalizedString("save", comment: "Save"), style: .default, handler: { [weak self] _ in
+                guard let self else { return }
                 var text = weakAlertController?.textFields?.first?.text
                 if(nil != text) {
                     text = text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -776,13 +781,14 @@ extension FTPDFRenderViewController {
                 }
             })
             alertController.addAction(saveAction)
-            let deleteAction = UIAlertAction.init(title: NSLocalizedString("quickNoteSave.deleteQuickNote", comment: "Delete Quick Note"), style: .destructive, handler: { _ in
+            let deleteAction = UIAlertAction(title: NSLocalizedString("quickNoteSave.deleteQuickNote", comment: "Delete Quick Note"), style: .destructive, handler: { [weak self] _ in
+                guard let self else { return }
                 let delete: FTNotebookBackAction = FTMoveToTrashAction //Save action
                 self.back(toShelfButtonAction: delete, with: self.shelfItemManagedObject.title)
             })
             alertController.addAction(deleteAction)
 
-            let cancelAction = UIAlertAction.init(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .default, handler: { _ in
                 alertController.dismiss(animated: true)
             })
             alertController.addAction(cancelAction)

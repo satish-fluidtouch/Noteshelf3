@@ -597,7 +597,6 @@
 "PageCreated" = "作成された";
 "PageCreatedOn" = "%@で作成";
 "PageDimensions" = "寸法";
-"PageFromClipBoard" = "クリップボードから貼り付ける";
 "PageFromClipboard" = "クリップボードからのページ";
 "PageFromPhoto" = "写真の背景";
 "PageFromTemplate" = "テンプレートを選択する";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "パスワードが一致しません。";
 "Paste" = "貼り付け";
 "PasteBelow" = "以下に貼り付け";
+"PasteFromClipBoard" = "クリップボードから貼り付ける";
 "Pause" = "一時停止";
 "PencilActionAlert" = "このアクションは、このアプリに対してのみシステムのデフォルトを上書きします。続行しますか？";
 "PencilActionChangeMessage" = "設定に移動して、Apple Pencilを変更してください。";
@@ -714,7 +714,7 @@
 "Restore" = "復元ページ";
 "ResultsFor" = "%@の結果";
 "RetakeKey" = "3本指で右にスワイプ/左にスワイプ";
-"Right" = "新しいページを追加するには、リリースしてください。";
+"Right" = "右";
 "Rotate" = "回転す";
 "Rotate Page" = "ページを回転する";
 "Rotating" = "最近から削除";
@@ -944,17 +944,23 @@
 "appearance.darkTheme" = "ダークテーマ";
 "appearance.lightTheme" = "ライトテーマ";
 "appearance.useSystemTheme" = "システムのライト/ダークモードを使用する";
+"audiooption.gotoRecording" = "録音に移動";
+"audiooption.jumptoPage" = "ページにジャンプ";
+"audiooption.speed" = "速度";
 "backup_file_create_failed" = "バックアップファイルを作成できません。後でもう一度お試しください。";
 "backup_unknown_error" = "バックアップ中にエラーが発生しました。後でもう一度お試しください。";
+"backupoptions.signoutfrom" = "%@からサインアウト";
 "banners" = "バナー";
+"bookmark.removebookMark" = "ブックマークの削除";
 "bujoessentials" = "ブジョエッセンシャルズ";
 "cancel" = "キャンセル";
 "clipart404" = "サーバーがビジーです。後でもう一度お試しください。";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "バックアップ中にエラーが発生しました。後でもう一度お試しください。";
 "cloud.backup.error.failedToCreateBackup" = "バックアップファイルの作成に失敗しました。デバイスの残りの空き容量を確認してください。";
 "cloud.backup.error.fileNotFound" = "ファイルが見つかりません";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.error.filePasswordProtected" = "パスワードで保護されたノートブックはPDFとしてバックアップできません。";
+"cloud.backup.error.packageNeedsUpgrade" = "エラーのためバックアップできません";
+"cloud.backup.errors" = "エラー";
 "cloud.backup.pdfFormatWarning" = "注意：パスワードで保護されたノートブックはPDFとしてバックアップできません。";
 "color.added" = "カラーが追加されました。";
 "color.deleted" = "色削除";
@@ -979,6 +985,8 @@
 "customizeToolbar.basicTools" = "基本ツール";
 "customizeToolbar.bookmark" = "ブックマーク";
 "customizeToolbar.currentToolbar" = "ツールバー上";
+"customizeToolbar.deletePage" = "ページを削除する";
+"customizeToolbar.deletePageConfirmation" = "このノートのページ %d を削除してもよろしいですか？";
 "customizeToolbar.duplicatePage" = "重複ページ";
 "customizeToolbar.emojis" = "絵文字";
 "customizeToolbar.eraser" = "消しゴム";
@@ -1026,11 +1034,14 @@
 "finder.bookmark.description" = "お気に入りのページと、大きなノートやPDFの概要を保持します。";
 "finder.bookmarks" = "ブックマーク";
 "finder.clear.recents" = "最近の履歴を消去しますか。";
+"finder.downloadPermissionText" = "選択されたノートブックはまだダウンロードされていません。ノートブックをダウンロードしてページを移動しますか？";
 "finder.duplicate" = "複製";
 "finder.fullscreen" = "フルスクリーン";
 "finder.importDocument" = "ドキュメントのインポート";
 "finder.media" = "メディア";
+"finder.media.allcontent" = "すべてのコンテンツ";
 "finder.media.nocontent" = "あなたのノートに画像、PDF、音声録音などを追加してください。";
+"finder.media.sticker" = "ステッカー";
 "finder.more" = "もっと";
 "finder.outline" = "アウトライン";
 "finder.outline.description" = "インポートされたPDFや追加されたページのアウトラインはここに表示されます。ノートブックのナビゲーションバーの􀍠メニューからアウトラインにページを追加してください。";
@@ -1056,6 +1067,8 @@
 "getInspired.student" = "勉強ノート";
 "globalSearch.page" = "ページ";
 "globalSearch.recentlySearched" = "最近検索した";
+"groupitem.noteText" = "メモ";
+"groupitem.notesText" = "ノート";
 "headers" = "ヘッダー";
 "highlighterRack.flat" = "フラットハイライター";
 "highlighterRack.round" = "ラウンドハイライター";
@@ -1074,8 +1087,12 @@
 "iap.featureLimitMessage" = "この機能はロックされています。今すぐアップグレードして解除します。";
 "iap.featureLimitTitle" = "今すぐアップグレード";
 "iap.message" = "「Noteshelfプレミアムで無制限のノートへのアクセス、手書き認識と検索、そしてデジタルダイアリーを手に入れましょう。」";
+"iap.noProductIDsFound" = "In-App Purchaseの製品識別子が見つかりませんでした。";
+"iap.noProductsFound" = "アプリ内での購入は見つかりませんでした。";
 "iap.onetimepurchase" = "ワンタイム購入。永遠にあなたのものです。";
+"iap.paymentWasCancelled" = "アプリ内購入プロセスはキャンセルされました。";
 "iap.privacy" = "プライバシーポリシー";
+"iap.productRequestFailed" = "現在、利用可能なアプリ内購入商品を取得できません。";
 "iap.purchase" = "アップグレード対象：%@";
 "iap.purchaseNotAllowed" = "このデバイスではアプリ内購入は許可されていません。";
 "iap.restorePurchase" = "購入の復元";
@@ -1095,6 +1112,7 @@
 "labels" = "ラベル";
 "lasso.select.textbox" = "テキストボックス";
 "lettering" = "レタリング";
+"librarystore.removefromLibrary" = "ライブラリから削除";
 "lineHeight.extraNarrow" = "超狭";
 "lineHeight.narrow" = "狭い (せまい)";
 "lineHeight.standard" = "標準";
@@ -1189,7 +1207,7 @@
 "removefromRecents" = "最近削除";
 "reset" = "リセット";
 "retry" = "リトライ";
-"save" = "グループ名変更";
+"save" = "保存";
 "school" = "学校";
 "search.tryNewSearch" = "新しい検索を試してください";
 "seeAll" = "再受験";
@@ -1218,6 +1236,8 @@
 "shelf.bottomBar.delete" = "削除";
 "shelf.bottomBar.restore" = "リストア";
 "shelf.bottomBar.trash" = "ゴミ";
+"shelf.category.noCategoryItemsDescription" = "上記のオプションをタップして新しいメモを作成するか、既存のメモを移動してください。";
+"shelf.category.noCategoryItemsTitle" = "このカテゴリーは空です。";
 "shelf.category.unCategorized" = "未分類";
 "shelf.changeCover" = "カバーを変更";
 "shelf.createGroup" = "グループを作成";
@@ -1281,12 +1301,14 @@
 "shelf.newnotebook.description" = "カスタム用紙とカバー付きの空白ノート";
 "shelf.notebook.textstyle.Presets" = "プリセット";
 "shelf.notebook.textstyle.Reorder" = "並べ替え";
+"shelf.notebook.textstyle.grid" = "グリッド";
 "shelf.notebook.textstyle.newpreset" = "新しいプリセット";
 "shelf.notebook.textstyle.presetname" = "プリセット名";
 "shelf.notebook.textstyle.resetdescrption" = "デフォルトのスタイルにリセットしてもよろしいですか？";
 "shelf.notebook.textstyle.size" = "サイズ";
 "shelf.notebook.textstyle.textLineHeight" = "行の高さ";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行間";
+"shelf.ns2Category.noCategoryItemsTitle" = "このカテゴリーにはアイテムがありません。";
 "shelf.paperPicker.choosePaper" = "用紙を選択してください";
 "shelf.paperPicker.orientation" = "オリエンテーション";
 "shelf.quickCreateSettings.NavTitle" = "クイックノート";
@@ -1447,6 +1469,11 @@
 "templatesStore.templatePreview.createNotebook" = "ノートブックを作成する";
 "templatesStore.templatePreview.inyourLibrary" = "あなたの図書館";
 "templatesStore.templatePreview.style" = "スタイル";
+"text.font.setAsDefault.menuTitle" = "デフォルトに設定します:";
+"text.font.setAsDefault.thisAndFutureBooks" = "このノートおよびすべての将来のノート";
+"text.font.setAsDefault.thisBook" = "このノートブック";
+"texttoolbar.fontselectionTitle" = "フォントを選択";
+"theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
@@ -1493,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

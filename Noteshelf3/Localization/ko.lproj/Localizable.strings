@@ -113,7 +113,7 @@
 "ButtonTwoPress" = "버튼 2 누르기";
 "ButtonsPosition" = "버튼 위치";
 "Camera" = "카메라";
-"Cancel" = "취소 (Chwiso)";
+"Cancel" = "취소";
 "CancelInspirationDownload" = "다운로드를 취소하시겠습니까?";
 "CancelKey" = "취소 (Choiso)";
 "CannotChangeToDiaryTemplate" = "페이지를 디지털 다이어리로 변경할 수 없습니다.";
@@ -520,7 +520,7 @@
 "NeedGoogleDriveForConvertion" = "노트셀프는 문서를 PDF로 변환하기 전에 Google Drive를 사용합니다. Google 계정으로 로그인해주세요.'";
 "NeverShowAgain" = "다시는 경고하지 않습니다";
 "New" = "신규";
-"NewCategory" = "새로운 카테고리 (Saeloun kategoli)";
+"NewCategory" = "새로운 카테고리";
 "NewCategory" = "새로운 카테고리";
 "NewFolder" = "새 폴더";
 "NewGroup" = "새 그룹";
@@ -597,7 +597,6 @@
 "PageCreated" = "페이지 생성";
 "PageCreatedOn" = "%@에서 생성";
 "PageDimensions" = "크기";
-"PageFromClipBoard" = "클립보드에서 붙여넣기";
 "PageFromClipboard" = "클립보드에서 페이지";
 "PageFromPhoto" = "사진 배경";
 "PageFromTemplate" = "템플릿 선택";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "비밀번호가 일치하지 않습니다.";
 "Paste" = "붙여넣기";
 "PasteBelow" = "아래에 붙여넣기";
+"PasteFromClipBoard" = "클립보드에서 붙여넣기";
 "Pause" = "일시정지";
 "PencilActionAlert" = "이 동작은 시스템 기본 설정을 이 앱에만 덮어씁니다. 계속하시겠습니까?";
 "PencilActionChangeMessage" = "설정으로 이동 > Apple Pencil로 변경";
@@ -714,7 +714,7 @@
 "Restore" = "페이지 복구";
 "ResultsFor" = "%@에 대한 결과";
 "RetakeKey" = "3-손가락 오른쪽 스와이프/왼쪽 스와이프";
-"Right" = "새 페이지를 추가하려면 놓아주세요.";
+"Right" = "옳은";
 "Rotate" = "회전";
 "Rotate Page" = "페이지 회전";
 "Rotating" = "최근에서 제거";
@@ -944,17 +944,23 @@
 "appearance.darkTheme" = "다크 테마";
 "appearance.lightTheme" = "라이트 테마";
 "appearance.useSystemTheme" = "시스템 라이트 / 다크 모드 사용";
+"audiooption.gotoRecording" = "녹음으로 이동";
+"audiooption.jumptoPage" = "페이지로 이동";
+"audiooption.speed" = "속도";
 "backup_file_create_failed" = "백업 파일을 생성할 수 없습니다. 나중에 다시 시도해주세요.";
 "backup_unknown_error" = "백업 중에 오류가 발생했습니다. 나중에 다시 시도하세요.";
+"backupoptions.signoutfrom" = "%@에서 로그아웃 하시겠습니까?";
 "banners" = "배너";
+"bookmark.removebookMark" = "북마크 제거";
 "bujoessentials" = "부조 필수품";
 "cancel" = "취소";
 "clipart404" = "서버가 바쁩니다. 나중에 다시 시도해주세요.";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "백업 중에 오류가 발생했습니다. 나중에 다시 시도하세요.";
 "cloud.backup.error.failedToCreateBackup" = "백업 파일 생성 실패. 기기의 남은 공간을 확인하세요.";
 "cloud.backup.error.fileNotFound" = "파일을 찾을 수 없음";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.error.filePasswordProtected" = "비밀번호로 보호된 책은 PDF로 백업할 수 없습니다.";
+"cloud.backup.error.packageNeedsUpgrade" = "오류로 인해 백업할 수 없습니다.";
+"cloud.backup.errors" = "에러";
 "cloud.backup.pdfFormatWarning" = "참고: 비밀번호로 보호된 책은 PDF로 백업할 수 없습니다.";
 "color.added" = "색상 추가";
 "color.deleted" = "색상 삭제";
@@ -979,6 +985,8 @@
 "customizeToolbar.basicTools" = "기본 도구";
 "customizeToolbar.bookmark" = "북마크";
 "customizeToolbar.currentToolbar" = "툴바에";
+"customizeToolbar.deletePage" = "페이지 삭제";
+"customizeToolbar.deletePageConfirmation" = "이 노트북의 %d 페이지를 삭제하시겠습니까?";
 "customizeToolbar.duplicatePage" = "중복 페이지";
 "customizeToolbar.emojis" = "이모티콘";
 "customizeToolbar.eraser" = "지우개";
@@ -993,7 +1001,7 @@
 "customizeToolbar.resetConfirmation" = "기본 도구 모음으로 재설정하시겠습니까?";
 "customizeToolbar.rotatePage" = "페이지 회전";
 "customizeToolbar.savePageAsPhoto" = "페이지를 사진으로 저장하기'";
-"customizeToolbar.shapes" = "형태";
+"customizeToolbar.shapes" = "모양";
 "customizeToolbar.share" = "공유";
 "customizeToolbar.shareAndSave" = "공유 및 저장";
 "customizeToolbar.shareNotebookAsPDF" = "PDF로 노트북 공유";
@@ -1010,7 +1018,7 @@
 "customtemplate.title" = "제목";
 "customtemplate.titleplaceholder" = "제목없음";
 "days" = "일";
-"delete" = "삭제 (chosah)";
+"delete" = "삭제";
 "done" = "끝";
 "downloadedStickers" = "다운로드된 스티커";
 "duplicate" = "중복";
@@ -1026,11 +1034,14 @@
 "finder.bookmark.description" = "즐겨찾는 페이지 및 대형 노트북과 PDF 파일을 개요로 유지하세요.";
 "finder.bookmarks" = "즐겨찾기";
 "finder.clear.recents" = "최근 기록을 지우시겠습니까?";
+"finder.downloadPermissionText" = "선택한 노트북은 아직 다운로드되지 않았습니다. 노트북을 다운로드하고 페이지를 이동하시겠습니까?";
 "finder.duplicate" = "중복";
 "finder.fullscreen" = "전체 화면";
 "finder.importDocument" = "문서 가져오기";
 "finder.media" = "미디어";
+"finder.media.allcontent" = "모든 내용";
 "finder.media.nocontent" = "노트북에 이미지, PDF, 오디오 녹음 등을 추가하세요.";
+"finder.media.sticker" = "스티커";
 "finder.more" = "더";
 "finder.outline" = "개요";
 "finder.outline.description" = "PDF 파일의 개요와 추가된 페이지가 여기에 표시됩니다. 노트북의 탐색 막대에서 메뉴를 통해 개요에 페이지를 추가하세요.";
@@ -1056,6 +1067,8 @@
 "getInspired.student" = "공부 노트";
 "globalSearch.page" = "페이지";
 "globalSearch.recentlySearched" = "최근 검색한";
+"groupitem.noteText" = "노트";
+"groupitem.notesText" = "노트";
 "headers" = "헤더";
 "highlighterRack.flat" = "플랫 형광펜";
 "highlighterRack.round" = "라운드 형광펜";
@@ -1074,8 +1087,12 @@
 "iap.featureLimitMessage" = "이 기능은 잠겨 있습니다. 지금 업그레이드하여 잠금 해제하세요.";
 "iap.featureLimitTitle" = "지금 업그레이드하세요.";
 "iap.message" = "노트셀프 프리미엄으로 무제한 노트, 필기 인식과 검색, 그리고 디지털 다이어리에 접근하세요.";
+"iap.noProductIDsFound" = "인앱 구매 상품 식별자를 찾을 수 없습니다.";
+"iap.noProductsFound" = "앱 내 구매가 없습니다.";
 "iap.onetimepurchase" = "원회성 구매. 영원히 소유하십시오.'";
+"iap.paymentWasCancelled" = "앱 내 구매 프로세스가 취소되었습니다.";
 "iap.privacy" = "개인정보 처리방침";
+"iap.productRequestFailed" = "현재 사용 가능한 인앱 구매 제품을 가져올 수 없습니다.";
 "iap.purchase" = "%@에 대한 업그레이드";
 "iap.purchaseNotAllowed" = "이 장치에서는 앱 내 구매가 허용되지 않습니다.";
 "iap.restorePurchase" = "구매 복원";
@@ -1095,6 +1112,7 @@
 "labels" = "라벨";
 "lasso.select.textbox" = "텍스트 상자";
 "lettering" = "레터링";
+"librarystore.removefromLibrary" = "도서관에서 제거";
 "lineHeight.extraNarrow" = "초 좁은";
 "lineHeight.narrow" = "좁다";
 "lineHeight.standard" = "표준";
@@ -1189,7 +1207,7 @@
 "removefromRecents" = "최근목록에서 제거";
 "reset" = "리셋";
 "retry" = "재시도";
-"save" = "그룹 이름 변경";
+"save" = "저장";
 "school" = "학교";
 "search.tryNewSearch" = "새로 검색해 보세요";
 "seeAll" = "재응시";
@@ -1218,6 +1236,8 @@
 "shelf.bottomBar.delete" = "삭제";
 "shelf.bottomBar.restore" = "복원";
 "shelf.bottomBar.trash" = "쓰레기";
+"shelf.category.noCategoryItemsDescription" = "위의 옵션을 탭하여 새로운 노트를 만들거나 기존 노트를 이동하세요.";
+"shelf.category.noCategoryItemsTitle" = "이 카테고리는 비어 있습니다.";
 "shelf.category.unCategorized" = "미분류";
 "shelf.changeCover" = "표지 변경";
 "shelf.createGroup" = "그룹 생성";
@@ -1281,12 +1301,14 @@
 "shelf.newnotebook.description" = "커스텀 종이와 표지가 있는 빈 노트북";
 "shelf.notebook.textstyle.Presets" = "사전 설정";
 "shelf.notebook.textstyle.Reorder" = "재정렬";
+"shelf.notebook.textstyle.grid" = "그리드";
 "shelf.notebook.textstyle.newpreset" = "새로운 프리셋";
 "shelf.notebook.textstyle.presetname" = "프리셋 이름";
 "shelf.notebook.textstyle.resetdescrption" = "기본 스타일로 재설정하시겠습니까?";
 "shelf.notebook.textstyle.size" = "크기";
 "shelf.notebook.textstyle.textLineHeight" = "줄 간격";
 "shelf.notebook.textstyle.textautoLineHeight" = "자동 줄 높이";
+"shelf.ns2Category.noCategoryItemsTitle" = "이 카테고리에는 항목이 없습니다.";
 "shelf.paperPicker.choosePaper" = "용지 선택";
 "shelf.paperPicker.orientation" = "방향";
 "shelf.quickCreateSettings.NavTitle" = "짧은 메모";
@@ -1447,6 +1469,11 @@
 "templatesStore.templatePreview.createNotebook" = "노트북 만들기";
 "templatesStore.templatePreview.inyourLibrary" = "당신의 라이브러리";
 "templatesStore.templatePreview.style" = "스타일";
+"text.font.setAsDefault.menuTitle" = "다음에 대해 기본값으로 설정:";
+"text.font.setAsDefault.thisAndFutureBooks" = "이와 이후의 모든 노트북";
+"text.font.setAsDefault.thisBook" = "이 노트북";
+"texttoolbar.fontselectionTitle" = "글꼴 선택";
+"theams.unsplashDescription" = "Unsplash에서 선택, 사진 촬영 또는 사진 라이브러리에서 선택하여 사용자 정의 표지 만들기";
 "trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
@@ -1493,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

@@ -17,7 +17,7 @@
         #import "Noteshelf-Swift.h"
     #endif
 #else
-#import "Noteshelf_Action-Swift.h"
+#import "Noteshelf3_Action-Swift.h"
 #endif
 
 #import "NSString_Backup_Additions.h"
@@ -937,26 +937,26 @@ NSString * _Nullable utiType(NSString* _Nonnull path)
     return extractedUTIType;
 }
 
-CG_EXTERN FTPackageType packageType(NSString *_Nonnull path)
-{
-    NSString *mimeUTIType = utiType(path);
-    FTPackageType type = FTPackageTypeNone;
-    
-    if([mimeUTIType caseInsensitiveCompare:@"com.ramki.noteshelfData"] == NSOrderedSame)
-    {
-        type = FTPackageTypeDatabase;;
-    }
-    else     if([mimeUTIType caseInsensitiveCompare:@"com.ramki.noteshelfpdf"] == NSOrderedSame)
-    {
-        type = FTPackageTypePDF;;
-    }
-    else     if([mimeUTIType caseInsensitiveCompare:@"com.ramki.noteshelfNotebook"] == NSOrderedSame)
-    {
-        type = FTPackageTypeNotebook;;
-    }
-
-    return type;
-}
+//CG_EXTERN FTPackageType packageType(NSString *_Nonnull path)
+//{
+//    NSString *mimeUTIType = utiType(path);
+//    FTPackageType type = FTPackageTypeNone;
+//    
+//    if([mimeUTIType caseInsensitiveCompare:@"com.ramki.noteshelfData"] == NSOrderedSame)
+//    {
+//        type = FTPackageTypeDatabase;;
+//    }
+//    else     if([mimeUTIType caseInsensitiveCompare:@"com.ramki.noteshelfpdf"] == NSOrderedSame)
+//    {
+//        type = FTPackageTypePDF;;
+//    }
+//    else     if([mimeUTIType caseInsensitiveCompare:@"com.ramki.noteshelfNotebook"] == NSOrderedSame)
+//    {
+//        type = FTPackageTypeNotebook;;
+//    }
+//
+//    return type;
+//}
 
 CG_EXTERN CGPoint CGPointIntegral(CGPoint p1)
 {

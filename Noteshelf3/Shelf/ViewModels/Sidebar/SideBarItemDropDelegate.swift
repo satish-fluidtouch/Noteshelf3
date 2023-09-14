@@ -33,7 +33,7 @@ struct SideBarDropDelegate: DropDelegate {
 }
 struct SideBarItemDropDelegate: DropDelegate {
 @ObservedObject var viewModel: FTSidebarViewModel
-    var droppedItem: FTSideBarItem
+   weak var droppedItem: FTSideBarItem?
 
     func performDrop(info: DropInfo) -> Bool {
         let items = info.itemProviders(for: [.data])
@@ -48,7 +48,7 @@ struct SideBarItemDropDelegate: DropDelegate {
                 }
             }
         }
-        droppedItem.highlighted = false
+        droppedItem?.highlighted = false
         viewModel.currentDraggedSidebarItem = nil
         return true
     }
@@ -56,30 +56,35 @@ struct SideBarItemDropDelegate: DropDelegate {
         return true
     }
     func dropEntered(info: DropInfo) {
-        viewModel.currentSideBarDropItem = droppedItem
-        guard let draggedItem = self.viewModel.currentDraggedSidebarItem else {
-                    return
-                }
-                if draggedItem != droppedItem, let activeReorderingSection = viewModel.activeReorderingSidebarSectionType {
-                    let sectionItems = viewModel.menuItems.first(where: {$0.type == activeReorderingSection})?.items
-                    if let from = sectionItems?.firstIndex(of: draggedItem),
-                       let to = sectionItems?.firstIndex(of: droppedItem) {
-                        self.viewModel.reOrderSidebarSectionItems(activeReorderingSection,fromOrder: from, toOrder: to)
-                        withAnimation(.default) {
-                            viewModel.menuItems.first(where: {$0.type == viewModel.activeReorderingSidebarSectionType})?.items.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
+        if let droppedItem {
+            viewModel.currentSideBarDropItem = droppedItem
+            guard let draggedItem = self.viewModel.currentDraggedSidebarItem else {
+                        return
+                    }
+                    if draggedItem != droppedItem, let activeReorderingSection = viewModel.activeReorderingSidebarSectionType {
+                        let sectionItems = viewModel.menuItems.first(where: {$0.type == activeReorderingSection})?.items
+                        if let from = sectionItems?.firstIndex(of: draggedItem),
+                           let to = sectionItems?.firstIndex(of: droppedItem) {
+                            self.viewModel.reOrderSidebarSectionItems(activeReorderingSection,fromOrder: from, toOrder: to)
+                            withAnimation(.default) {
+                                viewModel.menuItems.first(where: {$0.type == viewModel.activeReorderingSidebarSectionType})?.items.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
+                            }
                         }
                     }
-                }
+        }
     }
 
     func dropExited(info: DropInfo) {
-        droppedItem.highlighted = false
+        droppedItem?.highlighted = false
        viewModel.highlightItem = nil
     }
 
     func dropUpdated(info: DropInfo) -> DropProposal? {
+        guard let droppedItem else {
+            return nil
+        }
         if viewModel.currentDraggedSidebarItem != nil, viewModel.activeReorderingSidebarSectionType == .categories { // Reordering
-            if droppedItem.type != .category { // if drop item is not categories, we are putting back the dragged item in its last ordered position in order to avoid reorder empty space of dragged item.  
+            if droppedItem.type != .category { // if drop item is not categories, we are putting back the dragged item in its last ordered position in order to avoid reorder empty space of dragged item.
                 viewModel.fadeDraggedSidebarItem = nil
             }
             return DropProposal(operation: .move)

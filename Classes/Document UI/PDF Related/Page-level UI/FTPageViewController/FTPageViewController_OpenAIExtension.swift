@@ -49,7 +49,7 @@ extension FTPageViewController {
         }
         
         annotations.forEach { eachAnnotation in
-            if(eachAnnotation.supportsHandwrittenRecognition) {
+            if(eachAnnotation.supportsHandwrittenRecognition && FTIAPManager.shared.premiumUser.isPremiumUser) {
                 annotationsToConsider.append(eachAnnotation)
             }
             else if let textAnnotation = eachAnnotation as? FTTextAnnotation,let string = textAnnotation.attributedString?.string.openAITrim(), !string.isEmpty {

@@ -606,6 +606,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 -(void)updateContentSize
 {
     id currentScrollViewDel = self.mainScrollView.scrollViewDelegate;
+    self.mainScrollView.contentInset = UIEdgeInsetsZero;
     self.mainScrollView.scrollViewDelegate = nil;
     [self.pageLayoutHelper updateContentSizeWithPageCount:self.numberOfPages];
     self.mainScrollView.scrollViewDelegate = currentScrollViewDel;
@@ -1321,7 +1322,12 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
             if(shouldClose) {
                 [[FTNoteshelfDocumentManager shared] saveAndCloseWithDocument:documentToSave
                                                                         token:self.openDocToken
-                                                                 onCompletion:onCompletionBlock];
+                                                                 onCompletion:^(BOOL success) {
+                    [[FTCloudBackUpManager shared] startPublish];
+                    if(nil != onCompletionBlock) {
+                        onCompletionBlock(success);
+                    }
+                }];
             }
             else {
                 [documentToSave saveDocumentWithCompletionHandler:onCompletionBlock];
@@ -1454,7 +1460,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
             if (loadingIndicator) {
                 [loadingIndicator hide:nil];
             }
-            
             [[FTENPublishManager shared] startPublishing];
         };
         if(backAction == FTSaveAction) {
@@ -2161,6 +2166,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     clipInfo.clipString = clipUrlString;
     [firstPageController addAnnotationWithInfo:clipInfo];
     [indicator hide:nil];
+    self.pdfDocument.isDirty = true;
 }
 
 -(void)insertImages:(NSArray<UIImage *> *)pictures
@@ -2298,6 +2304,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         }];
         if (info.count > 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.pdfDocument.isDirty = true;
                 completionBlock(info,frameInfo,nil);
             });
         }
@@ -3323,6 +3330,11 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                 break;
         }
     }];
+}
+
+#pragma mark - FTLassoRackDelegate
+-(void)pasteFromClipBoard {
+    [self paste:nil];
 }
 
 -(CGFloat)zoomModeMaxZoomScale

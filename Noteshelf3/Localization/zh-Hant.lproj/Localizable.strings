@@ -597,7 +597,6 @@
 "PageCreated" = "頁面已建立";
 "PageCreatedOn" = "在%@上創建";
 "PageDimensions" = "尺寸";
-"PageFromClipBoard" = "從剪貼簿貼上";
 "PageFromClipboard" = "剪貼簿的頁面";
 "PageFromPhoto" = "照片背景";
 "PageFromTemplate" = "選擇模板";
@@ -629,6 +628,7 @@
 "PasswordsDontMatch" = "密碼不相符";
 "Paste" = "粘贴";
 "PasteBelow" = "貼在下方";
+"PasteFromClipBoard" = "從剪貼簿貼上";
 "Pause" = "暫停";
 "PencilActionAlert" = "此操作僅對此應用程式覆蓋系統預設值。是否要繼續？";
 "PencilActionChangeMessage" = "前往「設定」>「Apple Pencil」進行更改";
@@ -714,7 +714,7 @@
 "Restore" = "恢復頁面";
 "ResultsFor" = "結果為 %@";
 "RetakeKey" = "3-指右滑/左滑";
-"Right" = "發布以添加新頁面";
+"Right" = "對的";
 "Rotate" = "旋轉";
 "Rotate Page" = "旋轉頁面";
 "Rotating" = "從最近刪除";
@@ -944,17 +944,23 @@
 "appearance.darkTheme" = "暗黑主題";
 "appearance.lightTheme" = "明亮主題";
 "appearance.useSystemTheme" = "使用系統的淺色/暗色模式";
+"audiooption.gotoRecording" = "前往錄音";
+"audiooption.jumptoPage" = "跳至頁面";
+"audiooption.speed" = "速度";
 "backup_file_create_failed" = "無法建立備份檔案。請稍後再試。";
 "backup_unknown_error" = "備份時發生錯誤。請稍後再試。";
+"backupoptions.signoutfrom" = "從%@登出";
 "banners" = "橫幅";
+"bookmark.removebookMark" = "移除書籤";
 "bujoessentials" = "筆記必需品";
 "cancel" = "取消";
 "clipart404" = "服務器繁忙，請稍後再試。";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "時發生錯誤。請稍後再試。";
 "cloud.backup.error.failedToCreateBackup" = "無法建立備份檔案。請檢查您的設備剩餘空間。";
 "cloud.backup.error.fileNotFound" = "檔案未找到";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
+"cloud.backup.error.filePasswordProtected" = "受密碼保護的筆記本無法備份為 PDF。";
+"cloud.backup.error.packageNeedsUpgrade" = "由於錯誤無法備份";
+"cloud.backup.errors" = "錯誤";
 "cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
 "color.added" = "添加顏色";
 "color.deleted" = "顏色已刪除";
@@ -979,6 +985,8 @@
 "customizeToolbar.basicTools" = "基本工具";
 "customizeToolbar.bookmark" = "書籤";
 "customizeToolbar.currentToolbar" = "在工具欄上";
+"customizeToolbar.deletePage" = "刪除頁面";
+"customizeToolbar.deletePageConfirmation" = "您確定要刪除此筆記本的第 %d 頁嗎？";
 "customizeToolbar.duplicatePage" = "重複頁面";
 "customizeToolbar.emojis" = "表情符號";
 "customizeToolbar.eraser" = "橡皮擦";
@@ -1026,11 +1034,14 @@
 "finder.bookmark.description" = "收藏頁面並對大型筆記本和PDF保持概覽。";
 "finder.bookmarks" = "書籤";
 "finder.clear.recents" = "你想清除最近的紀錄嗎？";
+"finder.downloadPermissionText" = "所選筆記本尚未下載。您是否希望下載筆記本並移動頁面？";
 "finder.duplicate" = "重複";
 "finder.fullscreen" = "全螢幕";
 "finder.importDocument" = "導入文件";
 "finder.media" = "媒體";
+"finder.media.allcontent" = "所有內容";
 "finder.media.nocontent" = "將圖像、PDF、音頻錄音和其他內容添加到您的筆記本。";
+"finder.media.sticker" = "貼紙";
 "finder.more" = "更多 (Gèng duō)";
 "finder.outline" = "大綱";
 "finder.outline.description" = "進口PDF的輪廓和添加的頁面將顯示在這裡。通過筆記本導航欄上的􀍠菜單將頁面添加到輪廓中。";
@@ -1056,6 +1067,8 @@
 "getInspired.student" = "學習筆記";
 "globalSearch.page" = "頁";
 "globalSearch.recentlySearched" = "最近搜索";
+"groupitem.noteText" = "筆記";
+"groupitem.notesText" = "筆記";
 "headers" = "標題";
 "highlighterRack.flat" = "扁平荧光笔";
 "highlighterRack.round" = "圓形螢光筆";
@@ -1074,8 +1087,12 @@
 "iap.featureLimitMessage" = "此功能已鎖定。立即升級以解鎖。";
 "iap.featureLimitTitle" = "立即升級";
 "iap.message" = "獲取Noteshelf Premium中的無限筆記、手寫識別和搜索以及數字日記。";
+"iap.noProductIDsFound" = "找不到應用內購產品識別碼。";
+"iap.noProductsFound" = "找不到應用內購買。";
 "iap.onetimepurchase" = "一次性購買。永久擁有。";
+"iap.paymentWasCancelled" = "應用內購買流程已取消。";
 "iap.privacy" = "隱私政策";
+"iap.productRequestFailed" = "目前無法獲取可用的應用內購買產品。";
 "iap.purchase" = "升級為%@";
 "iap.purchaseNotAllowed" = "此裝置不允許應用內購買";
 "iap.restorePurchase" = "恢復購買";
@@ -1095,6 +1112,7 @@
 "labels" = "標籤";
 "lasso.select.textbox" = "文本框";
 "lettering" = "字體設計";
+"librarystore.removefromLibrary" = "從圖書館中移除";
 "lineHeight.extraNarrow" = "超窄";
 "lineHeight.narrow" = "窄";
 "lineHeight.standard" = "標準";
@@ -1189,7 +1207,7 @@
 "removefromRecents" = "從最近移除";
 "reset" = "重設";
 "retry" = "重試";
-"save" = "重命名群組";
+"save" = "保存";
 "school" = "學校";
 "search.tryNewSearch" = "嘗試新的搜索";
 "seeAll" = "重新拍攝";
@@ -1218,6 +1236,8 @@
 "shelf.bottomBar.delete" = "刪除";
 "shelf.bottomBar.restore" = "還原";
 "shelf.bottomBar.trash" = "垃圾";
+"shelf.category.noCategoryItemsDescription" = "點擊上方的選項以創建新的筆記或移動現有筆記。";
+"shelf.category.noCategoryItemsTitle" = "這個類別是空的";
 "shelf.category.unCategorized" = "未分類";
 "shelf.changeCover" = "更換封面";
 "shelf.createGroup" = "建立群組";
@@ -1281,12 +1301,14 @@
 "shelf.newnotebook.description" = "具有自定義紙張和封面的空白筆記本";
 "shelf.notebook.textstyle.Presets" = "預設";
 "shelf.notebook.textstyle.Reorder" = "重新排序";
+"shelf.notebook.textstyle.grid" = "網格";
 "shelf.notebook.textstyle.newpreset" = "新預設";
 "shelf.notebook.textstyle.presetname" = "預設名稱";
 "shelf.notebook.textstyle.resetdescrption" = "你確定要重設為預設樣式嗎";
 "shelf.notebook.textstyle.size" = "大小";
 "shelf.notebook.textstyle.textLineHeight" = "行高";
 "shelf.notebook.textstyle.textautoLineHeight" = "自動行高";
+"shelf.ns2Category.noCategoryItemsTitle" = "此分類下無任何項目";
 "shelf.paperPicker.choosePaper" = "選擇紙張";
 "shelf.paperPicker.orientation" = "定位";
 "shelf.quickCreateSettings.NavTitle" = "快速筆記";
@@ -1447,6 +1469,11 @@
 "templatesStore.templatePreview.createNotebook" = "創建筆記本";
 "templatesStore.templatePreview.inyourLibrary" = "在您的圖書館";
 "templatesStore.templatePreview.style" = "風格";
+"text.font.setAsDefault.menuTitle" = "設為預設：";
+"text.font.setAsDefault.thisAndFutureBooks" = "這本和所有未來的筆記本";
+"text.font.setAsDefault.thisBook" = "這個筆記本";
+"texttoolbar.fontselectionTitle" = "選擇字型";
+"theams.unsplashDescription" = "從Unsplash選擇、拍照或從您的照片庫中選擇來創建您的自定封面。";
 "trash.alert.cannotOpenNotebook" = "這個筆記本無法打開，因為它已被刪除。要恢復，請長按並從菜單選擇該選項。";
 "trash.alert.title" = "您確定要清空垃圾桶嗎？";
 "unsplash.search.alertMessage" = "輸入要搜索的文字";
@@ -1493,4 +1520,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 5 September 2023 at 15:19
+// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM

@@ -346,7 +346,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
     
     func askForDownloadPermission(_ oncompletion : @escaping (_ shouldContinue : Bool) -> ())
     {
-        let alertController = UIAlertController.init(title: "Selected Notebook is not downloaded yet. Do you wish to download the notebook and move the pages?", message: nil, preferredStyle: .alert);
+        let alertController = UIAlertController.init(title: "finder.downloadPermissionText".localized, message: nil, preferredStyle: .alert);
         let okAction = UIAlertAction.init(title: NSLocalizedString("OK", comment: "OK"), style: .default) { (action) in
             oncompletion(true);
         }

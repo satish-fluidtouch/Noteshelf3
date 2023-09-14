@@ -528,6 +528,9 @@ extension FTSidebarViewModel {
     }
 
     private func buildSideMenuItems(){
+        self.menuItems.forEach { eachSection in
+            eachSection.items.removeAll()
+        }
         self.menuItems.removeAll()
         self.menuItems.append(contentsOf: [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)])
         self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))

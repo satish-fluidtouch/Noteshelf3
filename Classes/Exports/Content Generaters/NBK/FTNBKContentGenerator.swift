@@ -120,7 +120,7 @@ class FTNBKContentGenerator: FTExportContentGenerator, SSZipArchiveDelegate {
                 }
                 else
                 {
-                    let error = NSError.init(domain: "FTAirTrasfer", code: 1003, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Failedtocreatebackup", comment: "Failed to create backup file. Check remaining space on your device.")])
+                    let error = NSError.init(domain: "FTContentGenerator", code: 1003, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Failedtocreatebackup", comment: "Failed to create backup file. Check remaining space on your device.")])
                     // Removed below main thread, to avoid deadlock in macOS Ventura while trying to drag and drop.
 //                    DispatchQueue.main.async(execute: {
                         completion(nil, error,false);

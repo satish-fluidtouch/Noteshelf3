@@ -91,8 +91,9 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
             Analytics.setUserProperty("none", forName: "ns_evernote_user")
         }
 
-        let countryCode = Locale.current.regionCode
-        Analytics.setUserProperty(countryCode, forName: "ns_user_country")
+        if let countryCode = Locale.current.language.region?.identifier {
+            Analytics.setUserProperty(countryCode, forName: "ns_user_country")
+        }
 
         //Last Active date
         let outputFormatter = DateFormatter()

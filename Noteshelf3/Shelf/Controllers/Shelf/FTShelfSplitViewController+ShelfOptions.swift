@@ -419,13 +419,13 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     }
     func deleteItems(_ items : [FTShelfItemProtocol],  shouldEmptyTrash:Bool, onCompletion: @escaping((Bool) -> Void))
     {
-        let alertTitle = shouldEmptyTrash ? "Are you sure you want empty your Trash?" : "Are you sure you want to delete?"
-        let deleteButtonTitle = shouldEmptyTrash ? "Empty Trash" : "Delete"
-        let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: UIAlertController.Style.alert)
-        let emptyTrashAction = UIAlertAction(title: deleteButtonTitle, style: .destructive) { _ in
+        let alertTitle = shouldEmptyTrash ? "trash.alert.title" : "shelf.deleteCategoryAlert.title"
+        let deleteButtonTitle = shouldEmptyTrash ? "shelf.emptyTrash" : "shelf.alerts.delete"
+        let alertController = UIAlertController(title: alertTitle.localized, message: nil, preferredStyle: UIAlertController.Style.alert)
+        let emptyTrashAction = UIAlertAction(title: deleteButtonTitle.localized, style: .destructive) { _ in
             deleteShelfItems()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .default)
         alertController.addAction(cancelAction)
         alertController.addAction(emptyTrashAction)
         alertController.preferredAction = cancelAction
@@ -550,7 +550,14 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         if items.count == 1 {
             originalTitle = items[0].displayTitle
         }
-        let headerTitle = NSLocalizedString("NotebookTitle", comment: "Notebook Title");
+        let headerTitle: String
+        if items.filter({$0 is FTGroupItemProtocol}).isEmpty { // only notebooks
+            headerTitle = NSLocalizedString("NotebookTitle", comment: "Notebook Title")
+        } else if items.filter({$0 is FTGroupItemProtocol}).count == items.count { //only groups
+            headerTitle = NSLocalizedString("GroupTitle", comment: "Group Title");
+        } else { // combination of notebooks and groups
+            headerTitle = NSLocalizedString("Title", comment: "Title");
+        }
 
         self.showAlertOn(viewController: self, title: headerTitle, message: "", textfieldPlaceHolder: originalTitle, textfiledValue: originalTitle, submitButtonTitle: NSLocalizedString("Rename", comment: "Rename"), cancelButtonTitle: NSLocalizedString("Cancel", comment: "Cancel")) { title in
 
