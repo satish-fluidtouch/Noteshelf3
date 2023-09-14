@@ -8,27 +8,65 @@
 
 import Foundation
 
-class FTWebdavBackupEntry : FTCloudBackup {
+class FTWebDavBackupFileInfo: FTCloudBackupFileInfo {
     var webdavPath: String?
     var backupFileName: String?
+
+    override func info() -> [String: String]? {
+        if let path = webdavPath, let fileName = backupFileName {
+            var info = [String: String]();
+            info["webdavPath"] = path;
+            info["backupFileName"] = fileName;
+            return info;
+        }
+        return nil;
+    }
     
+    override func updte(with info: [String:String]) {
+        if let path = info["webdavPath"] {
+            self.webdavPath = path;
+        }
+        if let fileName = info["backupFileName"] {
+            self.backupFileName = fileName;
+        }
+    }
+    
+    override func resetProperties() {
+        self.webdavPath = nil
+        self.backupFileName = nil
+    }
+}
+
+class FTWebdavBackupEntry : FTCloudBackup {
+    override class func fileInfo() -> FTCloudBackupFileInfo {
+        return FTWebDavBackupFileInfo();
+    }
+
     override init(withDict dict: [String: Any]) {
         super.init(withDict: dict);
-      
-        if let webdavInfo = dict["webdav"] as? [String : Any] {
-            self.webdavPath = webdavInfo["webdavPath"] as? String
-            self.backupFileName = webdavInfo["backupFileName"] as?  String
+        if let webdavInfo = dict["webdav"] {
+            if let singleFormatInfo = webdavInfo as? [String:String] {
+                self.nsFileInfo.updte(with: singleFormatInfo)
+            }
+            else if let multiFormatInfo = webdavInfo as? [String: [String:String]] {
+                if let pdfInfo = multiFormatInfo[kExportFormatPDF.cloudFileInfoKey] {
+                    self.pdfFileInfo.updte(with: pdfInfo)
+                }
+                if let bookInfo = multiFormatInfo[kExportFormatNBK.cloudFileInfoKey] {
+                    self.nsFileInfo.updte(with: bookInfo);
+                }
+            }
         }
     }
     
     override func representation() -> [String : Any] {
         var dict = super.representation()
         var webdavInfo: [String : Any] = [:]
-        if let path = self.webdavPath {
-            webdavInfo["webdavPath"] = path
+        if let pdfInfo = self.pdfFileInfo.info() {
+            webdavInfo[kExportFormatPDF.cloudFileInfoKey] = pdfInfo;
         }
-        if let fileName = self.backupFileName {
-            webdavInfo["backupFileName"] = fileName
+        if let bookInfo = self.nsFileInfo.info() {
+            webdavInfo[kExportFormatNBK.cloudFileInfoKey] = bookInfo;
         }
         dict["webdav"] = webdavInfo
         return dict
@@ -36,7 +74,5 @@ class FTWebdavBackupEntry : FTCloudBackup {
     
     override func resetProperties() {
         super.resetProperties()
-        self.webdavPath = nil
-        self.backupFileName = nil
     }
 }

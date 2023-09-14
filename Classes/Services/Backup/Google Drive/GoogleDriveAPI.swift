@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleAPIClientForREST_Drive
+import FTCommon
 
 class GoogleDriveAPI: NSObject {
     private let service: GTLRDriveService
@@ -98,7 +99,7 @@ class GoogleDriveAPI: NSObject {
         properties.setAdditionalProperty(relativePath, forName: self.RELATIVE_PATH_KEY)
         file.appProperties = properties
         
-        let mimeType = "application/ns2"
+        let mimeType = fileURL.gdMimeType
         
         // Optionally, GTLRUploadParameters can also be created with a Data object.
         let uploadParameters = GTLRUploadParameters(fileURL: fileURL, mimeType: mimeType)
@@ -119,7 +120,7 @@ class GoogleDriveAPI: NSObject {
         let file = GTLRDrive_File()
         file.name = name
         
-        let mimeType = "application/ns2"
+        let mimeType = fileURL.gdMimeType
         
         // Optionally, GTLRUploadParameters can also be created with a Data object.
         let uploadParameters = GTLRUploadParameters(fileURL: fileURL, mimeType: mimeType)
@@ -137,7 +138,7 @@ class GoogleDriveAPI: NSObject {
         properties.setAdditionalProperty(relativePath, forName: self.RELATIVE_PATH_KEY)
         file.appProperties = properties
         
-        let mimeType = "application/ns2"
+        let mimeType = fileURL.gdMimeType
         
         // Optionally, GTLRUploadParameters can also be created with a Data object.
         let uploadParameters = GTLRUploadParameters(fileURL: fileURL, mimeType: mimeType)
@@ -202,5 +203,16 @@ class GoogleDriveAPI: NSObject {
         service.executeQuery(query) { (_ , result, error) in
             onCompletion(result as? GTLRDrive_About, error)
         }
+    }
+}
+
+
+private extension URL {
+    var gdMimeType: String {
+        let pathExtension = self.pathExtension;
+        if pathExtension == pdfExtension {
+            return "application/pdf";
+        }
+        return "application/ns3";
     }
 }

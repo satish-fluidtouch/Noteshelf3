@@ -40,14 +40,9 @@ class FTDropboxBackupPublisher: FTCloudBackupPublisher {
         return entry
     }
     
-    override func publishRequest(forItem inItem: FTCloudBackup?) -> FTCloudPublishRequest? {
-        var request: FTDropboxPublishRequest?
-        if let item = inItem {
-            request = FTDropboxPublishRequest(backupEntry: item, delegate: self)
-            request?.delegate = self;
-            request?.refObject = item;
-        }
-        return request
+    override func publishRequest(forItem inItem: FTCloudBackup, itemURL: URL) -> FTCloudPublishRequest? {
+        let request = FTDropboxPublishRequest(backupEntry: inItem, delegate: self,sourceFile:itemURL);
+        return request;
     }
 
     // MARK: Sync Log

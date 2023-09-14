@@ -761,26 +761,42 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     
     private func addObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.handlePageRecognitionUpdate(_:)), name: NSNotification.Name(rawValue: FTRecognitionInfoDidUpdateNotification), object: nil)
-
-        NotificationCenter.default.addObserver(forName: .shouldReloadFinderNotification, object: nil, queue: nil) { [weak self] (notification) in
-            self?.reloadData()
-        }
-        NotificationCenter.default.addObserver(forName: .didChangeCurrentPageNotification, object: nil, queue: nil) { [weak self] (notification) in
-            var currentSessionID = ""
-            if let sessionIdentifier = self?.view.window?.windowScene?.session.persistentIdentifier {
-                currentSessionID = sessionIdentifier
-            }
-            guard let `self` = self, let sessionID = notification.object as? String, sessionID == currentSessionID else {
-                return
-            }
-            self.reloadData()
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(handleFinderReloadNotifier(_:)), name: .shouldReloadFinderNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleCurrentPageChangeNotifier(_:)), name:  .didChangeCurrentPageNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.willShowHideKeyboard(_:)), name: UIResponder.keyboardWillShowNotification, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.willShowHideKeyboard(_:)), name: UIResponder.keyboardWillHideNotification, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.reloadData), name: NSNotification.Name("FTDocumentGetReloaded"), object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(FTFinderViewController.reloadData), name: NSNotification.Name.FTPageDidChangePageTemplate, object: nil)
     }
-    
+
+    @objc private func handleFinderReloadNotifier(_ notification: Notification) {
+        if var arrSelectedPages = Array(self.selectedPages) as? [FTThumbnailable] {
+            if self.mode == .edit, !arrSelectedPages.isEmpty {
+                let pages = self.document.documentPages()
+                arrSelectedPages = arrSelectedPages.filter { reqPage in
+                    return pages.contains { page in
+                        return reqPage.uuid == page.uuid
+                    }
+                }
+                self.selectedPages.removeAllObjects()
+                self.selectedPages.addObjects(from: arrSelectedPages)
+                self.updateSelectAllUI()
+            }
+        }
+        self.reloadData()
+    }
+
+    @objc private func handleCurrentPageChangeNotifier(_ notification: Notification) {
+        var currentSessionID = ""
+        if let sessionIdentifier = self.view.window?.windowScene?.session.persistentIdentifier {
+            currentSessionID = sessionIdentifier
+        }
+        guard let sessionID = notification.object as? String, sessionID == currentSessionID else {
+            return
+        }
+        self.reloadData()
+    }
+
     func didTapOnSegmentControl(_segmentControl: FTFinderSegmentControl) {
         if let segmentType = FTFinderSectionType(rawValue: _segmentControl.selectedSegmentIndex) {
             updateSegmentData(for: segmentType);

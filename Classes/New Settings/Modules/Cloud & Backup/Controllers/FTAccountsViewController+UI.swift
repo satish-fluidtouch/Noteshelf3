@@ -18,6 +18,8 @@ enum CellIdentifiers: String {
     // Section - 1
     case backUp = "tableViewCellBackupTo"
     case backUpOptions = "CellBackUpOptions"
+    case backUpFormatOptions = "CellBackUpFormatOptions"
+
     case notebooks = "CellBackupNotebooks"
     case backUpOnWifi = "CellBackupOnWiFiOnly"
 }
