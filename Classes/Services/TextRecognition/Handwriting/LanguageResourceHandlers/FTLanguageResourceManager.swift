@@ -10,6 +10,8 @@
 let FTResourceDownloadStatusDidChange = "FTResourceDownloadStatusDidChange"
 let FTRecognitionLanguageDidSelect = "FTRecognitionLanguageDidSelect"
 
+import Combine
+
 class FTLanguageResourceManager: NSObject {
     @objc static let shared:FTLanguageResourceManager = FTLanguageResourceManager()
     var languageResources: [FTRecognitionLangResource] = []
@@ -19,6 +21,21 @@ class FTLanguageResourceManager: NSObject {
         }
     }
     fileprivate var fileHandler: FTLogger?
+    private var premiumCancellableEvent: AnyCancellable?
+
+    private override init() {
+        super.init()
+        // Once non premiumuser becomes premium, need to enable writing recognition
+        if !FTIAPManager.shared.premiumUser.isPremiumUser {
+            premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] isPremium in
+                    if isPremium {
+                        FTLanguageResourceManager.shared.updateRecognitionSettingIfNeeded()
+                    }
+                }
+        }
+    }
 
     var currentLanguageCode: String? {
         get{
@@ -42,6 +59,16 @@ class FTLanguageResourceManager: NSObject {
         }
         set{
             UserDefaults.standard.set(newValue, forKey: "isPreferredLanguageChosen")
+            UserDefaults.standard.synchronize()
+        }
+    }
+
+    var isManuallyDisabledRecognition: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "isManuallyDisabledRecognition")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "isManuallyDisabledRecognition")
             UserDefaults.standard.synchronize()
         }
     }
@@ -157,8 +184,21 @@ class FTLanguageResourceManager: NSObject {
                     currentLanguage.downloadResourceOnDemand()
                 }
             }
+        } else {
+            self.updateRecognitionSettingIfNeeded()
         }
     }
+
+    private func updateRecognitionSettingIfNeeded() {
+        if !FTIAPManager.shared.premiumUser.isPremiumUser {
+            return
+        }
+        if !isManuallyDisabledRecognition, currentLanguageCode == languageCodeNone {
+            self.currentLanguageCode = FTLanguageResourceMapper.currentScriptLanguageCode()
+            self.isPreferredLanguageChosen = true
+        }
+    }
+
     @objc func warnLanguageSelectionIfNeeded(onController controller: UIViewController){
         //==========================================
         if (self.isPreferredLanguageChosen || self.currentLanguageCode == nil || (self.currentLanguageCode != nil && self.currentLanguageCode != "en_US")) {
