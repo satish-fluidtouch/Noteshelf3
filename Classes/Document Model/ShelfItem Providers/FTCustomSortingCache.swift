@@ -29,7 +29,7 @@ class FTCustomSortingCache: NSObject {
     private var plistPath: String {
 #if DEBUG || ADHOC
         if !isCloudItem {
-            fatalError("should not be called for local data");
+            //fatalError("should not be called for local data");
         }
 #endif
         return self.cachePath.appending("/indexCache.plist")

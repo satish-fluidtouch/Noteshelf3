@@ -133,34 +133,37 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     
     func renameShelf(_ collection: FTShelfItemCollection,title: String, onCompletion: @escaping ((NSError?, FTShelfItemCollection?) -> Void))
     {
+        var collectionURLsInfo = [[String:URL?]]()
         let uniqueName = FileManager.uniqueFileName(title+".shelf", inFolder: self.localDocumentsURL);
         let destURL = self.localDocumentsURL.appendingPathComponent(uniqueName).urlByDeleteingPrivate();
         var fileError : NSError?;
-        
+        let originalURL = collection.URL
         do {
             try FileManager.init().moveItem(at: collection.URL, to: destURL);
             _ = self.moveItemInCache(collection, toURL: destURL);
+            collectionURLsInfo.append(["originalURL":originalURL,"updatedURL":destURL])
         }
         catch let error as NSError {
             fileError = error;
         }
         onCompletion(fileError,collection);
-        NotificationCenter.default.post(name: Notification.Name.collectionUpdated, object: self, userInfo: [FTShelfItemsKey : [collection.URL]])
+        NotificationCenter.default.post(name: Notification.Name.collectionUpdated, object: self, userInfo: [FTShelfItemsKey : [collection.URL],FTShelfCollectionURLInfoKey:collectionURLsInfo])
     }
     
     func deleteShelf(_ collection: FTShelfItemCollection, onCompletion:  @escaping ((NSError?, FTShelfItemCollection?) -> Void))
     {
         var fileError : NSError?;
-        
+        var removedCollectionURLs = [URL?]()
         do {
             try FileManager.init().removeItem(at: collection.URL as URL);
+            removedCollectionURLs.append(collection.URL)
             self.removeItemFromCache(collection.URL as URL, shelfItem: collection);
         }
         catch let error as NSError {
             fileError = error;
         }
         onCompletion(fileError,collection);
-        NotificationCenter.default.post(name: Notification.Name.collectionRemoved, object: self, userInfo: [FTShelfItemsKey : [collection.URL]])
+        NotificationCenter.default.post(name: Notification.Name.collectionRemoved, object: self, userInfo: [FTShelfItemsKey : [collection.URL],FTShelfCollectionRemovedURLsKey:removedCollectionURLs])
     }
     
     //MARK:- FTLocalQueryGatherDelegate

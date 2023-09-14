@@ -233,6 +233,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
     func removeMetadataItemsFromCache(_ metadataItems: [NSMetadataItem]) {
 
         var updatedDocumentURLs = [URL]();
+        var removedCollectionURLs = [URL?]()
 
         for eachItem in metadataItems {
             autoreleasepool {
@@ -243,6 +244,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                     updatedDocumentURLs.append(fileURL as URL);
                     
                     if(nil != shelfItem) {
+                        removedCollectionURLs.append(shelfItem!.URL)
                         self.removeItemFromCache(fileURL, shelfItem: shelfItem!);
                         self.hashTable.removeItemFromHashTable(eachItem);
                         if(ENABLE_SHELF_RPOVIDER_LOGS) {
@@ -253,6 +255,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                     }
                 } else {
                     if let shelfItem = self.collectionForMetadata(eachItem) as? FTShelfItemCollectionICloud {
+                        removedCollectionURLs.append(shelfItem.URL)
                         shelfItem.removeItemsFromCache([eachItem])
                     }
                 }
@@ -260,13 +263,14 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
         }
         if(!updatedDocumentURLs.isEmpty) {
             runInMainThread({
-                NotificationCenter.default.post(name: Notification.Name.collectionRemoved, object: self, userInfo: [FTShelfItemsKey: updatedDocumentURLs]);
+                NotificationCenter.default.post(name: Notification.Name.collectionRemoved, object: self, userInfo: [FTShelfItemsKey: updatedDocumentURLs,FTShelfCollectionRemovedURLsKey:removedCollectionURLs]);
             });
         }
     }
 
     func updateMetadataItemsInCache(_ metadataItems: [NSMetadataItem]) {
         var updatedDocumentURLs = [URL]();
+        var collectionURLsInfo = [[String:URL?]]()
         var addedItems = [NSMetadataItem]();
         var deletedItems = [NSMetadataItem]();
 
@@ -280,10 +284,12 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                     }
                     
                     if(shelfItem != nil) {
+                        let originalURL = shelfItem?.URL
                         let success = self.moveItemInCache(shelfItem!, toURL: fileURL);
                         if(success) {
                             //Update the document document attributes
                             (shelfItem as? FTDocumentItemProtocol)?.updateShelfItemInfo(eachItem);
+                            collectionURLsInfo.append(["originalURL":originalURL,"updatedURL":shelfItem?.URL])
                             updatedDocumentURLs.append((shelfItem?.URL)!);
                         }
                     }
@@ -325,7 +331,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
             runInMainThread({
                 NotificationCenter.default.post(name: .collectionUpdated,
                                                 object: self,
-                                                userInfo: [FTShelfItemsKey: updatedDocumentURLs]);
+                                                userInfo: [FTShelfItemsKey: updatedDocumentURLs,FTShelfCollectionURLInfoKey:collectionURLsInfo]);
             });
         }
     }
