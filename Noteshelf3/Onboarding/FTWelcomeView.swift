@@ -58,10 +58,10 @@ struct FTWelcomeView: View {
         VStack{
             Text(viewModel.headerTopTitle)
                 .font(.clearFaceFont(for: .regular, with: fontSize))
-            HStack{
+            HStack(spacing: 0){
                 Text(viewModel.headerbottomfirstTitle)
                     .font(.clearFaceFont(for: .regular, with: fontSize))
-                Text(viewModel.headerbottomsecondTitle)
+                Text("\(viewModel.headerbottomsecondTitle) ")
                     .font(.clearFaceFont(for: .regularItalic, with: fontSize))
             }
         }
