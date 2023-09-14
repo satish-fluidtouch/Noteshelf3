@@ -69,7 +69,6 @@ struct FTShelfGetStartedDescription: View {
     @EnvironmentObject private var shelfViewModel: FTShelfViewModel
 
     var body: some View {
-        if shelfViewModel.shouldShowGetStartedInfo && shelfViewModel.isInHomeMode{
             VStack{
                 Text("shefl.home.getStartedwithNoteShelf".localized)
                     .font(.clearFaceFont(for: .medium, with: 36))
@@ -87,7 +86,6 @@ struct FTShelfGetStartedDescription: View {
             .padding(.bottom , 28)
             .padding(.horizontal,16)
         }
-    }
 }
 
 struct FTShelfGetStartedDescription_Previews: PreviewProvider {

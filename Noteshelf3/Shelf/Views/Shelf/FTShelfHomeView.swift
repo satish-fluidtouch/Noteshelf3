@@ -19,10 +19,10 @@ struct FTShelfHomeView: FTShelfBaseView {
         GeometryReader { geometry in
                 ScrollView(.vertical) {
                     VStack(alignment: .center,spacing:0) {
-                        if geometry.size.width > 450 && viewModel.canShowCreateNBButtons || viewModel.shouldShowGetStartedInfo {
+                        if viewModel.shouldShowGetStartedInfo && viewModel.canShowCreateNBButtons {
 
                             FTShelfGetStartedDescription()
-                            
+
                             FTShelfTopSectionView()
                                 .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                 .padding(.horizontal,gridHorizontalPadding)
