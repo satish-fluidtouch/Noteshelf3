@@ -3,7 +3,7 @@
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -885,20 +885,20 @@
                                                         <constraint firstAttribute="width" secondItem="70n-iJ-DBM" secondAttribute="height" multiplier="1:1" id="lse-Lg-mT7"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lnb-dX-Bhx">
-                                                    <rect key="frame" x="64" y="12" width="688" height="23"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lnb-dX-Bhx">
+                                                    <rect key="frame" x="64" y="12" width="688" height="59"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LC5-cV-8VS">
-                                                    <rect key="frame" x="64" y="37" width="688" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LC5-cV-8VS">
+                                                    <rect key="frame" x="64" y="73" width="688" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" name="black50"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ji-Gj-QLl">
-                                                    <rect key="frame" x="64" y="57" width="688" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ji-Gj-QLl">
+                                                    <rect key="frame" x="64" y="75" width="688" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" name="signoutBtnColor"/>
                                                     <nil key="highlightedColor"/>
@@ -928,27 +928,17 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhs-nI-PwI">
-                                <rect key="frame" x="20" y="20" width="728" height="19.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="O3c-Xa-gfh"/>
                         <color key="backgroundColor" name="formSheetBgColor"/>
                         <constraints>
-                            <constraint firstItem="Nhs-nI-PwI" firstAttribute="top" secondItem="O3c-Xa-gfh" secondAttribute="top" id="3Tk-mI-RxU"/>
-                            <constraint firstItem="O3c-Xa-gfh" firstAttribute="trailing" secondItem="Nhs-nI-PwI" secondAttribute="trailing" constant="20" id="8Zs-Xi-qeV"/>
                             <constraint firstItem="mQQ-bd-XLp" firstAttribute="centerY" secondItem="O3c-Xa-gfh" secondAttribute="centerY" id="Gor-j5-JiB"/>
-                            <constraint firstItem="Nhs-nI-PwI" firstAttribute="leading" secondItem="O3c-Xa-gfh" secondAttribute="leading" constant="20" id="V6z-HZ-zgO"/>
                             <constraint firstItem="mQQ-bd-XLp" firstAttribute="width" secondItem="O3c-Xa-gfh" secondAttribute="width" id="Wf1-K9-FOA"/>
                             <constraint firstItem="mQQ-bd-XLp" firstAttribute="centerX" secondItem="O3c-Xa-gfh" secondAttribute="centerX" id="gbj-Ur-qFG"/>
                             <constraint firstItem="mQQ-bd-XLp" firstAttribute="height" secondItem="O3c-Xa-gfh" secondAttribute="height" id="kcb-Iu-RX7"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="infoLabel" destination="Nhs-nI-PwI" id="bhk-0g-Bux"/>
                         <outlet property="tableView" destination="mQQ-bd-XLp" id="X2B-dt-tBK"/>
                     </connections>
                 </viewController>
