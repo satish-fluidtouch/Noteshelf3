@@ -33,6 +33,3 @@ extension NSNotification.Name  {
 let FTIndexItemCollectionKey = "FTIndexItemCollection";
 let FTShelfItemsKey = "items";
 let FTShelfUUIDKey = "shelfUUID";
-let FTShelfCollectionURLInfoKey = "shelfCollectionURLInfoKey"
-let FTShelfCollectionRemovedURLsKey = "shelfCollectionRemovedURLsKey"
-

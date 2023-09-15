@@ -69,7 +69,7 @@ class FTSidebarManager {
             print("Error occured while saving" + "\(String(describing: "SideBarStatus"))" + "data.")
         }
     }
-    public static func saveCategoriesBookmarData(_ categoriesBookmarData:FTCategoryBookmarkData) {
+    public static func saveCategoriesBookmarData(_ categoriesBookmarData:FTCategoryBookmarkData) throws {
         do {
             let actualSideBarData = try Data(contentsOf: self.sidebarPlistURL)
             if var sideBarDictionary = try PropertyListSerialization.propertyList(from: actualSideBarData, options: [], format: nil) as? [String: Any] {
