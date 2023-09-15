@@ -631,6 +631,7 @@
                                         <color key="backgroundColor" name="cellBackgroundColor"/>
                                         <connections>
                                             <outlet property="labelTitle" destination="1BJ-tz-Bsp" id="hKO-v8-he2"/>
+                                            <outlet property="notebooksCountLabel" destination="zfk-fk-6aY" id="nZd-iE-Y6l"/>
                                             <segue destination="H7h-3n-Oki" kind="show" identifier="SegueSelectNotebook" id="OVf-z0-wR5"/>
                                         </connections>
                                     </tableViewCell>
@@ -948,7 +949,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cjO-3t-Rat"/>
+        <segue reference="OVf-z0-wR5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Notebooks" width="30" height="30"/>
