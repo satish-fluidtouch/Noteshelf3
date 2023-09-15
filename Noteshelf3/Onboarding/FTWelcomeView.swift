@@ -10,54 +10,69 @@ import SwiftUI
 
 struct FTWelcomeView: View {
     @State private var xoffset: CGFloat = 0
-    private let itemSize: CGFloat = 240
     weak var delegate: FTGetstartedHostingViewcontroller?
     @ObservedObject var viewModel: FTGetStartedItemViewModel
-    var source: FTSourceScreen
     @Environment(\.dismiss) var dismiss
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+
+    var source: FTSourceScreen
+    private var itemSize: CGFloat {
+        return (idiom == .phone ? 144 : 180)
+    }
+    private var fontSize: CGFloat {
+        return idiom == .phone ? 36 : 52
+    }
+
     var body: some View {
         VStack(alignment: .center, spacing: 0){
-            Spacer(minLength: 55)
+            Spacer(minLength: 0)
 
             headerView
 
-            VStack(spacing: -44){
+            Spacer(minLength: 0)
+
+            VStack(spacing: 16){
                 gridLeftToRight
                 gridRightToLeft
             }
+            .shadow(color:.appColor(.welcomeBtnColor).opacity(0.12), radius: 30, x: 0, y: 30)
+
+            Spacer(minLength: 0)
 
             footerView
 
-            Spacer(minLength: 55)
+            Spacer(minLength: 0)
+
                 .onAppear {
                     withAnimation(.linear(duration: 200).repeatForever(autoreverses: false)) {
                         xoffset = -itemSize * CGFloat((viewModel.getstartedList.count * 2))
                     }
                 }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(gradient: Gradient(colors: [.appColor(.welcometopGradiantColor), .appColor(.welcomeBottonGradiantColor)]), startPoint: .top, endPoint: .bottom))
     }
     
     @ViewBuilder
     private var headerView: some View {
-        Image(viewModel.appLogo)
-            .resizable()
-            .scaledToFit()
-            .frame(height: 48.0)
-            .padding(.bottom,16)
-        Text(viewModel.headerTopTitle)
-            .foregroundColor(.black)
-            .font(.clearFaceFont(for: .regular, with: 52))
+        VStack(spacing: 16){
+            Image(viewModel.appLogo)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 48.0)
 
-        HStack{
-            Text(viewModel.headerbottomfirstTitle)
-            Text(viewModel.headerbottomsecondTitle)
-                .italic(true)
+            VStack(spacing: 0){
+                Text(viewModel.headerTopTitle)
+                    .font(.clearFaceFont(for: .regular, with: fontSize))
+                HStack(spacing: 0){
+                    Text(viewModel.headerbottomfirstTitle)
+                        .font(.clearFaceFont(for: .regular, with: fontSize))
+                    Text("\(viewModel.headerbottomsecondTitle) ")
+                        .font(.clearFaceFont(for: .regularItalic, with: fontSize))
+                }
+            }
         }
         .foregroundColor(.black)
-        .font(.clearFaceFont(for: .regular, with: 52))
-        .multilineTextAlignment(.center)
-        .padding(.bottom,36)
     }
     @ViewBuilder
     private var footerView: some View {
@@ -93,10 +108,11 @@ struct GridItemView: View {
     let itemSize: CGFloat
     let getStartedItems:[FTGetStartedViewItems]
     let angle: Angle
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
+            HStack(spacing: 16) {
                 ForEach(0..<getStartedItems.count * 3, id: \.self) { item in
                     let iteminfo = getStartedItems[item % getStartedItems.count]
                     ZStack(alignment: .bottom) {
@@ -111,11 +127,10 @@ struct GridItemView: View {
                                     .multilineTextAlignment(.center)
                                     .lineLimit(2)
                                     .frame(height: 60, alignment: .center)
-                                    .padding(.top, 120)
+                                    .padding(.top, idiom == .phone ? 90 : 120)
                                     .padding(.horizontal, 23)
                             }
                     }
-                    .padding(.trailing, -54)
                 }
             }
             .rotationEffect(angle)

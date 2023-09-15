@@ -113,6 +113,7 @@
 		1439372029D6E02700D93033 /* FTStickerCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439370929D6E02700D93033 /* FTStickerCategoriesView.swift */; };
 		1439372129D6E02700D93033 /* FTReusableComponentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439370B29D6E02700D93033 /* FTReusableComponentViews.swift */; };
 		1439372629D6E06400D93033 /* Stickers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1439372529D6E06400D93033 /* Stickers.plist */; };
+		143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */; };
 		1449D16429F8256C00C7EC49 /* FTShelfHomeTopSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D15F29F8256700C7EC49 /* FTShelfHomeTopSectionModel.swift */; };
 		1449D16829F8256C00C7EC49 /* FTShelfTopSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D16329F8256B00C7EC49 /* FTShelfTopSectionView.swift */; };
 		1449D16A29F8258400C7EC49 /* FTShelfTopSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D16929F8258400C7EC49 /* FTShelfTopSectionItem.swift */; };
@@ -2588,6 +2589,7 @@
 		1439370929D6E02700D93033 /* FTStickerCategoriesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStickerCategoriesView.swift; sourceTree = "<group>"; };
 		1439370B29D6E02700D93033 /* FTReusableComponentViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTReusableComponentViews.swift; sourceTree = "<group>"; };
 		1439372529D6E06400D93033 /* Stickers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Stickers.plist; sourceTree = "<group>"; };
+		143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-RegularItalic.ttf"; sourceTree = "<group>"; };
 		1449D15F29F8256700C7EC49 /* FTShelfHomeTopSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfHomeTopSectionModel.swift; sourceTree = "<group>"; };
 		1449D16329F8256B00C7EC49 /* FTShelfTopSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfTopSectionView.swift; sourceTree = "<group>"; };
 		1449D16929F8258400C7EC49 /* FTShelfTopSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTopSectionItem.swift; sourceTree = "<group>"; };
@@ -10317,6 +10319,7 @@
 		E7D87C9929CEF47700E1FD1E /* ClearFace */ = {
 			isa = PBXGroup;
 			children = (
+				143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */,
 				E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.ttf */,
 				E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */,
 			);
@@ -11035,6 +11038,7 @@
 			files = (
 				E7BA02F129CC2780008B1B5C /* Clearface-Serial-Regular.ttf in Resources */,
 				E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.ttf in Resources */,
+				143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.ttf in Resources */,
 				BAA84E3428730FAA00DE801B /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
