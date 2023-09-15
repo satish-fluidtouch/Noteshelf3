@@ -11,6 +11,12 @@ import UIKit
 extension FTPageViewController {
     
     @objc func startOpenAiForPage() {
+
+        guard FTIAPManager.shared.premiumUser.isPremiumUser else {
+            FTIAPurchaseHelper.shared.showIAPAlertForFeature(feature: "Noteshelf AI", on: self);
+            return;
+        }
+
         guard let page = self.pdfPage else {
             return;
         }
