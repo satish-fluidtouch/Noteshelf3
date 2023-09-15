@@ -17,18 +17,26 @@ extension URL {
                                                    size: portraitCoverSize,
                                                    scale: 1.0,
                                                    representationTypes: .all)
-
+#if DEBUG
         NSLog("🌄 Generating thumbnail for \(self.path)")
+#endif
+
         let generator = QLThumbnailGenerator.shared
         generator.generateRepresentations(for: request) { thumbnail, _, error in
             if let thumbnail {
+#if DEBUG
                 NSLog("🌄 Thumbnail Fetched for \(self)")
+#endif
                 completion(thumbnail.uiImage)
             } else if let error {
+#if DEBUG
                 NSLog("🌄 Thumbnail Error \(error)")
+#endif
                 completion(nil)
             } else {
+#if DEBUG
                 NSLog("🌄 Thumbnail Unknown Error")
+#endif
                 completion(nil)
             }
         }

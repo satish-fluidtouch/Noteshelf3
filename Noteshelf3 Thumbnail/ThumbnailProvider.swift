@@ -11,7 +11,9 @@ import QuickLookThumbnailing
 
 class ThumbnailProvider: QLThumbnailProvider {
     override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
+        #if DEBUG
         NSLog("🌄 ✅ Thumbnail Fetch request for \(request.fileURL.path)")
+        #endif
         let thumbURL = request.fileURL.appendingPathComponent("cover-shelf-image.png")
         handler(QLThumbnailReply(imageFileURL: thumbURL), nil)
     }
