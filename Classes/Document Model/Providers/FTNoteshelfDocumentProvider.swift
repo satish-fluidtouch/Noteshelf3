@@ -175,7 +175,7 @@ class FTNoteshelfDocumentProvider: NSObject {
             return
         }
         ns2Collection.shelfs { items in
-            completion(items)
+            completion(self.sortedCollections(items))
         }
     }
 
