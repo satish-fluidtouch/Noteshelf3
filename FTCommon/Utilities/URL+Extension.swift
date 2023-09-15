@@ -7,6 +7,8 @@
 
 import Foundation
 
+public typealias ExtendedAttributeKey = FileAttributeKey
+
 public extension URL {
     var title : String {
         return self.deletingPathExtension().lastPathComponent;
@@ -32,34 +34,36 @@ public extension URL {
         return date ?? Date()
     }
 
-    func documentUUID() -> String? {
-        let attributes = try? FileManager.default.attributesOfItem(atPath: self.path)
-        if let existing = attributes?[.extendedAttributesKey] as? [AnyHashable: Any],
-           let uuid = existing[FileAttributeKey.documentUUIDKey] as? Data,
-           let docUUID = String(data: uuid, encoding: .utf8) {
-            return docUUID
-        } else {
-            return nil
-        }
-    }
-
-    func setDocumentUUID(_ uuid: String) throws {
+    func setExtendedAttribute(_ value: Data, for key: ExtendedAttributeKey) throws {
         do {
             var attributes = try FileManager.default.attributesOfItem(atPath: self.path)
-            if let uuid = uuid.data(using: .utf8) {
-                if var xAttributes = attributes[.extendedAttributesKey] as? [AnyHashable: Any] {
-                    xAttributes[FileAttributeKey.documentUUIDKey] = uuid
-                    attributes[.extendedAttributesKey] = xAttributes
-                } else {
-                    attributes[.extendedAttributesKey] = [FileAttributeKey.documentUUIDKey: uuid]
-                }
-            }
+            // fetch existing attributes and append
+            var xAttributes = (attributes[.extendedAttributesKey] as? [AnyHashable: Any]) ?? [AnyHashable: Any]()
+            xAttributes[key] = value
+
+            attributes[.extendedAttributesKey] = xAttributes
+
             try FileManager.default.setAttributes(attributes, ofItemAtPath: self.path)
+#if DEBUG
+            print("✅  xAttr set for \(key.rawValue)")
+#endif
+
         } catch {
 #if DEBUG
             print("⚠️ Unable to set document UUID", error.localizedDescription)
 #endif
             throw error
+        }
+    }
+
+    func getExtendedAttribute(for key: ExtendedAttributeKey) -> String? {
+        let attributes = try? FileManager.default.attributesOfItem(atPath: self.path)
+        if let xAttributes = attributes?[.extendedAttributesKey] as? [AnyHashable: Any],
+           let data = xAttributes[key] as? Data,
+           let value = String(data: data, encoding: .utf8) {
+            return value
+        } else {
+            return nil
         }
     }
 }
@@ -77,8 +81,11 @@ public extension URL {
     }
 }
 
-private extension FileAttributeKey {
+public extension FileAttributeKey {
     //Reference: https://eclecticlight.co/2023/07/21/icloud-drive-changes-extended-attributes/
-    static let extendedAttributesKey = FileAttributeKey("NSFileExtendedAttributes")
-    static let documentUUIDKey = "com.fluidtouch.document.uuid#S"
+    //Root Key
+    fileprivate static let extendedAttributesKey: FileAttributeKey = FileAttributeKey("NSFileExtendedAttributes")
+
+    // sub keys
+    static let documentUUIDKey: ExtendedAttributeKey = ExtendedAttributeKey("com.fluidtouch.document.uuid#S")
 }

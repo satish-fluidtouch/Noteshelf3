@@ -851,7 +851,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                 for: saveOperation);
 
         //writing fileattributes
-        try self.URL.setDocumentUUID(self.documentUUID)
+        if let uuidData = self.documentUUID.data(using: .utf8) {
+            try? self.URL.setExtendedAttribute(uuidData, for: .documentUUIDKey)
+        }
     }
     
     fileprivate var isInRevertMode = false;

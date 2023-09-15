@@ -22,7 +22,7 @@ class FTDocumentUUIDReader: NSObject {
     func readDocumentUUID(_ url: URL,onCompletion: @escaping ((String?) -> ()))
     {
         // Try to read from the URL extended attributes.
-        if let uuid = url.documentUUID() {
+        if let uuid = url.getExtendedAttribute(for: .documentUUIDKey) {
             onCompletion(uuid)
             debugLog("Document UUID Found on URL")
             return
