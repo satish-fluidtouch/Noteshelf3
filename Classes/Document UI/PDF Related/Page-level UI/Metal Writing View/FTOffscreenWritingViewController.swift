@@ -13,6 +13,7 @@ class FTOffscreenWritingViewController: UIViewController {
 
     fileprivate let extraTileCount : Int = 0;
     fileprivate var currentTileRenderRequest: FTOffscreenTileRequest?;
+    fileprivate var delayedDisplayRect: CGRect = CGRect.null;
     
     weak var delegate : FTContentDelegate?;
     
@@ -33,6 +34,7 @@ class FTOffscreenWritingViewController: UIViewController {
     };
     
     deinit {
+        self.cancelDelayedRefresh();
         FTRendererProvider.shared.enqueOffscreenRenderer(_offscreenRenderer)
     }
     
@@ -56,6 +58,7 @@ class FTOffscreenWritingViewController: UIViewController {
     
     func reloadTiles()
     {
+        self.cancelDelayedRefresh();
         self.tiledView.reloadTiles();
     }
     
@@ -76,8 +79,39 @@ class FTOffscreenWritingViewController: UIViewController {
         self.tiledView.removeTilesMarkedAsShouldRemove();
     }
 
-    func renderTiles(inRect rect : CGRect)
+    func renderTiles(inRect rect : CGRect,properties: FTRenderingProperties)
     {
+        if properties.delayedOffscreenRefresh {
+            self.delayedDisplayRect = self.delayedDisplayRect.union(rect);
+            self.scheduleDelayedRefresh();
+        }
+        else {
+            let rectToRefresh = self.delayedDisplayRect.union(rect);
+            self.delayedDisplayRect = .null;
+            self._renderTiles(rect);
+        }
+    }
+    
+    @objc func cancelDelayedRefresh() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.delayedRefresh), object: nil);
+    }
+}
+
+private extension FTOffscreenWritingViewController
+{
+    @objc func scheduleDelayedRefresh() {
+        self.cancelDelayedRefresh();
+        self.perform(#selector(self.delayedRefresh), with: nil, afterDelay: 0.5);
+    }
+
+    @objc func delayedRefresh() {
+        if !self.delayedDisplayRect.isNull {
+            self._renderTiles(self.delayedDisplayRect);
+            self.delayedDisplayRect = .null;
+        }
+    }
+    
+    private func _renderTiles(_ rect:CGRect) {
         guard let page = self.delegate?.pageToDisplay else { return }
         let tilesArray = self.tiledView.tiles(in: rect, extraTilesCount: extraTileCount)
         let contentScale : CGFloat = self.delegate?.contentScale ?? 1;
@@ -112,10 +146,7 @@ class FTOffscreenWritingViewController: UIViewController {
         }
         self.performTileRender();
     }
-}
-
-private extension FTOffscreenWritingViewController
-{
+    
     func performTileRender()
     {
         if(currentTileRenderRequest != nil) {

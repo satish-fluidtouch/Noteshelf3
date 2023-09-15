@@ -444,18 +444,18 @@ private extension FTWritingViewController
         if nil != self.pageToDisplay {
             if(self.mode == FTRenderModeDefault) {
                 if(!self.isCurrentPage || self.isCurrentPage && self.isInZoomMode()) {
-                    self.offscreenTileViewController?.renderTiles(inRect: rect);
+                    self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
                     self.renderingInProgress = false;
                     return;
                 }
             }
             else if(self.mode == FTRenderModeExternalScreen) {
-                self.offscreenTileViewController?.renderTiles(inRect: rect);
+                self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
                 return;
             }
             
             if(intents.contains(FTRendererIntent.offScreen)) {
-                self.offscreenTileViewController?.renderTiles(inRect: rect);
+                self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
             }
             if intents.contains(FTRendererIntent.onScreen),
                 let scrollView = self.scrollView,
@@ -764,6 +764,7 @@ extension FTWritingViewController : FTEraseTouchHandling
 extension FTWritingViewController : FTTouchEventsHandling
 {
     func processTouchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.offscreenTileViewController?.cancelDelayedRefresh();
         (self.pageContentDelegate as? FTTouchEventsHandling)?.processTouchesBegan(touches, with: event);
     }
     

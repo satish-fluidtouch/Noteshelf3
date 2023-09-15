@@ -12,6 +12,8 @@ import FTStyles
 protocol FTShorctcutActionDelegate: AnyObject {
     func didTapPresentationOption(_ option: FTPresenterModeOption)
     func didChangeCurrentPenset(_ penset: FTPenSetProtocol)
+    func showSizeEditView(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel);
+    func removeSizeEditViewIfNeeded();
 }
 
 protocol FTShapeSelectDelegate: AnyObject {
@@ -21,7 +23,7 @@ protocol FTShapeSelectDelegate: AnyObject {
 
 class FTToolTypeShortcutViewController: UIViewController {
     weak var delegate: FTShorctcutActionDelegate?
-
+    
     private weak var colorModel: FTFavoriteColorViewModel?
     private weak var shapeModel: FTFavoriteShapeViewModel?
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to implemented here(since we are dismissing color edit controller)
@@ -31,6 +33,8 @@ class FTToolTypeShortcutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.translatesAutoresizingMaskIntoConstraints = false;
+        self.view.autoresizingMask = UIView.AutoresizingMask(rawValue: 0);
         self.view.backgroundColor = .clear
     }
 
@@ -133,12 +137,12 @@ extension FTToolTypeShortcutViewController: FTFavoriteSelectDelegate {
 
 extension FTToolTypeShortcutViewController: FTFavoriteSizeEditDelegate {
     func showSizeEditScreen(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
-        if let parent = self.parent as? FTToolTypeShortcutContainerController {
+        if let windowParent = self.view.window {
             self.removeSizeEditViewIfNeeded()
             let hostingVc = FTPenSizeEditController(viewModel: viewModel, editPosition: position)
             hostingVc.view.backgroundColor = .white
-            if parent.view.frame.size.width > minScreenWidthForPopover {
-                parent.showSizeEditView(position: position, viewModel: viewModel)
+            if windowParent.frame.size.width > minScreenWidthForPopover {
+                self.delegate?.showSizeEditView(position: position, viewModel: viewModel)
             } else {
                 let contentSize = FTPenSizeEditController.editViewSize
                 self.ftPresentPopover(vcToPresent: hostingVc, contentSize: CGSize(width: contentSize.width, height: contentSize.height + 50.0))
@@ -146,10 +150,8 @@ extension FTToolTypeShortcutViewController: FTFavoriteSizeEditDelegate {
         }
     }
 
-    func removeSizeEditViewIfNeeded() {
-        if let parent = self.parent as? FTToolTypeShortcutContainerController {
-            parent.removeSizeEditViewIfNeeded()
-        }
+    private func removeSizeEditViewIfNeeded() {
+        self.delegate?.removeSizeEditViewIfNeeded()
     }
 }
 
@@ -164,10 +166,9 @@ extension FTToolTypeShortcutViewController: FTShapeShortcutEditDelegate {
             arrowOffset -= (2 * step)
         }
         let rect = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y - arrowOffset, width: self.view.bounds.width, height: self.view.bounds.height)
-        if let parent = self.parent as? FTToolTypeShortcutContainerController {
-            let controller = FTShapesRackViewController.showPopOver(presentingController: parent, sourceView: self.view as Any, sourceRect: rect, arrowDirections: [.left, .right]) as? FTShapesRackViewController
-            controller?.shapeEditDelegate = self
-        }
+
+        let controller = FTShapesRackViewController.showPopOver(presentingController: self, sourceView: self.view as Any, sourceRect: rect, arrowDirections: [.left, .right]) as? FTShapesRackViewController
+        controller?.shapeEditDelegate = self
     }
 
     func didSelectFavoriteShape(_ shape: FTShapeType) {

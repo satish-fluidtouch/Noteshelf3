@@ -40,6 +40,7 @@ typedef enum: NSInteger  {
 @protocol FTDeskToolbarDelegate;
 @protocol FTPageLayouter;
 
+@class FTShortcutToolPresenter;
 @class FTAnnotation,FTDroppingViewController;
 @class FTDocumentOpenInfo,FTImportAction, FTImportFileHandler,FTDocumentOpenToken;
 @class FTActiveStickyIndicatorViewController,FTFinderSearchOptions;
@@ -48,7 +49,6 @@ typedef enum: NSInteger  {
 @class FTDocumentScrollView;
 @class FTZoomOverlayViewController;
 @class FTQuickPageNavigatorViewController;
-@class FTToolTypeShortcutContainerController;
 
 @protocol FTPenRackSelectDelegate;
 @protocol FTEraserRackControllerDelegate;
@@ -119,7 +119,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate> {}
 @property (strong) FTExportProgressManager *exportManager;
 
 @property (weak) FTActiveStickyIndicatorViewController *activeStickyIndicatorView;
-@property (weak) FTToolTypeShortcutContainerController *toolTypeContainerVc;
+@property (strong) FTShortcutToolPresenter *toolTypeContainerVc;
 
 //FinderRestoration
 @property (nonatomic, strong) FTFinderSearchOptions *finderSearchOptions;
