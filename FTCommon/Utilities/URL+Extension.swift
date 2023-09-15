@@ -43,7 +43,7 @@ public extension URL {
         }
     }
 
-    func setDocumentUUID(_ uuid: String) {
+    func setDocumentUUID(_ uuid: String) throws {
         do {
             var attributes = try FileManager.default.attributesOfItem(atPath: self.path)
             if let uuid = uuid.data(using: .utf8) {
@@ -59,6 +59,7 @@ public extension URL {
 #if DEBUG
             print("⚠️ Unable to set document UUID", error.localizedDescription)
 #endif
+            throw error
         }
     }
 }
