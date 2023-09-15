@@ -66,8 +66,6 @@ struct FTShelfTopSectionView_Previews: PreviewProvider {
 
 struct FTShelfGetStartedDescription: View {
 
-    @EnvironmentObject private var shelfViewModel: FTShelfViewModel
-
     var body: some View {
             VStack{
                 Text("shefl.home.getStartedwithNoteShelf".localized)

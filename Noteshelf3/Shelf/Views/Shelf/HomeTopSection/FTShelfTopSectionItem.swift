@@ -86,8 +86,14 @@ extension FTShelfTopSectionItem{
             .scaledToFit()
             .frame(width: imageSize(),height: imageSize())
     }
-    private func imageSize() -> CGFloat{
-        return shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 500 ? FTShelfTopSectionviewConstants.regularImageSize : (geometrySize < 500 && shelfViewModel.shouldShowGetStartedInfo ? FTShelfTopSectionviewConstants.compactRegularImageSize : FTShelfTopSectionviewConstants.verticalImageSize)
+    private func imageSize() -> CGFloat {
+        if shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 500 {
+            return FTShelfTopSectionviewConstants.regularImageSize
+        } else if geometrySize < 500 && shelfViewModel.shouldShowGetStartedInfo {
+            return FTShelfTopSectionviewConstants.compactRegularImageSize
+        } else {
+            return FTShelfTopSectionviewConstants.verticalImageSize
+        }
     }
 }
 extension View {
