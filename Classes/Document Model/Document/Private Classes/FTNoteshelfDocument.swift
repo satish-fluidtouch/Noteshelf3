@@ -256,8 +256,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         self.propertyInfoPlist()!.setObject(self.documentUUID, forKey: DOCUMENT_ID_KEY);
         self.propertyInfoPlist()!.setObject(FTUtils.deviceModelFriendlyName(), forKey: DEVICE_ID);
         self.propertyInfoPlist()!.setObject(appVersion(), forKey: APP_VERSION);
-        self.propertyInfoPlist()!.setObject([], forKey: USER_IDs_KEY);
-        self.propertyInfoPlist()!.setObject([], forKey: DOCUMENT_TAGS_KEY);
+        self.propertyInfoPlist()!.setObject([String](), forKey: USER_IDs_KEY);
+        self.propertyInfoPlist()!.setObject([String](), forKey: DOCUMENT_TAGS_KEY);
 
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
             if info.overlayStyle != FTCoverStyle.default{ //When creating a new notebook while moving pages
@@ -850,6 +850,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                 andAttributes: additionalFileAttributes,
                                 safelyTo: url,
                                 for: saveOperation);
+
+        //writing fileattributes
+            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
+            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
     }
     
     fileprivate var isInRevertMode = false;
