@@ -21,6 +21,10 @@ let FTNewURLS = "FTNewURLS";
 class  FTShelfItemCollectionRecent: NSObject,FTShelfItemCollection,FTShelfItemSorting,
     FTShelfItemSearching,FTShelfItemDocumentStatusChangePublisher
 {
+    func removeGroupItem(_ groupItem: FTGroupItemProtocol, onCompletion block: @escaping (NSError?, FTGroupItemProtocol?) -> Void) {
+        
+    }
+    
     var downloadStatusChangedItems = FTHashTable();
     var timer : Timer?
     var title: String {

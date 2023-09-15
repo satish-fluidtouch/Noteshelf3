@@ -330,11 +330,18 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     }
 
     func showNewBookPopverOnShelf() {
-        if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
-            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
-            return;
+        //TODO: Remove the below commented part. This was added for testing purpose
+        if let collection = self.currentShelfViewModel?.collection {
+            self.currentShelfViewModel?.removeObserversForShelfItems()
+            self.createGroup(name: "", inGroup: self.currentShelfViewModel?.groupItem, items: [], shelfCollection: collection) { error, group in
+                self.currentShelfViewModel?.addObserversForShelfItems()
+            }
         }
-        FTCreateNotebookViewController.showFromViewController(self)
+//        if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
+//            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
+//            return;
+//        }
+//        FTCreateNotebookViewController.showFromViewController(self)
     }
 
     func showPaperTemplateFormSheet() {

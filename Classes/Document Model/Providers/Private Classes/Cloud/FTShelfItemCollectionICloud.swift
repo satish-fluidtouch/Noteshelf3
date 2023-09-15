@@ -142,10 +142,17 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         {
             if let item = itemsToMove.first {
                 if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
-                    self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
-                        movedItems.append(contentsOf: moved)
-                        itemsToMove.removeFirst();
-                        moveItem()
+                    if let groupItem = item as? FTGroupItemProtocol, groupItem.childrens.isEmpty {
+                        //@Sameer: This needs to be rechecked once
+                        self.removeGroupItem(groupItem) { error, deletedGroupd in
+                            moveItem()
+                        }
+                    } else {
+                        self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
+                            movedItems.append(contentsOf: moved)
+                            itemsToMove.removeFirst();
+                            moveItem()
+                        }
                     }
                 } else {
                     guard let shelfCollection = item.shelfCollection as? FTShelfItemCollectionICloud else  {
@@ -249,7 +256,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
             self.removeDocumentItem(shelfItem as! FTDocumentItemProtocol,
                                     onCompletion: block);
         } else {
-            self.removeGroupItem(shelfItem as! FTGroupItemProtocol,
+            self.removeGroupFolderItem(shelfItem as! FTGroupItemProtocol,
                                  onCompletion: block);
         }
     }
@@ -283,8 +290,13 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                 self.parent?.enableUpdates()
                             });
                         }
-                    }
-                    else {
+                    } else if !groupName.isEmpty {
+                        NotificationCenter.default.post(name: Notification.Name.groupItemAdded, object: self, userInfo: [:])
+                        DispatchQueue.main.async(execute: {
+                            block(nil, groupModel);
+                            self.parent?.enableUpdates()
+                        });
+                    } else {
                         DispatchQueue.main.async(execute: {
                             block(nil, groupModel);
                             self.parent?.enableUpdates()
@@ -486,7 +498,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         })
     }
 
-    fileprivate func removeGroupItem(_ groupItem: FTGroupItemProtocol,
+    fileprivate func removeGroupFolderItem(_ groupItem: FTGroupItemProtocol,
                                  onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void) {
         self.parent?.disableUpdates()
         let tempLocationURL = NSURL.fileURL(withPath: NSTemporaryDirectory()).appendingPathComponent(groupItem.URL.lastPathComponent);
@@ -506,6 +518,18 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         DispatchQueue.main.async(execute: {
             self.parent?.enableUpdates()
             block(fileError, groupItem);
+        });
+    }
+    
+    //When group is deleted, we are just removing the group from cache when iCloud is ON.
+    func removeGroupItem(_ groupItem: FTGroupItemProtocol,
+                         onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void) {
+        self.parent?.disableUpdates()
+        self.removeItemFromCache(groupItem.URL as URL, shelfItem: groupItem);
+        self.indexCache?.deleteNotebookTitle(groupItem.sortIndexHash)
+        DispatchQueue.main.async(execute: {
+            self.parent?.enableUpdates()
+            block(nil, groupItem);
         });
     }
 }
@@ -679,10 +703,6 @@ extension FTShelfItemCollectionICloud: FTShelfCacheProtocol {
         if(self.docBelongsToGroup(fileURL)) {
             if let groupItem = item.parent {
                 groupItem.removeChild(item);
-                if groupItem.childrens.isEmpty {
-                    (groupItem as? FTSortIndexContainerProtocol)?.indexCache?.handleDeletionUpdate()
-                    self.removeItemFromCache(groupItem.URL, shelfItem: groupItem);
-                }
             }
         } else {
 //            if(self.isGroup(fileURL)) {
