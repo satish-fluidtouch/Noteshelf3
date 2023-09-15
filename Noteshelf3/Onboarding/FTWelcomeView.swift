@@ -17,8 +17,7 @@ struct FTWelcomeView: View {
 
     var source: FTSourceScreen
     private var itemSize: CGFloat {
-        //Sizes are added to match the figma sizes. Note that the values are not taken from the figma file because the values are not giving the occurate result.
-        return (idiom == .phone ? 192 : 240)
+        return (idiom == .phone ? 144 : 180)
     }
     private var fontSize: CGFloat {
         return idiom == .phone ? 36 : 52
@@ -26,48 +25,54 @@ struct FTWelcomeView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 0){
-            Spacer(minLength: 55)
+            Spacer(minLength: 0)
 
             headerView
 
-            //Just because we apply - values here . in the image we have in builted shadow with more space . so we are adding - values here
-            VStack(spacing: idiom == .phone ? -30 : -44){
+            Spacer(minLength: 0)
+
+            VStack(spacing: 16){
                 gridLeftToRight
                 gridRightToLeft
             }
+            .shadow(color:.appColor(.welcomeBtnColor).opacity(0.12), radius: 30, x: 0, y: 30)
+
+            Spacer(minLength: 0)
 
             footerView
 
-            Spacer(minLength: 55)
+            Spacer(minLength: 0)
+
                 .onAppear {
                     withAnimation(.linear(duration: 200).repeatForever(autoreverses: false)) {
                         xoffset = -itemSize * CGFloat((viewModel.getstartedList.count * 2))
                     }
                 }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(gradient: Gradient(colors: [.appColor(.welcometopGradiantColor), .appColor(.welcomeBottonGradiantColor)]), startPoint: .top, endPoint: .bottom))
     }
     
     @ViewBuilder
     private var headerView: some View {
-        Image(viewModel.appLogo)
-            .resizable()
-            .scaledToFit()
-            .frame(height: 48.0)
-            .padding(.bottom,16)
-        VStack{
-            Text(viewModel.headerTopTitle)
-                .font(.clearFaceFont(for: .regular, with: fontSize))
-            HStack(spacing: 0){
-                Text(viewModel.headerbottomfirstTitle)
+        VStack(spacing: 16){
+            Image(viewModel.appLogo)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 48.0)
+
+            VStack(spacing: 0){
+                Text(viewModel.headerTopTitle)
                     .font(.clearFaceFont(for: .regular, with: fontSize))
-                Text("\(viewModel.headerbottomsecondTitle) ")
-                    .font(.clearFaceFont(for: .regularItalic, with: fontSize))
+                HStack(spacing: 0){
+                    Text(viewModel.headerbottomfirstTitle)
+                        .font(.clearFaceFont(for: .regular, with: fontSize))
+                    Text("\(viewModel.headerbottomsecondTitle) ")
+                        .font(.clearFaceFont(for: .regularItalic, with: fontSize))
+                }
             }
         }
         .foregroundColor(.black)
-        .multilineTextAlignment(.center)
-        .padding(.bottom,36)
     }
     @ViewBuilder
     private var footerView: some View {
@@ -107,7 +112,7 @@ struct GridItemView: View {
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
+            HStack(spacing: 16) {
                 ForEach(0..<getStartedItems.count * 3, id: \.self) { item in
                     let iteminfo = getStartedItems[item % getStartedItems.count]
                     ZStack(alignment: .bottom) {
@@ -126,8 +131,6 @@ struct GridItemView: View {
                                     .padding(.horizontal, 23)
                             }
                     }
-                    //Just because we apply - values here . in the image we have in builted shadow with more space . so we are adding - values here
-                    .padding(.trailing, idiom == .phone ? -42 : -54)
                 }
             }
             .rotationEffect(angle)
