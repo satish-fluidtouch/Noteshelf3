@@ -14,6 +14,10 @@ public class FTShortcutContentHolderView: UIView {
     @IBOutlet public weak var shortcutView: UIView?
     private var toolbarOffset: CGFloat = FTToolbarConfig.Height.regular + offset
 
+    func getToolbarOffset() -> CGFloat {
+        return self.toolbarOffset
+    }
+
      func updateMinOffsetIfNeeded() {
         if UIDevice().isIphone() || self.frame.width < FTToolbarConfig.compactModeThreshold {
             var extraOffset: CGFloat = 0.0
