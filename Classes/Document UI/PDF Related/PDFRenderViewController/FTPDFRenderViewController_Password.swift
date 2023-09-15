@@ -241,6 +241,7 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
         if let currentSceneID {
             FTDeviceAutoLockHelper.share.notebookDidEnterBackground(currentSceneID)
         }
+        FTBookInfoToastHostController.removeIfToastExists(from: self)
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }
@@ -253,6 +254,7 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
     }
 
     func sceneDidBecomeActive(_ notification: Notification) {
+        self.showNotebookInfoToast()
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }

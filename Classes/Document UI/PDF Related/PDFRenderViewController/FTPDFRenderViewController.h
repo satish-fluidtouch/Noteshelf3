@@ -213,6 +213,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate> {}
                animate:(BOOL)animate;
 -(void)setContentScaleInNormalMode:(CGFloat)inContentScaleInNormalMode pageController:(FTPageViewController*)controller;
 -(void)validateMenuItems;
+-(void)showNotebookInfoToast;
 
 @end
 

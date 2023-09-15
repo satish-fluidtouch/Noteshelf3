@@ -241,6 +241,11 @@ extension FTPDFRenderViewController {
     @objc func goToRecordings(with annotation: FTAnnotation) {
         self.finderNotifier?.didGoToAudioRecordings(with: annotation)
     }
+
+    @objc func showNotebookInfoToast() {
+        let info = FTNotebookToastInfo(title: "Sample Notebook1", currentPageNum: 3, totalPageCount: 24)
+        FTBookInfoToastHostController.showToast(from: self, info: info)
+    }
 }
 
 extension FTPDFRenderViewController : FTWatchRecordedListViewControllerDelegate{
