@@ -31,7 +31,7 @@ class FTLanguageResourceManager: NSObject {
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] isPremium in
                     if isPremium {
-                        FTLanguageResourceManager.shared.updateRecognitionSettingIfNeeded()
+                        self?.activateOnDemandResourcesIfNeeded()
                     }
                 }
         }
@@ -59,16 +59,6 @@ class FTLanguageResourceManager: NSObject {
         }
         set{
             UserDefaults.standard.set(newValue, forKey: "isPreferredLanguageChosen")
-            UserDefaults.standard.synchronize()
-        }
-    }
-
-    var isManuallyDisabledRecognition: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: "isManuallyDisabledRecognition")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "isManuallyDisabledRecognition")
             UserDefaults.standard.synchronize()
         }
     }
@@ -161,6 +151,14 @@ class FTLanguageResourceManager: NSObject {
     }()
     
     @objc func activateOnDemandResourcesIfNeeded(){ // Wehen we set a language for hand-writing recogntion, it needs to be ready if it is an on demand resource
+        if FTIAPManager.shared.premiumUser.isPremiumUser
+            , !UserDefaults.standard.isHWlLanguageSet  {
+            if self.currentLanguageCode == languageCodeNone {
+                self.currentLanguageCode = nil
+            }
+            UserDefaults.standard.isHWlLanguageSet = true
+        }
+
         self.languageResources = self.availableLanguageResources
         
         if self.currentLanguageCode == nil{
@@ -184,18 +182,6 @@ class FTLanguageResourceManager: NSObject {
                     currentLanguage.downloadResourceOnDemand()
                 }
             }
-        } else {
-            self.updateRecognitionSettingIfNeeded()
-        }
-    }
-
-    private func updateRecognitionSettingIfNeeded() {
-        if !FTIAPManager.shared.premiumUser.isPremiumUser {
-            return
-        }
-        if !isManuallyDisabledRecognition, currentLanguageCode == languageCodeNone {
-            self.currentLanguageCode = FTLanguageResourceMapper.currentScriptLanguageCode()
-            self.isPreferredLanguageChosen = true
         }
     }
 
@@ -247,3 +233,14 @@ extension FTLanguageResourceManager{
     
 }
 
+private extension UserDefaults {
+    var isHWlLanguageSet: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "isManuallyDisabledRecognition")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "isManuallyDisabledRecognition")
+            UserDefaults.standard.synchronize()
+        }
+    }
+}

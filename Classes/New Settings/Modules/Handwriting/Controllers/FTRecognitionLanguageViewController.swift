@@ -143,10 +143,8 @@ class FTRecognitionLanguageViewController: UIViewController, UITableViewDataSour
             self.tableView?.reloadData()
             
             if language.languageCode == languageCodeNone {
-                FTLanguageResourceManager.shared.isManuallyDisabledRecognition = true
                  track("Shelf_Settings_HandWriteRecg_Disable", params: [:], screenName: FTScreenNames.shelfSettings)
             } else {
-                FTLanguageResourceManager.shared.isManuallyDisabledRecognition = false
                 track("Shelf_Settings_HandWriteRecg_\(language.languageEventName!)", params: [:], screenName: FTScreenNames.shelfSettings)
             }
         } else if language.resourceStatus == .none {
