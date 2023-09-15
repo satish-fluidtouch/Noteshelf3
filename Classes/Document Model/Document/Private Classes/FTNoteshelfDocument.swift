@@ -151,8 +151,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
         }
     }
+    // Bypassing the old thumnail setting approach
     override var thumbnailImage: UIImage? {
-        return self.shelfImage;
+        return nil;
     }
 
     var shelfImage: UIImage? {
