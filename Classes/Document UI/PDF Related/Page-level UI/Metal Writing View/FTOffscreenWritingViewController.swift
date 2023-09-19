@@ -59,6 +59,7 @@ class FTOffscreenWritingViewController: UIViewController {
     func reloadTiles()
     {
         self.cancelDelayedRefresh();
+        self.delayedDisplayRect = .null;
         self.tiledView.reloadTiles();
     }
     
@@ -88,7 +89,7 @@ class FTOffscreenWritingViewController: UIViewController {
         else {
             let rectToRefresh = self.delayedDisplayRect.union(rect);
             self.delayedDisplayRect = .null;
-            self._renderTiles(rect);
+            self._renderTiles(rectToRefresh);
         }
     }
     
