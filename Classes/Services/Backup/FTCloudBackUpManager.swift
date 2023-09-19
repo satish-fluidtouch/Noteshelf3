@@ -22,6 +22,8 @@ class FTCloudBackUpManager : NSObject {
         self.setCurrentBackUpCloud(self.currentBackUpCloudType())
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidUpdatedNotification(_:)), name: .shelfItemAdded, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidUpdatedNotification(_:)), name: .shelfItemUpdated, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleAppDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleAppWillResignActive), name: UIApplication.willResignActiveNotification, object: nil);
     }
 
     @objc private func shelfItemDidUpdatedNotification(_ notification: NSNotification) {
@@ -107,12 +109,12 @@ class FTCloudBackUpManager : NSObject {
     }
     
     // MARK:- Active / resign -
-    func handleAppDidBecomeActive() {
+    @objc func handleAppDidBecomeActive() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(startPublish), object: nil)
         perform(#selector(startPublish), with: nil, afterDelay: 1)
     }
 
-    func handleAppWillResignActive() {
+    @objc func handleAppWillResignActive() {
         cancelPublish()
     }
     
@@ -156,7 +158,7 @@ class FTCloudBackUpManager : NSObject {
             }
             for item in items {
                 if let backupItem = item.value as? FTCloudBackup {
-                    let backupItemURL = rootURL.appendingPathComponent(backupItem.filePath)
+                    let backupItemURL = rootURL.appendingPathComponent(backupItem.relativeFilePath)
                     if !(FileManager.default.fileExists(atPath: backupItemURL.path)) {
                         reqItemsCount -= 1
                     }
@@ -215,5 +217,45 @@ extension FTCloudBackUpManager: FTBaseCloudManagerDelegate {
     
     func didCancelCloudBackUpManager(_ cloudManager: FTCloudBackupPublisher) {
         
+    }
+}
+
+enum FTCloudBackupFormat: Int,CaseIterable {
+    case noteshelf
+    case pdf
+    case both
+    
+    var displayTitle: String {
+        switch self {
+        case .noteshelf:
+            return "Noteshelf";
+        case .pdf:
+            return "PDF";
+        case .both:
+            return "Noteshelf and PDF";
+        }
+    }
+    
+    var exportFormats: [RKExportFormat] {
+        switch self {
+        case .noteshelf:
+            return [kExportFormatNBK];
+        case .pdf:
+            return [kExportFormatPDF];
+        case .both:
+            return [kExportFormatNBK,kExportFormatPDF];
+        }
+    }
+}
+
+extension FTUserDefaults {
+    class var backupFormat: FTCloudBackupFormat {
+        set {
+            FTUserDefaults.defaults().setValue(newValue.rawValue, forKey: "cloudBackupFormat");
+        }
+        get {
+            let rawValue = FTUserDefaults.defaults().integer(forKey: "cloudBackupFormat");
+            return FTCloudBackupFormat(rawValue: rawValue) ?? .noteshelf
+        }
     }
 }

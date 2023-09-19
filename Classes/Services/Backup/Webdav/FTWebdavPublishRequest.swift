@@ -9,12 +9,20 @@
 import Foundation
 
 typealias FTWebdavPreprocessCompletionHandler = (Error?) -> Void
-class FTWebdavPublishRequest : FTCloudPublishRequest {
-    
+class FTWebdavPublishRequest: FTCloudMultiFormatPublishRequest {
+    override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
+        let request = FTWebdavFilePublishRequest(backupEntry: self.refObject, delegate: self,sourceFile: self.sourceFileURL);
+        request.exportFormat = format;
+        return request;
+    }
+}
+
+private class FTWebdavFilePublishRequest : FTCloudFilePublishRequest {
     private var preprocessCompletionBlock: FTWebdavPreprocessCompletionHandler?
     fileprivate var uploadPath : String?;
     fileprivate var currentProgress : Progress?;
     fileprivate var isCancelled = false;
+    
     override func cloudRootName() -> String? {
         return FTCloudPublishRequest.backup_Folder_Name;
     }
@@ -37,7 +45,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
                     pathToUpload = (relativePath as NSString).deletingLastPathComponent;
                     name = (relativePath as NSString).lastPathComponent
                 }
-                if var webdavBackUpEntry = weakSelf.refObject as? FTWebdavBackupEntry {
+                if var webdavBackUpEntry = weakSelf.fileInfo {
                     
                     var currentRelativePath: String
                     var backedFilename : String
@@ -85,8 +93,8 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
                 self?.publishFinishedWith(error: error)
             }
         }
-        
     }
+    
     func preprocessRequest(onCompletion completionBlock: @escaping FTWebdavPreprocessCompletionHandler) {
         FTCloudBackupPublisher.recordSyncLog("preprocess Request")
         preprocessCompletionBlock = completionBlock
@@ -94,29 +102,30 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
         self.delegate?.publishRequest(self,
                                       uploadProgress: 0.0,
                                       backUpProgressType: .preparingContent)
-            self.prepareContent { [weak self](error, path) in
-                guard let weakSelf = self else {
-                    completionBlock(FTWebdavError.cloudBackupError);
-                    return;
-                }
-                weakSelf.delegate?.publishRequest(weakSelf,
+        self.prepareContent { [weak self](error, path) in
+            guard let weakSelf = self else {
+                completionBlock(FTWebdavError.cloudBackupError);
+                return;
+            }
+            weakSelf.delegate?.publishRequest(weakSelf,
                                               uploadProgress: 0.5,
                                               backUpProgressType: FTBackUpProgressType.preparingContent);
-                    if(nil != error) {
-                        completionBlock(error);
+            if(nil != error) {
+                completionBlock(error);
+            } else {
+                if(weakSelf.isCancelled) {
+                    completionBlock(FTWebdavError.cloudBackupError);
+                } else {
+                    weakSelf.uploadPath = path;
+                    if weakSelf.refObject as? FTWebdavBackupEntry != nil {
+                        completionCallback(nil)
                     } else {
-                        if(weakSelf.isCancelled) {
-                            completionBlock(FTWebdavError.cloudBackupError);
-                        } else {
-                            weakSelf.uploadPath = path;
-                            if weakSelf.refObject as? FTWebdavBackupEntry != nil {
-                                completionCallback(nil)
-                            } else {
-                                completionBlock(FTWebdavError.cloudBackupError)
-                            }
-                        }
+                        completionBlock(FTWebdavError.cloudBackupError)
                     }
+                }
             }
+        }
+        
         func completionCallback(_ error: Error?){
             self.delegate?.publishRequest(self,
                                           uploadProgress: 1,
@@ -124,7 +133,11 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             completionBlock(error)
         }
     }
-    private func saveWebdavPathAndFinishPublish(withPath path:String,webdavBackUpEntry :inout FTWebdavBackupEntry,fileName name :String,error:Error?){
+    
+    private func saveWebdavPathAndFinishPublish(withPath path:String
+                                                ,webdavBackUpEntry :inout FTWebDavBackupFileInfo
+                                                ,fileName name :String
+                                                ,error:Error?){
         if error == nil{
             webdavBackUpEntry.webdavPath = path
             webdavBackUpEntry.backupFileName = name
@@ -133,12 +146,14 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             self.publishFinishedWith(error: error);
         }
     }
+    
     private func readFileWith(relativePath:String, onCompletion:@escaping (_ error: Error?) -> Void){
         FTCloudBackupPublisher.recordSyncLog("Webdav publish: get file with relative path,\(relativePath)")
         FTWebdavManager.shared.readFileWith(relativePath: relativePath) { (error) in
             onCompletion(error)
         }
     }
+    
     private func renameAndMoveFile(currentRelativePath:String,newRelativePath:String,oldFileName:String,newFileName:String,onCompletion:@escaping(Error?) -> Void) {
         self.renameFileWith(currentRelativePath: currentRelativePath, oldFileName: oldFileName, newFileName: newFileName) { (error) in
             if error == nil{
@@ -154,6 +169,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             }
         }
     }
+    
     private func renameFileWith(currentRelativePath:String,
                                 oldFileName:String,
                                 newFileName:String,
@@ -175,6 +191,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             }
         }
     }
+    
     private func moveFileFrom(currentRelativePath:String, newRelativePath:String,fileName:String, onCompletion: @escaping (Error?) -> Void) {
         self.readFileWith(relativePath: newRelativePath) { (error) in
             if error == nil{
@@ -193,6 +210,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             }
         }
     }
+    
     private func createFileFor(newRelativePath newPath:String,withRefToCurrenRelativePath oldPath:String, fileName:String, onCompletion: @escaping (Error?) -> Void) {
             createFolder(pathArray: splitPath(relativePath: newPath), index: 0) { (error) in
                 if error == nil{
@@ -205,6 +223,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
                 }
             }
     }
+    
     private func createFileWith(relativePath:String, onCompletion: @escaping (Error?) -> Void) {
         if (uploadPath != nil) {
             createFolder(pathArray: splitPath(relativePath: relativePath), index: 0) { (error) in
@@ -219,6 +238,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             }
         }
     }
+    
     private func createFolder(pathArray: [String] ,  index: Int, onCompletion: @escaping (Error?) -> Void) {
         if (!pathArray.isEmpty && pathArray.count > index) {
             var i = 0;
@@ -253,6 +273,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             onCompletion(nil)
         }
     }
+    
     private func publishFinishedWith(error : Error?)
     {
         if(nil != self.uploadPath) {
@@ -292,6 +313,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
         }
         return ignoreEntry;
     }
+    
     private func uploadFileWith(relativePath:String,completion: @escaping (Error?) -> Void){
         
             self.readFileWith(relativePath: relativePath) { (error) in
@@ -311,6 +333,7 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
                 }
             }
     }
+    
     private func splitPath(relativePath: String) -> [String] {
         let strings = relativePath.split(separator: "/");
         var finalStrings = [String]()
@@ -319,5 +342,11 @@ class FTWebdavPublishRequest : FTCloudPublishRequest {
             finalStrings.append(item.description)
         }
         return finalStrings
+    }
+}
+
+private extension FTWebdavFilePublishRequest {
+    var fileInfo: FTWebDavBackupFileInfo? {
+        return self.refObject.cloudFileInfo(exportFormat) as? FTWebDavBackupFileInfo
     }
 }

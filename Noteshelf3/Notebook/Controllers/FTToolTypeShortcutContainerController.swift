@@ -14,8 +14,6 @@ protocol FTShortcutContainerDelegate: AnyObject {
     func didStartPlacementChange() 
 }
 
-private let minYOffset: CGFloat = 80.0
-
 class FTToolTypeShortcutContainerController: UIViewController {
     @IBOutlet weak var contentHolderView: FTShortcutContentHolderView!
     var rackType: FTRackType = .pen
@@ -136,6 +134,7 @@ class FTToolTypeShortcutContainerController: UIViewController {
         }
 
         func updateShortcutIfRequired() {
+            let minYOffset = self.contentHolderView.getToolbarOffset()
             if shortCutYpos >= minYOffset {
                 if self.shortcutView.frame.maxY > frame.origin.y {
                     let offSetToMove = self.shortcutView.frame.maxY - frame.origin.y

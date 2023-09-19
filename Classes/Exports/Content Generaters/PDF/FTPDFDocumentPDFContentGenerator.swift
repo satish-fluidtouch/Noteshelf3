@@ -132,9 +132,10 @@ class FTPDFDocumentPDFContentGenerator: FTPDFDocumentContentGenerator {
             }
             self.progress.completedUnitCount += Int64(val);
 
+            completion(self.exportItem,nil,false);
+            
             runInMainThread({
                 self.finalizeProcess();
-                completion(self.exportItem,nil,false);
             });
         };
     }
