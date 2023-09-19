@@ -486,11 +486,19 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                                  shelfItemsToGroup: groupItem.childrens)
                     {(error, newGroupItem) in
                         self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
-                            block(error, newGroupItem, groupItem)
+                            //Empty group removal while moving empty group inside other group
+                            if groupItem.childrens.isEmpty {
+                                self.removeGroupItem(groupItem) { error, _groupItem in
+                                    block(error, newGroupItem, groupItem)
+                                }
+                            } else {
+                                block(error, newGroupItem, groupItem)
+                            }
                         }
                     }
                 }
             } else if let createdGroup = createdGroupItem as? FTGroupItemProtocol {
+                //When moving group to other folder we might need to tweak some logic, needs to be discussed with Amar.
                 self.moveShelfItems(groupItem.childrens, toGroup: createdGroup, toCollection: toCollection) { error, _ in
                     block(error, createdGroup, groupItem)
                 }
