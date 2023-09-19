@@ -737,7 +737,6 @@ struct FTCategoryBookmarkData: Codable {
             if performURLResolving {
                 var isStale = false;
                 if let categoryURL = eachItem.fileURL, FileManager.default.fileExists(atPath: categoryURL.path) { // As file exist at same location, avoiding resolving alias data
-                    print("RRRRR inside performURLResolving - Fetched without resolving URL category name,\(eachItem.name), order :\(eachItem.sortOrder)")
                     plistBookmarkData.append(FTCategoryBookmarkDataItem(bookmarkData: eachItem.bookmarkData,
                                                                         sortOrder: eachItem.sortOrder,
                                                                         name: eachItem.name,
@@ -752,7 +751,6 @@ struct FTCategoryBookmarkData: Codable {
                         if isStale, let aliasData = URL.aliasData(fileURl) {
                             data = aliasData
                         }
-                        print("RRRRR Fetched with resolving URL category name,\(fileURl.lastPathComponent), order :\(eachItem.sortOrder)")
                         plistBookmarkData.append(FTCategoryBookmarkDataItem(bookmarkData: data,
                                                                             sortOrder: eachItem.sortOrder,
                                                                             name: fileURl.lastPathComponent,
@@ -763,7 +761,6 @@ struct FTCategoryBookmarkData: Codable {
                 }
             } else {
                 if let categoryURL = eachItem.fileURL, FileManager.default.fileExists(atPath: categoryURL.path) {
-                    print("RRRRR Fetched with out resolving URL category name,\(eachItem.sortOrder), order :\(eachItem.sortOrder)")
                     plistBookmarkData.append(eachItem)
                     let item = FTCategorySortOrderInfo(name:eachItem.name,order: eachItem.sortOrder);
                     categoriesSortOrderinfo.append(item);
