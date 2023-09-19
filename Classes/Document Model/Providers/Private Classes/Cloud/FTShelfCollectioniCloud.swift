@@ -280,7 +280,6 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                     }
                     
                     if(shelfItem != nil) {
-                        let originalURL = shelfItem?.URL
                         let success = self.moveItemInCache(shelfItem!, toURL: fileURL);
                         if(success) {
                             //Update the document document attributes
