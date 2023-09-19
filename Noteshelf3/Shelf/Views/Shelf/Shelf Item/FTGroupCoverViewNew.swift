@@ -130,7 +130,7 @@ struct FTGroupCoverViewNew: View {
     //**********************************************//
 
     var body: some View {
-        ZStack(alignment:.center) {
+        ZStack(alignment:.topLeading) {
             if coverViewPurpose == .shelf, shelfViewModel.highlightItem == groupItem {
                 FTShelfItemDropOverlayView()
                     .zIndex(1)
