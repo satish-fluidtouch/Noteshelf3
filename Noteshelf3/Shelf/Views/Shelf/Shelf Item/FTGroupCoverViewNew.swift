@@ -157,6 +157,10 @@ struct FTGroupCoverViewNew: View {
             .padding(.vertical,verticalPadding)
             .padding(.horizontal,horizontalpadding)
             .zIndex(0)
+            Image("emptyGroupPlaceholder")   .frame(width:groupCoverWidth,height:groupCoverHeight, alignment: .top)
+                .padding(.horizontal,horizontalpadding)
+                .scaledToFill()
+                .isHidden(!groupCoverViewModel.groupItem!.childrens.isEmpty)
         }
         .frame(width:groupCoverWidth,height:groupCoverHeight,alignment: .top)
         .background(bgColor)

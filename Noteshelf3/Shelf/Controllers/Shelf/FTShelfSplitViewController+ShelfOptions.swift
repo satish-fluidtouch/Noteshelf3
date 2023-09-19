@@ -330,18 +330,11 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
     }
 
     func showNewBookPopverOnShelf() {
-        //TODO: Remove the below commented part. This was added for testing purpose
-        if let collection = self.currentShelfViewModel?.collection {
-            self.currentShelfViewModel?.removeObserversForShelfItems()
-            self.createGroup(name: "", inGroup: self.currentShelfViewModel?.groupItem, items: [], shelfCollection: collection) { error, group in
-                self.currentShelfViewModel?.addObserversForShelfItems()
-            }
+        if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
+            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
+            return;
         }
-//        if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
-//            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
-//            return;
-//        }
-//        FTCreateNotebookViewController.showFromViewController(self)
+        FTCreateNotebookViewController.showFromViewController(self)
     }
 
     func showPaperTemplateFormSheet() {
@@ -1055,6 +1048,16 @@ extension FTShelfSplitViewController: FTShelfNewNoteDelegate {
         }
         self.importFileHandler?.importFile(onViewController: self);
     }
+    
+    func didTapOnNewGroup() {
+        if let collection = self.currentShelfViewModel?.collection {
+            self.currentShelfViewModel?.removeObserversForShelfItems()
+            self.createGroup(name: "", inGroup: self.currentShelfViewModel?.groupItem, items: [], shelfCollection: collection) { error, group in
+                self.currentShelfViewModel?.addObserversForShelfItems()
+            }
+        }
+    }
+    
     func didClickScanDocument(){
         if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
             FTIAPurchaseHelper.shared.showIAPAlert(on: self);

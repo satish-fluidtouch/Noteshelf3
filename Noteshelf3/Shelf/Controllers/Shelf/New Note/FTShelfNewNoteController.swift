@@ -17,6 +17,7 @@ protocol FTShelfNewNoteDelegate: AnyObject {
     func didClickImportNotebook()
     func didClickScanDocument()
     func didTapAudioNote()
+    func didTapOnNewGroup()
 }
 
 class FTShelfNewNoteController: UIHostingController<AnyView>, FTPopoverPresentable {

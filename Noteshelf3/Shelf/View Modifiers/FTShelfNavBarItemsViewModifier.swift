@@ -22,7 +22,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
     var appState : AppState
 
     private var popOverHeight: CGFloat {
-        return horizontalSizeClass == .regular ? 384.0 : 448 // increase the height of 52.0 if apple watch added in the popover view
+        return horizontalSizeClass == .regular ? 436.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
     }
      func newNoteViewModel() -> FTNewNotePopoverViewModel {
          let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()

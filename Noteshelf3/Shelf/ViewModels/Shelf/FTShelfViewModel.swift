@@ -420,7 +420,7 @@ private extension FTShelfViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDidGetRemoved(_:)), name: NSNotification.Name.shelfItemRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(shelfitemDidgetUpdated(_:)), name: NSNotification.Name.shelfItemUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(groupitemDidgetAdded(_:)), name: NSNotification.Name.groupItemAdded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(groupitemDidgetAdded(_:)), name: NSNotification.Name.groupItemRemoved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(groupitemDidgetRemoved(_:)), name: NSNotification.Name.groupItemRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDropOperationFinished(_:)), name: NSNotification.Name("ShelfItemDropOperationFinished"), object: nil)
         NotificationCenter.default.addObserver(self, selector:#selector(splitDisplayChangeHandler(_:)) , name: NSNotification.Name("SplitDisplayModeChangeNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleShowDateStatusChange), name: Notification.Name(rawValue: FTShelfShowDateChangeNotification), object: nil)

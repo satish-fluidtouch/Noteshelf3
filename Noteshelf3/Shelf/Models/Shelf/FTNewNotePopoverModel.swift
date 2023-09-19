@@ -16,6 +16,7 @@ enum FTNewNotePopoverOptions {
     case scanDocument
     case takePhoto
     case appleWatch
+    case newGroup
 
     var displayTitle: String {
         let title: String
@@ -36,6 +37,8 @@ enum FTNewNotePopoverOptions {
             title = NSLocalizedString("shelf.newNote.appleWatch", comment: "Apple Watch")
         case .takePhoto:
             title = NSLocalizedString("shelf.newNote.takePhoto", comment: "Take Photo")
+        case .newGroup:
+            title = "New Group".localized
         }
         return title
     }
@@ -59,12 +62,14 @@ enum FTNewNotePopoverOptions {
             icon = FTIcon.appleWatch
         case .takePhoto:
             icon = FTIcon.takePhoto
+        case .newGroup:
+            icon = FTIcon.emptyGroup
         }
         return icon
     }
     var showChevron: Bool{
         switch self {
-        case .photoLibrary,.appleWatch :
+        case .photoLibrary,.appleWatch, .importFromFiles :
             return true
         default:
             return false

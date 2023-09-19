@@ -14,6 +14,7 @@ protocol FTNewNotePopoverDelegate: NSObject {
 
 class FTNewNotePopoverViewModel: ObservableObject {
     var newNoteOptions: [FTNewNotePopoverModel] = [
+        FTNewNotePopoverModel(newNoteOption: .importFromFiles),
         FTNewNotePopoverModel(newNoteOption: .photoLibrary),
         FTNewNotePopoverModel(newNoteOption: .audioNote),
         FTNewNotePopoverModel(newNoteOption: .scanDocument),
