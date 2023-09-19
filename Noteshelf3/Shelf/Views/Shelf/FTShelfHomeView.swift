@@ -19,16 +19,21 @@ struct FTShelfHomeView: FTShelfBaseView {
         GeometryReader { geometry in
                 ScrollView(.vertical) {
                     VStack(alignment: .center,spacing:0) {
-                        if viewModel.shouldShowGetStartedInfo && viewModel.canShowCreateNBButtons {
-
+                        /*
+                            1. show description and top section in compact and ipad very first time
+                            2. once a notebook is created, dont show top section in compact but show in ipad.
+                            */
+                        if viewModel.shouldShowGetStartedInfo{
                             FTShelfGetStartedDescription()
-
+                        }
+                        if viewModel.canShowCreateNBButtons, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
                             FTShelfTopSectionView()
                                 .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                 .padding(.horizontal,gridHorizontalPadding)
                                 .padding(.top,10)
                                 .environmentObject(viewModel)
                         }
+                    }
                         homeShelfItemsViewForGeometrySize(geometry.size)
                         if viewModel.shelfDidLoad {
                             FTDiscoverWhatsNewView()
@@ -66,8 +71,6 @@ struct FTShelfHomeView: FTShelfBaseView {
                 }
                 .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
         }
-    }
-
     private func homeShelfItemsViewForGeometrySize(_ size: CGSize) -> some View {
         let homeShelfItems = homeShelfItemsForScreenSize(size)
         return VStack(spacing:0) {
