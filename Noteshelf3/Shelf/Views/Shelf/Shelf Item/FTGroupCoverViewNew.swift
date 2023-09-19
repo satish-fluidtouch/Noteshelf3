@@ -130,7 +130,7 @@ struct FTGroupCoverViewNew: View {
     //**********************************************//
 
     var body: some View {
-        ZStack(alignment:.topLeading) {
+        ZStack(alignment:.center) {
             if coverViewPurpose == .shelf, shelfViewModel.highlightItem == groupItem {
                 FTShelfItemDropOverlayView()
                     .zIndex(1)
@@ -157,10 +157,13 @@ struct FTGroupCoverViewNew: View {
             .padding(.vertical,verticalPadding)
             .padding(.horizontal,horizontalpadding)
             .zIndex(0)
-            Image("emptyGroupPlaceholder")   .frame(width:groupCoverWidth,height:groupCoverHeight, alignment: .top)
-                .padding(.horizontal,horizontalpadding)
-                .scaledToFill()
-                .isHidden(!groupCoverViewModel.groupItem!.childrens.isEmpty)
+        }
+        .overlay(alignment: .topLeading) {
+            if coverViewPurpose == .shelf, groupCoverViewModel.groupItem!.childrens.isEmpty {
+                Image("emptyGroupPlaceholder")
+                    .resizable()
+                    .frame(width:groupCoverWidth,height:groupCoverHeight, alignment: .center)
+            }
         }
         .frame(width:groupCoverWidth,height:groupCoverHeight,alignment: .top)
         .background(bgColor)
