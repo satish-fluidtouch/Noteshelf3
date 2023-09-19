@@ -18,14 +18,24 @@ extension FTShelfViewModel {
                     return [[.restore],[.delete]]
                 } else {
                     if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
-                        return [[.rename],[.duplicate,.move,.share],[.trash]]
+                        let hasAnEmptyGroup: Bool = selectedShelfItems.filter({($0 is FTGroupItemViewModel)}).first(where: {($0.model as? FTGroupItemProtocol)?.childrens.count == 0}) != nil
+                        if hasAnEmptyGroup {
+                            return [[.openInNewWindow],[.rename],[.duplicate,.move],[.trash]]
+                        } else {
+                            return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
+                        }
                     }else {
                         return [[.rename,.changeCover, .tags,],[.duplicate,.move,.share,],[.trash]]
                     }
                 }
             }else {
                 if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
-                    return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
+                    let hasAnEmptyGroup: Bool = selectedShelfItems.filter({($0 is FTGroupItemViewModel)}).first(where: {($0.model as? FTGroupItemProtocol)?.childrens.count == 0}) != nil
+                    if hasAnEmptyGroup {
+                        return [[.openInNewWindow],[.rename],[.duplicate,.move],[.trash]]
+                    } else {
+                        return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
+                    }
                 }else {
                     return contexualMenuOptionsInNormalModeForShelfItem(item)
                 }
