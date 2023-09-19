@@ -144,7 +144,7 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
         if indexPath.section == Section_Actions {
             if indexPath.row == Row_PublishNotebooks {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "CellPublishNotebooks", for: indexPath) as? FTSettingsBaseTableViewCell {
-                    self.updateEvernoteBackupNotebookCount(cell: cell)
+                    self.updateEvernoteBackupCount(cell: cell)
                     return cell
                 }
             } else if indexPath.row == Row_SyncOnWifiOnly {
@@ -187,12 +187,13 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    private func updateEvernoteBackupNotebookCount(cell: FTSettingsBaseTableViewCell) {
-        let noteBooksBackedUp = FTCloudBackUpManager.shared.fetchCloudBackUpItemsCount()
+    private func updateEvernoteBackupCount(cell: FTSettingsBaseTableViewCell) {
+        let predicate = NSPredicate.init(format: "parentRecord.nsGUID != nil");
+        let evernotenoteBooksBackedUp = FTENSyncUtilities.fetchCount(withEntity: "ENSyncRecord", predicate: predicate)
         let options = FTFetchShelfItemOptions()
         cell.notebooksCountLabel?.text = ""
         FTNoteshelfDocumentProvider.shared.fetchAllShelfItems(option: options) { shelfItems in
-            cell.notebooksCountLabel?.text = String(format: "%d/%d %@", noteBooksBackedUp, shelfItems.count, NSLocalizedString("Notebooks", comment: "Notebooks"))
+            cell.notebooksCountLabel?.text = String(format: "%d/%d %@", evernotenoteBooksBackedUp, shelfItems.count, "Notebooks".localized)
         }
     }
 
