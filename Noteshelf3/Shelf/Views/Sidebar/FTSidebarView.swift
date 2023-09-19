@@ -114,7 +114,7 @@ struct FTSidebarView: View {
             FTEditableView(placeHolder: placeHolder,
                            onButtonSubmit:  onSubmit ,
                            showEditableField: editableField,
-                           newTitle: item.title)
+                           originalTitle: item.title)
             .environmentObject(item)
         }
         .frame(height: 44.0, alignment: .leading)
