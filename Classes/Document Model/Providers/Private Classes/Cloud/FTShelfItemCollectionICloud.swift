@@ -277,40 +277,42 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                 var tempURL = NSURL(fileURLWithPath: NSTemporaryDirectory()) as URL;
                 tempURL = tempURL.appendingPathComponent(newGroupName);
                 let fileManager = FileManager();
-                do {
-                    if self.isEmptyGroupNameExists(at: groupURL.path) == false {
-                        try fileManager.createDirectory(at: tempURL, withIntermediateDirectories: true, attributes: nil);
-                        try fileManager.setUbiquitous(true, itemAt: tempURL, destinationURL: groupURL);
-                    }
-                    let groupModel = self.addItemToCache(groupURL.standardizedFileURL) as? FTGroupItemProtocol;
-
-                    if let _items = items, !_items.isEmpty {
-                        self.moveShelfItems(_items,
-                                            toGroup: groupModel,
-                                            toCollection: self) { (error, _) in
+                DispatchQueue.global().async(execute: {
+                    do {
+                        if self.isEmptyGroupNameExists(at: groupURL.path) == false {
+                            try fileManager.createDirectory(at: tempURL, withIntermediateDirectories: true, attributes: nil);
+                            try fileManager.setUbiquitous(true, itemAt: tempURL, destinationURL: groupURL);
+                        }
+                        let groupModel = self.addItemToCache(groupURL.standardizedFileURL) as? FTGroupItemProtocol;
+                        
+                        if let _items = items, !_items.isEmpty {
+                            self.moveShelfItems(_items,
+                                                toGroup: groupModel,
+                                                toCollection: self) { (error, _) in
+                                DispatchQueue.main.async(execute: {
+                                    block(error, groupModel);
+                                    self.parent?.enableUpdates()
+                                });
+                            }
+                        } else if !groupName.isEmpty {
+                            NotificationCenter.default.post(name: Notification.Name.groupItemAdded, object: self, userInfo: [:])
                             DispatchQueue.main.async(execute: {
-                                block(error, groupModel);
+                                block(nil, groupModel);
+                                self.parent?.enableUpdates()
+                            });
+                        } else {
+                            DispatchQueue.main.async(execute: {
+                                block(nil, groupModel);
                                 self.parent?.enableUpdates()
                             });
                         }
-                    } else if !groupName.isEmpty {
-                        NotificationCenter.default.post(name: Notification.Name.groupItemAdded, object: self, userInfo: [:])
+                    } catch let createError as NSError {
                         DispatchQueue.main.async(execute: {
-                            block(nil, groupModel);
-                            self.parent?.enableUpdates()
-                        });
-                    } else {
-                        DispatchQueue.main.async(execute: {
-                            block(nil, groupModel);
+                            block(createError, nil);
                             self.parent?.enableUpdates()
                         });
                     }
-                } catch let createError as NSError {
-                    DispatchQueue.main.async(execute: {
-                        block(createError, nil);
-                        self.parent?.enableUpdates()
-                    });
-                }
+                });
             });
         };
     }
@@ -500,33 +502,33 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         let tempLocationURL = NSURL.fileURL(withPath: NSTemporaryDirectory()).appendingPathComponent(groupItem.URL.lastPathComponent);
 
         var fileError: NSError?;
-        do {
-            let fileManger = FileManager();
-            try? fileManger.removeItem(at: tempLocationURL);
-            try fileManger.evictUbiquitousItem(at: groupItem.URL);
-            try fileManger.setUbiquitous(false, itemAt: groupItem.URL, destinationURL: tempLocationURL);
-            _ = try fileManger.removeItem(at: tempLocationURL);
-            self.removeItemFromCache(groupItem.URL as URL, shelfItem: groupItem);
-        } catch let error as NSError {
-            fileError = error;
+        DispatchQueue.global().async {
+            do {
+                let fileManger = FileManager();
+                try? fileManger.removeItem(at: tempLocationURL);
+                try fileManger.evictUbiquitousItem(at: groupItem.URL);
+                try fileManger.setUbiquitous(false, itemAt: groupItem.URL, destinationURL: tempLocationURL);
+                _ = try fileManger.removeItem(at: tempLocationURL);
+                self.removeItemFromCache(groupItem.URL as URL, shelfItem: groupItem);
+            } catch let error as NSError {
+                fileError = error;
+            }
+            self.indexCache?.deleteNotebookTitle(groupItem.sortIndexHash)
+            DispatchQueue.main.async(execute: {
+                self.parent?.enableUpdates()
+                block(fileError, groupItem);
+            });
         }
-        self.indexCache?.deleteNotebookTitle(groupItem.sortIndexHash)
-        DispatchQueue.main.async(execute: {
-            self.parent?.enableUpdates()
-            block(fileError, groupItem);
-        });
     }
     
-    //When group is deleted, we are just removing the group from cache when iCloud is ON.
     func removeGroupItem(_ groupItem: FTGroupItemProtocol,
                          onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void) {
-        self.parent?.disableUpdates()
-        self.removeItemFromCache(groupItem.URL as URL, shelfItem: groupItem);
-        self.indexCache?.deleteNotebookTitle(groupItem.sortIndexHash)
-        DispatchQueue.main.async(execute: {
-            self.parent?.enableUpdates()
-            block(nil, groupItem);
-        });
+        self.removeGroupFolderItem(groupItem) { error, groupItem in
+            DispatchQueue.main.async(execute: {
+                self.parent?.enableUpdates()
+                block(error, groupItem);
+            });
+        }
     }
 }
 

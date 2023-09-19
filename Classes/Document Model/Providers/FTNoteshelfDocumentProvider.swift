@@ -620,10 +620,10 @@ extension FTNoteshelfDocumentProvider
             else {
                 //Explicit group deletion, since we are supporting empty groups.
                 if let collection = groupItem.shelfCollection {
-                    collection.removeGroupItem(groupItem) { error, deletedGroup in
-                        NotificationCenter.default.post(name: Notification.Name.groupItemRemoved, object: collection, userInfo: [:])
-                        block(nil, movedItems)
-                    }
+                        collection.removeGroupItem(groupItem) { error, deletedGroup in
+                            NotificationCenter.default.post(name: Notification.Name.groupItemRemoved, object: collection, userInfo: [:])
+                            block(nil, movedItems)
+                        }
                 } else {
                     block(nil, movedItems)
                 }
@@ -957,6 +957,7 @@ extension FTNoteshelfDocumentProvider {
                 if !FileManager.default.fileExists(atPath: parentURL.path()) {
                     try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                 }
+                //TODO: (Discuss with Akshay) We should set Ubiquitous on background thread. Might need to move this to background, if we are on main thread.
                 try FileManager().setUbiquitous(true,
                                                 itemAt: url,
                                                 destinationURL: destinationURL);
