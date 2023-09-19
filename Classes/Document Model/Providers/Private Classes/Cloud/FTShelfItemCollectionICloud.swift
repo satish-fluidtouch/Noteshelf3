@@ -143,8 +143,11 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
             if let item = itemsToMove.first {
                 if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
                     if let groupItem = item as? FTGroupItemProtocol, groupItem.childrens.isEmpty {
-                        //@Sameer: This needs to be rechecked once
-                        self.removeGroupItem(groupItem) { error, deletedGroupd in
+                        self.removeGroupItem(groupItem) { error, deletedGroup in
+                            if let movedItem = deletedGroup {
+                                movedItems.append(movedItem)
+                            }
+                            itemsToMove.removeFirst();
                             moveItem()
                         }
                     } else {
@@ -468,39 +471,24 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                    toCollection : FTShelfItemCollection!,
                                    onCompletion block:@escaping (NSError?, FTShelfItemProtocol?, FTShelfItemProtocol?) -> Void)
     {
-        var toCreateFileName: Bool = true
-        var createdGroupItem: FTShelfItemProtocol?
-        
         toCollection?.shelfItems(.byName, parent: toGroup, searchKey: nil, onCompletion: { localItems in
-            for item in localItems where item.title == groupItem.title {
-                createdGroupItem = item
-                toCreateFileName = false
-                break
-            }
-            if toCreateFileName {
-                (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
-                                                                    inGroup: toGroup)
-                { (uniqueGroupName) -> (Void) in
-                    toCollection.createGroupItem(uniqueGroupName.deletingPathExtension,
-                                                 inGroup: toGroup,
-                                                 shelfItemsToGroup: groupItem.childrens)
-                    {(error, newGroupItem) in
-                        self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
-                            //Empty group removal while moving empty group inside other group
-                            if groupItem.childrens.isEmpty {
-                                self.removeGroupItem(groupItem) { error, _groupItem in
-                                    block(error, newGroupItem, groupItem)
-                                }
-                            } else {
+            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
+                                                                inGroup: toGroup)
+            { (uniqueGroupName) -> (Void) in
+                toCollection.createGroupItem(uniqueGroupName.deletingPathExtension,
+                                             inGroup: toGroup,
+                                             shelfItemsToGroup: groupItem.childrens)
+                {(error, newGroupItem) in
+                    self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
+                        //Empty group removal while moving empty group inside other group OR folder
+                        if groupItem.childrens.isEmpty {
+                            self.removeGroupItem(groupItem) { error, _groupItem in
                                 block(error, newGroupItem, groupItem)
                             }
+                        } else {
+                            block(error, newGroupItem, groupItem)
                         }
                     }
-                }
-            } else if let createdGroup = createdGroupItem as? FTGroupItemProtocol {
-                //When moving group to other folder we might need to tweak some logic, needs to be discussed with Amar.
-                self.moveShelfItems(groupItem.childrens, toGroup: createdGroup, toCollection: toCollection) { error, _ in
-                    block(error, createdGroup, groupItem)
                 }
             }
         })
