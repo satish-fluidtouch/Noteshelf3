@@ -256,7 +256,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24</string>
+	<string>25</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>INAlternativeAppNames</key>
@@ -432,6 +432,7 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.apple.package</string>
+				<string>public.folder</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Noteshelf Document</string>

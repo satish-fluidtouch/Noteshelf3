@@ -1,8 +1,8 @@
 //
 //  ThumbnailProvider.swift
-//  Noteshelf3 Thumbnail
+//  FTQLThumbnail
 //
-//  Created by Akshay on 12/09/23.
+//  Created by Amar Udupa on 19/09/23.
 //  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 //
 
@@ -11,9 +11,9 @@ import QuickLookThumbnailing
 
 class ThumbnailProvider: QLThumbnailProvider {
     override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
-        #if DEBUG
+#if DEBUG
         NSLog("🌄 ✅ Thumbnail Fetch request for \(request.fileURL.path)")
-        #endif
+#endif
         let thumbURL = request.fileURL.appendingPathComponent("cover-shelf-image.png")
         handler(QLThumbnailReply(imageFileURL: thumbURL), nil)
     }
