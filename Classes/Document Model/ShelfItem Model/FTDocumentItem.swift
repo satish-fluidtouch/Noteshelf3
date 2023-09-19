@@ -120,12 +120,11 @@ extension NSNotification.Name {
                     }
                 }
                 else {
-                    self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
-                    let metaURL = self.URL.appendingPathComponent("\(METADATA_FOLDER_NAME)/\(PROPERTIES_PLIST)");
-                    if let dictionary = NSDictionary.init(contentsOf: metaURL) {
-                        self.documentUUID = dictionary[DOCUMENT_ID_KEY] as? String;
+                    FTDocumentUUIDReader.shared.readDocumentUUID(self.URL) { (documentUUID) in
+                        self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
+                        self.documentUUID = documentUUID
+                        self.downloaded = newValue;
                     }
-                    self.downloaded = newValue;
                 }
             }
             else {
