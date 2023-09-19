@@ -686,24 +686,15 @@ extension FTSidebarViewModel {
         }
         return nil
     }
-    func updateCategoryOrderBasedOnDeletedURLs(_ removedCategoryURLS:[URL]){
-        removedCategoryURLS.forEach { url in
-            if !FileManager.default.fileExists(atPath: url.path), let deletedSortInfoIndex = self.sidebarItemsBookmarksData.firstIndex(where: {$0.collectionURL?.urlByDeleteingPrivate().path == url.urlByDeleteingPrivate().path}) {
-                self.sidebarItemsBookmarksData.remove(at: deletedSortInfoIndex)
-            }
-        }
-        let latestSortedInfo = self.updateCategoryBookmarkDataBasedOnCategorySortInfo()
-        self.updateSidebarCategoriesOrderUsingDict(FTCategoryBookmarkData(bookmarksData: latestSortedInfo))
-    }
 }
 
 class FTCategorySortOrderInfo {
-    var collectionURL : URL?;
+    var categoryURL : URL?;
     var categoryName: String;
     var order: Int = Int.max;
 
     init(_ url: URL? = nil,name: String,order: Int) {
-        collectionURL = url;
+        categoryURL = url;
         categoryName = name;
         self.order = order;
     }
