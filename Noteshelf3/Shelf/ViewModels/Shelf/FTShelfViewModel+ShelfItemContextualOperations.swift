@@ -12,7 +12,8 @@ import Foundation
 extension FTShelfViewModel {
     func getContexualOptionsForShelfItem(_ item: FTShelfItemViewModel) -> [[FTShelfItemContexualOption]] {
         if self.mode == .selection {
-            let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
+            var selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
+            selectedShelfItems.append(item)
             if selectedShelfItems.count > 1 {
                 if item.model.shelfCollection.isTrash {
                     return [[.restore],[.delete]]
