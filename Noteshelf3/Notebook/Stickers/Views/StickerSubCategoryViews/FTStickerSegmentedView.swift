@@ -19,21 +19,22 @@ struct FTStickerSegmentedView: View {
         ScrollView(.horizontal,showsIndicators: false) {
                 HStack{
                     ForEach(viewModel.menuItems, id: \.self) { item in
-                        Text(item.localized)
-                            .padding()
-                            .frame(height: 36.0)
-                            .appFont(for: .medium, with: 13)
-                            .foregroundColor(selection == item ? Color.white : Color.appColor(.black70))
-                            .background(selection == item ? Color.appColor(.darkBlack) : Color.appColor(.black5))
-                            .cornerRadius(10)
-                            .onTapGesture {
-                                selection = item
-                                onTapMenu(item)
-                                withAnimation(.easeInOut(duration: 0.4)) {
-                                    proxy.scrollTo(item,anchor: .center)
-                                }
+                        Button {
+                            selection = item
+                            onTapMenu(item)
+                            withAnimation(.easeInOut(duration: 0.4)) {
+                                proxy.scrollTo(item,anchor: .center)
                             }
-                            .buttonInteractionStyle(scaleValue: 0.98)
+                        } label: {
+                            Text(item.localized)
+                                .padding()
+                                .frame(height: 36.0)
+                                .appFont(for: .medium, with: 13)
+                                .foregroundColor(selection == item ? Color.white : Color.appColor(.black70))
+                                .background(selection == item ? Color.appColor(.darkBlack) : Color.appColor(.black5))
+                                .cornerRadius(10)
+                        }
+                        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.93))
                     }
                 }
                 .padding(5)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfTopSectionView: View {
 
@@ -49,12 +50,13 @@ struct FTShelfTopSectionView: View {
                     }
                 }
             }
-        }.macOnlyPlainButtonStyle()
+        }
     }
     private func getShelfDetailViewItem(_ type: FTShelfHomeTopSectionModel,shelfViewModel:FTShelfViewModel, geometrySize: CGFloat) -> some View {
         FTShelfTopSectionItem(type: type,
                              isFirsttime: shelfViewModel.shouldShowGetStartedInfo, geometrySize: geometrySize,
                              shelfViewModel: shelfViewModel)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.92))
     }
 }
 

@@ -16,14 +16,7 @@ struct FTTemplatesSidebarItemView: View {
     weak var delegate: FTSidebarViewDelegate?
     var body: some View {
         FTSideBarItemContextMenuPreview(preview: {
-            Button {
-                viewModel.endEditingActions()
-                viewModel.selectedSideBarItem = templatesSidebarItem
-                delegate?.didTapOnSidebarItem(templatesSidebarItem)
-            } label: {
-                templatesView
-            }
-            .buttonInteractionStyle(scaleValue: 0.99)
+            templatesView
             .ignoresSafeArea()
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true
@@ -77,7 +70,6 @@ struct FTTemplatesSidebarItemView: View {
         .if(templatesSidebarItem.type == viewModel.selectedSideBarItem?.type) { view in
             view.shadow(color: templatesSidebarItem.type.shadowColor, radius: 12,x: 0,y:8)
         }
-        .contentShape([.contextMenuPreview],RoundedRectangle(cornerRadius: 16))
     }
     private var titleFont: Font {
         if let selectedSideBarItem = viewModel.selectedSideBarItem,selectedSideBarItem.type == templatesSidebarItem.type {
@@ -99,26 +91,6 @@ struct FTTemplatesSidebarItemView: View {
             color = (colorScheme == .dark) ? .white : .black
         }
         return color
-    }
-    private var templatesView1: some View {
-        HStack(alignment:.center, spacing:0) {
-                ZStack(alignment: .bottomLeading) {
-                    Image("templatePaperIcon")   
-                }.padding(.top,1)
-                VStack(alignment: .leading,spacing: 0) {
-                    Text("Templates")
-                        .frame(height:22, alignment: .top)
-                        .font(.clearFaceFont(for: .medium, with: 18))
-                        .foregroundColor(getTintColorForTopSectionItem())
-                        .padding(.top,3)
-                    Text("shelf.sidebar.templates.subtitle")
-                        .frame(height:16,alignment: .top)
-                        .font(Font.appFont(for: .regular, with: 13))
-                        .foregroundColor(getTintColorForTopSectionItem().opacity(0.8))
-                }
-        }
-        .frame(maxWidth: .infinity,maxHeight: 80, alignment: .leading)
-
     }
 }
 struct FTTemplatesSidebarItemView_Previews: PreviewProvider {

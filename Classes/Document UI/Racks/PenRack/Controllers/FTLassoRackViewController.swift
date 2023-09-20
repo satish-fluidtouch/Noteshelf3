@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 @objc protocol FTLassoRackDelegate: NSObjectProtocol {
     @objc optional func pasteFromClipBoard()
@@ -23,7 +24,6 @@ import UIKit
     @IBOutlet private weak var photosSwitch: UISwitch!
     @IBOutlet private weak var shapesSwitch: UISwitch!
     @IBOutlet private weak var pasteFromClipboardView: UIView?
-
     weak var delegate: FTLassoRackDelegate?
 
     override class var identifier: String {
@@ -84,7 +84,6 @@ import UIKit
     @IBAction func lassoTapped(_ sender: UIButton) {
         self.squareBackgroundView.backgroundColor = .clear
         self.squareBackgroundView.removeShadow()
-
         self.lassoBackgroundView.backgroundColor = UIColor.appColor(.white100)
         self.lassoBackgroundView.layer.cornerRadius = self.lassoBackgroundView.frame.height/2.0
         self.lassoBackgroundView.dropShadowWith(color: UIColor.label.withAlphaComponent(0.12), offset: CGSize(width: 0.0, height: 4.0), radius: 8.0)

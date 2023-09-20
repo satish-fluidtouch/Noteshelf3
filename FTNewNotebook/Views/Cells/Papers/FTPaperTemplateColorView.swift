@@ -13,7 +13,7 @@ protocol FTPaperTemplateCustomColorDelegate: NSObject {
     func didSelectCustomColor(_ color:UIColor?)
 }
 
-final class FTPaperTemplateColorButton: FTUIkitInteractionButton {
+final class FTPaperTemplateColorButton: FTInteractionButton {
     var templateColor: FTTemplateColorModel?
 
     override init(frame: CGRect) {

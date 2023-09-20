@@ -26,13 +26,25 @@ struct FTSidebarTopSectionGridView: View {
                 gridItemFor(sidebarItemForType(.trash))
             }
             GridRow{
-                FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate).gridCellColumns(2)
+                templateGridItem(sidebarItemForType(.templates))
+                    .gridCellColumns(2)
             }
-        }.macOnlyPlainButtonStyle()
+        }
     }
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }
+    private func templateGridItem(_ sideBarItem: FTSideBarItem) -> some View {
+        Button {
+            viewModel.endEditingActions()
+            viewModel.selectedSideBarItem = sideBarItem
+            delegate?.didTapOnSidebarItem(sideBarItem)
+        } label: {
+            FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate)
+        }
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.92))
+    }
+
     private func gridItemFor(_ sideBarItem: FTSideBarItem) -> some View {
         Button {
             viewModel.endEditingActions()
@@ -42,7 +54,7 @@ struct FTSidebarTopSectionGridView: View {
             FTSidebarTopSectionGridItemView(viewModel: viewModel)
                 .environmentObject(sideBarItem)
         }
-        .buttonInteractionStyle(scaleValue: 0.98)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.92))
     }
 }
 

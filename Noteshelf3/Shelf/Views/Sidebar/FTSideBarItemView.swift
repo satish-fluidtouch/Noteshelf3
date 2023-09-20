@@ -22,11 +22,18 @@ struct SideBarItemView : View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var viewWidth: CGFloat
     var body: some View {
-        VStack(spacing:0) {
-            sideBarItem
-                .buttonInteractionStyle(scaleValue: 0.99)
+        Button {
+            self.viewModel.endEditingActions()
+            self.viewModel.currentDraggedSidebarItem = nil
+            self.viewModel.selectedSideBarItem = item
+            self.viewModel.delegate?.didTapOnSidebarItem(item)
+        } label: {
+            VStack(spacing:0) {
+                sideBarItem
+            }
+            .frame(height: 44)
         }
-        .frame(height: 44)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.92))
     }
     @ViewBuilder
     private var sideBarItem: some View {
@@ -87,12 +94,6 @@ struct SideBarItemView : View {
                     view.opacity(1.0)
                 }
             })
-            .onTapGesture {
-                self.viewModel.endEditingActions()
-                self.viewModel.currentDraggedSidebarItem = nil
-                self.viewModel.selectedSideBarItem = item
-                self.viewModel.delegate?.didTapOnSidebarItem(item)
-            }
             .background(RoundedRectangle(
                 cornerRadius: 10,
                 style: .continuous

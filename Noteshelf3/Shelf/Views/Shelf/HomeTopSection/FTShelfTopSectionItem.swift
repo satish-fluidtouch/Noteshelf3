@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfTopSectionItem: View {
     var type: FTShelfHomeTopSectionModel
@@ -32,12 +33,12 @@ struct FTShelfTopSectionItem: View {
             topSectionView
                 .padding()
                 .macOnlyTapAreaFixer()
+                .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
+                .cornerRadius(16)
+                .border(Color.appColor(.accentBorder),
+                        width:1.0,
+                        cornerRadius: 16)
         }
-        .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
-        .cornerRadius(16)
-        .border(Color.appColor(.accentBorder),
-                width:1.0,
-                cornerRadius: 16)
     }
 
     @ViewBuilder

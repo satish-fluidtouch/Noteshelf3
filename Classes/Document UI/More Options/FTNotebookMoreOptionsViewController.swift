@@ -134,6 +134,7 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
         view.confiure(with: self.page)
         view.del = self
         self.tblSettings?.tableHeaderView = view
+//        FTInteractionButton.shared.apply(to: view, withScaleValue: 0.8)
     }
 }
 

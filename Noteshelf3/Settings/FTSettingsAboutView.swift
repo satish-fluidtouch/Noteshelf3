@@ -140,11 +140,7 @@ struct FTSettingsAboutView: View {
         VStack{
             LazyHGrid(rows: columns,alignment: .center, spacing:32){
                 ForEach(SocialMediaTypes.allCases, id: \.self.url) { type in
-                    Image(type.icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44,height: 44)
-                        .onTapGesture {
+                    Button {
 #if targetEnvironment(macCatalyst)
                             if let url = URL(string: type.url) {
                                 UIApplication.shared.open(url);
@@ -153,8 +149,13 @@ struct FTSettingsAboutView: View {
                             selectedStyle = type
                             showWebview = true
 #endif
-                        }
-                        .buttonInteractionStyle(scaleValue: 0.98)
+                    } label: {
+                        Image(type.icon)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 44,height: 44)
+                    }
+                    .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
                 }
             }
             .if(selectedStyle != nil, transform: { view in

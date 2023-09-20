@@ -26,11 +26,9 @@ struct FTNewNoteTopSectionView: View {
                 getShelfPopOverItemView(.importFromFiles)
             }
         }
-        .macOnlyPlainButtonStyle()
     }
     private func getShelfPopOverItemView(_ type: FTNewNotePopoverOptions) -> some View {
         FTNewNoteItemView(type: type, viewModel: viewModel)
-            .buttonInteractionStyle(scaleValue: 0.99)
     }
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {

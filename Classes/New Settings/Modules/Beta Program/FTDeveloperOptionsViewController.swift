@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 struct FTDeveloperOption {
     #if DEBUG
@@ -56,6 +57,7 @@ class FTDeveloperOptionsViewController: UIViewController {
     
     @IBOutlet private weak var aiTokenOption: UIView?
 
+    @IBOutlet weak var speedLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTilingDevOptions()
@@ -190,6 +192,12 @@ class FTDeveloperOptionsViewController: UIViewController {
     @IBAction func resetTapped(sender: UIButton) {
         FTLaserAnimationValues.reset()
         configureLaserOptions()
+    }
+    @IBAction func animationValueChanged(_ sender: UIStepper) {
+        let value = sender.value
+        print("Stepper value  \(value)")
+        speedLabel.text = "Animation Duration \(value)"
+        AnimationValue.animatedValue = value
     }
 }
 

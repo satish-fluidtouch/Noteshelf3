@@ -9,25 +9,20 @@
 import UIKit
 import SwiftUI
 
-public class FTCustomButton: FTUIkitInteractionButton {
+public class FTCustomButton: UIButton {
     //Set the custom style in story board to set the custom font
 //    @IBInspectable var style: Int = 0;
     @IBInspectable var localizationKey: String?
 
     public override func awakeFromNib() {
         super.awakeFromNib()
-        var title = ""
         if let localizationKey = self.localizationKey {
-            title = NSLocalizedString(localizationKey, comment: self.title(for: .normal) ?? "")
+            self.setTitle(NSLocalizedString(localizationKey, comment: self.title(for: .normal) ?? ""), for: .normal)
         } else {
-            title = self.title(for: .normal)?.localized ?? ""
+            self.setTitle(self.title(for: .normal)?.localized ?? "", for: .normal)
         }
-
-        var config = self.configuration
-        config?.title = title
-        self.configuration = config
         setUpFont()
-        NotificationCenter.default.addObserver(self, selector: #selector(preferredContentSizeChanged(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+        FTInteractionButton.shared.apply(to: self,withScaleValue: 0.97)
     }
     
     private func setUpFont() {
@@ -38,84 +33,49 @@ public class FTCustomButton: FTUIkitInteractionButton {
             self.titleLabel?.font = scaledFont
         }
     }
-    
-    @objc func preferredContentSizeChanged(_ notification: Notification) {
-//        setStyle()
-    }
-
 }
 
-open class FTUIkitInteractionButton: UIButton {
+//UIKit Interaction Button Custom Class
+open class FTInteractionButton: UIButton {
+    public static let shared = FTInteractionButton()
 
-    private var isBouncing: Bool = false
-    private let animationDuration: Double = 0.2
+    open func apply(to button: UIButton, withScaleValue scaleValue: CGFloat = 0.93) {
+        button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchDown)
+        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpOutside)
 
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+        // Store the scale value in the button's tag for later use
+        button.tag = Int(scaleValue * 100) // Convert to an integer for simplicity
     }
 
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
+    @objc private func buttonPressed(sender: UIButton) {
+        let scaleValue = CGFloat(sender.tag) / 100.0
+        UIView.animate(withDuration: 0.3, animations: {
+            sender.transform = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
+        })
     }
-    private func commonInit() {
-        addTarget(self, action: #selector(buttonTouchDown), for: .touchDown)
-        addTarget(self, action: #selector(buttonTouchUpInside), for: .touchUpInside)
-    }
-    @objc private func buttonTouchDown() {
-        animateButton(scale: 0.99)
-    }
-    @objc private func buttonTouchUpInside() {
-        animateButton(scale: 1.0)
-    }
-    private func animateButton(scale: CGFloat) {
-        let springAnimation = CASpringAnimation(keyPath: "transform.scale")
-        springAnimation.fromValue = layer.presentation()?.value(forKeyPath: "transform.scale") as? CGFloat ?? 1.0
-        springAnimation.toValue = scale
-        springAnimation.duration = animationDuration
-        springAnimation.initialVelocity = 0.5
-        springAnimation.damping = 0.1
-        layer.add(springAnimation, forKey: "springAnimation")
-        UIView.animate(withDuration: animationDuration) {
-            self.isBouncing = scale < 1.0
-        }
+
+    @objc private func buttonReleased(sender: UIButton) {
+        UIView.animate(withDuration: 0.3, animations: {
+            sender.transform = .identity
+        })
     }
 }
 
- struct FTInteractionButtonModifier: ViewModifier {
-    @State private var isBouncing: Bool = false
-    var scaleValue: CGFloat
+//SwiftUI Interaction Button Custom Class
+public struct FTMicroInteractionButtonStyle: ButtonStyle {
+    let scaleValue: CGFloat
 
-     func body(content: Content) -> some View {
-        content
-            .scaleEffect(isBouncing ? scaleValue : 1.0)
-            .animation(Animation.easeInOut(duration: 0.1), value: isBouncing)
-            .simultaneousGesture(
-                TapGesture()
-                    .onEnded {
-                        toggleStateWithAnimation()
-                        isBouncing = false
-                    }
-            )
-            .simultaneousGesture(
-                LongPressGesture(minimumDuration: 1.0)
-                    .onEnded { _ in
-                        toggleStateWithAnimation()
-                        isBouncing = false
-                    }
-                    .onChanged { gesture in
-                        toggleStateWithAnimation()
-                    }
-            )
+    public init(scaleValue: CGFloat) {
+        self.scaleValue = scaleValue
     }
-    private func toggleStateWithAnimation() {
-        isBouncing.toggle()
+
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? scaleValue : 1.0)
+            .animation(.easeInOut(duration: AnimationValue.animatedValue), value: configuration.isPressed)
     }
 }
-
-extension View {
-    public func buttonInteractionStyle(scaleValue: CGFloat) -> some View {
-        self.modifier(FTInteractionButtonModifier(scaleValue: scaleValue))
-    }
+public struct AnimationValue {
+    public static var animatedValue: Double = 0.0
 }

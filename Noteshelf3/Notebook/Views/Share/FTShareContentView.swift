@@ -143,7 +143,6 @@ struct FTShareContentView: View {
         .padding(.horizontal, FTSpacing.extraLarge)
         .padding(.bottom, FTSpacing.extraLarge)
         .padding(.top, FTSpacing.large)
-        .macOnlyPlainButtonStyle()
     }
 
     private var shareButton : some View {
@@ -157,9 +156,9 @@ struct FTShareContentView: View {
                 .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
                 .foregroundColor(Color.white)
+                .background(Color.appColor(.accent)).cornerRadius(10)
         }
-        .background(Color.appColor(.accent)).cornerRadius(10)
-        .buttonInteractionStyle(scaleValue: 0.98)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
     }
 
     @ViewBuilder
@@ -175,12 +174,11 @@ struct FTShareContentView: View {
                     .frame(maxWidth: .infinity)
                     .contentShape(Rectangle())
                     .foregroundColor(Color.appColor(.accent))
+                    .border(Color.appColor(.accent),
+                            width:1.0,
+                            cornerRadius: 10)
             }
-            .border(Color.appColor(.accent),
-                    width:1.0,
-                    cornerRadius: 10)
-            .buttonStyle(PlainButtonStyle())
-            .buttonInteractionStyle(scaleValue: 0.98)
+            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
 
             shareButton
         }
