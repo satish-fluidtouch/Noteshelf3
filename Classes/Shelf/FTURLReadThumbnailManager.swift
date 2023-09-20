@@ -90,26 +90,27 @@ class FTThumbReadCallbacks : NSObject
                 }
             };
             
-            let nsURL = item.URL as NSURL;
-            var image : UIImage?;
-            image = (item as? FTShelfImage)?.image;
-            if(nil == image) {
-                #if !NS2_SIRI_APP && !NOTESHELF_ACTION
-                if item.URL.downloadStatus() != .downloaded {
-                    completionBlockExecution(nil,item);
-                    return
+            item.URL.fetchQLThumbnail { thumbImage in
+                let nsURL = item.URL as NSURL;
+                var image  = thumbImage;
+                if(nil == image) {
+                    #if !NS2_SIRI_APP && !NOTESHELF_ACTION
+                    if item.URL.downloadStatus() != .downloaded {
+                        completionBlockExecution(nil,item);
+                        return
+                    }
+                    #endif
+                    let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
+                    var error : NSError?;
+                    let coordinator = NSFileCoordinator.init(filePresenter: nil);
+                    coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
+                        image = UIImage.init(contentsOfFile: readURL.path);
+                        completionBlockExecution(image, item);
+                    });
                 }
-                #endif
-                let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
-                var error : NSError?;
-                let coordinator = NSFileCoordinator.init(filePresenter: nil);
-                coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
-                    image = UIImage.init(contentsOfFile: readURL.path);
-                    completionBlockExecution(image, item);
-                });
-            }
-            else {
-                completionBlockExecution(image,item);
+                else {
+                    completionBlockExecution(image,item);
+                }
             }
         };
         return callbackItem!.token;

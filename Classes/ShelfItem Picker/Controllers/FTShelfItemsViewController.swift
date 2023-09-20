@@ -293,13 +293,6 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
         return newTitle ?? defaultValue;
     }
     
-    fileprivate func shelfImage(forShelfItem shelfItem: FTShelfItemProtocol) -> UIImage? {
-        if (shelfItem is FTShelfImage) {
-            return (shelfItem as! FTShelfImage).image;
-        }
-        return nil;
-    }
-    
     //MARK:- Segue
     override func canPerformUnwindSegueAction(_ action: Selector, from fromViewController: UIViewController, withSender sender: Any) -> Bool {
         if action == #selector(self.unwindToViewController(_:)) {

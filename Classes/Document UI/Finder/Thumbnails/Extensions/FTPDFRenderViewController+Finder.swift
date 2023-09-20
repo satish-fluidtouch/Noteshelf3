@@ -13,12 +13,6 @@ extension FTPDFRenderViewController: FTFinderThumbnailsActionDelegate {
      
     //Share
     @objc func toggleFinder(_ animated: Bool) {
-#if DEBUG
-// Temporary location to trigger thumbnails on Finder Button tap.
-        self.pdfDocument.URL.fetchQLThumbnail { image in
-            NSLog("🌄 fetchQLThumbnail \(image?.debugDescription ?? "No thumbnail")")
-        }
-#endif
         if let splitView = self.noteBookSplitViewController() {
             if splitView.isRegularClass() {
                 if self.shouldStartFinderWithFullScreen() {

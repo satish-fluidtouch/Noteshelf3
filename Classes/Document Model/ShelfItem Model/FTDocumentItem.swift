@@ -20,7 +20,7 @@ extension NSNotification.Name {
     static let didChangeURL =  NSNotification.Name(rawValue: "DidChangeURL")
 }
 
-@objcMembers class FTDocumentItem : NSObject,FTDocumentItemProtocol,FTShelfImage,FTDocumentItemTempAttributes
+@objcMembers class FTDocumentItem : NSObject,FTDocumentItemProtocol,FTDocumentItemTempAttributes
 {
     var uuid : String = FTUtils.getUUID();
     var documentUUID: String?
