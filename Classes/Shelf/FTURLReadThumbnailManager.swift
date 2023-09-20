@@ -56,7 +56,8 @@ class FTThumbReadCallbacks : NSObject
             return nil;
         }
 
-        if(!FileManager().fileExists(atPath: item.URL.path)) {
+        if !FileManager().isUbiquitousItem(at: item.URL)
+            ,!FileManager().fileExists(atPath: item.URL.path) {
             onCompletion(nil,nil);
             return nil;
         }
