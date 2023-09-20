@@ -406,9 +406,7 @@ extension FTShelfSplitViewController {
         shelfViewModel.delegate = self
         shelfViewModel.tagsControllerDelegate = self
         let detailViewController = FTShelfHomeViewController(shelfViewModel: shelfViewModel, shelfMenuOverlayInfo: shelfMenuDisplayInfo);
-        if !FTUserDefaults.isFirstLaunch() {
-            detailViewController.title = "sidebar.topSection.home".localized
-        }
+        detailViewController.title = (self.currentShelfViewModel?.shouldShowGetStartedInfo ?? false) ? "" : "sidebar.topSection.home".localized
         detailViewController.shelfViewModel = shelfViewModel
         return detailViewController
     }

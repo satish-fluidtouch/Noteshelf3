@@ -171,9 +171,12 @@ private extension FTSidebarViewModel {
                selectedSideBarItem?.shelfCollection != nil,
                selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
                 selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
-            } else {
+            } else if selectedSideBarItem?.shelfCollection?.displayTitle != selectedShelfItemCollection?.displayTitle {
                 selectedSideBarItem = menuItems.flatMap({$0.items})
                     .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
+                if let selectedSideBarItem {
+                    self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
+                }
             }
         }
     }
