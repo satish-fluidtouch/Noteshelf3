@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "Nouvelle page";
 "notebook.eraserRack.NavTitle" = "Effaceur";
 "notebook.lassoRack.NavTitle" = "Lasso";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d de %d'";
 "notebook.restoring" = "Restauration...";
 "notebook.settings.moresettings" = "Plus de paramètres";
 "notebook.shapesRack.NavTitle" = "Formes";
@@ -1276,6 +1277,7 @@
 "shelf.evernote.signout" = "Déconnexion d'Evernote";
 "shelf.general.usefaceid" = "Identification faciale";
 "shelf.general.usetouchid" = "Identification tactile";
+"shelf.group.noGroupItemsTitle" = "Ce groupe est vide.";
 "shelf.home.getinspired" = "Obtenez de l'inspiration.";
 "shelf.home.recent" = "Récent";
 "shelf.home.seeAll" = "Voir tout";
@@ -1520,4 +1522,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
+// Last Synced by Ramakrishna on 21 September 2023 at 6:53 PM

@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "New Page";
 "notebook.eraserRack.NavTitle" = "Eraser";
 "notebook.lassoRack.NavTitle" = "Lasso";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d of %d";
 "notebook.restoring" = "Restoring...";
 "notebook.settings.moresettings" = "More Settings";
 "notebook.shapesRack.NavTitle" = "Shapes";
@@ -1276,6 +1277,7 @@
 "shelf.evernote.signout" = "Sign Out from Evernote";
 "shelf.general.usefaceid" = "Face ID";
 "shelf.general.usetouchid" = "Touch ID";
+"shelf.group.noGroupItemsTitle" = "This group is empty";
 "shelf.home.getinspired" = "Get Inspired";
 "shelf.home.recent" = "Recent";
 "shelf.home.seeAll" = "See All";
@@ -1520,4 +1522,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
+// Last Synced by Ramakrishna on 21 September 2023 at 6:53 PM

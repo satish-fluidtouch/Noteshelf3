@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "新页面";
 "notebook.eraserRack.NavTitle" = "橡皮擦";
 "notebook.lassoRack.NavTitle" = "套索";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d的%d";
 "notebook.restoring" = "恢复中...";
 "notebook.settings.moresettings" = "更多设置";
 "notebook.shapesRack.NavTitle" = "形状";
@@ -1276,6 +1277,7 @@
 "shelf.evernote.signout" = "退出 Evernote";
 "shelf.general.usefaceid" = "面容 ID";
 "shelf.general.usetouchid" = "指纹识别";
+"shelf.group.noGroupItemsTitle" = "这个群组是空的";
 "shelf.home.getinspired" = "获得灵感";
 "shelf.home.recent" = "最近";
 "shelf.home.seeAll" = "查看全部";
@@ -1520,4 +1522,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
+// Last Synced by Ramakrishna on 21 September 2023 at 6:53 PM
