@@ -131,10 +131,12 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
     
     func noteshelfAIController(_ ccntroller: FTNoteshelfAIViewController
                                , didTapOnAction action: FTNotesehlfAIAction
-                               , content: String) {
+                               , content: FTAIContent) {
         ccntroller.dismiss(animated: true) {
             if action == .copyToClipboard {
-                UIPasteboard.general.string = content;
+                if let content = content.contentAttributedString {
+                    UIPasteboard.general.string = content.string;
+                }
             }
             else if action == .addToPage {
                 if let annotation = self.pdfPage?.addTextAnnotation(content, visibleRect: CGRectScale(self.visibleRect(), 1/self.pageContentScale)) {
@@ -143,13 +145,13 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
             }
             else if action == .addToNewPage {
                 if let page = self.pdfPage {
-                    self.delegate?.insertNewPage(page, addText: content);
+                    self.delegate?.insertNewPage(page, addContent: content);
                 }
             }
             else if action == .addHandwriting {
                 let origin = self.originToInsertHandwrite();
                 if let page = self.pdfPage,page.isAtTheEndOfPage(origin) {
-                    self.delegate?.insertNewPage(page, addText: content, isHandwrite: true);
+                    self.delegate?.insertNewPage(page, addContent: content, isHandwrite: true);
                 }
                 else {
                     let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.delegate ?? self, withText: NSLocalizedString("Generating", comment: "Generating"))
@@ -162,7 +164,7 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
             }
             else if action == .addNewPageHandwriting {
                 if let page = self.pdfPage {
-                    self.delegate?.insertNewPage(page, addText: content, isHandwrite: true);
+                    self.delegate?.insertNewPage(page, addContent: content, isHandwrite: true);
                 }
             }
         }
@@ -170,17 +172,26 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
 }
 
 extension FTPageViewController {
-    @objc func convertTextToStroke(_ string: String,origin inOrigin: CGPoint) {
+    @objc func convertTextToStroke(_ text: String,origin inOrigin: CGPoint) {
         guard let nsPage = self.pdfPage else {
             return;
         }
-        self.delegate?.addTextAsStrokes(to: nsPage, content: string,origin: inOrigin)
+        let content = FTAIContent();
+        content.contentString = text;
+        self.delegate?.addTextAsStrokes(to: nsPage, content: content,origin: inOrigin)
+    }
+
+    func convertTextToStroke(_ content: FTAIContent,origin inOrigin: CGPoint) {
+        guard let nsPage = self.pdfPage else {
+            return;
+        }
+        self.delegate?.addTextAsStrokes(to: nsPage, content: content,origin: inOrigin)
     }
 }
 
 extension FTPDFRenderViewController {
     func insertNewPage(_ after: FTPageProtocol
-                       ,addText text:String
+                       , addContent content:FTAIContent
                        , isHandwrite: Bool = false) {
         func showPage(_ index: Int) {
             runInMainThread {
@@ -200,10 +211,10 @@ extension FTPDFRenderViewController {
             
             runInMainThread {
                 if isHandwrite {
-                    self.addTextAsStrokes(to: newPage, content: text,origin:origin);
+                    self.addTextAsStrokes(to: newPage, content: content,origin:origin);
                 }
                 else {
-                    newPage.addTextAnnotation(text);
+                    newPage.addTextAnnotation(content);
                 }
                 loadingIndicator?.hide(nil);
                 showPage(newPage.pageIndex())
@@ -212,7 +223,7 @@ extension FTPDFRenderViewController {
     }
         
     func addTextAsStrokes(to page:FTPageProtocol
-                          , content: String
+                          ,content: FTAIContent
                           ,origin: CGPoint) {
         let textRenderer: FTCharToStrokeRender = FTCharToStrokeRender.renderer(FTDeveloperOption.textToStrokeWrapChar ? .char : .word);
         
@@ -277,7 +288,11 @@ extension FTPageProtocol {
     }
     
     @discardableResult
-    func addTextAnnotation(_ text: String,visibleRect: CGRect = .null) -> FTAnnotation? {
+    func addTextAnnotation(_ content: FTAIContent,visibleRect: CGRect = .null) -> FTAnnotation? {
+        if nil == content.contentAttributedString && nil == content.contentString {
+            return nil;
+        }
+        
         let info = FTTextAnnotationInfo();
         info.scale = 1;
         info.visibleRect = CGRect(origin: .zero, size: self.pdfPageRect.size).insetBy(dx: 20, dy: 20);
@@ -293,7 +308,12 @@ extension FTPageProtocol {
         info.localmetadataCache = self.parentDocument?.localMetadataCache;
         info.fromConvertToText = true;
         info.enterEditMode = false;
-        info.string = text;
+        if let attr = content.contentAttributedString {
+            info.attributedString = attr;
+        }
+        else {
+            info.string = content.contentString;
+        }
         
         if let txtAnnotation = info.annotation() {
             (self as? FTPageUndoManagement)?.addAnnotations([txtAnnotation], indices: nil);

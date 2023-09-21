@@ -9,9 +9,73 @@ import UIKit
 import OpenAI
 import Foundation
 
-protocol FTNoteshelfAITextViewViewControllerDelegate:NSObjectProtocol {
-    func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: String);
+class FTAIContent {
+    var contentString: String?;
+    var contentAttributedString: NSAttributedString?;
 }
+
+protocol FTNoteshelfAITextViewViewControllerDelegate:NSObjectProtocol {
+    func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: FTAIContent);
+}
+
+private let defaultResponseStyle: String = """
+<style>
+body {
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+h1 {
+color: #D07459;
+font-size: 26px;
+font-weight: 700;
+}
+h2 {
+color: #52A7A7;
+font-size: 22px;
+font-weight: 700;
+}
+h3 {
+color: #EBAE24;
+font-size: 22px;
+font-weight: 700;
+}
+h4 {
+color: #8D59C1;
+font-size: 20px;
+font-weight: 500;
+}
+h5 {
+color: #000000;
+font-size: 18px;
+font-weight: 700;
+}
+h6 {
+color: #000000;
+font-size: 18px;
+font-weight: 500;
+}
+p {
+font-size: 18px;
+font-weight:400;
+}
+ol {
+display: grid;
+gap: 10px;
+}
+li {
+font-size: 18px;
+}
+ol li {
+list-style-type: decimal;
+}
+ol ol li {
+list-style-type: lower-alpha;
+}
+ol ol ol li {
+list-style-type: lower-roman;
+}
+</style>
+""";
+
 enum FTNotesehlfAIAction: Int {
     case copyToClipboard,addToPage,addToNewPage,regenerateResponse,addHandwriting,addNewPageHandwriting;
     
@@ -91,11 +155,22 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     var supportsHandwriting = false {
         didSet {
             self.updateButtonStates();
+            debugLog("attributes: \(self.textView?.attributedText)")
         }
     }
     
     @IBOutlet private weak var stackHeightConstraint: NSLayoutConstraint?;
         
+    func insertAttributedHTML(_ htmlString: String) {
+        if let txtView = self.textView {
+            let textToConside = defaultResponseStyle.appending(htmlString);
+            if let data = textToConside.data(using: .unicode), let attrString = try? NSAttributedString(data: data, options: [.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil) {
+                txtView.attributedText = attrString;
+                txtView.scrollRangeToVisible(NSRange(location: attrString.length, length: 0));
+            }
+        }
+    }
+    
     func insertText(_ text:String) {
         if let txtView = self.textView {
             let position = txtView.selectedRange.location;
@@ -129,9 +204,11 @@ class FTNoteshelfAITextViewViewController: UIViewController {
             menuActions.forEach { eachItem in
                 let menuItem = UIAction(title: eachItem.displayTitle(self.supportsHandwriting)) { [weak self] _ in
                     if let strongSelf = self {
+                        let content = FTAIContent();
+                        content.contentAttributedString = self?.textView?.attributedText;
                         strongSelf.delegate?.textViewController(strongSelf
                                                                 , didSelectOption: eachItem
-                                                                ,content: self?.textView?.text ?? "");
+                                                                ,content: content);
                     }
                 }
                 menuItems.append(menuItem);
@@ -177,21 +254,27 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
     
     @IBAction func copyToClipboard(_ sender:Any) {
+        let content = FTAIContent();
+        content.contentAttributedString = self.textView?.attributedText;
         self.delegate?.textViewController(self
                                           , didSelectOption: .copyToClipboard
-                                          ,content: self.textView?.text ?? "");
+                                          ,content: content);
     }
 
     @IBAction func addToPage(_ sender:Any) {
+        let content = FTAIContent();
+        content.contentAttributedString = self.textView?.attributedText;
         self.delegate?.textViewController(self
                                           , didSelectOption: .addToPage
-                                          ,content: self.textView?.text ?? "");
+                                          ,content: content);
     }
 
     @IBAction func addAsHandwrite(_ sender:Any?) {
+        let content = FTAIContent();
+        content.contentAttributedString = self.textView?.attributedText;
         self.delegate?.textViewController(self
                                           , didSelectOption: .addHandwriting
-                                          ,content: self.textView?.text ?? "");
+                                          ,content: content);
     }
 
     @IBAction func moreOptions(_ sender:Any) {

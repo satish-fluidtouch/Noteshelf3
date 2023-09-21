@@ -9,13 +9,13 @@
 import UIKit
 
 struct FTTextToStrokeProperties {
-    static let leftMargin: CGFloat = 48;
-    static let rightMargin: CGFloat = 48;
+    static let leftMargin: CGFloat = 67.5;
+    static let rightMargin: CGFloat = 67.5;
     static let spaceCharWidth: CGFloat = 20;
     static let verticalLineSpacing: CGFloat = 0;
-    static let paragraphMargin: CGFloat = 20;
-    static let topMargin: CGFloat = 64;
-    static let bottomMargin: CGFloat = 40;
+    static let paragraphMargin: CGFloat = 0;
+    static let topMargin: CGFloat = 60;
+    static let bottomMargin: CGFloat = 60;
 
     static let defaultOrigin: CGPoint = CGPoint(x: leftMargin, y: topMargin);
 }
@@ -51,14 +51,14 @@ class FTCharToStrokeRender: NSObject {
     }
         
     func convertTextToStroke(for page: FTPageProtocol
-                             ,content: String
+                             , content: FTAIContent
                              , origin inOrigin: CGPoint
                              , onUpdate: @escaping  FTStrokeRenderOnUpdateCallback
                              , onComplete: @escaping FTStrokeRenderOnCompleteCallback) {
         fatalError("\(Self.className) should overide \(#function)")
     }
     
-    func convertTextToStroke(for page: FTPageProtocol, string: String,origin inOrigin: CGPoint) -> [FTAnnotation] {
+    func convertTextToStroke(for page: FTPageProtocol, content: FTAIContent,origin inOrigin: CGPoint) -> [FTAnnotation] {
         fatalError("\(Self.className) should overide \(#function)")
     }
     
@@ -90,6 +90,7 @@ class FTCharToStrokeRender: NSObject {
     }
     
     func drawStroke(strokesInfo: FTCharStrokeInfo
+                    , word: NSAttributedString? = nil
                     ,origin: inout CGPoint) -> (strokes: [FTAnnotation],rect: CGRect) {
         var strokesToAdd = [FTAnnotation]();
         
@@ -125,7 +126,12 @@ class FTCharToStrokeRender: NSObject {
             eachStroke.setOffset(offset)
 
             rectOnAdd = rectOnAdd.union(eachStroke.boundingRect);
-            eachStroke.strokeColor = self.strokeColor;
+            if let strokeColor = word?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor {
+                eachStroke.strokeColor = strokeColor;
+            }
+            else {
+                eachStroke.strokeColor = self.strokeColor;
+            }
         }
         origin.x += (strokeFontInfo.width + offsetwidth);
         return (strokesToAdd,rectOnAdd);

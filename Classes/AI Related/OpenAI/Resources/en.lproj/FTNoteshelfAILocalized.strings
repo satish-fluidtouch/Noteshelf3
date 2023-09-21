@@ -19,10 +19,14 @@
 "noteshelf.ai.enterTopic" = "Enter the topic";
 "noteshelf.ai.provideContent" = "Please provide a topic to create notes";
 
-"noteshelf.ai.commandSummarize" = ".Summarize in 50 to 200 words";
-"noteshelf.ai.commandExplain" = ".Explain in simple terms";
-"noteshelf.ai.commandKeyPoints" = ".Give Key Points";
+"noteshelf.ai.commandAskAnything" = "in html format.";
+"noteshelf.ai.commandSummarize" = ".Summarize in html format. Do not exceed 50 to 200 words.";
+"noteshelf.ai.commandExplain" = ".Explain in simple terms in html format.";
+"noteshelf.ai.commandKeyPoints" = ".Give Key Points in html format.";
 "noteshelf.ai.commandTranslate" = "Translate to %@";
+
+"noteshelf.ai,commandSuffix" = "Only give what is requested no other lines please.";
+"noteshelf.ai.commandLanguageSuffix" = "Generate response in %@";
 
 "noteshelf.ai.actionCopyToClipboard" = "Copy to Clipboard";
 "noteshelf.ai.actionAddAsText" = "Add as Text";

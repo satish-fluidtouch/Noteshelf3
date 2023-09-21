@@ -7,12 +7,21 @@
 
 import UIKit
 
+private extension String  {
+    var appendingAICommandSuffix: String {
+        return self.appending("noteshelf.ai.commandSuffix".aiLocalizedString);
+    }
+}
+
 class FTAICommand: NSObject {
     var commandType: FTOpenAICommandType = .none;
     var content: String = ""
     var commandToken: String = UUID().uuidString;
     
     func command() -> String {
+        if commandType == .generalQuestion {
+            return "noteshelf.ai.commandAskAnything".aiLocalizedString.appendingAICommandSuffix;
+        }
         return "";
     }
         
@@ -64,7 +73,7 @@ class FTAITranslateCommand: FTAICommand {
 
 class FTAIKeyPointsCommand: FTAICommand {
     override func command() -> String {
-        return "noteshelf.ai.commandKeyPoints".aiLocalizedString;
+        return "noteshelf.ai.commandKeyPoints".aiLocalizedString.appendingAICommandSuffix;
     }
     
     override var executionMessage: String {
@@ -74,7 +83,7 @@ class FTAIKeyPointsCommand: FTAICommand {
 
 class FTAISummarizeCommand: FTAICommand {
     override func command() -> String {
-        return "noteshelf.ai.commandSummarize".aiLocalizedString;
+        return "noteshelf.ai.commandSummarize".aiLocalizedString.appendingAICommandSuffix;
     }
     
     override var executionMessage: String {
@@ -84,7 +93,7 @@ class FTAISummarizeCommand: FTAICommand {
 
 class FTAIExplainCommand: FTAICommand {
     override func command() -> String {
-        return "noteshelf.ai.commandExplain".aiLocalizedString;
+        return "noteshelf.ai.commandExplain".aiLocalizedString.appendingAICommandSuffix;
     }
     
     override var executionMessage: String {

@@ -9,9 +9,9 @@
 import UIKit
 
 class FTCharWrapStrokeRender: FTCharToStrokeRender {
-    override func convertTextToStroke(for page: FTPageProtocol, string: String,origin inOrigin: CGPoint) -> [FTAnnotation] {
+    override func convertTextToStroke(for page: FTPageProtocol, content: FTAIContent,origin inOrigin: CGPoint) -> [FTAnnotation] {
         self.updatePageProperties(page);
-
+        let string = (content.contentAttributedString != nil) ? (content.contentAttributedString?.string ?? "") : (content.contentString ?? "")
         var origin = inOrigin;
         string.forEach { eachChar in
             if(eachChar.isNewline) {
@@ -34,8 +34,10 @@ class FTCharWrapStrokeRender: FTCharToStrokeRender {
         return self.strokesToAdd;
     }
     
-    override func convertTextToStroke(for page: FTPageProtocol, content: String, origin inOrigin: CGPoint, onUpdate: @escaping FTStrokeRenderOnUpdateCallback, onComplete: @escaping FTStrokeRenderOnCompleteCallback) {
+    override func convertTextToStroke(for page: FTPageProtocol, content aiContent: FTAIContent, origin inOrigin: CGPoint, onUpdate: @escaping FTStrokeRenderOnUpdateCallback, onComplete: @escaping FTStrokeRenderOnCompleteCallback) {
         
+        let content = (aiContent.contentAttributedString != nil) ? (aiContent.contentAttributedString?.string ?? "") : (aiContent.contentString ?? "")
+
         self.updatePageProperties(page);
         var origin = inOrigin;
         var currentPage = page;
@@ -78,10 +80,11 @@ class FTCharWrapStrokeRender: FTCharToStrokeRender {
 
 //TODO: UNUSED WILL BE REMOVED LATER
 private class FTCharWrapRender: FTCharWrapStrokeRender {
-    override func convertTextToStroke(for page: FTPageProtocol, string: String,origin inOrigin: CGPoint)  -> [FTAnnotation] {
+    override func convertTextToStroke(for page: FTPageProtocol, content: FTAIContent,origin inOrigin: CGPoint)  -> [FTAnnotation] {
         self.updatePageProperties(page);
         var origin = inOrigin;
-        
+        let string = (content.contentAttributedString != nil) ? (content.contentAttributedString?.string ?? "") : (content.contentString ?? "")
+
         string.forEach { eachChar in
             if(eachChar.isNewline) {
                 gotoNextParagraph(page, origin: &origin);

@@ -25,7 +25,9 @@ extension UIStoryboard {
 }
 
 protocol FTNoteshelfAIDelegate: NSObjectProtocol {
-    func noteshelfAIController(_ ccntroller: FTNoteshelfAIViewController,didTapOnAction: FTNotesehlfAIAction,content: String);
+    func noteshelfAIController(_ ccntroller: FTNoteshelfAIViewController
+                               ,didTapOnAction: FTNotesehlfAIAction
+                               ,content: FTAIContent);
 }
 
 class FTNoteshelfAIInputField: UITextField {
@@ -250,11 +252,11 @@ extension FTNoteshelfAIViewController: FTNoteshelfAITranslateViewControllerDeleg
 }
 
 extension FTNoteshelfAIViewController: FTNoteshelfAITextViewViewControllerDelegate {
-    func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: String) {
+    func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: FTAIContent) {
         if action == .regenerateResponse {
             self.executeAIAction();
         }
-        else {
+        else {            
             self.delegate?.noteshelfAIController(self, didTapOnAction: action, content: content)
         }
     }
@@ -366,6 +368,7 @@ private extension FTNoteshelfAIViewController {
         
         UserDefaults.incrementAiTokenConsumed()
         currentToken = command.commandToken;
+        var response = "";
         FTOpenAI.shared.execute(command: command) {[weak self] (string, error,token) in
             guard let curToken = self?.currentToken, curToken == token else {
                 return;
@@ -375,12 +378,14 @@ private extension FTNoteshelfAIViewController {
                 self?.textViewController?.insertText("noteshelf.ai.noteshelfAIError".aiLocalizedString);
             }
             else {
-                self?.textViewController?.insertText(string);
+                response.append(string);
+                self?.textViewController?.insertAttributedHTML(response);
             }
         } onCompletion: { [weak self] (error,token) in
             guard let curToken = self?.currentToken, curToken == token else {
                 return;
             }
+            debugLog("HTML response: \(response)");
             var supportHandwrite = false;
             if self?.aiCommand == .langTranslate {
                 if let langCode = self?.languageCode, let option = FTTranslateOption.languageOption(title: langCode) {
