@@ -10,6 +10,7 @@ import UIKit
 
 class FTSettingsBaseTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var notebooksCountLabel: UILabel!
     @IBOutlet weak var accessoryImageView: UIImageView!
     @IBOutlet weak var imageViewIcon: UIImageView?
     @IBOutlet weak var labelTitle: FTSettingsLabel?
