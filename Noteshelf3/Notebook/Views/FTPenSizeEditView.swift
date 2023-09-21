@@ -11,7 +11,6 @@ import FTStyles
 
 struct FTPenSizeEditView: View {
    @StateObject var viewModel: FTFavoriteSizeViewModel
-    let viewSize: CGSize
     let editIndex: Int
     let favoriteSizeValue: CGFloat
 
@@ -19,19 +18,19 @@ struct FTPenSizeEditView: View {
         VStack {
             VStack {
             }
-            .frame(width: 288.0, height: 36.0)
+            .frame(width: FTPenSizeEditController.viewSize.width - 16.0, height: 36.0)
             .background(Color.appColor(.toolbarOutline))
             .cornerRadius(10.0)
             .border(Color.appColor(.toolbarOutline), width: 0.5, cornerRadius: 10.0)
         }
-        .frame(width: 304.0, height: 52.0)
+        .frame(width: FTPenSizeEditController.viewSize.width, height: 52.0)
         .background(Color.appColor(.popoverBgColor))
         .cornerRadius(16.0)
         .background(Color.appColor(.black20)
             .shadow(color: Color.appColor(.black20), radius: 60, x: 0, y: 10)
             .blur(radius: 30, opaque: false))
         .overlay(
-            FTPenSizeOverlay(editingSize: favoriteSizeValue, overlaySize: viewSize, editIndex: editIndex)
+            FTPenSizeOverlay(editingSize: favoriteSizeValue, editIndex: editIndex)
             .environmentObject(viewModel)
         )
     }
@@ -43,7 +42,7 @@ struct FTPenSizeOverlay: View {
     @State private var showIndicator: Bool = true
     @State private var sliderTapped: Bool = false
     @EnvironmentObject var sizeViewModel: FTFavoriteSizeViewModel
-    let overlaySize: CGSize
+    private let overlaySize: CGSize = FTPenSizeEditController.overlaySize
     let editIndex: Int
 
     var body: some View {
@@ -56,7 +55,7 @@ struct FTPenSizeOverlay: View {
                             view:
                                 VStack {
                                 })
-                        .background(Image("sliderBg").resizable().frame(width: 250,height: 8)).contentShape(Rectangle()),
+                        .background(Image("sliderBg").resizable().frame(width: overlaySize.width,height: 8)).contentShape(Rectangle()),
                     thumb: FTPenSizeView(isSelected: selected, showIndicator: showIndicator, viewSize: self.sizeViewModel.getViewSize(using: editingSize), favoriteSizeValue: editingSize),
                     thumbSize: CGSize(width: 40, height: 40),
                     options: .interactiveTrack

@@ -675,6 +675,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
     [[self navigationController]setNavigationBarHidden:YES animated:NO];
+    [[self toolTypeContainerVc] updatePositionOnScreenSizeChange];
 }
 
 -(void)performLayout
@@ -2068,7 +2069,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                            pageController:self.firstPageController];
         viewController.currentDeskMode = self.currentDeskMode;
         self.zoomOverlayController = viewController;
-        [self.view bringSubviewToFront:self.toolTypeContainerVc.view];
+        [self.toolTypeContainerVc bringToFront];
         [self.toolTypeContainerVc handleZoomPanelFrameChange:self.zoomOverlayController.view.frame mode:self.zoomOverlayController.shortcutModeZoom animate:true completion: nil];
     }
     else {
