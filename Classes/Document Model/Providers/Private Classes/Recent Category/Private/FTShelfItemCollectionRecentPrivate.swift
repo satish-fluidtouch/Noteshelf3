@@ -30,6 +30,7 @@ class FTShelfItemCollectionRecentPrivate: NSObject,FTShelfItemCollectionRecentPr
         if(!initialGathering) {
             objc_sync_enter(self);
             var shelfItems = self.childrens;
+            shelfItems = shelfItems.filter({!$0.URL.path.contains(trashCollectionTitle)}) // Filtering children as starred NB whose collection is trash should not be shown in starred category.
             if((nil != searchKey) && (searchKey!.count > 0)) {
                 shelfItems = self.searchShelfItems(shelfItems, skipGroupItems: true, searchKey: searchKey!);
             }
