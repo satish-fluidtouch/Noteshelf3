@@ -25,7 +25,7 @@ extension FTShortcutToolPresenter {
             
         case .began:
             self.isMoving = true
-            self.removeSizeEditViewIfNeeded()
+            self.removeSizeEditViewController()
             
         case .changed:
             let contentHolderView = recognizer.view;

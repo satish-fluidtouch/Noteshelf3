@@ -248,7 +248,7 @@ private extension FTShortcutToolPresenter {
     }
 }
 
-extension FTShortcutToolPresenter: FTShorctcutActionDelegate {
+extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditControllerDelegate {
     func didTapPresentationOption(_ option: FTPresenterModeOption) {
         self.delegate?.didTapPresentationOption(option)
     }
@@ -269,8 +269,9 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate {
     }
     
     func showSizeEditView(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel) {
-        self.removeSizeEditViewIfNeeded()
+        self.removeSizeEditViewController()
         let controller = FTPenSizeEditController(viewModel: viewModel, editPosition: position)
+        controller.delegate = self;
         self.pensizeEditVc = controller
         self.parentVC?.addChild(controller)
         controller.view.backgroundColor = .clear
@@ -280,7 +281,7 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate {
         controller.didMove(toParent: self.parentVC)
     }
 
-    func removeSizeEditViewIfNeeded() {
+    func removeSizeEditViewController() {
         if let sizeEditVc = self.pensizeEditVc {
             sizeEditVc.willMove(toParent: nil)
             sizeEditVc.removeFromParent()

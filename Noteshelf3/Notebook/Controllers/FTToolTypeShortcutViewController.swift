@@ -13,7 +13,7 @@ protocol FTShorctcutActionDelegate: AnyObject {
     func didTapPresentationOption(_ option: FTPresenterModeOption)
     func didChangeCurrentPenset(_ penset: FTPenSetProtocol)
     func showSizeEditView(position: FavoriteSizePosition, viewModel: FTFavoriteSizeViewModel);
-    func removeSizeEditViewIfNeeded();
+    func removeSizeEditViewController();
 }
 
 protocol FTShapeSelectDelegate: AnyObject {
@@ -151,7 +151,7 @@ extension FTToolTypeShortcutViewController: FTFavoriteSizeEditDelegate {
     }
 
     private func removeSizeEditViewIfNeeded() {
-        self.delegate?.removeSizeEditViewIfNeeded()
+        self.delegate?.removeSizeEditViewController()
     }
 }
 
