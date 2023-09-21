@@ -56,7 +56,7 @@ import Foundation
         var pens = [FTPenType]();
         switch self {
         case .pen:
-            pens = [.pilotPen, .caligraphy, .pen, .pencil];
+            pens = [.pen, .caligraphy, .pilotPen, .pencil];
         case .highlighter:
             pens = [.flatHighlighter, .highlighter];
         case .shape:
