@@ -1969,6 +1969,7 @@
 		E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */; };
 		E7BBBE232A382EFA0021872D /* FTSearchResultGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBBE222A382EFA0021872D /* FTSearchResultGroupCell.swift */; };
 		E7BBBE252A383C7F0021872D /* FTTraitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */; };
+		E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */; };
 		E7BE540E29AF799B0008A0CC /* FTPHPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE540D29AF799B0008A0CC /* FTPHPicker.swift */; };
 		E7BE89FF29C300C9009F1F79 /* CG+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE89FE29C300C2009F1F79 /* CG+Extension.swift */; };
 		E7C0D03C288A6D32005A87BC /* FTPenSizeEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C0D03B288A6D32005A87BC /* FTPenSizeEditView.swift */; };
@@ -4030,6 +4031,7 @@
 		E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-Medium.ttf"; sourceTree = "<group>"; };
 		E7BBBE222A382EFA0021872D /* FTSearchResultGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchResultGroupCell.swift; sourceTree = "<group>"; };
 		E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTraitCollectionViewCell.swift; sourceTree = "<group>"; };
+		E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookInfoToastView.swift; sourceTree = "<group>"; };
 		E7BE540D29AF799B0008A0CC /* FTPHPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPHPicker.swift; sourceTree = "<group>"; };
 		E7BE89FE29C300C2009F1F79 /* CG+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CG+Extension.swift"; sourceTree = "<group>"; };
 		E7C0D03B288A6D32005A87BC /* FTPenSizeEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenSizeEditView.swift; sourceTree = "<group>"; };
@@ -10113,6 +10115,7 @@
 				E7B5769D2923694F0066BA45 /* FTToastHostController.swift */,
 				979BC2862891497F00208B21 /* FTCircularProgressView.swift */,
 				979BC28A2893E47200208B21 /* FTShelfTextfieldAlertView.swift */,
+				E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */,
 				E7B02190296C446B00EBD49A /* UIHostingController+Extension.swift */,
 			);
 			path = SwiftUI;
@@ -11765,6 +11768,7 @@
 				BAF390A12859ADF00067CA9F /* FTBetaAlertHandler.swift in Sources */,
 				BAF390A32859ADF00067CA9F /* FTTheme.swift in Sources */,
 				BAF390A42859ADF00067CA9F /* FTPlannerDiaryTrackerTemplateFormat.swift in Sources */,
+				E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */,
 				BAF390A82859ADF00067CA9F /* FTStylusesViewController+ShortcutButton.swift in Sources */,
 				BAF390A92859ADF00067CA9F /* FTImportListTableViewCell.swift in Sources */,
 				BAF390AA2859ADF00067CA9F /* FTPDFRenderViewController+Refresh.swift in Sources */,

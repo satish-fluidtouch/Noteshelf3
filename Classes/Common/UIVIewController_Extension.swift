@@ -57,23 +57,20 @@ extension UIViewController {
         self.view.window?.windowScene?.title = title
     }
     
-    var sceneToObserve : Any? {
-        if #available(iOS 13.0, *) {
-            if let windowScene = self.view.window?.windowScene {
-                (self as? FTViewControllerSupportsScene)?.addedObserverOnScene = true;
-                return windowScene;
-            }
-            var attrs = ["OS" : UIDevice.current.systemName,
-                         "Build" : ProcessInfo.processInfo.operatingSystemVersionString];
-            if(self.view.window == nil) {
-                attrs = ["Window" : "Nil"];
-            }
-            FTLogError("WindowScene Not Available", attributes: attrs);
-            #if DEBUG
-            fatalError("view should be added to window before calling this");
-            #endif
+    var sceneToObserve: Any? {
+        if let windowScene = self.view.window?.windowScene {
+            (self as? FTViewControllerSupportsScene)?.addedObserverOnScene = true;
+            return windowScene;
         }
-        return nil;
+        var attrs = ["OS" : UIDevice.current.systemName,
+                     "Build" : ProcessInfo.processInfo.operatingSystemVersionString];
+        if(self.view.window == nil) {
+            attrs = ["Window" : "Nil"];
+        }
+        FTLogError("WindowScene Not Available", attributes: attrs);
+#if DEBUG
+        fatalError("view should be added to window before calling this");
+#endif
     }
     
     func addConstraintForView(_ view:UIView, withrespectTo toView:UIView) {
