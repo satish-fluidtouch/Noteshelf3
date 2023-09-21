@@ -397,6 +397,11 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 #endif
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNotebookInfoToast];
+}
+
 -(void)enableOrDisableNewPageCreationOptionsInsideDocument {
     if (self.currentDeskMode == kDeskModeReadOnly){
         [(FTDocumentScrollView*)self.mainScrollView disableNewPageCreationOptions];
@@ -646,7 +651,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     [self configureSceneNotifications];
     [self checkForExternalScreens];
     [self validateMenuItems];
-
+    [self showNotebookInfoToast];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if(self.pdfDocument.isJustCreatedWithQuickNote == false) {
             [self showQuickCreateInfoTipIfNeeded];
