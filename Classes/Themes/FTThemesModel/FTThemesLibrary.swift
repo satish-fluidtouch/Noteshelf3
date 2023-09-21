@@ -134,11 +134,11 @@ extension FTThemesLibrary {
                     return category.first!.themes.first!;
                 }
             }
-            guard let themeUrl = Bundle.main.url(forResource: "NoCover", withExtension: "nsc", subdirectory:"StockCovers.bundle") else {
+            guard let themeUrl = Bundle.main.url(forResource: "palette3", withExtension: "nsc", subdirectory:"StockCovers.bundle") else {
                 fatalError("Programmer error")
             }
             var reqTheme: FTThemeable
-            if let theme = FTTheme.theme(url: themeUrl, themeType: .noCover) {
+            if let theme = FTTheme.theme(url: themeUrl, themeType: .covers) {
                 reqTheme = theme
             } else {
                 guard var defaultTheme = categories.first?.themes.first else {

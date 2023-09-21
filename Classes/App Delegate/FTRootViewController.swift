@@ -1237,6 +1237,7 @@ extension FTRootViewController {
             if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
                 FTIAPurchaseHelper.shared.showIAPAlert(on: self);
                 self.importItemsQueue.removeAll();
+                self.isImportInProgress = false
                 FTImportStorageManager.clearImportFilesIfNeeded(true);
                 return;
             }

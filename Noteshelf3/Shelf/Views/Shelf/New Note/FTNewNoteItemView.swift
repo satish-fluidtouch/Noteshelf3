@@ -13,7 +13,7 @@ struct FTNewNoteItemView:View{
 
     let type: FTNewNotePopoverOptions
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject  var delegate:FTShelfViewModel
+    @EnvironmentObject var delegate: FTShelfViewModel
 
     var body: some View{
         VStack(alignment: .leading){
