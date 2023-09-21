@@ -100,41 +100,28 @@ class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToa
     }
 
     class func showToast(from controller: UIViewController, info: FTNotebookToastInfo) {
-        let toastInfo = FTBookInfoToastHostController.getIfToastExists(over: controller, for: FTToastTag.notebookInfoToastTag)
+        FTBookInfoToastHostController.removeIfToastExists(from: controller)
         let currentWindow = controller.fetchCurrentWindow()
         if let window = currentWindow {
-            if !toastInfo.toastExist {
-                showToast()
-            } else {
-                if let view = toastInfo.toastView {
-                    view.removeFromSuperview()
-                    showToast()
-                }
+            info.screenWidth = window.frame.width
+            let hostingVc = FTBookInfoToastHostController(info: info)
+            hostingVc.view.center.x = window.frame.width/2.0
+            hostingVc.view.tag = FTToastTag.notebookInfoToastTag.rawValue
+            window.addSubview(hostingVc.view)
+            hostingVc.view.backgroundColor = .clear
+            hostingVc.view.alpha = 0.0
+            var insetBottom: CGFloat = 16.0
+            if let window = UIApplication.shared.keyWindow {
+                insetBottom += window.safeAreaInsets.bottom
             }
-
-            func showToast() {
-                let hostingVc = FTBookInfoToastHostController(info: info)
-                hostingVc.view.center = CGPoint(x: window.frame.width/2.0, y: window.frame.maxY + 100.0)
-                hostingVc.view.tag = FTToastTag.notebookInfoToastTag.rawValue
-                window.addSubview(hostingVc.view)
-                hostingVc.view.backgroundColor = .clear
-                hostingVc.view.alpha = 0.0
-                var insetBottom: CGFloat = 16.0
-                if let window = UIApplication.shared.keyWindow {
-                    insetBottom += window.safeAreaInsets.bottom
-                }
-                UIView.animate(withDuration: 0.4) {
-                    hostingVc.view.alpha = 1.0
-                    hostingVc.view.center.y = window.frame.maxY - insetBottom - info.toastHeight/2.0
+            hostingVc.view.center.y = window.frame.maxY - insetBottom - info.toastHeight/2.0
+            UIView.animate(withDuration: 0.3) {
+                hostingVc.view.alpha = 1.0
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 2.0) {
+                    hostingVc.view.alpha = 0.0
                 } completion: { _ in
-                    runInMainThread(3.0) {
-                        UIView.animate(withDuration: 0.3) {
-                            hostingVc.view.alpha = 0.0
-                            hostingVc.view.center.y = window.frame.maxY + 100.0
-                        } completion: { _  in
-                            hostingVc.view.removeFromSuperview()
-                        }
-                    }
+                    hostingVc.view.removeFromSuperview()
                 }
             }
         }

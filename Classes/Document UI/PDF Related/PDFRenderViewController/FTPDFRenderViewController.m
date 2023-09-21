@@ -397,6 +397,11 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 #endif
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNotebookInfoToast];
+}
+
 -(void)enableOrDisableNewPageCreationOptionsInsideDocument {
     if (self.currentDeskMode == kDeskModeReadOnly){
         [(FTDocumentScrollView*)self.mainScrollView disableNewPageCreationOptions];

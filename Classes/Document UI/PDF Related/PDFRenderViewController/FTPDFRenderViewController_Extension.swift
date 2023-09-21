@@ -243,8 +243,16 @@ extension FTPDFRenderViewController {
     }
 
     @objc func showNotebookInfoToast() {
-        let info = FTNotebookToastInfo(title: "Sample Notebook1", currentPageNum: 3, totalPageCount: 24)
-        FTBookInfoToastHostController.showToast(from: self, info: info)
+        if let page = self.firstPageController()?.pdfPage as? FTThumbnailable, let title = self.shelfItemManagedObject.title {
+            let currentPageNum = page.pageIndex() + 1
+            let totalPagesCount = self.pdfDocument.pages().count
+            let info = FTNotebookToastInfo(title: title, currentPageNum: currentPageNum, totalPageCount: totalPagesCount, screenWidth: self.view.frame.width)
+            FTBookInfoToastHostController.showToast(from: self, info: info)
+        }
+    }
+
+    @objc func removeNotebookInfoToast() {
+        FTBookInfoToastHostController.removeIfToastExists(from: self)
     }
 }
 
