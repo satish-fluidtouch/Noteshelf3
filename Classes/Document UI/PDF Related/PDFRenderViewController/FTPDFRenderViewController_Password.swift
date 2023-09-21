@@ -152,32 +152,6 @@ extension FTPDFRenderViewController
         }
     }
 
-    func snapshotView(afterScreenUpdate : Bool) -> UIView? {
-        var snapshotView : UIView?
-        if let window = self.blurWindow {
-            snapshotView = window.snapshotView(afterScreenUpdates: afterScreenUpdate)
-            self.removeBlurEffect(false);
-        }
-        else if(self.view.window != nil) {
-            let bgColor = self.view.backgroundColor;
-            self.view.backgroundColor = nil;
-            self.toolTypeContainerVc?.view.isHidden = true;
-            snapshotView = self.view.snapshotView(afterScreenUpdates: afterScreenUpdate);
-            self.toolTypeContainerVc?.view.isHidden = false;
-            self.view.backgroundColor = bgColor;
-        }
-        else {
-            if let keyWindo = UIApplication.shared.keyWindow,
-                keyWindo.rootViewController is FTRootViewController,
-                let presentedVC = keyWindo.visibleViewController {
-                FTLogError("SNAPSHOT_ERROR", attributes: ["controller":presentedVC.description]);
-            } else {
-                FTLogError("SNAPSHOT_ERROR", attributes: ["controller":"Not availble"]);
-            }
-        }
-        return snapshotView
-    }
-
     @objc func waitForTheDocmentToBeOpened() {
         for eachController in self.visiblePageViewControllers() {
             eachController.writingView?.waitUntilComplete();
