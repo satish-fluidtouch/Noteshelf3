@@ -68,9 +68,10 @@ extension UIViewController {
             attrs = ["Window" : "Nil"];
         }
         FTLogError("WindowScene Not Available", attributes: attrs);
-#if DEBUG
-        fatalError("view should be added to window before calling this");
-#endif
+        #if DEBUG
+            fatalError("view should be added to window before calling this");
+        #endif
+        return nil;
     }
     
     func addConstraintForView(_ view:UIView, withrespectTo toView:UIView) {
