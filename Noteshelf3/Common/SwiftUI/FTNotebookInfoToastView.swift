@@ -54,12 +54,13 @@ struct FTNotebookInfoToastView: View {
         .frame(width: width, height: info.toastHeight)
         .toolbarOverlay(radius: info.cornerRadius)
         .onAppear {
-            self.width = self.getRequiredWidth() + (2 * FTSpacing.small) + 4.0 // extra offset to avoid truncation during string length caluclation
+            self.width = self.getRequiredWidth()
         }
     }
 
     private func getRequiredWidth() -> CGFloat {
         var width = info.title.widthOfString(usingFont: info.font, color: info.textColor) + " . \(info.currentPageNum) of  \(info.totalPageCount)".widthOfString(usingFont: info.font, color: info.textColor)
+        width += ((2 * FTSpacing.small) + 4.0) // 4 - extra offset to avoid truncation during string length calculation
         var padding: CGFloat = 2 * info.regularPadding
         if info.screenWidth < info.compactUpperThreshold {
             padding = 2 * info.compactPadding
