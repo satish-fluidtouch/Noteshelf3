@@ -333,11 +333,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                             (movedItem as? FTDocumentItemProtocol)?.documentUUID = shelfItem.documentUUID;
                             #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                             //Recent:
-                            if(toCollection.isTrash) {
-                                NotificationCenter.default.post(name: .shelfItemDidGetDeletedInternal, object: self, userInfo: [FTNewURLS: [oldURL]]);
-                            } else {
                                 NotificationCenter.default.post(name: .shelfItemDidGetMovedInternal, object: self, userInfo: [FTOldURLS: [oldURL], FTNewURLS: [destURL]]);
-                            }
                             //Recent:
                             #endif
                         } else {
