@@ -453,12 +453,12 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
 
                     runInMainThread {
                         if(item is FTGroupItemProtocol) {
-                            self.shelfItemCollection.shelfItems(FTShelfSortOrder.byName,
+                            self.shelfItemCollection?.shelfItems(FTShelfSortOrder.byName,
                                                                 parent: item as? FTGroupItemProtocol,
                                                                 searchKey: nil,
                                                                 onCompletion:
                                                                     { (items) in
-                                self.shelfItemCollection.removeShelfItem(item,
+                                self.shelfItemCollection?.removeShelfItem(item,
                                                                          onCompletion:
                                                                             { (error, _) in
                                     if(nil == error) {
@@ -475,7 +475,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                         }
                         else {
                             let documentUUID = (item as? FTDocumentItemProtocol)?.documentUUID;
-                            self.shelfItemCollection.removeShelfItem(item,
+                            self.shelfItemCollection?.removeShelfItem(item,
                                                                      onCompletion:
                                                                         { (error, _) in
                                 self.clearCache(documentUUID: documentUUID);

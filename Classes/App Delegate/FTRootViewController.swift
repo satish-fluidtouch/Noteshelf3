@@ -392,7 +392,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     // MARK: - Show Shelf -
-    fileprivate func showShelf(updateWithLastSelected collection:FTShelfItemCollection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection ,
+    fileprivate func showShelf(updateWithLastSelected collection:FTShelfItemCollection? = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection ,
                                isInNonCollectionMode: Bool = false,
                                lastSelectedSideBarContentType sideBarContentType: FTSideBarItemType = .home,
                                lastSelectedTag: String = "") {
@@ -416,8 +416,13 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             removeLaunchScreen(true)
         }
         else {
-            self.rootContentViewController?.shelfItemCollection = collection
-            self.rootContentViewController?.currentShelfViewModel?.collection = collection
+            let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category,.ns2Category]
+            if collectionTypes.contains(where: {$0 == sideBarContentType}),let collection {
+                self.rootContentViewController?.shelfItemCollection = collection
+                self.rootContentViewController?.currentShelfViewModel?.collection = collection
+            } else {
+                self.rootContentViewController?.shelfItemCollection = nil
+            }
         }
         configureSceneNotifications()
         return
