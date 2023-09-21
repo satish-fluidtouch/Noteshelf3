@@ -220,14 +220,14 @@ private extension FTShortcutToolPresenter {
             return .zero;
         }
         var center: CGPoint = .zero
-        let xOffset: CGFloat = 40.0
+        let xOffset: CGFloat = 16.0
 
         if self.rackType == .shape {
             let yOffset: CGFloat = 75.0 // for shape we have single size only
             if self.shortcutViewPlacement.isLeftPlacement() {
                 center.x = view.frame.maxX + xOffset
             } else {
-                center.x = view.frame.minX - FTPenSizeEditController.editViewSize.width - xOffset
+                center.x = view.frame.minX - FTPenSizeEditController.viewSize.width - xOffset
             }
             center.y = view.center.y + yOffset
         } else {
@@ -235,7 +235,7 @@ private extension FTShortcutToolPresenter {
             if self.shortcutViewPlacement.isLeftPlacement() {
                 center.x = view.frame.maxX + xOffset
             } else {
-                center.x = view.frame.minX - FTPenSizeEditController.editViewSize.width - xOffset
+                center.x = view.frame.minX - FTPenSizeEditController.viewSize.width - xOffset
             }
             center.y = view.center.y - 15.0
             if position == .second {
@@ -276,7 +276,7 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
         self.parentVC?.addChild(controller)
         controller.view.backgroundColor = .clear
         controller.view.center = self.getPenSizeEditViewCenter(at: position)
-        controller.view.frame.size = FTPenSizeEditController.editViewSize
+        controller.view.frame.size = FTPenSizeEditController.viewSize
         self.parentVC?.view.addSubview(controller.view)
         controller.didMove(toParent: self.parentVC)
     }

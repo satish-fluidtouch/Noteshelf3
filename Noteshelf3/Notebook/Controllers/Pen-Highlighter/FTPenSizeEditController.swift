@@ -18,12 +18,13 @@ class FTPenSizeEditController: UIHostingController<FTPenSizeEditView>, FTPopover
 
     weak var delegate: FTPenSizeEditControllerDelegate?;
     
-    static let editViewSize = CGSize(width: 250.0, height: 100.0)
+    static let overlaySize = CGSize(width: 250.0, height: 75.0)
+    static let viewSize = CGSize(width: 304.0, height: 75.0)
     private let viewModel: FTFavoriteSizeViewModel!
     
     init(viewModel: FTFavoriteSizeViewModel, editPosition: FavoriteSizePosition) {
         let size = viewModel.favoritePenSizes[editPosition.rawValue]
-        let sizeEditView = FTPenSizeEditView(viewModel: viewModel, viewSize: FTPenSizeEditController.editViewSize, editIndex: editPosition.rawValue, favoriteSizeValue: size.size)
+        let sizeEditView = FTPenSizeEditView(viewModel: viewModel, editIndex: editPosition.rawValue, favoriteSizeValue: size.size)
         self.viewModel = viewModel
         super.init(rootView: sizeEditView)
     }

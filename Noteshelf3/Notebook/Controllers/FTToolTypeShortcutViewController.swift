@@ -140,12 +140,12 @@ extension FTToolTypeShortcutViewController: FTFavoriteSizeEditDelegate {
         if let windowParent = self.view.window {
             self.removeSizeEditViewIfNeeded()
             let hostingVc = FTPenSizeEditController(viewModel: viewModel, editPosition: position)
-            hostingVc.view.backgroundColor = .white
+            hostingVc.view.backgroundColor = .systemBackground
             if windowParent.frame.size.width > minScreenWidthForPopover {
                 self.delegate?.showSizeEditView(position: position, viewModel: viewModel)
             } else {
-                let contentSize = FTPenSizeEditController.editViewSize
-                self.ftPresentPopover(vcToPresent: hostingVc, contentSize: CGSize(width: contentSize.width, height: contentSize.height + 50.0))
+                // compact mode
+                self.ftPresentPopover(vcToPresent: hostingVc, contentSize: CGSize(width: 250.0, height: 150.0))
             }
         }
     }
