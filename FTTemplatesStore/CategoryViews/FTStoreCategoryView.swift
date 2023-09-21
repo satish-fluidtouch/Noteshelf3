@@ -65,7 +65,6 @@ struct FTStoreCategoryView: View {
             .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.appColor(.accentBorder), lineWidth: 1))
             .font(Font.appFont(for: .medium, with: 16))
         }
-//        .macOnlyPlainButtonStyle()
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
     }
 }

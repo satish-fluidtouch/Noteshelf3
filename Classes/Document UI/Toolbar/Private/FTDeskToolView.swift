@@ -57,7 +57,6 @@ class FTDeskToolView: UIView {
             image = UIImage(named: toolType.iconName())
         }
         self.toolButton.setImage(image, for: .normal)
-       FTInteractionButton.shared.apply(to: self.toolButton,withScaleValue: 0.8)
     }
 
     private func showBgIfNeeded() {

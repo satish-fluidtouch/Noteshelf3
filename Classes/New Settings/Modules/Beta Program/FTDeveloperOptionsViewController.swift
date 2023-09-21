@@ -195,7 +195,6 @@ class FTDeveloperOptionsViewController: UIViewController {
     }
     @IBAction func animationValueChanged(_ sender: UIStepper) {
         let value = sender.value
-        print("Stepper value  \(value)")
         speedLabel.text = "Animation Duration \(value)"
         AnimationValue.animatedValue = value
     }

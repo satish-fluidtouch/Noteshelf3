@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FTCommon
 
 class FTBookmarkColorFooter: UICollectionReusableView {
     @IBOutlet var removeBookmarkButton: UIButton?
@@ -16,6 +15,5 @@ class FTBookmarkColorFooter: UICollectionReusableView {
         super.awakeFromNib()
         removeBookmarkButton?.layer.cornerRadius = 10
         removeBookmarkButton?.titleLabel?.text = "bookmark.removebookMark".localized
-        FTInteractionButton.shared.apply(to: removeBookmarkButton!,withScaleValue: 0.94)
     }
 }

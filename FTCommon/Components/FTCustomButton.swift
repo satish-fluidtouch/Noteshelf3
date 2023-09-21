@@ -22,7 +22,6 @@ public class FTCustomButton: UIButton {
             self.setTitle(self.title(for: .normal)?.localized ?? "", for: .normal)
         }
         setUpFont()
-        FTInteractionButton.shared.apply(to: self,withScaleValue: 0.97)
     }
     
     private func setUpFont() {
@@ -32,33 +31,6 @@ public class FTCustomButton: UIButton {
             let scaledFont = UIFont.scaledFont(for: font, with: style)
             self.titleLabel?.font = scaledFont
         }
-    }
-}
-
-//UIKit Interaction Button Custom Class
-open class FTInteractionButton: UIButton {
-    public static let shared = FTInteractionButton()
-
-    open func apply(to button: UIButton, withScaleValue scaleValue: CGFloat = 0.93) {
-        button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchDown)
-        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpInside)
-        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpOutside)
-
-        // Store the scale value in the button's tag for later use
-        button.tag = Int(scaleValue * 100) // Convert to an integer for simplicity
-    }
-
-    @objc private func buttonPressed(sender: UIButton) {
-        let scaleValue = CGFloat(sender.tag) / 100.0
-        UIView.animate(withDuration: 0.3, animations: {
-            sender.transform = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
-        })
-    }
-
-    @objc private func buttonReleased(sender: UIButton) {
-        UIView.animate(withDuration: 0.3, animations: {
-            sender.transform = .identity
-        })
     }
 }
 
@@ -77,5 +49,5 @@ public struct FTMicroInteractionButtonStyle: ButtonStyle {
     }
 }
 public struct AnimationValue {
-    public static var animatedValue: Double = 0.0
+    public static var animatedValue: Double = 0.1
 }

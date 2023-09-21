@@ -22,7 +22,6 @@ class FTEvernoteFooterView: UITableViewHeaderFooterView {
         self.signOutBtn.setTitleColor(UIColor.appColor(.signoutBtnColor), for: .normal)
         self.signOutBtn.titleLabel?.font = UIFont.appFont(for: .regular, with: 15)
         self.signOutBtn.setTitle(NSLocalizedString("shelf.evernote.signout", comment: "Sign Out from Evernote"), for: .normal)
-        FTInteractionButton.shared.apply(to: self.signOutBtn,withScaleValue: 0.93)
     }
     
     @IBAction func signOutTapped(_ sender: Any) {
