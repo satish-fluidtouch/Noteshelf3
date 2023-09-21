@@ -69,12 +69,13 @@ class FTSidebarManager {
             print("Error occured while saving" + "\(String(describing: "SideBarStatus"))" + "data.")
         }
     }
-    public static func saveCategoriesOrder(_ categoriesOrderDict:[String:Int]) {
+    public static func saveCategoriesBookmarData(_ categoriesBookmarData:FTCategoryBookmarkData) throws {
         do {
             let actualSideBarData = try Data(contentsOf: self.sidebarPlistURL)
             if var sideBarDictionary = try PropertyListSerialization.propertyList(from: actualSideBarData, options: [], format: nil) as? [String: Any] {
                 if var actualSideBarItemsOrderDict = sideBarDictionary["SideBarItemsOrder"] as? [String:Any] {
-                    actualSideBarItemsOrderDict["categories"] = categoriesOrderDict
+                    let bookmarkData = try PropertyListEncoder().encode(categoriesBookmarData)
+                    actualSideBarItemsOrderDict["categories"] = bookmarkData
                     sideBarDictionary["SideBarItemsOrder"] = actualSideBarItemsOrderDict
                     let updatedData = try PropertyListSerialization.data(fromPropertyList: sideBarDictionary as AnyObject, format: PropertyListSerialization.PropertyListFormat.xml, options: 0)
                     try updatedData.write(to: self.sidebarPlistURL, options: NSData.WritingOptions.atomic)
