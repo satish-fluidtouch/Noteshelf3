@@ -19,6 +19,11 @@ extension FTShelfViewModel: FTNewNotePopoverDelegate {
     func showNewNotebookPopover() {
         self.delegate?.showNewBookPopverOnShelf()
     }
+    
+    func isAllNotesCollection() -> Bool {
+        return self.collection.isAllNotesShelfItemCollection
+    }
+
 }
 // MARK: New note popover operations
 extension FTShelfViewModel {

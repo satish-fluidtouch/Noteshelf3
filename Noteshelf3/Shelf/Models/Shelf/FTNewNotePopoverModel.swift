@@ -69,7 +69,7 @@ enum FTNewNotePopoverOptions {
     }
     var showChevron: Bool{
         switch self {
-        case .photoLibrary,.appleWatch, .importFromFiles :
+        case .photoLibrary,.appleWatch :
             return true
         default:
             return false
