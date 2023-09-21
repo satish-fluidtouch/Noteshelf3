@@ -371,6 +371,9 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                                 let learnmoreAttributedText = NSAttributedString(string: String(format: NSLocalizedString("ConnectedThrough", comment: "Connected through.."), (accountInfo.serverAddress ?? "")), attributes: regularAttributes)
                                 mutableAttributedString.append(newLineString)
                                 mutableAttributedString.append(learnmoreAttributedText)
+                                mutableAttributedString.append(newLineString)
+                                let lastBackUpAttributedText = self.getLastBackUpMessage()
+                                mutableAttributedString.append(lastBackUpAttributedText)
                                 self.updateFooterViewIfNeeded(attributedText: mutableAttributedString, progressPercent: accountInfo.percentage)
                             } else {
                                 let mutableAttributedtext = NSMutableAttributedString(string: accountInfo.spaceUsedFormatString(), attributes: regularAttributes)
