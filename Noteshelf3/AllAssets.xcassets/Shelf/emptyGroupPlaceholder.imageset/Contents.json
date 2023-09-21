@@ -3,6 +3,16 @@
     {
       "filename" : "emptyGroupPlaceholder.png",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "emptyGroupPlaceholderDark.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {
