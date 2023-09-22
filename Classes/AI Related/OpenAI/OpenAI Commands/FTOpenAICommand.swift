@@ -9,7 +9,7 @@ import UIKit
 
 private extension String  {
     var appendingAICommandSuffix: String {
-        return self.appending("noteshelf.ai.commandSuffix".aiLocalizedString);
+        return self.appending("noteshelf.ai.commandSuffix".aiCommandString);
     }
 }
 
@@ -20,7 +20,7 @@ class FTAICommand: NSObject {
     
     func command() -> String {
         if commandType == .generalQuestion {
-            return "noteshelf.ai.commandAskAnything".aiLocalizedString.appendingAICommandSuffix;
+            return "noteshelf.ai.commandAskAnything".aiCommandString.appendingAICommandSuffix;
         }
         return "";
     }
@@ -59,7 +59,7 @@ class FTAICommand: NSObject {
 class FTAITranslateCommand: FTAICommand {
     var languageCode: String = "English"
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandTranslate".aiLocalizedString, languageCode);
+        return String(format: "noteshelf.ai.commandTranslate".aiCommandString, languageCode);
     }
     
     override var placeholderMessage: String {
@@ -73,7 +73,7 @@ class FTAITranslateCommand: FTAICommand {
 
 class FTAIKeyPointsCommand: FTAICommand {
     override func command() -> String {
-        return "noteshelf.ai.commandKeyPoints".aiLocalizedString.appendingAICommandSuffix;
+        return "noteshelf.ai.commandKeyPoints".aiCommandString.appendingAICommandSuffix;
     }
     
     override var executionMessage: String {
@@ -83,7 +83,7 @@ class FTAIKeyPointsCommand: FTAICommand {
 
 class FTAISummarizeCommand: FTAICommand {
     override func command() -> String {
-        return "noteshelf.ai.commandSummarize".aiLocalizedString.appendingAICommandSuffix;
+        return "noteshelf.ai.commandSummarize".aiCommandString.appendingAICommandSuffix;
     }
     
     override var executionMessage: String {
@@ -93,7 +93,7 @@ class FTAISummarizeCommand: FTAICommand {
 
 class FTAIExplainCommand: FTAICommand {
     override func command() -> String {
-        return "noteshelf.ai.commandExplain".aiLocalizedString.appendingAICommandSuffix;
+        return "noteshelf.ai.commandExplain".aiCommandString.appendingAICommandSuffix;
     }
     
     override var executionMessage: String {

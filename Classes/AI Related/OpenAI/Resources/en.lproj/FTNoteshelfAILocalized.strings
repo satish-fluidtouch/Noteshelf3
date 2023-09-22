@@ -25,7 +25,7 @@
 "noteshelf.ai.commandKeyPoints" = ".Give Key Points in html format.";
 "noteshelf.ai.commandTranslate" = "Translate to %@";
 
-"noteshelf.ai,commandSuffix" = "Only give what is requested no other lines please.";
+"noteshelf.ai.commandSuffix" = "Only give what is requested no other lines please.";
 "noteshelf.ai.commandLanguageSuffix" = "Generate response in %@";
 
 "noteshelf.ai.actionCopyToClipboard" = "Copy to Clipboard";

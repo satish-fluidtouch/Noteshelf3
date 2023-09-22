@@ -136,6 +136,10 @@ class FTCharToStrokeRender: NSObject {
         origin.x += (strokeFontInfo.width + offsetwidth);
         return (strokesToAdd,rectOnAdd);
     }
+    
+    var lineSpacing: CGFloat {
+        return 1;
+    }
 }
 
 internal extension FTCharToStrokeRender {
@@ -158,7 +162,7 @@ internal extension FTCharToStrokeRender {
     
     func gotoNextParagraph(_ page:FTPageProtocol,origin : inout CGPoint) {
         origin.x = page.startMargin.x + FTTextToStrokeProperties.paragraphMargin;
-        origin.y += self.lineHeight;
+        origin.y += (self.lineSpacing * self.lineHeight);
     }
     
     func gotoNextLine(_ page:FTPageProtocol,origin : inout CGPoint) {

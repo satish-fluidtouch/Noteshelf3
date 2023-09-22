@@ -1,0 +1,16 @@
+/* 
+  AICommands.strings
+  Noteshelf3
+
+  Created by Amar Udupa on 22/09/23.
+  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+"noteshelf.ai.commandAskAnything" = "in html format.";
+"noteshelf.ai.commandSummarize" = ".Summarize in html format. Do not exceed 50 to 200 words.";
+"noteshelf.ai.commandExplain" = ".Explain in simple terms in html format.";
+"noteshelf.ai.commandKeyPoints" = ".Give Key Points in html format.";
+"noteshelf.ai.commandTranslate" = "Translate to %@";
+
+"noteshelf.ai.commandSuffix" = "Only give what is requested no other lines please.";
+"noteshelf.ai.commandLanguageSuffix" = "Generate response in %@";

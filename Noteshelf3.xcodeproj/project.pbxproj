@@ -34,6 +34,7 @@
 		0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971841E2A82230D00656B36 /* FTPremiumBanner.swift */; };
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
+		097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */ = {isa = PBXBuildFile; fileRef = 097449DF2ABDB51A0008C6B6 /* AICommands.strings */; };
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
 		09ABDCA52A790F93008F144D /* FTOpenAICommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC982A790F93008F144D /* FTOpenAICommand.swift */; };
@@ -2269,6 +2270,7 @@
 		0971841E2A82230D00656B36 /* FTPremiumBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPremiumBanner.swift; sourceTree = "<group>"; };
 		097184232A825C1300656B36 /* IAPAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = IAPAssets.xcassets; sourceTree = "<group>"; };
 		097184272A82668200656B36 /* IAPEssentials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IAPEssentials.storyboard; sourceTree = "<group>"; };
+		097449DF2ABDB51A0008C6B6 /* AICommands.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AICommands.strings; sourceTree = "<group>"; };
 		09745D561EC03BAC001AC8D8 /* FTExternalScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTExternalScreenViewController.swift; sourceTree = "<group>"; };
 		09771C8720E64B1400B73FC0 /* FTDocumentPasswordValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPasswordValidate.swift; sourceTree = "<group>"; };
 		097BD8A621CCB034007CEC26 /* FTOffscreenWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOffscreenWritingViewController.swift; sourceTree = "<group>"; };
@@ -5074,6 +5076,7 @@
 				09103B842A86275800739602 /* FTNoteshelfAILocalized.strings */,
 				09ABDCA22A790F93008F144D /* NoteshelfAI.storyboard */,
 				09ABDC9B2A790F93008F144D /* NoteshelfAI.xcassets */,
+				097449DF2ABDB51A0008C6B6 /* AICommands.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -11224,6 +11227,7 @@
 				BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */,
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
+				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
 				BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */,
 				E7AE404428755D4500C0F3EC /* themes_v8_ja.plist in Resources */,
 				BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */,

@@ -9,6 +9,8 @@
 import UIKit
 
 class FTWordWrapStrokeRender: FTCharToStrokeRender {
+    private var xMargin: CGFloat = 0;
+    
     override func convertTextToStroke(for page: FTPageProtocol
                                       , content: FTAIContent
                                       ,origin inOrigin: CGPoint) -> [FTAnnotation] {
@@ -53,16 +55,16 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
                                                         , isLastChar: isLastChar
                                                         , currentPage: currentPage
                                                         , createPageCallBack: onUpdate) {
+                if self.xMargin != 0 {
+                    origin.x = self.xMargin;
+                }
                 currentPage = newPage;
             }
         }
         
         func drawCurrentWord(_ word: NSAttributedString,isLastChar: Bool) {
-            if isLastChar {
-                debugLog("ente");
-            }
             let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(word.string);
-            if self.canFixWord(wordInfo, origin: &origin, pageScale: self.pageScale, currentPage: currentPage) {
+            if self.canFitWord(wordInfo, origin: &origin, pageScale: self.pageScale, currentPage: currentPage) {
                 self.drawWord(wordInfo, content: word, origin: &origin)
             }
             else {
@@ -75,7 +77,21 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         let lines = aicontent.contentAttributedString?.lines();
         lines?.forEach({ eachLine in
             curindex += 1;
+            self.xMargin = 0;
             let words = eachLine.words()
+            if let bulletList = eachLine.bulletLists,let bullet = bulletList.last {
+                var bulletString = "*";
+                if !bullet.isOrdered {
+                    if bulletList.count % 2 == 0 {
+                        bulletString = "-";
+                    }
+                }
+                else {
+                    debugPrint("ordered list");
+                }
+                drawCurrentWord(NSAttributedString(string: bulletString), isLastChar: false);
+                self.xMargin = origin.x;
+            }
             words.forEach { eachWord in
                 curindex = eachWord.length + 1;
                 drawCurrentWord(eachWord, isLastChar: (curindex == content.count));
@@ -102,7 +118,7 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         }
     }
     
-    private func canFixWord(_ wordInfo: FTWordStrokeInfo
+    private func canFitWord(_ wordInfo: FTWordStrokeInfo
                             , origin: inout CGPoint
                             ,pageScale: CGFloat
                             ,currentPage: FTPageProtocol) -> Bool {
@@ -113,8 +129,15 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         
         if((self.pageRect.width - rightMargin) < (origin.x + maxWordWidth)) {
             gotoNextLine(currentPage, origin: &origin);
+            if self.xMargin != 0 {
+                origin.x = self.xMargin;
+            }
         }
         return !currentPage.isAtTheEndOfPage(origin)
+    }
+    
+    override var lineSpacing: CGFloat {
+        return 2;
     }
 }
 
@@ -149,5 +172,15 @@ extension NSAttributedString {
             }
         }
         return words;
+    }
+}
+
+private extension NSAttributedString {
+    var bulletLists: [NSTextList]? {
+        if let attributes = self.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
+        ,!attributes.textLists.isEmpty {
+            return attributes.textLists;
+        }
+        return nil;
     }
 }
