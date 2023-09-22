@@ -109,12 +109,16 @@ struct FTShelfView: View,FTShelfBaseView {
                                        title: NSLocalizedString("shelf.starred.noStarredTitle", comment: "No starred notes"),
                                        description: NSLocalizedString("shelf.starred.noStarredDescription", comment: "Star your important notes to access them all in one place"))
             } else if viewModel.collection.isUnfiledNotesShelfItemCollection {
-                return FTNoResultsView(noResultsImageName: "noUnCategorizedIcon",
-                                       title: NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes"),
-                                       description: NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here."))
+                let title = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes") :NSLocalizedString("shelf.group.noGroupItemsTitle", comment: "This group is empty")
+                let description = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here.") : NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones.")
+                let imageName = self.viewModel.groupItem == nil ? "noUnCategorizedIcon" : "noCategoryItems"
+                return FTNoResultsView(noResultsImageName: imageName,
+                                       title: title,
+                                       description: description)
             } else {
+                let title = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty") :NSLocalizedString("shelf.group.noGroupItemsTitle", comment: "This group is empty")
                  return FTNoResultsView(noResultsImageName: "noCategoryItems",
-                                       title: NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty"),
+                                       title: title,
                                        description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
             }
         }

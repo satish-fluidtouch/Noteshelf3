@@ -1276,6 +1276,7 @@
 "shelf.evernote.signout" = "에버노트에서 로그아웃";
 "shelf.general.usefaceid" = "얼굴 인식";
 "shelf.general.usetouchid" = "터치 아이디";
+"shelf.group.noGroupItemsTitle" = "이 그룹은 비어 있습니다.";
 "shelf.home.getinspired" = "영감을 얻다";
 "shelf.home.recent" = "최근";
 "shelf.home.seeAll" = "모두 보기";
@@ -1520,4 +1521,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
+// Last Synced by Ramakrishna on 19 September 2023 at 2:59 PM
