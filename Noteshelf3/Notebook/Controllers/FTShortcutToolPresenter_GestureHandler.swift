@@ -28,17 +28,17 @@ extension FTShortcutToolPresenter {
             self.removeSizeEditViewController()
             
         case .changed:
-            let contentHolderView = recognizer.view;
-            let touchMovementPoint = recognizer.location(in: contentHolderView)
-            let translation = recognizer.translation(in: contentHolderView)
-            let parentView = contentHolderView?.superview;
-            
+            let contentHolderView = recognizer.view
+            let parentView = contentHolderView?.superview
+            let touchMovementPoint = recognizer.location(in: parentView)
+            let translation = recognizer.translation(in: parentView)
+
             if self.checkIfViewCanBeMoved(point: recognizer.location(in: parentView),parentView: parentView) {
-                recognizer.setTranslation(CGPoint.zero, in: contentHolderView)
+                recognizer.setTranslation(CGPoint.zero, in: parentView)
                 if let recognizedView = recognizer.view, isMoving {
-                    let velocity = recognizer.velocity(in: contentHolderView)
+                    let velocity = recognizer.velocity(in: parentView)
                     self.moveView(movingCenter: recognizedView.center, touchPoint: touchMovementPoint, velocity: velocity, translation: translation)
-                    recognizer.setTranslation(CGPoint.zero, in: contentHolderView)
+                    recognizer.setTranslation(CGPoint.zero, in: parentView)
                 }
             }
             
@@ -88,9 +88,16 @@ private extension FTShortcutToolPresenter {
         }
         let placement = self.shortCutQuadrant.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset);
         placement.save()
-        let reqCenter = placement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset);
         UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.updateShortcutViewCenter(reqCenter)
+            guard let self else {
+                return
+            }
+            self.shortcutView?.transform = .identity
+            if placement == .top || placement == .bottom {
+                self.shortcutView?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            }
+            let reqCenter = placement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset);
+            self.updateShortcutViewCenter(reqCenter)
         } completion: { [weak self] _ in
             self?.delegate?.didStartPlacementChange()
         }

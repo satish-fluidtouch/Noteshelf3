@@ -77,7 +77,7 @@ class FTQuadrantDetector: NSObject {
     }
 
     func getQuadrant(for movingCenter: CGPoint) -> FTShortcutQuadrant {
-        var quadrant: FTShortcutQuadrant = .other
+        var quadrant: FTShortcutQuadrant = .center
         
         if self.topLeftQuadrantFrame.contains(movingCenter) {
             quadrant = .topLeft
@@ -91,10 +91,11 @@ class FTQuadrantDetector: NSObject {
             quadrant = .left
         } else if self.rightQuadrantFrame.contains(movingCenter) {
             quadrant = .right
-        } else {
-            quadrant = .other
+        } else if self.topQuadrantFrame.contains(movingCenter) {
+            quadrant = .top
+        } else if self.bottomQuadrantFrame.contains(movingCenter) {
+            quadrant = .bottom
         }
-
         return quadrant
     }
 }

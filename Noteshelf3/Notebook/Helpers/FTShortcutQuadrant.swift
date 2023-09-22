@@ -17,7 +17,9 @@ enum FTShortcutQuadrant: String {
     case right
     case bottomRight
 
-    case other
+    case top
+    case bottom
+    case center
 
     func convertToPlacementIfPossible() -> FTShortcutPlacement? {
         var placement: FTShortcutPlacement?
@@ -34,7 +36,12 @@ enum FTShortcutQuadrant: String {
             placement = .centerRight
         case .bottomRight:
             placement = .bottomRight
-        case .other:
+        case .top:
+            placement = .top
+        case .bottom:
+            placement = .bottom
+            break
+        case .center:
             break
         }
         return placement
@@ -57,6 +64,10 @@ extension FTShortcutQuadrant {
             reqPlacement = .centerRight
         } else if self == .bottomRight {
             reqPlacement = .bottomRight
+        } else if self == .top {
+            reqPlacement = .top
+        } else if self == .bottom {
+            reqPlacement = .bottom
         } else {
             let movingCenter: CGPoint = shortcutView.center
 
