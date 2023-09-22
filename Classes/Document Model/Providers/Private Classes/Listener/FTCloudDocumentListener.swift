@@ -13,6 +13,7 @@ import FTDocumentFramework
 private let fileExtensionsToListen = [FTFileExtension.shelf,
                                       FTFileExtension.ns3,
                                       FTFileExtension.ns2,
+                                      FTFileExtension.group,
                                       "m4a",
                                       "plist",
                                       FTFileExtension.sortIndex]

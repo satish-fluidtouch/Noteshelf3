@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "notebook.pdf",
+      "filename" : "emptyGroupPlaceholder.png",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "notebook_Dark.pdf",
+      "filename" : "emptyGroupPlaceholderDark.png",
       "idiom" : "universal"
     }
   ],

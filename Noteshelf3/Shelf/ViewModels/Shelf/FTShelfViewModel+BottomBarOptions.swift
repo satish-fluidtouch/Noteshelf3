@@ -43,7 +43,8 @@ extension FTShelfViewModel {
         }
         else if (!disableBottomBarItems && self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems)){
             // Selection list contains a group
-            if option == .changeCover || option == .tags {
+            let hasAnEmptyGroup: Bool = selectedShelfItems.filter({($0 is FTGroupItemViewModel)}).first(where: {($0.model as? FTGroupItemProtocol)?.childrens.count == 0}) != nil
+            if option == .changeCover || option == .tags || (hasAnEmptyGroup && option == .share) {
                 status = false
             } else {
                 status = true

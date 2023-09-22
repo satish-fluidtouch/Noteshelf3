@@ -11,7 +11,7 @@ import FTStyles
 
 struct FTShareView: View {
     let viewModel: FTShareViewModel
-    private let displayableOptions: [FTShareOption] = [.currentPage,.allPages, .selectPages]
+    private let displayableOptions: [FTShareOption] = [.currentPage,.allPages]
     private let rightCornerRadius: CGFloat = 2.0
     var showBackButton = false
 
@@ -22,62 +22,75 @@ struct FTShareView: View {
                 VStack(spacing: 0.0) {
                     ForEach(displayableOptions.indices, id: \.self) { index in
                         let option = displayableOptions[index]
-                        HStack(spacing: FTSpacing.large) {
-                            let thumbImage = viewModel.getthumbnailImage(option: option)
-                            Image(uiImage: thumbImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: thumbnailSizeForImage(thumbImage).width, height: thumbnailSizeForImage(thumbImage).height)
-                                .cornerRadius(leftCornerRadiusForOption(option), corners: [.topLeft, .bottomLeft])
-                                .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
-                                .if(option == .currentPage || (option == .allPages && !viewModel.info.bookHasStandardCover)) { view in
-                                    view.shadow(color: Color.appColor(.black8), radius: 1.40,x: 0,y: 0.56)
-                                        .shadow(color: Color.appColor(.black8), radius: 5.6,x: 0,y: 3.3)
-                                }
-                                .if((option == .allPages && viewModel.info.bookHasStandardCover)) { view in
-                                    view.shadow(color: Color.appColor(.black8), radius: 1.21,x: 0,y: 0.48)
-                                        .shadow(color: Color.appColor(.black8), radius: 4.85,x: 0,y: 2.91)
-                                }
-                            VStack(alignment: .leading){
-                                Text(option.displayTitle)
-                                    .appFont(for: .regular, with: 17)
-                                    .foregroundColor(Color.appColor(.black1))
-                                if viewModel.getPagetitleinfo(option: option) != ""{
-                                    Text(viewModel.getPagetitleinfo(option: option))
-                                        .appFont(for: .regular, with: 15)
-                                        .foregroundColor(.appColor(.black50))
-                                }
+
+                        shareItemView(option: option)
+                            .onTapGesture {
+                                self.viewModel.handleShareOptionSelection(option)
                             }
-                            Spacer()
-                            if option.showChevron {
-                                Image(icon: .rightArrow)
-                                    .font(Font.appFont(for: .regular, with: 17))
-                                    .fontWeight(.regular)
-                                    .foregroundColor(.appColor(.black50))
+                            if(index < displayableOptions.count - 1) {
+                                FTDividerLine()
+                                    .padding(.horizontal, FTSpacing.large)
                             }
-                        }
-                        .frame(height: 62)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            self.viewModel.handleShareOptionSelection(option)
-                        }
-                        if(index < displayableOptions.count - 1) {
-                            FTDividerLine()
-                        }
                     }
-                    .padding(.horizontal, FTSpacing.large)
-                    .background(Color.appColor(.cellBackgroundColor))
                 }
                 .cornerRadius(10.0)
-                .padding(.horizontal, FTSpacing.large)
-            }.padding(.top, 10)
+
+                shareItemView(option: FTShareOption.selectPages)
+                    .onTapGesture {
+                        self.viewModel.handleShareOptionSelection(FTShareOption.selectPages)
+                    }
+                    .cornerRadius(10.0)
+            }
+            .padding(.horizontal, FTSpacing.large)
+            .padding(.top, 10)
         }
         .scrollDisabled(true)
     }
-    
+    private func shareItemView(option : FTShareOption) -> some View{
+        HStack(spacing: FTSpacing.large) {
+            let thumbImage = viewModel.getthumbnailImage(option: option)
+            Image(uiImage: thumbImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: thumbnailSizeForImage(thumbImage).width, height: thumbnailSizeForImage(thumbImage).height)
+                .cornerRadius(leftCornerRadiusForOption(option), corners: [.topLeft, .bottomLeft])
+                .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+                .if(option == .currentPage || (option == .allPages && !viewModel.info.bookHasStandardCover)) { view in
+                    view.shadow(color: Color.appColor(.black8), radius: 1.40,x: 0,y: 0.56)
+                        .shadow(color: Color.appColor(.black8), radius: 5.6,x: 0,y: 3.3)
+                }
+                .if((option == .allPages && viewModel.info.bookHasStandardCover)) { view in
+                    view.shadow(color: Color.appColor(.black8), radius: 1.21,x: 0,y: 0.48)
+                        .shadow(color: Color.appColor(.black8), radius: 4.85,x: 0,y: 2.91)
+                }
+            VStack(alignment: .leading){
+                Text(option.displayTitle)
+                    .appFont(for: .regular, with: 17)
+                    .foregroundColor(Color.appColor(.black1))
+                if viewModel.getPagetitleinfo(option: option) != ""{
+                    Text(viewModel.getPagetitleinfo(option: option))
+                        .appFont(for: .regular, with: 15)
+                        .foregroundColor(.appColor(.black50))
+                }
+            }
+            Spacer()
+            if option.showChevron {
+                Image(icon: .rightArrow)
+                    .font(Font.appFont(for: .regular, with: 17))
+                    .fontWeight(.regular)
+                    .foregroundColor(.appColor(.black50))
+            }
+        }
+        .frame(height: 62)
+        .contentShape(Rectangle())
+        .padding(.horizontal, FTSpacing.large)
+        .background(Color.appColor(.cellBackgroundColor))
+
+    }
+
     private var shareHeaderView: some View {
         HStack{
-            if showBackButton { 
+            if showBackButton {
                 Button {
                     self.viewModel.delegate?.didTapBackButton()
                 } label: {
