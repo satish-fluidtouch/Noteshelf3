@@ -78,6 +78,8 @@ protocol FTShelfItemCollection: FTDiskItemProtocol, FTDroppable {
                          inGroup: FTGroupItemProtocol?,
                          shelfItemsToGroup items: [FTShelfItemProtocol]?,
                          onCompletion block: @escaping (NSError?, FTGroupItemProtocol?) -> Void);
+    func removeGroupItem(_ groupItem: FTGroupItemProtocol,
+                                onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void)
 
     // For NS3 Migration
     func isNS2Collection() -> Bool

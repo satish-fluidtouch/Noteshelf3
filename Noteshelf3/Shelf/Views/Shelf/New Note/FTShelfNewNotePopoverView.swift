@@ -133,6 +133,8 @@ struct FTShelfNewNotePopoverView: View {
             viewModel.delegate?.quickCreateNewNotebook()
         case .audioNote:
             delegate?.didTapAudioNote()
+        case .newGroup:
+            delegate?.didTapOnNewGroup()
         case .appleWatch: break
            // viewDelegate?.didTapOnWatchRecordings()
         }

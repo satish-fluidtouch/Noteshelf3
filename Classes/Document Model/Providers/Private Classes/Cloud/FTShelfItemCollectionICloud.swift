@@ -142,10 +142,20 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
         {
             if let item = itemsToMove.first {
                 if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
-                    self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
-                        movedItems.append(contentsOf: moved)
-                        itemsToMove.removeFirst();
-                        moveItem()
+                    if let groupItem = item as? FTGroupItemProtocol, groupItem.childrens.isEmpty {
+                        self.removeGroupItem(groupItem) { error, deletedGroup in
+                            if let movedItem = deletedGroup {
+                                movedItems.append(movedItem)
+                            }
+                            itemsToMove.removeFirst();
+                            moveItem()
+                        }
+                    } else {
+                        self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
+                            movedItems.append(contentsOf: moved)
+                            itemsToMove.removeFirst();
+                            moveItem()
+                        }
                     }
                 } else {
                     guard let shelfCollection = item.shelfCollection as? FTShelfItemCollectionICloud else  {
@@ -249,7 +259,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
             self.removeDocumentItem(shelfItem as! FTDocumentItemProtocol,
                                     onCompletion: block);
         } else {
-            self.removeGroupItem(shelfItem as! FTGroupItemProtocol,
+            self.removeGroupFolderItem(shelfItem as! FTGroupItemProtocol,
                                  onCompletion: block);
         }
     }
@@ -267,35 +277,42 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                 var tempURL = NSURL(fileURLWithPath: NSTemporaryDirectory()) as URL;
                 tempURL = tempURL.appendingPathComponent(newGroupName);
                 let fileManager = FileManager();
-                do {
-                    if self.isEmptyGroupNameExists(at: groupURL.path) == false {
-                        try fileManager.createDirectory(at: tempURL, withIntermediateDirectories: true, attributes: nil);
-                        try fileManager.setUbiquitous(true, itemAt: tempURL, destinationURL: groupURL);
-                    }
-                    let groupModel = self.addItemToCache(groupURL.standardizedFileURL) as? FTGroupItemProtocol;
-
-                    if let _items = items, !_items.isEmpty {
-                        self.moveShelfItems(_items,
-                                            toGroup: groupModel,
-                                            toCollection: self) { (error, _) in
+                DispatchQueue.global().async(execute: {
+                    do {
+                        if self.isEmptyGroupNameExists(at: groupURL.path) == false {
+                            try fileManager.createDirectory(at: tempURL, withIntermediateDirectories: true, attributes: nil);
+                            try fileManager.setUbiquitous(true, itemAt: tempURL, destinationURL: groupURL);
+                        }
+                        let groupModel = self.addItemToCache(groupURL.standardizedFileURL) as? FTGroupItemProtocol;
+                        
+                        if let _items = items, !_items.isEmpty {
+                            self.moveShelfItems(_items,
+                                                toGroup: groupModel,
+                                                toCollection: self) { (error, _) in
+                                DispatchQueue.main.async(execute: {
+                                    block(error, groupModel);
+                                    self.parent?.enableUpdates()
+                                });
+                            }
+                        } else if !groupName.isEmpty {
+                            NotificationCenter.default.post(name: Notification.Name.groupItemAdded, object: self, userInfo: [:])
                             DispatchQueue.main.async(execute: {
-                                block(error, groupModel);
+                                block(nil, groupModel);
+                                self.parent?.enableUpdates()
+                            });
+                        } else {
+                            DispatchQueue.main.async(execute: {
+                                block(nil, groupModel);
                                 self.parent?.enableUpdates()
                             });
                         }
-                    }
-                    else {
+                    } catch let createError as NSError {
                         DispatchQueue.main.async(execute: {
-                            block(nil, groupModel);
+                            block(createError, nil);
                             self.parent?.enableUpdates()
                         });
                     }
-                } catch let createError as NSError {
-                    DispatchQueue.main.async(execute: {
-                        block(createError, nil);
-                        self.parent?.enableUpdates()
-                    });
-                }
+                });
             });
         };
     }
@@ -456,57 +473,62 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                    toCollection : FTShelfItemCollection!,
                                    onCompletion block:@escaping (NSError?, FTShelfItemProtocol?, FTShelfItemProtocol?) -> Void)
     {
-        var toCreateFileName: Bool = true
-        var createdGroupItem: FTShelfItemProtocol?
-        
         toCollection?.shelfItems(.byName, parent: toGroup, searchKey: nil, onCompletion: { localItems in
-            for item in localItems where item.title == groupItem.title {
-                createdGroupItem = item
-                toCreateFileName = false
-                break
-            }
-            if toCreateFileName {
-                (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
-                                                                    inGroup: toGroup)
-                { (uniqueGroupName) -> (Void) in
-                    toCollection.createGroupItem(uniqueGroupName.deletingPathExtension,
-                                                 inGroup: toGroup,
-                                                 shelfItemsToGroup: groupItem.childrens)
-                    {(error, newGroupItem) in
-                        self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
+            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
+                                                                inGroup: toGroup)
+            { (uniqueGroupName) -> (Void) in
+                toCollection.createGroupItem(uniqueGroupName.deletingPathExtension,
+                                             inGroup: toGroup,
+                                             shelfItemsToGroup: groupItem.childrens)
+                {(error, newGroupItem) in
+                    self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
+                        //Empty group removal while moving empty group inside other group OR folder
+                        if groupItem.childrens.isEmpty {
+                            self.removeGroupItem(groupItem) { error, _groupItem in
+                                block(error, newGroupItem, groupItem)
+                            }
+                        } else {
                             block(error, newGroupItem, groupItem)
                         }
                     }
-                }
-            } else if let createdGroup = createdGroupItem as? FTGroupItemProtocol {
-                self.moveShelfItems(groupItem.childrens, toGroup: createdGroup, toCollection: toCollection) { error, _ in
-                    block(error, createdGroup, groupItem)
                 }
             }
         })
     }
 
-    fileprivate func removeGroupItem(_ groupItem: FTGroupItemProtocol,
+    fileprivate func removeGroupFolderItem(_ groupItem: FTGroupItemProtocol,
                                  onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void) {
         self.parent?.disableUpdates()
         let tempLocationURL = NSURL.fileURL(withPath: NSTemporaryDirectory()).appendingPathComponent(groupItem.URL.lastPathComponent);
 
         var fileError: NSError?;
-        do {
-            let fileManger = FileManager();
-            try? fileManger.removeItem(at: tempLocationURL);
-            try fileManger.evictUbiquitousItem(at: groupItem.URL);
-            try fileManger.setUbiquitous(false, itemAt: groupItem.URL, destinationURL: tempLocationURL);
-            _ = try fileManger.removeItem(at: tempLocationURL);
-            self.removeItemFromCache(groupItem.URL as URL, shelfItem: groupItem);
-        } catch let error as NSError {
-            fileError = error;
+        DispatchQueue.global().async {
+            do {
+                let fileManger = FileManager();
+                try? fileManger.removeItem(at: tempLocationURL);
+                try fileManger.evictUbiquitousItem(at: groupItem.URL);
+                try fileManger.setUbiquitous(false, itemAt: groupItem.URL, destinationURL: tempLocationURL);
+                _ = try fileManger.removeItem(at: tempLocationURL);
+                self.removeItemFromCache(groupItem.URL as URL, shelfItem: groupItem);
+            } catch let error as NSError {
+                fileError = error;
+            }
+            self.indexCache?.deleteNotebookTitle(groupItem.sortIndexHash)
+            DispatchQueue.main.async(execute: {
+                self.parent?.enableUpdates()
+                block(fileError, groupItem);
+            });
         }
-        self.indexCache?.deleteNotebookTitle(groupItem.sortIndexHash)
-        DispatchQueue.main.async(execute: {
-            self.parent?.enableUpdates()
-            block(fileError, groupItem);
-        });
+    }
+    
+    func removeGroupItem(_ groupItem: FTGroupItemProtocol,
+                         onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void) {
+        self.removeGroupFolderItem(groupItem) { error, groupItem in
+            DispatchQueue.main.async(execute: {
+                self.parent?.enableUpdates()
+                block(error, groupItem);
+            });
+        }
     }
 }
 
@@ -679,10 +701,6 @@ extension FTShelfItemCollectionICloud: FTShelfCacheProtocol {
         if(self.docBelongsToGroup(fileURL)) {
             if let groupItem = item.parent {
                 groupItem.removeChild(item);
-                if groupItem.childrens.isEmpty {
-                    (groupItem as? FTSortIndexContainerProtocol)?.indexCache?.handleDeletionUpdate()
-                    self.removeItemFromCache(groupItem.URL, shelfItem: groupItem);
-                }
             }
         } else {
 //            if(self.isGroup(fileURL)) {

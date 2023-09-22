@@ -42,9 +42,9 @@ struct FTNewNoteTopSectionView: View {
                         track(EventName.shelf_addmenu_importfile_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
                         self.dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
-                        delegate?.didClickImportNotebook()
+                            delegate?.didClickImportNotebook()
+                        }
                     }
-                }
             }
         }
     }

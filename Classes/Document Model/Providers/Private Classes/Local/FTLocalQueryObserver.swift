@@ -99,7 +99,12 @@ private extension FTLocalQueryGather {
             filteredURLS.enumerated().forEach({ (_,eachURL) in
                 if(eachURL.pathExtension == FTFileExtension.group) {
                     let dirContents = self.contentsOfURL(eachURL,skipsSubFolder: skipsSubFolder);
-                    notebookUrlList.append(contentsOf: dirContents);
+                    //Since we are supporting empty group creation
+                    if dirContents.isEmpty {
+                        notebookUrlList.append(eachURL)
+                    } else {
+                        notebookUrlList.append(contentsOf: dirContents);
+                    }
                 }
                 else {
                     notebookUrlList.append(eachURL);
