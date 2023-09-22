@@ -48,7 +48,7 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     private let thumbnailEdgePadding: CGFloat = 0.0 //No need because we already added padding
     private let expireDuration: TimeInterval = 5.0
     private let springLoadingDuration: TimeInterval = 1.0
-    private let thumbAnimationDuration: TimeInterval = (0.15 / 19) // (0.1(Total Duration) / 19(No. Of Images) )
+    private let thumbAnimationDuration: TimeInterval = (0.15 / 2) // (0.1(Total Duration) / 2(No. Of Images) )
 
     var currentThumbImageIndex: Int = 0
     let highlightStateImages:[String] = ["handle1", "handle2"]
@@ -250,7 +250,7 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
             return
         }
         self.numberOfPages = pageCount
-        if self.direction == .horizontal {
+        if self.direction == .vertical {
             slider.transform = CGAffineTransform(rotationAngle: .pi / 2)
         }
 
