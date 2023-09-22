@@ -3,7 +3,7 @@
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -131,55 +131,12 @@
             </objects>
             <point key="canvasLocation" x="67" y="-511"/>
         </scene>
-        <!--Tool Type Shortcut Container Controller-->
-        <scene sceneID="Yj8-eB-uzt">
-            <objects>
-                <viewController storyboardIdentifier="FTToolTypeShortcutContainerController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="r4W-hh-JI3" customClass="FTToolTypeShortcutContainerController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="my2-LM-3nf" customClass="FTShortcutContainerView" customModule="NS3_Beta" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="75e-iC-Fi3" customClass="FTShortcutContentHolderView" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="898"/>
-                                <subviews>
-                                    <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z38-bd-nr2">
-                                        <rect key="frame" x="10" y="400" width="36" height="256"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <segue destination="ieH-2x-evo" kind="embed" identifier="FTToolTypeShortcutViewController" id="E20-Nb-DT6"/>
-                                        </connections>
-                                    </containerView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <outlet property="shortcutView" destination="z38-bd-nr2" id="Qj7-65-jkf"/>
-                                </connections>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="IgU-th-gyE"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="75e-iC-Fi3" firstAttribute="top" secondItem="my2-LM-3nf" secondAttribute="top" id="GgM-gY-uvo"/>
-                            <constraint firstItem="75e-iC-Fi3" firstAttribute="leading" secondItem="my2-LM-3nf" secondAttribute="leading" id="XPd-6X-kER"/>
-                            <constraint firstAttribute="trailing" secondItem="75e-iC-Fi3" secondAttribute="trailing" id="uyg-bm-xTc"/>
-                            <constraint firstItem="IgU-th-gyE" firstAttribute="bottom" secondItem="75e-iC-Fi3" secondAttribute="bottom" id="zhH-M8-9vR"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="contentHolderView" destination="75e-iC-Fi3" id="eu1-yL-Tyo"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Udx-WJ-kHu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="492" y="-1590"/>
-        </scene>
         <!--Tool Type Shortcut View Controller-->
         <scene sceneID="NYI-3B-afq">
             <objects>
-                <viewController id="ieH-2x-evo" customClass="FTToolTypeShortcutViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTToolTypeShortcutViewController" id="ieH-2x-evo" customClass="FTToolTypeShortcutViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r8U-v4-nGb">
-                        <rect key="frame" x="0.0" y="0.0" width="36" height="256"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="x5U-Nt-Csy"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

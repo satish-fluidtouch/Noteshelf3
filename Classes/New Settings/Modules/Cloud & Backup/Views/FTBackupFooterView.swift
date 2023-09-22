@@ -53,8 +53,12 @@ class FTBackupFooterView: UITableViewHeaderFooterView {
     }
 
     func updateInfoLabel(attrText: NSAttributedString) {
-        let height = attrText.size().height
-        self.infoLabelHeightConstraint?.constant = height
+        let maxWidth: CGFloat = self.labelInfo.bounds.size.width
+        let rect = attrText.boundingRect(with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+                                         options: .usesLineFragmentOrigin,
+                                         context: nil)
+        let totalHeight = ceil(rect.size.height)
+        self.infoLabelHeightConstraint?.constant = totalHeight
         self.labelInfo.attributedText = attrText
     }
 
