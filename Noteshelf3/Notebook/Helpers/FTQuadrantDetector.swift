@@ -24,8 +24,11 @@ class FTQuadrantDetector: NSObject {
     private var leftQuadrantFrame: CGRect! = .zero
     private var rightQuadrantFrame: CGRect! = .zero
 
-    init(view: UIView, centerQuadrantInSet: CGFloat) {
-        let contentHolderRect: CGRect = view.bounds
+    init(view: UIView, centerQuadrantInSet: CGFloat, topOffset: CGFloat) {
+        let contentHolderRect = CGRect(x: view.bounds.origin.x,
+                                               y: view.bounds.origin.y + topOffset,
+                                               width: view.bounds.size.width,
+                                               height: view.bounds.size.height - topOffset)
 
         let contentHolderXpos = contentHolderRect.origin.x
         let contentHolderYpos = contentHolderRect.origin.y

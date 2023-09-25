@@ -90,10 +90,15 @@ enum FTShortcutPlacement: String, CaseIterable {
 private var offset: CGFloat = 8.0;
 extension FTShortcutPlacement {
     func shortcutViewCenter(fotShortcutView shorcutView: UIView,topOffset: CGFloat) -> CGPoint {
-        guard let frame = shorcutView.superview?.frame else {
-            return .zero;
+        guard let superViewFrame = shorcutView.superview?.frame else {
+            return .zero
         }
-        let size = shorcutView.frame.size;
+        let frame = CGRect(x: superViewFrame.origin.x,
+                                               y: superViewFrame.origin.y + topOffset,
+                                               width: superViewFrame.size.width,
+                                               height: superViewFrame.size.height - topOffset)
+
+        let size = shorcutView.frame.size
         
         let minY = frame.minY
         let maxX = frame.maxX
@@ -115,15 +120,15 @@ extension FTShortcutPlacement {
         case .centerRight:
             center = CGPoint(x: maxX - size.width/2.0 - offset, y: midY)
         case .topLeft:
-            center = CGPoint(x: size.width/2.0 + offset, y: minY + offset + topOffset + size.height/2.0)
+            center = CGPoint(x: size.width/2.0 + offset, y: minY + offset + size.height/2.0)
         case .bottomLeft:
             center = CGPoint(x: size.width/2.0 + offset, y: maxY - (2*offset) - size.height/2.0 - bottomOffset)
         case .topRight:
-            center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + offset + topOffset + size.height/2.0)
+            center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + offset + size.height/2.0)
         case .bottomRight:
             center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - (2*offset) - size.height/2.0 - bottomOffset)
         case .top:
-            center = CGPoint(x: midX, y: minY + topOffset + size.height/2.0)
+            center = CGPoint(x: midX, y: minY + size.height/2.0)
         case .bottom:
             center = CGPoint(x: midX, y: maxY - offset - size.height/2.0 - bottomOffset)
         }

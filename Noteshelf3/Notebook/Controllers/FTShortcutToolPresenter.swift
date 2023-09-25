@@ -78,9 +78,8 @@ private var offset: CGFloat = 8.0;
     func updatePositionOnScreenSizeChange() {
         let curSize = self.parentVC?.view.frame.size ?? .zero;
         if(!curSize.equalTo(contentSize)) {
-            contentSize = curSize;
+            contentSize = curSize
             self.prepareQuadrants()
-            self.updateMinOffsetIfNeeded()
             self.configureShortcutView(with: mode)
             if let parent = self.parentVC as? FTPDFRenderViewController, let zoomVc = parent.zoomOverlayController {
                 self.handleZoomPanelFrameChange(zoomVc.view.frame, mode: zoomVc.shortcutModeZoom, completion: nil)
@@ -293,10 +292,11 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
 // MARK: - Helper methods
 extension FTShortcutToolPresenter {
     private func prepareQuadrants() {
+        self.updateMinOffsetIfNeeded()
         guard let parentView = self.parentVC?.view else {
-            return;
+            return
         }
-        self.quadrantDetector = FTQuadrantDetector(view: parentView, centerQuadrantInSet: 0.33)
+        self.quadrantDetector = FTQuadrantDetector(view: parentView, centerQuadrantInSet: 0.33, topOffset: self.toolbarOffset)
     }
     
     internal func updateQuadrant(quadrant: FTShortcutQuadrant) {
