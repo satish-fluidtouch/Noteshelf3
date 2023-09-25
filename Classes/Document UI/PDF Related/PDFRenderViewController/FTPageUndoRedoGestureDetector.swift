@@ -17,31 +17,31 @@ import Foundation
     private var undoGesture: UITapGestureRecognizer?
     private var redoGesture: UITapGestureRecognizer?
     private var pinchGestureToFail: UIPinchGestureRecognizer?
-    private var contentHolderView: UIView?
     private weak var undoDelegate: FTUndoRedoDelegate?
     
     init(delegate: FTUndoRedoDelegate, contentHolderView: UIView) {
+        super.init()
         self.undoDelegate = delegate
-        self.contentHolderView = contentHolderView
+        self.addGestures(for: contentHolderView)
     }
     
-    func addGestures() {
+    private func addGestures(for contentHolderView: UIView) {
         undoGesture = UITapGestureRecognizer(target: self, action: #selector(undoGestureTriggered))
         undoGesture?.numberOfTouchesRequired = 2
         undoGesture?.delegate = self
-        self.contentHolderView?.addGestureRecognizer(undoGesture!)
+        contentHolderView.addGestureRecognizer(undoGesture!)
         
         redoGesture = UITapGestureRecognizer(target: self, action: #selector(redoGestureTriggered))
         redoGesture?.numberOfTouchesRequired = 3
         redoGesture?.delegate = self
-        self.contentHolderView?.addGestureRecognizer(redoGesture!)
+        contentHolderView.addGestureRecognizer(redoGesture!)
         
         pinchGestureToFail = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureTriggered))
         pinchGestureToFail?.cancelsTouchesInView = false
         pinchGestureToFail?.delaysTouchesBegan = false;
         pinchGestureToFail?.delaysTouchesEnded = false;
         pinchGestureToFail?.delegate = self
-        self.contentHolderView?.addGestureRecognizer(pinchGestureToFail!)
+        contentHolderView.addGestureRecognizer(pinchGestureToFail!)
         self.undoGesture?.require(toFail: pinchGestureToFail!)
         self.redoGesture?.require(toFail: pinchGestureToFail!)
     }

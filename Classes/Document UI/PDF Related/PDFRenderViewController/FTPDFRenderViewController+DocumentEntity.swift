@@ -19,7 +19,6 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
     
     @objc func setUpUndoRedoGesture() {
         let undoRedoGestureDetector = FTPageUndoRedoGestureDetector(delegate: self, contentHolderView: self.contentHolderView)
-        undoRedoGestureDetector.addGestures()
         self.undoRedoGestureDetector = undoRedoGestureDetector
     }
 
