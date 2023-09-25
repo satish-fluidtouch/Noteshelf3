@@ -955,12 +955,12 @@
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
 "clipart404" = "Servidor ocupado, por favor inténtelo de nuevo más tarde.";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "Se produjo un error al realizar la copia de seguridad. Por favor, inténtalo de nuevo más tarde.";
 "cloud.backup.error.failedToCreateBackup" = "No se pudo crear el archivo de respaldo. Verifique el espacio restante en su dispositivo.";
 "cloud.backup.error.fileNotFound" = "Archivo no encontrado";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
-"cloud.backup.errors" = "";
+"cloud.backup.error.filePasswordProtected" = "Los cuadernos protegidos con contraseña no se pueden respaldar como PDF.";
+"cloud.backup.error.packageNeedsUpgrade" = "No se pudo hacer una copia de seguridad debido a un error.";
+"cloud.backup.errors" = "Error";
 "cloud.backup.pdfFormatWarning" = "Nota: Los cuadernos protegidos con contraseña no se pueden respaldar como PDF.";
 "color.added" = "Color añadido";
 "color.deleted" = "Color eliminado";
@@ -1276,6 +1276,7 @@
 "shelf.evernote.signout" = "Cerrar sesión de Evernote";
 "shelf.general.usefaceid" = "Reconocimiento facial";
 "shelf.general.usetouchid" = "ID de huella digital";
+"shelf.group.noGroupItemsTitle" = "Este grupo está vacío.";
 "shelf.home.getinspired" = "Inspirarse";
 "shelf.home.recent" = "Reciente";
 "shelf.home.seeAll" = "Ver todo";
@@ -1520,4 +1521,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Ramakrishna on 19 September 2023 at 2:59 PM

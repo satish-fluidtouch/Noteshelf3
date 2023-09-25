@@ -25,6 +25,18 @@ private extension FTShelfDisplayStyle {
     }
 }
 
+struct FTShelfTopSectionviewConstants {
+    static let horizontalGridSize: CGFloat = 126
+    static let compactverticalGridSize: CGFloat = 330
+    static let regularverticalGridSize: CGFloat = 222
+    static let horizontalItemSize: CGFloat = 68
+    static let verticalItemSize: CGFloat = 96
+    static let regularImageSize: CGFloat = 64
+    static let compactRegularImageSize: CGFloat = 48
+    static let verticalImageSize: CGFloat = 36
+
+}
+
 extension FTShelfBaseView {
     var gridHorizontalPadding: CGFloat {
         let isInLandscape = UIScreen.main.bounds.width > UIScreen.main.bounds.height
@@ -126,9 +138,9 @@ private extension FTShelfBaseView {
 extension FTShelfBaseView{
      func showMinHeight(geometrySize: CGFloat) -> CGFloat {
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 1023 ? 218 : (geometrySize > 530 && geometrySize < 1023 ? 340 : 495)
+            return geometrySize > 1023 ? FTShelfTopSectionviewConstants.horizontalGridSize : (geometrySize < 500 ? FTShelfTopSectionviewConstants.compactverticalGridSize : FTShelfTopSectionviewConstants.regularverticalGridSize)
         } else {
-            return geometrySize > 680 ? 68 : 96
+            return geometrySize > 680 ? FTShelfTopSectionviewConstants.horizontalItemSize : FTShelfTopSectionviewConstants.verticalItemSize
         }
     }
 }

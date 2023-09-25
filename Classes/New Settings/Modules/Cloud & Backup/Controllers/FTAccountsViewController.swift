@@ -41,20 +41,26 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
 
     let autoBackUpNotes: String = FTAutoBackUpSection.autoBackUpNotebooks.localized()
 
+    private func updateBackupFooterView(_ footer: FTBackupFooterView) {
+        footer.isHidden = !self.isAutoBackUpOn
+        if isAutoBackUpOn {
+            footer.isHidden = false
+            footer.infoView.isHidden = true
+            footer.errorInfoBtn.isHidden = true
+            footer.activityIndicator.isHidden = false
+            if self.checkIfIgnoredItemsExists() {
+                footer.errorInfoBtn.isHidden = false
+            }
+            self.updateBackUpInfoIfLoggedIn()
+        }
+    }
+    
     private var isAutoBackUpOn: Bool = false {
         didSet {
             if let footer = self.tableView?.footerView(forSection: 1) as? FTBackupFooterView {
-                if isAutoBackUpOn {
-                    footer.isHidden = false
-                    footer.infoView.isHidden = true
-                    footer.errorInfoBtn.isHidden = true
-                    footer.activityIndicator.isHidden = false
-                    if self.checkIfIgnoredItemsExists() {
-                        footer.errorInfoBtn.isHidden = false
-                    }
-                    self.updateBackUpInfoIfLoggedIn()
-                } else {
-                    footer.isHidden = true
+                updateBackupFooterView(footer);
+                if !isAutoBackUpOn,oldValue != isAutoBackUpOn {
+                    self.tableView?.reloadData();
                 }
             }
         }
@@ -160,7 +166,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         if section == 0 {
             numRows = 1
         } else if section == 1 {
-            numRows = self.isAutoBackUpEnabled() ? 2 : 1
+            numRows = self.isAutoBackUpEnabled() ? 3 : 1
         } else if section == 2 {
 #if targetEnvironment(macCatalyst)
             numRows = 1;
@@ -183,6 +189,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         } else if cellIdentifier == CellIdentifiers.backUpOptions.rawValue {
             track("Shelf_Settings_Cloud_Backup_DriveOption", params: [:], screenName: FTScreenNames.shelfSettings)
             self.performSegue(withIdentifier: "showBackupOptionsSegue", sender: nil)
+        }else if cellIdentifier == CellIdentifiers.backUpFormatOptions.rawValue {
+            track("Shelf_Settings_Cloud_Backup_Drive_Format_Option", params: [:], screenName: FTScreenNames.shelfSettings)
         } else if cellIdentifier == CellIdentifiers.notebooks.rawValue {
             track("Shelf_Settings_Cloud_Backup_NotebooksOption", params: [:], screenName: FTScreenNames.shelfSettings)
             self.performSegue(withIdentifier: "NotebooksToBackUpSegue", sender: nil)
@@ -238,11 +246,13 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if isAutoBackUpEnabled() && section == 1 {
-            guard let footerView = Bundle.main.loadNibNamed("FTBackupFooterView", owner: nil, options: nil)?.first as? FTBackupFooterView else{
+            guard let footerView = Bundle.main.loadNibNamed("FTBackupFooterView", owner: nil, options: nil)?.first as? FTBackupFooterView else {
                 return nil
             }
+            footerView.setBackupFormat(FTUserDefaults.backupFormat)
             footerView.isHidden = !self.isAutoBackUpOn
             footerView.infoView.backgroundColor = UIColor.appColor(.cellBackgroundColor)
+            self.updateBackupFooterView(footerView);
             return footerView
         }
         return nil
@@ -276,6 +286,9 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 } else {
                     heightRequired += verticalSpace
                 }
+                if FTUserDefaults.backupFormat != .noteshelf {
+                    heightRequired += FTBackupFooterView.warning_View_Height;
+                }
             }
             if self.checkIfIgnoredItemsExists() { // to show more info button
                 heightRequired += 44.0 + verticalSpace // height of more info button 44
@@ -300,6 +313,10 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                 cell.rightSideDetailLabel?.text = self.getBackUpLocation()
                 cell.backUpOptionImageview.image = self.getCloudBackupIcon()
                 cell.rightSideDetailLabel?.addCharacterSpacing(kernValue: -0.41)
+            case CellIdentifiers.backUpFormatOptions.rawValue:
+                if let formatCell = cell as? FTSettingsBackupFormatTableViewCell {
+                    formatCell.delegate = self;
+                }
             case CellIdentifiers.notebooks.rawValue:
                 text = FTAutoBackUpSection.notebooks.localized()
                 self.updateBackUpFraction(cell: cell)
@@ -318,6 +335,7 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
         (cell as? FTSettingsCommonTableViewCell)?.populateCell(image: nil, name: text, showLinkView: false)
         return cell
     }
+    
     private func updateBackUpFraction(cell: FTSettingsBaseTableViewCell) {
         let noteBooksBackedUp = FTCloudBackUpManager.shared.fetchCloudBackUpItemsCount()
         let options = FTFetchShelfItemOptions()
@@ -353,6 +371,9 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
                                 let learnmoreAttributedText = NSAttributedString(string: String(format: NSLocalizedString("ConnectedThrough", comment: "Connected through.."), (accountInfo.serverAddress ?? "")), attributes: regularAttributes)
                                 mutableAttributedString.append(newLineString)
                                 mutableAttributedString.append(learnmoreAttributedText)
+                                mutableAttributedString.append(newLineString)
+                                let lastBackUpAttributedText = self.getLastBackUpMessage()
+                                mutableAttributedString.append(lastBackUpAttributedText)
                                 self.updateFooterViewIfNeeded(attributedText: mutableAttributedString, progressPercent: accountInfo.percentage)
                             } else {
                                 let mutableAttributedtext = NSMutableAttributedString(string: accountInfo.spaceUsedFormatString(), attributes: regularAttributes)
@@ -444,6 +465,8 @@ class FTAccountsViewController: FTCloudBackUpViewController, UITableViewDataSour
             cellIdentifier = CellIdentifiers.backUp.rawValue
         case (1,1):
             cellIdentifier = CellIdentifiers.backUpOptions.rawValue
+        case (1,2):
+            cellIdentifier = CellIdentifiers.backUpFormatOptions.rawValue
 #if targetEnvironment(macCatalyst)
         case (2, 0):
             cellIdentifier = CellIdentifiers.exportData.rawValue
@@ -586,6 +609,18 @@ private class FTTableHeaderView: UIView {
                                , height: 16.0);
             frame.origin.y = previousSize.height - frame.height - bottomOffset;
             self.headerLabel?.frame = frame;
+        }
+    }
+}
+
+extension FTAccountsViewController: FTSettingsBackupFormatTableViewCellDelegate {
+    func tableViewCell(_ cell: FTSettingsBackupFormatTableViewCell,didChangeFormat format: FTCloudBackupFormat) {
+        if let footer = self.tableView?.footerView(forSection: 1) as? FTBackupFooterView {
+            UIView.setAnimationsEnabled(false)
+            self.tableView?.beginUpdates()
+            footer.setBackupFormat(format);
+            self.tableView?.endUpdates()
+            UIView.setAnimationsEnabled(true)
         }
     }
 }

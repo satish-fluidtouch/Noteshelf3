@@ -36,7 +36,7 @@ protocol FTLaserPresentationDelegate: NSObjectProtocol {
             if self.enableAutoDisplay {
                 self.displayLink = CADisplayLink.init(target: self, selector: #selector(self.renderMetalView(_:)));
                 self.displayLink?.isPaused = true;
-                self.displayLink?.preferredFramesPerSecond = 60;
+                self.displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 20, maximum: 60, preferred: 60);
                 self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
             }
             else {

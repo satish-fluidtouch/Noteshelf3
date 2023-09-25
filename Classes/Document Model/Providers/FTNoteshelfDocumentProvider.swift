@@ -175,7 +175,7 @@ class FTNoteshelfDocumentProvider: NSObject {
             return
         }
         ns2Collection.shelfs { items in
-            completion(items)
+            completion(self.sortedCollections(items))
         }
     }
 
@@ -575,7 +575,8 @@ extension FTNoteshelfDocumentProvider
                                                     onCompletion: block);
         }
     }
-    private func moveGroupToTrash(_ groupItem: FTGroupItemProtocol, onCompletion block :@escaping (NSError?, [FTShelfItemProtocol]) -> Void){
+    
+    func moveGroupToTrash(_ groupItem: FTGroupItemProtocol, onCompletion block :@escaping (NSError?, [FTShelfItemProtocol]) -> Void){
         let shelfItems = groupItem.childrens
         var itemsToDelete = shelfItems;
         var movedItems = [FTShelfItemProtocol]()
@@ -591,10 +592,41 @@ extension FTNoteshelfDocumentProvider
                         itemsToDelete.removeFirst();
                         moveItem()
                     })
+                } else if let groupItem = itemsToDelete.first as? FTGroupItemProtocol {
+                    if !groupItem.childrens.isEmpty {
+                        self.moveGroupToTrash(groupItem) { error, _movedItems in
+                            if(nil == error) {
+                                movedItems.append(contentsOf: _movedItems)
+                            }
+                            itemsToDelete.removeFirst();
+                            moveItem()
+                        }
+                    } else {
+                        if let collection = groupItem.shelfCollection {
+                            collection.removeGroupItem(groupItem) { error, deletedGroup in
+                                NotificationCenter.default.post(name: Notification.Name.groupItemRemoved, object: collection, userInfo: [:])
+                                if(nil == error) {
+                                    movedItems.append(deletedGroup!)
+                                }
+                                itemsToDelete.removeFirst();
+                                moveItem()
+                            }
+                        }
+                    }
+                } else {
+                    block(nil, movedItems)
                 }
             }
-            else{
-                block(nil, movedItems)
+            else {
+                //Explicit group deletion, since we are supporting empty groups.
+                if let collection = groupItem.shelfCollection {
+                        collection.removeGroupItem(groupItem) { error, deletedGroup in
+                            NotificationCenter.default.post(name: Notification.Name.groupItemRemoved, object: collection, userInfo: [:])
+                            block(nil, movedItems)
+                        }
+                } else {
+                    block(nil, movedItems)
+                }
             }
         };
         moveItem();
@@ -925,6 +957,7 @@ extension FTNoteshelfDocumentProvider {
                 if !FileManager.default.fileExists(atPath: parentURL.path()) {
                     try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                 }
+                //TODO: (Discuss with Akshay) We should set Ubiquitous on background thread. Might need to move this to background, if we are on main thread.
                 try FileManager().setUbiquitous(true,
                                                 itemAt: url,
                                                 destinationURL: destinationURL);

@@ -11,6 +11,7 @@ import UIKit
 public enum ClearFace: String, CaseIterable {
     case regular = "Clearface-Serial-Regular"
     case medium = "Clearface-Serial-Medium"
+    case regularItalic = "Clearface-Serial-RegularItalic"
 }
 
 extension View {

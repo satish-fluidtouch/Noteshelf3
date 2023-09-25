@@ -12,7 +12,15 @@ import SwiftyDropbox
 let FTDidUnlinkAllDropboxClient: String = "FTDidUnlinkAllDropboxClient"
 typealias FTDropBoxPreprocessCompletionHandler = (Error?) -> Void
 
-class FTDropboxPublishRequest: FTCloudPublishRequest {
+class FTDropboxPublishRequest: FTCloudMultiFormatPublishRequest {
+    override func filePublishRequest(format: RKExportFormat) -> FTCloudFilePublishRequest {
+        let request = FTDropboxFilePublishRequest(backupEntry: self.refObject,delegate: self,sourceFile: self.sourceFileURL);
+        request.exportFormat = format;
+        return request;
+    }
+}
+
+private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
     private var currentRev: String?
     private var preprocessCompletionBlock: FTDropBoxPreprocessCompletionHandler?
     private var dropboxEntry: FTDropboxBackupEntry? {
@@ -22,15 +30,6 @@ class FTDropboxPublishRequest: FTCloudPublishRequest {
     private var uploadFilePath: String?
     private var queue: DispatchQueue?
     private var isCancelled = false
-
-    override init(backupEntry refObject: FTCloudBackup, delegate: FTCloudPublishRequestDelegate?) {
-        super.init(backupEntry: refObject, delegate: delegate)
-        NotificationCenter.default.addObserver(self, selector: #selector(dropboxClientUnlinked(_:)), name: NSNotification.Name(rawValue: FTDidUnlinkAllDropboxClient), object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 
     override func startRequest() {
         self.queue = self.publishQueue()
@@ -44,11 +43,12 @@ class FTDropboxPublishRequest: FTCloudPublishRequest {
                                               backUpProgressType: .uploadingContent)
             }
             guard let relativePath = self.relativePath, let uploadPath = self.uploadFilePath else {
-                self.publishFailedWithError(NSError(domain: "NSCloudBackup", code: 102, userInfo: nil))
+                self.publishFailedWithError(FTCloudBackupErrorCode.invalidInput.error);
                 return
             }
             let parentPath = URL(fileURLWithPath: relativePath).deletingLastPathComponent().path
-            if let dropboxPath = self.dropboxEntry?.dropboxPath {
+            if let fileInfo = self.fileInfo
+               , let dropboxPath = fileInfo.dropboxPath {
                 if self.currentRev == nil, (!(relativePath.lowercased() == dropboxPath.lowercased()) || !(URL(fileURLWithPath: dropboxPath).pathExtension == URL(fileURLWithPath: uploadPath).pathExtension)) {
                     FTCloudBackupPublisher.recordSyncLog(String.init(format: "DB File Move from: %@ to: %@", dropboxPath, relativePath))
                     self.moveFile(fromPath: dropboxPath, toPath: relativePath) { (error, file) in
@@ -124,8 +124,10 @@ class FTDropboxPublishRequest: FTCloudPublishRequest {
                     uploadSuccess = true
                     let fileManger = FileManager()
                     try? fileManger.removeItem(atPath: uploadPath)
-                    self.dropboxEntry?.rev = fileMetadata.rev
-                    self.dropboxEntry?.dropboxPath = fileMetadata.pathLower
+                    if let info = self.fileInfo {
+                        info.dropboxPath = fileMetadata.pathLower;
+                        info.rev = fileMetadata.rev;
+                    }
                     self.delegate?.didComplete(publishRequest: self, error: nil)
                 case .failure(let failure):
                     switch failure {
@@ -194,7 +196,7 @@ class FTDropboxPublishRequest: FTCloudPublishRequest {
             loadMetadateForFile(atPath: relativePath)
         }
         else {
-            completionBlock(NSError(domain: "NSCloudBackup", code: 102, userInfo: nil))
+            completionBlock(FTCloudBackupErrorCode.invalidInput.error)
         }
     }
     
@@ -316,5 +318,11 @@ class FTDropboxPublishRequest: FTCloudPublishRequest {
 //            }
         }
         return ignoreEntry
+    }
+}
+
+private extension FTDropboxFilePublishRequest {
+    var fileInfo: FTDBBackupFileInfo? {
+        return self.dropboxEntry?.cloudFileInfo(exportFormat) as? FTDBBackupFileInfo
     }
 }

@@ -10,6 +10,8 @@ import UIKit
 import FTStyles
 
 class FTBackupFooterView: UITableViewHeaderFooterView {
+    static let warning_View_Height: CGFloat = 23;
+    
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var progressView: UIProgressView!
@@ -19,6 +21,9 @@ class FTBackupFooterView: UITableViewHeaderFooterView {
 
     @IBOutlet private weak var errorLabelHeightConstraint: NSLayoutConstraint?
     
+    @IBOutlet private weak var pdfContentWarnLableHeight: NSLayoutConstraint?
+    @IBOutlet private weak var pdfContentWarnLable: UILabel?
+
     @IBOutlet weak var infoLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var errorInfoBtn: UIButton!
 
@@ -30,6 +35,7 @@ class FTBackupFooterView: UITableViewHeaderFooterView {
         self.errorInfoBtn.setTitle("moreInfo".localized, for: .normal)
         self.errorInfoBtn.setTitleColor(UIColor.appColor(.accent), for: .normal)
         self.updateErrorMessage("")
+        self.pdfContentWarnLable?.text = "cloud.backup.pdfFormatWarning".localized
     }
 
     func updateErrorMessage(_ msg: String) {
@@ -47,12 +53,27 @@ class FTBackupFooterView: UITableViewHeaderFooterView {
     }
 
     func updateInfoLabel(attrText: NSAttributedString) {
-        let height = attrText.size().height
-        self.infoLabelHeightConstraint?.constant = height
+        let maxWidth: CGFloat = self.labelInfo.bounds.size.width
+        let rect = attrText.boundingRect(with: CGSize(width: maxWidth, height: .greatestFiniteMagnitude),
+                                         options: .usesLineFragmentOrigin,
+                                         context: nil)
+        let totalHeight = ceil(rect.size.height)
+        self.infoLabelHeightConstraint?.constant = totalHeight
         self.labelInfo.attributedText = attrText
     }
 
     @IBAction func errorInfoTapped(_ sender: Any) {
-            self.errorInfoTapHandler?()
+        self.errorInfoTapHandler?()
+    }
+    
+    func setBackupFormat(_ format: FTCloudBackupFormat) {
+        if format != .noteshelf {
+            self.pdfContentWarnLableHeight?.constant = FTBackupFooterView.warning_View_Height;
+            self.layoutIfNeeded();
+        }
+        else {
+            self.pdfContentWarnLableHeight?.constant = 0;
+            self.layoutIfNeeded();
+        }
     }
 }

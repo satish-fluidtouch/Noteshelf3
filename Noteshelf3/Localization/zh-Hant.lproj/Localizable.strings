@@ -955,12 +955,12 @@
 "bujoessentials" = "筆記必需品";
 "cancel" = "取消";
 "clipart404" = "服務器繁忙，請稍後再試。";
-"cloud.backup.error.contentPreviouslyCrashed" = "";
+"cloud.backup.error.contentPreviouslyCrashed" = "時發生錯誤。請稍後再試。";
 "cloud.backup.error.failedToCreateBackup" = "無法建立備份檔案。請檢查您的設備剩餘空間。";
 "cloud.backup.error.fileNotFound" = "檔案未找到";
-"cloud.backup.error.filePasswordProtected" = "";
-"cloud.backup.error.packageNeedsUpgrade" = "";
-"cloud.backup.errors" = "";
+"cloud.backup.error.filePasswordProtected" = "受密碼保護的筆記本無法備份為 PDF。";
+"cloud.backup.error.packageNeedsUpgrade" = "由於錯誤無法備份";
+"cloud.backup.errors" = "錯誤";
 "cloud.backup.pdfFormatWarning" = "注意：受密碼保護的筆記本無法備份為 PDF。";
 "color.added" = "添加顏色";
 "color.deleted" = "顏色已刪除";
@@ -1276,6 +1276,7 @@
 "shelf.evernote.signout" = "從Evernote登出";
 "shelf.general.usefaceid" = "面容識別";
 "shelf.general.usetouchid" = "指紋辨識";
+"shelf.group.noGroupItemsTitle" = "這個群組是空的";
 "shelf.home.getinspired" = "獲取靈感";
 "shelf.home.recent" = "最近";
 "shelf.home.seeAll" = "查看全部";
@@ -1520,4 +1521,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 8 September 2023 at 7:08 PM
+// Last Synced by Ramakrishna on 19 September 2023 at 2:59 PM

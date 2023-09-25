@@ -11,6 +11,8 @@ import SwiftUI
 struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
+    @StateObject var backUpError: FTCloudBackupENPublishError = FTCloudBackupENPublishError(type: .cloudBackup);
+    @StateObject var enPublishError: FTCloudBackupENPublishError = FTCloudBackupENPublishError(type: .enPublish);
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State private var showingPopover:Bool = false
@@ -20,7 +22,11 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
     var appState : AppState
 
     private var popOverHeight: CGFloat {
-        return horizontalSizeClass == .regular ? 384.0 : 448 // increase the height of 52.0 if apple watch added in the popover view
+        var height = horizontalSizeClass == .regular ? 384.0 : 448 // increase the height of 52.0 if apple watch added in the popover view
+        if !self.shelfViewModel.collection.isAllNotesShelfItemCollection {
+            height += 52 // for new group cell. Adding of new group is not  supported in Home / All notes
+        }
+        return height
     }
      func newNoteViewModel() -> FTNewNotePopoverViewModel {
          let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
@@ -33,7 +39,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
                     ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                        if shelfViewModel.hasEvernotePublishError() {
+                        if enPublishError.hasError {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {
@@ -44,7 +50,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                         }
 
-                        if shelfViewModel.hasDropboxPublishError() {
+                        if backUpError.hasError {
                             Button {
                                 self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
                             } label: {

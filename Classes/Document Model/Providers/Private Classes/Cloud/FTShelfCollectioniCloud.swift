@@ -217,8 +217,9 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
                             itemCollection.handleSortIndexFileUpdates(eachItem)
                        }
                     }
-                }
-                else {
+                } else if (fileURL.pathExtension == FTFileExtension.group) {
+                    _ = self.addShelfItemToCache(eachItem, isBuildingCache: isBuildingCache) as? FTShelfItemCollection;
+                } else {
                     _ = self.addShelfItemToCache(eachItem, isBuildingCache: isBuildingCache) as? FTShelfItemCollection;
                 }
 

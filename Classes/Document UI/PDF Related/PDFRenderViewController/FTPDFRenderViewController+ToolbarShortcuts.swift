@@ -18,10 +18,6 @@ extension FTPDFRenderViewController {
     }
 
     private func addShortcutContainer(mode: RKDeskMode) {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTToolTypeShortcutContainerController.self))
-        guard let toolbarContainer = storyboard.instantiateViewController(identifier: "FTToolTypeShortcutContainerController") as?  FTToolTypeShortcutContainerController else {
-            fatalError("Programmer error, couldnot find FTToolTypeShortcutContainerController")
-        }
         var rackType = FTRackType.pen
 
         if mode == .deskModeMarker {
@@ -31,18 +27,16 @@ extension FTPDFRenderViewController {
         } else if mode == .deskModeLaser {
             rackType = .presenter
         }
-        toolbarContainer.rackType = rackType
+        
+        let toolbarContainer = FTShortcutToolPresenter();
         if let toolbar = self.parent as? FTToolbarElements {
             toolbarContainer.mode =  toolbar.isInFocusMode() ? .focus : .normal
         }
+        
         toolbarContainer.delegate = self
-        self.addChild(toolbarContainer)
         self.toolTypeContainerVc = toolbarContainer
-
-        if let parentView = self.view {
-            toolbarContainer.view.addFullConstraints(parentView)
-            toolbarContainer.didMove(toParent: self)
-        }
+        let rackData = FTRackData(type: rackType, userActivity: self.view.window?.windowScene?.userActivity);
+        toolbarContainer.showToolbar(rackData: rackData, on: self);
     }
 
     func showOrHideShortcutViewIfNeeded(_ mode: FTScreenMode) {
@@ -57,7 +51,7 @@ extension FTPDFRenderViewController {
    private func removeShortcutContainerIfExists() {
        if let controller = self.toolTypeContainerVc {
            controller.removeFromParent()
-           controller.view.removeFromSuperview()
+           self.toolTypeContainerVc = nil;
        }
     }
 }

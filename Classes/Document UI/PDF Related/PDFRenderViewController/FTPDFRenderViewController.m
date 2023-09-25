@@ -397,6 +397,11 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 #endif
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNotebookInfoToast];
+}
+
 -(void)enableOrDisableNewPageCreationOptionsInsideDocument {
     if (self.currentDeskMode == kDeskModeReadOnly){
         [(FTDocumentScrollView*)self.mainScrollView disableNewPageCreationOptions];
@@ -606,6 +611,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 -(void)updateContentSize
 {
     id currentScrollViewDel = self.mainScrollView.scrollViewDelegate;
+    self.mainScrollView.contentInset = UIEdgeInsetsZero;
     self.mainScrollView.scrollViewDelegate = nil;
     [self.pageLayoutHelper updateContentSizeWithPageCount:self.numberOfPages];
     self.mainScrollView.scrollViewDelegate = currentScrollViewDel;
@@ -645,7 +651,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     [self configureSceneNotifications];
     [self checkForExternalScreens];
     [self validateMenuItems];
-
+    [self showNotebookInfoToast];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if(self.pdfDocument.isJustCreatedWithQuickNote == false) {
             [self showQuickCreateInfoTipIfNeeded];
@@ -669,6 +675,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
     [[self navigationController]setNavigationBarHidden:YES animated:NO];
+    [[self toolTypeContainerVc] updatePositionOnScreenSizeChange];
 }
 
 -(void)performLayout
@@ -1321,7 +1328,12 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
             if(shouldClose) {
                 [[FTNoteshelfDocumentManager shared] saveAndCloseWithDocument:documentToSave
                                                                         token:self.openDocToken
-                                                                 onCompletion:onCompletionBlock];
+                                                                 onCompletion:^(BOOL success) {
+                    [[FTCloudBackUpManager shared] startPublish];
+                    if(nil != onCompletionBlock) {
+                        onCompletionBlock(success);
+                    }
+                }];
             }
             else {
                 [documentToSave saveDocumentWithCompletionHandler:onCompletionBlock];
@@ -1454,7 +1466,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
             if (loadingIndicator) {
                 [loadingIndicator hide:nil];
             }
-            
             [[FTENPublishManager shared] startPublishing];
         };
         if(backAction == FTSaveAction) {
@@ -2058,7 +2069,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                            pageController:self.firstPageController];
         viewController.currentDeskMode = self.currentDeskMode;
         self.zoomOverlayController = viewController;
-        [self.view bringSubviewToFront:self.toolTypeContainerVc.view];
+        [self.toolTypeContainerVc bringToFront];
         [self.toolTypeContainerVc handleZoomPanelFrameChange:self.zoomOverlayController.view.frame mode:self.zoomOverlayController.shortcutModeZoom animate:true completion: nil];
     }
     else {

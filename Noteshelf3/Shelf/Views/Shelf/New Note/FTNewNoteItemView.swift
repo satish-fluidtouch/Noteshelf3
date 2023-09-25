@@ -13,7 +13,7 @@ struct FTNewNoteItemView:View{
 
     let type: FTNewNotePopoverOptions
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject  var delegate:FTShelfViewModel
+    @EnvironmentObject var delegate: FTShelfViewModel
 
     var body: some View{
         VStack(alignment: .leading){
@@ -57,7 +57,7 @@ struct FTNewNoteItemView:View{
                 .cornerRadius(16)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.appColor(.accentBorder), lineWidth: 1.0)
+                        .stroke(Color.appColor(.accentBg), lineWidth: 1.0)
                 )
             }
 

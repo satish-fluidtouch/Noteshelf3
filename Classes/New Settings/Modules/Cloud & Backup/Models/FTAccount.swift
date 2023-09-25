@@ -85,7 +85,3 @@ enum FTAccount: String {
         }
     }
 }
-enum FTBackupFormat: String {
-    case noteshelf = ".noteshelf"
-    case pdf = ".pdf"
-}

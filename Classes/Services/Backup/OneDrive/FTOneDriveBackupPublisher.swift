@@ -44,13 +44,8 @@ class FTOneDriveBackupPublisher: FTCloudBackupPublisher {
         return entry
     }
     
-    override func publishRequest(forItem inItem: FTCloudBackup?) -> FTCloudPublishRequest? {
-        var request: FTOneDrivePublishRequest?
-        if let item = inItem {
-            request = FTOneDrivePublishRequest(backupEntry: item, delegate: self)
-            request?.delegate = self;
-            request?.refObject = item;
-        }
-        return request
+    override func publishRequest(forItem inItem: FTCloudBackup, itemURL: URL) -> FTCloudPublishRequest? {
+        let request = FTOneDrivePublishRequest(backupEntry: inItem, delegate: self,sourceFile:itemURL);
+        return request;
     }
 }

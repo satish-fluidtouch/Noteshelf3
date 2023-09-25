@@ -113,7 +113,7 @@ struct FTGroupCoverViewNew: View {
     }
     private var bgColor: Color {
         if coverViewPurpose == .shelf {
-            return Color.appColor(.black5)
+            return Color.appColor(.groupBGColor)
         } else if coverViewPurpose == .shareFormsheet {
             return  Color.appColor(.shareGroupCovernBg)
         } else  {
@@ -130,11 +130,7 @@ struct FTGroupCoverViewNew: View {
     //**********************************************//
 
     var body: some View {
-        ZStack(alignment:.topLeading) {
-            if coverViewPurpose == .shelf, shelfViewModel.highlightItem == groupItem {
-                FTShelfItemDropOverlayView()
-                    .zIndex(1)
-            }
+        VStack(alignment:.leading) {
             Grid(alignment:.leading ,horizontalSpacing: horizontalSpacing,verticalSpacing: verticalSpacing) {
                 // Top Row
                 if self.hasOnlyPortThumbs() {
@@ -157,6 +153,21 @@ struct FTGroupCoverViewNew: View {
             .padding(.vertical,verticalPadding)
             .padding(.horizontal,horizontalpadding)
             .zIndex(0)
+        }
+        .overlay(alignment: .top) {
+            if coverViewPurpose == .shelf, (groupCoverViewModel.groupItem!.childrens.isEmpty || groupContainsAllEmptyGroups){
+                Image("emptyGroupPlaceholder")
+                    .resizable()
+                    .frame(height:(groupCoverHeight - 2*verticalPadding), alignment: .top)
+                    .padding(.vertical,verticalPadding)
+                    .padding(.horizontal,horizontalpadding)
+            }
+        }
+        .overlay(alignment:.top) {
+            if coverViewPurpose == .shelf, shelfViewModel.highlightItem == groupItem {
+                FTShelfItemDropOverlayView()
+                    .frame(width:groupWidth,height:groupCoverHeight,alignment: .top)
+            }
         }
         .frame(width:groupCoverWidth,height:groupCoverHeight,alignment: .top)
         .background(bgColor)
@@ -260,6 +271,10 @@ struct FTGroupCoverViewNew: View {
 
     private var bottomLandItem: FTShelfItemViewModel? {
         return landThumbs.last
+    }
+
+    private var groupContainsAllEmptyGroups: Bool {
+        return groupCoverViewModel.groupItem!.childrens.filter({$0 is FTGroupItemProtocol}).count == groupCoverViewModel.groupItem!.childrens.count
     }
 }
 

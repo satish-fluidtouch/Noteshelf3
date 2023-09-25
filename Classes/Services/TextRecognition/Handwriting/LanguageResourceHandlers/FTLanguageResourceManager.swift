@@ -10,6 +10,8 @@
 let FTResourceDownloadStatusDidChange = "FTResourceDownloadStatusDidChange"
 let FTRecognitionLanguageDidSelect = "FTRecognitionLanguageDidSelect"
 
+import Combine
+
 class FTLanguageResourceManager: NSObject {
     @objc static let shared:FTLanguageResourceManager = FTLanguageResourceManager()
     var languageResources: [FTRecognitionLangResource] = []
@@ -19,6 +21,21 @@ class FTLanguageResourceManager: NSObject {
         }
     }
     fileprivate var fileHandler: FTLogger?
+    private var premiumCancellableEvent: AnyCancellable?
+
+    private override init() {
+        super.init()
+        // Once non premiumuser becomes premium, need to enable writing recognition
+        if !FTIAPManager.shared.premiumUser.isPremiumUser {
+            premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] isPremium in
+                    if isPremium {
+                        self?.activateOnDemandResourcesIfNeeded()
+                    }
+                }
+        }
+    }
 
     var currentLanguageCode: String? {
         get{
@@ -134,6 +151,14 @@ class FTLanguageResourceManager: NSObject {
     }()
     
     @objc func activateOnDemandResourcesIfNeeded(){ // Wehen we set a language for hand-writing recogntion, it needs to be ready if it is an on demand resource
+        if FTIAPManager.shared.premiumUser.isPremiumUser
+            , !UserDefaults.standard.isHWlLanguageSet  {
+            if self.currentLanguageCode == languageCodeNone {
+                self.currentLanguageCode = nil
+            }
+            UserDefaults.standard.isHWlLanguageSet = true
+        }
+
         self.languageResources = self.availableLanguageResources
         
         if self.currentLanguageCode == nil{
@@ -159,6 +184,7 @@ class FTLanguageResourceManager: NSObject {
             }
         }
     }
+
     @objc func warnLanguageSelectionIfNeeded(onController controller: UIViewController){
         //==========================================
         if (self.isPreferredLanguageChosen || self.currentLanguageCode == nil || (self.currentLanguageCode != nil && self.currentLanguageCode != "en_US")) {
@@ -207,3 +233,14 @@ extension FTLanguageResourceManager{
     
 }
 
+private extension UserDefaults {
+    var isHWlLanguageSet: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "isManuallyDisabledRecognition")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "isManuallyDisabledRecognition")
+            UserDefaults.standard.synchronize()
+        }
+    }
+}

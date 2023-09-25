@@ -17,7 +17,6 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
 }
 
 @objcMembers class FTENPublishManager: NSObject, FTBasePublishRequestDelegate {
-    
     var shouldCancelPublishing = false
     private var currentlyPublingNotebookId: String?
     private var publishInProgress = false

@@ -21,7 +21,6 @@ extension UIView {
 
 @objcMembers class FTZoomPanelConstant : NSObject {
     static let overlayHeight:CGFloat = UIDevice.current.userInterfaceIdiom == .phone ? 200.0 : 360;
-    static let areaTopOffset: CGFloat = UIDevice.current.userInterfaceIdiom == .phone ? 76.0 : 200.0;
     static let contentHeight: CGFloat = UIDevice.current.userInterfaceIdiom == .phone ? 156 : 290;
 }
 
@@ -78,11 +77,24 @@ extension UIView {
     
     private var maxPalmPosition:CGFloat {
         guard let superView = self.view.superview else {
-            return 0;
+            return 0
         }
-        
-        let maxPalmPosition = superView.frame.height - FTZoomPanelConstant.overlayHeight - FTZoomPanelConstant.areaTopOffset;
-        return maxPalmPosition;
+        var areaTopOffset: CGFloat = FTToolbarConfig.Height.regular
+
+        if UIDevice.current.isPhone() {
+            areaTopOffset = FTToolbarConfig.Height.compact
+            areaTopOffset += 100.0 // offset to see notebook
+            if let window = UIApplication.shared.keyWindow {
+                let topSafeAreaInset = window.safeAreaInsets.top
+                if topSafeAreaInset > 0 {
+                    areaTopOffset += topSafeAreaInset
+                }
+            }
+        } else {
+            areaTopOffset += 150.0 // offset to see notebook
+        }
+        let maxPalmPosition = superView.frame.height - FTZoomPanelConstant.overlayHeight - areaTopOffset
+        return maxPalmPosition
     }
     
     private(set)weak var currentPage: FTPageProtocol?;
@@ -759,10 +771,6 @@ class FTZoomOverlayView: UIView {
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-//        if let contentView = self.contentHolderView, contentView.frame.contains(point) {
-//            (self.pdfRenderVc as? FTPDFRenderViewController)?.minimizeFavToolBarIfNeeded()
-//        }
         return super.hitTest(point, with: event)
     }
-    
 }
