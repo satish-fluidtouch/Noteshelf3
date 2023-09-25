@@ -11,10 +11,9 @@ import FTCommon
 
 protocol FTTagsViewControllerDelegate: NSObjectProtocol {
     func addTagsViewController(didTapOnBack controller: FTTagsViewController);
-    func didAddTag(tag: FTTagModel) async throws
-    func didRenameTag(tag: FTTagModel, renamedTag: FTTagModel) async throws
-    func didDeleteTag(tag: FTTagModel) async throws
-    func didUnSelectTag(tag: FTTagModel) async throws
+    func didAddTag(tag: FTTagModel)
+    func didUnSelectTag(tag: FTTagModel)
+    func didDismissTags()
     func tagsViewControllerFor(items: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void))
 }
 
@@ -27,7 +26,11 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     @IBOutlet weak var textField: UITextField?
     @IBOutlet private weak var cancelButton: FTCustomButton?
 
-    var tagsList: [FTTagModel] = []
+    var tagsList: [FTTagItemModel] = [] {
+        didSet {
+            self.tagsList = self.tagsList.sorted(by: { $0.tag.text.localizedCaseInsensitiveCompare($1.tag.text) == .orderedAscending })
+        }
+    }
 
     var isPresenting = false
     var showCloseIcon = false
@@ -39,7 +42,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
            #if DEBUG
                debugPrint("deinit \(self.classForCoder)");
            #endif
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil, userInfo: ["tag": lastUsedTag])
+        self.delegate?.didDismissTags()
        }
 
     override func viewDidLoad() {
@@ -91,7 +94,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         tagsView?.backgroundColor = UIColor.appColor(.cellBackgroundColor)
         tagsView?.layer.cornerRadius = 10
         tagsView?.delegate = self
-        tagsView?.items = self.tagsList
+        tagsView?.items = self.tagsList.map {$0.tag}
         self.tagsView?.refresh()
         if self.tagsList.isEmpty {
             tagsView?.isHidden = true
@@ -106,7 +109,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             }
     }
     
-    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagModel]){
+    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]){
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
@@ -119,7 +122,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         }
     }
 
-    static func presentTagsController(onController controller:UIViewController, tags: [FTTagModel]){
+    static func presentTagsController(onController controller:UIViewController, tags: [FTTagItemModel]){
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
@@ -131,16 +134,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             tagsController.modalPresentationStyle = .formSheet
             controller.ftPresentFormsheet(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
         }
-    }
-    
-    func searchResultsFor(searchText: String) -> [FTTagModel]? {
-        if !searchText.isEmpty {
-            let filteredTags = self.tagsList.filter({ (tag) -> Bool in
-                return tag.text.lowercased().contains(searchText.lowercased())
-            })
-            return filteredTags
-        }
-        return self.tagsList
     }
 
     //MARK:- IBActions
@@ -165,130 +158,54 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     func didAddNewTag(tag: String) {
         if tag.count > 0 {
             tagsView?.isHidden = false
-            let filtered =  self.tagsList.filter {$0.text == tag }
+            let filtered =  self.tagsList.filter {$0.tag.text == tag }
             if filtered.count == 0 {
-                let item = FTTagModel(text: tag, isSelected: true)
-                self.tagsList.append(item)
+                let tagItem = FTTagsProvider.shared.addTag(tagName: tag)
+                self.tagsList.append(tagItem)
                 // Add new unique page tag
-                let sortedArray = self.tagsList.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-                self.tagsList = sortedArray
-                tagsView?.items = self.tagsList
+                tagsView?.items = self.tagsList.map {$0.tag}
                 self.tagsView?.refresh()
                 track("tag_action", params: ["isAdded" : true])
-                Task.detached(operation: {
-                    do {
-                        try await self.delegate?.didAddTag(tag: item)
-                        await self.performDidAddTag(tag: item.text)
-                    } catch {
-                        
-                    }
-                })
+
+                self.delegate?.didAddTag(tag: tagItem.tag)
+                self.performDidAddTag(tag: tagItem.tag.text)
+
             }
         }
+    }
+
+    func selectedTags() -> [FTTagModel] {
+        return self.tagsList.map({$0.tag}).filter({$0.isSelected})
     }
 }
 
 // MARK: TagsViewDelegate
 extension FTTagsViewController: TagsViewDelegate {
     func didSelectIndexPath(indexPath: IndexPath) {
-        let item = self.tagsList[indexPath.row]
+        let tagItem = self.tagsList[indexPath.row]
         // Update page tags based on Select and Unselect
-        if item.isSelected {
-            item.isSelected = false
-            Task.detached(operation: {
-                do {
-                    try await self.delegate?.didUnSelectTag(tag: item)
-                    let docIds = FTCacheTagsProcessor.shared.documentIdsForTag(tag: item)
-                    if docIds.isEmpty {
-                        await self.performDidDeleteTag(tag: item.text)
-                    }
-                } catch {
-
-                }
-            })
+        if tagItem.tag.isSelected {
+            tagItem.tag.isSelected = false
+            self.delegate?.didUnSelectTag(tag: tagItem.tag)
             track("tag_action", params: ["isAdded" : false])
         } else {
-            item.isSelected = true
-            Task.detached(operation: {
-                do {
-                    try await self.delegate?.didAddTag(tag: item)
-                } catch {
-
-                }
-            })
+            tagItem.tag.isSelected = true
+            self.delegate?.didAddTag(tag: tagItem.tag)
             track("tag_action", params: ["isAdded" : true])
         }
-        self.tagsList[indexPath.row] = item
-        let sortedArray = self.tagsList.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-        self.tagsList = sortedArray
-        tagsView?.items = self.tagsList
+        self.tagsList[indexPath.row] = tagItem
         self.tagsView?.refresh()
 
     }
 
-    func didRenameTag(tag: FTTagModel) {
-        UIAlertController.showRenameDialog(with: "Rename".localized, message: "", renameText: tag.text, from: self) { [weak self] renamedTag in
-            guard let self = self else { return }
-            let oldTag = FTTagModel(id: tag.id, text: tag.text, isSelected: tag.isSelected)
-
-            //Rename tag from All Pages from All Books
-            tag.text = renamedTag;
-            let sortedArray = self.tagsList.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-            self.tagsList = sortedArray
-            self.tagsView?.items = self.tagsList
-            self.tagsView?.refresh()
-            self.performDidRenameTag(tag: oldTag.text, renamedTag: renamedTag)
-
-            Task.detached(operation: {
-                do {
-                    try await self.delegate?.didRenameTag(tag: oldTag, renamedTag: FTTagModel(id: tag.id, text: renamedTag, isSelected: tag.isSelected))
-                }
-                catch {
-                    print(error)
-                }
-            })
-        }
-    }
-
-    func didDeleteTag(tag: FTTagModel) {
-        UIAlertController.showDeleteDialog(with: String(format: "tags.delete.alert.title".localized, "\"\(tag.text)\""), message: "tags.delete.alert.message".localized, from: self) {
-            self.tagsList.removeAll { tagModel in
-                tagModel.text == tag.text
-            }
-
-            let sortedArray = self.tagsList.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-            self.tagsList = sortedArray
-            self.tagsView?.items = self.tagsList
-            self.tagsView?.refresh()
-            if self.tagsList.isEmpty {
-                self.tagsView?.isHidden = true
-            } else {
-                self.tagsView?.isHidden = false
-            }
-            //Remove tag from All Pages from All books
-            Task.detached(operation: {
-                do {
-                    try await self.delegate?.didDeleteTag(tag: tag)
-                    await self.performDidDeleteTag(tag: tag.text)
-                } catch {
-
-                }
-            })
-            track("Tag_Delete")
-        }
-    }
-
-    @MainActor
     func performDidAddTag(tag: String) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "add", "renamedTag": ""])
     }
 
-    @MainActor
     func performDidDeleteTag(tag: String) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "delete", "renamedTag": ""])
     }
 
-    @MainActor
     func performDidRenameTag(tag: String, renamedTag: String) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "rename", "renamedTag": renamedTag])
         self.lastUsedTag = renamedTag

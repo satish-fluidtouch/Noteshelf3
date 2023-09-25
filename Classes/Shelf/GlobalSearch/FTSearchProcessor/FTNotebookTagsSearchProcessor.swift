@@ -48,7 +48,7 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
             currentTask =  Task {
                 do {
                     let result = try await viewModel.fetchOnlyTaggedNotebooks(selectedTags: self.tags, shelfItems: self.shelfItems, progress: progress)
-                    let booksInfo = result.tagsItems.filter({ $0.type == .book })
+                    let booksInfo = result.filter({ $0.type == .book })
                     var items = [FTSearchResultBookProtocol]()
                     let sectionResult = FTSearchSectionTitles()
 
@@ -60,7 +60,7 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
                         items.append(gridItem)
                     })
 
-                    let pageInfo = result.tagsItems.filter({ $0.type == .page })
+                    let pageInfo = result.filter({ $0.type == .page })
                     var searchPageContent: [FTSearchSectionContent] = []
 
                     pageInfo.forEach { eachPageInfo in

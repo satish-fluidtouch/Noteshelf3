@@ -116,7 +116,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     func documentTags() -> [String] {
         if let documentInfoPlist = self.propertyInfoPlist() {
             if let tags = documentInfoPlist.object(forKey: DOCUMENT_TAGS_KEY) as? [String] {
-                return tags
+                return Array(Set(tags))
             }
         }
         return []
@@ -128,7 +128,11 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
         self.propertyInfoPlist()?.setObject(tags, forKey: DOCUMENT_TAGS_KEY)
     }
 
-    func deleteTags(_ tags : [String]) async {
+    func addTags(tags: [String]) {
+        self.propertyInfoPlist()?.setObject(tags, forKey: DOCUMENT_TAGS_KEY)
+    }
+
+    func deleteTags(_ tags : [String]) {
         var docTags = self.documentTags()
         tags.forEach { tag in
             let index = docTags.firstIndex(where: {$0 == tag})
@@ -162,7 +166,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
         self.propertyInfoPlist()?.setObject([], forKey: DOCUMENT_TAGS_KEY)
     }
 
-    func renameTag(_ tag : String, with newTag: String) async {
+    func renameTag(_ tag : String, with newTag: String) {
         var docTags = self.documentTags()
         let index = docTags.firstIndex(where: {$0 == tag})
         if let idx = index {

@@ -162,21 +162,9 @@ extension FTCategoryTempaltesViewController: TagsViewDelegate {
         let button = UIButton()
         button.tag = indexPath.row
         seeAllAction(button)
-//        let tags = viewModel.tags
-//        var selectedTag = tags[indexPath.row]
-//        selectedTag.isSelected = true
-//        self.tagsView.items = tags
-//        self.tagsView.refresh()
-//        self.tableView.scrollToRow(at: IndexPath(row: 0, section: indexPath.row), at: .middle, animated: true)
     }
 
     func didAddNewTag(tag: String) {
-    }
-    
-    func didRenameTag(tag: FTTagModel) {
-    }
-    
-    func didDeleteTag(tag: FTTagModel) {
     }
     
 }

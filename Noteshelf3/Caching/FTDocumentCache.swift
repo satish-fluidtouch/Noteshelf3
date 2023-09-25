@@ -51,7 +51,7 @@ final class FTDocumentCache {
         cacheLog(.info, cacheFolderURL)
 
         FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
-        try? FTCacheTagsProcessor.shared.removeAllTagsFromPlist()
+//        try? FTCacheTagsProcessor.shared.removeAllTagsFromPlist()
 
         addObservers()
     }
@@ -61,15 +61,15 @@ final class FTDocumentCache {
     }
 
     private func createCachesDirectoryIfNeeded() {
-#if DEBUG
-        if cleanOnNextLaunch, fileManager.fileExists(atPath: cacheFolderURL.path) {
-            do {
-                try fileManager.removeItem(at: cacheFolderURL)
-            } catch {
-                cacheLog(.error, error)
-            }
-        }
-#endif
+//#if DEBUG
+//        if cleanOnNextLaunch, fileManager.fileExists(atPath: cacheFolderURL.path) {
+//            do {
+//                try fileManager.removeItem(at: cacheFolderURL)
+//            } catch {
+//                cacheLog(.error, error)
+//            }
+//        }
+//#endif
         if !fileManager.fileExists(atPath: cacheFolderURL.path) {
             do {
                 try fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
@@ -144,11 +144,7 @@ final class FTDocumentCache {
         queue.async {
             items.forEach { item in
                 if let docUUID = item.documentUUID {
-                    do {
-                        try self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
-                    } catch {
-                        cacheLog(.error, item.URL)
-                    }
+                    self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
                 } else {
                     cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
                 }
@@ -173,21 +169,29 @@ extension FTDocumentCache {
         return destinationURL
     }
 
-    func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
-        var catchError: Error?
+//    func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
+//        var catchError: Error?
+//         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { error in
+//             catchError = error
+//            if error == nil {
+//                do {
+//                    try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+//                } catch {
+//                    catchError = error
+//                }
+//            }
+//        })
+//        if let catchError = catchError {
+//            throw catchError
+//        }
+//    }
+
+    func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) {
          cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { error in
-             catchError = error
             if error == nil {
-                do {
-                    try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
-                } catch {
-                    catchError = error
-                }
+                FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
             }
         })
-        if let catchError = catchError {
-            throw catchError
-        }
     }
 }
 
@@ -217,7 +221,6 @@ private extension FTDocumentCache {
         }
     }
 
-    // TODO: (AK) Try using Async Sequences
     func removeCacheDocumentIfRequired(_ documents: [FTDocumentItemProtocol]) throws {
         for case let doc in documents where doc.documentUUID != nil {
             guard let docUUID = doc.documentUUID else { continue }
@@ -225,7 +228,7 @@ private extension FTDocumentCache {
             let destinationURL = cachedLocation(for: docUUID)
             if fileManager.fileExists(atPath: destinationURL.path) {
                 do {
-                    try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: doc.URL, documentUUID: docUUID)
+                    FTCacheTagsProcessor.shared.cacheTagsForDocument(url: doc.URL, documentUUID: docUUID)
                     try fileManager.removeItem(at: destinationURL)
                     cacheLog(.success, "Remove", destinationURL.lastPathComponent)
                 } catch {

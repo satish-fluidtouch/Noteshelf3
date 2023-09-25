@@ -57,9 +57,6 @@ public class FTTagViewConfiguration {
 public protocol TagsViewDelegate: AnyObject {
     func didSelectIndexPath(indexPath: IndexPath)
     func didAddNewTag(tag: String)
-    func didRenameTag(tag: FTTagModel)
-    func didDeleteTag(tag: FTTagModel)
-
 }
 
 public class FTTagsView: UIView {

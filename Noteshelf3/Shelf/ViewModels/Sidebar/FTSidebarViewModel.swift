@@ -378,6 +378,7 @@ extension FTSidebarViewModel {
     func configureUIOnViewLoad() {
         self.fetchSideBarData()
         self.fetchSidebarMenuItems()
+        self.fetchAllTags()
     }
 
     func updateUserCreatedCategories() {
@@ -427,11 +428,11 @@ extension FTSidebarViewModel {
     }
 
     private func fetchAllTags() {
-        let allTags = FTCacheTagsProcessor.shared.cachedTags()
+        let tagItems = FTTagsProvider.shared.getAllSortedTags()
         var tags: [FTSideBarItem] = [FTSideBarItem]()
-        tags = allTags.map { tag -> FTSideBarItem in
-            let tagItem = FTTagModel(text: tag)
-            let item = FTSideBarItem(id: tagItem.id, title: tagItem.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+        tags = tagItems.map { tagItem -> FTSideBarItem in
+            let tag = tagItem.tag
+            let item = FTSideBarItem(id: tag.id, title: tag.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
             return item
         }
         self.tags.removeAll()

@@ -27,6 +27,7 @@ extension FTShelfTagsViewController {
 #if !targetEnvironment(macCatalyst)
             let openNewWindowAction = UIAction(title: "sidebar.allTags.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
+                self.contextMenuSelectedIndexPath = indexPath as IndexPath
                 self.openInNewWindow()
                 track(EventName.shelf_tag_page_openinnewwindow_tap, screenName: ScreenName.shelf_tags)
             }
@@ -91,6 +92,7 @@ extension FTShelfTagsViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        self.contextMenuSelectedIndexPath = nil
         if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
             splitContorller.shelfMenuDisplayInfo.isMenuShown = false;
         }
