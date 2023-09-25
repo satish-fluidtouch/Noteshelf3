@@ -101,6 +101,7 @@ public enum AssetsColor: String, CaseIterable {
     case toastBgColor
     case globalSearchBgColor
     case groupBGColor
+    case shortcutSlotHighlightColor
 
     // System
     case black1

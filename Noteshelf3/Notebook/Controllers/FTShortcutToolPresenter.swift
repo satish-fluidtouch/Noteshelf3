@@ -22,13 +22,14 @@ private var offset: CGFloat = 8.0;
     private(set) var rackType: FTRackType = .pen
     var mode: FTScreenMode = .normal
 
-    private(set) weak var toolbarVc: FTToolTypeShortcutViewController?
+    private(set) weak var toolbarVc: FTToolTypeShortcutViewController!
     private weak var pensizeEditVc: FTPenSizeEditController?
 
     weak var delegate: FTShortcutContainerDelegate?
 
     // Internal variables/functions for extension purpose, not intended for out world
     internal var isMoving: Bool = false
+    internal var hasAddedSlots: Bool = false
     internal var quadrantDetector: FTQuadrantDetector!
     internal var shortCutQuadrant: FTShortcutQuadrant = .topLeft
     var shortcutViewPlacement: FTShortcutPlacement {
@@ -36,8 +37,8 @@ private var offset: CGFloat = 8.0;
         return placement
     }
 
-    var shortcutView: UIView? {
-        return self.toolbarVc?.view;
+    var shortcutView: UIView {
+        return self.toolbarVc.view;
     }
             
     override init() {
@@ -47,29 +48,27 @@ private var offset: CGFloat = 8.0;
 
     func showToolbar(rackData: FTRackData
                      ,on viewController: UIViewController) {
-        self.rackType = rackData.type;
-        self.parentVC = viewController;
-        let reqSize = self.getShortcutViewSize()
+        self.rackType = rackData.type
+        self.parentVC = viewController
+        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
         
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTToolTypeShortcutViewController.self));
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTToolTypeShortcutViewController.self))
         guard let controller  = storyboard.instantiateViewController(withIdentifier: "FTToolTypeShortcutViewController") as? FTToolTypeShortcutViewController else {
-            fatalError("check");
+            fatalError("Programmer error, couldnot find FTToolTypeShortcutViewController")
         }
-        self.toolbarVc = controller;
-        self.toolbarVc?.delegate = self;
-        viewController.addChild(controller);
-        controller.didMove(toParent: viewController);
+        self.toolbarVc = controller
+        self.toolbarVc.delegate = self
+        viewController.addChild(controller)
+        controller.didMove(toParent: viewController)
 
-        guard let shortcutView = self.shortcutView else {
-            fatalError("ShortcutView doesnot exist")
-        }
-        shortcutView.frame.size = reqSize
+        self.shortcutView.frame.size = reqSize
         viewController.view.addSubview(controller.view)
-        shortcutView.transform = .identity
+        self.shortcutView.transform = .identity
         if self.shortcutViewPlacement == .top || self.shortcutViewPlacement == .bottom {
-            shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
         }
-        let reqCenter = self.shortcutViewPlacement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset)
+        self.updateMinOffsetIfNeeded()
+        let reqCenter = self.shortcutViewPlacement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: self.toolbarOffset)
         self.updateShortcutViewCenter(reqCenter)
         self.toolbarVc?.showShortcutViewWrto(rack: rackData)
         self.configurePanGesture()
@@ -90,19 +89,17 @@ private var offset: CGFloat = 8.0;
     }
 
     func removeFromParent() {
-        self.shortcutView?.removeFromSuperview();
-        self.toolbarVc?.removeFromParent();
+        self.shortcutView.removeFromSuperview()
+        self.toolbarVc.removeFromParent()
     }
     
     func bringToFront() {
-        if let shortcutView = self.shortcutView {
-            shortcutView.superview?.bringSubviewToFront(shortcutView);
-        }
+        self.shortcutView.superview?.bringSubviewToFront(shortcutView)
     }
 
     func configureShortcutView(with mode: FTScreenMode, animate: Bool = false) {
         self.mode = mode
-        let reqSize = self.getShortcutViewSize()
+        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
         var reqCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
 
         var options = UIView.AnimationOptions.curveEaseOut
@@ -127,16 +124,14 @@ private var offset: CGFloat = 8.0;
 
     @objc func handleEndDragOfZoomPanel(_ frame: CGRect, mode: FTZoomShortcutMode) {
         self.handleZoomPanelFrameChange(frame, mode: mode) {
-            let center = self.shortcutView?.center ?? .zero
+            let center = self.shortcutView.center
             //TODO: prepareQuadrants() - will be done in isViewAppearing(after ios17 release), so that below condition can be removed. Right now before quadrants are ready, this method is getting called, so added.
             if nil == self.quadrantDetector {
                 self.prepareQuadrants()
             }
             self.updateQuadrant(quadrant: self.quadrantDetector.getQuadrant(for: center))
-            if let shortcutView = self.shortcutView {
-                let placement = self.shortCutQuadrant.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset);
-                placement.save()
-            }
+            let placement = self.shortCutQuadrant.nearestPlacement(for: self.shortcutView, topOffset: self.toolbarOffset);
+            placement.save()
         }
     }
 
@@ -145,7 +140,7 @@ private var offset: CGFloat = 8.0;
             completion?()
             return
         }
-        let shortCutYpos = self.shortcutView?.frame.origin.y ?? 0
+        let shortCutYpos = self.shortcutView.frame.origin.y
 
         if animate {
             UIView.animate(withDuration: 0.1) {
@@ -159,9 +154,6 @@ private var offset: CGFloat = 8.0;
         }
 
         func updateShortcutIfRequired() {
-            guard let shortcutView = self.shortcutView else {
-                return;
-            }
             let minYOffset = self.toolbarOffset
             if shortCutYpos >= minYOffset {
                 if shortcutView.frame.maxY > frame.origin.y {
@@ -175,7 +167,7 @@ private var offset: CGFloat = 8.0;
                 } else {
                     let offSetToMove = frame.origin.y - shortcutView.frame.maxY
                     let reqPos = shortCutYpos + offSetToMove
-                    let reqSize = self.getShortcutViewSize()
+                    let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
                     let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
                     let actualYPos = actualCenter.y - shortcutView.frame.height/2.0
                     if reqPos < actualYPos {
@@ -207,7 +199,7 @@ private var offset: CGFloat = 8.0;
         NotificationCenter.default.removeObserver(self)
     }
 
-    internal func getShortcutViewSize() -> CGSize {
+    internal func shortcutViewSizeWrToVertcalPlacement() -> CGSize {
         var size: CGSize = .zero
         if self.rackType == .pen || self.rackType == .highlighter {
             size = penShortcutSize
@@ -223,9 +215,7 @@ private var offset: CGFloat = 8.0;
 // Presentation of size edit screen
 private extension FTShortcutToolPresenter {
     func getPenSizeEditViewCenter(at position: FavoriteSizePosition) -> CGPoint {
-        guard let view = self.shortcutView else {
-            return .zero;
-        }
+        let view = self.shortcutView
         var center: CGPoint = .zero
 
         if self.shortcutViewPlacement.isHorizantalPlacement() { // top or bottom
@@ -314,7 +304,7 @@ extension FTShortcutToolPresenter {
     }
     
     internal func updateShortcutViewCenter(_ center: CGPoint) {
-        self.shortcutView?.center = center
+        self.shortcutView.center = center
     }
 }
 
@@ -326,7 +316,7 @@ extension FTShortcutToolPresenter {
         if UIDevice().isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
             var extraOffset: CGFloat = 0.0
             if UIDevice.current.isPhone() {
-                if let window = self.parentVC?.view.window {
+                if let window = self.parentVC?.fetchCurrentWindow() {
                     let topSafeAreaInset = window.safeAreaInsets.top
                     if topSafeAreaInset > 0 {
                         extraOffset = topSafeAreaInset
@@ -340,9 +330,6 @@ extension FTShortcutToolPresenter {
     }
 
     func shortcutViewCenter(for placement: FTShortcutPlacement, size: CGSize) -> CGPoint {
-        guard let shortcutView = self.shortcutView else {
-            return .zero;
-        }
-        return placement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset);
+        return placement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset)
     }
 }

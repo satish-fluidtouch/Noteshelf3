@@ -71,24 +71,25 @@ extension FTShortcutQuadrant {
         } else {
             let movingCenter: CGPoint = shortcutView.center
 
-            let topLeftCenter = FTShortcutPlacement.topLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
-            let leftCenter = FTShortcutPlacement.centerLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
-            let bottomLeftCenter = FTShortcutPlacement.bottomLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
-
-            
+            let topLeftCenter = FTShortcutPlacement.topLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
+            let leftCenter = FTShortcutPlacement.centerLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
+            let bottomLeftCenter = FTShortcutPlacement.bottomLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
             let topRightCenter = FTShortcutPlacement.topRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
-            let rightCenter = FTShortcutPlacement.centerRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
-            let bottomRightCenter = FTShortcutPlacement.bottomRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+            let rightCenter = FTShortcutPlacement.centerRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
+            let bottomRightCenter = FTShortcutPlacement.bottomRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
+            let topCenter = FTShortcutPlacement.top.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
+            let bottomCenter = FTShortcutPlacement.bottom.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset)
 
-            let distanceBtwCenterToTopLeftCenter: CGFloat = movingCenter.distance(to: topLeftCenter)
-            let distanceBtwCenterToLeftCenter: CGFloat = movingCenter.distance(to: leftCenter)
-            let distanceBtwCenterToBottomLeftCenter: CGFloat = movingCenter.distance(to: bottomLeftCenter)
+            let distanceBtwCenterToTopLeftCenter = movingCenter.distance(to: topLeftCenter)
+            let distanceBtwCenterToLeftCenter = movingCenter.distance(to: leftCenter)
+            let distanceBtwCenterToBottomLeftCenter = movingCenter.distance(to: bottomLeftCenter)
+            let distanceBtwCenterToTopRightCenter = movingCenter.distance(to: topRightCenter)
+            let distanceBtwCenterToRightCenter = movingCenter.distance(to: rightCenter)
+            let distanceBtwCenterToBottomRightCenter = movingCenter.distance(to: bottomRightCenter)
+            let distanceBtwCenterToTopCenter = movingCenter.distance(to: topCenter)
+            let distanceBtwCenterToBottomCenter = movingCenter.distance(to: bottomCenter)
 
-            let distanceBtwCenterToTopRightCenter: CGFloat = movingCenter.distance(to: topRightCenter)
-            let distanceBtwCenterToRightCenter: CGFloat = movingCenter.distance(to: rightCenter)
-            let distanceBtwCenterToBottomRightCenter: CGFloat = movingCenter.distance(to: bottomRightCenter)
-
-            let smallestOfAll: CGFloat = min(distanceBtwCenterToTopLeftCenter, distanceBtwCenterToLeftCenter, distanceBtwCenterToBottomLeftCenter, distanceBtwCenterToTopRightCenter, distanceBtwCenterToRightCenter, distanceBtwCenterToBottomRightCenter)
+            let smallestOfAll = min(distanceBtwCenterToTopLeftCenter, distanceBtwCenterToLeftCenter, distanceBtwCenterToBottomLeftCenter, distanceBtwCenterToTopRightCenter, distanceBtwCenterToRightCenter, distanceBtwCenterToBottomRightCenter, distanceBtwCenterToTopCenter, distanceBtwCenterToBottomCenter)
 
             if smallestOfAll == distanceBtwCenterToTopLeftCenter {
                 reqPlacement = .topLeft
@@ -102,10 +103,13 @@ extension FTShortcutQuadrant {
                 reqPlacement = .centerRight
             } else if smallestOfAll == distanceBtwCenterToBottomRightCenter {
                 reqPlacement = .bottomRight
+            } else if smallestOfAll == distanceBtwCenterToTopCenter {
+                reqPlacement = .top
+            } else if smallestOfAll == distanceBtwCenterToBottomCenter {
+                reqPlacement = .bottom
             }
         }
         return reqPlacement
-
     }
-    
+
 }

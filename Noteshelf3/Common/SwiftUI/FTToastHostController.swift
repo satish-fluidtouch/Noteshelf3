@@ -140,15 +140,3 @@ private extension UIView {
         }
     }
 }
-
-private extension UIViewController {
-    func fetchCurrentWindow() -> UIWindow? {
-        var currentWindow = self.view.window?.windowScene?.windows.first
-        if nil == currentWindow {
-            if let scenes = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = scenes.windows.last {
-                currentWindow = window
-            }
-        }
-        return currentWindow
-    }
-}
