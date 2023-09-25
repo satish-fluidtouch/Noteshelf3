@@ -40,3 +40,61 @@ enum FTShortcutQuadrant: String {
         return placement
     }
 }
+
+extension FTShortcutQuadrant {
+    func nearestPlacement(for shortcutView: UIView,topOffset: CGFloat) -> FTShortcutPlacement {
+        var reqPlacement: FTShortcutPlacement = .topLeft
+
+        if self == .topLeft {
+            reqPlacement = .topLeft
+        } else if self == .left {
+            reqPlacement = .centerLeft
+        } else if self == .bottomLeft {
+            reqPlacement = .bottomLeft
+        } else if self == .topRight {
+            reqPlacement = .topRight
+        } else if self == .right {
+            reqPlacement = .centerRight
+        } else if self == .bottomRight {
+            reqPlacement = .bottomRight
+        } else {
+            let movingCenter: CGPoint = shortcutView.center
+
+            let topLeftCenter = FTShortcutPlacement.topLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+            let leftCenter = FTShortcutPlacement.centerLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+            let bottomLeftCenter = FTShortcutPlacement.bottomLeft.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+
+            
+            let topRightCenter = FTShortcutPlacement.topRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+            let rightCenter = FTShortcutPlacement.centerRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+            let bottomRightCenter = FTShortcutPlacement.bottomRight.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: topOffset);
+
+            let distanceBtwCenterToTopLeftCenter: CGFloat = movingCenter.distance(to: topLeftCenter)
+            let distanceBtwCenterToLeftCenter: CGFloat = movingCenter.distance(to: leftCenter)
+            let distanceBtwCenterToBottomLeftCenter: CGFloat = movingCenter.distance(to: bottomLeftCenter)
+
+            let distanceBtwCenterToTopRightCenter: CGFloat = movingCenter.distance(to: topRightCenter)
+            let distanceBtwCenterToRightCenter: CGFloat = movingCenter.distance(to: rightCenter)
+            let distanceBtwCenterToBottomRightCenter: CGFloat = movingCenter.distance(to: bottomRightCenter)
+
+            let smallestOfAll: CGFloat = min(distanceBtwCenterToTopLeftCenter, distanceBtwCenterToLeftCenter, distanceBtwCenterToBottomLeftCenter, distanceBtwCenterToTopRightCenter, distanceBtwCenterToRightCenter, distanceBtwCenterToBottomRightCenter)
+
+            if smallestOfAll == distanceBtwCenterToTopLeftCenter {
+                reqPlacement = .topLeft
+            } else if smallestOfAll == distanceBtwCenterToLeftCenter {
+                reqPlacement = .centerLeft
+            } else if smallestOfAll == distanceBtwCenterToBottomLeftCenter {
+                reqPlacement = .bottomLeft
+            } else if smallestOfAll == distanceBtwCenterToTopRightCenter {
+                reqPlacement = .topRight
+            } else if smallestOfAll == distanceBtwCenterToRightCenter {
+                reqPlacement = .centerRight
+            } else if smallestOfAll == distanceBtwCenterToBottomRightCenter {
+                reqPlacement = .bottomRight
+            }
+        }
+        return reqPlacement
+
+    }
+    
+}

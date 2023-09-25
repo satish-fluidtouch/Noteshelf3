@@ -21,6 +21,8 @@ extension NSNotification.Name  {
     static let collectionAddedOrUpdated = NSNotification.Name(rawValue: "collectionAddedOrUpdated")
     
     static let shelfItemUpdated = NSNotification.Name(rawValue: "FTShelfItemDidUpdatedNotification")
+    static let groupItemAdded = NSNotification.Name(rawValue: "FTShelfItemGroupAddedNotification")
+    static let groupItemRemoved = NSNotification.Name(rawValue: "FTShelfItemGroupRemovedNotification")
     static let shelfItemRemoved = NSNotification.Name(rawValue: "FTShelfItemDidRemovedNotification")
     static let shelfItemAdded = NSNotification.Name(rawValue: "FTShelfItemDidAddedNotification")
     static let shelfItemRemoveLoader = NSNotification.Name(rawValue: "FTShelfItemRemoveLoadernotification")
@@ -33,4 +35,3 @@ extension NSNotification.Name  {
 let FTIndexItemCollectionKey = "FTIndexItemCollection";
 let FTShelfItemsKey = "items";
 let FTShelfUUIDKey = "shelfUUID";
-

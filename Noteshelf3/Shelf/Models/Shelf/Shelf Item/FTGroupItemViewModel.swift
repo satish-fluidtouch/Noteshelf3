@@ -18,11 +18,7 @@ class FTGroupItemViewModel: FTShelfItemViewModel {
 
     var noOfNotes: String {
         if let noOfNotes = (self.shelfItem as? FTGroupItemProtocol)?.childrens.count {
-            if noOfNotes > 1 {
-                return "\(noOfNotes) " + "groupitem.notesText".localized
-            } else {
-                return  "\(noOfNotes) " + "groupitem.noteText".localized
-            }
+            return "\(noOfNotes) " + "groupitem.notesText".localized
         }
         return ""
     }
