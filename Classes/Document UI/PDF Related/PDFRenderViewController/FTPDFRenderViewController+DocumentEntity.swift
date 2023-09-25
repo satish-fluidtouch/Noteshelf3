@@ -16,6 +16,12 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         self.insert([mediaImage], center: .zero, droppedPoint: .zero, source: source)
 
     }
+    
+    @objc func setUpUndoRedoGesture() {
+        let undoRedoGestureDetector = FTPageUndoRedoGestureDetector(delegate: self, contentHolderView: self.contentHolderView)
+        undoRedoGestureDetector.addGestures()
+        self.undoRedoGestureDetector = undoRedoGestureDetector
+    }
 
     /// Photo Library,  Take Photo
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource) {

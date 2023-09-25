@@ -49,6 +49,7 @@ typedef enum: NSInteger  {
 @class FTDocumentScrollView;
 @class FTZoomOverlayViewController;
 @class FTQuickPageNavigatorViewController;
+@class FTPageUndoRedoGestureDetector;
 
 @protocol FTPenRackSelectDelegate;
 @protocol FTEraserRackControllerDelegate;
@@ -57,9 +58,10 @@ typedef enum: NSInteger  {
 @class FTLaserStrokeStorage;
 @class FTShortcutExecuter;
 @protocol FTFinderNotifier;
+@protocol FTUndoRedoDelegate;
 
 #if !TARGET_OS_MACCATALYST
-@interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate, FTLassoRackDelegate> {
+@interface FTPDFRenderViewController : FTBaseRenderViewController <UIPopoverPresentationControllerDelegate,UINavigationControllerDelegate,PressurePenEngineDelegate,FTDeskToolbarDelegate,FTAudioListViewControllerDelegtes,FTApplePencilInteractionProtocol, FTPenRackSelectDelegate, FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {
 }
 #else
 @interface FTPDFRenderViewController : FTBaseRenderViewController
@@ -69,7 +71,7 @@ FTDeskToolbarDelegate,
 FTAudioListViewControllerDelegtes,
 FTApplePencilInteractionProtocol,
 FTPenRackSelectDelegate,
-FTEraserRackControllerDelegate, FTLassoRackDelegate> {}
+FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 #endif
 
 @property (strong) FTScrollViewPageOffset *contentOffsetPercentage; //internal
@@ -98,8 +100,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate> {}
 @property (strong) id<FTPageLayouter> pageLayoutHelper;
 
 @property (strong) FTDocumentScrollView *mainScrollView;
-@property (weak) UITapGestureRecognizer *twoFingerUndoGesture;
-@property (weak) UITapGestureRecognizer *threeFingerRedoGesture;
+@property (strong) FTPageUndoRedoGestureDetector *undoRedoGestureDetector;
 
 @property (weak) UIView *contentHolderView;
 @property (strong) FTQuickPageNavigatorViewController *pageNavigatorController;
