@@ -1054,7 +1054,10 @@ extension FTShelfSplitViewController: FTShelfNewNoteDelegate {
     }
     
     func didTapOnNewGroup() {
-        self.showAlertOn(viewController: self, title: "Group Title", message: "", textfieldPlaceHolder: "Group", submitButtonTitle: "Create Group", cancelButtonTitle: "Cancel") { title in
+        self.showAlertOn(viewController: self, title: "Group Title", message: "", textfieldPlaceHolder: "Group", submitButtonTitle: "Create Group", cancelButtonTitle: "Cancel") {[weak self] title in
+            guard let self = self else {
+                return
+            }
             var groupTitle: String = "Group"
             if let title = title, !title.isEmpty {
                 groupTitle = title
