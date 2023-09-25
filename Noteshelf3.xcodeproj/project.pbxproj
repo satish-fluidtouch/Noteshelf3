@@ -35,6 +35,7 @@
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
 		097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */ = {isa = PBXBuildFile; fileRef = 097449DF2ABDB51A0008C6B6 /* AICommands.strings */; };
+		097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */; };
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
 		09ABDCA52A790F93008F144D /* FTOpenAICommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC982A790F93008F144D /* FTOpenAICommand.swift */; };
@@ -2271,6 +2272,7 @@
 		097184232A825C1300656B36 /* IAPAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = IAPAssets.xcassets; sourceTree = "<group>"; };
 		097184272A82668200656B36 /* IAPEssentials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IAPEssentials.storyboard; sourceTree = "<group>"; };
 		097449DF2ABDB51A0008C6B6 /* AICommands.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AICommands.strings; sourceTree = "<group>"; };
+		097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString_OpenAI_Extension.swift; sourceTree = "<group>"; };
 		09745D561EC03BAC001AC8D8 /* FTExternalScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTExternalScreenViewController.swift; sourceTree = "<group>"; };
 		09771C8720E64B1400B73FC0 /* FTDocumentPasswordValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPasswordValidate.swift; sourceTree = "<group>"; };
 		097BD8A621CCB034007CEC26 /* FTOffscreenWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOffscreenWritingViewController.swift; sourceTree = "<group>"; };
@@ -5441,6 +5443,7 @@
 			children = (
 				091482BB2A725800009E49C2 /* FTWordWrapStrokeRender.swift */,
 				091482B92A7257EF009E49C2 /* FTCharWrapStrokeRender.swift */,
+				097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -13052,6 +13055,7 @@
 				1439371E29D6E02700D93033 /* FTStickerContainerView.swift in Sources */,
 				BAF395222859ADF10067CA9F /* FTShelfProviderConstants.swift in Sources */,
 				BAF395232859ADF10067CA9F /* FTLogger.swift in Sources */,
+				097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */,
 				5283D39C2A5BEAE200C6C125 /* FTShareItemsFetchModel.swift in Sources */,
 				BAF395242859ADF10067CA9F /* FTAutoTriggerButton.swift in Sources */,
 				BAF395262859ADF10067CA9F /* FTClassicDiaryTemplateFormat.swift in Sources */,

@@ -10,36 +10,6 @@ import UIKit
 
 class FTWordWrapStrokeRender: FTCharToStrokeRender {
     private var xMargin: CGFloat = 0;
-    
-    override func convertTextToStroke(for page: FTPageProtocol
-                                      , content: FTAIContent
-                                      ,origin inOrigin: CGPoint) -> [FTAnnotation] {
-        self.updatePageProperties(page);
-        var origin = inOrigin;
-        let string = (content.contentAttributedString != nil) ? (content.contentAttributedString?.string ?? "") : (content.contentString ?? "")
-
-        string.enumerateLines { line, stop in
-            var currentWord: String = "";
-            line.forEach { eachChar in
-                if(eachChar.isWhitespace) {
-                    let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(currentWord);
-                    self.drawWord(wordInfo, content: NSAttributedString(string: currentWord),origin: &origin)
-                    currentWord = "";
-                }
-                else {
-                    currentWord.append(eachChar);
-                }
-            }            
-            if(!currentWord.isEmpty) {
-                let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(currentWord);
-                self.drawWord(wordInfo, content: NSAttributedString(string: currentWord), origin: &origin)
-                currentWord = ""
-            }
-            self.gotoNextParagraph(page, origin: &origin);
-        }
-        return strokesToAdd;
-    }
-    
     override func convertTextToStroke(for page: FTPageProtocol
                                       ,content aicontent: FTAIContent
                                       , origin inOrigin: CGPoint
@@ -73,32 +43,40 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
             }
         }
         
-        var curindex = -1;
-        let lines = aicontent.contentAttributedString?.lines();
-        lines?.forEach({ eachLine in
-            curindex += 1;
-            self.xMargin = 0;
-            let words = eachLine.words()
-            if let bulletList = eachLine.bulletLists,let bullet = bulletList.last {
-                var bulletString = "*";
-                if !bullet.isOrdered {
-                    if bulletList.count % 2 == 0 {
-                        bulletString = "-";
+        var currentLineCounter = 0;
+        if let lines = aicontent.contentAttributedString?.lines() {
+            lines.forEach({ eachLineRange in
+                let eachLine = eachLineRange.attributedString;
+                currentLineCounter += 1;
+                self.xMargin = 0;
+                var currentLine = eachLine;
+                if let bulletList = eachLine.bulletLists,let bullet = bulletList.last {
+                    let trimmedEntries = eachLine.trimmingBullets(bulletlist: bulletList);
+                    currentLine = trimmedEntries.trimmed;
+                    var bulletString = trimmedEntries.bulletString;
+                    if !bullet.isOrdered {
+                        if bulletList.count % 2 == 0 {
+                            bulletString = "-";
+                        }
                     }
+                    drawCurrentWord(NSAttributedString(string: bulletString), isLastChar: false);
+                    self.xMargin = origin.x;
                 }
-                else {
-                    debugPrint("ordered list");
+                let words = currentLine.words()
+                let isLastLine = currentLineCounter == lines.count;
+                var isLastWord = false;
+                var currentWordCounter = 0;
+
+                words.forEach { eachWord in
+                    currentWordCounter += 1;
+                    isLastWord = currentWordCounter == words.count;
+                    drawCurrentWord(eachWord, isLastChar: (isLastLine && isLastWord));
                 }
-                drawCurrentWord(NSAttributedString(string: bulletString), isLastChar: false);
-                self.xMargin = origin.x;
-            }
-            words.forEach { eachWord in
-                curindex = eachWord.length + 1;
-                drawCurrentWord(eachWord, isLastChar: (curindex == content.count));
-            }
-            self.gotoNextParagraph(currentPage, origin: &origin);
-            _createNewPageIfNeeded(curindex == content.count);
-        });
+                
+                self.gotoNextParagraph(currentPage, origin: &origin);
+                _createNewPageIfNeeded((isLastLine && isLastWord));
+            });
+        }
         if !self.strokesToAdd.isEmpty {
             _ = onUpdate(self.strokesToAdd,currentPage,false);
         }
@@ -106,7 +84,13 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         onComplete();
     }
 
-    private func drawWord(_ wordInfo: FTWordStrokeInfo
+    override var lineSpacing: CGFloat {
+        return 2;
+    }
+}
+
+private extension FTWordWrapStrokeRender {
+    func drawWord(_ wordInfo: FTWordStrokeInfo
                           , content: NSAttributedString
                           , origin: inout CGPoint) {
         wordInfo.wordStrokesInfo.forEach { strokesInfo in
@@ -118,7 +102,7 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         }
     }
     
-    private func canFitWord(_ wordInfo: FTWordStrokeInfo
+    func canFitWord(_ wordInfo: FTWordStrokeInfo
                             , origin: inout CGPoint
                             ,pageScale: CGFloat
                             ,currentPage: FTPageProtocol) -> Bool {
@@ -135,52 +119,9 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         }
         return !currentPage.isAtTheEndOfPage(origin)
     }
-    
-    override var lineSpacing: CGFloat {
-        return 2;
-    }
 }
 
-extension NSAttributedString {
-    func lines() -> [NSAttributedString] {
-        var lines = [NSAttributedString]();
-        var currentIndex = 0
-        self.string.enumerateLines { line, stop in
-            let lineRange = NSRange(location: currentIndex, length: line.count);
-            let lineAttributedString = self.attributedSubstring(from: lineRange)
-            lines.append(lineAttributedString);
-            currentIndex += lineRange.length + 1 // +1 to account for the newline character
-        }
-        return lines;
-    }
-    
-    func words() -> [NSAttributedString] {
-        var words = [NSAttributedString]();
-        let text = self.string;
-
-        let range = text.startIndex ..< text.endIndex
-        
-        text.enumerateSubstrings(in: range
-                                 , options: .byWords) { substring, substringRange, enclosingRange, stop in
-            if let _substring = substring {
-                debugPrint("tokenRange: \(substringRange) _substring: \(_substring)")
-                let sub = self.attributedSubstring(from: NSRange(substringRange, in: text));
-                debugPrint("word: \(sub)");
-                if sub.length > 0 {
-                    words.append(sub)
-                }
-            }
-        }
-        return words;
-    }
-}
-
-private extension NSAttributedString {
-    var bulletLists: [NSTextList]? {
-        if let attributes = self.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
-        ,!attributes.textLists.isEmpty {
-            return attributes.textLists;
-        }
-        return nil;
-    }
-}
+/*
+var effectiveRange: NSRange = NSRange(location: NSNotFound, length: 0);
+eachLineRange.attributedString.attribute(.paragraphStyle, at: eachLineRange.range.location, effectiveRange: &effectiveRange);
+*/

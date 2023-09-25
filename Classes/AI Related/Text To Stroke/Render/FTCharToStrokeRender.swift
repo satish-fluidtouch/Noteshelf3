@@ -58,10 +58,6 @@ class FTCharToStrokeRender: NSObject {
         fatalError("\(Self.className) should overide \(#function)")
     }
     
-    func convertTextToStroke(for page: FTPageProtocol, content: FTAIContent,origin inOrigin: CGPoint) -> [FTAnnotation] {
-        fatalError("\(Self.className) should overide \(#function)")
-    }
-    
     internal func updatePageProperties(_ inPage:FTPageProtocol) {
         self.pageRect = inPage.pdfPageRect
         let pageLineHieght = inPage.lineHeight;
