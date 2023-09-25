@@ -288,14 +288,20 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     //    [self becomeFirstResponder];
 }
 
+- (void)performUndoOperation {
+    [self undo];
+}
+
+- (void)performRedoOperation {
+    [self redo];
+}
+
 -(void)disableUndoGestures {
-    self.twoFingerUndoGesture.enabled = false;
-    self.threeFingerRedoGesture.enabled = false;
+    [[self undoRedoGestureDetector] enableDisableUndoGesturesWithValue:false];
 }
 
 -(void)enableUndoGestures {
-    self.twoFingerUndoGesture.enabled = true;
-    self.threeFingerRedoGesture.enabled = true;
+    [[self undoRedoGestureDetector] enableDisableUndoGesturesWithValue:true];
 }
 
 - (BOOL)allowsFreeGestureConditions
@@ -360,24 +366,12 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     self.twoFingerTapGesture = gesture;
     gesture.delegate = self;
     
-    UITapGestureRecognizer *undoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerUndo:)];
-    undoGesture.numberOfTouchesRequired = 2;
-    [self.contentHolderView addGestureRecognizer:undoGesture];
-    undoGesture.delegate = self;
-    self.twoFingerUndoGesture = undoGesture;
-
-    UITapGestureRecognizer *redoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleThreeFingerRedo:)];
-    redoGesture.numberOfTouchesRequired = 3;
-    [self.contentHolderView addGestureRecognizer:redoGesture];
-    redoGesture.delegate = self;
-    self.threeFingerRedoGesture = redoGesture;
-
     UITapGestureRecognizer *fourFingerGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleFourFingerGesture:)];
     fourFingerGesture.numberOfTouchesRequired = 4;
     fourFingerGesture.delegate = self;
     [self.contentHolderView addGestureRecognizer:fourFingerGesture];
     self.fourFingerGesture = fourFingerGesture;
-
+    [self setUpUndoRedoGesture];
     [self configureShortcutActions];
     [self showToolbarShortcutControllerIfNeededWithMode:self.currentDeskMode];
     [self enableOrDisableNewPageCreationOptionsInsideDocument];
@@ -3415,12 +3409,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if(gestureRecognizer == self.twoFingerTapGesture || self.twoFingerTapGesture == otherGestureRecognizer) {
-        return true;;
-    }
-    if(gestureRecognizer == self.twoFingerUndoGesture || self.twoFingerUndoGesture == otherGestureRecognizer) {
-        return true;;
-    }
-    if(gestureRecognizer == self.threeFingerRedoGesture || self.threeFingerRedoGesture == otherGestureRecognizer) {
         return true;;
     }
     if(gestureRecognizer == self.fourFingerGesture || self.fourFingerGesture == otherGestureRecognizer) {
