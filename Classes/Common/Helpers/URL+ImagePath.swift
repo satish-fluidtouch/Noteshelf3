@@ -6,7 +6,6 @@
 //  Copyright © 2018 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import FTCommon
 import UIKit
 
 private extension UserDefaults {

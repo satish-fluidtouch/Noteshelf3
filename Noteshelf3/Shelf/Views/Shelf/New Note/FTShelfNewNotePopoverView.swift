@@ -111,9 +111,9 @@ struct FTShelfNewNotePopoverView: View {
     }
     private func performActionBasedOn(option: FTNewNotePopoverModel){
 
-        if option.newNoteOption != .appleWatch { // only incase of watch recordings we are showing the recordings inside popover itself.
-            viewDelegate?.dismissPopover()
-        }
+//        if option.newNoteOption != .appleWatch { // only incase of watch recordings we are showing the recordings inside popover itself.
+//            viewDelegate?.dismissPopover()
+//        }
 
         // Track Event
         shelfViewModel.trackEventForAddMenuoption(option: option.newNoteOption)
@@ -135,8 +135,8 @@ struct FTShelfNewNotePopoverView: View {
             delegate?.didTapAudioNote()
         case .newGroup:
             delegate?.didTapOnNewGroup()
-        case .appleWatch: break
-           // viewDelegate?.didTapOnWatchRecordings()
+        case .appleWatch:
+            viewDelegate?.didTapOnWatchRecordings()
         }
     }
     private var cancelView: some View {

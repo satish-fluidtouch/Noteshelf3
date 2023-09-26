@@ -20,9 +20,10 @@ class FTNewNotePopoverViewModel: ObservableObject {
         FTNewNotePopoverModel(newNoteOption: .audioNote),
         FTNewNotePopoverModel(newNoteOption: .scanDocument),
         FTNewNotePopoverModel(newNoteOption: .takePhoto),
-        //        FTNewNotePopoverModel(newNoteOption: .appleWatch)
+        FTNewNotePopoverModel(newNoteOption: .appleWatch)
     ]
     weak var delegate: FTNewNotePopoverDelegate?
+    weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
 
     var displayableOptions: [FTNewNotePopoverModel] {
 #if !targetEnvironment(macCatalyst)
