@@ -372,11 +372,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                             (movedItem as? FTDocumentItemProtocol)?.documentUUID = shelfItem.documentUUID;
                             #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                             //Recent:
-                            if(toCollection.isTrash) {
-                                NotificationCenter.default.post(name: .shelfItemDidGetDeletedInternal, object: self, userInfo: [FTNewURLS: [oldURL]]);
-                            } else {
                                 NotificationCenter.default.post(name: .shelfItemDidGetMovedInternal, object: self, userInfo: [FTOldURLS: [oldURL], FTNewURLS: [destURL]]);
-                            }
                             //Recent:
                             #endif
                         } else {
@@ -443,6 +439,8 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                     do {
                         _ = try FileManager().removeItem(at: writingURL);
                         self.removeItemFromCache(shelfItem.URL as URL, shelfItem: shelfItem);
+                        //Starred:
+                        NotificationCenter.default.post(name: Notification.Name("FTShelfItemDidGetDeletedInternalNotification"), object: self, userInfo: ["FTNewURLS": [shelfItem.URL]]);
                         removedItems.append(shelfItem);
                     } catch let error as NSError {
                         fileError = error;

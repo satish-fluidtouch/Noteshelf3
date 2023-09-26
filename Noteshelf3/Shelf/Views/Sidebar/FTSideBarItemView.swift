@@ -80,9 +80,14 @@ struct SideBarItemView : View {
                     }
                 })
                 .onTapGesture {
-                    self.viewModel.endEditingActions()
+                    #if targetEnvironment(macCatalyst)
+                        self.viewModel.endEditingOfActiveSidebarItem()
+                    #else
+                        self.viewModel.endEditingActions()
+                    #endif
                     self.viewModel.currentDraggedSidebarItem = nil
                     self.viewModel.selectedSideBarItem = item
+                    self.viewModel.selectedShelfItemCollection = item.shelfCollection
                     self.viewModel.delegate?.didTapOnSidebarItem(item)
                 }
                 .background(RoundedRectangle(

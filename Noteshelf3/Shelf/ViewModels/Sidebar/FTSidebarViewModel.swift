@@ -28,7 +28,11 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     //MARK: Published variables
     @Published var currentDraggedSidebarItem: FTSideBarItem?
     @Published var fadeDraggedSidebarItem: FTSideBarItem?
-    @Published var selectedSideBarItem: FTSideBarItem?
+    @Published var selectedSideBarItem: FTSideBarItem? {
+        didSet {
+            selectedSideBarItemType = selectedSideBarItem?.type ?? .home
+        }
+    }
     @Published var highlightItem: FTSideBarItem?
     @Published var menuItems: [FTSidebarSection] = [] {
         didSet {
@@ -70,16 +74,13 @@ class FTSidebarViewModel: NSObject, ObservableObject {
                              allowsItemDropping: true)
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
-        set {
-            selectedSideBarItem = menuItems.flatMap({$0.items})
-                .first(where: {$0.shelfCollection?.uuid == newValue?.uuid})
-        }
-        get {
-            selectedSideBarItem?.shelfCollection ?? FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
-        }
+       didSet {
+           updateSidebarItemSelection()
+       }
     }
     init(collection: FTShelfItemCollection? = nil) {
         super.init()
+        self.setSidebarItemTypeForCollection(collection)
         self.selectedShelfItemCollection = collection
         self.addObserverForContextualOperations()
     }
@@ -154,8 +155,46 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         }
         return matchedItem
     }
+    func endEditingOfActiveSidebarItem(){
+        for item in menuItems.flatMap({$0.items}) where item.isEditing {
+            debugLog("editing item new title \(item.title)")
+            item.isEditing = false
+            self.renameSideBarItem(item, toNewTitle: item.title)
+        }
+    }
 }
 private extension FTSidebarViewModel {
+    func updateSidebarItemSelection(){
+        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
+        if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
+            if selectedSideBarItem != nil,
+               selectedSideBarItem?.shelfCollection != nil,
+               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
+                selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
+            } else if selectedSideBarItem?.shelfCollection?.displayTitle != selectedShelfItemCollection?.displayTitle {
+                selectedSideBarItem = menuItems.flatMap({$0.items})
+                    .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
+                if let selectedSideBarItem {
+                    self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
+                }
+            }
+        }
+    }
+    func setSidebarItemTypeForCollection(_ collection: FTShelfItemCollection?){
+        if let collection {
+            if collection.isStarred {
+                selectedSideBarItemType = .starred
+            } else if collection.isTrash {
+                selectedSideBarItemType = .trash
+            } else if collection.isUnfiledNotesShelfItemCollection {
+                selectedSideBarItemType = .unCategorized
+            } else if collection.isNS2Collection(){
+                selectedSideBarItemType = .ns2Category
+            } else {
+                selectedSideBarItemType = .category
+            }
+        }
+    }
     func addObserverForContextualOperations(){
         self.sidebarItemContexualMenuVM.$performAction
             .dropFirst()
@@ -275,8 +314,7 @@ extension FTSidebarViewModel {
             if let _ = error {
             }
             else if let shelfCollection = collection {
-                let newCategory = FTSideBarItem(shelfCollection: shelfCollection)
-                self?.selectedSideBarItem = newCategory
+                self?.selectedShelfItemCollection = shelfCollection
                 self?.newCollectionAddedOrUpdated = true
             }
         }
@@ -292,9 +330,9 @@ extension FTSidebarViewModel {
         if title != shelfCollection.displayTitle {
             FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: title) { [weak self](error,shelfCollection) in
                 if let _ = error {
-                } else if let shelfCollection = shelfCollection {
-                    let currentShelfItem = self?.menuItems.compactMap({ $0.items.first(where: { $0.id == shelfCollection.uuid })}).first
-                    self?.newCollectionAddedOrUpdated = true
+                } else if let shelfCollection = shelfCollection, self?.selectedShelfItemCollection?.uuid == shelfCollection.uuid {
+                    self?.selectedShelfItemCollection = shelfCollection
+                    self?.delegate?.didSidebarItemRenamed(category)
                     //TODO: Check for EN
 //                    shelfCollection.shelfItems(.none,
 //                                          parent: nil,
@@ -325,33 +363,32 @@ extension FTSidebarViewModel {
         guard let shelfCollection = category.shelfCollection else {
             return
         }
-        let currentSelectedCategpory = self.selectedSideBarItem
+        let currentSelectedCategpory = self.selectedSideBarItem?.shelfCollection
         FTNoteshelfDocumentProvider.shared.moveShelfToTrash(shelfCollection, onCompletion: { [weak self](error, deletedCollection) in
             //self.delegate?.shelfCategory(self, didDeleteCollection: deletedCollection!);
             let categoriesSection = self?.menuItems.first(where: { $0.type == .categories})
             if let deletedCategoryIndex = categoriesSection?.items.firstIndex(where: {$0.id == category.id}) {
                 self?.menuItems.first(where: { $0.type == .categories})?.items.remove(at: deletedCategoryIndex)
-                let sideBarItemTobeSelected: FTSideBarItem!
-                if category.id == currentSelectedCategpory?.shelfCollection?.uuid {//If current category is being deleted
+                let sideBarItemTobeSelected: FTShelfItemCollection!
+                if category.id == currentSelectedCategpory?.uuid {//If current category is being deleted
                         if let totalCategories = categoriesSection?.items.count, totalCategories > 0 {
-                            if deletedCategoryIndex == totalCategories, let lastCategory = categoriesSection?.items.last {//Choose last category if it was last
+                            if deletedCategoryIndex == totalCategories, let lastCategory = categoriesSection?.items.last?.shelfCollection {//Choose last category if it was last
                                 sideBarItemTobeSelected = lastCategory
                             }
                             else {//Choose a category with same index
-                                sideBarItemTobeSelected = categoriesSection?.items[deletedCategoryIndex ];
+                                sideBarItemTobeSelected = categoriesSection?.items[deletedCategoryIndex].shelfCollection;
                             }
                         }
                         else {
-                            sideBarItemTobeSelected = self?.menuItems.first?.items.first // pointing to all notes incase of no categories
+                            sideBarItemTobeSelected = self?.menuItems.first?.items.first?.shelfCollection // pointing to all notes incase of no categories
                         }
                 }
                 else {
                     sideBarItemTobeSelected = currentSelectedCategpory;
                 }
-                self?.selectedSideBarItem = sideBarItemTobeSelected
                 self?.newCollectionAddedOrUpdated = true
+                self?.selectedShelfItemCollection = sideBarItemTobeSelected
             }
-            //self.delegate?.shelfCollection(self, didSelectCollection: shelfItemCollectionToShow);
         })
     }
     func openSideBarItemInNewWindow(_ item: FTSideBarItem){
@@ -445,7 +482,9 @@ extension FTSidebarViewModel {
         if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
             tagsSection.items = self.tags
         }
-        setSideBarItemSelection()
+        if selectedSideBarItemType == .tag {
+            setSideBarItemSelection()
+        }
     }
 
     func updateUnfiledCategory() {
@@ -552,13 +591,9 @@ extension FTSidebarViewModel {
         self.menuItems.append(FTSidebarSection(type: .tags, items: self.tags,supportsRearrangeOfItems: false))
         self.setSideBarItemSelection()
     }
-     func setSideBarItemSelection(){
-        if let selectedSideBarItem = self.selectedSideBarItem {
-            let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
-            if collectionTypes.contains(where: {$0 == selectedSideBarItem.type}) {
-                let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.shelfCollection?.uuid == selectedSideBarItem.shelfCollection?.uuid })}).first
-                self.selectedSideBarItem = selectedItem
-            } else if selectedSideBarItem.type == .tag {
+    func setSideBarItemSelection(){
+        if selectedSideBarItemType == .tag {
+            if let selectedSideBarItem = self.selectedSideBarItem {
                 let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
                 if selectedItem != nil {
                     self.selectedSideBarItem = selectedItem
@@ -566,21 +601,19 @@ extension FTSidebarViewModel {
                     self.selectedSideBarItem = selectedSideBarItem
                     self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
                 }
-            } else {
-                let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
-                self.selectedSideBarItem = selectedItem
+            } else if let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType && $0.title.lowercased() == lastSelectedTag.lowercased()})}).first {
+                self.selectedSideBarItem = selectedSideBarItem
             }
-            if newCollectionAddedOrUpdated {
-                newCollectionAddedOrUpdated = false
-                self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
-            }
+        } else if let collection = selectedShelfItemCollection {
+            selectedSideBarItem = menuItems.flatMap({$0.items})
+                .first(where: {$0.shelfCollection?.uuid == collection.uuid})
         } else {
-            if selectedSideBarItemType == .tag, let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType && $0.title.lowercased() == lastSelectedTag.lowercased()})}).first {
-                self.selectedSideBarItem = selectedSideBarItem
-            }  else {
-                let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType})}).first
-                self.selectedSideBarItem = selectedSideBarItem
-            }
+            let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType})}).first
+            self.selectedSideBarItem = selectedSideBarItem
+        }
+        if newCollectionAddedOrUpdated,let selectedSideBarItem {
+            newCollectionAddedOrUpdated = false
+            self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
         }
     }
 }
