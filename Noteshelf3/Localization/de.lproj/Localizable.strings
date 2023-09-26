@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "Neue Seite";
 "notebook.eraserRack.NavTitle" = "Radiergummi";
 "notebook.lassoRack.NavTitle" = "Lasso";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d von %d'";
 "notebook.restoring" = "Wiederherstellen...";
 "notebook.settings.moresettings" = "Weitere Einstellungen";
 "notebook.shapesRack.NavTitle" = "Formen";
@@ -1473,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "Standard festlegen für:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Dies und alle zukünftigen Notizbücher";
 "text.font.setAsDefault.thisBook" = "Dieses Notizbuch";
+"textmode.fonttitle" = "Schriftart/Textstil";
 "texttoolbar.fontselectionTitle" = "SCHRIFT AUSWÄHLEN";
 "theams.unsplashDescription" = "Wählen Sie aus Unsplash aus, machen Sie ein Foto oder wählen Sie aus Ihrer Fotobibliothek, um Ihre individuellen Cover zu erstellen.";
 "trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
@@ -1521,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 19 September 2023 at 2:59 PM
+// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
