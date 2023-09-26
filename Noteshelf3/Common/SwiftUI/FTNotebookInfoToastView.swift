@@ -31,28 +31,27 @@ struct FTNotebookInfoToastView: View {
     @State private var size: CGSize = .zero
 
     var body: some View {
-        VStack {
-                VStack {
-                    Text(config.title)
-                        .font(Font(config.titleFont))
-                        .foregroundColor(.primary)
-                        .multilineTextStyle(lineLimit: 2, aligment: .center)
-                        .truncationMode(.tail)
+        ZStack {
+            FTShortcutBarVisualEffectView()
+                .cornerRadius(size.height/2.0)
+            VStack {
+                Text(config.title)
+                    .font(Font(config.titleFont))
+                    .foregroundColor(.primary)
+                    .multilineTextStyle(lineLimit: 2, aligment: .center)
+                    .truncationMode(.tail)
 
-                    Text(config.subTitle)
-                        .font(Font(config.subTitleFont))
-                        .foregroundColor(Color.appColor(.black50))
-                        .multilineTextStyle(lineLimit: 1, aligment: .center)
-                }
+                Text(config.subTitle)
+                    .font(Font(config.subTitleFont))
+                    .foregroundColor(Color.appColor(.black50))
+                    .multilineTextStyle(lineLimit: 1, aligment: .center)
+            }
             .padding(.horizontal, config.horzPadding)
             .padding(.vertical, config.vertPadding)
         }
+        .toolbarOverlay(radius: size.height/2.0)
         .frame(width: size.width)
         .frame(minHeight: size.height)
-        .background(Color.appColor(.toastBgColor))
-        .cornerRadius(size.height/2.0)
-        .border(Color.appColor(.black10), width: 1.0, cornerRadius: size.height/2.0)
-        .shadow(color: Color.primary.opacity(0.2), radius: 60, x: 0, y: 10)
         .onAppear {
             size = config.getToastSize()
         }
