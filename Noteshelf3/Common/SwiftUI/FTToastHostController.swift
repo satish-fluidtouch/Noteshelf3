@@ -16,7 +16,7 @@ enum FTToastTag: Int {
 
 class FTToastBaseHostController<ContentView: View>: UIHostingController<ContentView> {
     class func getIfToastExists(over controller: UIViewController, for tag: FTToastTag) -> (toastExist: Bool, toastView: UIView?) {
-        let currentWindow = controller.fetchCurrentWindow()
+        let currentWindow = UIApplication.shared.keyWindow
         var ifExists = false
         var reqView: UIView?
         if let window = currentWindow {
@@ -50,8 +50,7 @@ class FTToastHostController: FTToastBaseHostController<FTToastView> {
 
     class func showToast(from controller: UIViewController, toastConfig: FTToastConfiguration) {
         let toastInfo = FTToastHostController.getIfToastExists(over: controller, for: FTToastTag.generalToastTag)
-        let currentWindow = controller.fetchCurrentWindow()
-        if let window = currentWindow, !toastInfo.toastExist {
+        if let window = UIApplication.shared.keyWindow, !toastInfo.toastExist {
             let hostingVc = FTToastHostController(toastConfig: toastConfig)
             hostingVc.view.center.y = -50.0
             hostingVc.view.center.x = window.frame.width/2.0
@@ -77,8 +76,11 @@ class FTToastHostController: FTToastBaseHostController<FTToastView> {
 }
 
 class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToastView> {
+    let config: FTToastConfiguration
     private init(info: FTNotebookToastInfo) {
-        let toastView = FTNotebookInfoToastView(info: info)
+        config = FTToastConfiguration(title: info.title, subTitle: info.displaySubTitle)
+        config.setContentMaxWidth(info.contentMaxWidth)
+        let toastView = FTNotebookInfoToastView(config: config)
         super.init(rootView: toastView)
     }
 
@@ -95,14 +97,15 @@ class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToa
     class func removeIfToastExists(from controller: UIViewController) {
         let toastInfo = FTBookInfoToastHostController.getIfToastExists(over: controller, for: FTToastTag.notebookInfoToastTag)
         if toastInfo.toastExist {
+            toastInfo.toastView?.alpha = 0.0
+            toastInfo.toastView?.layer.removeAllAnimations()
             toastInfo.toastView?.removeFromSuperview()
         }
     }
 
     class func showToast(from controller: UIViewController, info: FTNotebookToastInfo) {
         FTBookInfoToastHostController.removeIfToastExists(from: controller)
-        let currentWindow = controller.fetchCurrentWindow()
-        if let window = currentWindow {
+        if let window = UIApplication.shared.keyWindow {
             info.screenWidth = window.frame.width
             let hostingVc = FTBookInfoToastHostController(info: info)
             hostingVc.view.center.x = window.frame.width/2.0
@@ -114,7 +117,8 @@ class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToa
             if let window = UIApplication.shared.keyWindow {
                 insetBottom += window.safeAreaInsets.bottom
             }
-            hostingVc.view.center.y = window.frame.maxY - insetBottom - info.toastHeight/2.0
+            let toastHeight = hostingVc.config.getToastSize().height
+            hostingVc.view.center.y = window.frame.maxY - insetBottom - toastHeight/2.0
             UIView.animate(withDuration: 0.3) {
                 hostingVc.view.alpha = 1.0
             } completion: { _ in
@@ -138,17 +142,5 @@ private extension UIView {
                 self.removeFromSuperview()
             }
         }
-    }
-}
-
-private extension UIViewController {
-    func fetchCurrentWindow() -> UIWindow? {
-        var currentWindow = self.view.window?.windowScene?.windows.first
-        if nil == currentWindow {
-            if let scenes = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = scenes.windows.last {
-                currentWindow = window
-            }
-        }
-        return currentWindow
     }
 }
