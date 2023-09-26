@@ -29,6 +29,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        self.clearTempCache();
         FTStyles.registerFonts()
         FTImportStorageManager.resetCorruptedStatusWhenTerminated()
         FTCLSLog("--- didFinishLaunchingWithOptions ---")
@@ -223,4 +224,15 @@ extension NoteshelfAppDelegate {
     }
 }
 
-
+private extension NoteshelfAppDelegate {
+    func clearTempCache() {
+        if let contents = try? FileManager().contentsOfDirectory(atPath: NSTemporaryDirectory()) {
+            contents.forEach { eacItem in
+                let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(eacItem);
+                if path.isFileURL, path.pathExtension.isEmpty {
+                    try? FileManager().removeItem(at: path)
+                }
+            }
+        }
+    }
+}
