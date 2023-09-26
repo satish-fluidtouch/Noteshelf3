@@ -168,10 +168,20 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         {
             if let item = itemsToMove.first {
                 if let childItems = (item as? FTGroupItemProtocol)?.childrens, item.URL.pathExtension == FTFileExtension.group, toCollection.isTrash {
-                    self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
-                        movedItems.append(contentsOf: moved)
-                        itemsToMove.removeFirst();
-                        moveItem()
+                    if let groupItem = item as? FTGroupItemProtocol , groupItem.childrens.isEmpty {
+                        self.removeGroupItem(groupItem) { error, deletedGroup in
+                            if let movedItem = deletedGroup {
+                                movedItems.append(movedItem)
+                            }
+                            itemsToMove.removeFirst();
+                            moveItem()
+                        }
+                    } else {
+                        self.moveShelfItems(childItems, toGroup: toGroup, toCollection: toCollection) { (_, moved) in
+                            movedItems.append(contentsOf: moved)
+                            itemsToMove.removeFirst();
+                            moveItem()
+                        }
                     }
                 } else {
                     guard let shelfCollection = item.shelfCollection as? FTShelfItemCollectionLocal else  {
@@ -314,8 +324,8 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                                                         toCollection: self) { (error, _) in
                                         block(error,groupModel);
                                     };
-                                }
-                                else {
+                                } else {
+                                    NotificationCenter.default.post(name: Notification.Name.groupItemAdded, object: self, userInfo: [:])
                                     block(nil,groupModel);
                                 }
                             }
@@ -477,8 +487,8 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         }
     }
     
-    fileprivate func removeGroupItem(_ groupItem : FTGroupItemProtocol,
-                                 onCompletion block:(NSError?,FTGroupItemProtocol?) -> Void)
+    func removeGroupItem(_ groupItem: FTGroupItemProtocol,
+                                onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void)
     {
 //        var removedItems = [AnyObject]();
         
@@ -509,31 +519,23 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                                    toCollection : FTShelfItemCollection!,
                                    onCompletion block:@escaping (NSError?, FTShelfItemProtocol?, FTShelfItemProtocol?) -> Void)
     {
-        var toCreateFileName: Bool = true
-        var createdGroupItem: FTShelfItemProtocol?
-        
         toCollection?.shelfItems(.byName, parent: toGroup, searchKey: nil, onCompletion: { cloudItems in
-            for item in cloudItems where item.title == groupItem.title {
-                createdGroupItem = item
-                toCreateFileName = false
-                break
-            }
-            
-            if toCreateFileName {
-                (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
-                                                                    inGroup: toGroup)
-                { (uniqueGroupName) -> (Void) in
-                    toCollection.createGroupItem(uniqueGroupName.deletingPathExtension, inGroup: toGroup,
-                                                 shelfItemsToGroup: groupItem.childrens)
-                    {(error, newGroupItem) in
-                        self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
+            (toCollection as? FTUniqueNameProtocol)?.uniqueName(name: groupItem.URL.lastPathComponent,
+                                                                inGroup: toGroup)
+            { (uniqueGroupName) -> (Void) in
+                toCollection.createGroupItem(uniqueGroupName.deletingPathExtension, inGroup: toGroup,
+                                             shelfItemsToGroup: groupItem.childrens)
+                {(error, newGroupItem) in
+                    self.moveShelfItems(groupItem.childrens, toGroup: newGroupItem, toCollection: toCollection) { _, _ in
+                        //Empty group removal while moving empty group inside other group
+                        if groupItem.childrens.isEmpty {
+                            self.removeGroupItem(groupItem) { error, _groupItem in
+                                block(error, newGroupItem, groupItem)
+                            }
+                        } else {
                             block(error, newGroupItem, groupItem)
                         }
                     }
-                }
-            } else if let createdGroup = createdGroupItem as? FTGroupItemProtocol {
-                self.moveShelfItems(groupItem.childrens, toGroup: createdGroup, toCollection: toCollection) { error, _ in
-                    block(error, createdGroup, groupItem)
                 }
             }
         })
@@ -620,13 +622,6 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
             if let groupItem = item.parent {
                 groupItem.removeChild(item);
                 self.hashTable.removeItemFromHashTable(item.URL);
-                if(groupItem.childrens.isEmpty) {
-                    self.removeGroupItem(groupItem, onCompletion: { (error, group) in
-                        if(ENABLE_SHELF_RPOVIDER_LOGS) {
-                            debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Removed Group :\(groupItem.URL.lastPathComponent) child count 0");
-                        }
-                    });
-                }
             }
         }
         else {

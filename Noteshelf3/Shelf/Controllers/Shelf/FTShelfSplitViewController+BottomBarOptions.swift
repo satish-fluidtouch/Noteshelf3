@@ -52,25 +52,33 @@ extension FTShelfSplitViewController {
                     progress.localizedDescription = statusMsg;
 
                     runInMainThread { [weak self] in
-
+                        if let group = item as? FTGroupItemProtocol {
+                            FTNoteshelfDocumentProvider.shared.moveGroupToTrash(group) { (error, movedItems) in
+                                processDeletedItems(error, items: movedItems)
+                            }
+                        } else {
                             FTNoteshelfDocumentProvider.shared.moveItemstoTrash([item],
                                                                             onCompletion:
                             { (error, movedItems) in
-                                if(nil == error)
-                                {
-                                    self?.updatePublishedRecords(itmes: movedItems,
-                                                                 isDeleted: true,
-                                                                 isMoved: false);
-                                }
-                                progress.completedUnitCount += 1;
-                                deletedItems.removeFirst()
-                                if deletedItems.isEmpty {
-                                    smartProgress.hideProgressIndicator()
-                                    onCompletion?(movedItems)
-                                } else {
-                                    deleteItems()
-                                }
-                        });
+                            processDeletedItems(error, items: movedItems)
+                        })
+                        }
+                        func processDeletedItems(_ error: NSError?, items: [FTShelfItemProtocol]) {
+                            if(nil == error)
+                            {
+                                self?.updatePublishedRecords(itmes: items,
+                                                             isDeleted: true,
+                                                             isMoved: false);
+                            }
+                            progress.completedUnitCount += 1;
+                            deletedItems.removeFirst()
+                            if deletedItems.isEmpty {
+                                smartProgress.hideProgressIndicator()
+                                onCompletion?(items)
+                            } else {
+                                deleteItems()
+                            }
+                        }
                     }
                 }
             }

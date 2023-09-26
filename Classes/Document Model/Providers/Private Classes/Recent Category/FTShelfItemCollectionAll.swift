@@ -9,7 +9,11 @@
 import UIKit
 import FTCommon
 
-class FTShelfItemCollectionAll: NSObject, FTShelfItemCollection, FTShelfItemSorting {    
+class FTShelfItemCollectionAll: NSObject, FTShelfItemCollection, FTShelfItemSorting {
+    func removeGroupItem(_ groupItem: FTGroupItemProtocol, onCompletion block: @escaping (NSError?, FTGroupItemProtocol?) -> Void) {
+        
+    }
+    
     var URL: URL
     var uuid: String = FTUtils.getUUID();
     var type: RKShelfItemType = RKShelfItemType.shelfCollection;

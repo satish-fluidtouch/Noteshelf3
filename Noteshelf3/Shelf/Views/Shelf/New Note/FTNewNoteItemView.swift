@@ -82,7 +82,7 @@ struct FTNewNoteItemView:View{
                 .cornerRadius(16)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.appColor(.accentBorder), lineWidth: 1.0)
+                        .stroke(Color.appColor(.accentBg), lineWidth: 1.0)
                 )
             }
             .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))

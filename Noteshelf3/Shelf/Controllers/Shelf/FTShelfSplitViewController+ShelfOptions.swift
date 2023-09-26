@@ -507,7 +507,11 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 if item is FTDocumentItemProtocol {
                     count += 1
                 } else if let group = item as? FTGroupItemProtocol {
-                    count += actualNumberOfBooks(items: group.childrens)
+                    if group.childrens.isEmpty {
+                        count += 1
+                    } else {
+                        count += actualNumberOfBooks(items: group.childrens)
+                    }
                 }
             }
             return count
@@ -743,7 +747,7 @@ extension FTShelfSplitViewController {
 
             runInMainThread({
                 let doucmentItem = documents[index];
-                if let groupItem = doucmentItem as? FTGroupItemProtocol, let collection = groupItem.shelfCollection, !groupItem.childrens.isEmpty {
+                if let groupItem = doucmentItem as? FTGroupItemProtocol, let collection = groupItem.shelfCollection {
                     self.createGroup(name: groupItem.title,
                                      inGroup: groupItem.parent,
                                      items: [],
@@ -870,7 +874,7 @@ extension FTShelfSplitViewController {
     private func duplicateGroup(_ groupItem : FTGroupItemProtocol,
                         toGroup: FTGroupItemProtocol?,
                         onCompletion:@escaping ((NSError?, FTGroupItemProtocol?) -> Void)) {
-        guard let collection = groupItem.shelfCollection, !groupItem.childrens.isEmpty else {
+        guard let collection = groupItem.shelfCollection else {
             onCompletion(NSError.init(domain: "DuplicateError", code: 1000, userInfo: nil), nil)
             return;
         }
@@ -1048,6 +1052,16 @@ extension FTShelfSplitViewController: FTShelfNewNoteDelegate {
         }
         self.importFileHandler?.importFile(onViewController: self);
     }
+    
+    func didTapOnNewGroup() {
+        if let collection = self.currentShelfViewModel?.collection {
+            self.currentShelfViewModel?.removeObserversForShelfItems()
+            self.createGroup(name: "", inGroup: self.currentShelfViewModel?.groupItem, items: [], shelfCollection: collection) { error, group in
+                self.currentShelfViewModel?.addObserversForShelfItems()
+            }
+        }
+    }
+    
     func didClickScanDocument(){
         if FTIAPManager.shared.premiumUser.nonPremiumQuotaReached {
             FTIAPurchaseHelper.shared.showIAPAlert(on: self);

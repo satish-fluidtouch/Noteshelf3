@@ -13,8 +13,8 @@ enum FTScrollViewMode: Int {
 }
 
  enum FTScrollVelocityThreshold : CGFloat {
-    case left = -4500
-    case right = 4500;
+     case left = -1000
+     case right = 1000;
 }
 
 @objc protocol FTScrollViewDelegate : UIScrollViewDelegate {
