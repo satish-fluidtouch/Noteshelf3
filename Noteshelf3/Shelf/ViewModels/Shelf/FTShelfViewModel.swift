@@ -109,7 +109,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var collection: FTShelfItemCollection {
         didSet {
             reset()
-            reloadShelfItems = true // on change in current collection in sidebar bar we are reloading the shelf
         }
     }
     weak var groupItem: FTGroupItemProtocol?
@@ -464,7 +463,7 @@ extension FTShelfViewModel {
 extension FTShelfViewModel {
     
     @MainActor
-    func fetchShelfItems(animate: Bool = true) async {
+    func fetchShelfItems(animate: Bool = true)  {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
                               , searchKey: nil) { [weak self] items in

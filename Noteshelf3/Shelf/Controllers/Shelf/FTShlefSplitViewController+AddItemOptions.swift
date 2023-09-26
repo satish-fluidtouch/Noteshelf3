@@ -118,8 +118,8 @@ extension FTShelfSplitViewController {
             let subProgress = self.performBookImport(item.importItem, with: item.imporItemInfo,onCompletion: onCompletion);
             progress.addChild(subProgress, withPendingUnitCount: 1);
         }
-        else if let zipItem = item.importItem as? FTImportItemZip {
-            let zipImporter = FTNBKZipFileImporter(shelfItemCollection: self.shelfItemCollection,
+        else if let zipItem = item.importItem as? FTImportItemZip, let collection = self.shelfItemCollection {
+            let zipImporter = FTNBKZipFileImporter(shelfItemCollection: collection,
                                                    group: self.currentShelfViewModel?.groupItem);
             let subProgress = zipImporter.performImport(zipItem) { (error) in
                 onCompletion?(nil,error);
@@ -247,8 +247,8 @@ extension FTShelfSplitViewController {
                 self.fetchCollectionDetails(with: importInfo) { collection, group in
                     processImport(with: collection!, group: group)
                 }
-            } else {
-                processImport(with: self.shelfItemCollection, group: self.currentShelfViewModel?.groupItem)
+            } else if let collection = self.shelfItemCollection {
+                processImport(with: collection, group: self.currentShelfViewModel?.groupItem)
             }
             func processImport(with collection: FTShelfItemCollection, group: FTGroupItemProtocol?) {
                 let importer = FTNBKFormatImporter.init(url: URL.init(fileURLWithPath: downloadPath), collection: collection, group: group);
