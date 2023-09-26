@@ -274,7 +274,7 @@ struct FTGroupCoverViewNew: View {
     }
 
     private var groupContainsAllEmptyGroups: Bool {
-        return groupCoverViewModel.groupItem!.childrens.filter({$0 is FTGroupItemProtocol}).count == groupCoverViewModel.groupItem!.childrens.count
+        return groupCoverViewModel.groupItem?.isGroupEmpty() ?? false
     }
 }
 
