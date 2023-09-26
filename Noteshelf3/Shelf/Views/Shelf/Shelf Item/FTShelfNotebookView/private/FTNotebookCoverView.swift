@@ -74,6 +74,13 @@ struct FTNotebookCoverView: View {
                             .padding(.top,padding)
                     }
                 }
+                .overlay(alignment: .center, content: {
+                    if shelfItem.showLockIcon() {
+                        FTShortcutBarVisualEffectView().frame(width: sizeOfLockIcon(shelfViewModel.displayStlye.shelfItemSize), height: sizeOfLockIcon(shelfViewModel.displayStlye.shelfItemSize), alignment: .center)
+                            .cornerRadius(100.0)
+                        Image(systemName: "lock.fill").foregroundColor(Color.appColor(.black50))
+                    }
+                })
                 .overlay(alignment: .topLeading, content: {
                     NS2BadgeView()
                 })
@@ -83,6 +90,11 @@ struct FTNotebookCoverView: View {
         }
         .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
         .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+    }
+    
+    func sizeOfLockIcon(_ refSize: CGSize) -> CGFloat {
+        let ratio: CGFloat = 64 / 214
+        return refSize.width * ratio
     }
     
     private var leftCornerRadius: CGFloat {

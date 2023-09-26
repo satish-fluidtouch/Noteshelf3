@@ -21,6 +21,7 @@ let SHELF_TITLE_OPTION = "shelf_title";
 let ASSIGNMENTS_PLIST = "Assignments.plist"
 let NOTEBOOK_RECOVERY_PLIST = "RecoverBook.plist"
 let DOCUMENT_TAGS_KEY =  "tags";
+let INSERTCOVER = "insertCover"
 
 import Foundation
 import UIKit
@@ -212,7 +213,6 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 }
             }
         }
-
         return changes
     }
 
@@ -1182,6 +1182,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     #if !NOTESHELF_ACTION
+    func insertCoverForPasswordProtectedBooks(onCompletion : @escaping ((Bool,NSError?) -> Void)) {
+        self.updateCoverForMigratedBooks(onCompletion: onCompletion)
+    }
+    
     private func updateCoverForMigratedBooks(onCompletion : @escaping ((Bool,NSError?) -> Void)) {
         if self.shelfImage?.coverStyle() == FTCoverStyle.default {
             // If the document has cover then insert new page as cover.
@@ -1529,39 +1533,65 @@ extension FTNoteshelfDocument : FTRecognitionHelper {
 
 extension FTNoteshelfDocument: FTDocumentCoverPage {
     func generateCoverImage() -> UIImage? {
+        self.fetchCoverImage(isPinEnabled: self.isPinEnabled())
+    }
+    
+    func transparentThumbnail(isEncrypted: Bool) -> UIImage{
+       let isPinEnabled = isEncrypted || isPinEnabled()
+       return fetchCoverImage(isPinEnabled: isPinEnabled)
+    }
+   
+    func fetchCoverImage(isPinEnabled: Bool) -> UIImage {
         guard let _shelfImage = self.shelfImage else {
-                return nil;
+                return UIImage(named: "defaultNoCover")!
         }
         let coverImageSize :CGSize
         var coverImage: UIImage?;
-        if let page = self.pages().first, !self.isPinEnabled() {
-            let pageRect = page.pdfPageRect
-            if pageRect.width > pageRect.height {
-                // LandScape
-                if page.isCover {
-                    coverImageSize = landscapeCoverSize
-                } else {
-                    coverImageSize = landscapeNoCoverSize
+        if isPinEnabled {
+            // Password protected :
+            // If first page is cover, show standard cover with no strokes
+            // Else just show locked icon
+            if let page = self.pages().first, page.isCover {
+                if let document = page.pdfPageRef?.document {
+                    let pdfImage  = document.drawImagefromPdf()
+                    coverImage = pdfImage
                 }
             } else {
-                if page.isCover {
-                    coverImageSize = portraitCoverSize
-                } else {
-                    coverImageSize = portraitNoCoverSize
-                }
+                coverImage = UIImage(named: "locked")
             }
-            let shouldRenderBackground = page.isCover ? false : true
-            if let overLayImage = FTPDFExportView.snapshot(forPage: self.pages().first,
-                                                           size: coverImageSize,
-                                                           screenScale: 2,
-                                                           shouldRenderBackground: shouldRenderBackground) {
-                coverImage = self.generateImageForStandardCover(page: page, overLayImage: overLayImage, shelfImage: _shelfImage, angle: page.rotationAngle, targetSize: coverImageSize)
+        } else {
+            if let page = self.pages().first {
+                let pageRect = page.pdfPageRect
+                if pageRect.width > pageRect.height {
+                    // LandScape
+                    if page.isCover {
+                        coverImageSize = landscapeCoverSize
+                    } else {
+                        coverImageSize = landscapeNoCoverSize
+                    }
+                } else {
+                    if page.isCover {
+                        coverImageSize = portraitCoverSize
+                    } else {
+                        coverImageSize = portraitNoCoverSize
+                    }
+                }
+                let shouldRenderBackground = page.isCover ? false : true
+                if let overLayImage = FTPDFExportView.snapshot(forPage: self.pages().first,
+                                                               size: coverImageSize,
+                                                               screenScale: 2,
+                                                               shouldRenderBackground: shouldRenderBackground,
+                                                               offscreenRenderer: nil,
+                                                               with: FTSnapshotPurposeThumbnail) {
+                    coverImage = self.generateImageForStandardCover(page: page, overLayImage: overLayImage, shelfImage: _shelfImage, angle: page.rotationAngle, targetSize: coverImageSize)
+                }
             }
         }
         let newImage = coverImage ?? UIImage(named: "locked")!;
         return newImage;
     }
     
+    //This is used when we are sharing pages.
     func shelfCoverImage(for pages: [FTPageProtocol]) -> UIImage {
         let coverImageSize :CGSize
         var coverImage: UIImage?;
