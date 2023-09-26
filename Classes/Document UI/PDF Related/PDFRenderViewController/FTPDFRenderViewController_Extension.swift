@@ -1118,7 +1118,8 @@ extension FTPDFRenderViewController : FTExportActivityDelegate{
 
 extension FTPDFRenderViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if gestureRecognizer == self.twoFingerUndoGesture, let firstPageController = self.firstPageController() {
+        let isUndoRedoGestureRecognized = self.undoRedoGestureDetector.isUndoRedoGestureRecognized(gesture: gestureRecognizer)
+        if isUndoRedoGestureRecognized, let firstPageController = self.firstPageController() {
             return firstPageController.shouldAcceptTouch(touch: touch)
         }
         return true
