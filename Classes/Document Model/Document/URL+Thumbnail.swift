@@ -15,7 +15,7 @@ extension URL {
     func fetchQLThumbnail(completion: @escaping ((UIImage?) -> Void)) {
         let request = QLThumbnailGenerator.Request(fileAt: self,
                                                    size: portraitCoverSize,
-                                                   scale: UIScreen.main.scale,
+                                                   scale: 2,
                                                    representationTypes: .thumbnail)
 #if DEBUG
         NSLog("🌄 Generating thumbnail for \(self.path)")
