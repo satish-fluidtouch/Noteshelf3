@@ -173,11 +173,11 @@ extension FTDocumentCache {
         return destinationURL
     }
 
-    func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
+    func cacheShelfItemFor(url: URL, documentUUID: String) throws {
         var catchError: Error?
-         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { error in
+         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { isSuccess, error in
              catchError = error
-            if error == nil {
+            if isSuccess, error == nil {
                 do {
                     try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
                 } catch {
@@ -192,28 +192,39 @@ extension FTDocumentCache {
 }
 
 private extension FTDocumentCache {
-    func cacheShelfItemIfRequired(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
-        let destinationURL = cachedLocation(for: documentUUID)
-        if fileManager.fileExists(atPath: destinationURL.path) {
-            let isReplaced = try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
-            cacheLog(.success, "Replace", isReplaced, destinationURL.lastPathComponent)
-        } else {
-            let isCopied = try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL)
-            cacheLog(.success, "Copy", isCopied, destinationURL.lastPathComponent)
+    func cacheShelfItemIfRequired(url: URL, documentUUID: String, onCompletion: ((_ isSuccess: Bool, _ error: Error?) ->())?) {
+        // Ignore the documents which are already open
+        guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
+            cacheLog(.success, "Replace Ignored as already opened")
+            onCompletion?(false, nil)
+            return
         }
-    }
 
-    func cacheShelfItemIfRequired(url: URL, documentUUID: String, forceUpdate: Bool = false, onCompletion: ((Error?) ->())?) {
-        var forceUpdate = forceUpdate
         let destinationURL = cachedLocation(for: documentUUID)
-        var fileAction = "Copy"
-        if fileManager.fileExists(atPath: destinationURL.path) {
-            fileAction = "Replace"
-            forceUpdate = true
-        }
-        fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: forceUpdate) { error in
-            cacheLog( (error == nil) ? .success : .error, fileAction, (error == nil), destinationURL.lastPathComponent)
-            onCompletion?(error);
+        if !fileManager.fileExists(atPath: destinationURL.path) {
+            // Copy directly if the file doesn't exist at the cache location
+            fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false) { error in
+                cacheLog( (error == nil) ? .success : .error, "Copy", (error == nil), destinationURL.lastPathComponent)
+                onCompletion?(error == nil, error);
+            }
+        } else {
+            // Check for the latet modification dates at the cache location
+            let existingmodified = destinationURL.fileModificationDate
+            let newModified = url.fileModificationDate
+
+            // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
+            let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
+            cacheLog(.info, " \(isLatestModified) existingmodified: \(existingmodified) newModified: \(newModified)", destinationURL.lastPathComponent)
+
+            if isLatestModified {
+                fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true) { error in
+                    cacheLog( (error == nil) ? .success : .error, "Replace", (error == nil), destinationURL.lastPathComponent)
+                    onCompletion?(error == nil, error);
+                }
+            } else {
+                cacheLog(.success, "Replace Ignored as there are no modifications", destinationURL.lastPathComponent)
+                onCompletion?(false, nil);
+            }
         }
     }
 

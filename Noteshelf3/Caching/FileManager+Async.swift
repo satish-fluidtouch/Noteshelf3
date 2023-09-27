@@ -12,20 +12,20 @@ extension FileManager {
     func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false, onCompletion: ((Error?)->())?) {
         let document = FTNoteshelfDocument(fileURL: fromURL);
         let fileCoorinator = NSFileCoordinator.init(filePresenter: document)
-        let readIntent = NSFileAccessIntent.readingIntent(with: fromURL,options: .withoutChanges);
-        let writeIntent = NSFileAccessIntent.writingIntent(with: toURL,options: .forReplacing);
-        fileCoorinator.coordinate(with: [readIntent,writeIntent]
-                                  , queue: OperationQueue()) { error in
+        let readIntent = NSFileAccessIntent.readingIntent(with: fromURL, options: .forUploading);
+        let writeIntent = NSFileAccessIntent.writingIntent(with: toURL, options: .forReplacing);
+        fileCoorinator.coordinate(with: [readIntent,writeIntent], queue: OperationQueue()) { error in
             if error != nil {
                 onCompletion?(error)
             }
             else {
                 var catchError: Error?
                 do {
-                    if force {
-                        _ = try? self.removeItem(at: writeIntent.url)
+                    if self.fileExists(atPath: writeIntent.url.path) {
+                        _ = try self.replaceItemAt(writeIntent.url, withItemAt: readIntent.url)
+                    } else {
+                        _ = try self.copyItem(at: readIntent.url, to: writeIntent.url)
                     }
-                    _ = try self.copyItem(at: readIntent.url, to: writeIntent.url)
 
                 } catch {
                     catchError = error
@@ -41,16 +41,17 @@ extension FileManager {
         var copyError: NSError?
         var catchError: Error?
         fileCoorinator.coordinate(readingItemAt: fromURL,
-                                  options: NSFileCoordinator.ReadingOptions.withoutChanges,
+                                  options: NSFileCoordinator.ReadingOptions.forUploading,
                                   writingItemAt: toURL,
                                   options: NSFileCoordinator.WritingOptions.forReplacing,
                                   error: &copyError,
                                   byAccessor:{ (readingURL, writingURL) in
             do {
-                if force {
-                    _ = try? removeItem(at: writingURL)
+                if self.fileExists(atPath: writingURL.path) {
+                    _ = try self.replaceItemAt(writingURL, withItemAt: readingURL)
+                } else {
+                    _ = try self.copyItem(at: readingURL, to: writingURL)
                 }
-                _ = try copyItem(at: readingURL, to: writingURL)
 
             } catch {
                 catchError = error

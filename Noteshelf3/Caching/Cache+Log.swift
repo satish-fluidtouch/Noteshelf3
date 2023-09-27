@@ -17,15 +17,15 @@ enum LogType {
 
 func cacheLog(_ type: LogType = .info, _ items: Any...) {
     #if DEBUG
-//    let icon: String
-//    switch type {
-//    case .error:
-//        icon = "🔴"
-//    case .info:
-//        icon = "ℹ️"
-//    case .success:
-//        icon = "✅"
-//    }
-//    print("♻️", icon, items)
+    let icon: String
+    switch type {
+    case .error:
+        icon = "🔴"
+    case .info:
+        icon = "ℹ️"
+    case .success:
+        icon = "✅"
+    }
+    print("♻️", icon, items)
     #endif
 }

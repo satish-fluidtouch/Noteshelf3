@@ -1355,7 +1355,9 @@ extension FTRootViewController: FTOpenCloseDocumentProtocol {
     }
 
     func closeDocument(shelfItemManagedObject:FTDocumentItemWrapperObject, animate: Bool, onCompletion : (() -> Void)?) {
-
+        // cache the document if required.
+        try? FTDocumentCache.shared.cacheShelfItemFor(url: shelfItemManagedObject.URL, documentUUID: shelfItemManagedObject.documentUUID)
+        
         self.switchToShelf(shelfItemManagedObject,
                            documentViewController: self.docuemntViewController,
                            animate: animate,
