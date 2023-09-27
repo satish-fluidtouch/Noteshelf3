@@ -790,6 +790,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 
                 copiedPage.associatedPDFFileName = fileName;
                 copiedPage.associatedPDFPageIndex = Int(1);
+                copiedPage.isCover = false
                 copiedPage.lineHeight = Int(34);
                 copiedPage.pdfPageRect = tempFileItem.pageRectOfPage(atNumber: copiedPage.associatedPDFKitPageIndex);
                 
