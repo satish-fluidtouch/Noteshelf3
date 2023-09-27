@@ -19,7 +19,6 @@ struct FTShelfItemView: View {
     @ObservedObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State private var isPressed: Bool = false
 
     var shelfItemWidth: CGFloat = 212
     var shelfItemHeight: CGFloat = 334
@@ -84,7 +83,7 @@ struct FTShelfItemView: View {
             FTNotebookViewList(shelfItemWidth: shelfItemWidth, isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
         }
         else {
-            FTNotebookItemView(isPressed: $isPressed, shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
+            FTNotebookItemView(shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
         }
     }
     
@@ -100,28 +99,20 @@ struct FTShelfItemView: View {
                                                               viewModel: shelfViewModel,
                                                               shelfItemSize: thumbnailSize,
                                                               dropRect: NotebookDropRect))
-            .onTapGesture {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2){
-                    if(shelfViewModel.mode == .selection) {
-                        shelfItem.isSelected.toggle()
-                        // Track Event
-                        track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                    }
-                    else {
-                        shelfViewModel.openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
-                        track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                    }
-                }
-            }
-            .onLongPressGesture(perform: {
-
-            }, onPressingChanged: { _ in
-                isPressed.toggle()
-                withAnimation {
-                    isPressed = false
-                }
-            })
-
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded({ _ in
+                        if(shelfViewModel.mode == .selection) {
+                            shelfItem.isSelected.toggle()
+                            // Track Event
+                            track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                        }
+                        else {
+                            shelfViewModel.openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+                            track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                        }
+                    })
+            )
             .if(shelfViewModel.fadeDraggedShelfItem == shelfItem, transform: { view in
                 withAnimation(.easeInOut(duration: 1)) {
                     view.opacity(0.2)}
