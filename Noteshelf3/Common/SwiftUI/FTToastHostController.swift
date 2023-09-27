@@ -76,11 +76,8 @@ class FTToastHostController: FTToastBaseHostController<FTToastView> {
 }
 
 class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToastView> {
-    let config: FTToastConfiguration
     private init(info: FTNotebookToastInfo) {
-        config = FTToastConfiguration(title: info.title, subTitle: info.displaySubTitle)
-        config.setContentMaxWidth(info.contentMaxWidth)
-        let toastView = FTNotebookInfoToastView(config: config)
+        let toastView = FTNotebookInfoToastView(info: info)
         super.init(rootView: toastView)
     }
 
@@ -106,7 +103,6 @@ class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToa
     class func showToast(from controller: UIViewController, info: FTNotebookToastInfo) {
         FTBookInfoToastHostController.removeIfToastExists(from: controller)
         if let window = UIApplication.shared.keyWindow {
-            info.screenWidth = window.frame.width
             let hostingVc = FTBookInfoToastHostController(info: info)
             hostingVc.view.center.x = window.frame.width/2.0
             hostingVc.view.tag = FTToastTag.notebookInfoToastTag.rawValue
@@ -117,8 +113,7 @@ class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToa
             if let window = UIApplication.shared.keyWindow {
                 insetBottom += window.safeAreaInsets.bottom
             }
-            let toastHeight = hostingVc.config.getToastSize().height
-            hostingVc.view.center.y = window.frame.maxY - insetBottom - toastHeight/2.0
+            hostingVc.view.center.y = window.frame.maxY - insetBottom - info.toastHeight/2.0
             UIView.animate(withDuration: 0.3) {
                 hostingVc.view.alpha = 1.0
             } completion: { _ in

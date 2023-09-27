@@ -99,6 +99,7 @@ public enum AssetsColor: String, CaseIterable {
     case macTextToolbarBgColor
     case eraserBtnUnselected
     case toastBgColor
+    case bookInfoToastBgColor
     case globalSearchBgColor
     case groupBGColor
 
