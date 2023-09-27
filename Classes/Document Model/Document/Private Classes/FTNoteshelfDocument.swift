@@ -199,10 +199,10 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     var shouldGenerateCoverThumbnail : Bool {
         var changes = false
         
-        if (self.wasPinEnabled == true && self.isPinEnabled() == true) {
-            return false
-        }
-        else if (self.wasPinEnabled != self.isPinEnabled()){
+//        if (self.wasPinEnabled == true && self.isPinEnabled() == true) {
+//            return false
+//        }
+        if (self.wasPinEnabled != self.isPinEnabled()){
             return true
         }
         else{

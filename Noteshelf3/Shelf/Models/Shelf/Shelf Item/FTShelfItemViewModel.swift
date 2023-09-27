@@ -121,10 +121,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     
     func showLockIcon() -> Bool {
         let isPinEnabledForDoc = self.shelfItem?.URL.isPinEnabledForDocument() ?? false
-        if isPinEnabledForDoc {
-            return !self.coverImage.isLockedImage()
-        }
-        return false
+        return isPinEnabledForDoc
     }
 
     deinit {

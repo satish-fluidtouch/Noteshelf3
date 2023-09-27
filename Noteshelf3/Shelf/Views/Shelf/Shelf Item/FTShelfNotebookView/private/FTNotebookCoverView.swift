@@ -74,13 +74,11 @@ struct FTNotebookCoverView: View {
                             .padding(.top,padding)
                     }
                 }
-                .overlay(alignment: .center, content: {
+                .overlay {
                     if shelfItem.showLockIcon() {
-                        FTShortcutBarVisualEffectView().frame(width: sizeOfLockIcon(shelfViewModel.displayStlye.shelfItemSize), height: sizeOfLockIcon(shelfViewModel.displayStlye.shelfItemSize), alignment: .center)
-                            .cornerRadius(100.0)
-                        Image(systemName: "lock.fill").foregroundColor(Color.appColor(.black50))
+                        FTLockIconView()
                     }
-                })
+                }
                 .overlay(alignment: .topLeading, content: {
                     NS2BadgeView()
                 })
@@ -140,6 +138,26 @@ struct NS2BadgeView: View {
                 .frame(width: size, height: size)
                 .padding(.top, padding)
                 .padding(.leading, padding)
+        }
+    }
+}
+
+struct FTLockIconView: View {
+    @EnvironmentObject var shelfViewModel: FTShelfViewModel
+
+    var body: some View {
+        let size: CGFloat = shelfViewModel.displayStlye == .Gallery ? 64 : (shelfViewModel.displayStlye == .Icon ? 38 : 16)
+        let imageSize: CGFloat = shelfViewModel.displayStlye == .Gallery ?  24 : (shelfViewModel.displayStlye == .Icon ?  16 : 8)
+        ZStack {
+            FTShortcutBarVisualEffectView()
+            .frame(width: size, height: size, alignment: .center)
+            .cornerRadius(100.0)
+            .overlay {
+                Image("lockedIcon")
+                .resizable()
+                    .scaledToFit()
+                    .frame(width:imageSize, height: imageSize)
+            }
         }
     }
 }
