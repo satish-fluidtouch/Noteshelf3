@@ -92,7 +92,6 @@ final class FTDocumentCache {
     }
 
     @objc func shelfItemDidRemove(_ notification: Notification) {
-        cacheLog(.info, "shelfItemDidRemove", notification.userInfo, notification.object)
         guard let shelfItemCollection = notification.object as? FTShelfItemCollection else {
             return
         }
@@ -107,6 +106,7 @@ final class FTDocumentCache {
         }
 
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
+        cacheLog(.info, "shelfItemDidRemove", items.count)
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
         queue.async {
@@ -137,8 +137,8 @@ final class FTDocumentCache {
             return
         }
 
-        cacheLog(.info, "shelfitemDidUpdate", notification.userInfo, shelfItemCollection.URL)
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
+        cacheLog(.info, "shelfitemDidUpdate", items.count)
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
         queue.async {

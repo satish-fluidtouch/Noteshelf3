@@ -53,7 +53,11 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
             if storedToken.removeToken(token) {
                 if(storedToken.canClose) {
                     storedToken.document?.closeDocument(completionHandler: onCompletion);
-                    if let index = self.documentsInUse.index(of: storedToken) {
+
+                    // cache the document if required.
+                    try? FTDocumentCache.shared.cacheShelfItemFor(url: document.URL, documentUUID: document.documentUUID)
+
+                    if let index = self.documentsInUse.firstIndex(of: storedToken) {
                         self.documentsInUse.remove(at: index);
                     }
                 }
