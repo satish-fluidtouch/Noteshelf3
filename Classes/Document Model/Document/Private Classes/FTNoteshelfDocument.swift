@@ -1587,6 +1587,9 @@ extension FTNoteshelfDocument: FTDocumentCoverPage {
                 }
             }
         }
+        if coverImage == nil && self.shelfImage != nil {
+            coverImage = self.shelfImage
+        }
         let newImage = coverImage ?? UIImage(named: "locked")!;
         return newImage;
     }
