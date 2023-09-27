@@ -149,7 +149,7 @@ struct FTLockIconView: View {
         let size: CGFloat = shelfViewModel.displayStlye == .Gallery ? 64 : (shelfViewModel.displayStlye == .Icon ? 38 : 16)
         let imageSize: CGFloat = shelfViewModel.displayStlye == .Gallery ?  24 : (shelfViewModel.displayStlye == .Icon ?  16 : 8)
         ZStack {
-            FTShortcutBarVisualEffectView()
+            FTVibrancyEffectView()
             .frame(width: size, height: size, alignment: .center)
             .cornerRadius(100.0)
             .overlay {
