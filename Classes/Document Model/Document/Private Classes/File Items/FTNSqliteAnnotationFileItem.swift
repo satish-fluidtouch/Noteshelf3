@@ -258,7 +258,9 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         var annotationsToReturn = [FTAnnotation]();
         let typesOfAnnotation: [Int] = [FTAnnotationType.image.rawValue,
                                         FTAnnotationType.sticky.rawValue,
-                                        FTAnnotationType.audio.rawValue];
+                                        FTAnnotationType.audio.rawValue,
+                                        FTAnnotationType.sticker.rawValue,
+                                        FTAnnotationType.webclip.rawValue];
         if let _anotations = self.annotationsArray {
             annotationsToReturn = _anotations.filter({typesOfAnnotation.contains($0.annotationType.rawValue)})
             return annotationsToReturn;
