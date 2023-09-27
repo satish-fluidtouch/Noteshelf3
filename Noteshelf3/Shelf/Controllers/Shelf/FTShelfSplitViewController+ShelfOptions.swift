@@ -453,12 +453,12 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
 
                     runInMainThread {
                         if(item is FTGroupItemProtocol) {
-                            self.shelfItemCollection.shelfItems(FTShelfSortOrder.byName,
+                            self.shelfItemCollection?.shelfItems(FTShelfSortOrder.byName,
                                                                 parent: item as? FTGroupItemProtocol,
                                                                 searchKey: nil,
                                                                 onCompletion:
                                                                     { (items) in
-                                self.shelfItemCollection.removeShelfItem(item,
+                                self.shelfItemCollection?.removeShelfItem(item,
                                                                          onCompletion:
                                                                             { (error, _) in
                                     if(nil == error) {
@@ -475,7 +475,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                         }
                         else {
                             let documentUUID = (item as? FTDocumentItemProtocol)?.documentUUID;
-                            self.shelfItemCollection.removeShelfItem(item,
+                            self.shelfItemCollection?.removeShelfItem(item,
                                                                      onCompletion:
                                                                         { (error, _) in
                                 self.clearCache(documentUUID: documentUUID);
@@ -1054,12 +1054,26 @@ extension FTShelfSplitViewController: FTShelfNewNoteDelegate {
     }
     
     func didTapOnNewGroup() {
-        if let collection = self.currentShelfViewModel?.collection {
-            self.currentShelfViewModel?.removeObserversForShelfItems()
-            self.createGroup(name: "", inGroup: self.currentShelfViewModel?.groupItem, items: [], shelfCollection: collection) { error, group in
-                self.currentShelfViewModel?.addObserversForShelfItems()
+        self.showAlertOn(viewController: self, title: "Group Title", message: "", textfieldPlaceHolder: "Group", submitButtonTitle: "Create Group", cancelButtonTitle: "Cancel") {[weak self] title in
+            guard let self = self else {
+                return
             }
-        }
+            var groupTitle: String = "Group"
+            if let title = title, !title.isEmpty {
+                groupTitle = title
+            }
+            if let collection = self.currentShelfViewModel?.collection {
+                self.currentShelfViewModel?.removeObserversForShelfItems()
+                let loadingIndicatorView =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Grouping", comment: "Grouping"));
+                self.createGroup(name: groupTitle, inGroup: self.currentShelfViewModel?.groupItem, items: [], shelfCollection: collection) { error, group in
+                    loadingIndicatorView.hide()
+                    self.currentShelfViewModel?.addObserversForShelfItems()
+                    if let group {
+                        self.showGroup(with: group, animate: true)
+                    }
+                }
+            }
+        } cancelAction: {}
     }
     
     func didClickScanDocument(){

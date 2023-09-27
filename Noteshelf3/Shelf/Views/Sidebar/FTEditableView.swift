@@ -18,21 +18,28 @@ struct FTEditableView: View {
 
     @FocusState private var titleIsFocused: Bool
     @State var showEditableField: Bool = false
-    @State var newTitle: String = ""
+    var originalTitle: String = ""
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
                 Label {
                     HStack {
                         if showEditableField {
-                            TextField(placeHolder, text: $newTitle)
+                            TextField(placeHolder, text: $item.title)
                                 .font(.appFont(for: .regular, with: 17))
                                 .focused($titleIsFocused)
                                 .foregroundColor(.appColor(.black1))
                                 .onSubmit {
-                                    showEditableField = false
-                                    self.onButtonSubmit(newTitle)
-                                    newTitle = ""
+
+                                    if !item.title.isEmpty {
+                                        self.onButtonSubmit(item.title)
+                                    } else {
+                                        if originalTitle.isEmpty { // new category flow
+                                            showEditableField = false
+                                        } else {
+                                            item.title = originalTitle
+                                        }
+                                    }
                                 }
                                 .onAppear {
                                     runInMainThread(0.2) {
@@ -76,18 +83,17 @@ struct FTEditableView: View {
                 }
             }
         .onReceive(keyboardHideNotification) { _ in
-            showEditableField = false
-            self.onButtonSubmit(newTitle)
-            newTitle = ""
+
+            if !item.title.isEmpty {
+                self.onButtonSubmit(item.title)
+            } else {
+                if originalTitle.isEmpty { // new category flow
+                    showEditableField = false
+                } else {
+                    item.title = originalTitle
+                }
+            }
+
         }
     }
-    func titleBinding(_ title: String) -> Binding<String> {
-        return Binding<String>(
-          get: {
-              self.newTitle
-          },
-          set: {newValue in
-              self.newTitle = newValue
-          })
-      }
 }

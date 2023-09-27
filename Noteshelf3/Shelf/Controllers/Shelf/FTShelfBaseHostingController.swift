@@ -125,8 +125,6 @@ private extension FTShelfBaseHostingController {
     }
 
     private func fetchShelfItems(){
-        Task {
-            await shelfViewModel.fetchShelfItems()
-        }
+        shelfViewModel.fetchShelfItems()
     }
 }

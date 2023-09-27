@@ -30,9 +30,6 @@ class FTAccountInfoRequestDropbox: FTAccountInfoRequest {
                     }
                     account.userName = username
                     if var totalBytes = accountInfo?.totalBytes, var consumedBytes = accountInfo?.consumedBytes {
-                        let tempTotalBytes = totalBytes
-                        totalBytes = consumedBytes
-                        consumedBytes = tempTotalBytes
                         account.totalBytes = Int64(totalBytes)
                         account.consumedBytes = Int64(consumedBytes)
                     }
