@@ -49,5 +49,32 @@ public struct FTMicroInteractionButtonStyle: ButtonStyle {
     }
 }
 public struct AnimationValue {
-    public static var animatedValue: Double = 0.1
+    public static var animatedValue: Double = 0.2
+}
+
+//UIKit Interaction Button Custom Class
+open class FTInteractionButton: UIButton {
+    public static let shared = FTInteractionButton()
+
+    open func apply(to button: UIButton, withScaleValue scaleValue: CGFloat = 0.93) {
+        button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchDown)
+        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpOutside)
+
+        // Store the scale value in the button's tag for later use
+        button.tag = Int(scaleValue * 100) // Convert to an integer for simplicity
+    }
+
+    @objc private func buttonPressed(sender: UIButton) {
+        let scaleValue = CGFloat(sender.tag) / 100.0
+        UIView.animate(withDuration: AnimationValue.animatedValue, animations: {
+            sender.transform = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
+        })
+    }
+
+    @objc private func buttonReleased(sender: UIButton) {
+        UIView.animate(withDuration: AnimationValue.animatedValue, animations: {
+            sender.transform = .identity
+        })
+    }
 }

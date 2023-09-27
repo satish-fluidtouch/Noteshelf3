@@ -33,7 +33,7 @@ struct SideBarItemView : View {
             }
             .frame(height: 44)
         }
-        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.92))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
     }
     @ViewBuilder
     private var sideBarItem: some View {

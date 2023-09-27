@@ -56,7 +56,7 @@ struct FTShelfTopSectionView: View {
         FTShelfTopSectionItem(type: type,
                              isFirsttime: shelfViewModel.shouldShowGetStartedInfo, geometrySize: geometrySize,
                              shelfViewModel: shelfViewModel)
-        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.92))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
     }
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import StoreKit
 import SafariServices
+import FTCommon
 
 class FTIAPViewController: UIViewController {
     private var products: [SKProduct] = []
@@ -44,7 +45,9 @@ class FTIAPViewController: UIViewController {
 
         self.privacyButton?.setTitle("iap.privacy".localized, for: .normal);
         self.restorePurchaseButton?.setTitle("iap.restorePurchase".localized, for: .normal);
-        
+        if let upgradeButton = upgradeButton{
+            FTInteractionButton.shared.apply(to: upgradeButton, withScaleValue: 0.93)
+        }
         viewModel.delegate = self
     }
 
