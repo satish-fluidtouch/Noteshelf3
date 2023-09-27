@@ -90,11 +90,6 @@ struct FTNotebookCoverView: View {
         .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
     }
     
-    func sizeOfLockIcon(_ refSize: CGSize) -> CGFloat {
-        let ratio: CGFloat = 64 / 214
-        return refSize.width * ratio
-    }
-    
     private var leftCornerRadius: CGFloat {
         FTShelfItemProperties.leftCornerRadiusForShelfItemImage(shelfItem.coverImage,displayStyle: shelfViewModel.displayStlye)
     }

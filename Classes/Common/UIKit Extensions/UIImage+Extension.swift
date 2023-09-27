@@ -42,13 +42,6 @@ extension UIImage {
          return labelPosition;
      }
     
-    public func isLockedImage() -> Bool {
-        if let lockedImage = UIImage(named: "locked") {
-            return (self.size.width.remainder(dividingBy: lockedImage.size.width) == 0)
-        }
-        return false
-    }
-    
     convenience init(view: UIView) {
           UIGraphicsBeginImageContext(view.frame.size)
           view.layer.render(in:UIGraphicsGetCurrentContext()!)
