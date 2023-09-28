@@ -36,23 +36,22 @@ struct FTNotebookInfoToastView: View {
 
     var body: some View {
         ZStack {
-            FTVibrancyVisualEffectView()
+            FTShortcutBarVisualEffectView()
                 .cornerRadius(info.toastHeight/2.0)
             VStack {
                 Text(info.title)
                     .font(Font(info.titleFont))
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .truncationMode(.tail)
 
                 Text(info.displaySubTitle)
                     .font(Font(info.subTitleFont))
-                    .foregroundColor(.white.opacity(0.5))
+                    .foregroundColor(.primary.opacity(0.5))
             }
             .padding(.horizontal, info.horzPadding)
             .padding(.vertical, info.vertPadding)
         }
         .frame(width: self.width, height: info.toastHeight)
-        .toolbarOverlay(radius: info.toastHeight/2.0, borderWidth: 0.1)
         .onAppear {
             self.width = self.getRequiredWidth()
         }
@@ -61,33 +60,12 @@ struct FTNotebookInfoToastView: View {
     private func getRequiredWidth() -> CGFloat {
         let titleWidth = info.title.widthOfString(usingFont: info.titleFont) + 2*info.horzPadding
         let subTitleWidth = info.displaySubTitle.widthOfString(usingFont: info.subTitleFont) + 2*info.horzPadding
-        let maxWidth = max(min(max(titleWidth, subTitleWidth), 300.0), 150)
-        return maxWidth
-    }
-}
-
-struct FTVibrancyVisualEffectView: UIViewRepresentable {
-    var bgColor: UIColor = UIColor.appColor(.bookInfoToastBgColor)
-    @Environment(\.colorScheme) var colorScheme
-
-    init(bgColor: UIColor = UIColor.appColor(.bookInfoToastBgColor)) {
-        self.bgColor = bgColor
-    }
-
-    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
-        let blurEffect: UIBlurEffect
-        if colorScheme == .dark {
-            blurEffect = UIBlurEffect(style: .dark)
-        } else {
-            blurEffect = UIBlurEffect(style: .light)
+        var maxThreshold: CGFloat = 300.0
+        if let window = UIApplication.shared.keyWindow, window.frame.width > 500.0 {
+            maxThreshold = 400.0
         }
-        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-        let visualEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        return visualEffectView
-    }
-
-    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) {
-        uiView.backgroundColor = bgColor
+        let maxWidth = max(min(max(titleWidth, subTitleWidth), maxThreshold), 150)
+        return maxWidth
     }
 }
 
