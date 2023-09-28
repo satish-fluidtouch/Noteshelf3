@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTNewNoteTopSectionView: View {
     @ObservedObject var viewModel: FTNewNotePopoverViewModel
@@ -20,36 +21,15 @@ struct FTNewNoteTopSectionView: View {
             GridRow {
                 getShelfPopOverItemView(.quickNote)
                     .gridCellColumns(2)
-                    .onTapGesture {
-                        self.dismiss()
-                        track(EventName.shelf_addmenu_quicknote_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                            viewModel.delegate?.quickCreateNewNotebook()
-                        }
-                    }
             }
             GridRow{
                 getShelfPopOverItemView(.newNotebook)
-                    .onTapGesture {
-                        track(EventName.shelf_addmenu_newnotebook_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                        self.dismiss()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
-                            viewModel.delegate?.showNewNotebookPopover()
-                        }
-                    }
                 getShelfPopOverItemView(.importFromFiles)
-                    .onTapGesture {
-                        track(EventName.shelf_addmenu_importfile_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                        self.dismiss()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01){
-                            delegate?.didClickImportNotebook()
-                        }
-                    }
             }
         }
     }
     private func getShelfPopOverItemView(_ type: FTNewNotePopoverOptions) -> some View {
-        FTNewNoteItemView(type: type)
+        FTNewNoteItemView(type: type, viewModel: viewModel)
     }
 }
 struct FTNewNoteTopSectionView_Previews: PreviewProvider {

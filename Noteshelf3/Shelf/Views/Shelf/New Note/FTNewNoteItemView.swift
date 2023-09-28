@@ -13,10 +13,35 @@ struct FTNewNoteItemView:View{
 
     let type: FTNewNotePopoverOptions
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var delegate: FTShelfViewModel
+    @EnvironmentObject  var delegate:FTShelfViewModel
+    @ObservedObject var viewModel: FTNewNotePopoverViewModel
 
     var body: some View{
         VStack(alignment: .leading){
+            Button {
+                switch type {
+                case .quickNote:
+                    self.dismiss()
+                    track(EventName.shelf_addmenu_quicknote_tap, params: [EventParameterKey.location: delegate.shelfLocation()], screenName: ScreenName.shelf)
+                    runInMainThread(0.01) {
+                        viewModel.delegate?.quickCreateNewNotebook()
+                    }
+                case .newNotebook:
+                    track(EventName.shelf_addmenu_newnotebook_tap, params: [EventParameterKey.location: delegate.shelfLocation()], screenName: ScreenName.shelf)
+                    self.dismiss()
+                    runInMainThread(0.01){
+                        viewModel.delegate?.showNewNotebookPopover()
+                    }
+                case .importFromFiles:
+                    track(EventName.shelf_addmenu_importfile_tap, params: [EventParameterKey.location: delegate.shelfLocation()], screenName: ScreenName.shelf)
+                    self.dismiss()
+                    runInMainThread(0.01){
+                        delegate.delegate?.didClickImportNotebook()
+                    }
+                default:
+                    break
+                }
+            } label: {
                 HStack{
                     Image(icon: type.icon)
                         .resizable()
@@ -31,7 +56,7 @@ struct FTNewNoteItemView:View{
                             Image(icon: .quickCreateSettings)
                                 .resizable()
                                 .scaledToFit()
-                                    .frame(width: 16.0,height: 24.0)
+                                .frame(width: 16.0,height: 24.0)
                                 .padding(.trailing,16)
                                 .foregroundColor(.label.opacity(0.5))
                                 .contentShape(Rectangle())
@@ -60,12 +85,14 @@ struct FTNewNoteItemView:View{
                         .stroke(Color.appColor(.accentBg), lineWidth: 1.0)
                 )
             }
-
+            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
         }
     }
+}
+
     struct FTNewNoteItemView_Previews: PreviewProvider {
         static var previews: some View {
-            FTNewNoteItemView(type: .quickNote)
+            FTNewNoteItemView(type: .quickNote, viewModel: FTNewNotePopoverViewModel())
         }
     }
 

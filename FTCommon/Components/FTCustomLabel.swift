@@ -23,7 +23,6 @@ public class FTCustomLabel: UILabel {
         }
         self.adjustsFontForContentSizeCategory = true
         setUpFont()
-        NotificationCenter.default.addObserver(self, selector: #selector(preferredContentSizeChanged(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
     }
     
     private func setUpFont() {
@@ -34,7 +33,4 @@ public class FTCustomLabel: UILabel {
         }
     }
     
-    @objc func preferredContentSizeChanged(_ notification: Notification) {
-//        setStyle()
-    }
 }

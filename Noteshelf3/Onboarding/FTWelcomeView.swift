@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTWelcomeView: View {
     @State private var xoffset: CGFloat = 0
@@ -52,7 +53,7 @@ struct FTWelcomeView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(LinearGradient(gradient: Gradient(colors: [.appColor(.welcometopGradiantColor), .appColor(.welcomeBottonGradiantColor)]), startPoint: .top, endPoint: .bottom))
     }
-    
+
     @ViewBuilder
     private var headerView: some View {
         VStack(spacing: 16){
@@ -90,8 +91,8 @@ struct FTWelcomeView: View {
                 .background(Color.appColor(.welcomeBtnColor))
                 .cornerRadius(16)
         }
-        .macOnlyPlainButtonStyle()
         .shadow(color: .appColor(.welcomeBtnColor).opacity(0.24), radius: 16.0, x: 0, y: 12.0)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.93))
     }
     @ViewBuilder
     private var gridLeftToRight: some View {

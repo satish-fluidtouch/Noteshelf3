@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTSidebarTopSectionGridView: View {
 
@@ -25,13 +26,25 @@ struct FTSidebarTopSectionGridView: View {
                 gridItemFor(sidebarItemForType(.trash))
             }
             GridRow{
-                FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate).gridCellColumns(2)
+                templateGridItem(sidebarItemForType(.templates))
+                    .gridCellColumns(2)
             }
         }
     }
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
     }
+    private func templateGridItem(_ sideBarItem: FTSideBarItem) -> some View {
+        Button {
+            viewModel.endEditingActions()
+            viewModel.selectedSideBarItem = sideBarItem
+            delegate?.didTapOnSidebarItem(sideBarItem)
+        } label: {
+            FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate)
+        }
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
+    }
+
     private func gridItemFor(_ sideBarItem: FTSideBarItem) -> some View {
         Button {
             viewModel.endEditingActions()
@@ -40,8 +53,8 @@ struct FTSidebarTopSectionGridView: View {
         } label: {
             FTSidebarTopSectionGridItemView(viewModel: viewModel)
                 .environmentObject(sideBarItem)
-
         }
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
     }
 }
 

@@ -99,17 +99,20 @@ struct FTShelfItemView: View {
                                                               viewModel: shelfViewModel,
                                                               shelfItemSize: thumbnailSize,
                                                               dropRect: NotebookDropRect))
-            .onTapGesture {
-                if(shelfViewModel.mode == .selection) {
-                    shelfItem.isSelected.toggle()
-                    // Track Event
-                    track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                }
-                else {
-                    shelfViewModel.openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
-                    track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                }
-            }
+            .simultaneousGesture(
+                TapGesture()
+                    .onEnded({ _ in
+                        if(shelfViewModel.mode == .selection) {
+                            shelfItem.isSelected.toggle()
+                            // Track Event
+                            track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                        }
+                        else {
+                            shelfViewModel.openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+                            track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                        }
+                    })
+            )
             .if(shelfViewModel.fadeDraggedShelfItem == shelfItem, transform: { view in
                 withAnimation(.easeInOut(duration: 1)) {
                     view.opacity(0.2)}

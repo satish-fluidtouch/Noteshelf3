@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTHandWritingView: View {
     @Environment(\.dismiss) var dismiss
@@ -18,7 +19,7 @@ struct FTHandWritingView: View {
         GridItem(.fixed(133)),
         GridItem(.fixed(133))
     ]
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Section(header:Text("shelf.settings.handWritingRecognition".localized).sectionHeaderStyle()){
@@ -86,6 +87,7 @@ struct FTHandWritingView: View {
                                 Image(selecteStyle == style ? selecteStyle.selectedModeImageName : style.normalModeImageName)
                                     .frame(width: 85,height: 97)
                             })
+                            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
                         }
                     }
                     .padding(.vertical,32)
