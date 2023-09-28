@@ -102,7 +102,7 @@ struct FTShelfNewNotePopoverView: View {
                     }
                 }
                 .disabled(shouldDisableRow(for: index))
-                .opacity(shouldDisableRow(for: index) ? 0.5 : 1)
+                .opacity(shouldDisableRow(for: index) ? 0.4 : 1)
                 if index != (viewModel.displayableOptions.count - 1) {
                     Rectangle()
                         .frame(height: 0.5)
