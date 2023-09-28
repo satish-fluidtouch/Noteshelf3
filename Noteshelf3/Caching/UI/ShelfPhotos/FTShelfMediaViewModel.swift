@@ -89,7 +89,7 @@ private extension FTShelfContentPhotosViewModel {
                 continue
             }
         }
-        cacheLog(.success, totalMedia.count)
+        cacheLog(.info, "totalMedia", totalMedia.count)
         return totalMedia
     }
 
@@ -101,13 +101,13 @@ private extension FTShelfContentPhotosViewModel {
         guard FileManager.default.fileExists(atPath: annotationsFolder) else {
             return []
         }
-        var sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
+        let sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
         var totalMedia: [FTShelfMedia] = [FTShelfMedia]()
 
         for sqliteFile in sqliteFiles {
             let sqlitePath = annotationsFolder.appending(sqliteFile)
             let cachedFile = FTCachedSqliteAnnotationFileItem(url: URL(fileURLWithPath: sqlitePath), isDirectory: false, documentItem: docItem)
-            var media = cachedFile.annotataionsWithResources()
+            let media = cachedFile.annotataionsWithResources()
             totalMedia.append(contentsOf: media)
         }
         return totalMedia

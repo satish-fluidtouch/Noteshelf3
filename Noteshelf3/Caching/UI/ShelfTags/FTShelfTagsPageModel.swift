@@ -57,7 +57,6 @@ enum FTShelfTagsItemType {
         self.documentPlist = documentPlist
         self.shelfItem = shelfItem
         self.type = type
-//        self.document = (page as? FTNoteshelfPage)?.parentDocument as? FTNoteshelfDocument
     }
 }
 

@@ -178,7 +178,7 @@ private extension FTDocumentCache {
     func cacheShelfItemIfRequired(url: URL, documentUUID: String, onCompletion: ((_ isSuccess: Bool, _ error: Error?) ->())?) {
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
-            cacheLog(.success, "Replace Ignored as already opened \(url.lastPathComponent)")
+            cacheLog(.info, "Replace Ignored as already opened \(url.lastPathComponent)")
             onCompletion?(false, nil)
             return
         }

@@ -114,6 +114,8 @@ final class FTCacheTagsProcessor {
             } catch let error {
                 completion(nil, error)
             }
+        } else {
+            completion(nil, FTCacheError.corruptedDocument) //doesnot exist
         }
     }
 

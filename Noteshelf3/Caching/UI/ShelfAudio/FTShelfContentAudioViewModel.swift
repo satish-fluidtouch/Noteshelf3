@@ -86,7 +86,7 @@ private extension FTShelfContentAudioViewModel {
                 continue
             }
         }
-        cacheLog(.success, totalMedia.count)
+        cacheLog(.info, "totalMedia", totalMedia.count)
         return totalMedia
     }
 

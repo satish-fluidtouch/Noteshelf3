@@ -24,18 +24,22 @@ class FTTagItemModel {
     }
 
     func getTaggedItems(completion: @escaping ([FTShelfTagsItem]) -> Void) {
-        let reloadList = shelfItems.contains { eachItem in
-            eachItem.documentPlist == nil || eachItem.pageUUID != nil && eachItem.documentPlist?.pageFor(pageUUID: eachItem.pageUUID!) == nil
-        }
+//        let reloadList = shelfItems.contains { eachItem in
+//            if eachItem.type == .page {
+//                eachItem.documentPlist == nil || eachItem.documentPlist?.pageFor(pageUUID: eachItem.pageUUID!) == nil
+//            } else {
+//                eachItem.documentPlist == nil
+//            }
+//        }
 
-        if shelfItems.count > 0 && !reloadList {
-            completion(shelfItems)
-        } else {
+//        if shelfItems.count > 0 && !reloadList {
+//            completion(shelfItems)
+//        } else {
             taggedItemsFor(selectedTag: self.tag.text) { [weak self] shelftagItems in
                 self?.shelfItems = shelftagItems
                 completion(shelftagItems)
             }
-        }
+//        }
     }
 
     func updateShelfItems(items: [FTShelfTagsItem]) {
@@ -49,26 +53,32 @@ class FTTagItemModel {
             guard let self = self else { return }
             var taggedItems = items
             if let docUUID = shelfItem.documentUUID {
+
+                func updateDataWith(tags: [String], documentPlist: FTDocumentPlist?) {
+                    let item = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, pageUUID: pageUUID, tags: tags, documentPlist: documentPlist)
+                    let itemIndex = taggedItems.firstIndex(where: {$0.pageUUID == pageUUID})
+                    if self.tag.isSelected {
+                        item.tags.append(self.tag)
+                    } else {
+                        if let removeIndex = item.tags.firstIndex(where: {$0.text == self.tag.text}) {
+                            item.tags.remove(at: removeIndex)
+                        }
+                    }
+                    if let _itemIndex = itemIndex {
+                        taggedItems[_itemIndex].tags = item.tags
+                    } else {
+                        taggedItems.append(item)
+                    }
+                    self.updateShelfItems(items: taggedItems)
+                    completion(item)
+                }
                 FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist, error in
                     if let documentPlist = docPlist {
                         let page = documentPlist.pageFor(pageUUID: pageUUID)
                         let pageTags = page?.tags ?? []
-                        let item = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, pageUUID: pageUUID, tags: pageTags, documentPlist: documentPlist)
-                        let itemIndex = taggedItems.firstIndex(where: {$0.pageUUID == pageUUID})
-                        if self.tag.isSelected {
-                            item.tags.append(self.tag)
-                        } else {
-                            if let removeIndex = item.tags.firstIndex(where: {$0.text == self.tag.text}) {
-                                item.tags.remove(at: removeIndex)
-                            }
-                        }
-                        if let _itemIndex = itemIndex {
-                            taggedItems[_itemIndex].tags = item.tags
-                        } else {
-                            taggedItems.append(item)
-                        }
-                        self.updateShelfItems(items: taggedItems)
-                        completion(item)
+                        updateDataWith(tags: pageTags, documentPlist: documentPlist)
+                    } else {
+                        updateDataWith(tags: [], documentPlist: nil)
                     }
                 }
             }
@@ -213,7 +223,7 @@ class FTTagItemModel {
             dispatchGroup.notify(queue: .main) {
                 completion(totalTagItems)
             }
-            cacheLog(.success, totalTagItems.count)
+            cacheLog(.info, "totalTagItems", totalTagItems.count)
         }
 
     }

@@ -100,7 +100,7 @@ private extension FTShelfBookmarksPageModel {
                 cacheLog(.error, error, destinationURL.lastPathComponent)
             }
         }
-        cacheLog(.success, totalBookmarksItems.count)
+        cacheLog(.info, "Bookmarks", totalBookmarksItems.count)
         let result = FTBookmarksResult(bookmarkItems: totalBookmarksItems)
         return result
     }

@@ -25,6 +25,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                 let docPages =  document.pages()
                 if item.type == .book {
                     document.addTags(tags: item.tags.map{$0.text})
+                    document.pages().first?.isDirty = true
                 } else if item.type == .page {
                     if let page = docPages.first(where: {$0.uuid == item.pageUUID}) {
                         (page as? FTPageTagsProtocol)?.addTags(tags: item.tags.map({$0.text}))
@@ -87,8 +88,8 @@ class FTShelfTagsUpdateHandler: NSObject {
                         }
                     }
                 }
-                loadingIndicatorViewController.hide()
                 dispatchGroup.notify(queue: .main) {
+                    loadingIndicatorViewController.hide()
                     completion?(true)
                 }
             } else {
@@ -131,8 +132,8 @@ class FTShelfTagsUpdateHandler: NSObject {
                         }
                     }
                 }
-                loadingIndicatorViewController.hide()
                 dispatchGroup.notify(queue: .main) {
+                    loadingIndicatorViewController.hide()
                     completion?(true)
                 }
             } else {
