@@ -26,11 +26,7 @@ class FTNewNotePopoverViewModel: ObservableObject {
 
     var displayableOptions: [FTNewNotePopoverModel] {
 #if !targetEnvironment(macCatalyst)
-        if self.delegate?.isAllNotesCollection() ?? false {
-            return newNoteOptions.filter { $0.newNoteOption != .newGroup }
-        } else {
-            return newNoteOptions
-        }
+        return newNoteOptions
 #else
         return newNoteOptions.filter { $0.newNoteOption != .scanDocument }
 #endif

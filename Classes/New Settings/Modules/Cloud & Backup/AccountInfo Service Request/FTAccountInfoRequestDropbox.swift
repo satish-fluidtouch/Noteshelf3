@@ -29,7 +29,8 @@ class FTAccountInfoRequestDropbox: FTAccountInfoRequest {
                         username = FTEmptyDisplayName;
                     }
                     account.userName = username
-                    if var totalBytes = accountInfo?.totalBytes, var consumedBytes = accountInfo?.consumedBytes {
+                    if var totalBytes = accountInfo?.totalBytes, let consumedBytes = accountInfo?.consumedBytes {
+                        totalBytes = max(totalBytes, consumedBytes, 0)
                         account.totalBytes = Int64(totalBytes)
                         account.consumedBytes = Int64(consumedBytes)
                     }
