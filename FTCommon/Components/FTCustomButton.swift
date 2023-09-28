@@ -49,7 +49,7 @@ public struct FTMicroInteractionButtonStyle: ButtonStyle {
     }
 }
 public struct AnimationValue {
-    public static var animatedValue: Double = 0.2
+    public static var animatedValue: Double = 0.3
 }
 
 //UIKit Interaction Button Custom Class

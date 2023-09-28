@@ -29,7 +29,7 @@ struct FTSidebarTopSectionGridView: View {
                 templateGridItem(sidebarItemForType(.templates))
                     .gridCellColumns(2)
             }
-        }
+        }.macOnlyPlainButtonStyle()
     }
     private func sidebarItemForType(_ type: FTSideBarItemType) -> FTSideBarItem{
         viewModel.sidebarItemOfType(type)
