@@ -143,7 +143,7 @@ final class FTDocumentCache {
         // Perform all the operations on the secondary thread. This should never block the user interaction
         queue.async {
             items.forEach { item in
-                if let docUUID = item.documentUUID {
+                if let docUUID = item.documentUUID, item.isDownloaded {
                     do {
                         try self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
                     } catch {
@@ -195,7 +195,7 @@ private extension FTDocumentCache {
     func cacheShelfItemIfRequired(url: URL, documentUUID: String, onCompletion: ((_ isSuccess: Bool, _ error: Error?) ->())?) {
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
-            cacheLog(.success, "Replace Ignored as already opened")
+            cacheLog(.success, "Replace Ignored as already opened \(url.lastPathComponent)")
             onCompletion?(false, nil)
             return
         }
@@ -204,7 +204,7 @@ private extension FTDocumentCache {
         if !fileManager.fileExists(atPath: destinationURL.path) {
             // Copy directly if the file doesn't exist at the cache location
             fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false) { error in
-                cacheLog( (error == nil) ? .success : .error, "Copy", (error == nil), destinationURL.lastPathComponent)
+                cacheLog( (error == nil) ? .success : .error, "Copy", (error == nil), error?.localizedDescription ?? "-", url.lastPathComponent)
                 onCompletion?(error == nil, error);
             }
         } else {
@@ -214,15 +214,15 @@ private extension FTDocumentCache {
 
             // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
             let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
-            cacheLog(.info, " \(isLatestModified) existingmodified: \(existingmodified) newModified: \(newModified)", destinationURL.lastPathComponent)
+            cacheLog(.info, " \(isLatestModified) existingmodified: \(existingmodified) newModified: \(newModified)", url.lastPathComponent)
 
             if isLatestModified {
                 fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true) { error in
-                    cacheLog( (error == nil) ? .success : .error, "Replace", (error == nil), destinationURL.lastPathComponent)
+                    cacheLog( (error == nil) ? .success : .error, "Replace", (error == nil), error?.localizedDescription ?? "-", url.lastPathComponent)
                     onCompletion?(error == nil, error);
                 }
             } else {
-                cacheLog(.success, "Replace Ignored as there are no modifications", destinationURL.lastPathComponent)
+                cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
                 onCompletion?(false, nil);
             }
         }
@@ -231,16 +231,16 @@ private extension FTDocumentCache {
     // TODO: (AK) Try using Async Sequences
     func removeCacheDocumentIfRequired(_ documents: [FTDocumentItemProtocol]) throws {
         for case let doc in documents where doc.documentUUID != nil {
-            guard let docUUID = doc.documentUUID else { continue }
+            guard let docUUID = doc.documentUUID, doc.isDownloaded else { continue }
 
             let destinationURL = cachedLocation(for: docUUID)
             if fileManager.fileExists(atPath: destinationURL.path) {
                 do {
                     try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: doc.URL, documentUUID: docUUID)
                     try fileManager.removeItem(at: destinationURL)
-                    cacheLog(.success, "Remove", destinationURL.lastPathComponent)
+                    cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
-                    cacheLog(.error, "Remove", destinationURL.lastPathComponent)
+                    cacheLog(.error, "Remove", doc.URL.lastPathComponent)
                 }
             }
         }
