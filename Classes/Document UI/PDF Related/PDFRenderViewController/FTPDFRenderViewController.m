@@ -1178,34 +1178,38 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 }
 
 #pragma mark - UIScrollView Delegate
+-(void)scrollViewScrollComplete {
+    [self loadVisiblePages];
+    if (self.pageLayoutType == FTPageLayoutVertical) {
+        self.isPageScrollingByUser = false;
+        [self handlePageChange];
+
+        NSArray<FTPageViewController*> *visiblePages = [self visiblePageViewControllers];
+        for(FTPageViewController *eachPage in visiblePages) {
+            [eachPage.scrollView setNeedsLayout];
+            [eachPage.scrollView layoutIfNeeded];
+        }
+    }
+    [self triggerPageChangeNotification];
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     if (self.pageLayoutType == FTPageLayoutHorizontal) {
         [self handlePageChange];
     }
-    [self loadVisiblePages];
-    [self triggerPageChangeNotification];
+    [self scrollViewScrollComplete];
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     if (!decelerate) {
-        [self loadVisiblePages];
-    }
-    if (self.pageLayoutType == FTPageLayoutVertical) {
-        [self handlePageChange];
-        [self triggerPageChangeNotification];
-        if (!decelerate) {
-            self.isPageScrollingByUser = false;
-        }
+        [self scrollViewScrollComplete];
     }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if(self.pageLayoutType == FTPageLayoutVertical) {
-        [self loadVisiblePages];
-        self.isPageScrollingByUser = false;
-        [self handlePageChange];
-        [self triggerPageChangeNotification];
+        [self scrollViewScrollComplete];
     }
 }
 
