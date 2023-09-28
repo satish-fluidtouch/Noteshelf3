@@ -42,7 +42,7 @@ struct FTSidebarTopSectionGridView: View {
         } label: {
             FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate)
         }
-        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
     }
 
     private func gridItemFor(_ sideBarItem: FTSideBarItem) -> some View {
@@ -54,7 +54,7 @@ struct FTSidebarTopSectionGridView: View {
             FTSidebarTopSectionGridItemView(viewModel: viewModel)
                 .environmentObject(sideBarItem)
         }
-        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))
     }
 }
 

@@ -87,7 +87,7 @@ struct FTHandWritingView: View {
                                 Image(selecteStyle == style ? selecteStyle.selectedModeImageName : style.normalModeImageName)
                                     .frame(width: 85,height: 97)
                             })
-                            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.9))
+                            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
                         }
                     }
                     .padding(.vertical,32)

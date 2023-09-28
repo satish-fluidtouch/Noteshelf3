@@ -9,6 +9,14 @@
 import UIKit
 import SwiftUI
 
+public enum ScalevalueMode: CGFloat{
+    case veryslow = 0.8
+    case littleslow = 0.9
+    case slow = 0.92
+    case standard = 0.96
+    case fast = 0.98
+}
+
 public class FTCustomButton: UIButton {
     //Set the custom style in story board to set the custom font
 //    @IBInspectable var style: Int = 0;
@@ -16,11 +24,15 @@ public class FTCustomButton: UIButton {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
+        var title = ""
         if let localizationKey = self.localizationKey {
-            self.setTitle(NSLocalizedString(localizationKey, comment: self.title(for: .normal) ?? ""), for: .normal)
+            title = NSLocalizedString(localizationKey, comment: self.title(for: .normal) ?? "")
         } else {
-            self.setTitle(self.title(for: .normal)?.localized ?? "", for: .normal)
+            title = self.title(for: .normal)?.localized ?? ""
         }
+        var config = self.configuration
+        config?.title = title
+        self.configuration = config
         setUpFont()
     }
 
@@ -36,15 +48,16 @@ public class FTCustomButton: UIButton {
 
 //SwiftUI Interaction Button Custom Class
 public struct FTMicroInteractionButtonStyle: ButtonStyle {
-    let scaleValue: CGFloat
 
-    public init(scaleValue: CGFloat) {
+    let scaleValue: ScalevalueMode
+
+    public init(scaleValue: ScalevalueMode) {
         self.scaleValue = scaleValue
     }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? scaleValue : 1.0)
+            .scaleEffect(configuration.isPressed ? scaleValue.rawValue : 1.0)
             .animation(.easeInOut(duration: AnimationValue.animatedValue), value: configuration.isPressed)
     }
 }
@@ -53,10 +66,9 @@ public struct AnimationValue {
 }
 
 //UIKit Interaction Button Custom Class
-open class FTInteractionButton: UIButton {
-    public static let shared = FTInteractionButton()
+extension UIButton {
 
-    open func apply(to button: UIButton, withScaleValue scaleValue: CGFloat = 0.93) {
+    public func apply(to button: UIButton, withScaleValue scaleValue: CGFloat = 0.93) {
         button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchDown)
         button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpInside)
         button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpOutside)

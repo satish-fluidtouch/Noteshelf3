@@ -85,7 +85,7 @@ struct FTNewNoteItemView:View{
                         .stroke(Color.appColor(.accentBg), lineWidth: 1.0)
                 )
             }
-            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
+            .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
         }
     }
 }

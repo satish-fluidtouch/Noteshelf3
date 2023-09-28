@@ -92,7 +92,7 @@ struct FTWelcomeView: View {
                 .cornerRadius(16)
         }
         .shadow(color: .appColor(.welcomeBtnColor).opacity(0.24), radius: 16.0, x: 0, y: 12.0)
-        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.93))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
     @ViewBuilder
     private var gridLeftToRight: some View {

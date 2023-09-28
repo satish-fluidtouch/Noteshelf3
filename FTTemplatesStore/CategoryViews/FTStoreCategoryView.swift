@@ -65,7 +65,7 @@ struct FTStoreCategoryView: View {
             .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.appColor(.accentBorder), lineWidth: 1))
             .font(Font.appFont(for: .medium, with: 16))
         }
-        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
 }
 

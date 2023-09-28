@@ -47,7 +47,7 @@ struct FTPremiumBanner: View {
                             .shadow(color: .black.opacity(0.04), radius: 0.5, x: 0, y: 3)
                             .shadow(color: .black.opacity(0.12), radius: 4, x: 0, y: 3)
                     }
-                    .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.93))
+                    .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
                 }
                 Spacer()
             }

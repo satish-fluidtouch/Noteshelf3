@@ -106,7 +106,7 @@ struct FTShelfHomeView: FTShelfBaseView {
             .padding(.horizontal,gridHorizontalPadding)
             .padding(.top,28)
         }
-    .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: 0.94))
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
 
     private var seeAllNotesButtonTitle: String {
