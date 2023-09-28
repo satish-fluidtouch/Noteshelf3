@@ -87,7 +87,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     //TODO: RK Remove this default collection creation once we get confirmation from amar or akshay.
     fileprivate func defaultCollection(_ onCompletion : @escaping ((FTShelfItemCollection) -> Void))
     {
-        let myNotesCollectionName = NSLocalizedString("MyNotes", comment: "My Notes");
+        let myNotesCollectionName = "DefaultCategoryName".localized;
         self._createShelf(myNotesCollectionName.appending(".shelf"), onCompletion: { (error, collection) in
             guard let collection = collection else {
                 debugPrint("error: \(String(describing: error))")

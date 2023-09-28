@@ -895,6 +895,10 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             //updateSegmentData(for: self.segmentControl)
             self.sectionHeader?.segmentControl.selectedSegmentIndex = self.selectedSegment.rawValue
         #endif
+        if !shouldMoveToCurrentPage {
+            shouldMoveToCurrentPage = true
+            moveToCurrentPageIfNeeded(withDelay: false)
+        }
     }
     
     override func viewDidLayoutSubviews() {

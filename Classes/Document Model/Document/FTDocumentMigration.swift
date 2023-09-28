@@ -135,15 +135,11 @@ extension FTDocumentMigration {
     }
 
     static func isNS2AppInstalled() -> Bool {
-        #if DEBUG
-        return true
-        #else
         guard let ns2URL = URL(string: ns2URLScheme) else {
             return false
         }
         let canOpen = UIApplication.shared.canOpenURL(ns2URL)
         return canOpen
-        #endif
     }
 
     static func isNS2iCloudTurnedOn() -> Bool {

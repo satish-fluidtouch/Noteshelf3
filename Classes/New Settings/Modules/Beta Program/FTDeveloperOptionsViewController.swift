@@ -20,7 +20,7 @@ struct FTDeveloperOption {
     static var enablePDFSelection: Bool = true
     static var textToStrokeWrapChar: Bool = false
     static var textToStrokeSnapToLineHeight: Bool = true
-    static var cacheTextureTileImage: Bool = true
+    static var cacheTextureTileImage: Bool = false
 
    fileprivate struct SliderOptions {
         let title: String

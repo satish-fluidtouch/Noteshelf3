@@ -84,7 +84,6 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
 
     var isIntroScreen : Bool = false;
 
-    @objc private var isScrolling = false;
     @objc var orientationChanging = false {
         didSet{
             if(self.orientationChanging) {
@@ -460,7 +459,7 @@ private extension FTWritingViewController
             if intents.contains(FTRendererIntent.onScreen),
                 let scrollView = self.scrollView,
                 let metalViewController = self.onscreenViewController {
-                if(!self.isZooming && !isScrolling) {
+                if(!self.isZooming && !(self.scrollView?.isScrolling ?? true)) {
                     let isCurrentStrokeInProgress = (metalViewController.currentStroke == nil) ? false : true;
                     let frame = scrollView.visibleRect();
                     metalViewController.setVisibleRect(frame);
@@ -764,7 +763,6 @@ extension FTWritingViewController : FTEraseTouchHandling
 extension FTWritingViewController : FTTouchEventsHandling
 {
     func processTouchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.offscreenTileViewController?.cancelDelayedRefresh();
         (self.pageContentDelegate as? FTTouchEventsHandling)?.processTouchesBegan(touches, with: event);
     }
     
