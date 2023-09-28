@@ -9,22 +9,20 @@
 import Foundation
 import FTCommon
 extension FTSidebarViewModel {
-    func renametag(_ tag: FTSideBarItem, toNewTitle newTitle: String) {
-        let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title)
-        tagItem?.renameTagItemWith(renamedString: newTitle)
+    func renametag(_ tag: FTSideBarItem, oldTitle: String) {
+        let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle)
+        tagItem?.renameTagItemWith(renamedString: tag.title)
 
-        FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(id: tag.id, text: tag.title), with: FTTagModel(id: tag.id, text: newTitle), for: nil)
-        self.didUpdateRenameTag(tag: tag.title, with: newTitle)
-        tag.title = newTitle
+        FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(id: tag.id, text: oldTitle), with: FTTagModel(id: tag.id, text: tag.title)) { _ in
+            self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
+        }
     }
 
     func deleteTag(_ tag: FTSideBarItem) {
         if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
-            FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag, for: nil) { success in
-                if success == true {
-                    tagItem.deleteTagItem()
-                    self.updateShelfTagsAndSideMenu()
-                }
+            FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag) { _ in
+                tagItem.deleteTagItem()
+                self.updateShelfTagsAndSideMenu()
             }
         }
     }

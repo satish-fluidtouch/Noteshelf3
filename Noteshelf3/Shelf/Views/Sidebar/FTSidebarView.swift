@@ -144,10 +144,11 @@ struct FTSidebarView: View {
             VStack(spacing:2.0){
                 ForEach(menuSection.items, id:\.id) { item in
                     if item.isEditing {
+                        let oldTitle = item.title
                         getEditableViewForSideBarItem(item, withPlaceHolder:item.title,editableField: true) { newTitle in
                             item.isEditing = false
                             if !newTitle.isEmpty {
-                                viewModel.renameSideBarItem(item, toNewTitle: newTitle)
+                                viewModel.renameSideBarItem(item, oldTitle: oldTitle)
                             }
                         }
                     } else {

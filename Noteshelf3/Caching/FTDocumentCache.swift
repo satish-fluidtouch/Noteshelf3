@@ -113,11 +113,6 @@ final class FTDocumentCache {
                 try self.removeCacheDocumentIfRequired(items)
             } catch {
             }
-            if !items.isEmpty {
-//                runInMainThread {
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-//                }
-            }
         }
     }
 
@@ -150,11 +145,6 @@ final class FTDocumentCache {
                 } else {
                     cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
                 }
-            }
-            if !items.isEmpty {
-//                runInMainThread {
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-//                }
             }
         }
     }

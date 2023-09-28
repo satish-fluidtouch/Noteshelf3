@@ -225,48 +225,6 @@ final class FTCacheTagsProcessor {
             }
         }
     }
-
-    func renameTag(_ tag: FTTagModel, with newTag: FTTagModel, for document: FTNoteshelfDocument) {
-       let doc = document
-       var isOpen = false
-           isOpen =  doc.documentState == .normal
-           if !isOpen {
-                doc.openDocument(purpose: FTDocumentOpenPurpose.write, completionHandler: { success, error in
-                    if success {
-                        doc.renameTag(tag.text, with: newTag.text)
-                        doc.saveAndCloseWithCompletionHandler { _ in
-                            FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: doc.documentUUID)
-                        }
-                    }
-               })
-           } else {
-                doc.renameTag(tag.text, with: newTag.text)
-               doc.save { _ in
-                   FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: doc.documentUUID)
-               }
-           }
-   }
-
-    func deleteTags(tags: [FTTagModel], for document: FTNoteshelfDocument) {
-        let doc = document
-        var isOpen = false
-        isOpen =  doc.documentState == .normal
-        if !isOpen {
-            doc.openDocument(purpose: FTDocumentOpenPurpose.write) { success, error in
-                if success {
-                    doc.deleteTags(tags.map {$0.text})
-                    doc.saveAndCloseWithCompletionHandler { _ in
-                        FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: doc.documentUUID)
-                    }
-                }
-            }
-        } else {
-            doc.deleteTags(tags.map {$0.text})
-            doc.save { _ in
-                FTDocumentCache.shared.cacheShelfItemFor(url: doc.URL, documentUUID: doc.documentUUID)
-            }
-        }
-    }
 }
 
 extension FTCacheTagsProcessor {

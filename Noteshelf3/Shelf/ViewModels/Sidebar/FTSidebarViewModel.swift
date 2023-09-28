@@ -159,7 +159,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         for item in menuItems.flatMap({$0.items}) where item.isEditing {
             debugLog("editing item new title \(item.title)")
             item.isEditing = false
-            self.renameSideBarItem(item, toNewTitle: item.title)
+            self.renameSideBarItem(item, oldTitle: item.title)
         }
     }
 }
@@ -236,15 +236,11 @@ extension FTSidebarViewModel {
             self.deleteTag(item)
         }
     }
-    func renameSideBarItem(_ item: FTSideBarItem,toNewTitle newTitle:String) {
+    func renameSideBarItem(_ item: FTSideBarItem, oldTitle:String) {
         if item.type == .tag {
-            let tagItems = self.menuItems.filter {$0.type == .tags}
-            let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == newTitle})
-            if tagItem == nil {
-                self.renametag(item, toNewTitle: newTitle)
-            }
+            self.renametag(item, oldTitle: oldTitle)
         } else if item.type == .category {
-            self.renameCategory(item, toTitle: newTitle)
+            self.renameCategory(item, toTitle: oldTitle)
         }
     }
     func emptyTrash(_ sideBarItem: FTSideBarItem){

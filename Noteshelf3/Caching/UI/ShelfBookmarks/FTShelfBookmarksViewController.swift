@@ -117,12 +117,9 @@ class FTShelfBookmarksViewController: UIViewController {
                         document.removePageBookmark(page: page as! FTThumbnailable)
                     }
                 }
-                if let docUUID = shelfItem.documentUUID {
-                    FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
-                }
                 _ = await document.saveAndClose()
                 if let docUUID = shelfItem.documentUUID {
-                    FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
+                    try? FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
                 }
             }
         } catch {
