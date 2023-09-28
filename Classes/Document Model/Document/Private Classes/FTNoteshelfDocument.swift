@@ -1598,7 +1598,7 @@ extension FTNoteshelfDocument: FTDocumentCoverPage {
     func shelfCoverImage(for pages: [FTPageProtocol]) -> UIImage {
         let coverImageSize :CGSize
         var coverImage: UIImage?;
-        if let page = pages.first, !self.isPinEnabled() {
+        if let page = pages.first {
             let pageRect = page.pdfPageRect
             if pageRect.width > pageRect.height {
                 // LandScape
@@ -1688,6 +1688,7 @@ extension FTNoteshelfDocument: FTDocumentRecoverPages {
                     if self.shouldGenerateCoverThumbnail,
                         let finalImage = self.generateCoverImage() {
                         self.shelfImage = finalImage
+                        FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: finalImage, url: self.URL);
                         self.saveDocument { (_) in
                             onCompletion(success, nil)
                         }
