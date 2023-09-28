@@ -42,7 +42,7 @@ class FTAnalytics: NSObject {
         configureFirebase(with:launchOptions)
 //        AppDelegate.application(application, didFinishLaunchingWithOptions: launchOptions)
         #if DEBUG
-            FTMetrics.start(with: [.firebase], loglevel: FTMetricsLogLevel.debug)
+            FTMetrics.start(with: [.firebase], loglevel: FTMetricsLogLevel.none)
         #else
             FTMetrics.start(with: [.firebase])
         #endif

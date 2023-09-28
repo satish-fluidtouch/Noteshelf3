@@ -24,11 +24,9 @@ class FTDocumentUUIDReader: NSObject {
         // Try to read from the URL extended attributes.
         if let uuid = url.getExtendedAttribute(for: .documentUUIDKey)?.stringValue {
             onCompletion(uuid)
-            debugLog("Document UUID Found on URL")
             return
         } else {
             // Fallback to old approach
-            debugLog("Document UUID Falling back to Plist approach")
             let operation = FTDocumentUUIDReaderOperation(url: url, onCompletion: onCompletion);
             operationQueue.addOperation(operation);
         }

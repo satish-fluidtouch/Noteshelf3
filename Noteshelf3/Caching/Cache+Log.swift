@@ -26,6 +26,7 @@ func cacheLog(_ type: LogType = .info, _ items: Any...) {
     case .success:
         icon = "✅"
     }
-    print("♻️", icon, items)
+    var newitems = ["♻️", icon] + items
+    print(newitems)
     #endif
 }

@@ -23,7 +23,7 @@ enum FTCacheError: Error {
     case documentNotDownloaded
 }
 #if DEBUG
-private let cleanOnNextLaunch: Bool = true
+private let cleanOnNextLaunch: Bool = false
 #endif
 
 struct FTCacheFiles {
@@ -51,7 +51,6 @@ final class FTDocumentCache {
         cacheLog(.info, cacheFolderURL)
 
         FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
-//        try? FTCacheTagsProcessor.shared.removeAllTagsFromPlist()
 
         addObservers()
     }
@@ -61,15 +60,15 @@ final class FTDocumentCache {
     }
 
     private func createCachesDirectoryIfNeeded() {
-//#if DEBUG
-//        if cleanOnNextLaunch, fileManager.fileExists(atPath: cacheFolderURL.path) {
-//            do {
-//                try fileManager.removeItem(at: cacheFolderURL)
-//            } catch {
-//                cacheLog(.error, error)
-//            }
-//        }
-//#endif
+#if DEBUG
+        if cleanOnNextLaunch, fileManager.fileExists(atPath: cacheFolderURL.path) {
+            do {
+                try fileManager.removeItem(at: cacheFolderURL)
+            } catch {
+                cacheLog(.error, error)
+            }
+        }
+#endif
         if !fileManager.fileExists(atPath: cacheFolderURL.path) {
             do {
                 try fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
@@ -92,7 +91,6 @@ final class FTDocumentCache {
     }
 
     @objc func shelfItemDidRemove(_ notification: Notification) {
-        cacheLog(.info, "shelfItemDidRemove", notification.userInfo, notification.object)
         guard let shelfItemCollection = notification.object as? FTShelfItemCollection else {
             return
         }
@@ -107,18 +105,18 @@ final class FTDocumentCache {
         }
 
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
+        cacheLog(.info, "shelfItemDidRemove", items.count)
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
         queue.async {
             do {
                 try self.removeCacheDocumentIfRequired(items)
             } catch {
-
             }
             if !items.isEmpty {
-                runInMainThread {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-                }
+//                runInMainThread {
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+//                }
             }
         }
     }
@@ -137,22 +135,26 @@ final class FTDocumentCache {
             return
         }
 
-        cacheLog(.info, "shelfitemDidUpdate", notification.userInfo, shelfItemCollection.URL)
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
+        cacheLog(.info, "shelfitemDidUpdate", items.count)
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
         queue.async {
             items.forEach { item in
-                if let docUUID = item.documentUUID {
-                    self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
+                if let docUUID = item.documentUUID, item.isDownloaded {
+                    do {
+                        try self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
+                    } catch {
+                        cacheLog(.error, item.URL)
+                    }
                 } else {
                     cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
                 }
             }
             if !items.isEmpty {
-                runInMainThread {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-                }
+//                runInMainThread {
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+//                }
             }
         }
     }
@@ -169,70 +171,70 @@ extension FTDocumentCache {
         return destinationURL
     }
 
-//    func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
-//        var catchError: Error?
-//         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { error in
-//             catchError = error
-//            if error == nil {
-//                do {
-//                    try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
-//                } catch {
-//                    catchError = error
-//                }
-//            }
-//        })
-//        if let catchError = catchError {
-//            throw catchError
-//        }
-//    }
-
-    func cacheShelfItemFor(url: URL, documentUUID: String, forceUpdate: Bool = false) {
-         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { error in
-            if error == nil {
-                FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+    func cacheShelfItemFor(url: URL, documentUUID: String) throws {
+        var catchError: Error?
+         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { isSuccess, error in
+             catchError = error
+            if isSuccess, error == nil {
+                 FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
             }
         })
+        if let catchError = catchError {
+            throw catchError
+        }
     }
 }
 
 private extension FTDocumentCache {
-    func cacheShelfItemIfRequired(url: URL, documentUUID: String, forceUpdate: Bool = false) throws {
+    func cacheShelfItemIfRequired(url: URL, documentUUID: String, onCompletion: ((_ isSuccess: Bool, _ error: Error?) ->())?) {
+        // Ignore the documents which are already open
+        guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
+            cacheLog(.success, "Replace Ignored as already opened \(url.lastPathComponent)")
+            onCompletion?(false, nil)
+            return
+        }
+
         let destinationURL = cachedLocation(for: documentUUID)
-        if fileManager.fileExists(atPath: destinationURL.path) {
-            let isReplaced = try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
-            cacheLog(.success, "Replace", isReplaced, destinationURL.lastPathComponent)
+        if !fileManager.fileExists(atPath: destinationURL.path) {
+            // Copy directly if the file doesn't exist at the cache location
+            fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false) { error in
+                cacheLog( (error == nil) ? .success : .error, "Copy", (error == nil), error?.localizedDescription ?? "-", url.lastPathComponent)
+                onCompletion?(error == nil, error);
+            }
         } else {
-            let isCopied = try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL)
-            cacheLog(.success, "Copy", isCopied, destinationURL.lastPathComponent)
+            // Check for the latet modification dates at the cache location
+            let existingmodified = destinationURL.fileModificationDate
+            let newModified = url.fileModificationDate
+
+            // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
+            let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
+            cacheLog(.info, " \(isLatestModified) existingmodified: \(existingmodified) newModified: \(newModified)", url.lastPathComponent)
+
+            if isLatestModified {
+                fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true) { error in
+                    cacheLog( (error == nil) ? .success : .error, "Replace", (error == nil), error?.localizedDescription ?? "-", url.lastPathComponent)
+                    onCompletion?(error == nil, error);
+                }
+            } else {
+                cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
+                onCompletion?(false, nil);
+            }
         }
     }
 
-    func cacheShelfItemIfRequired(url: URL, documentUUID: String, forceUpdate: Bool = false, onCompletion: ((Error?) ->())?) {
-        var forceUpdate = forceUpdate
-        let destinationURL = cachedLocation(for: documentUUID)
-        var fileAction = "Copy"
-        if fileManager.fileExists(atPath: destinationURL.path) {
-            fileAction = "Replace"
-            forceUpdate = true
-        }
-        fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: forceUpdate) { error in
-            cacheLog( (error == nil) ? .success : .error, fileAction, (error == nil), destinationURL.lastPathComponent)
-            onCompletion?(error);
-        }
-    }
-
+    // TODO: (AK) Try using Async Sequences
     func removeCacheDocumentIfRequired(_ documents: [FTDocumentItemProtocol]) throws {
         for case let doc in documents where doc.documentUUID != nil {
-            guard let docUUID = doc.documentUUID else { continue }
+            guard let docUUID = doc.documentUUID, doc.isDownloaded else { continue }
 
             let destinationURL = cachedLocation(for: docUUID)
             if fileManager.fileExists(atPath: destinationURL.path) {
                 do {
                     FTCacheTagsProcessor.shared.cacheTagsForDocument(url: doc.URL, documentUUID: docUUID)
                     try fileManager.removeItem(at: destinationURL)
-                    cacheLog(.success, "Remove", destinationURL.lastPathComponent)
+                    cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
-                    cacheLog(.error, "Remove", destinationURL.lastPathComponent)
+                    cacheLog(.error, "Remove", doc.URL.lastPathComponent)
                 }
             }
         }
