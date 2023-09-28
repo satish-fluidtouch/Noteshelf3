@@ -243,11 +243,16 @@ extension FTPDFRenderViewController {
     }
 
     @objc func showNotebookInfoToast() {
-        if let page = self.firstPageController()?.pdfPage as? FTThumbnailable, let title = self.shelfItemManagedObject.title {
-            let currentPageNum = page.pageIndex() + 1
-            let totalPagesCount = self.pdfDocument.pages().count
-            let info = FTNotebookToastInfo(title: title, currentPageNum: currentPageNum, totalPageCount: totalPagesCount, screenWidth: self.view.frame.width)
-            FTBookInfoToastHostController.showToast(from: self, info: info)
+        if let page = self.firstPageController()?.pdfPage as? FTThumbnailable, let shelfItemObj = self.shelfItemManagedObject {
+            let creationDate = shelfItemObj.fileCreationDate
+            let timeInterval = Date().timeIntervalSince(creationDate)
+            // Not interested in showing notebook info toast for just created book
+            if timeInterval > 10.0,  let title = shelfItemObj.title {
+                let currentPageNum = page.pageIndex() + 1
+                let totalPagesCount = self.pdfDocument.pages().count
+                let info = FTNotebookToastInfo(title: title, currentPageNum: currentPageNum, totalPageCount: totalPagesCount)
+                FTBookInfoToastHostController.showToast(from: self, info: info)
+            }
         }
     }
 

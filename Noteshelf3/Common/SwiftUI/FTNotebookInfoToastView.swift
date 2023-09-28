@@ -13,75 +13,86 @@ class FTNotebookToastInfo {
     let title: String
     let currentPageNum: Int
     let totalPageCount: Int
-    var screenWidth: CGFloat // used to calculate width of toast based on info at view level.
 
-    let toastHeight: CGFloat = 24.0
-    let font = UIFont.appFont(for: .medium, with: 15.0)
-    let textColor = UIColor.appColor(.accent)
-    let regularPadding: CGFloat = 50.0
-    let compactPadding: CGFloat = 10.0
-    let compactUpperThreshold: CGFloat = 600.0
-    let cornerRadius: CGFloat = 6.0
+    let displaySubTitle: String
 
-    init(title: String, currentPageNum: Int, totalPageCount: Int, screenWidth: CGFloat) {
+    let toastHeight: CGFloat = 54.0
+    let titleFont = UIFont.appFont(for: .bold, with: 15)
+    let subTitleFont = UIFont.appFont(for: .regular, with: 13)
+    let horzPadding: CGFloat = 28.0
+    let vertPadding: CGFloat = 7.0
+    
+    init(title: String, currentPageNum: Int, totalPageCount: Int) {
         self.title = title
         self.currentPageNum = currentPageNum
         self.totalPageCount = totalPageCount
-        self.screenWidth = screenWidth
+        self.displaySubTitle = String.localizedStringWithFormat("PageNofN".localized, self.currentPageNum, self.totalPageCount)
     }
 }
 
 struct FTNotebookInfoToastView: View {
+    @State private var width: CGFloat = 100.0
     let info: FTNotebookToastInfo
-    @State var width: CGFloat = 270.0
 
     var body: some View {
         ZStack {
-            FTShortcutBarVisualEffectView()
-                .cornerRadius(info.cornerRadius)
-            HStack(spacing: FTSpacing.zero) {
+            FTVibrancyVisualEffectView()
+                .cornerRadius(info.toastHeight/2.0)
+            VStack {
                 Text(info.title)
-                    .foregroundColor(Color(uiColor: info.textColor))
-                    .font(Font(info.font))
+                    .font(Font(info.titleFont))
+                    .foregroundColor(.white)
                     .truncationMode(.tail)
 
-                Text(" . \(info.currentPageNum) of \(info.totalPageCount)")
-                    .foregroundColor(Color(uiColor: info.textColor))
-                    .font(Font(info.font))
+                Text(info.displaySubTitle)
+                    .font(Font(info.subTitleFont))
+                    .foregroundColor(.white.opacity(0.5))
             }
-            .padding(.horizontal, FTSpacing.small)
+            .padding(.horizontal, info.horzPadding)
+            .padding(.vertical, info.vertPadding)
         }
-        .frame(width: width, height: info.toastHeight)
-        .toolbarOverlay(radius: info.cornerRadius)
+        .frame(width: self.width, height: info.toastHeight)
+        .toolbarOverlay(radius: info.toastHeight/2.0, borderWidth: 0.1)
         .onAppear {
             self.width = self.getRequiredWidth()
         }
     }
 
     private func getRequiredWidth() -> CGFloat {
-        var width = info.title.widthOfString(usingFont: info.font, color: info.textColor) + " . \(info.currentPageNum) of  \(info.totalPageCount)".widthOfString(usingFont: info.font, color: info.textColor)
-        width += ((2 * FTSpacing.small) + 4.0) // 4 - extra offset to avoid truncation during string length calculation
-        var padding: CGFloat = 2 * info.regularPadding
-        if info.screenWidth < info.compactUpperThreshold {
-            padding = 2 * info.compactPadding
+        let titleWidth = info.title.widthOfString(usingFont: info.titleFont) + 2*info.horzPadding
+        let subTitleWidth = info.displaySubTitle.widthOfString(usingFont: info.subTitleFont) + 2*info.horzPadding
+        let maxWidth = max(min(max(titleWidth, subTitleWidth), 300.0), 150)
+        return maxWidth
+    }
+}
+
+struct FTVibrancyVisualEffectView: UIViewRepresentable {
+    var bgColor: UIColor = UIColor.appColor(.bookInfoToastBgColor)
+    @Environment(\.colorScheme) var colorScheme
+
+    init(bgColor: UIColor = UIColor.appColor(.bookInfoToastBgColor)) {
+        self.bgColor = bgColor
+    }
+
+    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
+        let blurEffect: UIBlurEffect
+        if colorScheme == .dark {
+            blurEffect = UIBlurEffect(style: .dark)
+        } else {
+            blurEffect = UIBlurEffect(style: .light)
         }
-        if width > info.screenWidth - padding {
-            width = info.screenWidth - padding
-        }
-        return width
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let visualEffectView = UIVisualEffectView(effect: vibrancyEffect)
+        return visualEffectView
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) {
+        uiView.backgroundColor = bgColor
     }
 }
 
 struct FTNotebookInfoToastView_Previews: PreviewProvider {
     static var previews: some View {
-        FTNotebookInfoToastView(info: FTNotebookToastInfo(title: "Sample Notebook 1", currentPageNum: 3, totalPageCount: 24, screenWidth: 450))
-    }
-}
-
-extension String {
-    func widthOfString(usingFont font: UIFont, color: UIColor) -> CGFloat {
-        let fontAttributes = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: color]
-        let size = self.size(withAttributes: fontAttributes)
-        return size.width
+        FTNotebookInfoToastView(info: FTNotebookToastInfo(title: "", currentPageNum: 1, totalPageCount: 4))
     }
 }
