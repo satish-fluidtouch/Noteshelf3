@@ -134,17 +134,11 @@ final class FTDocumentCache {
         cacheLog(.info, "shelfitemDidUpdate", items.count)
 
         // Perform all the operations on the secondary thread. This should never block the user interaction
-        queue.async {
-            items.forEach { item in
-                if let docUUID = item.documentUUID, item.isDownloaded {
-                    do {
-                        try self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
-                    } catch {
-                        cacheLog(.error, item.URL)
-                    }
-                } else {
-                    cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
-                }
+        items.forEach { item in
+            if let docUUID = item.documentUUID, item.isDownloaded {
+                self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
+            } else {
+                cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
             }
         }
     }
@@ -161,16 +155,21 @@ extension FTDocumentCache {
         return destinationURL
     }
 
-    func cacheShelfItemFor(url: URL, documentUUID: String) throws {
-        var catchError: Error?
-         cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { isSuccess, error in
-             catchError = error
-            if isSuccess, error == nil {
-                 FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+    func cacheShelfItemFor(url: URL, documentUUID: String) {
+        // (AK) Added a delay of 1 second, as we are receiving the  shelf item changed notification immediately after the cache call from the document close level
+        // Filesystem not returning the original modification date, When we read the modification date immediately
+        // This delay will help us to settle the copied document.
+        queue.asyncAfter(deadline: now() + 1) {
+            var catchError: Error?
+            self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { isSuccess, error in
+                catchError = error
+                if isSuccess, error == nil {
+                    FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+                }
+            })
+            if let catchError = catchError {
+                cacheLog(.error, catchError.localizedDescription, url.lastPathComponent)
             }
-        })
-        if let catchError = catchError {
-            throw catchError
         }
     }
 }
@@ -212,7 +211,6 @@ private extension FTDocumentCache {
         }
     }
 
-    // TODO: (AK) Try using Async Sequences
     func removeCacheDocumentIfRequired(_ documents: [FTDocumentItemProtocol]) throws {
         for case let doc in documents where doc.documentUUID != nil {
             guard let docUUID = doc.documentUUID, doc.isDownloaded else { continue }

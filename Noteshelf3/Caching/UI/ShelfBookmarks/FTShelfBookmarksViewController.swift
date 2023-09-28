@@ -119,7 +119,7 @@ class FTShelfBookmarksViewController: UIViewController {
                 }
                 _ = await document.saveAndClose()
                 if let docUUID = shelfItem.documentUUID {
-                    try? FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
+                    FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
                 }
             }
         } catch {
