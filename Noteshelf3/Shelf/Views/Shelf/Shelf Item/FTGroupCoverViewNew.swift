@@ -354,6 +354,13 @@ struct GroupNotebookView: View {
                             .environmentObject(shelfViewModel)
                     }
                 })
+                .overlay {
+                    if shelfItem.isPinEnabled {
+                        FTLockIconView()
+                            .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .center)
+                        .environmentObject(shelfViewModel)
+                    }
+                }
                 .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
                 .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
                 .zIndex(1)
