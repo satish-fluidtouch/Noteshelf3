@@ -1954,12 +1954,13 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
             pages.forEach({ pickedPage in
                 if let page = pickedPage as? FTThumbnailable
                     ,  let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol  {
-                    tagModel.updateTagForPage(shelfItem: shelfItem, page: page) { [weak self] item in
+                    tagModel.updateTagForPage(shelfItem: shelfItem, pageUUID: page.uuid) { [weak self] item in
                         guard let self = self else { return }
+                        item.document = self.document as? FTNoteshelfDocument
                         self.selectedTagItems[page.uuid] = item;
+                        (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
                         self.refreshTagPills()
                     }
-                    
                 }
             })
         }

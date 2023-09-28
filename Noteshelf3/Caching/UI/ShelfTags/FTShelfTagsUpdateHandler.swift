@@ -29,7 +29,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                     if item.type == .book {
                         document.addTags(tags: item.tags.map{$0.text})
                     } else if item.type == .page {
-                        let pages = docPages.filter {$0.uuid == item.page?.uuid}
+                        let pages = docPages.filter {$0.uuid == item.pageUUID}
                         if let page = pages.first as? FTPageTagsProtocol {
                             page.addTags(tags: item.tags.map({$0.text}))
                         }

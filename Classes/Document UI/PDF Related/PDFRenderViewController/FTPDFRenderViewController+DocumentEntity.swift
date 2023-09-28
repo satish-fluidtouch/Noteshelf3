@@ -309,10 +309,12 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
             if let page = self.currentlyVisiblePage() as? FTThumbnailable
                 , let shelfItem = self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol {
-                    tagModel.updateTagForPage(shelfItem: shelfItem, page: page) { [weak self] item in
-                        guard let self = self else { return }
-                        selectedShelfTagItems[page.uuid] = item;
-                        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+                tagModel.updateTagForPage(shelfItem: shelfItem, pageUUID: page.uuid) { [weak self] item in
+                    guard let self = self else { return }
+                    item.document = self.pdfDocument as? FTNoteshelfDocument
+                    (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
+                    selectedShelfTagItems[page.uuid] = item;
+                    NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
                 }
             }
         }

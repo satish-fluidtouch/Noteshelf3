@@ -40,12 +40,11 @@ extension FTShelfTagsViewController {
             }
             actions.append(editAction)
 
-            let removeTagsAction = UIAction(title: removeTagsTitle, image: UIImage(systemName: "tag.slash"), identifier: nil) { [weak self] (_) in
+            let removeTagsAction = UIAction(title: "sidebar.allTags.contextualMenu.removeTags".localized, image: UIImage(systemName: "tag.slash"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 self.contextMenuSelectedIndexPath = indexPath as IndexPath
                 self.removeTagsOperation()
                 track(EventName.shelf_tag_page_removetags_tap, screenName: ScreenName.shelf_tags)
-
             }
             removeTagsAction.attributes = .destructive
             actions.append(removeTagsAction)

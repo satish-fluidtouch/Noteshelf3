@@ -24,8 +24,7 @@ enum FTShelfTagsItemType {
  class FTShelfTagsItem: NSObject,Identifiable {
 
     var id: UUID = UUID()
-    var pageIndex: Int?
-    var page: FTThumbnailable?
+    var documentPlist: FTDocumentPlist?
     var documentUUID: String?
     var pageUUID: String?
     var shelfItem: FTDocumentItemProtocol?
@@ -53,39 +52,13 @@ enum FTShelfTagsItemType {
 
     private var observerProtocol: AnyObject?;
     
-    init(shelfItem: FTDocumentItemProtocol?, type: FTShelfTagsItemType, page: FTThumbnailable? = nil, pageIndex: Int? = 0) {
+    init(shelfItem: FTDocumentItemProtocol?, type: FTShelfTagsItemType, documentPlist: FTDocumentPlist? = nil) {
         super.init()
-        self.page = page
-        self.pageIndex = pageIndex
+        self.documentPlist = documentPlist
         self.shelfItem = shelfItem
         self.type = type
-        self.document = (page as? FTNoteshelfPage)?.parentDocument as? FTNoteshelfDocument
-
-        observerProtocol = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "tagsUpdate")
-                                               , object: nil
-                                               , queue: nil) { [weak self] notification in
-            guard let self = self else { return }
-
-            let userInfo = notification.userInfo
-            print("Page Id = ", self.pageUUID)
-            if let item = userInfo?.values.first as? FTShelfTagsItem
-                ,self != item
-                , self.type == item.type {
-                if self.type == .book, self.documentUUID == item.documentUUID {
-                    tags.removeAll();
-                    self.tags.append(contentsOf: item.tags);
-                }
-                else if self.type == .page, self.documentUUID == item.documentUUID, self.pageUUID == item.pageUUID {
-                    self.tags.removeAll();
-                    self.tags.append(contentsOf: item.tags);
-                }
-            }
-        }
+//        self.document = (page as? FTNoteshelfPage)?.parentDocument as? FTNoteshelfDocument
     }
-
-//    deinit {
-//        NotificationCenter.default.removeObserver(self.observerProtocol, name: NSNotification.Name(rawValue: "tagsUpdate"), object: nil);
-//    }
 }
 
 final class FTShelfTagsPageModel: ObservableObject {
@@ -95,8 +68,8 @@ final class FTShelfTagsPageModel: ObservableObject {
 
     func buildCache(completion: @escaping ([FTShelfTagsItem]) -> Void)  {
              startLoading()
-            let selectedTagItem = FTTagsProvider.shared.getTagItemFor(tagName: selectedTag)
-            selectedTagItem?.getTaggdItems(completion: { [weak self] tagsPage in
+        if let selectedTagItem = FTTagsProvider.shared.getTagItemFor(tagName: selectedTag) {
+            selectedTagItem.getTaggedItems(completion: { [weak self] tagsPage in
                 var tagItems = tagsPage
                 tagItems.removeAll(where: {$0.tags.isEmpty})
                 if self?.selectedTag.count ?? 0 > 0 {
@@ -108,6 +81,10 @@ final class FTShelfTagsPageModel: ObservableObject {
                 self?.setTagsPage(tagItems)
                 completion(self?.tagsResult ?? [])
             })
+        } else {
+            completion([])
+        }
+
     }
 
     private func startLoading() {
@@ -125,49 +102,30 @@ final class FTShelfTagsPageModel: ObservableObject {
 }
 
  extension FTShelfTagsPageModel {
-
-     func fetchOnlyTaggedNotebooks(selectedTags: [String], shelfItems: [FTShelfItemProtocol], progress: Progress) async throws -> [FTShelfTagsItem] {
-         if selectedTags.isEmpty {
-             debugLog("Programmer error")
-             return []
-         } else {
-             let result = try await self.processTags(reqItems: shelfItems, selectedTags: selectedTags, progress: progress)
-             return result
-         }
-     }
-
-     private func processTags(reqItems: [FTShelfItemProtocol], selectedTags: [String], progress: Progress) async throws -> [FTShelfTagsItem] {
-         let items: [FTDocumentItemProtocol] = reqItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
-
+      func processTags(reqItems: [FTShelfItemProtocol], selectedTags: [String], progress: Progress, completion: @escaping ([FTShelfTagsItem]) -> Void) {
          var totalTagItems: [FTShelfTagsItem] = [FTShelfTagsItem]()
+         let dispatchGroup = DispatchGroup()
+         selectedTags.forEach { eachTag in
+             dispatchGroup.enter()
 
-         for case let item in items where item.documentUUID != nil {
-             guard let docUUID = item.documentUUID else { continue }//, item.URL.downloadStatus() == .downloaded else { continue }
-             let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
-             print(destinationURL.path)
-             // move to post processing phace
-             do {
-                 let document = await FTNoteshelfDocument(fileURL: destinationURL)
-                 let isOpen = try await document.openDocument(purpose: FTDocumentOpenPurpose.read)
-                 if isOpen {
-                     let tags = await document.documentTags()
-                     let considerForResult = selectedTags.allSatisfy(tags.contains(_:))
-                     if considerForResult && !tags.isEmpty {
-                         let tagsBook = FTShelfTagsItem(shelfItem: item, type: .book)
-                         tagsBook.setTags(tags)
-                         totalTagItems.append(tagsBook)
-                     }
-                 }
-
-                 let tagsPage = await document.fetchSearchTagsPages(shelfItem: item, selectedTags: selectedTags)
-                 totalTagItems.append(contentsOf: tagsPage)
-                 _ = await document.saveAndClose()
-                 progress.completedUnitCount += 1
-             } catch {
-                 cacheLog(.error, error, destinationURL.lastPathComponent)
-             }
+             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: eachTag)
+              tagItem?.getTaggedItems(completion: { items in
+                 totalTagItems.append(contentsOf: items)
+                  progress.completedUnitCount += 1
+                 dispatchGroup.leave()
+             })
          }
-         cacheLog(.success, totalTagItems.count)
-         return totalTagItems
+         dispatchGroup.notify(queue: .main) {
+             var commonShelfss = [FTShelfTagsItem]()
+             totalTagItems.forEach { each in
+                 var tags = each.tags.map({$0.text}).sorted()
+                 let isCommonTags = selectedTags.allSatisfy(tags.contains(_:))
+                 if isCommonTags {
+                     commonShelfss.append(each)
+                 }
+             }
+             completion(Array(Set(commonShelfss)))
+         }
      }
+
 }

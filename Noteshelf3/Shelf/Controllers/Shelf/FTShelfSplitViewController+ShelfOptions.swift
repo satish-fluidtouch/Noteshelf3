@@ -1171,7 +1171,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
         items.forEach { item in
             if let shelfItem = item as? FTDocumentItemProtocol , let docUUID = shelfItem.documentUUID {
                 let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: shelfItem, tags: [])
-                let docTags = FTCacheTagsProcessor.shared.tagsForShelfItem(documentUUID: docUUID)
+                let docTags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
                 tagItem.setTags(docTags)
                 tagsItems.append(tagItem)
             }

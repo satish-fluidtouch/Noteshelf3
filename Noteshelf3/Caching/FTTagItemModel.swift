@@ -23,15 +23,18 @@ class FTTagItemModel {
         self.shelfItems = shelfItems
     }
 
-    func getTaggdItems(completion: @escaping ([FTShelfTagsItem]) -> Void) {
-        if shelfItems.count > 0 {
+    func getTaggedItems(completion: @escaping ([FTShelfTagsItem]) -> Void) {
+        let reloadList = shelfItems.contains { eachItem in
+            eachItem.documentPlist == nil || eachItem.pageUUID != nil && eachItem.documentPlist?.pageFor(pageUUID: eachItem.pageUUID!) == nil
+        }
+
+        if shelfItems.count > 0 && !reloadList {
             completion(shelfItems)
         } else {
-            //load tags item
-            taggedItemsFor(selectedTag: self.tag.text, completion: { [weak self] shelftagItems in
+            taggedItemsFor(selectedTag: self.tag.text) { [weak self] shelftagItems in
                 self?.shelfItems = shelftagItems
                 completion(shelftagItems)
-            })
+            }
         }
     }
 
@@ -41,36 +44,45 @@ class FTTagItemModel {
         self.documentIds = Array(Set(docIds))
     }
 
-    func updateTagForPage(shelfItem: FTDocumentItemProtocol, page: FTThumbnailable, completion: @escaping (FTShelfTagsItem) -> Void) {
-        self.getTaggdItems { [weak self] items in
+    func updateTagForPage(shelfItem: FTDocumentItemProtocol, pageUUID: String, completion: @escaping (FTShelfTagsItem) -> Void) {
+        self.getTaggedItems { [weak self] items in
             guard let self = self else { return }
             var taggedItems = items
-            let pageTags = page.tags()
-            let item = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, page: page, tags: pageTags)
-
-            if tag.isSelected {
-                item.tags.append(tag)
-                (page as? FTNoteshelfPage)?.addTag(tag.text)
-            } else {
-                if let removeIndex = item.tags.firstIndex(where: {$0.text == self.tag.text}) {
-                    item.tags.remove(at: removeIndex)
-                    (page as? FTNoteshelfPage)?.removeTag(tag.text)
+            if let docUUID = shelfItem.documentUUID {
+                FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist, error in
+                    if let documentPlist = docPlist {
+                        let page = documentPlist.pageFor(pageUUID: pageUUID)
+                        let pageTags = page?.tags ?? []
+                        let item = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, pageUUID: pageUUID, tags: pageTags, documentPlist: documentPlist)
+                        let itemIndex = taggedItems.firstIndex(where: {$0.pageUUID == pageUUID})
+                        if self.tag.isSelected {
+                            item.tags.append(self.tag)
+                        } else {
+                            if let removeIndex = item.tags.firstIndex(where: {$0.text == self.tag.text}) {
+                                item.tags.remove(at: removeIndex)
+                            }
+                        }
+                        if let _itemIndex = itemIndex {
+                            taggedItems[_itemIndex].tags = item.tags
+                        } else {
+                            taggedItems.append(item)
+                        }
+                        self.updateShelfItems(items: taggedItems)
+                        completion(item)
+                    }
                 }
             }
-            if taggedItems.isEmpty {
-                taggedItems.append(item)
-            }
-            self.updateShelfItems(items: taggedItems)
-            completion(item)
         }
     }
 
     func updateTagForBook(shelfItem: FTDocumentItemProtocol, completion: @escaping (FTShelfTagsItem) -> Void) {
-        self.getTaggdItems { [weak self] items in
+        self.getTaggedItems { [weak self] items in
             guard let self = self else { return }
             var taggedItems = items
-            let existingDocTags = FTCacheTagsProcessor.shared.documentTagsFor(shelfItem: shelfItem)
+            let existingDocTags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: shelfItem.documentUUID)
             let item = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: shelfItem, tags: existingDocTags)
+            let itemIndex = taggedItems.firstIndex(where: {$0.documentUUID == shelfItem.documentUUID})
+
             if tag.isSelected {
                 item.tags.append(tag)
             } else {
@@ -78,12 +90,13 @@ class FTTagItemModel {
                     item.tags.remove(at: removeIndex)
                 }
             }
-            if taggedItems.isEmpty {
+            if let _itemIndex = itemIndex {
+                taggedItems[_itemIndex].tags = item.tags
+            } else {
                 taggedItems.append(item)
             }
             self.updateShelfItems(items: taggedItems)
             completion(item)
-
         }
     }
 
@@ -97,6 +110,18 @@ class FTTagItemModel {
     }
 
     func deleteTagItem() {
+        self.getTaggedItems { [weak self] items in
+            guard let self = self else { return }
+            var taggedItems = items
+            for (index, taggedItem) in taggedItems.enumerated() {
+                if let removeIndex = taggedItem.tags.firstIndex(where: {$0.text == self.tag.text}) {
+                    taggedItem.tags.remove(at: removeIndex)
+                }
+                taggedItems[index] = taggedItem
+            }
+            self.updateShelfItems(items: taggedItems)
+        }
+
         var allTags = FTTagsProvider.shared.getAllTags()
         if let existingItemIndex = allTags.firstIndex(where: {$0.tag.text == self.tag.text}) {
             allTags.remove(at: existingItemIndex)
@@ -108,13 +133,16 @@ class FTTagItemModel {
         self.tag.text = renamedString
     }
 
-    func getDocumentIdsFor(tag: String) -> [String] {
+    func getDocumentIds() -> [String] {
         let allTags = FTTagsProvider.shared.getAllTags()
 
-        if !tag.isEmpty {
-            return allTags
-                .filter { $0.tag.text == tag }
+        if !self.tag.text.isEmpty {
+            let docIds = allTags
+                .filter { $0.tag.text == self.tag.text }
                 .first?.documentIds ?? []
+            let ids = Array(Set(docIds))
+            return ids
+
         } else {
             let returnDocids = allTags.compactMap { $0.documentIds }.joined()
             let ids = Array(Set(returnDocids))
@@ -132,6 +160,9 @@ class FTTagItemModel {
             var docIds = [String]()
             if !selectedTag.isEmpty {
                 docIds = self.documentIds
+                if docIds.isEmpty {
+                    docIds = self.getDocumentIds()
+                }
             } else {
                 let returnDocids = FTTagsProvider.shared.getAllTags().compactMap { $0.documentIds }.joined()
                 docIds = Array(Set(returnDocids))
@@ -142,17 +173,14 @@ class FTTagItemModel {
             }
             for case let item in filteredDocuments where item.documentUUID != nil {
                 dispatchGroup.enter()
-                guard let docUUID = item.documentUUID else { continue }//, item.URL.downloadStatus() == .downloaded else { continue }
+                guard let docUUID = item.documentUUID else { continue }
                 let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
                 let document = FTNoteshelfDocument(fileURL: destinationURL)
-                document.openDocument(purpose: .read) { isOpen, error in
-                    if isOpen {
-                        let tags = document.documentTags()
+                        let tags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
                         if tags.count > 0 {
                             func generateShelfTagItem() {
                                 let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: item, tags: tags)
                                 tagsBook.documentUUID = document.documentUUID
-                                tagsBook.document = document
                                 totalTagItems.append(tagsBook)
                             }
                             if selectedTag.isEmpty {
@@ -161,13 +189,26 @@ class FTTagItemModel {
                                 generateShelfTagItem()
                             }
                         }
-
-                        let tagsPage =  document.fetchTagsPages(shelfItem: item, selectedTag: selectedTag)
-                        totalTagItems.append(contentsOf: tagsPage)
-                        document.close(completionHandler: nil)
-                        dispatchGroup.leave()
-                    }
-                }
+                        FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist, error in
+                            let pages = docPlist?.pages
+                            var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
+                            pages?.forEach { page in
+                                    let tags = page.tags
+                                    if tags.count > 0 {
+                                        func generateShelfTagItem() {
+                                            let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: item, pageUUID: page.uuid, tags: tags, documentPlist: docPlist)
+                                            tagsPages.append(tagsPage)
+                                        }
+                                        if selectedTag.isEmpty {
+                                            generateShelfTagItem()
+                                        } else if tags.contains(selectedTag) {
+                                            generateShelfTagItem()
+                                        }
+                                    }
+                            }
+                            totalTagItems.append(contentsOf: tagsPages)
+                       }
+                dispatchGroup.leave()
             }
             dispatchGroup.notify(queue: .main) {
                 completion(totalTagItems)
@@ -305,15 +346,17 @@ class FTTagsProvider {
 
     }
 
-    func shelfTagsItemForPage(shelfItem: FTDocumentItemProtocol, page: FTThumbnailable, tags: [String]) -> FTShelfTagsItem {
-        if let docUUID = shelfItem.documentUUID, let shelfTagItem  = self.shelfTagsItems["\(docUUID)_\(page.uuid)"] {
+    func shelfTagsItemForPage(shelfItem: FTDocumentItemProtocol, pageUUID: String, tags: [String], documentPlist: FTDocumentPlist? = nil) -> FTShelfTagsItem {
+        if let docUUID = shelfItem.documentUUID, let shelfTagItem  = self.shelfTagsItems["\(docUUID)_\(pageUUID)"] {
+            shelfTagItem.documentPlist = documentPlist
             return shelfTagItem
         } else if let docUUID = shelfItem.documentUUID {
-            let tagsPage = FTShelfTagsItem(shelfItem: shelfItem, type: .page, page: page, pageIndex: page.pageIndex())
-            tagsPage.pageUUID = page.uuid
-            tagsPage.documentUUID = shelfItem.documentUUID
+            let tagsPage = FTShelfTagsItem(shelfItem: shelfItem, type: .page)
+            tagsPage.pageUUID = pageUUID
+            tagsPage.documentUUID = docUUID
             tagsPage.setTags(Array(Set(tags)))
-            self.shelfTagsItems["\(docUUID)_\(page.uuid)"] = tagsPage
+            tagsPage.documentPlist = documentPlist
+            self.shelfTagsItems["\(docUUID)_\(pageUUID)"] = tagsPage
             return tagsPage
 
         }

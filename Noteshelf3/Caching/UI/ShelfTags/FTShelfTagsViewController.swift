@@ -46,7 +46,6 @@ class FTShelfTagsViewController: UIViewController {
     }
     var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
-    var removeTagsTitle = "sidebar.allTags.contextualMenu.removeTags".localized
     var selectedPaths = [IndexPath]()
     var selectedItems = [FTShelfTagsItem]()
     private var currentSize: CGSize = .zero
@@ -108,8 +107,7 @@ class FTShelfTagsViewController: UIViewController {
 
     private func updateToolbarTitles() {
         if self.isRegularClass() {
-            removeTagsTitle = self.selectedTag == nil ? "sidebar.allTags.contextualMenu.removeTags".localized : "sidebar.allTags.contextualMenu.removeTag".localized
-            removeTagsBtn?.setTitle(removeTagsTitle, for: .normal)
+            removeTagsBtn?.setTitle("sidebar.allTags.contextualMenu.removeTags".localized, for: .normal)
             shareBtn?.setTitle("sidebar.allTags.toolbar.share".localized, for: .normal)
             editTagsBtn?.setTitle("sidebar.allTags.toolbar.editTags".localized, for: .normal)
         } else {
@@ -372,8 +370,8 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     func openInNewWindow() {
-        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.shelfItem  {
-            self.openItemInNewWindow(shelfItem, pageIndex: selectedItem.pageIndex)
+        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.shelfItem, let pageUUID = selectedItem.pageUUID, let page = selectedItem.documentPlist?.pageFor(pageUUID: pageUUID)   {
+            self.openItemInNewWindow(shelfItem, pageIndex: page.pageIndex)
         }
     }
 
@@ -391,9 +389,9 @@ class FTShelfTagsViewController: UIViewController {
     func removeTagsOperation() {
         selectedItems = self.selectedBooksOrPages()
 
-        UIAlertController.showDeleteDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
+        UIAlertController.showRemoveTagsDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
             for (index,selectedItem) in self.selectedItems.enumerated() {
-                let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: selectedItem.shelfItem!, page: selectedItem.page!, tags: selectedItem.tags.map({$0.text}))
+                let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: selectedItem.shelfItem!, pageUUID: selectedItem.pageUUID!, tags: selectedItem.tags.map({$0.text}))
 
                 if let tag = self.selectedTag {
                     self.selectedItems[index].tags.removeAll(where: { $0.text == tag.text })
@@ -483,8 +481,8 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             if indexPath.section == 1 {
                 let pages = generatePages()
                 let item = pages[indexPath.row]
-                if let shelf = item.shelfItem {
-                    self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex ?? 0)
+                if let shelf = item.shelfItem, let pageUUID = item.pageUUID, let page = item.documentPlist?.pageFor(pageUUID: pageUUID) {
+                    self.delegate?.openNotebook(shelfItem: shelf, page: page.pageIndex ?? 0)
                     track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                 }
             }
@@ -503,15 +501,12 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             let pages = generatePages()
             let item = pages[indexPath.row]
             let columnWidth = columnWidthForSize(self.view.frame.size) - 12
-            let size = CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
-
-            if let page = item.page {
-                if  page.pdfPageRect.size.width > page.pdfPageRect.size.height  { // landscape
+            if let pageUUID = item.pageUUID, let page = item.documentPlist?.pageFor(pageUUID: pageUUID) {
+                if  page.pageRect.size.width > page.pageRect.size.height  { // landscape
                     return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
                 } else {
                     return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
                 }
-
             }
         }
         return CGSize(width: collectionView.frame.width, height: 0.1);
@@ -570,27 +565,27 @@ extension FTShelfTagsViewController {
         let group = DispatchGroup()
 
         let multiples = Dictionary(grouping: selectedPages, by: {$0.shelfItem?.documentUUID})
-        multiples.values.forEach { tagItems in
-            group.enter()
-            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(FTUtils.getUUID());
-            let pages = tagItems.map {$0.page} as! [FTPageProtocol]
-            if let doc = tagItems.first?.document {
-                doc.openDocument(purpose: .read, completionHandler: { _, error in
-                    let info = FTDocumentInputInfo();
-                    info.rootViewController = self;
-                    info.overlayStyle = FTCoverStyle.clearWhite
-                    info.isNewBook = true;
-
-                    doc.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
-                        if let docum = FTDocumentItem.init(fileURL: url) as? FTShelfItemProtocol {
-                            itemsToExport?.append(docum)
-                            doc.closeDocument(completionHandler: nil)
-                            group.leave()
-                        }
-                    }
-                })
-            }
-        }
+//        multiples.values.forEach { tagItems in
+//            group.enter()
+//            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(FTUtils.getUUID());
+//            let pages = tagItems.map {$0.page} as! [FTPageProtocol]
+//            if let doc = tagItems.first?.document {
+//                doc.openDocument(purpose: .read, completionHandler: { _, error in
+//                    let info = FTDocumentInputInfo();
+//                    info.rootViewController = self;
+//                    info.overlayStyle = FTCoverStyle.clearWhite
+//                    info.isNewBook = true;
+//
+//                    doc.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
+//                        if let docum = FTDocumentItem.init(fileURL: url) as? FTShelfItemProtocol {
+//                            itemsToExport?.append(docum)
+//                            doc.closeDocument(completionHandler: nil)
+//                            group.leave()
+//                        }
+//                    }
+//                })
+//            }
+//        }
         group.notify(queue: DispatchQueue.main) {
             if let books = itemsToExport, books.count > 0 {
                 self.shareNotebooks(books)
@@ -622,14 +617,16 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
 
     func refreshView() {
         self.tagItems.removeAll(where: {$0.tags.isEmpty})
-        if selectedTag?.text != "All Tags".localized {
+        if selectedTag?.text != nil {
             self.tagItems = self.tagItems.filter { item in
-                // Check if the item's tags do not contain the selectedTag's text
-                return item.tags.map { $0.text }.contains(selectedTag?.text)
+                return item.tags.contains { $0.text == selectedTag?.text }
             }
+        } else {
+            self.tagItems = self.tagItems.filter { !$0.tags.isEmpty }
         }
         self.collectionView.reloadData()
         self.activateViewMode()
+        self.hidePlaceholderView()
         if self.tagItems.isEmpty {
             self.showPlaceholderView()
         }
@@ -665,9 +662,9 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
                             self.selectedTagItems[docUUID] = item;
                         }
                     }
-                } else if shelfTagItem.type == .page, let shelfItem = shelfTagItem.shelfItem, let page = shelfTagItem.page {
-                    tagModel.updateTagForPage(shelfItem: shelfItem, page: page) { item in
-                        self.selectedTagItems[page.uuid] = item;
+                } else if shelfTagItem.type == .page, let shelfItem = shelfTagItem.shelfItem, let pageUUID = shelfTagItem.pageUUID  {
+                    tagModel.updateTagForPage(shelfItem: shelfItem, pageUUID: pageUUID) { item in
+                        self.selectedTagItems[pageUUID] = item;
                     }
                 }
                 self.collectionView.reloadData()

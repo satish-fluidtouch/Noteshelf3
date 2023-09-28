@@ -45,7 +45,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         self.thumbnail?.backgroundColor = .clear
         self.thumbnail?.image = nil
 
-        if tagsItem.type == .page, let page = tagsItem.page {
+        if tagsItem.type == .page, let docUUID = tagsItem.documentUUID {
             self.thumbnail?.layer.cornerRadius = 10
 
             let image = UIImage(named: "pages_shadow")
@@ -53,15 +53,17 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             shadowImageView.image = scalled
             self.shadowImageView.layer.cornerRadius = 10
             self.shadowImageView.isHidden = true
-            page.thumbnail()?.thumbnailImage(onUpdate: {[weak self] image, uuid in
-                guard let self = self else { return }
-                if nil == image {
-                    self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
-                } else {
-                    self.shadowImageView.isHidden = false
-                    self.thumbnail?.image = image
+            if let pageUUID = tagsItem.pageUUID, let page = tagsItem.documentPlist?.pageFor(pageUUID: pageUUID) {
+                page.thumbnail(documentUUID: docUUID) { [weak self] image, pageUUID in
+                    guard let self = self else { return }
+                    if nil == image {
+                        self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
+                    } else {
+                        self.shadowImageView.isHidden = false
+                        self.thumbnail?.image = image
+                    }
                 }
-            })
+            }
         } else if tagsItem.type == .book, let shelfItem = tagsItem.shelfItem {
             var token : String?
             self.thumbnail?.contentMode = .scaleAspectFit
@@ -70,9 +72,6 @@ class FTShelfTagsPageCell: UICollectionViewCell {
                 if token == imageToken {
                     if let img = image {
                         self?.thumbnail?.contentMode = .scaleAspectFill
-
-//                        self?.thumbnail?.roundCorners(topLeft: 4, topRight: 10, bottomLeft: 4, bottomRight: 10)
-//                        self?.shadowImageView.roundCorners(topLeft: 4, topRight: 10, bottomLeft: 4, bottomRight: 10)
                         self?.shadowImageView.layer.cornerRadius = 8
                         self?.thumbnail?.layer.cornerRadius = 8
 

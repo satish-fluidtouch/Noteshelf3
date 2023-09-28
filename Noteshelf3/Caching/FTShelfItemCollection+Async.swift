@@ -42,49 +42,6 @@ extension FTDocumentProtocolInternal {
 
 // MARK: TagsPages
 extension FTNoteshelfDocument {
-  
-    func fetchTagsPages(shelfItem: FTDocumentItemProtocol, selectedTag: String) -> [FTShelfTagsItem] {
-        var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
-        self.pages().forEach { page in
-            if let tagPage = page as? FTThumbnailable {
-                var tags = tagPage.tags()
-                if tags.count > 0 {
-                    func generateShelfTagItem() {
-                        let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, page: tagPage, tags: tags)
-//                        let tagsPage = FTShelfTagsItem(shelfItem: shelfItem, type: .page, page: tagPage, pageIndex: page.pageIndex())
-//                        tagsPage.pageUUID = page.uuid
-//                        tagsPage.documentUUID = shelfItem.documentUUID
-//                        tagsPage.setTags(tags)
-                        tagsPage.document = self
-                        tagsPages.append(tagsPage)
-                    }
-                    if selectedTag.isEmpty {
-                        generateShelfTagItem()
-                    } else if tags.contains(selectedTag) {
-                        generateShelfTagItem()
-                    }
-                }
-            }
-        }
-        return tagsPages
-    }
-
-    func fetchSearchTagsPages(shelfItem: FTDocumentItemProtocol, selectedTags: [String]) -> [FTShelfTagsItem] {
-        var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
-        self.pages().forEach { page in
-            if let tagPage = page as? FTThumbnailable {
-                let tags = tagPage.tags()
-                let considerForResult = selectedTags.allSatisfy(tags.contains(_:))
-                if considerForResult && !tags.isEmpty {
-                    var tagsPage = FTShelfTagsItem(shelfItem: shelfItem, type: .page, page: tagPage, pageIndex: page.pageIndex())
-                    tagsPage.setTags(tags)
-                    tagsPages.append(tagsPage)
-                }
-            }
-        }
-        return tagsPages
-    }
-
     func addPageTag(tag: String) {
         self.pages().forEach { page in
             (page as? FTNoteshelfPage)?.addTag(tag)

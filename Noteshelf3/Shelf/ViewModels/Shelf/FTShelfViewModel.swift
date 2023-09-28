@@ -602,7 +602,7 @@ extension FTShelfViewModel {
             return
         }
         if let docUUID = document.documentUUID {
-            let tags = FTCacheTagsProcessor.shared.tagsForShelfItem(documentUUID: docUUID)
+            let tags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
             let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
             displayTagsView(tags: tagItems)
         }
