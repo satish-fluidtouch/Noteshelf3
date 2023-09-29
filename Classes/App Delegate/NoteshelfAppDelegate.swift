@@ -226,12 +226,17 @@ extension NoteshelfAppDelegate {
 
 private extension NoteshelfAppDelegate {
     func clearTempCache() {
-        if let contents = try? FileManager().contentsOfDirectory(atPath: NSTemporaryDirectory()) {
-            contents.forEach { eacItem in
-                let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(eacItem);
-                if path.isFileURL, path.pathExtension.isEmpty {
-                    try? FileManager().removeItem(at: path)
+        if !UserDefaults.standard.bool(forKey: "Template_Cache_Cleared") {
+            DispatchQueue.global().async {
+                if let contents = try? FileManager().contentsOfDirectory(atPath: NSTemporaryDirectory()) {
+                    contents.forEach { eacItem in
+                        let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(eacItem);
+                        if path.isFileURL, path.pathExtension.isEmpty {
+                            try? FileManager().removeItem(at: path)
+                        }
+                    }
                 }
+                UserDefaults.standard.set(true, forKey: "Template_Cache_Cleared");
             }
         }
     }
