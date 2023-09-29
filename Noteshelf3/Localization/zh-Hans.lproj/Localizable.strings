@@ -1067,8 +1067,8 @@
 "getInspired.student" = "学习笔记";
 "globalSearch.page" = "页面";
 "globalSearch.recentlySearched" = "最近搜索";
-"groupitem.noteText" = "笔记";
-"groupitem.notesText" = "注释";
+"groupitem.noteText" = "物品";
+"groupitem.notesText" = "项目";
 "headers" = "标题";
 "highlighterRack.flat" = "扁平荧光笔";
 "highlighterRack.round" = "圆形荧光笔";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM

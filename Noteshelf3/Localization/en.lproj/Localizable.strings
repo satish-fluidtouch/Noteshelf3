@@ -64,7 +64,7 @@
 "AutoBackup" = "Auto-Backup";
 "AutoBackupNotebooks" = "Auto-Backup Notebooks";
 "AutoBackupONMessage" = "This will enable Auto-Backup for all notebooks you create. Would you like to proceed?";
-"AutoSelectPreviousTool" = "Auto-select previous tool";
+"AutoSelectPreviousTool" = "Auto-Select Previous Tool";
 "Back" = "Back";
 "BackUpFailed" = "Backup Failed";
 "BackUpInProgress" = "Backup In Progress...";
@@ -1067,8 +1067,8 @@
 "getInspired.student" = "Study Notes";
 "globalSearch.page" = "page";
 "globalSearch.recentlySearched" = "Recently Searched";
-"groupitem.noteText" = "note";
-"groupitem.notesText" = "notes";
+"groupitem.noteText" = "item";
+"groupitem.notesText" = "items";
 "headers" = "Headers";
 "highlighterRack.flat" = "Flat Highlighter";
 "highlighterRack.round" = "Round Highlighter";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM
