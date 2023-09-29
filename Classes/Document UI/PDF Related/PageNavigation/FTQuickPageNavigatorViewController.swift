@@ -236,10 +236,6 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     }
         
     @IBAction private func sliderValueChanged(_ slider: UISlider) {
-        #if DEBUG
-        print(slider.value)
-        #endif
-        
         self.currentPageIndex = UInt(max(Int(slider.value.rounded()) - 1, 0))
         self.updatePageInfoContainer(at: self.currentPageIndex)
     }

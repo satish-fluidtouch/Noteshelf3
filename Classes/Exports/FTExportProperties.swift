@@ -24,5 +24,12 @@ class FTExportProperties {
         return properties
     }
 
-    
+    static func saveAsTemplateProperties() -> FTExportProperties {
+        let properties = FTExportProperties()
+        properties.exportFormat =  kExportFormatNBK
+        properties.hidePageTemplate = false
+        properties.includeCoverPage = true
+        properties.includesPageFooter = true
+        return properties
+    }
 }
