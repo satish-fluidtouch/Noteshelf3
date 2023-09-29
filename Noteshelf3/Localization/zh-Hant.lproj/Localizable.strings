@@ -1067,8 +1067,8 @@
 "getInspired.student" = "學習筆記";
 "globalSearch.page" = "頁";
 "globalSearch.recentlySearched" = "最近搜索";
-"groupitem.noteText" = "筆記";
-"groupitem.notesText" = "筆記";
+"groupitem.noteText" = "物品";
+"groupitem.notesText" = "專案";
 "headers" = "標題";
 "highlighterRack.flat" = "扁平荧光笔";
 "highlighterRack.round" = "圓形螢光筆";
@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "新頁";
 "notebook.eraserRack.NavTitle" = "橡皮擦";
 "notebook.lassoRack.NavTitle" = "套索";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d 的 %d";
 "notebook.restoring" = "恢復中...";
 "notebook.settings.moresettings" = "更多設置";
 "notebook.shapesRack.NavTitle" = "形狀";
@@ -1473,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "設為預設：";
 "text.font.setAsDefault.thisAndFutureBooks" = "這本和所有未來的筆記本";
 "text.font.setAsDefault.thisBook" = "這個筆記本";
+"textmode.fonttitle" = "字體/文字樣式";
 "texttoolbar.fontselectionTitle" = "選擇字型";
 "theams.unsplashDescription" = "從Unsplash選擇、拍照或從您的照片庫中選擇來創建您的自定封面。";
 "trash.alert.cannotOpenNotebook" = "這個筆記本無法打開，因為它已被刪除。要恢復，請長按並從菜單選擇該選項。";
@@ -1521,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 19 September 2023 at 2:59 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM

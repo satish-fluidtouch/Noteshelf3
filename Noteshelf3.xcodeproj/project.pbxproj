@@ -584,6 +584,7 @@
 		52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
+		52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */; };
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
 		8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */; };
@@ -3215,6 +3216,7 @@
 		52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTNoteBookToolsHeaderView.xib; sourceTree = "<group>"; };
 		52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookToolsHeaderView.swift; sourceTree = "<group>"; };
 		52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutLineCell.swift; sourceTree = "<group>"; };
+		52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageUndoRedoGestureDetector.swift; sourceTree = "<group>"; };
 		5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWatchRecordings.storyboard; sourceTree = "<group>"; };
 		5E31A16520062B2B007C28F5 /* FTExportProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportProgressManager.swift; sourceTree = "<group>"; };
 		5E322C702016EAA800F5F685 /* FTExportFileListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportFileListViewController.swift; sourceTree = "<group>"; };
@@ -8426,6 +8428,7 @@
 				211E2E3B1E027D72007B5CAD /* FTPDFRenderViewController.h */,
 				211E2E3C1E027D72007B5CAD /* FTPDFRenderViewController.m */,
 				09CDCB132A52EA4A000340FB /* FTPDFRenderViewController_Mac_Extension.swift */,
+				52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */,
 			);
 			path = PDFRenderViewController;
 			sourceTree = "<group>";
@@ -10962,8 +10965,8 @@
 				BAF395A92859ADF10067CA9F /* Swiftlint */,
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
-				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
+				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -11447,14 +11450,17 @@
 		};
 		BAF395A72859ADF10067CA9F /* Firebase Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
 			);
 			name = "Firebase Crashlytics";
 			outputFileListPaths = (
@@ -12515,6 +12521,7 @@
 				E7C71A65288E795A00AF2598 /* HorizontalRangeTrack.swift in Sources */,
 				BAF392EE2859ADF00067CA9F /* FTAnnotation_UI_Factory.swift in Sources */,
 				BAF392EF2859ADF00067CA9F /* FTSearchResultBookCell.swift in Sources */,
+				52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */,
 				BA2D90BC285C4416001BB495 /* FTModifiers.swift in Sources */,
 				BAF392F02859ADF00067CA9F /* FTShapeAnnotation.swift in Sources */,
 				BAF392F12859ADF00067CA9F /* FTZoomOverlayViewController.swift in Sources */,

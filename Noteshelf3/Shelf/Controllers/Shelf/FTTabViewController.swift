@@ -179,6 +179,9 @@ private extension FTTabViewController {
     }
 }
 extension FTTabViewController: FTSideMenuViewControllerDelegate {
+    func didCurrentCollectionRenamed(_ collection: FTShelfItemCollection) {
+
+    }
     func showHomeView() {
         if let navigationController = self.viewControllers?.first as? UINavigationController {
             let shelfViewModel = FTShelfViewModel(sidebarItemType: .home)

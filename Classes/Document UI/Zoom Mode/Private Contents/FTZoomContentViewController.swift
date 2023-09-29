@@ -93,6 +93,12 @@ class FTZoomContentViewController: UIViewController {
         }
     }
     
+    func setIsScrolling(_ scrolling: Bool) {
+        if let pageController = self.pageViewController {
+            pageController.scrollView?.setZoomBoxIsScrolling(scrolling);
+        }
+    }
+
     var visibleFrame: CGRect {
         return self.pageViewController?.scrollView?.visibleRect() ?? CGRect.null;
     }

@@ -17,7 +17,7 @@ protocol FTShelfPresentable {
     var isInSearchMode: Bool { get }
     var isInGroupMode: Bool { get }
     var currentShelfViewModel: FTShelfViewModel? { get }
-    var shelfItemCollection: FTShelfItemCollection! { get set }
+    var shelfItemCollection: FTShelfItemCollection? { get set }
     var groupItemIfExists : FTGroupItemProtocol? { get set }
 
     var presentedViewController: UIViewController? { get }
@@ -44,7 +44,13 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
     
-    internal var shelfItemCollection: FTShelfItemCollection! = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
+    internal var shelfItemCollection: FTShelfItemCollection? {
+        didSet {
+            if let shelfItemCollection {
+                self.sideMenuController?.selectSideMenuCollection(shelfItemCollection)
+            }
+        }
+    }
     private var lastSelectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
     private var isInNonCollectionMode: Bool = false
@@ -123,21 +129,30 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     func configureSecondaryController(isInNonCollectionMode:Bool,
                                       lastSelectedContentType: FTSideBarItemType,
                                       lastSelectedTag: String,
-                                      lastSelectedCollection collection: FTShelfItemCollection){
+                                      lastSelectedCollection collection: FTShelfItemCollection?){
+        func setSecondaryVC(_ vc: UIViewController) {
+            let navController = UINavigationController(rootViewController: secondaryViewController)
+            navController.navigationBar.prefersLargeTitles = true
+            self.detailNavigationController = navController;
+            self.showDetailViewController(navController, sender: nil);
+        }
         let secondaryViewController: UIViewController
+        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category,.ns2Category]
+        if collectionTypes.contains(where: {$0 == lastSelectedContentType}),let collection {
+            self.shelfItemCollection = collection
+        } else {
+            self.shelfItemCollection = nil
+        }
         if isInNonCollectionMode {
             self.lastSelectedSideBarItemType = lastSelectedContentType
             self.isInNonCollectionMode = isInNonCollectionMode
             self.lastSelectedTag = lastSelectedTag
             secondaryViewController =  getViewControllerBasedOn(sideBarItemType: self.lastSelectedSideBarItemType,selectedTag: self.lastSelectedTag)
-        } else {
-            self.shelfItemCollection = collection
-            secondaryViewController =  getSecondaryViewControllerWith(collection: shelfItemCollection, groupItem: nil)
+            setSecondaryVC(secondaryViewController)
+        } else if let collection = self.shelfItemCollection {
+            secondaryViewController =  getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+            setSecondaryVC(secondaryViewController)
         }
-        let navController = UINavigationController(rootViewController: secondaryViewController)
-        navController.navigationBar.prefersLargeTitles = true
-        self.detailNavigationController = navController;
-        self.showDetailViewController(navController, sender: nil);
     }
     
     private func setupView(){
@@ -275,7 +290,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
 
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol) {
-        if openDoc, self.shelfItemCollection.collectionType != .system, !(item.URL.isPinEnabledForDocument()) {
+        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.URL.isPinEnabledForDocument()) {
             self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
         }
     }
@@ -402,9 +417,7 @@ extension FTShelfSplitViewController {
         shelfViewModel.delegate = self
         shelfViewModel.tagsControllerDelegate = self
         let detailViewController = FTShelfHomeViewController(shelfViewModel: shelfViewModel, shelfMenuOverlayInfo: shelfMenuDisplayInfo);
-        if !FTUserDefaults.isFirstLaunch() {
-            detailViewController.title = "sidebar.topSection.home".localized
-        }
+        detailViewController.title = (self.currentShelfViewModel?.shouldShowGetStartedInfo ?? false) ? "" : "sidebar.topSection.home".localized
         detailViewController.shelfViewModel = shelfViewModel
         return detailViewController
     }
@@ -563,7 +576,7 @@ extension FTShelfSplitViewController {
             if(CloudBookDownloadDebuggerLog) {
                 FTCLSLog("Book: \(shelfItem.displayTitle): Download Requested")
             }
-            _ = try FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
+            try FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
         }
         catch let nserror as NSError {
             FTCLSLog("Book: \(shelfItem.displayTitle): Download Failed :\(nserror.description)")
@@ -709,7 +722,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() != .notDownloaded else {
+        guard shelfItem.URL.downloadStatus() == .downloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }

@@ -12,6 +12,13 @@ import FTNewNotebook
 import Reachability
 
 extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
+    func didCurrentCollectionRenamed(_ collection: FTShelfItemCollection) {
+        if currentShelfViewModel?.collection.uuid == collection.uuid,let shelfParentVC = detailNavigationController?.viewControllers.first as? FTShelfViewControllerNew {
+            shelfParentVC.shelfViewModel.collection = collection
+            shelfParentVC.title = collection.displayTitle
+        }
+    }
+
     func showHomeView() {
 
         if !self.isRegularClass() { // In Compact modes, we are navigating to home on every tap on home option
@@ -27,6 +34,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
                 detailNavigationController?.popToRootViewController(animated: false)
             }
             let secondaryViewController = getSecondaryViewControllerForHomeOption()
+            self.shelfItemCollection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
             self.updateRootVCToDetailNavController(rootVC: secondaryViewController)
         }
     }
@@ -34,9 +42,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     func saveLastSelectedNonCollectionType(_ type: FTSideBarItemType) {
         if let rootController = self.parent as? FTRootViewController {
             rootController.setLastSelectedNonCollectionType(type)
-            if type == .home { // As home represents all notes we are sitting all notes explicitly
-                self.shelfItemCollection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
-            }
         }
     }
     
@@ -103,7 +108,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
      func saveLastSelectedCollection(_ collection: FTShelfItemCollection?) {
          if let rootController = self.parent as? FTRootViewController, let selectedCollection = collection {
              rootController.setLastSelectedCollection(selectedCollection.URL)
-             self.shelfItemCollection = selectedCollection
          }
      }
     func showDetailedViewForCollection(_ collection: FTShelfItemCollection) {
@@ -118,7 +122,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
                 detailNavigationController?.popToRootViewController(animated: false)
             }
             let secondaryViewController = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
-            saveLastSelectedCollection(collection)
+            self.shelfItemCollection = collection
             self.updateRootVCToDetailNavController(rootVC: secondaryViewController)
             if let detailNavVC = detailNavigationController {
                 detailNavVC.viewControllers.first?.title = collection.displayTitle
