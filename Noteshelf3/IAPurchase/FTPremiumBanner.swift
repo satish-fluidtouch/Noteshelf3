@@ -38,7 +38,6 @@ struct FTPremiumBanner: View {
                         Text("iap.upgradeNow".localized)
                             .font(.appFont(for: .bold, with: 13))
                             .foregroundColor(Color.white)
-                            .buttonStyle(.plain)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 3)
                             .frame(height: 28,alignment: .leading)

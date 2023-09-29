@@ -74,8 +74,8 @@ struct FTNotebookItemView: View {
                 .padding(coverPadding)
                 
             }
-            .scaleEffect(isPressed ? 0.8 : 1.0)
-            .animation(Animation.easeInOut(duration: 0.3), value: isPressed)
+            .scaleEffect(isPressed ? 0.92 : 1.0)
+            .animation(Animation.easeInOut(duration: 0.4), value: isPressed)
             .frame(width: thumbnailSize.width + (coverPadding.leading + coverPadding.trailing),
                    height: thumbnailSize.height + (coverPadding.top + coverPadding.bottom),
                    alignment: .top)
