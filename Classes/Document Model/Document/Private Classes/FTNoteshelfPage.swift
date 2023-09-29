@@ -17,6 +17,10 @@ import FTDocumentFramework
 import MobileCoreServices
 import FTCommon
 
+enum FTPDFContent: Int {
+    case unknown,hasContent,noContent;
+}
+
 @objcMembers class FTPageSearchingInfo: NSObject {
     var searchKey: String = ""
     internal var searchItems: [FTSearchableItem]?
@@ -146,6 +150,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     #endif
     var isFirstPage : Bool = false;
     var isPageModified : Bool = false;
+    var hasContents: FTPDFContent = .unknown;
     
     var associatedPDFPageIndex : Int = 0;
     var associatedPDFKitPageIndex : UInt {
@@ -165,6 +170,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
             if(oldValue != nil) {
                 self.pageBackgroundColor = nil;
             }
+            hasContents = .unknown;
         }
     };
     
@@ -470,6 +476,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         newPage.pdfKitPageRect = self.pdfKitPageRect;
         newPage._pageRect = self._pageRect;
         newPage.isInitializationInprogress = false;
+        newPage.hasContents = self.hasContents;
         return newPage;
     }
     
@@ -541,6 +548,10 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         if let bgColor = dict["pageBGColor"] as? String, bgColor != "000000" {
             self.pageBackgroundColor = UIColor(hexString: bgColor)
         }
+        
+        if let hasContent = dict["hasPDFContent"] as? NSNumber, let content = FTPDFContent(rawValue: hasContent.intValue) {
+            self.hasContents = content;
+        }
         self.isInitializationInprogress = false;
     }
     
@@ -586,6 +597,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
 
         if leftMargin > 0 {
             dictRep["leftMargin"] = leftMargin;
+        }
+        if self.hasContents != .unknown {
+            dictRep["hasPDFContent"] = NSNumber(integerLiteral: self.hasContents.rawValue);
         }
         return dictRep;
     }
@@ -1152,6 +1166,7 @@ extension FTNoteshelfPage : FTCopying {
         newPage.pdfKitPageRect = self.pdfKitPageRect;
         newPage.rotationAngle = self.rotationAngle
         newPage.pageBackgroundColor = self.pageBackgroundColor;
+        newPage.hasContents = self.hasContents;
         //copy tags
         for eachTag in self.tags() {
             newPage.addTag(eachTag);
@@ -1165,6 +1180,7 @@ extension FTNoteshelfPage : FTCopying {
         let newPage = self.copyPage(toDocument);
         newPage.isInitializationInprogress = true;
         newPage.pageBackgroundColor = self.pageBackgroundColor;
+        newPage.hasContents = self.hasContents
         if let info = self.recognitionInfo, info.lastUpdated == self.lastUpdated{
             let newRecognitionInfo = FTRecognitionResult.init(withDictionary: info.dictionaryRepresentation())
             newRecognitionInfo.lastUpdated = newPage.lastUpdated
@@ -1298,16 +1314,19 @@ extension FTNoteshelfPage: FTThumbnailable {
 
 extension FTNoteshelfPage {
     func hasPDFText() -> Bool {
-        var hasString = false;
-        if let templateURL = self.templateFileItem()?.fileItemURL,
+        if self.hasContents == .unknown
+            , let templateURL = self.templateFileItem()?.fileItemURL,
             let pdfDoc = PDFDocument.init(url: templateURL) {
             let pageNumber = Int(self.associatedPDFKitPageIndex);
             let page = pdfDoc.page(at: pageNumber);
             if let pdfText = page?.string?.trimmingCharacters(in: CharacterSet.whitespaces), !pdfText.isEmpty {
-                hasString = true
+                self.hasContents = .hasContent;
+            }
+            else {
+                self.hasContents = .noContent;
             }
         }
-        return hasString
+        return (self.hasContents == .hasContent)
     }
 }
 

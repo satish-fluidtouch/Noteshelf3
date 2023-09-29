@@ -101,6 +101,8 @@ struct FTShelfNewNotePopoverView: View {
                         self.performActionBasedOn(option: viewModel.displayableOptions[index])
                     }
                 }
+                .disabled(shouldDisableRow(for: index))
+                .opacity(shouldDisableRow(for: index) ? 0.4 : 1)
                 if index != (viewModel.displayableOptions.count - 1) {
                     Rectangle()
                         .frame(height: 0.5)
@@ -183,6 +185,10 @@ struct FTShelfNewNotePopoverView: View {
             .padding(.trailing,10)
         }
         .frame(height:52.0)
+    }
+    
+    private func shouldDisableRow(for index: Int) -> Bool {
+        return (viewModel.displayableOptions[index].newNoteOption == .newGroup && shelfViewModel.isAllNotesCollection())
     }
 }
 
