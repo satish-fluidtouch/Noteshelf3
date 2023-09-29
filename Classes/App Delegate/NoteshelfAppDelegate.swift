@@ -239,5 +239,10 @@ private extension NoteshelfAppDelegate {
                 UserDefaults.standard.set(true, forKey: "Template_Cache_Cleared");
             }
         }
+
+        DispatchQueue.global().async {
+            let tempLocation = URL(fileURLWithPath: (FTUtils.applicationCacheDirectory() as NSString).appendingPathComponent("TempZip"))
+            try? FileManager().removeItem(at: tempLocation)
+        }
     }
 }
