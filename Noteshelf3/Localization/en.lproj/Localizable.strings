@@ -558,7 +558,7 @@
 "NotCorrectPassword" = "That's not the correct password. Please try again.";
 "NotSupportedFormat" = "This format is not supported by Noteshelf";
 "NotUsingiCloudMessage" = "Your documents were removed from this device but remain stored in iCloud.";
-"NoteBookRestoredToUnCategorized" = "Notebook has been restored to 'Uncategorized'";
+"NoteBookRestoredToUnCategorized" = "Notebook has been restored to Uncategorized";
 "Notebook" = "Notebook";
 "Notebook Options" = "Notebook Options";
 "NotebookAndPagesRestored" = "Notebooks and pages have been restored.";
@@ -1474,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "Set as default for: ";
 "text.font.setAsDefault.thisAndFutureBooks" = "This and all future notebooks";
 "text.font.setAsDefault.thisBook" = "This notebook";
+"textmode.fonttitle" = "Font/text style";
 "texttoolbar.fontselectionTitle" = "Select Font";
 "theams.unsplashDescription" = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers";
 "trash.alert.cannotOpenNotebook" = "This notebook cannot be opened as it has been deleted. To restore, long-press and select the option from the menu.";
@@ -1522,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 September 2023 at 6:53 PM
+// Last Synced by Rakesh on 26 September 2023 at 3:54 PM

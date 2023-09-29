@@ -11,12 +11,13 @@ import FTCommon
 
 final class FTShelfCollectioniCloudRoot: NSObject {
     private class MetadataContainer {
-        internal init(ns2booksMetadata: [NSMetadataItem], ns2ShelfsMetadata: [NSMetadataItem], ns3IndexMetadata: [NSMetadataItem], ns3booksMetadata: [NSMetadataItem], ns3ShelfsMetadata: [NSMetadataItem]) {
+        internal init(ns2booksMetadata: [NSMetadataItem], ns2ShelfsMetadata: [NSMetadataItem], ns3IndexMetadata: [NSMetadataItem], ns3booksMetadata: [NSMetadataItem], ns3ShelfsMetadata: [NSMetadataItem], ns3groupsMetadata: [NSMetadataItem]) {
             self.ns2booksMetadata = ns2booksMetadata
             self.ns2ShelfsMetadata = ns2ShelfsMetadata
             self.ns3IndexMetadata = ns3IndexMetadata
             self.ns3booksMetadata = ns3booksMetadata
             self.ns3ShelfsMetadata = ns3ShelfsMetadata
+            self.ns3groupsMetadata = ns3groupsMetadata
         }
 
         let ns2booksMetadata: [NSMetadataItem]
@@ -26,7 +27,7 @@ final class FTShelfCollectioniCloudRoot: NSObject {
         let ns3booksMetadata: [NSMetadataItem]
         let ns3ShelfsMetadata: [NSMetadataItem]
         let ns3IndexMetadata: [NSMetadataItem]
-
+        let ns3groupsMetadata: [NSMetadataItem]
     }
 
     let ns3Collection: FTShelfCollectioniCloud?
@@ -83,6 +84,7 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         self.ns3Collection?.addMetadataItemsToCache(metadata.ns3ShelfsMetadata, isBuildingCache: isBuildingCache)
         self.ns3Collection?.addMetadataItemsToCache(metadata.ns3booksMetadata, isBuildingCache: isBuildingCache)
         self.ns3Collection?.addMetadataItemsToCache(metadata.ns3IndexMetadata, isBuildingCache: isBuildingCache)
+        self.ns3Collection?.addMetadataItemsToCache(metadata.ns3groupsMetadata, isBuildingCache: isBuildingCache)
     }
     
     func removeMetadataItemsFromCache(_ metadataItems: [NSMetadataItem]) {
@@ -95,6 +97,7 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         self.ns3Collection?.removeMetadataItemsFromCache(metadata.ns3ShelfsMetadata)
         self.ns3Collection?.removeMetadataItemsFromCache(metadata.ns3booksMetadata)
         self.ns3Collection?.removeMetadataItemsFromCache(metadata.ns3IndexMetadata)
+        self.ns3Collection?.removeMetadataItemsFromCache(metadata.ns3groupsMetadata)
     }
     
     func updateMetadataItemsInCache(_ metadataItems: [NSMetadataItem]) {
@@ -107,6 +110,7 @@ extension FTShelfCollectioniCloudRoot: FTMetadataCachingProtocol {
         self.ns3Collection?.updateMetadataItemsInCache(metadata.ns3ShelfsMetadata)
         self.ns3Collection?.updateMetadataItemsInCache(metadata.ns3booksMetadata)
         self.ns3Collection?.updateMetadataItemsInCache(metadata.ns3IndexMetadata)
+        self.ns3Collection?.updateMetadataItemsInCache(metadata.ns3groupsMetadata)
     }
 }
 
@@ -121,6 +125,7 @@ private extension FTShelfCollectioniCloudRoot {
         var ns3booksMetadata = [NSMetadataItem]()
         var ns3ShelfsMetadata = [NSMetadataItem]()
         var ns3IndexMetadata = [NSMetadataItem]()
+        var ns3groupsMetadata = [NSMetadataItem]()
 
         for metadata in metadataItems {
             if let colection = ns2Collection,
@@ -142,6 +147,9 @@ private extension FTShelfCollectioniCloudRoot {
 
                 case FTFileExtension.ns3:
                     ns3booksMetadata.append(metadata)
+                    
+                case FTFileExtension.group:
+                    ns3groupsMetadata.append(metadata)
 
                 case FTFileExtension.sortIndex:
                     ns3IndexMetadata.append(metadata)
@@ -158,6 +166,7 @@ private extension FTShelfCollectioniCloudRoot {
                                  ns2ShelfsMetadata: ns2ShelfsMetadata,
                                  ns3IndexMetadata: ns3IndexMetadata,
                                  ns3booksMetadata: ns3booksMetadata,
-                                 ns3ShelfsMetadata: ns3ShelfsMetadata)
+                                 ns3ShelfsMetadata: ns3ShelfsMetadata,
+                                 ns3groupsMetadata: ns3groupsMetadata)
     }
 }

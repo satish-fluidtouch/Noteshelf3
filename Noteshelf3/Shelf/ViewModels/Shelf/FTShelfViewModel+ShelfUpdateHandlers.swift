@@ -51,22 +51,36 @@ extension FTShelfViewModel {
                                 parent.invalidateTop3Notebooks()
                             }
                         }
-                        if let group = self.groupItem
-                            ,itemBelongsToGroup(items) {
-                            reloadItems{ [weak self] in
-                                if group.childrens.isEmpty {
-                                    self?.hideGroup();
-                                }
-                            }
-                        }
-                        else {
-                            reloadItems{ [weak self] in
-                                if let group = self?.groupItem, group.childrens.isEmpty {
-                                    self?.hideGroup();
-                                }
-                            }
-                        }
+                        reloadItems()
                     }
+                }
+            }
+        }
+    }
+    
+    @objc func groupitemDidgetAdded(_ notification: Notification){
+        if let shelfCollection = notification.object as? FTShelfItemCollection {
+            //**************** To handle updates from other categories to All
+            if self.collection.isAllNotesShelfItemCollection {
+                self.reloadItems();
+            } else {
+                //****************
+                if(self.collection.uuid == shelfCollection.uuid) {
+                    self.reloadItems()
+                }
+            }
+        }
+    }
+    
+    @objc func groupitemDidgetRemoved(_ notification: Notification){
+        if let shelfCollection = notification.object as? FTShelfItemCollection {
+            //**************** To handle updates from other categories to All
+            if self.collection.isAllNotesShelfItemCollection {
+                self.reloadItems();
+            } else {
+                //****************
+                if(self.collection.uuid == shelfCollection.uuid) {
+                    self.reloadItems()
                 }
             }
         }
@@ -92,16 +106,7 @@ extension FTShelfViewModel {
                             parent.isUpdated = true
                         }
                     }
-                    if let group = self.groupItem, itemBelongsToGroup(removedItems) {
-                        self.reloadItems { [weak self] in
-                            if group.childrens.isEmpty {
-                                self?.hideGroup();
-                            }
-                        }
-                    }
-                    else {
-                        self.reloadItems()
-                    }
+                    self.reloadItems()
                 }
                 else {
                     self.reloadItems()

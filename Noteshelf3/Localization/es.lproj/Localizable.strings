@@ -1474,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
+"textmode.fonttitle" = "Estilo de fuente/texto";
 "texttoolbar.fontselectionTitle" = "SELECCIONAR FUENTE";
 "theams.unsplashDescription" = "Seleccionar de Unsplash, tomar una foto o seleccionar de tu Biblioteca de Fotos para crear tus portadas personalizadas.";
 "trash.alert.cannotOpenNotebook" = "Esta libreta no se puede abrir ya que ha sido eliminada. Para restaurar, mantén presionado y selecciona la opción del menú.";
@@ -1522,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 September 2023 at 6:53 PM
+// Last Synced by Rakesh on 26 September 2023 at 3:54 PM

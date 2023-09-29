@@ -299,7 +299,7 @@ extension FTOnScreenWritingViewController
             self.renderTiles(inRect: rectToRefresh, properties: properties) { _ in
                 self.isEraseRenderInProgress = false
             }
-            properties.delayedOffscreenRefresh = true;
+            properties.avoidOffscreenRefresh = true;
 
             self.delegate?.reloadTiles(forIntents: [.offScreen],
                                        rect: rectToRefresh,
@@ -437,7 +437,7 @@ extension FTOnScreenWritingViewController
                 self.delegate?.addAnnotations([curStroke],
                                               refreshView: false);
                 let properties = FTRenderingProperties();
-                properties.delayedOffscreenRefresh = true;
+                properties.avoidOffscreenRefresh = true;
                 self.delegate?.reloadTiles(forIntents: [.offScreen],
                                            rect: CGRectScale(rectToRefresh, self.scale).integral,
                                            properties: properties);
@@ -538,7 +538,7 @@ extension FTOnScreenWritingViewController
         properties.renderImmediately = true;
         properties.synchronously = true;
         if refreshRect.size != CGSize.zero{
-            properties.delayedOffscreenRefresh = true;
+            properties.avoidOffscreenRefresh = true;
             self.cancelCurrentStroke()
             self.currentStroke = nil;
             self.delegate?.reloadTiles(forIntents: [.offScreen,.onScreen],
@@ -681,7 +681,7 @@ extension FTOnScreenWritingViewController
         if(!self.lastEraserOperationRect.isNull) {
             let properties = FTRenderingProperties();
             properties.renderImmediately = true;
-            properties.delayedOffscreenRefresh = true;
+            properties.avoidOffscreenRefresh = true;
             self.delegate?.reloadTiles(forIntents: [.offScreen,.onScreen],
                                        rect: CGRectScale(lastEraserOperationRect, self.scale),
                                        properties: properties);
@@ -1073,7 +1073,7 @@ extension FTOnScreenWritingViewController: FTPDFSelectionViewDelegate {
         self.delegate?.addAnnotations(strokes, refreshView: true);
 
         let properties = FTRenderingProperties();
-        properties.delayedOffscreenRefresh = true;
+        properties.avoidOffscreenRefresh = true;
         self.delegate?.reloadTiles(forIntents: [.offScreen],
                                    rect: CGRectScale(rectToRefresh, self.scale).integral,
                                    properties: properties);

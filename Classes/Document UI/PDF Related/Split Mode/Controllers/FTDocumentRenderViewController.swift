@@ -348,7 +348,6 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
         
     func saveApplicationStateByClosingDocument(_ shouldClose : Bool, keepEditingOn : Bool,onCompletion :((Bool) -> Void)?) {
         
-        FTCLSLog("root controller save");
         if !keepEditingOn {
             documentViewController.normalizeAndEndEditingAnnotation(true);
         }

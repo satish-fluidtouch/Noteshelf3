@@ -15,6 +15,7 @@ protocol FTSideMenuViewControllerDelegate: AnyObject {
 
     func showHomeView()
     func showDetailedViewForCollection(_ collection: FTShelfItemCollection)
+    func didCurrentCollectionRenamed(_ collection: FTShelfItemCollection)
     func saveLastSelectedCollection(_ collection: FTShelfItemCollection?)
     func emptyTrash(_ collection : FTShelfItemCollection, showConfirmationAlert: Bool,onCompletion: @escaping ((Bool) -> Void))
     func saveLastSelectedNonCollectionType(_ type: FTSideBarItemType)
@@ -190,7 +191,12 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
         }
         self.didSelectBarItem(item)
         track(eventNameFor(item: item), screenName: ScreenName.sidebar)
-        
+
+    }
+    func didSidebarItemRenamed(_ item: FTSideBarItem) {
+        if item.type == .category,let collection = item.shelfCollection {
+            self.delegate?.didCurrentCollectionRenamed(collection)
+        }
     }
 
     private func eventNameFor(item: FTSideBarItem) -> String {

@@ -145,6 +145,9 @@ struct FTShelfItemContextualMenuOptions: Identifiable {
             [.trash]]
     }
     var groupOptions: [[FTShelfItemContexualOption]] {
+        if (shelfItem.model as? FTGroupItemProtocol)?.childrens.count == 0 {
+            return [[.openInNewWindow],[.rename],[.duplicate,.move],[.trash]]
+        }
         return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
     }
     var trashedBookOptions: [[FTShelfItemContexualOption]]{

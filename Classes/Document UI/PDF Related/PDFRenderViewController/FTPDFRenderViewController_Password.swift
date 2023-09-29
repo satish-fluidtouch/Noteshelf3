@@ -251,6 +251,7 @@ extension FTPDFRenderViewController: FTSceneBackgroundHandling,FTViewControllerS
     }
 
     func sceneWillResignActive(_ notification: Notification) {
+        self.removeNotebookInfoToast()
         if(!self.canProceedSceneNotification(notification)) {
             return;
         }

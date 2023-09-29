@@ -1474,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "デフォルトに設定します:";
 "text.font.setAsDefault.thisAndFutureBooks" = "このノートおよびすべての将来のノート";
 "text.font.setAsDefault.thisBook" = "このノートブック";
+"textmode.fonttitle" = "フォント/テキストスタイル";
 "texttoolbar.fontselectionTitle" = "フォントを選択";
 "theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
@@ -1522,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 21 September 2023 at 6:53 PM
+// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
