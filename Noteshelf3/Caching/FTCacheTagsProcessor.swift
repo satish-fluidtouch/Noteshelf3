@@ -115,7 +115,7 @@ final class FTCacheTagsProcessor {
                 completion(nil, error)
             }
         } else {
-            completion(nil, FTCacheError.corruptedDocument) //doesnot exist
+            completion(nil, FTCacheError.fileNotExists)
         }
     }
 
@@ -158,15 +158,23 @@ final class FTCacheTagsProcessor {
                 plistTags[tag] = docIds
             }
             // Remove Empty tags
+            var tagRemoved = false
             plistTags.forEach { (key, value) in
                 if value.isEmpty, let index = plistTags.index(forKey: key) {
                     plistTags.remove(at: index)
+                    tagRemoved = true
                 }
             }
             do {
                 let data1 = try JSONEncoder().encode(plistTags)
                 if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
                     dictionary.write(toFile: destinationURL.path, atomically: false)
+                    if tagRemoved {
+                        runInMainThread {
+                            FTTagsProvider.shared.getAllTags(forceUpdate: true)
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                        }
+                    }
                 }
             } catch {
 

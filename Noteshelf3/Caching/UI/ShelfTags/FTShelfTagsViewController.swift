@@ -391,18 +391,21 @@ class FTShelfTagsViewController: UIViewController {
 
         UIAlertController.showRemoveTagsDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
             for (index,selectedItem) in self.selectedItems.enumerated() {
-                let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: selectedItem.shelfItem!, pageUUID: selectedItem.pageUUID!, tags: selectedItem.tags.map({$0.text}))
-
-                if let tag = self.selectedTag {
-                    self.selectedItems[index].tags.removeAll(where: { $0.text == tag.text })
-                } else {
-                    self.selectedItems[index].tags.removeAll()
+                if let shelfItem = selectedItem.shelfItem {
+                    if selectedItem.type == .page, let pageUUID = selectedItem.pageUUID {
+                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, pageUUID: pageUUID, tags: selectedItem.tags.map({$0.text}))
+                        self.selectedItems[index].tags.removeAll()
+                        shelftagItem.tags = self.selectedItems[index].tags
+                    } else {
+                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: shelfItem, tags: selectedItem.tags.map({$0.text}))
+                        self.selectedItems[index].tags.removeAll()
+                        shelftagItem.tags = self.selectedItems[index].tags
+                    }
                 }
-                shelftagItem.tags = self.selectedItems[index].tags
 
             }
-                self.refreshView()
-                FTShelfTagsUpdateHandler.shared.updateTagsFor(items: self.selectedItems, completion: nil)
+            self.refreshView()
+            FTShelfTagsUpdateHandler.shared.updateTagsFor(items: self.selectedItems, completion: nil)
         }
     }
 
@@ -565,27 +568,35 @@ extension FTShelfTagsViewController {
         let group = DispatchGroup()
 
         let multiples = Dictionary(grouping: selectedPages, by: {$0.shelfItem?.documentUUID})
-//        multiples.values.forEach { tagItems in
-//            group.enter()
-//            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(FTUtils.getUUID());
-//            let pages = tagItems.map {$0.page} as! [FTPageProtocol]
-//            if let doc = tagItems.first?.document {
-//                doc.openDocument(purpose: .read, completionHandler: { _, error in
-//                    let info = FTDocumentInputInfo();
-//                    info.rootViewController = self;
-//                    info.overlayStyle = FTCoverStyle.clearWhite
-//                    info.isNewBook = true;
-//
-//                    doc.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
-//                        if let docum = FTDocumentItem.init(fileURL: url) as? FTShelfItemProtocol {
-//                            itemsToExport?.append(docum)
-//                            doc.closeDocument(completionHandler: nil)
-//                            group.leave()
-//                        }
-//                    }
-//                })
-//            }
-//        }
+        multiples.values.forEach { tagItems in
+            group.enter()
+            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(FTUtils.getUUID())
+            let pagesUUIDs = tagItems.map({$0.pageUUID})
+            if let docUrl = tagItems.first?.shelfItem?.URL {
+                let request = FTDocumentOpenRequest(url: docUrl, purpose: .read)
+                FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                    if let docPages = document?.pages() as? [FTPageProtocol] {
+                        let pages = docPages.filter{ page in
+                            return pagesUUIDs.contains(page.uuid)
+                        }
+                        let info = FTDocumentInputInfo()
+                        info.rootViewController = self
+                        info.overlayStyle = FTCoverStyle.clearWhite
+                        info.isNewBook = true
+                        if let document {
+                            document.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
+                                if let docum = FTDocumentItem.init(fileURL: url) as? FTShelfItemProtocol {
+                                    itemsToExport?.append(docum)
+                                    FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token) { _ in
+                                        group.leave()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         group.notify(queue: DispatchQueue.main) {
             if let books = itemsToExport, books.count > 0 {
                 self.shareNotebooks(books)

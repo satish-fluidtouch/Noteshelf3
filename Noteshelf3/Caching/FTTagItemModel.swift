@@ -24,22 +24,22 @@ class FTTagItemModel {
     }
 
     func getTaggedItems(completion: @escaping ([FTShelfTagsItem]) -> Void) {
-//        let reloadList = shelfItems.contains { eachItem in
-//            if eachItem.type == .page {
-//                eachItem.documentPlist == nil || eachItem.documentPlist?.pageFor(pageUUID: eachItem.pageUUID!) == nil
-//            } else {
-//                eachItem.documentPlist == nil
-//            }
-//        }
+        let reloadList = shelfItems.contains { eachItem in
+            if eachItem.type == .page {
+                eachItem.documentPlist == nil || eachItem.documentPlist?.pageFor(pageUUID: eachItem.pageUUID!) == nil
+            } else {
+                eachItem.documentPlist == nil
+            }
+        }
 
-//        if shelfItems.count > 0 && !reloadList {
-//            completion(shelfItems)
-//        } else {
+        if shelfItems.count > 0 && !reloadList {
+            completion(shelfItems)
+        } else {
             taggedItemsFor(selectedTag: self.tag.text) { [weak self] shelftagItems in
                 self?.shelfItems = shelftagItems
                 completion(shelftagItems)
             }
-//        }
+        }
     }
 
     func updateShelfItems(items: [FTShelfTagsItem]) {
@@ -56,7 +56,7 @@ class FTTagItemModel {
 
                 func updateDataWith(tags: [String], documentPlist: FTDocumentPlist?) {
                     let item = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, pageUUID: pageUUID, tags: tags, documentPlist: documentPlist)
-                    let itemIndex = taggedItems.firstIndex(where: {$0.pageUUID == pageUUID})
+                    let itemIndex = taggedItems.firstIndex(where: {$0.pageUUID == pageUUID && $0.type == .page})
                     if self.tag.isSelected {
                         item.tags.append(self.tag)
                     } else {
@@ -91,7 +91,7 @@ class FTTagItemModel {
             var taggedItems = items
             let existingDocTags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: shelfItem.documentUUID)
             let item = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: shelfItem, tags: existingDocTags)
-            let itemIndex = taggedItems.firstIndex(where: {$0.documentUUID == shelfItem.documentUUID})
+            let itemIndex = taggedItems.firstIndex(where: {$0.documentUUID == shelfItem.documentUUID && $0.type == .book})
 
             if tag.isSelected {
                 item.tags.append(tag)
@@ -100,8 +100,8 @@ class FTTagItemModel {
                     item.tags.remove(at: removeIndex)
                 }
             }
-            if let _itemIndex = itemIndex {
-                taggedItems[_itemIndex].tags = item.tags
+            if let _itemIndex = itemIndex  {
+                    taggedItems[_itemIndex].tags = item.tags
             } else {
                 taggedItems.append(item)
             }
@@ -120,17 +120,10 @@ class FTTagItemModel {
     }
 
     func deleteTagItem() {
-        self.getTaggedItems { [weak self] items in
-            guard let self = self else { return }
-            var taggedItems = items
-            for (index, taggedItem) in taggedItems.enumerated() {
-                if let removeIndex = taggedItem.tags.firstIndex(where: {$0.text == self.tag.text}) {
-                    taggedItem.tags.remove(at: removeIndex)
-                }
-                taggedItems[index] = taggedItem
-            }
-            self.updateShelfItems(items: taggedItems)
+        for item in shelfItems {
+            FTTagsProvider.shared.removeStoredTagItemFor(shelfTagItem: item)
         }
+        self.shelfItems.removeAll()
 
         var allTags = FTTagsProvider.shared.getAllTags()
         if let existingItemIndex = allTags.firstIndex(where: {$0.tag.text == self.tag.text}) {
@@ -190,7 +183,6 @@ class FTTagItemModel {
                         if tags.count > 0 {
                             func generateShelfTagItem() {
                                 let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: item, tags: tags)
-                                tagsBook.documentUUID = document.documentUUID
                                 totalTagItems.append(tagsBook)
                             }
                             if selectedTag.isEmpty {
@@ -236,8 +228,9 @@ class FTTagsProvider {
 
     var shelfTagsItems = Dictionary<String, FTShelfTagsItem>()
 
-    func getAllTags() -> [FTTagItemModel] {
-        if allTags.isEmpty {
+    @discardableResult
+    func getAllTags(forceUpdate: Bool = false) -> [FTTagItemModel] {
+        if allTags.isEmpty || forceUpdate {
             //load
             allTags = FTCacheTagsProcessor.shared.allTags()
         }
@@ -353,7 +346,6 @@ class FTTagsProvider {
             return tagsBook
         }
         return  FTShelfTagsItem(shelfItem: shelfItem, type: .book)
-
     }
 
     func shelfTagsItemForPage(shelfItem: FTDocumentItemProtocol, pageUUID: String, tags: [String], documentPlist: FTDocumentPlist? = nil) -> FTShelfTagsItem {
@@ -371,6 +363,15 @@ class FTTagsProvider {
 
         }
         return FTShelfTagsItem(shelfItem: shelfItem, type: .page)
+    }
+
+    func removeStoredTagItemFor(shelfTagItem: FTShelfTagsItem) {
+        if shelfTagItem.type == .page, let pageUUID = shelfTagItem.pageUUID, let docUUID = shelfTagItem.documentUUID {
+            self.shelfTagsItems.removeValue(forKey: "\(docUUID)_\(pageUUID)")
+        } else if let docUUID = shelfTagItem.documentUUID {
+            self.shelfTagsItems.removeValue(forKey: "\(docUUID)")
+        }
+
     }
 
 }

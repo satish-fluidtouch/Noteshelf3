@@ -21,6 +21,7 @@ enum FTCacheError: Error {
     case invalidPath
     case corruptedDocument
     case documentNotDownloaded
+    case fileNotExists
 }
 #if DEBUG
 private let cleanOnNextLaunch: Bool = false
