@@ -159,78 +159,56 @@ private extension FTShortcutToolPresenter {
 }
 
 class FTSlotView: UIView {
-    private let slotVisualEffectView = UIVisualEffectView(effect: nil)
     private let borderWidth: CGFloat = 0.5
     private let cornerRadius: CGFloat = 20.0
+
+    private lazy var borderLayer: CAShapeLayer = {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.strokeColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
+        shapeLayer.lineDashPattern = [4, 4]
+        shapeLayer.lineWidth = borderWidth
+        return shapeLayer
+    }()
+
 
     var isHighlighted: Bool = false {
         didSet {
             if isHighlighted {
-                self.backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
-                removeDashedBorder()
+                self.borderLayer.fillColor = UIColor.appColor(.shortcutSlotHighlightColor).cgColor
+                self.borderLayer.lineWidth = 0.0
             } else {
-                self.backgroundColor = UIColor.appColor(.shortcutSlotBgColor)
-                addDashedBorder()
+                self.borderLayer.fillColor = UIColor.appColor(.shortcutSlotBgColor).cgColor
+                self.borderLayer.lineWidth = borderWidth
             }
+        }
+    }
+
+    override var frame: CGRect {
+        didSet {
+            self.updateBorderLayer()
         }
     }
 
     init() {
         super.init(frame: .zero)
-        configure()
+        self.configure()
+
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configure()
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        guard let subLayers = slotVisualEffectView.layer.sublayers else { return }
-        for case let shapeLayer as CAShapeLayer in subLayers where shapeLayer.name == "DashedBorder" {
-            self.updateShapeLayer(shapeLayer)
-            return
-        }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configure() {
-        addSubview(slotVisualEffectView)
-        slotVisualEffectView.effect = UIBlurEffect(style: .regular)
-        slotVisualEffectView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            slotVisualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-            slotVisualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            slotVisualEffectView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-            slotVisualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
-        ])
-        self.layer.cornerRadius = cornerRadius
-        self.clipsToBounds = true
+        self.layer.addSublayer(borderLayer)
+        let rect = self.bounds.insetBy(dx: 1, dy: 1)
+        self.addVisualEffectBlur(cornerRadius: 16.0, frameToBlur: rect)
     }
 
-    private func updateShapeLayer(_ layer: CAShapeLayer) {
-        let reqBounds = slotVisualEffectView.frame.insetBy(dx: -borderWidth, dy: -borderWidth)
-        layer.frame = reqBounds
-        layer.path = UIBezierPath(roundedRect: reqBounds, cornerRadius: cornerRadius).cgPath
-        layer.layoutIfNeeded()
-        slotVisualEffectView.layoutIfNeeded()
-    }
-
-    private func addDashedBorder() {
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.name = "DashedBorder"
-        shapeLayer.strokeColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
-        shapeLayer.lineDashPattern = [4, 4]
-        shapeLayer.lineWidth = borderWidth
-        shapeLayer.fillColor = nil
-        self.updateShapeLayer(shapeLayer)
-        slotVisualEffectView.layer.addSublayer(shapeLayer)
-    }
-
-    private func removeDashedBorder() {
-        slotVisualEffectView.layer.sublayers?
-            .compactMap { $0 as? CAShapeLayer }
-            .filter { $0.name == "DashedBorder" }
-            .forEach { $0.removeFromSuperlayer() }
+    private func updateBorderLayer() {
+        self.borderLayer.frame = self.bounds
+        self.borderLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
+        self.borderLayer.layoutIfNeeded()
+        self.layoutIfNeeded()
     }
 }

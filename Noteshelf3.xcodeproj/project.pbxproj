@@ -1833,7 +1833,6 @@
 		E713D9AB299CC1CF008FDC77 /* FTConvertPreferencesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */; };
 		E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */; };
 		E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */; };
-		E731B2E12AC189F1000CD2BF /* FTDashedBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E731B2E02AC189F1000CD2BF /* FTDashedBorderView.swift */; };
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
@@ -3870,7 +3869,6 @@
 		E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTCustomDictViewController.xib; sourceTree = "<group>"; };
 		E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpellCheckManager.swift; sourceTree = "<group>"; };
 		E7281D9A26846C4600FD2161 /* FTSlideShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSlideShowTimeTracker.swift; sourceTree = "<group>"; };
-		E731B2E02AC189F1000CD2BF /* FTDashedBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDashedBorderView.swift; sourceTree = "<group>"; };
 		E73C96C025331DC3000FE7CC /* FTCustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomAlertViewController.swift; sourceTree = "<group>"; };
 		E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGlobalSearchController.swift; sourceTree = "<group>"; };
 		E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTGlobalSearchController+Suggestions.swift"; sourceTree = "<group>"; };
@@ -10071,7 +10069,6 @@
 				E7B77CDD29B0657B0013E794 /* FTImagePicker.swift */,
 				182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */,
 				E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */,
-				E731B2E02AC189F1000CD2BF /* FTDashedBorderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -11555,7 +11552,6 @@
 				E7B77CF129B06C1A0013E794 /* UIWindow+Extension.swift in Sources */,
 				E7B77CEF29B06A960013E794 /* UIAlertController+Extension.swift in Sources */,
 				473DB6162AA1F110006DBBA6 /* FTAnalyticsConsts.swift in Sources */,
-				E731B2E12AC189F1000CD2BF /* FTDashedBorderView.swift in Sources */,
 				4744E4732A28B18C00A9795A /* FTModalScaleUpPresentationController.swift in Sources */,
 				BAA84E682873108800DE801B /* FTCommonUserDefaults.swift in Sources */,
 				47CE07992A0A248D00E15028 /* FTPrintPageRenderer.swift in Sources */,
