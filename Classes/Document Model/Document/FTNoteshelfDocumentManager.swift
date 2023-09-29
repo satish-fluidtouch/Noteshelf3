@@ -89,7 +89,7 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
 
     func isDocumentAlreadyOpen(for url: URL) -> Bool {
         let isAlredyOpen = self.documentsInUse.contains(where: { docInUse in
-            if let doc = docInUse.document, doc.URL.path == url.path {
+            if let doc = docInUse.document, doc.URL == url {
                 return true
             } else {
                 return false

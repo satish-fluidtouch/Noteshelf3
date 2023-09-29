@@ -464,7 +464,7 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
                 }
                 else if(inError.isNotDownloadedError) {
                     if let documentItem = shelfItem as? FTDocumentItemProtocol {
-                        if(!documentItem.isDownloading) {
+                        if(!documentItem.isDownloaded) {
                             do {
                                 try FileManager().startDownloadingUbiquitousItem(at: documentItem.URL);
                             }
