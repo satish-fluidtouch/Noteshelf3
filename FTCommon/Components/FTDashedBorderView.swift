@@ -15,19 +15,34 @@ public class FTDashedBorderView: UIView {
         }
     }
 
+    private let blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .regular)
+        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+        let visualEffectView = UIVisualEffectView(effect: vibrancyEffect)
+        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        return visualEffectView
+    }()
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        blurView.frame = self.bounds
+    }
+
     public override func draw(_ rect: CGRect) {
         super.draw(rect)
-        let borderColor: UIColor = UIColor.appColor(.black10)
-        let borderWidth: CGFloat = 0.5
-        let dashPattern: [CGFloat] = [4, 4]
+
+        if !self.subviews.contains(blurView) {
+            self.insertSubview(blurView, at: 0)
+        }
 
         if let context = UIGraphicsGetCurrentContext() {
             if isDottedBorderEnabled {
+                let borderWidth: CGFloat = 0.5
                 let borderRect = CGRect(x: borderWidth / 2, y: borderWidth / 2, width: rect.width - borderWidth, height: rect.height - borderWidth)
-                let borderPath = UIBezierPath(roundedRect: borderRect, cornerRadius: 10.0)
+                let borderPath = UIBezierPath(roundedRect: borderRect, cornerRadius: 100.0)
                 context.setLineWidth(borderWidth)
-                context.setLineDash(phase: 0, lengths: dashPattern)
-                context.setStrokeColor(borderColor.cgColor)
+                context.setLineDash(phase: 0, lengths: [4, 4])
+                context.setStrokeColor(UIColor.appColor(.black10).cgColor)
                 context.addPath(borderPath.cgPath)
                 context.strokePath()
             } else {

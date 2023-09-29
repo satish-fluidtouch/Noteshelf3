@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FTCommon
 
 extension FTShortcutToolPresenter {
     func configurePanGesture() {
@@ -76,19 +77,14 @@ private extension FTShortcutToolPresenter {
         }
 
         func addSlotView(for placement: FTShortcutPlacement) {
-            let slotView = FTDashedBorderView()
-            var size = self.shortcutViewSizeWrToVertcalPlacement()
-            if placement.isHorizantalPlacement() {
-                size = CGSize(width: size.height, height: size.width)
-            }
-            slotView.frame.size = size
+            let slotView = FTSlotView()
+            slotView.frame.size = placement.slotSize
             slotView.center = shortcutView.center
             self.parentVC?.view.addSubview(slotView)
             let topCenter = placement.shortcutViewCenter(fotShortcutView: slotView, topOffset: toolbarOffset)
             slotView.center = topCenter // update center
             slotView.tag = placement.slotTag
-            slotView.layer.cornerRadius = 10.0
-            slotView.clipsToBounds = true
+            slotView.isHighlighted = false
         }
     }
 
@@ -111,16 +107,14 @@ private extension FTShortcutToolPresenter {
         FTShortcutPlacement.allCases.forEach { placement in
             let tagToSearch = placement.slotTag
             for subview in parentView.subviews {
-                if let dashedBorderView = subview as? FTDashedBorderView {
+                if let dashedBorderView = subview as? FTSlotView {
                     if dashedBorderView.tag == currentPlacement.slotTag {
-                        dashedBorderView.backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
-                        if dashedBorderView.isDottedBorderEnabled {
-                            dashedBorderView.isDottedBorderEnabled = false
+                        if !dashedBorderView.isHighlighted {
+                            dashedBorderView.isHighlighted = true
                         }
                     } else if dashedBorderView.tag == tagToSearch {
-                        dashedBorderView.backgroundColor =  UIColor.appColor(.black5)
-                        if !dashedBorderView.isDottedBorderEnabled {
-                            dashedBorderView.isDottedBorderEnabled = true
+                        if dashedBorderView.isHighlighted {
+                            dashedBorderView.isHighlighted = false
                         }
                     }
                 }
@@ -134,7 +128,7 @@ private extension FTShortcutToolPresenter {
         self.updateQuadrant(quadrant: self.quadrantDetector.getQuadrant(for: center))
 
         let currentPlacementCenter = self.shortcutViewPlacement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: self.toolbarOffset)
-        if abs(center.x - currentPlacementCenter.x) > 40.0 || abs(center.y - currentPlacementCenter.y) > 40.0 {
+        if abs(center.x - currentPlacementCenter.x) > 10.0 || abs(center.y - currentPlacementCenter.y) > 10.0 {
             if !self.hasAddedSlots {
                 self.addSlots()
                 self.hasAddedSlots = true
@@ -161,5 +155,82 @@ private extension FTShortcutToolPresenter {
         } completion: { [weak self] _ in
             self?.delegate?.didStartPlacementChange()
         }
+    }
+}
+
+class FTSlotView: UIView {
+    private let slotVisualEffectView = UIVisualEffectView(effect: nil)
+    private let borderWidth: CGFloat = 0.5
+    private let cornerRadius: CGFloat = 20.0
+
+    var isHighlighted: Bool = false {
+        didSet {
+            if isHighlighted {
+                self.backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
+                removeDashedBorder()
+            } else {
+                self.backgroundColor = UIColor.appColor(.shortcutSlotBgColor)
+                addDashedBorder()
+            }
+        }
+    }
+
+    init() {
+        super.init(frame: .zero)
+        configure()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configure()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let subLayers = slotVisualEffectView.layer.sublayers else { return }
+        for case let shapeLayer as CAShapeLayer in subLayers where shapeLayer.name == "DashedBorder" {
+            self.updateShapeLayer(shapeLayer)
+            return
+        }
+    }
+
+    private func configure() {
+        addSubview(slotVisualEffectView)
+        slotVisualEffectView.effect = UIBlurEffect(style: .regular)
+        slotVisualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            slotVisualEffectView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            slotVisualEffectView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            slotVisualEffectView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            slotVisualEffectView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+        ])
+        self.layer.cornerRadius = cornerRadius
+        self.clipsToBounds = true
+    }
+
+    private func updateShapeLayer(_ layer: CAShapeLayer) {
+        let reqBounds = slotVisualEffectView.frame.insetBy(dx: -borderWidth, dy: -borderWidth)
+        layer.frame = reqBounds
+        layer.path = UIBezierPath(roundedRect: reqBounds, cornerRadius: cornerRadius).cgPath
+        layer.layoutIfNeeded()
+        slotVisualEffectView.layoutIfNeeded()
+    }
+
+    private func addDashedBorder() {
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.name = "DashedBorder"
+        shapeLayer.strokeColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
+        shapeLayer.lineDashPattern = [4, 4]
+        shapeLayer.lineWidth = borderWidth
+        shapeLayer.fillColor = nil
+        self.updateShapeLayer(shapeLayer)
+        slotVisualEffectView.layer.addSublayer(shapeLayer)
+    }
+
+    private func removeDashedBorder() {
+        slotVisualEffectView.layer.sublayers?
+            .compactMap { $0 as? CAShapeLayer }
+            .filter { $0.name == "DashedBorder" }
+            .forEach { $0.removeFromSuperlayer() }
     }
 }

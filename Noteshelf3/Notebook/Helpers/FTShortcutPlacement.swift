@@ -41,6 +41,14 @@ enum FTShortcutPlacement: String, CaseIterable {
         return tag
     }
 
+    var slotSize: CGSize {
+        var size: CGSize = CGSize(width: 38.0, height: 124.0)
+        if self.isHorizantalPlacement() {
+            size = CGSize(width: 124.0, height: 38.0)
+        }
+        return size
+    }
+
     func save() {
         UserDefaults.standard.set(self.rawValue, forKey: "FTShortcutPlacement")
         UserDefaults.standard.synchronize()

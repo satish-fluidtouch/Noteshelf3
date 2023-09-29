@@ -22,7 +22,7 @@
       "color" : {
         "color-space" : "srgb",
         "components" : {
-          "alpha" : "0.100",
+          "alpha" : "0.200",
           "blue" : "0xFF",
           "green" : "0xA3",
           "red" : "0x00"
