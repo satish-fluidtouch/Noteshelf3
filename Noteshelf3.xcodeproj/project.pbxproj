@@ -13515,6 +13515,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Beta;
 		};
@@ -13567,7 +13568,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -13619,7 +13619,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -13673,7 +13672,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Beta;
@@ -13727,7 +13725,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -13779,7 +13776,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -13833,7 +13829,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Beta;
@@ -13911,7 +13906,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -13960,7 +13954,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -14009,7 +14002,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Beta;
@@ -14061,7 +14053,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -14110,7 +14101,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -14159,7 +14149,6 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Beta;
@@ -14225,7 +14214,6 @@
 				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelf3widgetcreatenewnotebook-dev";
 				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelf3widgetopennotebook-dev";
 				VALIDATE_WORKSPACE = NO;
-				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"$(inherited)",
 					"-Wno-nullability-completeness",
@@ -14310,7 +14298,6 @@
 				TODAY_SCHEME_NEW_NOTEBOOK = noteshelf3widgetcreatenewnotebook;
 				TODAY_SCHEME_OPEN_NOTEBOOK = noteshelf3widgetopennotebook;
 				VALIDATE_WORKSPACE = NO;
-				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"$(inherited)",
 					"-Wno-nullability-completeness",
@@ -14376,7 +14363,6 @@
 				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelf3widgetcreatenewnotebook-beta";
 				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelf3widgetopennotebook-beta";
 				VALIDATE_WORKSPACE = NO;
-				VERSIONING_SYSTEM = "apple-generic";
 				WARNING_CFLAGS = (
 					"$(inherited)",
 					"-Wno-nullability-completeness",
@@ -14444,6 +14430,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -14503,6 +14490,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_WORKSPACE = YES;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
