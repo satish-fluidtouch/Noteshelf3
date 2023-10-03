@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 import FTCommon
 import PDFKit
 
@@ -38,21 +37,44 @@ class FTStoreCustomCollectionCell: UICollectionViewCell {
         let scalled = image?.resizableImage(withCapInsets: UIEdgeInsets(top: 3, left: 4, bottom: 5, right: 4), resizingMode: .stretch)
         shadowImageView.image = scalled
 
-        thumbnail?.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        let url = FTStoreCustomTemplatesHandler.shared.imageUrlForTemplate(template: style)
-        self.thumbnail?.sd_setImage(with: url, completed: { [weak self] _, error, _, _ in
-            if error != nil {
-                let pdfUrl = FTStoreCustomTemplatesHandler.shared.pdfUrlForTemplate(template: style)
-                guard let document = PDFDocument(url: pdfUrl) else { return }
-                if document.isLocked {
-                    self?.thumbnail?.image = UIImage(named: "template_locked", in: storeBundle, with: nil)
-                } else {
-                    self?.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
-                }
+        self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
 
+        let url = FTStoreCustomTemplatesHandler.shared.imageUrlForTemplate(template: style)
+        func loadthumbnail() {
+            loadImageFromLocalURL(url) { [weak self] (loadedImage) in
+                DispatchQueue.main.async {
+                    if let loadedImage = loadedImage {
+                        self?.thumbnail?.image = loadedImage
+                    }
+                    self?.shadowImageView.isHidden = false
+                }
             }
-            self?.shadowImageView.isHidden = false
-        })
+        }
+
+        if let fileUrl = FTStoreCustomTemplatesHandler.shared.filUrlForTemplate(template: style), fileUrl.pathExtension == "pdf" {
+            guard let document = PDFDocument(url: fileUrl) else { return }
+            if document.isLocked {
+                self.thumbnail?.image = UIImage(named: "template_locked", in: storeBundle, with: nil)
+            } else {
+                loadthumbnail()
+            }
+        } else {
+            loadthumbnail()
+        }
+
+    }
+
+    func loadImageFromLocalURL(_ imageURL: URL, completion: @escaping (UIImage?) -> Void) {
+        do {
+            let imageData = try Data(contentsOf: imageURL)
+            if let image = UIImage(data: imageData) {
+                completion(image)
+            } else {
+                completion(nil)
+            }
+        } catch {
+            completion(nil)
+        }
     }
 
 }
