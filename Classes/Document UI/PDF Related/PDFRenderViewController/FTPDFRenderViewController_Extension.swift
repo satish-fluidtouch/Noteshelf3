@@ -460,7 +460,7 @@ extension FTPDFRenderViewController: FTNotebookMoreOptionsDelegate {
         target.itemsToExport = [item]
         target.notebook = page.parentDocument
         target.pages = [page]
-        target.properties = FTExportProperties.getSavedProperties()
+        target.properties = FTExportProperties.saveAsTemplateProperties()
         let exportManager = FTExportProgressManager()
         exportManager.exportTarget = target
         exportManager.exportType = .saveAsTemplate
