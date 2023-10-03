@@ -10,11 +10,13 @@ import Foundation
 import FTCommon
 extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, oldTitle: String) {
-        let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle)
-        tagItem?.renameTagItemWith(renamedString: tag.title)
-
-        FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(id: tag.id, text: oldTitle), with: FTTagModel(id: tag.id, text: tag.title)) { _ in
-            self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
+        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle) {
+            tagItem.renameTagItemWith(renamedString: tag.title)
+            if let newTagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
+                FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(text: oldTitle), with: newTagItem.tag) { _ in
+                    self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
+                }
+            }
         }
     }
 

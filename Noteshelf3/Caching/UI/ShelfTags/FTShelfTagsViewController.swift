@@ -125,7 +125,8 @@ class FTShelfTagsViewController: UIViewController {
             } else {
                 selectedTag = FTTagModel(text: tag)
             }
-            self.collectionView.reloadData()
+        } else {
+            loadtagsBooksAndPages()
         }
 
         self.title = self.selectedTag == nil ? "sidebar.allTags".localized : "#" + (self.selectedTag?.text ?? "")
@@ -370,8 +371,12 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     func openInNewWindow() {
-        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.shelfItem, let pageUUID = selectedItem.pageUUID, let page = selectedItem.documentPlist?.pageFor(pageUUID: pageUUID)   {
-            self.openItemInNewWindow(shelfItem, pageIndex: page.pageIndex)
+        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.shelfItem  {
+            if selectedItem.type == .page, let pageUUID = selectedItem.pageUUID, let page = selectedItem.documentPlist?.pageFor(pageUUID: pageUUID) {
+                self.openItemInNewWindow(shelfItem, pageIndex: page.pageIndex)
+            } else {
+                self.openItemInNewWindow(shelfItem, pageIndex: 0)
+            }
         }
     }
 
@@ -402,7 +407,6 @@ class FTShelfTagsViewController: UIViewController {
                         shelftagItem.tags = self.selectedItems[index].tags
                     }
                 }
-
             }
             self.refreshView()
             FTShelfTagsUpdateHandler.shared.updateTagsFor(items: self.selectedItems, completion: nil)

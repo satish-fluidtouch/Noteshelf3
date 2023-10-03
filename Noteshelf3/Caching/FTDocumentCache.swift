@@ -157,39 +157,34 @@ extension FTDocumentCache {
     }
 
     func cacheShelfItemFor(url: URL, documentUUID: String) {
-        // (AK) Added a delay of 1 second, as we are receiving the  shelf item changed notification immediately after the cache call from the document close level
-        // Filesystem not returning the original modification date, When we read the modification date immediately
-        // This delay will help us to settle the copied document.
-        queue.asyncAfter(deadline: now() + 1) {
-            var catchError: Error?
-            self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID, onCompletion: { isSuccess, error in
-                catchError = error
-                if isSuccess, error == nil {
-                    FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
-                }
-            })
-            if let catchError = catchError {
-                cacheLog(.error, catchError.localizedDescription, url.lastPathComponent)
+        queue.async {
+            do {
+                try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
+                FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+            } catch {
+                cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
         }
     }
 }
 
 private extension FTDocumentCache {
-    func cacheShelfItemIfRequired(url: URL, documentUUID: String, onCompletion: ((_ isSuccess: Bool, _ error: Error?) ->())?) {
+    func cacheShelfItemIfRequired(url: URL, documentUUID: String) throws {
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
             cacheLog(.info, "Replace Ignored as already opened \(url.lastPathComponent)")
-            onCompletion?(false, nil)
             return
         }
 
         let destinationURL = cachedLocation(for: documentUUID)
         if !fileManager.fileExists(atPath: destinationURL.path) {
-            // Copy directly if the file doesn't exist at the cache location
-            fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false) { error in
-                cacheLog( (error == nil) ? .success : .error, "Copy", (error == nil), error?.localizedDescription ?? "-", url.lastPathComponent)
-                onCompletion?(error == nil, error);
+            do {
+                // Copy directly if the file doesn't exist at the cache location
+                try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
+                cacheLog(.success, "Copy", url.lastPathComponent)
+            } catch {
+                cacheLog(.error, "Copy", error.localizedDescription, url.lastPathComponent)
+                throw error
             }
         } else {
             // Check for the latet modification dates at the cache location
@@ -198,16 +193,18 @@ private extension FTDocumentCache {
 
             // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
             let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
-            cacheLog(.info, " \(isLatestModified) existingmodified: \(existingmodified) newModified: \(newModified)", url.lastPathComponent)
+            cacheLog(.info, " \(isLatestModified) existing: \(existingmodified) new: \(newModified)", url)
 
             if isLatestModified {
-                fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true) { error in
-                    cacheLog( (error == nil) ? .success : .error, "Replace", (error == nil), error?.localizedDescription ?? "-", url.lastPathComponent)
-                    onCompletion?(error == nil, error);
+                do {
+                    try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
+                    cacheLog(.success, "Replace", url.lastPathComponent)
+                } catch {
+                    cacheLog(.error, "Replace", error.localizedDescription, url.lastPathComponent)
+                    throw error
                 }
             } else {
                 cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
-                onCompletion?(false, nil);
             }
         }
     }
@@ -219,7 +216,7 @@ private extension FTDocumentCache {
             let destinationURL = cachedLocation(for: docUUID)
             if fileManager.fileExists(atPath: destinationURL.path) {
                 do {
-                    FTCacheTagsProcessor.shared.cacheTagsForDocument(url: doc.URL, documentUUID: docUUID)
+                    FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
                     try fileManager.removeItem(at: destinationURL)
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {

@@ -114,7 +114,7 @@ extension FTStoreCustomTemplatesHandler {
         subcontents?.forEach({ url in
             if url.pathExtension == "noteshelf" {
                  pdfUrl = templateUrl.appendingPathComponent(template.title).appendingPathExtension("noteshelf")
-            } else {
+            } else if url.pathExtension == "pdf" {
                  pdfUrl = templateUrl.appendingPathComponent(template.title).appendingPathExtension("pdf")
             }
         })

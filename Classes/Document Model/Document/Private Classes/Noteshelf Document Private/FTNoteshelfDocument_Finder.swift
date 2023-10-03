@@ -125,11 +125,11 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     func addTag(_ tag : String) {
         var tags = self.documentTags()
         tags.append(tag)
-        self.propertyInfoPlist()?.setObject(tags, forKey: DOCUMENT_TAGS_KEY)
+        self.updateDocumentTags(tags: tags)
     }
 
     func addTags(tags: [String]) {
-        self.propertyInfoPlist()?.setObject(tags, forKey: DOCUMENT_TAGS_KEY)
+        self.updateDocumentTags(tags: tags)
     }
 
     func deleteTags(_ tags : [String]) {
@@ -138,7 +138,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
             let index = docTags.firstIndex(where: {$0 == tag})
             if let idx = index {
                 docTags.remove(at: idx)
-                self.propertyInfoPlist()?.setObject(docTags, forKey: DOCUMENT_TAGS_KEY)
+                self.updateDocumentTags(tags: docTags)
             }
         }
 
@@ -147,6 +147,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
                 (page as? FTNoteshelfPage)?.removeTag(tag)
             }
         }
+        
     }
 
     // This will remove tags from document
@@ -156,14 +157,13 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
             let index = docTags.firstIndex(where: {$0 == tag})
             if let idx = index {
                 docTags.remove(at: idx)
-                self.propertyInfoPlist()?.setObject(docTags, forKey: DOCUMENT_TAGS_KEY)
+                self.updateDocumentTags(tags: docTags)
             }
         }
     }
 
     func removeAllTags() async {
-        var docTags = self.documentTags()
-        self.propertyInfoPlist()?.setObject([], forKey: DOCUMENT_TAGS_KEY)
+        self.updateDocumentTags(tags: [])
     }
 
     func renameTag(_ tag : String, with newTag: String) {
@@ -172,7 +172,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
         if let idx = index {
             docTags.remove(at: idx)
             docTags.append(newTag)
-            self.propertyInfoPlist()?.setObject(docTags, forKey: DOCUMENT_TAGS_KEY)
+            self.updateDocumentTags(tags: docTags)
         }
 
         self.pages().forEach { page in

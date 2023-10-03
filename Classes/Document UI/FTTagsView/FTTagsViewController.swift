@@ -202,16 +202,6 @@ extension FTTagsViewController: TagsViewDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "add", "renamedTag": ""])
     }
 
-    func performDidDeleteTag(tag: String) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "delete", "renamedTag": ""])
-    }
-
-    func performDidRenameTag(tag: String, renamedTag: String) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "rename", "renamedTag": renamedTag])
-        self.lastUsedTag = renamedTag
-        track("Tag_Rename")
-    }
-
 }
 
 // MARK:- UITextFieldDelegate

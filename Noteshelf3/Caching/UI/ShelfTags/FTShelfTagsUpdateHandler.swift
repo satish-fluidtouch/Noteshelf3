@@ -25,7 +25,6 @@ class FTShelfTagsUpdateHandler: NSObject {
                 let docPages =  document.pages()
                 if item.type == .book {
                     document.addTags(tags: item.tags.map{$0.text})
-                    document.pages().first?.isDirty = true
                 } else if item.type == .page {
                     if let page = docPages.first(where: {$0.uuid == item.pageUUID}) {
                         (page as? FTPageTagsProtocol)?.addTags(tags: item.tags.map({$0.text}))
@@ -35,6 +34,7 @@ class FTShelfTagsUpdateHandler: NSObject {
             }
             if let document = item.document {
                 saveTags(document: document)
+                item.document = nil
                 dispatchGroup.leave()
             }
             else {
@@ -59,8 +59,6 @@ class FTShelfTagsUpdateHandler: NSObject {
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
 
-            FTCacheTagsProcessor.shared.deletTags(tags: [tag])
-
             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.text)
            
             guard let docIdsForTag = tagItem?.documentIds else {
@@ -71,6 +69,7 @@ class FTShelfTagsUpdateHandler: NSObject {
             let filteredDocuments = items.filter { item in
                 return docIdsForTag.contains(item.documentUUID ?? "")
             }
+            FTCacheTagsProcessor.shared.deletTags(tags: [tag])
 
             if let topViewController =  UIApplication.shared.topViewController() {
                 let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: topViewController, withText: "")
@@ -104,8 +103,6 @@ class FTShelfTagsUpdateHandler: NSObject {
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
 
-            FTCacheTagsProcessor.shared.renameTagInPlist(tag, with: newTag)
-
             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: newTag.text)
             guard let docIdsForTag = tagItem?.documentIds else {
                 completion?(false)
@@ -124,6 +121,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let document = document as? FTNoteshelfDocument {
                             document.renameTag(tag.text, with: newTag.text)
+                            FTCacheTagsProcessor.shared.renameTagInPlist(tag, with: newTag)
                             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                                 dispatchGroup.leave()
                             }

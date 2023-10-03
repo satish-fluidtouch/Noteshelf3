@@ -182,6 +182,43 @@ final class FTCacheTagsProcessor {
         }
     }
 
+    func removeTagsFor(documentUUID: String) {
+        if let cachedTagsPlist = cachedTagsPlist() {
+            let destinationURL = cachedPageTagsLocation()
+            var plistTags = cachedTagsPlist.tags
+            for key in plistTags.keys {
+                if var ids = plistTags[key] {
+                    for (index, docId) in ids.enumerated() {
+                        if documentUUID == docId {
+                            ids.remove(at: index)
+                        }
+                    }
+                    plistTags[key] = ids
+                }
+            }
+            // Remove Empty tags
+            plistTags.forEach { (key, value) in
+                if value.isEmpty, let index = plistTags.index(forKey: key) {
+                    plistTags.remove(at: index)
+                }
+            }
+            do {
+                let data1 = try JSONEncoder().encode(plistTags)
+                if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
+                    dictionary.write(toFile: destinationURL.path, atomically: false)
+                        runInMainThread {
+                            FTTagsProvider.shared.getAllTags(forceUpdate: true)
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                        }
+                }
+            } catch {
+
+            }
+
+        }
+    }
+
+
     // Cache tags from Cache Document and Document pages
     func cacheTagsForDocument(url: URL, documentUUID: String) {
         self.cachedDocumentPlistFor(documentUUID: documentUUID, completion: { documentPlist, error in
