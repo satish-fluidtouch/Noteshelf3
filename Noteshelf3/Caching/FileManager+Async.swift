@@ -34,7 +34,7 @@ extension FileManager {
             }
         }
     }
-    
+
     @discardableResult
     func coordinatedCopy(fromURL: URL, toURL: URL, force: Bool = false) throws -> Bool {
         let fileCoorinator = NSFileCoordinator.init(filePresenter: nil)

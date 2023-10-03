@@ -26,9 +26,14 @@ enum FTVariantType : String {
     case orientation
 }
 enum ThemeDefaultMode : Int {
-    case quickCreate // quick create option on shelf
-    case template // For change template and template options inside notebook
-    case basic // For covers and   basic papers
+    /// quick create option on shelf
+    case quickCreate
+
+    /// For change template and template options inside notebook
+    case template
+
+    /// For covers and   basic papers
+    case basic
 
     func defaultModeKey() -> String
     {

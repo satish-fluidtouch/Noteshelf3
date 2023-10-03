@@ -24,6 +24,7 @@ platform :ios do
         # 3. Take latest Pull
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
+        sh("git", "fetch")
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
@@ -88,6 +89,7 @@ platform :ios do
         # 3. Take latest Pull
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
+        sh("git", "fetch")
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
@@ -163,6 +165,7 @@ platform :mac do
         # 3. Take latest Pull
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
+        sh("git", "fetch")
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull
@@ -229,6 +232,7 @@ platform :mac do
         # 3. Take latest Pull
         reset_git_repo(force: true, disregard_gitignore: false)
         branch = options[:branch] ? options[:branch] : "develop"
+        sh("git", "fetch")
         sh("git", "switch", branch)
         ensure_git_branch(branch: branch)
         git_pull

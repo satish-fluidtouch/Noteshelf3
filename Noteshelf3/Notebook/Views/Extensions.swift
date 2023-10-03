@@ -18,8 +18,8 @@ struct FTShortcutBarVisualEffectView: UIViewRepresentable {
 }
 
 extension View {
-    func toolbarOverlay() -> some View {
-        modifier(FTToolbarBorder(radius: 100.0, borderColor: Color(uiColor: FTToolbarConfig.borderColor), borderWidth: 0.3))
+    func toolbarOverlay(radius: CGFloat = 100.0, borderWidth: CGFloat = 0.3) -> some View {
+        modifier(FTToolbarBorder(radius: radius, borderColor: Color(uiColor: FTToolbarConfig.borderColor), borderWidth: borderWidth))
     }
 }
 

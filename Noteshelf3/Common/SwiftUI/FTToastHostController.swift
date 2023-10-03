@@ -9,9 +9,29 @@
 import SwiftUI
 import FTCommon
 
-let toastTag = 5858
+enum FTToastTag: Int {
+    case generalToastTag = 1000
+    case notebookInfoToastTag = 1001
+}
 
-class FTToastHostController: UIHostingController<FTToastView> {
+class FTToastBaseHostController<ContentView: View>: UIHostingController<ContentView> {
+    class func getIfToastExists(over controller: UIViewController, for tag: FTToastTag) -> (toastExist: Bool, toastView: UIView?) {
+        let currentWindow = UIApplication.shared.keyWindow
+        var ifExists = false
+        var reqView: UIView?
+        if let window = currentWindow {
+            if let subView = window.subviews.filter({ view in
+                view.tag == tag.rawValue
+            }).first {
+                ifExists = true
+                reqView = subView
+            }
+        }
+        return (ifExists, reqView)
+    }
+}
+
+class FTToastHostController: FTToastBaseHostController<FTToastView> {
     private init(toastConfig: FTToastConfiguration) {
         let toastView = FTToastView(toastConfig: toastConfig, callbackFunction: {
         })
@@ -27,43 +47,14 @@ class FTToastHostController: UIHostingController<FTToastView> {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
     }
-}
 
-private extension FTToastHostController {
-    class func getIfToastExists(over controller: UIViewController) -> (toastExist: Bool, toastView: UIView?) {
-        let currentWindow = controller.fetchCurrentWindow()
-        var ifExists = false
-        var reqView: UIView?
-
-        if let window = currentWindow {
-            if let subView = window.subviews.filter({ view in
-                view.tag == toastTag
-            }).first {
-                ifExists = true
-                reqView = subView
-            }
-        }
-        return (ifExists, reqView)
-    }
-}
-
-extension FTToastHostController {
-    func updateToastInfo(from controller: UIViewController, toastConfig: FTToastConfiguration) {
-        let toastInfo = FTToastHostController.getIfToastExists(over: controller)
-        if toastInfo.toastExist {
-            self.rootView.toastConfig.subTitle = toastConfig.subTitle
-        }
-    }
-
-    @discardableResult
-    class func showToast(from controller: UIViewController, toastConfig: FTToastConfiguration) -> FTToastHostController? {
-        let toastInfo = FTToastHostController.getIfToastExists(over: controller)
-        let currentWindow = controller.fetchCurrentWindow()
-        if let window = currentWindow, !toastInfo.toastExist {
+    class func showToast(from controller: UIViewController, toastConfig: FTToastConfiguration) {
+        let toastInfo = FTToastHostController.getIfToastExists(over: controller, for: FTToastTag.generalToastTag)
+        if let window = UIApplication.shared.keyWindow, !toastInfo.toastExist {
             let hostingVc = FTToastHostController(toastConfig: toastConfig)
             hostingVc.view.center.y = -50.0
             hostingVc.view.center.x = window.frame.width/2.0
-            hostingVc.view.tag = toastTag
+            hostingVc.view.tag = FTToastTag.generalToastTag.rawValue
             window.addSubview(hostingVc.view)
             hostingVc.view.backgroundColor = .clear
             hostingVc.view.alpha = 0.0
@@ -80,20 +71,58 @@ extension FTToastHostController {
                     hostingVc.view.removeWithAnimation()
                 }
             }
-            return hostingVc
         }
-        return nil
+    }
+}
+
+class FTBookInfoToastHostController: FTToastBaseHostController<FTNotebookInfoToastView> {
+    private init(info: FTNotebookToastInfo) {
+        let toastView = FTNotebookInfoToastView(info: info)
+        super.init(rootView: toastView)
     }
 
-    func removeToastIfExists(controller: UIViewController) {
-        let toastInfo = FTToastHostController.getIfToastExists(over: controller)
+    @MainActor
+    dynamic required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .clear
+    }
+
+    class func removeIfToastExists(from controller: UIViewController) {
+        let toastInfo = FTBookInfoToastHostController.getIfToastExists(over: controller, for: FTToastTag.notebookInfoToastTag)
         if toastInfo.toastExist {
-            guard let subView = toastInfo.toastView else {
-                return
+            toastInfo.toastView?.alpha = 0.0
+            toastInfo.toastView?.layer.removeAllAnimations()
+            toastInfo.toastView?.removeFromSuperview()
+        }
+    }
+
+    class func showToast(from controller: UIViewController, info: FTNotebookToastInfo) {
+        FTBookInfoToastHostController.removeIfToastExists(from: controller)
+        if let window = UIApplication.shared.keyWindow {
+            let hostingVc = FTBookInfoToastHostController(info: info)
+            hostingVc.view.center.x = window.frame.width/2.0
+            hostingVc.view.tag = FTToastTag.notebookInfoToastTag.rawValue
+            window.addSubview(hostingVc.view)
+            hostingVc.view.backgroundColor = .clear
+            hostingVc.view.alpha = 0.0
+            var insetBottom: CGFloat = 16.0
+            if let window = UIApplication.shared.keyWindow {
+                insetBottom += window.safeAreaInsets.bottom
             }
-            subView.removeWithAnimation(0.0)
-        } else {
-            self.view.removeFromSuperview()
+            hostingVc.view.center.y = window.frame.maxY - insetBottom - info.toastHeight/2.0
+            UIView.animate(withDuration: 0.3) {
+                hostingVc.view.alpha = 1.0
+            } completion: { _ in
+                UIView.animate(withDuration: 1.0, delay: 2.0) {
+                    hostingVc.view.alpha = 0.0
+                } completion: { _ in
+                    hostingVc.view.removeFromSuperview()
+                }
+            }
         }
     }
 }
@@ -108,17 +137,5 @@ private extension UIView {
                 self.removeFromSuperview()
             }
         }
-    }
-}
-
-private extension UIViewController {
-    func fetchCurrentWindow() -> UIWindow? {
-        var currentWindow = self.view.window?.windowScene?.windows.first
-        if nil == currentWindow {
-            if let scenes = UIApplication.shared.connectedScenes.first as? UIWindowScene, let window = scenes.windows.last {
-                currentWindow = window
-            }
-        }
-        return currentWindow
     }
 }

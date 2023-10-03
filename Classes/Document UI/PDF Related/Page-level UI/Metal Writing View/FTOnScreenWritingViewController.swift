@@ -145,7 +145,7 @@ class FTOnScreenWritingViewController: UIViewController {
         if(nil == self.displayLink) {
             self.displayLink = CADisplayLink.init(target: self, selector: #selector(self.renderMetalView));
             self.displayLink?.isPaused = true;
-            self.displayLink?.preferredFramesPerSecond = 60;
+            self.displayLink?.preferredFrameRateRange = CAFrameRateRange(minimum: 20, maximum: 60, preferred: 60);
             self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
         }
         addObserverForOnScreenRendererReleaseNotification()
@@ -299,6 +299,8 @@ extension FTOnScreenWritingViewController
             self.renderTiles(inRect: rectToRefresh, properties: properties) { _ in
                 self.isEraseRenderInProgress = false
             }
+            properties.avoidOffscreenRefresh = true;
+
             self.delegate?.reloadTiles(forIntents: [.offScreen],
                                        rect: rectToRefresh,
                                        properties: properties);
@@ -434,9 +436,11 @@ extension FTOnScreenWritingViewController
                 rectToRefresh = curStroke.renderingRect;
                 self.delegate?.addAnnotations([curStroke],
                                               refreshView: false);
+                let properties = FTRenderingProperties();
+                properties.avoidOffscreenRefresh = true;
                 self.delegate?.reloadTiles(forIntents: [.offScreen],
                                            rect: CGRectScale(rectToRefresh, self.scale).integral,
-                                           properties: FTRenderingProperties());
+                                           properties: properties);
                 self.currentStroke = nil;
             }
 
@@ -534,6 +538,7 @@ extension FTOnScreenWritingViewController
         properties.renderImmediately = true;
         properties.synchronously = true;
         if refreshRect.size != CGSize.zero{
+            properties.avoidOffscreenRefresh = true;
             self.cancelCurrentStroke()
             self.currentStroke = nil;
             self.delegate?.reloadTiles(forIntents: [.offScreen,.onScreen],
@@ -676,6 +681,7 @@ extension FTOnScreenWritingViewController
         if(!self.lastEraserOperationRect.isNull) {
             let properties = FTRenderingProperties();
             properties.renderImmediately = true;
+            properties.avoidOffscreenRefresh = true;
             self.delegate?.reloadTiles(forIntents: [.offScreen,.onScreen],
                                        rect: CGRectScale(lastEraserOperationRect, self.scale),
                                        properties: properties);
@@ -1065,10 +1071,12 @@ extension FTOnScreenWritingViewController: FTPDFSelectionViewDelegate {
             rectToRefresh = rectToRefresh.union(stroke.renderingRect)
         }
         self.delegate?.addAnnotations(strokes, refreshView: true);
-        
+
+        let properties = FTRenderingProperties();
+        properties.avoidOffscreenRefresh = true;
         self.delegate?.reloadTiles(forIntents: [.offScreen],
                                    rect: CGRectScale(rectToRefresh, self.scale).integral,
-                                   properties: FTRenderingProperties());
+                                   properties: properties);
         
         if let del = self.delegate, del.mode == FTRenderModeZoom {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {

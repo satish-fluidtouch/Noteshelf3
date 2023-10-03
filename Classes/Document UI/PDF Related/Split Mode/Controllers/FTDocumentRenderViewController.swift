@@ -16,10 +16,7 @@ let textContainerTag: Int = 9001
     var relativePath : String? {get};
     var documentItemObject : FTDocumentItemWrapperObject {get};
     
-    func snapshotView(afterScreenUpdates: Bool) -> UIView?
     func didCompleteDocumentPresentation();
-    func performToolbarAnimation(isOpen:Bool,
-                                 onCompletion:@escaping (_ isCompleted:Bool) -> Void);
     func waitForTheDocmentToBeOpened();
     func canContinueToImportFiles() -> Bool;
     func showAlertAskingToEnterPwdToContinueOperation();
@@ -313,11 +310,7 @@ extension FTDocumentRenderViewController: FTToolbarElements {
 
 
 //MARK:- fileprivate member Variable Access methods
-extension FTDocumentRenderViewController: FTDocumentViewPresenter {
-    func snapshotView(afterScreenUpdates: Bool) -> UIView? {
-        return self.documentViewController.snapshotView(afterScreenUpdate: afterScreenUpdates);
-    }
-    
+extension FTDocumentRenderViewController: FTDocumentViewPresenter {    
     func didCompleteDocumentPresentation() {
         isReady = true;
         self.documentViewController.didCompleteDocumentPresentation();
@@ -352,35 +345,9 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     func startRecordingOnAudioNotebook() {
         self.documentViewController.audioButtonAction()
     }
-    
-    func performToolbarAnimation(isOpen:Bool,
-                                 onCompletion:@escaping (_ isCompleted:Bool) -> Void) {
-        if isOpen {
-            self.toolBarView?.alpha = 0
-            documentViewController?.toolTypeContainerVc?.view.alpha = 0;
-            documentViewController?.view.backgroundColor = UIColor.appColor(.pageBGColor)
-            UIView.animate(withDuration: 0.2, animations: { [weak self] in
-                self?.isReady = true;
-                self?.documentViewController?.toolTypeContainerVc?.view.alpha = 1;
-                self?.toolBarView?.alpha = 1.0
-                }, completion:{ finished in
-                    onCompletion(finished)
-            })
-            
-        } else {
-            isReady = true;
-            documentViewController?.view.backgroundColor = UIColor.appColor(.pageBGColor)
-            documentViewController?.view.isHidden = true
-            UIView.animate(withDuration: 0.05, animations: { [weak self] in
-                self?.documentViewController?.view.backgroundColor = UIColor.clear
-                self?.toolBarView?.alpha = 0.0
-                }, completion: onCompletion)
-        }
-    }
-    
+        
     func saveApplicationStateByClosingDocument(_ shouldClose : Bool, keepEditingOn : Bool,onCompletion :((Bool) -> Void)?) {
         
-        FTCLSLog("root controller save");
         if !keepEditingOn {
             documentViewController.normalizeAndEndEditingAnnotation(true);
         }

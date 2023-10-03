@@ -288,14 +288,20 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     //    [self becomeFirstResponder];
 }
 
+- (void)performUndoOperation {
+    [self undo];
+}
+
+- (void)performRedoOperation {
+    [self redo];
+}
+
 -(void)disableUndoGestures {
-    self.twoFingerUndoGesture.enabled = false;
-    self.threeFingerRedoGesture.enabled = false;
+    [[self undoRedoGestureDetector] enableDisableUndoGesturesWithValue:false];
 }
 
 -(void)enableUndoGestures {
-    self.twoFingerUndoGesture.enabled = true;
-    self.threeFingerRedoGesture.enabled = true;
+    [[self undoRedoGestureDetector] enableDisableUndoGesturesWithValue:true];
 }
 
 - (BOOL)allowsFreeGestureConditions
@@ -360,24 +366,12 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     self.twoFingerTapGesture = gesture;
     gesture.delegate = self;
     
-    UITapGestureRecognizer *undoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerUndo:)];
-    undoGesture.numberOfTouchesRequired = 2;
-    [self.contentHolderView addGestureRecognizer:undoGesture];
-    undoGesture.delegate = self;
-    self.twoFingerUndoGesture = undoGesture;
-
-    UITapGestureRecognizer *redoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleThreeFingerRedo:)];
-    redoGesture.numberOfTouchesRequired = 3;
-    [self.contentHolderView addGestureRecognizer:redoGesture];
-    redoGesture.delegate = self;
-    self.threeFingerRedoGesture = redoGesture;
-
     UITapGestureRecognizer *fourFingerGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleFourFingerGesture:)];
     fourFingerGesture.numberOfTouchesRequired = 4;
     fourFingerGesture.delegate = self;
     [self.contentHolderView addGestureRecognizer:fourFingerGesture];
     self.fourFingerGesture = fourFingerGesture;
-
+    [self setUpUndoRedoGesture];
     [self configureShortcutActions];
     [self showToolbarShortcutControllerIfNeededWithMode:self.currentDeskMode];
     [self enableOrDisableNewPageCreationOptionsInsideDocument];
@@ -393,8 +387,14 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     if(self.isViewLoadingFirstime && [self bookScaleAnim]) {
         self.isViewLoadingFirstime = false;
         [self prepareViewToShow:false];
+        [self showNotebookInfoToast];
     }
 #endif
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNotebookInfoToast];
 }
 
 -(void)enableOrDisableNewPageCreationOptionsInsideDocument {
@@ -646,7 +646,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     [self configureSceneNotifications];
     [self checkForExternalScreens];
     [self validateMenuItems];
-
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if(self.pdfDocument.isJustCreatedWithQuickNote == false) {
             [self showQuickCreateInfoTipIfNeeded];
@@ -670,6 +669,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
     [[self navigationController]setNavigationBarHidden:YES animated:NO];
+    [[self toolTypeContainerVc] updatePositionOnScreenSizeChange];
 }
 
 -(void)performLayout
@@ -1178,34 +1178,38 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 }
 
 #pragma mark - UIScrollView Delegate
+-(void)scrollViewScrollComplete {
+    [self loadVisiblePages];
+    if (self.pageLayoutType == FTPageLayoutVertical) {
+        self.isPageScrollingByUser = false;
+        [self handlePageChange];
+
+        NSArray<FTPageViewController*> *visiblePages = [self visiblePageViewControllers];
+        for(FTPageViewController *eachPage in visiblePages) {
+            [eachPage.scrollView setNeedsLayout];
+            [eachPage.scrollView layoutIfNeeded];
+        }
+    }
+    [self triggerPageChangeNotification];
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     if (self.pageLayoutType == FTPageLayoutHorizontal) {
         [self handlePageChange];
     }
-    [self loadVisiblePages];
-    [self triggerPageChangeNotification];
+    [self scrollViewScrollComplete];
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     if (!decelerate) {
-        [self loadVisiblePages];
-    }
-    if (self.pageLayoutType == FTPageLayoutVertical) {
-        [self handlePageChange];
-        [self triggerPageChangeNotification];
-        if (!decelerate) {
-            self.isPageScrollingByUser = false;
-        }
+        [self scrollViewScrollComplete];
     }
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if(self.pageLayoutType == FTPageLayoutVertical) {
-        [self loadVisiblePages];
-        self.isPageScrollingByUser = false;
-        [self handlePageChange];
-        [self triggerPageChangeNotification];
+        [self scrollViewScrollComplete];
     }
 }
 
@@ -2063,7 +2067,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
                            pageController:self.firstPageController];
         viewController.currentDeskMode = self.currentDeskMode;
         self.zoomOverlayController = viewController;
-        [self.view bringSubviewToFront:self.toolTypeContainerVc.view];
+        [self.toolTypeContainerVc bringToFront];
         [self.toolTypeContainerVc handleZoomPanelFrameChange:self.zoomOverlayController.view.frame mode:self.zoomOverlayController.shortcutModeZoom animate:true completion: nil];
     }
     else {
@@ -3409,12 +3413,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if(gestureRecognizer == self.twoFingerTapGesture || self.twoFingerTapGesture == otherGestureRecognizer) {
-        return true;;
-    }
-    if(gestureRecognizer == self.twoFingerUndoGesture || self.twoFingerUndoGesture == otherGestureRecognizer) {
-        return true;;
-    }
-    if(gestureRecognizer == self.threeFingerRedoGesture || self.threeFingerRedoGesture == otherGestureRecognizer) {
         return true;;
     }
     if(gestureRecognizer == self.fourFingerGesture || self.fourFingerGesture == otherGestureRecognizer) {

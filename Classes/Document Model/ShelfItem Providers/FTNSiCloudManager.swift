@@ -18,7 +18,7 @@ class FTNSiCloudManager: FTiCloudManager {
 #if !NOTESHELF_ACTION
             if FTDocumentMigration.supportsMigration() {
                 DispatchQueue.global().async {
-                    self.nsProductionURL = try? FileManager().url(forUbiquityContainerIdentifier: iCloudContainerID.ns2);
+                    self.nsProductionURL = FileManager().url(forUbiquityContainerIdentifier: iCloudContainerID.ns2);
                     DispatchQueue.main.async {
                         completionBlock(available || (nil != self.nsProductionURL));
                     }

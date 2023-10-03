@@ -55,6 +55,7 @@ extension FTIcon {
     static let rename: FTIcon = FTIcon(systemName: "pencil")
     static let changeCover: FTIcon = FTIcon(systemName: "book.closed")
     static let notebook: FTIcon = FTIcon(bundleName: "notebook")
+    static let emptyGroup: FTIcon = FTIcon(bundleName: "newGroupIcon")
     static let importFromFiles: FTIcon = FTIcon(bundleName: "importFile")
     static let photoLibrary: FTIcon = FTIcon(systemName: "photo.artframe")
     static let scanDocument: FTIcon = FTIcon(systemName: "viewfinder")

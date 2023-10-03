@@ -10,10 +10,12 @@ import Foundation
 protocol FTNewNotePopoverDelegate: NSObject {
     func quickCreateNewNotebook()
     func showNewNotebookPopover()
+    func isAllNotesCollection() -> Bool
 }
 
 class FTNewNotePopoverViewModel: ObservableObject {
     var newNoteOptions: [FTNewNotePopoverModel] = [
+        FTNewNotePopoverModel(newNoteOption: .newGroup),
         FTNewNotePopoverModel(newNoteOption: .photoLibrary),
         FTNewNotePopoverModel(newNoteOption: .audioNote),
         FTNewNotePopoverModel(newNoteOption: .scanDocument),

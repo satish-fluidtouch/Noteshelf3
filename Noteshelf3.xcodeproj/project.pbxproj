@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090CC9802AB4609700B43A3F /* FTShortcutPlacement.swift */; };
 		09103B862A86275800739602 /* FTNoteshelfAILocalized.strings in Resources */ = {isa = PBXBuildFile; fileRef = 09103B842A86275800739602 /* FTNoteshelfAILocalized.strings */; };
 		091482BA2A7257EF009E49C2 /* FTCharWrapStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482B92A7257EF009E49C2 /* FTCharWrapStrokeRender.swift */; };
 		091482BC2A725800009E49C2 /* FTWordWrapStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482BB2A725800009E49C2 /* FTWordWrapStrokeRender.swift */; };
@@ -283,7 +284,7 @@
 		429E0C76292362C600C75E37 /* FTFinderCollectionviewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429E0C75292362C500C75E37 /* FTFinderCollectionviewFlowLayout.swift */; };
 		42A119FF28C8AC7E0018FC13 /* FTFinderViewController_DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A119FE28C8AC7E0018FC13 /* FTFinderViewController_DataSource.swift */; };
 		42A4304E2907C86600184170 /* FTPlaceHolderThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A4304D2907C86600184170 /* FTPlaceHolderThumbnailCell.swift */; };
-		42A5B19228D0556800C279E8 /* FTToolTypeShortcutContainerController_GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A5B19128D0556800C279E8 /* FTToolTypeShortcutContainerController_GestureHandler.swift */; };
+		42A5B19228D0556800C279E8 /* FTShortcutToolPresenter_GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A5B19128D0556800C279E8 /* FTShortcutToolPresenter_GestureHandler.swift */; };
 		42A5B1B328D1F4C200C279E8 /* FTFinderSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A5B1B228D1F4C200C279E8 /* FTFinderSearchController.swift */; };
 		42A702F6293773DC00970A94 /* UIImage+RounderCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A702F5293773DB00970A94 /* UIImage+RounderCorner.swift */; };
 		42A702FC293A158F00970A94 /* cover_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 42A702FB293A158F00970A94 /* cover_line.png */; };
@@ -579,6 +580,7 @@
 		52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
+		52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */; };
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
 		8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */; };
@@ -1834,7 +1836,6 @@
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
-		E74BB38F28D1BE15004E398A /* FTShortcutContentHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74BB38E28D1BE15004E398A /* FTShortcutContentHolderView.swift */; };
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
@@ -1923,8 +1924,7 @@
 		E7B0B49E28A0DB51007675DA /* FTPenColorEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0B49D28A0DB51007675DA /* FTPenColorEditController.swift */; };
 		E7B0E4B82893D447007B031F /* FTToolTypeShortcutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0E4B72893D447007B031F /* FTToolTypeShortcutViewController.swift */; };
 		E7B0E4BA2893D9F1007B031F /* FTPDFRenderViewController+ToolbarShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0E4B92893D9F1007B031F /* FTPDFRenderViewController+ToolbarShortcuts.swift */; };
-		E7B0E4BC2893DC72007B031F /* FTToolTypeShortcutContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0E4BB2893DC72007B031F /* FTToolTypeShortcutContainerController.swift */; };
-		E7B0E4BE2893E158007B031F /* FTToolTypeShortcutContainerController_HitTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0E4BD2893E158007B031F /* FTToolTypeShortcutContainerController_HitTesting.swift */; };
+		E7B0E4BC2893DC72007B031F /* FTShortcutToolPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0E4BB2893DC72007B031F /* FTShortcutToolPresenter.swift */; };
 		E7B117E92959B8D8007A3BAC /* FTBiometricManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E7B117E82959B8D8007A3BAC /* FTBiometricManager.m */; };
 		E7B143B6299CB8F000C7EA56 /* FTConvertToViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B143B5299CB8F000C7EA56 /* FTConvertToViewModel.swift */; };
 		E7B143B9299CC12800C7EA56 /* FTCustomDictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B143B8299CC12800C7EA56 /* FTCustomDictViewController.swift */; };
@@ -1969,6 +1969,7 @@
 		E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */; };
 		E7BBBE232A382EFA0021872D /* FTSearchResultGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBBE222A382EFA0021872D /* FTSearchResultGroupCell.swift */; };
 		E7BBBE252A383C7F0021872D /* FTTraitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */; };
+		E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */; };
 		E7BE540E29AF799B0008A0CC /* FTPHPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE540D29AF799B0008A0CC /* FTPHPicker.swift */; };
 		E7BE89FF29C300C9009F1F79 /* CG+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BE89FE29C300C2009F1F79 /* CG+Extension.swift */; };
 		E7C0D03C288A6D32005A87BC /* FTPenSizeEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C0D03B288A6D32005A87BC /* FTPenSizeEditView.swift */; };
@@ -2179,6 +2180,7 @@
 		0904BC732373F6F600239DB8 /* FTSegmentCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTSegmentCache.h; sourceTree = "<group>"; };
 		090682A9205A9FF800EADA12 /* FTReceivedAudioFileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTReceivedAudioFileRequest.swift; sourceTree = "<group>"; };
 		09095BD8225C607700753FBB /* FTMigrationToV5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMigrationToV5.swift; sourceTree = "<group>"; };
+		090CC9802AB4609700B43A3F /* FTShortcutPlacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutPlacement.swift; sourceTree = "<group>"; };
 		09103B852A86275800739602 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FTNoteshelfAILocalized.strings; sourceTree = "<group>"; };
 		09103B872A86276000739602 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/FTNoteshelfAILocalized.strings"; sourceTree = "<group>"; };
 		09103B882A86276300739602 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/FTNoteshelfAILocalized.strings; sourceTree = "<group>"; };
@@ -2878,7 +2880,7 @@
 		429E0C75292362C500C75E37 /* FTFinderCollectionviewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderCollectionviewFlowLayout.swift; sourceTree = "<group>"; };
 		42A119FE28C8AC7E0018FC13 /* FTFinderViewController_DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderViewController_DataSource.swift; sourceTree = "<group>"; };
 		42A4304D2907C86600184170 /* FTPlaceHolderThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPlaceHolderThumbnailCell.swift; sourceTree = "<group>"; };
-		42A5B19128D0556800C279E8 /* FTToolTypeShortcutContainerController_GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolTypeShortcutContainerController_GestureHandler.swift; sourceTree = "<group>"; };
+		42A5B19128D0556800C279E8 /* FTShortcutToolPresenter_GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutToolPresenter_GestureHandler.swift; sourceTree = "<group>"; };
 		42A5B1B228D1F4C200C279E8 /* FTFinderSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFinderSearchController.swift; sourceTree = "<group>"; };
 		42A702F5293773DB00970A94 /* UIImage+RounderCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+RounderCorner.swift"; sourceTree = "<group>"; };
 		42A702FB293A158F00970A94 /* cover_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cover_line.png; sourceTree = "<group>"; };
@@ -3197,6 +3199,7 @@
 		52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTNoteBookToolsHeaderView.xib; sourceTree = "<group>"; };
 		52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookToolsHeaderView.swift; sourceTree = "<group>"; };
 		52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutLineCell.swift; sourceTree = "<group>"; };
+		52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageUndoRedoGestureDetector.swift; sourceTree = "<group>"; };
 		5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWatchRecordings.storyboard; sourceTree = "<group>"; };
 		5E31A16520062B2B007C28F5 /* FTExportProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportProgressManager.swift; sourceTree = "<group>"; };
 		5E322C702016EAA800F5F685 /* FTExportFileListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportFileListViewController.swift; sourceTree = "<group>"; };
@@ -3873,7 +3876,6 @@
 		E743C12125A6EADF00D59BBF /* FTInfoTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInfoTipView.swift; sourceTree = "<group>"; };
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
-		E74BB38E28D1BE15004E398A /* FTShortcutContentHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutContentHolderView.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
@@ -3975,8 +3977,7 @@
 		E7B0B49D28A0DB51007675DA /* FTPenColorEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenColorEditController.swift; sourceTree = "<group>"; };
 		E7B0E4B72893D447007B031F /* FTToolTypeShortcutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolTypeShortcutViewController.swift; sourceTree = "<group>"; };
 		E7B0E4B92893D9F1007B031F /* FTPDFRenderViewController+ToolbarShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTPDFRenderViewController+ToolbarShortcuts.swift"; sourceTree = "<group>"; };
-		E7B0E4BB2893DC72007B031F /* FTToolTypeShortcutContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolTypeShortcutContainerController.swift; sourceTree = "<group>"; };
-		E7B0E4BD2893E158007B031F /* FTToolTypeShortcutContainerController_HitTesting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTToolTypeShortcutContainerController_HitTesting.swift; sourceTree = "<group>"; };
+		E7B0E4BB2893DC72007B031F /* FTShortcutToolPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutToolPresenter.swift; sourceTree = "<group>"; };
 		E7B117E72959B8D8007A3BAC /* FTBiometricManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTBiometricManager.h; sourceTree = "<group>"; };
 		E7B117E82959B8D8007A3BAC /* FTBiometricManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTBiometricManager.m; sourceTree = "<group>"; };
 		E7B143B5299CB8F000C7EA56 /* FTConvertToViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTConvertToViewModel.swift; sourceTree = "<group>"; };
@@ -4030,6 +4031,7 @@
 		E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-Medium.ttf"; sourceTree = "<group>"; };
 		E7BBBE222A382EFA0021872D /* FTSearchResultGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchResultGroupCell.swift; sourceTree = "<group>"; };
 		E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTraitCollectionViewCell.swift; sourceTree = "<group>"; };
+		E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookInfoToastView.swift; sourceTree = "<group>"; };
 		E7BE540D29AF799B0008A0CC /* FTPHPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPHPicker.swift; sourceTree = "<group>"; };
 		E7BE89FE29C300C2009F1F79 /* CG+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CG+Extension.swift"; sourceTree = "<group>"; };
 		E7C0D03B288A6D32005A87BC /* FTPenSizeEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPenSizeEditView.swift; sourceTree = "<group>"; };
@@ -8381,6 +8383,7 @@
 				211E2E3B1E027D72007B5CAD /* FTPDFRenderViewController.h */,
 				211E2E3C1E027D72007B5CAD /* FTPDFRenderViewController.m */,
 				09CDCB132A52EA4A000340FB /* FTPDFRenderViewController_Mac_Extension.swift */,
+				52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */,
 			);
 			path = PDFRenderViewController;
 			sourceTree = "<group>";
@@ -9897,7 +9900,7 @@
 			children = (
 				E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */,
 				E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */,
-				E74BB38E28D1BE15004E398A /* FTShortcutContentHolderView.swift */,
+				090CC9802AB4609700B43A3F /* FTShortcutPlacement.swift */,
 			);
 			name = Helpers;
 			path = Noteshelf3/Notebook/Helpers;
@@ -9912,9 +9915,8 @@
 				E7A9767B28C0AF16009B43DC /* Shapes */,
 				E7B6040D2897F630007FEECD /* Pen-Highlighter */,
 				E7B0E4B72893D447007B031F /* FTToolTypeShortcutViewController.swift */,
-				E7B0E4BB2893DC72007B031F /* FTToolTypeShortcutContainerController.swift */,
-				42A5B19128D0556800C279E8 /* FTToolTypeShortcutContainerController_GestureHandler.swift */,
-				E7B0E4BD2893E158007B031F /* FTToolTypeShortcutContainerController_HitTesting.swift */,
+				E7B0E4BB2893DC72007B031F /* FTShortcutToolPresenter.swift */,
+				42A5B19128D0556800C279E8 /* FTShortcutToolPresenter_GestureHandler.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -10113,6 +10115,7 @@
 				E7B5769D2923694F0066BA45 /* FTToastHostController.swift */,
 				979BC2862891497F00208B21 /* FTCircularProgressView.swift */,
 				979BC28A2893E47200208B21 /* FTShelfTextfieldAlertView.swift */,
+				E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */,
 				E7B02190296C446B00EBD49A /* UIHostingController+Extension.swift */,
 			);
 			path = SwiftUI;
@@ -10898,8 +10901,8 @@
 				BAF395A92859ADF10067CA9F /* Swiftlint */,
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
-				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
+				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -11371,14 +11374,17 @@
 		};
 		BAF395A72859ADF10067CA9F /* Firebase Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
 			);
 			name = "Firebase Crashlytics";
 			outputFileListPaths = (
@@ -11765,6 +11771,7 @@
 				BAF390A12859ADF00067CA9F /* FTBetaAlertHandler.swift in Sources */,
 				BAF390A32859ADF00067CA9F /* FTTheme.swift in Sources */,
 				BAF390A42859ADF00067CA9F /* FTPlannerDiaryTrackerTemplateFormat.swift in Sources */,
+				E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */,
 				BAF390A82859ADF00067CA9F /* FTStylusesViewController+ShortcutButton.swift in Sources */,
 				BAF390A92859ADF00067CA9F /* FTImportListTableViewCell.swift in Sources */,
 				BAF390AA2859ADF00067CA9F /* FTPDFRenderViewController+Refresh.swift in Sources */,
@@ -11845,7 +11852,7 @@
 				BAF390E52859ADF00067CA9F /* FTPhotoAlbumsViewController.swift in Sources */,
 				BAF390E62859ADF00067CA9F /* FTShapeRectangleResizing.swift in Sources */,
 				BAF390E72859ADF00067CA9F /* FTScanDocumentService.swift in Sources */,
-				42A5B19228D0556800C279E8 /* FTToolTypeShortcutContainerController_GestureHandler.swift in Sources */,
+				42A5B19228D0556800C279E8 /* FTShortcutToolPresenter_GestureHandler.swift in Sources */,
 				BAF390E82859ADF00067CA9F /* FTQuotesProvider.swift in Sources */,
 				BAF390E92859ADF00067CA9F /* FTENSyncItemInfo.swift in Sources */,
 				BAF390EA2859ADF00067CA9F /* FTTooltipBubbleRight.swift in Sources */,
@@ -12165,7 +12172,7 @@
 				BAF392072859ADF00067CA9F /* FTMenuController.swift in Sources */,
 				1439371D29D6E02700D93033 /* FTStickerCategoryRecentView.swift in Sources */,
 				BAF392092859ADF00067CA9F /* FTShapeArrowResizing.swift in Sources */,
-				E7B0E4BC2893DC72007B031F /* FTToolTypeShortcutContainerController.swift in Sources */,
+				E7B0E4BC2893DC72007B031F /* FTShortcutToolPresenter.swift in Sources */,
 				BAF3920A2859ADF00067CA9F /* FTAccountInfoRequestDropbox.swift in Sources */,
 				14E202B32A2F06A800E88F60 /* FTGeneralSettingsViewModel.swift in Sources */,
 				BAF3920B2859ADF00067CA9F /* CCColorCube.m in Sources */,
@@ -12382,6 +12389,7 @@
 				BAF392C12859ADF00067CA9F /* FTRecognitionCache.swift in Sources */,
 				BAF392C22859ADF00067CA9F /* FTPageViewController_GestureHandler.swift in Sources */,
 				E7AE25A1288FD47200402413 /* FTCommonThemeStorage.swift in Sources */,
+				090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */,
 				BAF392C32859ADF00067CA9F /* LastModifiedBy.swift in Sources */,
 				BAF392C42859ADF00067CA9F /* FTFinderThumbnailViewCell.swift in Sources */,
 				BA6A4280293768140018BC2A /* FTCachedSqliteAnnotationFileItem.swift in Sources */,
@@ -12428,6 +12436,7 @@
 				E7C71A65288E795A00AF2598 /* HorizontalRangeTrack.swift in Sources */,
 				BAF392EE2859ADF00067CA9F /* FTAnnotation_UI_Factory.swift in Sources */,
 				BAF392EF2859ADF00067CA9F /* FTSearchResultBookCell.swift in Sources */,
+				52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */,
 				BA2D90BC285C4416001BB495 /* FTModifiers.swift in Sources */,
 				BAF392F02859ADF00067CA9F /* FTShapeAnnotation.swift in Sources */,
 				BAF392F12859ADF00067CA9F /* FTZoomOverlayViewController.swift in Sources */,
@@ -12829,7 +12838,6 @@
 				BAF3944D2859ADF00067CA9F /* NSTextAttachment_Extension.swift in Sources */,
 				1408AB7B2A14F9A500EF4B6D /* FTSettingsAboutView.swift in Sources */,
 				BA2D90B5285C4416001BB495 /* FTFormsheet.swift in Sources */,
-				E7B0E4BE2893E158007B031F /* FTToolTypeShortcutContainerController_HitTesting.swift in Sources */,
 				BAF3944F2859ADF00067CA9F /* FTRecognitionPackage.swift in Sources */,
 				BAF394502859ADF00067CA9F /* FTShapeDashLine.swift in Sources */,
 				BAF394512859ADF00067CA9F /* FTHorizontalPresentAnimator.swift in Sources */,
@@ -13005,7 +13013,6 @@
 				BAF394ED2859ADF10067CA9F /* FTExportFileListViewController.swift in Sources */,
 				E7A9767F28C0B476009B43DC /* FTPenShapeModel.swift in Sources */,
 				BAF394F12859ADF10067CA9F /* FTPDFThemeGenerator.swift in Sources */,
-				E74BB38F28D1BE15004E398A /* FTShortcutContentHolderView.swift in Sources */,
 				E7AD96C9291A85B0002A6DB2 /* FTPHPicker.swift in Sources */,
 				BAF394F22859ADF10067CA9F /* FTDocumentItemWrapperObject.swift in Sources */,
 				BAF394F32859ADF10067CA9F /* FTFinderSearchOptions.swift in Sources */,

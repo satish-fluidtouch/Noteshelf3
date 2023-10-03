@@ -64,7 +64,7 @@
 "AutoBackup" = "Auto-Backup";
 "AutoBackupNotebooks" = "Auto-Backup Notebooks";
 "AutoBackupONMessage" = "This will enable Auto-Backup for all notebooks you create. Would you like to proceed?";
-"AutoSelectPreviousTool" = "Auto-select previous tool";
+"AutoSelectPreviousTool" = "Auto-Select Previous Tool";
 "Back" = "Back";
 "BackUpFailed" = "Backup Failed";
 "BackUpInProgress" = "Backup In Progress...";
@@ -558,7 +558,7 @@
 "NotCorrectPassword" = "That's not the correct password. Please try again.";
 "NotSupportedFormat" = "This format is not supported by Noteshelf";
 "NotUsingiCloudMessage" = "Your documents were removed from this device but remain stored in iCloud.";
-"NoteBookRestoredToUnCategorized" = "Notebook has been restored to 'Uncategorized'";
+"NoteBookRestoredToUnCategorized" = "Notebook has been restored to Uncategorized";
 "Notebook" = "Notebook";
 "Notebook Options" = "Notebook Options";
 "NotebookAndPagesRestored" = "Notebooks and pages have been restored.";
@@ -1067,8 +1067,8 @@
 "getInspired.student" = "Study Notes";
 "globalSearch.page" = "page";
 "globalSearch.recentlySearched" = "Recently Searched";
-"groupitem.noteText" = "note";
-"groupitem.notesText" = "notes";
+"groupitem.noteText" = "item";
+"groupitem.notesText" = "items";
 "headers" = "Headers";
 "highlighterRack.flat" = "Flat Highlighter";
 "highlighterRack.round" = "Round Highlighter";
@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "New Page";
 "notebook.eraserRack.NavTitle" = "Eraser";
 "notebook.lassoRack.NavTitle" = "Lasso";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d of %d";
 "notebook.restoring" = "Restoring...";
 "notebook.settings.moresettings" = "More Settings";
 "notebook.shapesRack.NavTitle" = "Shapes";
@@ -1276,6 +1277,7 @@
 "shelf.evernote.signout" = "Sign Out from Evernote";
 "shelf.general.usefaceid" = "Face ID";
 "shelf.general.usetouchid" = "Touch ID";
+"shelf.group.noGroupItemsTitle" = "This group is empty";
 "shelf.home.getinspired" = "Get Inspired";
 "shelf.home.recent" = "Recent";
 "shelf.home.seeAll" = "See All";
@@ -1472,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "Set as default for: ";
 "text.font.setAsDefault.thisAndFutureBooks" = "This and all future notebooks";
 "text.font.setAsDefault.thisBook" = "This notebook";
+"textmode.fonttitle" = "Font/text style";
 "texttoolbar.fontselectionTitle" = "Select Font";
 "theams.unsplashDescription" = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers";
 "trash.alert.cannotOpenNotebook" = "This notebook cannot be opened as it has been deleted. To restore, long-press and select the option from the menu.";
@@ -1520,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM

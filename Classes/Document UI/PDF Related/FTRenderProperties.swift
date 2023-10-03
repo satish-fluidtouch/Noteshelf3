@@ -14,6 +14,7 @@ import UIKit
     var renderImmediately : Bool;
     var pageID : String?;
     var forcibly : Bool = false;
+    var avoidOffscreenRefresh = false;
     
     public override init() {
         self.synchronously = false;

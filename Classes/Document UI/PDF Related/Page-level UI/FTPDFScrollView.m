@@ -47,6 +47,8 @@ const CGFloat _zoomModeMinZoomScale = 1.0f;
     NSInteger scaleJumpWhilePinch;
     
     CGFloat _zoomFactor;
+    
+    BOOL _zoomBoxIsScrolling;
 
 }
 
@@ -312,6 +314,9 @@ parentViewController:(FTPageViewController*)controller
 {
     [super layoutSubviews];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performLayout) object:nil];
+    if(nil == self.window) {
+        return;
+    }
     if([self applicationState] == UIApplicationStateBackground) {
         [self performSelector:@selector(performLayout) withObject:nil afterDelay:0.01];
     }
@@ -1274,10 +1279,18 @@ CGPoint lastPoint1,lastPoint2;
 }
 
 - (BOOL)isScrolling {
+    if(self.mode == FTRenderModeZoom) {
+        return [super isScrolling] || _zoomBoxIsScrolling;
+    }
     if(self.parentViewController.layoutType == FTPageLayoutVertical) {
         return [self.parentViewController.delegate.mainScrollView isScrolling];
     }
     return [super isScrolling];
 }
 
+-(void)setZoomBoxIsScrolling:(BOOL)isScrolling {
+    if (self.mode == FTRenderModeZoom) {
+        _zoomBoxIsScrolling = isScrolling;
+    }
+}
 @end
