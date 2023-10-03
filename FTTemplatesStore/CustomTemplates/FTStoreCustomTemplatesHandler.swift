@@ -110,7 +110,7 @@ extension FTStoreCustomTemplatesHandler {
     func filUrlForTemplate(template: FTTemplateStyle) -> URL? {
         let templateFolderUrl = rootURL.appendingPathComponent(template.title)
         let fileUrl = templateFolderUrl.appendingPathComponent(template.title)
-        let noteshelfFileUrl = fileUrl.appendingPathExtension("noteshelf")
+        let noteshelfFileUrl = fileUrl.appendingPathExtension(nsBookExtension)
         let pdfFileUrl = fileUrl.appendingPathExtension("pdf")
         let thumbnailUrl = templateFolderUrl.appendingPathComponent("thumbnail@2x").appendingPathExtension("png")
 

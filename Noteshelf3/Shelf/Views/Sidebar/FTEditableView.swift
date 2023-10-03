@@ -34,7 +34,6 @@ struct FTEditableView: View {
                                     if !item.title.isEmpty {
                                         self.onButtonSubmit(item.title)
                                     } else {
-                                        print("<<<< Original Title = ", originalTitle)
                                         if originalTitle.isEmpty { // new category flow
                                             showEditableField = false
                                         } else {
