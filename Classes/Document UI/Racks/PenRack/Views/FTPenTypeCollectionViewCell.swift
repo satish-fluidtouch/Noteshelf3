@@ -9,7 +9,7 @@
 import UIKit
 import FTCommon
 
-class FTPenTypeCollectionViewCell: UICollectionViewCell {
+class FTPenTypeCollectionViewCell: FTPenStyleCollectionViewCell {
     @IBOutlet weak var buttonBackground: UIButton!
     @IBOutlet weak var viewPenImage: UIView!
 
@@ -48,7 +48,7 @@ class FTPenTypeCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configure(penType: FTPenType, penSet: FTPenSetProtocol, color: String) {
+    func configure(penType: FTPenType, currentPenSet: FTPenSetProtocol, color: String) {
         self.penColor = color
         self.penType = penType
 
@@ -66,7 +66,7 @@ class FTPenTypeCollectionViewCell: UICollectionViewCell {
         self.imageViewNoiseTop.alpha = UIColor(hexString: color).isLightColor() ? 0.1 : 0.16
 
         DispatchQueue.main.async {
-            self.isSelected = penSet.type == penType
+            self.isSelected = currentPenSet.type == penType
             self.imageViewShadow?.isHidden = !(self.isSelected)
         }
     }
@@ -93,8 +93,10 @@ class FTPenTypeCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+}
 
-   private func increseBrightnessBy(_ factor: CGFloat, for hexString: String) -> UIColor {
+class FTPenStyleCollectionViewCell: UICollectionViewCell {
+    func increseBrightnessBy(_ factor: CGFloat, for hexString: String) -> UIColor {
         let color = UIColor(hexString: hexString)
 
         var hue: CGFloat = 0.0
@@ -107,5 +109,124 @@ class FTPenTypeCollectionViewCell: UICollectionViewCell {
             return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
         }
         return color
+    }
+}
+
+private extension FTPenType {
+    //Shadow
+    var shadowImageName: String {
+        switch self {
+        case .pilotPen: // Felt tip
+            return "PenRack/felt_shadow"
+        case .caligraphy: // Fountain
+            return "PenRack/fountain_shadow"
+        case .pen: // Ballpoint
+            return "PenRack/ballpoint_shadow"
+        case .pencil: // Pencil
+            return "PenRack/pencil_shadow"
+        case .highlighter:
+            return "PenRack/highlighter_round_shadow"
+        case .flatHighlighter:
+            return "PenRack/highlighter_flat_shadow"
+        default:
+            return "PenRack/felt_tip_shadow";
+        }
+    }
+
+    //Color
+    var overlayImageName: String {
+        switch self {
+        case .pilotPen:
+            return "PenRack/felt_color"
+        case .caligraphy:
+            return "PenRack/fountain_color"
+        case .pen:
+            return "PenRack/ballpoint_color"
+        case .pencil:
+            return "PenRack/pencil_color"
+        case .highlighter:
+            return "PenRack/highlighter_round_color"
+        case .flatHighlighter:
+            return "PenRack/highlighter_flat_color"
+        default:
+            return "PenRack/ballpoint_color"
+        }
+    }
+
+    //Mask
+    var maskImageName: String {
+        switch self {
+        case .pilotPen:
+            return "PenRack/felt_mask"
+        case .caligraphy:
+            return "PenRack/fountain_mask"
+        case .pen:
+            return "PenRack/ballpoint_mask"
+        case .pencil:
+            return "PenRack/pencil_mask"
+        case .highlighter:
+            return "PenRack/highlighter_round_mask"
+        case .flatHighlighter:
+            return "PenRack/highlighter_flat_mask"
+        default:
+            return "PenRack/pilot_mask"
+        }
+    }
+
+    var effectImageName: String {
+        switch self {
+        case .pilotPen:
+            return "PenRack/felt_effect"
+        case .caligraphy:
+            return "PenRack/fountain_effect"
+        case .pen:
+            return "PenRack/ballpoint_effect"
+        case .pencil:
+            return "PenRack/pencil_effect"
+        case .highlighter:
+            return "PenRack/highlighter_round_effect"
+        case .flatHighlighter:
+            return "PenRack/highlighter_flat_effect"
+        default:
+            return "PenRack/ballpoint_effect"
+        }
+    }
+
+    var noiseTopImageName: String {
+        switch self {
+        case .pilotPen:
+            return "PenRack/felt_noiseTop"
+        case .caligraphy:
+            return "PenRack/fountain_noiseTop"
+        case .pen:
+            return "PenRack/ballpoint_noiseTop"
+        case .pencil:
+            return "PenRack/pencil_noiseTop"
+        case .highlighter:
+            return "PenRack/highlighter_round_noiseTop"
+        case .flatHighlighter:
+            return "PenRack/highlighter_flat_noiseTop"
+        default:
+            return "PenRack/pilot_noiseTop"
+        }
+    }
+
+    var noiseBottomImageName: String {
+        switch self {
+        case .pilotPen:
+            return "PenRack/felt_noiseBottom"
+        case .caligraphy:
+            return "PenRack/fountain_noiseBottom"
+        case .pen:
+            return "PenRack/ballpoint_noiseBottom"
+        case .pencil:
+            return "PenRack/pencil_noiseBottom"
+        case .highlighter:
+            return "PenRack/highlighter_round_noiseBottom"
+        case .flatHighlighter:
+            return "PenRack/highlighter_flat_noiseBottom"
+        default:
+            return "PenRack/pilot_noiseBottom"
+        }
     }
 }

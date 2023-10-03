@@ -28,15 +28,18 @@ extension FTPDFRenderViewController {
             rackType = .presenter
         }
         
-        let toolbarContainer = FTShortcutToolPresenter();
-        if let toolbar = self.parent as? FTToolbarElements {
-            toolbarContainer.mode =  toolbar.isInFocusMode() ? .focus : .normal
-        }
-        
-        toolbarContainer.delegate = self
-        self.toolTypeContainerVc = toolbarContainer
-        let rackData = FTRackData(type: rackType, userActivity: self.view.window?.windowScene?.userActivity);
-        toolbarContainer.showToolbar(rackData: rackData, on: self);
+//        let toolbarContainer = FTShortcutToolPresenter();
+//        if let toolbar = self.parent as? FTToolbarElements {
+//            toolbarContainer.mode =  toolbar.isInFocusMode() ? .focus : .normal
+//        }
+//
+//        toolbarContainer.delegate = self
+//        self.toolTypeContainerVc = toolbarContainer
+//        let rackData = FTRackData(type: rackType, userActivity: self.view.window?.windowScene?.userActivity);
+//        toolbarContainer.showToolbar(rackData: rackData, on: self);
+
+        let favPresenter = FTFavoritebarPresenter()
+        favPresenter.showFavoriteToolbar(on: self)
     }
 
     func showOrHideShortcutViewIfNeeded(_ mode: FTScreenMode) {

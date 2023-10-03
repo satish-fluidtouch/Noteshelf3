@@ -653,6 +653,7 @@
 		97D2A4FE2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */; };
 		97D2A5002AC6F09900A0E509 /* FTFavoritePensetDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */; };
 		97E4006A29139CAD00E0E0D7 /* FTDropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */; };
+		97E65E162ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */; };
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
 		97F60BFC291D32A30050C3F3 /* FTGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60BFB291D32A30050C3F3 /* FTGrouping.swift */; };
@@ -3418,6 +3419,7 @@
 		97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePensetDataModel.swift; sourceTree = "<group>"; };
 		97D470092624852700D29C4E /* FTPresenterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
 		97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDropOverlayView.swift; sourceTree = "<group>"; };
+		97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenCollectionViewCell.swift; sourceTree = "<group>"; };
 		97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitController+CreateNotebookDelegates.swift"; sourceTree = "<group>"; };
 		97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordHostController.swift; sourceTree = "<group>"; };
 		97F3C3B326B9247F00E3B75E /* FTClassicDiaryTemplateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryTemplateFormat.swift; sourceTree = "<group>"; };
@@ -9720,6 +9722,7 @@
 				97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */,
 				97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */,
 				97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */,
+				97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */,
 			);
 			path = Favoritebar;
 			sourceTree = "<group>";
@@ -12291,6 +12294,7 @@
 				BAF392492859ADF00067CA9F /* FTPDFRenderViewController+DocumentEntity.swift in Sources */,
 				BAF3924B2859ADF00067CA9F /* FTSegmentCache.m in Sources */,
 				BAF3924C2859ADF00067CA9F /* BEMCheckBoxGroup.m in Sources */,
+				97E65E162ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift in Sources */,
 				E7B5DD492938C42E0022F73F /* FTShareCoordinator.swift in Sources */,
 				BAF3924D2859ADF00067CA9F /* UIImageColors.swift in Sources */,
 				BAF3924E2859ADF00067CA9F /* FTHorizontalDismissAnimator.swift in Sources */,

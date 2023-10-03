@@ -19,15 +19,19 @@ private let favBarSize = CGSize(width: 293.0, height: 38.0)
     }
 
     func showFavoriteToolbar(on viewController: UIViewController) {
+        viewController.children
+            .filter { $0 is FTFavoritebarViewController }
+            .forEach { $0.remove() }
+
         self.parentVC = viewController
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTToolTypeShortcutViewController.self))
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTFavoritebarViewController.self))
         guard let controller  = storyboard.instantiateViewController(withIdentifier: "FTFavoritebarViewController") as? FTFavoritebarViewController else {
             fatalError("Proggrammer error")
         }
         self.favoriteBarVC = controller
         viewController.add(controller)
         self.favoriteBar?.frame.size = favBarSize
-        
-
+//        let reqCenter = self.shortcutViewCenter(for: .top, size: favBarSize)
+        self.self.favoriteBar?.center = CGPoint(x: viewController.view.frame.width/2, y: 150.0)
     }
 }
