@@ -28,18 +28,19 @@ extension URL {
             if let thumbImage = thumbnail?.uiImage {
                 try? thumbImage.pngData()?.write(to: thumbUrl)
                 completion?(thumbImage)
+            } else {
+                completion?(nil)
             }
         }
-
     }
 
-    func loadThumbnail( completion: @escaping (UIImage?) -> Void) {
+    func loadThumbnail() -> UIImage? {
         do {
             let imageData = try Data(contentsOf: self)
-           let image = UIImage(data: imageData)
-            completion(image)
+            let image = UIImage(data: imageData)
+            return image
         } catch {
-            completion(nil)
+            return nil
         }
     }
 }

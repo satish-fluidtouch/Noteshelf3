@@ -87,7 +87,6 @@ extension FTStoreCustomTemplatesHandler {
         return tempUrl
     }
 
-
     func imageUrlForTemplate(template: FTTemplateStyle) -> URL {
         let templateUrl = rootURL.appendingPathComponent(template.title)
         let thumbUrl = templateUrl.appendingPathComponent("thumbnail@2x").appendingPathExtension("png")
