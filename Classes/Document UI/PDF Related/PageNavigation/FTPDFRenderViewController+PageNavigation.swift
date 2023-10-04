@@ -34,7 +34,7 @@ extension FTPDFRenderViewController {
                 targetView.topAnchor.constraint(equalTo: self.view.topAnchor,
                                                     constant: edgesPadding).isActive = true
                 targetView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
-                                                     constant: UIDevice.current.isIpad() ? -14 : (insets.right - edgesPadding)).isActive = true
+                                                     constant: 8 ).isActive = true
                 targetView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
                                                    constant: -(max(insets.bottom, edgesPadding))).isActive = true
                 targetView.widthAnchor.constraint(equalToConstant: navigatorSize).isActive = true
@@ -45,7 +45,7 @@ extension FTPDFRenderViewController {
                 targetView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
                                                      constant: insets.right - edgesPadding).isActive = true
                 targetView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
-                                                   constant: -(max(insets.bottom, 20))).isActive = true
+                                                   constant: -(max(insets.bottom, 16))).isActive = true
                 targetView.heightAnchor.constraint(equalToConstant: navigatorSize).isActive = true
             }
         }

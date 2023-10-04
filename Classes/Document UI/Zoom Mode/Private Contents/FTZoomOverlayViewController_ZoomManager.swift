@@ -219,6 +219,7 @@ extension FTZoomOverlayViewController: FTZoomManagerViewDelegate {
     func zoomManagerRectMoved(_ managerView:FTZoomManagerView,point:CGPoint) {
         self._zoomManagerRectMoved(managerView, point: point);
         if(managerView.isMoving) {
+            self.zoomContentController?.setIsScrolling(managerView.isMoving);
             self.setUpAutoScroll();
         }
     }
@@ -240,7 +241,9 @@ extension FTZoomOverlayViewController: FTZoomManagerViewDelegate {
     
     func zoomManagerDidFinishMoving(_ managerView: FTZoomManagerView) {
         self.invalidatesScrollTimer();
+        self.zoomContentController?.setIsScrolling(managerView.isMoving);
         self.didFinishMoving(managerView);
+        self.zoomContentController?.refreshView();
     }
     
     func zoomManager(_ managerView: FTZoomManagerView, didTapAt point: CGPoint) {

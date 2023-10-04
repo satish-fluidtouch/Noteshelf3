@@ -82,7 +82,7 @@ class AddMenuDataManager {
         let cameraItem = MediaItem(image:UIImage(systemName: "camera"), name: "Camera".localized, type: .camera)
 
         let audioItem = MediaItem(image: UIImage(systemName: "mic.fill.badge.plus"), name: "RecordAudio".localized,type: .audio)
-        let emojiItem = MediaItem(image: UIImage(systemName: "face.smiling"), name: "Emojis".localized, showDiscloser: true, type: .emojis)
+        let emojiItem = MediaItem(image: UIImage(systemName: "face.smiling"), name: "customizeToolbar.emojis".localized, showDiscloser: true, type: .emojis)
         let stickerItem = MediaItem(image: UIImage(named: folderPrefix + "addmenu_stickers"), name: "customizeToolbar.stickers".localized, showDiscloser: true, type: .stickers)
 
         let importMediaItem = MediaItem(image: UIImage(systemName: "square.and.arrow.down"), name: "add.menu.import.media".localized, type: .importMedia)
