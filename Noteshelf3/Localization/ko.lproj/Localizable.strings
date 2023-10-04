@@ -1067,8 +1067,8 @@
 "getInspired.student" = "공부 노트";
 "globalSearch.page" = "페이지";
 "globalSearch.recentlySearched" = "최근 검색한";
-"groupitem.noteText" = "노트";
-"groupitem.notesText" = "노트";
+"groupitem.noteText" = "안건";
+"groupitem.notesText" = "아이템";
 "headers" = "헤더";
 "highlighterRack.flat" = "플랫 형광펜";
 "highlighterRack.round" = "라운드 형광펜";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM

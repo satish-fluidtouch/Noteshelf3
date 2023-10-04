@@ -60,7 +60,7 @@ extension FTPDFRenderViewController {
         if let documentItem = shelfItem as? FTDocumentItemProtocol {
             if !documentItem.isDownloaded {
                 do {
-                    _ = try FileManager().startDownloadingUbiquitousItem(at: documentItem.URL);
+                    try FileManager().startDownloadingUbiquitousItem(at: documentItem.URL);
                 }
                 catch let error as NSError {
                     FTLogError("Notebook download failed", attributes: error.userInfo);
