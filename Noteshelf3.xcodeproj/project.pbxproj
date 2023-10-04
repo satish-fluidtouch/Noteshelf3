@@ -33,7 +33,7 @@
 		093D85AA2A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D85A92A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift */; };
 		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
 		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
-		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971841E2A82230D00656B36 /* FTPremiumBanner.swift */; };
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
@@ -54,6 +54,9 @@
 		09ABDCB42A791077008F144D /* FTPageViewController_OpenAIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */; };
 		09AC0D5C2A83B3AC00375B1F /* FTPremiumUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
+		09BC391A2ACC4B370011D8B0 /* URL_WatchRecord_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09591AEC202C4B79008848DE /* URL_WatchRecord_Extension.swift */; };
+		09BC391B2ACC4B9D0011D8B0 /* URL+ImagePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92305088215E09F40043F646 /* URL+ImagePath.swift */; };
+		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
 		09C3696A2A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369662A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift */; };
 		09C3696B2A5EA6EB009BCC3F /* FTColorEyeDropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369682A5EA6EB009BCC3F /* FTColorEyeDropperView.swift */; };
 		09C3696C2A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369692A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift */; };
@@ -793,7 +796,7 @@
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
-		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2043,12 +2046,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0964D06E2AB9C27500C79C01 /* PBXContainerItemProxy */ = {
+		09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0964D0672AB9C27400C79C01;
-			remoteInfo = FTQLThumbnail;
+			remoteInfo = "Noteshelf3 Thumbnail";
 		};
 		5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2151,17 +2154,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */ = {
+		BAB258B8295B1B400072AEBB /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */,
-				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
+				0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */,
+				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */,
 			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BAF3959A2859ADF10067CA9F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2455,6 +2458,7 @@
 		09B924BC1EC5F8C400030EAA /* FTSmartProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSmartProgressView.swift; sourceTree = "<group>"; };
 		09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController_Mac_Extension.swift; sourceTree = "<group>"; };
 		09BB70AC21F84EF20065B781 /* FTBackgroundTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackgroundTexture.swift; sourceTree = "<group>"; };
+		09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQLThumbnail_Error.swift; sourceTree = "<group>"; };
 		09BD1DC021FAF59C000D73D5 /* FTAudioUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTAudioUtils.h; sourceTree = "<group>"; };
 		09C0066E1E49C15400C491F8 /* FTLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLogger.swift; sourceTree = "<group>"; };
 		09C0B6D5240D2178009F5E91 /* FTVerticalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTVerticalLayout.swift; sourceTree = "<group>"; };
@@ -4522,6 +4526,7 @@
 			children = (
 				099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */,
 				0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */,
+				09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */,
 				0964D06D2AB9C27500C79C01 /* Info.plist */,
 			);
 			path = "Noteshelf3 Thumbnail";
@@ -10965,18 +10970,18 @@
 				BAF395A92859ADF10067CA9F /* Swiftlint */,
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
-				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
+				BAB258B8295B1B400072AEBB /* Embed App Extensions */,
 				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				09BC39172ACC3F880011D8B0 /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
 				BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */,
 				BAF0DD722A6FE676006D293B /* PBXTargetDependency */,
-				0964D06F2AB9C27500C79C01 /* PBXTargetDependency */,
 			);
 			name = Noteshelf3;
 			packageProductDependencies = (
@@ -11574,7 +11579,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */,
+				09BC391A2ACC4B370011D8B0 /* URL_WatchRecord_Extension.swift in Sources */,
 				0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */,
+				09BC391B2ACC4B9D0011D8B0 /* URL+ImagePath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13350,10 +13358,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0964D06F2AB9C27500C79C01 /* PBXTargetDependency */ = {
+		09BC39172ACC3F880011D8B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */;
-			targetProxy = 0964D06E2AB9C27500C79C01 /* PBXContainerItemProxy */;
+			targetProxy = 09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */;
 		};
 		5283D3A72A5E7AA000C6C125 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13585,7 +13593,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.thumbnail";
@@ -13629,7 +13637,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.thumbnail;
@@ -13674,7 +13682,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta.thumbnail";
@@ -13693,7 +13701,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.1.1;
+				APP_VERSION = 1.1.2;
 				APP_VERSION_MAC = 1.1.1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14617,7 +14625,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.1.1;
+				APP_VERSION = 1.1.2;
 				APP_VERSION_MAC = 1.1.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -14680,7 +14688,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.1.1;
+				APP_VERSION = 1.1.2;
 				APP_VERSION_MAC = 1.1.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

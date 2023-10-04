@@ -9,6 +9,15 @@
 import UIKit
 import CloudKit
 
+@objc enum FTDownloadStatus : Int {
+    case notDownloaded
+    case downloading
+    case downloaded
+}
+
+let audioFileExtension : String = "m4a";
+let audioMetadataFileExtension : String = "plist";
+
 extension URL {
     #if os(watchOS)
     func urlByDeleteingPrivate() -> URL  {

@@ -50,11 +50,11 @@ class FTThumbReadCallbacks : NSObject
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
-        let cachedImage = self.imageCache.cachedImageForItem(item: item)
-        if(nil != cachedImage) {
-            onCompletion(cachedImage,nil);
-            return nil;
-        }
+//        let cachedImage = self.imageCache.cachedImageForItem(item: item)
+//        if(nil != cachedImage) {
+//            onCompletion(cachedImage,nil);
+//            return nil;
+//        }
 
         if !FileManager().isUbiquitousItem(at: item.URL)
             ,!FileManager().fileExists(atPath: item.URL.path) {
@@ -101,13 +101,14 @@ class FTThumbReadCallbacks : NSObject
                         return
                     }
                     #endif
-                    let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
-                    var error : NSError?;
-                    let coordinator = NSFileCoordinator.init(filePresenter: nil);
-                    coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
-                        image = UIImage.init(contentsOfFile: readURL.path);
-                        completionBlockExecution(image, item);
-                    });
+                    completionBlockExecution(nil, item);
+//                    let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
+//                    var error : NSError?;
+//                    let coordinator = NSFileCoordinator.init(filePresenter: nil);
+//                    coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
+//                        image = UIImage.init(contentsOfFile: readURL.path);
+//                        completionBlockExecution(image, item);
+//                    });
                 }
                 else {
                     completionBlockExecution(image,item);
@@ -119,6 +120,6 @@ class FTThumbReadCallbacks : NSObject
     
     func addImageToCache(image: UIImage?, url: URL)
     {
-        self.imageCache.addImageToCache(image: image, url: url)
+//        self.imageCache.addImageToCache(image: image, url: url)
     }
 }
