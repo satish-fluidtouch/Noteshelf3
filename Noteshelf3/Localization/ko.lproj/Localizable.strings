@@ -554,7 +554,7 @@
 "NoSearchResult" = "검색 결과 없음";
 "NoTagsInPage" = "이 노트북의 어떤 페이지에도 태그가 지정되지 않았습니다.";
 "NoWatchRecordingsMessage" = "Noteshelf 애플 워치 앱에서의 녹음 파일이 여기에 표시됩니다.";
-"NofNAlt" = "%d of %d'";
+"NofNAlt" = "%d / %d";
 "NotCorrectPassword" = "올바른 비밀번호가 아닙니다. 다시 시도해주세요.";
 "NotSupportedFormat" = "이 형식은 Noteshelf에서 지원되지 않습니다.";
 "NotUsingiCloudMessage" = "이 장치에서 문서가 제거되었지만 iCloud에 저장된 채로 남아 있습니다.";
@@ -1146,7 +1146,7 @@
 "notebook.addnew.newpage" = "새 페이지";
 "notebook.eraserRack.NavTitle" = "지우개";
 "notebook.lassoRack.NavTitle" = "라소";
-"notebook.quickPageNavigator.pageNumber.Text" = "%d 중 %d'";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "복원 중...";
 "notebook.settings.moresettings" = "더 많은 설정";
 "notebook.shapesRack.NavTitle" = "모양";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM
+// Last Synced by Rakesh on 4 October 2023 at 1:55 PM
