@@ -12,7 +12,6 @@ class FTFavoritebarViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var sizeIndicator: UIButton!
     @IBOutlet private weak var sizeDisplayView: UIView!
-    @IBOutlet private weak var visualContainer: FTToolbarVisualEffectView!
     @IBOutlet private weak var sizeDisplayWidthConstraint: NSLayoutConstraint?
 
     private var favorites: [FTPenSetProtocol] = []
@@ -20,7 +19,6 @@ class FTFavoritebarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.visualContainer.stylePanel()
         self.favorites = manager.fetchFavorites()
         self.showSizeDisplay(10.0)
     }

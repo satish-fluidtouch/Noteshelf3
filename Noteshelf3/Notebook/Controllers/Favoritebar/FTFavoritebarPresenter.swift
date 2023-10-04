@@ -32,6 +32,7 @@ private let favBarSize = CGSize(width: 293.0, height: 38.0)
         viewController.add(controller)
         self.favoriteBar?.frame.size = favBarSize
 //        let reqCenter = self.shortcutViewCenter(for: .top, size: favBarSize)
-        self.self.favoriteBar?.center = CGPoint(x: viewController.view.frame.width/2, y: 150.0)
+        self.favoriteBar?.center = CGPoint(x: viewController.view.frame.width/2, y: 150.0)
+        self.favoriteBar?.layer.cornerRadius = 19.0
     }
 }

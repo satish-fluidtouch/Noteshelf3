@@ -20,7 +20,13 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
     @IBOutlet private weak var penBottomConstraint: NSLayoutConstraint!
 
     private var currentViewSize = CGSize.zero
+    private let borderWidth: CGFloat = 0.5
     private var favorite: FTPenSetProtocol?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.btnBg.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -28,13 +34,9 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
             currentViewSize = self.frame.size
             self.layoutIfNeeded()
             self.btnBg.layer.cornerRadius = self.frame.size.width*0.5
-            self.btnBg.layer.borderWidth = 0.5
-            self.btnBg.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
-
-            let penWidth = self.isRegularTrait() ? self.bounds.width : self.viewPenImage.bounds.width
-
+            let penWidth = self.viewPenImage.bounds.width
             let maskLayer = CAShapeLayer()
-            maskLayer.path = UIBezierPath(roundedRect: CGRect.init(x: 0, y: 0, width: penWidth, height: self.bounds.height), byRoundingCorners: UIRectCorner.topLeft.union(.topRight), cornerRadii: CGSize(width: self.viewPenImage.frame.width / 2, height: self.viewPenImage.frame.height / 2)).cgPath
+            maskLayer.path = UIBezierPath(roundedRect: CGRect.init(x: 0, y: 0, width: penWidth, height: self.bounds.height + 20.0), byRoundingCorners: UIRectCorner.topLeft.union(.topRight), cornerRadii: CGSize(width: self.viewPenImage.frame.width / 2, height: self.viewPenImage.frame.height / 2)).cgPath // 20.0 is for pen to be extended outside
             self.viewPenImage.layer.mask = maskLayer
         }
     }
@@ -55,6 +57,8 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
             self.isFavoriteSelected = currentPenset.isEqual(favorite)
             self.imgShadow?.isHidden = !(self.isSelected)
         }
+
+        self.btnBg.backgroundColor = UIColor(hexString: favorite.color, alpha: 0.3)
     }
 
     func configureEmptySlot() {
@@ -65,25 +69,17 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
         self.isFavoriteSelected = false
     }
 
-    private func selectedBottomConstraint() -> CGFloat {
-        var value: CGFloat = -10.0
-//        if self.favorite?.type == .flatHighlighter {
-//            value = -40.0
-//        } else if self.favorite?.type == .highlighter {
-//            value = -36.0
-//        }
-        return value
-    }
-
      var isFavoriteSelected: Bool = false {
         didSet {
             if self.isFavoriteSelected {
+                self.btnBg.layer.borderWidth = borderWidth
+                self.penBottomConstraint.constant = -10.0
                 self.btnBg.backgroundColor = UIColor(hexString: self.favorite?.color ?? blackColorHex, alpha: 0.3)
-                self.penBottomConstraint.constant = self.selectedBottomConstraint()
             }
             else {
-                self.btnBg.backgroundColor = UIColor.appColor(.black5)
+                self.btnBg.layer.borderWidth = 0.0
                 self.penBottomConstraint.constant = 3.0
+                self.btnBg.backgroundColor = UIColor.appColor(.black5)
             }
         }
     }
