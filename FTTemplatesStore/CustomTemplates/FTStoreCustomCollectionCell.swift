@@ -26,7 +26,6 @@ class FTStoreCustomCollectionCell: UICollectionViewCell {
 
     // TODO: protocol approach
     func prepareCellWith(style: FTTemplateStyle, sourceType: Source) {
-        shadowImageView.isHidden = true
         self.sourceType = sourceType
         self.thumbnail?.image = nil
         self.titleLabel?.text = style.title
@@ -41,13 +40,8 @@ class FTStoreCustomCollectionCell: UICollectionViewCell {
 
         let url = FTStoreCustomTemplatesHandler.shared.imageUrlForTemplate(template: style)
         func loadthumbnail() {
-            url.loadThumbnail { [weak self] (loadedImage) in
-                DispatchQueue.main.async {
-                    if let loadedImage = loadedImage {
-                        self?.thumbnail?.image = loadedImage
-                    }
-                    self?.shadowImageView.isHidden = false
-                }
+            if let loadedImage = url.loadThumbnail() {
+                self.thumbnail?.image = loadedImage
             }
         }
 
