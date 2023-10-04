@@ -326,7 +326,7 @@ class FTExportContentGenerator: NSObject, FTContentGeneratorProtocol {
 
         var progressInfo = NSLocalizedString("Generating", comment: "Generating...");
         if(totalCount > 1) {
-            let str = String.formattedPageNumber(currentPage: Int(completedCount), totalPages: Int(totalCount))
+            let str = String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), completedCount,totalCount);
 
             progressInfo = progressInfo.appending("\n").appending(str);
         }
