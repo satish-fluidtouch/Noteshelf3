@@ -39,8 +39,8 @@ import FTStyles
     func setCurrentPage(_ page : FTPageProtocol) {
         self.updateTextColor();
         if let document = page.parentDocument {
-            let attributedPageNumberInfo = NSAttributedString(string: String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"),page.pageIndex()+1,document.pages().count))
-            let pageNumberInfo = attributedPageNumberInfo.string
+            let attributedPageNumberInfo = String.formattedPageNumber(currentPage: page.pageIndex()+1, totalPages: document.pages().count)
+            let pageNumberInfo = attributedPageNumberInfo
             self.pageNumberInfoLabel?.frame = CGRect(x: 16, y: 16, width: (attributedPageNumberInfo.size().width + 32), height: 26)
             self.pageNumberInfoLabel?.text =  pageNumberInfo
         }

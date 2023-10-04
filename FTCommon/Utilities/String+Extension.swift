@@ -131,3 +131,13 @@ public extension String {
         return nil
     }
 }
+extension String {
+   public static func formattedPageNumber(currentPage: Int, totalPages: Int) -> String {
+       let supportedLanguages = ["ko", "zh-Hans", "zh-Hant", "ja"]
+       if supportedLanguages.contains(FTCommonUtils.currentLanguage()) {
+           return String(format: "%d / %d", currentPage, totalPages)
+       } else {
+           return String(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), currentPage, totalPages)
+       }
+    }
+}

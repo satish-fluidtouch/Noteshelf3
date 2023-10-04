@@ -24,7 +24,8 @@ struct FTExportDataContent {
     func messageForProgress() -> String {
         var info = NSLocalizedString("Generating", comment: "Generating...");
         if(totalItemCount > 1) {
-            let str = String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), completed.count,totalItemCount);
+            let str = String.formattedPageNumber(currentPage: completed.count, totalPages: totalItemCount)
+
             info = info.appending("\n").appending(str);
         }
         return info

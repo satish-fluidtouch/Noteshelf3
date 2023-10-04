@@ -37,7 +37,7 @@ class FTNotebookToolsHeaderView: UIView {
     }
     
     func confiure(with page: FTPageProtocol) {
-        let pageNumberString = String(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), page.pageIndex() + 1, page.parentDocument?.pages().count ?? 0)
+        let pageNumberString = String.formattedPageNumber(currentPage: page.pageIndex()+1, totalPages: page.parentDocument?.pages().count ?? 0)
         numberOfPagesLabel?.text = pageNumberString
         macNumberOfPagesLabel?.text = pageNumberString
     }
