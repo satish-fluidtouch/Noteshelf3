@@ -1,0 +1,262 @@
+%PDF-1.7
+
+1 0 obj
+  << /Type /XObject
+     /Length 2 0 R
+     /Group << /Type /Group
+               /S /Transparency
+            >>
+     /Subtype /Form
+     /Resources << >>
+     /BBox [ 0.000000 0.000000 68.000000 18.000000 ]
+  >>
+stream
+/DeviceRGB CS
+/DeviceRGB cs
+q
+-0.000000 1.000000 -1.000000 -0.000000 7.455200 1.772340 cm
+0.000000 0.000000 0.000000 scn
+14.455221 14.455200 m
+0.000000 14.455200 l
+0.000000 -42.253754 l
+14.455221 -42.253754 l
+14.455221 14.455200 l
+h
+f
+n
+Q
+q
+-0.000000 1.000000 -1.000000 -0.000000 66.958130 6.886231 cm
+0.000000 0.000000 0.000000 scn
+0.000000 4.226685 m
+4.226672 4.226685 l
+4.226672 -0.542208 l
+0.000000 -0.542208 l
+0.000000 4.226685 l
+h
+f
+n
+Q
+
+endstream
+endobj
+
+2 0 obj
+  443
+endobj
+
+3 0 obj
+  << /Type /XObject
+     /Length 4 0 R
+     /Group << /Type /Group
+               /S /Transparency
+            >>
+     /Subtype /Form
+     /Resources << >>
+     /BBox [ 0.000000 0.000000 68.000000 18.000000 ]
+  >>
+stream
+/DeviceRGB CS
+/DeviceRGB cs
+q
+-0.000000 1.000000 -1.000000 -0.000000 7.455200 1.772339 cm
+0.834505 0.834505 0.834505 scn
+14.455221 14.455200 m
+0.000000 14.455200 l
+0.000002 -42.253754 l
+0.219711 -42.253754 l
+1.400253 -47.471390 3.851104 -50.646080 4.691770 -51.616531 c
+4.691770 -54.934990 l
+4.691770 -54.947159 4.692387 -54.959183 4.693590 -54.971031 c
+4.711641 -55.148781 4.861756 -55.287491 5.044268 -55.287491 c
+5.114171 -55.287491 l
+5.114171 -57.931816 l
+5.114171 -59.098976 6.060344 -60.045151 7.227507 -60.045151 c
+8.394670 -60.045151 9.340843 -59.098976 9.340842 -57.931816 c
+9.340842 -55.287491 l
+9.411278 -55.287491 l
+9.605957 -55.287491 9.763775 -55.129669 9.763775 -54.934990 c
+9.763775 -51.615936 l
+10.607036 -50.642357 13.067580 -47.456787 14.236928 -42.253754 c
+14.455223 -42.253754 l
+14.455221 14.455200 l
+h
+f*
+n
+Q
+
+endstream
+endobj
+
+4 0 obj
+  831
+endobj
+
+5 0 obj
+  << /Type /XObject
+     /Length 6 0 R
+     /Group << /Type /Group
+               /S /Transparency
+            >>
+     /Subtype /Form
+     /Resources << /XObject << /X1 1 0 R >>
+                   /ExtGState << /E1 << /SMask << /Type /Mask
+                                                  /G 3 0 R
+                                                  /S /Alpha
+                                               >>
+                                        /Type /ExtGState
+                                     >> >>
+                >>
+     /BBox [ 0.000000 0.000000 68.000000 18.000000 ]
+  >>
+stream
+/DeviceRGB CS
+/DeviceRGB cs
+q
+/E1 gs
+/X1 Do
+Q
+
+endstream
+endobj
+
+6 0 obj
+  46
+endobj
+
+7 0 obj
+  << /Type /XObject
+     /Length 8 0 R
+     /Group << /Type /Group
+               /S /Transparency
+            >>
+     /Subtype /Form
+     /Resources << >>
+     /BBox [ 0.000000 0.000000 68.000000 18.000000 ]
+  >>
+stream
+/DeviceRGB CS
+/DeviceRGB cs
+q
+-0.000000 1.000000 -1.000000 -0.000000 18.000000 0.000001 cm
+0.000000 0.000000 0.000000 scn
+0.000000 18.000000 m
+17.999996 18.000000 l
+17.999996 -50.000000 l
+0.000000 -50.000000 l
+0.000000 18.000000 l
+h
+f
+n
+Q
+
+endstream
+endobj
+
+8 0 obj
+  239
+endobj
+
+9 0 obj
+  << /XObject << /X1 5 0 R >>
+     /ExtGState << /E1 << /SMask << /Type /Mask
+                                    /G 7 0 R
+                                    /S /Alpha
+                                 >>
+                          /Type /ExtGState
+                       >> >>
+  >>
+endobj
+
+10 0 obj
+  << /Length 11 0 R >>
+stream
+/DeviceRGB CS
+/DeviceRGB cs
+q
+/E1 gs
+/X1 Do
+Q
+
+endstream
+endobj
+
+11 0 obj
+  46
+endobj
+
+12 0 obj
+  << /Annots []
+     /Type /Page
+     /MediaBox [ 0.000000 0.000000 68.000000 18.000000 ]
+     /Resources 9 0 R
+     /Contents 10 0 R
+     /Parent 13 0 R
+  >>
+endobj
+
+13 0 obj
+  << /Kids [ 12 0 R ]
+     /Count 1
+     /Type /Pages
+  >>
+endobj
+
+14 0 obj
+  << /Pages 13 0 R
+     /Type /Catalog
+  >>
+endobj
+
+xref
+0 15
+0000000000 65535 f
+0000000010 00000 n
+0000000701 00000 n
+0000000723 00000 n
+0000001802 00000 n
+0000001824 00000 n
+0000002490 00000 n
+0000002511 00000 n
+0000002998 00000 n
+0000003020 00000 n
+0000003318 00000 n
+0000003422 00000 n
+0000003444 00000 n
+0000003620 00000 n
+0000003696 00000 n
+trailer
+<< /ID [ (some) (id) ]
+   /Root 14 0 R
+   /Size 15
+>>
+startxref
+3757
+%%EOF12 0 obj
+<< /Annots [ ] /Type /Page /MediaBox [ 0 0 68 18 ] /Resources 9 0 R /Parent
+13 0 R /Rotate 90 /Contents 10 0 R >>
+endobj
+14 0 obj
+<< /Info 16 0 R /Pages 13 0 R /Type /Catalog >>
+endobj
+15 0 obj
+<< /Producer (macOS Version 13.5.1 \(Build 22G90\) Quartz PDFContext, AppendMode 1.1)
+/ModDate (D:20231003122248Z00'00') >>
+endobj
+16 0 obj
+15 0 R
+endobj
+xref
+0 1
+0000000000 65535 f 
+12 1
+0000004134 00000 n 
+14 3
+0000004264 00000 n 
+0000004328 00000 n 
+0000004468 00000 n 
+trailer
+<< /ID [<736F6D65><2AF489B2D7737061A6005480EEBE4126> ] /Root 14 0 R /Size 17 /Prev 3757 >> 
+startxref
+4491
+%%EOF

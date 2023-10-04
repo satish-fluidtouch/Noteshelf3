@@ -688,7 +688,7 @@
                         <subviews>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yKA-2o-cjJ" customClass="FTToolbarVisualEffectView" customModule="NS3_Beta" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="293" height="38"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kKD-IV-P3c">
+                                <view key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kKD-IV-P3c">
                                     <rect key="frame" x="0.0" y="0.0" width="293" height="38"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -719,8 +719,8 @@
                                                 <constraint firstAttribute="width" constant="1" id="aQa-xq-KDg"/>
                                             </constraints>
                                         </view>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mvY-Pj-jf2">
-                                            <rect key="frame" x="49" y="5" width="244" height="28"/>
+                                        <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="mvY-Pj-jf2">
+                                            <rect key="frame" x="53" y="5" width="240" height="28"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fo8-yS-AfF">
                                                 <size key="itemSize" width="28" height="38"/>
@@ -729,43 +729,46 @@
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                             <cells>
-                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTFavoritePenCollectionViewCell" id="C9q-ch-HtW" userLabel="FTFavoritePenCollectionViewCell" customClass="FTFavoritePenCollectionViewCell" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-5" width="28" height="38"/>
+                                                <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTFavoritePenCollectionViewCell" id="C9q-ch-HtW" userLabel="FTFavoritePenCollectionViewCell" customClass="FTFavoritePenCollectionViewCell" customModule="NS3_Beta" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yjc-xW-Xfc">
-                                                        <rect key="frame" x="0.0" y="0.0" width="28" height="38"/>
+                                                    <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iZC-sC-USJ">
+                                                        <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGL-Yz-qnA" userLabel="buttonBackground">
-                                                                <rect key="frame" x="0.0" y="0.0" width="24" height="14"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                                                 <accessibility key="accessibilityConfiguration">
                                                                     <bool key="isElement" value="NO"/>
                                                                 </accessibility>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" secondItem="nGL-Yz-qnA" secondAttribute="height" multiplier="1:1" id="ABH-Sh-gMx"/>
+                                                                </constraints>
                                                                 <buttonConfiguration key="configuration" style="plain"/>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="emU-xH-hOO" userLabel="viewPenImage">
-                                                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="Fyo-Wk-6gi" userLabel="imageViewShadow">
-                                                                        <rect key="frame" x="3" y="-8" width="18" height="68"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="Fyo-Wk-6gi" userLabel="imageViewShadow">
+                                                                        <rect key="frame" x="5" y="-43" width="18" height="68"/>
                                                                     </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_mask" translatesAutoresizingMaskIntoConstraints="NO" id="TS9-CY-geo" userLabel="imageViewIconMask">
-                                                                        <rect key="frame" x="3" y="-8" width="18" height="68"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_mask" translatesAutoresizingMaskIntoConstraints="NO" id="TS9-CY-geo" userLabel="imageViewIconMask">
+                                                                        <rect key="frame" x="5" y="-43" width="18" height="68"/>
                                                                     </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_color" translatesAutoresizingMaskIntoConstraints="NO" id="5TZ-m8-HGQ" userLabel="imageViewIconOverlay">
-                                                                        <rect key="frame" x="3" y="-8" width="18" height="68"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_color" translatesAutoresizingMaskIntoConstraints="NO" id="5TZ-m8-HGQ" userLabel="imageViewIconOverlay">
+                                                                        <rect key="frame" x="5" y="-43" width="18" height="68"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="18" id="KIE-qN-ICT"/>
                                                                             <constraint firstAttribute="height" constant="68" id="Zf7-jM-ara"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_penEffect" translatesAutoresizingMaskIntoConstraints="NO" id="kKe-j0-7rD">
-                                                                        <rect key="frame" x="3" y="-8" width="18" height="68"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_effect" translatesAutoresizingMaskIntoConstraints="NO" id="kKe-j0-7rD">
+                                                                        <rect key="frame" x="5" y="-43" width="18" height="68"/>
                                                                     </imageView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="bottom" secondItem="5TZ-m8-HGQ" secondAttribute="bottom" constant="-36" id="0W7-pE-PEK"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="5TZ-m8-HGQ" secondAttribute="bottom" constant="3" id="0W7-pE-PEK"/>
                                                                     <constraint firstItem="Fyo-Wk-6gi" firstAttribute="width" secondItem="5TZ-m8-HGQ" secondAttribute="width" id="6r8-Tg-14W"/>
                                                                     <constraint firstItem="Fyo-Wk-6gi" firstAttribute="bottom" secondItem="5TZ-m8-HGQ" secondAttribute="bottom" id="91E-pQ-f6Y"/>
                                                                     <constraint firstItem="Fyo-Wk-6gi" firstAttribute="centerX" secondItem="emU-xH-hOO" secondAttribute="centerX" id="JC8-s1-JjJ"/>
@@ -786,14 +789,15 @@
                                                         <constraints>
                                                             <constraint firstItem="emU-xH-hOO" firstAttribute="width" secondItem="nGL-Yz-qnA" secondAttribute="width" id="40s-dS-aEV"/>
                                                             <constraint firstAttribute="bottom" secondItem="nGL-Yz-qnA" secondAttribute="bottom" id="8ya-0h-OkB"/>
-                                                            <constraint firstItem="nGL-Yz-qnA" firstAttribute="top" secondItem="yjc-xW-Xfc" secondAttribute="top" id="Jm8-RN-IHs"/>
+                                                            <constraint firstItem="nGL-Yz-qnA" firstAttribute="top" secondItem="iZC-sC-USJ" secondAttribute="top" id="Jm8-RN-IHs"/>
                                                             <constraint firstItem="emU-xH-hOO" firstAttribute="leading" secondItem="nGL-Yz-qnA" secondAttribute="leading" id="NWw-2E-Chl"/>
-                                                            <constraint firstItem="nGL-Yz-qnA" firstAttribute="width" secondItem="yjc-xW-Xfc" secondAttribute="width" id="Vwo-ur-u2q"/>
-                                                            <constraint firstItem="emU-xH-hOO" firstAttribute="top" secondItem="yjc-xW-Xfc" secondAttribute="top" id="cnt-vt-9IR"/>
-                                                            <constraint firstItem="nGL-Yz-qnA" firstAttribute="centerX" secondItem="yjc-xW-Xfc" secondAttribute="centerX" id="ocN-SN-ryl"/>
+                                                            <constraint firstItem="nGL-Yz-qnA" firstAttribute="width" secondItem="iZC-sC-USJ" secondAttribute="width" id="Vwo-ur-u2q"/>
+                                                            <constraint firstItem="emU-xH-hOO" firstAttribute="top" secondItem="iZC-sC-USJ" secondAttribute="top" id="cnt-vt-9IR"/>
+                                                            <constraint firstItem="nGL-Yz-qnA" firstAttribute="centerX" secondItem="iZC-sC-USJ" secondAttribute="centerX" id="ocN-SN-ryl"/>
                                                         </constraints>
                                                     </collectionViewCellContentView>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <size key="customSize" width="28" height="28"/>
                                                     <connections>
                                                         <outlet property="btnBg" destination="nGL-Yz-qnA" id="AUc-nh-Y4u"/>
                                                         <outlet property="imgEffect" destination="kKe-j0-7rD" id="GdI-lQ-4Lo"/>
@@ -813,7 +817,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="mvY-Pj-jf2" firstAttribute="leading" secondItem="nj3-Ti-xkV" secondAttribute="trailing" constant="4" id="9kn-Uk-rEE"/>
+                                        <constraint firstItem="mvY-Pj-jf2" firstAttribute="leading" secondItem="nj3-Ti-xkV" secondAttribute="trailing" constant="8" id="9kn-Uk-rEE"/>
                                         <constraint firstItem="Tg6-Ka-y2Z" firstAttribute="top" secondItem="kKD-IV-P3c" secondAttribute="top" id="DRP-Td-iQ6"/>
                                         <constraint firstAttribute="bottom" secondItem="Tg6-Ka-y2Z" secondAttribute="bottom" id="EYb-bx-JRs"/>
                                         <constraint firstItem="nj3-Ti-xkV" firstAttribute="leading" secondItem="Tg6-Ka-y2Z" secondAttribute="trailing" id="G86-N9-n11"/>
@@ -839,6 +843,12 @@
                             <constraint firstItem="yKA-2o-cjJ" firstAttribute="top" secondItem="0Ta-7k-h39" secondAttribute="top" id="WDI-41-TeX"/>
                             <constraint firstItem="yKA-2o-cjJ" firstAttribute="leading" secondItem="RpU-uC-pyt" secondAttribute="leading" id="lQQ-u3-NKe"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="19"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="NO"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="293" height="38"/>
@@ -871,10 +881,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="PenRack/ballpoint_color" width="66" height="163"/>
-        <image name="PenRack/ballpoint_mask" width="198" height="489"/>
-        <image name="PenRack/ballpoint_penEffect" width="66" height="163"/>
-        <image name="PenRack/ballpoint_shadow" width="66" height="167"/>
+        <image name="Favorites/felt_color" width="18" height="68"/>
+        <image name="Favorites/felt_effect" width="18" height="68"/>
+        <image name="Favorites/felt_mask" width="18" height="68"/>
+        <image name="Favorites/felt_shadow" width="20" height="75"/>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
         <image name="books.vertical" catalog="system" width="128" height="107"/>
         <image name="circlebadge" catalog="system" width="128" height="122"/>

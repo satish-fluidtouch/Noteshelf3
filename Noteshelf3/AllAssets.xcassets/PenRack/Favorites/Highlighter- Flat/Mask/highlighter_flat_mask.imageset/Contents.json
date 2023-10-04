@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2221.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Flat Highlighter.png",
+      "filename" : "flatHighlighter_mask.pdf",
       "idiom" : "universal"
     }
   ],

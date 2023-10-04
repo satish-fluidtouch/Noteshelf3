@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2220 (1).png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Pencil.png",
+      "filename" : "pencil_mask.pdf",
       "idiom" : "universal"
     }
   ],

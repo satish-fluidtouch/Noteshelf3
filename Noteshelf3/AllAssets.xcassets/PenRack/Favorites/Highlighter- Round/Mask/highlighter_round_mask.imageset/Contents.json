@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2222.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Round Highlighter.png",
+      "filename" : "highlighter_mask.pdf",
       "idiom" : "universal"
     }
   ],

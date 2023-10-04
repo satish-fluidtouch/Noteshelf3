@@ -22,6 +22,23 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
     private var currentViewSize = CGSize.zero
     private var favorite: FTPenSetProtocol?
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if(currentViewSize != self.frame.size) {
+            currentViewSize = self.frame.size
+            self.layoutIfNeeded()
+            self.btnBg.layer.cornerRadius = self.frame.size.width*0.5
+            self.btnBg.layer.borderWidth = 0.5
+            self.btnBg.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+
+            let penWidth = self.isRegularTrait() ? self.bounds.width : self.viewPenImage.bounds.width
+
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = UIBezierPath(roundedRect: CGRect.init(x: 0, y: 0, width: penWidth, height: self.bounds.height), byRoundingCorners: UIRectCorner.topLeft.union(.topRight), cornerRadii: CGSize(width: self.viewPenImage.frame.width / 2, height: self.viewPenImage.frame.height / 2)).cgPath
+            self.viewPenImage.layer.mask = maskLayer
+        }
+    }
+
     func configure(favorite: FTPenSetProtocol, currentPenset: FTPenSetProtocol) {
         self.favorite = favorite
 
@@ -49,12 +66,12 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
     }
 
     private func selectedBottomConstraint() -> CGFloat {
-        var value: CGFloat = -45.0
-        if self.favorite?.type == .flatHighlighter {
-            value = -40.0
-        } else if self.favorite?.type == .highlighter {
-            value = -36.0
-        }
+        var value: CGFloat = -10.0
+//        if self.favorite?.type == .flatHighlighter {
+//            value = -40.0
+//        } else if self.favorite?.type == .highlighter {
+//            value = -36.0
+//        }
         return value
     }
 
@@ -66,7 +83,7 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
             }
             else {
                 self.btnBg.backgroundColor = UIColor.appColor(.black5)
-                self.penBottomConstraint.constant = -12
+                self.penBottomConstraint.constant = 3.0
             }
         }
     }

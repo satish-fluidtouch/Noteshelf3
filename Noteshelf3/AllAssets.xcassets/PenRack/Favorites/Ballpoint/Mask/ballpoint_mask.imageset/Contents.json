@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2225.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Ballpoint.png",
+      "filename" : "ballpoint_mask.pdf",
       "idiom" : "universal"
     }
   ],

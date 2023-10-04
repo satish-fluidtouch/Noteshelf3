@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2218.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Felt.png",
+      "filename" : "felt_mask.pdf",
       "idiom" : "universal"
     }
   ],

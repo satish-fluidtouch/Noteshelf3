@@ -25,6 +25,10 @@ class FTFavoritebarViewController: UIViewController {
         self.showSizeDisplay(10.0)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
     @IBAction func sizeIndicatorTapped(_ sender: Any) {
     }
 }
@@ -34,6 +38,18 @@ private extension FTFavoritebarViewController {
         self.sizeDisplayWidthConstraint?.constant = 8
         self.sizeDisplayView.layoutIfNeeded()
         self.sizeDisplayView.layer.cornerRadius = sizeDisplayView.frame.height/2
+    }
+
+     func updateSelectionStatus(cell: FTFavoritePenCollectionViewCell?) {
+        UIView.animate(withDuration: 0.1, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
+            for index in self.favorites.indices where (self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell)?.isFavoriteSelected == true {
+                let prevCell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell
+                prevCell?.isFavoriteSelected = false
+                break
+            }
+            cell?.isFavoriteSelected = true
+        }, completion: { (_) in
+        })
     }
 }
 
@@ -59,6 +75,16 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? FTFavoritePenCollectionViewCell else {
             fatalError("Programmer error - FTFavoritePenCollectionViewCell not found")
+        }
+
+        if(indexPath.row < self.favorites.count) {
+            if(cell.isFavoriteSelected) {
+                // to show edit mode UI here
+            } else {
+                self.updateSelectionStatus(cell: cell)
+            }
+        } else {
+
         }
     }
 }

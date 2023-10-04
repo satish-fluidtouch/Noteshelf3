@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Frame 2219.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "Fountain.png",
+      "filename" : "fountain_mask.pdf",
       "idiom" : "universal"
     }
   ],
