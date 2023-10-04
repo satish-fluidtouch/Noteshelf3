@@ -279,7 +279,7 @@ extension FTShelfSplitViewController {
                  group: FTShelfItemProtocol?,
                  onCompletion: @escaping (Error?) -> ())
     {
-        self.shelfItemCollection.moveShelfItems([shelfItem],
+        self.shelfItemCollection?.moveShelfItems([shelfItem],
                                             toGroup: group,
                                             toCollection: shelfItemCollection,
                                             onCompletion: { [weak self] (error, movedItems) in
@@ -321,7 +321,7 @@ extension FTShelfSplitViewController {
             if success == true {
                 loadingIndicatorViewController.hide()
                 let docID = (shelfItem as? FTDocumentItemProtocol)?.documentUUID;
-                self?.shelfItemCollection.removeShelfItem(shelfItem,
+                self?.shelfItemCollection?.removeShelfItem(shelfItem,
                                                           onCompletion:
                     { (error, _) in
                         if error == nil {

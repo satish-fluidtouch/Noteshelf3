@@ -33,6 +33,6 @@
 	<key>displayStyle</key>
 	<integer>0</integer>
 	<key>APPLE_PENCIL_SETTINGS_PRESSURE</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

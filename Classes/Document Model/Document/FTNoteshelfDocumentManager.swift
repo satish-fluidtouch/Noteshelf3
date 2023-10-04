@@ -24,7 +24,8 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
 
 @objcMembers class FTNoteshelfDocumentManager: NSObject {
     static let shared = FTNoteshelfDocumentManager();
-    
+    private override init() {}
+
     private var documentsInUse = [FTDocumentTokenInfo]();
     private var requestQueue = [FTDocumentOpenRequest]();
     private var currentRequest: FTDocumentOpenRequest?;
@@ -51,8 +52,12 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
            let storedToken = self.token(for: document.URL) {
             if storedToken.removeToken(token) {
                 if(storedToken.canClose) {
-                    storedToken.document?.closeDocument(completionHandler: onCompletion);
-                    if let index = self.documentsInUse.index(of: storedToken) {
+                    storedToken.document?.closeDocument(completionHandler: { success in
+                        // cache the document if required.
+                       try? FTDocumentCache.shared.cacheShelfItemFor(url: document.URL, documentUUID: document.documentUUID)
+                        onCompletion?(success)
+                    })
+                    if let index = self.documentsInUse.firstIndex(of: storedToken) {
                         self.documentsInUse.remove(at: index);
                     }
                 }
@@ -80,6 +85,18 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
                 onCompletion?(saveSuccess);
             }
         }
+    }
+
+    func isDocumentAlreadyOpen(for url: URL) -> Bool {
+        let isAlredyOpen = self.documentsInUse.contains(where: { docInUse in
+            if let doc = docInUse.document, doc.URL == url {
+                return true
+            } else {
+                return false
+            }
+        })
+
+        return isAlredyOpen
     }
 }
 

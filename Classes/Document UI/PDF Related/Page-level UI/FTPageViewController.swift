@@ -557,10 +557,11 @@ private extension FTPageViewController
         defaultNotificationCenter.addObserver(forName: Notification.Name.refreshPageNotification,
                                               object: self.pdfPage,
                                               queue: nil) { [weak self] (notification) in
+            let curRenderMode = (notification.userInfo?["RenderMode"] as? FTRenderMode) ?? FTRenderModeDefault;
             guard let strongSelf = self,
                   let userInfi = notification.userInfo,
                   let window = userInfi[FTRefreshWindowKey] as? UIWindow,
-                  window != strongSelf.view.window else {
+                  (window != strongSelf.view.window || curRenderMode != strongSelf.renderMode) else {
                 return;
             }
             
@@ -683,20 +684,20 @@ extension FTPageViewController {
     func postRefreshNotification(_ rect:CGRect = .null) {
         DispatchQueue.main.async {
             
-        var userInfo: [String:Any]?;
-        if let window = self.view.window {
-            userInfo = [FTRefreshWindowKey: window];
-        }
-        if !rect.isNull {
-            userInfo?[FTRefreshRectKey] = rect;
-        }
-        
-        NotificationCenter.default.post(name: Notification.Name.FTRefreshExternalView,
-                                        object: self.pdfPage,
-                                        userInfo: userInfo);
-        NotificationCenter.default.post(name: .refreshPageNotification,
-                                        object: self.pdfPage,
-                                        userInfo: userInfo);
+            var userInfo: [String:Any]?;
+            if let window = self.view.window {
+                userInfo = [FTRefreshWindowKey: window];
+            }
+            if !rect.isNull {
+                userInfo?[FTRefreshRectKey] = rect;
+            }
+            userInfo?["RenderMode"] = self.renderMode;
+            NotificationCenter.default.post(name: Notification.Name.FTRefreshExternalView,
+                                            object: self.pdfPage,
+                                            userInfo: userInfo);
+            NotificationCenter.default.post(name: .refreshPageNotification,
+                                            object: self.pdfPage,
+                                            userInfo: userInfo);
         }
     }
 }

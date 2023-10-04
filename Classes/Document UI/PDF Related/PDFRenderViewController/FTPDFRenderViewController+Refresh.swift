@@ -270,7 +270,11 @@ extension FTPDFRenderViewController: FTRefreshSelectedItemDelegate {
     }
     
     func didInsertPageFromRefreshView(type: FTPageType) {
-        self.didTapPage(type)
+        self.addNewpageMode = FTRefreshMode
+        if type == .pageFromCamera || type == .photoTemplate {
+            self.insertingPhotoAsPage = true
+        }
+        self.performPageInsertOperation(type)
     }
 }
 

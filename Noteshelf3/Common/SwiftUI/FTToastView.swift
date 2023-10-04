@@ -62,8 +62,8 @@ class FTToastConfiguration: ObservableObject {
     private(set) var imgSize = CGSize(width: 25.0, height: 15.0)
     private(set) var horzPadding: CGFloat = 28.0
     private(set) var vertPadding: CGFloat = 7.0
+    private(set) var contentMaxWidth: CGFloat = 250.0
 
-    private let contentMaxWidth: CGFloat = 250.0
     private let contentMaxHeight: CGFloat = 200.0
     private let contentMinWidth: CGFloat = 70.0
     private let contentMinHeight: CGFloat = 40.0
@@ -73,6 +73,10 @@ class FTToastConfiguration: ObservableObject {
         self.subTitle = subTitle
         self.image = image
         self.autoRemovalOfToast = autoRemovalOfToast
+    }
+
+    func setContentMaxWidth(_ width: CGFloat) {
+        self.contentMaxWidth = width
     }
 
     func getToastSize() -> CGSize {

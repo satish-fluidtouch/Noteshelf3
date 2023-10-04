@@ -205,6 +205,10 @@ extension FTMediaLibraryDataSource: UICollectionViewDataSource, UICollectionView
             let clipart = mediaLibraryArray[indexPath.item]
             didSelectClipart(clipart)
         }
+        if cellType == .recent {
+            let clipart = mediaLibraryArray[indexPath.item]
+            self.reOrderRecentClipart(clipart: clipart)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -512,6 +516,13 @@ fileprivate extension FTMediaLibraryDataSource {
                 self?.collectionView.deleteItems(at: [IndexPath(item: index, section: 0)])
             }
         })
+    }
+    func reOrderRecentClipart(clipart: FTMediaLibraryModel) {
+        if let index = self.mediaLibraryArray.lastIndex(where: { $0.id == clipart.id }) {
+            self.mediaLibraryArray.remove(at: index)
+            self.mediaLibraryArray.insert(clipart, at: 0)
+            localProvider.reorderMediaInLocal(with: self.mediaLibraryArray)
+        }
     }
 }
 

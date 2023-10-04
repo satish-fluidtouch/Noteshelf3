@@ -1067,8 +1067,8 @@
 "getInspired.student" = "勉強ノート";
 "globalSearch.page" = "ページ";
 "globalSearch.recentlySearched" = "最近検索した";
-"groupitem.noteText" = "メモ";
-"groupitem.notesText" = "ノート";
+"groupitem.noteText" = "アイテム";
+"groupitem.notesText" = "アイテム";
 "headers" = "ヘッダー";
 "highlighterRack.flat" = "フラットハイライター";
 "highlighterRack.round" = "ラウンドハイライター";
@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "新しいページ";
 "notebook.eraserRack.NavTitle" = "消しゴム";
 "notebook.lassoRack.NavTitle" = "ラッソ";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d の %d";
 "notebook.restoring" = "復元中";
 "notebook.settings.moresettings" = "さらに設定";
 "notebook.shapesRack.NavTitle" = "形状";
@@ -1473,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "デフォルトに設定します:";
 "text.font.setAsDefault.thisAndFutureBooks" = "このノートおよびすべての将来のノート";
 "text.font.setAsDefault.thisBook" = "このノートブック";
+"textmode.fonttitle" = "フォント/テキストスタイル";
 "texttoolbar.fontselectionTitle" = "フォントを選択";
 "theams.unsplashDescription" = "Unsplash から選択、写真を撮影、または写真ライブラリから選択してカスタムカバーを作成してください。";
 "trash.alert.cannotOpenNotebook" = "このノートブックは削除されたため開けません。復元するには、長押ししてメニューからオプションを選択してください。";
@@ -1521,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 19 September 2023 at 2:59 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM
