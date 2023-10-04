@@ -22,6 +22,7 @@ struct FTNotebookItemView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme
+    @Binding var isPressed: Bool
 
     var shelfItemWidth: CGFloat = 212
     var shelfItemHeight: CGFloat = 334
@@ -73,10 +74,13 @@ struct FTNotebookItemView: View {
                 .padding(coverPadding)
                 
             }
+            .scaleEffect(isPressed ? 0.92 : 1.0)
+            .animation(Animation.easeInOut(duration: 0.4), value: isPressed)
             .frame(width: thumbnailSize.width + (coverPadding.leading + coverPadding.trailing),
                    height: thumbnailSize.height + (coverPadding.top + coverPadding.bottom),
                    alignment: .top)
             .padding(EdgeInsets(top: -(coverPadding.top), leading: 0, bottom: 0, trailing: 0))
+
         }
         .padding(.horizontal,12)
         .frame(width: viewSize.width,
