@@ -104,7 +104,8 @@ public enum AssetsColor: String, CaseIterable {
     case shortcutSlotHighlightColor
     case shortcutSlotBgColor
     case shortcutSlotBorderColor
-    
+    case shortcutSlotHighlightBorderColor
+
     // System
     case black1
     case black2

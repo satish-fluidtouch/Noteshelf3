@@ -72,25 +72,44 @@ private extension FTShortcutToolPresenter {
     }
 
     func addSlots() {
-        FTShortcutPlacement.allCases.forEach { placement in
-            addSlotView(for: placement)
-        }
+        if let parentView = self.parentVC?.view {
+                let dimView = UIView()
+            if !UserDefaults.isApplePencilEnabled() {
+                dimView.tag = 2000
+                dimView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+                dimView.frame = parentView.bounds
+                parentView.addSubview(dimView)
+//                parentView.bringSubviewToFront(dimView)
+            }
 
-        func addSlotView(for placement: FTShortcutPlacement) {
-            let slotView = FTSlotView()
-            slotView.frame.size = placement.slotSize
-            slotView.center = shortcutView.center
-            self.parentVC?.view.addSubview(slotView)
-            let topCenter = placement.shortcutViewCenter(fotShortcutView: slotView, topOffset: toolbarOffset)
-            slotView.center = topCenter // update center
-            slotView.tag = placement.slotTag
-            slotView.isHighlighted = false
+            FTShortcutPlacement.allCases.forEach { placement in
+                addSlotView(for: placement)
+            }
+
+            shortcutView.superview?.bringSubviewToFront(shortcutView)
+            func addSlotView(for placement: FTShortcutPlacement) {
+                let slotView = FTSlotVisualEffectView()
+                slotView.stylePanel()
+                slotView.frame.size = placement.slotSize
+                slotView.center = shortcutView.center
+                if !UserDefaults.isApplePencilEnabled() {
+                    dimView.addSubview(slotView)
+                    dimView.bringSubviewToFront(slotView)
+                } else {
+                    parentView.addSubview(slotView)
+                }
+                let topCenter = placement.shortcutViewCenter(fotShortcutView: slotView, topOffset: toolbarOffset)
+                slotView.center = topCenter // update center
+                slotView.tag = placement.slotTag
+                slotView.layer.cornerRadius = 19.0
+                slotView.clipsToBounds = true
+            }
         }
     }
 
     func removeAllSlots() {
         FTShortcutPlacement.allCases.forEach { placement in
-            let tagToSearch = placement.slotTag
+            let tagToSearch = UserDefaults.isApplePencilEnabled() ? placement.slotTag : 2000
             for subview in self.parentVC?.view.subviews ?? [] {
                 if subview.tag == tagToSearch {
                     subview.removeFromSuperview()
@@ -100,14 +119,20 @@ private extension FTShortcutToolPresenter {
     }
 
     func highlightNearstSlotView() {
-        guard let parentView = self.parentVC?.view else {
+//        guard let dimView = self.parentVC?.view.subviews.first(where: { $0.tag == 2000 }) else {
+
+        guard var parentView = self.parentVC?.view else {
             return
         }
+        if let dimView = self.parentVC?.view.subviews.first(where: { $0.tag == 2000 }) {
+            parentView = dimView
+        }
+
         let currentPlacement = self.shortCutQuadrant.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset)
         FTShortcutPlacement.allCases.forEach { placement in
             let tagToSearch = placement.slotTag
             for subview in parentView.subviews {
-                if let dashedBorderView = subview as? FTSlotView {
+                if let dashedBorderView = subview as? FTSlotVisualEffectView {
                     if dashedBorderView.tag == currentPlacement.slotTag {
                         if !dashedBorderView.isHighlighted {
                             dashedBorderView.isHighlighted = true
@@ -158,57 +183,46 @@ private extension FTShortcutToolPresenter {
     }
 }
 
-class FTSlotView: UIView {
-    private let borderWidth: CGFloat = 0.5
-    private let cornerRadius: CGFloat = 20.0
+class FTSlotVisualEffectView: UIVisualEffectView {
+    private let borderWidth: CGFloat = 1.5
+    private let cornerRadius: CGFloat = 19.0
+    private let bgColor = UIColor.appColor(.shortcutSlotBgColor)
+    private let borderView = UIView()
 
-    private lazy var borderLayer: CAShapeLayer = {
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.strokeColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
-        shapeLayer.lineDashPattern = [4, 4]
-        shapeLayer.lineWidth = borderWidth
-        return shapeLayer
-    }()
-
+    override var frame: CGRect {
+        didSet {
+            let borderViewFrame =  self.contentView.frame
+            self.borderView.frame = borderViewFrame
+            self.borderView.layer.cornerRadius = cornerRadius
+        }
+    }
 
     var isHighlighted: Bool = false {
         didSet {
             if isHighlighted {
-                self.borderLayer.fillColor = UIColor.appColor(.shortcutSlotHighlightColor).cgColor
-                self.borderLayer.lineWidth = 0.0
+                self.borderView.backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
+                self.borderView.layer.borderColor = UIColor.appColor(.shortcutSlotHighlightBorderColor).cgColor
             } else {
-                self.borderLayer.fillColor = UIColor.appColor(.shortcutSlotBgColor).cgColor
-                self.borderLayer.lineWidth = borderWidth
+                self.borderView.backgroundColor = bgColor
+                self.borderView.layer.borderColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
             }
         }
     }
 
-    override var frame: CGRect {
-        didSet {
-            self.updateBorderLayer()
-        }
-    }
+    func stylePanel() {
+        let blurEffect = UIBlurEffect(style: .regular)
+        self.effect = blurEffect
+        self.backgroundColor = .clear
+        self.layer.cornerRadius = cornerRadius
 
-    init() {
-        super.init(frame: .zero)
-        self.configure()
-
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func configure() {
-        self.layer.addSublayer(borderLayer)
-        let rect = self.bounds.insetBy(dx: 1, dy: 1)
-        self.addVisualEffectBlur(cornerRadius: 16.0, frameToBlur: rect)
-    }
-
-    private func updateBorderLayer() {
-        self.borderLayer.frame = self.bounds
-        self.borderLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: cornerRadius).cgPath
-        self.borderLayer.layoutIfNeeded()
+        // add border view
+        let borderViewFrame = self.contentView.frame
+        self.borderView.frame = borderViewFrame
+        self.borderView.backgroundColor = bgColor
+        self.borderView.layer.cornerRadius = cornerRadius
+        self.borderView.layer.borderWidth = borderWidth
+        self.contentView.addSubview(borderView)
         self.layoutIfNeeded()
+        self.isHighlighted = false
     }
 }
