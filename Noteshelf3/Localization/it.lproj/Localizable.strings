@@ -1146,7 +1146,7 @@
 "notebook.addnew.newpage" = "Nuova Pagina";
 "notebook.eraserRack.NavTitle" = "Cancella";
 "notebook.lassoRack.NavTitle" = "Laccio";
-"notebook.quickPageNavigator.pageNumber.Text" = "%d di %d'";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d di %d";
 "notebook.restoring" = "Ripristino...";
 "notebook.settings.moresettings" = "Altre impostazioni";
 "notebook.shapesRack.NavTitle" = "Forme";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 4 October 2023 at 1:41 PM
+// Last Synced by Rakesh on 4 October 2023 at 1:55 PM

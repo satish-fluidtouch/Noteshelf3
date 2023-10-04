@@ -1146,7 +1146,7 @@
 "notebook.addnew.newpage" = "새 페이지";
 "notebook.eraserRack.NavTitle" = "지우개";
 "notebook.lassoRack.NavTitle" = "라소";
-"notebook.quickPageNavigator.pageNumber.Text" = "%d 중 %d'";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "복원 중...";
 "notebook.settings.moresettings" = "더 많은 설정";
 "notebook.shapesRack.NavTitle" = "모양";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 4 October 2023 at 1:41 PM
+// Last Synced by Rakesh on 4 October 2023 at 1:55 PM
