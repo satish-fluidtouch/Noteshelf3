@@ -587,7 +587,7 @@ extension FTShelfSplitViewController {
             if(CloudBookDownloadDebuggerLog) {
                 FTCLSLog("Book: \(shelfItem.displayTitle): Download Requested")
             }
-            _ = try FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
+            try FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
         }
         catch let nserror as NSError {
             FTCLSLog("Book: \(shelfItem.displayTitle): Download Failed :\(nserror.description)")
@@ -733,7 +733,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() != .notDownloaded else {
+        guard shelfItem.URL.downloadStatus() == .downloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }

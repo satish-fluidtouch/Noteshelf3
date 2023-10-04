@@ -34,7 +34,6 @@ class FTOffscreenWritingViewController: UIViewController {
     };
     
     deinit {
-        self.cancelDelayedRefresh();
         FTRendererProvider.shared.enqueOffscreenRenderer(_offscreenRenderer)
     }
     
@@ -58,8 +57,6 @@ class FTOffscreenWritingViewController: UIViewController {
     
     func reloadTiles()
     {
-        self.cancelDelayedRefresh();
-        self.delayedDisplayRect = .null;
         self.tiledView.reloadTiles();
     }
     
@@ -82,29 +79,14 @@ class FTOffscreenWritingViewController: UIViewController {
 
     func renderTiles(inRect rect : CGRect,properties: FTRenderingProperties)
     {
-        if properties.delayedOffscreenRefresh {
-            self.delayedDisplayRect = self.delayedDisplayRect.union(rect);
-            self.scheduleDelayedRefresh();
+        if !properties.avoidOffscreenRefresh {
+            self._renderTiles(rect);
         }
-        else {
-            let rectToRefresh = self.delayedDisplayRect.union(rect);
-            self.delayedDisplayRect = .null;
-            self._renderTiles(rectToRefresh);
-        }
-    }
-    
-    @objc func cancelDelayedRefresh() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.delayedRefresh), object: nil);
     }
 }
 
 private extension FTOffscreenWritingViewController
 {
-    @objc func scheduleDelayedRefresh() {
-        self.cancelDelayedRefresh();
-        self.perform(#selector(self.delayedRefresh), with: nil, afterDelay: 0.5);
-    }
-
     @objc func delayedRefresh() {
         if !self.delayedDisplayRect.isNull {
             self._renderTiles(self.delayedDisplayRect);
