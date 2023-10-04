@@ -87,7 +87,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     //TODO: RK Remove this default collection creation once we get confirmation from amar or akshay.
     fileprivate func defaultCollection(_ onCompletion : @escaping ((FTShelfItemCollection) -> Void))
     {
-        let myNotesCollectionName = NSLocalizedString("MyNotes", comment: "My Notes");
+        let myNotesCollectionName = "DefaultCategoryName".localized;
         self._createShelf(myNotesCollectionName.appending(".shelf"), onCompletion: { (error, collection) in
             guard let collection = collection else {
                 debugPrint("error: \(String(describing: error))")
@@ -136,7 +136,6 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
         let uniqueName = FileManager.uniqueFileName(title+".shelf", inFolder: self.localDocumentsURL);
         let destURL = self.localDocumentsURL.appendingPathComponent(uniqueName).urlByDeleteingPrivate();
         var fileError : NSError?;
-        
         do {
             try FileManager.init().moveItem(at: collection.URL, to: destURL);
             _ = self.moveItemInCache(collection, toURL: destURL);
@@ -151,7 +150,7 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     func deleteShelf(_ collection: FTShelfItemCollection, onCompletion:  @escaping ((NSError?, FTShelfItemCollection?) -> Void))
     {
         var fileError : NSError?;
-        
+
         do {
             try FileManager.init().removeItem(at: collection.URL as URL);
             self.removeItemFromCache(collection.URL as URL, shelfItem: collection);

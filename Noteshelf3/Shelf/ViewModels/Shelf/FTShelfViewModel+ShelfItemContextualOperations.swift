@@ -12,20 +12,31 @@ import Foundation
 extension FTShelfViewModel {
     func getContexualOptionsForShelfItem(_ item: FTShelfItemViewModel) -> [[FTShelfItemContexualOption]] {
         if self.mode == .selection {
-            let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
+            var selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
+            selectedShelfItems.append(item)
             if selectedShelfItems.count > 1 {
                 if item.model.shelfCollection.isTrash {
                     return [[.restore],[.delete]]
                 } else {
                     if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
-                        return [[.rename],[.duplicate,.move,.share],[.trash]]
+                        let hasAnEmptyGroup: Bool = selectedShelfItems.filter({($0 is FTGroupItemViewModel)}).first(where: {($0.model as? FTGroupItemProtocol)?.childrens.count == 0}) != nil
+                        if hasAnEmptyGroup {
+                            return [[.openInNewWindow],[.rename],[.duplicate,.move],[.trash]]
+                        } else {
+                            return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
+                        }
                     }else {
                         return [[.rename,.changeCover, .tags,],[.duplicate,.move,.share,],[.trash]]
                     }
                 }
             }else {
                 if self.hasAGroupShelfItemAmongSelectedShelfItems(selectedShelfItems) {
-                    return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
+                    let hasAnEmptyGroup: Bool = selectedShelfItems.filter({($0 is FTGroupItemViewModel)}).first(where: {($0.model as? FTGroupItemProtocol)?.childrens.count == 0}) != nil
+                    if hasAnEmptyGroup {
+                        return [[.openInNewWindow],[.rename],[.duplicate,.move],[.trash]]
+                    } else {
+                        return [[.openInNewWindow],[.rename],[.duplicate,.move,.share],[.trash]]
+                    }
                 }else {
                     return contexualMenuOptionsInNormalModeForShelfItem(item)
                 }

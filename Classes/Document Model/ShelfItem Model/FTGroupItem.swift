@@ -71,6 +71,26 @@ class FTGroupItem : NSObject,FTGroupItemProtocol, FTShelfItemSorting
         return self.uuid.hashValue;
     }
     private var topBooks = FTGroupItemTopBooks()
+    
+    private func allNotebooks() -> [FTShelfItemProtocol] {
+        var notebooks = self.notebooksInGroup()
+        for eachChild in childrens {
+            if let groupItem = eachChild as? FTGroupItem {
+                notebooks.append(contentsOf: groupItem.allNotebooks())
+            }
+        }
+        return notebooks
+    }
+    
+    private func notebooksInGroup() -> [FTShelfItemProtocol] {
+        return self.childrens.compactMap { eachChild in
+            return eachChild as? FTDocumentItem
+        }
+    }
+    
+    public func isGroupEmpty() -> Bool {
+        return self.allNotebooks().count == 0
+    }
 
     var fileCreationDate: Date {
         get {

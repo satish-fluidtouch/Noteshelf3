@@ -84,7 +84,6 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
 
     var isIntroScreen : Bool = false;
 
-    @objc private var isScrolling = false;
     @objc var orientationChanging = false {
         didSet{
             if(self.orientationChanging) {
@@ -444,23 +443,23 @@ private extension FTWritingViewController
         if nil != self.pageToDisplay {
             if(self.mode == FTRenderModeDefault) {
                 if(!self.isCurrentPage || self.isCurrentPage && self.isInZoomMode()) {
-                    self.offscreenTileViewController?.renderTiles(inRect: rect);
+                    self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
                     self.renderingInProgress = false;
                     return;
                 }
             }
             else if(self.mode == FTRenderModeExternalScreen) {
-                self.offscreenTileViewController?.renderTiles(inRect: rect);
+                self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
                 return;
             }
             
             if(intents.contains(FTRendererIntent.offScreen)) {
-                self.offscreenTileViewController?.renderTiles(inRect: rect);
+                self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
             }
             if intents.contains(FTRendererIntent.onScreen),
                 let scrollView = self.scrollView,
                 let metalViewController = self.onscreenViewController {
-                if(!self.isZooming && !isScrolling) {
+                if(!self.isZooming && !(self.scrollView?.isScrolling ?? true)) {
                     let isCurrentStrokeInProgress = (metalViewController.currentStroke == nil) ? false : true;
                     let frame = scrollView.visibleRect();
                     metalViewController.setVisibleRect(frame);

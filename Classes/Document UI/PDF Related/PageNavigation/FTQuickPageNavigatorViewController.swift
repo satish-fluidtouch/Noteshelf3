@@ -48,11 +48,11 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     private let thumbnailEdgePadding: CGFloat = 0.0 //No need because we already added padding
     private let expireDuration: TimeInterval = 5.0
     private let springLoadingDuration: TimeInterval = 1.0
-    private let thumbAnimationDuration: TimeInterval = (0.15 / 19) // (0.1(Total Duration) / 19(No. Of Images) )
+    private let thumbAnimationDuration: TimeInterval = (0.15 / 2) // (0.1(Total Duration) / 2(No. Of Images) )
 
     var currentThumbImageIndex: Int = 0
-    let highlightStateImages:[String] = ["handle1", "handle2", "handle3", "handle4", "handle5", "handle6", "handle7", "handle8", "handle9", "handle10", "handle11", "handle12", "handle13", "handle14", "handle15", "handle16", "handle17", "handle18", "handle19"]
-    let normalStateImages:[String] = ["handle1", "handle1", "handle1", "handle4", "handle5", "handle6", "handle7", "handle8", "handle9", "handle10", "handle11", "handle12", "handle13", "handle14", "handle15", "handle16", "handle17", "handle18", "handle19"]
+    let highlightStateImages:[String] = ["handle1", "handle2"]
+    let normalStateImages:[String] = ["handle1", "handle1"]
 
     private var currentPageIndex: UInt {
         set {
@@ -236,10 +236,6 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     }
         
     @IBAction private func sliderValueChanged(_ slider: UISlider) {
-        #if DEBUG
-        print(slider.value)
-        #endif
-        
         self.currentPageIndex = UInt(max(Int(slider.value.rounded()) - 1, 0))
         self.updatePageInfoContainer(at: self.currentPageIndex)
     }
@@ -311,7 +307,7 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
                 infoContainer.center = centerPoint
             }
             
-            self.pageInfoLabel?.text = "\(pageIndex + 1)/\(Int(slider.maximumValue))"
+            self.pageInfoLabel?.text =  String.localizedStringWithFormat(NSLocalizedString("notebook.quickPageNavigator.pageNumber.Text", comment: "N of N"), pageIndex + 1, Int(slider.maximumValue))
             self.page?.thumbnail()?.cancelThumbnailGeneration()
             
             self.page = currentDocument?.pages()[pageIndexToShow]

@@ -35,7 +35,7 @@ struct FTShelfTopSectionItem: View {
         }
         .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
         .cornerRadius(16)
-        .border(Color.appColor(.accentBorder),
+        .border(Color.appColor(.accentBg),
                 width:1.0,
                 cornerRadius: 16)
     }
@@ -79,12 +79,21 @@ extension FTShelfTopSectionItem{
                 .font(Font.appFont(for: .regular, with: 13))
         }
     }
+    @ViewBuilder
     var gridcomponetImageView: some View {
         Image(isFirsttime ? type.largeiconName : type.iconName)
             .resizable()
             .scaledToFit()
-            .frame(width: shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 400 ? 64.0 : (geometrySize < 400 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0),
-                   height: shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 400  ? 64.0 : (geometrySize < 400 && shelfViewModel.shouldShowGetStartedInfo ? 48.0 : 36.0))
+            .frame(width: imageSize(),height: imageSize())
+    }
+    private func imageSize() -> CGFloat {
+        if shelfViewModel.isInHomeMode && isFirsttime && geometrySize > 500 {
+            return FTShelfTopSectionviewConstants.regularImageSize
+        } else if geometrySize < 500 && shelfViewModel.shouldShowGetStartedInfo {
+            return FTShelfTopSectionviewConstants.compactRegularImageSize
+        } else {
+            return FTShelfTopSectionviewConstants.verticalImageSize
+        }
     }
 }
 extension View {

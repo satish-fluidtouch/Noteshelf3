@@ -57,6 +57,7 @@ struct FTPenColorShortcutView: View {
                         }) {
                             Label("color.resetToDefault".localized, systemImage: "arrow.counterclockwise")
                         }
+                        .disabled(viewModel.isItDefaultColor(at: colorPosition))
                     } preview: {
                         FTPenColorCircleView(hexColor: favColor.hex, isSelected: favColor.isSelected)
                     }

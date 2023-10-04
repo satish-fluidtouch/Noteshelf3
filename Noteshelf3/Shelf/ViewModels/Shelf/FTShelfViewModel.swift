@@ -109,7 +109,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var collection: FTShelfItemCollection {
         didSet {
             reset()
-            reloadShelfItems = true // on change in current collection in sidebar bar we are reloading the shelf
         }
     }
     weak var groupItem: FTGroupItemProtocol?
@@ -419,6 +418,8 @@ private extension FTShelfViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDidGetAdded(_:)), name: NSNotification.Name.shelfItemAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDidGetRemoved(_:)), name: NSNotification.Name.shelfItemRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(shelfitemDidgetUpdated(_:)), name: NSNotification.Name.shelfItemUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(groupitemDidgetAdded(_:)), name: NSNotification.Name.groupItemAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(groupitemDidgetRemoved(_:)), name: NSNotification.Name.groupItemRemoved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(shelfItemDropOperationFinished(_:)), name: NSNotification.Name("ShelfItemDropOperationFinished"), object: nil)
         NotificationCenter.default.addObserver(self, selector:#selector(splitDisplayChangeHandler(_:)) , name: NSNotification.Name("SplitDisplayModeChangeNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleShowDateStatusChange), name: Notification.Name(rawValue: FTShelfShowDateChangeNotification), object: nil)
@@ -462,7 +463,7 @@ extension FTShelfViewModel {
 extension FTShelfViewModel {
     
     @MainActor
-    func fetchShelfItems(animate: Bool = true) async {
+    func fetchShelfItems(animate: Bool = true)  {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
                               , searchKey: nil) { [weak self] items in

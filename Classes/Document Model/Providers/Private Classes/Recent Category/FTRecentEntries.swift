@@ -150,7 +150,6 @@ class FTRecentEntries: NSObject {
     }
     
     static func resetRecentEntries() {
-        favDataProvider.reset();
         recentDataProvider.reset();
         let defaults = self.defaults();
         defaults.setValue(false, forKey: "isUpdated");

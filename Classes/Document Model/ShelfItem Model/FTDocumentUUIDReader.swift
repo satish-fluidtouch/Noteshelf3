@@ -21,8 +21,15 @@ class FTDocumentUUIDReader: NSObject {
     
     func readDocumentUUID(_ url: URL,onCompletion: @escaping ((String?) -> ()))
     {
-        let operation = FTDocumentUUIDReaderOperation(url: url, onCompletion: onCompletion);
-        operationQueue.addOperation(operation);
+        // Try to read from the URL extended attributes.
+        if let uuid = url.getExtendedAttribute(for: .documentUUIDKey)?.stringValue {
+            onCompletion(uuid)
+            return
+        } else {
+            // Fallback to old approach
+            let operation = FTDocumentUUIDReaderOperation(url: url, onCompletion: onCompletion);
+            operationQueue.addOperation(operation);
+        }
     }
 }
 

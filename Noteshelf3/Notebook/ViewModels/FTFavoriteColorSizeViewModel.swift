@@ -57,6 +57,22 @@ class FTFavoriteColorViewModel: ObservableObject {
         self.colorEditPostion = position
     }
 
+    func isItDefaultColor(at position: FavoriteColorPosition) -> Bool {
+        var status = false
+        if position == .custom {
+            return status
+        }
+        let defaultFavs = self.rackData.defaultColors(for: self.currentPenset.type)
+        let index = position.rawValue
+        if index < defaultFavs.count {
+            let currentColor = self.favoriteColors[index]
+            if defaultFavs[index].color == currentColor.hex {
+                status = true
+            }
+        }
+        return status
+    }
+
     func resetToDefaultColor(at position: FavoriteColorPosition) {
         if position == .custom {
             return

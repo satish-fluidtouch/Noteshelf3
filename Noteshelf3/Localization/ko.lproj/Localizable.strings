@@ -1067,8 +1067,8 @@
 "getInspired.student" = "공부 노트";
 "globalSearch.page" = "페이지";
 "globalSearch.recentlySearched" = "최근 검색한";
-"groupitem.noteText" = "노트";
-"groupitem.notesText" = "노트";
+"groupitem.noteText" = "안건";
+"groupitem.notesText" = "아이템";
 "headers" = "헤더";
 "highlighterRack.flat" = "플랫 형광펜";
 "highlighterRack.round" = "라운드 형광펜";
@@ -1146,6 +1146,7 @@
 "notebook.addnew.newpage" = "새 페이지";
 "notebook.eraserRack.NavTitle" = "지우개";
 "notebook.lassoRack.NavTitle" = "라소";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d 중 %d'";
 "notebook.restoring" = "복원 중...";
 "notebook.settings.moresettings" = "더 많은 설정";
 "notebook.shapesRack.NavTitle" = "모양";
@@ -1276,6 +1277,7 @@
 "shelf.evernote.signout" = "에버노트에서 로그아웃";
 "shelf.general.usefaceid" = "얼굴 인식";
 "shelf.general.usetouchid" = "터치 아이디";
+"shelf.group.noGroupItemsTitle" = "이 그룹은 비어 있습니다.";
 "shelf.home.getinspired" = "영감을 얻다";
 "shelf.home.recent" = "최근";
 "shelf.home.seeAll" = "모두 보기";
@@ -1472,6 +1474,7 @@
 "text.font.setAsDefault.menuTitle" = "다음에 대해 기본값으로 설정:";
 "text.font.setAsDefault.thisAndFutureBooks" = "이와 이후의 모든 노트북";
 "text.font.setAsDefault.thisBook" = "이 노트북";
+"textmode.fonttitle" = "글꼴/텍스트 스타일";
 "texttoolbar.fontselectionTitle" = "글꼴 선택";
 "theams.unsplashDescription" = "Unsplash에서 선택, 사진 촬영 또는 사진 라이브러리에서 선택하여 사용자 정의 표지 만들기";
 "trash.alert.cannotOpenNotebook" = "이 노트북은 삭제되어 열 수 없습니다. 복원하려면 길게 눌러서 메뉴에서 해당 옵션을 선택하세요.";
@@ -1520,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Amar Udupa on 12 September 2023 at 7:10 PM
+// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM

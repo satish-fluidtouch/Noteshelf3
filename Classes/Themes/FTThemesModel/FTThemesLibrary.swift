@@ -134,11 +134,20 @@ extension FTThemesLibrary {
                     return category.first!.themes.first!;
                 }
             }
-            guard let themeUrl = Bundle.main.url(forResource: "NoCover", withExtension: "nsc", subdirectory:"StockCovers.bundle") else {
+            let coverTitle: String
+            let themeType: FTSelectedThemeType
+            if defaultMode == .basic {
+                coverTitle = "palette3"
+                themeType = .covers
+            } else {
+                coverTitle = "NoCover"
+                themeType = .noCover
+            }
+            guard let themeUrl = Bundle.main.url(forResource: coverTitle, withExtension: "nsc", subdirectory:"StockCovers.bundle") else {
                 fatalError("Programmer error")
             }
             var reqTheme: FTThemeable
-            if let theme = FTTheme.theme(url: themeUrl, themeType: .noCover) {
+            if let theme = FTTheme.theme(url: themeUrl, themeType: themeType) {
                 reqTheme = theme
             } else {
                 guard var defaultTheme = categories.first?.themes.first else {
