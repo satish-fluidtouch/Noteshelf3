@@ -18,64 +18,6 @@ protocol FTNoteshelfAITextViewViewControllerDelegate:NSObjectProtocol {
     func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: FTAIContent);
 }
 
-private let defaultResponseStyle: String = """
-<style>
-body {
-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-}
-h1 {
-color: #D07459;
-font-size: 26px;
-font-weight: 700;
-}
-h2 {
-color: #52A7A7;
-font-size: 22px;
-font-weight: 700;
-}
-h3 {
-color: #EBAE24;
-font-size: 22px;
-font-weight: 700;
-}
-h4 {
-color: #8D59C1;
-font-size: 20px;
-font-weight: 500;
-}
-h5 {
-color: #000000;
-font-size: 18px;
-font-weight: 700;
-}
-h6 {
-color: #000000;
-font-size: 18px;
-font-weight: 500;
-}
-p {
-font-size: 18px;
-font-weight:400;
-}
-ol {
-display: grid;
-gap: 10px;
-}
-li {
-font-size: 18px;
-}
-ol li {
-list-style-type: decimal;
-}
-ol ol li {
-list-style-type: lower-alpha;
-}
-ol ol ol li {
-list-style-type: lower-roman;
-}
-</style>
-""";
-
 enum FTNotesehlfAIAction: Int {
     case copyToClipboard,addToPage,addToNewPage,regenerateResponse,addHandwriting,addNewPageHandwriting;
     
@@ -155,30 +97,11 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     var supportsHandwriting = false {
         didSet {
             self.updateButtonStates();
-            debugLog("attributes: \(self.textView?.attributedText)")
         }
     }
     
     @IBOutlet private weak var stackHeightConstraint: NSLayoutConstraint?;
         
-    func insertAttributedHTML(_ htmlString: String) {
-        if let txtView = self.textView {
-            let textToConside = defaultResponseStyle.appending(htmlString);
-            if let data = textToConside.data(using: .unicode), let attrString = try? NSAttributedString(data: data, options: [.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                txtView.attributedText = attrString;
-                txtView.scrollRangeToVisible(NSRange(location: attrString.length, length: 0));
-            }
-        }
-    }
-    
-    func insertText(_ text:String) {
-        if let txtView = self.textView {
-            let position = txtView.selectedRange.location;
-            txtView.insertText(text);
-            txtView.scrollRangeToVisible(NSRange(location: position+text.count, length: 0));
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.moreButton?.layer.cornerRadius = 10;
@@ -221,6 +144,10 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         self.updateButtonStates();
     }
          
+    deinit {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
+    }
+    
     private func updateButtonStates() {
         self.addAsHandwrite?.isHidden = !self.supportsHandwriting;
         self.clipboardButton?.isHidden = self.supportsHandwriting
@@ -288,12 +215,21 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     func showActionOptions(_ show: Bool) {
         let heightConstraint: CGFloat = show ? 44 : 0;
         self.stackHeightConstraint?.constant = heightConstraint;
-//        if self.stackHeightConstraint?.constant != heightConstraint {
-//            UIView.animate(withDuration: 0.3) {
-//                self.stackHeightConstraint?.constant = heightConstraint;
-//                self.view.layoutIfNeeded();
-//            }
-//        }
+    }
+    
+    @objc private func scrollToBottom() {
+        if let txtView = self.textView {
+            txtView.scrollRangeToVisible(NSRange(location: max(txtView.attributedText.length-1,0), length: 0));
+        }
+    }
+    
+    func showResponse(_ response: FTOpenAIResponse) {
+        if let txtView = self.textView, txtView.attributedText.string != response.attributedString.string {
+            let currentOffset = txtView.contentOffset;
+            txtView.attributedText = response.attributedString;
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
+            self.perform(#selector(self.scrollToBottom), with: nil, afterDelay: 0.2);
+        }
     }
 }
 

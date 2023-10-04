@@ -122,7 +122,7 @@ class FTCharToStrokeRender: NSObject {
             eachStroke.setOffset(offset)
 
             rectOnAdd = rectOnAdd.union(eachStroke.boundingRect);
-            if let strokeColor = word?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor {
+            if let strokeColor = word?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor, strokeColor != UIColor.label {
                 eachStroke.strokeColor = strokeColor;
             }
             else {

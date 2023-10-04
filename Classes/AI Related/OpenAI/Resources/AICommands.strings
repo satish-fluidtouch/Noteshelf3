@@ -6,7 +6,7 @@
   Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 */
 
-"noteshelf.ai.commandAskAnything" = "in html format.";
+"noteshelf.ai.commandAskAnything" = ".Give response in html format.";
 "noteshelf.ai.commandSummarize" = ".Summarize in html format. Do not exceed 50 to 200 words.";
 "noteshelf.ai.commandExplain" = ".Explain in simple terms in html format.";
 "noteshelf.ai.commandKeyPoints" = ".Give Key Points in html format.";

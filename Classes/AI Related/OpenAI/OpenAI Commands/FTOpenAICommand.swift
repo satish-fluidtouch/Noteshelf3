@@ -9,11 +9,24 @@ import UIKit
 
 private extension String  {
     var appendingAICommandSuffix: String {
-        return self.appending("noteshelf.ai.commandSuffix".aiCommandString);
+        let stringToReturn =  self.appending("noteshelf.ai.commandSuffix".aiCommandString);
+        return stringToReturn.appendingAILangugaeResponse;
+    }
+    
+    var appendingAILangugaeResponse: String {
+        return self.appendingFormat("noteshelf.ai.commandLanguageSuffix".aiCommandString, FTUtils.currentLanguageResponseCode());
     }
 }
 
+enum FTAICommandResponseType: Int {
+    case html,string;
+}
+
 class FTAICommand: NSObject {
+    var responseType: FTAICommandResponseType {
+        return .html;
+    }
+
     var commandType: FTOpenAICommandType = .none;
     var content: String = ""
     var commandToken: String = UUID().uuidString;
@@ -58,6 +71,11 @@ class FTAICommand: NSObject {
 
 class FTAITranslateCommand: FTAICommand {
     var languageCode: String = "English"
+    
+    override var responseType: FTAICommandResponseType {
+        return .string;
+    }
+    
     override func command() -> String {
         return String(format: "noteshelf.ai.commandTranslate".aiCommandString, languageCode);
     }
@@ -67,7 +85,7 @@ class FTAITranslateCommand: FTAICommand {
     }
     
     override var executionMessage: String {
-        return String(format: "noteshelf.ai.commandTranslate".aiLocalizedString, languageCode).appending(" \" \(self.content.openAIDisplayString)\"")
+        return String(format: "noteshelf.ai.TranslateToPlaceHolder".aiLocalizedString, languageCode).appending(" \" \(self.content.openAIDisplayString)\"")
     }
 }
 
@@ -98,5 +116,33 @@ class FTAIExplainCommand: FTAICommand {
     
     override var executionMessage: String {
         return "noteshelf.ai.explain".aiLocalizedString.appending(" \" \(self.content.openAIDisplayString)\"");
+    }
+}
+
+private extension FTUtils {
+    static func currentLanguageResponseCode() -> String {
+        let curlang = FTUtils.currentLanguage();
+        switch curlang.lowercased() {
+        case "en":
+            return "English";
+        case "es":
+            return "Spanish";
+        case "jp":
+            return "Japanese";
+        case "zh-Hans":
+            return "Chinese Simplified";
+        case "zh-Hant":
+            return "Chinese Traditional";
+        case "ko":
+            return "Korean";
+        case "it":
+            return "Italian";
+        case "fr":
+            return "French";
+        case "de":
+            return "German";
+        default:
+            return "English";
+        }
     }
 }

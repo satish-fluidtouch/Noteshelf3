@@ -53,11 +53,17 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
                 if let bulletList = eachLine.bulletLists,let bullet = bulletList.last {
                     let trimmedEntries = eachLine.trimmingBullets(bulletlist: bulletList);
                     currentLine = trimmedEntries.trimmed;
-                    var bulletString = trimmedEntries.bulletString;
+                    var bulletString: String = "";
                     if !bullet.isOrdered {
                         if bulletList.count % 2 == 0 {
-                            bulletString = "-";
+                            bulletString = NSTextList(markerFormat: .hyphen, options: 0).marker(forItemNumber: 0);
                         }
+                        else {
+                            bulletString = NSTextList(markerFormat: .disc, options: 0).marker(forItemNumber: 0);
+                        }
+                    }
+                    else {
+                        bulletString = trimmedEntries.bulletString;
                     }
                     drawCurrentWord(NSAttributedString(string: bulletString), isLastChar: false);
                     self.xMargin = origin.x;
@@ -74,7 +80,7 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
                 }
                 
                 self.gotoNextParagraph(currentPage, origin: &origin);
-                _createNewPageIfNeeded((isLastLine && isLastWord));
+//                _createNewPageIfNeeded((isLastLine && isLastWord));
             });
         }
         if !self.strokesToAdd.isEmpty {

@@ -16,12 +16,14 @@ class FTOpenAI: NSObject {
         return OpenAI(apiToken: FTOpenAI.OPEN_API_TOKEN);
     }();
     static let shared = FTOpenAI();
-        
+    
     func execute(command: FTAICommand
-                 ,onUpdate: @escaping ((String,Error?,_ token: String) -> (Void))
+                 ,onUpdate: @escaping ((FTOpenAIResponse,Error?,_ token: String) -> (Void))
                  ,onCompletion: @escaping  ((Error?,_ token:String) -> (Void))) {
         
         let commandString: String = command.content.appending(command.command());
+    
+        let response = FTOpenAIResponse();
         
         var messages = [Chat]();
         messages.append(Chat(role: .user, content: commandString));
@@ -31,13 +33,21 @@ class FTOpenAI: NSObject {
         openAI.chatsStream(query: query) { partialResult in
             switch partialResult {
             case .success(let result):
+                if let content = result.choices.first?.delta.content {
+                    if command.responseType == .html {
+                        response.appendHtmlResponse(content);
+                    }
+                    else {
+                        response.appendStringRessponse(content);
+                    }
+                }
                 DispatchQueue.main.async {
-                    onUpdate(result.choices.first?.delta.content ?? "", nil,command.commandToken);
+                    onUpdate(response, nil,command.commandToken);
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     targettedError = error;
-                    onUpdate("",error,command.commandToken);
+                    onUpdate(response,error,command.commandToken);
                 }
             }
         } completion: { error in

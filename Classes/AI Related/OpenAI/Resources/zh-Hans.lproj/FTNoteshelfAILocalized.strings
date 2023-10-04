@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "总结"; //summarize
 "noteshelf.ai.explain" = "解释"; //explain
 "noteshelf.ai.translate" = "翻译"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "翻译为 %@";
 
 "noteshelf.ai.sendFeedback" = "发送反馈"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "任何问题..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "输入主题"; //enter_the_topic
 "noteshelf.ai.provideContent" = "请提供一个主题来创建笔记"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".用50到200字概括"; //summarize_command
-"noteshelf.ai.commandExplain" = ".用简单的话解释"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".给关键要点"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "翻译为 %@"; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "复制到剪贴板"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "添加为文本"; //add_to_page
@@ -51,3 +47,5 @@
 "noteshelf.ai.noteshelfAIError" = "无法连接到服务器。请稍后再试。";
 
 "noteshelf.ai.handwriteMessage" = "只有您是高级用户，Noteshelf AI 才能理解您的手写。";
+
+"noteshelf.ai.pressEnterToSend" = "Press enter to send";

@@ -87,6 +87,7 @@ class FTNoteshelfAIViewController: UIViewController {
     private weak var footerVC: FTNoteshelfAIFooterViewController?;
     private weak var betaAlertVC: FTNoteshelfAITokensConsumedAlertViewController?;
 
+    private var userInputInProgess = false;
     private var contentString: String?;
     private var enteredContent: String = "";
     
@@ -195,7 +196,9 @@ class FTNoteshelfAIViewController: UIViewController {
             (controller as? FTNoteshelfAIOptionsViewController)?.delegate = self;
             (controller as? FTNoteshelfAIOptionsViewController)?.contentString = self.contentString;
         }
-        else if aiCommand == .langTranslate && languageCode.isEmpty {
+        else if aiCommand == .langTranslate
+                    ,languageCode.isEmpty
+                    , !(self.textField?.isFirstResponder ?? false) {
             self.reset();
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAITranslateViewController.className);
             (controller as? FTNoteshelfAITranslateViewController)?.delegate = self;
@@ -204,7 +207,6 @@ class FTNoteshelfAIViewController: UIViewController {
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAITextViewViewController.className);
             (controller as? FTNoteshelfAITextViewViewController)?.delegate = self;
         }
-        
         if let optCOntorller = controller {
             self.optionsController?.view.removeFromSuperview();
             self.optionsController?.removeFromParent();
@@ -216,6 +218,9 @@ class FTNoteshelfAIViewController: UIViewController {
             
             self.setOverrideTraitCollection(self.traitCollection, forChild: optCOntorller);
             self.optionsController = optCOntorller;
+        }
+        if aiCommand == .generalQuestion || (aiCommand == .langTranslate && self.textField?.isFirstResponder ?? true) {
+            self.textViewController?.showPlaceHolder("noteshelf.ai.pressEnterToSend".aiLocalizedString);
         }
         
         if allTokensConsumed {
@@ -268,14 +273,18 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
         if self.aiCommand == .langTranslate, (self.contentToExecute?.isEmpty ?? true) {
             self.aiCommand = .generalQuestion;
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.textFieldDidChange(_:)), name: UITextField.textDidChangeNotification, object: textField);
     }
     
     @objc func textFieldDidChange(_ name: Notification) {
-        if self.aiCommand != .langTranslate, self.textField?.text?.isEmpty ?? false {
+        if self.textField?.text?.isEmpty ?? false {
             self.aiCommand = .none;
         }
-        else if self.aiCommand == .langTranslate, !self.languageCode.isEmpty {
-            self.aiCommand = .none;
+        else if self.aiCommand != .langTranslate {
+            self.aiCommand = .generalQuestion;
+        }
+        else {
+            self.updateContentView();
         }
     }
     
@@ -285,16 +294,13 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        if self.aiCommand != .langTranslate {
-            self.aiCommand = .none;
-        }
-        else if self.aiCommand == .langTranslate, !self.languageCode.isEmpty {
-            self.aiCommand = .none;
-        }
+        self.aiCommand = .none;
         return true;
     }
         
     func textFieldDidEndEditing(_ textField: UITextField) {
+        NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: textField);
+        
         if self.aiCommand == .langTranslate {
             if let trimmedText = textField.text?.openAITrim(), !trimmedText.isEmpty {
                 languageCode = trimmedText;
@@ -368,24 +374,21 @@ private extension FTNoteshelfAIViewController {
         
         UserDefaults.incrementAiTokenConsumed()
         currentToken = command.commandToken;
-        var response = "";
-        FTOpenAI.shared.execute(command: command) {[weak self] (string, error,token) in
+        FTOpenAI.shared.execute(command: command) {[weak self] (response, error,token) in
             guard let curToken = self?.currentToken, curToken == token else {
                 return;
             }
             if let inerror = error {
                 track("AI Error", params: ["detail":inerror.localizedDescription], screenName: nil)
-                self?.textViewController?.insertText("noteshelf.ai.noteshelfAIError".aiLocalizedString);
+                self?.textViewController?.showPlaceHolder("noteshelf.ai.noteshelfAIError".aiLocalizedString);
             }
             else {
-                response.append(string);
-                self?.textViewController?.insertAttributedHTML(response);
+                self?.textViewController?.showResponse(response);
             }
         } onCompletion: { [weak self] (error,token) in
             guard let curToken = self?.currentToken, curToken == token else {
                 return;
             }
-            debugLog("HTML response: \(response)");
             var supportHandwrite = false;
             if self?.aiCommand == .langTranslate {
                 if let langCode = self?.languageCode, let option = FTTranslateOption.languageOption(title: langCode) {
