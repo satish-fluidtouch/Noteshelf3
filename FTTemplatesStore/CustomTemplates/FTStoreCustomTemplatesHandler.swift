@@ -24,18 +24,15 @@ public class FTStoreCustomTemplatesHandler {
     }
 
     public func start() {
-        Task {
-            try await createDirectoryIfNeeded()
+        do {
+            try createDirectoryIfNeeded()
+        } catch {
         }
     }
 
-    private func createDirectoryIfNeeded() async throws {
+    private func createDirectoryIfNeeded() throws {
         if !fileManager.fileExists(atPath: rootURL.path) {
-            do {
-                try fileManager.createDirectory(at: rootURL, withIntermediateDirectories: true)
-            } catch {
-                throw error
-            }
+            try fileManager.createDirectory(at: rootURL, withIntermediateDirectories: true)
         }
     }
 
@@ -76,7 +73,7 @@ extension FTStoreCustomTemplatesHandler {
             return templateURL
         }
         try fileManager.copyItem(at: url, to: templateURL)
-        try templateURL.generateThumbnailForFile(fileName: "thumbnail@2x")
+        templateURL.generateThumbnailForPdf(thumbnailName: "thumbnail@2x", completion: nil)
         return templateURL
     }
 
@@ -115,7 +112,7 @@ extension FTStoreCustomTemplatesHandler {
         let thumbnailUrl = templateFolderUrl.appendingPathComponent("thumbnail@2x").appendingPathExtension("png")
 
         if !FileManager.default.fileExists(atPath: thumbnailUrl.path) {
-             try? templateFolderUrl.generateThumbnailForFile(fileName: "thumbnail@2x")
+              templateFolderUrl.generateThumbnailForPdf(thumbnailName: "thumbnail@2x", completion: nil)
         }
         if FileManager.default.fileExists(atPath: noteshelfFileUrl.path) {
             return noteshelfFileUrl

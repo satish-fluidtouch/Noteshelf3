@@ -41,7 +41,7 @@ class FTStoreCustomCollectionCell: UICollectionViewCell {
 
         let url = FTStoreCustomTemplatesHandler.shared.imageUrlForTemplate(template: style)
         func loadthumbnail() {
-            loadImageFromLocalURL(url) { [weak self] (loadedImage) in
+            url.loadThumbnail { [weak self] (loadedImage) in
                 DispatchQueue.main.async {
                     if let loadedImage = loadedImage {
                         self?.thumbnail?.image = loadedImage
@@ -64,17 +64,6 @@ class FTStoreCustomCollectionCell: UICollectionViewCell {
 
     }
 
-    func loadImageFromLocalURL(_ imageURL: URL, completion: @escaping (UIImage?) -> Void) {
-        do {
-            let imageData = try Data(contentsOf: imageURL)
-            if let image = UIImage(data: imageData) {
-                completion(image)
-            } else {
-                completion(nil)
-            }
-        } catch {
-            completion(nil)
-        }
-    }
+    
 
 }
