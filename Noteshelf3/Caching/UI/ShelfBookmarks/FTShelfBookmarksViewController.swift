@@ -23,6 +23,7 @@ class FTShelfBookmarksViewController: UIViewController {
     private var currentSize: CGSize = .zero
 
     weak var delegate: FTShelfBookmarksPageDelegate?
+    private var activityIndicator = UIActivityIndicatorView(style: .medium)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +32,16 @@ class FTShelfBookmarksViewController: UIViewController {
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.allowsMultipleSelection = true
         self.collectionView?.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+
+        // Add activity indicator in the view
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
         loadtagBookmarkPages()
-        // Do any additional setup after loading the view.
     }
 
     override func viewDidLayoutSubviews() {
@@ -66,19 +75,28 @@ class FTShelfBookmarksViewController: UIViewController {
 
     private func loadtagBookmarkPages() {
         viewModel = FTShelfBookmarksPageModel()
-        let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "")
+        showActivityIndicator()
         viewModel?.buildCache(completion: { result in
-            loadingIndicatorViewController.hide {
-                self.bookmarkItems = result
-                if self.bookmarkItems.isEmpty {
-                    self.showPlaceholderView()
-                } else {
-                    self.hidePlaceholderView()
-                }
-                self.collectionView?.reloadData()
+            self.bookmarkItems = result
+            if self.bookmarkItems.isEmpty {
+                self.showPlaceholderView()
+            } else {
+                self.hidePlaceholderView()
             }
+            self.collectionView?.reloadData()
+            self.hideActivityIndicator()
         })
 
+    }
+
+    private func showActivityIndicator() {
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
     }
 
     private func showPlaceholderView() {
