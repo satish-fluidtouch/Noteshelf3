@@ -15,6 +15,7 @@ struct FTGroupItemView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Binding var isPressed: Bool
 
     var groupItemWidth: CGFloat = 212
     var groupItemHeight: CGFloat = 334
@@ -51,6 +52,8 @@ struct FTGroupItemView: View {
                     .padding(.bottom, 4)
             }
         }
+        .scaleEffect(isPressed ? 0.8 : 1.0)
+        .animation(Animation.easeInOut(duration: 0.3), value: isPressed)
     }
 
     @ViewBuilder private var titleView: some View {
