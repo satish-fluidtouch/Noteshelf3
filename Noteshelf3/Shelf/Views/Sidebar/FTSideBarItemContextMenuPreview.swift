@@ -99,7 +99,7 @@ struct FTSideBarItemContextMenuPreview<Content: View>: UIViewControllerRepresent
             if let _parentPreview = interaction.view {
 
                 let parameters = UIPreviewParameters();
-                parameters.backgroundColor = .clear;
+//                parameters.backgroundColor = .clear;
                 let frame = _parentPreview.bounds;
                 let path = UIBezierPath(roundedRect: frame, cornerRadius:self.representView.cornerRadius)
                 parameters.visiblePath = path;
