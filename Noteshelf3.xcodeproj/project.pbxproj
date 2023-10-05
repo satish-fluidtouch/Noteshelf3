@@ -32,6 +32,7 @@
 		0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */; };
 		093D85AA2A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D85A92A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift */; };
 		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
+		095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */; };
 		0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971841E2A82230D00656B36 /* FTPremiumBanner.swift */; };
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
@@ -2252,6 +2253,7 @@
 		095E9F402366EBD3003277A4 /* FTSaveAsTemplateActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSaveAsTemplateActivity.swift; sourceTree = "<group>"; };
 		095E9F422366EDD6003277A4 /* FTEvernoteActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTEvernoteActivity.swift; sourceTree = "<group>"; };
 		095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOpenAIResponse.swift; sourceTree = "<group>"; };
+		095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDigitalInkRecognitionTaskProcessor.swift; sourceTree = "<group>"; };
 		096016C31FEA6E320028830C /* FTOneDriveBackupPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOneDriveBackupPublisher.swift; sourceTree = "<group>"; };
 		096016C51FEA6E580028830C /* FTOneDrivePublishRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOneDrivePublishRequest.swift; sourceTree = "<group>"; };
 		096016C71FEA6E830028830C /* FTOneDriveBackupEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOneDriveBackupEntry.swift; sourceTree = "<group>"; };
@@ -4458,6 +4460,14 @@
 				0988BC9A1F4C68FF0064A4C1 /* FTNS1MigrationInfoView.swift */,
 			);
 			path = "Migration UI";
+			sourceTree = "<group>";
+		};
+		095F042F2ACE89A500205BF7 /* Google  MLKit */ = {
+			isa = PBXGroup;
+			children = (
+				095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */,
+			);
+			path = "Google  MLKit";
 			sourceTree = "<group>";
 		};
 		096016C11FEA6E0A0028830C /* OneDrive */ = {
@@ -10528,6 +10538,7 @@
 		ED5639CF233E4C58000C2F2D /* Handwriting */ = {
 			isa = PBXGroup;
 			children = (
+				095F042F2ACE89A500205BF7 /* Google  MLKit */,
 				ED22107921DDE29E00E88085 /* FTRecognitionTaskManager.swift */,
 				ED8722DC21DA3759007825DC /* FTRecognitionTaskProcessor.swift */,
 				ED8722E021DA375A007825DC /* FTRecognitionTask.swift */,
@@ -10912,6 +10923,7 @@
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
 				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
 				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
+				977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -11324,6 +11336,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MLKitDigitalInkRecognition/MLKitDigitalInkRecognition_resource.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MLKitDigitalInkRecognition_resource.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BA909A3A2990E69C00260538 /* GoogleService Info */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -11452,13 +11482,16 @@
 				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfig/FirebaseRemoteConfig.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MSAL/MSAL.framework",
 				"${BUILT_PRODUCTS_DIR}/MSGraphClientSDK/MSGraphClientSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
@@ -11479,13 +11512,16 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfig.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSAL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphClientSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphMSALAuthProvider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPInAppReceipt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUISDK.framework",
@@ -11498,7 +11534,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$PLATFORM_NAME\" = \"macosx\" ]]; then\n \"${SRCROOT}/MacCatalyst/Noteshelf-maccatalyst-frameworks.sh\"\nelse\n \"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -12410,6 +12446,7 @@
 				BAF392C92859ADF00067CA9F /* FTStylusDisconnectTableViewCell.swift in Sources */,
 				BAF392CA2859ADF00067CA9F /* FTNoteshelfDocument_FileItems.swift in Sources */,
 				1438A3CA2A5C146100861C34 /* FTAppearanceViewHostingController.swift in Sources */,
+				095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */,
 				976F27372A16090800034D5A /* FTShelfView+Extensions.swift in Sources */,
 				E7CCA90D29DC007B0010D619 /* FTToolbarConfig.swift in Sources */,
 				BAF392CC2859ADF00067CA9F /* FTBookOpeningSpinner.swift in Sources */,

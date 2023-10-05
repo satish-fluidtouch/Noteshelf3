@@ -25,7 +25,12 @@ private extension Helper {
     }
 }
 
-class FTRecognitionTaskProcessor: NSObject {
+protocol FTRecognitionProcessor: NSObjectProtocol {
+    init(with langCode: String);
+    func startTask(_ task: FTBackgroundTask, onCompletion: (() -> (Void))?);
+}
+
+class FTRecognitionTaskProcessor: NSObject,FTRecognitionProcessor {
     var languageCode: String!
     var canAcceptNewTask: Bool = true
 

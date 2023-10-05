@@ -49,7 +49,7 @@ extension FTPageViewController {
         }
         
         annotations.forEach { eachAnnotation in
-            if(eachAnnotation.supportsHandwrittenRecognition && FTIAPManager.shared.premiumUser.isPremiumUser) {
+            if(eachAnnotation.supportsHandwrittenRecognition) {
                 annotationsToConsider.append(eachAnnotation)
             }
             else if let textAnnotation = eachAnnotation as? FTTextAnnotation,let string = textAnnotation.attributedString?.string.openAITrim(), !string.isEmpty {
@@ -63,19 +63,28 @@ extension FTPageViewController {
         else {
             let canvasSize = self.pdfPage?.pdfPageRect.size ?? CGSize.zero;
             let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.delegate ?? self, withText: NSLocalizedString("Indexing", comment: "Indexing"))
+            let isPremium = FTIAPManager.shared.premiumUser.isPremiumUser;
             DispatchQueue.global().async { [weak self] in
                 if let weakSelf  = self {
-                    let lang = FTConvertToTextViewModel.convertPreferredLanguage;
-                    let recognitionProcessor = FTRecognitionTaskProcessor(with: lang)
+                    let lang: String;
+                    let recognitionProcessor: FTRecognitionProcessor;
+                    if isPremium {
+                        lang = FTConvertToTextViewModel.convertPreferredLanguage;
+                        recognitionProcessor = FTRecognitionTaskProcessor(with: lang)
+                    }
+                    else {
+                        lang = FTUtils.currentLanguage();
+                        recognitionProcessor = FTDigitalInkRecognitionTaskProcessor(with: lang)
+                    }
                     let task: FTRecognitionTask = FTRecognitionTask(language: lang
                                                                     , annotations: annotationsToConsider
                                                                     , canvasSize: canvasSize);
                     
                     task.onCompletion = { (info, error) in
                         runInMainThread {
+                            debugLog("\(recognitionProcessor) executed");
                             loadingIndicator.hide(nil);
-                            guard let recogInfo = info,                    
-                                  FTConvertToTextViewModel.convertPreferredLanguage == recogInfo.languageCode else {
+                            guard let recogInfo = info else {
                                 weakSelf.showNoteshelfAIController(contentToSearch);
                                 return
                             }

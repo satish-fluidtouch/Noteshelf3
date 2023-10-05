@@ -20,12 +20,12 @@ class FTNoteshelfAIFooterViewController: UIViewController {
     var footermode: FTAIFooterMode = .noteshelfAiBeta {
         didSet {
             self.learnMore?.isHidden = self.footermode == .sendFeedback
-            if self.footermode == .noteshelfAiBeta {
-                self.bePremiumUser?.isHidden = FTIAPManager.shared.premiumUser.isPremiumUser;
-            }
-            else {
+//            if self.footermode == .noteshelfAiBeta {
+//                self.bePremiumUser?.isHidden = FTIAPManager.shared.premiumUser.isPremiumUser;
+//            }
+//            else {
                 self.bePremiumUser?.isHidden = true;
-            }
+//            }
             
             self.sendFeedback?.isHidden = self.footermode == .noteshelfAiBeta
         }
