@@ -73,33 +73,19 @@ private extension FTShortcutToolPresenter {
 
     func addSlots() {
         if let parentView = self.parentVC?.view {
-                let dimView = UIView()
-            if !UserDefaults.isApplePencilEnabled() {
-                dimView.tag = 2000
-                dimView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-                dimView.frame = parentView.bounds
-                parentView.addSubview(dimView)
-//                parentView.bringSubviewToFront(dimView)
-            }
-
             FTShortcutPlacement.allCases.forEach { placement in
                 addSlotView(for: placement)
             }
-
             shortcutView.superview?.bringSubviewToFront(shortcutView)
+
             func addSlotView(for placement: FTShortcutPlacement) {
                 let slotView = FTSlotVisualEffectView()
                 slotView.stylePanel()
                 slotView.frame.size = placement.slotSize
                 slotView.center = shortcutView.center
-                if !UserDefaults.isApplePencilEnabled() {
-                    dimView.addSubview(slotView)
-                    dimView.bringSubviewToFront(slotView)
-                } else {
-                    parentView.addSubview(slotView)
-                }
-                let topCenter = placement.shortcutViewCenter(fotShortcutView: slotView, topOffset: toolbarOffset)
-                slotView.center = topCenter // update center
+                parentView.addSubview(slotView)
+                let reqCenter = placement.shortcutViewCenter(fotShortcutView: slotView, topOffset: toolbarOffset)
+                slotView.center = reqCenter
                 slotView.tag = placement.slotTag
                 slotView.layer.cornerRadius = 19.0
                 slotView.clipsToBounds = true
@@ -109,9 +95,8 @@ private extension FTShortcutToolPresenter {
 
     func removeAllSlots() {
         FTShortcutPlacement.allCases.forEach { placement in
-            let tagToSearch = UserDefaults.isApplePencilEnabled() ? placement.slotTag : 2000
             for subview in self.parentVC?.view.subviews ?? [] {
-                if subview.tag == tagToSearch {
+                if subview.tag == placement.slotTag {
                     subview.removeFromSuperview()
                 }
             }
@@ -119,16 +104,11 @@ private extension FTShortcutToolPresenter {
     }
 
     func highlightNearstSlotView() {
-//        guard let dimView = self.parentVC?.view.subviews.first(where: { $0.tag == 2000 }) else {
-
-        guard var parentView = self.parentVC?.view else {
+        guard let parentView = self.parentVC?.view else {
             return
         }
-        if let dimView = self.parentVC?.view.subviews.first(where: { $0.tag == 2000 }) {
-            parentView = dimView
-        }
+        let currentPlacement = FTShortcutPlacement.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset, in: parentView)
 
-        let currentPlacement = self.shortCutQuadrant.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset)
         FTShortcutPlacement.allCases.forEach { placement in
             let tagToSearch = placement.slotTag
             for subview in parentView.subviews {
@@ -150,7 +130,6 @@ private extension FTShortcutToolPresenter {
     func moveView(movingCenter: CGPoint, touchPoint: CGPoint, velocity: CGPoint, translation: CGPoint) {
         let center = CGPoint(x: shortcutView.center.x + translation.x, y: shortcutView.center.y + translation.y)
         self.updateShortcutViewCenter(center)
-        self.updateQuadrant(quadrant: self.quadrantDetector.getQuadrant(for: center))
 
         let currentPlacementCenter = self.shortcutViewPlacement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: self.toolbarOffset)
         if abs(center.x - currentPlacementCenter.x) > 10.0 || abs(center.y - currentPlacementCenter.y) > 10.0 {
@@ -164,9 +143,12 @@ private extension FTShortcutToolPresenter {
     
     // MARK: - Gesture movement end handling
     func viewMovementEnded() {
-        self.removeAllSlots()
-        let placement = self.shortCutQuadrant.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset);
-        placement.save()
+        var placement: FTShortcutPlacement = .topLeft
+        if let parent = self.parentVC?.view {
+            placement = FTShortcutPlacement.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset, in: parent)
+            placement.save()
+            self.removeAllSlots()
+        }
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self else {
                 return
@@ -184,7 +166,6 @@ private extension FTShortcutToolPresenter {
 }
 
 class FTSlotVisualEffectView: UIVisualEffectView {
-    private let borderWidth: CGFloat = 1.5
     private let cornerRadius: CGFloat = 19.0
     private let bgColor = UIColor.appColor(.shortcutSlotBgColor)
     private let borderView = UIView()
@@ -201,9 +182,11 @@ class FTSlotVisualEffectView: UIVisualEffectView {
         didSet {
             if isHighlighted {
                 self.borderView.backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
+                self.borderView.layer.borderWidth = 1.5
                 self.borderView.layer.borderColor = UIColor.appColor(.shortcutSlotHighlightBorderColor).cgColor
             } else {
                 self.borderView.backgroundColor = bgColor
+                self.borderView.layer.borderWidth = 1.0
                 self.borderView.layer.borderColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
             }
         }
@@ -220,7 +203,6 @@ class FTSlotVisualEffectView: UIVisualEffectView {
         self.borderView.frame = borderViewFrame
         self.borderView.backgroundColor = bgColor
         self.borderView.layer.cornerRadius = cornerRadius
-        self.borderView.layer.borderWidth = borderWidth
         self.contentView.addSubview(borderView)
         self.layoutIfNeeded()
         self.isHighlighted = false

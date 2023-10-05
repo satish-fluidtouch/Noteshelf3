@@ -128,18 +128,43 @@ extension FTShortcutPlacement {
         case .centerRight:
             center = CGPoint(x: maxX - size.width/2.0 - offset, y: midY)
         case .topLeft:
-            center = CGPoint(x: size.width/2.0 + offset, y: minY + offset + size.height/2.0)
+            center = CGPoint(x: size.width/2.0 + offset, y: minY + size.height/2.0)
         case .bottomLeft:
-            center = CGPoint(x: size.width/2.0 + offset, y: maxY - (2*offset) - size.height/2.0 - bottomOffset)
+            center = CGPoint(x: size.width/2.0 + offset, y: maxY - offset - size.height/2.0 - bottomOffset)
         case .topRight:
-            center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + offset + size.height/2.0)
+            center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + size.height/2.0)
         case .bottomRight:
-            center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - (2*offset) - size.height/2.0 - bottomOffset)
+            center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - offset - size.height/2.0 - bottomOffset)
         case .top:
             center = CGPoint(x: midX, y: minY + size.height/2.0)
         case .bottom:
             center = CGPoint(x: midX, y: maxY - offset - size.height/2.0 - bottomOffset)
         }
         return center
+    }
+
+    static func nearestPlacement(for shortcutView: UIView,topOffset: CGFloat,in parentView: UIView) -> FTShortcutPlacement {
+        var reqPlacement: FTShortcutPlacement = .topLeft
+        let movingCenter: CGPoint = shortcutView.center
+
+        let filteredViews = parentView.subviews.compactMap { $0 as? FTSlotVisualEffectView }
+        let slotsAndCenters = Dictionary(uniqueKeysWithValues: filteredViews.map { ($0, $0.center) })
+
+        var nearestView: FTSlotVisualEffectView?
+        var minDistance: CGFloat = .greatestFiniteMagnitude
+
+        for (view, center) in slotsAndCenters {
+            let distance = center.distance(to: movingCenter)
+            if distance < minDistance {
+                minDistance = distance
+                nearestView = view
+            }
+        }
+        if let nearstSlot = nearestView {
+            if let matchingPlacement = FTShortcutPlacement.allCases.first(where: { $0.slotTag == nearstSlot.tag }) {
+                reqPlacement = matchingPlacement
+            }
+        }
+        return reqPlacement
     }
 }

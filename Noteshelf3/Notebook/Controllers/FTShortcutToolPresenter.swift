@@ -30,8 +30,6 @@ private var offset: CGFloat = 8.0;
     // Internal variables/functions for extension purpose, not intended for out world
     internal var isMoving: Bool = false
     internal var hasAddedSlots: Bool = false
-    internal var quadrantDetector: FTQuadrantDetector!
-    internal var shortCutQuadrant: FTShortcutQuadrant = .topLeft
     var shortcutViewPlacement: FTShortcutPlacement {
         let placement = FTShortcutPlacement.getSavedPlacement()
         return placement
@@ -79,7 +77,7 @@ private var offset: CGFloat = 8.0;
         let curSize = self.parentVC?.view.frame.size ?? .zero;
         if(!curSize.equalTo(contentSize)) {
             contentSize = curSize
-            self.prepareQuadrants()
+            self.updateMinOffsetIfNeeded()
             self.configureShortcutView(with: mode)
             if let parent = self.parentVC as? FTPDFRenderViewController, let zoomVc = parent.zoomOverlayController {
                 self.handleZoomPanelFrameChange(zoomVc.view.frame, mode: zoomVc.shortcutModeZoom, completion: nil)
@@ -124,13 +122,11 @@ private var offset: CGFloat = 8.0;
     @objc func handleEndDragOfZoomPanel(_ frame: CGRect, mode: FTZoomShortcutMode) {
         self.handleZoomPanelFrameChange(frame, mode: mode) {
             let center = self.shortcutView.center
-            //TODO: prepareQuadrants() - will be done in isViewAppearing(after ios17 release), so that below condition can be removed. Right now before quadrants are ready, this method is getting called, so added.
-            if nil == self.quadrantDetector {
-                self.prepareQuadrants()
+            if let parent = self.parentVC?.view {
+                self.updateMinOffsetIfNeeded()
+                let placement = FTShortcutPlacement.nearestPlacement(for: self.shortcutView, topOffset: self.toolbarOffset, in: parent)
+                placement.save()
             }
-            self.updateQuadrant(quadrant: self.quadrantDetector.getQuadrant(for: center))
-            let placement = self.shortCutQuadrant.nearestPlacement(for: self.shortcutView, topOffset: self.toolbarOffset);
-            placement.save()
         }
     }
 
@@ -289,30 +285,15 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
     }
 }
 
-// MARK: - Helper methods
 extension FTShortcutToolPresenter {
-    private func prepareQuadrants() {
-        self.updateMinOffsetIfNeeded()
-        guard let parentView = self.parentVC?.view else {
-            return
-        }
-        self.quadrantDetector = FTQuadrantDetector(view: parentView, centerQuadrantInSet: 0.33, topOffset: self.toolbarOffset)
-    }
-    
-    internal func updateQuadrant(quadrant: FTShortcutQuadrant) {
-        self.shortCutQuadrant = quadrant
-    }
-    
     internal func updateShortcutViewCenter(_ center: CGPoint) {
         self.shortcutView.center = center
     }
-}
 
-extension FTShortcutToolPresenter {
-     func updateMinOffsetIfNeeded() {
-         guard let frame = self.parentVC?.view.frame else {
-             return;
-         }
+    func updateMinOffsetIfNeeded() {
+        guard let frame = self.parentVC?.view.frame else {
+            return
+        }
         if UIDevice().isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
             var extraOffset: CGFloat = 0.0
             if UIDevice.current.isPhone() {
