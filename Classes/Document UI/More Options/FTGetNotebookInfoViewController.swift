@@ -34,6 +34,7 @@ class FTGetNotebookInfoViewController: UIViewController, FTNotebookTitleDelegate
         let pageUpdateDateString = pageUpdationDate.shelfShortStyleFormat()
         let pageDimensionsString = "\(Int(page.pageReferenceViewSize().width))" + " x " + "\(Int(page.pageReferenceViewSize().height))" + " px"
         let pageNumberString = String(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), page.pageIndex() + 1, notebookDocument.pages().count)
+
         let goToPageString = "\(1) - \(notebookDocument.pages().count)"
         //***************************
         var firstSection = FTNotebookInfoSection()

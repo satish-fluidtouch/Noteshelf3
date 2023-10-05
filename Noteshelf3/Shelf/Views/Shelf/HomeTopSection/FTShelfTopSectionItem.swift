@@ -31,13 +31,14 @@ struct FTShelfTopSectionItem: View {
         } label: {
             topSectionView
                 .padding()
-                .macOnlyTapAreaFixer()
+                .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
+                .cornerRadius(16)
+                .border(Color.appColor(.accentBg),
+                        width:1.0,
+                        cornerRadius: 16)
         }
-        .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
-        .cornerRadius(16)
-        .border(Color.appColor(.accentBg),
-                width:1.0,
-                cornerRadius: 16)
+        .macOnlyTapAreaFixer()
+
     }
 
     @ViewBuilder
