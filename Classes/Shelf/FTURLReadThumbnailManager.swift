@@ -50,6 +50,12 @@ class FTThumbReadCallbacks : NSObject
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
+        let token = UUID().uuidString
+        item.URL.fetchQLThumbnail(completion: { image in
+            onCompletion(image, token)
+        })
+        return token
+        /*
 //        let cachedImage = self.imageCache.cachedImageForItem(item: item)
 //        if(nil != cachedImage) {
 //            onCompletion(cachedImage,nil);
@@ -116,6 +122,7 @@ class FTThumbReadCallbacks : NSObject
             }
         };
         return callbackItem!.token;
+         */
     }
     
     func addImageToCache(image: UIImage?, url: URL)

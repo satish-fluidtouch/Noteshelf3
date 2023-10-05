@@ -8,17 +8,7 @@
 
 import UIKit
 
-private let FTQLDomain = "FTNSQuickLookThumbnail";
-
-enum FTQLThumbnailError: Int {
-    case notDownloaded, coverNotFound
-    
-    var error: NSError {
-        switch self {
-        case .notDownloaded:
-            return NSError(domain: FTQLDomain, code: 101,userInfo: [NSLocalizedDescriptionKey: "book not downloaded yet"])
-        case .coverNotFound:
-            return NSError(domain: FTQLDomain, code: 102,userInfo: [NSLocalizedDescriptionKey: "cover image did not found"])
-        }
-    }
+enum FTQLThumbnailError: Error {
+    case notDownloaded
+    case coverNotFound
 }
