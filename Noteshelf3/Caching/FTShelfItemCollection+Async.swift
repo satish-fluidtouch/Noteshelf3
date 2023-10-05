@@ -72,20 +72,6 @@ extension FTNoteshelfDocument {
 }
 
 extension FTNoteshelfDocument {
-
-    func fetchBookmarksPages(shelfItem: FTDocumentItemProtocol) -> [FTBookmarksItem] {
-        var bookmarksPages: [FTBookmarksItem] = [FTBookmarksItem]()
-        self.pages().forEach { page in
-            if let _page = page as? FTThumbnailable {
-                if _page.isBookmarked {
-                    let bookmarkPage = FTBookmarksItem(shelfItem: shelfItem, type: .page, page: _page, pageIndex: _page.pageIndex(), color: _page.bookmarkColor)
-                    bookmarksPages.append(bookmarkPage)
-                }
-            }
-        }
-        return bookmarksPages
-    }
-
     func removePageBookmark(page: FTThumbnailable) {
         let isBookmarked = !page.isBookmarked
         page.isBookmarked = isBookmarked

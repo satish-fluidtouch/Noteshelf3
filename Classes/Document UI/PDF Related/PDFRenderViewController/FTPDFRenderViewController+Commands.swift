@@ -156,6 +156,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
             page.bookmarkColor = "C69C3C"
         }
         (page as? FTNoteshelfPage)?.isDirty = true
+        FTBookmarksProvider.shared.updateBoodmarkItemFor(pages: [page], shelfItem: self.shelfItemManagedObject.shelfItemProtocol as! FTDocumentItemProtocol)
         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
     }
 

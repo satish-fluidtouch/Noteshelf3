@@ -17,91 +17,50 @@ enum FTbookmarksPageLoadState {
     case none
 }
 
-enum FTBookmarkItemType {
-    case page, none
-}
-
-struct FTBookmarksResult: Identifiable {
-    var id: UUID = UUID()
-    var bookmarkItems: [FTBookmarksItem] = [FTBookmarksItem]()
-
-    init(bookmarkItems: [FTBookmarksItem]) {
-        self.bookmarkItems = bookmarkItems
-    }
-}
-
 struct FTBookmarksItem: Identifiable {
     var id: UUID = UUID()
-    let pageIndex: Int?
-    let page: FTThumbnailable?
-    var shelfItem: FTDocumentItemProtocol?
-    var type: FTBookmarkItemType = .none
-    var color: String?
+    var shelfItem: FTDocumentItemProtocol
+    var documentUUID: String
+    var pageUUID: String
+    var pageIndex: Int
+    var pdfKitPageRect: CGRect
+    var bookmarkTitle: String
+    var isBookmarked: Bool
+    var bookmarkColor: String
 
-    init(shelfItem: FTDocumentItemProtocol?, type: FTBookmarkItemType, page: FTThumbnailable? = nil, pageIndex: Int? = 0, color: String?) {
-        self.page = page
-        self.pageIndex = pageIndex
+    init(shelfItem: FTDocumentItemProtocol,documentUUID: String, pageUUID: String, pageIndex: Int, pdfKitPageRect: CGRect, bookmarkTitle: String,isBookmarked: Bool,bookmarkColor: String) {
         self.shelfItem = shelfItem
-        self.type = type
-        self.color = color
+        self.documentUUID = documentUUID
+        self.pageUUID = pageUUID
+        self.pageIndex = pageIndex
+        self.pdfKitPageRect = pdfKitPageRect
+        self.bookmarkTitle = bookmarkTitle
+        self.isBookmarked = isBookmarked
+        self.bookmarkColor = bookmarkColor
     }
 }
+
 final class FTShelfBookmarksPageModel: ObservableObject {
-    @Published private(set) var bookmarksResult: FTBookmarksResult? = nil
     @Published private(set) var state: FTbookmarksPageLoadState = .loading
     var selectedTag: String = ""
 
-    func buildCache() async {
-        do {
-            await startLoading()
-            let bookmarksPage = try await fetchBookmarksPages()
-            await setBookmarksPage(bookmarksPage)
-        } catch {
-            cacheLog(.error, error)
-        }
+    func buildCache(completion: @escaping ([FTBookmarksItem]) -> Void) {
+             startLoading()
+            FTBookmarksProvider.shared.getBookmarkItems {[weak self] items in
+                self?.setBookmarksPage(items)
+                completion(items)
+            }
     }
 
-    @MainActor
     private func startLoading() {
         state = .loading
     }
 
-    @MainActor
-    private func setBookmarksPage(_ bookmarksResult: FTBookmarksResult?) {
-        if bookmarksResult == nil {
+    private func setBookmarksPage(_ bookmarksResult: [FTBookmarksItem]) {
+        if bookmarksResult.isEmpty {
             state = .empty
         } else {
             state = .loaded
         }
-        self.bookmarksResult = bookmarksResult
-    }
-}
-
-private extension FTShelfBookmarksPageModel {
-    func fetchBookmarksPages() async throws -> FTBookmarksResult {
-        let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
-        var totalBookmarksItems: [FTBookmarksItem] = [FTBookmarksItem]()
-
-        let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
-
-        for case let item in items where item.documentUUID != nil {
-            guard let docUUID = item.documentUUID else { continue }//, item.URL.downloadStatus() == .downloaded else { continue }
-            let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
-            // move to post processing phace
-            do {
-                let document = await FTNoteshelfDocument(fileURL: destinationURL)
-                let isOpen = try await document.openDocument(purpose: FTDocumentOpenPurpose.read)
-                if isOpen {
-                    let bookmarkPage = await document.fetchBookmarksPages(shelfItem: item)
-                    totalBookmarksItems.append(contentsOf: bookmarkPage)
-                }
-                _ = await document.close(completionHandler: nil)
-            } catch {
-                cacheLog(.error, error, destinationURL.lastPathComponent)
-            }
-        }
-        cacheLog(.info, "Bookmarks", totalBookmarksItems.count)
-        let result = FTBookmarksResult(bookmarkItems: totalBookmarksItems)
-        return result
     }
 }

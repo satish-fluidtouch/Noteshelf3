@@ -9,7 +9,6 @@
 import Foundation
 
 class FTDocumentPage: Decodable, Identifiable, Hashable {
-    var uuid: String
 
     public func hash(into hasher: inout Hasher) {
         return hasher.combine(uuid)
@@ -66,12 +65,14 @@ class FTDocumentPage: Decodable, Identifiable, Hashable {
         return pageRec
     }
 
+    var uuid: String
     var pageIndex: Int?
     var tags: [String]
     var pdfKitPageRect: String
     var rotationAngle: UInt
     var bookmarkTitle: String
     var isBookmarked: Bool
+    var bookmarkColor: String
 }
 
 class FTDocumentPlist: Decodable {
@@ -83,6 +84,13 @@ class FTDocumentPlist: Decodable {
             return page
         }
         return nil
+    }
+
+    func pageIndexFor(page: FTDocumentPage) -> Int {
+        if let index = self.pages.firstIndex(where: { $0.uuid == page.uuid }) {
+            return index
+        }
+        return 0
     }
 
 }

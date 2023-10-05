@@ -61,7 +61,6 @@ enum FTShelfTagsItemType {
 }
 
 final class FTShelfTagsPageModel: ObservableObject {
-    @Published private(set) var tagsResult = [FTShelfTagsItem]()
     @Published private(set) var state: FTShelfTagsPageLoadState = .loading
     var selectedTag: String = ""
 
@@ -78,12 +77,11 @@ final class FTShelfTagsPageModel: ObservableObject {
                     }
                 }
                 self?.setTagsPage(tagItems)
-                completion(self?.tagsResult ?? [])
+                completion(tagItems)
             })
         } else {
             completion([])
         }
-
     }
 
     private func startLoading() {
@@ -96,7 +94,6 @@ final class FTShelfTagsPageModel: ObservableObject {
         } else {
             state = .loaded
         }
-        self.tagsResult = tagsResult
     }
 }
 
@@ -117,7 +114,7 @@ final class FTShelfTagsPageModel: ObservableObject {
          dispatchGroup.notify(queue: .main) {
              var commonShelfss = [FTShelfTagsItem]()
              totalTagItems.forEach { each in
-                 var tags = each.tags.map({$0.text}).sorted()
+                 let tags = each.tags.map({$0.text}).sorted()
                  let isCommonTags = selectedTags.allSatisfy(tags.contains(_:))
                  if isCommonTags {
                      commonShelfss.append(each)

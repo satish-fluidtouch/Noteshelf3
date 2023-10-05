@@ -316,6 +316,7 @@
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
 		472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472BDF8329E7E9FF001BE43A /* FTDataCache.swift */; };
+		472C78CF2ACD5D81005E7DCE /* FTBookmarksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472C78CE2ACD5D81005E7DCE /* FTBookmarksProvider.swift */; };
 		473310782A1F2DFC008DC0DB /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */; };
 		473C1F8029C864E4003BD6BB /* FTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */; };
 		473C1FA229CC2B6E003BD6BB /* FTSharedGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */; };
@@ -2911,6 +2912,7 @@
 		471A47451FA1ADB800E8E3DF /* FTCutOutPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCutOutPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		472770E31E2F65A400100A54 /* FTPDFRenderViewController+Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTPDFRenderViewController+Export.swift"; sourceTree = "<group>"; };
 		472BDF8329E7E9FF001BE43A /* FTDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDataCache.swift; sourceTree = "<group>"; };
+		472C78CE2ACD5D81005E7DCE /* FTBookmarksProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarksProvider.swift; sourceTree = "<group>"; };
 		473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 		4738DC191E2CF3AA004E62E6 /* FormSheetPresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSheetPresentationManager.swift; sourceTree = "<group>"; };
 		473DB6142AA1F025006DBBA6 /* FTTemplatesAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTemplatesAnalytics.swift; sourceTree = "<group>"; };
@@ -7279,6 +7281,7 @@
 				47C2EA2D297A803500D0494A /* FTShelfBookmarksViewController+ContextMenu.swift */,
 				4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */,
 				4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */,
+				472C78CE2ACD5D81005E7DCE /* FTBookmarksProvider.swift */,
 			);
 			path = ShelfBookmarks;
 			sourceTree = "<group>";
@@ -12060,6 +12063,7 @@
 				3DAA68AE29113A6100848434 /* FTColorCell.swift in Sources */,
 				BAF3919A2859ADF00067CA9F /* FTShelfItemCollectionRecent.swift in Sources */,
 				42A5B1B328D1F4C200C279E8 /* FTFinderSearchController.swift in Sources */,
+				472C78CF2ACD5D81005E7DCE /* FTBookmarksProvider.swift in Sources */,
 				E7B0E4BA2893D9F1007B031F /* FTPDFRenderViewController+ToolbarShortcuts.swift in Sources */,
 				BAF3919B2859ADF00067CA9F /* FTVisionNotebookRecognitionHelper.swift in Sources */,
 				BAF3919C2859ADF00067CA9F /* BEMAnimationManager.m in Sources */,

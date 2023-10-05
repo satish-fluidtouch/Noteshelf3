@@ -161,13 +161,27 @@ class FTTagItemModel {
             for case let item in filteredDocuments where item.documentUUID != nil {
                 dispatchGroup.enter()
                 guard let docUUID = item.documentUUID else { continue }
-                let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
-                let document = FTNoteshelfDocument(fileURL: destinationURL)
-                        let tags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
+                let tags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
+                if tags.count > 0 {
+                    func generateShelfTagItem() {
+                        let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: item, tags: tags)
+                        totalTagItems.append(tagsBook)
+                    }
+                    if selectedTag.isEmpty {
+                        generateShelfTagItem()
+                    } else if tags.contains(selectedTag) {
+                        generateShelfTagItem()
+                    }
+                }
+                FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist, error in
+                    let pages = docPlist?.pages
+                    var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
+                    pages?.forEach { page in
+                        let tags = page.tags
                         if tags.count > 0 {
                             func generateShelfTagItem() {
-                                let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: item, tags: tags)
-                                totalTagItems.append(tagsBook)
+                                let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: item, pageUUID: page.uuid, tags: tags, documentPlist: docPlist)
+                                tagsPages.append(tagsPage)
                             }
                             if selectedTag.isEmpty {
                                 generateShelfTagItem()
@@ -175,25 +189,9 @@ class FTTagItemModel {
                                 generateShelfTagItem()
                             }
                         }
-                        FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist, error in
-                            let pages = docPlist?.pages
-                            var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
-                            pages?.forEach { page in
-                                    let tags = page.tags
-                                    if tags.count > 0 {
-                                        func generateShelfTagItem() {
-                                            let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: item, pageUUID: page.uuid, tags: tags, documentPlist: docPlist)
-                                            tagsPages.append(tagsPage)
-                                        }
-                                        if selectedTag.isEmpty {
-                                            generateShelfTagItem()
-                                        } else if tags.contains(selectedTag) {
-                                            generateShelfTagItem()
-                                        }
-                                    }
-                            }
-                            totalTagItems.append(contentsOf: tagsPages)
-                       }
+                    }
+                    totalTagItems.append(contentsOf: tagsPages)
+                }
                 dispatchGroup.leave()
             }
             dispatchGroup.notify(queue: .main) {
