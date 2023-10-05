@@ -13,7 +13,8 @@ import FTCommon
 class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     let contentTransitionDelegate = FTModalScaleTransitionDelegate();
-
+    var loadingIndictor: FTLoadingIndicatorViewController?
+    var isViewLoading = false
     private(set) weak var documentViewController: FTDocumentRenderViewController?;
     
     var curentPrefrredDisplayMode = UISplitViewController.DisplayMode.secondaryOnly
@@ -76,9 +77,21 @@ class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControlle
     // TODO: (Narayana) Temporarily added, to be removed once NSToolbar is updated
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
+        if isViewLoading {
+            self.isViewLoading = false
+            loadingIndictor = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
+        }
 #if targetEnvironment(macCatalyst)
         self.configureMacToolbar();
 #endif
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.isViewLoading = true
+        NotificationCenter.default.addObserver(forName: .didCompleteRenderingNotification, object: nil, queue: .main) { [weak self] (_) in
+            self?.loadingIndictor?.hide()
+        }
     }
 
     func addSupplimentaryController(_ controller: FTFinderTabBarController) {

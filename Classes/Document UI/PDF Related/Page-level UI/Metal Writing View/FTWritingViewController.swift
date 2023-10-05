@@ -9,6 +9,10 @@
 import UIKit
 import FTCommon
 
+extension Notification.Name {
+    static let didCompleteRenderingNotification = Notification.Name(rawValue: "didCompleteRenderingNotification")
+}
+
 @objc protocol FTPageContentDelegate : NSObjectProtocol {
     func showZoomPanelIfNeeded();
     func change(mode : RKDeskMode);
@@ -147,7 +151,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
             }
         }
     };
-
+    
     var currentDrawingMode : RKDeskMode {
         get {
             return self.pageContentDelegate?.currentDeskMode() ?? .deskModeView
@@ -445,6 +449,7 @@ private extension FTWritingViewController
                 if(!self.isCurrentPage || self.isCurrentPage && self.isInZoomMode()) {
                     self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
                     self.renderingInProgress = false;
+                    NotificationCenter.default.post(name: .didCompleteRenderingNotification, object: nil)
                     return;
                 }
             }
@@ -472,6 +477,7 @@ private extension FTWritingViewController
                                 if(success) {
                                     DispatchQueue.main.async { [weak self] in
                                         self?.updateCurrentPageProperties();
+                                        NotificationCenter.default.post(name: .didCompleteRenderingNotification, object: nil)
                                     }
                                 }
                         });
