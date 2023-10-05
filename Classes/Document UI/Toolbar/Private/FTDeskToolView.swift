@@ -62,14 +62,14 @@ class FTDeskToolView: UIView {
     private func showBgIfNeeded() {
         if isSelected {
             self.bgButton.backgroundColor = UIColor.appColor(.white100)
-            self.bgButton.addRequiredShadow()
+//            self.bgButton.addRequiredShadow()
             if let selImgName = self.toolType.selectedIconName() {
                 let img = UIImage(named: selImgName)?.withRenderingMode(.alwaysOriginal)
                 self.toolButton.setImage(img, for: .normal)
             }
         } else {
             self.bgButton.backgroundColor = .clear
-            self.bgButton?.removeShadow()
+//            self.bgButton?.removeShadow()
             self.bgButton.layer.cornerRadius = 0.0
             if nil != self.toolType.selectedIconName() {
                 let img = UIImage(named: self.toolType.iconName())
@@ -158,17 +158,17 @@ class FTDeskShortcutView: FTDeskToolView {
 }
 
 final class FTToolBgButton: UIButton {
-    func addRequiredShadow() {
-        self.layer.masksToBounds = false
-        self.layer.shadowOpacity = 0.0
-        self.layer.cornerRadius = 7.0
-        self.layer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 4.0)
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowRadius = 8.0
-        let reqBounds = self.bounds.insetBy(dx: 4.0, dy: 8.0)
-        self.layer.shadowPath = UIBezierPath(roundedRect: reqBounds, cornerRadius: 7).cgPath
-    }
+//    func addRequiredShadow() {
+//        self.layer.masksToBounds = false
+//        self.layer.shadowOpacity = 0.0
+//        self.layer.cornerRadius = 7.0
+//        self.layer.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
+//        self.layer.shadowOffset = CGSize(width: 0, height: 4.0)
+//        self.layer.shadowOpacity = 1.0
+//        self.layer.shadowRadius = 8.0
+//        let reqBounds = self.bounds.insetBy(dx: 4.0, dy: 8.0)
+//        self.layer.shadowPath = UIBezierPath(roundedRect: reqBounds, cornerRadius: 7).cgPath
+//    }
 }
 
 extension FTDeskToolView: UIPointerInteractionDelegate {

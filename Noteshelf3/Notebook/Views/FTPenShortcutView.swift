@@ -16,7 +16,7 @@ struct FTPenShortcutView: View {
     var body: some View {
         ZStack {
             FTShortcutBarVisualEffectView()
-                .cornerRadius(100.0)
+//                .cornerRadius(100.0)
             VStack(spacing: 0.0) {
                 FTPenColorShortcutView()
                     .environmentObject(colorModel)
@@ -28,7 +28,7 @@ struct FTPenShortcutView: View {
                     .padding(.vertical, 6.0)
             }
         }
-        .toolbarOverlay()
+//        .toolbarOverlay()
     }
 }
 

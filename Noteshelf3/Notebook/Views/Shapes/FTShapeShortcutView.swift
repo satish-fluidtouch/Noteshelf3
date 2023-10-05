@@ -19,7 +19,7 @@ struct FTShapeShortcutView: View {
     var body: some View {
         ZStack {
             FTShortcutBarVisualEffectView()
-                .cornerRadius(100.0)
+//                .cornerRadius(100.0)
             VStack(spacing: 0.0) {
                 FTFavoriteShapesView()
                     .environmentObject(shapeModel)
@@ -36,7 +36,7 @@ struct FTShapeShortcutView: View {
                     .padding(.vertical, 4.0)
             }
         }
-        .toolbarOverlay()
+//        .toolbarOverlay()
     }
 }
 

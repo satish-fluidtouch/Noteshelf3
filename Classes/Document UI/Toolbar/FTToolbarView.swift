@@ -151,15 +151,15 @@ class FTToolbarVisualEffectView: UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: .regular)
         self.effect = blurEffect
         self.backgroundColor = FTToolbarConfig.bgColor
-        self.layer.borderWidth = FTToolbarConfig.borderWidth
-        self.layer.cornerRadius = FTToolbarConfig.cornerRadius
-        self.layer.borderColor = FTToolbarConfig.borderColor.cgColor
+//        self.layer.borderWidth = FTToolbarConfig.borderWidth
+//        self.layer.cornerRadius = FTToolbarConfig.cornerRadius
+//        self.layer.borderColor = FTToolbarConfig.borderColor.cgColor
     }
 
     func clearStyling() {
         self.effect = nil
         self.backgroundColor = .clear
-        self.layer.borderWidth = 0.0
-        self.layer.cornerRadius = 0.0
+//        self.layer.borderWidth = 0.0
+//        self.layer.cornerRadius = 0.0
     }
 }

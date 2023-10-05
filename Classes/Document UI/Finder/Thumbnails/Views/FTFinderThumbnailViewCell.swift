@@ -122,18 +122,18 @@ class FTFinderThumbnailViewCell: UICollectionViewCell {
 
     private func configure() {
         if let selectionBadge = selectionBadge {
-            selectionBadge.layer.masksToBounds = false
-            selectionBadge.layer.shadowColor = UIColor.black.cgColor
-            selectionBadge.layer.shadowOpacity = 0.2
-            selectionBadge.layer.shadowOffset = CGSize(width: 1, height: 1)
-            selectionBadge.layer.shadowRadius = 4
-            
-            self.layer.masksToBounds = false
-            self.layer.shadowColor = UIColor.black.cgColor
-            self.layer.shadowOpacity = 0.08
-            self.layer.shadowOffset = CGSize(width: 0, height: 12)
-            self.layer.shadowRadius = 20
-            self.imageViewPage?.layer.cornerRadius = 0 
+//            selectionBadge.layer.masksToBounds = false
+//            selectionBadge.layer.shadowColor = UIColor.black.cgColor
+//            selectionBadge.layer.shadowOpacity = 0.2
+//            selectionBadge.layer.shadowOffset = CGSize(width: 1, height: 1)
+//            selectionBadge.layer.shadowRadius = 4
+//            
+//            self.layer.masksToBounds = false
+//            self.layer.shadowColor = UIColor.black.cgColor
+//            self.layer.shadowOpacity = 0.08
+//            self.layer.shadowOffset = CGSize(width: 0, height: 12)
+//            self.layer.shadowRadius = 20
+//            self.imageViewPage?.layer.cornerRadius = 0 
         }
     }
     

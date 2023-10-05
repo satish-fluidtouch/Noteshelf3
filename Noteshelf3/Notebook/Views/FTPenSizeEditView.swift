@@ -20,14 +20,14 @@ struct FTPenSizeEditView: View {
             }
             .frame(width: FTPenSizeEditController.viewSize.width - 16.0, height: 36.0)
             .background(Color.appColor(.toolbarOutline))
-            .cornerRadius(10.0)
-            .border(Color.appColor(.toolbarOutline), width: 0.5, cornerRadius: 10.0)
+//            .cornerRadius(10.0)
+//            .border(Color.appColor(.toolbarOutline), width: 0.5, cornerRadius: 10.0)
         }
         .frame(width: FTPenSizeEditController.viewSize.width, height: 52.0)
         .background(Color.appColor(.popoverBgColor))
-        .cornerRadius(16.0)
+//        .cornerRadius(16.0)
         .background(Color.appColor(.black20)
-            .shadow(color: Color.appColor(.black20), radius: 60, x: 0, y: 10)
+//            .shadow(color: Color.appColor(.black20), radius: 60, x: 0, y: 10)
             .blur(radius: 30, opaque: false))
         .overlay(
             FTPenSizeOverlay(editingSize: favoriteSizeValue, editIndex: editIndex)

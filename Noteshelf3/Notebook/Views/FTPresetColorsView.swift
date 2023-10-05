@@ -91,7 +91,7 @@ struct FTPresetSectionView: View {
         }
         .background(Color.appColor(.black4))
         .background(self.getNavlinkForSelectedItem())
-        .cornerRadius(10.0)
+//        .cornerRadius(10.0)
         .padding(.horizontal, FTSpacing.small)
         .padding(.bottom, FTSpacing.large)
         .onDrop(of: [.text], delegate: FTColorDropOutDelegate(viewModel: self.viewModel))

@@ -84,7 +84,7 @@ struct FTPenColorShortcutView: View {
                     Image("rainbowSelected").renderingMode(.template)
                         .resizable()
                         .frame(width: overlaySize, height: overlaySize)
-                        .cornerRadius(overlaySize/2.0)
+//                        .cornerRadius(overlaySize/2.0)
                         .foregroundColor(Color(hex: favColor.hex))
                 )
         }

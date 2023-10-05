@@ -94,7 +94,9 @@ struct FTColorGridView: View {
                                     gridColor.location = geometry.frame(in: CoordinateSpace.named("screen"))
                                 })
                         })
-                    .overlay(self.isSelectedColor(colorModel: gridColor) ? Image("selectedGrid").resizable().frame(width: 27.0, height: 27.0).shadow(color: Color.appColor(.black20), radius: 2.0, x: 0.0, y: 0.0) : nil)
+                    .overlay(self.isSelectedColor(colorModel: gridColor) ? Image("selectedGrid").resizable().frame(width: 27.0, height: 27.0)
+//                        .shadow(color: Color.appColor(.black20), radius: 2.0, x: 0.0, y: 0.0)
+                             : nil)
                         .onTapGesture {
                         colorSelectModeImage = .add
                         self.hexInputVm.text = color
@@ -148,9 +150,9 @@ struct FTColorGridView: View {
             }
             .frame(width: 97.0, height: 23.0)
             .background(Color(hex: self.viewModel.currentSelectedColor))
-            .cornerRadius(6.0)
-            .shadow(color: Color.appColor(.black4), radius: 1, x: 0.0, y: 3.0)
-            .shadow(color: Color.appColor(.black3), radius: 1, x: 0.0, y: 3.0)
+//            .cornerRadius(6.0)
+//            .shadow(color: Color.appColor(.black4), radius: 1, x: 0.0, y: 3.0)
+//            .shadow(color: Color.appColor(.black3), radius: 1, x: 0.0, y: 3.0)
             .padding(.trailing, FTSpacing.small)
             
             if colorMode == .select {
@@ -176,7 +178,7 @@ struct FTColorGridView: View {
         }
         .frame(width: 288.0, height: 36.0)
         .background(Color.appColor(.gray60).opacity(0.12))
-        .cornerRadius(10.0)
+//        .cornerRadius(10.0)
         .padding(.horizontal)
     }
 

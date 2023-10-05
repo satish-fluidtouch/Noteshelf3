@@ -18,24 +18,24 @@ struct FTShortcutBarVisualEffectView: UIViewRepresentable {
 }
 
 extension View {
-    func toolbarOverlay(radius: CGFloat = 100.0, borderWidth: CGFloat = 0.3) -> some View {
-        modifier(FTToolbarBorder(radius: radius, borderColor: Color(uiColor: FTToolbarConfig.borderColor), borderWidth: borderWidth))
-    }
+//    func toolbarOverlay(radius: CGFloat = 100.0, borderWidth: CGFloat = 0.3) -> some View {
+//        modifier(FTToolbarBorder(radius: radius, borderColor: Color(uiColor: FTToolbarConfig.borderColor), borderWidth: borderWidth))
+//    }
 }
 
-struct FTToolbarBorder: ViewModifier {
-    let radius: CGFloat
-    let borderColor: Color
-    let borderWidth: CGFloat
-
-    func body(content: Content) -> some View {
-        content
-            .overlay(
-                RoundedRectangle(cornerRadius: radius)
-                    .stroke(borderColor, lineWidth: borderWidth)
-            )
-    }
-}
+//struct FTToolbarBorder: ViewModifier {
+//    let radius: CGFloat
+//    let borderColor: Color
+//    let borderWidth: CGFloat
+//
+//    func body(content: Content) -> some View {
+//        content
+//            .overlay(
+//                RoundedRectangle(cornerRadius: radius)
+//                    .stroke(borderColor, lineWidth: borderWidth)
+//            )
+//    }
+//}
 
 struct FTToolSeperator: View {
     var body: some View {

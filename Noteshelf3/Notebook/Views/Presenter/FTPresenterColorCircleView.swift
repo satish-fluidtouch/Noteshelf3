@@ -20,7 +20,7 @@ struct FTPresenterColorCircleView: View {
             Circle()
                 .frame(width: isSelected ? (circleDiam+2.0) : circleDiam, height: isSelected ? (circleDiam+2.0) : circleDiam)
                 .foregroundColor(Color(hex: hexColor))
-                .shadow(color: isSelected ? Color.black.opacity(0.16) : .clear, radius: 8, x: 0.0, y: 4.0)
+//                .shadow(color: isSelected ? Color.black.opacity(0.16) : .clear, radius: 8, x: 0.0, y: 4.0)
                 .blur(radius: 2.0)
 
             if isSelected {

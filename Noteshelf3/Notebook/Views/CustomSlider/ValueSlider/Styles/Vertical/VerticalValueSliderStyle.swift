@@ -138,6 +138,6 @@ public struct DefaultVerticalValueTrack: View {
         VerticalTrack()
             .frame(width: 3)
             .background(Color.secondary.opacity(0.25))
-            .cornerRadius(1.5)
+//            .cornerRadius(1.5)
     }
 }

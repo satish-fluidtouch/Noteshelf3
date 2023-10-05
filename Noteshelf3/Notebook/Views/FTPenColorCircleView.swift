@@ -24,10 +24,10 @@ struct FTPenColorCircleView: View {
                 Circle()
                     .frame(width: isSelected ? (circleDiam+2.0) : circleDiam, height: isSelected ? (circleDiam+2.0) : circleDiam)
                     .foregroundColor(Color(hex: hexColor))
-                    .shadow(color: isSelected ? Color.primary.opacity(0.16) : .clear, radius: 8, x: 0.0, y: 4.0)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: circleDiam)
-                            .stroke(Color.appColor(.black20), lineWidth: 1.0))
+//                    .shadow(color: isSelected ? Color.primary.opacity(0.16) : .clear, radius: 8, x: 0.0, y: 4.0)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: circleDiam)
+//                            .stroke(Color.appColor(.black20), lineWidth: 1.0))
                 if isSelected {
                     Image("whiteCircle")
                         .resizable()

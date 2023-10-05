@@ -410,7 +410,7 @@ final class FTFinderButton: FTBaseButton {
         finderBgBtn.addFullConstraints(self, top: 6.0, bottom: 6.0, left: 2.0, right: 2.0)
         finderBgBtn.layoutIfNeeded()
         finderBgBtn.backgroundColor = .appColor(.white100)
-        finderBgBtn.addRequiredShadow()
+//        finderBgBtn.addRequiredShadow()
         self.sendSubviewToBack(finderBgBtn)
         self.hideFinderBg()
     }

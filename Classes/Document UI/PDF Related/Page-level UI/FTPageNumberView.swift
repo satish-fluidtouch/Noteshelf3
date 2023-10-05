@@ -23,8 +23,8 @@ import FTStyles
         pageLabel.textAlignment = NSTextAlignment.center;
         pageLabel.backgroundColor = UIColor.appColor(.readOnlyModePageNumberBG)
         pageLabel.font = UIFont.appFont(for: .semibold, with: 13)
-        pageLabel.layer.cornerRadius = 4.0
-        pageLabel.layer.masksToBounds = true
+//        pageLabel.layer.cornerRadius = 4.0
+//        pageLabel.layer.masksToBounds = true
         self.addSubview(pageLabel);
         self.pageNumberInfoLabel = pageLabel;
         self.pageNumberInfoLabel?.textColor = UIColor.appColor(.readOnlyModePageNumberTint);

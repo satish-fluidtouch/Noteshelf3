@@ -31,7 +31,7 @@ struct FTFavoriteShapeView: View {
     private var backGround: some View {
         RoundedRectangle(cornerRadius: 14.0, style: .continuous)
             .frame(width: 28.0, height: 28.0)
-            .shadow(color: Color.label.opacity(0.12), radius: 8, x: 0.0, y: 4.0)
+//            .shadow(color: Color.label.opacity(0.12), radius: 8, x: 0.0, y: 4.0)
             .foregroundColor(Color.appColor(.white100))
     }
 

@@ -239,7 +239,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         segmentControl?.type = .image
         if self.mode == .selectPages {
             segmentControl?.segmentsCount = 2
-            pagesShareButton.dropShadowWith(color: UIColor.appColor(.buttonShadow), offset:  CGSize(width: 0, height: 4), radius: 8)
+//            pagesShareButton.dropShadowWith(color: UIColor.appColor(.buttonShadow), offset:  CGSize(width: 0, height: 4), radius: 8)
         }
         segmentControl?.populateSegments()
         segmentControl?.selectedSegmentIndex = 0

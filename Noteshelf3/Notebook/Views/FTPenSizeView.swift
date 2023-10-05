@@ -38,7 +38,7 @@ struct FTPenSizeView: View {
             RoundedRectangle(cornerRadius: 100.0, style: .continuous)
                 .frame(width: 31.0, height: 18.0)
                 .foregroundColor(.systemBackground) // to be chnaged on confirmation
-                .shadow(color: .primary.opacity(0.12), radius: 8, x: 0.0, y: 4.0)
+//                .shadow(color: .primary.opacity(0.12), radius: 8, x: 0.0, y: 4.0)
             Text("\(self.favoriteSizeValue.roundToDecimal(1).formattedValue)")
                 .foregroundColor(.label)
                 .font(.caption2)
@@ -61,7 +61,7 @@ struct FTPenSizeView: View {
         Circle()
             .fill(Color.appColor(.white100))
             .frame(width: 28.0, height: 28.0)
-            .shadow(color: .primary.opacity(0.12), radius: 8, x: 0.0, y: 4.0)
+//            .shadow(color: .primary.opacity(0.12), radius: 8, x: 0.0, y: 4.0)
     }
 }
 

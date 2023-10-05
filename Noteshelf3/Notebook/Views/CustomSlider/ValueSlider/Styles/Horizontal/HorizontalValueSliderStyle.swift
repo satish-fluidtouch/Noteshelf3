@@ -134,7 +134,7 @@ public struct DefaultHorizontalValueTrack: View {
         HorizontalTrack()
             .frame(height: 3)
             .background(Color.secondary.opacity(0.25))
-            .cornerRadius(1.5)
+//            .cornerRadius(1.5)
     }
 }
 

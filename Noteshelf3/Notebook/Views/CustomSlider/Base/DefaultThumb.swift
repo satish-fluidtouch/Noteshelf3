@@ -5,7 +5,7 @@ public struct DefaultThumb: View {
     public var body: some View {
         Capsule()
             .foregroundColor(.systemBackground)
-            .shadow(color: Color.primary.opacity(0.3), radius: 2, x: 0, y: 1.5)
+//            .shadow(color: Color.primary.opacity(0.3), radius: 2, x: 0, y: 1.5)
     }
 }
 

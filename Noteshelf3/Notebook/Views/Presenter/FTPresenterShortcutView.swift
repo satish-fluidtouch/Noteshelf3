@@ -15,7 +15,7 @@ struct FTPresenterShortcutView: View {
     var body: some View {
         ZStack {
             FTShortcutBarVisualEffectView()
-                .cornerRadius(100.0)
+//                .cornerRadius(100.0)
             VStack(spacing: FTSpacing.small) {
                 self.pointerView
                 self.penView
@@ -23,7 +23,7 @@ struct FTPresenterShortcutView: View {
                     .hoverScaleEffect(scale: 1.3)
             }
         }
-        .toolbarOverlay()
+//        .toolbarOverlay()
         .onAppear {
             self.viewModel.fetchPresenterData()
         }
