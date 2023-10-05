@@ -798,6 +798,7 @@
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
+		BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF0DD542A6FE30D006D293B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0DD532A6FE30D006D293B /* SDWebImage */; };
@@ -2087,6 +2088,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C8140D30232667B60053FC86;
 			remoteInfo = "Noteshelf Action";
+		};
+		BADB2D172ACECA0200B1B52A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAA84E432873105500DE801B;
+			remoteInfo = FTCommon;
 		};
 		BAF0DCCE2A6FE2A9006D293B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -4266,6 +4274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */,
+				BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10866,6 +10875,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BADB2D182ACECA0200B1B52A /* PBXTargetDependency */,
 			);
 			name = "Noteshelf3 Thumbnail";
 			productName = FTQLThumbnail;
@@ -13387,6 +13397,11 @@
 			isa = PBXTargetDependency;
 			target = C8140D30232667B60053FC86 /* Noteshelf3 Action */;
 			targetProxy = BAB258B6295B1B400072AEBB /* PBXContainerItemProxy */;
+		};
+		BADB2D182ACECA0200B1B52A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BAA84E432873105500DE801B /* FTCommon */;
+			targetProxy = BADB2D172ACECA0200B1B52A /* PBXContainerItemProxy */;
 		};
 		BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
