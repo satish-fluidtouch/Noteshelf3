@@ -554,7 +554,7 @@
 "NoSearchResult" = "無搜尋結果";
 "NoTagsInPage" = "此筆記本的任何頁面都未分配標籤。";
 "NoWatchRecordingsMessage" = "從Noteshelf Apple Watch應用程式的錄音將出現在此處。";
-"NofNAlt" = "%d 的 %d";
+"NofNAlt" = "%d / %d";
 "NotCorrectPassword" = "那不是正確的密碼。請再試一次。";
 "NotSupportedFormat" = "此格式不被Noteshelf支援";
 "NotUsingiCloudMessage" = "您的文件已從此設備中移除，但仍存儲在iCloud中。";
@@ -1146,7 +1146,7 @@
 "notebook.addnew.newpage" = "新頁";
 "notebook.eraserRack.NavTitle" = "橡皮擦";
 "notebook.lassoRack.NavTitle" = "套索";
-"notebook.quickPageNavigator.pageNumber.Text" = "%d 的 %d";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "恢復中...";
 "notebook.settings.moresettings" = "更多設置";
 "notebook.shapesRack.NavTitle" = "形狀";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
+// Last Synced by Rakesh on 4 October 2023 at 1:55 PM

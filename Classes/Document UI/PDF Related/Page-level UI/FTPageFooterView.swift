@@ -84,6 +84,7 @@ import FTStyles
         
         if let document = page.parentDocument {
             self.pageInfoLabel?.text = String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"),page.pageIndex()+1,document.pages().count);
+
             self.bookTitleLabel?.text = document.URL.deletingPathExtension().lastPathComponent;
         }
         else {

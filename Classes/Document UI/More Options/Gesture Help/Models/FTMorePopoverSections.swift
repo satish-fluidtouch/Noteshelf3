@@ -22,18 +22,6 @@ struct FTMorePopoverSections {
         section.append(FTNotebookOptionSaveAsTemplate())
         return section
     }
-    
-    private func documentProperties(_ page: FTPageProtocol) -> [FTNotebookMoreOption] {
-        var section = [FTNotebookMoreOption]()
-        let pageNumberString = String(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), page.pageIndex() + 1, page.parentDocument?.pages().count ?? 0)
-        section.append(FTNotebookOptionGoToPage(with: pageNumberString))
-        section.append(FTNotebookOptionShare())
-#if !targetEnvironment(macCatalyst)
-        section.append(FTNotebookOptionPresentMode())
-        section.append(FTNotebookOptionZoomBox(isEnabled: FTUserDefaults.isZoomBoxModeOn()))
-#endif
-        return section
-    }
 
     private func otherProperties() -> [FTNotebookMoreOption] {
         var section = [FTNotebookMoreOption]()

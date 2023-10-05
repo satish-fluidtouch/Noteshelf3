@@ -554,7 +554,7 @@
 "NoSearchResult" = "検索結果なし";
 "NoTagsInPage" = "このノートブックのどのページにもタグが割り当てられていません。";
 "NoWatchRecordingsMessage" = "Noteshelf Apple Watchアプリからの録音はここに表示されます。";
-"NofNAlt" = "%dの%d";
+"NofNAlt" = "%d / %d";
 "NotCorrectPassword" = "それは正しいパスワードではありません。もう一度お試しください。";
 "NotSupportedFormat" = "この形式はNoteshelfではサポートされていません。";
 "NotUsingiCloudMessage" = "このデバイスから文書が削除されましたが、iCloudには保存されたままです。";
@@ -1146,7 +1146,7 @@
 "notebook.addnew.newpage" = "新しいページ";
 "notebook.eraserRack.NavTitle" = "消しゴム";
 "notebook.lassoRack.NavTitle" = "ラッソ";
-"notebook.quickPageNavigator.pageNumber.Text" = "%d の %d";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
 "notebook.restoring" = "復元中";
 "notebook.settings.moresettings" = "さらに設定";
 "notebook.shapesRack.NavTitle" = "形状";
@@ -1523,4 +1523,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 26 September 2023 at 3:54 PM
+// Last Synced by Rakesh on 4 October 2023 at 1:55 PM

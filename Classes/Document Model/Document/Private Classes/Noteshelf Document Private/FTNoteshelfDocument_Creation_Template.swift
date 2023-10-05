@@ -176,6 +176,7 @@ extension FTNoteshelfDocument
                                                         page.pdfPageRect = firstPage.pdfPageRect;
                                                         page.lineHeight = firstPage.lineHeight;
                                                         page.resetRotation()
+                                                        page.isCover = false //Forcing to false, as no cover will be updated as template.
                                                         (page as! FTNoteshelfPage).deepCopyAnnotations(pageAnnotations,
                                                                                                        insertFrom : 0,
                                                                                                        onCompletion:
