@@ -210,15 +210,6 @@ class FTDocumentRenderViewController: UIViewController {
             (documentViewController.pdfDocument as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
         }
     }
-
-//    override func overrideTraitCollection(forChild childViewController: UIViewController) -> UITraitCollection? {
-//        var superTraitCollection = super.overrideTraitCollection(forChild: childViewController) ?? self.traitCollection
-//        if let overridableController = childViewController as? FTTraitCollectionOverridable {
-//            superTraitCollection = overridableController.ftOverrideTraitCollection(forWindow: self.view.window) ?? self.traitCollection
-//        }
-//        return superTraitCollection
-//    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
 #if DEBUG
