@@ -58,10 +58,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
     private var currentActiveShelfItem: FTCurrentShelfItem?
     private var groupItemCache = [String: FTGroupItemViewModel]();
     private var notebookItemCache = [String: FTShelfItemViewModel]();
-
+    var closedDocumentItem: FTDocumentItem?
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
-
+    @Published var scrollToIndex :Int = -1
     // MARK: Published variables
     @Published var mode: FTShelfMode = .normal {
         didSet {
@@ -275,9 +275,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
         self.removeObserversForShelfItems()
     }
     
-    func shelfViewDidMovedToFront() {
+    func shelfViewDidMovedToFront(with item : FTDocumentItem) {
+        self.closedDocumentItem = item
         self.addObserversForShelfItems()
-        self.reloadShelf(animate: true);
+        self.reloadShelf(animate: false);
     }
     
     func endDragAndDropOperation(){
@@ -467,13 +468,26 @@ extension FTShelfViewModel {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
                               , searchKey: nil) { [weak self] items in
+            guard let self = self else {
+                return
+            }
             if(animate) {
                 withAnimation {
-                    self?.setShelfItems(items);
+                    self.setShelfItems(items);
+                    if let item = self.closedDocumentItem {
+                        let index = items.firstIndex(where: {$0.uuid == item.uuid}) ?? 0
+                        NotificationCenter.default.post(name: NSNotification.Name.didScrollToCurrentShelfItem, object: nil, userInfo: ["index": index])
+                        self.closedDocumentItem = nil
+                    }
                 }
             }
             else {
-                self?.setShelfItems(items);
+                self.setShelfItems(items);
+                if let item = self.closedDocumentItem {
+                    let index = items.firstIndex(where: {$0.uuid == item.uuid}) ?? 0
+                    NotificationCenter.default.post(name: NSNotification.Name.didScrollToCurrentShelfItem, object: nil, userInfo: ["index": index])
+                    self.closedDocumentItem = nil
+                }
             }
         }
         self.addObservers()
