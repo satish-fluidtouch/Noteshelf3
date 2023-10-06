@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -16,11 +16,11 @@
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAIOptionsViewController" id="Y6W-OH-hqX" customClass="FTNoteshelfAIOptionsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9mi-hb-KiQ">
-                                <rect key="frame" x="0.0" y="59" width="393" height="176"/>
+                                <rect key="frame" x="0.0" y="24" width="834" height="176"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="176" id="hFR-CV-kOR"/>
@@ -31,11 +31,21 @@
                                     <outlet property="delegate" destination="Y6W-OH-hqX" id="9Qc-Ah-rch"/>
                                 </connections>
                             </tableView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIG-sS-lPn" userLabel="Credits View">
+                                <rect key="frame" x="0.0" y="1032" width="834" height="142"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="142" id="YMT-9F-W6j"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CEu-rT-Sgh"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="FIG-sS-lPn" firstAttribute="centerX" secondItem="9mi-hb-KiQ" secondAttribute="centerX" id="2yt-qT-D8z"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="HOw-Pm-SZp"/>
+                            <constraint firstItem="CEu-rT-Sgh" firstAttribute="bottom" secondItem="FIG-sS-lPn" secondAttribute="bottom" id="bN2-Gb-ywg"/>
+                            <constraint firstItem="FIG-sS-lPn" firstAttribute="width" secondItem="9mi-hb-KiQ" secondAttribute="width" id="dpK-bh-aHu"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="centerX" secondItem="CEu-rT-Sgh" secondAttribute="centerX" id="ePb-5x-NLB"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="top" secondItem="CEu-rT-Sgh" secondAttribute="top" id="uE7-Di-QTV"/>
                         </constraints>
@@ -43,6 +53,8 @@
                     <navigationItem key="navigationItem" id="EvG-Uv-fG8"/>
                     <connections>
                         <outlet property="aiTableView" destination="9mi-hb-KiQ" id="NKm-0t-fJm"/>
+                        <outlet property="creditsContainerView" destination="FIG-sS-lPn" id="sT2-T3-lX2"/>
+                        <outlet property="creditsContainerViewHeightConstraint" destination="YMT-9F-W6j" id="uIU-Jf-2Ap"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -54,11 +66,11 @@
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAITranslateViewController" id="zQv-Qm-p1u" customClass="FTNoteshelfAITranslateViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="d7f-dy-Vtr">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Q9H-hI-SUp">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="24" width="834" height="1150"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" name="cellBackgroundColor"/>
                                 <sections/>
@@ -106,10 +118,10 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ppJ-hS-gV8">
-                                <rect key="frame" x="0.0" y="1.6666666666666643" width="500" height="77"/>
+                                <rect key="frame" x="0.0" y="1.5" width="500" height="77.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhT-PV-sFF">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="29.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="30"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                         <color key="tintColor" name="accent"/>
                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -129,7 +141,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="Ny7-Hv-AT4">
-                                        <rect key="frame" x="0.0" y="31.666666666666668" width="500" height="45.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="32" width="500" height="45.5"/>
                                         <color key="tintColor" name="accent"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Noteshelf AI will be able to understand your handwriting only if you are a Premium user.">
@@ -168,21 +180,21 @@
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAITextViewViewController" id="eyF-S8-pnK" customClass="FTNoteshelfAITextViewViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="hOE-2Y-rer">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="798"/>
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1154"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q84-gf-X3D">
-                                <rect key="frame" x="0.0" y="818" width="344" height="0.0"/>
+                                <rect key="frame" x="0.0" y="1174" width="785" height="0.0"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="255" height="0.0"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -201,7 +213,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="118" y="0.0" width="108" height="0.0"/>
+                                        <rect key="frame" x="265" y="0.0" width="255" height="0.0"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -220,7 +232,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="236" y="0.0" width="108" height="0.0"/>
+                                        <rect key="frame" x="530" y="0.0" width="255" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Copy To Clipboard">
@@ -246,7 +258,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE">
-                                <rect key="frame" x="354" y="818" width="39" height="0.0"/>
+                                <rect key="frame" x="795" y="1174" width="39" height="0.0"/>
                                 <color key="backgroundColor" name="sidebarBG"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="2yM-T8-1j6"/>
@@ -298,11 +310,11 @@
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAIViewController" id="3PP-7r-iC7" customClass="FTNoteshelfAIViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mE6-0L-BUy" customClass="FTSafeAreazView" customModule="NS3_Beta" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Lzk-hw-Us3" customClass="FTNoteshelfAIInputField" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="16" y="75" width="361" height="48"/>
+                                <rect key="frame" x="16" y="40" width="802" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="PTk-Xl-2ub"/>
                                 </constraints>
@@ -313,10 +325,10 @@
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-21-mVm" userLabel="Content View">
-                                <rect key="frame" x="16" y="139" width="361" height="631"/>
+                                <rect key="frame" x="16" y="104" width="802" height="1022"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6i-wZ-1px" userLabel="Footer View">
-                                <rect key="frame" x="16" y="770" width="361" height="48"/>
+                                <rect key="frame" x="16" y="1126" width="802" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="wRT-mR-stq"/>
                                 </constraints>
@@ -355,26 +367,26 @@
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAITokensConsumedAlertViewController" id="Bz4-aN-P0u" customClass="FTNoteshelfAITokensConsumedAlertViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4c8-0r-k7e">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lwm-AW-1KH">
-                                <rect key="frame" x="20" y="354" width="353" height="144.33333333333337"/>
+                                <rect key="frame" x="20" y="541.5" width="794" height="111.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank you for using Noteshelf AI" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIk-ps-3qg" userLabel="Beta Alert Title">
-                                        <rect key="frame" x="0.0" y="0.0" width="353" height="67"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="794" height="33.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vK5-Bb-DIu" userLabel="Message Lable">
-                                        <rect key="frame" x="160" y="83" width="33" height="15.666666666666671"/>
+                                        <rect key="frame" x="380.5" y="49.5" width="33" height="16"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zP6-xc-nMX" userLabel="Send Feedback" customClass="FTNoteshelfButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="116.33333333333334" y="114.6666666666667" width="120.33333333333334" height="29.666666666666671"/>
+                                        <rect key="frame" x="337" y="81.5" width="120.5" height="30"/>
                                         <color key="backgroundColor" name="premium_bg"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -421,18 +433,184 @@
             </objects>
             <point key="canvasLocation" x="-1089" y="-1065"/>
         </scene>
+        <!--NoteshelfAI Free User Credits View Controller-->
+        <scene sceneID="exk-BI-DGg">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAIFreeUserCreditsViewController" id="QMa-py-FGC" customClass="FTNoteshelfAIFreeUserCreditsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Eb-ua-oPR">
+                        <rect key="frame" x="0.0" y="0.0" width="492" height="142"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PgI-2W-c3j" userLabel="Info View">
+                                <rect key="frame" x="16" y="16" width="460" height="70"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="premium_icon" translatesAutoresizingMaskIntoConstraints="NO" id="8w9-Wt-jeF">
+                                        <rect key="frame" x="0.0" y="19" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="aB0-j8-e1O"/>
+                                            <constraint firstAttribute="width" secondItem="8w9-Wt-jeF" secondAttribute="height" multiplier="1:1" id="jGX-an-fpb"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="F0N-yo-0Db" userLabel="Info Stack View">
+                                        <rect key="frame" x="48" y="2.5" width="284" height="65"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Upgrade to Noteshelf Premium" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f60-0d-CuH">
+                                                <rect key="frame" x="0.0" y="0.0" width="284" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="749" text="Upgrade to Noteshelf Premium to unlock 100 monthly AI credits and to get handwriting recognition" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gls-fx-Wk8">
+                                                <rect key="frame" x="0.0" y="18" width="284" height="47"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" name="black70"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TaN-1b-JjP">
+                                        <rect key="frame" x="348" y="20" width="112" height="30"/>
+                                        <color key="backgroundColor" name="premium_bg"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="112" id="Rzd-lX-ii3"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Upgrade Now">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="13"/>
+                                            <color key="baseForegroundColor" name="alwaysWhite"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="upgradeNow:" destination="QMa-py-FGC" eventType="touchUpInside" id="knA-p4-M6l"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="8w9-Wt-jeF" firstAttribute="leading" secondItem="PgI-2W-c3j" secondAttribute="leading" id="53Y-Wa-Muk"/>
+                                    <constraint firstItem="TaN-1b-JjP" firstAttribute="leading" secondItem="F0N-yo-0Db" secondAttribute="trailing" constant="16" id="5Sz-Gl-suh"/>
+                                    <constraint firstItem="F0N-yo-0Db" firstAttribute="centerY" secondItem="PgI-2W-c3j" secondAttribute="centerY" id="FZw-sM-vhH"/>
+                                    <constraint firstItem="8w9-Wt-jeF" firstAttribute="centerY" secondItem="PgI-2W-c3j" secondAttribute="centerY" id="Wk4-ss-As3"/>
+                                    <constraint firstAttribute="trailing" secondItem="TaN-1b-JjP" secondAttribute="trailing" id="uhf-TJ-EIR"/>
+                                    <constraint firstItem="F0N-yo-0Db" firstAttribute="leading" secondItem="8w9-Wt-jeF" secondAttribute="trailing" constant="16" id="vmw-xQ-kDG"/>
+                                    <constraint firstItem="TaN-1b-JjP" firstAttribute="centerY" secondItem="PgI-2W-c3j" secondAttribute="centerY" id="yew-6H-v9T"/>
+                                </constraints>
+                            </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7D-GU-7qa">
+                                <rect key="frame" x="48" y="86" width="428" height="56"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="iqc-u6-BKX"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="r97-eO-Zw3" kind="embed" id="7Yc-ll-flY"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" name="white60"/>
+                        <constraints>
+                            <constraint firstItem="PgI-2W-c3j" firstAttribute="top" secondItem="0Eb-ua-oPR" secondAttribute="top" constant="16" id="FCS-LE-DKF"/>
+                            <constraint firstItem="PgI-2W-c3j" firstAttribute="leading" secondItem="0Eb-ua-oPR" secondAttribute="leading" constant="16" id="JHk-8p-Ush"/>
+                            <constraint firstItem="q7D-GU-7qa" firstAttribute="leading" secondItem="PgI-2W-c3j" secondAttribute="leading" constant="32" id="Jed-cg-KYT"/>
+                            <constraint firstAttribute="trailing" secondItem="PgI-2W-c3j" secondAttribute="trailing" constant="16" id="LUj-Oc-Uig"/>
+                            <constraint firstAttribute="bottom" secondItem="q7D-GU-7qa" secondAttribute="bottom" id="UOg-Mb-RUF"/>
+                            <constraint firstItem="PgI-2W-c3j" firstAttribute="centerX" secondItem="0Eb-ua-oPR" secondAttribute="centerX" id="UoG-Ap-sXr"/>
+                            <constraint firstItem="q7D-GU-7qa" firstAttribute="trailing" secondItem="PgI-2W-c3j" secondAttribute="trailing" id="cdX-Vy-lc1"/>
+                            <constraint firstItem="q7D-GU-7qa" firstAttribute="top" secondItem="PgI-2W-c3j" secondAttribute="bottom" id="f5d-EM-90N"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="492" height="142"/>
+                    <connections>
+                        <outlet property="creditMessage" destination="gls-fx-Wk8" id="u7h-nL-TA6"/>
+                        <outlet property="creditTitle" destination="f60-0d-CuH" id="bOe-Ge-sgw"/>
+                        <outlet property="upgradeNowButton" destination="TaN-1b-JjP" id="6sV-Cs-J1I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dg1-AQ-jHK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1364" y="-1807"/>
+        </scene>
+        <!--NoteshelfAI Premium User Credits View Controller-->
+        <scene sceneID="sLe-8r-AYd">
+            <objects>
+                <viewController storyboardIdentifier="FTNoteshelfAIPremiumUserCreditsViewController" id="r97-eO-Zw3" customClass="FTNoteshelfAIPremiumUserCreditsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ile-ds-tl9">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="56"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="q7K-Iy-UFc">
+                                <rect key="frame" x="16" y="10" width="396" height="40"/>
+                                <subviews>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="32B-3e-qRV">
+                                        <rect key="frame" x="0.0" y="0.0" width="396" height="4"/>
+                                        <color key="progressTintColor" name="credits_progress_normal"/>
+                                        <color key="trackTintColor" name="credits_progress_bg"/>
+                                    </progressView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aKP-UP-yO4">
+                                        <rect key="frame" x="0.0" y="8" width="396" height="32"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBV-bK-0KS" userLabel="Credits left">
+                                                <rect key="frame" x="0.0" y="0.0" width="396" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" name="black70"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbO-dn-nsl" userLabel="Credits Info">
+                                                <rect key="frame" x="0.0" y="16" width="396" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" name="black50"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="b5o-yr-RVc"/>
+                        <color key="backgroundColor" name="credits_normal_bg"/>
+                        <constraints>
+                            <constraint firstItem="q7K-Iy-UFc" firstAttribute="centerY" secondItem="b5o-yr-RVc" secondAttribute="centerY" id="0DS-PY-a93"/>
+                            <constraint firstItem="q7K-Iy-UFc" firstAttribute="centerX" secondItem="b5o-yr-RVc" secondAttribute="centerX" id="1uZ-f2-DNS"/>
+                            <constraint firstItem="q7K-Iy-UFc" firstAttribute="leading" secondItem="b5o-yr-RVc" secondAttribute="leading" constant="16" id="Yej-FV-N5y"/>
+                            <constraint firstItem="b5o-yr-RVc" firstAttribute="trailing" secondItem="q7K-Iy-UFc" secondAttribute="trailing" constant="16" id="rge-K3-HxT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="creditsInfo" destination="YBV-bK-0KS" id="0GP-Dk-Bq1"/>
+                        <outlet property="creditsMessage" destination="MbO-dn-nsl" id="Ll4-W6-ioV"/>
+                        <outlet property="progressBar" destination="32B-3e-qRV" id="GuU-mv-lL9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5s7-KJ-Nch" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2324" y="-1119"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
+        <image name="premium_icon" width="36" height="36"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="alwaysWhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="black70">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="cellBackgroundColor">
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="credits_normal_bg">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="credits_progress_bg">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="credits_progress_normal">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="groupNotesCountTint">
             <color red="0.015686274509803921" green="0.33333333333333331" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -446,8 +624,11 @@
         <namedColor name="sidebarBG">
             <color red="1" green="0.98431372549019602" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="white60">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

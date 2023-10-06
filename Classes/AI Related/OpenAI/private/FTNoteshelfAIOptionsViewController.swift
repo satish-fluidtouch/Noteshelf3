@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol FTNoteshelfAIOptionsViewControllerDelegate: NSObjectProtocol {
     func aiOptionsController(_ controller: FTNoteshelfAIOptionsViewController, didTapOnOption option:FTOpenAICommandType);
@@ -28,6 +29,12 @@ private class FTAIOptionTableViewCell: UITableViewCell {
 class FTNoteshelfAIOptionsViewController: UIViewController {
     weak var delegate: FTNoteshelfAIOptionsViewControllerDelegate?;
     @IBOutlet private weak var aiTableView: UITableView?;
+    @IBOutlet private weak var creditsContainerView: UIView?;
+    @IBOutlet private weak var creditsContainerViewHeightConstraint: NSLayoutConstraint?;
+    
+    private weak var creditsController: UIViewController?;
+    private var premiumCancellableEvent: AnyCancellable?;
+
     var contentString: String?;
         
     override func viewDidLoad() {
@@ -35,6 +42,21 @@ class FTNoteshelfAIOptionsViewController: UIViewController {
         self.aiTableView?.layer.cornerRadius = 10.0
         self.aiTableView?.separatorInset = .zero;
         aiTableView?.register(FTAIOptionTableViewCell.self, forCellReuseIdentifier: FTAIOptionTableViewCell.cellIdentifier);
+        self.creditsContainerView?.layer.cornerRadius = 12;
+        
+        if !FTIAPManager.shared.premiumUser.isPremiumUser {
+            premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
+                self?.addCredtisFooter();
+            }
+        }
+        else {
+            self.addCredtisFooter();
+        }
+    }
+    
+    deinit {
+        premiumCancellableEvent?.cancel();
+        premiumCancellableEvent = nil;
     }
 }
 
@@ -75,5 +97,28 @@ extension FTNoteshelfAIOptionsViewController: UITableViewDataSource,UITableViewD
 
         let aitoption = FTOpenAICommandType.supportedCommands̉[indexPath.row];
         self.delegate?.aiOptionsController(self, didTapOnOption: aitoption);
+    }
+}
+
+private extension FTNoteshelfAIOptionsViewController {
+    func addCredtisFooter() {
+        self.creditsContainerViewHeightConstraint?.constant = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
+        self.creditsController?.view.removeFromSuperview();
+        self.creditsController?.removeFromParent();
+        
+        guard let creditsView = self.creditsContainerView else {
+            return;
+        }
+        var controller: UIViewController;
+        if FTIAPManager.shared.premiumUser.isPremiumUser {
+            controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIPremiumUserCreditsViewController");
+        }
+        else {
+            controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIFreeUserCreditsViewController");
+        }
+        self.addChild(controller);
+        self.creditsController = controller;
+        controller.view.frame = creditsView.bounds;
+        controller.view.addFullConstraints(creditsView);
     }
 }

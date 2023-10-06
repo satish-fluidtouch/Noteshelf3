@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import FTCommon
 
 class FTNoteshelfAI {
     static var supportsNoteshelfAI: Bool {
@@ -135,12 +136,7 @@ class FTNoteshelfAIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaultFont = UIFont.clearFaceFont(for: .medium, with: 20)
-        let attrTitle = "noteshelf.ai.noteshelfAI".aiLocalizedString.appendBetalogo(font: defaultFont);
-        let button = UIButton()
-        button.setAttributedTitle(attrTitle, for: .normal)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.navigationItem.titleView = button
+        self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;
         updateContentView();
@@ -261,7 +257,8 @@ extension FTNoteshelfAIViewController: FTNoteshelfAITextViewViewControllerDelega
         if action == .regenerateResponse {
             self.executeAIAction();
         }
-        else {            
+        else {        
+            FTNoteshelfAITokenManager.shared.markAsConsumed();
             self.delegate?.noteshelfAIController(self, didTapOnAction: action, content: content)
         }
     }
@@ -327,7 +324,7 @@ private extension FTNoteshelfAIViewController {
 #if DEBUG || ADHOC
         return false;
 #else
-        if FTNoteshelfAIViewController.maxAllowedTokenCounter <= UserDefaults.aiTokensConsumed {
+        if FTNoteshelfAITokenManager.shared.maxAllowedTokens <= FTNoteshelfAITokenManager.shared.consumedTokens {
             return true;
         }
         return false;
@@ -372,7 +369,6 @@ private extension FTNoteshelfAIViewController {
         
         self.textField?.text = command.executionMessage;
         
-        UserDefaults.incrementAiTokenConsumed()
         currentToken = command.commandToken;
         FTOpenAI.shared.execute(command: command) {[weak self] (response, error,token) in
             guard let curToken = self?.currentToken, curToken == token else {
@@ -450,24 +446,6 @@ private extension FTNoteshelfAIViewController {
         vc.removeFromParent();
         self.aiCommand = .none;
     }
-}
-
-extension UserDefaults {
-    static var aiTokensConsumed: Int {
-        return UserDefaults.standard.integer(forKey: "aiTokensConsumed");
-    }
-    
-    static func incrementAiTokenConsumed() {
-        let counter = self.aiTokensConsumed + 1;
-        UserDefaults.standard.set(counter, forKey: "aiTokensConsumed");
-        UserDefaults.standard.synchronize();
-    }
-    
-#if !RELEASE
-    static func resetAITokens() {
-        UserDefaults.standard.removeObject(forKey: "aiTokensConsumed");
-    }
-#endif
 }
 
 extension FTNoteshelfAIViewController: FTBarButtonItemDelegate {

@@ -49,3 +49,12 @@
 "noteshelf.ai.handwriteMessage" = "Noteshelf AI will be able to understand your handwriting only if you are a Premium user.";
 
 "noteshelf.ai.pressEnterToSend" = "Press enter to send";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "No credits left";
+"noteshelf.ai.credit.bePremium" = "Upgrade to Noteshelf Premium";
+"noteshelf.ai.credit.creditsRunningOut" = "Credits running out soon";
+"noteshelf.ai.credit.bePremiumInfo" = "Upgrade to Noteshelf Premium to unlock 100 monthly AI credits and to get handwriting recognition";
+"noteshelf.ai.credit.upgradeNow" = "Upgrade Now";
+"noteshelf.ai.credit.details" = "%d/%d credits left";
+"noteshelf.ai.credit.moreinfo" = "reset every month";
