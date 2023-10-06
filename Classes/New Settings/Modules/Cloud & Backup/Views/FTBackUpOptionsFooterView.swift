@@ -18,6 +18,7 @@ class FTBackUpOptionsFooterView: UITableViewHeaderFooterView {
         self.signoutBtn.layer.cornerRadius = 10.0
         self.signoutBtn.setTitleColor(UIColor.appColor(.darkRed), for: .normal)
         self.signoutBtn.titleLabel?.font = UIFont.appFont(for: .regular, with: 17)
+        self.signoutBtn.applyInteraction()
     }
 
     @IBAction func signOutClicked(_ sender: UIButton) {

@@ -45,7 +45,7 @@ class FTIAPViewController: UIViewController {
         self.privacyButton?.setTitle("iap.privacy".localized, for: .normal);
         self.restorePurchaseButton?.setTitle("iap.restorePurchase".localized, for: .normal);
         if let upgradeButton = upgradeButton{
-            upgradeButton.apply(to: upgradeButton, withScaleValue: 0.93)
+            upgradeButton.applyInteraction()
         }
         viewModel.delegate = self
     }

@@ -67,23 +67,16 @@ public struct AnimationValue {
 
 //UIKit Interaction Button Custom Class
 extension UIButton {
-
-    public func apply(to button: UIButton, withScaleValue scaleValue: CGFloat = 0.93) {
-        button.addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchDown)
-        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpInside)
-        button.addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpOutside)
-
-        // Store the scale value in the button's tag for later use
-        button.tag = Int(scaleValue * 100) // Convert to an integer for simplicity
+    public func applyInteraction() {
+        addTarget(self, action: #selector(buttonPressed(sender:)), for: .touchDown)
+        addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpInside)
+        addTarget(self, action: #selector(buttonReleased(sender:)), for: .touchUpOutside)
     }
-
     @objc private func buttonPressed(sender: UIButton) {
-        let scaleValue = CGFloat(sender.tag) / 100.0
         UIView.animate(withDuration: AnimationValue.animatedValue, animations: {
-            sender.transform = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
+            sender.transform = CGAffineTransform(scaleX: 0.91, y: 0.91)
         })
     }
-
     @objc private func buttonReleased(sender: UIButton) {
         UIView.animate(withDuration: AnimationValue.animatedValue, animations: {
             sender.transform = .identity

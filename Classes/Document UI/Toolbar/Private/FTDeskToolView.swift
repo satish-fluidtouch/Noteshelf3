@@ -57,6 +57,12 @@ class FTDeskToolView: UIView {
             image = UIImage(named: toolType.iconName())
         }
         self.toolButton.setImage(image, for: .normal)
+       self.toolButton?.applyInteraction()
+       self.bgButton?.applyInteraction()
+       if let tintButton = tintButton{
+           self.tintButton?.applyInteraction()
+       }
+
     }
 
     private func showBgIfNeeded() {
@@ -84,6 +90,11 @@ class FTDeskToolView: UIView {
         let tintImg = self.toolType.tintImage()
         self.tintButton?.setImage(tintImg, for: .normal)
         self.tintButton?.tintColor = color
+        self.toolButton?.applyInteraction()
+        self.bgButton?.applyInteraction()
+        if let tintButton = tintButton{
+            self.tintButton?.applyInteraction()
+        }
     }
 
      func resetTint() {
