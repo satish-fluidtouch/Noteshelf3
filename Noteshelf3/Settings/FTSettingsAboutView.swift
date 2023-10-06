@@ -15,7 +15,8 @@ struct FTSettingsAboutView: View {
     @ObservedObject var viewModel: FTSettingsAboutViewModel
     @State private var isShowingWebView: Bool = false
 
-    @State var selectedStyle:SocialMediaTypes?
+    @State private var selectedStyle: SocialMediaTypes?
+    @State private var middleSectiontype: MiddleSectionTypes?
     @State private var showWebview: Bool = false
     @State private var showWelcome: Bool = false
 
@@ -82,30 +83,18 @@ struct FTSettingsAboutView: View {
     @ViewBuilder
     private var middleSection: some View{
         VStack(alignment: .leading, spacing: 0) {
-            Button {
-#if targetEnvironment(macCatalyst)
-                if let url = URL(string: "http://www.noteshelf.net") {
-                    UIApplication.shared.open(url);
-                }
-#else
-                isShowingWebView = true
-#endif
-            } label: {
-                HStack {
-                    Text(viewModel.visitWebsite)
-                    Spacer()
-                    Image(icon: .rightArrow)
-                        .foregroundColor(Color.label).opacity(0.5)
-                }
-                .padding(EdgeInsets())
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .fullScreenCover(isPresented: $isShowingWebView) {
-                SafariView(url:URL(string: "http://www.noteshelf.net")!)
-            }
-            .modifier(MiddleSectionItemConfig())
-            
+            middleSectionItem(type: .visitWebsite)
+
+            FTDividerLine()
+
+            middleSectionItem(type: .privacyPolicy)
+                .if(middleSectiontype != nil, transform: { view in
+                    view.fullScreenCover(isPresented: $isShowingWebView) {
+                        if let middleSectiontype = middleSectiontype, let url = URL(string: middleSectiontype.webUrl) {
+                            SafariView(url: url)
+                        }
+                    }
+                })
 #if !RELEASE && !targetEnvironment(macCatalyst)
             FTDividerLine()
             
@@ -132,6 +121,30 @@ struct FTSettingsAboutView: View {
         .cornerRadius(10)
         .padding(.horizontal,25.5)
         .padding(.top,16)
+    }
+
+    @ViewBuilder
+    private func middleSectionItem(type: MiddleSectionTypes) -> some View{
+        Button {
+    #if targetEnvironment(macCatalyst)
+            if let url = URL(string: type.webUrl) {
+                UIApplication.shared.open(url);
+            }
+    #else
+            middleSectiontype = type
+            isShowingWebView = true
+    #endif
+        } label: {
+            HStack {
+                Text(type.title)
+                Spacer()
+                Image(icon: .rightArrow)
+                    .foregroundColor(Color.label).opacity(0.5)
+            }
+            .contentShape(Rectangle())
+        }
+        .macOnlyPlainButtonStyle()
+        .modifier(MiddleSectionItemConfig())
     }
 
     @ViewBuilder
