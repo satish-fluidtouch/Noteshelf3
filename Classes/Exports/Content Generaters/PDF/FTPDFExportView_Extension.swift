@@ -465,7 +465,6 @@ extension FTPDFExportView {
         let titleRect = CGRect(x: 10.0, y: y, width: width, height: size.height)
         render(attributedString: titleAttri, rect: titleRect, context: context, scale: scale)
 
-
         let pageNum = String(format: NSLocalizedString("NofNAlt", comment: "%d of %d"), currentPage, totalPages);
         let pageNumAttri = NSAttributedString(string: pageNum, attributes: attributes)
         let pageNumSize = pageNumAttri.size()
