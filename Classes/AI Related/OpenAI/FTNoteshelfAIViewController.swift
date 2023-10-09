@@ -160,14 +160,7 @@ class FTNoteshelfAIViewController: UIViewController {
     }
 
     private func updateFooterHeight() {
-        var height: CGFloat = FTIAPManager.shared.premiumUser.isPremiumUser ? 48 : 77;
-        if let mode = self.footerVC?.footermode {
-            if mode == .sendFeedback {
-                height = 48;
-            }
-            self.footerVC?.footermode = mode;
-        }
-        self.footerHeightConstraint?.constant = height;
+        self.footerHeightConstraint?.constant = 48;
         self.view.layoutIfNeeded()
     }
     

@@ -63,6 +63,10 @@
 		09C3697B2A5EBB06009BCC3F /* glyphs_font.ns in Resources */ = {isa = PBXBuildFile; fileRef = 09C3697A2A5EBB06009BCC3F /* glyphs_font.ns */; };
 		09C3697D2A5EBB1D009BCC3F /* stroke_text_map.json in Resources */ = {isa = PBXBuildFile; fileRef = 09C3697C2A5EBB1D009BCC3F /* stroke_text_map.json */; };
 		09C3697F2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3697E2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift */; };
+		09C404632AD4095200CCFF22 /* FTAITokenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404622AD4095200CCFF22 /* FTAITokenInfo.swift */; };
+		09C404652AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404642AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift */; };
+		09C404672AD40A0A00CCFF22 /* Date_Extension_AIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404662AD40A0A00CCFF22 /* Date_Extension_AIToken.swift */; };
+		09C404692AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404682AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift */; };
 		09C5FB272A6A720900D30FCB /* FTKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5FB262A6A720900D30FCB /* FTKeyCommands.swift */; };
 		09C7142D2A38344900E69E4A /* FTShelfItemConextMenuPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7142C2A38344900E69E4A /* FTShelfItemConextMenuPreview.swift */; };
 		09C714532A405BD200E69E4A /* FTShelfBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C714522A405BD200E69E4A /* FTShelfBaseView.swift */; };
@@ -2489,6 +2493,10 @@
 		09C3697A2A5EBB06009BCC3F /* glyphs_font.ns */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = glyphs_font.ns; sourceTree = "<group>"; };
 		09C3697C2A5EBB1D009BCC3F /* stroke_text_map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stroke_text_map.json; sourceTree = "<group>"; };
 		09C3697E2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextToStrokeDataProvider.swift; sourceTree = "<group>"; };
+		09C404622AD4095200CCFF22 /* FTAITokenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAITokenInfo.swift; sourceTree = "<group>"; };
+		09C404642AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper_AIToken.swift; sourceTree = "<group>"; };
+		09C404662AD40A0A00CCFF22 /* Date_Extension_AIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date_Extension_AIToken.swift; sourceTree = "<group>"; };
+		09C404682AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUbiquitousKeyValueStore_AIToken.swift; sourceTree = "<group>"; };
 		09C5DC6A1F446EA600033BAC /* FTShelfCollectionSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCollectionSystem.swift; sourceTree = "<group>"; };
 		09C5DC6C1F44700100033BAC /* FTFTShelfCollectionMigration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTFTShelfCollectionMigration.swift; sourceTree = "<group>"; };
 		09C5FB262A6A720900D30FCB /* FTKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTKeyCommands.swift; sourceTree = "<group>"; };
@@ -5093,6 +5101,7 @@
 		09ABDC9C2A790F93008F144D /* private */ = {
 			isa = PBXGroup;
 			children = (
+				09C404612AD4092800CCFF22 /* Tokens Related */,
 				09DBD5252A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift */,
 				09ABDC9D2A790F93008F144D /* FTNoteshelfAIFooterViewController.swift */,
 				09ABDC9E2A790F93008F144D /* FTNoteshelfAITextViewViewController.swift */,
@@ -5312,6 +5321,17 @@
 				97C8520F24F51ABE00EF893A /* FTServerConfig.swift */,
 			);
 			path = "FTThemeDownloader Private";
+			sourceTree = "<group>";
+		};
+		09C404612AD4092800CCFF22 /* Tokens Related */ = {
+			isa = PBXGroup;
+			children = (
+				09C404622AD4095200CCFF22 /* FTAITokenInfo.swift */,
+				09C404642AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift */,
+				09C404662AD40A0A00CCFF22 /* Date_Extension_AIToken.swift */,
+				09C404682AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift */,
+			);
+			path = "Tokens Related";
 			sourceTree = "<group>";
 		};
 		09C5DF771EB0C29200EFD4D1 /* Text Input View */ = {
@@ -12136,6 +12156,7 @@
 				BAF391A62859ADF00067CA9F /* FTCloudBackup.swift in Sources */,
 				E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */,
 				5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */,
+				09C404692AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift in Sources */,
 				E7A87F0628DAEBBE0038CF90 /* FTDoneButton.swift in Sources */,
 				1439372029D6E02700D93033 /* FTStickerCategoriesView.swift in Sources */,
 				BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */,
@@ -12203,6 +12224,7 @@
 				BA2D9120285CAFCC001BB495 /* FTShelfItemViewModel.swift in Sources */,
 				BAF391EB2859ADF00067CA9F /* FTLegalTemplateFormat.swift in Sources */,
 				BAF391EC2859ADF00067CA9F /* FTMonthlyCalendarInfo.swift in Sources */,
+				09C404672AD40A0A00CCFF22 /* Date_Extension_AIToken.swift in Sources */,
 				BAF391ED2859ADF00067CA9F /* FTWatchAudioActionsViewController.swift in Sources */,
 				E7C71A68288E795A00AF2598 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
 				BAF391F02859ADF00067CA9F /* FTModernDiaryTemplateAssetGenerator.swift in Sources */,
@@ -12281,6 +12303,7 @@
 				BAF392272859ADF00067CA9F /* FTModernDiaryDayTemplate.swift in Sources */,
 				BAF392282859ADF00067CA9F /* NSDate_Extension.swift in Sources */,
 				979BC281288FE9D500208B21 /* FTSideBarItemView.swift in Sources */,
+				09C404632AD4095200CCFF22 /* FTAITokenInfo.swift in Sources */,
 				E7B5769C292368F70066BA45 /* FTToastView.swift in Sources */,
 				520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */,
 				973652E22A82786800FD4326 /* FTSidebarViewModel + NS2.swift in Sources */,
@@ -12935,6 +12958,7 @@
 				974E8A6A2A011B5800EFF8D8 /* FTShelfHomeViewController.swift in Sources */,
 				BAF3946C2859ADF00067CA9F /* FTShelfItemPublishRequest_Extension.swift in Sources */,
 				BAF3946D2859ADF00067CA9F /* FTMidnightDiaryMonthTemplate.swift in Sources */,
+				09C404652AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift in Sources */,
 				E7B9475129124E3500BE4430 /* FTShareFormatViewModel.swift in Sources */,
 				BAF3946E2859ADF00067CA9F /* NSString_Backup_Additions.m in Sources */,
 				BAF394702859ADF00067CA9F /* FTOneDriveAlertHandler.swift in Sources */,

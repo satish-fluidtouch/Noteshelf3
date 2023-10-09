@@ -29,7 +29,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        FTDigitalInkRecognitionManager.shared.prepare();
+        FTNoteshelfAIConfigHelper.configureAI();
         self.clearTempCache();
         FTStyles.registerFonts()
         FTImportStorageManager.resetCorruptedStatusWhenTerminated()

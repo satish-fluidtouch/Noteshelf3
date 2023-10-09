@@ -11,7 +11,7 @@ import MLKit
 
 class FTDigitalInkRecognitionManager: NSObject {
     static let shared = FTDigitalInkRecognitionManager();
-    func prepare() {
+    func configure() {
         if let inkModel = self.digitalINkModel(for: FTUtils.currentLanguage()),!inkModel.isDownloaded {
             inkModel.startDownloading();
         }
@@ -84,7 +84,7 @@ private extension FTDigitalInkRecognitionTaskProcessor {
         recognitionData.lastUpdated = NSNumber(value: Date.timeIntervalSinceReferenceDate);
         
         guard let model = FTDigitalInkRecognitionManager.shared.digitalINkModel(for: language), model.isDownloaded else {
-            FTDigitalInkRecognitionManager.shared.prepare();
+            FTDigitalInkRecognitionManager.shared.configure();
             onCompletion(recognitionData,nil);
             return;
         }
@@ -99,7 +99,7 @@ private extension FTDigitalInkRecognitionTaskProcessor {
             let writingArea = WritingArea(width: Float(viewSize.width), height: Float(viewSize.height));
             let context = DigitalInkRecognitionContext(preContext: "", writingArea: writingArea)
             
-            recognizer?.recognize(ink: ink) { recognitionResult, error in
+            recognizer?.recognize(ink: ink,context: context) { recognitionResult, error in
                 if let result = recognitionResult, let candidate = result.candidates.first {
                     recognitionData.recognisedString = candidate.text;
                     recognitionData.lastUpdated = NSNumber(value: Date.timeIntervalSinceReferenceDate)

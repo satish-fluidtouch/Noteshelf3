@@ -148,8 +148,21 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
                 }
             }
             else if action == .addToPage {
-                if let annotation = self.pdfPage?.addTextAnnotation(content, visibleRect: CGRectScale(self.visibleRect(), 1/self.pageContentScale)) {
-                    self.refreshView(refreshArea: annotation.boundingRect);
+                guard let page = self.pdfPage else {
+                    return;
+                }
+                
+                let origin = self.originToInsertHandwrite();
+                var areaToInsert = CGRectScale(self.visibleRect(), 1/self.pageContentScale);
+                areaToInsert.origin = origin;
+
+                if page.pdfPageRect.height - page.pageBottomMargin - origin.y < 100 {
+                    self.delegate?.insertNewPage(page, addContent: content);
+                }
+                else {
+                    if let annotation = self.pdfPage?.addTextAnnotation(content, visibleRect: areaToInsert) {
+                        self.refreshView(refreshArea: annotation.boundingRect);
+                    }
                 }
             }
             else if action == .addToNewPage {
@@ -317,8 +330,24 @@ extension FTPageProtocol {
         info.localmetadataCache = self.parentDocument?.localMetadataCache;
         info.fromConvertToText = true;
         info.enterEditMode = false;
+        
+        var textDefaultColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1);
+        if self.templateInfo.isTemplate
+            , let bgColor = (self as? FTPageBackgroundColorProtocol)?.pageBackgroundColor
+            , let curColor = bgColor.blackOrWhiteContrastingColor() {
+            textDefaultColor = curColor;
+        }
+
         if let attr = content.contentAttributedString {
-            info.attributedString = attr;
+            let mutableAttr = NSMutableAttributedString(attributedString: attr);
+            mutableAttr.beginEditing();
+            mutableAttr.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: attr.length)) { color, effectiveRange, stop in
+                if let fgColor = color as? UIColor, fgColor == UIColor.label {
+                    mutableAttr.addAttribute(.foregroundColor, value: textDefaultColor, range: effectiveRange);
+                }
+            }
+            mutableAttr.endEditing();
+            info.attributedString = mutableAttr;
         }
         else {
             info.string = content.contentString;
@@ -330,5 +359,4 @@ extension FTPageProtocol {
         }
         return nil;
     }
-
 }

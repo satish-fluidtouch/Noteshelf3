@@ -52,6 +52,6 @@ class FTNoteshelfAIPremiumUserCreditsViewController: UIViewController {
         self.progressBar?.progress = Float(consumed)/Float(maxTokens);
         self.creditsInfo?.text = String(format: "noteshelf.ai.credit.details".aiLocalizedString, tokensLeft,maxTokens);
         self.creditsMessage?.isHidden = !FTIAPManager.shared.premiumUser.isPremiumUser
-        self.creditsMessage?.text = "noteshelf.ai.credit.moreinfo".aiLocalizedString
+        self.creditsMessage?.text = String(format: "noteshelf.ai.credit.moreinfo".aiLocalizedString,FTNoteshelfAITokenManager.shared.daysLeftForTokenReset());
     }
 }
