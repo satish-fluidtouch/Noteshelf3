@@ -58,7 +58,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     private var currentActiveShelfItem: FTCurrentShelfItem?
     private var groupItemCache = [String: FTGroupItemViewModel]();
     private var notebookItemCache = [String: FTShelfItemViewModel]();
-    var closedDocumentItem: FTDocumentItem?
+    private var closedDocumentItem: FTDocumentItem?
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
     @Published var scrollToIndex: Int?
