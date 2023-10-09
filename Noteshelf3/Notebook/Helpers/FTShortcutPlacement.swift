@@ -18,6 +18,10 @@ enum FTShortcutPlacement: String, CaseIterable {
     case top
     case bottom
 
+    static var zoomModePlacements: [FTShortcutPlacement] {
+        return [.top, .centerLeft, .centerRight, .bottom]
+    }
+
     var slotTag: Int {
         let tag: Int
         switch self {
@@ -97,7 +101,46 @@ enum FTShortcutPlacement: String, CaseIterable {
 
 private var offset: CGFloat = 8.0;
 extension FTShortcutPlacement {
-    func shortcutViewCenter(fotShortcutView shorcutView: UIView,topOffset: CGFloat) -> CGPoint {
+    func slotCenter(forSlotView slotView: UIView, topOffset: CGFloat, zoomModeInfo: FTZoomModeInfo) -> CGPoint {
+        var center: CGPoint = .zero
+
+        if zoomModeInfo.isEnabled {
+            guard let superViewFrame = slotView.superview?.bounds else {
+                return .zero
+            }
+            let frame = CGRect(x: superViewFrame.origin.x,
+                               y: superViewFrame.origin.y + topOffset,
+                               width: superViewFrame.size.width,
+                               height: superViewFrame.size.height - topOffset - zoomModeInfo.overlayHeight)
+
+            let size = slotView.frame.size
+
+            let minY = frame.minY
+            let maxX = frame.maxX
+            let midY = frame.midY
+
+            if FTShortcutPlacement.zoomModePlacements.contains(self) {
+                if self == .centerLeft {
+                    center = CGPoint(x: size.width/2.0 + offset, y: midY)
+                    if center.y < minY + size.height/2.0 {
+                        center.y = minY + size.height/2.0
+                    }
+                } else if self == .centerRight {
+                    center = CGPoint(x: maxX - size.width/2.0 - offset, y: midY)
+                    if center.y < minY + size.height/2.0 {
+                        center.y = minY + size.height/2.0
+                    }
+                }
+            }
+        }
+
+        if center == .zero {
+            center = self.placementCenter(forShortcutView: slotView, topOffset: topOffset, zoomModeInfo: zoomModeInfo)
+        }
+        return center
+    }
+
+    func placementCenter(forShortcutView shorcutView: UIView,topOffset: CGFloat, zoomModeInfo: FTZoomModeInfo) -> CGPoint {
         guard let superViewFrame = shorcutView.superview?.bounds else {
             return .zero
         }
@@ -116,29 +159,45 @@ extension FTShortcutPlacement {
 
         var center: CGPoint = .zero
         var bottomOffset: CGFloat = 0.0
-        if self.isBottomPlacement() {
+        if self.isBottomPlacement() && !zoomModeInfo.isEnabled {
             if let window = UIApplication.shared.keyWindow {
                 bottomOffset = window.safeAreaInsets.bottom
             }
         }
 
         switch self {
+        case .top:
+            center = CGPoint(x: midX, y: minY + size.height/2.0)
         case .centerLeft:
             center = CGPoint(x: size.width/2.0 + offset, y: midY)
         case .centerRight:
             center = CGPoint(x: maxX - size.width/2.0 - offset, y: midY)
-        case .topLeft:
-            center = CGPoint(x: size.width/2.0 + offset, y: minY + size.height/2.0)
-        case .bottomLeft:
-            center = CGPoint(x: size.width/2.0 + offset, y: maxY - offset - size.height/2.0 - bottomOffset)
-        case .topRight:
-            center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + size.height/2.0)
-        case .bottomRight:
-            center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - offset - size.height/2.0 - bottomOffset)
-        case .top:
-            center = CGPoint(x: midX, y: minY + size.height/2.0)
         case .bottom:
             center = CGPoint(x: midX, y: maxY - offset - size.height/2.0 - bottomOffset)
+        case .topLeft:
+            center = CGPoint(x: size.width/2.0 + offset, y: minY + size.height/2.0)
+        case .topRight:
+            center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + size.height/2.0)
+        case .bottomLeft:
+            center = CGPoint(x: size.width/2.0 + offset, y: maxY - offset - size.height/2.0 - bottomOffset)
+        case .bottomRight:
+            center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - offset - size.height/2.0 - bottomOffset)
+        }
+
+        if zoomModeInfo.isEnabled {
+            if self == .centerLeft || self == .centerRight {
+                let zoomModeCenterY = maxY - zoomModeInfo.overlayHeight - offset - size.height/2.0
+                if center.y > zoomModeCenterY {
+                    center.y = zoomModeCenterY
+                }
+                if center.y < minY + size.height/2.0 {
+                    center.y = minY + size.height/2.0
+                }
+            } else if self == .bottomLeft || self == .bottomRight {
+                center.y = max(center.y - (zoomModeInfo.overlayHeight + offset), minY + size.height/2.0)
+            } else if self == .bottom {
+                center.y -= (zoomModeInfo.overlayHeight + offset)
+            }
         }
         return center
     }

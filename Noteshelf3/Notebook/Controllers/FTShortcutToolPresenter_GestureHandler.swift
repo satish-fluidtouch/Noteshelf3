@@ -41,8 +41,10 @@ extension FTShortcutToolPresenter {
             }
             
         case .cancelled,.ended:
-            self.hasAddedSlots = false
-            self.viewMovementEnded()
+            if self.hasAddedSlots {
+                self.hasAddedSlots = false
+                self.viewMovementEnded()
+            }
         default:
             break
         }
@@ -73,7 +75,11 @@ private extension FTShortcutToolPresenter {
 
     func addSlots() {
         if let parentView = self.parentVC?.view {
-            FTShortcutPlacement.allCases.forEach { placement in
+            var placements: [FTShortcutPlacement] = FTShortcutPlacement.allCases
+            if self.zoomModeInfo.isEnabled {
+                placements = FTShortcutPlacement.zoomModePlacements
+            }
+            placements.forEach { placement in
                 addSlotView(for: placement)
             }
             shortcutView.superview?.bringSubviewToFront(shortcutView)
@@ -84,21 +90,33 @@ private extension FTShortcutToolPresenter {
                 slotView.frame.size = placement.slotSize
                 slotView.center = shortcutView.center
                 parentView.addSubview(slotView)
-                let reqCenter = placement.shortcutViewCenter(fotShortcutView: slotView, topOffset: toolbarOffset)
+                slotView.alpha = 0.0
+                let reqCenter = placement.slotCenter(forSlotView: slotView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
                 slotView.center = reqCenter
                 slotView.tag = placement.slotTag
                 slotView.layer.cornerRadius = 19.0
                 slotView.clipsToBounds = true
+                UIView.animate(withDuration: animDuration) {
+                    slotView.alpha = 1.0
+                }
             }
         }
     }
 
     func removeAllSlots() {
+        var reqSlotViews: [UIView] = []
         FTShortcutPlacement.allCases.forEach { placement in
             for subview in self.parentVC?.view.subviews ?? [] {
                 if subview.tag == placement.slotTag {
-                    subview.removeFromSuperview()
+                    reqSlotViews.append(subview)
                 }
+            }
+        }
+        reqSlotViews.forEach { slotView in
+            UIView.animate(withDuration: animDuration, delay: 0.1) {
+                slotView.alpha = 0.0
+            } completion: { _ in
+                slotView.removeFromSuperview()
             }
         }
     }
@@ -131,7 +149,7 @@ private extension FTShortcutToolPresenter {
         let center = CGPoint(x: shortcutView.center.x + translation.x, y: shortcutView.center.y + translation.y)
         self.updateShortcutViewCenter(center)
 
-        let currentPlacementCenter = self.shortcutViewPlacement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: self.toolbarOffset)
+        let currentPlacementCenter = self.shortcutViewPlacement.placementCenter(forShortcutView: shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
         if abs(center.x - currentPlacementCenter.x) > 10.0 || abs(center.y - currentPlacementCenter.y) > 10.0 {
             if !self.hasAddedSlots {
                 self.addSlots()
@@ -147,9 +165,8 @@ private extension FTShortcutToolPresenter {
         if let parent = self.parentVC?.view {
             placement = FTShortcutPlacement.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset, in: parent)
             placement.save()
-            self.removeAllSlots()
         }
-        UIView.animate(withDuration: 0.3) { [weak self] in
+        UIView.animate(withDuration: animDuration) { [weak self] in
             guard let self else {
                 return
             }
@@ -157,10 +174,16 @@ private extension FTShortcutToolPresenter {
             if placement == .top || placement == .bottom {
                 self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
             }
-            let reqCenter = placement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset);
+            let reqCenter = placement.slotCenter(forSlotView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
             self.updateShortcutViewCenter(reqCenter)
+            self.removeAllSlots()
         } completion: { [weak self] _ in
-            self?.delegate?.didStartPlacementChange()
+            guard let self else {
+                return
+            }
+            if self.zoomModeInfo.isEnabled {
+                self.shortcutZoomMode = .manual
+            } 
         }
     }
 }
@@ -206,5 +229,15 @@ class FTSlotVisualEffectView: UIVisualEffectView {
         self.contentView.addSubview(borderView)
         self.layoutIfNeeded()
         self.isHighlighted = false
+    }
+}
+
+class FTZoomModeInfo {
+    private(set) var isEnabled: Bool = false
+    private(set) var overlayHeight: CGFloat = 0.0
+
+    init(isEnabled: Bool = false, overlayHeight: CGFloat = 0.0) {
+        self.isEnabled = isEnabled
+        self.overlayHeight = overlayHeight
     }
 }

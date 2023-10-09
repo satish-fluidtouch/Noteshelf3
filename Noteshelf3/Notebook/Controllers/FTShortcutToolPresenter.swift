@@ -14,7 +14,7 @@ protocol FTShortcutContainerDelegate: AnyObject {
     func didStartPlacementChange() 
 }
 
-private var offset: CGFloat = 8.0;
+private var offset: CGFloat = 8.0
 
 @objcMembers class FTShortcutToolPresenter: NSObject {
     private(set) var toolbarOffset: CGFloat = FTToolbarConfig.Height.regular + offset;
@@ -30,6 +30,9 @@ private var offset: CGFloat = 8.0;
     // Internal variables/functions for extension purpose, not intended for out world
     internal var isMoving: Bool = false
     internal var hasAddedSlots: Bool = false
+    internal var shortcutZoomMode: FTZoomShortcutMode = .auto
+    internal var animDuration: CGFloat = 0.3
+
     var shortcutViewPlacement: FTShortcutPlacement {
         let placement = FTShortcutPlacement.getSavedPlacement()
         return placement
@@ -40,8 +43,9 @@ private var offset: CGFloat = 8.0;
     }
             
     override init() {
-        super.init();
+        super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(showToast(_:)), name: NSNotification.Name.PresetColorUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(exitZoomModeNotified(_:)), name: NSNotification.Name(FTAppDidEXitZoomMode), object: nil)
     }
 
     func showToolbar(rackData: FTRackData
@@ -66,7 +70,7 @@ private var offset: CGFloat = 8.0;
             self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
         }
         self.updateMinOffsetIfNeeded()
-        let reqCenter = self.shortcutViewPlacement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: self.toolbarOffset)
+        let reqCenter = self.shortcutViewPlacement.placementCenter(forShortcutView: shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
         self.updateShortcutViewCenter(reqCenter)
         self.toolbarVc?.showShortcutViewWrto(rack: rackData)
         self.configurePanGesture()
@@ -103,17 +107,17 @@ private var offset: CGFloat = 8.0;
         if mode == .focus {
             options = .curveEaseIn
         }
-        UIView.animate(withDuration: animate ? 0.3 : 0.0, delay: 0.0, options: options) { [weak self] in
+        UIView.animate(withDuration: animate ? animDuration : 0.0, delay: 0.0, options: options) { [weak self] in
             self?.updateShortcutViewCenter(reqCenter)
         }
 
         if mode == .focus {
             if self.shortcutViewPlacement.isLeftPlacement() {
                 reqCenter.x -= 60.0
-            } else {
+            } else if self.shortcutViewPlacement.isRightPlacement() {
                 reqCenter.x += 60.0
             }
-            UIView.animate(withDuration: animate ? 0.3 : 0.0, delay: 0.0, options: options) { [weak self] in
+            UIView.animate(withDuration: animate ? animDuration : 0.0, delay: 0.0, options: options) { [weak self] in
                 self?.updateShortcutViewCenter(CGPoint(x: reqCenter.x, y: reqCenter.y))
             }
         }
@@ -121,24 +125,30 @@ private var offset: CGFloat = 8.0;
 
     @objc func handleEndDragOfZoomPanel(_ frame: CGRect, mode: FTZoomShortcutMode) {
         self.handleZoomPanelFrameChange(frame, mode: mode) {
-            let center = self.shortcutView.center
-            if let parent = self.parentVC?.view {
-                self.updateMinOffsetIfNeeded()
-                let placement = FTShortcutPlacement.nearestPlacement(for: self.shortcutView, topOffset: self.toolbarOffset, in: parent)
-                placement.save()
+            self.updateMinOffsetIfNeeded()
+        }
+    }
+
+    @objc func exitZoomModeNotified(_ notification: Notification) {
+        if (self.zoomModeInfo.overlayHeight == 0 && self.shortcutZoomMode == .auto) {
+            let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+            let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+            UIView.animate(withDuration: animDuration) {
+                self.updateShortcutViewCenter(actualCenter)
             }
+        } else {
+            self.shortcutZoomMode = .auto
         }
     }
 
     @objc func handleZoomPanelFrameChange(_ frame: CGRect, mode: FTZoomShortcutMode, animate: Bool = false, completion:(() -> Void)?) {
-        if mode == .manual {
+        if self.shortcutZoomMode == .manual && self.shortcutViewPlacement != .bottom {
             completion?()
             return
         }
-        let shortCutYpos = self.shortcutView.frame.origin.y
 
         if animate {
-            UIView.animate(withDuration: 0.1) {
+            UIView.animate(withDuration: animDuration) {
                 updateShortcutIfRequired()
             } completion: { _ in
                 completion?()
@@ -149,28 +159,11 @@ private var offset: CGFloat = 8.0;
         }
 
         func updateShortcutIfRequired() {
-            let minYOffset = self.toolbarOffset
-            if shortCutYpos >= minYOffset {
-                if shortcutView.frame.maxY > frame.origin.y {
-                    let offSetToMove = shortcutView.frame.maxY - frame.origin.y
-                    let reqPos = shortCutYpos - offSetToMove
-                    if reqPos > minYOffset {
-                        shortcutView.frame.origin.y = reqPos
-                    } else {
-                        shortcutView.frame.origin.y = minYOffset
-                    }
-                } else {
-                    let offSetToMove = frame.origin.y - shortcutView.frame.maxY
-                    let reqPos = shortCutYpos + offSetToMove
-                    let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
-                    let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
-                    let actualYPos = actualCenter.y - shortcutView.frame.height/2.0
-                    if reqPos < actualYPos {
-                        shortcutView.frame.origin.y = reqPos
-                    } else {
-                        self.updateShortcutViewCenter(actualCenter)
-                    }
-                }
+            let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+            let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+            self.updateShortcutViewCenter(actualCenter)
+            if self.zoomModeInfo.overlayHeight == 0 {
+                self.shortcutZoomMode = .auto
             }
         }
     }
@@ -204,6 +197,16 @@ private var offset: CGFloat = 8.0;
             size = presenterShortcutSize
         }
         return size
+    }
+
+    internal var zoomModeInfo: FTZoomModeInfo {
+        var info = FTZoomModeInfo()
+        if let pdfRender = self.parentVC as? FTPDFRenderViewController, pdfRender.isInZoomMode() {
+            if let overlay = pdfRender.zoomOverlayController {
+                info = FTZoomModeInfo(isEnabled: true, overlayHeight: overlay.view.frame.height)
+            }
+        }
+        return info
     }
 }
 
@@ -311,6 +314,6 @@ extension FTShortcutToolPresenter {
     }
 
     func shortcutViewCenter(for placement: FTShortcutPlacement, size: CGSize) -> CGPoint {
-        return placement.shortcutViewCenter(fotShortcutView: shortcutView, topOffset: toolbarOffset)
+        return placement.placementCenter(forShortcutView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
     }
 }
