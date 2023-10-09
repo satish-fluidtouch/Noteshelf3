@@ -45,6 +45,30 @@ enum SocialMediaTypes: CaseIterable{
     }
 }
 
+enum FTAboutNoteshelfOptions: CaseIterable{
+    case visitWebsite
+    case privacyPolicy
+
+    var title: String{
+        let title: String
+        switch self{
+        case .visitWebsite:
+            title = "AboutVisitNoteshelfWebsite"
+        case .privacyPolicy:
+            title = "iap.privacy"
+        }
+        return title.localized
+    }
+    var webUrl: String{
+        switch self{
+        case .visitWebsite:
+            return "http://www.noteshelf.net"
+        case .privacyPolicy:
+            return "https://www.noteshelf.net/privacy.html"
+        }
+    }
+}
+
 class FTSettingsAboutViewModel: ObservableObject {
     var headerTopTitle: String {
         return "Noteshelf 3"
@@ -64,9 +88,6 @@ class FTSettingsAboutViewModel: ObservableObject {
     }
     var copyrightMessage: String{
         return "settings.about.copyrightmessage".localized
-    }
-    var visitWebsite: String{
-        return "AboutVisitNoteshelfWebsite".localized
     }
     var welcomeTourText: String{
         return "Welcome Tour".localized
