@@ -11,6 +11,9 @@ import FTCommon
 
 extension FTShortcutToolPresenter {
     func configurePanGesture() {
+        if UIDevice.current.isIphone() {
+            return
+        }
         let pan = UIPanGestureRecognizer.init(target: self, action: #selector(handlePan(recognizer:)))
         shortcutView.addGestureRecognizer(pan)
         shortcutView.translatesAutoresizingMaskIntoConstraints = true

@@ -34,6 +34,9 @@ private var offset: CGFloat = 8.0
     internal var animDuration: CGFloat = 0.3
 
     var shortcutViewPlacement: FTShortcutPlacement {
+        if UIDevice.current.isIphone() {
+            return .top
+        }
         let placement = FTShortcutPlacement.getSavedPlacement()
         return placement
     }
