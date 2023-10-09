@@ -127,7 +127,7 @@ struct FTSettingsAboutView: View {
     private func aboutNoteshelfOption(option: FTAboutNoteshelfOptions) -> some View{
         Button {
     #if targetEnvironment(macCatalyst)
-            if let url = URL(string: type.webUrl) {
+            if let url = URL(string: option.webUrl) {
                 UIApplication.shared.open(url);
             }
     #else
