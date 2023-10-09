@@ -98,7 +98,7 @@ enum FTShortcutPlacement: String, CaseIterable {
 private var offset: CGFloat = 8.0;
 extension FTShortcutPlacement {
     func shortcutViewCenter(fotShortcutView shorcutView: UIView,topOffset: CGFloat) -> CGPoint {
-        guard let superViewFrame = shorcutView.superview?.frame else {
+        guard let superViewFrame = shorcutView.superview?.bounds else {
             return .zero
         }
         let frame = CGRect(x: superViewFrame.origin.x,
