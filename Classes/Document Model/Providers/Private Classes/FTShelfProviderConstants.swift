@@ -21,7 +21,6 @@ extension NSNotification.Name  {
     static let collectionAddedOrUpdated = NSNotification.Name(rawValue: "collectionAddedOrUpdated")
     
     static let shelfItemUpdated = NSNotification.Name(rawValue: "FTShelfItemDidUpdatedNotification")
-    static let didScrollToCurrentShelfItem = NSNotification.Name(rawValue: "didScrollCurrentShelfItem")
     static let groupItemAdded = NSNotification.Name(rawValue: "FTShelfItemGroupAddedNotification")
     static let groupItemRemoved = NSNotification.Name(rawValue: "FTShelfItemGroupRemovedNotification")
     static let shelfItemRemoved = NSNotification.Name(rawValue: "FTShelfItemDidRemovedNotification")

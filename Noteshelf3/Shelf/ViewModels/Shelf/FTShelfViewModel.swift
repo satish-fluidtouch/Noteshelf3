@@ -61,7 +61,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var closedDocumentItem: FTDocumentItem?
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
-    @Published var scrollToIndex :Int = -1
+    @Published var scrollToIndex: Int?
     // MARK: Published variables
     @Published var mode: FTShelfMode = .normal {
         didSet {
@@ -473,19 +473,18 @@ extension FTShelfViewModel {
             }
             if(animate) {
                 withAnimation {
-                    self.setShelfItems(items);
-                    if let item = self.closedDocumentItem {
-                        let index = items.firstIndex(where: {$0.uuid == item.uuid}) ?? 0
-                        NotificationCenter.default.post(name: NSNotification.Name.didScrollToCurrentShelfItem, object: nil, userInfo: ["index": index])
-                        self.closedDocumentItem = nil
-                    }
+                    setShelfItems()
                 }
             }
             else {
+              setShelfItems()
+            }
+            
+            func setShelfItems() {
                 self.setShelfItems(items);
                 if let item = self.closedDocumentItem {
-                    let index = items.firstIndex(where: {$0.uuid == item.uuid}) ?? 0
-                    NotificationCenter.default.post(name: NSNotification.Name.didScrollToCurrentShelfItem, object: nil, userInfo: ["index": index])
+                    let index = items.firstIndex(where: {$0.uuid == item.uuid})
+                    self.scrollToIndex = index
                     self.closedDocumentItem = nil
                 }
             }

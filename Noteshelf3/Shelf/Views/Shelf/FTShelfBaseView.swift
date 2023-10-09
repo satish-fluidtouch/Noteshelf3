@@ -63,13 +63,12 @@ extension FTShelfBaseView {
                                     shelfItemWidth:gridItemSize.width,
                                     shelfItemHeight: gridItemSize.height)
                     .frame(width: gridItemSize.width , height: gridItemSize.height, alignment: Alignment(horizontal: .center, vertical: .bottom))
-                    .onReceive(NotificationCenter.default.publisher(for: .didScrollToCurrentShelfItem), perform: { notification in
-                        if let scrollViewProxy {
-                            if let userInfo = notification.userInfo, let scrollToIndex = userInfo["index"] as? Int {
-                                scrollViewProxy.scrollTo(scrollToIndex)
-                            }
+                    .onChange(of: viewModel.scrollToIndex) { newValue in
+                        if let newValue {
+                            scrollViewProxy?.scrollTo(newValue)
+                            viewModel.scrollToIndex = nil
                         }
-                    })
+                    }
                 } else {
                     EmptyView()
                 }
