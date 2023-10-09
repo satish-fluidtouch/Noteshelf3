@@ -281,12 +281,12 @@ private extension FTDocumentItem {
     }
     
     func updateIsDownloading(_ metadataItem: NSMetadataItem) {
-        if metadataItem.isItemDownloaded() == false {
-            let metadataValue = metadataItem.isDownloading()
-            if metadataValue != self.isDownloading {
-                self.isDownloading = metadataValue;
-                if(metadataValue) {
-                    self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!;
+        let metadataValue = metadataItem.isDownloading()
+        if metadataValue != self.isDownloading {
+            if(metadataValue) {
+                self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!;
+                if self.downloadProgress > 0 {
+                    self.isDownloading = metadataValue;
                 }
             }
         }
