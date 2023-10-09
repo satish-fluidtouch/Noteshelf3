@@ -93,6 +93,8 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureNewNavigationBar(hideDoneButton: false,title: "Evernote".localized)
+        let indexPathToReload = IndexPath(row: Row_PublishNotebooks, section: Section_Actions)
+        self.tableView?.reloadRows(at: [indexPathToReload], with: .automatic)
     }
 
     override func didReceiveMemoryWarning() {
@@ -188,12 +190,10 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
         tableView.deselectRow(at: indexPath, animated: true)
     }
     private func updateEvernoteBackupCount(cell: FTSettingsBaseTableViewCell) {
-        let predicate = NSPredicate.init(format: "parentRecord.nsGUID != nil");
-        let evernotenoteBooksBackedUp = FTENSyncUtilities.fetchCount(withEntity: "ENSyncRecord", predicate: predicate)
         let options = FTFetchShelfItemOptions()
         cell.notebooksCountLabel?.text = ""
         FTNoteshelfDocumentProvider.shared.fetchAllShelfItems(option: options) { shelfItems in
-            cell.notebooksCountLabel?.text = String(format: "%d/%d %@", evernotenoteBooksBackedUp, shelfItems.count, "Notebooks".localized)
+            cell.notebooksCountLabel?.text = String(format: "%d/%d %@", FTENPublishManager.shared.syncEnabledBooks?.count ?? 0, shelfItems.count, "Notebooks".localized)
         }
     }
 
