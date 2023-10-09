@@ -85,7 +85,7 @@ private extension FTShortcutToolPresenter {
             shortcutView.superview?.bringSubviewToFront(shortcutView)
 
             func addSlotView(for placement: FTShortcutPlacement) {
-                let slotView = FTSlotVisualEffectView()
+                let slotView = FTSlotView()
                 slotView.stylePanel()
                 slotView.frame.size = placement.slotSize
                 slotView.center = shortcutView.center
@@ -130,7 +130,7 @@ private extension FTShortcutToolPresenter {
         FTShortcutPlacement.allCases.forEach { placement in
             let tagToSearch = placement.slotTag
             for subview in parentView.subviews {
-                if let dashedBorderView = subview as? FTSlotVisualEffectView {
+                if let dashedBorderView = subview as? FTSlotView {
                     if dashedBorderView.tag == currentPlacement.slotTag {
                         if !dashedBorderView.isHighlighted {
                             dashedBorderView.isHighlighted = true
@@ -188,47 +188,57 @@ private extension FTShortcutToolPresenter {
     }
 }
 
-class FTSlotVisualEffectView: UIVisualEffectView {
+class FTSlotView: UIView {
     private let cornerRadius: CGFloat = 19.0
-    private let bgColor = UIColor.appColor(.shortcutSlotBgColor)
     private let borderView = UIView()
+    private let dashedBorder = CAShapeLayer()
 
     override var frame: CGRect {
         didSet {
-            let borderViewFrame =  self.contentView.frame
-            self.borderView.frame = borderViewFrame
-            self.borderView.layer.cornerRadius = cornerRadius
+            self.updateBorderViewAppearance()
         }
     }
 
     var isHighlighted: Bool = false {
         didSet {
-            if isHighlighted {
-                self.borderView.backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
-                self.borderView.layer.borderWidth = 1.5
-                self.borderView.layer.borderColor = UIColor.appColor(.shortcutSlotHighlightBorderColor).cgColor
-            } else {
-                self.borderView.backgroundColor = bgColor
-                self.borderView.layer.borderWidth = 1.0
-                self.borderView.layer.borderColor = UIColor.appColor(.shortcutSlotBorderColor).cgColor
-            }
+            self.updateBorderViewAppearance()
         }
     }
 
     func stylePanel() {
-        let blurEffect = UIBlurEffect(style: .regular)
-        self.effect = blurEffect
         self.backgroundColor = .clear
         self.layer.cornerRadius = cornerRadius
-
-        // add border view
-        let borderViewFrame = self.contentView.frame
-        self.borderView.frame = borderViewFrame
-        self.borderView.backgroundColor = bgColor
+        self.borderView.frame = self.frame
         self.borderView.layer.cornerRadius = cornerRadius
-        self.contentView.addSubview(borderView)
+        self.borderView.layer.addSublayer(dashedBorder)
+        self.addSubview(borderView)
         self.layoutIfNeeded()
         self.isHighlighted = false
+    }
+
+    private func updateBorderViewAppearance() {
+        let width: CGFloat = 1.0
+        let borderColor: UIColor
+        let backgroundColor: UIColor
+        if isHighlighted {
+            borderColor = UIColor.appColor(.shortcutSlotHighlightBorderColor)
+            backgroundColor = UIColor.appColor(.shortcutSlotHighlightColor)
+        } else {
+            borderColor = UIColor.appColor(.shortcutSlotBorderColor)
+            backgroundColor = UIColor.appColor(.shortcutSlotBgColor)
+        }
+
+        self.borderView.frame = self.bounds.insetBy(dx: width, dy: width)
+        self.borderView.backgroundColor = backgroundColor
+        self.dashedBorder.fillColor = nil
+        self.dashedBorder.path = UIBezierPath(roundedRect: self.borderView.bounds, cornerRadius: cornerRadius).cgPath
+        self.dashedBorder.lineWidth = width
+        self.dashedBorder.strokeColor = borderColor.cgColor
+        self.dashedBorder.lineDashPattern = [4, 4]
+        self.dashedBorder.shadowColor = UIColor.label.withAlphaComponent(0.12).cgColor
+        self.dashedBorder.shadowOpacity = 1.0
+        self.dashedBorder.shadowRadius = 2.0
+        self.dashedBorder.shadowOffset = CGSize(width: 0, height: 2.0)
     }
 }
 

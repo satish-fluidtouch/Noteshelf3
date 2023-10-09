@@ -206,10 +206,10 @@ extension FTShortcutPlacement {
         var reqPlacement: FTShortcutPlacement = .topLeft
         let movingCenter: CGPoint = shortcutView.center
 
-        let filteredViews = parentView.subviews.compactMap { $0 as? FTSlotVisualEffectView }
+        let filteredViews = parentView.subviews.compactMap { $0 as? FTSlotView }
         let slotsAndCenters = Dictionary(uniqueKeysWithValues: filteredViews.map { ($0, $0.center) })
 
-        var nearestView: FTSlotVisualEffectView?
+        var nearestView: FTSlotView?
         var minDistance: CGFloat = .greatestFiniteMagnitude
 
         for (view, center) in slotsAndCenters {
