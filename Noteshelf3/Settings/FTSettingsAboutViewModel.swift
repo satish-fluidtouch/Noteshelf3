@@ -45,7 +45,7 @@ enum SocialMediaTypes: CaseIterable{
     }
 }
 
-enum MiddleSectionTypes: CaseIterable{
+enum FTAboutNoteshelfOptions: CaseIterable{
     case visitWebsite
     case privacyPolicy
 

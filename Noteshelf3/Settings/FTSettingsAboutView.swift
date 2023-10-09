@@ -16,7 +16,7 @@ struct FTSettingsAboutView: View {
     @State private var isShowingWebView: Bool = false
 
     @State private var selectedStyle: SocialMediaTypes?
-    @State private var middleSectiontype: MiddleSectionTypes?
+    @State private var aboutNoteshelfOption: FTAboutNoteshelfOptions?
     @State private var showWebview: Bool = false
     @State private var showWelcome: Bool = false
 
@@ -83,14 +83,14 @@ struct FTSettingsAboutView: View {
     @ViewBuilder
     private var middleSection: some View{
         VStack(alignment: .leading, spacing: 0) {
-            middleSectionItem(type: .visitWebsite)
+            aboutNoteshelfOption(option: .visitWebsite)
 
             FTDividerLine()
 
-            middleSectionItem(type: .privacyPolicy)
-                .if(middleSectiontype != nil, transform: { view in
+            aboutNoteshelfOption(option: .privacyPolicy)
+                .if(aboutNoteshelfOption != nil, transform: { view in
                     view.fullScreenCover(isPresented: $isShowingWebView) {
-                        if let middleSectiontype = middleSectiontype, let url = URL(string: middleSectiontype.webUrl) {
+                        if let aboutNoteshelfOption = aboutNoteshelfOption, let url = URL(string: aboutNoteshelfOption.webUrl) {
                             SafariView(url: url)
                         }
                     }
@@ -124,19 +124,19 @@ struct FTSettingsAboutView: View {
     }
 
     @ViewBuilder
-    private func middleSectionItem(type: MiddleSectionTypes) -> some View{
+    private func aboutNoteshelfOption(option: FTAboutNoteshelfOptions) -> some View{
         Button {
     #if targetEnvironment(macCatalyst)
             if let url = URL(string: type.webUrl) {
                 UIApplication.shared.open(url);
             }
     #else
-            middleSectiontype = type
+            aboutNoteshelfOption = option
             isShowingWebView = true
     #endif
         } label: {
             HStack {
-                Text(type.title)
+                Text(option.title)
                 Spacer()
                 Image(icon: .rightArrow)
                     .foregroundColor(Color.label).opacity(0.5)
