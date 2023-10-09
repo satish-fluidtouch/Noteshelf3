@@ -83,22 +83,6 @@ final class FTDocumentMigration {
 
             // Copy the notebook to temporary location with new extension
             try FileManager().coordinatedCopy(fromURL: shelfItem.URL, toURL: documentTemporaryLocation);
-            if documentTemporaryLocation.isPinEnabledForDocument() {
-                let imageUrl = documentTemporaryLocation.appendingPathComponent("cover-shelf-image.png")
-                if FileManager().fileExists(atPath: imageUrl.path) {
-                    let image = UIImage(contentsOfFile: imageUrl.path)
-                    if image?.coverStyle() == .default {
-                        let propertyInfoPlist = documentTemporaryLocation.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
-                        let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
-                        dictionary.setValue(true, forKey: INSERTCOVER)
-                        dictionary.write(to: propertyInfoPlist, atomically: true);
-                    } else {
-                        if let lockedImage = UIImage(named: "locked") {
-                            try? lockedImage.pngData()?.write(to: imageUrl)
-                        }
-                    }
-                }
-            }
             // When the user choses copy option, we must regenrate Document UUID, for this purpose, we're using the existing approach.
             FTDocumentFactory.prepareForImportingAtURL(documentTemporaryLocation) { error, document in
                 if let fileURL = document?.URL {
