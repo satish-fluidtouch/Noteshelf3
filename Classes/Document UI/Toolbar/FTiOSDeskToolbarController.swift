@@ -68,6 +68,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.handleInteractions()
 #if targetEnvironment(macCatalyst)
         self.view.isHidden = true
 #endif
@@ -123,6 +124,16 @@ protocol FTDeskPanelActionDelegate: AnyObject {
             view = self.centerPanelVc?.centerPanelVisualEffectBlurView()
         }
         return view
+    }
+    private func handleInteractions(){
+        self.addButton?.applyInteraction()
+        self.shareButton?.applyInteraction()
+        self.fullScreenModeButton.applyInteraction()
+        self.moreButton?.applyInteraction()
+        self.backButton?.applyInteraction()
+        self.finderButton?.applyInteraction()
+        self.undoButton?.applyInteraction()
+        self.redoButton?.applyInteraction()
     }
 
     private func handleObservers() {
