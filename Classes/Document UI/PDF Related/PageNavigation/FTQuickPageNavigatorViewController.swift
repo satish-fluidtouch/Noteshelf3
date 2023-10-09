@@ -521,12 +521,13 @@ extension FTQuickPageNavigatorViewController {
                         
                         if let scrollDirection = self?.direction, scrollDirection == .vertical {
                             thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
-                            thumbnailImgView.center = CGPoint.init(x: tipView.frame.minX - gapBetweenPageTipAndThumbnail - thumbnailImgView.frame.width * 0.5, y: tipView.center.y)
+//                            thumbnailImgView.center = CGPoint.init(x: tipView.frame.minX - gapBetweenPageTipAndThumbnail - thumbnailImgView.frame.width * 0.5, y: tipView.center.y)
+                            thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width + (tipView.frame.width * 0.4) , y: tipView.frame.maxY + (newImage.size.height * 0.5) + gapBetweenPageTipAndThumbnail )
                         }
                         else {
                             thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
                             thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * 0.5, y: tipView.frame.minY - (newImage.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
-                    }
+                        }
                     }
                 }
             }
