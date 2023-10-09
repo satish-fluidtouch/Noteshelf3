@@ -28,20 +28,26 @@ class FTStoreCustomPreviewViewController: UIViewController {
     }
 
     func preparePreviewOfFile() {
-        do {
-            let image = try fileUrl.generateThumbnailForFile()
-            self.imageView.image = image
-            if image == nil {
-                guard let document = PDFDocument(url: fileUrl) else { return }
-                if document.isLocked {
-                    self.imageView.image = UIImage(named: "template_locked", in: storeBundle, with: nil)
-                } else {
-                    self.imageView.image = UIImage(named: "finder-empty-pdf-page");
+        self.imageView.image = UIImage(named: "finder-empty-pdf-page");
+        func generteThumbnail() {
+            fileUrl.generateThumbnailForPdf { image in
+                if let image {
+                    runInMainThread {
+                        self.imageView.image = image
+                    }
                 }
-
             }
-        } catch let error {
-            print("catch Eroor", error)
+        }
+
+        if fileUrl.pathExtension == "pdf" {
+            guard let document = PDFDocument(url: fileUrl) else { return }
+            if document.isLocked {
+                self.imageView.image = UIImage(named: "template_locked", in: storeBundle, with: nil)
+            } else {
+               generteThumbnail()
+            }
+        } else {
+            generteThumbnail()
         }
     }
 
