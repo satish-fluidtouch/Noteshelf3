@@ -16,7 +16,8 @@ class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControlle
     var loadingIndictor: FTLoadingIndicatorViewController?
     var isViewLoading = false
     private(set) weak var documentViewController: FTDocumentRenderViewController?;
-    
+    private var renderingObserver: NSObjectProtocol?
+
     var curentPrefrredDisplayMode = UISplitViewController.DisplayMode.secondaryOnly
     class func viewController(_ docInfo : FTDocumentOpenInfo
                               , bounds: CGRect
@@ -89,8 +90,17 @@ class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isViewLoading = true
-        NotificationCenter.default.addObserver(forName: .didCompleteRenderingNotification, object: nil, queue: .main) { [weak self] (_) in
-            self?.loadingIndictor?.hide()
+        let notificationCenter = NotificationCenter.default
+        renderingObserver = notificationCenter.addObserver(forName: .didCompleteRenderingNotification, object: nil, queue: .main) { [weak self] (_) in
+            guard let self = self else {
+                return
+            }
+            if self.loadingIndictor != nil {
+                self.loadingIndictor?.hide()
+                if let observer = self.renderingObserver {
+                    notificationCenter.removeObserver(observer)
+                }
+            }
         }
     }
 

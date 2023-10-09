@@ -449,7 +449,7 @@ private extension FTWritingViewController
                 if(!self.isCurrentPage || self.isCurrentPage && self.isInZoomMode()) {
                     self.offscreenTileViewController?.renderTiles(inRect: rect,properties: properties);
                     self.renderingInProgress = false;
-                    NotificationCenter.default.post(name: .didCompleteRenderingNotification, object: nil)
+//                    NotificationCenter.default.post(name: .didCompleteRenderingNotification, object: nil)
                     return;
                 }
             }
