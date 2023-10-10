@@ -65,7 +65,9 @@ class FTCloudBackupENPublishError: NSObject,ObservableObject {
                 hasError = true
             }
         }
-        self.hasError = hasError;
+        runInMainThread {
+            self.hasError = hasError;
+        }
     }
 
     deinit {
