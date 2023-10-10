@@ -70,6 +70,22 @@ class FTSafeAreazView: UIView {
     }
 }
 
+class FTPageContent: NSObject {
+    var writtenContent: String = "";
+    var pdfContent: String = "";
+    var textContent: String = "";
+    
+    var content: String {
+        var contents = [pdfContent,textContent,writtenContent];
+        return contents.joined(separator: " ");
+    }
+    
+    var nonPDFContent: String {
+        var contents = [textContent,writtenContent];
+        return contents.joined(separator: " ");
+    }
+}
+
 class FTNoteshelfAIViewController: UIViewController {
     private var currentToken : String = UUID().uuidString
 
@@ -89,7 +105,7 @@ class FTNoteshelfAIViewController: UIViewController {
     private weak var betaAlertVC: FTNoteshelfAITokensConsumedAlertViewController?;
 
     private var userInputInProgess = false;
-    private var contentString: String?;
+    private var content = FTPageContent();
     private var enteredContent: String = "";
     
     private var languageCode: String = "" {
@@ -120,11 +136,13 @@ class FTNoteshelfAIViewController: UIViewController {
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange();
     }
-    static func showNoteshelfAI(from presentingController:UIViewController, content:String?,delegate: FTNoteshelfAIDelegate?) {
+    static func showNoteshelfAI(from presentingController:UIViewController
+                                , content:FTPageContent
+                                ,delegate: FTNoteshelfAIDelegate?) {        
         guard let controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIViewController") as? FTNoteshelfAIViewController else {
             fatalError("ERROR!!!!");
         }
-        controller.contentString = content;
+        controller.content = content;
         controller.delegate = delegate;
         controller.preferredContentSize = CGSize(width: 500, height: 508);
         let navController = UINavigationController(rootViewController: controller);
@@ -136,6 +154,7 @@ class FTNoteshelfAIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        FTNoteshelfAITokenManager.shared.resetAITokens();
         self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;
@@ -178,12 +197,14 @@ class FTNoteshelfAIViewController: UIViewController {
         
         self.textField?.placeholder = self.aiCommand.placeholderMessage;
         self.setFooterMode(.noteshelfAiBeta);
-                
+        let allTokensConsumed = allTokensConsumed;
+
         if aiCommand == .none {
             self.reset();
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAIOptionsViewController.className);
             (controller as? FTNoteshelfAIOptionsViewController)?.delegate = self;
-            (controller as? FTNoteshelfAIOptionsViewController)?.contentString = self.contentString;
+            (controller as? FTNoteshelfAIOptionsViewController)?.content = self.content;
+            (controller as? FTNoteshelfAIOptionsViewController)?.isAllTokensConsumend = allTokensConsumed;
         }
         else if aiCommand == .langTranslate
                     ,languageCode.isEmpty
@@ -211,10 +232,8 @@ class FTNoteshelfAIViewController: UIViewController {
         if aiCommand == .generalQuestion || (aiCommand == .langTranslate && self.textField?.isFirstResponder ?? true) {
             self.textViewController?.showPlaceHolder("noteshelf.ai.pressEnterToSend".aiLocalizedString);
         }
-        
-        if allTokensConsumed {
-            self.showTokensConsumedAlert();
-        }
+        self.textField?.isUserInteractionEnabled = !allTokensConsumed;
+        self.textField?.alpha = allTokensConsumed ? 0.6: 1;
     }
 }
 
@@ -260,7 +279,7 @@ extension FTNoteshelfAIViewController: FTNoteshelfAITextViewViewControllerDelega
 
 extension FTNoteshelfAIViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if self.aiCommand == .langTranslate, (self.contentToExecute?.isEmpty ?? true) {
+        if self.aiCommand == .langTranslate, self.contentToExecute.isEmpty {
             self.aiCommand = .generalQuestion;
         }
         NotificationCenter.default.addObserver(self, selector: #selector(self.textFieldDidChange(_:)), name: UITextField.textDidChangeNotification, object: textField);
@@ -314,13 +333,10 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
 
 private extension FTNoteshelfAIViewController {
     var allTokensConsumed: Bool {
-#if DEBUG || ADHOC
+#if DEBUG
         return false;
 #else
-        if FTNoteshelfAITokenManager.shared.maxAllowedTokens <= FTNoteshelfAITokenManager.shared.consumedTokens {
-            return true;
-        }
-        return false;
+        return FTNoteshelfAITokenManager.shared.tokensLeft > 0;
 #endif
     }
     
@@ -329,7 +345,7 @@ private extension FTNoteshelfAIViewController {
             return false;
         }
         
-        guard let stringToExecute = self.contentToExecute,!stringToExecute.isEmpty else {
+        guard !self.contentToExecute.isEmpty else {
             return false;
         }
         
@@ -357,7 +373,7 @@ private extension FTNoteshelfAIViewController {
         self.textViewController?.showPlaceHolder("");
         self.textViewController?.showActionOptions(false);
         
-        let command = FTAICommand.command(for: self.aiCommand,content: self.contentToExecute ?? "");
+        let command = FTAICommand.command(for: self.aiCommand, content: content, enteredContent: self.enteredContent)
         (command as? FTAITranslateCommand)?.languageCode = languageCode;
         
         self.textField?.text = command.executionMessage;
@@ -400,16 +416,16 @@ private extension FTNoteshelfAIViewController {
         return self.optionsController as? FTNoteshelfAITextViewViewController
     }
     
-    var contentToExecute: String? {
+    var contentToExecute: String {
         if aiCommand == .generalQuestion {
-            return self.contentString?.appending(" \(self.enteredContent)");
+            return self.content.content.appending(" \(self.enteredContent)");
         }
         if aiCommand != .langTranslate {
             if !self.enteredContent.isEmpty {
                 return self.enteredContent;
             }
         }
-        return self.contentString;
+        return self.content.content;
     }
 }
 

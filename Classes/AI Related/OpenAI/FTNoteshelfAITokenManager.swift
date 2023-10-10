@@ -23,12 +23,14 @@ class FTNoteshelfAITokenManager: NSObject,ObservableObject {
     private var premiumCancellable : AnyCancellable?;
     
     func configure() {
-        self.loadTokenInfo();
+        self.refreshTokenInfo();
         self.configureForPremoumUser();
         if !FTIAPManager.shared.premiumUser.isPremiumUser {
             premiumCancellable = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremiumUser in
                 if isPremiumUser {
                     self?.configureForPremoumUser();
+                    self?.premiumCancellable?.cancel();
+                    self?.premiumCancellable = nil;
                 }
             }
         }
@@ -74,27 +76,30 @@ class FTNoteshelfAITokenManager: NSObject,ObservableObject {
         let daysLeft = nextMonth.daysBetween(date: currentDate);
         return daysLeft;
     }
+    
+    func refreshTokenInfo() {
+        self.storedTokenInfo = tokeknInfo();
+    }
 }
 
 private extension FTNoteshelfAITokenManager {
     private func saveTokenInfo() {
         KeychainItemWrapper.saveTokenInfo(storedTokenInfo);
-        NSUbiquitousKeyValueStore.saveTokenInfo(storedTokenInfo)
+//        NSUbiquitousKeyValueStore.saveTokenInfo(storedTokenInfo)
     }
     
-    private func loadTokenInfo() {
+    private func tokeknInfo() -> FTAITokenInfo {
         if let tokenInfo = KeychainItemWrapper.tokenInfo() {
-            storedTokenInfo = tokenInfo;
+            return tokenInfo;
         }
-        else if let tokenInfo = NSUbiquitousKeyValueStore.tokenInfo() {
-            storedTokenInfo = tokenInfo;
-        }
-        else {
-            storedTokenInfo = FTAITokenInfo();
-        }
+//        else if let tokenInfo = NSUbiquitousKeyValueStore.tokenInfo() {
+//            return tokenInfo;
+//        }
+        return FTAITokenInfo();
     }
     
     @objc private func resetTokenIfNeeded(_ notification: Notification?) {
+        self.refreshTokenInfo();
         if shouldCheckForUpdate() {
             let lastResetDate = storedTokenInfo.lastResetDate;
             let currentDate = Date.utcDate;

@@ -43,22 +43,21 @@ extension FTPageViewController {
     @objc private func generateOpenAIContentFor(annotations : [FTAnnotation],pdfContent: String = "") {
         var annotationsToConsider = [FTAnnotation]();
         
-        var contentToSearch: String = "";
+        let pageContent = FTPageContent();
         if !pdfContent.isEmpty {
-            contentToSearch = pdfContent.appending(" ");
+            pageContent.pdfContent = pdfContent;
         }
-        
         annotations.forEach { eachAnnotation in
             if(eachAnnotation.supportsHandwrittenRecognition) {
                 annotationsToConsider.append(eachAnnotation)
             }
             else if let textAnnotation = eachAnnotation as? FTTextAnnotation,let string = textAnnotation.attributedString?.string.openAITrim(), !string.isEmpty {
-                contentToSearch.append(string);
+                pageContent.textContent.append(string);
             }
         }
         
         if annotationsToConsider.isEmpty {
-            self.showNoteshelfAIController(contentToSearch);
+            self.showNoteshelfAIController(pageContent);
         }
         else {
             let canvasSize = self.pdfPage?.pdfPageRect.size ?? CGSize.zero;
@@ -85,14 +84,14 @@ extension FTPageViewController {
                             debugLog("\(recognitionProcessor) executed");
                             loadingIndicator.hide(nil);
                             guard let recogInfo = info else {
-                                weakSelf.showNoteshelfAIController(contentToSearch);
+                                weakSelf.showNoteshelfAIController(pageContent);
                                 return
                             }
                             let text = recogInfo.recognisedString.openAITrim();
                             if !text.isEmpty {
-                                contentToSearch.append(text);
+                                pageContent.writtenContent = text;
                             }
-                            weakSelf.showNoteshelfAIController(contentToSearch);
+                            weakSelf.showNoteshelfAIController(pageContent);
                         }
                     }
                     recognitionProcessor.startTask(task, onCompletion: nil)
@@ -101,7 +100,7 @@ extension FTPageViewController {
         }
     }
     
-    private func showNoteshelfAIController(_ content:String) {
+    private func showNoteshelfAIController(_ content:FTPageContent) {
         FTNoteshelfAIViewController.showNoteshelfAI(from: self
                                                     , content: content
                                                     , delegate: self);

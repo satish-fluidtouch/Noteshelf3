@@ -21,10 +21,8 @@ class FTOpenAI: NSObject {
                  ,onUpdate: @escaping ((FTOpenAIResponse,Error?,_ token: String) -> (Void))
                  ,onCompletion: @escaping  ((Error?,_ token:String) -> (Void))) {
         
-        let commandString: String = command.content.appending(command.command());
-    
+        let commandString: String = command.command();
         let response = FTOpenAIResponse();
-        
         var messages = [Chat]();
         messages.append(Chat(role: .user, content: commandString));
         

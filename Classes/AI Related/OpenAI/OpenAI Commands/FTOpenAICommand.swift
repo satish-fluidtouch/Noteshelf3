@@ -28,17 +28,22 @@ class FTAICommand: NSObject {
     }
 
     var commandType: FTOpenAICommandType = .none;
-    var content: String = ""
+    var content: FTPageContent = FTPageContent();
+    var enteredContent: String = "";
     var commandToken: String = UUID().uuidString;
     
+    private var contentToExecute: String {
+        return self.content.content.appending(enteredContent);
+    }
+
     func command() -> String {
         if commandType == .generalQuestion {
-            return "noteshelf.ai.commandAskAnything".aiCommandString.appendingAICommandSuffix;
+            return String(format: "noteshelf.ai.commandAskAnything".aiCommandString.appendingAICommandSuffix, contentToExecute);
         }
-        return "";
+        return contentToExecute;
     }
         
-    static func command(for command: FTOpenAICommandType,content:String) -> FTAICommand {
+    static func command(for command: FTOpenAICommandType,content:FTPageContent,enteredContent: String) -> FTAICommand {
         let aiCommand: FTAICommand;
         switch command {
         case .explain:
@@ -49,10 +54,13 @@ class FTAICommand: NSObject {
             aiCommand = FTAIKeyPointsCommand();
         case .langTranslate:
             aiCommand = FTAITranslateCommand();
+        case .cleanUp:
+            aiCommand = FTAICleanUpCommand();
         default:
             aiCommand = FTAICommand();
         }
         aiCommand.content = content;
+        aiCommand.enteredContent = enteredContent;
         aiCommand.commandType = command;
         return aiCommand;
     }
@@ -65,19 +73,23 @@ class FTAICommand: NSObject {
         if commandType == .none {
             return "";
         }
-        return self.content;
+        return contentToExecute;
     }
 }
 
 class FTAITranslateCommand: FTAICommand {
     var languageCode: String = "English"
     
+    private var contentToExecute: String {
+        return self.content.content;
+    }
+
     override var responseType: FTAICommandResponseType {
         return .string;
     }
     
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandTranslate".aiCommandString, languageCode);
+        return String(format: "noteshelf.ai.commandTranslate".aiCommandString, contentToExecute,languageCode);
     }
     
     override var placeholderMessage: String {
@@ -85,37 +97,63 @@ class FTAITranslateCommand: FTAICommand {
     }
     
     override var executionMessage: String {
-        return String(format: "noteshelf.ai.TranslateToPlaceHolder".aiLocalizedString, languageCode).appending(" \" \(self.content.openAIDisplayString)\"")
+        return String(format: "noteshelf.ai.TranslateToPlaceHolder".aiLocalizedString, languageCode).appending(" \" \(contentToExecute.openAIDisplayString)\"")
     }
 }
 
 class FTAIKeyPointsCommand: FTAICommand {
+    private var contentToExecute: String {
+        return self.content.content;
+    }
+
     override func command() -> String {
-        return "noteshelf.ai.commandKeyPoints".aiCommandString.appendingAICommandSuffix;
+        return String(format: "noteshelf.ai.commandKeyPoints".aiCommandString.appendingAICommandSuffix, contentToExecute);
     }
     
     override var executionMessage: String {
-        return "noteshelf.ai.generateNotesOn".aiLocalizedString.appending(" \" \(self.content.openAIDisplayString)\"");
+        return "noteshelf.ai.generateNotesOn".aiLocalizedString.appending(" \" \(contentToExecute.openAIDisplayString)\"");
     }
 }
 
 class FTAISummarizeCommand: FTAICommand {
+    private var contentToExecute: String {
+        return self.content.content;
+    }
+
     override func command() -> String {
-        return "noteshelf.ai.commandSummarize".aiCommandString.appendingAICommandSuffix;
+        return String(format: "noteshelf.ai.commandSummarize".aiCommandString.appendingAICommandSuffix, contentToExecute);
     }
     
     override var executionMessage: String {
-        return "noteshelf.ai.summarize".aiLocalizedString.appending(" \" \(self.content.openAIDisplayString)\"");
+        return "noteshelf.ai.summarize".aiLocalizedString.appending(" \" \(contentToExecute.openAIDisplayString)\"");
     }
 }
 
 class FTAIExplainCommand: FTAICommand {
+    private var contentToExecute: String {
+        return self.content.content;
+    }
+
     override func command() -> String {
-        return "noteshelf.ai.commandExplain".aiCommandString.appendingAICommandSuffix;
+        return String(format: "noteshelf.ai.commandExplain".aiCommandString.appendingAICommandSuffix, contentToExecute);
     }
     
     override var executionMessage: String {
-        return "noteshelf.ai.explain".aiLocalizedString.appending(" \" \(self.content.openAIDisplayString)\"");
+        return "noteshelf.ai.explain".aiLocalizedString.appending(" \" \(contentToExecute.openAIDisplayString)\"");
+    }
+}
+
+class FTAICleanUpCommand: FTAICommand {
+    private var contentToExecute: String {
+        return self.content.nonPDFContent;
+    }
+    
+    override func command() -> String {
+        return String(format: "noteshelf.ai.cleanupContent".aiCommandString, self.contentToExecute).appendingAILangugaeResponse;
+    }
+    
+    override var executionMessage: String {
+        return "Clean up in progress"
     }
 }
 

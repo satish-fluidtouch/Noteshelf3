@@ -8,8 +8,8 @@
 import UIKit
 
 enum FTOpenAICommandType: Int {
-    static let supportedCommands̉: [FTOpenAICommandType] = [.generateNotes,.summarize,.explain,.langTranslate];
-    case summarize,explain,generateNotes,langTranslate,generalQuestion,none
+    static let supportedCommands̉: [FTOpenAICommandType] = [.generateNotes,.summarize,.explain,.langTranslate,.cleanUp];
+    case summarize,explain,generateNotes,langTranslate,generalQuestion,cleanUp,none
     
     var placeholderMessage: String {
         switch self {
@@ -21,6 +21,8 @@ enum FTOpenAICommandType: Int {
             return "noteshelf.ai.generateNotesOn".aiLocalizedString;
         case .summarize:
             return "noteshelf.ai.summarize".aiLocalizedString;
+        case .cleanUp:
+            return "Clean up";
         case .none:
             return "noteshelf.ai.askAnything".aiLocalizedString
         default:
@@ -38,6 +40,8 @@ enum FTOpenAICommandType: Int {
             return "noteshelf.ai.generateNotesOn".aiLocalizedString;
         case .summarize:
             return "noteshelf.ai.summarize".aiLocalizedString;
+        case .cleanUp:
+            return "Provide content";
         default:
             return "noteshelf.ai.provideContent".aiLocalizedString;
         }
@@ -53,6 +57,8 @@ enum FTOpenAICommandType: Int {
             return UIImage(named: "explain") ?? UIImage();
         case .langTranslate:
             return UIImage(named: "translate") ?? UIImage();
+        case .cleanUp:
+            return UIImage(named: "generate") ?? UIImage();
         default:
             return UIImage();
         }
@@ -71,6 +77,8 @@ enum FTOpenAICommandType: Int {
             return "noteshelf.ai.explain".aiLocalizedString;
         case .langTranslate:
             return "noteshelf.ai.translate".aiLocalizedString;
+        case .cleanUp:
+            return "Clean Up: ";
         default:
             return "";
         }

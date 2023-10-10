@@ -55,6 +55,7 @@
                         <outlet property="aiTableView" destination="9mi-hb-KiQ" id="NKm-0t-fJm"/>
                         <outlet property="creditsContainerView" destination="FIG-sS-lPn" id="sT2-T3-lX2"/>
                         <outlet property="creditsContainerViewHeightConstraint" destination="YMT-9F-W6j" id="uIU-Jf-2Ap"/>
+                        <outlet property="tableViewHeightConstraint" destination="hFR-CV-kOR" id="hFv-wA-zpp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -505,6 +506,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="WLZ-uo-OYz"/>
                         <color key="backgroundColor" name="white60"/>
                         <constraints>
                             <constraint firstItem="PgI-2W-c3j" firstAttribute="top" secondItem="0Eb-ua-oPR" secondAttribute="top" constant="16" id="FCS-LE-DKF"/>
