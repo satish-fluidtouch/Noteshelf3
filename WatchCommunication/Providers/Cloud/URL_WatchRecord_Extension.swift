@@ -74,14 +74,14 @@ extension URL {
             }
         }
         catch {
-            
+            debugLog("Error while fetching status \(error.localizedDescription)")
         }
         return status;
     }
     
     private func isDownloaded() -> Bool {
         let status = self.urlDownloadStatus();
-        if(status == .current) {
+        if(status == .current || status == .downloaded) {
             return true;
         }
         return false;

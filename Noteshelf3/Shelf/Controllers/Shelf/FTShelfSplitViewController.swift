@@ -29,7 +29,7 @@ protocol FTShelfPresentable {
 //    func createNotebookWithCameraPhoto()
 //    func createNotebookWithScannedPhoto()
     func shelfWillMovetoBack()
-    func shelfViewDidMovedToFront()
+    func shelfViewDidMovedToFront(with item : FTDocumentItem)
     
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?)
     func showGroup(with shelfItem: FTShelfItemProtocol, animate: Bool)
