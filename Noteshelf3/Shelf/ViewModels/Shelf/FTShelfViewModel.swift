@@ -61,7 +61,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     private var closedDocumentItem: FTDocumentItem?
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
-    @Published var scrollToIndex: Int?
+    @Published var scrollToItemID: String?
     // MARK: Published variables
     @Published var mode: FTShelfMode = .normal {
         didSet {
@@ -483,8 +483,7 @@ extension FTShelfViewModel {
             func setShelfItems() {
                 self.setShelfItems(items);
                 if let item = self.closedDocumentItem {
-                    let index = items.firstIndex(where: {$0.uuid == item.uuid})
-                    self.scrollToIndex = index
+                    self.scrollToItemID = item.uuid
                     self.closedDocumentItem = nil
                 }
             }
