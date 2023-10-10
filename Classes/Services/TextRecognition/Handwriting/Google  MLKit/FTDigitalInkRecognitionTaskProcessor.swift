@@ -7,19 +7,24 @@
 //
 
 import UIKit
+#if !targetEnvironment(macCatalyst)
 import MLKit
+#endif
 
 class FTDigitalInkRecognitionManager: NSObject {
     static let shared = FTDigitalInkRecognitionManager();
     func configure() {
+#if !targetEnvironment(macCatalyst)
         if let inkModel = self.digitalINkModel(for: FTUtils.currentLanguage()),!inkModel.isDownloaded {
             inkModel.startDownloading();
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.inkModelDownloadSuccess(_:)), name: .mlkitModelDownloadDidSucceed, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.inkModelDownloadSuccess(_:)), name: .mlkitModelDownloadDidFail, object: nil);
+#endif
     }
     
+#if !targetEnvironment(macCatalyst)
     @objc private func inkModelDownloadSuccess(_ notification: Notification) {
         if let userInfo = notification.userInfo,
            let model = userInfo[ModelDownloadUserInfoKey.remoteModel.rawValue] as? DigitalInkRecognitionModel {
@@ -33,7 +38,6 @@ class FTDigitalInkRecognitionManager: NSObject {
             debugPrint("mlKitLangiage failed: \(model)")
         }
     }
-    
     func digitalINkModel(for language: String, considerRegion: Bool = true, pickDefaultIfNotAvailable: Bool = true) -> DigitalInkRecognitionModel? {
         var inkModel: DigitalInkRecognitionModel?;
 
@@ -53,11 +57,14 @@ class FTDigitalInkRecognitionManager: NSObject {
         }
         return inkModel;
     }
+#endif
 }
 
 class FTDigitalInkRecognitionTaskProcessor: NSObject,FTRecognitionProcessor {
     private var language = "en";
+#if !targetEnvironment(macCatalyst)
     private var recognizer: DigitalInkRecognizer?;
+#endif
     
     required init(with langCode: String) {
         language = langCode;
@@ -67,14 +74,20 @@ class FTDigitalInkRecognitionTaskProcessor: NSObject,FTRecognitionProcessor {
         guard let currentTask = task as? FTRecognitionTask else {
             fatalError("task should be of FTRecognitionTask");
         }
+#if targetEnvironment(macCatalyst)
+        onCompletion?();
+        currentTask.onCompletion?(nil,nil);
+#else
         self.getRecognitionText(for: currentTask.pageAnnotations
                                 , viewSize: currentTask.viewSize) { result, error in
             onCompletion?();
             currentTask.onCompletion?(result,error as? NSError);
         }
+#endif
     }
 }
 
+#if !targetEnvironment(macCatalyst)
 private extension FTDigitalInkRecognitionTaskProcessor {
     func getRecognitionText(for annotations: [FTAnnotationProtocol],
                             viewSize:CGSize,
@@ -159,7 +172,9 @@ private extension FTDigitalInkRecognitionTaskProcessor {
         return events;
     }
 }
+#endif
 
+#if !targetEnvironment(macCatalyst)
 extension DigitalInkRecognitionModel {
     var isDownloaded: Bool {
         return ModelManager.modelManager().isModelDownloaded(self);
@@ -170,3 +185,4 @@ extension DigitalInkRecognitionModel {
         ModelManager.modelManager().download(self, conditions: condition);
     }
 }
+#endif
