@@ -165,7 +165,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
 }
 private extension FTSidebarViewModel {
     func updateSidebarItemSelection(){
-        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
+        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category, .ns2Category]
         if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
             if selectedSideBarItem != nil,
                selectedSideBarItem?.shelfCollection != nil,
@@ -265,6 +265,16 @@ extension FTSidebarViewModel {
                 self.dropDelegate?.endDragAndDropOperation()
             }
         }
+
+        // As the main function is called in serial queue and below operation to be called on main thread
+        func favoriteShelfItem() {
+            runInMainThread {
+                if let item = shelfItem {
+                    self.dropDelegate?.favoriteShelfItem(item, toPin: true)
+                }
+            }
+        }
+
         if let shelfCollection = highlightItem?.shelfCollection {
             FTNoteshelfDocumentProvider.shared.shelfCollection(title: collectionName) { shelfCollection in
                 if let shelfCollection = shelfCollection {
@@ -289,7 +299,7 @@ extension FTSidebarViewModel {
                         if shelfItem is FTGroupItemProtocol {
                             // show toast as group cannot be favorited
                         }else {
-                            dropDelegate?.favoriteShelfItem(shelfItem, toPin: true)
+                            favoriteShelfItem()
                         }
                         endHighlightingSideBarItem()
                     }

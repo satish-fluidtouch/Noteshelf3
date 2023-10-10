@@ -568,6 +568,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         dictRep["uuid"] = self.uuid as AnyObject?;
         dictRep["isBookmarked"] = NSNumber.init(value: self.isBookmarked as Bool);
         dictRep["isCover"] = NSNumber.init(value: self.isCover as Bool);
+
         dictRep["bookmarkTitle"] = self.bookmarkTitle
         dictRep["bookmarkColor"] = self.bookmarkColor
         dictRep["rotationAngle"] = self.rotationAngle
@@ -1154,7 +1155,7 @@ extension FTNoteshelfPage : FTCopying {
         newPage.bottomMargin = self.bottomMargin;
         newPage.topMargin = self.topMargin;
         newPage.leftMargin = self.leftMargin;
-
+        newPage.isCover = self.isCover
         newPage.pdfKitPageRect = self.pdfKitPageRect;
         newPage.rotationAngle = self.rotationAngle
         newPage.pageBackgroundColor = self.pageBackgroundColor;

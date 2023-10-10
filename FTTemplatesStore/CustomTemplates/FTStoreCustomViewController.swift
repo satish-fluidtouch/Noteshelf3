@@ -156,21 +156,22 @@ extension FTStoreCustomViewController: UICollectionViewDelegate, UICollectionVie
                 return;
             }
             let name = "\(style.title)"
-            let fileUrl = FTStoreCustomTemplatesHandler.shared.pdfUrlForTemplate(template: style)
+            if let fileUrl = FTStoreCustomTemplatesHandler.shared.filUrlForTemplate(template: style) {
             let tempUrl = FTTemplatesCache().temporaryFolder.appendingPathComponent(name).appendingPathExtension(fileUrl.pathExtension)
-                do {
-                    if FileManager.default.fileExists(atPath: tempUrl.path) {
-                        try FileManager.default.removeItem(at: tempUrl)
-                    }
-                    try FileManager.default.copyItem(at: fileUrl, to: tempUrl)
-                    let info = sourceType == .shelf ? FTTemplateInfo(url: fileUrl) : FTTemplateInfo(url: tempUrl)
-                    info.isLandscape = style.orientation == .landscape ? true : false
-                    info.isCustom = true
-                    self.delegate?.setCurrentSelectedURL(url: fileUrl)
-                    self.delegate?.customController(self, didSelectTemplate: info);
-                } catch let error {
-                    UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
+            do {
+                if FileManager.default.fileExists(atPath: tempUrl.path) {
+                    try FileManager.default.removeItem(at: tempUrl)
                 }
+                try FileManager.default.copyItem(at: fileUrl, to: tempUrl)
+                let info = sourceType == .shelf ? FTTemplateInfo(url: fileUrl) : FTTemplateInfo(url: tempUrl)
+                info.isLandscape = style.orientation == .landscape ? true : false
+                info.isCustom = true
+                self.delegate?.setCurrentSelectedURL(url: fileUrl)
+                self.delegate?.customController(self, didSelectTemplate: info);
+            } catch let error {
+                UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
+            }
+        }
             // Track Event
             FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_custom_template_tap, params: nil, screenName: ScreenName.templatesStore))
         }
