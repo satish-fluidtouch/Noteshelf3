@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfHomeView: FTShelfBaseView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -98,15 +99,14 @@ struct FTShelfHomeView: FTShelfBaseView {
                     .font(Font.appFont(for: .medium, with: 13))
                     .foregroundColor(Color.appColor(.black70))
             }
-            .frame(maxWidth:.infinity)
+            .frame(maxWidth:.infinity,alignment: .center)
             .frame(height: 36)
+            .background(Color.appColor(.seeAllBtnBG))
+            .cornerRadius(10)
+            .padding(.horizontal,gridHorizontalPadding)
+            .padding(.top,28)
         }
-    .frame(maxWidth:.infinity,alignment: .center)
-    .frame(height: 36)
-    .background(Color.appColor(.seeAllBtnBG))
-    .cornerRadius(10)
-    .padding(.horizontal,gridHorizontalPadding)
-    .padding(.top,28)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
 
     private var seeAllNotesButtonTitle: String {

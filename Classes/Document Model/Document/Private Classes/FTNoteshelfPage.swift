@@ -568,6 +568,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         dictRep["uuid"] = self.uuid as AnyObject?;
         dictRep["isBookmarked"] = NSNumber.init(value: self.isBookmarked as Bool);
         dictRep["isCover"] = NSNumber.init(value: self.isCover as Bool);
+
         dictRep["bookmarkTitle"] = self.bookmarkTitle
         dictRep["bookmarkColor"] = self.bookmarkColor
         dictRep["rotationAngle"] = self.rotationAngle
