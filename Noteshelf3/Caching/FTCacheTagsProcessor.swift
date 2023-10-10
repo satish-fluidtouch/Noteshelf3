@@ -145,6 +145,10 @@ final class FTCacheTagsProcessor {
             var plistTags = cachedTagsPlist.tags
             FTTagsProvider.shared.removeDocumentId(docId: documentUUID)
 
+            var refreshTagsView = false
+            if !Set(tags).isSubset(of: plistTags.keys) {
+                refreshTagsView = true
+            }
             for key in plistTags.keys {
                 if var ids = plistTags[key] {
                     for (index, docId) in ids.enumerated() {
@@ -180,6 +184,11 @@ final class FTCacheTagsProcessor {
                         runInMainThread {
                             FTTagsProvider.shared.getAllTags(forceUpdate: true)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                        }
+                    }
+                    if refreshTagsView {
+                        runInMainThread {
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil)
                         }
                     }
                 }

@@ -43,7 +43,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
         self.updateTagsViewWith(tags: sortedArray)
         self.thumbnail?.backgroundColor = .clear
-        self.thumbnail?.image = nil
+//        self.thumbnail?.image = nil
 
         if tagsItem.type == .page, let docUUID = tagsItem.documentUUID, let pageUUID = tagsItem.pageUUID {
             self.thumbnail?.layer.cornerRadius = 10

@@ -74,6 +74,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
             controller.selectedTag = (tag == "sidebar.allTags".localized) ? nil : FTTagModel(text: tag)
             self.showDetailViewController(detailController, sender: self)
+            controller.reloadContent()
         } else {
             self.updateRootVCToDetailNavController(rootVC: getTagsVC(for: tag))
         }
