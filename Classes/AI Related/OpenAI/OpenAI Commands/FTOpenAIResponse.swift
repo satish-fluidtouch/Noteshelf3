@@ -36,6 +36,20 @@ class FTOpenAIResponse: NSObject {
                     attrString.addAttribute(.foregroundColor, value: UIColor.label, range: effectedRange);
                 }
             }
+            attrString.enumerateAttribute(.paragraphStyle, in: NSRange(location: 0, length: attrString.length), options: .reverse) { value, effRange, stop in
+                if let paragraphStyle = value as? NSParagraphStyle, !(paragraphStyle.bulletLists?.isEmpty ?? true) {
+                    let maxRange = NSMaxRange(effRange);
+                    if attrString.length > maxRange {
+                        if let attribute = attrString.attribute(.paragraphStyle, at: maxRange, effectiveRange: nil) as? NSParagraphStyle, (attribute.bulletLists?.isEmpty ?? true) {
+                            let string = attrString.attributedSubstring(from: NSRange(location: maxRange, length: 1));
+                            if string.string != "\n" {
+                                let attributes = attrString.attributes(at: maxRange, longestEffectiveRange: nil, in: NSRange(location: 0, length: attrString.length));
+                                attrString.insert(NSAttributedString(string: "\n", attributes: attributes), at: maxRange);
+                            }
+                        }
+                    }
+                }
+            }
             attrString.endEditing();
             self.attributedString = attrString;
         }

@@ -125,11 +125,10 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
             }
             if !annotations.isEmpty {
                 let offset = (origin.y - page.pageTopMargin).toInt;
-                var yquotient = offset / page.lineHeight;
-                if offset % page.lineHeight > 0 {
-                    yquotient += 1;
-                }
-                
+                let yquotient = (offset / page.lineHeight) + 1;
+//                if offset % page.lineHeight > 0 {
+//                    yquotient += 1;
+//                }
                 origin.y = (yquotient * page.lineHeight).toCGFloat() + page.pageTopMargin
             }
         }
@@ -142,7 +141,7 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
                                , content: FTAIContent) {
         ccntroller.dismiss(animated: true) {
             if action == .copyToClipboard {
-                if let content = content.contentAttributedString {
+                if let content = content.normalizedAttrText {
                     UIPasteboard.general.string = content.string;
                 }
             }
@@ -197,8 +196,7 @@ extension FTPageViewController {
         guard let nsPage = self.pdfPage else {
             return;
         }
-        let content = FTAIContent();
-        content.contentString = text;
+        let content = FTAIContent(with: NSAttributedString(string: text));
         self.delegate?.addTextAsStrokes(to: nsPage, content: content,origin: inOrigin)
     }
 
@@ -310,7 +308,7 @@ extension FTPageProtocol {
     
     @discardableResult
     func addTextAnnotation(_ content: FTAIContent,visibleRect: CGRect = .null) -> FTAnnotation? {
-        if nil == content.contentAttributedString && nil == content.contentString {
+        guard let contentAttr = content.attributedString else {
             return nil;
         }
         
@@ -337,21 +335,16 @@ extension FTPageProtocol {
             textDefaultColor = curColor;
         }
 
-        if let attr = content.contentAttributedString {
-            let mutableAttr = NSMutableAttributedString(attributedString: attr);
-            mutableAttr.beginEditing();
-            mutableAttr.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: attr.length)) { color, effectiveRange, stop in
-                if let fgColor = color as? UIColor, fgColor == UIColor.label {
-                    mutableAttr.addAttribute(.foregroundColor, value: textDefaultColor, range: effectiveRange);
-                }
+        let mutableAttr = NSMutableAttributedString(attributedString: contentAttr);
+        mutableAttr.beginEditing();
+        mutableAttr.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: contentAttr.length)) { color, effectiveRange, stop in
+            if let fgColor = color as? UIColor, fgColor == UIColor.label {
+                mutableAttr.addAttribute(.foregroundColor, value: textDefaultColor, range: effectiveRange);
             }
-            mutableAttr.endEditing();
-            info.attributedString = mutableAttr;
         }
-        else {
-            info.string = content.contentString;
-        }
-        
+        mutableAttr.endEditing();
+        info.attributedString = mutableAttr;
+
         if let txtAnnotation = info.annotation() {
             (self as? FTPageUndoManagement)?.addAnnotations([txtAnnotation], indices: nil);
             return txtAnnotation;

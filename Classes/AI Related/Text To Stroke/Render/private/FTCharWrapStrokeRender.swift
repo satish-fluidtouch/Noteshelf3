@@ -11,7 +11,7 @@ import UIKit
 class FTCharWrapStrokeRender: FTCharToStrokeRender {
     override func convertTextToStroke(for page: FTPageProtocol, content aiContent: FTAIContent, origin inOrigin: CGPoint, onUpdate: @escaping FTStrokeRenderOnUpdateCallback, onComplete: @escaping FTStrokeRenderOnCompleteCallback) {
         
-        let content = (aiContent.contentAttributedString != nil) ? (aiContent.contentAttributedString?.string ?? "") : (aiContent.contentString ?? "")
+        let content = aiContent.attributedString?.string ?? "";
 
         self.updatePageProperties(page);
         var origin = inOrigin;

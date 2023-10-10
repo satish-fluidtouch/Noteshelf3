@@ -10,8 +10,36 @@ import OpenAI
 import Foundation
 
 class FTAIContent {
-    var contentString: String?;
-    var contentAttributedString: NSAttributedString?;
+    private(set) var attributedString: NSAttributedString?;
+    required init(with attrString: NSAttributedString?) {
+//        if let attr = attrString {
+//            attributedString = NSAttributedString(string: attr.string);
+//        }
+        attributedString = attrString;
+    }
+    
+    var normalizedAttrText: NSAttributedString? {
+        if let attr = attributedString?.mapAttributesToMatch(withLineHeight: -1) {
+            let mutableAttr = NSMutableAttributedString(attributedString: attr);
+            mutableAttr.beginEditing();
+            mutableAttr.enumerateAttribute(.paragraphStyle, in: NSRange(location: 0, length: attr.length), options: .reverse) { value, _range, _stop in
+                if let style = value as? NSParagraphStyle,style.hasBullet() {
+                    let nsString = (mutableAttr.string as NSString);
+                    var lineRange = nsString.lineRange(for: NSRange(location: NSMaxRange(_range), length: 0));
+                    while lineRange.location >= _range.location {
+                        let str = mutableAttr.attributedSubstring(from: lineRange);
+                        if str.string.hasPrefix("\t") {
+                            mutableAttr.deleteCharacters(in: NSRange(location: lineRange.location, length: 1));
+                        }
+                        lineRange = nsString.lineRange(for: NSRange(location: max(lineRange.location-1,0), length: 0));
+                    }
+                }
+            }
+            mutableAttr.endEditing();
+            return mutableAttr;
+        }
+        return nil;
+    }
 }
 
 protocol FTNoteshelfAITextViewViewControllerDelegate:NSObjectProtocol {
@@ -127,8 +155,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
             menuActions.forEach { eachItem in
                 let menuItem = UIAction(title: eachItem.displayTitle(self.supportsHandwriting)) { [weak self] _ in
                     if let strongSelf = self {
-                        let content = FTAIContent();
-                        content.contentAttributedString = self?.textView?.attributedText;
+                        let content = FTAIContent(with: self?.textView?.attributedText);
                         strongSelf.delegate?.textViewController(strongSelf
                                                                 , didSelectOption: eachItem
                                                                 ,content: content);
@@ -181,24 +208,21 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
     
     @IBAction func copyToClipboard(_ sender:Any) {
-        let content = FTAIContent();
-        content.contentAttributedString = self.textView?.attributedText;
+        let content = FTAIContent(with: self.textView?.attributedText);
         self.delegate?.textViewController(self
                                           , didSelectOption: .copyToClipboard
                                           ,content: content);
     }
 
     @IBAction func addToPage(_ sender:Any) {
-        let content = FTAIContent();
-        content.contentAttributedString = self.textView?.attributedText;
+        let content = FTAIContent(with: self.textView?.attributedText);
         self.delegate?.textViewController(self
                                           , didSelectOption: .addToPage
                                           ,content: content);
     }
 
     @IBAction func addAsHandwrite(_ sender:Any?) {
-        let content = FTAIContent();
-        content.contentAttributedString = self.textView?.attributedText;
+        let content = FTAIContent(with: self.textView?.attributedText);
         self.delegate?.textViewController(self
                                           , didSelectOption: .addHandwriting
                                           ,content: content);

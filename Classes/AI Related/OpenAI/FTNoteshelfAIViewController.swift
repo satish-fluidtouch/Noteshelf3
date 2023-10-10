@@ -359,7 +359,7 @@ private extension FTNoteshelfAIViewController {
 #if DEBUG
         return false;
 #else
-        return FTNoteshelfAITokenManager.shared.tokensLeft > 0;
+        return FTNoteshelfAITokenManager.shared.tokensLeft == 0;
 #endif
     }
     

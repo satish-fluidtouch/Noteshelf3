@@ -17,8 +17,7 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
                                       , onComplete: @escaping FTStrokeRenderOnCompleteCallback) {
         self.updatePageProperties(page);
         var origin = inOrigin;
-        let content = (aicontent.contentAttributedString != nil) ? (aicontent.contentAttributedString?.string ?? "") : (aicontent.contentString ?? "")
-
+        
         var currentPage = page;
         func _createNewPageIfNeeded(_ isLastChar: Bool) {
             if let newPage = self.createNewPageIfNeeded(origin: &origin
@@ -44,7 +43,7 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         }
         
         var currentLineCounter = 0;
-        if let lines = aicontent.contentAttributedString?.lines() {
+        if let lines = aicontent.attributedString?.lines() {
             lines.forEach({ eachLineRange in
                 let eachLine = eachLineRange.attributedString;
                 currentLineCounter += 1;
