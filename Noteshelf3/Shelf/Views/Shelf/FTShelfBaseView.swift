@@ -53,15 +53,21 @@ extension FTShelfBaseView {
         return padding
     }
 
-    func shelfGridView(items: [FTShelfItemViewModel], size: CGSize) -> some View {
+    func shelfGridView(items: [FTShelfItemViewModel], size: CGSize, scrollViewProxy: ScrollViewProxy?) -> some View {
         LazyVGrid(columns: gridItemLayout(size), alignment: .center, spacing:viewModel.displayStlye.gridSpacing) {
-            ForEach(items, id: \.self) { item in
+            ForEach(items, id: \.id) { item in
                 let gridItemSize = gridItemSize(size, shelfItem: item)
                 if gridItemSize != .zero {
                     FTShelfItemView(shelfItem: item,
                                     shelfItemWidth:gridItemSize.width,
                                     shelfItemHeight: gridItemSize.height)
                     .frame(width: gridItemSize.width , height: gridItemSize.height, alignment: Alignment(horizontal: .center, vertical: .bottom))
+                    .onChange(of: viewModel.scrollToItemID) { newValue in
+                        if let newValue {
+                            scrollViewProxy?.scrollTo(newValue)
+                            viewModel.scrollToItemID = nil
+                        }
+                    }
                 } else {
                     EmptyView()
                 }

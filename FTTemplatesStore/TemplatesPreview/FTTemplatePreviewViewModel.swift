@@ -26,7 +26,7 @@ class FTTemplatePreviewViewModel: ObservableObject {
 
     func downloadTemplateFor(style: FTTemplateStyle) async throws -> URL {
         let url = try await downloadTemplateFromServer(style: style)
-        try url.generateThumbnailForFile()
+        url.generateThumbnailForPdf(completion: nil)
         return url
     }
 
