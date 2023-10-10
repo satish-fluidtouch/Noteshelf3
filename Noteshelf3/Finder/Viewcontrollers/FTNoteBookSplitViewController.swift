@@ -78,30 +78,9 @@ class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControlle
     // TODO: (Narayana) Temporarily added, to be removed once NSToolbar is updated
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
-        if isViewLoading {
-            self.isViewLoading = false
-            loadingIndictor = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
-        }
 #if targetEnvironment(macCatalyst)
         self.configureMacToolbar();
 #endif
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.isViewLoading = true
-        let notificationCenter = NotificationCenter.default
-        renderingObserver = notificationCenter.addObserver(forName: .didCompleteRenderingNotification, object: nil, queue: .main) { [weak self] (_) in
-            guard let self = self else {
-                return
-            }
-            if self.loadingIndictor != nil {
-                self.loadingIndictor?.hide()
-                if let observer = self.renderingObserver {
-                    notificationCenter.removeObserver(observer)
-                }
-            }
-        }
     }
 
     func addSupplimentaryController(_ controller: FTFinderTabBarController) {
