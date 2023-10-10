@@ -201,6 +201,9 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func shelfViewDidMovedToFront() {
         currentShelfViewModel?.shelfViewDidMovedToFront()
+        if let shelfTagsVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfTagsViewController {
+            shelfTagsVC.reloadContent()
+        }
     }
 
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?) {

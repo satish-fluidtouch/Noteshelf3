@@ -97,13 +97,13 @@ class FTShelfTagsUpdateHandler: NSObject {
         }
     }
 
-    func renameTag(tag: FTTagModel, with newTag: FTTagModel, completion: ((Bool?) -> Void)?) {
+    func renameTag(tag: String, with newTag: String, completion: ((Bool?) -> Void)?) {
         let dispatchGroup = DispatchGroup()
 
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
 
-            let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: newTag.text)
+            let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: newTag)
             guard let docIdsForTag = tagItem?.documentIds else {
                 completion?(false)
                 return
@@ -120,8 +120,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                     let request = FTDocumentOpenRequest(url: doc.URL, purpose: .write)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let document = document as? FTNoteshelfDocument {
-                            document.renameTag(tag.text, with: newTag.text)
-                            FTCacheTagsProcessor.shared.renameTagInPlist(tag, with: newTag)
+                            document.renameTag(tag, with: newTag)
                             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                                 dispatchGroup.leave()
                             }

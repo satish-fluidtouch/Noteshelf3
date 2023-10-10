@@ -30,11 +30,12 @@ class FTShelfTagsViewController: UIViewController {
     var viewModel: FTShelfTagsPageModel?
     var tagItems = [FTShelfTagsItem]()
     private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
+    private var activityIndicator = UIActivityIndicatorView(style: .medium)
 
     var selectedTag: FTTagModel? {
         didSet {
             if searchTag != selectedTag?.text || (selectedTag == nil && searchTag == "sidebar.allTags".localized) || self.tagItems.isEmpty {
-                loadtagsBooksAndPages()
+                loadShelfTagItems()
             }
             searchTag = selectedTag?.text
             if self.collectionView != nil {
@@ -71,8 +72,11 @@ class FTShelfTagsViewController: UIViewController {
         self.collectionView.collectionViewLayout = layout
         self.collectionView.allowsMultipleSelection = true
         self.collectionView?.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
-        loadtagsBooksAndPages()
+
+        configureActivityIndicator()
+        loadShelfTagItems()
         self.updateToolbarTitles()
+
 #if targetEnvironment(macCatalyst)
         self.navigationItem.leftBarButtonItems = []
         self.navigationItem.rightBarButtonItems = []
@@ -121,16 +125,40 @@ class FTShelfTagsViewController: UIViewController {
         activateViewMode()
         if let info = notification.userInfo, let tag = info["tag"] as? String {
             if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag) {
-                selectedTag = tagItem.tag
+                self.selectedTag = tagItem.tag
             } else {
                 selectedTag = FTTagModel(text: tag)
             }
         } else {
-            loadtagsBooksAndPages()
+            loadShelfTagItems()
         }
 
         self.title = self.selectedTag == nil ? "sidebar.allTags".localized : "#" + (self.selectedTag?.text ?? "")
         enableToolbarItemsIfNeeded()
+    }
+
+    func reloadContent() {
+        self.loadShelfTagItems()
+    }
+
+    private func configureActivityIndicator() {
+        // Add activity indicator in the view
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+
+    private func showActivityIndicator() {
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
     }
 
     private func generateBooks() -> [FTShelfTagsItem] {
@@ -155,25 +183,23 @@ class FTShelfTagsViewController: UIViewController {
         return pages
     }
 
-
-    private func loadtagsBooksAndPages() {
+    private func loadShelfTagItems() {
         viewModel = FTShelfTagsPageModel()
         viewModel?.selectedTag = self.selectedTag?.text ?? "";
-        let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "")
+        showActivityIndicator()
         viewModel?.buildCache(completion: { result in
-            loadingIndicatorViewController.hide {
-                self.tagItems = result
-                if self.tagItems.isEmpty {
-                    self.showPlaceholderView()
+            self.tagItems = result
+            if self.tagItems.isEmpty {
+                self.showPlaceholderView()
+            } else {
+                self.hidePlaceholderView()
+                if self.viewState == .edit, !self.selectedPaths.isEmpty {
+                    self.collectionView.reloadItems(at: self.selectedPaths)
                 } else {
-                    self.hidePlaceholderView()
-                    if self.viewState == .edit, !self.selectedPaths.isEmpty {
-                        self.collectionView.reloadItems(at: self.selectedPaths)
-                    } else {
-                        self.collectionView.reloadData()
-                    }
+                    self.collectionView.reloadData()
                 }
             }
+            self.hideActivityIndicator()
         })
     }
 
@@ -372,8 +398,8 @@ class FTShelfTagsViewController: UIViewController {
 
     func openInNewWindow() {
         if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.shelfItem  {
-            if selectedItem.type == .page, let pageUUID = selectedItem.pageUUID, let page = selectedItem.documentPlist?.pageFor(pageUUID: pageUUID) {
-                self.openItemInNewWindow(shelfItem, pageIndex: page.pageIndex)
+            if selectedItem.type == .page {
+                self.openItemInNewWindow(shelfItem, pageIndex: selectedItem.pageIndex)
             } else {
                 self.openItemInNewWindow(shelfItem, pageIndex: 0)
             }
@@ -488,8 +514,8 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             if indexPath.section == 1 {
                 let pages = generatePages()
                 let item = pages[indexPath.row]
-                if let shelf = item.shelfItem, let pageUUID = item.pageUUID, let page = item.documentPlist?.pageFor(pageUUID: pageUUID) {
-                    self.delegate?.openNotebook(shelfItem: shelf, page: page.pageIndex ?? 0)
+                if let shelf = item.shelfItem {
+                    self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex)
                     track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                 }
             }
@@ -508,8 +534,8 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             let pages = generatePages()
             let item = pages[indexPath.row]
             let columnWidth = columnWidthForSize(self.view.frame.size) - 12
-            if let pageUUID = item.pageUUID, let page = item.documentPlist?.pageFor(pageUUID: pageUUID) {
-                if  page.pageRect.size.width > page.pageRect.size.height  { // landscape
+            if let pageRect = item.pdfKitPageRect {
+                if  pageRect.size.width > pageRect.size.height  { // landscape
                     return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
                 } else {
                     return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
@@ -669,25 +695,20 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
 
     func updateShelfTagItemsFor(tag: FTTagModel) {
         let selectedItems = selectedItems
+
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            for shelfTagItem in selectedItems {
-                if shelfTagItem.type == .book, let shelfItem = shelfTagItem.shelfItem {
-                    tagModel.updateTagForBook(shelfItem: shelfItem) { item in
-                        if let docUUID = shelfTagItem.documentUUID {
-                            self.selectedTagItems[docUUID] = item;
-                        }
-                    }
-                } else if shelfTagItem.type == .page, let shelfItem = shelfTagItem.shelfItem, let pageUUID = shelfTagItem.pageUUID  {
-                    tagModel.updateTagForPage(shelfItem: shelfItem, pageUUID: pageUUID) { item in
-                        self.selectedTagItems[pageUUID] = item;
+            tagModel.updateTagForShelfTagItem(shelfTagItems: selectedItems) { items in
+                items.forEach { item in
+                    if item.type == .page, let pageUUID = item.pageUUID {
+                        self.selectedTagItems[pageUUID] = item
+                    } else if let docUUID = item.documentUUID {
+                        self.selectedTagItems[docUUID] = item
                     }
                 }
-                self.collectionView.reloadData()
-
             }
+            self.collectionView.reloadData()
         }
     }
-
 }
 
 // MARK: FTShelfTagsAndBooksDelegate

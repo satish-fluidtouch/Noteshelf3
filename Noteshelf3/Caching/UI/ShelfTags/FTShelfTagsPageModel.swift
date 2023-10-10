@@ -24,10 +24,11 @@ enum FTShelfTagsItemType {
  class FTShelfTagsItem: NSObject,Identifiable {
 
     var id: UUID = UUID()
-    var documentPlist: FTDocumentPlist?
+     var shelfItem: FTDocumentItemProtocol?
     var documentUUID: String?
     var pageUUID: String?
-    var shelfItem: FTDocumentItemProtocol?
+    var pageIndex: Int = 0
+    var pdfKitPageRect: CGRect?
     var document: FTNoteshelfDocument?
     var type: FTShelfTagsItemType = .none
     var tags: [FTTagModel] = [FTTagModel]() {
@@ -52,10 +53,10 @@ enum FTShelfTagsItemType {
 
     private var observerProtocol: AnyObject?;
     
-    init(shelfItem: FTDocumentItemProtocol?, type: FTShelfTagsItemType, documentPlist: FTDocumentPlist? = nil) {
+     init(shelfItem: FTDocumentItemProtocol, documentUUID: String?, type: FTShelfTagsItemType) {
         super.init()
-        self.documentPlist = documentPlist
         self.shelfItem = shelfItem
+        self.documentUUID = documentUUID
         self.type = type
     }
 }
@@ -117,7 +118,7 @@ final class FTShelfTagsPageModel: ObservableObject {
          dispatchGroup.notify(queue: .main) {
              var commonShelfss = [FTShelfTagsItem]()
              totalTagItems.forEach { each in
-                 var tags = each.tags.map({$0.text}).sorted()
+                 let tags = each.tags.map({$0.text}).sorted()
                  let isCommonTags = selectedTags.allSatisfy(tags.contains(_:))
                  if isCommonTags {
                      commonShelfss.append(each)

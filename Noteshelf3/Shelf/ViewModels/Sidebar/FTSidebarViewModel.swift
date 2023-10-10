@@ -485,6 +485,10 @@ extension FTSidebarViewModel {
         }
     }
 
+    func updateTagsSection(items: [FTSideBarItem]) {
+        self.tags = items
+    }
+
     func updateUnfiledCategory() {
         FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { [weak self] collection in
             if let unfiledCollection = collection {

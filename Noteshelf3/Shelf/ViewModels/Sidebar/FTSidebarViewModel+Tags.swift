@@ -12,8 +12,9 @@ extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, oldTitle: String) {
         if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle) {
             tagItem.renameTagItemWith(renamedString: tag.title)
-            if let newTagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
-                FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(text: oldTitle), with: newTagItem.tag) { _ in
+
+            FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: tag.title) { success in
+                if success ?? false {
                     self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
                 }
             }
@@ -22,9 +23,11 @@ extension FTSidebarViewModel {
 
     func deleteTag(_ tag: FTSideBarItem) {
         if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
-            FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag) { _ in
-                tagItem.deleteTagItem()
-                self.updateShelfTagsAndSideMenu()
+            FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag) { success in
+                if success ?? false {
+                    tagItem.deleteTagItem()
+                    self.updateShelfTagsAndSideMenu()
+                }
             }
         }
     }
