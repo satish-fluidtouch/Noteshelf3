@@ -38,7 +38,7 @@ class FTAICommand: NSObject {
 
     func command() -> String {
         if commandType == .generalQuestion {
-            return String(format: "noteshelf.ai.commandAskAnything".aiCommandString.appendingAICommandSuffix, contentToExecute);
+            return String(format: "noteshelf.ai.commandAskAnything".aiCommandString, contentToExecute,FTUtils.currentLanguageResponseCode());
         }
         return contentToExecute;
     }
@@ -107,7 +107,7 @@ class FTAIKeyPointsCommand: FTAICommand {
     }
 
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandKeyPoints".aiCommandString.appendingAICommandSuffix, contentToExecute);
+        return String(format: "noteshelf.ai.commandKeyPoints".aiCommandString, contentToExecute,FTUtils.currentLanguageResponseCode());
     }
     
     override var executionMessage: String {
@@ -121,7 +121,7 @@ class FTAISummarizeCommand: FTAICommand {
     }
 
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandSummarize".aiCommandString.appendingAICommandSuffix, contentToExecute);
+        return String(format: "noteshelf.ai.commandSummarize".aiCommandString, contentToExecute,FTUtils.currentLanguageResponseCode());
     }
     
     override var executionMessage: String {
@@ -135,7 +135,7 @@ class FTAIExplainCommand: FTAICommand {
     }
 
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandExplain".aiCommandString.appendingAICommandSuffix, contentToExecute);
+        return String(format: "noteshelf.ai.commandExplain".aiCommandString, contentToExecute, FTUtils.currentLanguageResponseCode());
     }
     
     override var executionMessage: String {
