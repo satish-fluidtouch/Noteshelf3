@@ -6,9 +6,9 @@
   Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 */
 
-"noteshelf.ai.commandAskAnything" = "%@.Give response in html format.";
+"noteshelf.ai.commandAskAnything" = "%@.Generate response in html format.";
 "noteshelf.ai.commandSummarize" = "%@.Summarize in html format. Do not exceed 50 to 200 words.";
-"noteshelf.ai.commandExplain" = "%@.Explain in simple terms.Always give response in html format.";
+"noteshelf.ai.commandExplain" = "%@.Explain in simple terms in html format.";
 "noteshelf.ai.commandKeyPoints" = "%@.Give Key Points in html format.";
 "noteshelf.ai.commandTranslate" = "%@.Translate to %@";
 "noteshelf.ai.cleanupContent" = "%@ correct grammar and spelling with minimum changes in the text provided. Generate response in html format. Keep headings if they exist. If the phrase is repeated, treat first repeated phrase as heading. In case of meeting minutes Keep the meeting minutes in proper format. Give response in html. Do not add or remove anything. Keep headings if they exist. Do not write style.";

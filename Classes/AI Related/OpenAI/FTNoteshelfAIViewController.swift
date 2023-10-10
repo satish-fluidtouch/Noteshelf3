@@ -76,12 +76,35 @@ class FTPageContent: NSObject {
     var textContent: String = "";
     
     var content: String {
-        var contents = [pdfContent,textContent,writtenContent];
+        var contents = [String]();
+        let pdfContent = pdfContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        if !pdfContent.isEmpty {
+            contents.append(pdfContent)
+        }
+
+        let textContent = textContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        if !textContent.isEmpty {
+            contents.append(textContent)
+        }
+
+        let writtenContent = writtenContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        if !writtenContent.isEmpty {
+            contents.append(writtenContent)
+        }
         return contents.joined(separator: " ");
     }
     
     var nonPDFContent: String {
-        var contents = [textContent,writtenContent];
+        var contents = [String]();
+        let textContent = textContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        if !textContent.isEmpty {
+            contents.append(textContent)
+        }
+
+        let writtenContent = writtenContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        if !writtenContent.isEmpty {
+            contents.append(writtenContent)
+        }
         return contents.joined(separator: " ");
     }
 }
