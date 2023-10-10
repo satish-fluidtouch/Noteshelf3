@@ -177,7 +177,7 @@ class FTNoteshelfAIViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        FTNoteshelfAITokenManager.shared.resetAITokens();
+        FTNoteshelfAITokenManager.shared.refreshTokenInfo();
         self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;

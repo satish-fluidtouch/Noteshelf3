@@ -184,7 +184,7 @@ class FTDeveloperOptionsViewController: UIViewController {
     }
 
     @IBAction func resetAITokens(sender: UIButton?) {
-#if !RELEASE
+#if DEBUG
         FTNoteshelfAITokenManager.shared.resetAITokens();
 #endif
     }

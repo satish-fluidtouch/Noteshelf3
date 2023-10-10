@@ -61,7 +61,7 @@ class FTNoteshelfAITokenManager: NSObject,ObservableObject {
         return (self.maxAllowedTokens - self.consumedTokens);
     }
     
-#if !RELEASE
+#if DEBUG
     func resetAITokens() {
         KeychainItemWrapper.resetKeyChain();
         UserDefaults.standard.removeObject(forKey: "prev_request_date");
