@@ -199,8 +199,8 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         currentShelfViewModel?.shelfWillMovetoBack()
     }
 
-    func shelfViewDidMovedToFront() {
-        currentShelfViewModel?.shelfViewDidMovedToFront()
+   func shelfViewDidMovedToFront(with item : FTDocumentItem) {
+        currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
         if let shelfTagsVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfTagsViewController {
             shelfTagsVC.reloadContent()
         }
