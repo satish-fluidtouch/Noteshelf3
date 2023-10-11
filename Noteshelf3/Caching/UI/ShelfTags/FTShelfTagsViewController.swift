@@ -635,6 +635,7 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
 
     func refreshView() {
         self.tagItems.removeAll(where: {$0.tags.isEmpty})
+
         if selectedTag?.text != nil {
             self.tagItems = self.tagItems.filter { item in
                 return item.tags.contains { $0.text == selectedTag?.text }
@@ -642,6 +643,8 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
         } else {
             self.tagItems = self.tagItems.filter { !$0.tags.isEmpty }
         }
+        self.books = self.generateBooks()
+        self.pages = self.generatePages()
         self.collectionView.reloadData()
         self.activateViewMode()
         self.hidePlaceholderView()
