@@ -19,6 +19,10 @@ extension FTPremiumUser {
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemAdded, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemRemoved, object: nil);
     }
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .shelfItemAdded, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .shelfItemRemoved, object: nil)
+    }
     
     @objc private func shelfItemDidAddedRemoved(_ notification: Notification?) {
         guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
