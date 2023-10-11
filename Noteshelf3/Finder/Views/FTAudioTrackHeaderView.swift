@@ -74,7 +74,7 @@ class FTAudioTrackHeaderView: UITableViewHeaderFooterView {
         if let annotation = annotation  {
             audioAnnotation = annotation
             titleLabel?.text = annotation.audioName
-            audioDuration?.text = DateFormatter.localizedString(from: Date(timeIntervalSinceNow: annotation.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
+            audioDuration?.text = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: annotation.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
             if !self.isAnimating {
                 self.chevronImage.transform = self.isCollapsed ? CGAffineTransform.identity :
                     CGAffineTransform(rotationAngle: .pi/2.0)

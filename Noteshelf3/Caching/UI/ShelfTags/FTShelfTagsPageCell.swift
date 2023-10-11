@@ -43,25 +43,21 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
         self.updateTagsViewWith(tags: sortedArray)
         self.thumbnail?.backgroundColor = .clear
-        self.thumbnail?.image = nil
+//        self.thumbnail?.image = nil
 
-        if tagsItem.type == .page, let docUUID = tagsItem.documentUUID {
+        if tagsItem.type == .page, let docUUID = tagsItem.documentUUID, let pageUUID = tagsItem.pageUUID {
             self.thumbnail?.layer.cornerRadius = 10
 
             let image = UIImage(named: "pages_shadow")
             let scalled = image?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
             shadowImageView.image = scalled
             self.shadowImageView.layer.cornerRadius = 10
-            self.shadowImageView.isHidden = true
-            if let pageUUID = tagsItem.pageUUID, let page = tagsItem.documentPlist?.pageFor(pageUUID: pageUUID) {
-                page.thumbnail(documentUUID: docUUID) { [weak self] image, pageUUID in
-                    guard let self = self else { return }
-                    if nil == image {
-                        self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
-                    } else {
-                        self.shadowImageView.isHidden = false
-                        self.thumbnail?.image = image
-                    }
+
+            self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
+            FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: pageUUID) { [weak self] image, pageUUID in
+                guard let self = self else { return }
+                if let image {
+                    self.thumbnail?.image = image
                 }
             }
         } else if tagsItem.type == .book, let shelfItem = tagsItem.shelfItem {

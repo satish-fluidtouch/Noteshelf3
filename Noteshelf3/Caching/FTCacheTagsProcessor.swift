@@ -66,7 +66,12 @@ final class FTCacheTagsProcessor {
                     if let ids = value as? [String], ids.isEmpty {
                         plistTags.removeObject(forKey: key)
                     } else if let tagName = key as? String, let ids = value as? [String] {
-                        allTags.append(FTTagItemModel(tag: FTTagModel(text: tagName), documentIds: ids))
+                        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tagName) {
+                            tagItem.updateDocumentIds(docIds: ids)
+                            allTags.append(tagItem)
+                        } else {
+                            allTags.append(FTTagItemModel(tag: FTTagModel(text: tagName), documentIds: ids))
+                        }
                     }
                 }
                 return allTags
@@ -138,6 +143,12 @@ final class FTCacheTagsProcessor {
         if let cachedTagsPlist = cachedTagsPlist() {
             let destinationURL = cachedPageTagsLocation()
             var plistTags = cachedTagsPlist.tags
+            FTTagsProvider.shared.removeDocumentId(docId: documentUUID)
+
+            var refreshTagsView = false
+            if !Set(tags).isSubset(of: plistTags.keys) {
+                refreshTagsView = true
+            }
             for key in plistTags.keys {
                 if var ids = plistTags[key] {
                     for (index, docId) in ids.enumerated() {
@@ -148,14 +159,14 @@ final class FTCacheTagsProcessor {
                     plistTags[key] = ids
                 }
             }
-
             tags.forEach { tag in
-                var docIds: [String] = [String]()
-                docIds = plistTags[tag] ?? []
-                docIds.append(documentUUID)
-                let set = Set(docIds)
-                docIds = Array(set)
-                plistTags[tag] = docIds
+                var docIds = Set(plistTags[tag] ?? [])
+                docIds.insert(documentUUID)
+                plistTags[tag] = Array(docIds)
+                if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag) {
+                    tagItem.updateDocumentIds(docIds: Array(docIds))
+                    FTTagsProvider.shared.addNewTagItemIfNeeded(tagItem: tagItem)
+                }
             }
             // Remove Empty tags
             var tagRemoved = false
@@ -173,6 +184,11 @@ final class FTCacheTagsProcessor {
                         runInMainThread {
                             FTTagsProvider.shared.getAllTags(forceUpdate: true)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+                        }
+                    }
+                    if refreshTagsView {
+                        runInMainThread {
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil)
                         }
                     }
                 }
@@ -227,7 +243,8 @@ final class FTCacheTagsProcessor {
                 let pages = NSSet(set: Set.init((documentPlist.pages)))
                 let pagesTags = self.tagsFor(pages)
                 let tags = Array(Set.init(docTags + pagesTags))
-                self.cacheTagsIntoPlist(tags, for: documentUUID)
+                let filteredTags = tags.filter { $0.count > 0 }
+                self.cacheTagsIntoPlist(filteredTags, for: documentUUID)
             }
         })
     }
@@ -253,14 +270,14 @@ final class FTCacheTagsProcessor {
         }
     }
 
-    func renameTagInPlist(_ tag: FTTagModel, with newTag: FTTagModel) {
+    func renameTagInPlist(_ tag: String, with newTag: String) {
         let destinationURL = cachedPageTagsLocation()
         if let cacheTagsPlist = self.cachedTagsPlist() {
             do {
                 var plistTags = cacheTagsPlist.tags
-                if let docIds = plistTags[tag.text] {
-                    plistTags.removeValue(forKey: tag.text)
-                    plistTags[newTag.text] = docIds
+                if let docIds = plistTags[tag] {
+                    plistTags.removeValue(forKey: tag)
+                    plistTags[newTag] = docIds
                     
                     let data1 = try JSONEncoder().encode(plistTags)
                     if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {

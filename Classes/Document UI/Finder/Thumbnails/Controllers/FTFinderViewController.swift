@@ -1955,18 +1955,19 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
     func updateShelfTagItemsFor(tag: FTTagModel) {
         let pages = self.selectedPages.count > 0 ? self.selectedPages : contextMenuActivePages
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            pages.forEach({ pickedPage in
-                if let page = pickedPage as? FTThumbnailable
-                    ,  let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol  {
-                    tagModel.updateTagForPage(shelfItem: shelfItem, pageUUID: page.uuid) { [weak self] item in
-                        guard let self = self else { return }
+            if let _pages = pages.allObjects as? [FTThumbnailable], let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
+                tagModel.updateTagForPages(shelfItem: shelfItem, pages: _pages) { [weak self] items in
+                    guard let self = self else { return }
+                    items.forEach { item in
                         item.document = self.document as? FTNoteshelfDocument
-                        self.selectedTagItems[page.uuid] = item;
-                        (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
+                        if let page = _pages.first(where: {$0.uuid == item.pageUUID}) {
+                            self.selectedTagItems[page.uuid] = item
+                            (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
+                        }
                         self.refreshTagPills()
                     }
                 }
-            })
+            }
         }
 
     }

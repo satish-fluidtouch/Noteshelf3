@@ -120,9 +120,11 @@ extension UIView {
         return blurEffectView
     }
 
-    public func addVisualEffectBlur(style: UIBlurEffect.Style = .systemThinMaterial, cornerRadius: CGFloat, frameToBlur: CGRect = .zero) {
+    @discardableResult
+    public func addVisualEffectBlur(style: UIBlurEffect.Style = .systemThinMaterial, cornerRadius: CGFloat, frameToBlur: CGRect = .zero) -> UIVisualEffectView {
         let reqView = self.getVisualEffectBlur(style: style, cornerRadius: cornerRadius, frameToBlur: frameToBlur)
         self.insertSubview(reqView, at: 0)
+        return reqView
     }
 
     public func removeVisualEffectBlur() {

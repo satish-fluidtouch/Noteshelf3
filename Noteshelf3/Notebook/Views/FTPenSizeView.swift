@@ -19,18 +19,27 @@ struct FTPenSizeView: View {
     var body: some View {
         if showIndicator {
             VStack(spacing: 0.0) {
-                self.penSizeIndicatorView
+                self.penSizeIndicatorView.isHidden(toShowSizeIndicatorAtBottom())
                 Spacer()
                     .frame(height: 8.0)
                 self.penSizeStateView
                 Spacer()
                     .frame(height: 8.0)
-                self.penSizeIndicatorView.hidden()
+                self.penSizeIndicatorView.isHidden(!toShowSizeIndicatorAtBottom())
             }
         } else {
             self.penSizeStateView
                 .contentShape(Rectangle())
         }
+    }
+
+    private func toShowSizeIndicatorAtBottom() -> Bool {
+        var toShow = false
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        if placement == .top {
+            toShow = true
+        }
+        return toShow
     }
 
     private var penSizeIndicatorView: some View {

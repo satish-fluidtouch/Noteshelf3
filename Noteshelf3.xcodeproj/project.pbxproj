@@ -1918,8 +1918,6 @@
 		E7AE404D28758DA300C0F3EC /* FTServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8520F24F51ABE00EF893A /* FTServerConfig.swift */; };
 		E7AE4D9F2899480A004CF608 /* FTShapeShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE4D9E2899480A004CF608 /* FTShapeShortcutView.swift */; };
 		E7AE4DA728995093004CF608 /* FTFavoriteShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE4DA628995093004CF608 /* FTFavoriteShapeView.swift */; };
-		E7AF392828D1AAAA009EE145 /* FTQuadrantDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */; };
-		E7AF392A28D1AB3D009EE145 /* FTShortcutQuadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */; };
 		E7AF476E28EC53F4005F90E8 /* FTDeskModeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AF476D28EC53F4005F90E8 /* FTDeskModeHelper.swift */; };
 		E7B02191296C446B00EBD49A /* UIHostingController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B02190296C446B00EBD49A /* UIHostingController+Extension.swift */; };
 		E7B0B49E28A0DB51007675DA /* FTPenColorEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0B49D28A0DB51007675DA /* FTPenColorEditController.swift */; };
@@ -3971,8 +3969,6 @@
 		E7AE4048287562C300C0F3EC /* FTResourceFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTResourceFetcher.swift; sourceTree = "<group>"; };
 		E7AE4D9E2899480A004CF608 /* FTShapeShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeShortcutView.swift; sourceTree = "<group>"; };
 		E7AE4DA628995093004CF608 /* FTFavoriteShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShapeView.swift; sourceTree = "<group>"; };
-		E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTQuadrantDetector.swift; sourceTree = "<group>"; };
-		E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutQuadrant.swift; sourceTree = "<group>"; };
 		E7AF476D28EC53F4005F90E8 /* FTDeskModeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeskModeHelper.swift; sourceTree = "<group>"; };
 		E7AFD9462637E28000652DD6 /* FTPopOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPopOver.swift; sourceTree = "<group>"; };
 		E7B02190296C446B00EBD49A /* UIHostingController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIHostingController+Extension.swift"; sourceTree = "<group>"; };
@@ -9901,8 +9897,6 @@
 		E7AF392628D1AA9E009EE145 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */,
-				E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */,
 				090CC9802AB4609700B43A3F /* FTShortcutPlacement.swift */,
 			);
 			name = Helpers;
@@ -13012,7 +13006,6 @@
 				BAF394E82859ADF10067CA9F /* NSUbiquitousKeyValueStore_Extension.swift in Sources */,
 				BAF394E92859ADF10067CA9F /* FTResizable_Extesnion.swift in Sources */,
 				E7C71A63288E795A00AF2598 /* EnvironmentValues+TrackRange.swift in Sources */,
-				E7AF392828D1AAAA009EE145 /* FTQuadrantDetector.swift in Sources */,
 				BAF394EC2859ADF10067CA9F /* FTDropboxBackupEntry.swift in Sources */,
 				BAF394ED2859ADF10067CA9F /* FTExportFileListViewController.swift in Sources */,
 				E7A9767F28C0B476009B43DC /* FTPenShapeModel.swift in Sources */,
@@ -13100,7 +13093,6 @@
 				E7AF476E28EC53F4005F90E8 /* FTDeskModeHelper.swift in Sources */,
 				E7B333002860804F002C5BBE /* FTPasswordView.swift in Sources */,
 				E7ADB528288173BB005E03B7 /* FTPenColorEditView.swift in Sources */,
-				E7AF392A28D1AB3D009EE145 /* FTShortcutQuadrant.swift in Sources */,
 				BAF395482859ADF10067CA9F /* FTPDFSelectionView.swift in Sources */,
 				BAF395492859ADF10067CA9F /* FTPenRackUtils.swift in Sources */,
 				E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */,
@@ -13468,8 +13460,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.2;
-				APP_VERSION_MAC = 1.2;
+				APP_VERSION = 1.2.1;
+				APP_VERSION_MAC = 1.2.1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -14378,8 +14370,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.2;
-				APP_VERSION_MAC = 1.2;
+				APP_VERSION = 1.2.1;
+				APP_VERSION_MAC = 1.2.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14442,8 +14434,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.2;
-				APP_VERSION_MAC = 1.2;
+				APP_VERSION = 1.2.1;
+				APP_VERSION_MAC = 1.2.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

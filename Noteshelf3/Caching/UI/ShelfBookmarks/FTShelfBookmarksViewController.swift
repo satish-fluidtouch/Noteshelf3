@@ -27,7 +27,7 @@ class FTShelfBookmarksViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "sidebar.bookmarks.bookmark".localized
+        self.title = "sidebar.bookmarks".localized
         let layout = FTTagsAlignedCollectionViewFlowLayout(verticalAlignment: .bottom)
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.allowsMultipleSelection = true

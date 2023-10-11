@@ -35,7 +35,7 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
         self.collectionView.dataSource = self
         let selection = collectionView.indexPathsForSelectedItems
         self.collectionView.reloadData()
-        if let items = selection {
+        if books.count > 0, let items = selection {
             for selectedItem in items {
                 self.collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: [])
             }

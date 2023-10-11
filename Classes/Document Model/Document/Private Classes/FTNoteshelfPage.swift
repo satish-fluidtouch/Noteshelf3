@@ -489,7 +489,6 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         }
         isBookmarked = (dict["isBookmarked"] as? NSNumber)?.boolValue ?? false;
         isCover = (dict["isCover"] as? NSNumber)?.boolValue ?? false;
-        isPageModified = (dict["isPageModified"] as? NSNumber)?.boolValue ?? false;
 
         if let _bookmarkTitle = dict["bookmarkTitle"] as? String {
             self.bookmarkTitle = _bookmarkTitle
@@ -569,7 +568,6 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         dictRep["uuid"] = self.uuid as AnyObject?;
         dictRep["isBookmarked"] = NSNumber.init(value: self.isBookmarked as Bool);
         dictRep["isCover"] = NSNumber.init(value: self.isCover as Bool);
-        dictRep["isPageModified"] = NSNumber.init(value: self.isPageModified as Bool);
 
         dictRep["bookmarkTitle"] = self.bookmarkTitle
         dictRep["bookmarkColor"] = self.bookmarkColor
@@ -1165,7 +1163,7 @@ extension FTNoteshelfPage : FTCopying {
         newPage.bottomMargin = self.bottomMargin;
         newPage.topMargin = self.topMargin;
         newPage.leftMargin = self.leftMargin;
-
+        newPage.isCover = self.isCover
         newPage.pdfKitPageRect = self.pdfKitPageRect;
         newPage.rotationAngle = self.rotationAngle
         newPage.pageBackgroundColor = self.pageBackgroundColor;

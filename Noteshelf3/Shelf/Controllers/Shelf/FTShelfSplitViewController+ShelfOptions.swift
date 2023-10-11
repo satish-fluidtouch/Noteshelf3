@@ -1192,10 +1192,11 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     func updateShelfTagItemsFor(tag: FTTagModel) {
         let selectedItems = (self.currentShelfViewModel?.selectedShelfItems as! [FTDocumentItemProtocol])
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            selectedItems.forEach { eachShelf in
-                tagModel.updateTagForBook(shelfItem: eachShelf) { [weak self] item in
+            tagModel.updateTagForBooks(shelfItems: selectedItems) { [weak self] items in
+                guard let self = self else {return}
+                items.forEach { item in
                     if let docUUID = item.documentUUID {
-                        self?.selectedTagItems[docUUID] = item
+                        self.selectedTagItems[docUUID] = item
                     }
                 }
             }
