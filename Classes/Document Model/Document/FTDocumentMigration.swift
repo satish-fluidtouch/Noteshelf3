@@ -78,6 +78,8 @@ final class FTDocumentMigration {
             let fileName = shelfItem.URL.lastPathComponent.deletingPathExtension
             let documentTemporaryLocation = temporaryDirectory.appendingPathComponent(shelfItem.URL.lastPathComponent)
 
+            let lastModificationDate = shelfItem.URL.fileModificationDate
+            let fileCreationDate = shelfItem.URL.fileCreationDate
             // Remove if something already exists
             try? FileManager().removeItem(at: documentTemporaryLocation);
 
@@ -87,6 +89,10 @@ final class FTDocumentMigration {
             FTDocumentFactory.prepareForImportingAtURL(documentTemporaryLocation) { error, document in
                 if let fileURL = document?.URL {
                     do {
+                        try? (fileURL as NSURL).setResourceValue(lastModificationDate, forKey: URLResourceKey.contentModificationDateKey)
+
+                        try? (fileURL as NSURL).setResourceValue(fileCreationDate, forKey: URLResourceKey.creationDateKey)
+
                         let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: shelfItem.URL.relativePathWRTCollection())
 
                         // TODO: Pass the document
