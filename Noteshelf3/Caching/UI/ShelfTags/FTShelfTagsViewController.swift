@@ -576,9 +576,9 @@ extension FTShelfTagsViewController {
         let multiples = Dictionary(grouping: selectedPages, by: {$0.shelfItem?.documentUUID})
         multiples.values.forEach { tagItems in
             group.enter()
-            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(FTUtils.getUUID())
             let pagesUUIDs = tagItems.map({$0.pageUUID})
             if let docUrl = tagItems.first?.shelfItem?.URL {
+                let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docUrl.deletingPathExtension().lastPathComponent)
                 let request = FTDocumentOpenRequest(url: docUrl, purpose: .read)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                     if let docPages = document?.pages() as? [FTPageProtocol] {
@@ -591,11 +591,12 @@ extension FTShelfTagsViewController {
                         info.isNewBook = true
                         if let document {
                             document.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
-                                if let docum = FTDocumentItem.init(fileURL: url) as? FTShelfItemProtocol {
+                                if error == nil {
+                                    let docum = FTDocumentItem.init(fileURL: url)
                                     itemsToExport?.append(docum)
-                                    FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token) { _ in
-                                        group.leave()
-                                    }
+                                }
+                                FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token) { _ in
+                                    group.leave()
                                 }
                             }
                         }
