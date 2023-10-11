@@ -308,8 +308,8 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
     private func updateShelfTagItemsFor(tag: FTTagModel) {
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
             if let page = self.currentlyVisiblePage() as? FTThumbnailable
-                , let shelfItem = self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol {
-                tagModel.updateTagForPages(shelfItem: shelfItem, pages: [page]) { [weak self] items in
+                , let documentItem = self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol {
+                tagModel.updateTagForPages(documentItem: documentItem, pages: [page]) { [weak self] items in
                     guard let self = self else { return }
                     items.forEach { item in
                         item.document = self.pdfDocument as? FTNoteshelfDocument

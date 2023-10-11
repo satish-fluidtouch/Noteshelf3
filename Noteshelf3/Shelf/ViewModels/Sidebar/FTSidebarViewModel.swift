@@ -472,7 +472,7 @@ extension FTSidebarViewModel {
     }
 
     private func allTagsSidebarItem() -> FTSideBarItem {
-        let allTags = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+        let allTags = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.allTags, allowsItemDropping: false)
         return allTags
     }
 

@@ -70,9 +70,9 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
     
-    func openTags(for tag: String){
+    func openTags(for tag: String, isAllTags: Bool) {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
-            controller.selectedTag = (tag == "sidebar.allTags".localized) ? nil : FTTagModel(text: tag)
+            controller.selectedTag = isAllTags ? nil : FTTagModel(text: tag)
             self.showDetailViewController(detailController, sender: self)
             controller.reloadContent()
         } else {

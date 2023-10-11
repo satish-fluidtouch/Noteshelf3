@@ -378,7 +378,7 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     func openInNewWindow() {
-        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.shelfItem  {
+        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.documentItem  {
             if selectedItem.type == .page {
                 self.openItemInNewWindow(shelfItem, pageIndex: selectedItem.pageIndex)
             } else {
@@ -403,13 +403,13 @@ class FTShelfTagsViewController: UIViewController {
 
         UIAlertController.showRemoveTagsDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
             for (index,selectedItem) in self.selectedItems.enumerated() {
-                if let shelfItem = selectedItem.shelfItem {
+                if let shelfItem = selectedItem.documentItem {
                     if selectedItem.type == .page, let pageUUID = selectedItem.pageUUID {
-                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(shelfItem: shelfItem, pageUUID: pageUUID, tags: selectedItem.tags.map({$0.text}))
+                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(documentItem: shelfItem, pageUUID: pageUUID, tags: selectedItem.tags.map({$0.text}))
                         self.selectedItems[index].tags.removeAll()
                         shelftagItem.tags = self.selectedItems[index].tags
                     } else {
-                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: shelfItem, tags: selectedItem.tags.map({$0.text}))
+                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: shelfItem, tags: selectedItem.tags.map({$0.text}))
                         self.selectedItems[index].tags.removeAll()
                         shelftagItem.tags = self.selectedItems[index].tags
                     }
@@ -493,7 +493,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
         if viewState == .none {
             if indexPath.section == 1 {
                 let item = pages[indexPath.row]
-                if let shelf = item.shelfItem {
+                if let shelf = item.documentItem {
                     self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex)
                     track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                 }
@@ -569,15 +569,15 @@ extension FTShelfTagsViewController {
     private func createDocumentForSelectedPages() {
         let selectedBooks = self.selectedBooksOrPages().filter {$0.type == .book}
         let selectedPages = self.selectedBooksOrPages().filter {$0.type == .page}
-        let bookShelfs = selectedBooks.map {$0.shelfItem} as? [FTShelfItemProtocol]
+        let bookShelfs = selectedBooks.map {$0.documentItem} as? [FTShelfItemProtocol]
         var itemsToExport = bookShelfs
         let group = DispatchGroup()
 
-        let multiples = Dictionary(grouping: selectedPages, by: {$0.shelfItem?.documentUUID})
+        let multiples = Dictionary(grouping: selectedPages, by: {$0.documentItem?.documentUUID})
         multiples.values.forEach { tagItems in
             group.enter()
             let pagesUUIDs = tagItems.map({$0.pageUUID})
-            if let docUrl = tagItems.first?.shelfItem?.URL {
+            if let docUrl = tagItems.first?.documentItem?.URL {
                 let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docUrl.deletingPathExtension().lastPathComponent)
                 let request = FTDocumentOpenRequest(url: docUrl, purpose: .read)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in

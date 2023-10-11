@@ -1169,8 +1169,8 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
         var tagsItems = [FTShelfTagsItem]()
         items.forEach { item in
-            if let shelfItem = item as? FTDocumentItemProtocol , let docUUID = shelfItem.documentUUID {
-                let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(shelfItem: shelfItem, tags: [])
+            if let documentItem = item as? FTDocumentItemProtocol , let docUUID = documentItem.documentUUID {
+                let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: documentItem, tags: [])
                 let docTags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
                 tagItem.setTags(docTags)
                 tagsItems.append(tagItem)
@@ -1192,7 +1192,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     func updateShelfTagItemsFor(tag: FTTagModel) {
         let selectedItems = (self.currentShelfViewModel?.selectedShelfItems as! [FTDocumentItemProtocol])
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            tagModel.updateTagForBooks(shelfItems: selectedItems) { [weak self] items in
+            tagModel.updateTagForBooks(documentItems: selectedItems) { [weak self] items in
                 guard let self = self else {return}
                 items.forEach { item in
                     if let docUUID = item.documentUUID {

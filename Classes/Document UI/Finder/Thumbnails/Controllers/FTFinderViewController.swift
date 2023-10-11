@@ -1955,8 +1955,8 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
     func updateShelfTagItemsFor(tag: FTTagModel) {
         let pages = self.selectedPages.count > 0 ? self.selectedPages : contextMenuActivePages
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            if let _pages = pages.allObjects as? [FTThumbnailable], let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
-                tagModel.updateTagForPages(shelfItem: shelfItem, pages: _pages) { [weak self] items in
+            if let _pages = pages.allObjects as? [FTThumbnailable], let documentItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
+                tagModel.updateTagForPages(documentItem: documentItem, pages: _pages) { [weak self] items in
                     guard let self = self else { return }
                     items.forEach { item in
                         item.document = self.document as? FTNoteshelfDocument

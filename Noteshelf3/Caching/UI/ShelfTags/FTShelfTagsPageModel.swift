@@ -24,12 +24,12 @@ enum FTShelfTagsItemType {
  class FTShelfTagsItem: NSObject,Identifiable {
 
     var id: UUID = UUID()
-     var shelfItem: FTDocumentItemProtocol?
+    weak var documentItem: FTDocumentItemProtocol?
     var documentUUID: String?
     var pageUUID: String?
     var pageIndex: Int = 0
     var pdfKitPageRect: CGRect?
-    var document: FTNoteshelfDocument?
+    weak var document: FTNoteshelfDocument?
     var type: FTShelfTagsItemType = .none
     var tags: [FTTagModel] = [FTTagModel]() {
         didSet {
@@ -53,9 +53,9 @@ enum FTShelfTagsItemType {
 
     private var observerProtocol: AnyObject?;
     
-     init(shelfItem: FTDocumentItemProtocol, documentUUID: String?, type: FTShelfTagsItemType) {
+     init(documentItem: FTDocumentItemProtocol, documentUUID: String?, type: FTShelfTagsItemType) {
         super.init()
-        self.shelfItem = shelfItem
+        self.documentItem = documentItem
         self.documentUUID = documentUUID
         self.type = type
     }

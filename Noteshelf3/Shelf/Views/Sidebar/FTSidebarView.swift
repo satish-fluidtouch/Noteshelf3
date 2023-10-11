@@ -208,8 +208,14 @@ struct FTSidebarView: View {
                 } else if type == "delete", let tag = info["tag"] as? String {
                     tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
                 }
-                if let items = tagItems.first?.items {
-                    let sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
+                if var items = tagItems.first?.items {
+                    let allTags = items.first(where: {$0.type == .allTags})
+                    items.removeAll(where: {$0.type == .allTags})
+                    var sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
+                    if let allTags {
+                        sortedArray.insert(allTags, at: 0)
+                    }
+                    viewModel.menuItems.first(where: {$0.type == .tags})?.items = sortedArray
                     viewModel.updateTagsSection(items: sortedArray)
                 }
                 viewModel.setSideBarItemSelection()
