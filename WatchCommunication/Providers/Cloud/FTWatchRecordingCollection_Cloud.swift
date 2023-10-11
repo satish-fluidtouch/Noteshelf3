@@ -369,7 +369,7 @@ extension FTWatchRecordingCollection_Cloud {
             var status = FTDownloadStatus.notDownloaded;
             if(metadata!.isItemDownloaded()) {
                 status = .downloaded
-            } else if let isDownloading = metadata!.isDownloading(), isDownloading.boolValue {
+            } else if metadata?.isDownloading() == true {
                 status = .downloading;
             }
             item.downloadStatus = status;

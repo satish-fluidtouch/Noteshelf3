@@ -30,7 +30,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     var downloadingStatusObserver: NSKeyValueObservation?
     var uploadedStatusObserver: NSKeyValueObservation?
     var animType: FTAnimType = FTAnimType.none;
-
+    var isPinEnabled: Bool = false
     var id: String {
         model.uuid
     }
@@ -89,6 +89,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
         self.updateDownloadStatusFor(item: model);
         self.isFavorited = FTRecentEntries.isFavorited(model.URL)
         self.isNS2Book = model.URL.isNS2Book
+        self.isPinEnabled = model.URL.isPinEnabledForDocument()
     }
         
     func configureShelfItem(_ item: FTShelfItemProtocol){
@@ -189,6 +190,7 @@ extension FTShelfItemViewModel {
     @objc func shelfitemDidgetUpdated(_ notification: Notification) {
         if let userInfo = notification.userInfo,let items = userInfo[FTShelfItemsKey] as? [FTDocumentItem], let item = items.first, item.uuid == self.model.uuid {
             self.fetchCoverImage()
+            self.isPinEnabled = self.model.URL.isPinEnabledForDocument()
         }
     }
     
@@ -206,21 +208,18 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if(documentItem.isDownloading) {
-            shouldFetchCoverImage = true;
-            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
-            self.animType = .download;
-            self.showDownloadingProgressView();
-            self.progress = progress;
-        }
-        else if (documentItem.isDownloaded && shouldFetchCoverImage) {
-            shouldFetchCoverImage = false;
+        if documentItem.isDownloaded {
             self.progress = 1.0;
             self.isNotDownloaded = false
             self.stopDownloadingProgressView()
             self.fetchCoverImage()
         }
-        else if(documentItem.URL.downloadStatus() == .notDownloaded) {
+        else if documentItem.isDownloading {
+            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
+            self.animType = .download;
+            self.showDownloadingProgressView();
+            self.progress = progress;
+        } else if(documentItem.URL.downloadStatus() == .notDownloaded) {
             self.isNotDownloaded = true
         }
         if documentItem.isUploading {

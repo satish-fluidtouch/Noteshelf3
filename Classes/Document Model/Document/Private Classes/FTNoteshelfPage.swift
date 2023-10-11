@@ -1155,7 +1155,7 @@ extension FTNoteshelfPage : FTCopying {
         newPage.bottomMargin = self.bottomMargin;
         newPage.topMargin = self.topMargin;
         newPage.leftMargin = self.leftMargin;
-
+        newPage.isCover = self.isCover
         newPage.pdfKitPageRect = self.pdfKitPageRect;
         newPage.rotationAngle = self.rotationAngle
         newPage.pageBackgroundColor = self.pageBackgroundColor;

@@ -76,6 +76,11 @@ struct FTNotebookCoverView: View {
                             .padding(.top,padding)
                     }
                 }
+                .overlay {
+                    if shelfItem.isPinEnabled {
+                        FTLockIconView()
+                    }
+                }
                 .overlay(alignment: .topLeading, content: {
                     NS2BadgeView()
                 })
@@ -134,6 +139,26 @@ struct NS2BadgeView: View {
     }
 }
 
+
+struct FTLockIconView: View {
+    @EnvironmentObject var shelfViewModel: FTShelfViewModel
+
+    var body: some View {
+        let size: CGFloat = shelfViewModel.displayStlye == .Gallery ? 64 : (shelfViewModel.displayStlye == .Icon ? 38 : 16)
+        let imageSize: CGFloat = shelfViewModel.displayStlye == .Gallery ?  24 : (shelfViewModel.displayStlye == .Icon ?  16 : 8)
+        ZStack {
+            FTVibrancyEffectView()
+            .frame(width: size, height: size, alignment: .center)
+            .cornerRadius(100.0)
+            .overlay {
+                Image("lockedIcon")
+                .resizable()
+                    .scaledToFit()
+                    .frame(width:imageSize, height: imageSize)
+            }
+        }
+    }
+}
 
 @available(iOS 17.0, *)
 struct PulseAnimationModifier: ViewModifier {
