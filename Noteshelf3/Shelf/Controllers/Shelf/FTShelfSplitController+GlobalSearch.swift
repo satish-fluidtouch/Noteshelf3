@@ -16,6 +16,7 @@ extension FTShelfSplitViewController {
         self.sideMenuController?.addBlurView()
         globalSearchController.delegate = self
         globalSearchController.shelfItemCollection = self.shelfItemCollection
+        globalSearchController.navTitle = (currentShelfViewModel?.isInHomeMode ?? false) ? NSLocalizedString("sidebar.topSection.home", comment: "Home") : shelfItemCollection?.displayTitle
         self.globalSearchController = globalSearchController
         self.detailNavigationController?.pushViewController(globalSearchController, animated: false)
     }
@@ -41,6 +42,10 @@ extension FTShelfSplitViewController {
 }
 
 extension FTShelfSplitViewController: FTGlobalSearchDelegate {
+    func selectSidebarWithCollection(_ collection: FTShelfItemCollection) {
+        self.shelfItemCollection = currentShelfViewModel?.collection
+        self.sideMenuController?.selectSidebarItemWithCollection(collection)
+    }
     func willExitFromSearch(_ controller: FTGlobalSearchController) {
         self.exitFromGlobalSearch()
     }
@@ -58,7 +63,11 @@ extension FTShelfSplitViewController: FTGlobalSearchDelegate {
     }
 
     func didSelectCategory(category: FTShelfItemCollection) {
-        self.showSearchResultCollection(category)
+        self.saveLastSelectedCollection(category)
+        self.shelfItemCollection = category
+        self.sideMenuController?.selectSidebarItemWithCollection(category)
+        let categoryVc = getSecondaryViewControllerWith(collection: category, groupItem: nil)
+        self.globalSearchController?.navigationController?.pushViewController(categoryVc, animated: true)
     }
 
     func didSelectGroup(groupItem: FTGroupItemProtocol) {

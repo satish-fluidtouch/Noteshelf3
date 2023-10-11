@@ -130,14 +130,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
 
-    func showSearchResultCollection(_ collection: FTShelfItemCollection) {
-        self.saveLastSelectedCollection(collection)
-        self.shelfItemCollection = collection
-        self.sideMenuController?.selectSideMenuCollection(collection)
-        let categoryVc = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
-        self.globalSearchController?.navigationController?.pushViewController(categoryVc, animated: true)
-    }
-
     func openTemplates() {
         if let detailController = self.detailController(), detailController.isKind(of: FTStoreContainerViewController.self) {
             self.showDetailViewController(detailController, sender: self)

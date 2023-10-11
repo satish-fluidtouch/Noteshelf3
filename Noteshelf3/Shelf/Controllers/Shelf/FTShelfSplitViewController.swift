@@ -47,7 +47,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     internal var shelfItemCollection: FTShelfItemCollection? {
         didSet {
             if let shelfItemCollection {
-                self.sideMenuController?.selectSideMenuCollection(shelfItemCollection)
+                self.sideMenuController?.upateSideMenuCurrentCollection(shelfItemCollection)
             }
         }
     }
@@ -179,8 +179,9 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func refreshShelfCollection(setToDefault: Bool,animate: Bool, onCompletion: @escaping () -> Void) {
         if setToDefault {
-            self.sideMenuController?.selectSideMenuCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection);
-            self.showHomeView();
+            self.sideMenuController?.upateSideMenuCurrentCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection);
+            self.sideMenuController?.selectSidebarItemWithCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection)
+            self.showHomeView()
             onCompletion()
         }
         else {
@@ -263,7 +264,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     func showCategory(_ shelfCollection: FTShelfItemCollection) {
         self.saveLastSelectedCollection(shelfCollection)
         self.shelfItemCollection = shelfCollection
-        self.sideMenuController?.selectSideMenuCollection(shelfCollection)
+        self.sideMenuController?.selectSidebarItemWithCollection(shelfCollection)
         let categoryVc = getSecondaryViewControllerWith(collection: shelfCollection, groupItem: nil)
         if UIDevice.current.userInterfaceIdiom == .phone {
             if let tabController = self.viewControllers.first(where: {$0 is FTTabViewController}) as? FTTabViewController, let searchNavVc = tabController.globalSearchVc?.navigationController {
@@ -779,8 +780,8 @@ extension FTShelfSplitViewController {
         // Build Category Controller
         self.saveLastSelectedCollection(collection)
         self.shelfItemCollection = collection
-        self.sideMenuController?.selectSideMenuCollection(collection)
         let categoryControllers = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+        self.sideMenuController?.selectSidebarItemWithCollection(collection)
         controllers.append(categoryControllers)
 
         // Build Group Controllers

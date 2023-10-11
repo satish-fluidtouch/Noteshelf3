@@ -419,6 +419,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category,.ns2Category]
             if collectionTypes.contains(where: {$0 == sideBarContentType}),let collection {
                 self.rootContentViewController?.shelfItemCollection = collection
+                (self.rootContentViewController as? FTShelfSplitViewController)?.sideMenuController?.showSidebarItemWithCollection(collection)
                 self.rootContentViewController?.currentShelfViewModel?.collection = collection
             } else {
                 self.rootContentViewController?.shelfItemCollection = nil
