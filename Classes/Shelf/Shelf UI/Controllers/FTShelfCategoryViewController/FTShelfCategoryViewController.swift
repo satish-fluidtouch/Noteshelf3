@@ -89,7 +89,7 @@ class FTShelfCategoryViewController : UIViewController, FTCustomPresentable
         self.delegate?.didTapOnCategoriesOverlay()
     }
     
-    func shelfViewDidMovedToFront()
+    func shelfViewDidMovedToFront(with item : FTDocumentItem)
     {
         //self.addCategoriesObservers();
         //self.reloadCollectionsWithLatestData();
