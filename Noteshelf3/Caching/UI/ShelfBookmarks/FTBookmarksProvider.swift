@@ -46,6 +46,39 @@ class FTBookmarksProvider {
         }
     }
 
+    func updateBookmarkItemFor(documentUUID: String) {
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            let item = (allItems as! [FTDocumentItemProtocol]).first(where: {$0.documentUUID == documentUUID})
+            FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: documentUUID) { [weak self] docPlist, error in
+                guard let self = self else {return}
+                if let documentItem = item  {
+                    let pages = docPlist?.pages
+                    pages?.forEach { page in
+                        if let index = self.bookmarkItems.firstIndex(where: {$0.pageUUID == page.uuid}) {
+                            if page.isBookmarked == false {
+                                self.bookmarkItems.remove(at: index)
+                            } else {
+                                self.bookmarkItems[index].isBookmarked = page.isBookmarked
+                                self.bookmarkItems[index].bookmarkTitle = page.bookmarkTitle
+                                self.bookmarkItems[index].bookmarkColor = page.bookmarkColor
+                            }
+                        } else {
+                            if page.isBookmarked {
+                                var pageIndex = 0
+                                if let index = pages?.firstIndex(where: { $0.uuid == page.uuid }) {
+                                    pageIndex = index
+                                }
+                                let pdfRect = page.pageRect
+                                let bookmarkPage = FTBookmarksItem(shelfItem: documentItem, documentUUID: documentUUID, pageUUID: page.uuid,pageIndex: pageIndex, pdfKitPageRect: pdfRect, bookmarkTitle: page.bookmarkTitle, isBookmarked: page.isBookmarked, bookmarkColor: page.bookmarkColor)
+                                self.bookmarkItems.append(bookmarkPage)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     func removeBookmarkFor(item: FTBookmarksItem, completion: ((Bool?) -> Void)?) {
         if let index = self.bookmarkItems.firstIndex(where: {$0.pageUUID == item.pageUUID}) {
             self.removeBookmarFor(item: item) {[weak self] _ in
