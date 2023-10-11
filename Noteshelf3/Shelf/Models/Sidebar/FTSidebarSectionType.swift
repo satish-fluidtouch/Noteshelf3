@@ -44,6 +44,7 @@ enum FTSideBarItemType: String {
     case media
     case audio
     case tag
+    case allTags
     case bookmark
 
     var displayTitle: String {

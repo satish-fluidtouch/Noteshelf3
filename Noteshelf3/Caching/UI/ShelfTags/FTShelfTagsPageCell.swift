@@ -38,7 +38,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
 
     func updateTagsItemCellContent(tagsItem: FTShelfTagsItem, isRegular: Bool) {
 
-        self.bookTitleLbl?.text = tagsItem.shelfItem?.displayTitle
+        self.bookTitleLbl?.text = tagsItem.documentItem?.displayTitle
         let tags = Set.init(tagsItem.tags)
         let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
         self.updateTagsViewWith(tags: sortedArray)
@@ -60,7 +60,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
                     self.thumbnail?.image = image
                 }
             }
-        } else if tagsItem.type == .book, let shelfItem = tagsItem.shelfItem {
+        } else if tagsItem.type == .book, let shelfItem = tagsItem.documentItem {
             var token : String?
             self.thumbnail?.contentMode = .scaleAspectFit
 

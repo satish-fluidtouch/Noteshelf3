@@ -50,7 +50,7 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
                 var items = [FTSearchResultBookProtocol]()
                 let sectionResult = FTSearchSectionTitles()
 
-                let searchedBooks = booksInfo.map({ $0.shelfItem })
+                let searchedBooks = booksInfo.map({ $0.documentItem })
                 searchedBooks.forEach({ (shelfItem) in
                     let gridItem = FTSearchResultBook()
                     gridItem.parentSection = sectionResult
@@ -63,13 +63,13 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
 
                 pageInfo.forEach { eachPageInfo in
                     let searchSectionItem: FTSearchSectionContent = FTSearchSectionContent()
-                    searchSectionItem.sectionHeaderItem = eachPageInfo.shelfItem
+                    searchSectionItem.sectionHeaderItem = eachPageInfo.documentItem
                     let searchingInfo = FTPageSearchingInfo()
                     let pageItem = FTSearchResultPage.init()
                     pageItem.parentSection = searchSectionItem
                     searchingInfo.pageUUID = eachPageInfo.pageUUID
                     pageItem.searchingInfo = searchingInfo
-                    pageItem.shelfItem = eachPageInfo.shelfItem
+                    pageItem.shelfItem = eachPageInfo.documentItem
                     searchSectionItem.addSearchItem(pageItem)
                     searchPageContent.append(searchSectionItem)
                 }

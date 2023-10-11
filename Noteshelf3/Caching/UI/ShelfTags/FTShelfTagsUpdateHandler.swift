@@ -19,7 +19,7 @@ class FTShelfTagsUpdateHandler: NSObject {
     func updateTagsFor(items: [FTShelfTagsItem], completion: ((Bool?) -> Void)?) {
         let dispatchGroup = DispatchGroup()
 
-        for case let item in items where (item.shelfItem?.documentUUID != nil) {
+        for case let item in items where (item.documentItem?.documentUUID != nil) {
             dispatchGroup.enter()
             func saveTags(document: FTNoteshelfDocument) {
                 let docPages =  document.pages()
@@ -38,7 +38,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                 dispatchGroup.leave()
             }
             else {
-                let request = FTDocumentOpenRequest(url: item.shelfItem!.URL, purpose: .write)
+                let request = FTDocumentOpenRequest(url: item.documentItem!.URL, purpose: .write)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                     if let document = document as? FTNoteshelfDocument {
                         saveTags(document: document)
