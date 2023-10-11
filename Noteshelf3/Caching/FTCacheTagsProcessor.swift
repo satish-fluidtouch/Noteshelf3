@@ -149,6 +149,12 @@ final class FTCacheTagsProcessor {
             if !Set(tags).isSubset(of: plistTags.keys) {
                 refreshTagsView = true
             }
+            tags.forEach { tag in
+                var docIds = Set(plistTags[tag] ?? [])
+                if !docIds.contains(documentUUID) {
+                    refreshTagsView = true
+                }
+            }
             for key in plistTags.keys {
                 if var ids = plistTags[key] {
                     for (index, docId) in ids.enumerated() {

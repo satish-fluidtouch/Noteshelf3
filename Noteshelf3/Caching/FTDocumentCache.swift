@@ -22,6 +22,8 @@ enum FTCacheError: Error {
     case corruptedDocument
     case documentNotDownloaded
     case fileNotExists
+    case cachingNotRequired
+    case documentIsStillOpen
 }
 #if DEBUG
 private let cleanOnNextLaunch: Bool = false
@@ -173,7 +175,7 @@ private extension FTDocumentCache {
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
             cacheLog(.info, "Replace Ignored as already opened \(url.lastPathComponent)")
-            return
+            throw FTCacheError.documentIsStillOpen
         }
 
         let destinationURL = cachedLocation(for: documentUUID)
@@ -205,6 +207,7 @@ private extension FTDocumentCache {
                 }
             } else {
                 cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
+                throw FTCacheError.cachingNotRequired
             }
         }
     }
