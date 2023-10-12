@@ -125,6 +125,6 @@ class FTThumbReadCallbacks : NSObject
     
     func addImageToCache(image: UIImage?, url: URL)
     {
-//        self.imageCache.addImageToCache(image: image, url: url)
+        self.imageCache.addImageToCache(image: image, url: url)
     }
 }
