@@ -39,6 +39,7 @@ extension FTGlobalSearchController: FTUISearchDelegate {
     }
 
     func didTapOnCancelButton() {
+        self.cancelSearch();
         self.delegate?.willExitFromSearch(self)
     }
 }
@@ -63,6 +64,7 @@ extension FTGlobalSearchController {
                 self.segmentInfoStackView.isHidden = true
                 self.collectionView.isHidden = true
             }
+            self.cancelSearch();
         } else {
             self.recentsTableView.isHidden = true
             self.segmentInfoStackView.isHidden = false
