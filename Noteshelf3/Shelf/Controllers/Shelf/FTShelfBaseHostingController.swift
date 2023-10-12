@@ -74,7 +74,6 @@ private extension FTShelfBaseHostingController {
     private func updateSelectionIfNeeded() {
         if let splitController = self.splitViewController as? FTShelfSplitViewController {
             splitController.shelfItemCollection = shelfViewModel.collection
-            splitController.sideMenuController?.upateSideMenuCurrentCollection(shelfViewModel.collection)
             splitController.sideMenuController?.selectSidebarItemWithCollection(shelfViewModel.collection)
         }
     }
