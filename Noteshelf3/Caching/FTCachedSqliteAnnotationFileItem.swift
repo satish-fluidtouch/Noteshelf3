@@ -53,7 +53,7 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
                             let media = FTShelfAudio(audioTitle: title,
                                                      duration: duration,
                                                      page: index,
-                                                     document: self.documentItem)
+                                                     document: self.documentItem, dateAndTime: title)
                         }
                     }
                 }
@@ -87,14 +87,15 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
                         continue
                     }
                     if annotationType == .audio {
-                        if let annotation = FTAnnotation.annotation(forSet: _set) as? FTAudioAnnotation, let model = audioRecording(uuid: uuid) {
-
-                            let title = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: annotation.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
+                        if let annotation = FTAnnotation.annotation(forSet: _set) as? FTAudioAnnotation, let recordning = audioRecording(uuid: uuid), let model = recordning.1 {
+                            let name = recordning.0 ?? "-"
+                            let dateAndTime = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: annotation.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
                             let duration =  FTUtils.timeFormatted(UInt(model.audioDurationWithoutCheckingFileExistance()))
-                            let media = FTShelfAudio(audioTitle: title,
+                            let media = FTShelfAudio(audioTitle: name,
                                                      duration: duration,
                                                      page: index,
-                                                     document: self.documentItem)
+                                                     document: self.documentItem,
+                                                     dateAndTime: dateAndTime)
                             mediaToReturn.append(media)
                         }
                     }
@@ -143,16 +144,18 @@ private extension FTCachedSqliteAnnotationFileItem {
         return URL(fileURLWithPath: imageAssetPath)
     }
 
-    func audioRecording(uuid: String) -> FTAudioRecordingModel? {
+    func audioRecording(uuid: String) -> (String?, FTAudioRecordingModel?)? {
         let annotationsFolder = self.fileItemURL.deletingLastPathComponent()
         let rootFolder = annotationsFolder.deletingLastPathComponent()
         let audioAssetPath = rootFolder.path.appending("/Resources/\(uuid.appending(".plist"))")
         do {
             let url = URL(fileURLWithPath: audioAssetPath)
             let dict = try NSDictionary(contentsOf: url, error: ())
-            return FTAudioRecordingModel.init(dict: dict["recordingModel"] as? Dictionary<String,Any>)
+            let model = FTAudioRecordingModel.init(dict: dict["recordingModel"] as? Dictionary<String,Any>)
+            let name = dict["audioName"] as? String
+            return (name, model)
         } catch {
-            return  nil
+            return  (nil, nil)
         }
     }
 
