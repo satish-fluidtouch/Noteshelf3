@@ -159,6 +159,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                animate anim: Bool,
                                onCompletion : (() -> Void)?)
     {
+        if let item = shelfItem?.documentItem as? FTDocumentItem {
+            self.rootContentViewController?.shelfViewDidMovedToFront(with: item);
+        }
         let animate : Bool = anim
         self.view.isUserInteractionEnabled = false;
         //added below code to resolve a crash related to EAGLCOntext setcurrentContext. This may resolve the issue.
@@ -174,7 +177,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         func finalizeBlock() {
             self.view.isUserInteractionEnabled = true;
-            self.rootContentViewController?.shelfViewDidMovedToFront();
             self.refreshStatusBarAppearnce();
             onCompletion?();
         }

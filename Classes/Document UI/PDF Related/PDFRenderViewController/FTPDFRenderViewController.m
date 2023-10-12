@@ -200,7 +200,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     self.previousDeskMode = -1;
     self.currentDeskMode = -1;
     
-    [self switchMode:[[self.pdfDocument localMetadataCache] currentDeskMode]];
     self.eachPageViewArray = [NSMutableArray array];
     _oldSize = self.contentHolderView.bounds.size;
     
@@ -643,6 +642,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
         self.currentWindow = self.view.window;
         self.mainScrollView.scrollViewDelegate = self;
     }
+    [self switchMode:[[self.pdfDocument localMetadataCache] currentDeskMode]];
     [self configureSceneNotifications];
     [self checkForExternalScreens];
     [self validateMenuItems];
