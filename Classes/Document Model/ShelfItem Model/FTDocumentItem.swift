@@ -20,7 +20,7 @@ extension NSNotification.Name {
     static let didChangeURL =  NSNotification.Name(rawValue: "DidChangeURL")
 }
 
-@objcMembers class FTDocumentItem : NSObject,FTDocumentItemProtocol,FTDocumentItemTempAttributes
+@objcMembers class FTDocumentItem : NSObject,FTDocumentItemProtocol,FTShelfImage,FTDocumentItemTempAttributes
 {
     var uuid : String = FTUtils.getUUID();
     var documentUUID: String?
@@ -283,11 +283,9 @@ private extension FTDocumentItem {
     func updateIsDownloading(_ metadataItem: NSMetadataItem) {
         let metadataValue = metadataItem.isDownloading()
         if metadataValue != self.isDownloading {
+            self.isDownloading = metadataValue;
             if(metadataValue) {
                 self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!;
-                if self.downloadProgress > 0 {
-                    self.isDownloading = metadataValue;
-                }
             }
         }
     }

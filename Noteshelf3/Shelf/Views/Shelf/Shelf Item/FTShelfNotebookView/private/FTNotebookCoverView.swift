@@ -37,12 +37,15 @@ struct FTNotebookCoverView: View {
                     })
                         .overlay(alignment: Alignment.bottom) {
                     if shelfItem.uploadDownloadInProgress {
+                        let imagSize: CGSize = shelfViewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 24, height: 24)
+                        let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
+
                         let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
-                        Image(systemName: "arrow.up.circle")
-                            .foregroundColor(Color.black.opacity(0.5))// For handlilng dark/light mode used black color
+                        Image(systemName: "icloud.and.arrow.up")
+                            .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
                             .frame(width: 24, height: 24, alignment: Alignment.center)
                             .font(font)
-                            .padding(.bottom, 8)
+                            .padding(.bottom, padding)
                             .pulseAnimation()
 
                     } else if shelfItem.isNotDownloaded {
@@ -50,7 +53,7 @@ struct FTNotebookCoverView: View {
                         let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
                         let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
                         Image(systemName: "icloud.and.arrow.down")
-//                            .foregroundColor(Color.black.opacity(0.2))// For handlilng dark/light mode used black color
+                            .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
                             .frame(width: imagSize.width, height: imagSize.height, alignment: Alignment.center)
                             .font(font)
                             .padding(.bottom, padding)

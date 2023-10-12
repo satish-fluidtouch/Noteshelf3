@@ -50,20 +50,21 @@ class FTThumbReadCallbacks : NSObject
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
-        let token = UUID().uuidString
-        item.URL.fetchQLThumbnail(completion: { image in
-            onCompletion(image, token)
-        })
-        return token
-        /*
-//        let cachedImage = self.imageCache.cachedImageForItem(item: item)
-//        if(nil != cachedImage) {
-//            onCompletion(cachedImage,nil);
-//            return nil;
-//        }
+        guard item.URL.isNS2Book else {
+            let token = UUID().uuidString
+            item.URL.fetchQLThumbnail(completion: { image in
+                onCompletion(image, token)
+            })
+            return token
+        }
 
-        if !FileManager().isUbiquitousItem(at: item.URL)
-            ,!FileManager().fileExists(atPath: item.URL.path) {
+        let cachedImage = self.imageCache.cachedImageForItem(item: item)
+        if(nil != cachedImage) {
+            onCompletion(cachedImage,nil);
+            return nil;
+        }
+
+        if(!FileManager().fileExists(atPath: item.URL.path)) {
             onCompletion(nil,nil);
             return nil;
         }
@@ -79,7 +80,7 @@ class FTThumbReadCallbacks : NSObject
             self.readCallbacks[hash] = callbackItem;
             callbackItem?.callbacks.append(onCompletion);
         }
-        
+
         thumbReadOperationQueue.addOperation {
             let completionBlockExecution : (UIImage?, FTDiskItemProtocol) -> Void = { (image, item) in
                 DispatchQueue.main.async {
@@ -96,33 +97,30 @@ class FTThumbReadCallbacks : NSObject
                     }
                 }
             };
-            
-            item.URL.fetchQLThumbnail { thumbImage in
-                let nsURL = item.URL as NSURL;
-                var image  = thumbImage;
-                if(nil == image) {
-                    #if !NS2_SIRI_APP && !NOTESHELF_ACTION
-                    if item.URL.downloadStatus() != .downloaded {
-                        completionBlockExecution(nil,item);
-                        return
-                    }
-                    #endif
-                    completionBlockExecution(nil, item);
-//                    let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
-//                    var error : NSError?;
-//                    let coordinator = NSFileCoordinator.init(filePresenter: nil);
-//                    coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
-//                        image = UIImage.init(contentsOfFile: readURL.path);
-//                        completionBlockExecution(image, item);
-//                    });
+
+            let nsURL = item.URL as NSURL;
+            var image : UIImage?;
+            image = (item as? FTShelfImage)?.image;
+            if(nil == image) {
+                #if !NS2_SIRI_APP && !NOTESHELF_ACTION
+                if item.URL.downloadStatus() != .downloaded {
+                    completionBlockExecution(nil,item);
+                    return
                 }
-                else {
-                    completionBlockExecution(image,item);
-                }
+                #endif
+                let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
+                var error : NSError?;
+                let coordinator = NSFileCoordinator.init(filePresenter: nil);
+                coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
+                    image = UIImage.init(contentsOfFile: readURL.path);
+                    completionBlockExecution(image, item);
+                });
+            }
+            else {
+                completionBlockExecution(image,item);
             }
         };
         return callbackItem!.token;
-         */
     }
     
     func addImageToCache(image: UIImage?, url: URL)

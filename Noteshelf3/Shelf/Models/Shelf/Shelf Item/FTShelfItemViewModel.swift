@@ -208,7 +208,8 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if documentItem.isDownloaded {
+        if documentItem.isDownloaded && shouldFetchCoverImage{
+            self.shouldFetchCoverImage = false
             self.progress = 1.0;
             self.isNotDownloaded = false
             self.stopDownloadingProgressView()
@@ -219,6 +220,7 @@ extension FTShelfItemViewModel {
             self.animType = .download;
             self.showDownloadingProgressView();
             self.progress = progress;
+            shouldFetchCoverImage = true;
         } else if(documentItem.URL.downloadStatus() == .notDownloaded) {
             self.isNotDownloaded = true
         }

@@ -83,7 +83,9 @@ extension URL {
             }
         }
         catch {
-            debugLog("Error while fetching status \(error.localizedDescription)")
+#if DEBUG
+            print("Error while fetching status \(error.localizedDescription)")
+#endif
         }
         return status;
     }

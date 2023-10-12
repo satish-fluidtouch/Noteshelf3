@@ -88,6 +88,23 @@ extension FTGroupItemProtocol
     }    
 }
 
+extension FTShelfImage {
+    var image : UIImage? {
+        var thumbImage : UIImage?;
+        do {
+            var thumbnailInfoDict : AnyObject?;
+            try (self.URL as NSURL).getPromisedItemResourceValue(&thumbnailInfoDict, forKey: URLResourceKey.thumbnailDictionaryKey);
+            if(nil != thumbnailInfoDict) {
+                thumbImage = (thumbnailInfoDict as! NSDictionary).object(forKey: URLThumbnailDictionaryItem.NSThumbnail1024x1024SizeKey.rawValue) as? UIImage;
+            }
+        }
+        catch {
+
+        }
+        return thumbImage;
+    };
+}
+
 extension URL {
     func pathRelativeTo(_ inURL: URL) -> String {
         let url = inURL.urlByDeleteingPrivate().path;
