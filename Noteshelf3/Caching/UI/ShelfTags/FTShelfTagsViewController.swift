@@ -283,6 +283,7 @@ class FTShelfTagsViewController: UIViewController {
             activateViewMode()
             track(EventName.shelf_tag_select_done_tap, screenName: ScreenName.shelf_tags)
         } else {
+            selectOrDeselectAllBooks(shouldSelect: false)
             activeEditMode()
             track(EventName.shelf_tag_select_tap, screenName: ScreenName.shelf_tags)
         }

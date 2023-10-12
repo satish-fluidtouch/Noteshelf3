@@ -205,6 +205,8 @@ final class FTCacheTagsProcessor {
     }
 
     func removeTagsFor(documentUUID: String) {
+        FTTagsProvider.shared.removeDocumentId(docId: documentUUID)
+
         if let cachedTagsPlist = cachedTagsPlist() {
             let destinationURL = cachedPageTagsLocation()
             var plistTags = cachedTagsPlist.tags
