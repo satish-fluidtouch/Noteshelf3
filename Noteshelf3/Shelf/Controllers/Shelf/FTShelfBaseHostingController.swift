@@ -47,12 +47,6 @@ class FTShelfBaseHostingController: UIHostingController<AnyView> {
         self.shelfViewModel.removeObserversForShelfItems()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-        }
-    }
-
     override func didMove(toParent parent: UIViewController?) {
         if parent == nil {
             self.removeFromParent()
