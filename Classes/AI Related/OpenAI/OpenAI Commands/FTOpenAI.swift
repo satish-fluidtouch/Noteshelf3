@@ -16,19 +16,26 @@ class FTOpenAI: NSObject {
         return OpenAI(apiToken: FTOpenAI.OPEN_API_TOKEN);
     }();
     static let shared = FTOpenAI();
+    private var currentcommand: FTAICommand?;
+    
     
     func execute(command: FTAICommand
                  ,onUpdate: @escaping ((FTOpenAIResponse,Error?,_ token: String) -> (Void))
                  ,onCompletion: @escaping  ((Error?,_ token:String) -> (Void))) {
+        currentcommand = command;
         
         let commandString: String = command.command();
         let response = FTOpenAIResponse();
         var messages = [Chat]();
-        messages.append(Chat(role: .user, content: commandString));
-        
+        messages.append(Chat(role: .system, content: commandString));
+        messages.append(Chat(role: .user, content: command.contentToExecute));
+
         var targettedError: Error?;
         let query = ChatQuery(model: .gpt3_5Turbo, messages: messages,temperature: 0.2)
         openAI.chatsStream(query: query) { partialResult in
+            guard self.currentcommand == command else {
+                return;
+            }
             switch partialResult {
             case .success(let result):
                 if let content = result.choices.first?.delta.content {
@@ -56,5 +63,9 @@ class FTOpenAI: NSObject {
                 onCompletion(targettedError,command.commandToken);
             }
         };
+    }
+    
+    func cancelCurrentExecution() {
+        self.currentcommand = nil;
     }
 }

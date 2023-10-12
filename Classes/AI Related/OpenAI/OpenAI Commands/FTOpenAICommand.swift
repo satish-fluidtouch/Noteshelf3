@@ -32,13 +32,13 @@ class FTAICommand: NSObject {
     var enteredContent: String = "";
     var commandToken: String = UUID().uuidString;
     
-    private var contentToExecute: String {
-        return self.content.content.appending(enteredContent);
+    public var contentToExecute: String {
+        return self.content.content.appendingFormat(" %@", enteredContent);
     }
 
     func command() -> String {
         if commandType == .generalQuestion {
-            return String(format: "noteshelf.ai.commandAskAnything".aiCommandString, contentToExecute,FTUtils.currentLanguageResponseCode());
+            return String(format: "noteshelf.ai.commandAskAnything".aiCommandString,FTUtils.currentLanguageResponseCode());
         }
         return contentToExecute;
     }
@@ -73,14 +73,14 @@ class FTAICommand: NSObject {
         if commandType == .none {
             return "";
         }
-        return contentToExecute;
+        return self.enteredContent;
     }
 }
 
 class FTAITranslateCommand: FTAICommand {
     var languageCode: String = "English"
     
-    private var contentToExecute: String {
+    override var contentToExecute: String {
         return self.content.content;
     }
 
@@ -89,7 +89,7 @@ class FTAITranslateCommand: FTAICommand {
     }
     
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandTranslate".aiCommandString, contentToExecute,languageCode);
+        return String(format: "noteshelf.ai.commandTranslate".aiCommandString,languageCode);
     }
     
     override var placeholderMessage: String {
@@ -102,12 +102,12 @@ class FTAITranslateCommand: FTAICommand {
 }
 
 class FTAIKeyPointsCommand: FTAICommand {
-    private var contentToExecute: String {
+    override var contentToExecute: String {
         return self.content.content;
     }
 
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandKeyPoints".aiCommandString, contentToExecute,FTUtils.currentLanguageResponseCode());
+        return String(format: "noteshelf.ai.commandKeyPoints".aiCommandString, FTUtils.currentLanguageResponseCode());
     }
     
     override var executionMessage: String {
@@ -116,12 +116,12 @@ class FTAIKeyPointsCommand: FTAICommand {
 }
 
 class FTAISummarizeCommand: FTAICommand {
-    private var contentToExecute: String {
+    override var contentToExecute: String {
         return self.content.content;
     }
 
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandSummarize".aiCommandString, contentToExecute,FTUtils.currentLanguageResponseCode());
+        return String(format: "noteshelf.ai.commandSummarize".aiCommandString,FTUtils.currentLanguageResponseCode());
     }
     
     override var executionMessage: String {
@@ -130,12 +130,12 @@ class FTAISummarizeCommand: FTAICommand {
 }
 
 class FTAIExplainCommand: FTAICommand {
-    private var contentToExecute: String {
+    override var contentToExecute: String {
         return self.content.content;
     }
 
     override func command() -> String {
-        return String(format: "noteshelf.ai.commandExplain".aiCommandString, contentToExecute, FTUtils.currentLanguageResponseCode());
+        return String(format: "noteshelf.ai.commandExplain".aiCommandString, FTUtils.currentLanguageResponseCode());
     }
     
     override var executionMessage: String {
@@ -144,7 +144,7 @@ class FTAIExplainCommand: FTAICommand {
 }
 
 class FTAICleanUpCommand: FTAICommand {
-    private var contentToExecute: String {
+    override var contentToExecute: String {
         return self.content.nonPDFContent;
     }
     

@@ -31,11 +31,22 @@ class FTOpenAIResponse: NSObject {
         if let data = htmlContent.data(using: .unicode)
             , let attrString = try? NSMutableAttributedString(data: data, options: [.documentType : NSAttributedString.DocumentType.html], documentAttributes: nil) {
             attrString.beginEditing();
-            attrString.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: attrString.length)) { color, effectedRange, stop in
-                if let fgColor = color as? UIColor, fgColor.hexString == self.blackHexColor {
+            attrString.enumerateAttributes(in: NSRange(location: 0, length: attrString.length)) { attribues, effectedRange, stop in
+                if let fgColor = attribues[.foregroundColor] as? UIColor,fgColor.hexString == self.blackHexColor {
                     attrString.addAttribute(.foregroundColor, value: UIColor.label, range: effectedRange);
                 }
+                if nil == attribues[.font] as? UIFont {
+                    attrString.addAttribute(.font, value: UIFont.systemFont(ofSize: 18), range: effectedRange);
+                }
+                if let font = attribues[.font] as? UIFont, font.pointSize < 18 {
+                    attrString.addAttribute(.font, value: UIFont.systemFont(ofSize: 18), range: effectedRange);
+                }
             }
+//            attrString.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: attrString.length)) { color, effectedRange, stop in
+//                if let fgColor = color as? UIColor, fgColor.hexString == self.blackHexColor {
+//                    attrString.addAttribute(.foregroundColor, value: UIColor.label, range: effectedRange);
+//                }
+//            }
             attrString.enumerateAttribute(.paragraphStyle, in: NSRange(location: 0, length: attrString.length), options: .reverse) { value, effRange, stop in
                 if let paragraphStyle = value as? NSParagraphStyle, !(paragraphStyle.bulletLists?.isEmpty ?? true) {
                     let maxRange = NSMaxRange(effRange);

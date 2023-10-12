@@ -151,6 +151,7 @@ class FTNoteshelfAIViewController: UIViewController {
     };
         
     private func reset() {
+        FTOpenAI.shared.cancelCurrentExecution();
         self.textField?.text = "";
         languageCode = "";
         self.enteredContent = "";
@@ -197,6 +198,7 @@ class FTNoteshelfAIViewController: UIViewController {
     }
 
     deinit{
+        FTOpenAI.shared.cancelCurrentExecution();
         self.premiumCancellableEvent?.cancel();
         self.premiumCancellableEvent = nil;
     }
@@ -403,7 +405,7 @@ private extension FTNoteshelfAIViewController {
         
         currentToken = command.commandToken;
         FTOpenAI.shared.execute(command: command) {[weak self] (response, error,token) in
-            guard let curToken = self?.currentToken, curToken == token else {
+            guard nil != self, let curToken = self?.currentToken, curToken == token else {
                 return;
             }
             if let inerror = error {
@@ -414,7 +416,7 @@ private extension FTNoteshelfAIViewController {
                 self?.textViewController?.showResponse(response);
             }
         } onCompletion: { [weak self] (error,token) in
-            guard let curToken = self?.currentToken, curToken == token else {
+            guard nil != self, let curToken = self?.currentToken, curToken == token else {
                 return;
             }
             var supportHandwrite = false;
