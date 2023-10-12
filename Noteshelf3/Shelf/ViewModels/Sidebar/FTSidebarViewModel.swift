@@ -165,7 +165,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
 }
 private extension FTSidebarViewModel {
     func updateSidebarItemSelection(){
-        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
+        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category, .ns2Category]
         if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
             if selectedSideBarItem != nil,
                selectedSideBarItem?.shelfCollection != nil,
