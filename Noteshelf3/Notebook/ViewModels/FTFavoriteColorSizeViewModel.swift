@@ -21,6 +21,10 @@ protocol FTFavoriteColorEditDelegate: FTFavoriteSelectDelegate {
     func showEditColorScreen(using rack: FTRackData, position: FavoriteColorPosition)
 }
 
+extension Notification.Name {
+    static let penTypeDisplayChange = NSNotification.Name("FTPenTypeDisplayChange")
+}
+
 class FTFavoriteColorViewModel: ObservableObject {
     @Published var favoriteColors: [FTPenColorModel] = []
     @Published private(set) var currentSelectedColor: String = blackColorHex
@@ -30,19 +34,21 @@ class FTFavoriteColorViewModel: ObservableObject {
     private var rackData: FTRackData!
     private var currentPenset: FTPenSetProtocol!
     private(set) var colorEditPostion: FavoriteColorPosition?
+    private weak var window: UIWindow?
 
     // MARK: Initialization
-    init(rackData: FTRackData, delegate: FTFavoriteColorEditDelegate?) {
+    init(rackData: FTRackData, delegate: FTFavoriteColorEditDelegate?, window: UIWindow?) {
         self.rackData = rackData
         self.currentPenset = self.rackData.currentPenset
         self.delegate = delegate
+        self.window = window
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: NSNotification.Name("FTPenTypeDisplayChange"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: window)
     }
 
     // This is to show different display size for pencil and other pen types
     @objc func handlePenTypeVariantChange(_ notification: Notification) {
-        if let rackData = notification.object as? FTRackData, rackData.userActivity == self.rackData.userActivity {
+        if let rackData = notification.userInfo?["FTRackData"] as? FTRackData {
             self.rackData = rackData
             self.fetchColorData()
         }
@@ -94,14 +100,15 @@ class FTFavoriteColorViewModel: ObservableObject {
 
 extension FTFavoriteColorViewModel {
     func fetchColorData() {
-        self.favoriteColors = []
+        self.favoriteColors.removeAll()
         self.currentPenset = self.rackData.currentPenset
         self.currentSelectedColor = self.currentPenset.color
 
         let favModels = self.rackData.getFavoriteColors(for: self.currentPenset.type)
-        self.favoriteColors = favModels.map({
+         let newfav = favModels.map({
             return FTPenColorModel(hex: $0.color, isSelected: $0.isSelected)
         })
+        self.favoriteColors.append(contentsOf: newfav)
     }
 
     func resetFavoriteColorSelection() {
@@ -143,19 +150,20 @@ class FTFavoriteSizeViewModel: ObservableObject {
     private var sizeEditPostion: FavoriteSizePosition?
 
     private weak var delegate: FTFavoriteSizeEditDelegate?
-
+    private weak var window: UIWindow?
     // MARK: Initialization
-    init(rackData: FTRackData, delegate: FTFavoriteSizeEditDelegate?) {
+    init(rackData: FTRackData, delegate: FTFavoriteSizeEditDelegate?, window: UIWindow?) {
         self.rackData = rackData
         self.currentPenset = self.rackData.currentPenset
         self.delegate = delegate
+        self.window = window
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: NSNotification.Name("FTPenTypeDisplayChange"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: window)
     }
 
     // This is to show different display size for pencil and other pen types
     @objc func handlePenTypeVariantChange(_ notification: Notification) {
-        if let rackData = notification.object as? FTRackData, rackData.userActivity == self.rackData.userActivity {
+        if let rackData = notification.userInfo?["FTRackData"] as? FTRackData {
             self.rackData = rackData
             self.fetchSizesData()
         }

@@ -206,19 +206,18 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if(documentItem.isDownloading) {
-            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
-            self.animType = .download;
-            self.showDownloadingProgressView();
-            self.progress = progress;
-        }
-        else if ((documentItem.isDownloaded)) {
+        if ((documentItem.isDownloaded)) {
             self.progress = 1.0;
             self.isNotDownloaded = false
             self.stopDownloadingProgressView()
             self.fetchCoverImage()
         }
-        else if(documentItem.URL.downloadStatus() == .notDownloaded) {
+        else if(documentItem.isDownloading) {
+            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
+            self.animType = .download;
+            self.showDownloadingProgressView();
+            self.progress = progress;
+        } else if(documentItem.URL.downloadStatus() == .notDownloaded) {
             self.isNotDownloaded = true
         }
         if documentItem.isUploading {

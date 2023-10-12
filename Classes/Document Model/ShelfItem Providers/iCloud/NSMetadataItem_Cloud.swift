@@ -37,7 +37,8 @@ extension NSMetadataItem
     {
         var isDownloaded = false;
         if let value = self.value(forAttribute: NSMetadataUbiquitousItemDownloadingStatusKey) as? String,
-            value == NSMetadataUbiquitousItemDownloadingStatusCurrent {
+            (value == NSMetadataUbiquitousItemDownloadingStatusCurrent ||
+             value == NSMetadataUbiquitousItemDownloadingStatusDownloaded) {
             isDownloaded = true;
         }
         return isDownloaded;
@@ -59,31 +60,31 @@ extension NSMetadataItem
         return downloadStatus;
     }
     
-    func isDownloading() -> NSNumber?
+    func isDownloading() -> Bool
     {
-        var number :  NSNumber?;
+        var downloading = false;
         if let value = self.value(forAttribute: NSMetadataUbiquitousItemIsDownloadingKey) as? NSNumber {
-            number = value;
+            downloading = value.boolValue;
         }
-        return number;
+        return downloading;
     }
     
-    func isUploaded() -> NSNumber?
+    func isUploaded() -> Bool
     {
-        var number :  NSNumber?;
+        var uploaded = false;
         if let value = self.value(forAttribute: NSMetadataUbiquitousItemIsUploadedKey) as? NSNumber {
-            number = value;
+            uploaded = value.boolValue;
         }
-        return number;
+        return uploaded;
     }
 
-    func isUploading() -> NSNumber?
+    func isUploading() -> Bool
     {
-        var number :  NSNumber?;
+        var uploading = false;
         if let value = self.value(forAttribute: NSMetadataUbiquitousItemIsUploadingKey) as? NSNumber {
-            number = value;
+            uploading = value.boolValue;
         }
-        return number;
+        return uploading;
     }
     
     func percentDownloaded() -> NSNumber?

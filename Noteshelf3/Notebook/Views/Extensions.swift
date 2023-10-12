@@ -19,7 +19,8 @@ struct FTShortcutBarVisualEffectView: UIViewRepresentable {
 
 struct FTVibrancyEffectView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
-        let blurEffect  = UIBlurEffect(style: .regular)
+        let style =  UIScreen.main.traitCollection.userInterfaceStyle == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
+        let blurEffect  = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect);
 
         let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)

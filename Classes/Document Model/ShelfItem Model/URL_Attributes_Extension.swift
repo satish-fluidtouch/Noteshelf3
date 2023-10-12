@@ -45,7 +45,7 @@ extension URL {
             return date ?? fileModificationDate;
         }
     }
-
+/*
     public func updateLastOpenedDate(_ date: Date) {
         DispatchQueue.global().async {
             let coordinator = NSFileCoordinator(filePresenter: nil);
@@ -80,5 +80,23 @@ extension URL {
                 completion(self.fileCreationDate);
             }
         }
+    }
+*/
+    public mutating func updateLastOpenedDate(_ date: Date) {
+        do {
+            var resourceValue = URLResourceValues();
+            resourceValue.contentAccessDate = date;
+            try self.setResourceValues(resourceValue);
+            debugLog("😄 Successfully set \(date) for \(self.lastPathComponent)")
+
+        } catch {
+            debugLog("😄🥵 error setting \(date) for \(self.lastPathComponent)")
+        }
+    }
+    
+    public func readLastOpenedDate(_ completion : @escaping (Date)->()) {
+        let date = self.fileLastOpenedDate;
+        debugLog("😄 Read lastOpen \(date) for \(self.lastPathComponent)")
+        completion(date);
     }
 }

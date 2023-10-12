@@ -115,7 +115,7 @@ extension FTPenRackViewController : UICollectionViewDelegate {
         self.penTypeRack.currentPenset.preciseSize = self.penTypeRack.lastSelectedPenSize(for: penType).preciseSize
 
         self.penTypeRack.saveCurrentSelection()
-        NotificationCenter.default.post(name: NSNotification.Name("FTPenTypeDisplayChange"), object: self.penTypeRack)
+        NotificationCenter.default.post(name: .penTypeDisplayChange, object: self.view.window, userInfo: ["FTRackData": self.penTypeRack])
 
         collectionView.indexPathsForVisibleItems.forEach({ (penTypeIndexPath) in
             if let cell = collectionView.cellForItem(at: penTypeIndexPath) as? FTPenTypeCollectionViewCell {

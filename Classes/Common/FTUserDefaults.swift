@@ -602,16 +602,6 @@ extension FTUserDefaults {
     }
 }
 
-//MARK:- Zoom bar button on onScreenWritingVC
-extension FTUserDefaults {
-    static func setZoomBoxModeTo(_ isOn : Bool){
-        self.defaults().setValue(isOn, forKey: "zoom_button_visibility_identifier")
-    }
-    static func isZoomBoxModeOn() -> Bool{
-        return self.defaults().bool(forKey: "zoom_button_visibility_identifier")
-    }
-}
-
 extension FTUserDefaults { // for saving last selected non collection type
     static func isInNonCollectionMode() -> Bool {
         return self.defaults().bool(forKey: NonCollectionModeKey)
