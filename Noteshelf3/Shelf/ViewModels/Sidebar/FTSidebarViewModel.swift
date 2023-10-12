@@ -183,9 +183,10 @@ private extension FTSidebarViewModel {
     func updateCurrentSidebarItemCollection(){
         let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category, .ns2Category]
         if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
+            let currentCollectionSidebarItemType: FTSideBarItemType = (selectedShelfItemCollection?.isNS2Collection() ?? false) ? .ns2Category : .category
             if selectedSideBarItem != nil,
                selectedSideBarItem?.shelfCollection != nil,
-               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
+               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle, selectedSideBarItem?.type == currentCollectionSidebarItemType {
                 selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
             }
         }
