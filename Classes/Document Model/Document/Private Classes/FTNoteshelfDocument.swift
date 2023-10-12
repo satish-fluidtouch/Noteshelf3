@@ -40,7 +40,7 @@ private class FTNSDocumentListener: NSObject {
 class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,FTDocumentProtocolInternal,FTCacheProtocol
 {
     var cache: FTCache?;
-    fileprivate var searchOperationQueue = OperationQueue.init();
+    fileprivate var searchOperationQueue = OperationQueue();
     fileprivate var openPurpose = FTDocumentOpenPurpose.write;
     
     internal weak var documentPlistItem: FTNSDocumentInfoPlistItem?;
@@ -95,6 +95,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     required override init(fileURL url: URL) {
         super.init(fileURL: url);
         self.wasPinEnabled = self.isPinEnabled()
+        searchOperationQueue.name = "com.ft.ns3.doc.search"
     }
 
     deinit {
@@ -1442,19 +1443,16 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
                 (eachPage as? FTPageSearchProtocol)?.searchingInfo = nil;
             }
 
-            if(nil != onCompletion) {
-                DispatchQueue.main.async(execute: {
-                    onCompletion!();
-                });
-            }
+            DispatchQueue.main.async(execute: {
+                onCompletion?();
+            });
             return;
         }
         
         self.searchOperationQueue.maxConcurrentOperationCount = 1;
         self.searchOperationQueue.cancelAllOperations();
 
-        var operation : BlockOperation!;
-        operation = BlockOperation();
+        let operation = BlockOperation()
         operation.addExecutionBlock { [weak self] in
             let allPages = self?.pages();
             if(nil != allPages) {
@@ -1465,13 +1463,10 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
                 }
             }
         }
-        
         operation.completionBlock = {
-            if(nil != onCompletion) {
-                DispatchQueue.main.async(execute: {
-                    onCompletion!();
-                });
-            }
+            DispatchQueue.main.async(execute: {
+                onCompletion?();
+            });
         }
         self.searchOperationQueue.addOperation(operation);
     }
@@ -1491,8 +1486,7 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
         searchProgress.totalUnitCount = Int64(allPages.count)
 
         for eachPage in allPages {
-            var operation : BlockOperation!;
-            operation = BlockOperation();
+            let operation = BlockOperation();
             operation.addExecutionBlock { [weak eachPage,weak searchProgress,weak operation] in
                 let isCancelled = operation?.isCancelled ?? false;
                 if let searchingPage = eachPage as? FTPageSearchProtocol,
@@ -1507,11 +1501,10 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
             self.searchOperationQueue.addOperation(operation);
         }
         
-        var operation : BlockOperation!;
-        operation = BlockOperation.init {
-            
+
+        let operation = BlockOperation.init {
+
         };
-        
         operation.completionBlock = {
             DispatchQueue.main.async(execute: {
                 onCompletion(operation.isCancelled);

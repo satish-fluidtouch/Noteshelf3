@@ -9,14 +9,18 @@
 import UIKit
 
 class FTSearchProcessorFactory: NSObject {
-    static func getProcessor(forType type: FTGlobalSearchType, searchKey: String, tags: [String] = []) -> FTSearchProcessor {
-        if type == .titles {
-            return FTNotebookTitleSearchProcessor.init(with: searchKey)
-        } else if type == .tags {
-            return FTNotebookTagsSearchProcessor(with: tags)
-        } else if type == .content {
-            return FTNotebookContentSearchProcessor.init(with: searchKey, tags: tags)
+    static func getProcessor(forType type: FTGlobalSearchType, searchKey: String, tags: [String] = [], opQueue: OperationQueue?) -> FTSearchProcessor {
+        let processor: FTSearchProcessor
+        switch type {
+        case .titles:
+            processor = FTNotebookTitleSearchProcessor(with: searchKey, opQueue: opQueue)
+        case .tags:
+            processor = FTNotebookTagsSearchProcessor(with: tags)
+        case .content:
+            processor = FTNotebookContentSearchProcessor(with: searchKey, tags: tags, opQueue: opQueue)
+        case .all:
+            processor = FTNotebookAllSearchProcessor(with: searchKey, tags: tags, opQueue: opQueue)
         }
-        return FTNotebookAllSearchProcessor.init(with: searchKey, tags: tags)
+        return processor
     }
 }
