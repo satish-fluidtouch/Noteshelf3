@@ -106,6 +106,10 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         }
     }
 
+    func updateSideMenuItemsCollections(){
+        viewModel.updateUserCreatedCategories()
+    }
+
     private func addOverlay() {
         overLayBg = UIView()
         overLayBg?.alpha = 0.0

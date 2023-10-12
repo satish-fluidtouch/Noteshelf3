@@ -330,8 +330,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 DispatchQueue.main.async {
                     FTNoteshelfDocumentProvider.shared.moveContentsFromCloudToLocal(onCompletion: { (_) in
                         FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
+                        FTNoteshelfDocumentProvider.shared.isContentMoving = false
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
                             weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
+                                FTNoteshelfDocumentProvider.shared.resetProviderCache()
+                                (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
                                 weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
                                 weakSelf?.refreshShelfCollection(setToDefault: true) {
                                     loadingIndicatorViewController.hide();
@@ -347,6 +350,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             let deleteFromLocal = UIAlertAction.init(title: NSLocalizedString("DeleteALocalCopy",comment:"Delete on my iPad"), style: .destructive, handler: { (_) in
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
+                (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
                 weakSelf?.refreshShelfCollection(setToDefault: false,onCompletion: nil);
             });
             controller.addAction(deleteFromLocal);
@@ -362,6 +366,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 FTNoteshelfDocumentProvider.shared.moveContentsFromLocalToiCloud(onCompletion: { (_, error) in                    (error as NSError?)?.showAlert(from: self.view.window?.visibleViewController)
                     FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                     FTNSiCloudManager.shared().setiCloudWas(on: true);
+                    FTNoteshelfDocumentProvider.shared.isContentMoving = false
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
                         weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
                             weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;

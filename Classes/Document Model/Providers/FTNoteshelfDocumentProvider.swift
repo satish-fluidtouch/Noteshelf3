@@ -49,6 +49,8 @@ class FTNoteshelfDocumentProvider: NSObject {
     var isProviderReady: Bool {
         return providerMode != nil
     }
+
+    var isContentMoving: Bool = false // set this to true when content is being moved from iCloud to local and vice versa.
     /// This needs to be called only on initialization and whenever the iCloud Settings are modified.
     func updateProviderIfRequired(_ onCompletion :((_ isUpdated: Bool) -> Void)?) {
         FTNoteshelfDocumentProvider.documentProvider { provider in
@@ -654,7 +656,7 @@ extension FTNoteshelfDocumentProvider {
     func moveContentsFromLocalToiCloud(onCompletion completion :@escaping ((Bool, Error?) -> Void)) {
         self.resetProviderCache();
         guard let icloudShelfCollection = cloudShelfCollectionRoot?.ns3Collection  as? FTShelfCollectioniCloud else { completion(false, nil); return }
-
+        isContentMoving = true
         self.shelfs({ [weak self] (_) in
             self?.cloudDocumentListener?.disableUpdates();
             self?.localShelfCollectionRoot?.ns3Collection.shelfs({ (collections) in
@@ -689,6 +691,7 @@ extension FTNoteshelfDocumentProvider {
         guard let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() else {
             return;
         }
+        self.isContentMoving = true
         self.resetProviderCache();
         if let cloudDocumentListener {
             cloudDocumentListener.disableUpdates();

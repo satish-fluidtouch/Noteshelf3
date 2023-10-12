@@ -455,7 +455,9 @@ extension FTSidebarViewModel {
                 item.type = .category
                 return item
             }
-            self.updateUnfiledCategory()
+            if let unCategorizedCollection = collections.first(where: {$0.isUnfiledNotesShelfItemCollection}) {
+                self.setCollectionToSystemType(.unCategorized, collection: unCategorizedCollection)
+            }
             FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
                 let NS2Items = collections.map { shelfItem -> FTSideBarItem in
                     let item = FTSideBarItem(shelfCollection: shelfItem)

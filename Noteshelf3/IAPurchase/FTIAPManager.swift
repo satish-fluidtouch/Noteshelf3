@@ -41,6 +41,10 @@ extension FTPremiumUser {
             onCompletion?();
             return;
         }
+        if FTNoteshelfDocumentProvider.shared.isContentMoving {
+            onCompletion?();
+            return;
+        }
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(.none, parent: nil, searchKey: nil) { allItems in
             FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
                 trashCollection.shelfItems(.none, parent: nil, searchKey: nil) { items in

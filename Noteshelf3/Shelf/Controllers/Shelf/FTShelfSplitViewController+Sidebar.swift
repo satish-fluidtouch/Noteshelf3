@@ -27,6 +27,8 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             showHomeDetailedVC()
         } else if currentShelfViewModel == nil { // Executes when shifting from non collection types to home.
             showHomeDetailedVC()
+        } else {
+            currentShelfViewModel?.reloadShelf()
         }
 
         func showHomeDetailedVC(){
@@ -220,6 +222,9 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         } else {
             return getTemplatesVC() // templates
         }
+    }
+    func updateSidebarCollections(){
+        self.sideMenuController?.updateSideMenuItemsCollections()
     }
  }
 
