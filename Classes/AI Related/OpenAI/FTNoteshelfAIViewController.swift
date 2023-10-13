@@ -131,6 +131,10 @@ class FTNoteshelfAIViewController: UIViewController {
     private var content = FTPageContent();
     private var enteredContent: String = "";
     
+    @IBOutlet private weak var creditsContainerView: UIView?;
+    @IBOutlet private weak var creditsContainerViewHeightConstraint: NSLayoutConstraint?;
+    private weak var creditsController: UIViewController?;
+
     private var languageCode: String = "" {
         didSet {
             if languageCode != oldValue,aiCommand == .langTranslate {
@@ -189,11 +193,16 @@ class FTNoteshelfAIViewController: UIViewController {
                 break;
             }
         }
+        self.creditsContainerView?.layer.cornerRadius = 12;
         self.updateFooterHeight();
         if !FTIAPManager.shared.premiumUser.isPremiumUser {
             premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
                 self?.updateFooterHeight();
+                self?.addCredtisFooter();
             }
+        }
+        else {
+            self.addCredtisFooter();
         }
     }
 
@@ -223,9 +232,12 @@ class FTNoteshelfAIViewController: UIViewController {
         self.textField?.placeholder = self.aiCommand.placeholderMessage;
         self.setFooterMode(.noteshelfAiBeta);
         let allTokensConsumed = allTokensConsumed;
+        
+        var creditsHeight: CGFloat = 0;
 
         if aiCommand == .none {
             self.reset();
+            creditsHeight = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAIOptionsViewController.className);
             (controller as? FTNoteshelfAIOptionsViewController)?.delegate = self;
             (controller as? FTNoteshelfAIOptionsViewController)?.content = self.content;
@@ -242,6 +254,9 @@ class FTNoteshelfAIViewController: UIViewController {
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAITextViewViewController.className);
             (controller as? FTNoteshelfAITextViewViewController)?.delegate = self;
         }
+        
+        self.creditsContainerViewHeightConstraint?.constant = creditsHeight;
+        
         if let optCOntorller = controller {
             self.optionsController?.view.removeFromSuperview();
             self.optionsController?.removeFromParent();
@@ -485,5 +500,31 @@ private extension FTNoteshelfAIViewController {
 extension FTNoteshelfAIViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
         self.dismiss(animated: true);
+    }
+}
+
+private extension FTNoteshelfAIViewController {
+    func addCredtisFooter() {
+        self.removeCreditsFooter();
+        
+        guard let creditsView = self.creditsContainerView else {
+            return;
+        }
+        var controller: UIViewController;
+        if FTIAPManager.shared.premiumUser.isPremiumUser {
+            controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIPremiumUserCreditsViewController");
+        }
+        else {
+            controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIFreeUserCreditsViewController");
+        }
+        self.addChild(controller);
+        self.creditsController = controller;
+        controller.view.frame = creditsView.bounds;
+        controller.view.addFullConstraints(creditsView);
+    }
+    
+    func removeCreditsFooter() {
+        self.creditsController?.view.removeFromSuperview();
+        self.creditsController?.removeFromParent();
     }
 }

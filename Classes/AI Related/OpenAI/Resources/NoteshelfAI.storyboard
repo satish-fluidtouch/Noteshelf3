@@ -31,21 +31,11 @@
                                     <outlet property="delegate" destination="Y6W-OH-hqX" id="9Qc-Ah-rch"/>
                                 </connections>
                             </tableView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FIG-sS-lPn" userLabel="Credits View">
-                                <rect key="frame" x="0.0" y="1032" width="834" height="142"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="142" id="YMT-9F-W6j"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CEu-rT-Sgh"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="FIG-sS-lPn" firstAttribute="centerX" secondItem="9mi-hb-KiQ" secondAttribute="centerX" id="2yt-qT-D8z"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="HOw-Pm-SZp"/>
-                            <constraint firstItem="CEu-rT-Sgh" firstAttribute="bottom" secondItem="FIG-sS-lPn" secondAttribute="bottom" id="bN2-Gb-ywg"/>
-                            <constraint firstItem="FIG-sS-lPn" firstAttribute="width" secondItem="9mi-hb-KiQ" secondAttribute="width" id="dpK-bh-aHu"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="centerX" secondItem="CEu-rT-Sgh" secondAttribute="centerX" id="ePb-5x-NLB"/>
                             <constraint firstItem="9mi-hb-KiQ" firstAttribute="top" secondItem="CEu-rT-Sgh" secondAttribute="top" id="uE7-Di-QTV"/>
                         </constraints>
@@ -53,8 +43,6 @@
                     <navigationItem key="navigationItem" id="EvG-Uv-fG8"/>
                     <connections>
                         <outlet property="aiTableView" destination="9mi-hb-KiQ" id="NKm-0t-fJm"/>
-                        <outlet property="creditsContainerView" destination="FIG-sS-lPn" id="sT2-T3-lX2"/>
-                        <outlet property="creditsContainerViewHeightConstraint" destination="YMT-9F-W6j" id="uIU-Jf-2Ap"/>
                         <outlet property="tableViewHeightConstraint" destination="hFR-CV-kOR" id="hFv-wA-zpp"/>
                     </connections>
                 </viewController>
@@ -326,7 +314,14 @@
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-21-mVm" userLabel="Content View">
-                                <rect key="frame" x="16" y="104" width="802" height="1022"/>
+                                <rect key="frame" x="16" y="104" width="802" height="880"/>
+                            </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdR-Zd-sLn" userLabel="Credits View">
+                                <rect key="frame" x="0.0" y="984" width="834" height="142"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="142" id="fLE-e7-Hft"/>
+                                </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6i-wZ-1px" userLabel="Footer View">
                                 <rect key="frame" x="16" y="1126" width="802" height="48"/>
@@ -341,9 +336,12 @@
                         <viewLayoutGuide key="safeArea" id="7Uu-6C-X2x"/>
                         <color key="backgroundColor" name="panelBgColor"/>
                         <constraints>
+                            <constraint firstItem="kdR-Zd-sLn" firstAttribute="width" secondItem="mE6-0L-BUy" secondAttribute="width" id="81u-Z5-cFI"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="width" secondItem="Lzk-hw-Us3" secondAttribute="width" id="Dd3-hj-6el"/>
-                            <constraint firstItem="V6w-21-mVm" firstAttribute="bottom" secondItem="i6i-wZ-1px" secondAttribute="top" id="Ens-Va-8BJ"/>
+                            <constraint firstItem="V6w-21-mVm" firstAttribute="bottom" secondItem="kdR-Zd-sLn" secondAttribute="top" id="Idq-c5-SmF"/>
+                            <constraint firstItem="i6i-wZ-1px" firstAttribute="top" secondItem="kdR-Zd-sLn" secondAttribute="bottom" id="Jg5-6v-dWy"/>
                             <constraint firstItem="Lzk-hw-Us3" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="MUO-mP-WTG"/>
+                            <constraint firstItem="kdR-Zd-sLn" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="PD5-Wc-SAg"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="XmG-bO-phS"/>
                             <constraint firstItem="i6i-wZ-1px" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="YXw-qT-0lG"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="top" secondItem="Lzk-hw-Us3" secondAttribute="bottom" constant="16" id="dbQ-AR-A7P"/>
@@ -355,6 +353,8 @@
                     </view>
                     <connections>
                         <outlet property="contentView" destination="V6w-21-mVm" id="ZLu-jk-9lj"/>
+                        <outlet property="creditsContainerView" destination="kdR-Zd-sLn" id="IVa-km-eiH"/>
+                        <outlet property="creditsContainerViewHeightConstraint" destination="fLE-e7-Hft" id="WVh-Dp-KiZ"/>
                         <outlet property="footerHeightConstraint" destination="wRT-mR-stq" id="HU5-U6-Pcc"/>
                         <outlet property="textField" destination="Lzk-hw-Us3" id="ckN-e8-pPE"/>
                     </connections>
