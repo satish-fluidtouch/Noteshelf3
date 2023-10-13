@@ -78,8 +78,8 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
                         continue
                     }
                     if annotationType == .audio {
-                        if let annotation = FTAnnotation.annotation(forSet: _set) as? FTAudioAnnotation, let recordning = audioRecording(uuid: uuid), let model = recordning.1 {
-                            let name = recordning.0 ?? "-"
+                    if let annotation = FTAnnotation.annotation(forSet: _set) as? FTAudioAnnotation, let recording = audioRecording(uuid: uuid), let model = recording.1 {
+                            let name = recording.0 ?? "-"
                             let dateAndTime = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: annotation.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
                             let duration =  FTUtils.timeFormatted(UInt(model.audioDurationWithoutCheckingFileExistance()))
                             let media = FTShelfAudio(audioTitle: name,
