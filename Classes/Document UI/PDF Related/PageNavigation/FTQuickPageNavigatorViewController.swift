@@ -30,11 +30,8 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
     @IBOutlet weak private var pageInfoContainer: UIView?
     @IBOutlet weak private var thumbnailImageView: UIImageView?
     @IBOutlet weak private var pageSlider: FTPageSlider?
-    
     @IBOutlet weak private var pageTipView: UIView?
     @IBOutlet weak private var pageInfoLabel: UILabel?
-    @IBOutlet weak private var tipImageView: UIImageView?
-    @IBOutlet weak private var tipImageView_Blue: UIImageView?
     var direction: FTSlidingDirection = .horizontal
 
     weak var delegate: FTQuickPageNavigatorDelegate?
@@ -61,26 +58,6 @@ private let gapBetweenPageTipAndThumbnail: CGFloat = 8.0
                 NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.springLoadSelectedPage), object: nil)
                 if self.isTrackingActive {
                     self.perform(#selector(self.springLoadSelectedPage), with: nil, afterDelay: self.springLoadingDuration)
-                }
-                //***************************Flash for a moment when reaches bounds
-                if (numberOfPages == newValue + 1 || newValue == 0) {
-                    UIView.animate(withDuration: 0.2, animations: {
-                        self.tipImageView?.alpha = 0.0
-                        self.tipImageView_Blue?.alpha = 1.0
-                    }) { (_) in
-                        UIView.animate(withDuration: 0.8) {
-                            self.tipImageView?.alpha = 1.0
-                            self.tipImageView_Blue?.alpha = 0.0
-                        }
-                    }
-                }
-                else {
-                    if let imgView = self.tipImageView, imgView.alpha != 1.0 {
-                        UIView.animate(withDuration: 0.2) {
-                            self.tipImageView?.alpha = 1.0
-                            self.tipImageView_Blue?.alpha = 0.0
-                        }
-                    }
                 }
                 //***************************
             }
@@ -418,18 +395,11 @@ extension FTQuickPageNavigatorViewController {
     //This will setup the frames for all the subviews with respect to the scrolling direction
     private func arrangeContentsForPageInfoContainer() {
         guard let infoContainer = self.pageInfoContainer,
-            let tipView = self.pageTipView,
-            let tipBlackImgView = self.tipImageView,
-            let tipBlueImgView = self.tipImageView_Blue,
-            let pageLabel = self.pageInfoLabel else {
+              let tipView = self.pageTipView,
+              let pageLabel = self.pageInfoLabel else {
             return
         }
 
-        let normalTipImage = UIImage.init(named: self.direction == .horizontal ? "pagenumbertip" : "pagenumbertip_v")
-        let blueTipImage = UIImage.init(named: self.direction == .horizontal ? "pagenumbertip_blue" : "pagenumbertip_blue_v")
-        self.tipImageView?.image = normalTipImage
-        self.tipImageView_Blue?.image = blueTipImage
-        
         //******************************** To calculate dark blue tip size ONLY ONCE as getting some UI glitch if we do on  page number changes
         var referencePageString = "999/999"
         if numberOfPages > 999 {
@@ -441,46 +411,27 @@ extension FTQuickPageNavigatorViewController {
         //********************************
 
         if self.direction == .horizontal { //For horizontal, frames will be as it is in the xib file
-            if numberOfPages > 99 {
-                let tipViewBounds = tipView.bounds
-                let expectedSize = referencePageString.sizeWithFont(pageLabel.font)
-                let tipImageFrame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: max(expectedSize.width + 36, 88), height: 69))
-                
-                var strechedImage = normalTipImage?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 0, left: 15, bottom: 0, right: 15), resizingMode: .stretch)
-                tipBlackImgView.contentMode = .scaleToFill
-                tipBlackImgView.image = strechedImage
-                tipBlackImgView.frame = tipImageFrame
-                tipBlackImgView.center = CGPoint.init(x: tipViewBounds.width * 0.5, y: tipViewBounds.midY + 12)
-
-                strechedImage = blueTipImage?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 0, left: 15, bottom: 0, right: 15), resizingMode: .stretch)
-                tipBlueImgView.contentMode = .scaleToFill
-                tipBlueImgView.image = strechedImage
-                tipBlueImgView.frame = tipBlackImgView.frame
-            }
-        }
-        else { //For vertical, all the calculations applied here for arranging subviews in pageInfoContainer
-            var tipContainerSize = CGSize.init(width: 64, height: 36)
-            var tipImageFrame = CGRect.init(origin: CGPoint.init(x: -13, y: -4), size: CGSize.init(width: 97, height: 60))
+            var tipContainerSize = CGSize.init(width: 50, height: 30)
             if numberOfPages > 99 {
                 let expectedSize = referencePageString.sizeWithFont(pageLabel.font);
-                tipImageFrame.size = CGSize.init(width: max(expectedSize.width + 44, 97), height: 60)
                 tipContainerSize = CGSize.init(width: expectedSize.width + 10, height: 36)
-                
-                var strechedImage = normalTipImage?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 0, left: 15, bottom: 0, right: 15), resizingMode: .stretch)
-                tipBlackImgView.contentMode = .scaleToFill
-                tipBlackImgView.image = strechedImage
-
-                strechedImage = blueTipImage?.resizableImage(withCapInsets: UIEdgeInsets.init(top: 0, left: 15, bottom: 0, right: 15), resizingMode: .stretch)
-                tipBlueImgView.contentMode = .scaleToFill
-                tipBlueImgView.image = strechedImage
             }
-            tipBlackImgView.frame = tipImageFrame
-            tipBlueImgView.frame = tipBlackImgView.frame
-                        
-            infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: 100 + gapBetweenPageTipAndThumbnail + tipContainerSize.width, height: 125))
-            
+            infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: (numberOfPages > 99 ? 40 : 20) + tipContainerSize.width, height: 125))
             var tipViewFrame = tipView.frame
-            tipViewFrame.origin = CGPoint.init(x: infoContainer.bounds.width - tipContainerSize.width - 5, y: (infoContainer.frame.height * 0.5) - (tipContainerSize.height * 0.5))
+            tipViewFrame.origin = CGPoint.init(x: infoContainer.bounds.width - tipContainerSize.width - gapBetweenPageTipAndThumbnail , y: infoContainer.frame.height -  (infoContainer.frame.height * 0.3))
+            tipViewFrame.size = tipContainerSize
+            tipView.frame = tipViewFrame
+            pageLabel.frame = CGRect.init(origin: tipView.bounds.origin, size: CGSize.init(width: tipView.bounds.width, height: tipView.bounds.height))
+        }
+        else { //For vertical, all the calculations applied here for arranging subviews in pageInfoContainer
+            var tipContainerSize = CGSize.init(width: 50, height: 30)
+            if numberOfPages > 99 {
+                let expectedSize = referencePageString.sizeWithFont(pageLabel.font);
+                tipContainerSize = CGSize.init(width: expectedSize.width + 10, height: 36)
+            }
+            infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: (numberOfPages > 99 ? 40 : 20) + tipContainerSize.width, height: 125))
+            var tipViewFrame = tipView.frame
+            tipViewFrame.origin = CGPoint.init(x: infoContainer.bounds.width - tipContainerSize.width, y: (infoContainer.frame.height * 0.6) - (tipContainerSize.height))
             tipViewFrame.size = tipContainerSize
             tipView.frame = tipViewFrame
                         
@@ -518,15 +469,17 @@ extension FTQuickPageNavigatorViewController {
                     if let thumbnailImgView = self?.thumbnailImageView, let newImage = image?.resizedImageWithinRect(originalThumbnailSize), let tipView = self?.pageTipView {
                         self?.thumbnailImageView?.image = newImage;
                         self?.thumbnailImageView?.backgroundColor = UIColor.clear
-                        
-                        if let scrollDirection = self?.direction, scrollDirection == .vertical {
-                            thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
-//                            thumbnailImgView.center = CGPoint.init(x: tipView.frame.minX - gapBetweenPageTipAndThumbnail - thumbnailImgView.frame.width * 0.5, y: tipView.center.y)
-                            thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width + (tipView.frame.width * 0.4) , y: tipView.frame.maxY + (newImage.size.height * 0.5) + gapBetweenPageTipAndThumbnail )
-                        }
-                        else {
-                            thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
-                            thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * 0.5, y: tipView.frame.minY - (newImage.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
+                        if let pageinfolabel = self?.pageInfoLabel{
+                            if let scrollDirection = self?.direction, scrollDirection == .vertical {
+                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x: pageinfolabel.frame.midX - 16, y: tipView.frame.maxY + 16 + gapBetweenPageTipAndThumbnail), size: newImage.size)
+                            }
+                            else {
+//                                thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
+//                                thumbnailImgView.center = CGPoint.init(x: tipView.frame.width * 0.8 - gapBetweenPageTipAndThumbnail, y: tipView.frame.minY - pageinfolabel.frame.size.height - 16 - gapBetweenPageTipAndThumbnail )
+
+                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x: pageinfolabel.frame.minX, y: tipView.frame.minY - pageinfolabel.frame.size.height - 16), size: newImage.size)
+
+                            }
                         }
                     }
                 }
