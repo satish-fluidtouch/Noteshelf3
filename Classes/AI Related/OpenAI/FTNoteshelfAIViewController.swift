@@ -133,6 +133,8 @@ class FTNoteshelfAIViewController: UIViewController {
     
     @IBOutlet private weak var creditsContainerView: UIView?;
     @IBOutlet private weak var creditsContainerViewHeightConstraint: NSLayoutConstraint?;
+    @IBOutlet private weak var creditsContainerViewBottomConstraint: NSLayoutConstraint?;
+
     private weak var creditsController: UIViewController?;
 
     private var languageCode: String = "" {
@@ -213,7 +215,11 @@ class FTNoteshelfAIViewController: UIViewController {
     }
 
     private func updateFooterHeight() {
-        self.footerHeightConstraint?.constant = 48;
+        var footerHeight: CGFloat = 0;
+        if let mode = self.footerVC?.footermode,mode != .noFooter {
+            footerHeight =  48;
+        }
+        self.footerHeightConstraint?.constant = footerHeight;
         self.view.layoutIfNeeded()
     }
     
@@ -230,14 +236,15 @@ class FTNoteshelfAIViewController: UIViewController {
         var controller: UIViewController?;
         
         self.textField?.placeholder = self.aiCommand.placeholderMessage;
-        self.setFooterMode(.noteshelfAiBeta);
         let allTokensConsumed = allTokensConsumed;
-        
-        var creditsHeight: CGFloat = 0;
+        self.setFooterMode(allTokensConsumed ? .sendFeedback : .noteshelfAiBeta);
+
+        self.creditsContainerViewHeightConstraint?.constant = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
+        var bottomConstraint: CGFloat = self.creditsContainerViewHeightConstraint?.constant ?? 0;
 
         if aiCommand == .none {
             self.reset();
-            creditsHeight = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
+            bottomConstraint = 0;
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAIOptionsViewController.className);
             (controller as? FTNoteshelfAIOptionsViewController)?.delegate = self;
             (controller as? FTNoteshelfAIOptionsViewController)?.content = self.content;
@@ -255,8 +262,7 @@ class FTNoteshelfAIViewController: UIViewController {
             (controller as? FTNoteshelfAITextViewViewController)?.delegate = self;
         }
         
-        self.creditsContainerViewHeightConstraint?.constant = creditsHeight;
-        
+        self.creditsContainerViewBottomConstraint?.constant = bottomConstraint
         if let optCOntorller = controller {
             self.optionsController?.view.removeFromSuperview();
             self.optionsController?.removeFromParent();
@@ -309,7 +315,12 @@ extension FTNoteshelfAIViewController: FTNoteshelfAITextViewViewControllerDelega
         if action == .regenerateResponse {
             self.executeAIAction();
         }
-        else {        
+        else if action == .semdFeedback {
+            FTZenDeskManager.shared.showSupportContactUsScreen(controller: self
+                                                               , defaultSubject: "Noteshelf-AI Feedback"
+                                                               , extraTags: ["Noteshelf-AI"]);
+        }
+        else {
             FTNoteshelfAITokenManager.shared.markAsConsumed();
             self.delegate?.noteshelfAIController(self, didTapOnAction: action, content: content)
         }
@@ -448,7 +459,7 @@ private extension FTNoteshelfAIViewController {
             }
             self?.textViewController?.supportsHandwriting = supportHandwrite;
             self?.textViewController?.showActionOptions(error == nil);
-            self?.setFooterMode(.sendFeedback);
+            self?.setFooterMode(.noFooter);
         }
     }
     

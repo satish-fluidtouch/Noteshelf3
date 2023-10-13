@@ -58,3 +58,4 @@
 "noteshelf.ai.credit.upgradeNow" = "지금 업그레이드";
 "noteshelf.ai.credit.details" = "%d/%d credits left";
 "noteshelf.ai.credit.moreinfo" = "AI credits resets in %d days";
+"noteshelf.ai.credit.moreOptions" = "More Options";

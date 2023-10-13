@@ -9,7 +9,7 @@ import UIKit
 import SafariServices
 
 enum FTAIFooterMode: Int {
-    case noteshelfAiBeta,sendFeedback;
+    case noteshelfAiBeta,sendFeedback,noFooter;
 }
 
 class FTNoteshelfAIFooterViewController: UIViewController {
@@ -19,9 +19,18 @@ class FTNoteshelfAIFooterViewController: UIViewController {
 
     var footermode: FTAIFooterMode = .noteshelfAiBeta {
         didSet {
-            self.learnMore?.isHidden = self.footermode == .sendFeedback
+            switch self.footermode {
+            case .noFooter:
+                self.learnMore?.isHidden = true;
+                self.sendFeedback?.isHidden = true;
+            case .noteshelfAiBeta:
+                self.sendFeedback?.isHidden = true;
+                self.learnMore?.isHidden = false;
+            case .sendFeedback:
+                self.learnMore?.isHidden = true;
+                self.sendFeedback?.isHidden = false;
+            }
             self.bePremiumUser?.isHidden = true;
-            self.sendFeedback?.isHidden = self.footermode == .noteshelfAiBeta
         }
     }
     

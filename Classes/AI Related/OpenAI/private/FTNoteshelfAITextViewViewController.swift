@@ -47,7 +47,7 @@ protocol FTNoteshelfAITextViewViewControllerDelegate:NSObjectProtocol {
 }
 
 enum FTNotesehlfAIAction: Int {
-    case copyToClipboard,addToPage,addToNewPage,regenerateResponse,addHandwriting,addNewPageHandwriting;
+    case copyToClipboard,addToPage,addToNewPage,regenerateResponse,addHandwriting,addNewPageHandwriting,semdFeedback;
     
     func displayTitle(_ supportsHandwrite: Bool) -> String {
         switch self {
@@ -69,6 +69,8 @@ enum FTNotesehlfAIAction: Int {
             return "noteshelf.ai.actionCopyToClipboard".aiLocalizedString
         case .regenerateResponse:
             return "noteshelf.ai.actionRegenerateResponse".aiLocalizedString
+        case .semdFeedback:
+            return "noteshelf.ai.sendFeedback".aiLocalizedString
         }
     }
 }
@@ -115,11 +117,9 @@ class FTNoteshelfAIButton: UIButton {
 
 class FTNoteshelfAITextViewViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView?;
-    @IBOutlet private weak var stackView: UIStackView?;
-    @IBOutlet private weak var moreButton: UIButton?;
-    @IBOutlet private weak var clipboardButton: FTNoteshelfAIButton?;
-    @IBOutlet private weak var addAsHandwrite: FTNoteshelfAIButton?;
-    @IBOutlet private weak var addToPageButton: FTNoteshelfAIButton?;
+    @IBOutlet private weak var primaryActionButton: FTNoteshelfAIButton?;
+    @IBOutlet private weak var secondaryActionButton: FTNoteshelfAIButton?;
+    @IBOutlet private weak var moreOptionsButton: FTNoteshelfAIButton?;
 
     weak var delegate: FTNoteshelfAITextViewViewControllerDelegate?;
     var supportsHandwriting = false {
@@ -128,30 +128,25 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         }
     }
     
-    @IBOutlet private weak var stackHeightConstraint: NSLayoutConstraint?;
+    @IBOutlet private weak var footerActionBottomConstraint: NSLayoutConstraint?;
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.moreButton?.layer.cornerRadius = 10;
         self.textView?.layer.cornerRadius = 10.0
         self.supportsHandwriting = !UIDevice.isChinaRegion;
         let menuItem = UIDeferredMenuElement.uncached { items in
             var menuItems = [UIMenuElement]();
-            var menuActions: [FTNotesehlfAIAction] =  [.regenerateResponse];
+            var menuActions: [FTNotesehlfAIAction] =  [.semdFeedback,.regenerateResponse];
             
-            if self.clipboardButton?.isHidden ?? false {
+            if self.supportsHandwriting {
                 menuActions.append(.copyToClipboard);
-            }
-
-            if self.addToPageButton?.isHidden ?? false {
-                menuActions.append(.addToPage);
-            }
-            menuActions.append(.addToNewPage);
-
-            if(self.supportsHandwriting) {
+                menuActions.append(.addToNewPage);
                 menuActions.append(.addNewPageHandwriting);
             }
-
+            else {
+                menuActions.append(.addToNewPage);
+            }
+            
             menuActions.forEach { eachItem in
                 let menuItem = UIAction(title: eachItem.displayTitle(self.supportsHandwriting)) { [weak self] _ in
                     if let strongSelf = self {
@@ -166,8 +161,8 @@ class FTNoteshelfAITextViewViewController: UIViewController {
             items(menuItems)
         }
         
-        self.moreButton?.menu = UIMenu(children: [menuItem]);
-        self.moreButton?.showsMenuAsPrimaryAction = true;
+        self.moreOptionsButton?.menu = UIMenu(children: [menuItem]);
+        self.moreOptionsButton?.showsMenuAsPrimaryAction = true;
         self.updateButtonStates();
     }
          
@@ -176,28 +171,23 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
     
     private func updateButtonStates() {
-        self.addAsHandwrite?.isHidden = !self.supportsHandwriting;
-        self.clipboardButton?.isHidden = self.supportsHandwriting
-        if self.view.frame.width < 400 {
-            self.clipboardButton?.isHidden = true;
-            self.addToPageButton?.isHidden = self.supportsHandwriting;
+        self.moreOptionsButton?.setTitle("noteshelf.ai.credit.moreOptions".aiLocalizedString, for: .normal);
+        if self.supportsHandwriting {
+            self.primaryActionButton?.addTarget(self, action: #selector(self.addAsHandwrite(_:)), for: .touchUpInside);
+            self.primaryActionButton?.setTitle(FTNotesehlfAIAction.addHandwriting.displayTitle(self.supportsHandwriting), for: .normal);
+
+            self.secondaryActionButton?.addTarget(self, action: #selector(self.addToPage(_:)), for: .touchUpInside);
+            self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
         }
-        self.clipboardButton?.setTitle(FTNotesehlfAIAction.copyToClipboard.displayTitle(self.supportsHandwriting), for: .normal);
-        self.addToPageButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
-        self.addAsHandwrite?.setTitle(FTNotesehlfAIAction.addHandwriting.displayTitle(self.supportsHandwriting), for: .normal);
-        if let button = self.clipboardButton, !button.isHidden {
-            button.hasBorder = true;
-        }
-        if let button = self.addAsHandwrite {
-            self.addToPageButton?.hasBorder = !button.isHidden
+        else {
+            self.primaryActionButton?.addTarget(self, action: #selector(self.addToPage(_:)), for: .touchUpInside);
+            self.primaryActionButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
+
+            self.secondaryActionButton?.addTarget(self, action: #selector(self.copyToClipboard(_:)), for: .touchUpInside);
+            self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.copyToClipboard.displayTitle(self.supportsHandwriting), for: .normal);
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated);
-        self.clipboardButton?.isHidden = (self.view.frame.size.width < 400)
-    }
-    
+        
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self](_) in
@@ -228,17 +218,13 @@ class FTNoteshelfAITextViewViewController: UIViewController {
                                           ,content: content);
     }
 
-    @IBAction func moreOptions(_ sender:Any) {
-        
-    }
-    
     func showPlaceHolder(_ string: String) {
         self.textView?.text = string;
     }
     
     func showActionOptions(_ show: Bool) {
-        let heightConstraint: CGFloat = show ? 44 : 0;
-        self.stackHeightConstraint?.constant = heightConstraint;
+        let heightConstraint: CGFloat = show ? 0 : 128;
+        self.footerActionBottomConstraint?.constant = heightConstraint;
     }
     
     @objc private func scrollToBottom() {
@@ -249,7 +235,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     
     func showResponse(_ response: FTOpenAIResponse) {
         if let txtView = self.textView, txtView.attributedText.string != response.attributedString.string {
-            let currentOffset = txtView.contentOffset;
+//            let currentOffset = txtView.contentOffset;
             txtView.attributedText = response.attributedString;
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
             self.perform(#selector(self.scrollToBottom), with: nil, afterDelay: 0.2);

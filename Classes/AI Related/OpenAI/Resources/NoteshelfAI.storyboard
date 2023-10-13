@@ -173,23 +173,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1154"/>
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1046"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Q84-gf-X3D">
-                                <rect key="frame" x="0.0" y="1174" width="785" height="0.0"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaw-w5-zL2" userLabel="Footer Action">
+                                <rect key="frame" x="0.0" y="1046" width="834" height="128"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="YBF-iL-iDT" userLabel="Add as Handwriting" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="255" height="0.0"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zf-Mq-s7T" userLabel="Primary Button" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24" width="834" height="40"/>
                                         <color key="backgroundColor" name="accent"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Add as Handwrite">
-                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
-                                        </state>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="40" id="3Zw-ZP-tHR"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Add as Handwrite">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
                                             <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
@@ -197,96 +196,66 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="addAsHandwrite:" destination="eyF-S8-pnK" eventType="touchUpInside" id="lNB-q0-TsQ"/>
-                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="us1-QN-E6H" userLabel="Add as text" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="265" y="0.0" width="255" height="0.0"/>
-                                        <color key="backgroundColor" name="accent"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Add to page">
-                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
-                                        </state>
-                                        <buttonConfiguration key="configuration" style="plain" title="Add to page">
-                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
-                                            <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
-                                        </buttonConfiguration>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="addToPage:" destination="eyF-S8-pnK" eventType="touchUpInside" id="XMc-MQ-4Kq"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="K6O-bs-QgG" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="530" y="0.0" width="255" height="0.0"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Copy To Clipboard">
-                                            <color key="titleColor" name="accent"/>
-                                        </state>
-                                        <buttonConfiguration key="configuration" style="plain" title="Copy To Clipboard">
-                                            <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
-                                            <color key="baseForegroundColor" name="accent"/>
-                                        </buttonConfiguration>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="YES"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="copyToClipboard:" destination="eyF-S8-pnK" eventType="touchUpInside" id="BLm-gb-tzR"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nz3-iO-CcG">
+                                        <rect key="frame" x="0.0" y="72" width="834" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ivf-jM-SNj" userLabel="Secondary Button" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="413" height="40"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Button">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="baseForegroundColor" name="accent"/>
+                                                </buttonConfiguration>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="svf-yS-uUO" userLabel="More Button" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="421" y="0.0" width="413" height="40"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="More Options" imagePadding="6">
+                                                    <imageReference key="image" image="chevron.down" catalog="system" symbolScale="default"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="15" scale="default" weight="medium"/>
+                                                    <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="baseForegroundColor" name="accent"/>
+                                                </buttonConfiguration>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="K6O-bs-QgG" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="6Zz-xp-yTF"/>
-                                    <constraint firstAttribute="height" id="7Gf-dp-a3r"/>
-                                    <constraint firstItem="YBF-iL-iDT" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="mLg-jZ-APk"/>
-                                    <constraint firstItem="us1-QN-E6H" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="ysi-28-NYa"/>
+                                    <constraint firstItem="nz3-iO-CcG" firstAttribute="top" secondItem="2zf-Mq-s7T" secondAttribute="bottom" constant="8" id="5rV-Ox-2BC"/>
+                                    <constraint firstItem="2zf-Mq-s7T" firstAttribute="width" secondItem="iaw-w5-zL2" secondAttribute="width" id="9iV-bd-zPx"/>
+                                    <constraint firstAttribute="bottom" secondItem="nz3-iO-CcG" secondAttribute="bottom" constant="16" id="A2g-b7-4gM"/>
+                                    <constraint firstItem="nz3-iO-CcG" firstAttribute="height" secondItem="2zf-Mq-s7T" secondAttribute="height" id="YCE-Q4-FRp"/>
+                                    <constraint firstItem="2zf-Mq-s7T" firstAttribute="centerX" secondItem="iaw-w5-zL2" secondAttribute="centerX" id="b7h-Be-3oI"/>
+                                    <constraint firstItem="nz3-iO-CcG" firstAttribute="centerX" secondItem="2zf-Mq-s7T" secondAttribute="centerX" id="fL2-Xd-SWR"/>
+                                    <constraint firstAttribute="height" constant="128" id="oMw-UV-Ibh"/>
+                                    <constraint firstItem="nz3-iO-CcG" firstAttribute="width" secondItem="2zf-Mq-s7T" secondAttribute="width" id="vma-HC-mW2"/>
+                                    <constraint firstItem="2zf-Mq-s7T" firstAttribute="top" secondItem="iaw-w5-zL2" secondAttribute="top" constant="24" id="xzz-0Q-mYg"/>
                                 </constraints>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="7KU-f4-tjE">
-                                <rect key="frame" x="795" y="1174" width="39" height="0.0"/>
-                                <color key="backgroundColor" name="sidebarBG"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="39" id="2yM-T8-1j6"/>
-                                </constraints>
-                                <color key="tintColor" name="black70"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Button" image="ellipsis" catalog="system"/>
-                                <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="13"/>
-                                </buttonConfiguration>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasBorder" value="NO"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="moreOptions:" destination="eyF-S8-pnK" eventType="touchUpInside" id="fum-cj-UqC"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zQR-sH-Wh6"/>
                         <constraints>
-                            <constraint firstItem="7KU-f4-tjE" firstAttribute="centerY" secondItem="Q84-gf-X3D" secondAttribute="centerY" id="0oq-Qm-Tus"/>
-                            <constraint firstItem="CIA-5r-bQ5" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="top" constant="-20" id="6ih-cM-RWb"/>
-                            <constraint firstItem="Q84-gf-X3D" firstAttribute="leading" secondItem="zQR-sH-Wh6" secondAttribute="leading" id="CeK-Jm-qJx"/>
-                            <constraint firstItem="zQR-sH-Wh6" firstAttribute="bottom" secondItem="Q84-gf-X3D" secondAttribute="bottom" id="Fjw-KG-mm4"/>
-                            <constraint firstItem="zQR-sH-Wh6" firstAttribute="trailing" secondItem="7KU-f4-tjE" secondAttribute="trailing" id="Mw1-nW-3gO"/>
-                            <constraint firstItem="7KU-f4-tjE" firstAttribute="leading" secondItem="Q84-gf-X3D" secondAttribute="trailing" constant="10" id="RZ6-Yw-y2i"/>
+                            <constraint firstItem="iaw-w5-zL2" firstAttribute="width" secondItem="CIA-5r-bQ5" secondAttribute="width" id="KLG-Ax-U7w"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="width" secondItem="hOE-2Y-rer" secondAttribute="width" id="Ydg-Bd-Lr5"/>
+                            <constraint firstItem="iaw-w5-zL2" firstAttribute="centerX" secondItem="CIA-5r-bQ5" secondAttribute="centerX" id="c4v-iR-WTO"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="centerX" secondItem="zQR-sH-Wh6" secondAttribute="centerX" id="cRw-cb-wI5"/>
-                            <constraint firstItem="7KU-f4-tjE" firstAttribute="height" secondItem="Q84-gf-X3D" secondAttribute="height" id="fL0-xY-zat"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="top" secondItem="hOE-2Y-rer" secondAttribute="top" id="lYr-9Q-KhH"/>
+                            <constraint firstItem="iaw-w5-zL2" firstAttribute="top" secondItem="CIA-5r-bQ5" secondAttribute="bottom" id="th9-e6-bZX"/>
+                            <constraint firstItem="iaw-w5-zL2" firstAttribute="bottom" secondItem="zQR-sH-Wh6" secondAttribute="bottom" id="vht-eb-Wdh"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addAsHandwrite" destination="YBF-iL-iDT" id="rak-Az-oHV"/>
-                        <outlet property="addToPageButton" destination="us1-QN-E6H" id="hHq-Az-FVJ"/>
-                        <outlet property="clipboardButton" destination="K6O-bs-QgG" id="lgH-DA-yRk"/>
-                        <outlet property="moreButton" destination="7KU-f4-tjE" id="Dc7-T6-CYn"/>
-                        <outlet property="stackHeightConstraint" destination="7Gf-dp-a3r" id="cBA-k0-rVH"/>
-                        <outlet property="stackView" destination="Q84-gf-X3D" id="dgN-gX-T1M"/>
+                        <outlet property="footerActionBottomConstraint" destination="vht-eb-Wdh" id="84y-Tt-5Yj"/>
+                        <outlet property="moreOptionsButton" destination="svf-yS-uUO" id="dsx-ic-Bce"/>
+                        <outlet property="primaryActionButton" destination="2zf-Mq-s7T" id="rmz-SQ-fxR"/>
+                        <outlet property="secondaryActionButton" destination="Ivf-jM-SNj" id="ow8-Gg-bVW"/>
                         <outlet property="textView" destination="CIA-5r-bQ5" id="id8-uZ-GQg"/>
                     </connections>
                 </viewController>
@@ -354,6 +323,7 @@
                     <connections>
                         <outlet property="contentView" destination="V6w-21-mVm" id="ZLu-jk-9lj"/>
                         <outlet property="creditsContainerView" destination="kdR-Zd-sLn" id="IVa-km-eiH"/>
+                        <outlet property="creditsContainerViewBottomConstraint" destination="Jg5-6v-dWy" id="eNO-Ch-Sc6"/>
                         <outlet property="creditsContainerViewHeightConstraint" destination="fLE-e7-Hft" id="WVh-Dp-KiZ"/>
                         <outlet property="footerHeightConstraint" destination="wRT-mR-stq" id="HU5-U6-Pcc"/>
                         <outlet property="textField" destination="Lzk-hw-Us3" id="ckN-e8-pPE"/>
@@ -438,11 +408,11 @@
         <scene sceneID="exk-BI-DGg">
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAIFreeUserCreditsViewController" id="QMa-py-FGC" customClass="FTNoteshelfAIFreeUserCreditsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0Eb-ua-oPR">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="0Eb-ua-oPR">
                         <rect key="frame" x="0.0" y="0.0" width="492" height="142"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PgI-2W-c3j" userLabel="Info View">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PgI-2W-c3j" userLabel="Info View">
                                 <rect key="frame" x="16" y="16" width="460" height="70"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="premium_icon" translatesAutoresizingMaskIntoConstraints="NO" id="8w9-Wt-jeF">
@@ -497,7 +467,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7D-GU-7qa">
-                                <rect key="frame" x="48" y="86" width="428" height="56"/>
+                                <rect key="frame" x="48" y="86" width="444" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="iqc-u6-BKX"/>
                                 </constraints>
@@ -515,7 +485,7 @@
                             <constraint firstAttribute="trailing" secondItem="PgI-2W-c3j" secondAttribute="trailing" constant="16" id="LUj-Oc-Uig"/>
                             <constraint firstAttribute="bottom" secondItem="q7D-GU-7qa" secondAttribute="bottom" id="UOg-Mb-RUF"/>
                             <constraint firstItem="PgI-2W-c3j" firstAttribute="centerX" secondItem="0Eb-ua-oPR" secondAttribute="centerX" id="UoG-Ap-sXr"/>
-                            <constraint firstItem="q7D-GU-7qa" firstAttribute="trailing" secondItem="PgI-2W-c3j" secondAttribute="trailing" id="cdX-Vy-lc1"/>
+                            <constraint firstItem="q7D-GU-7qa" firstAttribute="trailing" secondItem="0Eb-ua-oPR" secondAttribute="trailing" id="cdX-Vy-lc1"/>
                             <constraint firstItem="q7D-GU-7qa" firstAttribute="top" secondItem="PgI-2W-c3j" secondAttribute="bottom" id="f5d-EM-90N"/>
                         </constraints>
                     </view>
@@ -535,28 +505,28 @@
             <objects>
                 <viewController storyboardIdentifier="FTNoteshelfAIPremiumUserCreditsViewController" id="r97-eO-Zw3" customClass="FTNoteshelfAIPremiumUserCreditsViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ile-ds-tl9">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="444" height="56"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="q7K-Iy-UFc">
-                                <rect key="frame" x="16" y="10" width="396" height="40"/>
+                                <rect key="frame" x="16" y="10" width="412" height="40"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="32B-3e-qRV">
-                                        <rect key="frame" x="0.0" y="0.0" width="396" height="4"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="412" height="4"/>
                                         <color key="progressTintColor" name="credits_progress_normal"/>
                                         <color key="trackTintColor" name="credits_progress_bg"/>
                                     </progressView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aKP-UP-yO4">
-                                        <rect key="frame" x="0.0" y="8" width="396" height="32"/>
+                                        <rect key="frame" x="0.0" y="8" width="412" height="32"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YBV-bK-0KS" userLabel="Credits left">
-                                                <rect key="frame" x="0.0" y="0.0" width="396" height="16"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="412" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" name="black70"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbO-dn-nsl" userLabel="Credits Info">
-                                                <rect key="frame" x="0.0" y="16" width="396" height="16"/>
+                                                <rect key="frame" x="0.0" y="16" width="412" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" name="black50"/>
                                                 <nil key="highlightedColor"/>
@@ -587,7 +557,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="info.circle" catalog="system" width="128" height="123"/>
         <image name="premium_icon" width="36" height="36"/>
         <namedColor name="accent">
@@ -622,9 +592,6 @@
         </namedColor>
         <namedColor name="premium_bg">
             <color red="0.9100000262260437" green="0.70999997854232788" blue="0.27000001072883606" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="sidebarBG">
-            <color red="1" green="0.98431372549019602" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white60">
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
