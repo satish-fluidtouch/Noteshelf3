@@ -106,7 +106,7 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         }
     }
 
-    func updateSideMenuItemsCollections(){
+    func updateSideMenuItemsCollections(){ // Use this method to force update sidebar's categories sections related collections
         viewModel.updateUserCreatedCategories()
     }
 

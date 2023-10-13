@@ -27,8 +27,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             showHomeDetailedVC()
         } else if currentShelfViewModel == nil { // Executes when shifting from non collection types to home.
             showHomeDetailedVC()
-        } else {
-            currentShelfViewModel?.reloadShelf()
         }
 
         func showHomeDetailedVC(){
@@ -168,7 +166,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         self.exitFromGlobalSearch()
     }
 
-    private func detailController() -> UIViewController? {
+    func detailController() -> UIViewController? {
         if let detailController = self.viewController(for: .secondary) as? UINavigationController, let controller = detailController.viewControllers.first {
             return controller
         }
