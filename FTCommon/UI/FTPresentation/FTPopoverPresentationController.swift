@@ -42,6 +42,7 @@ public class FTPopoverPresentationController: UIPopoverPresentationController {
     }
 
     public override func adaptivePresentationStyle(for traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        self.overrideTraitCollection = traitCollection
         return .none
     }
 }

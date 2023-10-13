@@ -147,7 +147,7 @@ class FTWritingViewController: UIViewController,FTViewControllerSupportsScene {
             }
         }
     };
-
+    
     var currentDrawingMode : RKDeskMode {
         get {
             return self.pageContentDelegate?.currentDeskMode() ?? .deskModeView
