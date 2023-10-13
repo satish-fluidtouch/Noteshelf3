@@ -59,6 +59,13 @@ class FTCoversViewController: UIViewController {
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            self.collectionView.reloadData()
+        }
+    }
+
     private func updateContentInset() {
         var contentInset = FTCovers.ContentInset.regular
         if !self.isRegularClass() {

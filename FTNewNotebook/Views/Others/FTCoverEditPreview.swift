@@ -106,3 +106,16 @@ extension FTCoverEditPreview: UIScrollViewDelegate {
         return selectedImageView
     }
 }
+
+class FTNoCoverLabel: UILabel {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.text = "covers.category.noCover".localized.capitalized
+        self.textAlignment = .center
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

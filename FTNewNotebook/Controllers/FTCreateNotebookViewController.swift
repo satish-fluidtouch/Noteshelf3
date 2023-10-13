@@ -188,7 +188,7 @@ public class FTCreateNotebookViewController: UIViewController {
         self.coverImageView?.image = image?.resizedImage(coverPreviewViewSize)
         self.setShadowToCoverPreview()
         self.setCornersToCoverPreview()
-
+        self.setNoCoverTextIfNeeded()
     }
     private func configCoverPickerBasedOnScrnSize(_ size: CGSize) {
         self.coverPreviewViewWidthConstraint?.isActive = size.width > 560 ? true : false
@@ -213,12 +213,25 @@ public class FTCreateNotebookViewController: UIViewController {
     }
 
     private func setShadowToCoverPreview() {
-        coverShadowView?.layer.shadowPath = UIBezierPath(
-            roundedRect: coverShadowView?.bounds ?? .zero,
-            cornerRadius: 14).cgPath
-        self.coverShadowView?.addShadow(color: UIColor.appColor(.black28), offset: CGSize(width: 0, height: 24), opacity: 1, shadowRadius: 40)
+        if let coverTheme = newNotebookDetails?.selectedCoverTheme {
+            if coverTheme.hasCover {
+                coverShadowView?.layer.shadowPath = UIBezierPath(
+                    roundedRect: coverShadowView?.bounds ?? .zero,
+                    cornerRadius: 14).cgPath
+                self.coverShadowView?.addShadow(color: UIColor.appColor(.black28), offset: CGSize(width: 0, height: 24), opacity: 1, shadowRadius: 40)
+            }else{
+                self.coverShadowView?.removeShadow()
+            }
+        }
     }
-    
+
+    private func setNoCoverTextIfNeeded() {
+        self.coverImageView?.subviews.filter { $0 is FTNoCoverLabel }.forEach { $0.removeFromSuperview() }
+        if let coverTheme = newNotebookDetails?.selectedCoverTheme, !coverTheme.hasCover, let coverImgView = self.coverImageView {
+            coverImgView.addNoCoverLabel(of: 14.0)
+        }
+    }
+
     @objc private func chooseCoverTapped(_ gesture: UITapGestureRecognizer) {
        let currentTheme = self.delegate?.fetchPreviousSelectedCoverTheme()
         if let chooseCoverVC = FTChooseCoverViewController.viewControllerInstance(coversInfoDelegate: self.delegate, currentTheme: currentTheme),let coverImgView = self.coverImageView {
@@ -356,15 +369,6 @@ public class FTCreateNotebookViewController: UIViewController {
         return CGSize(width: width, height: height)
     }
     //MARK: General
-    /*private func addlayerBlurShadowToView(_ view: UIView){
-        if let shadowImage = UIImage(named: "shadowImage",in: currentBundle, with: nil) {
-            let shadowImageView = UIImageView(image: shadowImage)
-            shadowImageView.frame.size = CGSize(width: paperPreviewSizeBasedOnScrnSize().width + 60, height: paperPreviewSizeBasedOnScrnSize().height + 12)
-            shadowImageView.frame.origin = CGPoint(x: -30, y: 24)
-            view.addSubview(shadowImageView)
-            view.sendSubviewToBack(shadowImageView)
-        }
-    }*/
     private func updateNewNotebookDetails(){
         if let cover = self.delegate?.fetchPreviousSelectedCoverTheme() ,
            let themeWithVariants = self.delegate?.selectedPaperVariantsAndTheme {
@@ -582,6 +586,10 @@ extension FTCreateNotebookViewController: FTCoverUpdateDelegate {
 
     public func didCancelCoverSelection() {
         FTCurrentCoverSelection.shared.selectedCover = self.newNotebookDetails?.selectedCoverTheme
+    }
+
+    public func removeNoCoverShadow() {
+        self.coverShadowView?.removeShadow()
     }
 }
 

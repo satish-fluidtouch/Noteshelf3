@@ -85,6 +85,7 @@ public class FTChooseCoverViewController: UIViewController {
         if(coverSelectionType == .changeCover) {
             self.view.backgroundColor = UIColor.appColor(.createNotebookViewBG)
             self.handleLayoutChanges()
+            self.setNoCoverTextIfNeeded()
         }
     }
 
@@ -118,6 +119,7 @@ public class FTChooseCoverViewController: UIViewController {
     }
 
     func openPreview(from frame: CGRect, onCompletion: (() -> Void)?) {
+        self.removeNoCoverText()
         self.panelBottomConstraint?.constant = -500.0
         let centerXandY = self.getCenterXandY(from: frame)
         
@@ -167,13 +169,14 @@ public class FTChooseCoverViewController: UIViewController {
             let shapeLayer = self.getShapeLayer()
             shapeLayer.path = path
             self.coverPreview?.layer.mask = shapeLayer
-
+            self.setNoCoverTextIfNeeded()
             onCompletion?()
         }
     }
 
     func closePreview(isCancelled: Bool = false, onCompletion: @escaping () -> Void) {
         self.previewContainer?.layer.shadowOpacity = 0.0
+        self.removeNoCoverText()
         if(coverSelectionType == .changeCover) {
             self.dismiss(animated: true,completion: {
                 onCompletion();
@@ -242,6 +245,17 @@ public class FTChooseCoverViewController: UIViewController {
 }
 
 private extension FTChooseCoverViewController {
+    private func setNoCoverTextIfNeeded() {
+        self.removeNoCoverText()
+        if let curCover = FTCurrentCoverSelection.shared.selectedCover,  !curCover.hasCover, let coverPreview = self.coverPreview {
+            coverPreview.addNoCoverLabel(of: 16.0)
+        }
+    }
+
+    private func removeNoCoverText() {
+        self.coverPreview?.subviews.filter { $0 is FTNoCoverLabel }.forEach { $0.removeFromSuperview() }
+    }
+
     private func getCenterXandY(from frame: CGRect) -> CGPoint {
         let centerX = frame.origin.x + frame.size.width/2 - self.view.frame.width/2
         let centerY = frame.origin.y + frame.size.height/2 - self.view.frame.height/2
@@ -268,7 +282,7 @@ private extension FTChooseCoverViewController {
         let coverRadiusAttrs = FTNewNotebook.Constants.SelectedCoverRadius.self
         var initialPath = self.coverPreview?.getCornerRadiiPath(topLeft: coverRadiusAttrs.topLeft, topRight: coverRadiusAttrs.topRight, bottomLeft: coverRadiusAttrs.bottomLeft, bottomRight: coverRadiusAttrs.bottomRight)
         if let curCover = FTCurrentCoverSelection.shared.selectedCover,  !curCover.hasCover { // no cover
-            let radius: CGFloat = 14.0
+            let radius: CGFloat = 9.0
             initialPath = self.coverPreview?.getCornerRadiiPath(topLeft: radius, topRight: radius, bottomLeft: radius, bottomRight: radius)
         }
         return initialPath
@@ -288,7 +302,7 @@ private extension FTChooseCoverViewController {
     }
 
     private func fetchNoCoverPreviewRadius(using currentSize: CGSize, previousSize: CGSize) -> CGFloat {
-        var radius: CGFloat = 21.0 // // Change cover - since no animation
+        var radius: CGFloat = 9.0 // // Change cover - since no animation
         if(coverSelectionType == .chooseCover && previousSize != .zero && currentSize != .zero) {
             let noCoverRadius = FTNewNotebook.Constants.NoCoverRadius.allCorners
             let reqFactor = currentSize.width * (currentSize.width/currentSize.height)
@@ -342,6 +356,9 @@ extension FTChooseCoverViewController: FTCoverSelectionDelegate {
     func didTapOnDoneButton() {
         let coverInfo = FTCurrentCoverSelection.shared.selectedCover
         if let theme = coverInfo {
+            if !theme.hasCover {
+                self.coverUpdateDelegate?.removeNoCoverShadow()
+            }
             self.closePreview() {
                 self.remove()
                 self.coverUpdateDelegate?.didUpdateCover(theme)
@@ -372,8 +389,14 @@ extension FTChooseCoverViewController: FTCoverSelectionDelegate {
     func didSelectCover(_ themeModel: FTCoverThemeModel) {
         FTCurrentCoverSelection.shared.selectedCover = themeModel.themeable
         self.updatePreviewModeIfNeeded(.justPreview)
-        self.coverPreview?.image = themeModel.thumbnail()
+        let img = themeModel.thumbnail()
+        if themeModel.themeable.hasCover {
+            self.coverPreview?.image = img?.withRenderingMode(.alwaysOriginal)
+        } else {
+            self.coverPreview?.image =  img?.withTintColor(UIColor.appColor(.black5), renderingMode: .alwaysTemplate)
+        }
         self.updateCornerRadius()
+        self.setNoCoverTextIfNeeded()
     }
 
     func didSelectCustomImage(_ image: UIImage) {
@@ -381,6 +404,7 @@ extension FTChooseCoverViewController: FTCoverSelectionDelegate {
         self.coverEditPreview?.updatePreviewIfNeeded(image)
         FTCurrentCoverSelection.shared.selectedCover = nil
         self.updateCornerRadius()
+        self.removeNoCoverText()
     }
 
     func didSelectUnsplash(of url: String) {
@@ -393,5 +417,20 @@ extension FTChooseCoverViewController: FTCoverSelectionDelegate {
         self.updatePreviewModeIfNeeded(.previewEdit)
         self.coverEditPreview?.updateAsynchronousImage(using: url, placeholder: placeholder)
         self.updateCornerRadius()
+        self.removeNoCoverText()
+    }
+}
+
+extension UIView {
+    func addNoCoverLabel(of fontSize: CGFloat) {
+        let label = FTNoCoverLabel()
+        label.font = UIFont.appFont(for: .regular, with: fontSize)
+        self.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8.0),
+            label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 8.0),
+            label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+        ])
     }
 }

@@ -24,6 +24,7 @@ protocol FTCoversScrollDelegate: AnyObject {
 public protocol FTCoverUpdateDelegate: AnyObject {
     func didCancelCoverSelection()
     func didUpdateCover(_ theme: FTThemeable?)
+    func removeNoCoverShadow()
     func fetchCoverViewFrame() -> CGRect
     func fetchPreviousSelectedCover() -> UIImage?
     func animateShowContentViewBasedOn(themeType:FTThemeType)
@@ -32,6 +33,7 @@ public protocol FTCoverUpdateDelegate: AnyObject {
 }
 
 public extension FTCoverUpdateDelegate {
+    func removeNoCoverShadow() {}
     func didCancelCoverSelection() {}
     func fetchCoverViewFrame() -> CGRect {return .zero}
     func fetchPreviousSelectedCover() -> UIImage? {return nil}
