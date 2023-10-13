@@ -317,7 +317,7 @@
                                 <rect key="frame" x="16" y="104" width="802" height="880"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdR-Zd-sLn" userLabel="Credits View">
-                                <rect key="frame" x="0.0" y="984" width="834" height="142"/>
+                                <rect key="frame" x="16" y="984" width="802" height="142"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="142" id="fLE-e7-Hft"/>
@@ -336,12 +336,12 @@
                         <viewLayoutGuide key="safeArea" id="7Uu-6C-X2x"/>
                         <color key="backgroundColor" name="panelBgColor"/>
                         <constraints>
-                            <constraint firstItem="kdR-Zd-sLn" firstAttribute="width" secondItem="mE6-0L-BUy" secondAttribute="width" id="81u-Z5-cFI"/>
+                            <constraint firstItem="kdR-Zd-sLn" firstAttribute="width" secondItem="V6w-21-mVm" secondAttribute="width" id="81u-Z5-cFI"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="width" secondItem="Lzk-hw-Us3" secondAttribute="width" id="Dd3-hj-6el"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="bottom" secondItem="kdR-Zd-sLn" secondAttribute="top" id="Idq-c5-SmF"/>
                             <constraint firstItem="i6i-wZ-1px" firstAttribute="top" secondItem="kdR-Zd-sLn" secondAttribute="bottom" id="Jg5-6v-dWy"/>
                             <constraint firstItem="Lzk-hw-Us3" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="MUO-mP-WTG"/>
-                            <constraint firstItem="kdR-Zd-sLn" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="PD5-Wc-SAg"/>
+                            <constraint firstItem="kdR-Zd-sLn" firstAttribute="centerX" secondItem="V6w-21-mVm" secondAttribute="centerX" id="PD5-Wc-SAg"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="XmG-bO-phS"/>
                             <constraint firstItem="i6i-wZ-1px" firstAttribute="centerX" secondItem="7Uu-6C-X2x" secondAttribute="centerX" id="YXw-qT-0lG"/>
                             <constraint firstItem="V6w-21-mVm" firstAttribute="top" secondItem="Lzk-hw-Us3" secondAttribute="bottom" constant="16" id="dbQ-AR-A7P"/>
