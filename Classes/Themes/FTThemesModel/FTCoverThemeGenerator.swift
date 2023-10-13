@@ -73,8 +73,3 @@ extension FTCoverThemeGenerator {
         context.restoreGState();
     }
 }
-
-
-extension PDFDocument {
-    
-}
