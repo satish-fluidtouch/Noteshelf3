@@ -46,15 +46,6 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
                                                  page: index,
                                                  document: self.documentItem)
                         mediaToReturn.append(media)
-                    } else if annotationType == .audio {
-                        if let annotation = FTAnnotation.annotation(forSet: _set) as? FTAudioAnnotation {
-                            let title = DateFormatter.localizedString(from: Date(timeIntervalSinceNow: annotation.modifiedTimeInterval), dateStyle: .short, timeStyle: .short)
-                            let duration =  FTUtils.timeFormatted(UInt(annotation.recordingModel.audioDuration()))
-                            let media = FTShelfAudio(audioTitle: title,
-                                                     duration: duration,
-                                                     page: index,
-                                                     document: self.documentItem, dateAndTime: title)
-                        }
                     }
                 }
             }
