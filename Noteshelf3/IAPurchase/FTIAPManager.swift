@@ -41,7 +41,7 @@ extension FTPremiumUser {
             onCompletion?();
             return;
         }
-        if FTNoteshelfDocumentProvider.shared.isContentMoving {
+        if FTNoteshelfDocumentProvider.shared.isContentMovingInProgress() {
             onCompletion?();
             return;
         }
