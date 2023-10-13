@@ -8,7 +8,7 @@
 
 "noteshelf.ai.commandAskAnything" = "You are an assistant in Noteshelf.\nIn case input makes sense answer the input.\nGive appropriate headings if necessary.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
 
-"noteshelf.ai.commandSummarize" = "You are an assistant in Noteshelf.\nSummarize the input.\n\nGive appropriate heading.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
+"noteshelf.ai.commandSummarize" = "Summarize.\nDo not exceed 200 words.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags";
 
 "noteshelf.ai.commandExplain" = "Explain in simple terms.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags";
 
