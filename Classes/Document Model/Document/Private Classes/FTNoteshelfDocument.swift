@@ -854,6 +854,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         //writing fileattributes
             let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
             try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+            let isSecureAttribute = FileAttributeKey.ExtendedAttribute(key: .documentIsSecure, string: self.isPinEnabled().boolToString.lowercased())
+            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute, isSecureAttribute])
     }
     
     fileprivate var isInRevertMode = false;
@@ -1824,5 +1826,22 @@ extension FTNoteshelfDocument: FTNoteshelfDocumentDelegate {
         self.documentListners.forEach { (key,value) in
             value.documentDelegate?.documentWillStartSaving(document)
         }
+    }
+}
+
+enum FTBoolValue: String {
+    case TRUE = "true"
+    case FALSE = "false"
+}
+
+extension Bool {
+    var boolToString: String {
+        return self ? FTBoolValue.TRUE.rawValue : FTBoolValue.FALSE.rawValue
+    }
+}
+
+extension String {
+    var stringToBool: Bool {
+        return self == FTBoolValue.TRUE.rawValue ? true : false
     }
 }

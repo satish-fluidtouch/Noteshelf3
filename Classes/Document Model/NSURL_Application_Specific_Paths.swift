@@ -35,10 +35,18 @@ extension URL {
     }
     
     func isPinEnabledForDocument() -> Bool {
-        let securityPath = self.appendingPathComponent("secure.plist");
-        if(FileManager().fileExists(atPath: securityPath.path)) {
-            return true;
+        if let attri = getExtendedAttribute(for: .documentIsSecure), let isSecure = attri.stringValue?.lowercased().stringToBool {
+            return isSecure
         }
-        return false;
+        let securityPath = self.appendingPathComponent("secure.plist");
+        let isEnabled: Bool
+        if(FileManager().fileExists(atPath: securityPath.path)) {
+            isEnabled = true;
+        } else {
+            isEnabled = false
+        }
+        let isSecureAttribute = FileAttributeKey.ExtendedAttribute(key: .documentIsSecure, string: isEnabled.boolToString.lowercased())
+        try? self.setExtendedAttributes(attributes: [isSecureAttribute])
+        return isEnabled;
     }
 }
