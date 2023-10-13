@@ -173,17 +173,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CIA-5r-bQ5">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1046"/>
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1062"/>
                                 <color key="backgroundColor" name="cellBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaw-w5-zL2" userLabel="Footer Action">
-                                <rect key="frame" x="0.0" y="1046" width="834" height="128"/>
+                                <rect key="frame" x="0.0" y="1086" width="834" height="88"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2zf-Mq-s7T" userLabel="Primary Button" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24" width="834" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="834" height="40"/>
                                         <color key="backgroundColor" name="accent"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="40" id="3Zw-ZP-tHR"/>
@@ -198,7 +198,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nz3-iO-CcG">
-                                        <rect key="frame" x="0.0" y="72" width="834" height="40"/>
+                                        <rect key="frame" x="0.0" y="48" width="834" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ivf-jM-SNj" userLabel="Secondary Button" customClass="FTNoteshelfAIButton" customModule="NS3_Beta" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="413" height="40"/>
@@ -230,13 +230,13 @@
                                 <constraints>
                                     <constraint firstItem="nz3-iO-CcG" firstAttribute="top" secondItem="2zf-Mq-s7T" secondAttribute="bottom" constant="8" id="5rV-Ox-2BC"/>
                                     <constraint firstItem="2zf-Mq-s7T" firstAttribute="width" secondItem="iaw-w5-zL2" secondAttribute="width" id="9iV-bd-zPx"/>
-                                    <constraint firstAttribute="bottom" secondItem="nz3-iO-CcG" secondAttribute="bottom" constant="16" id="A2g-b7-4gM"/>
+                                    <constraint firstAttribute="bottom" secondItem="nz3-iO-CcG" secondAttribute="bottom" id="A2g-b7-4gM"/>
                                     <constraint firstItem="nz3-iO-CcG" firstAttribute="height" secondItem="2zf-Mq-s7T" secondAttribute="height" id="YCE-Q4-FRp"/>
                                     <constraint firstItem="2zf-Mq-s7T" firstAttribute="centerX" secondItem="iaw-w5-zL2" secondAttribute="centerX" id="b7h-Be-3oI"/>
                                     <constraint firstItem="nz3-iO-CcG" firstAttribute="centerX" secondItem="2zf-Mq-s7T" secondAttribute="centerX" id="fL2-Xd-SWR"/>
-                                    <constraint firstAttribute="height" constant="128" id="oMw-UV-Ibh"/>
+                                    <constraint firstAttribute="height" constant="88" id="oMw-UV-Ibh"/>
                                     <constraint firstItem="nz3-iO-CcG" firstAttribute="width" secondItem="2zf-Mq-s7T" secondAttribute="width" id="vma-HC-mW2"/>
-                                    <constraint firstItem="2zf-Mq-s7T" firstAttribute="top" secondItem="iaw-w5-zL2" secondAttribute="top" constant="24" id="xzz-0Q-mYg"/>
+                                    <constraint firstItem="2zf-Mq-s7T" firstAttribute="top" secondItem="iaw-w5-zL2" secondAttribute="top" id="xzz-0Q-mYg"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -247,7 +247,7 @@
                             <constraint firstItem="iaw-w5-zL2" firstAttribute="centerX" secondItem="CIA-5r-bQ5" secondAttribute="centerX" id="c4v-iR-WTO"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="centerX" secondItem="zQR-sH-Wh6" secondAttribute="centerX" id="cRw-cb-wI5"/>
                             <constraint firstItem="CIA-5r-bQ5" firstAttribute="top" secondItem="hOE-2Y-rer" secondAttribute="top" id="lYr-9Q-KhH"/>
-                            <constraint firstItem="iaw-w5-zL2" firstAttribute="top" secondItem="CIA-5r-bQ5" secondAttribute="bottom" id="th9-e6-bZX"/>
+                            <constraint firstItem="iaw-w5-zL2" firstAttribute="top" secondItem="CIA-5r-bQ5" secondAttribute="bottom" constant="24" id="th9-e6-bZX"/>
                             <constraint firstItem="iaw-w5-zL2" firstAttribute="bottom" secondItem="zQR-sH-Wh6" secondAttribute="bottom" id="vht-eb-Wdh"/>
                         </constraints>
                     </view>
@@ -282,7 +282,7 @@
                                     <outlet property="delegate" destination="3PP-7r-iC7" id="Fzf-2m-czr"/>
                                 </connections>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-21-mVm" userLabel="Content View">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V6w-21-mVm" userLabel="Content View">
                                 <rect key="frame" x="16" y="104" width="802" height="880"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdR-Zd-sLn" userLabel="Credits View">

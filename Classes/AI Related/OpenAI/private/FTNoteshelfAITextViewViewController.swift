@@ -223,7 +223,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
     
     func showActionOptions(_ show: Bool) {
-        let heightConstraint: CGFloat = show ? 0 : 128;
+        let heightConstraint: CGFloat = show ? 0 : 112;
         self.footerActionBottomConstraint?.constant = heightConstraint;
     }
     

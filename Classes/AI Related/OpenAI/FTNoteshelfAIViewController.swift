@@ -215,7 +215,7 @@ class FTNoteshelfAIViewController: UIViewController {
     }
 
     private func updateFooterHeight() {
-        var footerHeight: CGFloat = 0;
+        var footerHeight: CGFloat = 16;
         if let mode = self.footerVC?.footermode,mode != .noFooter {
             footerHeight =  48;
         }
@@ -240,8 +240,7 @@ class FTNoteshelfAIViewController: UIViewController {
         self.setFooterMode(allTokensConsumed ? .sendFeedback : .noteshelfAiBeta);
 
         self.creditsContainerViewHeightConstraint?.constant = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
-        var bottomConstraint: CGFloat = self.creditsContainerViewHeightConstraint?.constant ?? 0;
-
+        var bottomConstraint: CGFloat = (self.creditsContainerViewHeightConstraint?.constant ?? 0) * -1;
         if aiCommand == .none {
             self.reset();
             bottomConstraint = 0;
@@ -263,6 +262,8 @@ class FTNoteshelfAIViewController: UIViewController {
         }
         
         self.creditsContainerViewBottomConstraint?.constant = bottomConstraint
+        self.creditsContainerView?.isHidden = aiCommand != .none;
+        
         if let optCOntorller = controller {
             self.optionsController?.view.removeFromSuperview();
             self.optionsController?.removeFromParent();
