@@ -85,7 +85,7 @@ class FTDocumentRenderViewController: UIViewController {
     private weak var deskPanelActionDelegate: FTDeskPanelActionDelegate?
 
     var documentViewController: FTPDFRenderViewController!
-    private var loadingIndicator: FTLoadingIndicatorViewController?
+    private weak var loadingIndicator: FTLoadingIndicatorViewController?
     private var showRenderingIndicator = false
 
     private var isReady = FTDeveloperOption.bookScaleAnim {
