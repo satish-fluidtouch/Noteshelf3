@@ -10,6 +10,7 @@ import Foundation
 import StoreKit
 import FTCommon
 import FTTemplatesStore
+import Combine
 
 public typealias ProductIdentifier = String
 
@@ -89,6 +90,7 @@ class FTIAPManager: NSObject {
     var onReceiveProductsHandler: ((Result<[SKProduct], FTIAPHelperError>) -> Void)?
     var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
     var totalRestoredPurchases = 0
+    private var premiumCancellableEvent: AnyCancellable?;
     
     private override init() {
         super.init()
@@ -99,7 +101,13 @@ class FTIAPManager: NSObject {
     func config() {
         premiumUser.isPremiumUser = FTIAPurchaseHelper.shared.isPremiumUser;
         if !premiumUser.isPremiumUser {
-            premiumUser.addObsrversIfNeeded();
+            premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
+                if isPremium {
+                    self?.premiumUser.removeObservers()
+                } else {
+                    self?.premiumUser.addObsrversIfNeeded();
+                }
+            }
         }
     }
 }

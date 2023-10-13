@@ -57,7 +57,6 @@ class FTIAPViewModel {
                     switch result {
                     case .success(_):
                         FTIAPurchaseHelper.shared.isPremiumUser = true
-                        FTIAPManager.shared.premiumUser.removeObservers()
                         track(EventName.premium_success, screenName: ScreenName.iap)
                     case .failure(let error): self.delegate?.showIAPRelatedError(error)
                         track(EventName.premium_failed, screenName: ScreenName.iap)
@@ -78,7 +77,6 @@ class FTIAPViewModel {
                 case .success(let success):
                     if success {
                         FTIAPurchaseHelper.shared.isPremiumUser = true
-                        FTIAPManager.shared.premiumUser.removeObservers()
                         self.delegate?.didFinishRestoringPurchasedProducts()
                     } else {
                         self.delegate?.didFinishRestoringPurchasesWithZeroProducts()

@@ -130,11 +130,6 @@ class FTDeveloperOptionsViewController: UIViewController {
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
         FTIAPurchaseHelper.shared.isPremiumUser = swicth.isOn
-        if swicth.isOn {
-            FTIAPManager.shared.premiumUser.removeObservers()
-        } else {
-            FTIAPManager.shared.premiumUser.addObsrversIfNeeded()
-        }
     }
     
     // MARK:- Metal
