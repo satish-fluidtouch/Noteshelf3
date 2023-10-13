@@ -62,10 +62,11 @@ class FTCoverCollectionViewCell: FTTraitCollectionViewCell {
 
         if let theme = model {
             let img = theme.thumbnail()
-            if theme.themeable.hasCover {
-                self.imgView?.image = img?.withRenderingMode(.alwaysOriginal)
+            self.imgView?.image = img
+            if !theme.themeable.hasCover {
+                self.imgView?.tintColor = UIColor.appColor(.black5)
             } else {
-                self.imgView?.image =  img?.withTintColor(UIColor.appColor(.black5), renderingMode: .alwaysTemplate)
+                self.imgView?.tintColor = .clear
             }
         }
         self.updateShadowImage()
@@ -78,9 +79,7 @@ class FTCoverCollectionViewCell: FTTraitCollectionViewCell {
             let radius: CGFloat = 6.0
             self.borderPath = self.imgView.roundCorners(topLeft: radius, topRight: radius, bottomLeft: radius, bottomRight: radius)
         }
-//        DispatchQueue.main.async {
-            self.isCoverSelected = isSelected
-//        }
+        self.isCoverSelected = isSelected
     }
 
     fileprivate func updateShadowImage() {

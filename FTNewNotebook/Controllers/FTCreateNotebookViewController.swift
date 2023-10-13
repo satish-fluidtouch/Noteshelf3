@@ -31,7 +31,7 @@ public protocol FTCreateNotebookDelegate: FTCoversInfoDelegate, FTPapersInfoDele
 public class FTCreateNotebookViewController: UIViewController {
     @IBOutlet private weak var contentView: UIView?
     @IBOutlet private weak var closeBtn: UIButton?
-    
+    @IBOutlet private weak var noCoverLabel: UILabel?
     @IBOutlet private weak var chooseCoverView: UIView?
     @IBOutlet private weak var previewStackView: UIStackView?
     @IBOutlet private weak var notebookTitleAndPasswordView: UIView?
@@ -94,6 +94,8 @@ public class FTCreateNotebookViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        self.noCoverLabel?.text = "covers.category.noCover".localized.capitalized
+        self.noCoverLabel?.isHidden = true
         self.updateNewNotebookDetails()
         self.view.layoutIfNeeded()
         self.setUpView()
@@ -226,9 +228,9 @@ public class FTCreateNotebookViewController: UIViewController {
     }
 
     private func setNoCoverTextIfNeeded() {
-        self.coverImageView?.subviews.filter { $0 is FTNoCoverLabel }.forEach { $0.removeFromSuperview() }
-        if let coverTheme = newNotebookDetails?.selectedCoverTheme, !coverTheme.hasCover, let coverImgView = self.coverImageView {
-            coverImgView.addNoCoverLabel(of: 14.0)
+        self.noCoverLabel?.isHidden = true
+        if let coverTheme = newNotebookDetails?.selectedCoverTheme, !coverTheme.hasCover {
+            self.noCoverLabel?.isHidden = false
         }
     }
 
@@ -537,8 +539,8 @@ extension FTCreateNotebookViewController: FTCoverUpdateDelegate {
         return rect
     }
 
-    public func fetchPreviousSelectedCover() -> UIImage? {
-        self.newNotebookDetails?.selectedCoverTheme?.themeThumbnail()
+    public func fetchPreviousSelectedCover() -> FTThemeable? {
+        self.newNotebookDetails?.selectedCoverTheme
     }
 
     public func animateHideContentViewBasedOn(themeType: FTThemeType) {

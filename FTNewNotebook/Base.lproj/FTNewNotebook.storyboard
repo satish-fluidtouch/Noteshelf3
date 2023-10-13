@@ -57,6 +57,12 @@
                                                                             </mask>
                                                                         </variation>
                                                                     </imageView>
+                                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIy-GT-VEu">
+                                                                        <rect key="frame" x="8" y="140.5" width="208.5" height="17"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <color key="textColor" name="black50"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cover" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="514-lo-Mck">
                                                                         <rect key="frame" x="0.0" y="314" width="224.5" height="16"/>
                                                                         <constraints>
@@ -69,20 +75,24 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="jIy-GT-VEu" firstAttribute="centerX" secondItem="8EC-SM-BWz" secondAttribute="centerX" id="2Gl-hE-TCU"/>
                                                                     <constraint firstAttribute="trailing" secondItem="514-lo-Mck" secondAttribute="trailing" id="56S-ef-rhk"/>
                                                                     <constraint firstAttribute="height" constant="330" id="FBw-XD-7J8"/>
                                                                     <constraint firstItem="nLN-A4-fvf" firstAttribute="centerY" secondItem="8EC-SM-BWz" secondAttribute="centerY" id="LHM-Ih-tWh"/>
                                                                     <constraint firstItem="514-lo-Mck" firstAttribute="leading" secondItem="GBC-6V-6sz" secondAttribute="leading" id="Ouk-PP-VbU"/>
                                                                     <constraint firstItem="nLN-A4-fvf" firstAttribute="height" secondItem="8EC-SM-BWz" secondAttribute="height" id="Sep-Uz-cnb"/>
+                                                                    <constraint firstItem="jIy-GT-VEu" firstAttribute="trailing" secondItem="8EC-SM-BWz" secondAttribute="trailing" constant="-8" id="Sg1-Wp-tWQ"/>
                                                                     <constraint firstItem="514-lo-Mck" firstAttribute="top" secondItem="8EC-SM-BWz" secondAttribute="bottom" constant="16" id="WfO-0q-QY7"/>
                                                                     <constraint firstAttribute="trailing" secondItem="8EC-SM-BWz" secondAttribute="trailing" id="bC3-d0-jlf"/>
                                                                     <constraint firstItem="8EC-SM-BWz" firstAttribute="top" secondItem="GBC-6V-6sz" secondAttribute="top" id="fgw-oa-oyQ"/>
                                                                     <constraint firstItem="8EC-SM-BWz" firstAttribute="width" secondItem="GBC-6V-6sz" secondAttribute="width" id="gjw-jz-pmt"/>
                                                                     <constraint firstItem="nLN-A4-fvf" firstAttribute="width" secondItem="8EC-SM-BWz" secondAttribute="width" id="gsg-50-hkN"/>
                                                                     <constraint firstAttribute="width" constant="224" id="io8-x7-BRP"/>
+                                                                    <constraint firstItem="jIy-GT-VEu" firstAttribute="centerY" secondItem="8EC-SM-BWz" secondAttribute="centerY" id="pwF-w9-pIa"/>
                                                                     <constraint firstItem="nLN-A4-fvf" firstAttribute="centerX" secondItem="8EC-SM-BWz" secondAttribute="centerX" id="s0D-A0-M9I"/>
                                                                     <constraint firstItem="8EC-SM-BWz" firstAttribute="leading" secondItem="GBC-6V-6sz" secondAttribute="leading" id="v2S-HK-xsh"/>
                                                                     <constraint firstAttribute="bottom" secondItem="514-lo-Mck" secondAttribute="bottom" id="vkX-xt-48U"/>
+                                                                    <constraint firstItem="jIy-GT-VEu" firstAttribute="leading" secondItem="8EC-SM-BWz" secondAttribute="leading" constant="8" id="z0t-Gk-NqB"/>
                                                                 </constraints>
                                                                 <variation key="heightClass=compact-widthClass=compact">
                                                                     <mask key="constraints">
@@ -353,6 +363,7 @@
                         <outlet property="coverShadowView" destination="nLN-A4-fvf" id="eQc-NN-9hq"/>
                         <outlet property="coverTitleLabel" destination="514-lo-Mck" id="ZN5-iR-pKV"/>
                         <outlet property="createNotebookButton" destination="Uhk-TK-5Ub" id="DZg-kh-8K7"/>
+                        <outlet property="noCoverLabel" destination="jIy-GT-VEu" id="jVP-Aj-vT2"/>
                         <outlet property="notebookTitleAndPasswordView" destination="jqC-o7-r5m" id="Qt3-UQ-O2x"/>
                         <outlet property="notebookTitleTextfield" destination="BoV-bb-iNf" id="coG-Dc-GQy"/>
                         <outlet property="paperImageView" destination="OQM-ld-jw1" id="3m4-0h-cVF"/>
@@ -378,6 +389,9 @@
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="black70">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
