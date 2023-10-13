@@ -164,9 +164,9 @@ extension FTShelfBookmarksViewController: UICollectionViewDataSource, UICollecti
 
         if let page = item.page {
             if  page.pdfPageRect.size.width > page.pdfPageRect.size.height  { // landscape
-                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
+                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding + 20)
             } else {
-                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
+                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding + 20)
             }
 
         }
