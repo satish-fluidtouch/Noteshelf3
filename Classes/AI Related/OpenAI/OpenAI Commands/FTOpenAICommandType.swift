@@ -8,7 +8,7 @@
 import UIKit
 
 enum FTOpenAICommandType: Int {
-    static let supportedCommands̉: [FTOpenAICommandType] = [.generateNotes,.summarize,.explain,.langTranslate,.cleanUp];
+    static let supportedCommands̉: [FTOpenAICommandType] = [.generateNotes,.summarize,.explain,.langTranslate]; //.cleanUp
     case summarize,explain,generateNotes,langTranslate,generalQuestion,cleanUp,none
     
     var placeholderMessage: String {

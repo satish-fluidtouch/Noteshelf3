@@ -29,7 +29,6 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        FTNoteshelfAIConfigHelper.configureAI();
         self.clearTempCache();
         FTStyles.registerFonts()
         FTImportStorageManager.resetCorruptedStatusWhenTerminated()
@@ -40,6 +39,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         self.didCrashDuringPreviousExecution();
         
         FTIAPManager.shared.config();
+        FTNoteshelfAIConfigHelper.configureAI();
         FTLanguageResourceManager.shared.activateOnDemandResourcesIfNeeded()
         if FTWhatsNewManger.shouldShowWhatsNew() {
             FTWhatsNewManger.start()

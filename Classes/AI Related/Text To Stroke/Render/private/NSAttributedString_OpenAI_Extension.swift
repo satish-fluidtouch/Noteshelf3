@@ -63,7 +63,7 @@ extension NSAttributedString {
     }
     
     var bulletLists: [NSTextList]? {
-        if let attributes = self.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
+        if self.length > 0, let attributes = self.attribute(.paragraphStyle, at: 0, effectiveRange: nil) as? NSParagraphStyle
             ,!attributes.textLists.isEmpty {
             return attributes.textLists;
         }
