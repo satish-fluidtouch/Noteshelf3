@@ -560,7 +560,7 @@
                                                                 <constraint firstAttribute="height" constant="16" id="iQw-PE-t32"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" name="black70"/>
+                                                            <color key="textColor" name="black50"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
