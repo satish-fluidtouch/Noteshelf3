@@ -418,7 +418,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.refreshStatusBarAppearnce();
             controller.didMove(toParent: self)
             self.rootContentViewController = controller
-            removeLaunchScreen(true)
         }
         else {
             let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category,.ns2Category]
