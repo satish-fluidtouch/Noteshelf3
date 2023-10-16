@@ -76,11 +76,7 @@ public class FTChooseCoverViewController: UIViewController {
         } else {
             self.coverPreview?.image = coverImagePreview
             if coverImagePreview?.hasNoCover ?? false {
-                self.coverPreview?.tintColor = UIColor.appColor(.black5)
                 self.noCoverLabel?.isHidden = false
-                self.noCoverLabel?.superview?.bringSubviewToFront(self.noCoverLabel!)
-            } else {
-                self.coverPreview?.tintColor = .clear
             }
         }
 

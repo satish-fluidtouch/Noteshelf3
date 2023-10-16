@@ -3,6 +3,16 @@
     {
       "filename" : "defaultNoCover.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "cover (12).png",
+      "idiom" : "universal"
     }
   ],
   "info" : {
