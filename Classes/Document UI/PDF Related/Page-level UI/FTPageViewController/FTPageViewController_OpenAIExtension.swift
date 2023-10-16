@@ -189,14 +189,12 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
                 }
                 
                 let origin = self.originToInsertHandwrite();
-                var areaToInsert = CGRectScale(self.visibleRect(), 1/self.pageContentScale);
-                areaToInsert.origin = origin;
 
                 if page.pdfPageRect.height - page.pageBottomMargin - origin.y < 100 {
                     self.delegate?.insertNewPage(page, addContent: content);
                 }
                 else {
-                    if let annotation = self.pdfPage?.addTextAnnotation(content, visibleRect: areaToInsert) {
+                    if let annotation = self.pdfPage?.addTextAnnotation(content, at: origin) {
                         self.refreshView(refreshArea: annotation.boundingRect);
                     }
                 }
@@ -345,19 +343,17 @@ extension FTPageProtocol {
     }
     
     @discardableResult
-    func addTextAnnotation(_ content: FTAIContent,visibleRect: CGRect = .null) -> FTAnnotation? {
-        guard let contentAttr = content.attributedString else {
+    func addTextAnnotation(_ content: FTAIContent,at point: CGPoint = .zero) -> FTAnnotation? {
+        guard let contentAttr = content.normalizedAttrText else {
             return nil;
         }
         
         let info = FTTextAnnotationInfo();
         info.scale = 1;
         info.visibleRect = CGRect(origin: .zero, size: self.pdfPageRect.size).insetBy(dx: 20, dy: 20);
-        if !visibleRect.isNull {
-            info.visibleRect = visibleRect;
+        if CGPoint.zero != point {
+            info.atPoint = point;
         }
-        info.atPoint = info.visibleRect.origin;
-        
         let startPoint = startMargin;
         info.atPoint.x = max(info.atPoint.x , startPoint.x)
         info.atPoint.y = max(info.atPoint.y , startPoint.y)

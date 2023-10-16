@@ -39,7 +39,8 @@ class FTOpenAIResponse: NSObject {
                     attrString.addAttribute(.font, value: UIFont.systemFont(ofSize: 18), range: effectedRange);
                 }
                 if let font = attribues[.font] as? UIFont, font.pointSize < 18 {
-                    attrString.addAttribute(.font, value: UIFont.systemFont(ofSize: 18), range: effectedRange);
+                    let newFont = font.withSize(18);
+                    attrString.addAttribute(.font, value: newFont, range: effectedRange);
                 }
             }
 //            attrString.enumerateAttribute(.foregroundColor, in: NSRange(location: 0, length: attrString.length)) { color, effectedRange, stop in
