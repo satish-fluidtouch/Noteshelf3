@@ -110,7 +110,7 @@ class FTCloudBackupPublisher: NSObject {
             return false
         }
 
-        if UserDefaults.standard.bool(forKey: "safe_mode_Identifier") {
+        if FTUserDefaults.isInSafeMode() {
             return false
         }
 
