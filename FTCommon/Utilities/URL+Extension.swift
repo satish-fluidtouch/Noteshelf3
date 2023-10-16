@@ -45,12 +45,12 @@ public extension URL {
 
             try FileManager.default.setAttributes(fileAttributes, ofItemAtPath: self.path)
 #if DEBUG
-            print("✅  xAttr set for \(attributes.map{$0.key})")
+            print("✅  xAttr set for \(attributes.map{$0.key.rawValue})")
 #endif
 
         } catch {
 #if DEBUG
-            print("⚠️  xAttr failed to set for \(attributes.map{$0.key})")
+            print("⚠️  xAttr failed to set for \(attributes.map{$0.key.rawValue})")
 #endif
             throw error
         }

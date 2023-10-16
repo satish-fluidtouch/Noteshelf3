@@ -13,9 +13,8 @@ import FTCommon
 class FTNoteBookSplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     let contentTransitionDelegate = FTModalScaleTransitionDelegate();
-
     private(set) weak var documentViewController: FTDocumentRenderViewController?;
-    
+
     var curentPrefrredDisplayMode = UISplitViewController.DisplayMode.secondaryOnly
     class func viewController(_ docInfo : FTDocumentOpenInfo
                               , bounds: CGRect
