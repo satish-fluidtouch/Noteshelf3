@@ -30,7 +30,7 @@ extension FTNoteshelfDocumentProvider : FTShelfItemSorting {
     @available(*, renamed: "fetchAllShelfItems(option:)")
     func fetchAllShelfItems(option : FTFetchShelfItemOptions,
                             onCompletion : @escaping (([FTShelfItemProtocol]) -> (Void))) {
-        self.fetchAllCollections(includeUnCategorized: true) { (shelfItemCollections) in
+        self.fetchAllCollections() { (shelfItemCollections) in
             self.fetchShelfItems(forCollections: shelfItemCollections,
                                  option: option,
                                  parent : nil,
@@ -122,17 +122,12 @@ extension FTNoteshelfDocumentProvider : FTShelfItemSorting {
     }
     
     @available(*, renamed: "fetchAllCollections()")
-    func fetchAllCollections(includeUnCategorized: Bool = false,onCompeltion : @escaping ([FTShelfItemCollection]) -> Void)
+    func fetchAllCollections(onCompeltion : @escaping ([FTShelfItemCollection]) -> Void)
     {
         self.shelfs { (categories) in
             var allShelfCollections = [FTShelfItemCollection]();
             categories.forEach({ (category) in
-                let filteredCategories: [FTShelfItemCollection]
-                if includeUnCategorized {
-                    filteredCategories = category.categories.filter({$0.collectionType == .default || $0.collectionType == .migrated})
-                }else {
-                    filteredCategories = category.categories.filter({($0.collectionType == .default || $0.collectionType == .migrated)})
-                }
+                let filteredCategories: [FTShelfItemCollection] = category.categories.filter({$0.collectionType == .default || $0.collectionType == .migrated})
                 allShelfCollections.append(contentsOf: filteredCategories);
             });
             onCompeltion(allShelfCollections);
@@ -162,7 +157,7 @@ extension FTNoteshelfDocumentProvider : FTShelfItemSorting {
 }
 
 protocol DocumentProviderAsync {
-    func fetchAllCollections(includingUnCategorized: Bool) async -> [FTShelfItemCollection]
+    func fetchAllCollections() async -> [FTShelfItemCollection]
     func fetchShelfItems(forCollections shelfCollection: [FTShelfItemCollection],
                          option : FTFetchShelfItemOptions,
                          parent : FTGroupItemProtocol?,
@@ -172,9 +167,9 @@ protocol DocumentProviderAsync {
 // MARK: Async version
 #if !NS2_SIRI_APP && !NOTESHELF_ACTION
 extension FTNoteshelfDocumentProvider: DocumentProviderAsync {
-    func fetchAllCollections(includingUnCategorized: Bool = false) async -> [FTShelfItemCollection] {
+    func fetchAllCollections() async -> [FTShelfItemCollection] {
         return await withCheckedContinuation { continuation in
-            fetchAllCollections(includeUnCategorized:includingUnCategorized) { result in
+            fetchAllCollections() { result in
                 continuation.resume(returning: result)
             }
         }
