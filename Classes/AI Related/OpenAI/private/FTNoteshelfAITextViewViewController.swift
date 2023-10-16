@@ -186,6 +186,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
             self.secondaryActionButton?.addTarget(self, action: #selector(self.copyToClipboard(_:)), for: .touchUpInside);
             self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.copyToClipboard.displayTitle(self.supportsHandwriting), for: .normal);
         }
+        self.primaryActionButton?.setTitleColor(UIColor.white, for: .normal)
     }
         
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
