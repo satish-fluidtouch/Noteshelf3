@@ -3839,7 +3839,7 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 }
 
 -(void)zoomOverlayWillChangePanelFrame:(CGRect)frame {
-    [self.toolTypeContainerVc handleZoomPanelFrameChange: frame mode:self.zoomOverlayController.shortcutModeZoom animate:true completion: nil];
+    [self.toolTypeContainerVc handleZoomPanelFrameChange: frame mode:self.zoomOverlayController.shortcutModeZoom animate:false completion: nil];
 }
 
 @end
