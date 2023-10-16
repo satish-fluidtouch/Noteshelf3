@@ -70,6 +70,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                     if let doc = document {
                         guard let self,
                               let notebook = doc as? FTDocumentSearchProtocol else {
+                            blockOperation?.taskCompleted();
                             FTNoteshelfDocumentManager.shared.closeDocument(document: doc,
                                                                             token: token,
                                                                             onCompletion: nil);

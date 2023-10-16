@@ -16,7 +16,6 @@ class FTGlobalSearchProvider: NSObject {
     }
 
     private var currentProcessorToken = UUID().uuidString;
-    private let lock = NSLock()
 
     private var allShelfItems: [FTShelfItemProtocol] = [FTShelfItemProtocol]()
     private var allShelfCategories: [FTShelfItemCollection] = [FTShelfItemCollection]()
@@ -42,12 +41,10 @@ class FTGlobalSearchProvider: NSObject {
         })
     }
     func cancelSearching(){
-        self.lock.lock()
         self.observer?.invalidate()
         self.searchProcessor?.cancelSearching()
         self.searchProcessor = nil
         self.searchProgress?.cancel()
-        self.lock.unlock()
     }
 
     func fetchSearchResults(with searchKey: String, tags: [String] = [], shelfCategories: [FTShelfItemCollection] = [], onSectionFinding: ((_ items: [FTSearchSectionProtocol]) -> Void)?, onCompletion: ((_ token: String) -> ())?) {
@@ -68,18 +65,21 @@ class FTGlobalSearchProvider: NSObject {
             self.currentProcessorToken = token;
 
             FTNoteshelfDocumentProvider.shared.fetchShelfItems(forCollections: shelfCategories, option: options, parent: nil) { [self] (shelfItems) in
-                self.lock.lock()
                 let nonNs2Books = shelfItems.filter { !$0.URL.isNS2Book }
                 if token == self.currentProcessorToken {
                     fetchResults(items: nonNs2Books)
                 }
-                self.lock.unlock()
             }
         }
         
         func fetchResults(items: [FTShelfItemProtocol]) {
+            guard let searchProcessor = self.searchProcessor else {
+                onCompletion?(currentToken);
+                return;
+            }
+            
             self.searchProcessor?.setDataToProcess(shelfCategories: shelfCategories, shelfItems: items)
-            currentToken = self.searchProcessor!.startProcessing()
+            currentToken = searchProcessor.startProcessing()
             self.searchProgress = self.searchProcessor?.progress
             
             self.observer = self.searchProgress?.observe(\.fractionCompleted,
