@@ -400,8 +400,8 @@ extension FTQuickPageNavigatorViewController {
             return
         }
 
-        var tipContainerSize = CGSize.init(width: 50, height: 30)
-        infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: (numberOfPages > 99 ? 40 : 20) + tipContainerSize.width, height: 125))
+        var tipContainerSize = CGSize.init(width: numberOfPages > 99 ? 80 : 50, height: 30)
+        infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: 20 + tipContainerSize.width, height: 125))
         var tipViewFrame = tipView.frame
         
         let tipViewX = self.direction == .horizontal ? infoContainer.bounds.width - tipContainerSize.width - gapBetweenPageTipAndThumbnail : infoContainer.bounds.width - tipContainerSize.width
@@ -446,13 +446,13 @@ extension FTQuickPageNavigatorViewController {
                         
                         self?.thumbnailImageView?.image = newImage;
                         self?.thumbnailImageView?.backgroundColor = UIColor.clear
-                        if let pageinfolabel = self?.pageInfoLabel{
+                        if let pageinfolabel = self?.pageInfoLabel, let numberofPages = self?.numberOfPages{
                             if let scrollDirection = self?.direction, scrollDirection == .vertical {
-                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x:pageinfolabel.frame.maxX - newImage.size.width + newImage.size.width * 0.2 , y: tipView.frame.maxY + gapBetweenPageTipAndThumbnail), size: newImage.size)
-                            }
+                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x:pageinfolabel.frame.maxX - newImage.size.width * 0.8  , y: tipView.frame.maxY + gapBetweenPageTipAndThumbnail), size: newImage.size)
+                              }
                             else {
                                 thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
-                                thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * 0.4, y: tipView.frame.minY - (newImage.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
+                                thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * (numberofPages > 99 ? 0.5 : 0.4), y: tipView.frame.minY - (newImage.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
                             }
                         }
                     }
