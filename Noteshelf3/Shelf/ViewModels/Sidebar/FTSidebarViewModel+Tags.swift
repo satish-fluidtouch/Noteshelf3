@@ -12,10 +12,10 @@ extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, oldTitle: String) {
         if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle) {
             tagItem.renameTagItemWith(renamedString: tag.title)
+            self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
 
             FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: tag.title) { success in
                 if success ?? false {
-                    self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
                 }
             }
         }

@@ -35,10 +35,22 @@ struct FTCacheFiles {
     static let documentPlist: String = "Document.plist"
 }
 
+ class FTItemToCache {
+    var fileUrl: URL;
+    var documentID : String;
+    init(url: URL, documentID docID: String) {
+        fileUrl = url;
+        documentID = docID;
+    }
+}
+
 final class FTDocumentCache {
     static let shared = FTDocumentCache()
     let cacheFolderURL: URL
 
+    private var itemsToCache = [FTItemToCache]();
+    private var cacheDisabled = false;
+    
     // MARK: Private
     private let fileManager = FileManager()
     private let queue = DispatchQueue(label: FTCacheFiles.cacheFolderName, qos: .utility)
@@ -54,7 +66,7 @@ final class FTDocumentCache {
         cacheLog(.info, cacheFolderURL)
 
         FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
-
+        FTTagsProvider.shared.getAllTags()
         addObservers()
     }
 
@@ -135,21 +147,35 @@ final class FTDocumentCache {
 
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
         cacheLog(.info, "shelfitemDidUpdate", items.count)
-
-        // Perform all the operations on the secondary thread. This should never block the user interaction
+        var cacheItems = [FTItemToCache]()
         items.forEach { item in
-            if let docUUID = item.documentUUID, item.isDownloaded {
-                self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
-            } else {
-                cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
+            if let docId = item.documentUUID {
+                cacheItems.append(FTItemToCache(url: item.URL, documentID: docId))
             }
         }
+
+        self.cacheShelfItems(items: cacheItems)
     }
 }
 
 // Interface for cache creation
-
 extension FTDocumentCache {
+    func disableCacheUpdates() {
+        self.cacheDisabled = true;
+    }
+    
+    func enableCacheUpdates() {
+        self.cacheDisabled = false;
+        runInMainThread(0.1) {
+            objc_sync_enter(self.itemsToCache)
+            self.itemsToCache.forEach { eachItem in
+                self.cacheShelfItemFor(url: eachItem.fileUrl, documentUUID: eachItem.documentID);
+            }
+            self.itemsToCache.removeAll();
+            objc_sync_exit(self.itemsToCache)
+        }
+    }
+    
     func cachedLocation(for docUUID: String) -> URL {
         guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {
             fatalError("Unable to find cache directory")
@@ -158,7 +184,45 @@ extension FTDocumentCache {
         return destinationURL
     }
 
+    func cacheShelfItems(items: [FTItemToCache]) {
+
+        if self.cacheDisabled {
+            objc_sync_enter(self.itemsToCache)
+            items.forEach { eachItem in
+                self.itemsToCache.append(FTItemToCache(url: eachItem.fileUrl, documentID: eachItem.documentID))
+            }
+            objc_sync_exit(self.itemsToCache)
+            return;
+        }
+
+        let dispatchGroup = DispatchGroup()
+        queue.async {
+            var itemsCached = [FTItemToCache]();
+            items.forEach { eachItem in
+                dispatchGroup.enter()
+                    do {
+                        try self.cacheShelfItemIfRequired(url: eachItem.fileUrl, documentUUID: eachItem.documentID )
+                        itemsCached.append(eachItem)
+                        dispatchGroup.leave()
+                    } catch {
+                        cacheLog(.error, error.localizedDescription, eachItem.fileUrl.lastPathComponent)
+                        dispatchGroup.leave()
+                    }
+            }
+            dispatchGroup.notify(queue: .main) {
+                FTCacheTagsProcessor.shared.cacheTagsForDocument(items: itemsCached)
+            }
+        }
+    }
+
     func cacheShelfItemFor(url: URL, documentUUID: String) {
+        if self.cacheDisabled {
+            objc_sync_enter(self.itemsToCache)
+            self.itemsToCache.append(FTItemToCache(url: url, documentID: documentUUID))
+            objc_sync_exit(self.itemsToCache)
+            return;
+        }
+        
         queue.async {
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)

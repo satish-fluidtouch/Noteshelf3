@@ -19,37 +19,61 @@ class FTShelfTagsUpdateHandler: NSObject {
     func updateTagsFor(items: [FTShelfTagsItem], completion: ((Bool?) -> Void)?) {
         let dispatchGroup = DispatchGroup()
 
-        for case let item in items where (item.documentItem?.documentUUID != nil) {
-            dispatchGroup.enter()
-            func saveTags(document: FTNoteshelfDocument) {
-                let docPages =  document.pages()
-                if item.type == .book {
-                    document.addTags(tags: item.tags.map{$0.text})
-                } else if item.type == .page {
-                    if let page = docPages.first(where: {$0.uuid == item.pageUUID}) {
-                        (page as? FTPageTagsProtocol)?.addTags(tags: item.tags.map({$0.text}))
-                        page.isDirty = true
-                    }
-                }
+        var itemsGrouped = [String: [FTShelfTagsItem]]()
+        
+        items.forEach { eachItem in
+            if let documentId = eachItem.documentUUID {
+                var items = itemsGrouped[documentId] ?? [FTShelfTagsItem]()
+                items.append(eachItem)
+                itemsGrouped[documentId] = items
             }
-            if let document = item.document {
-                saveTags(document: document)
-                item.document = nil
-                dispatchGroup.leave()
-            }
-            else {
-                let request = FTDocumentOpenRequest(url: item.documentItem!.URL, purpose: .write)
+        }
+
+        guard  !itemsGrouped.isEmpty else {
+            completion?(true)
+            return
+        }
+        
+        var itesmToCache = [FTItemToCache]()
+        FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
+        FTDocumentCache.shared.disableCacheUpdates()
+        itemsGrouped.forEach { eachItem in
+            if let firstItem = eachItem.value.first?.documentItem {
+                let url = firstItem.URL
+                let isDocAlreadyOpened = FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url)
+                dispatchGroup.enter()
+                let items = eachItem.value
+                let request = FTDocumentOpenRequest(url: url, purpose: .write)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                     if let document = document as? FTNoteshelfDocument {
-                        saveTags(document: document)
+                        let docPages =  document.pages()
+                        items.forEach { eachItem in
+                            if eachItem.type == .book {
+                                document.addTags(tags: eachItem.tags.map{$0.text})
+                            } else if eachItem.type == .page {
+                                if let page = docPages.first(where: {$0.uuid == eachItem.pageUUID}) {
+                                    (page as? FTPageTagsProtocol)?.addTags(tags: eachItem.tags.map({$0.text}))
+                                    page.isDirty = true
+                                }
+                            }
+                        }
                         FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
+                            if !isDocAlreadyOpened {
+                                itesmToCache.append(FTItemToCache(url: document.URL, documentID: document.documentUUID))
+                            }
                             dispatchGroup.leave()
                         }
+                    }
+                    else {
+                        dispatchGroup.leave()
                     }
                 }
             }
         }
         dispatchGroup.notify(queue: .main) {
+            FTDocumentCache.shared.enableCacheUpdates();
+            FTDocumentCache.shared.cacheShelfItems(items: itesmToCache);
+            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
             completion?(true)
         }
     }
@@ -69,10 +93,12 @@ class FTShelfTagsUpdateHandler: NSObject {
             let filteredDocuments = items.filter { item in
                 return docIdsForTag.contains(item.documentUUID ?? "")
             }
-            FTCacheTagsProcessor.shared.deletTags(tags: [tag])
+            var itesmToCache = [FTItemToCache]()
 
-            if let topViewController =  UIApplication.shared.topViewController() {
-                let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: topViewController, withText: "")
+            if !filteredDocuments.isEmpty, let topViewController =  UIApplication.shared.topViewController() {
+                let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: topViewController, withText: "")
+                FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
+                FTDocumentCache.shared.disableCacheUpdates();
                 for case let doc in filteredDocuments where doc.documentUUID != nil {
                     dispatchGroup.enter()
                     let request = FTDocumentOpenRequest(url: doc.URL, purpose: .write)
@@ -80,6 +106,7 @@ class FTShelfTagsUpdateHandler: NSObject {
                         if let document = document as? FTNoteshelfDocument {
                             document.deleteTags([tag.text])
                             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
+                                itesmToCache.append(FTItemToCache(url: document.URL, documentID: document.documentUUID))
                                 dispatchGroup.leave()
                             }
                         } else {
@@ -89,6 +116,9 @@ class FTShelfTagsUpdateHandler: NSObject {
                 }
                 dispatchGroup.notify(queue: .main) {
                     loadingIndicatorViewController.hide()
+                    FTDocumentCache.shared.enableCacheUpdates();
+                    FTDocumentCache.shared.cacheShelfItems(items: itesmToCache);
+                    FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
                     completion?(true)
                 }
             } else {
@@ -112,16 +142,19 @@ class FTShelfTagsUpdateHandler: NSObject {
             let filteredDocuments = items.filter { item in
                 return docIdsForTag.contains(item.documentUUID ?? "")
             }
-            if let topViewController =  UIApplication.shared.topViewController() {
+            var itesmToCache = [FTItemToCache]()
+            if !filteredDocuments.isEmpty, let topViewController =  UIApplication.shared.topViewController() {
                 let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: topViewController, withText: "")
+                FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
+                FTDocumentCache.shared.disableCacheUpdates();
                 for case let doc in filteredDocuments where doc.documentUUID != nil {
                     dispatchGroup.enter()
-
                     let request = FTDocumentOpenRequest(url: doc.URL, purpose: .write)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let document = document as? FTNoteshelfDocument {
                             document.renameTag(tag, with: newTag)
                             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
+                                itesmToCache.append(FTItemToCache(url: document.URL, documentID: document.documentUUID))
                                 dispatchGroup.leave()
                             }
                         } else {
@@ -130,6 +163,9 @@ class FTShelfTagsUpdateHandler: NSObject {
                     }
                 }
                 dispatchGroup.notify(queue: .main) {
+                    FTDocumentCache.shared.enableCacheUpdates();
+                    FTDocumentCache.shared.cacheShelfItems(items: itesmToCache);
+                    FTNoteshelfDocumentProvider.shared.enableCloudUpdates();
                     loadingIndicatorViewController.hide()
                     completion?(true)
                 }

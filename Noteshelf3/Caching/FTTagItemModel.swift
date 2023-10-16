@@ -62,6 +62,8 @@ class FTTagItemModel {
     }
 
     func updateTagForShelfTagItem(shelfTagItems: [FTShelfTagsItem], completion: @escaping ([FTShelfTagsItem]) -> Void) {
+        var returnItems = [FTShelfTagsItem]()
+
         self.getTaggedItems { [weak self] items in
             guard let self = self else { return }
             var taggedItems = items
@@ -92,14 +94,17 @@ class FTTagItemModel {
                     } else if let item {
                         taggedItems.append(item)
                     }
+                    returnItems.append(item!)
                 }
         }
             self.updateShelfTagItems(items: taggedItems)
-            completion(taggedItems)
+            completion(returnItems)
         }
     }
 
     func updateTagForPages(documentItem: FTDocumentItemProtocol, pages: [FTThumbnailable], completion: @escaping ([FTShelfTagsItem]) -> Void) {
+        var returnItems = [FTShelfTagsItem]()
+
         self.getTaggedItems { [weak self] items in
             guard let self = self else { return }
             var taggedItems = items
@@ -120,13 +125,15 @@ class FTTagItemModel {
                 } else {
                     taggedItems.append(item)
                 }
+                returnItems.append(item)
             })
             self.updateShelfTagItems(items: taggedItems)
-            completion(taggedItems)
+            completion(returnItems)
         }
     }
 
     func updateTagForBooks(documentItems: [FTDocumentItemProtocol], completion: @escaping ([FTShelfTagsItem]) -> Void) {
+        var returnItems = [FTShelfTagsItem]()
         self.getTaggedItems { [weak self] items in
             guard let self = self else { return }
             var taggedItems = items
@@ -147,10 +154,11 @@ class FTTagItemModel {
                 } else {
                     taggedItems.append(item)
                 }
+                returnItems.append(item)
             }
 
             self.updateShelfTagItems(items: taggedItems)
-            completion(taggedItems)
+            completion(returnItems)
         }
     }
 

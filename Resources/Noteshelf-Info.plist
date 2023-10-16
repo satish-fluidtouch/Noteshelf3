@@ -259,6 +259,8 @@
 	<string>27</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<false/>
 	<key>INAlternativeAppNames</key>
 	<array>
 		<dict>
