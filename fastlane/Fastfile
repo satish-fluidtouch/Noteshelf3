@@ -43,6 +43,11 @@ platform :ios do
         releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
 
         # Step 4
+        slack(message: "🛠️ NS3 Beta iOS started Building 💪🏼",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number
+              })
 
         # 1. Build app with the configuration
         build_app(workspace: "Noteshelf3.xcworkspace",
@@ -108,7 +113,11 @@ platform :ios do
         releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
 
         # Step 4
-
+        slack(message: "🛠️ Noteshelf 3 iOS started Building 💪🏼",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number
+              })
         # 1. Build app with the configuration
         build_app(workspace: "Noteshelf3.xcworkspace",
                   scheme: "Noteshelf3",
@@ -183,7 +192,11 @@ platform :mac do
         releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
 
         # Step 4
-
+        slack(message: "🛠️ NS3 Beta macOS started Building 💪🏼",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number
+              })
         # 1. Build app with the configuration
         build_mac_app(workspace: "Noteshelf3.xcworkspace",
                       scheme: "Noteshelf3",
@@ -250,6 +263,11 @@ platform :mac do
         releaseNotes = "*******" + branch + "*******\n" + changelog_from_git_commits(pretty: "- %s", date_format: "short")
 
         # Step 4
+        slack(message: "🛠️ Noteshelf3 macOS started Building 💪🏼",
+              default_payloads: [:lane, :git_branch, :git_author],
+              payload: {
+              "Build Number" => build_number
+              })
 
         # 1. Build app with the configuration
         build_mac_app(workspace: "Noteshelf3.xcworkspace",
