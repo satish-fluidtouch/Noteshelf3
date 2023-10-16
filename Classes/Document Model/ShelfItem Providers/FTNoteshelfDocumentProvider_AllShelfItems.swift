@@ -131,7 +131,7 @@ extension FTNoteshelfDocumentProvider : FTShelfItemSorting {
                 if includeUnCategorized {
                     filteredCategories = category.categories.filter({$0.collectionType == .default || $0.collectionType == .migrated})
                 }else {
-                    filteredCategories = category.categories.filter({($0.collectionType == .default || $0.collectionType == .migrated) && !$0.isUnfiledNotesShelfItemCollection })
+                    filteredCategories = category.categories.filter({($0.collectionType == .default || $0.collectionType == .migrated)})
                 }
                 allShelfCollections.append(contentsOf: filteredCategories);
             });

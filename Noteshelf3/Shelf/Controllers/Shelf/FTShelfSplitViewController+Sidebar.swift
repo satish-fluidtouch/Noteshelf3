@@ -158,7 +158,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         self.exitFromGlobalSearch()
     }
 
-    private func detailController() -> UIViewController? {
+    func detailController() -> UIViewController? {
         if let detailController = self.viewController(for: .secondary) as? UINavigationController, let controller = detailController.viewControllers.first {
             return controller
         }
@@ -212,6 +212,9 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         } else {
             return getTemplatesVC() // templates
         }
+    }
+    func updateSidebarCollections(){
+        self.sideMenuController?.updateSideMenuItemsCollections()
     }
  }
 

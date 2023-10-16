@@ -458,7 +458,7 @@ extension FTSidebarViewModel {
     }
     private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
         FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
-            let newlyCreatedSidebarItems = collections.map { shelfItem -> FTSideBarItem in
+            let newlyCreatedSidebarItems = collections.filter({!$0.isUnfiledNotesShelfItemCollection}).map { shelfItem -> FTSideBarItem in
                 let item = FTSideBarItem(shelfCollection: shelfItem)
                 item.id = shelfItem.uuid
                 item.isEditable = true
@@ -466,7 +466,9 @@ extension FTSidebarViewModel {
                 item.type = .category
                 return item
             }
-
+            if let unCategorizedCollection = collections.first(where: {$0.isUnfiledNotesShelfItemCollection}) {
+                self.setCollectionToSystemType(.unCategorized, collection: unCategorizedCollection)
+            }
             FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
                 let NS2Items = collections.map { shelfItem -> FTSideBarItem in
                     let item = FTSideBarItem(shelfCollection: shelfItem)

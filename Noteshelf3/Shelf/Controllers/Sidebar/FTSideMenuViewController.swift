@@ -112,6 +112,9 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
     func showSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
         self.viewModel.showSidebarItemWithCollection(shelfItemCollection)
     }
+    func updateSideMenuItemsCollections(){ // Use this method to force update sidebar's categories sections related collections
+        viewModel.updateUserCreatedCategories()
+    }
 
     private func addOverlay() {
         overLayBg = UIView()

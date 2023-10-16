@@ -180,7 +180,11 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         if setToDefault {
             self.sideMenuController?.upateSideMenuCurrentCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection);
             self.sideMenuController?.selectSidebarItemWithCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection)
-            self.showHomeView()
+            if let detailController = self.detailController(), detailController.isKind(of: FTShelfHomeViewController.self) {
+                currentShelfViewModel?.reloadShelf() // As home is already active, we are reloading the shelf
+            } else {
+                self.showHomeView();
+            }
             onCompletion()
         }
         else {
