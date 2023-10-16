@@ -24,6 +24,16 @@ protocol FTGlobalSearchDelegate: NSObjectProtocol {
     func performContextualMenuPin(for shelfItem: FTShelfItemProtocol, isToPin: Bool)
 }
 
+class FTSearchInputInfo: NSObject {
+    var textKey: String
+    var tags: [String]
+
+    init(textKey: String, tags: [String]) {
+        self.textKey = textKey
+        self.tags = tags
+    }
+}
+
 class FTGlobalSearchController: UIViewController {
     @IBOutlet private weak var searchStatusLabel: UILabel?
     @IBOutlet private weak var countInfoLabel: UILabel?
@@ -38,7 +48,8 @@ class FTGlobalSearchController: UIViewController {
     internal var progressView: RPCircularProgress?
 
     internal var allTags = [FTTagModel]()
-    internal var searchKey: String = ""
+    internal var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
+
     internal var isRecentSelected: Bool = false
     internal var recentSearchList: [[FTRecentSearchedItem]] = []
     internal var searchController = FTUISearchController()
@@ -101,8 +112,8 @@ class FTGlobalSearchController: UIViewController {
 
     @IBAction func segmentValueChanged(_ sender: Any) {
         self.cancelSearch()
-        let currentTags = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: searchController.searchTokens)
-        self.searchForNotebooks(with: self.searchKey, tags: currentTags)
+        self.searchInputInfo.tags = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: searchController.searchTokens)
+        self.searchForNotebooks(with: searchInputInfo)
     }
 
     func cancelSearch() {
@@ -120,10 +131,9 @@ class FTGlobalSearchController: UIViewController {
 // MARK:  **** functions declared 'internal' here are intened to to use only inside this class extensions
 // and not for outside purpose ****
 extension FTGlobalSearchController {
-    internal func searchForNotebooks(with searchText: String, tags: [String] = []) {
+    internal func searchForNotebooks(with info: FTSearchInputInfo) {
         self.cancelSearch()
         self.updateProgressViewCenter()
-        self.searchKey = searchText
 
         runInMainThread {
             var sectionIndexSet = IndexSet()
@@ -143,7 +153,7 @@ extension FTGlobalSearchController {
         if self.segmentControl.selectedSegmentIndex == 1, let collection = self.shelfItemCollection {
             shelfcatgories.append(collection)
         }
-        self.searchHelper?.fetchSearchResults(with: searchText, tags: tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
+        self.searchHelper?.fetchSearchResults(with: info.textKey, tags: info.tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
             guard let self = self, !items.isEmpty else {
                 return
             }
@@ -245,11 +255,11 @@ private extension FTGlobalSearchController {
         let searchTokens = self.searchController.searchTokens
         var searchedCompundStr = ""
         if searchTokens.isEmpty {
-            searchedCompundStr = searchKey
+            searchedCompundStr = searchInputInfo.textKey
         } else {
             var searchedText = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: searchController.searchTokens)
-            if !self.searchKey.isEmpty {
-                searchedText.append(self.searchKey)
+            if !searchInputInfo.textKey.isEmpty {
+                searchedText.append(searchInputInfo.textKey)
             }
             for (index, tagText) in searchedText.enumerated() {
                 if index == 0 {
@@ -324,10 +334,10 @@ extension FTGlobalSearchController: UICollectionViewDataSource{
         }
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: cellIdentifier, for: indexPath)
         if let headerCell = header as? FTSearchResultTitlesHeader {
-            headerCell.configureHeader(sectionContent, searchKey: self.searchKey)
+            headerCell.configureHeader(sectionContent, searchKey: searchInputInfo.textKey)
         }
         else if let headerCell = header as? FTSearchResultContentHeader {
-            headerCell.configureHeader(sectionContent, searchKey: self.searchKey)
+            headerCell.configureHeader(sectionContent, searchKey: searchInputInfo.textKey)
         }
         return header
     }
