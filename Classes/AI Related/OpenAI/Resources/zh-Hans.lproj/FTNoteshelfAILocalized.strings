@@ -48,14 +48,14 @@
 
 "noteshelf.ai.handwriteMessage" = "只有您是高级用户，Noteshelf AI 才能理解您的手写。";
 
-"noteshelf.ai.pressEnterToSend" = "Press enter to send";
+"noteshelf.ai.pressEnterToSend" = "按Enter键发送";
 
 //Credits related
-"noteshelf.ai.credit.nocredits" = "No credits left";
-"noteshelf.ai.credit.bePremium" = "Upgrade to Noteshelf Premium";
-"noteshelf.ai.credit.creditsRunningOut" = "Credits running out soon";
-"noteshelf.ai.credit.bePremiumInfo" = "Upgrade to Noteshelf Premium to unlock 100 monthly AI credits and to get handwriting recognition";
+"noteshelf.ai.credit.nocredits" = "没有剩余学分";
+"noteshelf.ai.credit.bePremium" = "升级到Noteshelf高级版";
+"noteshelf.ai.credit.creditsRunningOut" = "积分即将用尽";
+"noteshelf.ai.credit.bePremiumInfo" = "升级到Noteshelf Premium以解锁每月100个AI学分并获得手写识别功能";
 "noteshelf.ai.credit.upgradeNow" = "立即升级";
-"noteshelf.ai.credit.details" = "%d/%d credits left";
-"noteshelf.ai.credit.moreinfo" = "AI credits resets in %d days";
-"noteshelf.ai.credit.moreOptions" = "More Options";
+"noteshelf.ai.credit.details" = "%d/%d 剩余学分";
+"noteshelf.ai.credit.moreinfo" = "AI积分将在%d天后重置";
+"noteshelf.ai.credit.moreOptions" = "更多选项";

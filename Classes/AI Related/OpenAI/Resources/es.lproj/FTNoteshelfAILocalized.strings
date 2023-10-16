@@ -48,14 +48,14 @@
 
 "noteshelf.ai.handwriteMessage" = "Noteshelf AI podrá entender tu escritura solo si eres un usuario Premium.";
 
-"noteshelf.ai.pressEnterToSend" = "Press enter to send";
+"noteshelf.ai.pressEnterToSend" = "Presiona Enter para enviar";
 
 //Credits related
-"noteshelf.ai.credit.nocredits" = "No credits left";
-"noteshelf.ai.credit.bePremium" = "Upgrade to Noteshelf Premium";
-"noteshelf.ai.credit.creditsRunningOut" = "Credits running out soon";
-"noteshelf.ai.credit.bePremiumInfo" = "Upgrade to Noteshelf Premium to unlock 100 monthly AI credits and to get handwriting recognition";
+"noteshelf.ai.credit.nocredits" = "No hay créditos disponibles";
+"noteshelf.ai.credit.bePremium" = "Actualización a Noteshelf Premium";
+"noteshelf.ai.credit.creditsRunningOut" = "Créditos próximos a agotarse";
+"noteshelf.ai.credit.bePremiumInfo" = "Actualiza a Noteshelf Premium para desbloquear 100 créditos mensuales de IA y obtener reconocimiento de escritura";
 "noteshelf.ai.credit.upgradeNow" = "Actualiza ahora";
-"noteshelf.ai.credit.details" = "%d/%d credits left";
-"noteshelf.ai.credit.moreinfo" = "AI credits resets in %d days";
-"noteshelf.ai.credit.moreOptions" = "More Options";
+"noteshelf.ai.credit.details" = "%d/%d créditos restantes";
+"noteshelf.ai.credit.moreinfo" = "Créditos de IA se reiniciarán en %d días";
+"noteshelf.ai.credit.moreOptions" = "Más opciones.";
