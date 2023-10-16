@@ -46,7 +46,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 }
             }
         } else {
-            if var notebookDetails = notebookDetails {
+            if let notebookDetails = notebookDetails {
                 FTNotebookCreation().createNewNotebookInside(collection: collection, group: group, notebookDetails: notebookDetails,mode: mode) { [weak self] error, shelfItemProtocol in
                     loadingIndicatorView.hide()
                     if error != nil {
@@ -178,9 +178,6 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                 request.pin = pin;
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { (token, document, error) in
                     if let _document = document, let nsDoc = _document as? FTNoteshelfDocument {
-                        //todo update school
-                        let propertyInfoPlist = shelfItem.URL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(ASSIGNMENTS_PLIST);
-                        let coverStyle = FTCoverStyle.clearWhite
                         var isEncrypted: Bool = false
                         if let pin, !pin.isEmpty  {
                             isEncrypted = true

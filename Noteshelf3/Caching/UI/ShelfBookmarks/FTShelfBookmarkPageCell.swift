@@ -12,6 +12,7 @@ class FTShelfBookmarkPageCell: UICollectionViewCell {
     @IBOutlet weak var thumbnail: UIImageView?
     @IBOutlet weak var bookTitleLbl: UILabel?
     @IBOutlet weak var pageTitleLbl: UILabel?
+    @IBOutlet weak var bookmarkName: UILabel!
     @IBOutlet weak private var bookmarkIcon: UIButton?
     @IBOutlet weak var shadowImageView: UIImageView!
 
@@ -26,6 +27,7 @@ class FTShelfBookmarkPageCell: UICollectionViewCell {
         self.thumbnail?.image = nil
         bookmarkIcon?.tintColor = UIColor(hexString: bookmarkItem.color)
         if bookmarkItem.type == .page, let page = bookmarkItem.page {
+            self.bookmarkName.text = page.bookmarkTitle.isEmpty ? "untitled".localized  : page.bookmarkTitle
             let image = UIImage(named: "pages_shadow")
             let scalled = image?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
             shadowImageView.image = scalled

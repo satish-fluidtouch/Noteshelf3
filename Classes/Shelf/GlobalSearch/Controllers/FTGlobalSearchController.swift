@@ -22,6 +22,7 @@ protocol FTGlobalSearchDelegate: NSObjectProtocol {
                                      type: FTShelfItemContexualOption)
     func performContextMenuPageShare(for page: FTPageProtocol, shelfItem: FTShelfItemProtocol)
     func performContextualMenuPin(for shelfItem: FTShelfItemProtocol, isToPin: Bool)
+    func selectSidebarWithCollection(_ collection: FTShelfItemCollection)
 }
 
 class FTGlobalSearchController: UIViewController {
@@ -52,7 +53,7 @@ class FTGlobalSearchController: UIViewController {
     private var searchedSections = [FTSearchSectionProtocol]()
     private var currentSize = CGSize.zero
     private let alignmentOffset: CGFloat = 550.0
-
+    var navTitle: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.allTags = FTSearchSuggestionHelper.shared.fetchTags()
@@ -68,6 +69,7 @@ class FTGlobalSearchController: UIViewController {
         self.collectionView.backgroundView?.isHidden = true
 
         self.collectionView?.register(UINib(nibName: "FTSearchResultContentHeader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FTSearchResultContentHeader")
+        self.title = navTitle
 #if !targetEnvironment(macCatalyst)
         runInMainThread(0.1) {
             self.searchController.bringSearchBarResponder()
@@ -75,7 +77,12 @@ class FTGlobalSearchController: UIViewController {
         }
 #endif
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let shelfItemCollection {
+            self.delegate?.selectSidebarWithCollection(shelfItemCollection)
+        }
+    }
     override func viewDidLayoutSubviews() {
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize != self.currentSize) {

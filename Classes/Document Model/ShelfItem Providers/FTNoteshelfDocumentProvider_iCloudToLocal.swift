@@ -73,10 +73,12 @@ extension FTNoteshelfDocumentProvider {
 
             if(eachShelfItem!.URL.pathExtension == FTFileExtension.group) {
                 let groupItem = eachShelfItem as! FTGroupItemProtocol;
-                let destinationURL = toCollection.URL.appendingPathComponent(groupItem.URL.lastPathComponent);
-                if(FileManager().fileExists(atPath: destinationURL.path)) {
+                let relativePath = groupItem.URL.pathRelativeTo(groupItem.shelfCollection.URL);
+                let destinationURL = toCollection.URL.appendingPathComponent(relativePath);
+                if FileManager().fileExists(atPath: destinationURL.path)
+                    ,let localGroupItem = toCollection.groupItemForURL(destinationURL) {
                     self.copyItems(items: groupItem.childrens,
-                                   toGroup: groupItem,
+                                   toGroup: localGroupItem,
                                    toCollection: toCollection,
                                    onCompletion: { error in
                                     if(nil == error) {

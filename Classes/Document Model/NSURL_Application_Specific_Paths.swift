@@ -35,10 +35,17 @@ extension URL {
     }
     
     func isPinEnabledForDocument() -> Bool {
-        let securityPath = self.appendingPathComponent("secure.plist");
-        if(FileManager().fileExists(atPath: securityPath.path)) {
-            return true;
+        var valueToReturn = false
+        #if !NOTESHELF_ACTION
+        if self.downloadStatus() == .downloaded {
+          let securityPath = self.appendingPathComponent("secure.plist");
+          if(FileManager().fileExists(atPath: securityPath.path)) {
+              valueToReturn = true;
+          }
         }
-        return false;
-    }
+        return valueToReturn
+        #else
+        return valueToReturn
+        #endif
+      }
 }

@@ -19,7 +19,7 @@ class FTShareItemsFetchModel: NSObject {
         FTNoteshelfDocumentProvider.shared.updateProviderForNoteShelfAction { isUpdated in
            // if isUpdated {
                 self.isProviderUpdated = isUpdated
-            FTNoteshelfDocumentProvider.shared.fetchAllCollections(includeUnCategorized: true) { collections in
+            FTNoteshelfDocumentProvider.shared.fetchAllCollections() { collections in
                     let items: [FTShareItem] = collections.map { collection -> FTShareItem in
                         let title = collection.isUnfiledNotesShelfItemCollection ? collection.displayTitle.localized : collection.displayTitle
                         let item = FTCategoryShareItem(id: collection.uuid, title: title, type: .category, collection: collection)
