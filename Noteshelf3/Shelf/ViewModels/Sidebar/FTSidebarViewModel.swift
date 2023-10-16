@@ -269,7 +269,7 @@ extension FTSidebarViewModel {
         // As the main function is called in serial queue and below operation to be called on main thread
         func favoriteShelfItem() {
             runInMainThread {
-                if let item = shelfItem {
+                if let item = shelfItem, item.URL.downloadStatus() == .downloaded {
                     self.dropDelegate?.favoriteShelfItem(item, toPin: true)
                 }
             }
