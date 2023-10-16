@@ -400,43 +400,19 @@ extension FTQuickPageNavigatorViewController {
             return
         }
 
-        //******************************** To calculate dark blue tip size ONLY ONCE as getting some UI glitch if we do on  page number changes
-        var referencePageString = "999/999"
-        if numberOfPages > 999 {
-            referencePageString = "9999/9999"
-        }
-        if numberOfPages > 9999 {
-            referencePageString = "99999/99999"
-        }
-        //********************************
+        var tipContainerSize = CGSize.init(width: 50, height: 30)
+        infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: (numberOfPages > 99 ? 40 : 20) + tipContainerSize.width, height: 125))
+        var tipViewFrame = tipView.frame
+        
+        let tipViewX = self.direction == .horizontal ? infoContainer.bounds.width - tipContainerSize.width - gapBetweenPageTipAndThumbnail : infoContainer.bounds.width - tipContainerSize.width
 
-        if self.direction == .horizontal { //For horizontal, frames will be as it is in the xib file
-            var tipContainerSize = CGSize.init(width: 50, height: 30)
-            if numberOfPages > 99 {
-                let expectedSize = referencePageString.sizeWithFont(pageLabel.font);
-                tipContainerSize = CGSize.init(width: expectedSize.width + 10, height: 36)
-            }
-            infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: (numberOfPages > 99 ? 40 : 20) + tipContainerSize.width, height: 125))
-            var tipViewFrame = tipView.frame
-            tipViewFrame.origin = CGPoint.init(x: infoContainer.bounds.width - tipContainerSize.width - gapBetweenPageTipAndThumbnail , y: infoContainer.frame.height -  (infoContainer.frame.height * 0.3))
-            tipViewFrame.size = tipContainerSize
-            tipView.frame = tipViewFrame
-            pageLabel.frame = CGRect.init(origin: tipView.bounds.origin, size: CGSize.init(width: tipView.bounds.width, height: tipView.bounds.height))
-        }
-        else { //For vertical, all the calculations applied here for arranging subviews in pageInfoContainer
-            var tipContainerSize = CGSize.init(width: 50, height: 30)
-            if numberOfPages > 99 {
-                let expectedSize = referencePageString.sizeWithFont(pageLabel.font);
-                tipContainerSize = CGSize.init(width: expectedSize.width + 10, height: 36)
-            }
-            infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: (numberOfPages > 99 ? 40 : 20) + tipContainerSize.width, height: 125))
-            var tipViewFrame = tipView.frame
-            tipViewFrame.origin = CGPoint.init(x: infoContainer.bounds.width - tipContainerSize.width, y: (infoContainer.frame.height * 0.6) - (tipContainerSize.height))
-            tipViewFrame.size = tipContainerSize
-            tipView.frame = tipViewFrame
-                        
-            pageLabel.frame = CGRect.init(origin: tipView.bounds.origin, size: CGSize.init(width: tipView.bounds.width, height: tipView.bounds.height))
-        }
+        let tipViewY = self.direction == .horizontal ? infoContainer.frame.height - (infoContainer.frame.height * 0.3) : (infoContainer.frame.height * 0.6) - tipContainerSize.height
+
+        tipViewFrame.origin = CGPoint(x: tipViewX, y: tipViewY)
+
+        tipViewFrame.size = tipContainerSize
+        tipView.frame = tipViewFrame
+        pageLabel.frame = CGRect.init(origin: tipView.bounds.origin, size: CGSize.init(width: tipView.bounds.width, height: tipView.bounds.height))
     }
 }
 //MARK:- Thumbnail & Page Info
@@ -467,18 +443,16 @@ extension FTQuickPageNavigatorViewController {
                 else {
                     let originalThumbnailSize: CGSize = CGSize.init(width: 100, height: 125)
                     if let thumbnailImgView = self?.thumbnailImageView, let newImage = image?.resizedImageWithinRect(originalThumbnailSize), let tipView = self?.pageTipView {
+                        
                         self?.thumbnailImageView?.image = newImage;
                         self?.thumbnailImageView?.backgroundColor = UIColor.clear
                         if let pageinfolabel = self?.pageInfoLabel{
                             if let scrollDirection = self?.direction, scrollDirection == .vertical {
-                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x: pageinfolabel.frame.midX - 16, y: tipView.frame.maxY + 16 + gapBetweenPageTipAndThumbnail), size: newImage.size)
+                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x:pageinfolabel.frame.maxX - newImage.size.width + newImage.size.width * 0.2 , y: tipView.frame.maxY + gapBetweenPageTipAndThumbnail), size: newImage.size)
                             }
                             else {
-//                                thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
-//                                thumbnailImgView.center = CGPoint.init(x: tipView.frame.width * 0.8 - gapBetweenPageTipAndThumbnail, y: tipView.frame.minY - pageinfolabel.frame.size.height - 16 - gapBetweenPageTipAndThumbnail )
-
-                                thumbnailImgView.frame = CGRect(origin: CGPoint.init(x: pageinfolabel.frame.minX, y: tipView.frame.minY - pageinfolabel.frame.size.height - 16), size: newImage.size)
-
+                                thumbnailImgView.frame = CGRect.init(origin: CGPoint.zero, size: newImage.size)
+                                thumbnailImgView.center = CGPoint.init(x: originalThumbnailSize.width * 0.4, y: tipView.frame.minY - (newImage.size.height * 0.5) - gapBetweenPageTipAndThumbnail)
                             }
                         }
                     }
