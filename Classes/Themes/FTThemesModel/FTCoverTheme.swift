@@ -12,26 +12,14 @@ import UIKit
 import SDWebImage
 #endif
 
-class FTCoverTheme : FTTheme {
-    private var thumbnailURL: URL
+class FTCoverTheme: FTTheme {
+    private var thumbnailURL: URL?
 
     override init (url: URL) {
-        let thumbURL: URL
         let pdfUrl = url.appendingPathComponent("template").appendingPathExtension("pdf")
         if FileManager().fileExists(atPath: pdfUrl.path) {
-            thumbURL = pdfUrl
-        }  else { // transparent no cover is handled with png image
-            let thumbPath = url.appendingPathComponent("thumbnail2x.png")
-            if (FileManager.default.fileExists(atPath: thumbPath.path)) {
-                thumbURL = thumbPath
-            } else if let url = Bundle.main.url(forResource: "defaultNoCover", withExtension: "png") {
-                thumbURL = url
-            } else {
-                fatalError("Default cover image not found in bundle")
-            }
+            self.thumbnailURL = pdfUrl
         }
-        self.thumbnailURL = thumbURL
-        
         super.init(url: url)
     }
     
@@ -43,17 +31,21 @@ class FTCoverTheme : FTTheme {
     
     //MARK:- FTTheme methods
     override func themeTemplateURL() -> URL {
-        return self.thumbnailURL;
+        if let url = self.thumbnailURL {
+            return url
+        }
+        return self.themeFileURL
     }
     
     override func themeThumbnail() -> UIImage {
-        let thumbnail: UIImage
-        if let image = UIImage(contentsOfFile: self.thumbnailURL.path) { // This ll be executed only for NO COVER
-            thumbnail = image
-        } else {
-            thumbnail = self.getThumbnailI()
+        var reqImg: UIImage = UIImage(named: "defaultNoCover")!
+        if let image = self.cachedThumbnailIfExists() {
+            reqImg = image
+        } else if let url = self.thumbnailURL, let pdf = PDFDocument(url: url), let img = pdf.drawImagefromPdf() {
+            self.cacheThumbnail(image: img)
+            reqImg = img
         }
-        return thumbnail
+        return reqImg
     }
 
     private lazy var cachedThumbnailURL: URL = {
@@ -76,7 +68,10 @@ class FTCoverTheme : FTTheme {
     }()
 
     override func preview() async -> UIImage? {
-        return UIImage.init(contentsOfFile: thumbnailURL.path)
+        if let url = self.thumbnailURL {
+            return UIImage.init(contentsOfFile: url.path)
+        }
+        return nil
     }
     
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
@@ -88,17 +83,6 @@ class FTCoverTheme : FTTheme {
 }
 
 private extension FTCoverTheme {
-    func getThumbnailI() -> UIImage {
-        var reqImg: UIImage = UIImage(named: "defaultNoCover")!
-        if let image = self.cachedThumbnailIfExists() {
-            reqImg = image
-        } else if let pdf = PDFDocument(url: self.thumbnailURL), let img = pdf.drawImagefromPdf() {
-            self.cacheThumbnail(image: img)
-            reqImg = img
-        }
-        return reqImg
-    }
-
     func cacheThumbnail(image: UIImage) {
         if let data = image.pngData() {
             do {
@@ -125,7 +109,19 @@ class FTNoCoverTheme: FTCoverTheme {
         self.hasCover = false
     }
 
+    override func themeTemplateURL() -> URL {
+        return self.themeFileURL
+    }
+
+    override func themeThumbnail() -> UIImage {
+        return UIImage(named: "defaultNoCover")!
+    }
+
     override func isValidTheme() -> Bool {
         return true
+    }
+
+    override func preview() async -> UIImage? {
+        return self.themeThumbnail()
     }
 }

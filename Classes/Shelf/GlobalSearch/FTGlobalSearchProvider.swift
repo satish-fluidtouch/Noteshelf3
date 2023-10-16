@@ -33,7 +33,7 @@ class FTGlobalSearchProvider: NSObject {
         self.init()
 
         let options = FTFetchShelfItemOptions()
-        FTNoteshelfDocumentProvider.shared.fetchAllCollections(includeUnCategorized: true, onCompeltion: {[weak self] (shelfCategories) -> (Void) in
+        FTNoteshelfDocumentProvider.shared.fetchAllCollections( onCompeltion: {[weak self] (shelfCategories) -> (Void) in
             self?.allShelfCategories = shelfCategories
             FTNoteshelfDocumentProvider.shared.fetchAllShelfItems(option:options) {[weak self] (shelfItems) -> (Void) in
                 self?.allShelfItems = (FTNoteshelfDocumentProvider.shared as FTShelfItemSorting).sortItems(shelfItems, sortOrder: FTShelfSortOrder.byName)

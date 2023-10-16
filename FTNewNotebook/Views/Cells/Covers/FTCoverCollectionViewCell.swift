@@ -63,11 +63,6 @@ class FTCoverCollectionViewCell: FTTraitCollectionViewCell {
         if let theme = model {
             let img = theme.thumbnail()
             self.imgView?.image = img
-            if !theme.themeable.hasCover {
-                self.imgView?.tintColor = UIColor.appColor(.black5)
-            } else {
-                self.imgView?.tintColor = .clear
-            }
         }
         self.updateShadowImage()
         self.layoutIfNeeded()
