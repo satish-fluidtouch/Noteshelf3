@@ -75,7 +75,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
        didSet {
-           updateSidebarItemSelection()
+           updateCurrentSidebarItemCollection()
        }
     }
     init(collection: FTShelfItemCollection? = nil) {
@@ -87,6 +87,9 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     init(selectedSideBarItemType: FTSideBarItemType, selectedTag:String = "") {
         super.init()
         self.selectedSideBarItemType = selectedSideBarItemType
+        if selectedSideBarItemType == .home {
+            selectedShelfItemCollection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
+        }
         self.lastSelectedTag = selectedTag
         self.addObserverForContextualOperations()
     }
@@ -162,21 +165,29 @@ class FTSidebarViewModel: NSObject, ObservableObject {
             self.renameSideBarItem(item, toNewTitle: item.title)
         }
     }
+    func selectSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
+        selectedSideBarItem = menuItems.flatMap({$0.items})
+            .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
+        setSideBarItemSelection()
+    }
+    func showSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
+        selectedSideBarItem = menuItems.flatMap({$0.items})
+            .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
+        setSideBarItemSelection()
+        if let selectedSideBarItem {
+            self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
+        }
+    }
 }
 private extension FTSidebarViewModel {
-    func updateSidebarItemSelection(){
+    func updateCurrentSidebarItemCollection(){
         let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category, .ns2Category]
         if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
+            let currentCollectionSidebarItemType: FTSideBarItemType = (selectedShelfItemCollection?.isNS2Collection() ?? false) ? .ns2Category : .category
             if selectedSideBarItem != nil,
                selectedSideBarItem?.shelfCollection != nil,
-               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
+               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle, selectedSideBarItem?.type == currentCollectionSidebarItemType {
                 selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
-            } else if selectedSideBarItem?.shelfCollection?.displayTitle != selectedShelfItemCollection?.displayTitle {
-                selectedSideBarItem = menuItems.flatMap({$0.items})
-                    .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
-                if let selectedSideBarItem {
-                    self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
-                }
             }
         }
     }
@@ -447,7 +458,7 @@ extension FTSidebarViewModel {
     }
     private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
         FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
-            let newlyCreatedSidebarItems = collections.map { shelfItem -> FTSideBarItem in
+            let newlyCreatedSidebarItems = collections.filter({!$0.isUnfiledNotesShelfItemCollection}).map { shelfItem -> FTSideBarItem in
                 let item = FTSideBarItem(shelfCollection: shelfItem)
                 item.id = shelfItem.uuid
                 item.isEditable = true
@@ -455,7 +466,9 @@ extension FTSidebarViewModel {
                 item.type = .category
                 return item
             }
-
+            if let unCategorizedCollection = collections.first(where: {$0.isUnfiledNotesShelfItemCollection}) {
+                self.setCollectionToSystemType(.unCategorized, collection: unCategorizedCollection)
+            }
             FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
                 let NS2Items = collections.map { shelfItem -> FTSideBarItem in
                     let item = FTSideBarItem(shelfCollection: shelfItem)
