@@ -355,7 +355,7 @@ struct GroupNotebookView: View {
                     }
                 })
                 .overlay {
-                    if shelfItem.isPinEnabled && coverViewPurpose == .shelf {
+                    if shelfItem.model.URL.isPinEnabledForDocument() && coverViewPurpose == .shelf {
                         FTLockIconView()
                             .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .center)
                         .environmentObject(shelfViewModel)

@@ -190,14 +190,10 @@ class FTNoteshelfAIViewController: UIViewController {
         }
         controller.content = content;
         controller.delegate = delegate;
-        controller.preferredContentSize = CGSize(width: 500, height: 508);
         let navController = UINavigationController(rootViewController: controller);
-        navController.modalPresentationStyle = .formSheet;
-        navController.transitioningDelegate = controller.formSheetTransitionDelegate;
-        navController.isModalInPresentation = true;
-        presentingController.present(navController, animated: true);
-    }
-    
+        presentingController.ftPresentFormsheet(vcToPresent: navController, contentSize: CGSize(width: 500, height: 508), hideNavBar: false)
+      }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         FTNoteshelfAITokenManager.shared.refreshTokenInfo();
