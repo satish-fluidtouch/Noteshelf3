@@ -141,7 +141,7 @@ extension FTThemesLibrary {
             if let theme = FTTheme.theme(url: themeUrl, themeType: .covers) {
                 reqTheme = theme
             } else {
-                guard var defaultTheme = categories.first?.themes.first else {
+                guard let defaultTheme = categories.first?.themes.first else {
                     fatalError("Programmer error")
                 }
                 reqTheme = defaultTheme
@@ -153,7 +153,7 @@ extension FTThemesLibrary {
                 fatalError("Programmer error")
             }
             let dataSource = FTBasicTemplatesDataSource.shared
-            var reqVariants = dataSource.getDefaultVariants()
+            let reqVariants = dataSource.getDefaultVariants()
             paperTheme.customvariants = reqVariants
             return paperTheme
         }

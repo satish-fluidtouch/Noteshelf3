@@ -14,17 +14,19 @@ class FTShelfAudio: Identifiable {
     let page: Int
     let audioTitle: String
     let duration: String
+    let dateAndTime: String
     weak var document: FTDocumentItemProtocol?
 
     var title: String {
         document?.displayTitle ?? ""
     }
 
-    init(audioTitle: String, duration: String, page: Int, document: FTDocumentItemProtocol?) {
+    init(audioTitle: String, duration: String, page: Int, document: FTDocumentItemProtocol?, dateAndTime: String) {
         self.page = page
         self.document = document
         self.audioTitle = audioTitle
         self.duration = duration
+        self.dateAndTime = dateAndTime
     }
 
     var isProtected: Bool {

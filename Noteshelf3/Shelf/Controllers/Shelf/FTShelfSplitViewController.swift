@@ -120,7 +120,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
         self.sideMenuController = primaryViewController
         self.setViewController(primaryViewController, for: UISplitViewController.Column.primary)
-        setOverrideTraitCollection(self.traitCollection, forChild: primaryViewController)
         let dropInteraction = UIDropInteraction(delegate: self)
         self.view.addInteraction(dropInteraction)
         /*if UIDevice.current.userInterfaceIdiom == .phone {
@@ -314,10 +313,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
                 completionHandler?(nil, false)
             }
         }
-    }
-
-    override func overrideTraitCollection(forChild childViewController: UIViewController) -> UITraitCollection? {
-        return self.traitCollection
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
