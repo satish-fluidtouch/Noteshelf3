@@ -18,7 +18,9 @@ extension FTPageViewController {
 
         if let selectedText = self.writingView?.selectedPDFString(), !selectedText.isEmpty {
             self.writingView?.selectedTextRange = nil;
-            self.generateOpenAIContentFor(annotations: annotationsToConsider,pdfContent: selectedText);
+            self.generateOpenAIContentFor(annotations: annotationsToConsider
+                                          ,pdfContent: selectedText
+                                          ,isFullPage: false);
             return;
         }
         
@@ -28,19 +30,25 @@ extension FTPageViewController {
             self.lassoSelectionView?.finalizeMove();
             shouldReadPDFContent = annotationsToConsider.isEmpty;
         }
+        let isFullPage = annotationsToConsider.isEmpty;
         annotationsToConsider = annotationsToConsider.isEmpty ? page.annotations() : annotationsToConsider
         
         var pdfContent = "";
         if !page.templateInfo.isTemplate
             , shouldReadPDFContent
+            , page.hasPDFText()
             , let pdfString = page.pdfPageRef?.string?.openAITrim()
             ,!pdfString.isEmpty {
             pdfContent = pdfString;
         }
-        self.generateOpenAIContentFor(annotations: annotationsToConsider,pdfContent: pdfContent);
+        self.generateOpenAIContentFor(annotations: annotationsToConsider
+                                      ,pdfContent: pdfContent
+                                      ,isFullPage: isFullPage);
     }
     
-    @objc private func generateOpenAIContentFor(annotations : [FTAnnotation],pdfContent: String = "") {
+    @objc private func generateOpenAIContentFor(annotations : [FTAnnotation]
+                                                ,pdfContent: String
+                                                ,isFullPage: Bool) {
         var annotationsToConsider = [FTAnnotation]();
         
         let pageContent = FTPageContent();
@@ -60,15 +68,29 @@ extension FTPageViewController {
             self.showNoteshelfAIController(pageContent);
         }
         else {
+            let isPremium = FTIAPManager.shared.premiumUser.isPremiumUser;
+            let pageLastUpdated = self.pdfPage?.lastUpdated;
+
+            if isPremium,isFullPage, let recognizedString = self.recognizedString() {
+                pageContent.writtenContent = recognizedString;
+                self.showNoteshelfAIController(pageContent);
+                return;
+            }
+            
             let canvasSize = self.pdfPage?.pdfPageRect.size ?? CGSize.zero;
             let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.delegate ?? self, withText: NSLocalizedString("Indexing", comment: "Indexing"))
-            let isPremium = FTIAPManager.shared.premiumUser.isPremiumUser;
+            
             DispatchQueue.global().async { [weak self] in
                 if let weakSelf  = self {
                     let lang: String;
                     let recognitionProcessor: FTRecognitionProcessor;
                     if isPremium {
-                        lang = FTConvertToTextViewModel.convertPreferredLanguage;
+                        if let curLang = FTLanguageResourceManager.shared.currentLanguageCode, curLang != languageCodeNone {
+                            lang = curLang;
+                        }
+                        else {
+                            lang = FTConvertToTextViewModel.convertPreferredLanguage;
+                        }
                         recognitionProcessor = FTRecognitionTaskProcessor(with: lang)
                     }
                     else {
@@ -88,6 +110,10 @@ extension FTPageViewController {
                                 return
                             }
                             let text = recogInfo.recognisedString.openAITrim();
+                            if isPremium, isFullPage, let lastUpdated = pageLastUpdated {
+                                recogInfo.lastUpdated = lastUpdated;
+                                self?.pdfPage?.recognitionInfo = recogInfo;
+                            }
                             if !text.isEmpty {
                                 pageContent.writtenContent = text;
                             }
@@ -104,6 +130,18 @@ extension FTPageViewController {
         FTNoteshelfAIViewController.showNoteshelfAI(from: self
                                                     , content: content
                                                     , delegate: self);
+    }
+    
+    private func recognizedString() -> String? {
+        guard let recognitionInfo = self.pdfPage?.recognitionInfo
+                ,let lastUpdated = self.pdfPage?.lastUpdated else {
+            return nil;
+        }
+        if recognitionInfo.languageCode == FTLanguageResourceManager.shared.currentLanguageCode
+            , recognitionInfo.lastUpdated.doubleValue == lastUpdated.doubleValue {
+            return recognitionInfo.recognisedString;
+        }
+        return nil;
     }
 }
 

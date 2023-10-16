@@ -71,23 +71,41 @@ class FTSafeAreazView: UIView {
 }
 
 class FTPageContent: NSObject {
-    var writtenContent: String = "";
-    var pdfContent: String = "";
-    var textContent: String = "";
+    var writtenContent: String = "" {
+        didSet {
+            let trimmedText = writtenContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+            if writtenContent != trimmedText {
+                writtenContent = trimmedText;
+            }
+        }
+    }
+    var pdfContent: String = "" {
+        didSet {
+            let trimmedText = pdfContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+            if pdfContent != trimmedText {
+                pdfContent = trimmedText;
+            }
+        }
+    }
+    var textContent: String = "" {
+        didSet {
+            let trimmedText = textContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+            if textContent != trimmedText {
+                textContent = trimmedText;
+            }
+        }
+    }
     
     var content: String {
         var contents = [String]();
-        let pdfContent = pdfContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
         if !pdfContent.isEmpty {
             contents.append(pdfContent)
         }
-
-        let textContent = textContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        
         if !textContent.isEmpty {
             contents.append(textContent)
         }
-
-        let writtenContent = writtenContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+        
         if !writtenContent.isEmpty {
             contents.append(writtenContent)
         }
@@ -96,12 +114,10 @@ class FTPageContent: NSObject {
     
     var nonPDFContent: String {
         var contents = [String]();
-        let textContent = textContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
         if !textContent.isEmpty {
             contents.append(textContent)
         }
 
-        let writtenContent = writtenContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
         if !writtenContent.isEmpty {
             contents.append(writtenContent)
         }
