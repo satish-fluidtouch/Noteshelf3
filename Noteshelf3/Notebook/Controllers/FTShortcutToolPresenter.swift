@@ -300,6 +300,9 @@ extension FTShortcutToolPresenter {
         guard let frame = self.parentVC?.view.frame else {
             return
         }
+#if targetEnvironment(macCatalyst)
+        self.toolbarOffset = offset
+#else
         if UIDevice().isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
             var extraOffset: CGFloat = 0.0
             if UIDevice.current.isPhone() {
@@ -314,6 +317,7 @@ extension FTShortcutToolPresenter {
         } else {
             self.toolbarOffset = FTToolbarConfig.Height.regular + offset
         }
+#endif
     }
 
     func shortcutViewCenter(for placement: FTShortcutPlacement, size: CGSize) -> CGPoint {

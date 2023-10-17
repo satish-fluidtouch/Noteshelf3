@@ -18,8 +18,8 @@ extension FTGlobalSearchController {
             let item =  FTRecentSearchedItem(type: .tag, name: tagText)
             items.append(item)
         }
-        if !self.searchKey.isEmpty {
-            let recentTextItem = FTRecentSearchedItem(type: .text, name: self.searchKey)
+        if !searchInputInfo.textKey.isEmpty {
+            let recentTextItem = FTRecentSearchedItem(type: .text, name: searchInputInfo.textKey)
             items.append(recentTextItem)
         }
         FTRecentSearchStorage.shared.addNewSearchItem(items)
@@ -67,15 +67,15 @@ extension FTGlobalSearchController: UITableViewDataSource, UITableViewDelegate {
         let searchbar = self.searchController.searchBar
         if !searchableText.isEmpty {
             searchbar.searchTextField.text = searchableText
-            self.searchKey = searchableText
+            self.searchInputInfo.textKey = searchableText
         }
      // textFieldDidChangeSelection(will not be called when we set text programatically)
         if (UIDevice.current.isIphone() || UIDevice.current.isMac()) && (!searchbar.searchTextField.isFirstResponder) {
-            self.updateUICondictionally(with: self.searchKey)
+            self.updateUICondictionally(with: searchInputInfo.textKey)
         }
 #if targetEnvironment(macCatalyst)
         if let toolbar = self.view.toolbar as? FTShelfToolbar {
-            toolbar.updateSearchText(self.searchKey)
+            toolbar.updateSearchText(searchInputInfo.textKey)
         }
 #endif
         self.isRecentSelected = false

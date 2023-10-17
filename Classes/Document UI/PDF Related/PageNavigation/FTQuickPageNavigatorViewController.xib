@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad10_2" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -13,27 +14,25 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTQuickPageNavigatorViewController" customModule="NS2_Beta" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FTQuickPageNavigatorViewController" customModule="NS3_Beta" customModuleProvider="target">
             <connections>
                 <outlet property="pageInfoContainer" destination="eMY-8A-p7M" id="6IA-qm-sJi"/>
                 <outlet property="pageInfoLabel" destination="ofx-Vi-8WX" id="twm-3N-yIc"/>
                 <outlet property="pageSlider" destination="2vO-5O-sZQ" id="Cc1-2T-imL"/>
                 <outlet property="pageTipView" destination="gJp-gx-V9M" id="vXh-6W-TV0"/>
                 <outlet property="thumbnailImageView" destination="LxG-eJ-oXN" id="sUW-zo-leX"/>
-                <outlet property="tipImageView" destination="BfV-sF-DKS" id="a3q-kC-3Jj"/>
-                <outlet property="tipImageView_Blue" destination="3o6-uQ-pzu" id="z22-vp-KZ7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="FTNavigatorTouchByPassView" customModule="NS2_Beta" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="810" height="200"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT" customClass="FTNavigatorTouchByPassView" customModule="NS3_Beta" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="810" height="209"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Oq-gD-HTx">
-                    <rect key="frame" x="0.0" y="0.0" width="810" height="200"/>
+                    <rect key="frame" x="0.0" y="20" width="810" height="189"/>
                     <subviews>
-                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="3500" translatesAutoresizingMaskIntoConstraints="NO" id="2vO-5O-sZQ" customClass="FTPageSlider" customModule="NS2_Beta" customModuleProvider="target">
+                        <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="3500" translatesAutoresizingMaskIntoConstraints="NO" id="2vO-5O-sZQ" customClass="FTPageSlider" customModule="NS3_Beta" customModuleProvider="target">
                             <rect key="frame" x="16" y="132" width="732" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <connections>
@@ -53,16 +52,6 @@
                                     <rect key="frame" x="0.0" y="133" width="100" height="36"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pagenumbertip" translatesAutoresizingMaskIntoConstraints="NO" id="BfV-sF-DKS">
-                                            <rect key="frame" x="6" y="-5" width="88" height="69"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pagenumbertip_blue" translatesAutoresizingMaskIntoConstraints="NO" id="3o6-uQ-pzu" userLabel="pagenumbertip_blue">
-                                            <rect key="frame" x="6" y="-5" width="88" height="69"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="134/345" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofx-Vi-8WX">
                                             <rect key="frame" x="-10" y="0.0" width="120" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -72,10 +61,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" red="0.27843137254901962" green="0.27843137254901962" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="4"/>
+                                            <integer key="value" value="6"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
@@ -86,7 +75,8 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="1Oq-gD-HTx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="C4u-XT-sf8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1Oq-gD-HTx" secondAttribute="bottom" id="PE5-PA-XB1"/>
@@ -94,16 +84,16 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1Oq-gD-HTx" secondAttribute="trailing" id="lOu-SS-6zW"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <connections>
                 <outlet property="contentView" destination="1Oq-gD-HTx" id="T1d-Na-05Q"/>
                 <outlet property="sliderView" destination="2vO-5O-sZQ" id="2ea-mm-Rmf"/>
             </connections>
-            <point key="canvasLocation" x="186.66666666666666" y="141.66666666666666"/>
+            <point key="canvasLocation" x="186.66666666666666" y="139.16666666666666"/>
         </view>
     </objects>
     <resources>
-        <image name="pagenumbertip" width="88" height="69.5"/>
-        <image name="pagenumbertip_blue" width="88" height="69.5"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

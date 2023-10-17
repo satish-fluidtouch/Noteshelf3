@@ -130,14 +130,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
 
-    func showSearchResultCollection(_ collection: FTShelfItemCollection) {
-        self.saveLastSelectedCollection(collection)
-        self.shelfItemCollection = collection
-        self.sideMenuController?.selectSideMenuCollection(collection)
-        let categoryVc = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
-        self.globalSearchController?.navigationController?.pushViewController(categoryVc, animated: true)
-    }
-
     func openTemplates() {
         if let detailController = self.detailController(), detailController.isKind(of: FTStoreContainerViewController.self) {
             self.showDetailViewController(detailController, sender: self)
@@ -166,7 +158,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         self.exitFromGlobalSearch()
     }
 
-    private func detailController() -> UIViewController? {
+    func detailController() -> UIViewController? {
         if let detailController = self.viewController(for: .secondary) as? UINavigationController, let controller = detailController.viewControllers.first {
             return controller
         }
@@ -220,6 +212,9 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         } else {
             return getTemplatesVC() // templates
         }
+    }
+    func updateSidebarCollections(){
+        self.sideMenuController?.updateSideMenuItemsCollections()
     }
  }
 
