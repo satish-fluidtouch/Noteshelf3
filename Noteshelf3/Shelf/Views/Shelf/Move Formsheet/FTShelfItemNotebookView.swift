@@ -11,7 +11,7 @@ import SwiftUI
 struct FTShelfItemNotebookView: View {
     var isLastItemInList: Bool = false
     @ObservedObject var notebookItem: FTShelfNotebookItem
-    @State var defaultCoverImage: UIImage? = UIImage(named: "defaultNoCover")
+    @State var defaultCoverImage: UIImage? = UIImage(named: "shelfDefaultNoCover")
     @EnvironmentObject var viewModel: FTShelfItemsViewModel
     @Environment(\.colorScheme) var colorScheme
 

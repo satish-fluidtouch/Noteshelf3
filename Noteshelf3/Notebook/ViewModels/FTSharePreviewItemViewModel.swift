@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 class FTSharePreviewItemViewModel: NSObject, ObservableObject, Identifiable {
-    @Published var coverImage: UIImage? = UIImage(named: "defaultNoCover")
+    @Published var coverImage: UIImage? = UIImage(named: "shelfDefaultNoCover")
     func fetchThumbnailsForShelfItem(_ shelfItem:FTShelfItemProtocol) {
         fatalError("Chlid class need to override this method.")
     }

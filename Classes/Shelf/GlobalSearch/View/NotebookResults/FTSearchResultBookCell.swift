@@ -128,7 +128,7 @@ class FTSearchResultBookCell: FTTraitCollectionViewCell, FTShelfItemCellProgress
             self.stopObservingProgressUpdates()
             self.shelfItem = item
             self.startObservingProgressUpdates()
-            self.coverImageView.image = UIImage(named: "defaultNoCover")
+            self.coverImageView.image = UIImage(named: "shelfDefaultNoCover")
             self.shadowImageView?.image = nil
             self.coverImageView?.layer.cornerRadius = 0.0
             self.configureView(item: item)
