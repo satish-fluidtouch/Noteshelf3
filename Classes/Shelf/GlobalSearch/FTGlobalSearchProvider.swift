@@ -33,7 +33,7 @@ class FTGlobalSearchProvider: NSObject {
         self.init()
 
         let options = FTFetchShelfItemOptions()
-        FTNoteshelfDocumentProvider.shared.fetchAllCollections(includeUnCategorized: true, onCompeltion: {[weak self] (shelfCategories) -> (Void) in
+        FTNoteshelfDocumentProvider.shared.fetchAllCollections( onCompeltion: {[weak self] (shelfCategories) -> (Void) in
             self?.allShelfCategories = shelfCategories
             FTNoteshelfDocumentProvider.shared.fetchAllShelfItems(option:options) {[weak self] (shelfItems) -> (Void) in
                 self?.allShelfItems = (FTNoteshelfDocumentProvider.shared as FTShelfItemSorting).sortItems(shelfItems, sortOrder: FTShelfSortOrder.byName)
@@ -63,7 +63,8 @@ class FTGlobalSearchProvider: NSObject {
             let options = FTFetchShelfItemOptions()
             let token = UUID().uuidString;
             self.currentProcessorToken = token;
-            FTNoteshelfDocumentProvider.shared.fetchShelfItems(forCollections: shelfCategories, option: options, parent: nil) { (shelfItems) in
+
+            FTNoteshelfDocumentProvider.shared.fetchShelfItems(forCollections: shelfCategories, option: options, parent: nil) { [self] (shelfItems) in
                 let nonNs2Books = shelfItems.filter { !$0.URL.isNS2Book }
                 if token == self.currentProcessorToken {
                     fetchResults(items: nonNs2Books)
@@ -72,8 +73,13 @@ class FTGlobalSearchProvider: NSObject {
         }
         
         func fetchResults(items: [FTShelfItemProtocol]) {
+            guard let searchProcessor = self.searchProcessor else {
+                onCompletion?(currentToken);
+                return;
+            }
+            
             self.searchProcessor?.setDataToProcess(shelfCategories: shelfCategories, shelfItems: items)
-            currentToken = self.searchProcessor!.startProcessing()
+            currentToken = searchProcessor.startProcessing()
             self.searchProgress = self.searchProcessor?.progress
             
             self.observer = self.searchProgress?.observe(\.fractionCompleted,

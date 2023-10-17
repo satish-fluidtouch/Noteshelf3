@@ -25,11 +25,3 @@ struct FTCoverStyleVariantConfig {
     let cornerRadiusUnSelected: CGFloat = 16.0
     let borderLayerId = "Border"
 }
-
-struct FTCoverStyleConfig {
-    let borderWidthSelected: CGFloat = 6.0
-    let borderLayerId = "Border"
-    let borderColor = UIColor.appColor(.accent).cgColor
-    let leftRadius: CGFloat = 4.0
-    let rightRadius: CGFloat = 10.0
-}

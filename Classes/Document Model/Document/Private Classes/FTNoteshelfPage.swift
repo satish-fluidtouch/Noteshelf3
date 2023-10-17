@@ -1307,6 +1307,10 @@ extension FTNoteshelfPage: FTThumbnailable {
 
 extension FTNoteshelfPage {
     func hasPDFText() -> Bool {
+        if FTUserDefaults.isInSafeMode() {
+            return false
+        }
+
         if self.hasContents == .unknown
             , let templateURL = self.templateFileItem()?.fileItemURL,
             let pdfDoc = PDFDocument.init(url: templateURL) {

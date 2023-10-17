@@ -75,7 +75,7 @@ struct FTNewNotebook {
             static let bottomRight: CGFloat = 14
         }
         struct NoCoverRadius {
-            static let allCorners: CGFloat = 14
+            static let allCorners: CGFloat = 9.0
         }
     }
 }
