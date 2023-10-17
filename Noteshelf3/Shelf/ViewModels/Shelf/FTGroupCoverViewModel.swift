@@ -18,7 +18,7 @@ class FTGroupCoverViewModel: ObservableObject {
             }
         }
     }
-    var coverImage: UIImage? = UIImage(named: "shelfDefaultNoCover")
+    var coverImage: UIImage? = UIImage.shelfDefaultNoCoverImage
     @Published var groupNotebooks: [FTShelfItemViewModel] = []
     var groupCoverProperties:   FTShelfItemCoverViewProperties = .large
     private var cancellables = [AnyCancellable]()

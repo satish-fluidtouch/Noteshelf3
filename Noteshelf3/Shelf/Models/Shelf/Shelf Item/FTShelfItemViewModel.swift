@@ -67,7 +67,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     @Published var isBackupOn: Bool = false
     @Published var isNotDownloaded = false
     @Published var isFavorited: Bool = false
-    @Published var coverImage = UIImage(named: "shelfDefaultNoCover")!
+    @Published var coverImage = UIImage.shelfDefaultNoCoverImage
     @Published var isLoadingNotebook: Bool = false
     @Published var isDownloadingNotebook: Bool = false
     @Published var isSelected: Bool = false

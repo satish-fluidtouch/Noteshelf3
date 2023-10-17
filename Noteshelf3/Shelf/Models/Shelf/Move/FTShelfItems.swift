@@ -64,7 +64,7 @@ class FTShelfNotebookItem: FTShelfItems {
         if let shelfItemProtocol = notebook {
             token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItemProtocol, onCompletion: { [weak self](image, imageToken) in
                 if token == imageToken {
-                    self?.coverImage = (nil == image ? UIImage(named: "shelfDefaultNoCover") : image)
+                    self?.coverImage = (nil == image ? UIImage.shelfDefaultNoCoverImage : image)
                     completionhandler(self?.coverImage)
                 }
             })

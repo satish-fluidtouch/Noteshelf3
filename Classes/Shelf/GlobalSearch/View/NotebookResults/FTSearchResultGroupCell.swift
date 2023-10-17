@@ -201,7 +201,7 @@ private extension FTSearchResultGroupCell {
             group.enter()
 
             var token: String?
-            var reqImg = UIImage(named: "shelfDefaultNoCover")
+            var reqImg = UIImage.shelfDefaultNoCoverImage
             token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem) { [weak self] (image, imageToken) in
                 if token == imageToken, let image {
                     reqImg = image
