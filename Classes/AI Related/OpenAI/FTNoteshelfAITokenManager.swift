@@ -42,10 +42,14 @@ class FTNoteshelfAITokenManager: NSObject,ObservableObject {
     }
     
     var maxAllowedTokens: Int {
+#if DEBUG
+        return 15;
+#else
         if FTIAPManager.shared.premiumUser.isPremiumUser {
             return 100;
         }
         return 30;
+#endif
     }
     
     func markAsConsumed() {

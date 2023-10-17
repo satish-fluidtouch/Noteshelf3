@@ -18,5 +18,4 @@
 
 "noteshelf.ai.cleanupContent" = "%@ correct grammar and spelling with minimum changes in the text provided. Generate response in html format. Keep headings if they exist. If the phrase is repeated, treat first repeated phrase as heading. In case of meeting minutes Keep the meeting minutes in proper format. Give response in html. Do not add or remove anything. Keep headings if they exist. Do not write style.";
 
-"noteshelf.ai.commandSuffix" = "Only give what is requested no other lines please.If you want to give points use ordered lists. Please do not mention html word in your response.";
 "noteshelf.ai.commandLanguageSuffix" = "Generate response in %@";

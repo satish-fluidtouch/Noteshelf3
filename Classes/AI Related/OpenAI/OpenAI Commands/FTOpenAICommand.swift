@@ -8,11 +8,6 @@
 import UIKit
 
 private extension String  {
-    var appendingAICommandSuffix: String {
-        let stringToReturn =  self.appending("noteshelf.ai.commandSuffix".aiCommandString);
-        return stringToReturn.appendingAILangugaeResponse;
-    }
-    
     var appendingAILangugaeResponse: String {
         return self.appendingFormat("noteshelf.ai.commandLanguageSuffix".aiCommandString, FTUtils.currentLanguageResponseCode());
     }

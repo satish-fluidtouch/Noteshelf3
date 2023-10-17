@@ -168,6 +168,9 @@ class FTNoteshelfAITextViewViewController: UIViewController {
             items(menuItems)
         }
         
+        self.primaryActionButton?.addTarget(self, action: #selector(self.primaryButtonPressAction(_:)), for: .touchUpInside);
+        self.secondaryActionButton?.addTarget(self, action: #selector(self.secondaryButtonPressAction(_:)), for: .touchUpInside);
+        
         self.moreOptionsButton?.menu = UIMenu(children: [menuItem]);
         self.moreOptionsButton?.showsMenuAsPrimaryAction = true;
         self.updateButtonStates();
@@ -180,17 +183,11 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     private func updateButtonStates() {
         self.moreOptionsButton?.setTitle("noteshelf.ai.credit.moreOptions".aiLocalizedString, for: .normal);
         if self.supportsHandwriting {
-            self.primaryActionButton?.addTarget(self, action: #selector(self.addAsHandwrite(_:)), for: .touchUpInside);
             self.primaryActionButton?.setTitle(FTNotesehlfAIAction.addHandwriting.displayTitle(self.supportsHandwriting), for: .normal);
-
-            self.secondaryActionButton?.addTarget(self, action: #selector(self.addToPage(_:)), for: .touchUpInside);
             self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
         }
         else {
-            self.primaryActionButton?.addTarget(self, action: #selector(self.addToPage(_:)), for: .touchUpInside);
             self.primaryActionButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
-
-            self.secondaryActionButton?.addTarget(self, action: #selector(self.copyToClipboard(_:)), for: .touchUpInside);
             self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.copyToClipboard.displayTitle(self.supportsHandwriting), for: .normal);
         }
         self.primaryActionButton?.setTitleColor(UIColor.white, for: .normal)
@@ -205,25 +202,32 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         })
     }
     
-    @IBAction func copyToClipboard(_ sender:Any) {
+    @objc private func primaryButtonPressAction(_ sender: Any?) {
         let content = FTAIContent(with: self.textView?.attributedText);
-        self.delegate?.textViewController(self
-                                          , didSelectOption: .copyToClipboard
-                                          ,content: content);
+        if supportsHandwriting {
+            self.delegate?.textViewController(self
+                                              , didSelectOption: .addHandwriting
+                                              ,content: content);
+        }
+        else {
+            self.delegate?.textViewController(self
+                                              , didSelectOption: .addToPage
+                                              ,content: content);
+        }
     }
 
-    @IBAction func addToPage(_ sender:Any) {
+    @objc private func secondaryButtonPressAction(_ sender: Any?) {
         let content = FTAIContent(with: self.textView?.attributedText);
-        self.delegate?.textViewController(self
-                                          , didSelectOption: .addToPage
-                                          ,content: content);
-    }
-
-    @IBAction func addAsHandwrite(_ sender:Any?) {
-        let content = FTAIContent(with: self.textView?.attributedText);
-        self.delegate?.textViewController(self
-                                          , didSelectOption: .addHandwriting
-                                          ,content: content);
+        if supportsHandwriting {
+            self.delegate?.textViewController(self
+                                              , didSelectOption: .addToPage
+                                              ,content: content);
+        }
+        else {
+            self.delegate?.textViewController(self
+                                              , didSelectOption: .copyToClipboard
+                                              ,content: content);
+        }
     }
 
     func showPlaceHolder(_ string: String) {

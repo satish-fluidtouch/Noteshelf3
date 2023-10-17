@@ -251,6 +251,8 @@ class FTNoteshelfAIViewController: UIViewController {
         let allTokensConsumed = allTokensConsumed;
         self.setFooterMode(allTokensConsumed ? .sendFeedback : .noteshelfAiBeta);
 
+        let enteredText = self.textField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "";
+        
         self.creditsContainerViewHeightConstraint?.constant = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
         var bottomConstraint: CGFloat = (self.creditsContainerViewHeightConstraint?.constant ?? 0) * -1;
         if aiCommand == .none {
@@ -262,8 +264,9 @@ class FTNoteshelfAIViewController: UIViewController {
             (controller as? FTNoteshelfAIOptionsViewController)?.isAllTokensConsumend = allTokensConsumed;
         }
         else if aiCommand == .langTranslate
-                    ,languageCode.isEmpty
-                    , !(self.textField?.isFirstResponder ?? false) {
+                    , let txtField = self.textField
+                    , languageCode.isEmpty
+                    , !(txtField.isFirstResponder && !enteredText.isEmpty) {
             self.reset();
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAITranslateViewController.className);
             (controller as? FTNoteshelfAITranslateViewController)?.delegate = self;
@@ -288,7 +291,8 @@ class FTNoteshelfAIViewController: UIViewController {
             self.setOverrideTraitCollection(self.traitCollection, forChild: optCOntorller);
             self.optionsController = optCOntorller;
         }
-        if aiCommand == .generalQuestion || (aiCommand == .langTranslate && self.textField?.isFirstResponder ?? true) {
+        if aiCommand == .generalQuestion || (aiCommand == .langTranslate
+                                             && ((self.textField?.isFirstResponder ?? false) && !enteredText.isEmpty)) {
             self.textViewController?.showPlaceHolder("noteshelf.ai.pressEnterToSend".aiLocalizedString);
         }
         self.textField?.isUserInteractionEnabled = !allTokensConsumed;
