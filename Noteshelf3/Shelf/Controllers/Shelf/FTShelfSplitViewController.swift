@@ -200,10 +200,14 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func shelfWillMovetoBack() {
         currentShelfViewModel?.shelfWillMovetoBack()
+        sideMenuController?.disableUpdatesForSideBar()
     }
 
     func shelfViewDidMovedToFront(with item : FTDocumentItem) {
         currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
+        sideMenuController?.enableUpdatesForSideBar()
+        //Force refresh the UI to update with latest categories.
+        sideMenuController?.updateSideMenuItemsCollections()
     }
 
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?) {
