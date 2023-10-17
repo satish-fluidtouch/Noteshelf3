@@ -205,6 +205,7 @@ class FTTagItemModel {
                 if tags.count > 0 {
                     func generateShelfTagItem() {
                         let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: item, tags: tags)
+                        tagsBook.documentItem = item
                         totalTagItems.append(tagsBook)
                     }
                     if selectedTag.isEmpty {

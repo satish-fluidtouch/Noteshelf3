@@ -28,7 +28,12 @@ protocol FTShelfTagsAndBooksDelegate: AnyObject {
 
 class FTShelfTagsViewController: UIViewController {
     var viewModel: FTShelfTagsPageModel?
-    var tagItems = [FTShelfTagsItem]()
+    var tagItems = [FTShelfTagsItem]() 
+    {
+        didSet {
+            tagItems = tagItems.filter({$0.documentItem?.URL.isPinEnabledForDocument() == false})
+        }
+    }
     private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
     private var activityIndicator = UIActivityIndicatorView(style: .medium)
     var books = [FTShelfTagsItem]()
@@ -507,7 +512,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0, generateBooks().count > 0 {
+        if indexPath.section == 0, books.count > 0 {
             return CGSize(width: collectionView.frame.width, height: 250);
         }
         if indexPath.section == 1 {
@@ -643,6 +648,11 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
             }
         } else {
             self.tagItems = self.tagItems.filter { !$0.tags.isEmpty }
+        }
+        if let booksCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView.indexPathsForSelectedItems, viewState == .edit  {
+            for selectedItem in selectedBooks {
+                booksCell.collectionView.deselectItem(at: selectedItem, animated: false)
+            }
         }
         self.books = self.generateBooks()
         self.pages = self.generatePages()

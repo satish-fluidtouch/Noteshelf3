@@ -8,14 +8,14 @@
 
 import Foundation
 
-class FTDocumentPage: Decodable, Identifiable, Hashable {
+class FTCachedDocumentPage: Decodable, Identifiable, Hashable {
     var uuid: String
 
     public func hash(into hasher: inout Hasher) {
         return hasher.combine(uuid)
     }
 
-    public static func == (lhs: FTDocumentPage, rhs: FTDocumentPage) -> Bool {
+    public static func == (lhs: FTCachedDocumentPage, rhs: FTCachedDocumentPage) -> Bool {
         return lhs.uuid == rhs.uuid
     }
 
@@ -74,9 +74,9 @@ class FTDocumentPage: Decodable, Identifiable, Hashable {
     var isBookmarked: Bool
 }
 
-class FTDocumentPlist: Decodable {
-     var pages: [FTDocumentPage]
-    func pageFor(pageUUID: String) -> FTDocumentPage? {
+class FTCachedDocumentPlist: Decodable {
+     var pages: [FTCachedDocumentPage]
+    func pageFor(pageUUID: String) -> FTCachedDocumentPage? {
         if let index = self.pages.firstIndex(where: { $0.uuid == pageUUID }) {
             let page = self.pages[index]
             page.pageIndex = index

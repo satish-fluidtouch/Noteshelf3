@@ -32,7 +32,8 @@ private let cleanOnNextLaunch: Bool = false
 struct FTCacheFiles {
     static let cacheFolderName: String = "com.noteshelf.cache"
     static let cacheTagsPlist: String = "cacheTags.plist"
-    static let documentPlist: String = "Document.plist"
+    static let cacheDocumentPlist: String = "Document.plist"
+    static let cachePropertyPlist: String = "Metadata/Properties.plist"
 }
 
  class FTItemToCache {
@@ -226,18 +227,50 @@ extension FTDocumentCache {
         queue.async {
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
-                FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+                let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
+                FTCacheTagsProcessor.shared.cacheTagsForDocument(items: [itemToCache])
             } catch {
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
         }
     }
+
+    private func updateMetadataPlistWithRelativePathFor(documentId: String, docUrl: URL) {
+        let destinationURL = cachedLocation(for: documentId)
+        let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
+        if var propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
+            let relativePath = docUrl.relativePathWRTCollection()
+            propertiList.setObject(relativePath, forKey: "relativePath")
+            try? propertiList.writeUpdates(to: dest)
+        }
+    }
+
+    private func relativePathWRTCollectionFor(documentId: String) -> String? {
+        let destinationURL = cachedLocation(for: documentId)
+        let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
+        if var propertiList = FTFileItemPlist(url: dest, isDirectory: false), let relativePath = propertiList.object(forKey: "relativePath") as? String {
+            return relativePath
+        }
+        return nil
+    }
 }
 
 private extension FTDocumentCache {
     func cacheShelfItemIfRequired(url: URL, documentUUID: String) throws {
+
+        func updateMetadataPlistWithRelativePathFor(docUrl: URL, documentId: String) {
+            let destinationURL = cachedLocation(for: documentId)
+            let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
+            if var propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
+                let relativePath = docUrl.relativePathWRTCollection()
+                propertiList.setObject(relativePath, forKey: "relativePath")
+                try? propertiList.writeUpdates(to: dest)
+            }
+        }
+
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
+            updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
             cacheLog(.info, "Replace Ignored as already opened \(url.lastPathComponent)")
             throw FTCacheError.documentIsStillOpen
         }
@@ -247,6 +280,7 @@ private extension FTDocumentCache {
             do {
                 // Copy directly if the file doesn't exist at the cache location
                 try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
+                updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                 cacheLog(.success, "Copy", url.lastPathComponent)
             } catch {
                 cacheLog(.error, "Copy", error.localizedDescription, url.lastPathComponent)
@@ -264,12 +298,14 @@ private extension FTDocumentCache {
             if isLatestModified {
                 do {
                     try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
+                    updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                     cacheLog(.success, "Replace", url.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Replace", error.localizedDescription, url.lastPathComponent)
                     throw error
                 }
             } else {
+                updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                 cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
                 throw FTCacheError.cachingNotRequired
             }
@@ -281,7 +317,8 @@ private extension FTDocumentCache {
             guard let docUUID = doc.documentUUID, doc.isDownloaded else { continue }
 
             let destinationURL = cachedLocation(for: docUUID)
-            if fileManager.fileExists(atPath: destinationURL.path) {
+            let relativePath = self.relativePathWRTCollectionFor(documentId: docUUID)
+            if fileManager.fileExists(atPath: destinationURL.path) && (doc.URL.relativePathWRTCollection() == relativePath || relativePath == nil){
                 do {
                     FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
                     try fileManager.removeItem(at: destinationURL)

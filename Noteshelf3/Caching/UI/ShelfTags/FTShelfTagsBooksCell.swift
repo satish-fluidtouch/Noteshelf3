@@ -17,22 +17,28 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     var contextMenuSelectedIndexPath: IndexPath?
     weak var parentVC: UIViewController?
 
-    override class func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
+        initializeCollectionView()
+    }
 
+    private func initializeCollectionView() {
+        let layout = FTShelfPagesLayout()
+        layout.scrollDirection = .horizontal
+        self.collectionView.collectionViewLayout = layout
+        self.collectionView.allowsMultipleSelection = true
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     }
 
     func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState, parentVC: UIViewController) {
         self.books = books
         self.viewState = viewState
         self.parentVC = parentVC
-        let layout = FTShelfPagesLayout()
-        layout.scrollDirection = .horizontal
-        self.collectionView.collectionViewLayout = layout
-        self.collectionView.allowsMultipleSelection = true
+        
+        collectionView.frame = self.bounds
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
         let selection = collectionView.indexPathsForSelectedItems
         self.collectionView.reloadData()
         if books.count > 0, let items = selection {

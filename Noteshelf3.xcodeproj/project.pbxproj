@@ -725,7 +725,7 @@
 		BA50E0342959CB2B00CDC0FD /* FTShelfTagsPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474DFE2B291A5618006AE5BC /* FTShelfTagsPageModel.swift */; };
 		BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476991E4291BAE7A0066BB51 /* FTShelfPagesLayout.swift */; };
 		BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */; };
-		BA50E0382959CB3600CDC0FD /* FTDocumentPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207E291E52200066C429 /* FTDocumentPlist.swift */; };
+		BA50E0382959CB3600CDC0FD /* FTCachedDocumentPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207E291E52200066C429 /* FTCachedDocumentPlist.swift */; };
 		BA50E0392959CB3900CDC0FD /* FTDocumentPropertyPlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */; };
 		BA50E03A2959CB3C00CDC0FD /* FTCacheTagsProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */; };
 		BA50E03B2959CB3F00CDC0FD /* FTSidebarViewModel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */; };
@@ -2995,7 +2995,7 @@
 		47C7C439297E633600AE4648 /* FTShelfContentCompactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfContentCompactView.swift; sourceTree = "<group>"; };
 		47C7C43A297E633600AE4648 /* FTShelfCompactContentContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCompactContentContainerView.swift; sourceTree = "<group>"; };
 		47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsPlist.swift; sourceTree = "<group>"; };
-		47CA207E291E52200066C429 /* FTDocumentPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPlist.swift; sourceTree = "<group>"; };
+		47CA207E291E52200066C429 /* FTCachedDocumentPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCachedDocumentPlist.swift; sourceTree = "<group>"; };
 		47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTSidebarViewModel+Tags.swift"; sourceTree = "<group>"; };
 		47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsProcessor.swift; sourceTree = "<group>"; tabWidth = 4; };
 		47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsRepresentableView.swift; sourceTree = "<group>"; };
@@ -7233,7 +7233,7 @@
 				477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */,
 				47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */,
 				47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */,
-				47CA207E291E52200066C429 /* FTDocumentPlist.swift */,
+				47CA207E291E52200066C429 /* FTCachedDocumentPlist.swift */,
 				47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */,
 				4747C4242A962F0800B1AB59 /* FTAnalyticsConstants.swift */,
 			);
@@ -12698,7 +12698,7 @@
 				E7B9474D291244AE00BE4430 /* FTShareFormatHostingController.swift in Sources */,
 				BAF393D52859ADF00067CA9F /* FTNoInternetReusableView.swift in Sources */,
 				BAF393D62859ADF00067CA9F /* FTSlideInPresentAnimator.swift in Sources */,
-				BA50E0382959CB3600CDC0FD /* FTDocumentPlist.swift in Sources */,
+				BA50E0382959CB3600CDC0FD /* FTCachedDocumentPlist.swift in Sources */,
 				BAF393D72859ADF00067CA9F /* FTiOSShelfCategoryHeaderView.swift in Sources */,
 				BAF393D92859ADF00067CA9F /* FTDocumentErrorCodes.swift in Sources */,
 				4747C4092A95EC2A00B1AB59 /* FTAnalytics.swift in Sources */,

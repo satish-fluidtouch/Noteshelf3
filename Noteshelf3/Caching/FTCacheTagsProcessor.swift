@@ -15,9 +15,7 @@ enum FTTagsCacheError: Error {
     case documentNotDownloaded
     case documentPlistNotAvailable
     case tagsPlistNotAvailable
-
 }
-
 
 final class FTCacheTagsProcessor {
 
@@ -100,14 +98,14 @@ final class FTCacheTagsProcessor {
         return []
     }
 
-    func cachedDocumentPlistFor(documentUUID: String, completion: @escaping (FTDocumentPlist?, Error?) -> Void) {
+    func cachedDocumentPlistFor(documentUUID: String, completion: @escaping (FTCachedDocumentPlist?, Error?) -> Void) {
         let cachedLocation = FTDocumentCache.shared.cachedLocation(for: documentUUID)
-        let destinationURL = cachedLocation.appendingPathComponent(FTCacheFiles.documentPlist)
+        let destinationURL = cachedLocation.appendingPathComponent(FTCacheFiles.cacheDocumentPlist)
         if fileManager.fileExists(atPath: destinationURL.path) {
             do {
                 let data = try Data(contentsOf: destinationURL)
                 let decoder = PropertyListDecoder()
-                let documentPlist = try decoder.decode(FTDocumentPlist
+                let documentPlist = try decoder.decode(FTCachedDocumentPlist
                     .self, from: data)
                 completion(documentPlist, nil)
             } catch let error {
@@ -118,10 +116,6 @@ final class FTCacheTagsProcessor {
         }
     }
 
-    private func cachedTagsPlist() -> FTCacheTagsPlist? {
-        return self.readTagsInfo();
-    }
-    
     private func cacheTagsIntoPlist(_ tags: [String]
                                      , for documentUUID: String
                                      , tagsplist cachedTagsPlist: FTCacheTagsPlist) -> (refreshSideMenu: Bool,refreshShelf: Bool) {
@@ -170,15 +164,19 @@ final class FTCacheTagsProcessor {
     }
     
     private var lock = NSRecursiveLock();
-    private func saveTagsInfo(_ plistTags: [String:[String]]) throws {
+    private func saveTagsInfo(_ plistTags: [String:[String]]) {
         self.lock.lock();
         defer {
             self.lock.unlock();
         }
         let destinationURL = cachedPageTagsLocation()
-        let data1 = try JSONEncoder().encode(plistTags)
-        if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
-            dictionary.write(toFile: destinationURL.path, atomically: false)
+        do {
+            let data1 = try JSONEncoder().encode(plistTags)
+            if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
+                dictionary.write(toFile: destinationURL.path, atomically: false)
+            }
+        } catch {
+            cacheLog(.error, error)
         }
     }
     
@@ -196,7 +194,7 @@ final class FTCacheTagsProcessor {
                 return cacheTagsPlist
             }
             catch {
-                
+                cacheLog(.error, error)
             }
         }
         return nil;
@@ -205,8 +203,7 @@ final class FTCacheTagsProcessor {
     func removeTagsFor(documentUUID: String) {
         FTTagsProvider.shared.removeDocumentId(docId: documentUUID)
 
-        if let cachedTagsPlist = cachedTagsPlist() {
-            let destinationURL = cachedPageTagsLocation()
+        if let cachedTagsPlist = readTagsInfo() {
             var plistTags = cachedTagsPlist.tags
             for key in plistTags.keys {
                 if var ids = plistTags[key] {
@@ -224,24 +221,16 @@ final class FTCacheTagsProcessor {
                     plistTags.remove(at: index)
                 }
             }
-            do {
-                let data1 = try JSONEncoder().encode(plistTags)
-                if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
-                    dictionary.write(toFile: destinationURL.path, atomically: false)
-                        runInMainThread {
-                            FTTagsProvider.shared.getAllTags(forceUpdate: true)
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-                        }
-                }
-            } catch {
-
+            saveTagsInfo(plistTags)
+            runInMainThread {
+                FTTagsProvider.shared.getAllTags(forceUpdate: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
             }
-
         }
     }
 
     func cacheTagsForDocument(items: [FTItemToCache]) {
-        if !items.isEmpty,let cachePlist = self.cachedTagsPlist() {
+        if !items.isEmpty,let cachePlist = self.readTagsInfo() {
             var shouldRefreshSideMenu = false;
             var shouldRefreshShelfTag = false;
             
@@ -260,8 +249,7 @@ final class FTCacheTagsProcessor {
                     }
             }
             
-            do {
-                try self.saveTagsInfo(cachePlist.tags);
+            self.saveTagsInfo(cachePlist.tags);
                 if shouldRefreshShelfTag || shouldRefreshSideMenu {
                     runInMainThread {
                         if shouldRefreshSideMenu {
@@ -273,65 +261,9 @@ final class FTCacheTagsProcessor {
                         }
                     }
                 }
-            } catch {
-            }
         }
     }
 
-    // Cache tags from Cache Document and Document pages
-    func cacheTagsForDocument(url: URL, documentUUID: String) {
-        self.cachedDocumentPlistFor(documentUUID: documentUUID, completion: { documentPlist, error in
-            if documentPlist != nil, let documentPlist, let cachePlist = self.cachedTagsPlist() {
-                let docTags = self.documentTagsFor(documentUUID: documentUUID)
-                let pages = NSSet(set: Set.init((documentPlist.pages)))
-                let pagesTags = self.tagsFor(pages)
-                let tags = Array(Set.init(docTags + pagesTags))
-                let filteredTags = tags.filter { $0.count > 0 }
-                _ = self.cacheTagsIntoPlist(filteredTags, for: documentUUID, tagsplist: cachePlist)
-            }
-        })
-    }
-
-    func deletTags(tags: [FTTagModel]) {
-        let destinationURL = cachedPageTagsLocation()
-
-        if let cacheTagsPlist = self.cachedTagsPlist() {
-            var plistTags = cacheTagsPlist.tags
-            for tag in tags {
-                if let index = plistTags.index(forKey: tag.text) {
-                    plistTags.remove(at: index)
-                }
-            }
-            do {
-                let data1 = try JSONEncoder().encode(plistTags)
-                if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
-                    dictionary.write(toFile: destinationURL.path, atomically: false)
-                }
-            } catch {
-
-            }
-        }
-    }
-
-    func renameTagInPlist(_ tag: String, with newTag: String) {
-        let destinationURL = cachedPageTagsLocation()
-        if let cacheTagsPlist = self.cachedTagsPlist() {
-            do {
-                var plistTags = cacheTagsPlist.tags
-                if let docIds = plistTags[tag] {
-                    plistTags.removeValue(forKey: tag)
-                    plistTags[newTag] = docIds
-                    
-                    let data1 = try JSONEncoder().encode(plistTags)
-                    if let dictionary = try JSONSerialization.jsonObject(with: data1, options: .mutableContainers) as? NSDictionary {
-                        dictionary.write(toFile: destinationURL.path, atomically: false)
-                    }
-                }
-            } catch {
-                
-            }
-        }
-    }
 }
 
 extension FTCacheTagsProcessor {
@@ -339,7 +271,7 @@ extension FTCacheTagsProcessor {
     func documentTagsFor(documentUUID: String?) -> [String] {
         if let docUUID = documentUUID {
             let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
-            let dest = destinationURL.appendingPathComponent("Metadata/Properties").appendingPathExtension("plist")
+            let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
             let propertiList = FTFileItemPlist(url: dest, isDirectory: false)
             if let docTags = propertiList?.object(forKey: "tags") as? [String] {
                 return Array(Set.init(docTags))
@@ -360,7 +292,7 @@ extension FTCacheTagsProcessor {
     func commonTagsFor(pages: NSSet) -> [String] {
         var commonTags: Set<String> = []
         for (index, pickedPage) in pages.enumerated() {
-            if let page = pickedPage as? FTDocumentPage {
+            if let page = pickedPage as? FTCachedDocumentPage {
                 commonTags = index == 0 ? Set.init(page.tags.map{$0}) : commonTags.intersection(Set.init(page.tags.map{$0}))
             } else if let page = pickedPage as? FTPageTagsProtocol {
                 commonTags = index == 0 ? Set.init(page.tags().map{$0}) : commonTags.intersection(Set.init(page.tags().map{$0}))
@@ -385,7 +317,7 @@ extension FTCacheTagsProcessor {
     private func insersectedPagesTags(pages: NSSet) -> [String] {
         var pagesTags: [String] = []
         pages.forEach { pickedPage in
-            if let page = pickedPage as? FTDocumentPage {
+            if let page = pickedPage as? FTCachedDocumentPage {
                 pagesTags += page.tags
             } else if let page = pickedPage as? FTPageTagsProtocol {
                 pagesTags += page.tags()

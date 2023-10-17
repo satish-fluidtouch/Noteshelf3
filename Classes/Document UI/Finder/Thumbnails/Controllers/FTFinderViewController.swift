@@ -1959,7 +1959,6 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
                 tagModel.updateTagForPages(documentItem: documentItem, pages: _pages) { [weak self] items in
                     guard let self = self else { return }
                     items.forEach { item in
-                        item.document = self.document as? FTNoteshelfDocument
                         if let page = _pages.first(where: {$0.uuid == item.pageUUID}) {
                             self.selectedTagItems[page.uuid] = item
                             (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))

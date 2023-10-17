@@ -29,7 +29,6 @@ enum FTShelfTagsItemType {
     var pageUUID: String?
     var pageIndex: Int = 0
     var pdfKitPageRect: CGRect?
-    weak var document: FTNoteshelfDocument?
     var type: FTShelfTagsItemType = .none
     var tags: [FTTagModel] = [FTTagModel]() {
         didSet {

@@ -312,7 +312,6 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
                 tagModel.updateTagForPages(documentItem: documentItem, pages: [page]) { [weak self] items in
                     guard let self = self else { return }
                     items.forEach { item in
-                        item.document = self.pdfDocument as? FTNoteshelfDocument
                         (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
                         selectedShelfTagItems[page.uuid] = item;
                         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)

@@ -75,9 +75,13 @@ struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentab
                 menuItems.forEach { group in
                     var actions = [UIAction]();
                     group.forEach { eachItem in
-                        let action1 = UIAction(title:eachItem.displayTitle,
+                        var actionType: UIMenuElement.Attributes = eachItem.isDestructiveOption ? .destructive : .standard
+                        if _shelfItem.isPinEnabled && eachItem == .tags {
+                            actionType = .disabled
+                        }
+                        var action1 = UIAction(title:eachItem.displayTitle,
                                                image: UIImage(icon: eachItem.icon),
-                                               attributes: eachItem.isDestructiveOption ? .destructive : .standard) { [weak self] _ in
+                                               attributes: actionType) { [weak self] _ in
                             guard let strongSelf = self else {
                                 return;
                             }
