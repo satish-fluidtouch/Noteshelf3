@@ -20,6 +20,7 @@ class FTNotebookTitleSearchProcessor: NSObject, FTSearchProcessor {
 
     private lazy var searchOperationQueue: OperationQueue = {
         let queue = OperationQueue()
+        queue.name = "com.ft.ns3.search.title"
         queue.maxConcurrentOperationCount = 1
         return queue
     }()

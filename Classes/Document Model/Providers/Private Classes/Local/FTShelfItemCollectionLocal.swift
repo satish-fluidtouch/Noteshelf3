@@ -716,7 +716,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
             return groupItem;
         }
         
-        if let first = fileURL.pathRelativeTo(self.URL).components(separatedBy: "/").first {
+        if let first = fileURL.pathRelativeTo(self.URL).components(separatedBy: "/").first, first.hasSuffix(FTFileExtension.group) { // Ensuring url's first component has a group extension
             if let item = self.groupItemWithName(title: first) {
                 itemToReturn = item
             }

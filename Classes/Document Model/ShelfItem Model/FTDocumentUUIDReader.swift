@@ -73,8 +73,11 @@ private class FTDocumentUUIDReaderOperation: Operation
                                             error: &error,
                                             byAccessor:
             { (url) in
-                if let dictionary = NSDictionary.init(contentsOf: url) {
-                    documentUUID = dictionary[DOCUMENT_ID_KEY] as? String;
+                if let dictionary = NSDictionary(contentsOf: url),
+                   let documentUUID = dictionary[DOCUMENT_ID_KEY] as? String {
+                    // Storing document UUID for older notebooks, once it is retrieved.
+                    let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: documentUUID)
+                    try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
                 }
                 self.didCompleteTask(documentUUID);
         });

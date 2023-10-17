@@ -455,6 +455,16 @@ public class FTCreateNotebookViewController: UIViewController {
             self.containerView?.setNeedsLayout()
         }
     }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            if let cover = self.newNotebookDetails?.selectedCoverTheme {
+                self.updateCoverImage(cover.themeThumbnail())
+            }
+        }
+    }
+
     private func getPaperViewFrame() -> CGRect {
         self.view.layoutIfNeeded()
         var rect: CGRect = .zero

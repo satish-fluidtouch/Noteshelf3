@@ -10,6 +10,7 @@ import Foundation
 import StoreKit
 import FTCommon
 import FTTemplatesStore
+import Combine
 
 public typealias ProductIdentifier = String
 
@@ -18,6 +19,10 @@ extension FTPremiumUser {
         self.updateNoOfBooks(nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemAdded, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.shelfItemDidAddedRemoved(_:)), name: .shelfItemRemoved, object: nil);
+    }
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .shelfItemAdded, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .shelfItemRemoved, object: nil)
     }
     
     @objc private func shelfItemDidAddedRemoved(_ notification: Notification?) {
@@ -34,6 +39,10 @@ extension FTPremiumUser {
     
     func updateNoOfBooks(_ onCompletion: (() -> ())?) {
         guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
+            onCompletion?();
+            return;
+        }
+        if FTNoteshelfDocumentProvider.shared.isContentMovingInProgress() {
             onCompletion?();
             return;
         }
@@ -81,6 +90,7 @@ class FTIAPManager: NSObject {
     var onReceiveProductsHandler: ((Result<[SKProduct], FTIAPHelperError>) -> Void)?
     var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
     var totalRestoredPurchases = 0
+    private var premiumCancellableEvent: AnyCancellable?;
     
     private override init() {
         super.init()
@@ -91,7 +101,13 @@ class FTIAPManager: NSObject {
     func config() {
         premiumUser.isPremiumUser = FTIAPurchaseHelper.shared.isPremiumUser;
         if !premiumUser.isPremiumUser {
-            premiumUser.addObsrversIfNeeded();
+            premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
+                if isPremium {
+                    self?.premiumUser.removeObservers()
+                } else {
+                    self?.premiumUser.addObsrversIfNeeded();
+                }
+            }
         }
     }
 }

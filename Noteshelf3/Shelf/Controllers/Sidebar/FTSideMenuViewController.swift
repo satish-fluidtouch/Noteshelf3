@@ -100,10 +100,20 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         }
     }
 
-    func selectSideMenuCollection(_ collection: FTShelfItemCollection) {
+    func upateSideMenuCurrentCollection(_ collection: FTShelfItemCollection) {
         if self.viewModel.selectedShelfItemCollection?.uuid != collection.uuid {
             self.viewModel.selectedShelfItemCollection = collection
         }
+    }
+
+    func selectSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection) {
+        self.viewModel.selectSidebarItemWithCollection(shelfItemCollection)
+    }
+    func showSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
+        self.viewModel.showSidebarItemWithCollection(shelfItemCollection)
+    }
+    func updateSideMenuItemsCollections(){ // Use this method to force update sidebar's categories sections related collections
+        viewModel.updateUserCreatedCategories()
     }
 
     private func addOverlay() {

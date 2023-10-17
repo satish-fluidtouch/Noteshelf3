@@ -221,7 +221,7 @@ extension FTAudioAnnotation
 {
     private func uniqueFileName(for audioName: String) -> String
     {
-        var count = 1;
+        var count = 0;
         var newDocName = audioName;
         
         var nameExists = true;

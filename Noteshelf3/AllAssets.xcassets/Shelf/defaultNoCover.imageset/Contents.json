@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "defaultNoCover.pdf",
+      "filename" : "defaultNoCover_light.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "defaultNoCover_dark.png",
       "idiom" : "universal"
     }
   ],
