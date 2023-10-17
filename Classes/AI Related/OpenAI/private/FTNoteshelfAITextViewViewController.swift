@@ -26,12 +26,19 @@ class FTAIContent {
                 if let style = value as? NSParagraphStyle,style.hasBullet() {
                     let nsString = (mutableAttr.string as NSString);
                     var lineRange = nsString.lineRange(for: NSRange(location: NSMaxRange(_range), length: 0));
-                    while lineRange.location >= _range.location {
+                    while lineRange.location != NSNotFound,
+                          lineRange.location >= _range.location {
                         let str = mutableAttr.attributedSubstring(from: lineRange);
                         if str.string.hasPrefix("\t") {
                             mutableAttr.deleteCharacters(in: NSRange(location: lineRange.location, length: 1));
                         }
-                        lineRange = nsString.lineRange(for: NSRange(location: max(lineRange.location-1,0), length: 0));
+                        let prevlocation = lineRange.location - 1;
+                        if prevlocation < 0 {
+                            lineRange = NSRange(location: NSNotFound, length: 0);
+                        }
+                        else {
+                            lineRange = nsString.lineRange(for: NSRange(location: prevlocation, length: 0));
+                        }
                     }
                 }
             }
