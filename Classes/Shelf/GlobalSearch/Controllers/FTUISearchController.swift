@@ -83,12 +83,12 @@ final class FTUISearchBarHandler: NSObject {
             .compactMap { $0.object as? UITextField }
             .map { $0.text }
         let debouncedPublisher = textPublisher
-            .debounce(for: .seconds(0.2), scheduler: RunLoop.main)
+            .debounce(for: .seconds(0.3), scheduler: RunLoop.main)
             .removeDuplicates()
         debouncedPublisher
             .sink { [weak self] text in
-                if let keyWord = text {
-                    self?.delegate?.textFieldDidChangeSelection(key: keyWord)
+                if let text {
+                    self?.delegate?.textFieldDidChangeSelection(key: text)
                 }
             }
             .store(in: &cancellables)
