@@ -110,7 +110,7 @@ class FTNoteshelfAIButton: UIButton {
         if self.hasBorder {
             self.configuration?.baseForegroundColor = UIColor.appColor(.accent);
             self.layer.borderColor = UIColor.appColor(.accent).cgColor;
-            self.layer.borderWidth = 2;
+            self.layer.borderWidth = 1;
             self.backgroundColor = UIColor.clear;
         }
         else {
@@ -172,6 +172,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         self.secondaryActionButton?.addTarget(self, action: #selector(self.secondaryButtonPressAction(_:)), for: .touchUpInside);
         
         self.moreOptionsButton?.menu = UIMenu(children: [menuItem]);
+        self.moreOptionsButton?.titleLabel?.font = UIFont.appFont(for: .medium, with: 15);
         self.moreOptionsButton?.showsMenuAsPrimaryAction = true;
         self.updateButtonStates();
     }
@@ -181,16 +182,29 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
     
     private func updateButtonStates() {
-        self.moreOptionsButton?.setTitle("noteshelf.ai.credit.moreOptions".aiLocalizedString, for: .normal);
+        let primaryAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor.white
+            , .font : UIFont.appFont(for: .medium, with: 15)];
+
+        let secondaryAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor : UIColor.appColor(.accent)
+            , .font : UIFont.appFont(for: .medium, with: 15)];
+
+        var primaryTitle = FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting);
+        var secondaryTitle = FTNotesehlfAIAction.copyToClipboard.displayTitle(self.supportsHandwriting);
+        
         if self.supportsHandwriting {
-            self.primaryActionButton?.setTitle(FTNotesehlfAIAction.addHandwriting.displayTitle(self.supportsHandwriting), for: .normal);
-            self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
+            primaryTitle = FTNotesehlfAIAction.addHandwriting.displayTitle(self.supportsHandwriting);
+            secondaryTitle = FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting);
         }
-        else {
-            self.primaryActionButton?.setTitle(FTNotesehlfAIAction.addToPage.displayTitle(self.supportsHandwriting), for: .normal);
-            self.secondaryActionButton?.setTitle(FTNotesehlfAIAction.copyToClipboard.displayTitle(self.supportsHandwriting), for: .normal);
-        }
-        self.primaryActionButton?.setTitleColor(UIColor.white, for: .normal)
+        let primaryAttrTitle = NSAttributedString(string: primaryTitle,attributes: primaryAttributes);
+        let secondaryAttrTitle = NSAttributedString(string: secondaryTitle,attributes: secondaryAttributes);
+        
+        self.primaryActionButton?.setAttributedTitle(primaryAttrTitle, for: .normal);
+        self.secondaryActionButton?.setAttributedTitle(secondaryAttrTitle, for: .normal);
+        
+        let moreOptionAttr = NSAttributedString(string: "noteshelf.ai.credit.moreOptions".aiLocalizedString, attributes: secondaryAttributes);
+        self.moreOptionsButton?.setAttributedTitle(moreOptionAttr, for: .normal);
     }
         
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

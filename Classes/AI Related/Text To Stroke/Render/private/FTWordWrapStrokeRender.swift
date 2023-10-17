@@ -54,11 +54,11 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
                     currentLine = trimmedEntries.trimmed;
                     var bulletString: String = "";
                     if !bullet.isOrdered {
-                        if bulletList.count % 2 == 0 {
-                            bulletString = NSTextList(markerFormat: .hyphen, options: 0).marker(forItemNumber: 0);
+                        if bulletList.count % 2 == 0 {                            
+                            bulletString = FTTextList.textListWithMarkerFormat("{hyphen}", option: 0).marker(forItemNumber: 0);
                         }
                         else {
-                            bulletString = NSTextList(markerFormat: .disc, options: 0).marker(forItemNumber: 0);
+                            bulletString = FTTextList.textListWithMarkerFormat("{disc}", option: 0).marker(forItemNumber: 0);
                         }
                     }
                     else {
