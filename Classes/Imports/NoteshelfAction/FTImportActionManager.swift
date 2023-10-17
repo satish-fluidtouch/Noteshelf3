@@ -25,7 +25,9 @@ extension Notification.Name {
     
     override private init() {
         super.init()
-        
+        downloadQueue.name = "com.ft.ns3.download"
+        importQueue.name = "com.ft.ns3.import"
+
         let sharedDefaults = FTUserDefaults.defaults()
         userDefaultsObserver = sharedDefaults.observe(\.userImportCount,
                                                       options: [.old, .new]) { [weak self] (userdefaults, context) in

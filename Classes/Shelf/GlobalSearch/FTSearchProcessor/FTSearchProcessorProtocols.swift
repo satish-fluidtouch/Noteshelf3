@@ -29,12 +29,18 @@ class FTGlobalSearchOperation : BlockOperation
 {
     weak var document : FTDocumentProtocol?;
     var documentToken : FTDocumentOpenToken = FTDocumentOpenToken();
+    var isExecutionStarted = false;
+    
     private var _isFinished = false {
         didSet {
-            didChangeValue(forKey: "isFinished");
+            if self.isExecutionStarted {
+                didChangeValue(forKey: "isFinished");
+            }
         }
         willSet {
-            willChangeValue(forKey: "isFinished");
+            if self.isExecutionStarted {
+                willChangeValue(forKey: "isFinished");
+            }
         }
     }
     deinit {
@@ -44,6 +50,11 @@ class FTGlobalSearchOperation : BlockOperation
     }
     
     override func start() {
+        guard !self.isCancelled else {
+            taskCompleted();
+            return;
+        }
+        isExecutionStarted = true;
         super.start();
     }
     
@@ -66,8 +77,13 @@ class FTGlobalSearchOperation : BlockOperation
 
     override func cancel() {
         super.cancel();
-        (self.document as? FTDocumentSearchProtocol)?.cancelSearchOperation(onCompletion: {[weak self] in
-            self?.taskCompleted()
-        });
+        if let doc  = self.document as? FTDocumentSearchProtocol {
+            doc.cancelSearchOperation(onCompletion: {[weak self] in
+                self?.taskCompleted()
+            });
+        }
+        else {
+            self.taskCompleted();
+        }
     }
 }

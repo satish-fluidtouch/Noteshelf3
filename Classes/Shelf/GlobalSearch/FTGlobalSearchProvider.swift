@@ -63,7 +63,8 @@ class FTGlobalSearchProvider: NSObject {
             let options = FTFetchShelfItemOptions()
             let token = UUID().uuidString;
             self.currentProcessorToken = token;
-            FTNoteshelfDocumentProvider.shared.fetchShelfItems(forCollections: shelfCategories, option: options, parent: nil) { (shelfItems) in
+
+            FTNoteshelfDocumentProvider.shared.fetchShelfItems(forCollections: shelfCategories, option: options, parent: nil) { [self] (shelfItems) in
                 let nonNs2Books = shelfItems.filter { !$0.URL.isNS2Book }
                 if token == self.currentProcessorToken {
                     fetchResults(items: nonNs2Books)
@@ -72,8 +73,13 @@ class FTGlobalSearchProvider: NSObject {
         }
         
         func fetchResults(items: [FTShelfItemProtocol]) {
+            guard let searchProcessor = self.searchProcessor else {
+                onCompletion?(currentToken);
+                return;
+            }
+            
             self.searchProcessor?.setDataToProcess(shelfCategories: shelfCategories, shelfItems: items)
-            currentToken = self.searchProcessor!.startProcessing()
+            currentToken = searchProcessor.startProcessing()
             self.searchProgress = self.searchProcessor?.progress
             
             self.observer = self.searchProgress?.observe(\.fractionCompleted,

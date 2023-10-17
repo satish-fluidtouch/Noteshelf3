@@ -586,7 +586,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     fileprivate func maintainPreviousLaunchState() {
-        if(UserDefaults.standard.bool(forKey: "safe_mode_Identifier")) {
+        if FTUserDefaults.isInSafeMode() {
             self.setLastOpenedGroup(nil);
             self.setLastOpenedDocument(nil);
 
