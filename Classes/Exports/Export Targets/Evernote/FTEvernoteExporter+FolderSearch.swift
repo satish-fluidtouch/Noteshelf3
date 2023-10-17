@@ -8,7 +8,7 @@
 
 import Foundation
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
+import Evernote_SDK_iOS
 #endif
 
 let EvernoteRootFolder = FTCloudRootFolder;
@@ -21,7 +21,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
         
         let folderInfo = UserDefaults.standard.value(forKey: PersistenceKey_ExportTarget_FolderID_Evernote) as? NSDictionary
         #if !targetEnvironment(macCatalyst)
-        let session = ENSession.shared;
+        let session = EvernoteSession.shared;
         let noteStore = session.primaryNoteStore();
         
         if nil == folderInfo {
@@ -46,7 +46,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
     
     func fetchDefaultNotebook() {
         #if !targetEnvironment(macCatalyst)
-        let session = ENSession.shared;
+        let session = EvernoteSession.shared;
         let noteStore = session.primaryNoteStore();
         
         noteStore?.listNotebooks(completion: { (notebooks, error) in
@@ -70,7 +70,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
     
     fileprivate func createDefaultNotebook() {
         #if !targetEnvironment(macCatalyst)
-        let session = ENSession.shared;
+        let session = EvernoteSession.shared;
         let noteStore = session.primaryNoteStore();
         let newNotebook = EDAMNotebook();
         newNotebook.name = EvernoteRootFolder;

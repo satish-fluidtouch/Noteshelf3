@@ -7,7 +7,7 @@
 //
 
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
+import Evernote_SDK_iOS
 #endif
 import Foundation
 
@@ -19,7 +19,7 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
             account.statusText = account.loadingText;
             updateBlock(account);
             #if !targetEnvironment(macCatalyst)
-            let evernoteSession = ENSession.shared;
+            let evernoteSession = EvernoteSession.shared;
             let userStore = evernoteSession.userStore;
 
             userStore?.fetchUser(completion: { user, error in
@@ -54,9 +54,9 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
     private func fetchUsageDetails(_ account: FTCloudAccountInfo,
                                    onCompelltion completionBlock : @escaping ((FTCloudAccountInfo, NSError?) -> Void) ) {
         #if !targetEnvironment(macCatalyst)
-        let evernoteSession = ENSession.shared;
+        let evernoteSession = EvernoteSession.shared;
         
-        var currentStore: ENNoteStoreClient? = evernoteSession.primaryNoteStore();
+        var currentStore: EDAMNoteStoreClient? = evernoteSession.primaryNoteStore();
         if(evernoteSession.isBusinessUser) {
             currentStore = evernoteSession.businessNoteStore();
         }
@@ -106,7 +106,7 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
 
     override func isLoggedIn() -> Bool {
         #if !targetEnvironment(macCatalyst)
-        return ENSession.shared.isAuthenticated;
+        return EvernoteSession.shared().isAuthenticated;
         #else
         return false
         #endif
@@ -114,16 +114,16 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
 
     override func showLoginView(withViewController viewController: UIViewController, completion: @escaping ((Bool) -> Void)) {
         #if !targetEnvironment(macCatalyst)
-        ENSession.shared.authenticate(with: viewController, preferRegistration: false, completion: { error in
+        EvernoteSession.shared().authenticate(with: viewController, preferRegistration: false, completion: { error in
             self.clearEvernotePersistentData();
-            completion(ENSession.shared.isAuthenticated)
+            completion(EvernoteSession.shared().isAuthenticated)
         })
         #endif
     }
 
     override func logOut(_ onCompletion : @escaping ((Bool) -> Void)) {
         #if !targetEnvironment(macCatalyst)
-        let evernoteSession = ENSession.shared;
+        let evernoteSession = EvernoteSession.shared;
         if (evernoteSession.isAuthenticated) {
             evernoteSession.unauthenticate();
         }

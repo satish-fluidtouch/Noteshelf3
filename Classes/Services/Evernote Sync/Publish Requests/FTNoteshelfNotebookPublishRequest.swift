@@ -18,7 +18,7 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
         super.startRequest()
         FTENPublishManager.recordSyncLog("Listing personal notebooks")
         #if !targetEnvironment(macCatalyst)
-        ENSession.shared.primaryNoteStore()?.listNotebooks(completion: { [self] notebooks, error in
+        EvernoteSession.shared().primaryNoteStore()?.listNotebooks(completion: { [self] notebooks, error in
             if nil != error {
                 self.executeBlock(onPublishQueue: { [self] in
                     if let error = error {
@@ -41,7 +41,7 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
                         FTENPublishManager.recordSyncLog("Creating Noteshelf notebook")
                         let newNoteBook = EDAMNotebook()
                         newNoteBook.name = "Noteshelf"
-                        ENSession.shared.primaryNoteStore()?.create(newNoteBook){[self] (notebook : EDAMNotebook?, error:Error?) -> Void in
+                        EvernoteSession.shared().primaryNoteStore()?.create(newNoteBook){[self] (notebook : EDAMNotebook?, error:Error?) -> Void in
                             if (nil != error) {
                                 self.executeBlock(onPublishQueue: { [self] in
                                     if let error = error {

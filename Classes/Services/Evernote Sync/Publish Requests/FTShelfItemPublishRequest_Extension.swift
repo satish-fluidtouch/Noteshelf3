@@ -8,7 +8,7 @@
 
 import Foundation
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
+import Evernote_SDK_iOS
 #endif
 
 #if !targetEnvironment(macCatalyst)
@@ -48,7 +48,7 @@ extension FTShelfItemPublishRequest {
             
             newNote.content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"><en-note></en-note>";
             
-            guard ENSession.shared.isAuthenticated else {
+            guard EvernoteSession.shared().isAuthenticated else {
                 let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                 self.delegate?.didCompletePublishRequestWithError!(error);
@@ -98,7 +98,7 @@ extension FTShelfItemPublishRequest {
         if ((nil != filePath) && (FileManager.default.fileExists(atPath: filePath!))) {
             let url = URL(fileURLWithPath: filePath!);
             
-            guard ENSession.shared.isAuthenticated else {
+            guard EvernoteSession.shared().isAuthenticated else {
                 let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                 self.delegate?.didCompletePublishRequestWithError!(error);
@@ -132,7 +132,7 @@ extension FTShelfItemPublishRequest {
                             
                             note?.updated = NSNumber(value: (url.fileModificationDate as NSDate).edamTimestamp as Int64);
                             
-                            guard ENSession.shared.isAuthenticated else {
+                            guard EvernoteSession.shared().isAuthenticated else {
                                 let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
                                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                                 self.delegate?.didCompletePublishRequestWithError!(error);

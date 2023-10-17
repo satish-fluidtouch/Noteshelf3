@@ -79,7 +79,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     
     func isLoggedin() -> Bool {
         #if !targetEnvironment(macCatalyst)
-        return ENSession.shared.isAuthenticated
+        return EvernoteSession.shared().isAuthenticated
         #else
         return false
         #endif
@@ -95,7 +95,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
         }
         //Check if logged in to Evernote
         #if !targetEnvironment(macCatalyst)
-        if ENSession.shared.isAuthenticated && shouldProceedWithPublishing() {
+        if EvernoteSession.shared().isAuthenticated && shouldProceedWithPublishing() {
             publishInProgress = true
             executeBlock(onPublishQueue: { [self] in
                 if self.isPublishPending(){
@@ -154,7 +154,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     }
     func loginToEvernote(with viewController: UIViewController,  completionHandler :@escaping GenericCompletionBlockWithStatus) {
         #if !targetEnvironment(macCatalyst)
-        let session = ENSession.shared
+        let session = EvernoteSession.shared
         session.authenticate(
             with: viewController,
             preferRegistration: false) { error in
@@ -616,7 +616,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     // MARK: - ENBusinessSupport
     func showAccountChooser(_ fromViewController: UIViewController?, withCompletionHandler completionHandler: @escaping (_ evernoteAccountType: EvernoteAccountType) -> Void) {
         #if !targetEnvironment(macCatalyst)
-        if !ENSession.shared.isBusinessUser {
+        if !EvernoteSession.shared().isBusinessUser {
             completionHandler(EvernoteAccountType.evernoteAccountPersonal)
             return
         }
@@ -649,7 +649,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             let standardUserDefaults = UserDefaults.standard
             if let evernoteBusinessSupportHelpValue = standardUserDefaults.value(forKey: kEvernoteBusinessSupportHelp) as? String, !(evernoteBusinessSupportHelpValue == kEvernoteBusinessSupportHelpDisplayed) {
                 #if !targetEnvironment(macCatalyst)
-                if ENSession.shared.isBusinessUser {
+                if EvernoteSession.shared().isBusinessUser {
                     FTLogError("EN Business Alert Shown", attributes: nil)
                     FTCLSLog("EN Business Alert Shown")
                     let alertController = UIAlertController(title: "Good news!", message: "Noteshelf now supports auto-publish to Evernote Business notebooks. You can choose between Business and Personal when you enable Evernote Sync on a specific notebook.", preferredStyle: .alert)
@@ -711,7 +711,7 @@ extension FTENPublishManager{
                     evernotePublishManager.enableSync(for: item);
                     evernotePublishManager.updateSyncRecord(forShelfItem: item, withDocumentUUID: documentUUID);
                     #if !targetEnvironment(macCatalyst)
-                    evernotePublishManager.updateSyncRecord(forShelfItemAtURL: item.URL, withDeleteOption: true, andAccountType: (ENSession.shared.isBusinessUser ? EvernoteAccountType.evernoteAccountBusiness : EvernoteAccountType.evernoteAccountPersonal))
+                    evernotePublishManager.updateSyncRecord(forShelfItemAtURL: item.URL, withDeleteOption: true, andAccountType: (EvernoteSession.shared().isBusinessUser ? EvernoteAccountType.evernoteAccountBusiness : EvernoteAccountType.evernoteAccountPersonal))
                     #endif
                 });
             }

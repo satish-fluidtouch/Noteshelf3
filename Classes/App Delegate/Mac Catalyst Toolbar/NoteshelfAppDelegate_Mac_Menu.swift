@@ -88,7 +88,7 @@ extension NoteshelfAppDelegate {
 
 extension UIApplication {
     func shelfSceen() -> UISceneSession? {
-        let session = self.openSessions.first(where: { eachScene in
+        let session = self.opEvernoteSessions.first(where: { eachScene in
             if eachScene.configuration.delegateClass == SceneDelegate.classForCoder() {
                 return true;
             }
@@ -98,7 +98,7 @@ extension UIApplication {
     }
     
     func preferenceScene() -> UISceneSession? {
-        let session = self.openSessions.first(where: { eachScene in
+        let session = self.opEvernoteSessions.first(where: { eachScene in
             if eachScene.configuration.delegateClass == FTPreferenceSceneDelegate.classForCoder() {
                 return true;
             }
@@ -107,7 +107,7 @@ extension UIApplication {
         return session;
     }
     func sessionForDocument(_ relativePath: String) -> UISceneSession? {
-        let session = self.openSessions.first(where: { eachScene in
+        let session = self.opEvernoteSessions.first(where: { eachScene in
             if eachScene.configuration.delegateClass == FTBookOpenSceneDelegate.classForCoder(),
                eachScene.scene?.userActivity?.lastOpenedDocument == relativePath {
                 return true;

@@ -171,7 +171,7 @@
     //Set tags
     note.tagNames = [[item.tags allObjects] mutableCopy];
     
-    ENNoteStoreClient *noteStore = [ENSession sharedSession].primaryNoteStore;
+    EDAMNoteStoreClient *noteStore = [EvernoteSession sharedSession].primaryNoteStore;
     
     [noteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
         if (nil != error) {
@@ -205,7 +205,7 @@
         [note setCreated:[NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000]];
         note.content = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"><en-note></en-note>";
         
-        [[ENSession sharedSession].primaryNoteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
+        [[EvernoteSession sharedSession].primaryNoteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
             if (nil != error) {
                 NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
                 
@@ -259,7 +259,7 @@
     NSString *enml = [FTENSyncUtilities enmlRepresentationWithResources:imageArray];
     [self.evernoteNote setContent:[[NSString alloc] initWithFormat:EVERNOTE_NOTE_TEMPLATE,enml]];
     [self.evernoteNote setUpdated:[NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000]];
-    ENNoteStoreClient *noteStore = [ENSession sharedSession].primaryNoteStore;
+    EDAMNoteStoreClient *noteStore = [EvernoteSession sharedSession].primaryNoteStore;
     
     ////////////////////////////////////////
     //Publish tags to Evernote

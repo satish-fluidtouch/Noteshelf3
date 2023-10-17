@@ -1,6 +1,7 @@
 PODS:
   - ASN1Swift (1.2.3)
-  - EvernoteSDK (3.0.0)
+  - Evernote-SDK-iOS (1.3.1):
+    - SSKeychain (~> 1.2.2)
   - Firebase/Analytics (10.3.0):
     - Firebase/Core
   - Firebase/Core (10.3.0):
@@ -120,6 +121,7 @@ PODS:
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
   - Reachability (3.2)
+  - SSKeychain (1.2.3)
   - SwiftLint (0.50.3)
   - TPInAppReceipt (3.3.4):
     - TPInAppReceipt/Core (= 3.3.4)
@@ -140,7 +142,7 @@ PODS:
     - ZendeskSupportProvidersSDK (= 6.0.0)
 
 DEPENDENCIES:
-  - EvernoteSDK
+  - Evernote-SDK-iOS
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
@@ -153,7 +155,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - ASN1Swift
-    - EvernoteSDK
+    - Evernote-SDK-iOS
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -170,6 +172,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Reachability
+    - SSKeychain
     - SwiftLint
     - TPInAppReceipt
     - ZendeskCommonUISDK
@@ -191,7 +194,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ASN1Swift: 73ba94f1d97c1c1d059d180708ad42845aeac4f9
-  EvernoteSDK: 7e9de762a9c281e714f3e6d0ae10657db3046792
+  Evernote-SDK-iOS: beab0882c4bcdc05117ea0b56119da12cff47fbb
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   FirebaseABTesting: e6660693429b4663573c82f8d2f1041deff1753a
   FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
@@ -209,6 +212,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   TPInAppReceipt: 75ff97f2484a463cf46c172fe7f94225612aeda1
   ZendeskCommonUISDK: f06dbac6c9e74c3afff75ecdc6bec3832b23258c
@@ -219,6 +223,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: 685b5d185af47ced0ec40564ec46355c838bbd06
   ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
 
-PODFILE CHECKSUM: 3fa9e66068bc996337452f956edaa9d0fb4ecb59
+PODFILE CHECKSUM: 293306e009e459b3fc67ca8189aa1a1a9500c4bb
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

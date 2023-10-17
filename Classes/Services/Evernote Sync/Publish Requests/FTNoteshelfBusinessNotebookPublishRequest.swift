@@ -14,7 +14,7 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
         super.startRequest()
         FTENPublishManager.recordSyncLog("Listing business notebooks")
         #if !targetEnvironment(macCatalyst)
-        ENSession.shared.primaryNoteStore()?.listLinkedNotebooks(completion: {(linkedNotebooks :[EDAMLinkedNotebook]?, error : Error?) in
+        EvernoteSession.shared().primaryNoteStore()?.listLinkedNotebooks(completion: {(linkedNotebooks :[EDAMLinkedNotebook]?, error : Error?) in
             if (nil != error){
                 self.executeBlock(onPublishQueue:{ [weak self] in
                     
@@ -39,7 +39,7 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
                         FTENPublishManager.recordSyncLog("Creating Noteshelf Business-Notebook")
                         let newNoteBook = EDAMNotebook()
                         newNoteBook.name = "Noteshelf"
-                        ENSession.shared.businessNoteStore()?.createBusinessNotebook(
+                        EvernoteSession.shared().businessNoteStore()?.createBusinessNotebook(
                         newNoteBook) { [weak self] notebook, error in
                             
                             if(nil != error) {
@@ -70,7 +70,7 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
     }
     #if !targetEnvironment(macCatalyst)
     func fetchSharedNotebook(notebookLinked : EDAMLinkedNotebook){
-        let noteStoreForLinkedNotebook = ENSession.shared.noteStore(for: notebookLinked)
+        let noteStoreForLinkedNotebook = EvernoteSession.shared().noteStore(for: notebookLinked)
         
         noteStoreForLinkedNotebook.fetchSharedNotebookByAuth(completion: { [weak self] sharedNotebook, error in
             if nil != error {

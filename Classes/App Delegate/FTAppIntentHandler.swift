@@ -12,7 +12,7 @@ import FTCommon
 import CoreSpotlight
 import SwiftyDropbox
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
+import Evernote_SDK_iOS
 import GoogleSignIn
 #endif
 
@@ -123,7 +123,7 @@ final class FTAppIntentHandler {
             return true
         } else if (url.scheme == "en-pssramakrishnna") {
             #if !targetEnvironment(macCatalyst)
-            return ENSession.shared.handleOpenURL(url)
+            return EvernoteSession.shared().handleOpenURL(url)
             #endif
         } else if let googleURLScheme = FTAppIntentHandler.googleURLScheme, url.scheme == googleURLScheme {
             #if !targetEnvironment(macCatalyst)

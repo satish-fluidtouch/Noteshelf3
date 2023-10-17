@@ -6850,7 +6850,7 @@
 			path = iRate;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
@@ -11000,15 +11000,15 @@
 				"zh-Hans",
 				"zh-Hant",
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
 			packageReferences = (
 				BAB46650296FD98A004FCBDC /* XCRemoteSwiftPackageReference "OpenCV" */,
-				BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
+				BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox.git" */,
 				BA8BA66B29794C6400946CFE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				BA8BA67129795F4A00946CFE /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
-				DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */,
-				09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */,
+				DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */,
+				478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */,
+				09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI.git" */,
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
@@ -11429,7 +11429,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/EvernoteSDK/EvernoteSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/Evernote-SDK-iOS/Evernote_SDK_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
@@ -11443,6 +11443,7 @@
 				"${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
@@ -11456,7 +11457,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASN1Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EvernoteSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Evernote_SDK_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseABTesting.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
@@ -11470,6 +11471,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphMSALAuthProvider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPInAppReceipt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUISDK.framework",
@@ -11482,7 +11484,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$PLATFORM_NAME\" = \"macosx\" ]]; then\n \"${SRCROOT}/MacCatalyst/Noteshelf-maccatalyst-frameworks.sh\"\nelse\n \"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -14714,7 +14716,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+		09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
 			requirement = {
@@ -14722,7 +14724,7 @@
 				minimumVersion = 0.2.3;
 			};
 		};
-		478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+		478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
 			requirement = {
@@ -14730,7 +14732,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
+		BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
 			requirement = {
@@ -14762,7 +14764,7 @@
 				kind = branch;
 			};
 		};
-		DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+		DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
 			requirement = {
@@ -14775,22 +14777,22 @@
 /* Begin XCSwiftPackageProductDependency section */
 		09ABDCB12A790FB3008F144D /* OpenAI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */;
+			package = 09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI.git" */;
 			productName = OpenAI;
 		};
 		478394A92A55250C00EEB75C /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
 			productName = ZipArchive;
 		};
 		5288FB442A553F5100EBC37C /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
 			productName = ZipArchive;
 		};
 		BA8BA65529766D2900946CFE /* SwiftyDropbox */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
+			package = BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox.git" */;
 			productName = SwiftyDropbox;
 		};
 		BA8BA66C29794C6400946CFE /* GoogleSignIn */ = {
@@ -14810,22 +14812,22 @@
 		};
 		BAF0DD532A6FE30D006D293B /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */;
 			productName = SDWebImage;
 		};
 		BAF0DE8E2A6FE6F5006D293B /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */;
 			productName = SDWebImage;
 		};
 		BAF0DEA02A6FE8F5006D293B /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
+			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
 			productName = ZipArchive;
 		};
 		DDAD78EB2A08C550001D8B21 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */;
 			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
