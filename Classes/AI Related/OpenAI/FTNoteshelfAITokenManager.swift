@@ -61,11 +61,11 @@ class FTNoteshelfAITokenManager: NSObject,ObservableObject {
         if Date.utcDate.compareDate(storedTokenInfo.lastResetDate) == .orderedAscending {
             return self.maxAllowedTokens;
         }
-        return storedTokenInfo.consumedToken
+        return min(storedTokenInfo.consumedToken,self.maxAllowedTokens)
     }
     
     var tokensLeft: Int {
-        return (self.maxAllowedTokens - self.consumedTokens);
+        return max((self.maxAllowedTokens - self.consumedTokens) , 0);
     }
     
 #if DEBUG
