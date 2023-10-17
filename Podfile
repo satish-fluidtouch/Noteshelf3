@@ -12,7 +12,7 @@ def common_pods
 
   #common_pods
   pod 'Reachability'
-  pod 'EvernoteSDK'
+  pod 'Evernote-SDK-iOS'
   pod 'SwiftLint'
   pod 'MSGraphMSALAuthProvider', :git => 'https://github.com/AkshayFT/msgraph-sdk-objc-auth'
   pod 'ZendeskSupportSDK'
