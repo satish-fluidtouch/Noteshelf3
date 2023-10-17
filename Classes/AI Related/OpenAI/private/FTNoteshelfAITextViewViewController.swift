@@ -172,7 +172,6 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         self.secondaryActionButton?.addTarget(self, action: #selector(self.secondaryButtonPressAction(_:)), for: .touchUpInside);
         
         self.moreOptionsButton?.menu = UIMenu(children: [menuItem]);
-        self.moreOptionsButton?.titleLabel?.font = UIFont.appFont(for: .medium, with: 15);
         self.moreOptionsButton?.showsMenuAsPrimaryAction = true;
         self.updateButtonStates();
     }
