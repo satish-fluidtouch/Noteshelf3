@@ -123,9 +123,9 @@ struct FTShelfAudioItemView: View {
                         .font(.title)
                     VStack{
                         Text(audio.audioTitle)
-                            .foregroundColor(.appColor(.white100))
+                            .foregroundColor(.appColor(.alwaysWhite))
                         Text(audio.duration)
-                            .foregroundColor(.appColor(.white60))
+                            .foregroundColor(.appColor(.audioDurationWhite60))
                     }
                     .appFont(for: .medium, with: 13)
                 }
