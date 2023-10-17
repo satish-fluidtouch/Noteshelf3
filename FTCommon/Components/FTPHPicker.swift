@@ -104,18 +104,32 @@ public class FTPHPicker: NSObject, PHPickerViewControllerDelegate {
 }
 
 extension NSItemProvider {
-    func loadImage(_ onCompeltion : @escaping (FTPHItem?) -> Void)
-    {
-        if let readType = UIImage.classForCoder() as? NSItemProviderReading.Type {
-            self.loadObject(ofClass: readType) { (image, _) in
-                if let image = image as? UIImage, let title = self.suggestedName {
-                    let phItem = FTPHItem(image: image, title: title)
-                    onCompeltion(phItem);
+    /*
+     func loadImage1(_ onCompeltion : @escaping (FTPHItem?) -> Void)
+     {
+         if let readType = UIImage.classForCoder() as? NSItemProviderReading.Type {
+             self.loadObject(ofClass: readType) { (image, _) in
+                 if let image = image as? UIImage, let title = self.suggestedName {
+                     let phItem = FTPHItem(image: image, title: title)
+                     onCompeltion(phItem);
+                 }
+             };
+         }
+         else {
+             onCompeltion(nil)
+         }
+     }
+     */
+    func loadImage(_ onCompeltion : @escaping (FTPHItem?) -> Void){
+        if let type = self.registeredContentTypes.first {
+              _ = self.loadDataRepresentation(for: type) { data, error in
+                  if let imageData = data,let image = UIImage(data: imageData), let title = self.suggestedName {
+                  let phItem = FTPHItem(image: image, title: title)
+                  onCompeltion(phItem);
                 }
-            };
-        }
-        else {
-            onCompeltion(nil)
-        }
+                onCompeltion(nil);
+              }
+              return;
+            }
     }
 }
