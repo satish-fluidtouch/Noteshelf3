@@ -387,7 +387,6 @@ extension FTSidebarViewModel {
             else if let shelfCollection = collection {
                 self?.selectedShelfItemCollection = shelfCollection
                 self?.newCollectionAddedOrUpdated = true
-                //self.push
             }
         }
     }
@@ -458,7 +457,7 @@ extension FTSidebarViewModel {
                 else {
                     sideBarItemTobeSelected = currentSelectedCategpory;
                 }
-//                self?.newCollectionAddedOrUpdated = true
+                self?.newCollectionAddedOrUpdated = true
                 self?.selectedShelfItemCollection = sideBarItemTobeSelected
             }
         })
