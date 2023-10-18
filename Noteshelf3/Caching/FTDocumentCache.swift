@@ -31,7 +31,8 @@ private let cleanOnNextLaunch: Bool = false
 
 struct FTCacheFiles {
     static let cacheFolderName: String = "com.noteshelf.cache"
-    static let cacheTagsPlist: String = "cacheTags.plist"
+    static let legacycacheTagsPlist: String = "cacheTags.plist"
+    static let cacheTagsPlist: String = "cacheTagsv2.plist"
     static let cacheDocumentPlist: String = "Document.plist"
     static let cachePropertyPlist: String = "Metadata/Properties.plist"
 }
@@ -235,20 +236,10 @@ extension FTDocumentCache {
         }
     }
 
-    private func updateMetadataPlistWithRelativePathFor(documentId: String, docUrl: URL) {
-        let destinationURL = cachedLocation(for: documentId)
-        let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-        if var propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
-            let relativePath = docUrl.relativePathWRTCollection()
-            propertiList.setObject(relativePath, forKey: "relativePath")
-            try? propertiList.writeUpdates(to: dest)
-        }
-    }
-
     private func relativePathWRTCollectionFor(documentId: String) -> String? {
         let destinationURL = cachedLocation(for: documentId)
         let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-        if var propertiList = FTFileItemPlist(url: dest, isDirectory: false), let relativePath = propertiList.object(forKey: "relativePath") as? String {
+        if let propertiList = FTFileItemPlist(url: dest, isDirectory: false), let relativePath = propertiList.object(forKey: "relativePath") as? String {
             return relativePath
         }
         return nil
@@ -261,7 +252,7 @@ private extension FTDocumentCache {
         func updateMetadataPlistWithRelativePathFor(docUrl: URL, documentId: String) {
             let destinationURL = cachedLocation(for: documentId)
             let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-            if var propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
+            if let propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
                 let relativePath = docUrl.relativePathWRTCollection()
                 propertiList.setObject(relativePath, forKey: "relativePath")
                 try? propertiList.writeUpdates(to: dest)

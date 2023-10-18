@@ -222,6 +222,7 @@ class FTTagItemModel {
                         if tags.count > 0 {
                             func generateShelfTagItem() {
                                 let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(documentItem: item, pageUUID: page.uuid, tags: tags)
+                                tagsPage.documentItem = item
                                 tagsPage.pdfKitPageRect = page.pageRect
                                 if let index = pages?.firstIndex(where: {$0.uuid == page.uuid}) {
                                     tagsPage.pageIndex = index

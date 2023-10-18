@@ -28,8 +28,7 @@ protocol FTShelfTagsAndBooksDelegate: AnyObject {
 
 class FTShelfTagsViewController: UIViewController {
     var viewModel: FTShelfTagsPageModel?
-    var tagItems = [FTShelfTagsItem]() 
-    {
+    var tagItems = [FTShelfTagsItem]() {
         didSet {
             tagItems = tagItems.filter({$0.documentItem?.URL.isPinEnabledForDocument() == false})
         }
