@@ -79,6 +79,11 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         self.view.backgroundColor = UIColor.appColor(.sidebarBG)
         self.addOverlay()
         self.setUpNavigationBar()
+        viewModel.addNotificationObservers()
+    }
+
+    deinit {
+        disableUpdatesForSideBar()
     }
 
     func addBlurView() {
@@ -176,6 +181,14 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
             let attributes :  [NSAttributedString.Key : Any] = [.font : UIFont.clearFaceFont(for: .medium, with: 28)]
             navigationController.navigationBar.largeTitleTextAttributes = attributes
         }
+    }
+    
+    func enableUpdatesForSideBar() {
+        viewModel.addNotificationObservers()
+    }
+    
+    func disableUpdatesForSideBar() {
+        viewModel.removeNotificationObservers()
     }
 }
 

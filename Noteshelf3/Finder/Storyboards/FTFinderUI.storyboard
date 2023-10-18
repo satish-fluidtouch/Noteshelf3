@@ -526,23 +526,20 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6V-Fw-XlN">
                                                             <rect key="frame" x="0.0" y="210" width="200" height="22"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE3-md-SIT" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                    <rect key="frame" x="0.0" y="1.3333333333333428" width="30" height="19.333333333333332"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="30" id="jBq-qg-oLU"/>
-                                                                    </constraints>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE3-md-SIT" customClass="FTCustomLabel" customModule="FTCommon">
+                                                                    <rect key="frame" x="0.0" y="1.3333333333333428" width="39.666666666666664" height="19.333333333333332"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="0Lw-FB-xuw">
-                                                                    <rect key="frame" x="38" y="2" width="162" height="18"/>
+                                                                    <rect key="frame" x="47.666666666666671" y="2" width="152.33333333333331" height="18"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9a-WA-ug0">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="121" height="18"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="111.33333333333333" height="18"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label tagsCounButton tagsCounButton tagsCounButton  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNZ-yj-cRa">
-                                                                                    <rect key="frame" x="10" y="1.3333333333333419" width="101" height="15.666666666666664"/>
+                                                                                    <rect key="frame" x="10" y="1.3333333333333419" width="91.333333333333329" height="15.666666666666664"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <color key="textColor" name="accent"/>
                                                                                     <nil key="highlightedColor"/>
@@ -562,7 +559,7 @@
                                                                             </variation>
                                                                         </view>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwU-46-mzx">
-                                                                            <rect key="frame" x="125" y="0.0" width="37" height="18"/>
+                                                                            <rect key="frame" x="115.33333333333334" y="0.0" width="37" height="18"/>
                                                                             <color key="backgroundColor" name="accentBg"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="18" id="A5l-Pg-V9o"/>
@@ -2036,7 +2033,7 @@
         <image name="shelfItemSelectionMode" width="33" height="33"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="square.grid.2x2" catalog="system" width="128" height="114"/>
-        <image name="volume.2.fill" catalog="system" width="128" height="88"/>
+        <image name="volume.2.fill" catalog="system" width="32" height="32"/>
         <namedColor name="7f7f7f">
             <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -10,10 +10,6 @@ import SwiftUI
 import UIKit
 import FTCommon
 
-extension Notification.Name {
-    static let didChangeUnfiledCategoryLocation = Notification.Name(rawValue: "didChangeUnfiledCategoryLocation");
-}
-
 struct TrashAlertInfo {
     enum TrashType {
         case category(item: FTSideBarItem)
@@ -45,7 +41,6 @@ struct FTSidebarView: View {
     @State private var reloadView: Bool = false
 
     weak var delegate: FTSidebarViewDelegate?
-    private let collectionAddedUpdatedNotification = NotificationCenter.default.publisher(for: FTCategoryItemsDidUpdateNotification)
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
@@ -90,15 +85,6 @@ struct FTSidebarView: View {
             .detectOrientation($orientation)
                 .onFirstAppear(perform: {
                     self.viewModel.configureUIOnViewLoad()
-                })
-                .onReceive(collectionAddedUpdatedNotification, perform: { notification in
-                    viewModel.updateUserCreatedCategories()
-                })
-                .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue: "refreshSideMenu")), perform: { notification in
-                    updateTagItems(notification: notification)
-                })
-                .onReceive(NotificationCenter.default.publisher(for: .didChangeUnfiledCategoryLocation), perform: { notification in
-                    viewModel.updateUnfiledCategory()
                 })
                 .onChange(of: orientation) { newValue in
                     self.reloadView.toggle()
@@ -195,37 +181,6 @@ struct FTSidebarView: View {
         return (width > 0) ? width - 24 : 0  // 24 is horizontal padding
     }
 
-    private func updateTagItems(notification: Notification) {
-        if let selectedSideBarItem = viewModel.selectedSideBarItem, selectedSideBarItem.type == .tag {
-            if let info = notification.userInfo, let type = info["type"] as? String {
-                let tagItems = viewModel.menuItems.filter {$0.type == .tags}
-                if type == "rename", let tag = info["tag"] as? String, let renamedTag = info["renamedTag"] as? String {
-                    let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == tag})
-                    tagItem?.title = renamedTag
-                } else if type == "add", let tag = info["tag"] as? String {
-                    let item = FTSideBarItem(title: tag, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
-                    tagItems.first?.items.append(item)
-                } else if type == "delete", let tag = info["tag"] as? String {
-                    tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
-                }
-                if var items = tagItems.first?.items {
-                    let allTags = items.first(where: {$0.type == .allTags})
-                    items.removeAll(where: {$0.type == .allTags})
-                    var sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
-                    if let allTags {
-                        sortedArray.insert(allTags, at: 0)
-                    }
-                    viewModel.menuItems.first(where: {$0.type == .tags})?.items = sortedArray
-                    viewModel.updateTagsSection(items: sortedArray)
-                }
-                viewModel.setSideBarItemSelection()
-            } else {
-                viewModel.updateTags()
-            }
-        } else {
-            viewModel.updateTags()
-        }
-    }
 }
 struct SidebarSectionHeader: View {
     @EnvironmentObject var section: FTSidebarSection

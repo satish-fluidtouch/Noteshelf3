@@ -133,14 +133,14 @@ private var offset: CGFloat = 8.0
     }
 
     @objc func exitZoomModeNotified(_ notification: Notification) {
-        if (self.zoomModeInfo.overlayHeight == 0 && self.shortcutZoomMode == .auto) {
-            let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
-            let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
-            UIView.animate(withDuration: animDuration) {
-                self.updateShortcutViewCenter(actualCenter)
+        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+        let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+        UIView.animate(withDuration: 0.2) {
+            self.updateShortcutViewCenter(actualCenter)
+        } completion: { _ in
+            if !(self.zoomModeInfo.overlayHeight == 0 && self.shortcutZoomMode == .auto) {
+                self.shortcutZoomMode = .auto
             }
-        } else {
-            self.shortcutZoomMode = .auto
         }
     }
 
@@ -151,7 +151,7 @@ private var offset: CGFloat = 8.0
         }
 
         if animate {
-            UIView.animate(withDuration: animDuration) {
+            UIView.animate(withDuration: 0.2) {
                 updateShortcutIfRequired()
             } completion: { _ in
                 completion?()
