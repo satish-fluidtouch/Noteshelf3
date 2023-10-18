@@ -39,7 +39,7 @@ class FTAIContent {
                     }
                 }
             }
-            mutableAttr.endEditing();            
+            mutableAttr.endEditing();
             return mutableAttr;
         }
         return nil;
@@ -136,6 +136,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        _ = self.textView?.layoutManager;
         self.textView?.layer.cornerRadius = 10.0
         self.supportsHandwriting = !UIDevice.isChinaRegion;
         let menuItem = UIDeferredMenuElement.uncached { items in
@@ -174,7 +175,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
          
     deinit {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
+//        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
     }
     
     private func updateButtonStates() {
@@ -249,11 +250,11 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         self.footerActionBottomConstraint?.constant = heightConstraint;
     }
     
-    @objc private func scrollToBottom() {
-        if let txtView = self.textView {
-            txtView.scrollRangeToVisible(NSRange(location: max(txtView.attributedText.length-1,0), length: 0));
-        }
-    }
+//    @objc private func scrollToBottom() {
+//        if let txtView = self.textView {
+//            txtView.scrollRangeToVisible(NSRange(location: max(txtView.attributedText.length-1,0), length: 0));
+//        }
+//    }
     
     func showResponse(_ response: FTOpenAIResponse) {
         let attrString = response.attributedString();
@@ -261,8 +262,9 @@ class FTNoteshelfAITextViewViewController: UIViewController {
             txtView.textStorage.beginEditing();
             txtView.textStorage.setAttributedString(attrString);
             txtView.textStorage.endEditing();
-            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
-            self.perform(#selector(self.scrollToBottom), with: nil, afterDelay: 0.2);
+//            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
+//            self.perform(#selector(self.scrollToBottom), with: nil, afterDelay: 0.2);
+            txtView.scrollRangeToVisible(NSRange(location: max(txtView.attributedText.length-1,0), length: 0));
         }
     }
 }
