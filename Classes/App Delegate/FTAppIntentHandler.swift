@@ -121,7 +121,7 @@ final class FTAppIntentHandler {
                 intentHandler?.importItem(item)
             }
             return true
-        } else if (url.scheme == "en-pssramakrishnna") {
+        } else if (url.scheme == "noteshelf3-3461") {
             #if !targetEnvironment(macCatalyst)
             return ENSession.shared.handleOpenURL(url)
             #endif
