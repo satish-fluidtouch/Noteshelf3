@@ -114,6 +114,8 @@ extension FTRackPreferenceState {
         if self.photos {
             annoTypes.append(.image)
             annoTypes.append(.sticker)
+            annoTypes.append(.sticky)
+            annoTypes.append(.webclip)
         }
         
         if self.shapes {
