@@ -617,6 +617,7 @@ extension FTSidebarViewModel {
         self.setSideBarItemSelection()
     }
     func setSideBarItemSelection(){
+        let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio]
         if selectedSideBarItemType == .tag {
             if let selectedSideBarItem = self.selectedSideBarItem {
                 let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
@@ -629,12 +630,13 @@ extension FTSidebarViewModel {
             } else if let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType && $0.title.lowercased() == lastSelectedTag.lowercased()})}).first {
                 self.selectedSideBarItem = selectedSideBarItem
             }
-        } else if let collection = selectedShelfItemCollection {
-            selectedSideBarItem = menuItems.flatMap({$0.items})
-                .first(where: {$0.shelfCollection?.uuid == collection.uuid})
-        } else {
+        } else if nonCollectionTypes.contains(where: { $0 == selectedSideBarItemType}) {
             let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType})}).first
             self.selectedSideBarItem = selectedSideBarItem
+        }
+        else if let collection = selectedShelfItemCollection {
+            selectedSideBarItem = menuItems.flatMap({$0.items})
+                .first(where: {$0.shelfCollection?.uuid == collection.uuid})
         }
         if newCollectionAddedOrUpdated,let selectedSideBarItem {
             newCollectionAddedOrUpdated = false

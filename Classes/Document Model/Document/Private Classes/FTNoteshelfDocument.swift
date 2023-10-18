@@ -1558,7 +1558,7 @@ extension FTNoteshelfDocument: FTDocumentCoverPage {
    
     func fetchCoverImage(isPinEnabled: Bool) -> UIImage {
         guard let _shelfImage = self.shelfImage else {
-                return UIImage(named: "defaultNoCover")!
+                return UIImage.shelfDefaultNoCoverImage
         }
         let coverImageSize :CGSize
         var coverImage: UIImage?;
