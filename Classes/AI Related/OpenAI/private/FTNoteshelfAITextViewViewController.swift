@@ -12,9 +12,6 @@ import Foundation
 class FTAIContent {
     private(set) var attributedString: NSAttributedString?;
     required init(with attrString: NSAttributedString?) {
-//        if let attr = attrString {
-//            attributedString = NSAttributedString(string: attr.string);
-//        }
         attributedString = attrString;
     }
     
@@ -42,7 +39,7 @@ class FTAIContent {
                     }
                 }
             }
-            mutableAttr.endEditing();
+            mutableAttr.endEditing();            
             return mutableAttr;
         }
         return nil;
@@ -259,9 +256,11 @@ class FTNoteshelfAITextViewViewController: UIViewController {
     }
     
     func showResponse(_ response: FTOpenAIResponse) {
-        if let txtView = self.textView, txtView.attributedText.string != response.attributedString.string {
-//            let currentOffset = txtView.contentOffset;
-            txtView.attributedText = response.attributedString;
+        let attrString = response.attributedString();
+        if let txtView = self.textView, txtView.attributedText.string != attrString.string {
+            txtView.textStorage.beginEditing();
+            txtView.textStorage.setAttributedString(attrString);
+            txtView.textStorage.endEditing();
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.scrollToBottom), object: nil);
             self.perform(#selector(self.scrollToBottom), with: nil, afterDelay: 0.2);
         }

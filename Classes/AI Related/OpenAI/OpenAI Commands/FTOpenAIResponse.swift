@@ -34,7 +34,7 @@ ol ol ol ol ol ol ol ol ol ol ol li{ list-style-type: upper-alpha;}
 """;
 
 class FTOpenAIResponse: NSObject {
-    private(set) var attributedString = NSAttributedString();
+    private var attributedText = NSAttributedString();
     private var htmlFormat = "";
     private var stringResponse = "";
     private var blackHexColor = UIColor.black.hexString;
@@ -46,7 +46,8 @@ class FTOpenAIResponse: NSObject {
     
     func appendStringRessponse(_ response: String) {
         stringResponse.append(response);
-        self.attributedString = NSMutableAttributedString(string: stringResponse, attributes: [.font: UIFont.systemFont(ofSize: 18),.foregroundColor : UIColor.label])
+        let attrString = NSMutableAttributedString(string: stringResponse, attributes: [.font: UIFont.systemFont(ofSize: 18),.foregroundColor : UIColor.label])
+        self.setAttributedString(attrString);
     }
     
     private func updateAttributedString() {
@@ -102,8 +103,21 @@ class FTOpenAIResponse: NSObject {
                 }
             }
             attrString.endEditing();
-            self.attributedString = attrString;
+            self.setAttributedString(attrString);
         }
+    }
+    
+    private func setAttributedString(_ attrString: NSAttributedString) {
+        objc_sync_enter(self)
+        self.attributedText = attrString;
+        objc_sync_exit(self);
+    }
+    
+    func attributedString() -> NSAttributedString {
+        objc_sync_enter(self)
+        var attrString = self.attributedText;
+        objc_sync_exit(self);
+        return attrString;
     }
     
     private func mappedParagraphStyleForBullets(_ paragraphStyle: NSParagraphStyle) -> NSParagraphStyle {
