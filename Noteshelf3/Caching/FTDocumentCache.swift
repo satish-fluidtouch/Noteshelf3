@@ -31,8 +31,7 @@ private let cleanOnNextLaunch: Bool = false
 
 struct FTCacheFiles {
     static let cacheFolderName: String = "com.noteshelf.cache"
-    static let legacycacheTagsPlist: String = "cacheTags.plist"
-    static let cacheTagsPlist: String = "cacheTagsv2.plist"
+    static let cacheTagsPlist: String = "cacheTags.plist"
     static let cacheDocumentPlist: String = "Document.plist"
     static let cachePropertyPlist: String = "Metadata/Properties.plist"
 }
@@ -67,8 +66,8 @@ final class FTDocumentCache {
         createCachesDirectoryIfNeeded()
         cacheLog(.info, cacheFolderURL)
 
-        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
-        FTTagsProvider.shared.getAllTags()
+//        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
+//        FTTagsProvider.shared.getAllTags()
         addObservers()
     }
 

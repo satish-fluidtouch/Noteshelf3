@@ -18,6 +18,7 @@ enum FTTagsCacheError: Error {
 }
 
 final class FTCacheTagsProcessor {
+    private let queue = DispatchQueue(label: FTCacheFiles.cacheFolderName, qos: .utility)
     static let shared = FTCacheTagsProcessor()
     private let fileManager = FileManager()
     let cacheFolderURL = FTDocumentCache.shared.cacheFolderURL
@@ -32,33 +33,30 @@ final class FTCacheTagsProcessor {
     }
 
     func createCacheTagsPlistIfNeeded() {
-        let cachedTagsPlistURL = cacheFolderURL.appendingPathComponent(FTCacheFiles.cacheTagsPlist)
-
+        let cachedTagsPlistURL = self.cacheFolderURL.appendingPathComponent(FTCacheFiles.cacheTagsPlist)
+        
         // Existing tags plist may be with wrong tags information so remove it and recerate New one
         // reload tags from Documents
-        let legacyTagsPlst = cacheFolderURL.appendingPathComponent(FTCacheFiles.legacycacheTagsPlist)
-        if fileManager.fileExists(atPath: legacyTagsPlst.path) {
-            try? fileManager.removeItem(at: legacyTagsPlst)
-            createTagsPlist()
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(isDocumentProviderReady), userInfo: nil, repeats: true)
-        } else {
-            if fileManager.fileExists(atPath: cachedTagsPlistURL.path) {
-                let tagsPlist = self.readTagsInfo()
-                // Plist is exists and if its corrept re creating it
-                if tagsPlist == nil {
-                    createTagsPlist()
-                }
-            } else {
-                createTagsPlist()
+        if self.fileManager.fileExists(atPath: cachedTagsPlistURL.path) {
+            let tagsPlist = self.readTagsInfo()
+            // Plist is exists and if its corrept re creating it
+            if tagsPlist == nil {
+                self.createTagsPlist()
+                self.loadTagsFromDocuments()
             }
+        } else {
+            self.createTagsPlist()
+            self.loadTagsFromDocuments()
         }
-        cacheLog(.info, cachedPageTagsLocation())
+        FTTagsProvider.shared.getAllTags()
+        cacheLog(.info, self.cachedPageTagsLocation())
     }
 
     private func loadTagsFromDocuments() {
         let dispatchGroup = DispatchGroup()
         var itemsToCahe = [FTItemToCache]()
-        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { [weak self] allItems in
+            guard let self = self else {return}
             let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
 
             for case let item in items where item.URL.downloadStatus() == .downloaded {
@@ -72,7 +70,6 @@ final class FTCacheTagsProcessor {
             dispatchGroup.notify(queue: .main) {
                 self.cacheTagsForDocument(items: itemsToCahe)
             }
-
         }
     }
 
