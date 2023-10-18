@@ -349,11 +349,6 @@ private extension FTChooseCoverViewController {
     // This ll be for standard and no cover
     private func updateCoverPreview(_ cover: FTThemeable) {
         self.coverPreview?.image = cover.themeThumbnail()
-        if cover.hasCover {
-            self.coverPreview?.tintColor = .clear
-        } else {
-            self.coverPreview?.tintColor = UIColor.appColor(.black5)
-        }
     }
 }
 

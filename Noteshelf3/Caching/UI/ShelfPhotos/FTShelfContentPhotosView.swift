@@ -38,16 +38,6 @@ struct FTShelfContentPhotosView: View  {
         }
     }
 
-
-    let gradient = LinearGradient(
-        gradient: Gradient(stops: [
-            .init(color: Color.appColor(.black50), location: 0),
-            .init(color: .clear, location: 0.4)
-        ]),
-        startPoint: .bottom,
-        endPoint: .top
-    )
-
     var contentView: some View {
          GeometryReader { proxy in
             ScrollView {
@@ -58,10 +48,11 @@ struct FTShelfContentPhotosView: View  {
                             .frame(width: size.width, height: size.width)
                             .clipped()
                             .overlay(alignment: .bottomLeading) {
-                                gradient
-                                .blur(radius: 20) /// blur the overlay
-                                .padding(-20) /// expand the blur a bit to cover the edges
-                                .clipped() // prevent blur overflow
+                                Image("gradient")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: size.width, height: size.width/2)
+                                    .clipped()
                             }
                             .overlay(alignment: .bottomLeading) {
                                 Text(media.title)

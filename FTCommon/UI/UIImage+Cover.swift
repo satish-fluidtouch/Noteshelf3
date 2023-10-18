@@ -15,6 +15,8 @@ public let landscapeCoverSize: CGSize = CGSize(width: 259, height: 185)
 public let landscapeNoCoverSize: CGSize = CGSize(width: 260, height: 186)
 public let defaultCoverSize: CGSize = CGSize(width: 215, height: 299)
 extension UIImage {
+    public static var shelfDefaultNoCoverImage: UIImage { UIImage(named:"shelfDefaultNoCover")!
+    }
     //No Cover OR Cover with landscape
     public var needEqualCorners: Bool {
          ((self.size.width.remainder(dividingBy: landscapeCoverSize.width) == 0) ||

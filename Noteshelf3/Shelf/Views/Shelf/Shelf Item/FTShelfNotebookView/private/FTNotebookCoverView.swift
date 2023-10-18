@@ -139,12 +139,14 @@ struct NS2BadgeView: View {
 
 struct FTLockIconView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         let size: CGFloat = shelfViewModel.displayStlye == .Gallery ? 64 : (shelfViewModel.displayStlye == .Icon ? 38 : 16)
         let imageSize: CGFloat = shelfViewModel.displayStlye == .Gallery ?  24 : (shelfViewModel.displayStlye == .Icon ?  16 : 8)
         ZStack {
             FTVibrancyEffectView()
+            .environment(\.colorScheme, colorScheme)
             .frame(width: size, height: size, alignment: .center)
             .cornerRadius(100.0)
             .overlay {

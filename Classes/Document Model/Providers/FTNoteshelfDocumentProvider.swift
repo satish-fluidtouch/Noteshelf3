@@ -194,11 +194,6 @@ class FTNoteshelfDocumentProvider: NSObject {
                     let favoritesShelfCollection = recentShelfCat.favoritesShelfItemCollection
                     let starredCategory = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("sidebar.topSection.starred", comment: "Starred"), type: .starred, categories: [favoritesShelfCollection]);
                     categoryCollection.append(starredCategory);
-
-                    let recentShelfCollection = recentShelfCat.recentShelfItemCollection
-                    let recentsCategory = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("Recents", comment: "Recents"), type: .recent, categories: [recentShelfCollection]);
-                    recentsCategory.type = .recent;
-                    categoryCollection.append(recentsCategory);
                 }
                 #endif
                 self.categorizedShelfs = categoryCollection

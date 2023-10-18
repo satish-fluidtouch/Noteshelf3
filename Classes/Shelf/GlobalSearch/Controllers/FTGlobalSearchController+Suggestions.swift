@@ -16,6 +16,7 @@ extension FTGlobalSearchController: FTUISearchDelegate {
             textField.text = ""
             textField.insertToken(token, at:  textField.tokens.count)
             searchInputInfo.textKey = ""
+            self.updateUICondictionally(with: "", tokens: textField.tokens)
         } else {
             let text = searchController.searchBar.searchTextField.text ?? ""
             self.updateUICondictionally(with: text)
