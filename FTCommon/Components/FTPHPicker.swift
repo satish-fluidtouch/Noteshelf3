@@ -104,32 +104,26 @@ public class FTPHPicker: NSObject, PHPickerViewControllerDelegate {
 }
 
 extension NSItemProvider {
-    /*
-     func loadImage1(_ onCompeltion : @escaping (FTPHItem?) -> Void)
+     func loadImage(_ onCompeltion : @escaping (FTPHItem?) -> Void)
      {
          if let readType = UIImage.classForCoder() as? NSItemProviderReading.Type {
              self.loadObject(ofClass: readType) { (image, _) in
                  if let image = image as? UIImage, let title = self.suggestedName {
                      let phItem = FTPHItem(image: image, title: title)
-                     onCompeltion(phItem);
-                 }
-             };
-         }
-         else {
+                     onCompeltion(phItem)
+                 } else if let type = self.registeredContentTypes.first { // This condition we have added it for Raw , png and JPEG types registering. this will not convert HEIC type image.
+                     _ = self.loadDataRepresentation(for: type) { data, error in
+                         if let imageData = data,let image = UIImage(data: imageData), let title = self.suggestedName {
+                         let phItem = FTPHItem(image: image, title: title)
+                         onCompeltion(phItem)
+                       }
+                       onCompeltion(nil)
+                     }
+                     return
+                   }
+             }
+         } else {
              onCompeltion(nil)
          }
      }
-     */
-    func loadImage(_ onCompeltion : @escaping (FTPHItem?) -> Void){
-        if let type = self.registeredContentTypes.first {
-              _ = self.loadDataRepresentation(for: type) { data, error in
-                  if let imageData = data,let image = UIImage(data: imageData), let title = self.suggestedName {
-                  let phItem = FTPHItem(image: image, title: title)
-                  onCompeltion(phItem);
-                }
-                onCompeltion(nil);
-              }
-              return;
-            }
-    }
 }
