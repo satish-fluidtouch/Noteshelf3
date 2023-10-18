@@ -11,6 +11,12 @@ import FTCommon
 
 let shelfCollectionItemsCountNotification = "FTShelfCollectionChildrenCountNotification"
 
+extension NSNotification.Name {
+    static let categoryItemsDidUpdateNotification = NSNotification.Name(rawValue: "FTCategoryItemsDidUpdateNotification")
+    static let refresSideMenuNotification = NSNotification.Name(rawValue: "refreshSideMenu")
+    static let didChangeUnfiledCategoryLocation = Notification.Name(rawValue: "didChangeUnfiledCategoryLocation");
+}
+
 protocol FTCategoryDropDelegate: AnyObject {
     func moveDraggedShelfItem(_ item : FTShelfItemProtocol,
                               toCollection collection: FTShelfItemCollection,
@@ -178,6 +184,19 @@ class FTSidebarViewModel: NSObject, ObservableObject {
             self.delegate?.didTapOnSidebarItem(selectedSideBarItem)
         }
     }
+    
+    func addNotificationObservers() {
+        removeNotificationObservers() // remove if its already added
+        NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTagItems(_:)), name: .refresSideMenuNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didChangeUnfiledCategoryLocation(_:)), name: .didChangeUnfiledCategoryLocation, object: nil)
+    }
+    
+    func removeNotificationObservers() {
+        NotificationCenter.default.removeObserver(self, name: .categoryItemsDidUpdateNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .refresSideMenuNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .didChangeUnfiledCategoryLocation, object: nil)
+    }
 }
 private extension FTSidebarViewModel {
     func updateCurrentSidebarItemCollection(){
@@ -218,6 +237,37 @@ private extension FTSidebarViewModel {
             }
             .store(in: &cancellables)
     }
+    
+    @objc func categoryDidUpdate(_ notification : Notification) {
+        self.updateUserCreatedCategories()
+    }
+    
+    @objc func didChangeUnfiledCategoryLocation(_ notification : Notification) {
+        self.updateUnfiledCategory()
+    }
+    
+    @objc func updateTagItems(_ notification : Notification) {
+        if let selectedSideBarItem = self.selectedSideBarItem, selectedSideBarItem.type == .tag {
+            if let info = notification.userInfo, let type = info["type"] as? String {
+                let tagItems = self.menuItems.filter {$0.type == .tags}
+                if type == "rename", let tag = info["tag"] as? String, let renamedTag = info["renamedTag"] as? String {
+                    let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == tag})
+                    tagItem?.title = renamedTag
+                } else if type == "add", let tag = info["tag"] as? String {
+                    let item = FTSideBarItem(title: tag, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+                    tagItems.first?.items.append(item)
+                } else if type == "delete", let tag = info["tag"] as? String {
+                    tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
+                }
+                self.setSideBarItemSelection()
+            } else {
+                self.updateTags()
+            }
+        } else {
+            self.updateTags()
+        }
+    }
+    
     func addObservers() {
         self.menuItems.forEach({ menuItem in
             menuItem.objectWillChange
@@ -615,6 +665,7 @@ extension FTSidebarViewModel {
         self.setSideBarItemSelection()
     }
     func setSideBarItemSelection(){
+        let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio]
         if selectedSideBarItemType == .tag {
             if let selectedSideBarItem = self.selectedSideBarItem {
                 let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
@@ -627,12 +678,13 @@ extension FTSidebarViewModel {
             } else if let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType && $0.title.lowercased() == lastSelectedTag.lowercased()})}).first {
                 self.selectedSideBarItem = selectedSideBarItem
             }
-        } else if let collection = selectedShelfItemCollection {
-            selectedSideBarItem = menuItems.flatMap({$0.items})
-                .first(where: {$0.shelfCollection?.uuid == collection.uuid})
-        } else {
+        } else if nonCollectionTypes.contains(where: { $0 == selectedSideBarItemType}) {
             let selectedSideBarItem = menuItems.compactMap({$0.items.first(where:{$0.type == selectedSideBarItemType})}).first
             self.selectedSideBarItem = selectedSideBarItem
+        }
+        else if let collection = selectedShelfItemCollection {
+            selectedSideBarItem = menuItems.flatMap({$0.items})
+                .first(where: {$0.shelfCollection?.uuid == collection.uuid})
         }
         if newCollectionAddedOrUpdated,let selectedSideBarItem {
             newCollectionAddedOrUpdated = false
