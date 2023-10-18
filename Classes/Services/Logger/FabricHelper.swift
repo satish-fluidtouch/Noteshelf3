@@ -21,7 +21,6 @@ private struct FabircKeys {
     static let MigratedItems = "HasMigratedItems"
 
     //String values
-    static let Stylus = "Stylus"
     static let Language = "Lang"
     static let Theme = "Theme"
     static let Locale = "Locale"
@@ -32,6 +31,7 @@ private struct FabircKeys {
     static let Clouds = "Clouds"
     static let Layout = "Layout"
     static let Premium = "Premium"
+    static let Noteshelf2 = "NS2"
 
 }
 
@@ -55,7 +55,6 @@ class FabricHelper: NSObject {
         keys[FabircKeys.ENPublish] = UserDefaults.standard.bool(forKey: "EvernotePubUsed").asString
         keys[FabircKeys.MigratedItems] = FTZenDeskManager.hasMigratedContents().asString
 
-        keys[FabircKeys.Stylus] = UserDefaults.standard.string(forKey: "LastConnectedStylus")
         keys[FabircKeys.Language] = FTUtils.currentLanguage()
         keys[FabircKeys.Theme] = FTShelfThemeStyle.defaultTheme().title
         keys[FabircKeys.Locale] = Locale.current.identifier
@@ -65,6 +64,7 @@ class FabricHelper: NSObject {
         keys[FabircKeys.RecognitionActivated] = FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO";
         keys[FabircKeys.Layout] = (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal";
         keys[FabircKeys.Premium] = FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
+        keys[FabircKeys.Noteshelf2] = FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO"
         Crashlytics.crashlytics().setCustomValue(keys, forKey: "Startup Keys")
     }
 
