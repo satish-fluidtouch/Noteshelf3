@@ -18,8 +18,10 @@ struct FTShortcutBarVisualEffectView: UIViewRepresentable {
 }
 
 struct FTVibrancyEffectView: UIViewRepresentable {
+    @Environment(\.colorScheme) var colorScheme
+
     func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
-        let style =  UIScreen.main.traitCollection.userInterfaceStyle == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
+        let style = colorScheme == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
         let blurEffect  = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect);
 
@@ -30,7 +32,9 @@ struct FTVibrancyEffectView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) {
-        uiView.backgroundColor = FTToolbarConfig.bgColor
+        let style = colorScheme == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
+        let blurEffect = UIBlurEffect(style: style)
+        uiView.effect = blurEffect
     }
 }
 
