@@ -1181,10 +1181,8 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
         var tagsItems = [FTShelfTagsItem]()
         items.forEach { item in
-            if let documentItem = item as? FTDocumentItemProtocol , let docUUID = documentItem.documentUUID {
-                let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: documentItem, tags: [])
-                let docTags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
-                tagItem.setTags(docTags)
+            if let documentItem = item as? FTDocumentItemProtocol {
+                let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: documentItem)
                 tagsItems.append(tagItem)
             }
         }

@@ -67,7 +67,10 @@ class FTGlobalSearchController: UIViewController {
     var navTitle: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.allTags = FTSearchSuggestionHelper.shared.fetchTags()
+        //Check if updating tags inside will break
+         FTSearchSuggestionHelper.shared.fetchTags(completion: { allTags in
+             self.allTags = allTags
+        })
 #if !targetEnvironment(macCatalyst)
         self.configureSearchControllerIfNeeded()
 #endif

@@ -414,7 +414,7 @@ class FTShelfTagsViewController: UIViewController {
                         self.selectedItems[index].tags.removeAll()
                         shelftagItem.tags = self.selectedItems[index].tags
                     } else {
-                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: shelfItem, tags: selectedItem.tags.map({$0.text}))
+                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: shelfItem)
                         self.selectedItems[index].tags.removeAll()
                         shelftagItem.tags = self.selectedItems[index].tags
                     }

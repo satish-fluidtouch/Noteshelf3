@@ -66,8 +66,6 @@ final class FTDocumentCache {
         createCachesDirectoryIfNeeded()
         cacheLog(.info, cacheFolderURL)
 
-//        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
-//        FTTagsProvider.shared.getAllTags()
         addObservers()
     }
 
@@ -210,8 +208,8 @@ extension FTDocumentCache {
                         dispatchGroup.leave()
                     }
             }
-            dispatchGroup.notify(queue: .main) {
-                FTCacheTagsProcessor.shared.cacheTagsForDocument(items: itemsCached)
+            dispatchGroup.notify(queue: self.queue) {
+                FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: itemsCached)
             }
         }
     }
@@ -228,7 +226,7 @@ extension FTDocumentCache {
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
                 let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
-                FTCacheTagsProcessor.shared.cacheTagsForDocument(items: [itemToCache])
+                FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
             } catch {
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }

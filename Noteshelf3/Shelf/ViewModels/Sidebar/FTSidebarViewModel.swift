@@ -550,21 +550,22 @@ extension FTSidebarViewModel {
     }
 
     private func fetchAllTags() {
-        let tagItems = FTTagsProvider.shared.getAllSortedTags()
-        var tags: [FTSideBarItem] = [FTSideBarItem]()
-        tags = tagItems.map { tagItem -> FTSideBarItem in
-            let tag = tagItem.tag
-            let item = FTSideBarItem(id: tag.id, title: tag.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
-            return item
-        }
-        self.tags.removeAll()
-        self.tags.append(allTagsSidebarItem())
-        self.tags += tags
-        if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
-            tagsSection.items = self.tags
-        }
-        if selectedSideBarItemType == .tag {
-            setSideBarItemSelection()
+         FTTagsProvider.shared.getAllSortedTags { tagItems in
+             var tags: [FTSideBarItem] = [FTSideBarItem]()
+             tags = tagItems.map { tagItem -> FTSideBarItem in
+                 let tag = tagItem.tag
+                 let item = FTSideBarItem(id: tag.id, title: tag.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+                 return item
+             }
+             self.tags.removeAll()
+             self.tags.append(self.allTagsSidebarItem())
+             self.tags += tags
+             if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
+                 tagsSection.items = self.tags
+             }
+             if self.selectedSideBarItemType == .tag {
+                 self.setSideBarItemSelection()
+             }
         }
     }
 
