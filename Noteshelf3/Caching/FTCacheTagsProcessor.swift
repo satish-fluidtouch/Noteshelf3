@@ -33,9 +33,6 @@ final class FTCacheTagsProcessor {
 
     func createCacheTagsPlistIfNeeded() {
         let cachedTagsPlistURL = self.cacheFolderURL.appendingPathComponent(FTCacheFiles.cacheTagsPlist)
-
-        // Existing tags plist may be with wrong tags information so remove it and recerate New one
-        // reload tags from Documents
         queue.async {
             if self.fileManager.fileExists(atPath: cachedTagsPlistURL.path) {
                 self.readTagsInfo { [weak self] tagsPlist in
@@ -62,17 +59,19 @@ final class FTCacheTagsProcessor {
         var itemsToCahe = [FTItemToCache]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { [weak self] allItems in
             guard let self = self else {return}
-            let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
-            for item in items {
-                dispatchGroup.enter()
-                if let docId = item.documentUUID {
-                    let destinationURL = FTDocumentCache.shared.cachedLocation(for: docId)
-                    itemsToCahe.append(FTItemToCache(url: destinationURL, documentID: docId))
+            queue.async {
+                let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+                for item in items {
+                    dispatchGroup.enter()
+                    if let docId = item.documentUUID {
+                        let destinationURL = FTDocumentCache.shared.cachedLocation(for: docId)
+                        itemsToCahe.append(FTItemToCache(url: destinationURL, documentID: docId))
+                    }
+                    dispatchGroup.leave()
                 }
-                dispatchGroup.leave()
-            }
-            dispatchGroup.notify(queue: self.queue) {
-                self.cacheTagsForDocuments(items: itemsToCahe)
+                dispatchGroup.notify(queue: self.queue) {
+                    self.cacheTagsForDocuments(items: itemsToCahe)
+                }
             }
         }
     }

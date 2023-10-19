@@ -36,7 +36,7 @@ class FTTagItemModel {
                 if self.shelfTagItems.count > 0 && self.documentIds.allSatisfy(shelfTagDocIds.contains(_:)) {
                     completion(self.shelfTagItems)
                 } else {
-                    self.taggedItemsFor(selectedTag: self.tag.text) { [weak self] shelftagItems in
+                    self.taggedItemsFor(selectedTag: self.tag.text, allTags: allTags) { [weak self] shelftagItems in
                         self?.shelfTagItems = shelftagItems
                         completion(shelftagItems)
                     }
@@ -196,65 +196,64 @@ class FTTagItemModel {
         self.tag.text = renamedString
     }
 
-    private func taggedItemsFor(selectedTag: String, completion: @escaping ([FTShelfTagsItem]) -> Void)  {
+    private func taggedItemsFor(selectedTag: String, allTags: [FTTagItemModel], completion: @escaping ([FTShelfTagsItem]) -> Void)  {
         let dispatchGroup = DispatchGroup()
         var totalTagItems: [FTShelfTagsItem] = [FTShelfTagsItem]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            DispatchQueue.global(qos: .background).async {
+                let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
 
-            let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
-
-            var docIds = [String]()
-            if !selectedTag.isEmpty {
-                docIds = self.documentIds
-            } else {
-                FTTagsProvider.shared.getAllTags { allTags in
+                var docIds = [String]()
+                if !selectedTag.isEmpty {
+                    docIds = self.documentIds
+                } else {
                     let returnDocids = allTags.compactMap { $0.documentIds }.joined()
                     docIds = Array(Set(returnDocids))
                 }
-            }
 
-            let filteredDocuments = items.filter { item in
-                return docIds.contains(item.documentUUID ?? "")
-            }
-            for case let item in filteredDocuments where item.documentUUID != nil {
-                dispatchGroup.enter()
-                guard let docUUID = item.documentUUID else { continue }
-                let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: item)
-                tagsBook.documentItem = item
-                if !tagsBook.tags.isEmpty {
-                    totalTagItems.append(tagsBook)
+                let filteredDocuments = items.filter { item in
+                    return docIds.contains(item.documentUUID ?? "")
                 }
+                for case let item in filteredDocuments where item.documentUUID != nil {
+                    dispatchGroup.enter()
+                    guard let docUUID = item.documentUUID else { continue }
+                    let tagsBook = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: item)
+                    tagsBook.documentItem = item
+                    if !tagsBook.tags.isEmpty {
+                        totalTagItems.append(tagsBook)
+                    }
 
-                 FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist in
-                     let pages = docPlist?.pages
-                     var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
-                     pages?.forEach { page in
-                         let tags = page.tags
-                         if tags.count > 0 {
-                             func generateShelfTagItem() {
-                                 let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(documentItem: item, pageUUID: page.uuid, tags: tags)
-                                 tagsPage.documentItem = item
-                                 tagsPage.pdfKitPageRect = page.pageRect
-                                 if let index = pages?.firstIndex(where: {$0.uuid == page.uuid}) {
-                                     tagsPage.pageIndex = index
-                                 }
-                                 tagsPages.append(tagsPage)
-                             }
-                             if selectedTag.isEmpty {
-                                 generateShelfTagItem()
-                             } else if tags.contains(selectedTag) {
-                                 generateShelfTagItem()
-                             }
-                         }
-                     }
-                     totalTagItems.append(contentsOf: tagsPages)
-                     dispatchGroup.leave()
+                    FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist in
+                        let pages = docPlist?.pages
+                        var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
+                        pages?.forEach { page in
+                            let tags = page.tags
+                            if tags.count > 0 {
+                                func generateShelfTagItem() {
+                                    let tagsPage = FTTagsProvider.shared.shelfTagsItemForPage(documentItem: item, pageUUID: page.uuid, tags: tags)
+                                    tagsPage.documentItem = item
+                                    tagsPage.pdfKitPageRect = page.pageRect
+                                    if let index = pages?.firstIndex(where: {$0.uuid == page.uuid}) {
+                                        tagsPage.pageIndex = index
+                                    }
+                                    tagsPages.append(tagsPage)
+                                }
+                                if selectedTag.isEmpty {
+                                    generateShelfTagItem()
+                                } else if tags.contains(selectedTag) {
+                                    generateShelfTagItem()
+                                }
+                            }
+                        }
+                        totalTagItems.append(contentsOf: tagsPages)
+                        dispatchGroup.leave()
+                    }
                 }
+                dispatchGroup.notify(queue: .main) {
+                    completion(totalTagItems)
+                }
+                cacheLog(.info, "totalTagItems", totalTagItems.count)
             }
-            dispatchGroup.notify(queue: .main) {
-                completion(totalTagItems)
-            }
-            cacheLog(.info, "totalTagItems", totalTagItems.count)
         }
 
     }
