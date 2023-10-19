@@ -430,6 +430,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
         configureSceneNotifications()
+        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
         return
     }
 

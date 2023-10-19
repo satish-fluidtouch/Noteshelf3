@@ -29,7 +29,7 @@ protocol FTSideMenuViewControllerDelegate: AnyObject {
 
     //Bookmarks, tags
     func openBookmarks()
-    func openTags(for tag: String)
+    func openTags(for tag: String, isAllTags: Bool)
     func saveLastSelectedTag(_ tag:String)
     
     // Global search
@@ -164,9 +164,11 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         case .audio:
             delegate?.openAudio()
         case .tag:
-            delegate?.openTags(for: item.title)
+            delegate?.openTags(for: item.title, isAllTags: false)
         case .bookmark:
             delegate?.openBookmarks()
+        case .allTags:
+            delegate?.openTags(for: item.title, isAllTags: true)
         }
     }
 
