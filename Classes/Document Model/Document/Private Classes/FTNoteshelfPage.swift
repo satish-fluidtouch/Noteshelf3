@@ -1404,6 +1404,9 @@ private extension FTNoteshelfPage {
     }
 
     func canContinuePDFContentSearch() -> Bool {
+        if FTUserDefaults.isInSafeMode() {
+            return false
+        }
         var canContinue = false;
         let val = self.contentCache?.object(forKey: self.uuid) as? [String:Any] ?? [String:Any]();
         let timeStamp = (val[timeStampKey] as? TimeInterval) ?? 0;
