@@ -185,8 +185,19 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
                                , content: FTAIContent) {
         ccntroller.dismiss(animated: true) {
             if action == .copyToClipboard {
-                if let content = content.normalizedAttrText {
-                    UIPasteboard.general.string = content.string;
+                if let contentAttr = content.normalizedAttrText {
+                    if let rtfData = try? contentAttr.data(from: NSRange(location: 0, length: contentAttr.length), documentAttributes: [.documentType: NSAttributedString.DocumentType.rtf]) {
+                        // Get the shared pasteboard
+                        let pasteboard = UIPasteboard.general
+                        
+                        var pbinfo = [String:Any]();
+                        pbinfo[UTType.rtf.identifier] = rtfData;
+                        pbinfo[UTType.text.identifier] = contentAttr.string;
+                        pasteboard.setItems([pbinfo])
+                    }
+                    else {
+                        UIPasteboard.general.string = contentAttr.string;
+                    }
                 }
             }
             else if action == .addToPage {
