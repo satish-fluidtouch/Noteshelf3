@@ -462,6 +462,16 @@ private extension FTNoteshelfAIViewController {
             guard nil != self, let curToken = self?.currentToken, curToken == token else {
                 return;
             }
+            if let inerror = error as? NSError {
+                track("AI Error", params: ["detail":inerror.localizedDescription], screenName: nil)
+                if FTOPenAIError.isNoInternetConnectionError(inerror) {
+                    self?.textViewController?.showPlaceHolder(inerror.localizedDescription);
+                }
+                else {
+                    self?.textViewController?.showPlaceHolder("noteshelf.ai.noteshelfAIError".aiLocalizedString);
+                }
+                return;
+            }
             var supportHandwrite = false;
             if self?.aiCommand == .langTranslate {
                 if let langCode = self?.languageCode, let option = FTTranslateOption.languageOption(title: langCode) {

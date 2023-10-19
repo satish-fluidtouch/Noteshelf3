@@ -7,6 +7,7 @@
 
 import UIKit
 import OpenAI
+import Reachability
 
 class FTOpenAI: NSObject {
     private static let OPEN_API_TOKEN = "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";
@@ -22,6 +23,12 @@ class FTOpenAI: NSObject {
     func execute(command: FTAICommand
                  ,onUpdate: @escaping ((FTOpenAIResponse,Error?,_ token: String) -> (Void))
                  ,onCompletion: @escaping  ((Error?,_ token:String) -> (Void))) {
+        
+        guard let connection = Reachability.forInternetConnection(),connection.currentReachabilityStatus() != NetworkStatus.NotReachable  else {
+            onCompletion(FTOPenAIError.noInternetConnection,command.commandToken);
+            return;
+        }
+        
         currentcommand = command;
         
         let commandString: String = command.command();
@@ -67,5 +74,13 @@ class FTOpenAI: NSObject {
     
     func cancelCurrentExecution() {
         self.currentcommand = nil;
+    }
+}
+
+struct FTOPenAIError {
+    static let noInternetConnection: NSError = NSError(domain: "FTOpenAI", code: Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue), userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("NoInternetConnection", comment: "No Internet Connection")]);
+    
+    static func isNoInternetConnectionError(_ error:NSError) -> Bool {
+        return (error.domain == "FTOpenAI" && error.code == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue));
     }
 }

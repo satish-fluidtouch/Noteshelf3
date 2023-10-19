@@ -7,10 +7,16 @@
 //
 
 import UIKit
+import Reachability
 
 extension FTPageViewController {
     
     @objc func startOpenAiForPage() {
+        guard let connection = Reachability.forInternetConnection(),connection.currentReachabilityStatus() != NetworkStatus.NotReachable  else {
+            FTOPenAIError.noInternetConnection.showAlert(from: self);
+            return;
+        }
+        
         guard let page = self.pdfPage else {
             return;
         }
