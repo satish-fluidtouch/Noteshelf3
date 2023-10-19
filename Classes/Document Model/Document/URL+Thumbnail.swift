@@ -12,7 +12,7 @@ import QuickLookThumbnailing
 import UniformTypeIdentifiers
 
 extension URL {
-    func fetchQLThumbnail(completion: @escaping ((UIImage?) -> Void)) {
+    func fetchQLThumbnail(completion: @escaping ((UIImage?) -> Void)) -> QLThumbnailGenerator.Request {
         let request = QLThumbnailGenerator.Request(fileAt: self,
                                                    size: portraitCoverSize,
                                                    scale: 2,
@@ -21,10 +21,11 @@ extension URL {
         NSLog("🌄 Requesting thumbnail for \(self.path)")
 #endif
 
+        NSLog("called: \(self.path())");
         let generator = QLThumbnailGenerator.shared
         generator.generateRepresentations(for: request) { thumbnail, _, error in
             DispatchQueue.main.async {
-
+                NSLog("called respinde: \(self.path())");
                 if let thumbnail {
 #if DEBUG
                     NSLog("🌄 Thumbnail Fetched for \(self)")
@@ -43,5 +44,6 @@ extension URL {
                 }
             }
         }
+        return request;
     }
 }

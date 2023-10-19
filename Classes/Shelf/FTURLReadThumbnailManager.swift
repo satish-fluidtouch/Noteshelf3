@@ -8,6 +8,7 @@
 
 import UIKit
 import FTCommon
+import QuickLookThumbnailing
 
 class FTThumbReadCallbacks : NSObject
 {
@@ -47,17 +48,15 @@ class FTThumbReadCallbacks : NSObject
         self.imageCache.clearStoredThumbnailCache()
     }
     
+    private var QLRequestCache = [String: QLThumbnailGenerator.Request] ();
+    
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
         guard item.URL.isNS2Book else {
-            let token = UUID().uuidString
-            item.URL.fetchQLThumbnail(completion: { image in
-                onCompletion(image, token)
-            })
-            return token
+            return self.thumbnailForNS3Book(item, onCompletion: onCompletion);
         }
-
+        
         let cachedImage = self.imageCache.cachedImageForItem(item: item)
         if(nil != cachedImage) {
             onCompletion(cachedImage,nil);
@@ -126,5 +125,58 @@ class FTThumbReadCallbacks : NSObject
     func addImageToCache(image: UIImage?, url: URL)
     {
         self.imageCache.addImageToCache(image: image, url: url)
+    }
+}
+
+private extension FTURLReadThumbnailManager {
+    func removeQLRequest(_ item: FTDiskItemProtocol) {
+        objc_sync_enter(self.QLRequestCache)
+        let reqid = item.URL.hashKey;
+        self.QLRequestCache.removeValue(forKey: reqid);
+        objc_sync_exit(self.QLRequestCache)
+    }
+    
+    func cancelPreviousQLRequest(_ item: FTDiskItemProtocol) {
+        objc_sync_enter(self.QLRequestCache)
+        let reqid = item.URL.hashKey;
+        if let request = self.QLRequestCache[reqid] {
+            QLThumbnailGenerator.shared.cancel(request);
+            self.removeQLRequest(item);
+        }
+        objc_sync_exit(self.QLRequestCache)
+    }
+    
+    func addQLRequestToCache(_ item: FTDiskItemProtocol,request: QLThumbnailGenerator.Request) {
+        objc_sync_enter(self.QLRequestCache)
+        let reqid = item.URL.hashKey;
+        self.QLRequestCache[reqid] = request;
+        objc_sync_exit(self.QLRequestCache)
+    }
+    
+    func thumbnailForNS3Book(_ item : FTDiskItemProtocol,
+                             onCompletion : @escaping (UIImage?,String?) -> Void) -> String? {
+        let token = UUID().uuidString;
+        self.cancelPreviousQLRequest(item);
+        
+        func fetchImage() {
+            let request = item.URL.fetchQLThumbnail(completion: { [weak self] image in
+                self?.removeQLRequest(item)
+                onCompletion(image,token);
+            })
+            self.addQLRequestToCache(item, request: request);
+        }
+
+        let modifiedime = item.URL.fileModificationDate.timeIntervalSinceReferenceDate;
+        let currentTime = Date().timeIntervalSinceReferenceDate;
+        let thresholdTimeDifference: TimeInterval = 0.5;
+        if currentTime - modifiedime > thresholdTimeDifference {
+            fetchImage();
+        }
+        else {
+            runInMainThread(thresholdTimeDifference) {
+                fetchImage();
+            }
+        }
+        return token
     }
 }

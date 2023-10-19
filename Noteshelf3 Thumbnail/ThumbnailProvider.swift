@@ -19,19 +19,17 @@ class ThumbnailProvider: QLThumbnailProvider {
             handler(nil,FTQLThumbnailError.notDownloaded);
             return;
         }
-        let thumbURL = request.fileURL.appendingPathComponent("cover-shelf-image.png")
         let coordinator = NSFileCoordinator(filePresenter: nil);
         var error: NSError?;
-        coordinator.coordinate(readingItemAt: thumbURL,
-                               options: .immediatelyAvailableMetadataOnly,
+        coordinator.coordinate(readingItemAt: request.fileURL,
                                error: &error,
                                byAccessor: { readingURL in
-
-            if let image = UIImage(contentsOfFile: readingURL.path(percentEncoded: false)) {
+            let thumbURL = readingURL.appendingPathComponent("cover-shelf-image.png")
+            if let image = UIImage(contentsOfFile: thumbURL.path(percentEncoded: false)) {
                 let maxsz = request.maximumSize;
                 let r = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin:.zero, size:maxsz))
 #if DEBUG
-                NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(readingURL.fileModificationDate) \(request.fileURL.path)")
+                NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(request.fileURL.path)")
 #endif
                 let reply = QLThumbnailReply(contextSize: r.size, currentContextDrawing: {
                     image.draw(in: CGRect(origin: .zero, size: r.size));
