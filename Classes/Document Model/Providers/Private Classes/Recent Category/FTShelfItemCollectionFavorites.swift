@@ -50,4 +50,19 @@ class FTShelfItemCollectionFavorites: FTShelfItemCollectionRecent {
         let paths = NSURL.urlPaths(items);
         self.recentCollectionLocal?.updateQuery(searchPaths: paths);
     }
+
+    override func addShelfItemForDocument(_ path: Foundation.URL,
+                                 toTitle: String,
+                                 toGroup: FTGroupItemProtocol?,
+                                 onCompletion block: @escaping (NSError?, FTDocumentItemProtocol?) -> Void){
+        FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { (unfiledShelf) in
+            unfiledShelf?.addShelfItemForDocument(path, toTitle: toTitle, toGroup: toGroup, onCompletion: { [weak self] error, documentItemProtocol in
+                if error == nil, let shelfItemURL = documentItemProtocol?.URL {
+                    self?.addShelfItemToList(shelfItemURL)
+                }
+                block(error,documentItemProtocol)
+            })
+        }
+    }
+
 }

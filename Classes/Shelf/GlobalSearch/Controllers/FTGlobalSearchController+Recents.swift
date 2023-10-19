@@ -68,13 +68,13 @@ extension FTGlobalSearchController: UITableViewDataSource, UITableViewDelegate {
         if !searchableText.isEmpty {
             searchbar.searchTextField.text = searchableText
         }
-        if let reqText = searchbar.searchTextField.text, !reqText.isEmpty {
+        if let reqText = searchbar.searchTextField.text {
 #if targetEnvironment(macCatalyst)
-            if let toolbar = self.view.toolbar as? FTShelfToolbar {
+            if let toolbar = self.view.toolbar as? FTShelfToolbar, !reqText.isEmpty {
                 toolbar.updateSearchText(reqText)
             }
 #else
-            self.updateUICondictionally(with: reqText)
+            self.updateUICondictionally(with: reqText, tokens: searchTokens)
 #endif
         }
         self.isRecentSelected = false

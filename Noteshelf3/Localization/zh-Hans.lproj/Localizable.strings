@@ -5,7 +5,7 @@
 "AboutOptionWhatsNew" = "最新动态";
 "AboutVisitNoteshelfWebsite" = "访问Noteshelf官网";
 "Accept" = "接受";
-"AccountInfoFormat" = "您的 %@ 的 %@ 已使用";
+"AccountInfoFormat" = "使用了您的%@中的%@ ";
 "ActualSize" = "实际尺寸";
 "Add" = "添加";
 "AddBtnNameInAlert" = "添加";
@@ -49,7 +49,7 @@
 "AppleWatchRecording" = "苹果手表录音";
 "Apply" = "应用";
 "Arts" = "艺术";
-"Athletics" = "田径";
+"Athletics" = "体育";
 "Audio" = "音频";
 "AudioDeleteConfirmMessage" = "你确定要删除这个录音吗？";
 "AudioNote" = "音频笔记";
@@ -85,7 +85,7 @@
 "Basic" = "基础";
 "BetaFeedback" = "测试反馈";
 "BlurredBand" = "模糊乐队";
-"Body" = "身体";
+"Body" = "正文";
 "BookAddedMessageSingular" = "已将%d本笔记本添加到'%@'分类中。";
 "BookNotExistMessage" = "笔记本不再存在。";
 "Bookmark" = "书签";
@@ -554,7 +554,7 @@
 "NoSearchResult" = "没有搜索结果";
 "NoTagsInPage" = "此笔记本的任何页面都没有分配标签。";
 "NoWatchRecordingsMessage" = "Noteshelf Apple Watch 应用的录音将在这里显示。";
-"NofNAlt" = "%d / %d";
+"NofNAlt" = "%d 的 %d";
 "NotCorrectPassword" = "这不是正确的密码。请再试一次。";
 "NotSupportedFormat" = "此格式不受Noteshelf支持。";
 "NotUsingiCloudMessage" = "您的文件已从此设备中移除，但仍存储在iCloud中。";
@@ -826,6 +826,7 @@
 "Tag" = "标签";
 "Tagged" = "标记";
 "Tags" = "标签";
+"Take beautiful notes effortlessly" = "轻松地记录美丽的笔记";
 "TakePhoto" = "拍照";
 "TakeScreenshot" = "截图";
 "TapToRate" = "点击评分";
@@ -1146,7 +1147,7 @@
 "notebook.addnew.newpage" = "新页面";
 "notebook.eraserRack.NavTitle" = "橡皮擦";
 "notebook.lassoRack.NavTitle" = "套索";
-"notebook.quickPageNavigator.pageNumber.Text" = "%d / %d";
+"notebook.quickPageNavigator.pageNumber.Text" = "%d的%d";
 "notebook.restoring" = "恢复中...";
 "notebook.settings.moresettings" = "更多设置";
 "notebook.shapesRack.NavTitle" = "形状";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "添加为手写到新页面";
 "noteshelf.ai.actionAddToNewPage" = "添加为文字到新页面";
 "noteshelf.ai.actionAddToPage" = "添加为文本";
+"noteshelf.ai.credit.bePremium" = "升级到Noteshelf高级版";
+"noteshelf.ai.credit.bePremiumInfo" = "升级到Noteshelf Premium以解锁每月100个AI学分并获得手写识别功能";
+"noteshelf.ai.credit.creditsRunningOut" = "积分即将用尽";
+"noteshelf.ai.credit.details" = "%d/%d 剩余学分";
+"noteshelf.ai.credit.moreOptions" = "更多选项";
+"noteshelf.ai.credit.moreinfo" = "AI积分将在%d天后重置";
+"noteshelf.ai.credit.nocredits" = "没有剩余学分";
+"noteshelf.ai.pressEnterToSend" = "按Enter键发送";
 "numSelected" = "%ld 已选中'";
 "objects" = "对象";
 "ok" = "好的";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 6 October 2023 at 10:26
+// Last Synced by Akshay on 19 October 2023 at 18:37

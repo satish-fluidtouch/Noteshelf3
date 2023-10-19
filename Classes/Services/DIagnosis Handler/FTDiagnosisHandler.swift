@@ -62,7 +62,7 @@ import MessageUI
         //Attach to mail and send
         let mailComposerViewController = MFMailComposeController()
         mailComposerViewController.mailComposeDelegate = self;
-        mailComposerViewController.setSubject("Noteshelf Log");
+        mailComposerViewController.setSubject("Noteshelf3 Log");
 
         let stringMessage = NSString.init(format: "<html><body><br><br><br><br><br><br> %@</body></html>", FTZenDeskManager.customFieldsString())
         mailComposerViewController.setMessageBody(stringMessage as String, isHTML: true)
@@ -71,7 +71,7 @@ import MessageUI
         if(success) {
             let sysData = try? Data.init(contentsOf: URL(fileURLWithPath: zipPath));
             if(sysData != nil) {
-                mailComposerViewController.addAttachmentData(sysData!, mimeType: "application/com.ramki.logs", fileName: "noteshelf.log")
+                mailComposerViewController.addAttachmentData(sysData!, mimeType: "application/com.ramki.logs", fileName: "noteshelf3.log")
             }
             _ = try? fileManager.removeItem(atPath: zipPath);
         }
