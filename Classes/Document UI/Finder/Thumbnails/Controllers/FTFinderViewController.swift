@@ -2033,8 +2033,9 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
     func outlinesViewController(showPlaceHolder: Bool) {
         if showPlaceHolder {
             self.collectionView.backgroundView?.isHidden = false
+        } else {
+            createSnapShot()
         }
-        createSnapShot()
     }
 }
 

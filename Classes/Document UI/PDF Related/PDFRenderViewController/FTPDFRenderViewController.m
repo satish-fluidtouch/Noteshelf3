@@ -2594,7 +2594,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 
 -(void)pressurePenConnected:(NSString *)stylusName
 {
-    [FTZenDeskManager setLastConnectedStylus:stylusName];
     [self registerViewForTouchEvents];
 
     BOOL shouldShowConnectedMessage = YES;
