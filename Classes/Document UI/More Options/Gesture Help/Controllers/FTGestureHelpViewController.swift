@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 class FTGestureHelpViewController: UIViewController, UITableViewDataSource, FTCustomPresentable {
     var customTransitioningDelegate = FTCustomTransitionDelegate(with: .interaction)
@@ -59,8 +60,7 @@ class FTGestureHelpViewController: UIViewController, UITableViewDataSource, FTCu
         let storyboard = UIStoryboard.init(name: "FTNotebookMoreOptions", bundle: nil);
         if let gestureHelpController = storyboard.instantiateViewController(withIdentifier: FTGestureHelpViewController.className) as? FTGestureHelpViewController {
                 let navController = UINavigationController(rootViewController: gestureHelpController)
-                navController.modalPresentationStyle = .formSheet
-                controller.present(navController, animated: true, completion: nil)
+                controller.ftPresentFormsheet(vcToPresent: navController, hideNavBar: false, completion: nil)
         }
     }
     
