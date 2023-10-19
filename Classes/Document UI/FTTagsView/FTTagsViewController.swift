@@ -60,7 +60,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 34))
         textField?.leftView = paddingView
         textField?.leftViewMode = .always
-
+        textField?.returnKeyType = .done
         let shadowColor = UIColor(hexString: "#000000")
         view.layer.applySketchShadow(color: shadowColor, alpha: 0.2, x: 0.0, y: 10.0, blur: 30.0, spread: 0)
         configureTagsView()
