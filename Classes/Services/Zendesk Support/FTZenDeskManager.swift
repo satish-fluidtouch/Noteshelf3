@@ -314,7 +314,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Apple Pencil": UserDefaults.standard.bool(forKey: "isUsingApplePencil") ? "YES" : "NO",
             "Lang": FTUtils.currentLanguage(),
             "Locale": NSLocale.current.identifier,
-            "HasMigratedItems": self.hasMigratedContents() ? "YES" : "NO",
             "AppleWatch": watchStatus,
             "Recognition": FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO",
             "Recog_Act": FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO",
@@ -342,7 +341,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            let ENPublish = customFields["ENPublish"],
            let lang = customFields["Lang"],
            let locale = customFields["Locale"],
-           let hasMigratedItems = customFields["HasMigratedItems"],
            let appleWatch = customFields["AppleWatch"],
            let recognition = customFields["Recognition"],
            let recog_Act = customFields["Recog_Act"],
@@ -350,7 +348,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            let battery = customFields["Battery"],
            let premium = customFields["Premium"],
            let ns2 = customFields["NS2"]{
-            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | HasMigratedItems : \(hasMigratedItems) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2)"
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2)"
         }
         return string ?? ""
     }
@@ -362,23 +360,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         UserDefaults.standard.set(numberOfCounts, forKey:key)
         UserDefaults.standard.synchronize()
     }
-
-    class func hasMigratedContents() -> Bool {
-        var hasMigratedContents = false
-        let fileURL = FTUtils.noteshelfDocumentsDirectory().appendingPathComponent("Migrated Documents")
-        var contents: [String]?
-        do {
-            contents = try FileManager.default.contentsOfDirectory(atPath: fileURL.path)
-        } catch {
-        }
-        for eachItem in contents ?? [] {
-            if eachItem.hasSuffix(FTFileExtension.shelf) {
-                hasMigratedContents = true
-                break
-            }
-        }
-        return hasMigratedContents
-    }
+     
 
     // MARK: - UINavigationControllerDelegate -
     func navigationController(_ navigationController:UINavigationController, willShow viewController:UIViewController, animated:Bool) {
