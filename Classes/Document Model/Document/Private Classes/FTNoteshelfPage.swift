@@ -848,16 +848,15 @@ extension FTNoteshelfPage : FTPageSearchProtocol
         var found = false;
 
         var searchableItems = [FTSearchableItem]();
-        var tagsFound = false
         for eachTag in tags {
-            tagsFound = self.tags().contains(where: { (element) -> Bool in
+            found = self.tags().contains(where: { (element) -> Bool in
                 return element == eachTag
             })
-            if !tagsFound {break}
+            if !found {break}
         }
         //If any tags are present and found in this page, proceed further search is specific tagged page
         //If no tags, also continue search with searchKey
-        let processFurtherSearch = tags.isEmpty || (!tags.isEmpty && tagsFound)
+        let processFurtherSearch = tags.isEmpty || (!tags.isEmpty && found)
         if processFurtherSearch, !searchKey.isEmpty, let textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) {
             if(!textAnnotations.isEmpty) {
                 found = true;
