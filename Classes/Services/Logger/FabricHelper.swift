@@ -18,7 +18,6 @@ private struct FabircKeys {
     static let Watch = "AppleWatch"
     static let Club = "Club"
     static let ENPublish = "ENPublish"
-    static let MigratedItems = "HasMigratedItems"
 
     //String values
     static let Language = "Lang"
@@ -53,7 +52,6 @@ class FabricHelper: NSObject {
         keys[FabircKeys.Pencil] = UserDefaults.standard.bool(forKey: "isUsingApplePencil").asString
         keys[FabircKeys.Watch] = watchStatus
         keys[FabircKeys.ENPublish] = UserDefaults.standard.bool(forKey: "EvernotePubUsed").asString
-        keys[FabircKeys.MigratedItems] = FTZenDeskManager.hasMigratedContents().asString
 
         keys[FabircKeys.Language] = FTUtils.currentLanguage()
         keys[FabircKeys.Theme] = FTShelfThemeStyle.defaultTheme().title
