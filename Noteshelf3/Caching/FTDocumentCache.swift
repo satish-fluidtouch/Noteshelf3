@@ -160,11 +160,17 @@ final class FTDocumentCache {
 
 extension FTDocumentCache {
     func cachedLocation(for docUUID: String) -> URL {
-        guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {
-            fatalError("Unable to find cache directory")
-        }
         let destinationURL = cacheFolderURL.appendingPathComponent(docUUID).appendingPathExtension(FTFileExtension.ns3)
         return destinationURL
+    }
+
+    func cachedDocumentURL(docUUID: String) -> URL? {
+        let destinationURL = cachedLocation(for: docUUID)
+        if FileManager.default.fileExists(atPath: destinationURL.path(percentEncoded: false)) {
+            return destinationURL
+        } else {
+            return nil
+        }
     }
 
     func cacheShelfItemFor(url: URL, documentUUID: String) {

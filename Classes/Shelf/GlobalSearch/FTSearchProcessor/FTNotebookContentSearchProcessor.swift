@@ -65,7 +65,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                     return
                 }
 
-                let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read);
+                let request = FTDocumentOpenRequest(url: shelfItem.URLforSearchProcessing, purpose: .read);
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] (token, document, _) in
                     if let doc = document {
                         guard let self,
@@ -130,5 +130,21 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
             endBackgroundTask(task)
         }
         self.searchOperationQueue.addOperation(operation);
+    }
+}
+
+extension FTShelfItemProtocol {
+    var URLforSearchProcessing: URL {
+        guard FTDeveloperOption.cachedSearch else {
+            return URL
+        }
+
+        // If the cached document search is enabled
+        if let docUUID = (self as? FTDocumentProtocol)?.documentUUID,
+           let cacheURL = FTDocumentCache.shared.cachedDocumentURL(docUUID: docUUID) {
+            return cacheURL
+        } else {
+            return URL
+        }
     }
 }

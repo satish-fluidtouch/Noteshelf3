@@ -22,6 +22,7 @@ struct FTDeveloperOption {
     static var textToStrokeWrapChar: Bool = false
     static var textToStrokeSnapToLineHeight: Bool = true
     static var cacheTextureTileImage: Bool = false
+    static var cachedSearch: Bool = true
 
    fileprivate struct SliderOptions {
         let title: String
@@ -55,6 +56,8 @@ class FTDeveloperOptionsViewController: UIViewController {
     @IBOutlet private weak var textToStrokeWrapChar: UISwitch?
     @IBOutlet private weak var textToStrokeSnapToLineHeight: UISwitch?
     
+    @IBOutlet private weak var cacheSearchSwitch: UISwitch?
+
     @IBOutlet private weak var aiTokenOption: UIView?
 
     @IBOutlet weak var speedLabel: UILabel!
@@ -126,6 +129,7 @@ class FTDeveloperOptionsViewController: UIViewController {
         textToStrokeWrapChar?.isOn = FTDeveloperOption.textToStrokeWrapChar
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
+        cacheSearchSwitch?.isOn = FTDeveloperOption.cachedSearch
     }
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
@@ -169,6 +173,10 @@ class FTDeveloperOptionsViewController: UIViewController {
 
     @IBAction func toggleEnablePDFSelection(swicth: UISwitch) {
         FTDeveloperOption.enablePDFSelection = swicth.isOn
+    }
+
+    @IBAction func toggleCachedSearch(swicth: UISwitch) {
+        FTDeveloperOption.cachedSearch = swicth.isOn
     }
 
     @IBAction func clearRecents(sender: UIButton?) {
