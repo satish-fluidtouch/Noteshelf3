@@ -785,7 +785,15 @@ extension FTNoteshelfPage : FTPageTagsProtocol
         }
         return []
     }
-    
+
+    func addTags(tags: [String]) {
+        let newOrderedSet = NSMutableOrderedSet(array: tags)
+        self._tags = newOrderedSet.mutableCopy() as! NSMutableOrderedSet
+        if(!self.isInitializationInprogress) {
+            NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument);
+        }
+    }
+
     func addTag(_ tag : String)
     {
         self._tags.add(tag)

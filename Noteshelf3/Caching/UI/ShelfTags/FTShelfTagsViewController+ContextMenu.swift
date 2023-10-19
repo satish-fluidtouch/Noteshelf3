@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - contextMenuConfiguration
 extension FTShelfTagsViewController {
-    
+
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         if indexPath.section == 0 {
             return nil
@@ -40,12 +40,11 @@ extension FTShelfTagsViewController {
             }
             actions.append(editAction)
 
-            let removeTagsAction = UIAction(title: removeTagsTitle, image: UIImage(systemName: "tag.slash"), identifier: nil) { [weak self] (_) in
+            let removeTagsAction = UIAction(title: "sidebar.allTags.contextualMenu.removeTags".localized, image: UIImage(systemName: "tag.slash"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 self.contextMenuSelectedIndexPath = indexPath as IndexPath
                 self.removeTagsOperation()
                 track(EventName.shelf_tag_page_removetags_tap, screenName: ScreenName.shelf_tags)
-
             }
             removeTagsAction.attributes = .destructive
             actions.append(removeTagsAction)
@@ -91,6 +90,7 @@ extension FTShelfTagsViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        self.contextMenuSelectedIndexPath = nil
         if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
             splitContorller.shelfMenuDisplayInfo.isMenuShown = false;
         }
