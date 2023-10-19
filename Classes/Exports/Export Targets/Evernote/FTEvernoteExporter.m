@@ -171,18 +171,18 @@
     //Set tags
     note.tagNames = [[item.tags allObjects] mutableCopy];
     
-    EDAMNoteStoreClient *noteStore = [EvernoteSession sharedSession].primaryNoteStore;
-    
-    [noteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
-        if (nil != error) {
-            NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
-            
-            [self.delegate didFailExportWithError:error withMessage:exportMessage];
-        } else {
-            self.progress.completedUnitCount += 1;
-            [self.delegate didEndExportWithMessage:NSLocalizedString(@"ExportComplete",@"Export Complete!")];
-        }
-    }];
+//    EDAMNoteStoreClient *noteStore = [EvernoteSession sharedSession].primaryNoteStore;
+//
+//    [noteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
+//        if (nil != error) {
+//            NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
+//
+//            [self.delegate didFailExportWithError:error withMessage:exportMessage];
+//        } else {
+//            self.progress.completedUnitCount += 1;
+//            [self.delegate didEndExportWithMessage:NSLocalizedString(@"ExportComplete",@"Export Complete!")];
+//        }
+//    }];
     #endif
 }
 
@@ -205,18 +205,18 @@
         [note setCreated:[NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000]];
         note.content = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"><en-note></en-note>";
         
-        [[EvernoteSession sharedSession].primaryNoteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
-            if (nil != error) {
-                NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
-                
-                [self.delegate didFailExportWithError:error withMessage:exportMessage];
-            }
-            else {
-                self.progress.completedUnitCount += 1;
-                self.evernoteNote = note;
-                [self performSelector:@selector(uploadCurrentPageImageToEvernote) withObject:nil afterDelay:0.001];
-            }
-        }];
+//        [[EvernoteSession sharedSession].primaryNoteStore createNote:note completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
+//            if (nil != error) {
+//                NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
+//
+//                [self.delegate didFailExportWithError:error withMessage:exportMessage];
+//            }
+//            else {
+//                self.progress.completedUnitCount += 1;
+//                self.evernoteNote = note;
+//                [self performSelector:@selector(uploadCurrentPageImageToEvernote) withObject:nil afterDelay:0.001];
+//            }
+//        }];
         #endif
     }
 }
@@ -259,7 +259,7 @@
     NSString *enml = [FTENSyncUtilities enmlRepresentationWithResources:imageArray];
     [self.evernoteNote setContent:[[NSString alloc] initWithFormat:EVERNOTE_NOTE_TEMPLATE,enml]];
     [self.evernoteNote setUpdated:[NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000]];
-    EDAMNoteStoreClient *noteStore = [EvernoteSession sharedSession].primaryNoteStore;
+    EDAMNoteStoreClient *noteStore = [EvernoteSession sharedSession].noteStore;
     
     ////////////////////////////////////////
     //Publish tags to Evernote
@@ -268,19 +268,19 @@
     [self.evernoteNote setTagNames:tempSet.allObjects.mutableCopy];
 
     ////////////////////////////////////////
-    [noteStore updateNote:self.evernoteNote completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
-        if(nil != error) {
-            NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
-            //Show error message and conclude export
-            [self.delegate didFailExportWithError:error withMessage:exportMessage];
-            
-        }
-        else {
-            self.currentIndex++;
-            self.progress.completedUnitCount += 1;
-            [self performSelector:@selector(uploadCurrentPageImageToEvernote) withObject:nil afterDelay:0.001];
-        }
-    }];
+//    [noteStore updateNote:self.evernoteNote completion:^(EDAMNote * _Nullable note, NSError * _Nullable error) {
+//        if(nil != error) {
+//            NSString *exportMessage = NSLocalizedString(@"EvernoteUploadFailed", @"Unexpected error. Upload to Evernote failed");
+//            //Show error message and conclude export
+//            [self.delegate didFailExportWithError:error withMessage:exportMessage];
+//
+//        }
+//        else {
+//            self.currentIndex++;
+//            self.progress.completedUnitCount += 1;
+//            [self performSelector:@selector(uploadCurrentPageImageToEvernote) withObject:nil afterDelay:0.001];
+//        }
+//    }];
     #endif
 }
 

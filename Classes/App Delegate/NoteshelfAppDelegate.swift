@@ -87,7 +87,7 @@ let AppDelegate = UIApplication.shared.delegate as! NoteshelfAppDelegate
         //Evernote related
         #if !targetEnvironment(macCatalyst)
         if EvernoteSession.shared().isAuthenticated {
-            Analytics.setUserProperty((EvernoteSession.shared().isBusinessUser ? "business" : "personal"), forName: "ns_evernote_user")
+            Analytics.setUserProperty((EvernoteSession.shared().businessUser != nil ? "business" : "personal"), forName: "ns_evernote_user")
         } else {
             Analytics.setUserProperty("none", forName: "ns_evernote_user")
         }

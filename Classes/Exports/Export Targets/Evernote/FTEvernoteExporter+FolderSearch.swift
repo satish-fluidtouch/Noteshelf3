@@ -17,73 +17,73 @@ extension FTEvernoteExporter : FTExporterProtocol{
     //MARK:- FolderSearch
     @objc func fetchFolderObject(withCompletionHandler completionHandler: @escaping FolderSearchCompletionHandler)
     {
-        self.folderSearchCompletionHandler = completionHandler;
-        
-        let folderInfo = UserDefaults.standard.value(forKey: PersistenceKey_ExportTarget_FolderID_Evernote) as? NSDictionary
-        #if !targetEnvironment(macCatalyst)
-        let session = EvernoteSession.shared;
-        let noteStore = session.primaryNoteStore();
-        
-        if nil == folderInfo {
-            self.fetchDefaultNotebook();
-        }
-        else {
-            let guid = folderInfo!["guid"] as! String;
-            
-            if nil != noteStore {
-                noteStore?.fetchNotebook(withGuid: guid, completion: { (notebook, error) in
-                    if(nil != error) {
-                        self.fetchDefaultNotebook();
-                    }
-                    else {
-                        self.setAsCurrentNotebook(notebook);
-                    }
-                })
-            }
-        }
-        #endif
+//        self.folderSearchCompletionHandler = completionHandler;
+//
+//        let folderInfo = UserDefaults.standard.value(forKey: PersistenceKey_ExportTarget_FolderID_Evernote) as? NSDictionary
+//        #if !targetEnvironment(macCatalyst)
+//        let session = EvernoteSession.shared;
+//        let noteStore = session.primaryNoteStore();
+//
+//        if nil == folderInfo {
+//            self.fetchDefaultNotebook();
+//        }
+//        else {
+//            let guid = folderInfo!["guid"] as! String;
+//
+//            if nil != noteStore {
+//                noteStore?.fetchNotebook(withGuid: guid, completion: { (notebook, error) in
+//                    if(nil != error) {
+//                        self.fetchDefaultNotebook();
+//                    }
+//                    else {
+//                        self.setAsCurrentNotebook(notebook);
+//                    }
+//                })
+//            }
+//        }
+//        #endif
     }
     
     func fetchDefaultNotebook() {
-        #if !targetEnvironment(macCatalyst)
-        let session = EvernoteSession.shared;
-        let noteStore = session.primaryNoteStore();
-        
-        noteStore?.listNotebooks(completion: { (notebooks, error) in
-            if let _ = error {
-                self.folderSearchCompletionHandler(nil, false);
-            }
-            else {
-                if let notebooks = notebooks  {
-                    let noteshelfNotebooks = notebooks.filter {$0.name == EvernoteRootFolder};
-                    if noteshelfNotebooks.count > 0 {
-                        self.setAsCurrentNotebook(noteshelfNotebooks[0]);
-                    }
-                    else {
-                        self.createDefaultNotebook();
-                    }
-                }
-            }
-        });
-        #endif
+//        #if !targetEnvironment(macCatalyst)
+//        let session = EvernoteSession.shared;
+//        let noteStore = session.primaryNoteStore();
+//
+//        noteStore?.listNotebooks(completion: { (notebooks, error) in
+//            if let _ = error {
+//                self.folderSearchCompletionHandler(nil, false);
+//            }
+//            else {
+//                if let notebooks = notebooks  {
+//                    let noteshelfNotebooks = notebooks.filter {$0.name == EvernoteRootFolder};
+//                    if noteshelfNotebooks.count > 0 {
+//                        self.setAsCurrentNotebook(noteshelfNotebooks[0]);
+//                    }
+//                    else {
+//                        self.createDefaultNotebook();
+//                    }
+//                }
+//            }
+//        });
+//        #endif
     }
     
     fileprivate func createDefaultNotebook() {
-        #if !targetEnvironment(macCatalyst)
-        let session = EvernoteSession.shared;
-        let noteStore = session.primaryNoteStore();
-        let newNotebook = EDAMNotebook();
-        newNotebook.name = EvernoteRootFolder;
-        
-        noteStore?.create(newNotebook, completion: { (notebook, error) in
-            if let _ = error {
-                self.folderSearchCompletionHandler(nil, false);
-            }
-            else {
-                self.setAsCurrentNotebook(notebook);
-            }
-        });
-        #endif
+//        #if !targetEnvironment(macCatalyst)
+//        let session = EvernoteSession.shared;
+//        let noteStore = session.primaryNoteStore();
+//        let newNotebook = EDAMNotebook();
+//        newNotebook.name = EvernoteRootFolder;
+//
+//        noteStore?.create(newNotebook, completion: { (notebook, error) in
+//            if let _ = error {
+//                self.folderSearchCompletionHandler(nil, false);
+//            }
+//            else {
+//                self.setAsCurrentNotebook(notebook);
+//            }
+//        });
+//        #endif
     }
     #if !targetEnvironment(macCatalyst)
     func setAsCurrentNotebook(_ notebook: EDAMNotebook!) {

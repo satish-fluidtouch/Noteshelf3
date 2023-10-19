@@ -18,33 +18,29 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
         if(self.isLoggedIn()) {
             account.statusText = account.loadingText;
             updateBlock(account);
-            #if !targetEnvironment(macCatalyst)
-            let evernoteSession = EvernoteSession.shared;
-            let userStore = evernoteSession.userStore;
+    #if !targetEnvironment(macCatalyst)
+            let evernoteSession = EvernoteSession.shared();
+            let userStore = evernoteSession?.userStore();
+            if let authToken = evernoteSession?.authenticationToken as? String {
+                let user = userStore?.getUser(authToken)
+                let username: String;
 
-            userStore?.fetchUser(completion: { user, error in
-                if (nil != error) {
-                    account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
-                    completionBlock(account, nil);
+                if let email = user?.email, email != "" {
+                    username = email;
+                } else if let user_name = user?.username, user_name != "" {
+                    username = user_name;
+                } else if let name = user?.name, name != "" {
+                    username = name;
                 } else {
-                    let username: String;
-
-                    if let email = user?.email, email != "" {
-                        username = email;
-                    } else if let user_name = user?.username, user_name != "" {
-                        username = user_name;
-                    } else if let name = user?.name, name != "" {
-                        username = name;
-                    } else if evernoteSession.userDisplayName != "" {
-                        username = evernoteSession.userDisplayName;
-                    } else {
-                        username = FTEmptyDisplayName;
-                    }
-                    account.userName = username;
-                    self.fetchUsageDetails(account, onCompelltion: completionBlock);
+                    username = FTEmptyDisplayName;
                 }
-            })
-            #endif
+                account.userName = username;
+                self.fetchUsageDetails(account, onCompelltion: completionBlock);
+            } else {
+                account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
+                completionBlock(account, nil);
+            }
+        #endif
         } else {
             account.statusText = NSLocalizedString("EvernoteHelpMessage", comment: "Publish notebooks to your Evernote account");
             completionBlock(account, NSError(domain: "NSUSERNOTLOGGEDIN", code: 103, userInfo: nil));
@@ -53,55 +49,50 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
 
     private func fetchUsageDetails(_ account: FTCloudAccountInfo,
                                    onCompelltion completionBlock : @escaping ((FTCloudAccountInfo, NSError?) -> Void) ) {
-        #if !targetEnvironment(macCatalyst)
-        let evernoteSession = EvernoteSession.shared;
-        
-        var currentStore: EDAMNoteStoreClient? = evernoteSession.primaryNoteStore();
-        if(evernoteSession.isBusinessUser) {
-            currentStore = evernoteSession.businessNoteStore();
+#if !targetEnvironment(macCatalyst)
+        guard let evernoteSession = EvernoteSession.shared() else {
+            account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
+            completionBlock(account, nil)
+            return
         }
-        guard isLoggedIn(),let store = currentStore  else {
+        guard isLoggedIn(),let authToken = evernoteSession.authenticationToken as? String  else {
             account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
             completionBlock(account, nil);
             return;
         }
 
-        store.fetchSyncState(completion: { syncState, error in
-            if(nil != error) {
-                account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
-                completionBlock(account, nil);
-            } else {
-                account.consumedBytes = evernoteSession.personalUploadUsage;
-                var accountingInfo = evernoteSession.user?.accounting;
+        EvernoteNoteStore(session: evernoteSession).getSyncState { edamSyncState in
+            let user = evernoteSession.userStore()?.getUser(authToken)
+            //account.consumedBytes = user?.accounting.;
+            var accountingInfo = user?.accounting;
 
-                if(evernoteSession.isBusinessUser) {
-                    accountingInfo = evernoteSession.businessUser?.accounting;
-                    account.consumedBytes = evernoteSession.businessUploadUsage;
-                }
-
-                account.totalBytes = accountingInfo?.uploadLimit.int64Value ?? 0;
-
-                if(nil != syncState) {
-                    account.consumedBytes = syncState!.uploaded.int64Value;
-                }
-
-                let usedSize = account.spaceUsedFormatString();
-                if(account.userName == FTEmptyDisplayName) {
-                    account.statusText = usedSize;
-                } else {
-                    let userName = account.usernameFormatString();
-                    //Added condition to check for totalbytes which will return as 0 when there is no internet connection while quering.
-                    //Instead of showing empty used ,here we will be just shwoing the logged user name/id
-                    if(account.totalBytes! > 0) {
-                        account.statusText = "\(userName)\n\(usedSize)"
-                    } else {
-                        account.statusText = "\(userName)\n";
-                    }
-                }
-                completionBlock(account, nil);
+            if let businessUser = evernoteSession.businessUser, businessUser.active {
+                accountingInfo = evernoteSession.businessUser?.accounting;
+                //account.consumedBytes = accountingInfo;
             }
-        })
-        #endif
+
+            account.totalBytes = accountingInfo?.uploadLimit ?? 0;
+            account.consumedBytes = edamSyncState?.uploaded;
+
+            let usedSize = account.spaceUsedFormatString();
+            if(account.userName == FTEmptyDisplayName) {
+                account.statusText = usedSize;
+            } else {
+                let userName = account.usernameFormatString();
+                //Added condition to check for totalbytes which will return as 0 when there is no internet connection while quering.
+                //Instead of showing empty used ,here we will be just shwoing the logged user name/id
+                if(account.totalBytes! > 0) {
+                    account.statusText = "\(userName)\n\(usedSize)"
+                } else {
+                    account.statusText = "\(userName)\n";
+                }
+            }
+            completionBlock(account, nil);
+        } failure: { error in
+            account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
+            completionBlock(account, error as NSError?);
+        }
+#endif
     }
 
     override func isLoggedIn() -> Bool {
@@ -114,18 +105,18 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
 
     override func showLoginView(withViewController viewController: UIViewController, completion: @escaping ((Bool) -> Void)) {
         #if !targetEnvironment(macCatalyst)
-        EvernoteSession.shared().authenticate(with: viewController, preferRegistration: false, completion: { error in
+        EvernoteSession.shared().authenticate(with: viewController) { error in
             self.clearEvernotePersistentData();
             completion(EvernoteSession.shared().isAuthenticated)
-        })
+        }
         #endif
     }
 
     override func logOut(_ onCompletion : @escaping ((Bool) -> Void)) {
         #if !targetEnvironment(macCatalyst)
-        let evernoteSession = EvernoteSession.shared;
-        if (evernoteSession.isAuthenticated) {
-            evernoteSession.unauthenticate();
+
+        if let evernoteSession = EvernoteSession.shared(),(evernoteSession.isAuthenticated) {
+            evernoteSession.logout();
         }
         #endif
         self.clearEvernotePersistentData();

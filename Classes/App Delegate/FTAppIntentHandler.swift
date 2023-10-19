@@ -121,9 +121,9 @@ final class FTAppIntentHandler {
                 intentHandler?.importItem(item)
             }
             return true
-        } else if (url.scheme == "en-pssramakrishnna") {
+        } else if (url.scheme == "noteshelf3-3461") {
             #if !targetEnvironment(macCatalyst)
-            return EvernoteSession.shared().handleOpenURL(url)
+            //return EvernoteSession.shared().handleOpenURL(url)
             #endif
         } else if let googleURLScheme = FTAppIntentHandler.googleURLScheme, url.scheme == googleURLScheme {
             #if !targetEnvironment(macCatalyst)
