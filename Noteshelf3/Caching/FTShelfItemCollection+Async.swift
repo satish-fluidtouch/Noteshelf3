@@ -42,45 +42,6 @@ extension FTDocumentProtocolInternal {
 
 // MARK: TagsPages
 extension FTNoteshelfDocument {
-  
-    func fetchTagsPages(shelfItem: FTDocumentItemProtocol, selectedTag: String) -> [FTShelfTagsItem] {
-        var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
-        self.pages().forEach { page in
-            if let tagPage = page as? FTThumbnailable {
-                var tags = tagPage.tags()
-                // Check if the selected tag is All Tags or Individual
-                // If the received selectedtag is Empty, treate it as "All Tags"
-                if !selectedTag.isEmpty {
-                    let filteredTags = tags.filter {$0 == selectedTag}
-                    tags = filteredTags
-                }
-                if tags.count > 0 {
-                    var tagsPage = FTShelfTagsItem(shelfItem: shelfItem, type: .page, page: tagPage, pageIndex: page.pageIndex())
-                    tagsPage.setTags(tags)
-                    tagsPage.document = self
-                    tagsPages.append(tagsPage)
-                }
-            }
-        }
-        return tagsPages
-    }
-
-    func fetchSearchTagsPages(shelfItem: FTDocumentItemProtocol, selectedTags: [String]) -> [FTShelfTagsItem] {
-        var tagsPages: [FTShelfTagsItem] = [FTShelfTagsItem]()
-        self.pages().forEach { page in
-            if let tagPage = page as? FTThumbnailable {
-                let tags = tagPage.tags()
-                let considerForResult = selectedTags.allSatisfy(tags.contains(_:))
-                if considerForResult && !tags.isEmpty {
-                    var tagsPage = FTShelfTagsItem(shelfItem: shelfItem, type: .page, page: tagPage, pageIndex: page.pageIndex())
-                    tagsPage.setTags(tags)
-                    tagsPages.append(tagsPage)
-                }
-            }
-        }
-        return tagsPages
-    }
-
     func addPageTag(tag: String) {
         self.pages().forEach { page in
             (page as? FTNoteshelfPage)?.addTag(tag)
