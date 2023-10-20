@@ -396,6 +396,10 @@ class FTTagsProvider {
     }
 
     func shelfTagsItemForBook(documentItem: FTDocumentItemProtocol) -> FTShelfTagsItem {
+        objc_sync_enter(self.shelfTagsItems);
+        defer {
+            objc_sync_exit(self.shelfTagsItems);
+        }
         if let docUUID = documentItem.documentUUID {
             if let shelfTagItem  = self.shelfTagsItems[docUUID] {
                 return shelfTagItem
@@ -411,6 +415,10 @@ class FTTagsProvider {
     }
 
     func shelfTagsItemForPage(documentItem: FTDocumentItemProtocol, pageUUID: String, tags: [String]) -> FTShelfTagsItem {
+        objc_sync_enter(self.shelfTagsItems);
+        defer {
+            objc_sync_exit(self.shelfTagsItems);
+        }
         if let docUUID = documentItem.documentUUID {
             if let shelfTagItem  = self.shelfTagsItems["\(docUUID)_\(pageUUID)"] {
                 return shelfTagItem
