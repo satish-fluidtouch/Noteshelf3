@@ -143,11 +143,7 @@ final class FTCacheTagsProcessor {
         }
         for key in plistTags.keys {
             if var ids = plistTags[key] {
-                for (index, docId) in ids.enumerated().reversed() {
-                    if documentUUID == docId {
-                        ids.remove(at: index)
-                    }
-                }
+                ids.removeAll(where: { documentUUID == $0 })
                 plistTags[key] = ids
             }
         }
@@ -211,11 +207,7 @@ final class FTCacheTagsProcessor {
                 var plistTags = cachedTagsPlist.tags
                 for key in plistTags.keys {
                     if var ids = plistTags[key] {
-                        for (index, docId) in ids.enumerated().reversed() {
-                            if documentUUID == docId {
-                                ids.remove(at: index)
-                            }
-                        }
+                        ids.removeAll(where: { documentUUID == $0 })
                         plistTags[key] = ids
                     }
                 }
