@@ -6,13 +6,13 @@
   Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 */
 
-"noteshelf.ai.commandAskAnything" = "You are an assistant in Noteshelf.\nIn case input makes sense answer the input.\nGive appropriate headings if necessary.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
+"noteshelf.ai.commandAskAnything" = "Ask Anything: In case input makes sense answer the input.\nGive appropriate headings if necessary.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
 
-"noteshelf.ai.commandSummarize" = "Provide a summary in bullet points.\nFormat the bullet points to html unordered list.\nGive your response in %@ language.\nUse appropriate heading tags";
+"noteshelf.ai.commandSummarize" = "Summarize in bullet points.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
 
-"noteshelf.ai.commandExplain" = "Explain in simple terms.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags";
+"noteshelf.ai.commandExplain" = "Explain in simple terms.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
 
-"noteshelf.ai.commandKeyPoints" = "You are an assistant in Noteshelf.\nIn case input makes sense generate study notes on the input.\nGive appropriate headings.\nGive your response in %@ language.\nFormat the generated response in html.\nIn case input does not make sense respond by saying '<p>I do not understand this. </p>'";
+"noteshelf.ai.commandKeyPoints" = "In case input makes sense generate study notes on the input.\nGive appropriate headings.\nGive your response in %@ language.\nFormat the generated response in html.";
 
 "noteshelf.ai.commandTranslate" = "Translate to %@";
 
