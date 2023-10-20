@@ -293,7 +293,7 @@ typedef enum : NSInteger {
 #define EVERNOTE_LOG(s,...)
 #endif
 
-#define EVERNOTE_CONSUMER_KEY @"pssramakrishnna"
+#define EVERNOTE_CONSUMER_KEY @"noteshelf3-3461"
 
 /*
 #define EVERNOTE_NOTE_TEMPLATE  @"<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"> %@"

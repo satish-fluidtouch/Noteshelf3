@@ -157,13 +157,11 @@ extension FTNoteshelfDocument : FTDocumentFileItems
     }
 
     func updateDocumentTags(tags: [String]) {
-        var contents = self.propertyInfoPlist()?.contentDictionary
-        contents?[DOCUMENT_TAGS_KEY] = tags
-        self.propertyInfoPlist()?.updateContent(contents as? NSObjectProtocol)
+        self.propertyInfoPlist()?.setObject(tags, forKey: DOCUMENT_TAGS_KEY);
         if !self.pages().isEmpty, let firstPage = self.pages().first {
-            firstPage.isDirty = true
+          firstPage.isDirty = true
         }
-    }
+      }
 
     func assignmentInfoPlist(createIfNeeded : Bool) -> FTFileItemPlist?
     {
