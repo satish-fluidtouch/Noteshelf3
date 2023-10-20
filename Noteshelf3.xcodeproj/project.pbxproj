@@ -322,8 +322,9 @@
 		4708DEC32A022B870009F071 /* FTThemesLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8521B24F521BA00EF893A /* FTThemesLibrary.swift */; };
 		4708DEC82A026D100009F071 /* FTAppIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57454122F9875300310882 /* FTAppIntentHandler.swift */; };
 		4708DEDC2A0279960009F071 /* FTFileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A59671E726F0B0044E9F1 /* FTFileImporter.swift */; };
+		4709F4242AE161050085A8C9 /* FTTagItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709F4232AE161040085A8C9 /* FTTagItemModel.swift */; };
+		4709F4262AE168120085A8C9 /* FTCachedDocumentPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */; };
 		471B90EC29F0ED7C00861A2B /* FTTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450192924E24200B6113B /* FTTagsView.swift */; };
-		471B90ED29F0ED7F00861A2B /* FTTagsView+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */; };
 		471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450152924E24200B6113B /* FTTagCollectionCell.swift */; };
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
@@ -736,7 +737,6 @@
 		BA50E0342959CB2B00CDC0FD /* FTShelfTagsPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474DFE2B291A5618006AE5BC /* FTShelfTagsPageModel.swift */; };
 		BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476991E4291BAE7A0066BB51 /* FTShelfPagesLayout.swift */; };
 		BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */; };
-		BA50E0382959CB3600CDC0FD /* FTDocumentPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207E291E52200066C429 /* FTDocumentPlist.swift */; };
 		BA50E0392959CB3900CDC0FD /* FTDocumentPropertyPlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */; };
 		BA50E03A2959CB3C00CDC0FD /* FTCacheTagsProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */; };
 		BA50E03B2959CB3F00CDC0FD /* FTSidebarViewModel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */; };
@@ -2921,6 +2921,8 @@
 		42D8BC3628C8778300B4AED0 /* FTThumbnailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailsCell.swift; sourceTree = "<group>"; };
 		470492701E1CB25A00848DAC /* FTTargetsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTargetsTableViewCell.swift; sourceTree = "<group>"; };
 		470492731E1CB47800848DAC /* FTTargetCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTargetCollectionViewCell.swift; sourceTree = "<group>"; };
+		4709F4232AE161040085A8C9 /* FTTagItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTagItemModel.swift; sourceTree = "<group>"; };
+		4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCachedDocumentPlist.swift; sourceTree = "<group>"; };
 		470B9E7D1EC3181000A5B0EB /* FTCenteredCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCenteredCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		471A47391FA1AB7500E8E3DF /* FTCustomCoverStyleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomCoverStyleProtocol.swift; sourceTree = "<group>"; };
 		471A473B1FA1ABBF00E8E3DF /* FTNoBandCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoBandCoverStyle.swift; sourceTree = "<group>"; };
@@ -2938,7 +2940,6 @@
 		473EA5EF1FB45A3400D7614F /* FTThemeableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThemeableLabel.swift; sourceTree = "<group>"; };
 		473EA5F11FB460A000D7614F /* ActionLabel_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionLabel_Extension.swift; sourceTree = "<group>"; };
 		473F073F1F4477A800D79F9E /* FTPrivateProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPrivateProtocols.h; sourceTree = "<group>"; };
-		4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTTagsView+ContextMenu.swift"; sourceTree = "<group>"; };
 		47446B921EFCF5E60006EFC5 /* ENSyncRecord_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSyncRecord_Extension.swift; sourceTree = "<group>"; };
 		47447CBB1FA0540900E70023 /* FTCustomCoverStyleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomCoverStyleCollectionViewCell.swift; sourceTree = "<group>"; };
 		4744E4722A28B18C00A9795A /* FTModalScaleUpPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalScaleUpPresentationController.swift; sourceTree = "<group>"; };
@@ -3017,7 +3018,6 @@
 		47C7C439297E633600AE4648 /* FTShelfContentCompactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfContentCompactView.swift; sourceTree = "<group>"; };
 		47C7C43A297E633600AE4648 /* FTShelfCompactContentContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCompactContentContainerView.swift; sourceTree = "<group>"; };
 		47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsPlist.swift; sourceTree = "<group>"; };
-		47CA207E291E52200066C429 /* FTDocumentPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPlist.swift; sourceTree = "<group>"; };
 		47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTSidebarViewModel+Tags.swift"; sourceTree = "<group>"; };
 		47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsProcessor.swift; sourceTree = "<group>"; tabWidth = 4; };
 		47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsRepresentableView.swift; sourceTree = "<group>"; };
@@ -7289,7 +7289,8 @@
 				477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */,
 				47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */,
 				47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */,
-				47CA207E291E52200066C429 /* FTDocumentPlist.swift */,
+				4709F4232AE161040085A8C9 /* FTTagItemModel.swift */,
+				4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */,
 				47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */,
 				4747C4242A962F0800B1AB59 /* FTAnalyticsConstants.swift */,
 			);
@@ -7300,7 +7301,6 @@
 			isa = PBXGroup;
 			children = (
 				476450192924E24200B6113B /* FTTagsView.swift */,
-				4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */,
 				476450152924E24200B6113B /* FTTagCollectionCell.swift */,
 				476450172924E24200B6113B /* FTTagCollectionCell.xib */,
 				476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */,
@@ -11624,7 +11624,6 @@
 				E7A51E652A051614003C0DC0 /* FTPopoverPresentationController.swift in Sources */,
 				472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */,
 				BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */,
-				471B90ED29F0ED7F00861A2B /* FTTagsView+ContextMenu.swift in Sources */,
 				E7B77CDE29B0657B0013E794 /* FTImagePicker.swift in Sources */,
 				E7B77CF129B06C1A0013E794 /* UIWindow+Extension.swift in Sources */,
 				E7B77CEF29B06A960013E794 /* UIAlertController+Extension.swift in Sources */,
@@ -12468,6 +12467,7 @@
 				BAF392BF2859ADF00067CA9F /* UIImage+.swift in Sources */,
 				BAF392C12859ADF00067CA9F /* FTRecognitionCache.swift in Sources */,
 				BAF392C22859ADF00067CA9F /* FTPageViewController_GestureHandler.swift in Sources */,
+				4709F4242AE161050085A8C9 /* FTTagItemModel.swift in Sources */,
 				E7AE25A1288FD47200402413 /* FTCommonThemeStorage.swift in Sources */,
 				090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */,
 				BAF392C32859ADF00067CA9F /* LastModifiedBy.swift in Sources */,
@@ -12534,6 +12534,7 @@
 				42A971D828B758FF00EDAC90 /* FTAudioCollectionCell.swift in Sources */,
 				BAF392F92859ADF00067CA9F /* FTWhatsNewHelper.swift in Sources */,
 				BAF392FB2859ADF00067CA9F /* SwiftSimplify.swift in Sources */,
+				4709F4262AE168120085A8C9 /* FTCachedDocumentPlist.swift in Sources */,
 				BAF392FC2859ADF00067CA9F /* FTGoogleDriveClient.swift in Sources */,
 				972B53222A45CB7A001158D9 /* FTNotebookShadowView.swift in Sources */,
 				BAF392FD2859ADF00067CA9F /* FTShelfItemSearching.swift in Sources */,
@@ -12788,7 +12789,6 @@
 				E7B9474D291244AE00BE4430 /* FTShareFormatHostingController.swift in Sources */,
 				BAF393D52859ADF00067CA9F /* FTNoInternetReusableView.swift in Sources */,
 				BAF393D62859ADF00067CA9F /* FTSlideInPresentAnimator.swift in Sources */,
-				BA50E0382959CB3600CDC0FD /* FTDocumentPlist.swift in Sources */,
 				BAF393D72859ADF00067CA9F /* FTiOSShelfCategoryHeaderView.swift in Sources */,
 				BAF393D92859ADF00067CA9F /* FTDocumentErrorCodes.swift in Sources */,
 				4747C4092A95EC2A00B1AB59 /* FTAnalytics.swift in Sources */,

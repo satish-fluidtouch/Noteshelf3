@@ -280,7 +280,15 @@ extension FTPDFRenderViewController: FTAddMenuSelectImageProtocal {
 }
 
 //MARK:- TagsViewControllerDelegate
+var selectedShelfTagItems = Dictionary<String, FTShelfTagsItem>()
+
 extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
+    func didDismissTags() {
+        let items = selectedShelfTagItems.values.reversed();
+        selectedShelfTagItems.removeAll()
+        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
+    }
+
     func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
 
     }
@@ -289,40 +297,28 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
 
-    func didAddTag(tag: FTTagModel) async throws {
-        if let item = self.currentShelfTagsItem() {
-            try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: [item], updateType: .add)
-            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
-        }
+    func didAddTag(tag: FTTagModel) {
+        self.updateShelfTagItemsFor(tag: tag)
     }
 
-    func didUnSelectTag(tag: FTTagModel) async throws {
-        if let item = self.currentShelfTagsItem() {
-            try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: [item], updateType: .remove)
-            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
-        }
+    func didUnSelectTag(tag: FTTagModel) {
+        self.updateShelfTagItemsFor(tag: tag)
     }
 
-    func didRenameTag(tag: FTTagModel, renamedTag: FTTagModel) async throws {
-        if let item = self.currentShelfTagsItem(), let currentDocument = item.document {
-            try await FTShelfTagsUpdateHandler.shared.renameTag(tag: tag, with: renamedTag, for: currentDocument)
-            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+    private func updateShelfTagItemsFor(tag: FTTagModel) {
+        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
+            if let page = self.currentlyVisiblePage() as? FTThumbnailable
+                , let documentItem = self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol {
+                tagModel.updateTagForPages(documentItem: documentItem, pages: [page]) { [weak self] items in
+                    guard let self = self else { return }
+                    items.forEach { item in
+                        (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
+                        selectedShelfTagItems[page.uuid] = item;
+                        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+                    }
+                }
+            }
         }
-    }
-
-    func didDeleteTag(tag: FTTagModel) async throws {
-        if let item = self.currentShelfTagsItem(), let currentDocument = item.document {
-            try await FTShelfTagsUpdateHandler.shared.deleteTag(tag: tag, for: currentDocument)
-            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
-        }
-    }
-
-    private func currentShelfTagsItem() -> FTShelfTagsItem? {
-        if let page = self.currentlyVisiblePage() as? FTThumbnailable {
-            let item = FTShelfTagsItem(shelfItem: self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol, type: .page, page: page, pageIndex: page.pageIndex())
-            return item
-        }
-        return nil
     }
 
 }

@@ -12,7 +12,7 @@ import FTCommon
 struct FTShelfTagsRepresentableView: UIViewControllerRepresentable {
 
     typealias UIViewControllerType = FTTagsViewController
-    var tags: [FTTagModel] = []
+    var tags: [FTTagItemModel] = []
     weak var delegate: FTTagsViewControllerDelegate?
 
     func makeUIViewController(context: Context) -> FTTagsViewController {
