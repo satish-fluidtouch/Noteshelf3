@@ -99,7 +99,7 @@ extension FTShelfImage {
             }
         }
         catch {
-            
+
         }
         return thumbImage;
     };

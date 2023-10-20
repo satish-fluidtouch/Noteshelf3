@@ -31,6 +31,9 @@
 		0938F4222362E07900DFC7F3 /* FTCollectionName_Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938F4202362E07900DFC7F3 /* FTCollectionName_Utils.swift */; };
 		0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */; };
 		093D85AA2A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D85A92A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift */; };
+		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
+		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
+		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
 		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
 		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
@@ -43,6 +46,7 @@
 		097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */; };
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
+		099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
 		09ABDCA52A790F93008F144D /* FTOpenAICommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC982A790F93008F144D /* FTOpenAICommand.swift */; };
 		09ABDCA62A790F93008F144D /* FTOpenAICommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC992A790F93008F144D /* FTOpenAICommandType.swift */; };
 		09ABDCA72A790F93008F144D /* FTOpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC9A2A790F93008F144D /* FTOpenAI.swift */; };
@@ -57,6 +61,9 @@
 		09ABDCB42A791077008F144D /* FTPageViewController_OpenAIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */; };
 		09AC0D5C2A83B3AC00375B1F /* FTPremiumUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
+		09BC391A2ACC4B370011D8B0 /* URL_WatchRecord_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09591AEC202C4B79008848DE /* URL_WatchRecord_Extension.swift */; };
+		09BC391B2ACC4B9D0011D8B0 /* URL+ImagePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92305088215E09F40043F646 /* URL+ImagePath.swift */; };
+		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
 		09C3696A2A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369662A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift */; };
 		09C3696B2A5EA6EB009BCC3F /* FTColorEyeDropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369682A5EA6EB009BCC3F /* FTColorEyeDropperView.swift */; };
 		09C3696C2A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369692A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift */; };
@@ -753,6 +760,7 @@
 		BA6C51D428DC728F006504EB /* FileManager+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CD28DC728E006504EB /* FileManager+Async.swift */; };
 		BA6C51D528DC728F006504EB /* Cache+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CE28DC728E006504EB /* Cache+Log.swift */; };
 		BA6C51D628DC728F006504EB /* FTDocumentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CF28DC728E006504EB /* FTDocumentCache.swift */; };
+		BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
 		BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */; };
 		BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA65529766D2900946CFE /* SwiftyDropbox */; };
 		BA8BA65F29782E9500946CFE /* FTAdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8465E1921EF057F00F892AB /* FTAdvancedViewController.swift */; };
@@ -799,8 +807,9 @@
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
-		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
+		BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF0DD542A6FE30D006D293B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0DD532A6FE30D006D293B /* SDWebImage */; };
@@ -2047,6 +2056,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0964D0672AB9C27400C79C01;
+			remoteInfo = "Noteshelf3 Thumbnail";
+		};
 		5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2081,6 +2097,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C8140D30232667B60053FC86;
 			remoteInfo = "Noteshelf Action";
+		};
+		BADB2D172ACECA0200B1B52A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAA84E432873105500DE801B;
+			remoteInfo = FTCommon;
 		};
 		BAF0DCCE2A6FE2A9006D293B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2148,16 +2171,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */ = {
+		BAB258B8295B1B400072AEBB /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
+				0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */,
+				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */,
 			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BAF3959A2859ADF10067CA9F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2271,6 +2295,9 @@
 		096497C322DD8E9700A6993D /* FTPageViewController_GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageViewController_GestureHandler.swift; sourceTree = "<group>"; };
 		0964A6C22338A99600337464 /* FTScanDocumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTScanDocumentService.swift; sourceTree = "<group>"; };
 		0964CB672201704A0001E506 /* FTAnnotationBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotationBaseView.swift; sourceTree = "<group>"; };
+		0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf3 Thumbnail.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProvider.swift; sourceTree = "<group>"; };
+		0964D06D2AB9C27500C79C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09668A061EC5720B00E042F4 /* FTRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRootViewController.swift; sourceTree = "<group>"; };
 		09668A0C1EC594C600E042F4 /* FTDropboxError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDropboxError.swift; sourceTree = "<group>"; };
 		0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSharedGroupID.swift; sourceTree = "<group>"; };
@@ -2404,6 +2431,7 @@
 		099C92102A8CC23500C1FD07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MyScriptLanguageLocalizable.strings"; sourceTree = "<group>"; };
 		099C92112A8CC23700C1FD07 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MyScriptLanguageLocalizable.strings; sourceTree = "<group>"; };
 		099C92122A8CC23A00C1FD07 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MyScriptLanguageLocalizable.strings; sourceTree = "<group>"; };
+		099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Thumbnail.entitlements"; sourceTree = "<group>"; };
 		099F722020526FC7004D3518 /* default_paper_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_paper_image.png; sourceTree = "<group>"; };
 		099F722120526FC7004D3518 /* default_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover_image.png; sourceTree = "<group>"; };
 		09A3870D210763F4005E4000 /* FTAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotation.swift; sourceTree = "<group>"; };
@@ -2454,6 +2482,7 @@
 		09B924BC1EC5F8C400030EAA /* FTSmartProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSmartProgressView.swift; sourceTree = "<group>"; };
 		09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController_Mac_Extension.swift; sourceTree = "<group>"; };
 		09BB70AC21F84EF20065B781 /* FTBackgroundTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackgroundTexture.swift; sourceTree = "<group>"; };
+		09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQLThumbnail_Error.swift; sourceTree = "<group>"; };
 		09BD1DC021FAF59C000D73D5 /* FTAudioUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTAudioUtils.h; sourceTree = "<group>"; };
 		09C0066E1E49C15400C491F8 /* FTLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLogger.swift; sourceTree = "<group>"; };
 		09C0B6D5240D2178009F5E91 /* FTVerticalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTVerticalLayout.swift; sourceTree = "<group>"; };
@@ -3495,6 +3524,8 @@
 		BA11637B227ACAD500CCC153 /* FTDocumentRenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentRenderViewController.swift; sourceTree = "<group>"; };
 		BA11637E227ACAD500CCC153 /* FTDocumentView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTDocumentView.storyboard; sourceTree = "<group>"; };
 		BA1265452302CDB500AD4647 /* FTPageProtocol_Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageProtocol_Additions.swift; sourceTree = "<group>"; };
+		BA183D2C2AC15F070011EA01 /* export_options.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = export_options.plist; path = fastlane/export_options.plist; sourceTree = SOURCE_ROOT; };
+		BA183D2D2AC15F070011EA01 /* export_options_mac.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = export_options_mac.plist; path = fastlane/export_options_mac.plist; sourceTree = SOURCE_ROOT; };
 		BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNSiCloudManager.swift; sourceTree = "<group>"; };
 		BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfCollectioniCloudRoot.swift; sourceTree = "<group>"; };
 		BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeveloperOptionsViewController.swift; sourceTree = "<group>"; };
@@ -3637,6 +3668,9 @@
 		BA799912216F65FC001DC0D5 /* FTRecentItemEditMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecentItemEditMenuCell.swift; sourceTree = "<group>"; };
 		BA799914216F6EC0001DC0D5 /* FTRecentsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecentsHeaderView.swift; sourceTree = "<group>"; };
 		BA799916216F6ECC001DC0D5 /* FTRecentsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTRecentsHeaderView.xib; sourceTree = "<group>"; };
+		BA7A5F332AB06951006D5284 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
+		BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Thumbnail.swift"; sourceTree = "<group>"; };
 		BA7D891121F07DD300883D82 /* FTWatchRecordingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider.swift; sourceTree = "<group>"; };
 		BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLayouter.swift; sourceTree = "<group>"; };
 		BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomPresentationDelegate.swift; sourceTree = "<group>"; };
@@ -4253,6 +4287,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0964D0652AB9C27400C79C01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */,
+				BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1228730F5800DE801B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4522,6 +4565,17 @@
 			path = Scanner;
 			sourceTree = "<group>";
 		};
+		0964D06A2AB9C27500C79C01 /* Noteshelf3 Thumbnail */ = {
+			isa = PBXGroup;
+			children = (
+				099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */,
+				0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */,
+				09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */,
+				0964D06D2AB9C27500C79C01 /* Info.plist */,
+			);
+			path = "Noteshelf3 Thumbnail";
+			sourceTree = "<group>";
+		};
 		0966EE4C213FE79100B2B456 /* Shared Group Container Related */ = {
 			isa = PBXGroup;
 			children = (
@@ -4558,6 +4612,7 @@
 			isa = PBXGroup;
 			children = (
 				09953E7D1F1F2A7F00753F70 /* FTDocumentCreateInfo.swift */,
+				BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */,
 				EDAE759F22AE517800053B05 /* FTDocumentValidator.swift */,
 				BA666A4B2A790B96002FF383 /* FTDocumentMigration.swift */,
 				09953E7E1F1F2A7F00753F70 /* FTDocumentFactory.swift */,
@@ -6027,6 +6082,7 @@
 				BAA84E442873105500DE801B /* FTCommon.framework */,
 				BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */,
 				BAF0DD6D2A6FE675006D293B /* FTTemplatesStore.framework */,
+				0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6918,6 +6974,7 @@
 				52550EBE2A70FCC000E7A1E7 /* FTTemplatesStore */,
 				52550E3F2A70FCAD00E7A1E7 /* FTNewNotebook */,
 				BAA84E452873105500DE801B /* FTCommon */,
+				0964D06A2AB9C27500C79C01 /* Noteshelf3 Thumbnail */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				8BA031271A060E8300891239 /* Resources */,
 				211E39121E028265007B5CAD /* Third Party */,
@@ -6936,6 +6993,8 @@
 				5288FB202A54520200EBC37C /* SSZipArchive.framework */,
 				52560AD32A544A4D0075BD2D /* SSZipArchive.framework */,
 				F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */,
+				BA7A5F332AB06951006D5284 /* QuickLook.framework */,
+				BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -9090,6 +9149,8 @@
 		BAA46233241A4705008F6AAE /* XCConfigurations */ = {
 			isa = PBXGroup;
 			children = (
+				BA183D2D2AC15F070011EA01 /* export_options_mac.plist */,
+				BA183D2C2AC15F070011EA01 /* export_options.plist */,
 				BAC369822A83D4510005F635 /* Fastfile */,
 				BA50E027295981E000CDC0FD /* Noteshelf-beta.xcconfig */,
 				0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */,
@@ -10854,6 +10915,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0964D0722AB9C27C00C79C01 /* Build configuration list for PBXNativeTarget "Noteshelf3 Thumbnail" */;
+			buildPhases = (
+				0964D0642AB9C27400C79C01 /* Sources */,
+				0964D0652AB9C27400C79C01 /* Frameworks */,
+				0964D0662AB9C27400C79C01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BADB2D182ACECA0200B1B52A /* PBXTargetDependency */,
+			);
+			name = "Noteshelf3 Thumbnail";
+			productName = FTQLThumbnail;
+			productReference = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BAA84E1428730F5800DE801B /* FTStyles */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAA84E1F28730F5900DE801B /* Build configuration list for PBXNativeTarget "FTStyles" */;
@@ -10952,13 +11031,14 @@
 				BAF395A92859ADF10067CA9F /* Swiftlint */,
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
-				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
+				BAB258B8295B1B400072AEBB /* Embed App Extensions */,
 				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 				977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				09BC39172ACC3F880011D8B0 /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
@@ -11010,10 +11090,13 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = FT;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Fluid Touch Pte Ltd";
 				TargetAttributes = {
+					0964D0672AB9C27400C79C01 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					BAA84E1428730F5800DE801B = {
 						CreatedOnToolsVersion = 13.4;
 					};
@@ -11074,6 +11157,7 @@
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
 				C8140D30232667B60053FC86 /* Noteshelf3 Action */,
+				0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */,
 				BAB689A72862E7A400FACF11 /* GenerateLocalization */,
 				BAA84E1428730F5800DE801B /* FTStyles */,
 				BAA84E432873105500DE801B /* FTCommon */,
@@ -11084,6 +11168,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0964D0662AB9C27400C79C01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1328730F5800DE801B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11571,6 +11662,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0964D0642AB9C27400C79C01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */,
+				09BC391A2ACC4B370011D8B0 /* URL_WatchRecord_Extension.swift in Sources */,
+				0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */,
+				09BC391B2ACC4B9D0011D8B0 /* URL+ImagePath.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1128730F5800DE801B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11947,6 +12049,7 @@
 				BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */,
 				BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */,
 				BAF390F92859ADF00067CA9F /* UIScrollView_Extension.swift in Sources */,
+				BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */,
 				BAF390FA2859ADF00067CA9F /* FTSettingsButton.swift in Sources */,
 				BAF390FD2859ADF00067CA9F /* FTAnnotationBaseView.swift in Sources */,
 				97A663C429966D08006F13C8 /* FTNotebookShape.swift in Sources */,
@@ -13264,6 +13367,7 @@
 				4209FE7D295C5FFD00ACC02E /* FTDynamicTemplateGenerator.swift in Sources */,
 				4209FEC9295C6E7C00ACC02E /* FTThemesStorage_Favorites.swift in Sources */,
 				4209FEA5295C624700ACC02E /* FTThumbnailCache.swift in Sources */,
+				099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */,
 				4209FE7B295C5FE000ACC02E /* FTHashTable.swift in Sources */,
 				4209FEA9295C626800ACC02E /* FTDocumentErrorCodes.swift in Sources */,
 				4209FE71295C5F4700ACC02E /* FTShelfCollectionSystem.swift in Sources */,
@@ -13349,6 +13453,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		09BC39172ACC3F880011D8B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */;
+			targetProxy = 09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */;
+		};
 		5283D3A72A5E7AA000C6C125 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
@@ -13373,6 +13482,11 @@
 			isa = PBXTargetDependency;
 			target = C8140D30232667B60053FC86 /* Noteshelf3 Action */;
 			targetProxy = BAB258B6295B1B400072AEBB /* PBXContainerItemProxy */;
+		};
+		BADB2D182ACECA0200B1B52A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BAA84E432873105500DE801B /* FTCommon */;
+			targetProxy = BADB2D172ACECA0200B1B52A /* PBXContainerItemProxy */;
 		};
 		BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13545,6 +13659,138 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0964D0732AB9C27C00C79C01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.thumbnail";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Debug;
+		};
+		0964D0742AB9C27C00C79C01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.thumbnail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0964D0752AB9C27C00C79C01 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta.thumbnail";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
 		97F36F9E126D620C00FA092E /* Beta */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -13587,6 +13833,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -14503,6 +14750,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -14565,6 +14813,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -14727,6 +14976,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0964D0722AB9C27C00C79C01 /* Build configuration list for PBXNativeTarget "Noteshelf3 Thumbnail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0964D0732AB9C27C00C79C01 /* Debug */,
+				0964D0742AB9C27C00C79C01 /* Release */,
+				0964D0752AB9C27C00C79C01 /* Beta */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BAA84E1F28730F5900DE801B /* Build configuration list for PBXNativeTarget "FTStyles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

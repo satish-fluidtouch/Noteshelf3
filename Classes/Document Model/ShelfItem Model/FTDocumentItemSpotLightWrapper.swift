@@ -54,19 +54,27 @@ class FTDocumentItemSpotLightWrapper : NSObject,FTCSIndexableItem {
     func modifiedDateForCSSearchIndex() -> Date?
     {
         var date = self.docItem.fileModificationDate;
-        if(nil == date) {
-            date = self.docItem.fileCreationDate;
-        }
         return date;
     }
 
     func thumbnailForCSSearchIndex() -> UIImage?
     {
-        var image = (self.docItem as? FTShelfImage)?.image;
-        if(nil == image) {
-            image = UIImage.init(named: "covergray");
+        var imageToReturn: UIImage?;
+        let sema = DispatchSemaphore(value: 0);
+        DispatchQueue.global().async {
+            var token: String?
+            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(self.docItem) { img, inToken in
+                if token == inToken {
+                    imageToReturn = img;
+                }
+                sema.signal();
+            }
         }
-        return image;
+        sema.wait();
+        if(nil == imageToReturn) {
+            imageToReturn = UIImage.init(named: "covergray");
+        }
+        return imageToReturn;
     }
 }
 

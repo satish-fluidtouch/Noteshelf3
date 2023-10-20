@@ -17,19 +17,12 @@ import UIKit
     case synced
 }
 
-@objc enum FTDownloadStatus : Int {
-    case notDownloaded
-    case downloading
-    case downloaded
-}
 @objc enum FTWatchProviderType : Int {
     case local
     case cloud
 }
 
 let FTRecordingCollectionUpdatedNotification = "FTRecordingCollectionUpdatedNotification";
-let audioFileExtension : String = "m4a";
-let audioMetadataFileExtension : String = "plist";
 
 protocol FTWatchRecordingCollection {
    

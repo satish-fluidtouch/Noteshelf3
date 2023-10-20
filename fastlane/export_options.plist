@@ -6,14 +6,18 @@
 	<string>app-store</string>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>com.fluidtouch.noteshelf3-beta</key>
-		<string>Noteshelf3 beta TestFlight</string>
 		<key>com.fluidtouch.noteshelf3</key>
 		<string>Noteshelf 3 AppStore</string>
-		<key>com.fluidtouch.noteshelf3-beta.noteshelf-action</key>
-		<string>Noteshelf3 Action beta TestFlight</string>
 		<key>com.fluidtouch.noteshelf3.noteshelf-action</key>
 		<string>Noteshelf 3 Action AppStore</string>
+		<key>com.fluidtouch.noteshelf3.thumbnail</key>
+		<string>Noteshelf 3 Thumbnail AppStore</string>
+		<key>com.fluidtouch.noteshelf3-beta</key>
+		<string>Noteshelf3 beta TestFlight</string>
+		<key>com.fluidtouch.noteshelf3-beta.noteshelf-action</key>
+		<string>Noteshelf3 Action beta TestFlight</string>
+		<key>com.fluidtouch.noteshelf3-beta.thumbnail</key>
+		<string>Noteshelf3 Thumbnail beta TestFlight</string>
 	</dict>
 	<key>signingStyle</key>
 	<string>manual</string>
