@@ -34,16 +34,16 @@ class FTFavoriteColorViewModel: ObservableObject {
     private var rackData: FTRackData!
     private var currentPenset: FTPenSetProtocol!
     private(set) var colorEditPostion: FavoriteColorPosition?
-    private weak var window: UIWindow?
+    private weak var scene: UIWindowScene?
 
     // MARK: Initialization
-    init(rackData: FTRackData, delegate: FTFavoriteColorEditDelegate?, window: UIWindow?) {
+    init(rackData: FTRackData, delegate: FTFavoriteColorEditDelegate?, scene: UIWindowScene?) {
         self.rackData = rackData
         self.currentPenset = self.rackData.currentPenset
         self.delegate = delegate
-        self.window = window
+        self.scene = scene
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: window)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: scene)
     }
 
     // This is to show different display size for pencil and other pen types
@@ -150,15 +150,15 @@ class FTFavoriteSizeViewModel: ObservableObject {
     private var sizeEditPostion: FavoriteSizePosition?
 
     private weak var delegate: FTFavoriteSizeEditDelegate?
-    private weak var window: UIWindow?
+    private weak var scene: UIWindowScene?
     // MARK: Initialization
-    init(rackData: FTRackData, delegate: FTFavoriteSizeEditDelegate?, window: UIWindow?) {
+    init(rackData: FTRackData, delegate: FTFavoriteSizeEditDelegate?, scene: UIWindowScene?) {
         self.rackData = rackData
         self.currentPenset = self.rackData.currentPenset
         self.delegate = delegate
-        self.window = window
+        self.scene = scene
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: window)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePenTypeVariantChange(_:)), name: .penTypeDisplayChange, object: scene)
     }
 
     // This is to show different display size for pencil and other pen types
