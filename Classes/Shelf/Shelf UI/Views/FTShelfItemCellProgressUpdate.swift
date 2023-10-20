@@ -99,19 +99,17 @@ extension FTShelfItemCellProgressUpdate
         self.pieProgressView?.isHidden = false;
         self.statusImageView?.image = nil;
         if let documentItem = item as? FTDocumentItem {
-            if(documentItem.isDownloading) {
-                let progress = min(CGFloat(documentItem.downloadProgress)/100,0.9);
-                self.animType = .download;
-                self.startDownloadAnimation();
-                self.pieProgressView?.progress = progress;
-            }
-            else if ((documentItem.isDownloaded)) {
+            if ((documentItem.isDownloaded)) {
                 self.pieProgressView?.endAnimation();
                 if(self.animType != .upload){
                     self.stopAnimation(true);
                 }
-            }
-            else if(documentItem.URL.downloadStatus() == .notDownloaded) {
+            } else if(documentItem.isDownloading) {
+                let progress = min(CGFloat(documentItem.downloadProgress)/100,0.9);
+                self.animType = .download;
+                self.startDownloadAnimation();
+                self.pieProgressView?.progress = progress;
+            } else if(documentItem.URL.downloadStatus() == .notDownloaded) {
                 self.statusImageView?.image = self.cloudImage;
             }
             

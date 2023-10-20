@@ -51,7 +51,7 @@ class FTDeskToolCell: UICollectionViewCell {
         NotificationCenter.default.removeObserver(self)
         NotificationCenter.default.addObserver(self, selector: #selector(validateToolbar), name: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(applyTintIfNeeded), name: .penTypeDisplayChange, object: self.window)
+        NotificationCenter.default.addObserver(self, selector: #selector(applyTintIfNeeded), name: .penTypeDisplayChange, object: self.window?.windowScene)
     }
 
     @objc func validateToolbar(_ notification: Notification?) {
