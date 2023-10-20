@@ -27,7 +27,7 @@ extension FTGlobalSearchController {
     }
 
     internal func updateRecentSearchList() {
-        self.recentSearchList = FTRecentSearchStorage.shared.availableRecents()
+        self.recentSearchList = FTRecentSearchStorage.shared.availableRecents().filter { !$0.isEmpty }
     }
 }
 
