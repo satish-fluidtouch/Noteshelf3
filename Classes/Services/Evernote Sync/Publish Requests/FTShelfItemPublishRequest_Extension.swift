@@ -35,9 +35,7 @@ extension FTShelfItemPublishRequest {
             let attributes = EDAMNoteAttributes();
 
             let map = EDAMLazyMap();
-            if let keys = [EVERNOTE_CONSUMER_KEY] as? NSMutableSet {
-                map?.keysOnly = keys;
-            }
+            map?.keysOnly = NSMutableSet(array: Array([EVERNOTE_CONSUMER_KEY])) ;
 
             attributes?.contentClass = EVERNOTE_NOTESHELF_CONTENT_CLASS;
             attributes?.applicationData = map;

@@ -121,7 +121,7 @@ final class FTAppIntentHandler {
                 intentHandler?.importItem(item)
             }
             return true
-        } else if (url.scheme == "noteshelf3-3461") {
+        } else if (url.scheme == "en-noteshelf3-3461") {
             #if !targetEnvironment(macCatalyst)
             //return EvernoteSession.shared().handleOpenURL(url)
             #endif
