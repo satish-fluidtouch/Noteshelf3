@@ -36,11 +36,6 @@ class FTNSDocumentFileItemFactory : FTFileItemFactory
             let fileItem = FTNotebookRecoverPlist.init(url:url, isDirectory: false)
             return fileItem;
         }
-        else if(url.lastPathComponent == PROPERTIES_PLIST)
-        {
-            let fileItem = FTMetadataPropertiesPlist(url:url, isDirectory: false)
-            return fileItem;
-        }
         else
         {
             return super.plistFileItem(with: url)
