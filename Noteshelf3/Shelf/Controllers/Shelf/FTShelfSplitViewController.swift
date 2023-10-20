@@ -549,9 +549,9 @@ extension FTShelfSplitViewController {
                 return
             }
             let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
-            doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
             if shouldInsertCover {
                 doc.insertCoverForPasswordProtectedBooks { success, error in
+                    doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
                     processDocumentOpen()
                 }
             } else {
