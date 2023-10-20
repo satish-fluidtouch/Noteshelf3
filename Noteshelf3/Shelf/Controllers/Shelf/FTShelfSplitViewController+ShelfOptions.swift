@@ -773,6 +773,9 @@ extension FTShelfSplitViewController {
                 } else {
                     FTDocumentFactory.duplicateDocumentAtURL(doucmentItem.URL, onCompletion: { (_, document) in
                         if let duplicatedDocument = document {
+                            if let docUUID = (doucmentItem as? FTDocumentItemProtocol)?.documentUUID {
+                                self.duplicateThumbnailsFrom(documentId: docUUID, to: duplicatedDocument.documentUUID)
+                            }
                             doucmentItem.shelfCollection.addShelfItemForDocument(duplicatedDocument.URL,
                                                                                  toTitle: doucmentItem.title,
                                                                                  toGroup: doucmentItem.parent,
@@ -806,6 +809,17 @@ extension FTShelfSplitViewController {
             onCompletion(duplicatedList);
         }
     }
+
+    private func duplicateThumbnailsFrom(documentId: String, to duplicatedDocumentId: String) {
+        let thumbnailFolderPath = URL.thumbnailFolderURL()
+        let documentPath = thumbnailFolderPath.appendingPathComponent(documentId)
+        let duplicatedPath = thumbnailFolderPath.appendingPathComponent(duplicatedDocumentId)
+        if !FileManager.default.fileExists(atPath: duplicatedPath.path) {
+            try? FileManager.default.copyItem(atPath: documentPath.path, toPath: duplicatedPath.path)
+        }
+
+    }
+    
     private func createGroup(name: String?,
                      inGroup: FTGroupItemProtocol?,
                      items: [FTShelfItemProtocol],
@@ -1140,7 +1154,12 @@ extension FTShelfSplitViewController: FTImagePickerDelegate {
     }
 }
 extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
-    
+    func didDismissTags() {
+        let items = self.selectedTagItems.values.reversed();
+        self.selectedTagItems.removeAll()
+        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
+    }
+
     func commonTagsFor(items: [FTShelfTagsItem]) -> [String] {
         var commonTags: Set<String> = []
         for (index, item) in items.enumerated() {
@@ -1160,42 +1179,36 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
         var tagsItems = [FTShelfTagsItem]()
         items.forEach { item in
-            var tagItem = FTShelfTagsItem(shelfItem: item as? FTDocumentItemProtocol, type: .book)
-            let docTags = FTCacheTagsProcessor.shared.tagsForShelfItem(url: item.URL)
-            tagItem.setTags(docTags)
-            tagsItems.append(tagItem)
+            if let documentItem = item as? FTDocumentItemProtocol {
+                let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: documentItem)
+                tagsItems.append(tagItem)
+            }
         }
         let tags = self.commonTagsFor(items: tagsItems)
-        let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
-        FTTagsViewController.presentTagsController(onController: self, tags: sortedArray)
+        let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
+        FTTagsViewController.presentTagsController(onController: self, tags: tagItems)
     }
 
-    func didAddTag(tag: FTTagModel) async throws {
-        let selectedItems = self.currentShelfViewModel?.selectedShelfItems
-            var items = [FTShelfTagsItem]()
-            selectedItems?.forEach({ doc in
-                let item = FTShelfTagsItem(shelfItem: doc as? FTDocumentItemProtocol, type: .book)
-                items.append(item)
-            })
-            try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: items, updateType: .add)
+    func didAddTag(tag: FTTagModel) {
+        updateShelfTagItemsFor(tag: tag)
     }
 
-    func didUnSelectTag(tag: FTTagModel) async throws {
-        let selectedItems = self.currentShelfViewModel?.selectedShelfItems as! [FTDocumentItemProtocol]
-            var items = [FTShelfTagsItem]()
-            selectedItems.forEach({ doc in
-                let item = FTShelfTagsItem(shelfItem: doc, type: .book)
-                items.append(item)
-            })
-            try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: items, updateType: .remove)
+    func didUnSelectTag(tag: FTTagModel) {
+        updateShelfTagItemsFor(tag: tag)
     }
 
-    func didRenameTag(tag: FTTagModel, renamedTag: FTTagModel) async throws {
-        try await FTShelfTagsUpdateHandler.shared.renameTag(tag: tag, with: renamedTag)
-    }
-
-    func didDeleteTag(tag: FTTagModel) async throws {
-        try await FTShelfTagsUpdateHandler.shared.deleteTag(tag: tag)
+    func updateShelfTagItemsFor(tag: FTTagModel) {
+        let selectedItems = (self.currentShelfViewModel?.selectedShelfItems as! [FTDocumentItemProtocol])
+        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
+            tagModel.updateTagForBooks(documentItems: selectedItems) { [weak self] items in
+                guard let self = self else {return}
+                items.forEach { item in
+                    if let docUUID = item.documentUUID {
+                        self.selectedTagItems[docUUID] = item
+                    }
+                }
+            }
+        }
     }
 
 }

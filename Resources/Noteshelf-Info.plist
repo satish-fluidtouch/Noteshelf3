@@ -185,7 +185,7 @@
 			<string>Evernote</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>en-pssramakrishnna</string>
+				<string>en-noteshelf3-3461</string>
 			</array>
 		</dict>
 		<dict>
@@ -272,7 +272,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>27</string>
+	<string>233</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>INAlternativeAppNames</key>

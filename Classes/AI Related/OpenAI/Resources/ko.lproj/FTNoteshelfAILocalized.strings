@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "요약하다"; //summarize
 "noteshelf.ai.explain" = "설명하다"; //explain
 "noteshelf.ai.translate" = "번역하다"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "%@ 로 번역하기";
 
 "noteshelf.ai.sendFeedback" = "피드백 보내기"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "아무 질문이나 해주세요..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "주제를 입력하세요"; //enter_the_topic
 "noteshelf.ai.provideContent" = "노트를 작성할 주제를 입력해주세요"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".50자에서 200자로 요약해주세요"; //summarize_command
-"noteshelf.ai.commandExplain" = ".간단한 용어로 설명해주세요"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".주요 사항을 제시하다"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "%@ 로 번역하기"; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "클립보드에 복사"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "텍스트로 추가"; //add_to_page
@@ -51,3 +47,15 @@
 "noteshelf.ai.noteshelfAIError" = "서버에 연결할 수 없습니다. 나중에 다시 시도하세요.";
 
 "noteshelf.ai.handwriteMessage" = "노트셀프 AI는 당신이 프리미엄 사용자인 경우에만 당신의 필기를 이해할 수 있습니다.";
+
+"noteshelf.ai.pressEnterToSend" = "엔터를 눌러서 전송하세요.";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "잔여 크레딧 없음";
+"noteshelf.ai.credit.bePremium" = "Noteshelf 프리미엄으로 업그레이드";
+"noteshelf.ai.credit.creditsRunningOut" = "크레딧이 곧 소진됩니다";
+"noteshelf.ai.credit.bePremiumInfo" = "Noteshelf 프리미엄으로 업그레이드하여 매월 100개의 AI 크레딧을 해제하고 필기 인식을 받으세요";
+"noteshelf.ai.credit.upgradeNow" = "지금 업그레이드";
+"noteshelf.ai.credit.details" = "%d/%d 잔여 크레딧";
+"noteshelf.ai.credit.moreinfo" = "AI 크레딧은 %d일 후에 초기화됩니다";
+"noteshelf.ai.credit.moreOptions" = "더 많은 옵션";

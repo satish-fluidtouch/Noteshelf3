@@ -188,7 +188,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     var hasAnyUnsavedChanges: Bool {
         let documentInfoPlist = self.documentInfoPlist();
         var changes = super.hasUnsavedChanges
-            || ((nil != documentInfoPlist) && documentInfoPlist!.isModified);
+            || ((nil != documentInfoPlist) && documentInfoPlist!.isModified)
 
         let allPages = self.pages()
         if(!changes){
