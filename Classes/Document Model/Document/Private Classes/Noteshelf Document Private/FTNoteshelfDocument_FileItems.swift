@@ -147,12 +147,12 @@ extension FTNoteshelfDocument : FTDocumentFileItems
     }
 
     #endif
-    func propertyInfoPlist() -> FTFileItemPlist?
+    func propertyInfoPlist() -> FTMetadataPropertiesPlist?
     {
         if(nil == self.rootFileItem) {
             return nil;
         }
-        let propertyInfoPlist = self.metadataFolderItem()?.childFileItem(withName: PROPERTIES_PLIST) as? FTFileItemPlist;
+        let propertyInfoPlist = self.metadataFolderItem()?.childFileItem(withName: PROPERTIES_PLIST) as? FTMetadataPropertiesPlist;
         return propertyInfoPlist;
     }
 
@@ -160,6 +160,7 @@ extension FTNoteshelfDocument : FTDocumentFileItems
         var contents = self.propertyInfoPlist()?.contentDictionary
         contents?[DOCUMENT_TAGS_KEY] = tags
         self.propertyInfoPlist()?.updateContent(contents as? NSObjectProtocol)
+        self.propertyInfoPlist()?.isTagsModified = true
         if !self.pages().isEmpty, let firstPage = self.pages().first {
             firstPage.isDirty = true
         }

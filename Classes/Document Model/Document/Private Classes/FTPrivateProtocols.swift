@@ -37,7 +37,7 @@ protocol FTPrepareForImporting {
     func recognitionInfoPlist() -> FTFileItemPlist?
     func visionRecognitionInfoPlist() -> FTFileItemPlist?
     #endif
-    func propertyInfoPlist() -> FTFileItemPlist?;
+    func propertyInfoPlist() -> FTMetadataPropertiesPlist?;
     
     func validateFileItemsForDocumentConsistancy() -> Bool;
 }

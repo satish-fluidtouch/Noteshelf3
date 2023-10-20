@@ -28,12 +28,17 @@ class FTNSDocumentFileItemFactory : FTFileItemFactory
         
         if(url.lastPathComponent == DOCUMENT_INFO_FILE_NAME)
         {
-            let fileItem = FTNSDocumentInfoPlistItem.init(url:url,isDirectory: false)
+            let fileItem = FTNSDocumentInfoPlistItem.init(url:url, isDirectory: false)
             return fileItem;
         }
         else if(url.lastPathComponent == NOTEBOOK_RECOVERY_PLIST)
         {
-            let fileItem = FTNotebookRecoverPlist.init(url:url,isDirectory: false)
+            let fileItem = FTNotebookRecoverPlist.init(url:url, isDirectory: false)
+            return fileItem;
+        }
+        else if(url.lastPathComponent == PROPERTIES_PLIST)
+        {
+            let fileItem = FTMetadataPropertiesPlist(url:url, isDirectory: false)
             return fileItem;
         }
         else

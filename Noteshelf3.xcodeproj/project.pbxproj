@@ -742,6 +742,8 @@
 		BA6C51D428DC728F006504EB /* FileManager+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CD28DC728E006504EB /* FileManager+Async.swift */; };
 		BA6C51D528DC728F006504EB /* Cache+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CE28DC728E006504EB /* Cache+Log.swift */; };
 		BA6C51D628DC728F006504EB /* FTDocumentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CF28DC728E006504EB /* FTDocumentCache.swift */; };
+		BA73A9E82AE2518500B4A2A3 /* FTMetadataPropertiesPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73A9E72AE2518500B4A2A3 /* FTMetadataPropertiesPlist.swift */; };
+		BA73A9E92AE252F600B4A2A3 /* FTMetadataPropertiesPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73A9E72AE2518500B4A2A3 /* FTMetadataPropertiesPlist.swift */; };
 		BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */; };
 		BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA65529766D2900946CFE /* SwiftyDropbox */; };
 		BA8BA65F29782E9500946CFE /* FTAdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8465E1921EF057F00F892AB /* FTAdvancedViewController.swift */; };
@@ -3608,6 +3610,7 @@
 		BA7050CD24F644C1009CA613 /* StoreTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreTemplateFormat.swift; sourceTree = "<group>"; };
 		BA7050CE24F644C1009CA613 /* StoreTemplateGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreTemplateGenerator.swift; sourceTree = "<group>"; };
 		BA708D842433745600353AD6 /* FTNoteshelfPage_UndoManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfPage_UndoManagement.swift; sourceTree = "<group>"; };
+		BA73A9E72AE2518500B4A2A3 /* FTMetadataPropertiesPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMetadataPropertiesPlist.swift; sourceTree = "<group>"; };
 		BA73B4362451AD11007FAAE4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA77198825B853D100707232 /* FTSingleTextureCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSingleTextureCreation.swift; sourceTree = "<group>"; };
 		BA773E73216CEE5F00B7AACD /* FTShelfItemCollectionFavorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemCollectionFavorites.swift; sourceTree = "<group>"; };
@@ -4564,6 +4567,7 @@
 				09953E891F1F2A7F00753F70 /* FTNSqliteAnnotationFileItem.swift */,
 				09E41AB11F9712CB00A591F1 /* FTFileItemPDFTemp.h */,
 				09E41AB21F9712CB00A591F1 /* FTFileItemPDFTemp.m */,
+				BA73A9E72AE2518500B4A2A3 /* FTMetadataPropertiesPlist.swift */,
 			);
 			path = "File Items";
 			sourceTree = "<group>";
@@ -12777,6 +12781,7 @@
 				BAF394172859ADF00067CA9F /* FTNotebookMoreOptionsViewController.swift in Sources */,
 				BA8BA65F29782E9500946CFE /* FTAdvancedViewController.swift in Sources */,
 				BAF394192859ADF00067CA9F /* CITreeView.swift in Sources */,
+				BA73A9E82AE2518500B4A2A3 /* FTMetadataPropertiesPlist.swift in Sources */,
 				BAF3941A2859ADF00067CA9F /* FTShelfCacheProtocol.swift in Sources */,
 				1439371F29D6E02700D93033 /* FTStickerItemView.swift in Sources */,
 				BAF3941B2859ADF00067CA9F /* FTOneDrivePublishRequest.swift in Sources */,
@@ -13233,6 +13238,7 @@
 				4209FE72295C5F4700ACC02E /* FTFTShelfCollectionMigration.swift in Sources */,
 				4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */,
 				4209FEB3295C636700ACC02E /* FTShelfItemSearching.swift in Sources */,
+				BA73A9E92AE252F600B4A2A3 /* FTMetadataPropertiesPlist.swift in Sources */,
 				0938F4172361B06400DFC7F3 /* FTShelfProviderConstants.swift in Sources */,
 				4209FEB5295C638000ACC02E /* FTShelfItemCollectionICloud.swift in Sources */,
 				C8054ADD23350C4B0083BB04 /* FTSharedAction.swift in Sources */,
