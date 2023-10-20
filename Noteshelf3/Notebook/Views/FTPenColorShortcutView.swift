@@ -106,6 +106,6 @@ struct FTPenColorShortcutView: View {
 struct FTPenColorShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         FTPenColorShortcutView()
-            .environmentObject(FTFavoriteColorViewModel(rackData: FTRackData(type: .pen, userActivity: nil), delegate: nil, window: nil))
+            .environmentObject(FTFavoriteColorViewModel(rackData: FTRackData(type: .pen, userActivity: nil), delegate: nil, scene: nil))
     }
 }

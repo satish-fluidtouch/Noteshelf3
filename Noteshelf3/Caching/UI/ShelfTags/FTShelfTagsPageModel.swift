@@ -58,6 +58,20 @@ enum FTShelfTagsItemType {
         self.documentUUID = documentUUID
         self.type = type
     }
+     
+     override func isEqual(_ object: Any?) -> Bool {
+         guard let other = object as? FTShelfTagsItem
+                ,other.type == self.type else {
+             return false;
+         }
+         if self.type == .book {
+             return self.documentUUID == other.documentUUID;
+         }
+         else if self.type == .page {
+             return self.documentUUID == other.documentUUID && self.pageUUID == other.pageUUID
+         }
+         return false;
+     }
 }
 
 final class FTShelfTagsPageModel: ObservableObject {

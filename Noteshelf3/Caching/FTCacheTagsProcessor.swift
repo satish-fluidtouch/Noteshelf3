@@ -143,11 +143,7 @@ final class FTCacheTagsProcessor {
         }
         for key in plistTags.keys {
             if var ids = plistTags[key] {
-                for (index, docId) in ids.enumerated() {
-                    if documentUUID == docId {
-                        ids.remove(at: index)
-                    }
-                }
+                ids.removeAll(where: { documentUUID == $0 })
                 plistTags[key] = ids
             }
         }
@@ -211,11 +207,7 @@ final class FTCacheTagsProcessor {
                 var plistTags = cachedTagsPlist.tags
                 for key in plistTags.keys {
                     if var ids = plistTags[key] {
-                        for (index, docId) in ids.enumerated() {
-                            if documentUUID == docId {
-                                ids.remove(at: index)
-                            }
-                        }
+                        ids.removeAll(where: { documentUUID == $0 })
                         plistTags[key] = ids
                     }
                 }
@@ -270,9 +262,10 @@ final class FTCacheTagsProcessor {
                     dispatchGroup.notify(queue: self.queue) {
                         // Check wheteher documentId hold in Plist for some tag and that document doesn't contain any tags remove it from Plist
                         var plistTags = cachePlist.tags
+                        
                         for key in plistTags.keys {
                             if var ids = plistTags[key] {
-                                for (index, docId) in ids.enumerated() {
+                                for (index, docId) in ids.enumerated().reversed() {
                                     tagsFor(documentUUID: docId) { tags in
                                         if !tags.contains(key) || tags.isEmpty {
                                             ids.remove(at: index)

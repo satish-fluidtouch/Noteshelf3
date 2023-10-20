@@ -36,8 +36,11 @@ class FTGlobalSettingsController: UITableViewController {
         if UIDevice.current.userInterfaceIdiom == .phone {
             section1 = [.appearance, .handwriting, .cloudAndBackup]
         }
-//        let section2 : [FTGlobalSettingsOptions] = [.about,.rateOnAppStore,.noteshelfHelp]
+#if DEBUG
+        let section2 : [FTGlobalSettingsOptions] = [.about,.rateOnAppStore,.noteshelfHelp]
+#else
         let section2 : [FTGlobalSettingsOptions] = [.about,.noteshelfHelp]
+#endif
         sections.append(section1)
         sections.append(section2)
         return sections;

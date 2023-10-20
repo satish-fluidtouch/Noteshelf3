@@ -42,18 +42,18 @@ class FTToolTypeShortcutViewController: UIViewController {
         self.rackType = rack.type
         if rack.type == .pen || rack.type == .highlighter {
             let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let shortcutView = FTPenShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTPenShortcutHostingController(rootView: shortcutView)
             self.add(hostingVc, frame: self.view.bounds)
             self.colorModel = _colorModel;
         } else if rack.type == .shape {
             let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: self)
             let shortcutView = FTShapeShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTShapeShortcutHostingController(rootView: shortcutView)

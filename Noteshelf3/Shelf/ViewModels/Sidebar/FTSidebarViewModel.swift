@@ -678,7 +678,7 @@ extension FTSidebarViewModel {
     }
     func setSideBarItemSelection(){
         let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio]
-        if selectedSideBarItemType == .tag {
+        if selectedSideBarItemType == .tag || selectedSideBarItemType == .allTags {
             if let selectedSideBarItem = self.selectedSideBarItem {
                 let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
                 if selectedItem != nil {

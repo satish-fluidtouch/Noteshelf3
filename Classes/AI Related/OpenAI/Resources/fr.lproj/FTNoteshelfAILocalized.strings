@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "Résumer"; //summarize
 "noteshelf.ai.explain" = "Expliquer"; //explain
 "noteshelf.ai.translate" = "Traduire"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "Traduire en %@";
 
 "noteshelf.ai.sendFeedback" = "SeEnvoyer un commentaireck"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "Posez toutes vos questions..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "Geben Sie das Thema ein"; //enter_the_topic
 "noteshelf.ai.provideContent" = "Bitte geben Sie ein Thema an, um Notizen zu erstellen"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".Résumé en 50 à 200 mots"; //summarize_command
-"noteshelf.ai.commandExplain" = ".Expliquez en termes simples"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".Donner les points clés"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "Traduire en %@"; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "Copier dans le Presse-papiers"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "Ajouter en tant que texte"; //add_to_page
@@ -51,3 +47,15 @@
 "noteshelf.ai.noteshelfAIError" = "Impossible de se connecter au serveur. Veuillez réessayer ultérieurement.";
 
 "noteshelf.ai.handwriteMessage" = "Noteshelf AI pourra comprendre votre écriture uniquement si vous êtes un utilisateur Premium.";
+
+"noteshelf.ai.pressEnterToSend" = "Appuyez sur Entrée pour envoyer";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "Aucun crédit restant";
+"noteshelf.ai.credit.bePremium" = "Passer à Noteshelf Premium";
+"noteshelf.ai.credit.creditsRunningOut" = "Crédits bientôt épuisés";
+"noteshelf.ai.credit.bePremiumInfo" = "Mise à niveau vers Noteshelf Premium pour débloquer 100 crédits AI mensuels et bénéficier de la reconnaissance de l'écriture";
+"noteshelf.ai.credit.upgradeNow" = "Mettre à jour maintenant";
+"noteshelf.ai.credit.details" = "%d/%d crédits restants";
+"noteshelf.ai.credit.moreinfo" = "Les crédits d'IA seront réinitialisés dans %d jours";
+"noteshelf.ai.credit.moreOptions" = "Plus d'options";
