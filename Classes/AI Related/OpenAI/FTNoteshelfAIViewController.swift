@@ -26,7 +26,9 @@ extension UIStoryboard {
 }
 
 protocol FTNoteshelfAIDelegate: NSObjectProtocol {
-    func noteshelfAIController(_ ccntroller: FTNoteshelfAIViewController,didTapOnAction: FTNotesehlfAIAction,content: String);
+    func noteshelfAIController(_ ccntroller: FTNoteshelfAIViewController
+                               ,didTapOnAction: FTNotesehlfAIAction
+                               ,content: FTAIContent);
 }
 
 class FTNoteshelfAIInputField: UITextField {
@@ -68,6 +70,61 @@ class FTSafeAreazView: UIView {
     }
 }
 
+class FTPageContent: NSObject {
+    var writtenContent: String = "" {
+        didSet {
+            let trimmedText = writtenContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+            if writtenContent != trimmedText {
+                writtenContent = trimmedText;
+            }
+        }
+    }
+    var pdfContent: String = "" {
+        didSet {
+            let trimmedText = pdfContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+            if pdfContent != trimmedText {
+                pdfContent = trimmedText;
+            }
+        }
+    }
+    var textContent: String = "" {
+        didSet {
+            let trimmedText = textContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+            if textContent != trimmedText {
+                textContent = trimmedText;
+            }
+        }
+    }
+    
+    var content: String {
+        var contents = [String]();
+        if !pdfContent.isEmpty {
+            contents.append(pdfContent)
+        }
+        
+        if !textContent.isEmpty {
+            contents.append(textContent)
+        }
+        
+        if !writtenContent.isEmpty {
+            contents.append(writtenContent)
+        }
+        return contents.joined(separator: " ");
+    }
+    
+    var nonPDFContent: String {
+        var contents = [String]();
+        if !textContent.isEmpty {
+            contents.append(textContent)
+        }
+
+        if !writtenContent.isEmpty {
+            contents.append(writtenContent)
+        }
+        return contents.joined(separator: " ");
+    }
+}
+
 class FTNoteshelfAIViewController: UIViewController {
     private var currentToken : String = UUID().uuidString
 
@@ -86,9 +143,16 @@ class FTNoteshelfAIViewController: UIViewController {
     private weak var footerVC: FTNoteshelfAIFooterViewController?;
     private weak var betaAlertVC: FTNoteshelfAITokensConsumedAlertViewController?;
 
-    private var contentString: String?;
+    private var userInputInProgess = false;
+    private var content = FTPageContent();
     private var enteredContent: String = "";
     
+    @IBOutlet private weak var creditsContainerView: UIView?;
+    @IBOutlet private weak var creditsContainerViewHeightConstraint: NSLayoutConstraint?;
+    @IBOutlet private weak var creditsContainerViewBottomConstraint: NSLayoutConstraint?;
+
+    private weak var creditsController: UIViewController?;
+
     private var languageCode: String = "" {
         didSet {
             if languageCode != oldValue,aiCommand == .langTranslate {
@@ -109,6 +173,7 @@ class FTNoteshelfAIViewController: UIViewController {
     };
         
     private func reset() {
+        FTOpenAI.shared.cancelCurrentExecution();
         self.textField?.text = "";
         languageCode = "";
         self.enteredContent = "";
@@ -117,11 +182,13 @@ class FTNoteshelfAIViewController: UIViewController {
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange();
     }
-    static func showNoteshelfAI(from presentingController:UIViewController, content:String?,delegate: FTNoteshelfAIDelegate?) {
+    static func showNoteshelfAI(from presentingController:UIViewController
+                                , content:FTPageContent
+                                ,delegate: FTNoteshelfAIDelegate?) {        
         guard let controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIViewController") as? FTNoteshelfAIViewController else {
             fatalError("ERROR!!!!");
         }
-        controller.contentString = content;
+        controller.content = content;
         controller.delegate = delegate;
         let navController = UINavigationController(rootViewController: controller);
         presentingController.ftPresentFormsheet(vcToPresent: navController, contentSize: CGSize(width: 500, height: 508), hideNavBar: false)
@@ -129,12 +196,8 @@ class FTNoteshelfAIViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaultFont = UIFont.clearFaceFont(for: .medium, with: 20)
-        let attrTitle = "noteshelf.ai.noteshelfAI".aiLocalizedString.appendBetalogo(font: defaultFont);
-        let button = UIButton()
-        button.setAttributedTitle(attrTitle, for: .normal)
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        self.navigationItem.titleView = button
+        FTNoteshelfAITokenManager.shared.refreshTokenInfo();
+        self.title = "noteshelf.ai.noteshelfAI".aiLocalizedString;
         let doneButton = FTNavBarButtonItem(type: .right, title: "Done".localized, delegate: self);
         self.navigationItem.rightBarButtonItem = doneButton;
         updateContentView();
@@ -144,28 +207,31 @@ class FTNoteshelfAIViewController: UIViewController {
                 break;
             }
         }
+        self.creditsContainerView?.layer.cornerRadius = 12;
         self.updateFooterHeight();
         if !FTIAPManager.shared.premiumUser.isPremiumUser {
             premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
                 self?.updateFooterHeight();
+                self?.addCredtisFooter();
             }
+        }
+        else {
+            self.addCredtisFooter();
         }
     }
 
     deinit{
+        FTOpenAI.shared.cancelCurrentExecution();
         self.premiumCancellableEvent?.cancel();
         self.premiumCancellableEvent = nil;
     }
 
     private func updateFooterHeight() {
-        var height: CGFloat = FTIAPManager.shared.premiumUser.isPremiumUser ? 48 : 77;
-        if let mode = self.footerVC?.footermode {
-            if mode == .sendFeedback {
-                height = 48;
-            }
-            self.footerVC?.footermode = mode;
+        var footerHeight: CGFloat = 16;
+        if let mode = self.footerVC?.footermode,mode != .noFooter {
+            footerHeight =  48;
         }
-        self.footerHeightConstraint?.constant = height;
+        self.footerHeightConstraint?.constant = footerHeight;
         self.view.layoutIfNeeded()
     }
     
@@ -182,15 +248,25 @@ class FTNoteshelfAIViewController: UIViewController {
         var controller: UIViewController?;
         
         self.textField?.placeholder = self.aiCommand.placeholderMessage;
-        self.setFooterMode(.noteshelfAiBeta);
-                
+        let allTokensConsumed = allTokensConsumed;
+        self.setFooterMode(allTokensConsumed ? .sendFeedback : .noteshelfAiBeta);
+
+        let enteredText = self.textField?.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? "";
+        
+        self.creditsContainerViewHeightConstraint?.constant = FTIAPManager.shared.premiumUser.isPremiumUser ? 74 : 142;
+        var bottomConstraint: CGFloat = (self.creditsContainerViewHeightConstraint?.constant ?? 0) * -1;
         if aiCommand == .none {
             self.reset();
+            bottomConstraint = 0;
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAIOptionsViewController.className);
             (controller as? FTNoteshelfAIOptionsViewController)?.delegate = self;
-            (controller as? FTNoteshelfAIOptionsViewController)?.contentString = self.contentString;
+            (controller as? FTNoteshelfAIOptionsViewController)?.content = self.content;
+            (controller as? FTNoteshelfAIOptionsViewController)?.isAllTokensConsumend = allTokensConsumed;
         }
-        else if aiCommand == .langTranslate && languageCode.isEmpty {
+        else if aiCommand == .langTranslate
+                    , let txtField = self.textField
+                    , languageCode.isEmpty
+                    , !(txtField.isFirstResponder && !enteredText.isEmpty) {
             self.reset();
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAITranslateViewController.className);
             (controller as? FTNoteshelfAITranslateViewController)?.delegate = self;
@@ -199,6 +275,9 @@ class FTNoteshelfAIViewController: UIViewController {
             controller = UIStoryboard.instantiateAIViewController(withIdentifier: FTNoteshelfAITextViewViewController.className);
             (controller as? FTNoteshelfAITextViewViewController)?.delegate = self;
         }
+        
+        self.creditsContainerViewBottomConstraint?.constant = bottomConstraint
+        self.creditsContainerView?.isHidden = aiCommand != .none;
         
         if let optCOntorller = controller {
             self.optionsController?.view.removeFromSuperview();
@@ -212,10 +291,12 @@ class FTNoteshelfAIViewController: UIViewController {
             self.setOverrideTraitCollection(self.traitCollection, forChild: optCOntorller);
             self.optionsController = optCOntorller;
         }
-        
-        if allTokensConsumed {
-            self.showTokensConsumedAlert();
+        if aiCommand == .generalQuestion || (aiCommand == .langTranslate
+                                             && ((self.textField?.isFirstResponder ?? false) && !enteredText.isEmpty)) {
+            self.textViewController?.showPlaceHolder("noteshelf.ai.pressEnterToSend".aiLocalizedString);
         }
+        self.textField?.isUserInteractionEnabled = !allTokensConsumed;
+        self.textField?.alpha = allTokensConsumed ? 0.6: 1;
     }
 }
 
@@ -247,11 +328,17 @@ extension FTNoteshelfAIViewController: FTNoteshelfAITranslateViewControllerDeleg
 }
 
 extension FTNoteshelfAIViewController: FTNoteshelfAITextViewViewControllerDelegate {
-    func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: String) {
+    func textViewController(_ controller: FTNoteshelfAITextViewViewController, didSelectOption action: FTNotesehlfAIAction,content: FTAIContent) {
         if action == .regenerateResponse {
             self.executeAIAction();
         }
+        else if action == .semdFeedback {
+            FTZenDeskManager.shared.showSupportContactUsScreen(controller: self
+                                                               , defaultSubject: "Noteshelf-AI Feedback"
+                                                               , extraTags: ["Noteshelf-AI"]);
+        }
         else {
+            FTNoteshelfAITokenManager.shared.markAsConsumed();
             self.delegate?.noteshelfAIController(self, didTapOnAction: action, content: content)
         }
     }
@@ -260,17 +347,21 @@ extension FTNoteshelfAIViewController: FTNoteshelfAITextViewViewControllerDelega
 
 extension FTNoteshelfAIViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if self.aiCommand == .langTranslate, (self.contentToExecute?.isEmpty ?? true) {
+        if self.aiCommand == .langTranslate, self.contentToExecute.isEmpty {
             self.aiCommand = .generalQuestion;
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(self.textFieldDidChange(_:)), name: UITextField.textDidChangeNotification, object: textField);
     }
     
     @objc func textFieldDidChange(_ name: Notification) {
-        if self.aiCommand != .langTranslate, self.textField?.text?.isEmpty ?? false {
+        if self.textField?.text?.isEmpty ?? false {
             self.aiCommand = .none;
         }
-        else if self.aiCommand == .langTranslate, !self.languageCode.isEmpty {
-            self.aiCommand = .none;
+        else if self.aiCommand != .langTranslate {
+            self.aiCommand = .generalQuestion;
+        }
+        else {
+            self.updateContentView();
         }
     }
     
@@ -280,16 +371,13 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        if self.aiCommand != .langTranslate {
-            self.aiCommand = .none;
-        }
-        else if self.aiCommand == .langTranslate, !self.languageCode.isEmpty {
-            self.aiCommand = .none;
-        }
+        self.aiCommand = .none;
         return true;
     }
         
     func textFieldDidEndEditing(_ textField: UITextField) {
+        NotificationCenter.default.removeObserver(self, name: UITextField.textDidChangeNotification, object: textField);
+        
         if self.aiCommand == .langTranslate {
             if let trimmedText = textField.text?.openAITrim(), !trimmedText.isEmpty {
                 languageCode = trimmedText;
@@ -313,13 +401,10 @@ extension FTNoteshelfAIViewController: UITextFieldDelegate {
 
 private extension FTNoteshelfAIViewController {
     var allTokensConsumed: Bool {
-#if DEBUG || ADHOC
+#if DEBUG
         return false;
 #else
-        if FTNoteshelfAIViewController.maxAllowedTokenCounter <= UserDefaults.aiTokensConsumed {
-            return true;
-        }
-        return false;
+        return FTNoteshelfAITokenManager.shared.tokensLeft == 0;
 #endif
     }
     
@@ -328,7 +413,7 @@ private extension FTNoteshelfAIViewController {
             return false;
         }
         
-        guard let stringToExecute = self.contentToExecute,!stringToExecute.isEmpty else {
+        guard !self.contentToExecute.isEmpty else {
             return false;
         }
         
@@ -356,26 +441,35 @@ private extension FTNoteshelfAIViewController {
         self.textViewController?.showPlaceHolder("");
         self.textViewController?.showActionOptions(false);
         
-        let command = FTAICommand.command(for: self.aiCommand,content: self.contentToExecute ?? "");
+        let command = FTAICommand.command(for: self.aiCommand, content: content, enteredContent: self.enteredContent)
         (command as? FTAITranslateCommand)?.languageCode = languageCode;
         
         self.textField?.text = command.executionMessage;
         
-        UserDefaults.incrementAiTokenConsumed()
         currentToken = command.commandToken;
-        FTOpenAI.shared.execute(command: command) {[weak self] (string, error,token) in
-            guard let curToken = self?.currentToken, curToken == token else {
+        FTOpenAI.shared.execute(command: command) {[weak self] (response, error,token) in
+            guard nil != self, let curToken = self?.currentToken, curToken == token else {
                 return;
             }
             if let inerror = error {
                 track("AI Error", params: ["detail":inerror.localizedDescription], screenName: nil)
-                self?.textViewController?.insertText("noteshelf.ai.noteshelfAIError".aiLocalizedString);
+                self?.textViewController?.showPlaceHolder("noteshelf.ai.noteshelfAIError".aiLocalizedString);
             }
             else {
-                self?.textViewController?.insertText(string);
+                self?.textViewController?.showResponse(response);
             }
         } onCompletion: { [weak self] (error,token) in
-            guard let curToken = self?.currentToken, curToken == token else {
+            guard nil != self, let curToken = self?.currentToken, curToken == token else {
+                return;
+            }
+            if let inerror = error as? NSError {
+                track("AI Error", params: ["detail":inerror.localizedDescription], screenName: nil)
+                if FTOPenAIError.isNoInternetConnectionError(inerror) {
+                    self?.textViewController?.showPlaceHolder(inerror.localizedDescription);
+                }
+                else {
+                    self?.textViewController?.showPlaceHolder("noteshelf.ai.noteshelfAIError".aiLocalizedString);
+                }
                 return;
             }
             var supportHandwrite = false;
@@ -392,7 +486,7 @@ private extension FTNoteshelfAIViewController {
             }
             self?.textViewController?.supportsHandwriting = supportHandwrite;
             self?.textViewController?.showActionOptions(error == nil);
-            self?.setFooterMode(.sendFeedback);
+            self?.setFooterMode(.noFooter);
         }
     }
     
@@ -400,16 +494,16 @@ private extension FTNoteshelfAIViewController {
         return self.optionsController as? FTNoteshelfAITextViewViewController
     }
     
-    var contentToExecute: String? {
+    var contentToExecute: String {
         if aiCommand == .generalQuestion {
-            return self.contentString?.appending(" \(self.enteredContent)");
+            return self.content.content.appending(" \(self.enteredContent)");
         }
         if aiCommand != .langTranslate {
             if !self.enteredContent.isEmpty {
                 return self.enteredContent;
             }
         }
-        return self.contentString;
+        return self.content.content;
     }
 }
 
@@ -441,26 +535,34 @@ private extension FTNoteshelfAIViewController {
     }
 }
 
-extension UserDefaults {
-    static var aiTokensConsumed: Int {
-        return UserDefaults.standard.integer(forKey: "aiTokensConsumed");
-    }
-    
-    static func incrementAiTokenConsumed() {
-        let counter = self.aiTokensConsumed + 1;
-        UserDefaults.standard.set(counter, forKey: "aiTokensConsumed");
-        UserDefaults.standard.synchronize();
-    }
-    
-#if !RELEASE
-    static func resetAITokens() {
-        UserDefaults.standard.removeObject(forKey: "aiTokensConsumed");
-    }
-#endif
-}
-
 extension FTNoteshelfAIViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
         self.dismiss(animated: true);
+    }
+}
+
+private extension FTNoteshelfAIViewController {
+    func addCredtisFooter() {
+        self.removeCreditsFooter();
+        
+        guard let creditsView = self.creditsContainerView else {
+            return;
+        }
+        var controller: UIViewController;
+        if FTIAPManager.shared.premiumUser.isPremiumUser {
+            controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIPremiumUserCreditsViewController");
+        }
+        else {
+            controller = UIStoryboard.instantiateAIViewController(withIdentifier: "FTNoteshelfAIFreeUserCreditsViewController");
+        }
+        self.addChild(controller);
+        self.creditsController = controller;
+        controller.view.frame = creditsView.bounds;
+        controller.view.addFullConstraints(creditsView);
+    }
+    
+    func removeCreditsFooter() {
+        self.creditsController?.view.removeFromSuperview();
+        self.creditsController?.removeFromParent();
     }
 }
