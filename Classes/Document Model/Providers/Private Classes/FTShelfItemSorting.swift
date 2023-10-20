@@ -37,9 +37,9 @@ extension FTShelfItemSorting
                 let fileCreated2 = object2.fileCreationDate;
                 returnVal = (fileCreated1.compare(fileCreated2) == ComparisonResult.orderedDescending) ? true : false;
             case .byLastOpenedDate:
-                let fileCreated1 = object1.fileLastOpenedDate;
-                let fileCreated2 = object2.fileLastOpenedDate;
-                returnVal = (fileCreated1.compare(fileCreated2) == ComparisonResult.orderedDescending) ? true : false;
+                let fileOpened1 = object1.fileLastOpenedDate;
+                let fileOpened2 = object2.fileLastOpenedDate;
+                returnVal = (fileOpened1.compare(fileOpened2) == ComparisonResult.orderedDescending) ? true : false;
             case .manual:
                 let firstIndex = object1.sortIndex()
                 let secondIndex = object2.sortIndex()

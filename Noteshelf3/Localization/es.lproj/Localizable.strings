@@ -826,6 +826,7 @@
 "Tag" = "Etiqueta";
 "Tagged" = "Etiquetado";
 "Tags" = "Etiquetas";
+"Take beautiful notes effortlessly" = "Tomar apuntes hermosos sin esfuerzo";
 "TakePhoto" = "Tomar foto";
 "TakeScreenshot" = "Capturar pantalla";
 "TapToRate" = "Toque para calificar";
@@ -1141,8 +1142,8 @@
 "newnotebook.webclip.insert" = "Insertar";
 "newnotebook.webclip.title" = "Recorte web";
 "newnotebook.webclip.webclipinfo" = "Arrastra y suelta desde tu navegador en tu cuaderno o escribe la dirección web a continuación.";
-"nintetyClockwise" = "En el sentido de las agujas del reloj 90°.";
-"nintetyCounterClockwise" = "Girar 90° en sentido contrario a las agujas del reloj.";
+"nintetyClockwise" = "En sentido horario 90°";
+"nintetyCounterClockwise" = "En sentido antihorario 90°";
 "notebook.addnew.newpage" = "Nueva Pagina";
 "notebook.eraserRack.NavTitle" = "Borrador";
 "notebook.lassoRack.NavTitle" = "Lazo";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "Agregar como escritura a una nueva página";
 "noteshelf.ai.actionAddToNewPage" = "Añadir como texto a nueva página.";
 "noteshelf.ai.actionAddToPage" = "Agregar como texto";
+"noteshelf.ai.credit.bePremium" = "Actualización a Noteshelf Premium";
+"noteshelf.ai.credit.bePremiumInfo" = "Actualiza a Noteshelf Premium para desbloquear 100 créditos mensuales de IA y obtener reconocimiento de escritura";
+"noteshelf.ai.credit.creditsRunningOut" = "Créditos próximos a agotarse";
+"noteshelf.ai.credit.details" = "%d/%d créditos restantes";
+"noteshelf.ai.credit.moreOptions" = "Más opciones.";
+"noteshelf.ai.credit.moreinfo" = "Créditos de IA se reiniciarán en %d días";
+"noteshelf.ai.credit.nocredits" = "No hay créditos disponibles";
+"noteshelf.ai.pressEnterToSend" = "Presiona Enter para enviar";
 "numSelected" = "%ld Seleccionado'";
 "objects" = "Objetos";
 "ok" = "Bien";
@@ -1475,7 +1484,7 @@
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
 "textmode.fonttitle" = "Estilo de fuente/texto";
-"texttoolbar.fontselectionTitle" = "SELECCIONAR FUENTE";
+"texttoolbar.fontselectionTitle" = "Seleccionar Fuente";
 "theams.unsplashDescription" = "Seleccionar de Unsplash, tomar una foto o seleccionar de tu Biblioteca de Fotos para crear tus portadas personalizadas.";
 "trash.alert.cannotOpenNotebook" = "Esta libreta no se puede abrir ya que ha sido eliminada. Para restaurar, mantén presionado y selecciona la opción del menú.";
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
@@ -1506,7 +1515,7 @@
 "welcome.nestedgroups" = "GRUPOS ANIDADOS";
 "welcome.password" = "CONTRASEÑA";
 "welcome.pixabay" = "PIXABAY";
-"welcome.presentMode" = "MODO PRESENTE";
+"welcome.presentMode" = "MODO PRESENTACIÓN";
 "welcome.pressureSensitive" = "SENSIBLE A LA PRESIÓN";
 "welcome.richText" = "TEXTO RICO";
 "welcome.scanDocuments" = "ESCANEAR DOCUMENTOS";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 6 October 2023 at 10:26
+// Last Synced by Akshay on 19 October 2023 at 18:37

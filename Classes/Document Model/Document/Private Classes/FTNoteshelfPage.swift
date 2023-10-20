@@ -785,7 +785,15 @@ extension FTNoteshelfPage : FTPageTagsProtocol
         }
         return []
     }
-    
+
+    func addTags(tags: [String]) {
+        let newOrderedSet = NSMutableOrderedSet(array: tags)
+        self._tags = newOrderedSet.mutableCopy() as! NSMutableOrderedSet
+        if(!self.isInitializationInprogress) {
+            NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument);
+        }
+    }
+
     func addTag(_ tag : String)
     {
         self._tags.add(tag)
@@ -854,8 +862,10 @@ extension FTNoteshelfPage : FTPageSearchProtocol
             })
             if !found {break}
         }
-
-        if !searchKey.isEmpty, let textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) {
+        //If any tags are present and found in this page, proceed further search is specific tagged page
+        //If no tags, also continue search with searchKey
+        let processFurtherSearch = tags.isEmpty || (!tags.isEmpty && found)
+        if processFurtherSearch, !searchKey.isEmpty, let textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) {
             if(!textAnnotations.isEmpty) {
                 found = true;
             }
@@ -878,7 +888,7 @@ extension FTNoteshelfPage : FTPageSearchProtocol
                 });
             });
         }
-        if(!searchKey.isEmpty) {
+        if(processFurtherSearch && !searchKey.isEmpty) {
             if self.canContinuePDFContentSearch(), let pdfPageRef = self.pdfPageRef?.copy() as? PDFPage {
                 let pageRect = self.pdfPageRect;
                 let document = PDFDocument();
@@ -1396,6 +1406,9 @@ private extension FTNoteshelfPage {
     }
 
     func canContinuePDFContentSearch() -> Bool {
+        if FTUserDefaults.isInSafeMode() {
+            return false
+        }
         var canContinue = false;
         let val = self.contentCache?.object(forKey: self.uuid) as? [String:Any] ?? [String:Any]();
         let timeStamp = (val[timeStampKey] as? TimeInterval) ?? 0;

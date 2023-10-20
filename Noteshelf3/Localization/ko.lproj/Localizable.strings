@@ -826,6 +826,7 @@
 "Tag" = "태그";
 "Tagged" = "태그된";
 "Tags" = "태그";
+"Take beautiful notes effortlessly" = "아름다운 노트를 쉽게 만들다";
 "TakePhoto" = "사진 촬영";
 "TakeScreenshot" = "화면 캡처";
 "TapToRate" = "평가하려면 터치하세요";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "새 페이지에 필기로 추가";
 "noteshelf.ai.actionAddToNewPage" = "새 페이지에 텍스트로 추가";
 "noteshelf.ai.actionAddToPage" = "텍스트로 추가";
+"noteshelf.ai.credit.bePremium" = "Noteshelf 프리미엄으로 업그레이드";
+"noteshelf.ai.credit.bePremiumInfo" = "Noteshelf 프리미엄으로 업그레이드하여 매월 100개의 AI 크레딧을 해제하고 필기 인식을 받으세요";
+"noteshelf.ai.credit.creditsRunningOut" = "크레딧이 곧 소진됩니다";
+"noteshelf.ai.credit.details" = "%d/%d 잔여 크레딧";
+"noteshelf.ai.credit.moreOptions" = "더 많은 옵션";
+"noteshelf.ai.credit.moreinfo" = "AI 크레딧은 %d일 후에 초기화됩니다";
+"noteshelf.ai.credit.nocredits" = "잔여 크레딧 없음";
+"noteshelf.ai.pressEnterToSend" = "엔터를 눌러서 전송하세요.";
 "numSelected" = "%ld 선택됨'";
 "objects" = "객체";
 "ok" = "괜찮아";
@@ -1506,7 +1515,7 @@
 "welcome.nestedgroups" = "중첩된 그룹";
 "welcome.password" = "비밀번호";
 "welcome.pixabay" = "픽사베이";
-"welcome.presentMode" = "현재 모드";
+"welcome.presentMode" = "프레젠테이션 모드";
 "welcome.pressureSensitive" = "압력 감지 (appeulgyeok gamji)";
 "welcome.richText" = "리치 텍스트";
 "welcome.scanDocuments" = "문서 스캔";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 6 October 2023 at 10:26
+// Last Synced by Akshay on 19 October 2023 at 18:37
