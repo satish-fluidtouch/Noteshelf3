@@ -238,14 +238,14 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
 
                                 var resource: EDAMResource?
                                 if let note,
-                                   let orderedResources = note.resources as? [EDAMResource],orderedResources.contains(where: {nil != pageRecord.enGUID && ($0 as EDAMResource).guid == pageRecord.enGUID}) {
+                                   let orderedResources = note.resources as? [EDAMResource],orderedResources.contains(where: {nil != pageRecord.enGUID && ($0 as AnyObject).guid == pageRecord.enGUID}) {
                                     if pageRecord.isContentDirty {
                                         let items = FTENSyncUtilities.fetchItems(withEntity: "ENSyncRecord", predicate: NSPredicate(format: "enGUID == %@",pageRecord.enGUID));
                                         if((items?.count)! > 1) {
                                             //if there is only one GUID usage the update the same or else create new one
                                         }
                                         else {
-                                            let index = orderedResources.index(where: { (resource) -> Bool in
+                                            let index = orderedResources.firstIndex(where: { (resource) -> Bool in
                                                 let pageResource = resource ;
                                                 if(pageResource.guid == pageRecord.enGUID) {
                                                     return true;

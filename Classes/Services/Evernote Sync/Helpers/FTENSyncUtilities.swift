@@ -28,134 +28,129 @@ let SYNC_LOG_TRUNCATE_RECORDS = 4000
     #endif
     #if !targetEnvironment(macCatalyst)
     class func enmlRepresentation(withResources resources: [EDAMResource]?,syncRecords: [ENSyncRecord]?) -> String? {
-//        guard let resources = resources, let syncRecords = syncRecords else{
-//            return nil
-//        }
-//        let myWriter = ENMLWriter()
-//        myWriter.startDocument()
-//        //Attachment data should go here
-//        for (index,record) in syncRecords.enumerated() {
-//            var resourceToReturn: EDAMResource?
-//            if record.enGUID != nil{
-//                for resource in resources where resource.guid == record.enGUID {
-//                   // if resource.guid == record.enGUID{
-//                        resourceToReturn = resource
-//                        break
-//                    //}
-//                }
-//            }
-//            if nil == resourceToReturn {
-//                let fileName = (record.nsGUID ?? "") + ".jpg"
-//                for resource in resources where resource.attributes.fileName == fileName{
-//                    //if resource.attributes.fileName == fileName{
-//                        resourceToReturn = resource
-//                        break
-//                    //}
-//                }
-//            }
-//            if nil == resourceToReturn {
-//                if nil != record.enGUID {
-//                    FTLogError("EN: Failed to find resource", attributes: [
-//                        "enGUID": record.enGUID ?? ""
-//                    ])
-//                } else {
-//                    FTLogError("EN: Failed to find resource", attributes: [
-//                        "enGUID": "Not fouund"
-//                    ])
-//                }
-//                FTENSyncUtilities.recordSyncLog("Failed to find resource")
-//            }else{
-//                myWriter.start(
-//                    element: "div",
-//                    attributes: [
-//                        "style": "padding: 0px 0px 0px 0px;margin-bottom:15px;"
-//                ])
-//                myWriter.start(
-//                    element: "div",
-//                    attributes: [
-//                        "style": String(format: "max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;", resourceToReturn?.width.intValue ?? 0)])
-//                if let resourceData = resourceToReturn?.data {
-//                    myWriter.writeResource(
-//                        withDataHash: resourceData.bodyHash,
-//                        mime: resourceToReturn?.mime,
-//                        attributes: [
-//                            "style": "margin: 0px; padding:0px; border-radius:7px;"
-//                        ])
-//                }
-//                myWriter.endElement()
-//                #if DEBUG
-//                myWriter.start(
-//                    element: "div",
-//                    attributes: [
-//                        "style": "color: rgb(128, 128, 128);margin-top:5px;text-align:center;"
-//                ])
-//                myWriter.write(String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, syncRecords.count as CVarArg ))
-//                myWriter.endElement()
-//                #endif
-//                myWriter.endElement()
-//            }
-//        }
-//
-//        //Footer : Start
-//        let htmlString = "<a href=\"https://itunes.apple.com/us/app/noteshelf-2/id1271086060?mt=8\" target=\"_blank\">Noteshelf</a>"
-//        let publishByString = String.localizedStringWithFormat(NSLocalizedString("PublishedByNoteshelf", comment: "Published By Noteshelf"), htmlString)
-//        myWriter.start(element: "div", attributes: [
-//            "style": "color: #808080;text-align: center;padding:10px 10px;"
-//        ])
-//        myWriter.write(rawString: publishByString)
-//        myWriter.endElement()
-//        //Footer : end
-//        myWriter.endDocument()
-//        let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
-//        return contents
-        return nil
+        guard let resources = resources, let syncRecords = syncRecords else{
+            return nil
+        }
+        let myWriter = ENMLWriter()
+        myWriter.startDocument()
+        //Attachment data should go here
+        for (index,record) in syncRecords.enumerated() {
+            var resourceToReturn: EDAMResource?
+            if record.enGUID != nil{
+                for resource in resources where resource.guid == record.enGUID {
+                   // if resource.guid == record.enGUID{
+                        resourceToReturn = resource
+                        break
+                    //}
+                }
+            }
+            if nil == resourceToReturn {
+                let fileName = (record.nsGUID ?? "") + ".jpg"
+                for resource in resources where resource.attributes.fileName == fileName{
+                    //if resource.attributes.fileName == fileName{
+                        resourceToReturn = resource
+                        break
+                    //}
+                }
+            }
+            if nil == resourceToReturn {
+                if nil != record.enGUID {
+                    FTLogError("EN: Failed to find resource", attributes: [
+                        "enGUID": record.enGUID ?? ""
+                    ])
+                } else {
+                    FTLogError("EN: Failed to find resource", attributes: [
+                        "enGUID": "Not fouund"
+                    ])
+                }
+                FTENSyncUtilities.recordSyncLog("Failed to find resource")
+            }else{
+                myWriter.startElement("div",withAttributes: [
+                    "style": "padding: 0px 0px 0px 0px;margin-bottom:15px;"
+            ])
+                myWriter.startElement("div",withAttributes:[
+                    "style": String(format: "max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;", resourceToReturn?.width ?? 0)] )
+                if let resourceData = resourceToReturn?.data {
+                    myWriter.writeResource(
+                        withDataHash: resourceData.bodyHash,
+                        mime: resourceToReturn?.mime,
+                        attributes: [
+                            "style": "margin: 0px; padding:0px; border-radius:7px;"
+                        ])
+                }
+                myWriter.endElement()
+                #if DEBUG
+                myWriter.startElement("div",withAttributes: [
+                    "style": "color: rgb(128, 128, 128);margin-top:5px;text-align:center;"])
+                myWriter.write(String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, syncRecords.count as CVarArg ))
+                myWriter.endElement()
+                #endif
+                myWriter.endElement()
+            }
+        }
+
+        //Footer : Start
+        let htmlString = "<a href=\"https://www.itunes.apple.com/us/app/noteshelf-2/id1271086060?mt=8\" >Noteshelf</a>"
+        let publishByString = String.localizedStringWithFormat(NSLocalizedString("PublishedByNoteshelf", comment: "Published By Noteshelf"), htmlString)
+        myWriter.startElement("div",withAttributes: [
+            "style": "color: #808080;text-align: center;padding:10px 10px;"
+        ])
+        myWriter.write(publishByString)
+        myWriter.endElement()
+        //Footer : end
+        myWriter.endDocument()
+        let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
+        let xmlVersionAndDocType: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">"
+        
+        if let contents {
+            return xmlVersionAndDocType + contents
+        } else {
+            return nil
+        }
     }
     #endif
     
     #if !targetEnvironment(macCatalyst)
     class func enmlRepresentation(withResources resources: [EDAMResource]?) -> String? {
-//        guard let resources = resources else{
-//            return nil
-//        }
-//        let myWriter = ENMLWriter()
-//        myWriter.startDocument()
-//
-//        for (index,resource) in resources.enumerated() {
-//            myWriter.start(
-//                element: "div",
-//                attributes: [
-//                    "style": "padding: 0px 0px 0px 0px;margin-bottom:15px;"
-//            ])
-//            myWriter.start(
-//                element: "div",
-//                attributes: [
-//                    "style": String(format: "max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;", resource.width.intValue)
-//            ])
-//            if let edamData = resource.data {
-//                myWriter.writeResource(
-//                    withDataHash: edamData.bodyHash,
-//                    mime: resource.mime,
-//                    attributes: [
-//                        "style": "margin: 0px; padding:0px; border-radius:7px;"
-//                ])
-//            }
-//            myWriter.endElement()
-//            #if DEBUG
-//            myWriter.start(
-//                element: "div",
-//                attributes: [
-//                    "style": "color: rgb(128, 128, 128);margin-top:5px;text-align:center;"
-//            ])
-//            myWriter.write(String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, resources.count as CVarArg))
-//            myWriter.endElement()
-//            #endif
-//
-//            myWriter.endElement()
-//        }
-//        myWriter.endDocument()
-//        let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
-//        return contents
-        return nil
+        guard let resources = resources else{
+            return nil
+        }
+        let myWriter = ENMLWriter()
+        myWriter.startDocument()
+
+        for (index,resource) in resources.enumerated() {
+            myWriter.startElement(
+                "div",
+                withAttributes: [
+                    "style": "padding: 0px 0px 0px 0px;margin-bottom:15px;"
+            ])
+            myWriter.startElement("div",
+                withAttributes: [
+                    "style": String(format: "max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;", Int(resource.width))
+            ])
+            if let edamData = resource.data {
+                myWriter.writeResource(
+                    withDataHash: edamData.bodyHash,
+                    mime: resource.mime,
+                    attributes: [
+                        "style": "margin: 0px; padding:0px; border-radius:7px;"
+                ])
+            }
+            myWriter.endElement()
+            #if DEBUG
+            myWriter.startElement("div",
+                withAttributes: [
+                    "style": "color: rgb(128, 128, 128);margin-top:5px;text-align:center;"
+            ])
+            myWriter.write(String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, resources.count as CVarArg))
+            myWriter.endElement()
+            #endif
+
+            myWriter.endElement()
+        }
+        myWriter.endDocument()
+        let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
+        return contents
     }
     #endif
     //MARK:- Fetch From DB
