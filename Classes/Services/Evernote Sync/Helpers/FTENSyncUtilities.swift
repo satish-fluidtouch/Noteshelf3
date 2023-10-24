@@ -150,7 +150,13 @@ let SYNC_LOG_TRUNCATE_RECORDS = 4000
         }
         myWriter.endDocument()
         let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
-        return contents
+        let xmlVersionAndDocType: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">"
+
+        if let contents {
+            return xmlVersionAndDocType + contents
+        } else {
+            return nil
+        }
     }
     #endif
     //MARK:- Fetch From DB
