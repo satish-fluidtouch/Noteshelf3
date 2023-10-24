@@ -693,6 +693,7 @@ extension FTShelfSplitViewController: UISplitViewControllerDelegate {
     func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
         //NotificationCenter.default.post(name: NSNotification.Name("SplitDisplayModeChangeNotification"), object: nil, userInfo: ["splitDisplayMode":displayMode.rawValue])
         self.currentShelfViewModel?.isSidebarOpen = displayMode == .oneBesideSecondary
+        FTUserDefaults.setSidebarOpenorClose(displayMode == .oneBesideSecondary)
         self.currentShelfViewModel?.showCompactBottombar = !self.traitCollection.isRegular || (displayMode == .oneBesideSecondary && self.traitCollection.isRegular && !isInLandscape) ||  (displayMode == .oneBesideSecondary && isInLandscape && self.view.frame.width <= 809)
     }
 #endif

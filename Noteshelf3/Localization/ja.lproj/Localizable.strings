@@ -826,6 +826,7 @@
 "Tag" = "タグ";
 "Tagged" = "この単語に「タグ付け」";
 "Tags" = "タグ";
+"Take beautiful notes effortlessly" = "美しいノートを簡単に取る";
 "TakePhoto" = "写真を撮る";
 "TakeScreenshot" = "スクリーンショットを撮る";
 "TapToRate" = "評価するためにタップしてください";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "新しいページに手書きで追加";
 "noteshelf.ai.actionAddToNewPage" = "新しいページにテキストとして追加";
 "noteshelf.ai.actionAddToPage" = "テキストとして追加";
+"noteshelf.ai.credit.bePremium" = "Noteshelfプレミアムにアップグレード";
+"noteshelf.ai.credit.bePremiumInfo" = "手書き認識を利用するために、Noteshelfプレミアムにアップグレードしてください。月間100個のAIクレジットが解放されます";
+"noteshelf.ai.credit.creditsRunningOut" = "クレジットが間もなく切れます";
+"noteshelf.ai.credit.details" = "残り%d/%d クレジット";
+"noteshelf.ai.credit.moreOptions" = "もっとオプション";
+"noteshelf.ai.credit.moreinfo" = "AI クレジットのリセットまであと%d日";
+"noteshelf.ai.credit.nocredits" = "クレジットが残っていません";
+"noteshelf.ai.pressEnterToSend" = "Enterキーを押して送信";
 "numSelected" = "%ld 選択されました'";
 "objects" = "オブジェクト";
 "ok" = "OK";
@@ -1506,7 +1515,7 @@
 "welcome.nestedgroups" = "ネストされたグループ";
 "welcome.password" = "パスワード";
 "welcome.pixabay" = "ピクスベイ";
-"welcome.presentMode" = "現在のモード";
+"welcome.presentMode" = "プレゼンテーションモード";
 "welcome.pressureSensitive" = "圧力感知 (あつりょくかんち)";
 "welcome.richText" = "リッチテキスト";
 "welcome.scanDocuments" = "文書をスキャン";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 6 October 2023 at 10:26
+// Last Synced by Rakesh on 19 October 2023 at 6:44 PM

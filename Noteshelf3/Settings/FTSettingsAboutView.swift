@@ -20,13 +20,11 @@ struct FTSettingsAboutView: View {
     @State private var showWebview: Bool = false
     @State private var showWelcome: Bool = false
 
-
     let columns = [
-        GridItem(.flexible())
+        GridItem(.fixed(44))
     ]
 
     var body: some View {
-        GeometryReader{ proxy in
             ScrollView {
                 headerSection
                 
@@ -34,9 +32,7 @@ struct FTSettingsAboutView: View {
                 
                 footerSection
             }
-            .frame(width: proxy.size.width,height: proxy.size.height)
             .background(Color.appColor(.formSheetBgColor))
-        }
 #if !targetEnvironment(macCatalyst)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -149,40 +145,45 @@ struct FTSettingsAboutView: View {
 
     @ViewBuilder
     private var footerSection: some View{
-        VStack{
-            LazyHGrid(rows: columns,alignment: .center, spacing:32){
-                ForEach(SocialMediaTypes.allCases, id: \.self.url) { type in
-                    Image(type.icon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44,height: 44)
-                        .onTapGesture {
+            VStack{
+                GeometryReader { geometry in
+                    LazyHGrid(rows: columns,alignment: .center, spacing: geometry.size.width < 500 ? 16 : 32){
+                        ForEach(SocialMediaTypes.allCases, id: \.self.url) { type in
+                            Spacer()
+                            Image(type.icon)
+                                .resizable()
+                                .scaledToFit()
+                                .onTapGesture {
 #if targetEnvironment(macCatalyst)
-                            if let url = URL(string: type.url) {
-                                UIApplication.shared.open(url);
-                            }
+                                    if let url = URL(string: type.url) {
+                                        UIApplication.shared.open(url);
+                                    }
 #else
-                            selectedStyle = type
-                            showWebview = true
+                                    selectedStyle = type
+                                    showWebview = true
 #endif
+                                }
+                            Spacer()
                         }
-                }
-            }
-            .if(selectedStyle != nil, transform: { view in
-                view.fullScreenCover(isPresented: $showWebview) {
-                    if let selectedStyle = selectedStyle, let url = URL(string: selectedStyle.url) {
-                        SafariView(url: url)
                     }
+                    .padding(.horizontal,16)
                 }
-            })
+                .if(selectedStyle != nil, transform: { view in
+                    view.fullScreenCover(isPresented: $showWebview) {
+                        if let selectedStyle = selectedStyle, let url = URL(string: selectedStyle.url) {
+                            SafariView(url: url)
+                        }
+                    }
+                })
                 Text(viewModel.copyrightMessage)
-                .font(.appFont(for: .regular, with: 13))
-                .foregroundColor(Color.label).opacity(0.7)
-                .lineLimit(1)
+                    .font(.appFont(for: .regular, with: 13))
+                    .foregroundColor(Color.label).opacity(0.7)
+                    .lineLimit(1)
+            }
+            .frame(height: 120)
+            .padding(.bottom,22)
         }
-        .frame(height: 120)
-        .padding(.bottom,22)
-    }
+
 }
 
 struct MiddleSectionItemConfig: ViewModifier {

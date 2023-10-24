@@ -12,12 +12,21 @@ struct FTShelfContentPhotosView: View  {
     @ObservedObject var viewModel: FTShelfContentPhotosViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    @State private var orientation = UIDevice.current.orientation
+
     private var gridItems: [GridItem] {
-        var numberOfColoums = 4
-        if horizontalSizeClass == .compact {
-            numberOfColoums = 3
+        let isSidebarOpen = FTUserDefaults.isSidebarOpen()
+        let isPortrait = orientation.isPortrait
+        var numberOfColumns: Int
+        if isSidebarOpen {
+            numberOfColumns = isPortrait ? 3 : 4
+        } else {
+            numberOfColumns = isPortrait ? 4 : 5
         }
-        return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColoums)
+        if horizontalSizeClass == .compact {
+            numberOfColumns = 2
+        }
+        return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColumns)
     }
     var body: some View {
         Group {
@@ -26,6 +35,7 @@ struct FTShelfContentPhotosView: View  {
                 ProgressView()
             case .loaded:
                 contentView
+                    .detectOrientation($orientation)
             case .empty:
                 emptyStateView
             }
@@ -48,7 +58,7 @@ struct FTShelfContentPhotosView: View  {
                             .frame(width: size.width, height: size.width)
                             .clipped()
                             .overlay(alignment: .bottomLeading) {
-                                Image("gradient")
+                                Image(media.isProtected ? "" : "gradient")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: size.width, height: size.width/2)
@@ -56,10 +66,11 @@ struct FTShelfContentPhotosView: View  {
                             }
                             .overlay(alignment: .bottomLeading) {
                                 Text(media.title)
-                                    .appFont(for: .medium, with: 14)
+                                    .appFont(for: .medium, with: 15)
                                     .multilineTextAlignment(.leading)
+                                    .lineLimit(1)
                                     .foregroundColor(Color.white)
-                                    .padding()
+                                    .padding(.all,8)
                             }
                             .onTapGesture {
                                 viewModel.onSelect?(media)
@@ -91,12 +102,18 @@ struct FTShelfContentPhotosView: View  {
 
     private func itemSize(for viewSize: CGSize) -> CGSize {
         let cellSpacing: CGFloat = 2
-        var itemsPerRow: CGFloat = 4
+        let isSidebarOpen = FTUserDefaults.isSidebarOpen()
+        let isPortrait = orientation.isPortrait
+        var itemsPerRow: CGFloat
+        if isSidebarOpen {
+            itemsPerRow = isPortrait ? 3 : 4
+        } else {
+            itemsPerRow = isPortrait ? 4 : 5
+        }
         if horizontalSizeClass == .compact {
-            itemsPerRow = 3
+            itemsPerRow = 2
         }
         let iterimSpacing: CGFloat = (itemsPerRow - 1)*cellSpacing
-
         let width: CGFloat = (viewSize.width-iterimSpacing)/itemsPerRow
         let size = CGSize(width: width, height: width)
         return size
@@ -109,9 +126,16 @@ struct MediaItemView: View {
     var body: some View {
         if media.isProtected {
             Color.gray
-                .opacity(0.3)
                 .overlay {
-                    Image(systemName: "lock")
+                    HStack{
+                        VStack{
+                            Image(systemName: "lock")
+                                .foregroundColor(.label)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .padding(.all,8)
                 }
         } else {
             AsyncImage(url: media.imageURL) { image in

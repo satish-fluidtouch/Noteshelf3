@@ -12,10 +12,16 @@ struct FTShelfContentAudioView: View {
     @ObservedObject var viewModel: FTShelfContentAudioViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
+    @State private var orientation = UIDevice.current.orientation
+
     private var gridItems: [GridItem] {
-        var numberOfColoums = 4
-        if horizontalSizeClass == .compact {
-            numberOfColoums = 3
+        let isSidebarOpen = FTUserDefaults.isSidebarOpen()
+        let isPortrait = orientation.isPortrait
+        var numberOfColoums: Int
+        if isSidebarOpen {
+            numberOfColoums = isPortrait ? 3 : 4
+        } else {
+            numberOfColoums = isPortrait ? 4 : 5
         }
         return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColoums)
     }
@@ -26,6 +32,7 @@ struct FTShelfContentAudioView: View {
                 ProgressView()
             case .loaded:
                 contentView
+                    .detectOrientation($orientation)
             case .empty:
                 emptyStateView
             }
@@ -53,6 +60,14 @@ struct FTShelfContentAudioView: View {
                                     .scaledToFill()
                                     .frame(width: size.width, height: size.width/2)
                                     .clipped()
+                            }
+                            .overlay(alignment: .bottomLeading) {
+                                Text(audio.title)
+                                    .appFont(for: .medium, with: 14)
+                                    .multilineTextAlignment(.leading)
+                                    .lineLimit(1)
+                                    .foregroundColor(Color.white)
+                                    .padding(.all,8)
                             }
                             .onTapGesture {
                                 viewModel.onSelect?(audio)
@@ -83,12 +98,18 @@ struct FTShelfContentAudioView: View {
     }
 
     private func itemSize(for viewSize: CGSize) -> CGSize {
+        let isSidebarOpen = FTUserDefaults.isSidebarOpen()
         let cellSpacing: CGFloat = 2
-        var itemsPerRow: CGFloat = 4
-        if horizontalSizeClass == .compact {
-            itemsPerRow = 3
+        let isPortrait = orientation.isPortrait
+        var itemsPerRow: CGFloat
+        if isSidebarOpen {
+            itemsPerRow = isPortrait ? 3 : 4
+        } else {
+            itemsPerRow = isPortrait ? 4 : 5
         }
-
+        if horizontalSizeClass == .compact {
+            itemsPerRow = 2
+        }
         let iterimSpacing: CGFloat = (itemsPerRow - 1)*cellSpacing
 
         let width: CGFloat = (viewSize.width-iterimSpacing)/itemsPerRow
@@ -104,23 +125,38 @@ struct FTShelfAudioItemView: View {
     var body: some View {
         if audio.isProtected {
             Color.gray
-                .opacity(0.3)
                 .overlay {
-                    Image(systemName: "lock")
+                    HStack{
+                        VStack{
+                            Image(systemName: "lock")
+                                .foregroundColor(.label)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                    .padding(.all,8)
                 }
         } else {
-            Color(.appColor(.accent)).overlay(content: {
-                VStack(spacing: 4) {
-                    Image(systemName: "volume.2.fill")
-                        .font(.title)
-                    VStack{
-                        Text(audio.audioTitle)
-                            .foregroundColor(.white)
-                        Text(audio.duration)
-                            .foregroundColor(.white.opacity(0.6))
+            Color(.appColor(.accent))
+                .overlay(content: {
+                HStack{
+                    VStack(alignment: .leading,spacing: 8) {
+                        Image(systemName: "volume.2.fill")
+                            .frame(width: 28,height: 24)
+                            .   font(.appFont(for: .medium, with: 20))
+                        VStack(alignment: .leading,spacing: 2){
+                            Text(audio.audioTitle)
+                                .lineLimit(2)
+                                .foregroundColor(.white)
+                            Text(audio.duration)
+                                .foregroundColor(.white.opacity(0.6))
+                        }
+                        .appFont(for: .medium, with: 13)
+                        Spacer()
                     }
-                    .appFont(for: .medium, with: 13)
+                    Spacer()
                 }
+                .padding(.all,8)
                 .appFont(for: .medium, with: 10)
                 .foregroundColor(Color.white)
             })
