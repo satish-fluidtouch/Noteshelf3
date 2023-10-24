@@ -209,8 +209,8 @@ extension FTPDFRenderViewController: FTShortcutActions {
     func handleTagPage(source: Any, controller: UIViewController, pages: NSSet) {
         if self.pdfDocument is FTThumbnailableCollection {
             let tags = FTCacheTagsProcessor.shared.commonTagsFor(pages: pages)
-            let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
-            FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: sortedArray)
+            let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
+            FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: tagItems)
         }
     }
 

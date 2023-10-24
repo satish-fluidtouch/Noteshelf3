@@ -115,7 +115,16 @@ extension FTPenRackViewController : UICollectionViewDelegate {
         self.penTypeRack.currentPenset.preciseSize = self.penTypeRack.lastSelectedPenSize(for: penType).preciseSize
 
         self.penTypeRack.saveCurrentSelection()
-        NotificationCenter.default.post(name: .penTypeDisplayChange, object: self.view.window, userInfo: ["FTRackData": self.penTypeRack])
+
+        // In MAC window scene is coming as UIPopoverscene which is different than notebook-split-controller
+        // If window scene is differed, we ll not be able to listen to the notification, so handled like below
+        var scene: UIWindowScene?
+#if targetEnvironment(macCatalyst)
+        scene =  self.parent?.presentingViewController?.view.uiWindowScene // Notebook split view controller - window scene
+#else
+        scene = self.view?.window?.windowScene
+#endif
+        NotificationCenter.default.post(name: .penTypeDisplayChange, object: scene, userInfo: ["FTRackData": self.penTypeRack])
 
         collectionView.indexPathsForVisibleItems.forEach({ (penTypeIndexPath) in
             if let cell = collectionView.cellForItem(at: penTypeIndexPath) as? FTPenTypeCollectionViewCell {

@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "要約する"; //summarize
 "noteshelf.ai.explain" = "説明する"; //explain
 "noteshelf.ai.translate" = "翻訳する"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "%@ に翻訳する";
 
 "noteshelf.ai.sendFeedback" = "フィードバックを送信する"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "何でも質問してください..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "トピックを入力してください"; //enter_the_topic
 "noteshelf.ai.provideContent" = "ノートを作成するためのトピックを提供してください"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".50から200語で要約してください"; //summarize_command
-"noteshelf.ai.commandExplain" = ".簡単な言葉で説明してください"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".キーポイントを示す"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "%@ に翻訳する"; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "クリップボードにコピーする"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "テキストとして追加"; //add_to_page
@@ -51,3 +47,15 @@
 "noteshelf.ai.noteshelfAIError" = "サーバーに接続できませんでした。後でもう一度お試しください。";
 
 "noteshelf.ai.handwriteMessage" = "Noteshelf AIは、あなたがプレミアムユーザーである場合にのみ、あなたの手書きを理解することができます。";
+
+"noteshelf.ai.pressEnterToSend" = "Enterキーを押して送信";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "クレジットが残っていません";
+"noteshelf.ai.credit.bePremium" = "Noteshelfプレミアムにアップグレード";
+"noteshelf.ai.credit.creditsRunningOut" = "クレジットが間もなく切れます";
+"noteshelf.ai.credit.bePremiumInfo" = "手書き認識を利用するために、Noteshelfプレミアムにアップグレードしてください。月間100個のAIクレジットが解放されます";
+"noteshelf.ai.credit.upgradeNow" = "今すぐアップグレード";
+"noteshelf.ai.credit.details" = "残り%d/%d クレジット";
+"noteshelf.ai.credit.moreinfo" = "AI クレジットのリセットまであと%d日";
+"noteshelf.ai.credit.moreOptions" = "もっとオプション";

@@ -26,7 +26,7 @@ struct FTPenSizeView: View {
                 Spacer()
                     .frame(height: 8.0)
                 self.penSizeIndicatorView.isHidden(!toShowSizeIndicatorAtBottom())
-            }
+            }.contentShape(Rectangle())
         } else {
             self.penSizeStateView
                 .contentShape(Rectangle())

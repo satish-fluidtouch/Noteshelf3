@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "Resumir"; //summarize
 "noteshelf.ai.explain" = "Explicar"; //explain
 "noteshelf.ai.translate" = "Traducir"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "Traducir al %@";
 
 "noteshelf.ai.sendFeedback" = "Enviar comentarios"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "Pregunta cualquier cosa..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "Ingresar el tema"; //enter_the_topic
 "noteshelf.ai.provideContent" = "Por favor, proporciona un tema para crear notas"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".Resumir en 50 a 200 palabras"; //summarize_command
-"noteshelf.ai.commandExplain" = ".Explica en términos simples"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".Dar puntos clave"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "Traducir al %@"; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "Copiar al portapapeles"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "Agregar como texto"; //add_to_page
@@ -51,3 +47,15 @@
 "noteshelf.ai.noteshelfAIError" = "No se pudo conectar al servidor. Por favor, inténtalo de nuevo más tarde.";
 
 "noteshelf.ai.handwriteMessage" = "Noteshelf AI podrá entender tu escritura solo si eres un usuario Premium.";
+
+"noteshelf.ai.pressEnterToSend" = "Presiona Enter para enviar";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "No hay créditos disponibles";
+"noteshelf.ai.credit.bePremium" = "Actualización a Noteshelf Premium";
+"noteshelf.ai.credit.creditsRunningOut" = "Créditos próximos a agotarse";
+"noteshelf.ai.credit.bePremiumInfo" = "Actualiza a Noteshelf Premium para desbloquear 100 créditos mensuales de IA y obtener reconocimiento de escritura";
+"noteshelf.ai.credit.upgradeNow" = "Actualiza ahora";
+"noteshelf.ai.credit.details" = "%d/%d créditos restantes";
+"noteshelf.ai.credit.moreinfo" = "Créditos de IA se reiniciarán en %d días";
+"noteshelf.ai.credit.moreOptions" = "Más opciones.";

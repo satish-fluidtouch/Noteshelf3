@@ -123,11 +123,11 @@ extension FTFinderViewController {
     }
     
     @objc func didTapTagspill(_ gesture: UITapGestureRecognizer) {
-        if let sender = gesture.view as? UIStackView, gesture.state == .ended {
+        if let sender = gesture.view as? UIStackView, gesture.state == .ended, let cell = collectionView.cellForItem(at: IndexPath(item: sender.tag, section: 0)) as? FTFinderThumbnailViewCell  {
             let page = self.filteredPages[sender.tag]
             if let newPage = page as? FTPageProtocol {
                 let set =  NSSet(array: [newPage]) as Set<NSObject> as NSSet
-                self.tagPages(withSelectedPages: set, targetView: sender)
+                self.tagPages(withSelectedPages: set, targetView: cell)
                 contextMenuActivePages = [page]
             }
         }

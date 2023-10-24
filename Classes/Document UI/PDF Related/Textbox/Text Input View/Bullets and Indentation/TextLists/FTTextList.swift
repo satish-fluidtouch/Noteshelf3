@@ -36,15 +36,15 @@ import Foundation
 
     class func textListWithMarkerFormat(_ format:String!, option mask:UInt) -> FTTextList {
         let list:FTTextList
-        if (format == "{checkbox}")
+        if (format.hasPrefix("{checkbox}"))
         {
             list = FTCheckBoxTextList(markerFormat:format, options:Int(mask))
         }
-        else if (format == "{decimal}")
+        else if (format.hasPrefix("{decimal}"))
         {
             list = FTNumberTextList(markerFormat:format, options:Int(mask))
         }
-        else if (format == "{upper-alpha}")
+        else if (format.hasPrefix("{upper-alpha}"))
         {
             list = FTAlphabetTextList(markerFormat:format, options:Int(mask))
         }

@@ -45,61 +45,54 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
         let viewModel = FTShelfTagsPageModel()
 
         if !self.tags.isEmpty {
-            currentTask =  Task {
-                do {
-                    let result = try await viewModel.fetchOnlyTaggedNotebooks(selectedTags: self.tags, shelfItems: self.shelfItems, progress: progress)
-                    let booksInfo = result.tagsItems.filter({ $0.type == .book })
-                    var items = [FTSearchResultBookProtocol]()
-                    let sectionResult = FTSearchSectionTitles()
+                viewModel.processTags(reqItems: self.shelfItems, selectedTags: self.tags, progress: progress) { result in
+                let booksInfo = result.filter({ $0.type == .book })
+                var items = [FTSearchResultBookProtocol]()
+                let sectionResult = FTSearchSectionTitles()
 
-                    let searchedBooks = booksInfo.map({ $0.shelfItem })
-                    searchedBooks.forEach({ (shelfItem) in
-                        let gridItem = FTSearchResultBook()
-                        gridItem.parentSection = sectionResult
-                        gridItem.shelfItem = shelfItem
-                        items.append(gridItem)
-                    })
+                let searchedBooks = booksInfo.map({ $0.documentItem })
+                searchedBooks.forEach({ (shelfItem) in
+                    let gridItem = FTSearchResultBook()
+                    gridItem.parentSection = sectionResult
+                    gridItem.shelfItem = shelfItem
+                    items.append(gridItem)
+                })
 
-                    let pageInfo = result.tagsItems.filter({ $0.type == .page })
-                    var searchPageContent: [FTSearchSectionContent] = []
+                let pageInfo = result.filter({ $0.type == .page })
+                var searchPageContent: [FTSearchSectionContent] = []
 
-                    pageInfo.forEach { eachPageInfo in
-                        let searchSectionItem: FTSearchSectionContent = FTSearchSectionContent()
-                        searchSectionItem.sectionHeaderItem = eachPageInfo.shelfItem
-                        let searchingInfo = FTPageSearchingInfo()
-                        let pageItem = FTSearchResultPage.init()
-                        pageItem.parentSection = searchSectionItem
-                        searchingInfo.pageUUID = eachPageInfo.page?.uuid
-                        pageItem.searchingInfo = searchingInfo
-                        pageItem.shelfItem = eachPageInfo.shelfItem
-                        searchSectionItem.addSearchItem(pageItem)
-                        searchPageContent.append(searchSectionItem)
-                    }
-
-                    if !items.isEmpty {
-                        var searchSections = [FTSearchSectionProtocol]()
-                        sectionResult.items = items
-                        searchSections.append(sectionResult)
-                        self.onSectionFinding?(searchSections, self.token)
-                    }
-
-                    if !searchPageContent.isEmpty {
-                        self.onSectionFinding?(searchPageContent, self.token)
-                    }
-
-                    if items.isEmpty && searchPageContent.isEmpty {
-                        self.onSectionFinding?([], self.token)
-                    }
-
-                    //                            if let isCancelled = operation?.isCancelled, isCancelled == false {
-                    self.onCompletion?(self.token)
-                    //                            }
-                    endBackgroundTask(task)
-
+                pageInfo.forEach { eachPageInfo in
+                    let searchSectionItem: FTSearchSectionContent = FTSearchSectionContent()
+                    searchSectionItem.sectionHeaderItem = eachPageInfo.documentItem
+                    let searchingInfo = FTPageSearchingInfo()
+                    let pageItem = FTSearchResultPage.init()
+                    pageItem.parentSection = searchSectionItem
+                    searchingInfo.pageUUID = eachPageInfo.pageUUID
+                    pageItem.searchingInfo = searchingInfo
+                    pageItem.shelfItem = eachPageInfo.documentItem
+                    searchSectionItem.addSearchItem(pageItem)
+                    searchPageContent.append(searchSectionItem)
                 }
-                catch let error as NSError {
-                    print(error.localizedDescription)
+
+                if !items.isEmpty {
+                    var searchSections = [FTSearchSectionProtocol]()
+                    sectionResult.items = items
+                    searchSections.append(sectionResult)
+                    self.onSectionFinding?(searchSections, self.token)
                 }
+
+                if !searchPageContent.isEmpty {
+                    self.onSectionFinding?(searchPageContent, self.token)
+                }
+
+                if items.isEmpty && searchPageContent.isEmpty {
+                    self.onSectionFinding?([], self.token)
+                }
+
+                //                            if let isCancelled = operation?.isCancelled, isCancelled == false {
+                self.onCompletion?(self.token)
+                //                            }
+                endBackgroundTask(task)
             }
         }
     }

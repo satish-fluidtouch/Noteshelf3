@@ -153,8 +153,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
         }
     }
+    // Bypassing the old thumnail setting approach
     override var thumbnailImage: UIImage? {
-        return self.shelfImage;
+        if self.URL.isNS2Book {
+            return self.shelfImage;
+        } else {
+            return nil
+        }
     }
 
     var shelfImage: UIImage? {
@@ -183,7 +188,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     var hasAnyUnsavedChanges: Bool {
         let documentInfoPlist = self.documentInfoPlist();
         var changes = super.hasUnsavedChanges
-            || ((nil != documentInfoPlist) && documentInfoPlist!.isModified);
+            || ((nil != documentInfoPlist) && documentInfoPlist!.isModified)
 
         let allPages = self.pages()
         if(!changes){

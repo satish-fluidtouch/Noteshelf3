@@ -54,7 +54,7 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
                 if(storedToken.canClose) {
                     storedToken.document?.closeDocument(completionHandler: { success in
                         // cache the document if required.
-                       try? FTDocumentCache.shared.cacheShelfItemFor(url: document.URL, documentUUID: document.documentUUID)
+                       FTDocumentCache.shared.cacheShelfItemFor(url: document.URL, documentUUID: document.documentUUID)
                         onCompletion?(success)
                     })
                     if let index = self.documentsInUse.firstIndex(of: storedToken) {
