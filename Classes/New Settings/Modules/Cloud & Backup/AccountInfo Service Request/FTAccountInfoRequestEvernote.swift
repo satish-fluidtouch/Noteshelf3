@@ -19,10 +19,12 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
             account.statusText = account.loadingText;
             updateBlock(account);
     #if !targetEnvironment(macCatalyst)
-            let evernoteSession = EvernoteSession.shared();
-            let userStore = evernoteSession?.userStore();
-            if let authToken = evernoteSession?.authenticationToken as? String {
-                let user = userStore?.getUser(authToken)
+            guard let evernoteSession = EvernoteSession.shared() else {
+                account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
+                completionBlock(account, nil);
+                return
+            }
+            EvernoteUserStore(session: evernoteSession).getUserWithSuccess { user in
                 let username: String;
 
                 if let email = user?.email, email != "" {
@@ -36,8 +38,8 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
                 }
                 account.userName = username;
                 self.fetchUsageDetails(account, onCompelltion: completionBlock);
-            } else {
-                account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
+            } failure: { error in
+                account.statusText = "Failed to user details."//NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
                 completionBlock(account, nil);
             }
         #endif
