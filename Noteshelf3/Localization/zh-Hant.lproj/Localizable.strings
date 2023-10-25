@@ -1169,13 +1169,13 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "新增為手寫到新頁面";
 "noteshelf.ai.actionAddToNewPage" = "新增為文字到新頁面";
 "noteshelf.ai.actionAddToPage" = "新增為文字";
-"noteshelf.ai.credit.bePremium" = "升級至Noteshelf高級版";
-"noteshelf.ai.credit.bePremiumInfo" = "升級到Noteshelf高級版，解鎖每月100個AI點數和手寫辨識。";
-"noteshelf.ai.credit.creditsRunningOut" = "積分即將用完";
-"noteshelf.ai.credit.details" = "還剩下%d/%d個學分";
+"noteshelf.ai.credit.bePremium" = "升級到Noteshelf高級版";
+"noteshelf.ai.credit.bePremiumInfo" = "升級到Noteshelf Premium以解鎖每月100個AI積分並獲得手寫識別功能";
+"noteshelf.ai.credit.creditsRunningOut" = "積分即將用盡";
+"noteshelf.ai.credit.details" = "%d/%d 剩餘積分";
 "noteshelf.ai.credit.moreOptions" = "更多選項";
-"noteshelf.ai.credit.moreinfo" = "AI 學分將在%d天後重置";
-"noteshelf.ai.credit.nocredits" = "沒有剩餘學分";
+"noteshelf.ai.credit.moreinfo" = "AI積分將在%d天後重置";
+"noteshelf.ai.credit.nocredits" = "沒有剩餘積分";
 "noteshelf.ai.pressEnterToSend" = "按下回車鍵發送";
 "numSelected" = "%ld 已選中'";
 "objects" = "物件";
@@ -1532,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 19 October 2023 at 18:37
+// Last Synced by Akshay on 25 October 2023 at 12:13
