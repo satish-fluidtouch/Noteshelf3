@@ -13,7 +13,6 @@ extension FTShelfSplitViewController {
         guard let globalSearchController = UIStoryboard.init(name: "FTGlobalSearch", bundle: nil).instantiateViewController(identifier: "FTGlobalSearchController") as? FTGlobalSearchController else {
             fatalError("Programmer error, Could not find Global searc controller")
         }
-        self.sideMenuController?.addBlurView()
         globalSearchController.delegate = self
         globalSearchController.shelfItemCollection = self.shelfItemCollection
         globalSearchController.navTitle = (currentShelfViewModel?.isInHomeMode ?? false) ? NSLocalizedString("sidebar.topSection.home", comment: "Home") : shelfItemCollection?.displayTitle
@@ -26,15 +25,15 @@ extension FTShelfSplitViewController {
         if let searchVc = self.globalSearchController, let navVc = searchVc.navigationController {
             navVc.popViewController(animated: false)
             self.globalSearchController = nil
-        }
 #if targetEnvironment(macCatalyst)
-        (self.view.toolbar as? FTShelfToolbar)?.resignSearchToolbar()
+            (self.view.toolbar as? FTShelfToolbar)?.resignSearchToolbar()
 #endif
+        }
     }
 
     func checkIfGlobalSearchControllerExists() -> Bool {
         var status = false
-        if let globalSearchVc = self.globalSearchController, let children = self.detailNavigationController?.children, children.contains(globalSearchVc) {
+        if self.detailNavigationController?.children.last is FTGlobalSearchController {
             status = true
         }
         return status
@@ -67,7 +66,7 @@ extension FTShelfSplitViewController: FTGlobalSearchDelegate {
         self.shelfItemCollection = category
         self.sideMenuController?.selectSidebarItemWithCollection(category)
         let categoryVc = getSecondaryViewControllerWith(collection: category, groupItem: nil)
-        self.globalSearchController?.navigationController?.pushViewController(categoryVc, animated: true)
+        self.detailNavigationController?.pushViewController(categoryVc, animated: true)
     }
 
     func didSelectGroup(groupItem: FTGroupItemProtocol) {
@@ -108,3 +107,15 @@ extension FTShelfSplitViewController {
         }
     }
 }
+
+#if !targetEnvironment(macCatalyst)
+extension FTShelfSplitViewController: UINavigationControllerDelegate {
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is FTGlobalSearchController {
+            self.sideMenuController?.addBlurView()
+        } else {
+            self.sideMenuController?.removeBlurView()
+        }
+    }
+}
+#endif
