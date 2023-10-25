@@ -58,7 +58,7 @@ struct FTShelfContentPhotosView: View  {
                             .frame(width: size.width, height: size.width)
                             .clipped()
                             .overlay(alignment: .bottomLeading) {
-                                Image(media.isProtected ? "" : "gradient")
+                                Image("gradient")
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: size.width, height: size.width/2)
@@ -124,32 +124,17 @@ struct MediaItemView: View {
     let media: FTShelfMedia
 
     var body: some View {
-        if media.isProtected {
+        AsyncImage(url: media.imageURL) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipped()
+        } placeholder: {
             Color.gray
+                .opacity(0.3)
                 .overlay {
-                    HStack{
-                        VStack{
-                            Image(systemName: "lock")
-                                .foregroundColor(.label)
-                            Spacer()
-                        }
-                        Spacer()
-                    }
-                    .padding(.all,8)
+                    ProgressView()
                 }
-        } else {
-            AsyncImage(url: media.imageURL) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
-            } placeholder: {
-                Color.gray
-                    .opacity(0.3)
-                    .overlay {
-                        ProgressView()
-                    }
-            }
         }
     }
 }

@@ -28,14 +28,6 @@ class FTShelfAudio: Identifiable {
         self.duration = duration
         self.dateAndTime = dateAndTime
     }
-
-    var isProtected: Bool {
-        guard let url = document?.URL else {
-            return false
-        }
-
-        return url.isPinEnabledForDocument()
-    }
 }
 
 final class FTShelfContentAudioViewModel: ObservableObject {

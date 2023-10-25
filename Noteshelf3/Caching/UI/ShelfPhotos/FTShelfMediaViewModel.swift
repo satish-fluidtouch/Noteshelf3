@@ -30,14 +30,6 @@ class FTShelfMedia: Identifiable {
         self.imageURL = imageURL
         self.document = document
     }
-
-    var isProtected: Bool {
-        guard let url = document?.URL else {
-            return false
-        }
-
-        return url.isPinEnabledForDocument()
-    }
 }
 
 final class FTShelfContentPhotosViewModel: ObservableObject {

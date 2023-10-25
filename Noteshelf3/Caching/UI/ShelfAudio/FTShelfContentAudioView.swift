@@ -123,22 +123,8 @@ struct FTShelfAudioItemView: View {
     let audio: FTShelfAudio
 
     var body: some View {
-        if audio.isProtected {
-            Color.gray
-                .overlay {
-                    HStack{
-                        VStack{
-                            Image(systemName: "lock")
-                                .foregroundColor(.label)
-                            Spacer()
-                        }
-                        Spacer()
-                    }
-                    .padding(.all,8)
-                }
-        } else {
-            Color(.appColor(.accent))
-                .overlay(content: {
+        Color(.appColor(.accent))
+            .overlay(content: {
                 HStack{
                     VStack(alignment: .leading,spacing: 8) {
                         Image(systemName: "volume.2.fill")
@@ -160,7 +146,6 @@ struct FTShelfAudioItemView: View {
                 .appFont(for: .medium, with: 10)
                 .foregroundColor(Color.white)
             })
-        }
     }
 }
 
