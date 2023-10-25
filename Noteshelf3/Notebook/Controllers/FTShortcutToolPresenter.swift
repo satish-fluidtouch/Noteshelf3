@@ -119,6 +119,10 @@ private var offset: CGFloat = 8.0
                 reqCenter.x -= 60.0
             } else if self.shortcutViewPlacement.isRightPlacement() {
                 reqCenter.x += 60.0
+            } else if self.shortcutViewPlacement == .top {
+                reqCenter.y -= 200.0
+            } else if self.shortcutViewPlacement == .bottom {
+                reqCenter.y += 200.0
             }
             UIView.animate(withDuration: animate ? animDuration : 0.0, delay: 0.0, options: options) { [weak self] in
                 self?.updateShortcutViewCenter(CGPoint(x: reqCenter.x, y: reqCenter.y))
@@ -133,14 +137,14 @@ private var offset: CGFloat = 8.0
     }
 
     @objc func exitZoomModeNotified(_ notification: Notification) {
-        if (self.zoomModeInfo.overlayHeight == 0 && self.shortcutZoomMode == .auto) {
-            let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
-            let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
-            UIView.animate(withDuration: animDuration) {
-                self.updateShortcutViewCenter(actualCenter)
+        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+        let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+        UIView.animate(withDuration: 0.2) {
+            self.updateShortcutViewCenter(actualCenter)
+        } completion: { _ in
+            if !(self.zoomModeInfo.overlayHeight == 0 && self.shortcutZoomMode == .auto) {
+                self.shortcutZoomMode = .auto
             }
-        } else {
-            self.shortcutZoomMode = .auto
         }
     }
 
@@ -151,7 +155,7 @@ private var offset: CGFloat = 8.0
         }
 
         if animate {
-            UIView.animate(withDuration: animDuration) {
+            UIView.animate(withDuration: 0.2) {
                 updateShortcutIfRequired()
             } completion: { _ in
                 completion?()

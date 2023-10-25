@@ -71,19 +71,16 @@ private class FTDocumentUUIDReaderOperation: Operation
         NSFileCoordinator.init().coordinate(readingItemAt: metaURL,
                                             options:.immediatelyAvailableMetadataOnly,
                                             error: &error,
-                                            byAccessor:
-            { (url) in
+                                            byAccessor: { (url) in
                 if let dictionary = NSDictionary(contentsOf: url),
-                   let documentUUID = dictionary[DOCUMENT_ID_KEY] as? String {
+                   let docUUID = dictionary[DOCUMENT_ID_KEY] as? String {
                     // Storing document UUID for older notebooks, once it is retrieved.
-                    let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: documentUUID)
+                    let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey,  string: docUUID)
                     try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+                    documentUUID = docUUID
                 }
-                self.didCompleteTask(documentUUID);
         });
-        if(nil != error) {
-            self.didCompleteTask(documentUUID);
-        }
+        self.didCompleteTask(documentUUID);
     }
     
     private func didCompleteTask(_ uuid:String?) {

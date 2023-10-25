@@ -194,26 +194,6 @@ extension FTPDFRenderViewController {
         }
     }
     
-    @objc func showRecentItems(_ animated: Bool) {
-        self.normalizeAndEndEditingAnnotation(true);
-        guard let currentPage = self.firstPageController()?.pdfPage else {
-            return;
-        }
-        
-        if(currentPage.isDirty) {
-            self.pdfDocument.saveDocument(completionHandler: nil);
-        }
-//        let stroyBoard = UIStoryboard(name: "FTShelf_iOS13", bundle: nil)
-//        if let categoryVC = stroyBoard.instantiateViewController(withIdentifier: "FTShelfCategoryViewController_iOS13") as? FTShelfCategoryViewController_iOS13 {
-//            if let shelfItem = self.shelfItemManagedObject.documentItem as? FTShelfItemProtocol {
-//                categoryVC.shelfItemCollection = shelfItem.shelfCollection;
-//                categoryVC.delegate = self
-//                categoryVC.displayMode = .notebook
-//                self.ftPresentHorizontally(categoryVC, contentSize: CGSize.init(width: 300, height: UIScreen.main.bounds.height), animated: true, completion: nil)
-//            }
-//        }
-    }    
-    
     @objc
     func showShareScreenshotWindowWithImage(_ image : UIImage) {
         let controller = FTLassoScreenshotViewController.init(nibName:

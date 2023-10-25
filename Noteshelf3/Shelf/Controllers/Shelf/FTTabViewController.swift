@@ -220,19 +220,19 @@ extension FTTabViewController: FTSideMenuViewControllerDelegate {
         FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
     }
 
-    func openTags(for tag: String) {
+    func openTags(for tag: String, isAllTags: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "FTShelfTagsViewController") as? FTShelfTagsViewController else {
             fatalError("FTShelfTagsViewController doesnt exist")
         }
         viewController.delegate = self
-        viewController.selectedTag = (tag == "sidebar.allTags".localized) ? nil : FTTagModel(text: tag);
+        viewController.selectedTag = isAllTags ? nil : FTTagModel(text: tag);
         if let navigationController = self.viewControllers?.first as? UINavigationController {
             navigationController.navigationBar.prefersLargeTitles = true
             navigationController.pushViewController(viewController, animated: true)
         }
     }
-    
+
     func showSettings() {
         let storyboard = UIStoryboard(name: "FTNewSettings", bundle: nil);
         if let settingsController = storyboard.instantiateViewController(withIdentifier: "FTGlobalSettingsController") as? FTGlobalSettingsController {

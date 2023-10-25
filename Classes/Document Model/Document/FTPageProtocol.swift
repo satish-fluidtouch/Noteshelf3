@@ -18,6 +18,7 @@ import PDFKit
 {
     func tags() -> [String];
     func addTag(_ tag : String);
+    func addTags(tags: [String])
     func removeTag(_ tag : String);
     func rename(tag: String, with title:String)
     func removeAllTags()

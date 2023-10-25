@@ -19,6 +19,8 @@ let shelfItemURLKey = "shelfItemURL"
 let collectionNameKey = "collectionName"
 class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfItemCellProgressUpdate {
 
+    private var shouldFetchCoverImage = false;
+
     var pieProgressView: FTRoundProgressView?
     var statusImageView: UIImageView? // Unused properery, this is just to satisfy protocol `FTShelfItemCellProgressUpdate`
     var shelfItem: FTShelfItemProtocol?
@@ -67,7 +69,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     @Published var isBackupOn: Bool = false
     @Published var isNotDownloaded = false
     @Published var isFavorited: Bool = false
-    @Published var coverImage = UIImage(named: "defaultNoCover")!
+    @Published var coverImage = UIImage.shelfDefaultNoCoverImage
     @Published var isLoadingNotebook: Bool = false
     @Published var isDownloadingNotebook: Bool = false
     @Published var isSelected: Bool = false
@@ -203,17 +205,19 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if ((documentItem.isDownloaded)) {
+        if documentItem.isDownloaded && shouldFetchCoverImage{
+            self.shouldFetchCoverImage = false
             self.progress = 1.0;
             self.isNotDownloaded = false
             self.stopDownloadingProgressView()
             self.fetchCoverImage()
         }
-        else if(documentItem.isDownloading) {
+        else if documentItem.isDownloading {
             let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
             self.animType = .download;
             self.showDownloadingProgressView();
             self.progress = progress;
+            shouldFetchCoverImage = true;
         } else if(documentItem.URL.downloadStatus() == .notDownloaded) {
             self.isNotDownloaded = true
         }

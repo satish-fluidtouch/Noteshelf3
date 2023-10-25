@@ -41,6 +41,7 @@ protocol FTShelfPresentable {
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
+    var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
     
@@ -200,11 +201,18 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func shelfWillMovetoBack() {
         currentShelfViewModel?.shelfWillMovetoBack()
+        sideMenuController?.disableUpdatesForSideBar()
     }
 
     func shelfViewDidMovedToFront(with item : FTDocumentItem) {
-        currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
-    }
+         currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
+         if let shelfTagsVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfTagsViewController {
+             shelfTagsVC.reloadContent()
+         }
+         sideMenuController?.enableUpdatesForSideBar()
+         //Force refresh the UI to update with latest categories.
+         sideMenuController?.updateSideMenuItemsCollections()
+     }
 
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?) {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -541,9 +549,9 @@ extension FTShelfSplitViewController {
                 return
             }
             let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
-            doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
             if shouldInsertCover {
                 doc.insertCoverForPasswordProtectedBooks { success, error in
+                    doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
                     processDocumentOpen()
                 }
             } else {

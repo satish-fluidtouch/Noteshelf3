@@ -20,10 +20,6 @@
 
 @import FTRenderKit;
 
-NSString *const FTPDFSwipeFromLeftGesture = @"FTPDFSwipeFromLeftGesture";
-NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
-
-
 #define ASSIGNMENTS_PLIST @"Assignments.plist"
 
 @interface FTOrientationChangeInfo : NSObject
@@ -63,9 +59,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 @property (weak) UIWindow *currentWindow;
 @property (strong) NSString *extDisplayID;
 
-@property (weak) UIScreenEdgePanGestureRecognizer *leftPanScreenGesture;
-@property (weak) UIScreenEdgePanGestureRecognizer *rightPanScreenGesture;
-@property (weak) UITapGestureRecognizer *twoFingerTapGesture;
 @property (weak) UITapGestureRecognizer *fourFingerGesture;
 
 @property (nonatomic,assign) BOOL applePencilDoubleTapMsgShown;
@@ -212,20 +205,13 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(documentDidGetSecurityUpdate) name:@"FTDocumentDidGetSecurityUpdate" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSwipeFromLeftGesture) name:FTPDFSwipeFromLeftGesture object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSwipeFromRightGesture) name:FTPDFSwipeFromRightGesture object:nil];
-    
     FTNS1MigrationInfoView *infoView = [[FTNS1MigrationInfoView alloc] initWithFrame:CGRectMake(0, 0, self.contentHolderView.frame.size.width, 44)];
     infoView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.contentHolderView addSubview:infoView];
     self.migrationInfoView = infoView;
     [infoView updateInfoString:NSLocalizedString(@"NS1ContentsEditNotSupport", @"Handwriting from Noteshelf Classic can not be edited in Noteshelf 2")];
     self.migrationInfoView.hidden = true;
-    
-    [self updateSwipeFromLeftGesture];
-
-    [self updateSwipeFromRightGesture];
-    
+        
     [self addPlayerNotifications];
     
     [self addObserverForPageLayoutChange];
@@ -234,54 +220,16 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     self.mainScrollView.clipsToBounds = NO;
 }
 
--(void)updateSwipeFromLeftGesture {
-    if([FTUserDefaults canSwipeFromLeftForRecent]) {
-        UIScreenEdgePanGestureRecognizer *leftEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanScreenEdgeGesture:)];
-        leftEdgeGesture.edges = UIRectEdgeLeft;
-        self.leftPanScreenGesture = leftEdgeGesture;
-        [self.contentHolderView addGestureRecognizer:leftEdgeGesture];
-        [[(FTDocumentScrollView*)self.mainScrollView scrollViewPanGesture] requireGestureRecognizerToFail:self.leftPanScreenGesture];
-    }else{
-        if(self.leftPanScreenGesture != nil) {
-            [self.contentHolderView removeGestureRecognizer:self.leftPanScreenGesture];
-            self.leftPanScreenGesture = nil;
-        }
-    }
-}
-
--(void)updateSwipeFromRightGesture {
-    if([FTUserDefaults canSwipeFromRightForThumbnail]) {
-        UIScreenEdgePanGestureRecognizer *rightEdgeGesture = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanScreenEdgeGesture:)];
-        rightEdgeGesture.edges = UIRectEdgeRight;
-        self.rightPanScreenGesture = rightEdgeGesture;
-        [self.contentHolderView addGestureRecognizer:rightEdgeGesture];
-        [[(FTDocumentScrollView*)self.mainScrollView scrollViewPanGesture] requireGestureRecognizerToFail:self.rightPanScreenGesture];
-    }else{
-        if(self.rightPanScreenGesture != nil) {
-            [self.contentHolderView removeGestureRecognizer:self.rightPanScreenGesture];
-            self.rightPanScreenGesture = nil;
-        }
-    }
-}
-
 -(BOOL)prefersHomeIndicatorAutoHidden{
     return YES;
 }
 
 -(void)enablePanDetection{
-    self.twoFingerTapGesture.enabled = true;
     FTDocumentScrollView *scrollview = (FTDocumentScrollView*)self.mainScrollView;
     [scrollview enablePanDetection:[self allowsFreeGestureConditions]];
-    if(self.leftPanScreenGesture) {
-        [[scrollview scrollViewPanGesture] requireGestureRecognizerToFail:self.leftPanScreenGesture];
-    }
-    if(self.rightPanScreenGesture) {
-        [[scrollview scrollViewPanGesture] requireGestureRecognizerToFail:self.rightPanScreenGesture];
-    }
 }
 
 -(void)disablePanDetection{
-    self.twoFingerTapGesture.enabled = false;
     [(FTDocumentScrollView*)self.mainScrollView disablePanDetection];
     //TODO: Casuing issues where on double tap using apple pencil in text mode not creating text box.
     //    [self becomeFirstResponder];
@@ -357,13 +305,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleForceToShowShelf:) name:@"FTForceToDisplayShelfWhenBookOpened" object:nil];
     
     [self performAccessibiltyUIUpdate];
-    
-    //Gesture For Page Navigator
-    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTwoFingerTap:)];
-    gesture.numberOfTouchesRequired = 2;
-//    [self.contentHolderView addGestureRecognizer:gesture];
-    self.twoFingerTapGesture = gesture;
-    gesture.delegate = self;
     
     UITapGestureRecognizer *fourFingerGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleFourFingerGesture:)];
     fourFingerGesture.numberOfTouchesRequired = 4;
@@ -2520,28 +2461,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
     return UIModalPresentationNone;
 }
 
-#pragma mark - Selection and Copy Paste related -
--(void)didPanScreenEdgeGesture:(UIScreenEdgePanGestureRecognizer*)gesture
-{
-    if(gesture.state == UIGestureRecognizerStateBegan) {
-        if(gesture.edges == UIRectEdgeLeft) {
-            [self showRecentItems: false];
-        }
-    }
-    else if(gesture.state == UIGestureRecognizerStateChanged){
-        FTHorizontalModalPresentationController *presentationController = (FTHorizontalModalPresentationController *)self.presentedViewController.presentationController;
-        if (presentationController != nil && [presentationController isKindOfClass:[FTHorizontalModalPresentationController class]]){
-            [presentationController sendGesture:gesture];
-        }
-    }
-    else if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled){
-        FTHorizontalModalPresentationController *presentationController = (FTHorizontalModalPresentationController *)self.presentedViewController.presentationController;
-        if (presentationController != nil && [presentationController isKindOfClass:[FTHorizontalModalPresentationController class]]){
-            [presentationController sendGesture:gesture];
-        }
-    }
-}
-
 #pragma mark - PressurePenEngine Delegate Methods -
 -(void)updateGestureConditions
 {
@@ -2594,7 +2513,6 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 
 -(void)pressurePenConnected:(NSString *)stylusName
 {
-    [FTZenDeskManager setLastConnectedStylus:stylusName];
     [self registerViewForTouchEvents];
 
     BOOL shouldShowConnectedMessage = YES;
@@ -3412,13 +3330,9 @@ NSString *const FTPDFSwipeFromRightGesture = @"FTPDFSwipeFromRightGesture";
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if(gestureRecognizer == self.twoFingerTapGesture || self.twoFingerTapGesture == otherGestureRecognizer) {
-        return true;;
-    }
     if(gestureRecognizer == self.fourFingerGesture || self.fourFingerGesture == otherGestureRecognizer) {
-        return true;;
+        return true;
     }
-
     return false;
 }
 @end

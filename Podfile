@@ -21,4 +21,5 @@ end
 
 target 'Noteshelf3' do
   common_pods
+  pod 'GoogleMLKit/DigitalInkRecognition'
 end

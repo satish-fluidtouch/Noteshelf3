@@ -25,7 +25,12 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             showHomeDetailedVC()
         } else if let detailController = self.detailController(), !detailController.isKind(of: FTShelfHomeViewController.self) { // In regular modes, avoiding refreshing shelf again if we are already in home.
             showHomeDetailedVC()
-        } else if currentShelfViewModel == nil { // Executes when shifting from non collection types to home.
+        } else if let navigationVC = self.viewController(for: .secondary) as? UINavigationController,
+                  ((navigationVC.viewControllers.first?.isKind(of:FTShelfHomeViewController.self)) != nil),
+            navigationVC.viewControllers.count > 1 {
+            showHomeDetailedVC() // Executes incase of show in enclosing folder option. As we are adding controller on to same nav stack which contains home, above condition fails. So to explicitly show home on tap of home option in sidebar this block is used.
+        }
+        else if currentShelfViewModel == nil { // Executes when shifting from non collection types to home.
             showHomeDetailedVC()
         }
 
@@ -70,15 +75,16 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
     
-    func openTags(for tag: String){
+    func openTags(for tag: String, isAllTags: Bool) {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
-            controller.selectedTag = (tag == "sidebar.allTags".localized) ? nil : FTTagModel(text: tag)
+            controller.selectedTag = isAllTags ? nil : FTTagModel(text: tag)
             self.showDetailViewController(detailController, sender: self)
+            controller.reloadContent()
         } else {
             self.updateRootVCToDetailNavController(rootVC: getTagsVC(for: tag))
         }
     }
-    
+
     func showSettings() {
         let storyboard = UIStoryboard(name: "FTNewSettings", bundle: nil);
         if let settingsController = storyboard.instantiateViewController(withIdentifier: "FTGlobalSettingsController") as? FTGlobalSettingsController {

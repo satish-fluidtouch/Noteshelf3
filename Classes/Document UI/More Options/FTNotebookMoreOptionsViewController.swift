@@ -113,8 +113,8 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
             getInfoVC.getInfoDel = self
         }  else if let tagsVc = segue.destination as? FTTagsViewController {
             let tags = FTCacheTagsProcessor.shared.tagsFor(NSSet(object: page))
-            let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
-            tagsVc.tagsList = sortedArray
+            let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
+            tagsVc.tagsList = tagItems
             tagsVc.showBackButton = true
         }
     }
