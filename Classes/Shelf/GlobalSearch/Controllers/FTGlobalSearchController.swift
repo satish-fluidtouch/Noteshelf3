@@ -49,7 +49,7 @@ class FTGlobalSearchController: UIViewController {
     internal var progressView: RPCircularProgress?
 
     internal var allTags = [FTTagModel]()
-    internal var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
+    private(set) var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
 
     internal var isRecentSelected: Bool = false
     internal var recentSearchList: [[FTRecentSearchedItem]] = []
@@ -64,6 +64,12 @@ class FTGlobalSearchController: UIViewController {
     private var searchedSections = [FTSearchSectionProtocol]()
     private var currentSize = CGSize.zero
     private let alignmentOffset: CGFloat = 550.0
+
+#if targetEnvironment(macCatalyst)
+    // This is used exclusively for updating search text when book is closed
+    private var toUpdateSearchText = false
+#endif
+
     var navTitle: String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +88,6 @@ class FTGlobalSearchController: UIViewController {
         self.collectionView.backgroundView?.isHidden = true
 
         self.collectionView?.register(UINib(nibName: "FTSearchResultContentHeader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FTSearchResultContentHeader")
-        self.title = navTitle
 #if !targetEnvironment(macCatalyst)
         runInMainThread(0.1) {
             self.searchController.bringSearchBarResponder()
@@ -95,7 +100,20 @@ class FTGlobalSearchController: UIViewController {
         if let shelfItemCollection {
             self.delegate?.selectSidebarWithCollection(shelfItemCollection)
         }
+#if targetEnvironment(macCatalyst)
+        self.toUpdateSearchText = presentedViewController is FTNoteBookSplitViewController
+#endif
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
+        if let toolbar = self.view.toolbar as? FTShelfToolbar, toUpdateSearchText {
+            toolbar.updateSearchText(self.searchInputInfo.textKey)
+        }
+#endif
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
@@ -227,7 +245,9 @@ private extension FTGlobalSearchController {
         self.recentsTableView.isScrollEnabled = self.recentsTableView.contentSize.height > self.recentsTableView.frame.size.height
         self.recentsTableView.dataSource = self
         self.recentsTableView.delegate = self
+#if !targetEnvironment(macCatalyst)
         self.updateUICondictionally(with: "")
+#endif
     }
 
     private func configureSegmentControl() {

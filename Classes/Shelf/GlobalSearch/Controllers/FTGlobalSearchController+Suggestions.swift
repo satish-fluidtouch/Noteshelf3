@@ -21,6 +21,7 @@ extension FTGlobalSearchController: FTUISearchDelegate {
             let text = searchController.searchBar.searchTextField.text ?? ""
             self.updateUICondictionally(with: text)
         }
+        self.searchController.resignSearchbarResponder()
         self.constructRecentItems()
     }
 
@@ -30,6 +31,7 @@ extension FTGlobalSearchController: FTUISearchDelegate {
 
     func textFieldDidEndEditing(key: String) {
         self.constructRecentItems()
+        self.searchController.dismiss(animated: false)
     }
 
     func textFieldDidChangeSelection(key: String) {
@@ -57,7 +59,9 @@ extension FTGlobalSearchController {
         if keyWord.isEmpty && searchTokens.isEmpty {
             self.searchInputInfo.textKey = keyWord
             self.searchInputInfo.tags = currentTags
-
+#if targetEnvironment(macCatalyst)
+            self.updateSearchText()
+#endif
             if !self.recentSearchList.isEmpty {
                 self.segmentInfoStackView.isHidden = true
                 self.collectionView.isHidden = true
@@ -77,6 +81,9 @@ extension FTGlobalSearchController {
             if self.searchInputInfo.textKey != text || self.searchInputInfo.tags != currentTags {
                 self.searchInputInfo.textKey = text
                 self.searchInputInfo.tags = currentTags
+#if targetEnvironment(macCatalyst)
+                self.updateSearchText()
+#endif
                 self.searchForNotebooks(with: self.searchInputInfo)
             }
         }
