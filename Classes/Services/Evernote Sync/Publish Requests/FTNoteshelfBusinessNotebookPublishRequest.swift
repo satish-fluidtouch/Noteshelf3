@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Evernote_SDK_iOS
 
 class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequest {
     
