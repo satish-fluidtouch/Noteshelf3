@@ -147,7 +147,6 @@ private extension FTCachedSqliteAnnotationFileItem {
             return (name, model)
                 
         } catch {
-            print(error.localizedDescription)
             return  (nil, nil)
         }
     }
