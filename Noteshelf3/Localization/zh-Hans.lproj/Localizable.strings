@@ -1170,12 +1170,12 @@
 "noteshelf.ai.actionAddToNewPage" = "添加为文字到新页面";
 "noteshelf.ai.actionAddToPage" = "添加为文本";
 "noteshelf.ai.credit.bePremium" = "升级到Noteshelf高级版";
-"noteshelf.ai.credit.bePremiumInfo" = "升级到Noteshelf Premium以解锁每月100个AI学分并获得手写识别功能";
+"noteshelf.ai.credit.bePremiumInfo" = "升级到Noteshelf Premium以解锁每月100个AI积分并获得手写识别功能";
 "noteshelf.ai.credit.creditsRunningOut" = "积分即将用尽";
-"noteshelf.ai.credit.details" = "%d/%d 剩余学分";
+"noteshelf.ai.credit.details" = "%d/%d 剩余积分";
 "noteshelf.ai.credit.moreOptions" = "更多选项";
 "noteshelf.ai.credit.moreinfo" = "AI积分将在%d天后重置";
-"noteshelf.ai.credit.nocredits" = "没有剩余学分";
+"noteshelf.ai.credit.nocredits" = "没有剩余积分";
 "noteshelf.ai.pressEnterToSend" = "按Enter键发送";
 "numSelected" = "%ld 已选中'";
 "objects" = "对象";
@@ -1532,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 19 October 2023 at 6:44 PM
+// Last Synced by Akshay on 25 October 2023 at 12:13

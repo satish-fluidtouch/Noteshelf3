@@ -239,6 +239,10 @@ extension FTThemesStorage {
         if themeLibraryType == .papers {
             isCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)isCustom") as? Bool) ?? false
         } else {
+            if nil == (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom") as? Bool) {
+                let prevCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)isCustom") as? Bool) ?? false
+                FTUserDefaults.defaults().set(prevCustom, forKey: "DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom")
+            }
             isCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom") as? Bool) ?? false
         }
         let hasCover = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)hasCover") as? Bool) ?? false

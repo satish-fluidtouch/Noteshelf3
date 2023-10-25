@@ -83,7 +83,8 @@ extension FTPageResultSectionCell: UICollectionViewDataSource {
                             if associatedPage.pdfPageRect.size.width > associatedPage.pdfPageRect.height {
                                 size = isRegular ? GlobalSearchConstants.PageThumbnailSize.Landscape.regular : GlobalSearchConstants.PageThumbnailSize.Landscape.compact
                             }
-                            cell.pdfSize = size
+                            let aspectFitSize = CGSize.aspectFittedSize(associatedPage.pdfPageRect.size, max: size)
+                            cell.pdfSize = aspectFitSize
                             cell.setThumbnailImage(usingPage: associatedPage)
                         }
                     }
