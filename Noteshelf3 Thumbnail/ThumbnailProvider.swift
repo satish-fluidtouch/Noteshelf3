@@ -26,8 +26,7 @@ class ThumbnailProvider: QLThumbnailProvider {
                                byAccessor: { readingURL in
             let thumbURL = readingURL.appendingPathComponent("cover-shelf-image.png")
             if let image = UIImage(contentsOfFile: thumbURL.path(percentEncoded: false)) {
-                let maxsz = request.maximumSize;
-                let r = AVMakeRect(aspectRatio: image.size, insideRect: CGRect(origin:.zero, size:maxsz))
+                let r = CGRect(origin: .zero, size: image.size)
 #if DEBUG
                 NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(request.fileURL.path)")
 #endif
