@@ -81,7 +81,7 @@ extension FTBiometricManager: UITextFieldDelegate {
             }
             alertMessage = message;
         } else {
-            alertMessage = NSLocalizedString("EnterPasswordToOpenThisNotebook", comment: "Enter the password to open this notebook");
+            alertMessage = String(format: NSLocalizedString("EnterPasswordToOpenThisNotebook", comment: "Enter the password to open %@"), shelfItem.displayTitle)
         }
      
 

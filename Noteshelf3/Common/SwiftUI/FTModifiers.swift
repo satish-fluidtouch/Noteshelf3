@@ -71,7 +71,7 @@ struct FTDeviceOrientationViewModifier: ViewModifier {
         content
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
                 let currentOrientation = UIDevice.current.orientation
-                if currentOrientation.isPortrait || currentOrientation.isLandscape {
+                if currentOrientation.isPortrait || currentOrientation.isLandscape && orientation != currentOrientation{
                     orientation = currentOrientation
                 }
             }
