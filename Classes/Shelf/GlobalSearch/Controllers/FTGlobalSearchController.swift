@@ -105,14 +105,14 @@ class FTGlobalSearchController: UIViewController {
 #endif
     }
 
-#if targetEnvironment(macCatalyst)
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
         if let toolbar = self.view.toolbar as? FTShelfToolbar, toUpdateSearchText {
             toolbar.updateSearchText(self.searchInputInfo.textKey)
         }
-    }
 #endif
+    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
