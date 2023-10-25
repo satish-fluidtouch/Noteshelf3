@@ -84,15 +84,13 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         return nil
     }
     
-#if targetEnvironment(macCatalyst)
     override func showDetailViewController(_ vc: UIViewController, sender: Any?) {
-        super.showDetailViewController(vc, sender: sender);
+        super.showDetailViewController(vc, sender: sender)
         if let nav = vc as? UINavigationController {
-            nav.delegate = self;
+            nav.delegate = self
         }
     }
-#endif
-    
+
     var openingBookInProgress: Bool = false
     var cancellable = Set<AnyCancellable>()
     typealias ImportItems = [FTImportItem]

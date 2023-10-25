@@ -741,9 +741,6 @@ extension FTShelfItemCollectionICloud: FTShelfCacheProtocol {
             if(currentGroup?.uuid != newGroupItem?.uuid) {
                 if let _currentGroup = currentGroup {
                     _currentGroup.removeChild(item);
-                    if _currentGroup.childrens.isEmpty {
-                        self.removeItemFromCache(_currentGroup.URL, shelfItem: _currentGroup);
-                    }
                 }else {
                     self.removeChild(item);
                 }
