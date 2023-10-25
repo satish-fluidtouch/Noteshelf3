@@ -1330,17 +1330,31 @@ extension FTNoteshelfPage {
             return false
         }
 
-        if self.hasContents == .unknown
-            , let templateURL = self.templateFileItem()?.fileItemURL,
-            let pdfDoc = PDFDocument.init(url: templateURL) {
-            let pageNumber = Int(self.associatedPDFKitPageIndex);
-            let page = pdfDoc.page(at: pageNumber);
-            if let pdfText = page?.string?.trimmingCharacters(in: CharacterSet.whitespaces), !pdfText.isEmpty {
-                self.hasContents = .hasContent;
+        if self.hasContents == .unknown {
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+            if let pageContent = (self.parentDocument as? FTPDFContentCacheProtocol)?.pdfContentCache {
+                var pagePDFContent = pageContent.pdfContentFor(self);
+                if nil == pagePDFContent, let dupPage = self.pdfPageRef?.copy() as? PDFPage {
+                    let doc = PDFDocument();
+                    doc.insert(dupPage, at: 0);
+                    pagePDFContent = pageContent.cachePDFContent(dupPage, pageProtocol: self);
+                }
+                if let _content = pagePDFContent {
+                    let content = _content.pdfContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+                    if content.isEmpty {
+                        self.hasContents = .noContent;
+                    }
+                    else {
+                        self.hasContents = .hasContent;
+                    }
+                }
+                else {
+                    self.hasContents = .noContent;
+                }
             }
-            else {
-                self.hasContents = .noContent;
-            }
+#else
+            return false;
+#endif
         }
         return (self.hasContents == .hasContent)
     }

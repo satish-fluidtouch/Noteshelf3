@@ -9,7 +9,7 @@
 import UIKit
 
 class FTPDFPageContent: NSObject,NSSecureCoding {
-    private var pdfContent: String = "";
+    private(set) var pdfContent: String = "";
     private var characterRects = [CGRect]();
     
     required override init() {
