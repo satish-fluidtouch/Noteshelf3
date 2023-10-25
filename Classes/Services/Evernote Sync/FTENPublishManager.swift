@@ -8,6 +8,8 @@
 
 import Reachability
 import FTCommon
+import Evernote_SDK_iOS
+import CoreData
 
 typealias GenericCompletionBlockWithStatus = (Bool) -> Void
 @objc enum EvernoteAccountType : Int {

@@ -37,9 +37,9 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
                     username = FTEmptyDisplayName;
                 }
                 account.userName = username;
-                self.fetchUsageDetails(account, onCompelltion: completionBlock);
+                self.fetchUsageDetails(account, user: user, onCompelltion: completionBlock);
             } failure: { error in
-                account.statusText = "Failed to user details."//NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
+                account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
                 completionBlock(account, nil);
             }
         #endif
@@ -49,28 +49,19 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
         }
     }
 
-    private func fetchUsageDetails(_ account: FTCloudAccountInfo,
+    private func fetchUsageDetails(_ account: FTCloudAccountInfo,user: EDAMUser?,
                                    onCompelltion completionBlock : @escaping ((FTCloudAccountInfo, NSError?) -> Void) ) {
 #if !targetEnvironment(macCatalyst)
-        guard let evernoteSession = EvernoteSession.shared() else {
+        guard let evernoteSession = EvernoteSession.shared(), evernoteSession.isAuthenticated else {
             account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
             completionBlock(account, nil)
             return
         }
-        guard isLoggedIn(),let authToken = evernoteSession.authenticationToken as? String  else {
-            account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
-            completionBlock(account, nil);
-            return;
-        }
 
         EvernoteNoteStore(session: evernoteSession).getSyncState { edamSyncState in
-            let user = evernoteSession.userStore()?.getUser(authToken)
-            //account.consumedBytes = user?.accounting.;
             var accountingInfo = user?.accounting;
-
             if let businessUser = evernoteSession.businessUser, businessUser.active {
                 accountingInfo = evernoteSession.businessUser?.accounting;
-                //account.consumedBytes = accountingInfo;
             }
 
             account.totalBytes = accountingInfo?.uploadLimit ?? 0;

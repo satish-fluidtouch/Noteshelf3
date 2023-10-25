@@ -31,14 +31,6 @@ final class FTCloudSetupManager {
         //Evernote session setup
         #if !targetEnvironment(macCatalyst)
         EvernoteSession.setSharedSessionHost("www.evernote.com", consumerKey: EVERNOTE_CONSUMER_KEY, consumerSecret: evernoteConsumerSecret)
-
-        //Evernote Sandbox Session setup
-        //Enable below line for sandbox
-//        EvernoteSession.setSharedSessionConsumerKey(EVERNOTE_CONSUMER_KEY,
-//                                              consumerSecret: evernoteConsumerSecret,
-//                                              optionalHost: EvernoteSessionHostSandbox)
-        
-        //EvernoteSession.shared().logger = nil
         #endif
     }
 }

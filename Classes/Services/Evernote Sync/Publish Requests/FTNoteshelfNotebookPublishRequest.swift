@@ -19,7 +19,8 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
         FTENPublishManager.recordSyncLog("Listing personal notebooks")
 #if !targetEnvironment(macCatalyst)
         guard let evernoteSession = EvernoteSession.shared() else {
-            self.delegate?.didCompletePublishRequestWithError?(nil)
+            let error = NSError(domain: "EDAMErrorDomain", code: Int(EDAMErrorCode_AUTH_EXPIRED.rawValue), userInfo: nil)
+            self.delegate?.didCompletePublishRequestWithError?(error)
             return
         }
         EvernoteNoteStore(session: evernoteSession).listNotebooks { [self] notebooks in

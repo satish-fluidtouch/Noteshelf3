@@ -109,11 +109,11 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
         let uploadInfo = [
             sourceFileURL: info
         ]
-//        let progressBlock: ProgressBlock = { progress in
-//            self.delegate?.publishRequest(self,
-//                                          uploadProgress: progress.fractionCompleted,
-//                                          backUpProgressType: .uploadingContent)
-//        }
+        let progressBlock: (Progress) -> Void = { progress in
+            self.delegate?.publishRequest(self,
+                                          uploadProgress: progress.fractionCompleted,
+                                          backUpProgressType: .uploadingContent)
+        }
         let responseBlock: BatchUploadResponseBlock = { (fileUrlsToBatchResultEntries, finishBatchRouteError, fileUrlsToRequestErrors) in
             var writeError: Files.WriteError?
             var uploadSuccess = false
@@ -165,10 +165,10 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
                 self.publishFailedWithError(error)
             }
         }
-//        self.uploadTask = fileRoute?.batchUploadFiles(fileUrlsToCommitInfo: uploadInfo,
-//                                                      queue: queue,
-//                                                      progressBlock: progressBlock,
-//                                                      responseBlock: responseBlock)
+        self.uploadTask = fileRoute?.batchUploadFiles(fileUrlsToCommitInfo: uploadInfo,
+                                                      queue: queue,
+                                                      progressBlock: progressBlock,
+                                                      responseBlock: responseBlock)
     }
             
     override func canelRequestIfPossible() {
