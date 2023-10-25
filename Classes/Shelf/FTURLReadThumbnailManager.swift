@@ -18,6 +18,7 @@ class FTThumbReadCallbacks : NSObject
 
 @objcMembers class FTURLReadThumbnailManager: NSObject {
     static var sharedInstance : FTURLReadThumbnailManager = FTURLReadThumbnailManager();
+    private let recursiveLock = NSRecursiveLock();
     
     //*****************
     private var imageCache: FTThumbnailCacheProtocol = FTThumbnailCache()
@@ -130,27 +131,29 @@ class FTThumbReadCallbacks : NSObject
 
 private extension FTURLReadThumbnailManager {
     func removeQLRequest(_ item: FTDiskItemProtocol) {
-        objc_sync_enter(self.QLRequestCache)
         let reqid = item.URL.hashKey;
+        recursiveLock.lock();
         self.QLRequestCache.removeValue(forKey: reqid);
-        objc_sync_exit(self.QLRequestCache)
+        recursiveLock.unlock();
     }
     
     func cancelPreviousQLRequest(_ item: FTDiskItemProtocol) {
-        objc_sync_enter(self.QLRequestCache)
         let reqid = item.URL.hashKey;
-        if let request = self.QLRequestCache[reqid] {
-            QLThumbnailGenerator.shared.cancel(request);
+        recursiveLock.lock();
+        let request = self.QLRequestCache[reqid]
+        recursiveLock.unlock();
+        
+        if let _request = request {
+            QLThumbnailGenerator.shared.cancel(_request);
             self.removeQLRequest(item);
         }
-        objc_sync_exit(self.QLRequestCache)
     }
     
     func addQLRequestToCache(_ item: FTDiskItemProtocol,request: QLThumbnailGenerator.Request) {
-        objc_sync_enter(self.QLRequestCache)
         let reqid = item.URL.hashKey;
+        recursiveLock.lock();
         self.QLRequestCache[reqid] = request;
-        objc_sync_exit(self.QLRequestCache)
+        recursiveLock.unlock();
     }
     
     func thumbnailForNS3Book(_ item : FTDiskItemProtocol,
@@ -161,7 +164,11 @@ private extension FTURLReadThumbnailManager {
         func fetchImage() {
             let request = item.URL.fetchQLThumbnail(completion: { [weak self] image in
                 self?.removeQLRequest(item)
-                onCompletion(image,token);
+                var imgToReturn = image;
+                if nil == imgToReturn {
+                    imgToReturn = self?.imageCache.cachedImageForItem(item: item);
+                }
+                onCompletion(imgToReturn,token);
             })
             self.addQLRequestToCache(item, request: request);
         }
