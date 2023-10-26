@@ -375,6 +375,7 @@
 		4786A7ED297A5896007FE156 /* FTShelfBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786A7EC297A5896007FE156 /* FTShelfBookmarksViewController.swift */; };
 		4786A7EF297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */; };
 		4786A7F1297A708E007FE156 /* FTShelfBookmarkPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */; };
+		479A12FA2ADE9C6B00EBBF8D /* FTStoreTemplatesVersionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479A12F92ADE9C6B00EBBF8D /* FTStoreTemplatesVersionHandler.swift */; };
 		47AF5D0B297EB12F0065AFF4 /* FTShelfBookmarksRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47AF5D0A297EB12F0065AFF4 /* FTShelfBookmarksRepresentableView.swift */; };
 		47BC0AF72A77CBEE00163A0A /* FTIAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BC0AF32A77CBEE00163A0A /* FTIAPManager.swift */; };
 		47BC0AF82A77CBEE00163A0A /* FTIAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BC0AF42A77CBEE00163A0A /* FTIAPViewController.swift */; };
@@ -3025,6 +3026,7 @@
 		4786A7EC297A5896007FE156 /* FTShelfBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarksViewController.swift; sourceTree = "<group>"; };
 		4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarksPageModel.swift; sourceTree = "<group>"; };
 		4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarkPageCell.swift; sourceTree = "<group>"; };
+		479A12F92ADE9C6B00EBBF8D /* FTStoreTemplatesVersionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreTemplatesVersionHandler.swift; sourceTree = "<group>"; };
 		47AA73A21F8B49A000B41144 /* FTShelfItemAddNewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemAddNewTableViewCell.swift; sourceTree = "<group>"; };
 		47AD37351E1BDF2900632699 /* FTExportImportTargetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTExportImportTargetProtocol.swift; sourceTree = "<group>"; };
 		47AD37371E1BDF2900632699 /* FTTargets.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTTargets.storyboard; sourceTree = "<group>"; };
@@ -7693,6 +7695,7 @@
 			isa = PBXGroup;
 			children = (
 				52550EC92A70FCC000E7A1E7 /* FTStoreService.swift */,
+				479A12F92ADE9C6B00EBBF8D /* FTStoreTemplatesVersionHandler.swift */,
 				52550ECB2A70FCC000E7A1E7 /* FTStoreContainerHandler.swift */,
 				52550EF92A70FCC000E7A1E7 /* FTStoreConstants.swift */,
 				52550EEF2A70FCC000E7A1E7 /* FTDairyDateSelectionPicker_iOS.swift */,
@@ -11802,6 +11805,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52550F2E2A70FCC100E7A1E7 /* FTStoreHeader.swift in Sources */,
+				479A12FA2ADE9C6B00EBBF8D /* FTStoreTemplatesVersionHandler.swift in Sources */,
 				52550F3A2A70FCC100E7A1E7 /* FTStoreJournalTableCell.swift in Sources */,
 				4766F6AA2A8DFB6E00F8FA27 /* FTNetwork.swift in Sources */,
 				52550F562A70FCC100E7A1E7 /* FTCategoryTemplatesViewModel.swift in Sources */,

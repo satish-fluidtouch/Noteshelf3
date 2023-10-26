@@ -18,7 +18,7 @@ class FTTemplatePreviewViewModel: ObservableObject {
     private let storeServiceApi: FTStoreServiceApi
     private let templateCache: FTTemplatesCacheService
     var template: TemplateInfo!
-
+    var thumbnailSize: CGSize = CGSize(width: 400, height: 400)
     init(storeServiceApi: FTStoreServiceApi = FTStoreService(), templatesCache: FTTemplatesCacheService = FTTemplatesCache()) {
         self.storeServiceApi = storeServiceApi
         self.templateCache = templatesCache
@@ -26,7 +26,7 @@ class FTTemplatePreviewViewModel: ObservableObject {
 
     func downloadTemplateFor(style: FTTemplateStyle) async throws -> URL {
         let url = try await downloadTemplateFromServer(style: style)
-        url.generateThumbnailForPdf(completion: nil)
+        try url.generateThumbnailForTemplate()
         return url
     }
 
@@ -37,8 +37,17 @@ class FTTemplatePreviewViewModel: ObservableObject {
 
         let url = style.pdfDownloadUrl(template: templa)
         let dest = style.thumbnailPath()
-        if !FileManager.default.fileExists(atPath: dest.path) {
-            return try await self.storeServiceApi.downloadTemplateFor(url: url)
+
+        // VersionItem
+        let versionItem = FTTemplateVerionItem(version: style.version, templateName: style.pdfPath().deletingPathExtension().lastPathComponent)
+        let shouldReDownlload = try FTStoreTemplatesVersionHandler.shared.allowToReDownload(item: versionItem)
+        if !FileManager.default.fileExists(atPath: dest.path) || shouldReDownlload {
+           let pdfUrl = try await self.storeServiceApi.downloadTemplateFor(url: url)
+            if FileManager.default.fileExists(atPath: style.thumbnailPath().path) {
+                try FileManager.default.removeItem(at: style.thumbnailPath())
+            }
+            try FTStoreTemplatesVersionHandler.shared.updateVersionPlistWith(item: versionItem)
+            return pdfUrl
         } else {
             return dest
         }

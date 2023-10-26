@@ -76,7 +76,6 @@ class FTLocalService: FTLocalServiceApi {
 }
 
 class FTStoreService: FTStoreServiceApi {
-
     func downloadTemplateFor(url: URL) async throws -> URL {
         let session = URLSession.shared
         return try await withCheckedThrowingContinuation { continuation in
@@ -87,9 +86,10 @@ class FTStoreService: FTStoreServiceApi {
                 if let tempUrl = responseUrl {
                     let dest = FTTemplatesCache().templatesFolder.appendingPathComponent(url.lastPathComponent)
                     do {
-                        if !FileManager.default.fileExists(atPath: dest.path) {
-                            try FileManager.default.moveItem(at: tempUrl, to: dest)
+                        if FileManager.default.fileExists(atPath: dest.path) {
+                            try FileManager.default.removeItem(at: dest)
                         }
+                        try FileManager.default.moveItem(at: tempUrl, to: dest)
                         continuation.resume(returning: dest)
                     } catch {
                         continuation.resume(throwing: error)

@@ -10,7 +10,7 @@ import QuickLook
 import FTCommon
 
 extension URL {
-    func generateThumbnailForPdf(thumbnailName: String? = nil, completion: ((UIImage?) -> Void?)? = nil) {
+    func generateThumbnailForPdf(thumbnailName: String? = nil, size: CGSize = CGSize(width: 400, height: 400), completion: ((UIImage?) -> Void?)? = nil) {
         var thumbUrl: URL
         if let thumbnailName {
             thumbUrl = self.deletingLastPathComponent().appending(path: thumbnailName).appendingPathExtension("png")
@@ -20,7 +20,7 @@ extension URL {
 
         let request = QLThumbnailGenerator.Request(
             fileAt: self,
-            size: CGSize(width: 400, height: 400),
+            size: size,
             scale: 1,
             representationTypes: .thumbnail)
 
@@ -32,6 +32,20 @@ extension URL {
                 completion?(nil)
             }
         }
+    }
+
+    func generateThumbnailForTemplate(fileName: String? = nil) throws -> UIImage? {
+        var fileURL = self.deletingPathExtension().appendingPathExtension("png")
+        if let fileName {
+            fileURL = fileURL.deletingLastPathComponent().appending(path: fileName).appendingPathExtension("png")
+        }
+        guard let document = PDFDocument(url: self) else { return nil }
+        guard let page = document.page(at: 0) else { return nil }
+        let pageBox = PDFDisplayBox.cropBox;
+        let pageRect = page.bounds(for: pageBox)
+        let thumbnailImage = page.thumbnail(of: pageRect.size, for: .cropBox)
+        try thumbnailImage.pngData()?.write(to: fileURL)
+        return thumbnailImage
     }
 
     func loadThumbnail() -> UIImage? {
