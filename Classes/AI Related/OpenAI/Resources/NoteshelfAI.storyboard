@@ -555,6 +555,40 @@
             </objects>
             <point key="canvasLocation" x="-2324" y="-1119"/>
         </scene>
+        <!--Command Debugger View Controller-->
+        <scene sceneID="idr-Ua-TTp">
+            <objects>
+                <viewController storyboardIdentifier="FTCommandDebuggerViewController" id="ChC-ns-TOx" customClass="FTCommandDebuggerViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ylQ-sX-Blt">
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="TSt-vf-nOH">
+                                <rect key="frame" x="0.0" y="24" width="834" height="1150"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Nk4-uu-VoU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TSt-vf-nOH" firstAttribute="height" secondItem="Nk4-uu-VoU" secondAttribute="height" id="InY-4z-CMd"/>
+                            <constraint firstItem="TSt-vf-nOH" firstAttribute="width" secondItem="Nk4-uu-VoU" secondAttribute="width" id="dj8-dR-bbe"/>
+                            <constraint firstItem="TSt-vf-nOH" firstAttribute="centerY" secondItem="Nk4-uu-VoU" secondAttribute="centerY" id="j2G-cW-igY"/>
+                            <constraint firstItem="TSt-vf-nOH" firstAttribute="centerX" secondItem="Nk4-uu-VoU" secondAttribute="centerX" id="uaz-VR-Qm2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="TSt-vf-nOH" id="qaJ-jb-viy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i9I-rO-29e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1722" y="-745"/>
+        </scene>
     </scenes>
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="70"/>

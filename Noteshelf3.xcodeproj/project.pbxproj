@@ -27,6 +27,7 @@
 		091482BC2A725800009E49C2 /* FTWordWrapStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482BB2A725800009E49C2 /* FTWordWrapStrokeRender.swift */; };
 		091482BE2A72581A009E49C2 /* FTCharToStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482BD2A72581A009E49C2 /* FTCharToStrokeRender.swift */; };
 		0935E0DC2AE9058800BC1017 /* FTPDFPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935E0DB2AE9058800BC1017 /* FTPDFPageContent.swift */; };
+		0935E0DF2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935E0DE2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift */; };
 		0938F4172361B06400DFC7F3 /* FTShelfProviderConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E81E852B7A0003DA80 /* FTShelfProviderConstants.swift */; };
 		0938F41F2362E04C00DFC7F3 /* FTURL_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938F41D2362E04C00DFC7F3 /* FTURL_Extension.swift */; };
 		0938F4222362E07900DFC7F3 /* FTCollectionName_Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938F4202362E07900DFC7F3 /* FTCollectionName_Utils.swift */; };
@@ -2245,6 +2246,7 @@
 		09324683207E0EA200C0836F /* FTWatchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchButton.swift; sourceTree = "<group>"; };
 		0932468F207F419200C0836F /* FTStoreStyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStoreStyledButton.swift; sourceTree = "<group>"; };
 		0935E0DB2AE9058800BC1017 /* FTPDFPageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPDFPageContent.swift; sourceTree = "<group>"; };
+		0935E0DE2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCommandDebuggerViewController.swift; sourceTree = "<group>"; };
 		093755202213F6290009D5DC /* CoverDownloadData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CoverDownloadData.plist; sourceTree = "<group>"; };
 		0938F41D2362E04C00DFC7F3 /* FTURL_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTURL_Extension.swift; sourceTree = "<group>"; };
 		0938F4202362E07900DFC7F3 /* FTCollectionName_Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCollectionName_Utils.swift; sourceTree = "<group>"; };
@@ -4418,6 +4420,14 @@
 			path = "DIagnosis Handler";
 			sourceTree = "<group>";
 		};
+		0935E0DD2AEA41D000BC1017 /* Debugger */ = {
+			isa = PBXGroup;
+			children = (
+				0935E0DE2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift */,
+			);
+			path = Debugger;
+			sourceTree = "<group>";
+		};
 		093755162213F6290009D5DC /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -5169,6 +5179,7 @@
 		09ABDC9C2A790F93008F144D /* private */ = {
 			isa = PBXGroup;
 			children = (
+				0935E0DD2AEA41D000BC1017 /* Debugger */,
 				09C404612AD4092800CCFF22 /* Tokens Related */,
 				09DBD5252A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift */,
 				09ABDC9D2A790F93008F144D /* FTNoteshelfAIFooterViewController.swift */,
@@ -13190,6 +13201,7 @@
 				BAF394D02859ADF10067CA9F /* FTGoogleAnalytics.m in Sources */,
 				BAF394D12859ADF10067CA9F /* FTTextAnnotationCheckBoxHelper.swift in Sources */,
 				09ABDCB42A791077008F144D /* FTPageViewController_OpenAIExtension.swift in Sources */,
+				0935E0DF2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift in Sources */,
 				BAF394D22859ADF10067CA9F /* FTSearchResultProtocols.swift in Sources */,
 				972B53FC2A4C6944001158D9 /* FTSharePreviewView.swift in Sources */,
 				478142CB2A8617250029378B /* FTMediaLibraryCell.swift in Sources */,
