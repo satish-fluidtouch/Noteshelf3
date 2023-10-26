@@ -1,7 +1,5 @@
 PODS:
   - ASN1Swift (1.2.3)
-  - Evernote-SDK-iOS (1.3.1):
-    - SSKeychain (~> 1.2.2)
   - Firebase/Analytics (10.3.0):
     - Firebase/Core
   - Firebase/Core (10.3.0):
@@ -155,7 +153,6 @@ PODS:
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
   - Reachability (3.2)
-  - SSKeychain (1.2.3)
   - SSZipArchive (2.4.3)
   - SwiftLint (0.50.3)
   - TPInAppReceipt (3.3.4):
@@ -177,7 +174,6 @@ PODS:
     - ZendeskSupportProvidersSDK (~> 7.0.0)
 
 DEPENDENCIES:
-  - Evernote-SDK-iOS
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
@@ -191,7 +187,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - ASN1Swift
-    - Evernote-SDK-iOS
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -215,7 +210,6 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Reachability
-    - SSKeychain
     - SSZipArchive
     - SwiftLint
     - TPInAppReceipt
@@ -238,7 +232,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ASN1Swift: 73ba94f1d97c1c1d059d180708ad42845aeac4f9
-  Evernote-SDK-iOS: beab0882c4bcdc05117ea0b56119da12cff47fbb
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   FirebaseABTesting: e6660693429b4663573c82f8d2f1041deff1753a
   FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
@@ -263,7 +256,6 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   TPInAppReceipt: 75ff97f2484a463cf46c172fe7f94225612aeda1
@@ -275,6 +267,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: 44f6639b5845815d4111b97ff00218f122ef9e33
   ZendeskSupportSDK: cae2bd10740bed62d8f89b78e6eea42713cd1e3c
 
-PODFILE CHECKSUM: c61b35cc367a5eeaa2259722f7b329f2ec248870
+PODFILE CHECKSUM: 16d7175d5a1be3689ee6f4ad46f85933d07d8055
 
 COCOAPODS: 1.11.3

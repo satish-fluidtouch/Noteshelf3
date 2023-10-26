@@ -8,7 +8,7 @@
 
 import Reachability
 import FTCommon
-import Evernote_SDK_iOS
+// import EvernoteSDK
 import CoreData
 
 typealias GenericCompletionBlockWithStatus = (Bool) -> Void

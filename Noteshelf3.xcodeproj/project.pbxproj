@@ -31,14 +31,14 @@
 		0938F4222362E07900DFC7F3 /* FTCollectionName_Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938F4202362E07900DFC7F3 /* FTCollectionName_Utils.swift */; };
 		0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */; };
 		093D85AA2A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D85A92A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift */; };
-		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
-		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
-		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
 		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
 		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
 		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
 		095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */; };
+		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
+		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
+		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971841E2A82230D00656B36 /* FTPremiumBanner.swift */; };
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
@@ -666,6 +666,7 @@
 		97C5A22E29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5A22D29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift */; };
 		97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5A22F29F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift */; };
 		97C73415294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C73414294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift */; };
+		97D874F72AEA2CDA002D6614 /* libEvernoteSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97D874EE2AEA2C9E002D6614 /* libEvernoteSDK.a */; };
 		97E4006A29139CAD00E0E0D7 /* FTDropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */; };
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
@@ -2070,6 +2071,41 @@
 			remoteGlobalIDString = BAA84E1428730F5800DE801B;
 			remoteInfo = FTStyles;
 		};
+		97D874ED2AEA2C9E002D6614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0BB3D1AD1524ED96001C4534;
+			remoteInfo = EvernoteSDK;
+		};
+		97D874EF2AEA2C9E002D6614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43741864170ADB2400D2BE51;
+			remoteInfo = "EvernoteSDK-Mac";
+		};
+		97D874F12AEA2C9E002D6614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0BB3D26E1524EF37001C4534;
+			remoteInfo = "SampleApp-iOS";
+		};
+		97D874F32AEA2C9E002D6614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 437418AC170ADCD600D2BE51;
+			remoteInfo = "SampleApp-Mac";
+		};
+		97D874F52AEA2C9E002D6614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0BDBBC431550A11A003E6681;
+			remoteInfo = UnitTests;
+		};
 		BAA84E1B28730F5800DE801B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3454,6 +3490,7 @@
 		97C8529E24F65AB800EF893A /* CommonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		97C852A224F6708D00EF893A /* FTThemeStorage_Migrate3o1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThemeStorage_Migrate3o1.swift; sourceTree = "<group>"; };
 		97D470092624852700D29C4E /* FTPresenterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
+		97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EvernoteSDK.xcodeproj; path = EvernoteSDK/EvernoteSDK.xcodeproj; sourceTree = "<group>"; };
 		97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDropOverlayView.swift; sourceTree = "<group>"; };
 		97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitController+CreateNotebookDelegates.swift"; sourceTree = "<group>"; };
 		97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordHostController.swift; sourceTree = "<group>"; };
@@ -4361,6 +4398,7 @@
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
 				70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */,
 				BA3F7FB9299E2F51003964C6 /* libMyScriptShape.xcframework in Frameworks */,
+				97D874F72AEA2CDA002D6614 /* libEvernoteSDK.a in Frameworks */,
 				BA3F7FB2299E2F51003964C6 /* libMyScriptPrediction.xcframework in Frameworks */,
 				DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */,
 				478394AA2A55250C00EEB75C /* ZipArchive in Frameworks */,
@@ -6924,6 +6962,7 @@
 		211E39121E028265007B5CAD /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */,
 				9787571625DBD46A00CB766F /* WebdavFramework */,
 				B86B7B2F24B6DB9100B57783 /* FTDocumentFramework */,
 				09D18F4121BFA25300882B19 /* FTRenderKit */,
@@ -6962,7 +7001,7 @@
 			path = iRate;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
@@ -8173,6 +8212,18 @@
 				97A663C329966D08006F13C8 /* FTNotebookShape.swift */,
 			);
 			path = ShelfItemShapes;
+			sourceTree = "<group>";
+		};
+		97D874E62AEA2C9E002D6614 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97D874EE2AEA2C9E002D6614 /* libEvernoteSDK.a */,
+				97D874F02AEA2C9E002D6614 /* EvernoteSDK-Mac.framework */,
+				97D874F22AEA2C9E002D6614 /* SampleApp-iOS.app */,
+				97D874F42AEA2C9E002D6614 /* SampleApp-Mac.app */,
+				97D874F62AEA2C9E002D6614 /* UnitTests.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		97EAB18C26A91AA200545FBB /* Midnight */ = {
@@ -11141,18 +11192,24 @@
 				"zh-Hans",
 				"zh-Hant",
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			packageReferences = (
 				BAB46650296FD98A004FCBDC /* XCRemoteSwiftPackageReference "OpenCV" */,
-				BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox.git" */,
+				BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
 				BA8BA66B29794C6400946CFE /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				BA8BA67129795F4A00946CFE /* XCRemoteSwiftPackageReference "google-api-objectivec-client-for-rest" */,
-				DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */,
-				478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */,
-				09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI.git" */,
+				DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */,
+				09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */,
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 97D874E62AEA2C9E002D6614 /* Products */;
+					ProjectRef = 97D874E52AEA2C9E002D6614 /* EvernoteSDK.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
@@ -11166,6 +11223,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		97D874EE2AEA2C9E002D6614 /* libEvernoteSDK.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libEvernoteSDK.a;
+			remoteRef = 97D874ED2AEA2C9E002D6614 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		97D874F02AEA2C9E002D6614 /* EvernoteSDK-Mac.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = "EvernoteSDK-Mac.framework";
+			remoteRef = 97D874EF2AEA2C9E002D6614 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		97D874F22AEA2C9E002D6614 /* SampleApp-iOS.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "SampleApp-iOS.app";
+			remoteRef = 97D874F12AEA2C9E002D6614 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		97D874F42AEA2C9E002D6614 /* SampleApp-Mac.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "SampleApp-Mac.app";
+			remoteRef = 97D874F32AEA2C9E002D6614 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		97D874F62AEA2C9E002D6614 /* UnitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.octest;
+			remoteRef = 97D874F52AEA2C9E002D6614 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0964D0662AB9C27400C79C01 /* Resources */ = {
@@ -11597,7 +11692,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/Evernote-SDK-iOS/Evernote_SDK_iOS.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
@@ -11613,7 +11707,6 @@
 				"${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework",
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -11628,7 +11721,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASN1Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Evernote_SDK_iOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseABTesting.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
@@ -11644,7 +11736,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphMSALAuthProvider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSKeychain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPInAppReceipt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -15071,7 +15162,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI.git" */ = {
+		09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
 			requirement = {
@@ -15079,7 +15170,7 @@
 				minimumVersion = 0.2.3;
 			};
 		};
-		478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */ = {
+		478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
 			requirement = {
@@ -15087,7 +15178,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox.git" */ = {
+		BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
 			requirement = {
@@ -15119,7 +15210,7 @@
 				kind = branch;
 			};
 		};
-		DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */ = {
+		DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
 			requirement = {
@@ -15132,22 +15223,22 @@
 /* Begin XCSwiftPackageProductDependency section */
 		09ABDCB12A790FB3008F144D /* OpenAI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI.git" */;
+			package = 09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAI;
 		};
 		478394A92A55250C00EEB75C /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
+			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
 		};
 		5288FB442A553F5100EBC37C /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
+			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
 		};
 		BA8BA65529766D2900946CFE /* SwiftyDropbox */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox.git" */;
+			package = BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
 			productName = SwiftyDropbox;
 		};
 		BA8BA66C29794C6400946CFE /* GoogleSignIn */ = {
@@ -15167,22 +15258,22 @@
 		};
 		BAF0DD532A6FE30D006D293B /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */;
+			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
 		};
 		BAF0DE8E2A6FE6F5006D293B /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */;
+			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
 		};
 		BAF0DEA02A6FE8F5006D293B /* ZipArchive */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive.git" */;
+			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
 		};
 		DDAD78EB2A08C550001D8B21 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage.git" */;
+			package = DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */

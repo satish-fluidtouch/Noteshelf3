@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment version="101200" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ENOAuthWindowController">
+            <connections>
+                <outlet property="activityIndicator" destination="14" id="15"/>
+                <outlet property="webView" destination="2KS-vv-sLX" id="qRj-q6-EDV"/>
+                <outlet property="window" destination="1" id="3"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="600" height="700"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="944"/>
+            <view key="contentView" id="2">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="700"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="12">
+                        <rect key="frame" x="475" y="13" width="105" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="103" id="tLq-9x-H4v"/>
+                        </constraints>
+                        <buttonCell key="cell" type="roundTextured" title="Cancel" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="13">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="doCancel:" target="-2" id="16"/>
+                        </connections>
+                    </button>
+                    <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="14">
+                        <rect key="frame" x="20" y="18" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="tDd-mY-b0e"/>
+                        </constraints>
+                    </progressIndicator>
+                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" ambiguous="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="18">
+                        <rect key="frame" x="0.0" y="47" width="600" height="5"/>
+                    </box>
+                    <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2KS-vv-sLX">
+                        <rect key="frame" x="0.0" y="50" width="600" height="650"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="12" secondAttribute="bottom" constant="15" id="3Ad-OX-Voa"/>
+                    <constraint firstItem="14" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="IGk-AL-C3M"/>
+                    <constraint firstItem="12" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="12" id="gp0-4R-PAb"/>
+                    <constraint firstItem="14" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="15" id="tyr-HB-dap"/>
+                    <constraint firstItem="14" firstAttribute="centerY" secondItem="12" secondAttribute="centerY" id="uh2-02-SJk"/>
+                    <constraint firstAttribute="trailing" secondItem="12" secondAttribute="trailing" constant="21" id="z1I-Sk-f8m"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="4"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="126"/>
+        </window>
+    </objects>
+</document>

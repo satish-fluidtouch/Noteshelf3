@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #if !TARGET_OS_MACCATALYST
-@import Evernote_SDK_iOS;
+#include <EvernoteSDK/EvernoteSDK.h>
 #endif
 #pragma GCC diagnostic ignored "-Wproperty-attribute-mismatch"
 

@@ -12,7 +12,7 @@ import FTCommon
 import CoreSpotlight
 import SwiftyDropbox
 #if !targetEnvironment(macCatalyst)
-import Evernote_SDK_iOS
+// import EvernoteSDK
 import GoogleSignIn
 #endif
 

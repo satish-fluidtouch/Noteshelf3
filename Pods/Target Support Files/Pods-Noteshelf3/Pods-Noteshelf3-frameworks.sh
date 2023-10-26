@@ -177,7 +177,6 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Evernote-SDK-iOS/Evernote_SDK_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework"
@@ -193,7 +192,6 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
@@ -207,7 +205,6 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Evernote-SDK-iOS/Evernote_SDK_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework"
@@ -223,7 +220,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
@@ -237,7 +233,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/Evernote-SDK-iOS/Evernote_SDK_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework"
@@ -253,7 +248,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/SSKeychain/SSKeychain.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"

@@ -7,7 +7,7 @@
 //
 
 #if !targetEnvironment(macCatalyst)
-import Evernote_SDK_iOS
+// import EvernoteSDK
 #endif
 import Foundation
 

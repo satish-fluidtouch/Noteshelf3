@@ -16,7 +16,7 @@
     #import "NSStringAdditions.h"
     
 #if !TARGET_OS_MACCATALYST
-    #import <Evernote_SDK_iOS/EvernoteSDK.h>
+    #import "EvernoteSDK.h"
 #endif
     #import <FirebaseCrashlytics/FirebaseCrashlytics.h>
     #import "FTDiagonosisHeader.h"
