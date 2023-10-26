@@ -81,7 +81,6 @@ extension FTFinderSearchController: UITableViewDelegate, UITableViewDataSource, 
                     return
                 }
                 if !(self.searchBar?.searchTextField.isFirstResponder ?? false) {
-                    self.searchBar?.searchTextField.becomeFirstResponder()
                     self.hideSuggestions = false
                 }
             }

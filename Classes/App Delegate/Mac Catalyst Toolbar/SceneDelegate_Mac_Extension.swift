@@ -57,7 +57,8 @@ class FTShelfToolbar: NSToolbar {
     weak var windowScene: UIWindowScene?;
     var sheflToolbarMode = FTShelfToolbarMode.shelf;
     let toolbardel = FTShelfToolbarDelegate();
-    
+    private(set) var searchText: String = ""
+
     required init(windwowScene scene: UIWindowScene?) {
         let uniqueID = scene?.session.persistentIdentifier ?? UUID().uuidString;
         super.init(identifier: "shelf_toolbar_\(uniqueID)");
@@ -93,6 +94,7 @@ class FTShelfToolbar: NSToolbar {
     }
 
     func updateSearchText(_ text: String) {
+        self.searchText = text
         let userInfo = ["searchText": text]
         NotificationCenter.default.post(name: .updateRecentSearchText,
                                         object: self,
@@ -100,6 +102,9 @@ class FTShelfToolbar: NSToolbar {
     }
 
     func switchMode(_ mode: FTShelfToolbarMode) {
+        if mode != .shelf {
+            self.searchText = ""
+        }
         if(mode != self.sheflToolbarMode) {
             self.sheflToolbarMode = mode;
             if let identifiers  = self.delegate?.toolbarDefaultItemIdentifiers?(self) {

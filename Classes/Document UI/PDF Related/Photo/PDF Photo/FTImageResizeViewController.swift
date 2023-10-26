@@ -14,8 +14,8 @@ enum FTPhotoMode {
     case clipBoard
 }
 
-private let MIN_IMAGE_VIEW_HEIGHT : CGFloat = 60;
-private let MIN_IMAGE_VIEW_WIDTH : CGFloat = 60;
+private let MIN_IMAGE_VIEW_HEIGHT : CGFloat = 30;
+private let MIN_IMAGE_VIEW_WIDTH : CGFloat = 30;
 
 private let CONTROL_POINT_SIZE : CGFloat = 40
 

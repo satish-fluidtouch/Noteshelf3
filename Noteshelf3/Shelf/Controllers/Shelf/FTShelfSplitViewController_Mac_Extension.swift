@@ -27,11 +27,7 @@ extension FTShelfSplitViewController: FTToolbarActionDelegate {
                 self.hide(.primary)
             }
         } else if item.itemIdentifier == FTShelfBackToolbarItem.identifier {
-            if self.checkIfGlobalSearchControllerExists() {
-                self.exitFromGlobalSearch()
-            } else {
-                self.detailNavigationController?.popViewController(animated: true)
-            }
+            self.detailNavigationController?.popViewController(animated: true)
         } else if let actionDelegate = self.getSecondaryRootViewController() as? FTToolbarActionDelegate {
             actionDelegate.toolbar(toolbar, toolbarItem: item);
         }
@@ -121,8 +117,27 @@ extension FTStoreContainerViewController: FTToolbarActionDelegate {
 
 extension FTShelfSplitViewController: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is FTGlobalSearchController {
+            self.sideMenuController?.addBlurView()
+        } else {
+            self.sideMenuController?.removeBlurView()
+        }
         viewController.navigationItem.hidesBackButton = true
         if let toolbar = self.view.toolbar as? FTShelfToolbar {
+            if let searchVc = viewController as? FTGlobalSearchController {
+                toolbar.updateSearchText(searchVc.searchInputInfo.textKey)
+            } else {
+                toolbar.updateSearchText("")
+                toolbar.resignSearchToolbar()
+                // To disable other tool items during search mode
+                if let addToolItem = toolbar.getToolbarItem(with: FTShelfAddToolbarItem.identifier) as? FTShelfAddToolbarItem {
+                    addToolItem.validate()
+                }
+                if let moreItem = toolbar.getToolbarItem(with: FTShelfMoreToolbarItem.identifier) as? FTShelfMoreToolbarItem {
+                    moreItem.validate()
+                }
+            }
+
             if navigationController.rootViewController is FTStoreContainerViewController {
                 toolbar.switchMode(.templatePreview)
             } else if self.checkIfShelfContentViewControllerExists(from: navigationController) {
@@ -140,15 +155,6 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
             } else {
                 toolbar.switchMode(.shelf)
             }
-            // To disable other tool items during search mode
-            if !self.checkIfGlobalSearchControllerExists() {
-                if let addToolItem = toolbar.getToolbarItem(with: FTShelfAddToolbarItem.identifier) as? FTShelfAddToolbarItem {
-                    addToolItem.validate()
-                }
-                if let moreItem = toolbar.getToolbarItem(with: FTShelfMoreToolbarItem.identifier) as? FTShelfMoreToolbarItem {
-                    moreItem.validate()
-                }
-            }
             toolbar.showBackButton(viewController.isRootViewController ? false : true)
         }
     }
@@ -161,9 +167,5 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
         }
         return status
     }
-
-    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-    }
 }
-
 #endif
