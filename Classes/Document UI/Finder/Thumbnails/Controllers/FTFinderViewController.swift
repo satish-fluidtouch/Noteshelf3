@@ -452,7 +452,9 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
                         }
                     }
                 } else if type == .outline {
-                    itemSnapShot.appendItems([FTOutline(name: "outline")], toSection: .outline)
+                    if !(outlinesViewController?.outlinesList.isEmpty ?? false) {
+                        itemSnapShot.appendItems([FTOutline(name: "outline")], toSection: .outline)
+                    }
                 } else if type == .bookmark {
                     placeHolderVc?.updateView(for: .bookmark)
                     collectionView.backgroundView?.isHidden = true
@@ -2032,9 +2034,8 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
     func outlinesViewController(showPlaceHolder: Bool) {
         if showPlaceHolder {
             self.collectionView.backgroundView?.isHidden = false
-        } else {
-            createSnapShot()
         }
+        createSnapShot()
     }
 }
 
