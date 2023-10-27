@@ -30,6 +30,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     var downloadingStatusObserver: NSKeyValueObservation?
     var uploadedStatusObserver: NSKeyValueObservation?
     var animType: FTAnimType = FTAnimType.none;
+    
     var id: String {
         model.uuid
     }

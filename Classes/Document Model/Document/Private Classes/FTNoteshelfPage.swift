@@ -16,6 +16,7 @@ import PDFKit
 import FTDocumentFramework
 import MobileCoreServices
 import FTCommon
+import UniformTypeIdentifiers
 
 enum FTPDFContent: Int {
     case unknown,hasContent,noContent;
@@ -893,18 +894,22 @@ extension FTNoteshelfPage : FTPageSearchProtocol
             });
         }
         if(!searchKey.isEmpty) {
-            if self.canContinuePDFContentSearch(), let pdfPageRef = self.pdfPageRef?.copy() as? PDFPage {
+            if let pdfPageRef = self.pdfPageRef
+                , let pdfContent = (self.parentDocument as? FTNoteshelfDocument)?.pdfContentCache {
                 let pageRect = self.pdfPageRect;
-                let document = PDFDocument();
-                document.insert(pdfPageRef, at: 0);
-
-                self.pdfContentSearchDidStart();
-                let selections = document.findString(searchKey, withOptions: NSString.CompareOptions.caseInsensitive);
-                self.pdfContentSearchDidComplete();
-                if(!selections.isEmpty) {
+                var pdfPageContent = pdfContent.pdfContentFor(self)
+                if nil == pdfPageContent
+                    , pdfContent.canContinuePDFContentSearch(for: self)
+                    ,let duplPage = pdfPageRef.copy() as? PDFPage {
+                    let document = PDFDocument();
+                    document.insert(duplPage, at: 0);
+                    pdfPageContent = pdfContent.cachePDFContent(duplPage, pageProtocol: self);
+                }
+                
+                if let rects = pdfPageContent?.ranges(for: searchKey),!rects.isEmpty {
                     found = true;
-                    for eachItem in selections {
-                        let rect = pdfPageRef.convertRect(eachItem.bounds(for: pdfPageRef), toViewBounds: pageRect, rotationAngle: Int(self.rotationAngle));
+                    rects.forEach { eachRect in
+                        let rect = pdfPageRef.convertRect(eachRect, toViewBounds: pageRect, rotationAngle: Int(self.rotationAngle));
                         let searchItem = FTSearchItem(withRect: rect,type: FTSearchableItemType.pdfText);
                         searchableItems.append(searchItem);
                     }
@@ -1325,17 +1330,31 @@ extension FTNoteshelfPage {
             return false
         }
 
-        if self.hasContents == .unknown
-            , let templateURL = self.templateFileItem()?.fileItemURL,
-            let pdfDoc = PDFDocument.init(url: templateURL) {
-            let pageNumber = Int(self.associatedPDFKitPageIndex);
-            let page = pdfDoc.page(at: pageNumber);
-            if let pdfText = page?.string?.trimmingCharacters(in: CharacterSet.whitespaces), !pdfText.isEmpty {
-                self.hasContents = .hasContent;
+        if self.hasContents == .unknown {
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+            if let pageContent = (self.parentDocument as? FTPDFContentCacheProtocol)?.pdfContentCache {
+                var pagePDFContent = pageContent.pdfContentFor(self);
+                if nil == pagePDFContent, let dupPage = self.pdfPageRef?.copy() as? PDFPage {
+                    let doc = PDFDocument();
+                    doc.insert(dupPage, at: 0);
+                    pagePDFContent = pageContent.cachePDFContent(dupPage, pageProtocol: self);
+                }
+                if let _content = pagePDFContent {
+                    let content = _content.pdfContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+                    if content.isEmpty {
+                        self.hasContents = .noContent;
+                    }
+                    else {
+                        self.hasContents = .hasContent;
+                    }
+                }
+                else {
+                    self.hasContents = .noContent;
+                }
             }
-            else {
-                self.hasContents = .noContent;
-            }
+#else
+            return false;
+#endif
         }
         return (self.hasContents == .hasContent)
     }
@@ -1390,105 +1409,9 @@ extension FTNoteshelfPage: FTPageBackgroundColorProtocol {
     }
 }
 
-private extension FTNoteshelfPage {
-    var timeStampKey: String {
-        return "timeStamp";
-    }
-    
-    var minDuration: TimeInterval {
-        return 12 * 60 * 60;
-    }
-    
-    var contentCache: FTCache? {
-        guard var doc = self.parentDocument as? FTCacheProtocol else {
-            return nil;
-        }
-        if nil == doc.cache,let uuid = self.parentDocument?.documentUUID {
-            doc.cache = FTCache(identifier: uuid);
-        }
-        return doc.cache;
-    }
-
-    func canContinuePDFContentSearch() -> Bool {
-        if FTUserDefaults.isInSafeMode() {
-            return false
-        }
-        var canContinue = false;
-        let val = self.contentCache?.object(forKey: self.uuid) as? [String:Any] ?? [String:Any]();
-        let timeStamp = (val[timeStampKey] as? TimeInterval) ?? 0;
-        let curTimeStamp = Date().timeIntervalSinceReferenceDate;
-        if(curTimeStamp - timeStamp > minDuration) {
-            canContinue = true;
-        }
-        return canContinue;
-    }
-        
-    func pdfContentSearchDidStart() {
-        var val = self.contentCache?.object(forKey: self.uuid) as? [String:Any] ?? [String:Any]();
-        val[timeStampKey] = Date().timeIntervalSinceReferenceDate;
-        self.contentCache?.setObject(val, forKey: self.uuid);
-    }
-    
-    func pdfContentSearchDidComplete() {
-        self.contentCache?.removeObject(forKey: self.uuid);
-    }
-}
-
-protocol FTCacheProtocol {
-    var cache: FTCache? {get set};
-}
-
-class FTCache: NSObject {
-    private var _contents: NSMutableDictionary?;
-    private var identifier = UUID().uuidString;
-    
-    init(identifier _iden: String) {
-        identifier = _iden
-    }
-    
-    private func cacheURL() -> URL {
-        let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                              .userDomainMask,
-                                                              true).last;
-        let cacheFolderURL = Foundation.URL(fileURLWithPath: cacheFolder!);
-        let fileName = self.identifier.appending(".plist");
-        return cacheFolderURL.appendingPathComponent(fileName);
-    }
-    
-    private var contents: NSMutableDictionary? {
-        objc_sync_enter(self);
-        if nil == _contents {
-            _contents = NSMutableDictionary(contentsOf: self.cacheURL());
-        }
-        objc_sync_exit(self);
-        return _contents
-    }
-    
-    func setObject(_ object:Any,forKey key: String) {
-        objc_sync_enter(self);
-        self.contents?.setObject(object, forKey: key as NSCopying);
-        self.contents?.write(to: self.cacheURL(), atomically: true);
-        objc_sync_exit(self);
-    }
-    
-    func removeObject(forKey key: String) {
-        objc_sync_enter(self);
-        self.contents?.removeObject(forKey: key);
-        self.contents?.write(to: self.cacheURL(), atomically: true);
-        objc_sync_exit(self);
-    }
-    
-    func object(forKey key: String) -> Any? {
-        objc_sync_enter(self);
-        let value = self.contents?.object(forKey: key);
-        objc_sync_exit(self);
-        return value;
-    }
-}
-
 extension FTNoteshelfPage: NSItemProviderWriting {
     public static var writableTypeIdentifiersForItemProvider: [String] {
-        return [kUTTypeData as String]
+        return [UTType.data.identifier]
     }
     
     public func loadData(withTypeIdentifier typeIdentifier: String, forItemProviderCompletionHandler completionHandler: @escaping (Data?, Error?) -> Void) -> Progress? {
