@@ -739,7 +739,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() == .downloaded else {
+        guard let documentItem = shelfItem as? FTDocumentItemProtocol,  documentItem.isDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }
