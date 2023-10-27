@@ -13,6 +13,7 @@ import Network
 
 private let storeTemplatesFolderName: String = "com.ns3.storeTemplates"
 private let storeStickersFolderName: String = "com.ns3.storeStickers"
+private let storeTemplatesThumbnailsFolderName: String = "com.ns3.storeTemplatesThumbnails"
 
 enum FTTemplatesServiceError: String, Error {
     case fileNotFound = "Unable to find the requested File."
@@ -138,6 +139,7 @@ class FTStoreService: FTStoreServiceApi {
 
 protocol FTTemplatesCacheService {
     var templatesFolder: URL { get }
+    var templatesThumbnailsFolder: URL { get }
 }
 
 public class FTTemplatesCache: FTTemplatesCacheService {
@@ -150,6 +152,22 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         let urls = fileManager.urls(for: .libraryDirectory, in: .userDomainMask)
         if let url = urls.last {
             path = "\(url.path.appending("/\(storeTemplatesFolderName)"))"
+        }
+        if !fileManager.fileExists(atPath: path) && path != "" {
+            do {
+                try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
+            } catch _ {
+            }
+        }
+        return URL(fileURLWithPath: path)
+    }
+
+    var templatesThumbnailsFolder: URL {
+        var path = ""
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
+        if let url = urls.last {
+            path = "\(url.path.appending("/\(storeTemplatesThumbnailsFolderName)"))"
         }
         if !fileManager.fileExists(atPath: path) && path != "" {
             do {

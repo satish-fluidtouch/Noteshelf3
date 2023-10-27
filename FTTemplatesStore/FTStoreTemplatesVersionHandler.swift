@@ -56,6 +56,7 @@ class FTStoreTemplatesVersionHandler {
         if !fileManager.fileExists(atPath: templatesVersionPlistUrl.path) {
             try createVersionPlist()
             try addVersionForDownloadedTemplates()
+            try removeThumbnailsFromTemplatesLocation()
         } else {
             let tagsInfo = try readVersionInfo()
             if tagsInfo == nil {
@@ -84,6 +85,15 @@ class FTStoreTemplatesVersionHandler {
         }
         if let versionInfo {
             try saveVersionInfo(info: versionInfo)
+        }
+    }
+
+    private func removeThumbnailsFromTemplatesLocation() throws {
+        let templatesUrl = FTTemplatesCache().templatesFolder
+        let subcontents = try fileManager.contentsOfDirectory(at: templatesUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+        let thumbnails = subcontents.filter { $0.pathExtension == "png" }
+        for thumbnail in thumbnails {
+            try fileManager.removeItem(at: thumbnail)
         }
     }
 

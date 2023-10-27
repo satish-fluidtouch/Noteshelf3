@@ -34,18 +34,18 @@ extension URL {
         }
     }
 
-    func generateThumbnailForTemplate(fileName: String? = nil) throws -> UIImage? {
-        var fileURL = self.deletingPathExtension().appendingPathExtension("png")
+    func generateThumbnailForTemplate(fileName: String? = nil) throws {
+        let thumbnailName = self.lastPathComponent.deletingPathExtension
+        var thumbnailLocation = FTTemplatesCache().templatesThumbnailsFolder.appendingPathComponent(thumbnailName).appendingPathExtension("png")
         if let fileName {
-            fileURL = fileURL.deletingLastPathComponent().appending(path: fileName).appendingPathExtension("png")
+            thumbnailLocation = thumbnailLocation.deletingLastPathComponent().appending(path: fileName).appendingPathExtension("png")
         }
-        guard let document = PDFDocument(url: self) else { return nil }
-        guard let page = document.page(at: 0) else { return nil }
+        guard let document = PDFDocument(url: self) else { return }
+        guard let page = document.page(at: 0) else { return }
         let pageBox = PDFDisplayBox.cropBox;
         let pageRect = page.bounds(for: pageBox)
         let thumbnailImage = page.thumbnail(of: pageRect.size, for: .cropBox)
-        try thumbnailImage.pngData()?.write(to: fileURL)
-        return thumbnailImage
+        try thumbnailImage.pngData()?.write(to: thumbnailLocation)
     }
 
     func loadThumbnail() -> UIImage? {
