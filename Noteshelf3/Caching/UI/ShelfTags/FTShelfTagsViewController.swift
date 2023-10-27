@@ -30,7 +30,7 @@ class FTShelfTagsViewController: UIViewController {
     var viewModel: FTShelfTagsPageModel?
     var tagItems = [FTShelfTagsItem]() {
         didSet {
-            tagItems = tagItems.filter({$0.documentItem?.URL.isPinEnabledForDocument() == false})
+            tagItems = tagItems.filter({$0.documentItem?.isPinEnabledForDocument() == false})
         }
     }
     private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();

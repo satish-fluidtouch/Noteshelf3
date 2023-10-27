@@ -80,7 +80,7 @@ struct FTNotebookCoverView: View {
                     }
                 }
                 .overlay {
-                    if shelfItem.model.URL.isPinEnabledForDocument() {
+                    if shelfItem.model.isPinEnabledForDocument() {
                         FTLockIconView()
                     }
                 }
