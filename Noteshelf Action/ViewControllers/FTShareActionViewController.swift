@@ -124,8 +124,9 @@ class FTShareActionViewController: UIViewController {
     }
     
     private func updateImagesForPublicUrls() {
+        var audioImage: UIImage?
         var pdfImage: UIImage?
-        var publicImage: UIImage?
+        var notshelfBookImage: UIImage?
         if let attachmentsInfo {
             let audioFiles = attachmentsInfo.publicURLs.filter { eachUrl in
                 return eachUrl.isAudioType
@@ -133,26 +134,31 @@ class FTShareActionViewController: UIViewController {
             if !audioFiles.isEmpty {
                 self.imageView1HeightConstraint.constant = 240
                 self.imageView1WidthConstraint.constant = 240
-                self.imageView1.image = UIImage(named: "audio")
+                audioImage = UIImage(named: "audio")
             }
             for eachUrl in attachmentsInfo.publicURLs {
                 if eachUrl.isPDFType, let pdf = PDFDocument(url: eachUrl), let page = pdf.page(at: 0) {
                     pdfImage = page.thumbnail(of: CGSize(width: 240, height: 300), for: .mediaBox)
+                } else if eachUrl.pathExtension == "noteshelf" {
+                    notshelfBookImage = UIImage(named: "notebook_placeholder")
+                }
+                if pdfImage != nil && notshelfBookImage != nil {
                     break
                 }
             }
-            if let publicImageUrl = attachmentsInfo.publicImageURLs.first {
-                publicImage = UIImage(contentsOfFile: publicImageUrl.path)
-            }
-            if audioFiles.isEmpty {
-                self.imageView1.image = pdfImage ?? UIImage(named: "website")
-                self.imageView2.isHidden = false
-                self.imageView2.image = publicImage
-            } else {
-                self.imageView2.isHidden = false
-                self.imageView3.isHidden = false
-                self.imageView2.image = pdfImage
-                self.imageView3.image = publicImage
+            imageView1.isHidden = true
+            imageView2.isHidden = true
+            imageView3.isHidden = true
+            let images: [UIImage?] = [audioImage, pdfImage, notshelfBookImage]
+            let imageViews = [imageView1, imageView2, imageView3]
+            let newImages = images.compactMap{return $0}
+            for (index,eachImage) in newImages.enumerated() {
+                if index < imageViews.count {
+                    if let imageView = imageViews[index] {
+                        imageView.image = eachImage
+                        imageView.isHidden = false
+                    }
+                }
             }
         }
     }
@@ -242,6 +248,9 @@ class FTShareActionViewController: UIViewController {
                 self.addImportAction(for: importedURL)
             }
             FTUserDefaults.defaults().userImportCount += 1;
+            if !attachmentsInfo.publicImageURLs.isEmpty {
+                self.handlePublicImageURLs()
+            }
             if !attachmentsInfo.imageItems.isEmpty {
                 self.handleImageItems(attachmentsInfo.imageItems)
             }
@@ -250,6 +259,13 @@ class FTShareActionViewController: UIViewController {
                 self.animationState = .ended
             }
         }
+    }
+    
+    func handlePublicImageURLs() {
+        attachmentsInfo?.publicImageURLs.forEach { eachUrl in
+            self.addImportAction(for: eachUrl)
+        }
+        FTUserDefaults.defaults().userImportCount += 1;
     }
     
    private func addImportAction(for url: URL) {
