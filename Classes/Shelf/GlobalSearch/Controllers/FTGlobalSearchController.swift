@@ -74,9 +74,7 @@ class FTGlobalSearchController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         FTSearchSuggestionHelper.shared.fetchTags(completion: { allTags in
-            runInMainThread {
-                self.allTags = allTags
-            }
+            self.allTags = allTags
        })
 #if !targetEnvironment(macCatalyst)
         self.configureSearchControllerIfNeeded()
