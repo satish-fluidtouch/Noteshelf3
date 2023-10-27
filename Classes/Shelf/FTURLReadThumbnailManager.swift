@@ -108,7 +108,7 @@ class FTThumbReadCallbacks : NSObject
             image = (item as? FTShelfImage)?.image;
             if(nil == image) {
                 #if !NS2_SIRI_APP && !NOTESHELF_ACTION
-                if item.URL.downloadStatus() != .downloaded {
+                if (item as? FTDocumentItemProtocol)?.isDownloaded == false {
                     completionBlockExecution(nil,item);
                     return
                 }

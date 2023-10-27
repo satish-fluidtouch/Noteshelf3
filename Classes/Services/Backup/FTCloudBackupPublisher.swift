@@ -158,10 +158,10 @@ class FTCloudBackupPublisher: NSObject {
                 var request: FTCloudPublishRequest?
                 let ignoreList = self.ignoreList.ignoreListIds();
                 for eachItem in shelfItems {
-                    if eachItem.URL.downloadStatus() == .downloaded,
-                       let docItem = eachItem as? FTDocumentItemProtocol
-                        ,let docId = docItem.documentUUID {
-                        
+                    if let docItem = eachItem as? FTDocumentItemProtocol,
+                       docItem.isDownloaded,
+                       let docId = docItem.documentUUID {
+
                         let autobackupItem = FTAutoBackupItem(URL: eachItem.URL, documentUUID: docId);
                         
                         if let refObject = self.backupItem(docId) {

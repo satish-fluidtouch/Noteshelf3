@@ -81,7 +81,7 @@ class FTShelfTagsUpdateHandler: NSObject {
     func deleteTag(tag: FTTagModel, completion: ((Bool?) -> Void)?) {
         let dispatchGroup = DispatchGroup()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-            let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+            let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.text)
 
@@ -131,7 +131,7 @@ class FTShelfTagsUpdateHandler: NSObject {
         let dispatchGroup = DispatchGroup()
 
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-            let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+            let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: newTag)
             guard let docIdsForTag = tagItem?.getDocumentIDS() else {

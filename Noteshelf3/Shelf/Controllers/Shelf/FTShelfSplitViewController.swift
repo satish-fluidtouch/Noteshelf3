@@ -300,7 +300,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
 
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol) {
-        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.URL.isPinEnabledForDocument()) {
+        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.isPinEnabledForDocument()) {
             self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
         }
     }
@@ -739,7 +739,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() == .downloaded else {
+        guard let documentItem = shelfItem as? FTDocumentItemProtocol,  documentItem.isDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }

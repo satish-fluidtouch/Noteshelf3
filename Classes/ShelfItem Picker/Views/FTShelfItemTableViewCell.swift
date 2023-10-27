@@ -380,13 +380,9 @@ class FTShelfItemTableViewCell: UITableViewCell,FTShelfItemCellProgressUpdate {
             self.updateDownloadStatusFor(item: item);
             self.readThumbnailFor(item: item, imageView: self.imageViewIcon);
         }
-        if let url = self.shelfItem?.URL {
-            self.updatePasscodeIconForShelfItem(at: url);
+        if let item = self.shelfItem {
+            self.passcodeLockStatusView.isHidden = !(item.isPinEnabledForDocument())
         }
-    }
-    
-    private func updatePasscodeIconForShelfItem(at url: URL!) {
-        self.passcodeLockStatusView.isHidden = !(url!.isPinEnabledForDocument());
     }
     
     fileprivate func readThumbnailFor(item : FTShelfItemProtocol,imageView : UIImageView) {
