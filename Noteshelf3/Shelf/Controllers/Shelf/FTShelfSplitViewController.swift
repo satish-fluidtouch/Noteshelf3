@@ -448,10 +448,9 @@ extension FTShelfSplitViewController {
             return
         }
         //----------- Migration for NS3 ------------------- //
-
-        let downloadStatus = shelfItem.URL.downloadStatus();
-        if downloadStatus != .downloaded {
-            if downloadStatus == .notDownloaded {
+        if let document = shelfItem as? FTDocumentItemProtocol,
+           document.isDownloaded == false {
+            if !document.isDownloading {
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 self.downloadShelfItem(shelfItem)
             }
@@ -739,7 +738,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() == .downloaded else {
+        guard let documentItem = shelfItem as? FTDocumentItemProtocol,  documentItem.isDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }

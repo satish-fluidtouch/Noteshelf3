@@ -14,7 +14,7 @@ class FTDocumentValidator: NSObject {
                                      pin: String?,
                                      onViewController : UIViewController,
                                      onCompletion: ((FTDocumentProtocol?, Error?,FTDocumentOpenToken?) -> Void)?) {
-        guard shelfItem.URL.downloadStatus() != .notDownloaded else {
+        guard let documentItem = shelfItem as? FTDocumentItemProtocol, documentItem.isDownloaded else {
             onCompletion?(nil, FTDocumentOpenErrorCode.error(.notDownload),nil);
             return;
         }

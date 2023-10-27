@@ -241,7 +241,7 @@ class FTTagItemModel {
         var totalTagItems: [FTShelfTagsItem] = [FTShelfTagsItem]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             DispatchQueue.global(qos: .background).async {
-                let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+                let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
                 var docIds = [String]()
                 if !selectedTag.isEmpty {
