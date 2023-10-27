@@ -57,10 +57,12 @@ class FTThumbReadCallbacks : NSObject
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
-        guard item.URL.isNS2Book else {
-            return self.thumbnailForNS3Book(item, onCompletion: onCompletion);
+        if FTDeveloperOption.useQuickLookThumbnailing {
+            guard item.URL.isNS2Book else {
+                return self.thumbnailForNS3Book(item, onCompletion: onCompletion);
+            }
         }
-        
+
         let cachedImage = self.imageCache.cachedImageForItem(item: item)
         if(nil != cachedImage) {
             onCompletion(cachedImage,nil);
