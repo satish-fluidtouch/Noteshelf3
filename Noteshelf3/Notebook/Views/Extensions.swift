@@ -24,10 +24,6 @@ struct FTVibrancyEffectView: UIViewRepresentable {
         let style = colorScheme == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
         let blurEffect  = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect);
-
-        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
-        blurEffectView.contentView.addSubview(vibrancyView)
         return blurEffectView
     }
 
@@ -35,6 +31,7 @@ struct FTVibrancyEffectView: UIViewRepresentable {
         let style = colorScheme == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
         let blurEffect = UIBlurEffect(style: style)
         uiView.effect = blurEffect
+        uiView.backgroundColor = UIColor.appColor(.lock_icon_bgcolor)
     }
 }
 
