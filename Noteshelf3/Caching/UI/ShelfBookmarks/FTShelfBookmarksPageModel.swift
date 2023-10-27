@@ -82,10 +82,10 @@ private extension FTShelfBookmarksPageModel {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
         var totalBookmarksItems: [FTBookmarksItem] = [FTBookmarksItem]()
 
-        let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
-            guard let docUUID = item.documentUUID else { continue }//, item.URL.downloadStatus() == .downloaded else { continue }
+            guard let docUUID = item.documentUUID else { continue }
             let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
             // move to post processing phace
             do {

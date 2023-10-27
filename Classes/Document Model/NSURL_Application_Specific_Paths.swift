@@ -49,3 +49,20 @@ extension URL {
         #endif
       }
 }
+
+extension FTShelfItemProtocol {
+    func isPinEnabledForDocument() -> Bool {
+        let valueToReturn: Bool
+        if let document = self as? FTDocumentItemProtocol, document.isDownloaded {
+            let securityPath = self.URL.appendingPathComponent("secure.plist");
+            if(FileManager().fileExists(atPath: securityPath.path)) {
+                valueToReturn = true
+            } else {
+                valueToReturn = false
+            }
+        } else {
+            valueToReturn = false
+        }
+        return valueToReturn
+    }
+}
