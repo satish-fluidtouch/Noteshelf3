@@ -8,7 +8,6 @@
 
 import Foundation
 #if !targetEnvironment(macCatalyst)
-// import EvernoteSDK
 #endif
 
 let EvernoteRootFolder = FTCloudRootFolder;

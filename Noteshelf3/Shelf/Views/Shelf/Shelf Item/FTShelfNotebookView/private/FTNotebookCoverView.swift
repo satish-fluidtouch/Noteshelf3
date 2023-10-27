@@ -169,7 +169,7 @@ struct FTLockIconView: View {
 struct PulseAnimationModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .symbolEffect(.pulse.byLayer)
+            //.symbolEffect(.pulse.byLayer)
     }
 }
 

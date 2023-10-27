@@ -41,7 +41,7 @@ extension FTShelfItemPublishRequest {
             attributes?.applicationData = map;
 
             newNote?.attributes = attributes;
-            newNote?.created = Int64((url.fileModificationDate as NSDate).timeIntervalSinceNow) ;
+            newNote?.created = Int64(url.fileModificationDate.timeIntervalSinceNow);
             FTENSyncUtilities.recordSyncLog(String.init(format: "Creating note for shelf item with name: %@", noteName));
 
             newNote?.content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"><en-note></en-note>";
