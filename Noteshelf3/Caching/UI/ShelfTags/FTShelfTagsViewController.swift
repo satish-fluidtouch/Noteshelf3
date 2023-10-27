@@ -30,7 +30,7 @@ class FTShelfTagsViewController: UIViewController {
     var viewModel: FTShelfTagsPageModel?
     var tagItems = [FTShelfTagsItem]() {
         didSet {
-            tagItems = tagItems.filter({$0.documentItem?.URL.isPinEnabledForDocument() == false})
+            tagItems = tagItems.filter({$0.documentItem?.isPinEnabledForDocument() == false})
         }
     }
     private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
@@ -464,8 +464,6 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTShelfTagsBooksCell", for: indexPath) as? FTShelfTagsBooksCell else {
                 return UICollectionViewCell()
             }
-            cell.delegate = self
-            cell.prepareCellWith(books: books, viewState: viewState, parentVC: self)
             return cell
         } else if indexPath.section == 1 {
             let item = pages[indexPath.row]
@@ -475,6 +473,13 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
         return cell
     }
 
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.section == 0, let pageCell = cell as? FTShelfTagsBooksCell {
+            pageCell.delegate = self
+            pageCell.prepareCellWith(books: books, viewState: viewState, parentVC: self)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if viewState == .none {
             return true

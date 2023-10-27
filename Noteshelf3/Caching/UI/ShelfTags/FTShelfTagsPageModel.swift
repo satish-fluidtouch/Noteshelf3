@@ -75,12 +75,9 @@ enum FTShelfTagsItemType {
 }
 
 final class FTShelfTagsPageModel: ObservableObject {
-    @Published private(set) var tagsResult = [FTShelfTagsItem]()
-    @Published private(set) var state: FTShelfTagsPageLoadState = .loading
     var selectedTag: String = ""
 
     func buildCache(completion: @escaping ([FTShelfTagsItem]) -> Void)  {
-             startLoading()
         if let selectedTagItem = FTTagsProvider.shared.getTagItemFor(tagName: selectedTag) {
             selectedTagItem.getTaggedItems(completion: { [weak self] tagsPage in
                 var tagItems = tagsPage
@@ -91,26 +88,12 @@ final class FTShelfTagsPageModel: ObservableObject {
                         return item.tags.map { $0.text }.contains(self?.selectedTag)
                     }
                 }
-                self?.setTagsPage(tagItems)
-                completion(self?.tagsResult ?? [])
+                completion(tagItems)
             })
         } else {
             completion([])
         }
 
-    }
-
-    private func startLoading() {
-        state = .loading
-    }
-
-    private func setTagsPage(_ tagsResult: [FTShelfTagsItem]) {
-        if tagsResult.isEmpty {
-            state = .empty
-        } else {
-            state = .loaded
-        }
-        self.tagsResult = tagsResult
     }
 }
 

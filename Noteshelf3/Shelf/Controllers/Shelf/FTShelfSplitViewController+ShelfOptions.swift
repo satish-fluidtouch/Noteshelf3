@@ -188,16 +188,25 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
                         }
                         if !isFirstPageCover && !theme.hasCover {
                             processNextItemIfNeeded();
-                        } else if !nsDoc.pages().isEmpty, let firstPage = nsDoc.pages().first as? FTThumbnailable, !theme.hasCover, isFirstPageCover {
-                            //If first page is cover and no cover is selected, we should delete the first cover page
-                            nsDoc.deletePages([firstPage])
-                            let newImage = nsDoc.transparentThumbnail(isEncrypted: isEncrypted)
-                            nsDoc.shelfImage = newImage
-                            FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: newImage, url: shelfItem.URL);
-                            FTNoteshelfDocumentManager.shared.saveAndClose(document: _document,
-                                                                           token: token) { (_) in
-                                FTRecentEntries.updateImageInGroupContainerForUrl(_document.URL)
-                                processNextItemIfNeeded();
+                        } else if !nsDoc.pages().isEmpty, let firstPage = nsDoc.pages().first, !theme.hasCover, isFirstPageCover {
+                            //Replace cover with blank page so that content wont be lost
+                            let generator = FTPDFFileGenerator.init();
+                            let pageRect = firstPage.pdfPageRect
+                            let fileName = FTUtils.getUUID().appending(".\(pdfExtension)");
+                            let path = generator.generateBlankPDFFileWithPageRect(pageRect, fileName: fileName);
+                            let coverInfo = FTDocumentInputInfo()
+                            coverInfo.isCover = false
+                            let inputUrl = Foundation.URL(fileURLWithPath: path)
+                            coverInfo.inputFileURL = inputUrl
+                            nsDoc.updatePageTemplate(page: firstPage, info: coverInfo) { error, success in
+                                let newImage = nsDoc.transparentThumbnail(isEncrypted: isEncrypted)
+                                nsDoc.shelfImage = newImage
+                                FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: newImage, url: shelfItem.URL);
+                                FTNoteshelfDocumentManager.shared.saveAndClose(document: _document,
+                                                                               token: token) { (_) in
+                                    FTRecentEntries.updateImageInGroupContainerForUrl(_document.URL)
+                                    processNextItemIfNeeded();
+                                }
                             }
                         } else {
                             updateCoverPageIfNeeded(with: theme, nsDoc: nsDoc) { error, success in

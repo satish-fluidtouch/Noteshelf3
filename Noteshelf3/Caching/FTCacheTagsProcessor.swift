@@ -60,7 +60,7 @@ final class FTCacheTagsProcessor {
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { [weak self] allItems in
             guard let self = self else {return}
             queue.async {
-                let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+                let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
                 for item in items {
                     dispatchGroup.enter()
                     if let docId = item.documentUUID {
@@ -152,7 +152,7 @@ final class FTCacheTagsProcessor {
             docIds.insert(documentUUID)
             plistTags[tag] = Array(docIds)
             if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag) {
-                tagItem.updateDocumentIds(docIds: Array(docIds))
+                tagItem.setDocumentIds(docIds: Array(docIds))
                 FTTagsProvider.shared.addNewTagItemIfNeeded(tagItem: tagItem)
             }
         }
