@@ -9,6 +9,7 @@
 import UIKit
 
 class FTSearchSectionContent: NSObject, FTSearchSectionContentProtocol {
+    var uuid = UUID().uuidString
     var searchKey: String = ""
     var onStatusChange: ((_ section: FTSearchSectionProtocol?, _ isActive: Bool) -> Void)?
     

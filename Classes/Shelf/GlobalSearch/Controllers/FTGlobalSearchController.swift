@@ -184,13 +184,36 @@ extension FTGlobalSearchController {
                 return
             }
             runInMainThread {
-                var sectionIndexSet = IndexSet()
-                for i in 0 ..< items.count {
-                    sectionIndexSet.insert(self.searchedSections.count + i)
+                items.forEach { itemSection in
+                    if !self.searchedSections.contains(where: { section in
+                        return itemSection.uuid == section.uuid
+                    }) {
+                        var sectionIndexSet = IndexSet()
+                        for i in 0 ..< items.count {
+                            sectionIndexSet.insert(self.searchedSections.count + i)
+                        }
+                        self.searchedSections.append(contentsOf: items)
+                        self.collectionView?.insertSections(sectionIndexSet)
+                        self.updateCountInfoLabel()
+                    } else {
+                        if let index = self.searchedSections.firstIndex(where: { section in
+                            section.uuid == itemSection.uuid
+                        }) {
+                            let indexPath = IndexPath(item: 0, section: index)
+                            if self.collectionView.indexPathsForVisibleItems.contains(where: { visibleIndexPath in
+                                visibleIndexPath == indexPath
+                            }) {
+                                if let cell = self.collectionView.cellForItem(at: indexPath) as? FTBaseResultSectionCell {
+                                    cell.updateContentSection(itemSection)
+                                }
+                                if let header = self.collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: indexPath) as? FTSearchResultHeader {
+                                    header.updatePageCount(itemSection)
+                                }
+                            }
+                            self.updateCountInfoLabel()
+                        }
+                    }
                 }
-                self.searchedSections.append(contentsOf: items)
-                self.collectionView?.insertSections(sectionIndexSet)
-                self.updateCountInfoLabel()
             }
         }, onCompletion: { [weak self] (_) in
             runInMainThread {

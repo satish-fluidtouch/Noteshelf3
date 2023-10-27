@@ -34,7 +34,11 @@ class FTBaseResultSectionCell: UICollectionViewCell {
             self.collectionView?.reloadData()
         }
     }
-    
+
+    func updateContentSection(_ section: FTSearchSectionProtocol) {
+        self.contentSection = section
+    }
+
     func getAnimationInfo(for indexPath: IndexPath) -> FTOpenAnimationInfo? {
         //Subclass should override this
         return nil
