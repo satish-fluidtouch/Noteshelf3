@@ -562,7 +562,7 @@ extension FTSidebarViewModel {
             if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
                 tagsSection.items = self.tags
             }
-            if self.selectedSideBarItemType == .tag {
+            if self.selectedSideBarItemType == .tag || self.selectedSideBarItemType == .allTags {
                 self.setSideBarItemSelection()
             }
        }
