@@ -31,26 +31,22 @@ let SYNC_LOG_TRUNCATE_RECORDS = 4000
         guard let resources = resources, let syncRecords = syncRecords else{
             return nil
         }
-        let myWriter = ENMLWriter()
-        myWriter.startDocument()
+        var content: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">" + "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\">"
         //Attachment data should go here
         for (index,record) in syncRecords.enumerated() {
+            var eachSyncRecordContent: String = ""
             var resourceToReturn: EDAMResource?
             if record.enGUID != nil{
                 for resource in resources where resource.guid == record.enGUID {
-                   // if resource.guid == record.enGUID{
-                        resourceToReturn = resource
-                        break
-                    //}
+                    resourceToReturn = resource
+                    break
                 }
             }
             if nil == resourceToReturn {
                 let fileName = (record.nsGUID ?? "") + ".jpg"
                 for resource in resources where resource.attributes.fileName == fileName{
-                    //if resource.attributes.fileName == fileName{
-                        resourceToReturn = resource
-                        break
-                    //}
+                    resourceToReturn = resource
+                    break
                 }
             }
             if nil == resourceToReturn {
@@ -65,48 +61,35 @@ let SYNC_LOG_TRUNCATE_RECORDS = 4000
                 }
                 FTENSyncUtilities.recordSyncLog("Failed to find resource")
             }else{
-                myWriter.startElement("div",withAttributes: [
-                    "style": "padding: 0px 0px 0px 0px;margin-bottom:15px;"
-            ])
-                myWriter.startElement("div",withAttributes:[
-                    "style": String(format: "max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;", resourceToReturn?.width ?? 0)] )
-                if let resourceData = resourceToReturn?.data {
-                    myWriter.writeResource(
-                        withDataHash: resourceData.bodyHash,
-                        mime: resourceToReturn?.mime,
-                        attributes: [
-                            "style": "margin: 0px; padding:0px; border-radius:7px;"
-                        ])
+
+                eachSyncRecordContent = "<div style =\"padding: 0px 0px 0px 0px;margin-bottom:15px;\">"
+                let stylingWithResourceWidth = String(format: "<div style = \"max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;\">", resourceToReturn?.width ?? 0)
+                eachSyncRecordContent += stylingWithResourceWidth
+                if let edamData = resourceToReturn?.data as? EDAMData, let dataHexDigits = (edamData.bodyHash as? NSData)?.enlowercaseHexDigits(){
+                    let enMedia = String(format: "<en-media type =\"image/png\" style= \"margin: 0px; padding:0px; border-radius:7px;\" hash=\"%@\"></en-media></div>",dataHexDigits)
+                    eachSyncRecordContent += enMedia
+                } else {
+                    eachSyncRecordContent += "</div>"
                 }
-                myWriter.endElement()
                 #if DEBUG
-                myWriter.startElement("div",withAttributes: [
-                    "style": "color: rgb(128, 128, 128);margin-top:5px;text-align:center;"])
-                myWriter.write(String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, syncRecords.count as CVarArg ))
-                myWriter.endElement()
+                let debugStyling = "<div style = \"color: rgb(128, 128, 128);margin-top:5px;text-align:center;\">"
+                eachSyncRecordContent += debugStyling
+                let pageNoDetails = String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, syncRecords.count as CVarArg )
+                let pageNoenmlString = "<span>" + "\(pageNoDetails)" + "</span></div>"
+                eachSyncRecordContent += pageNoenmlString
                 #endif
-                myWriter.endElement()
+                eachSyncRecordContent += "</div>"
             }
+            content += eachSyncRecordContent
         }
 
         //Footer : Start
-        let htmlString = "<a href=\"https://www.itunes.apple.com/us/app/noteshelf-2/id1271086060?mt=8\" >Noteshelf</a>"
+        let htmlString = "<a href=\"https://apps.apple.com/us/app/noteshelf-3/id6458735203\" >Noteshelf 3</a>"
         let publishByString = String.localizedStringWithFormat(NSLocalizedString("PublishedByNoteshelf", comment: "Published By Noteshelf"), htmlString)
-        myWriter.startElement("div",withAttributes: [
-            "style": "color: #808080;text-align: center;padding:10px 10px;"
-        ])
-        myWriter.write(publishByString)
-        myWriter.endElement()
-        //Footer : end
-        myWriter.endDocument()
-        let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
-        let xmlVersionAndDocType: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">"
-        
-        if let contents {
-            return xmlVersionAndDocType + contents
-        } else {
-            return nil
-        }
+        var footerString = "<div style = \"color: #808080;text-align: center;padding:10px 10px;\">"
+        footerString += "<span>" + "\(publishByString)" + "</span></div></en-note>"
+        content += footerString
+        return content
     }
     #endif
     
@@ -115,48 +98,32 @@ let SYNC_LOG_TRUNCATE_RECORDS = 4000
         guard let resources = resources else{
             return nil
         }
-        let myWriter = ENMLWriter()
-        myWriter.startDocument()
+        var content: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">" + "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\">"
 
         for (index,resource) in resources.enumerated() {
-            myWriter.startElement(
-                "div",
-                withAttributes: [
-                    "style": "padding: 0px 0px 0px 0px;margin-bottom:15px;"
-            ])
-            myWriter.startElement("div",
-                withAttributes: [
-                    "style": String(format: "max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;", Int(resource.width))
-            ])
-            if let edamData = resource.data {
-                myWriter.writeResource(
-                    withDataHash: edamData.bodyHash,
-                    mime: resource.mime,
-                    attributes: [
-                        "style": "margin: 0px; padding:0px; border-radius:7px;"
-                ])
+            var eachSyncRecordContent = "<div style =\"padding: 0px 0px 0px 0px;margin-bottom:15px;\">"
+            let stylingWithResourceWidth = String(format: "<div style = \"max-width:%dpx;margin:0px auto 0px auto;padding:0px 0px 0px 0px;display:block;background-color:white;background-color:#ffffff;-webkit-box-shadow:1px 1px 3px rgba(0,0,0,.25);border-radius:7px;\">", resource.width )
+            eachSyncRecordContent += stylingWithResourceWidth
+            if let edamData = resource.data, let dataHexDigits = (edamData.bodyHash as? NSData)?.enlowercaseHexDigits(){
+                let enMedia = String(format: "<en-media type =\"image/png\" style= \"margin: 0px; padding:0px; border-radius:7px;\" hash=\"%@\"></en-media></div>",dataHexDigits)
+                eachSyncRecordContent += enMedia
+            } else {
+                eachSyncRecordContent += "</div>"
             }
-            myWriter.endElement()
             #if DEBUG
-            myWriter.startElement("div",
-                withAttributes: [
-                    "style": "color: rgb(128, 128, 128);margin-top:5px;text-align:center;"
-            ])
-            myWriter.write(String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, resources.count as CVarArg))
-            myWriter.endElement()
+            let debugStyling = "<div style = \"color: rgb(128, 128, 128);margin-top:5px;text-align:center;\">"
+            eachSyncRecordContent += debugStyling
+            let pageNoDetails = String.localizedStringWithFormat(NSLocalizedString("PageNofN", comment: "Page N of N"), index + 1, resources.count as CVarArg )
+            let pageNoenmlString = "<span>" + "\(pageNoDetails)" + "</span></div>"
+            eachSyncRecordContent += pageNoenmlString
             #endif
-
-            myWriter.endElement()
+            eachSyncRecordContent += "</div>"
+            content += eachSyncRecordContent
         }
-        myWriter.endDocument()
-        let contents = myWriter.contents?.replacingOccurrences(of: "<en-note", with: "<en-note style=\"padding: 15px 15px 1px 15px;text-align:center;background-color:#eef2f3;\"")
-        let xmlVersionAndDocType: String = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">"
-
-        if let contents {
-            return xmlVersionAndDocType + contents
-        } else {
-            return nil
-        }
+        //Footer : Start
+        let footer = "</en-note>"
+        content += footer
+        return content
     }
     #endif
     //MARK:- Fetch From DB
