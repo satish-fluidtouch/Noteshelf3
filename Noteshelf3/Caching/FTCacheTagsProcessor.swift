@@ -152,7 +152,7 @@ final class FTCacheTagsProcessor {
             docIds.insert(documentUUID)
             plistTags[tag] = Array(docIds)
             if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag) {
-                tagItem.updateDocumentIds(docIds: Array(docIds))
+                tagItem.setDocumentIds(docIds: Array(docIds))
                 FTTagsProvider.shared.addNewTagItemIfNeeded(tagItem: tagItem)
             }
         }

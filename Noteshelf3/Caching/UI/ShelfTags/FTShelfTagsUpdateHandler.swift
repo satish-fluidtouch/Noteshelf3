@@ -85,7 +85,7 @@ class FTShelfTagsUpdateHandler: NSObject {
 
             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.text)
 
-            guard let docIdsForTag = tagItem?.documentIds else {
+            guard let docIdsForTag = tagItem?.getDocumentIDS() else {
                 completion?(false)
                 return
             }
@@ -134,7 +134,7 @@ class FTShelfTagsUpdateHandler: NSObject {
             let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
 
             let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: newTag)
-            guard let docIdsForTag = tagItem?.documentIds else {
+            guard let docIdsForTag = tagItem?.getDocumentIDS() else {
                 completion?(false)
                 return
             }

@@ -562,7 +562,7 @@ extension FTSidebarViewModel {
             if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
                 tagsSection.items = self.tags
             }
-            if self.selectedSideBarItemType == .tag {
+            if self.selectedSideBarItemType == .tag || self.selectedSideBarItemType == .allTags {
                 self.setSideBarItemSelection()
             }
        }
@@ -680,7 +680,7 @@ extension FTSidebarViewModel {
         let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio]
         if selectedSideBarItemType == .tag || selectedSideBarItemType == .allTags {
             if let selectedSideBarItem = self.selectedSideBarItem {
-                let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
+                let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.title == selectedSideBarItem.title })}).first
                 if selectedItem != nil {
                     self.selectedSideBarItem = selectedItem
                 } else if let selectedSideBarItem = menuItems.compactMap( { $0.items.first(where:{ $0.title == "sidebar.allTags".localized })}).first {
