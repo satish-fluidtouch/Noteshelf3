@@ -31,14 +31,14 @@
 		0938F4222362E07900DFC7F3 /* FTCollectionName_Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938F4202362E07900DFC7F3 /* FTCollectionName_Utils.swift */; };
 		0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */; };
 		093D85AA2A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D85A92A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift */; };
-		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
-		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
-		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
 		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
 		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
 		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
 		095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */; };
+		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
+		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
+		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971841E2A82230D00656B36 /* FTPremiumBanner.swift */; };
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
@@ -760,6 +760,7 @@
 		BA6C51D428DC728F006504EB /* FileManager+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CD28DC728E006504EB /* FileManager+Async.swift */; };
 		BA6C51D528DC728F006504EB /* Cache+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CE28DC728E006504EB /* Cache+Log.swift */; };
 		BA6C51D628DC728F006504EB /* FTDocumentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CF28DC728E006504EB /* FTDocumentCache.swift */; };
+		BA73AA8E2AEB826D00B4A2A3 /* FTDeveloperOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */; };
 		BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
 		BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */; };
 		BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA65529766D2900946CFE /* SwiftyDropbox */; };
@@ -13433,6 +13434,7 @@
 				0938F4172361B06400DFC7F3 /* FTShelfProviderConstants.swift in Sources */,
 				4209FEB5295C638000ACC02E /* FTShelfItemCollectionICloud.swift in Sources */,
 				C8054ADD23350C4B0083BB04 /* FTSharedAction.swift in Sources */,
+				BA73AA8E2AEB826D00B4A2A3 /* FTDeveloperOptionsViewController.swift in Sources */,
 				4209FEA2295C61F500ACC02E /* FTLegalTemplateFormat.swift in Sources */,
 				4209FEC4295C6BC800ACC02E /* FTNoteshelfDocument_FileItems.swift in Sources */,
 				4209FE9F295C61E900ACC02E /* FTPlainTemplateFormat.swift in Sources */,
