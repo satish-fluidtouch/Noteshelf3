@@ -32,11 +32,11 @@ class FTShelfMedia: Identifiable {
     }
 
     var isProtected: Bool {
-        guard let url = document?.URL else {
+        guard let doc = document else {
             return false
         }
 
-        return url.isPinEnabledForDocument()
+        return doc.isPinEnabledForDocument()
     }
 }
 

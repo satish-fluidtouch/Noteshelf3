@@ -59,7 +59,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
             let blockOperation = FTGlobalSearchOperation();
             blockOperation.addExecutionBlock { [weak self, weak blockOperation] in
                 let isDownloaded = (shelfItem as? FTDocumentItemProtocol)?.isDownloaded ?? false
-                if isDownloaded == false || shelfItem.URL.isPinEnabledForDocument() {
+                if isDownloaded == false || shelfItem.isPinEnabledForDocument() {
                     self?.progress.completedUnitCount += 1
                     blockOperation?.taskCompleted()
                     return
