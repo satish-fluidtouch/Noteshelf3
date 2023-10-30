@@ -26,6 +26,7 @@ enum FTPDFContent: Int {
     var searchKey: String = ""
     internal var searchItems: [FTSearchableItem]?
     var pageUUID: String!
+    var pageIndex: Int!
 }
 
 class FTNoteshelfPage : NSObject, FTPageProtocol
@@ -932,6 +933,7 @@ extension FTNoteshelfPage : FTPageSearchProtocol
         let result = FTPageSearchingInfo()
         result.searchKey = searchKey
         result.pageUUID = self.uuid
+        result.pageIndex = self.pageIndex()
         if !searchableItems.isEmpty {
             result.searchItems = searchableItems
         }

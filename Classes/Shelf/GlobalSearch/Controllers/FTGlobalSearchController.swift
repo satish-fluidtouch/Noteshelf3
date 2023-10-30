@@ -548,28 +548,8 @@ extension FTGlobalSearchController: FTSearchResultActionDelegate {
                 return
             }
             var selectedPageIndex = -1
-            if let contentSection = section as? FTSearchSectionContentProtocol, let pageItem = gridItem as? FTSearchResultPageProtocol {
-                contentSection.beginContentAccess()
-                if let associatedPage = contentSection.associatedPage(forItem: pageItem) {
-                    let pages = notebookToOpen.pages();
-                    let firstPage = pages.first(where: { (eachPage) -> Bool in
-                        return eachPage.uuid == associatedPage.uuid;
-                    });
-                    if let selPage = firstPage {
-                        selectedPageIndex = selPage.pageIndex()
-                    }
-                    else {
-                        DispatchQueue.main.async {
-                            if let shelfController = self.parent {
-                                UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("PageNotExistMessage", comment: ""), from: shelfController, withCompletionHandler: nil)
-                            }
-                        }
-                        if let token = token {
-                            FTNoteshelfDocumentManager.shared.closeDocument(document: notebookToOpen, token: token, onCompletion: nil);
-                        }
-                        return
-                    }
-                }
+            if let pageItem = gridItem as? FTSearchResultPageProtocol {
+                selectedPageIndex = pageItem.searchingInfo?.pageIndex ?? 0
             }
 
             FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent);
