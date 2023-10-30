@@ -210,12 +210,16 @@ extension FTThemesStorage {
             let localThemesPath = self.pathToLocalThemesFolder.standardizedFileURL.path;
             FTUserDefaults.defaults().set(path.replacingOccurrences(of: localThemesPath, with: ""), forKey: key);
         }
-        if themeLibraryType == .papers, let defaultVariants = variants {
-            self.updateVariants(defaultVariants, forKey: "DefaultThemeVariantsFor\(defaultMode.rawValue)")
+        if themeLibraryType == .papers {
+            if let defaultVariants = variants {
+                self.updateVariants(defaultVariants, forKey: "DefaultThemeVariantsFor\(defaultMode.rawValue)")
+            }
+            FTUserDefaults.defaults().set(isCustom, forKey: "DefaultThemeFor\(defaultMode.rawValue)isCustom")
         }
-        FTUserDefaults.defaults().set(isCustom, forKey: "DefaultThemeFor\(defaultMode.rawValue)isCustom")
+
         if themeLibraryType == .covers {
             FTUserDefaults.defaults().set(hasCover, forKey: "DefaultThemeFor\(defaultMode.rawValue)hasCover")
+            FTUserDefaults.defaults().set(isCustom, forKey: "DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom")
         }
         FTUserDefaults.defaults().set(themeInfo.title, forKey: titleKey);
         FTUserDefaults.defaults().set(themeInfo.dynamicId, forKey: "DefaultThemeFor\(defaultMode.rawValue)dynamicId");
@@ -231,21 +235,34 @@ extension FTThemesStorage {
         let title = FTUserDefaults.defaults().string(forKey: titleKey);
         let id = FTUserDefaults.defaults().string(forKey: dynamicIdKey) ?? "0"
         let dynamicId = Int(id) ?? 0
-        let isCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)isCustom") as? Bool) ?? false
+        var isCustom: Bool = false
+        if themeLibraryType == .papers {
+            isCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)isCustom") as? Bool) ?? false
+        } else {
+            if nil == (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom") as? Bool) {
+                let prevCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)isCustom") as? Bool) ?? false
+                FTUserDefaults.defaults().set(prevCustom, forKey: "DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom")
+            }
+            isCustom = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(key)\(defaultMode.rawValue)isCustom") as? Bool) ?? false
+        }
         let hasCover = (FTUserDefaults.defaults().value(forKey:"DefaultThemeFor\(defaultMode.rawValue)hasCover") as? Bool) ?? false
         var variants : FTPaperVariants = FTBasicTemplatesDataSource.shared.getDefaultVariants()
-        if themeLibraryType == .papers, let defaultVariants = self.getVariants(forKey: "DefaultThemeVariantsFor\(defaultMode.rawValue)"){
+        if themeLibraryType == .papers, let defaultVariants = self.getVariants(forKey: "DefaultThemeVariantsFor\(defaultMode.rawValue)") {
             variants = defaultVariants
         }
         if let storedPath {
             var templatePath = FTTemplatesCache().locationFor(filePath: storedPath)
-            if isCustom {
+            if isCustom && themeLibraryType == .papers {
                 templatePath = FTStoreCustomTemplatesHandler.shared.locationFor(filePath:storedPath)
             }
             if dynamicId == FTTemplateType.storeTemplate.rawValue, FileManager().fileExists(atPath: templatePath.path) {
                 return DefaultThemeProperties(themeURL: templatePath, themeDisplayName: title!, isCustom: isCustom, hasCover: hasCover, variants: variants, dynamicId: dynamicId)
-            }
-            else {
+            } else if isCustom && themeLibraryType == .covers {
+                let customFolderUrl = self.pathToLocalThemesFolder.standardizedFileURL.appendingPathComponent(storedPath)
+                if(FileManager().fileExists(atPath: customFolderUrl.path)) {
+                    return DefaultThemeProperties(themeURL: customFolderUrl, themeDisplayName: title!, isCustom: isCustom, hasCover: hasCover, variants: variants, dynamicId: dynamicId)
+                }
+            } else {
                 let stockThemeURL = self.stockThemesURL.standardizedFileURL.appendingPathComponent(storedPath);
                 if(FileManager().fileExists(atPath: stockThemeURL.path)) {
                     return DefaultThemeProperties(themeURL: stockThemeURL, themeDisplayName: title!, isCustom: isCustom, hasCover: hasCover, variants: variants, dynamicId: dynamicId)

@@ -15,13 +15,7 @@ struct FTTemplatesSidebarItemView: View {
     weak var delegate: FTSidebarViewDelegate?
     var body: some View {
         FTSideBarItemContextMenuPreview(preview: {
-            Button {
-                viewModel.endEditingActions()
-                viewModel.selectedSideBarItem = templatesSidebarItem
-                delegate?.didTapOnSidebarItem(templatesSidebarItem)
-            } label: {
-                templatesView
-            }
+            templatesView
             .ignoresSafeArea()
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true

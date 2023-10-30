@@ -11,6 +11,22 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ns3</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>NS3 Document</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.fluidtouch.noteshelf3</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<true/>
+		</dict>
+		<dict>
 			<key>CFBundleTypeIconFiles</key>
 			<array/>
 			<key>CFBundleTypeName</key>
@@ -169,7 +185,7 @@
 			<string>Evernote</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>en-pssramakrishnna</string>
+				<string>en-noteshelf3-3461</string>
 			</array>
 		</dict>
 		<dict>

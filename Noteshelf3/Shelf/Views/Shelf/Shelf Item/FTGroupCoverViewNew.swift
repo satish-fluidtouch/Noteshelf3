@@ -199,17 +199,21 @@ struct FTGroupCoverViewNew: View {
         }
     }
     private func PortNotebookItem(_ shelfItem:FTShelfItemViewModel) -> some View {
-        GroupNotebookView(shelfItem: shelfItem,coverViewPurpose:coverViewPurpose, shelfItemWidth: portThumbSize.width,shelfItemHeight: portThumbSize.height)
+        GroupNotebookView(coverViewPurpose:coverViewPurpose, shelfItemWidth: portThumbSize.width,shelfItemHeight: portThumbSize.height)
             .if(coverViewPurpose == .shelf, transform: { view in
                 view.environmentObject(shelfViewModel)
             })
+            .environmentObject(shelfItem)
     }
+    
     private func LandNotebookItem(_ shelfItem:FTShelfItemViewModel) -> some View {
-        GroupNotebookView(shelfItem: shelfItem,coverViewPurpose:coverViewPurpose, shelfItemWidth: landThumbSize.width,shelfItemHeight: landThumbSize.height)
+        GroupNotebookView(coverViewPurpose:coverViewPurpose, shelfItemWidth: landThumbSize.width,shelfItemHeight: landThumbSize.height)
             .if(coverViewPurpose == .shelf, transform: { view in
                 view.environmentObject(shelfViewModel)
             })
+            .environmentObject(shelfItem)
     }
+    
     private var portThumbSize: CGSize {
         if groupCoverWidth > 0 && groupCoverHeight > 0 {
             return CGSize(width: (groupCoverWidth - 2*horizontalpadding - horizontalSpacing)/2, height: (groupCoverHeight - 2*verticalPadding - verticalSpacing)/2)
@@ -283,9 +287,10 @@ struct FTGroupCoverViewNew_Previews: PreviewProvider {
         FTGroupCoverViewNew(groupCoverViewModel: FTGroupCoverViewModel(groupItem: nil))
     }
 }
-struct GroupNotebookView: View {
 
-    @ObservedObject var shelfItem: FTShelfItemViewModel
+private struct GroupNotebookView: View {
+
+    @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
 
@@ -335,6 +340,13 @@ struct GroupNotebookView: View {
                         x:0,
                         y:blurShadowY)
         }
+        .onAppear(perform: {
+            shelfItem.isVisible = true;
+            shelfItem.fetchCoverImage();
+        })
+        .onDisappear(perform: {
+            shelfItem.isVisible = false;
+        })
         .frame(width: viewSize.width,
                    height: viewSize.height,
                    alignment: .top)
@@ -345,41 +357,41 @@ struct GroupNotebookView: View {
 
     @ViewBuilder private var coverView: some View {
         Image(uiImage: shelfItem.coverImage)
-                .resizable()
-                .overlay(alignment: .topLeading, content: {
-                    if coverViewPurpose == .shelf {
-                        NS2BadgeView()
-                            .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .topLeading)
-                            .environmentObject(shelfItem)
-                            .environmentObject(shelfViewModel)
-                    }
-                })
-                .overlay {
-                    if shelfItem.isPinEnabled && coverViewPurpose == .shelf {
-                        FTLockIconView()
-                            .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .center)
+            .resizable()
+            .overlay(alignment: .topLeading, content: {
+                if coverViewPurpose == .shelf {
+                    NS2BadgeView()
+                        .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .topLeading)
+                        .environmentObject(shelfItem)
                         .environmentObject(shelfViewModel)
-                    }
                 }
-                .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
-                .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
-                .zIndex(1)
-                .onFirstAppear(perform: {
-                        shelfItem.configureShelfItem(shelfItem.model)
-                })
-                .overlay(alignment: Alignment.bottom) {
-                   if coverViewPurpose == .shelf && shelfItem.isNotDownloaded {
-                        Image(systemName: "icloud.and.arrow.down")
-                            .symbolRenderingMode(SymbolRenderingMode.palette)
-                            .foregroundColor(Color.appColor(.black20))
-                            .frame(width: 16, height: 16, alignment: Alignment.center)
-                            .font(Font.appFont(for: .medium, with: 12))
-                            .if(shelfViewModel.displayStlye == .List, transform: { view in
-                                view.scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .bottom)
-                            })
-                            .padding(.bottom, 4)
-                    }
+            })
+            .overlay {
+                if shelfItem.model.isPinEnabledForDocument() && coverViewPurpose == .shelf {
+                    FTLockIconView()
+                        .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .center)
+                        .environmentObject(shelfViewModel)
                 }
+            }
+            .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
+            .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+            .zIndex(1)
+            .onFirstAppear(perform: {
+                shelfItem.configureShelfItem(shelfItem.model)
+            })
+            .overlay(alignment: Alignment.bottom) {
+                if coverViewPurpose == .shelf && shelfItem.isNotDownloaded {
+                    Image(systemName: "icloud.and.arrow.down")
+                        .symbolRenderingMode(SymbolRenderingMode.palette)
+                        .foregroundColor(Color.appColor(.black20))
+                        .frame(width: 16, height: 16, alignment: Alignment.center)
+                        .font(Font.appFont(for: .medium, with: 12))
+                        .if(shelfViewModel.displayStlye == .List, transform: { view in
+                            view.scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .bottom)
+                        })
+                        .padding(.bottom, 4)
+                }
+            }
     }
     private var fineShadowRadius: CGFloat {
         var radius: CGFloat = 3.22

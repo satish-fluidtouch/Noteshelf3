@@ -20,9 +20,6 @@ variant_for_slice()
   "SupportProvidersSDK.xcframework/ios-arm64")
     echo ""
     ;;
-  "SupportProvidersSDK.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "maccatalyst"
-    ;;
   "SupportProvidersSDK.xcframework/ios-arm64_x86_64-simulator")
     echo "simulator"
     ;;
@@ -34,9 +31,6 @@ archs_for_slice()
   case "$1" in
   "SupportProvidersSDK.xcframework/ios-arm64")
     echo "arm64"
-    ;;
-  "SupportProvidersSDK.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "arm64 x86_64"
     ;;
   "SupportProvidersSDK.xcframework/ios-arm64_x86_64-simulator")
     echo "arm64 x86_64"
@@ -123,5 +117,5 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.xcframework" "ZendeskSupportProvidersSDK" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
+install_xcframework "${PODS_ROOT}/ZendeskSupportProvidersSDK/SupportProvidersSDK.xcframework" "ZendeskSupportProvidersSDK" "framework" "ios-arm64" "ios-arm64_x86_64-simulator"
 

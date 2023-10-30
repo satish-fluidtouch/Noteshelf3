@@ -21,6 +21,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
 
     private lazy var searchOperationQueue: OperationQueue = {
         let queue = OperationQueue()
+        queue.name = "com.ft.ns3.search.content"
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
@@ -58,7 +59,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
             let blockOperation = FTGlobalSearchOperation();
             blockOperation.addExecutionBlock { [weak self, weak blockOperation] in
                 let isDownloaded = (shelfItem as? FTDocumentItemProtocol)?.isDownloaded ?? false
-                if isDownloaded == false || shelfItem.URL.isPinEnabledForDocument() {
+                if isDownloaded == false || shelfItem.isPinEnabledForDocument() {
                     self?.progress.completedUnitCount += 1
                     blockOperation?.taskCompleted()
                     return
@@ -67,8 +68,9 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                 let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read);
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] (token, document, _) in
                     if let doc = document {
-                        guard let `self` = self,
+                        guard let self,
                               let notebook = doc as? FTDocumentSearchProtocol else {
+                            blockOperation?.taskCompleted();
                             FTNoteshelfDocumentManager.shared.closeDocument(document: doc,
                                                                             token: token,
                                                                             onCompletion: nil);
@@ -95,7 +97,8 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                                 }
                         }, onCompletion: {[weak self] (isCancelled) in
                             if isCancelled == false {
-                                guard let `self` = self else{
+                                guard let self else {
+                                    blockOperation?.taskCompleted();
                                     return
                                 }
                                 if !searchSectionItem.items.isEmpty {
@@ -115,10 +118,9 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
             }
             self.searchOperationQueue.addOperation(blockOperation);
         }
-        
-        var operation : BlockOperation!;
-        operation = BlockOperation.init {
-            
+
+        let operation = BlockOperation {
+
         };
         
         operation.completionBlock = {[weak self] in

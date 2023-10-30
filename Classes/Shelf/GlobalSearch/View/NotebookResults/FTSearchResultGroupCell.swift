@@ -55,13 +55,14 @@ class FTSearchResultGroupCell: FTTraitCollectionViewCell {
 
             if groupItem.shelfCollection != nil {
                 groupItem.fetchTopNotebooks(sortOrder: currentOrder,noOfBooksTofetch: 4, onCompletion: { [weak self] top4Children in
-                    if top4Children.isEmpty {
-                        return
-                    }
                     guard let strngSelf = self else {
                         return
                     }
-
+                    if top4Children.isEmpty {
+                        strngSelf.updateEmptyGroupAppearance()
+                        return
+                    }
+                    strngSelf.resetViews()
                     strngSelf.fetchCoverImages(for: top4Children) { images in
                         let coverImgInfo = strngSelf.fetchImagesWrToOrientation(from: images)
                         let landscapeImages = coverImgInfo.landscapeImgs
@@ -140,6 +141,27 @@ private extension FTSearchResultGroupCell {
         self.view4.isHidden = true
     }
 
+    private func updateEmptyGroupAppearance() {
+        self.updateVisibleStatus(showView1: true, showView2: true, showView3: true, showView4: true)
+        self.updateImages()
+        let reqColor = UIColor.appColor(.black5)
+        var children = [view1, view2, view3, view4]
+        children.compactMap { $0 }
+            .forEach {
+                $0.backgroundColor = reqColor
+                $0.layer.cornerRadius = 6.0
+            }
+    }
+
+    private func resetViews() {
+        var children = [view1, view2, view3, view4]
+        children.compactMap { $0 }
+            .forEach {
+                $0.backgroundColor = .clear
+                $0.layer.cornerRadius = 0.0
+            }
+    }
+
     private func updateShadowAndCornerRadiusIfNeeded() {
         self.shadowImgView1.image = nil
         self.shadowImgView2.image = nil
@@ -201,7 +223,7 @@ private extension FTSearchResultGroupCell {
             group.enter()
 
             var token: String?
-            var reqImg = UIImage(named: "defaultNoCover")
+            var reqImg = UIImage.shelfDefaultNoCoverImage
             token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem) { [weak self] (image, imageToken) in
                 if token == imageToken, let image {
                     reqImg = image

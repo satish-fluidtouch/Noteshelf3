@@ -47,12 +47,6 @@ class FTShelfBaseHostingController: UIHostingController<AnyView> {
         self.shelfViewModel.removeObserversForShelfItems()
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-        }
-    }
-
     override func didMove(toParent parent: UIViewController?) {
         if parent == nil {
             self.removeFromParent()
@@ -72,10 +66,9 @@ private extension FTShelfBaseHostingController {
     }
 
     private func updateSelectionIfNeeded() {
-        if let sideMenuVc = self.splitViewController?.viewController(for: .primary)?.children.first(where: { controller in
-            controller is FTSideMenuViewController
-        }) as? FTSideMenuViewController {
-            sideMenuVc.selectSideMenuCollection(shelfViewModel.collection)
+        if let splitController = self.splitViewController as? FTShelfSplitViewController {
+            splitController.shelfItemCollection = shelfViewModel.collection
+            splitController.sideMenuController?.selectSidebarItemWithCollection(shelfViewModel.collection)
         }
     }
 

@@ -29,7 +29,7 @@ protocol FTShelfPresentable {
 //    func createNotebookWithCameraPhoto()
 //    func createNotebookWithScannedPhoto()
     func shelfWillMovetoBack()
-    func shelfViewDidMovedToFront()
+    func shelfViewDidMovedToFront(with item : FTDocumentItem)
     
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?)
     func showGroup(with shelfItem: FTShelfItemProtocol, animate: Bool)
@@ -41,13 +41,14 @@ protocol FTShelfPresentable {
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
+    var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
     
     internal var shelfItemCollection: FTShelfItemCollection? {
         didSet {
             if let shelfItemCollection {
-                self.sideMenuController?.selectSideMenuCollection(shelfItemCollection)
+                self.sideMenuController?.upateSideMenuCurrentCollection(shelfItemCollection)
             }
         }
     }
@@ -83,15 +84,13 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         return nil
     }
     
-#if targetEnvironment(macCatalyst)
     override func showDetailViewController(_ vc: UIViewController, sender: Any?) {
-        super.showDetailViewController(vc, sender: sender);
+        super.showDetailViewController(vc, sender: sender)
         if let nav = vc as? UINavigationController {
-            nav.delegate = self;
+            nav.delegate = self
         }
     }
-#endif
-    
+
     var openingBookInProgress: Bool = false
     var cancellable = Set<AnyCancellable>()
     typealias ImportItems = [FTImportItem]
@@ -119,7 +118,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
         self.sideMenuController = primaryViewController
         self.setViewController(primaryViewController, for: UISplitViewController.Column.primary)
-        setOverrideTraitCollection(self.traitCollection, forChild: primaryViewController)
         let dropInteraction = UIDropInteraction(delegate: self)
         self.view.addInteraction(dropInteraction)
         /*if UIDevice.current.userInterfaceIdiom == .phone {
@@ -179,8 +177,13 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func refreshShelfCollection(setToDefault: Bool,animate: Bool, onCompletion: @escaping () -> Void) {
         if setToDefault {
-            self.sideMenuController?.selectSideMenuCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection);
-            self.showHomeView();
+            self.sideMenuController?.upateSideMenuCurrentCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection);
+            self.sideMenuController?.selectSidebarItemWithCollection(FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection)
+            if let detailController = self.detailController(), detailController.isKind(of: FTShelfHomeViewController.self) {
+                currentShelfViewModel?.reloadShelf() // As home is already active, we are reloading the shelf
+            } else {
+                self.showHomeView();
+            }
             onCompletion()
         }
         else {
@@ -196,11 +199,18 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
 
     func shelfWillMovetoBack() {
         currentShelfViewModel?.shelfWillMovetoBack()
+        sideMenuController?.disableUpdatesForSideBar()
     }
 
-    func shelfViewDidMovedToFront() {
-        currentShelfViewModel?.shelfViewDidMovedToFront()
-    }
+    func shelfViewDidMovedToFront(with item : FTDocumentItem) {
+         currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
+         if let shelfTagsVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfTagsViewController {
+             shelfTagsVC.reloadContent()
+         }
+         sideMenuController?.enableUpdatesForSideBar()
+         //Force refresh the UI to update with latest categories.
+         sideMenuController?.updateSideMenuItemsCollections()
+     }
 
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?) {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -263,7 +273,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     func showCategory(_ shelfCollection: FTShelfItemCollection) {
         self.saveLastSelectedCollection(shelfCollection)
         self.shelfItemCollection = shelfCollection
-        self.sideMenuController?.selectSideMenuCollection(shelfCollection)
+        self.sideMenuController?.selectSidebarItemWithCollection(shelfCollection)
         let categoryVc = getSecondaryViewControllerWith(collection: shelfCollection, groupItem: nil)
         if UIDevice.current.userInterfaceIdiom == .phone {
             if let tabController = self.viewControllers.first(where: {$0 is FTTabViewController}) as? FTTabViewController, let searchNavVc = tabController.globalSearchVc?.navigationController {
@@ -290,7 +300,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
 
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol) {
-        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.URL.isPinEnabledForDocument()) {
+        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.isPinEnabledForDocument()) {
             self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
         }
     }
@@ -310,10 +320,6 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
                 completionHandler?(nil, false)
             }
         }
-    }
-
-    override func overrideTraitCollection(forChild childViewController: UIViewController) -> UITraitCollection? {
-        return self.traitCollection
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -541,9 +547,9 @@ extension FTShelfSplitViewController {
                 return
             }
             let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
-            doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
             if shouldInsertCover {
                 doc.insertCoverForPasswordProtectedBooks { success, error in
+                    doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
                     processDocumentOpen()
                 }
             } else {
@@ -733,7 +739,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() == .downloaded else {
+        guard let documentItem = shelfItem as? FTDocumentItemProtocol,  documentItem.isDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }
@@ -779,8 +785,8 @@ extension FTShelfSplitViewController {
         // Build Category Controller
         self.saveLastSelectedCollection(collection)
         self.shelfItemCollection = collection
-        self.sideMenuController?.selectSideMenuCollection(collection)
         let categoryControllers = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
+        self.sideMenuController?.selectSidebarItemWithCollection(collection)
         controllers.append(categoryControllers)
 
         // Build Group Controllers

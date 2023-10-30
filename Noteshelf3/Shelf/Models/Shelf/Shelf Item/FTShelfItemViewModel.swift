@@ -19,6 +19,8 @@ let shelfItemURLKey = "shelfItemURL"
 let collectionNameKey = "collectionName"
 class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfItemCellProgressUpdate {
 
+    private var shouldFetchCoverImage = false;
+
     var pieProgressView: FTRoundProgressView?
     var statusImageView: UIImageView? // Unused properery, this is just to satisfy protocol `FTShelfItemCellProgressUpdate`
     var shelfItem: FTShelfItemProtocol?
@@ -28,7 +30,20 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     var downloadingStatusObserver: NSKeyValueObservation?
     var uploadedStatusObserver: NSKeyValueObservation?
     var animType: FTAnimType = FTAnimType.none;
-    var isPinEnabled: Bool = false
+    
+    var isVisible: Bool = false {
+        didSet {
+            if isVisible {
+                self.addObservers();
+                self.addUrlObserversIfNeeded();
+                self.startObservingProgressUpdates();
+            }
+            else {
+                self.removeAllObservers();
+            }
+        }
+    }
+    
     var id: String {
         model.uuid
     }
@@ -68,7 +83,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     @Published var isBackupOn: Bool = false
     @Published var isNotDownloaded = false
     @Published var isFavorited: Bool = false
-    @Published var coverImage = UIImage(named: "defaultNoCover")!
+    @Published var coverImage = UIImage.shelfDefaultNoCoverImage
     @Published var isLoadingNotebook: Bool = false
     @Published var isDownloadingNotebook: Bool = false
     @Published var isSelected: Bool = false
@@ -80,14 +95,9 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     init(model: FTShelfItemProtocol) {
         self.model = model
         super.init()
-        self.removeObservers()
-        self.addObservers()
-        //TODO: (AK) can be moved to on demand
-        self.fetchCoverImage()
         self.updateDownloadStatusFor(item: model);
         self.isFavorited = FTRecentEntries.isFavorited(model.URL)
         self.isNS2Book = model.URL.isNS2Book
-        self.isPinEnabled = model.URL.isPinEnabledForDocument()
     }
         
     func configureShelfItem(_ item: FTShelfItemProtocol){
@@ -112,6 +122,9 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     
     // MARK: For Cover Image
     func fetchCoverImage(){
+        guard isVisible else {
+            return;
+        }
         var token : String?
         token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(self.model, onCompletion: { [weak self](image, imageToken) in
             if token == imageToken, let image {
@@ -120,10 +133,14 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
         })
     }
 
-    deinit {
+    private func removeAllObservers() {
         removeObservers()
         removeAllKeyPathObservers()
         stopObservingProgressUpdates()
+    }
+    
+    deinit {
+        self.removeAllObservers();
     }
     
     func notebookShape() -> AnyShape {
@@ -188,7 +205,6 @@ extension FTShelfItemViewModel {
     @objc func shelfitemDidgetUpdated(_ notification: Notification) {
         if let userInfo = notification.userInfo,let items = userInfo[FTShelfItemsKey] as? [FTDocumentItem], let item = items.first, item.uuid == self.model.uuid {
             self.fetchCoverImage()
-            self.isPinEnabled = self.model.URL.isPinEnabledForDocument()
         }
     }
     
@@ -206,19 +222,20 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if(documentItem.isDownloading) {
-            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
-            self.animType = .download;
-            self.showDownloadingProgressView();
-            self.progress = progress;
-        }
-        else if ((documentItem.isDownloaded)) {
+        if documentItem.isDownloaded && shouldFetchCoverImage{
+            self.shouldFetchCoverImage = false
             self.progress = 1.0;
             self.isNotDownloaded = false
             self.stopDownloadingProgressView()
             self.fetchCoverImage()
         }
-        else if(documentItem.URL.downloadStatus() == .notDownloaded) {
+        else if documentItem.isDownloading {
+            let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);
+            self.animType = .download;
+            self.showDownloadingProgressView();
+            self.progress = progress;
+            shouldFetchCoverImage = true;
+        } else if !documentItem.isDownloaded {
             self.isNotDownloaded = true
         }
         if documentItem.isUploading {

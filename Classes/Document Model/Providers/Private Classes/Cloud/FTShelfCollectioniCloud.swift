@@ -428,13 +428,13 @@ extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
 extension FTShelfCollectioniCloud {
 
     fileprivate func collectionForURL(_ url: URL) -> FTShelfItemCollection? {
-        var collectionURL : URL? = url;
-        if url.pathExtension != FTFileExtension.shelf {
-            collectionURL = url.collectionURL();
+        var collectionName = url.lastPathComponent;
+        if url.pathExtension != FTFileExtension.shelf,let newName = url.collectionURL()?.lastPathComponent {
+            collectionName =  newName;
         }
-        if collectionURL?.pathExtension == FTFileExtension.shelf {
+        if collectionName.pathExtension == FTFileExtension.shelf {
             let item = self.shelfCollections.first { item -> Bool in
-                return item.URL == collectionURL
+                return item.URL.lastPathComponent == collectionName
             }
             return item
         } else {

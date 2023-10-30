@@ -31,11 +31,22 @@
 		0938F4222362E07900DFC7F3 /* FTCollectionName_Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0938F4202362E07900DFC7F3 /* FTCollectionName_Utils.swift */; };
 		0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */; };
 		093D85AA2A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D85A92A68022800CD8A83 /* FTShelfMenuOverlayInfo.swift */; };
+		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
+		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
+		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
+		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
+		095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */; };
+		0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */; };
+		0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */; };
+		0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971841E2A82230D00656B36 /* FTPremiumBanner.swift */; };
 		097184242A825C1300656B36 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
+		097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */ = {isa = PBXBuildFile; fileRef = 097449DF2ABDB51A0008C6B6 /* AICommands.strings */; };
+		097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */; };
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
+		099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
 		09ABDCA52A790F93008F144D /* FTOpenAICommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC982A790F93008F144D /* FTOpenAICommand.swift */; };
 		09ABDCA62A790F93008F144D /* FTOpenAICommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC992A790F93008F144D /* FTOpenAICommandType.swift */; };
 		09ABDCA72A790F93008F144D /* FTOpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDC9A2A790F93008F144D /* FTOpenAI.swift */; };
@@ -50,12 +61,19 @@
 		09ABDCB42A791077008F144D /* FTPageViewController_OpenAIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */; };
 		09AC0D5C2A83B3AC00375B1F /* FTPremiumUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
+		09BC391A2ACC4B370011D8B0 /* URL_WatchRecord_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09591AEC202C4B79008848DE /* URL_WatchRecord_Extension.swift */; };
+		09BC391B2ACC4B9D0011D8B0 /* URL+ImagePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92305088215E09F40043F646 /* URL+ImagePath.swift */; };
+		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
 		09C3696A2A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369662A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift */; };
 		09C3696B2A5EA6EB009BCC3F /* FTColorEyeDropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369682A5EA6EB009BCC3F /* FTColorEyeDropperView.swift */; };
 		09C3696C2A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369692A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift */; };
 		09C3697B2A5EBB06009BCC3F /* glyphs_font.ns in Resources */ = {isa = PBXBuildFile; fileRef = 09C3697A2A5EBB06009BCC3F /* glyphs_font.ns */; };
 		09C3697D2A5EBB1D009BCC3F /* stroke_text_map.json in Resources */ = {isa = PBXBuildFile; fileRef = 09C3697C2A5EBB1D009BCC3F /* stroke_text_map.json */; };
 		09C3697F2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3697E2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift */; };
+		09C404632AD4095200CCFF22 /* FTAITokenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404622AD4095200CCFF22 /* FTAITokenInfo.swift */; };
+		09C404652AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404642AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift */; };
+		09C404672AD40A0A00CCFF22 /* Date_Extension_AIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404662AD40A0A00CCFF22 /* Date_Extension_AIToken.swift */; };
+		09C404692AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C404682AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift */; };
 		09C5FB272A6A720900D30FCB /* FTKeyCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C5FB262A6A720900D30FCB /* FTKeyCommands.swift */; };
 		09C7142D2A38344900E69E4A /* FTShelfItemConextMenuPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C7142C2A38344900E69E4A /* FTShelfItemConextMenuPreview.swift */; };
 		09C714532A405BD200E69E4A /* FTShelfBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C714522A405BD200E69E4A /* FTShelfBaseView.swift */; };
@@ -311,8 +329,9 @@
 		4708DEC32A022B870009F071 /* FTThemesLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8521B24F521BA00EF893A /* FTThemesLibrary.swift */; };
 		4708DEC82A026D100009F071 /* FTAppIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA57454122F9875300310882 /* FTAppIntentHandler.swift */; };
 		4708DEDC2A0279960009F071 /* FTFileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094A59671E726F0B0044E9F1 /* FTFileImporter.swift */; };
+		4709F4242AE161050085A8C9 /* FTTagItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709F4232AE161040085A8C9 /* FTTagItemModel.swift */; };
+		4709F4262AE168120085A8C9 /* FTCachedDocumentPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */; };
 		471B90EC29F0ED7C00861A2B /* FTTagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450192924E24200B6113B /* FTTagsView.swift */; };
-		471B90ED29F0ED7F00861A2B /* FTTagsView+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */; };
 		471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450152924E24200B6113B /* FTTagCollectionCell.swift */; };
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
@@ -731,7 +750,6 @@
 		BA50E0342959CB2B00CDC0FD /* FTShelfTagsPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474DFE2B291A5618006AE5BC /* FTShelfTagsPageModel.swift */; };
 		BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476991E4291BAE7A0066BB51 /* FTShelfPagesLayout.swift */; };
 		BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */; };
-		BA50E0382959CB3600CDC0FD /* FTDocumentPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207E291E52200066C429 /* FTDocumentPlist.swift */; };
 		BA50E0392959CB3900CDC0FD /* FTDocumentPropertyPlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */; };
 		BA50E03A2959CB3C00CDC0FD /* FTCacheTagsProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */; };
 		BA50E03B2959CB3F00CDC0FD /* FTSidebarViewModel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */; };
@@ -748,6 +766,8 @@
 		BA6C51D428DC728F006504EB /* FileManager+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CD28DC728E006504EB /* FileManager+Async.swift */; };
 		BA6C51D528DC728F006504EB /* Cache+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CE28DC728E006504EB /* Cache+Log.swift */; };
 		BA6C51D628DC728F006504EB /* FTDocumentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6C51CF28DC728E006504EB /* FTDocumentCache.swift */; };
+		BA73AA8E2AEB826D00B4A2A3 /* FTDeveloperOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */; };
+		BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
 		BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */; };
 		BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA65529766D2900946CFE /* SwiftyDropbox */; };
 		BA8BA65F29782E9500946CFE /* FTAdvancedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8465E1921EF057F00F892AB /* FTAdvancedViewController.swift */; };
@@ -794,8 +814,9 @@
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
-		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
+		BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF0DD542A6FE30D006D293B /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = BAF0DD532A6FE30D006D293B /* SDWebImage */; };
@@ -1925,8 +1946,6 @@
 		E7AE404D28758DA300C0F3EC /* FTServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8520F24F51ABE00EF893A /* FTServerConfig.swift */; };
 		E7AE4D9F2899480A004CF608 /* FTShapeShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE4D9E2899480A004CF608 /* FTShapeShortcutView.swift */; };
 		E7AE4DA728995093004CF608 /* FTFavoriteShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AE4DA628995093004CF608 /* FTFavoriteShapeView.swift */; };
-		E7AF392828D1AAAA009EE145 /* FTQuadrantDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */; };
-		E7AF392A28D1AB3D009EE145 /* FTShortcutQuadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */; };
 		E7AF476E28EC53F4005F90E8 /* FTDeskModeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7AF476D28EC53F4005F90E8 /* FTDeskModeHelper.swift */; };
 		E7B02191296C446B00EBD49A /* UIHostingController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B02190296C446B00EBD49A /* UIHostingController+Extension.swift */; };
 		E7B0B49E28A0DB51007675DA /* FTPenColorEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B0B49D28A0DB51007675DA /* FTPenColorEditController.swift */; };
@@ -2046,6 +2065,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0964D0672AB9C27400C79C01;
+			remoteInfo = "Noteshelf3 Thumbnail";
+		};
 		5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2080,6 +2106,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = C8140D30232667B60053FC86;
 			remoteInfo = "Noteshelf Action";
+		};
+		BADB2D172ACECA0200B1B52A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BAA84E432873105500DE801B;
+			remoteInfo = FTCommon;
 		};
 		BAF0DCCE2A6FE2A9006D293B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2147,16 +2180,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */ = {
+		BAB258B8295B1B400072AEBB /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
+				0964D0702AB9C27500C79C01 /* Noteshelf3 Thumbnail.appex in Embed App Extensions */,
+				BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */,
 			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BAF3959A2859ADF10067CA9F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -2233,6 +2267,8 @@
 		093EE22E213FDC5900D6F115 /* FTMigrateToV3o1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMigrateToV3o1.swift; sourceTree = "<group>"; };
 		093FC9772032E95C00843C29 /* FTNoteshelfDocument_WatchExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfDocument_WatchExtension.swift; sourceTree = "<group>"; };
 		0940C4A51F02179400D50A06 /* FTDocumentItemSpotLightWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentItemSpotLightWrapper.swift; sourceTree = "<group>"; };
+		09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAIPremiumUserCreditsViewController.swift; sourceTree = "<group>"; };
+		09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAIFreeUserCreditsViewController.swift; sourceTree = "<group>"; };
 		0941A9881EF2977100EB050F /* FTNBKFormatImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTNBKFormatImporter.swift; path = Classes/Imports/FTNBKFormatImporter.swift; sourceTree = SOURCE_ROOT; };
 		094348B82035967500757884 /* FTSearchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchable.swift; sourceTree = "<group>"; };
 		094348BB20359D6D00757884 /* FTSelectionHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSelectionHighlightView.swift; sourceTree = "<group>"; };
@@ -2246,6 +2282,7 @@
 		094C985C22A0F10C00C93401 /* FTNoteshelfDocumentProvider_AllShelfItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfDocumentProvider_AllShelfItems.swift; sourceTree = "<group>"; };
 		094E5E4D20ADABEA009171B6 /* FTImageAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageAnnotationViewController.swift; sourceTree = "<group>"; };
 		094E5E5020ADB094009171B6 /* FTImageResizeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTImageResizeViewController.xib; sourceTree = "<group>"; };
+		0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAITokenManager.swift; sourceTree = "<group>"; };
 		09591AE1202C4AE6008848DE /* FTWatchRecordingCollection_Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingCollection_Cloud.swift; sourceTree = "<group>"; };
 		09591AE2202C4AE6008848DE /* FTWatchRecordingCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingCollection.swift; sourceTree = "<group>"; };
 		09591AE5202C4AE6008848DE /* FTWatchRecordingCollection_Local.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingCollection_Local.swift; sourceTree = "<group>"; };
@@ -2256,6 +2293,8 @@
 		095E3E94227810C6005FCABA /* FTNoteshelfPage_FTPageEvernoteSyncProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfPage_FTPageEvernoteSyncProtocol.swift; sourceTree = "<group>"; };
 		095E9F402366EBD3003277A4 /* FTSaveAsTemplateActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSaveAsTemplateActivity.swift; sourceTree = "<group>"; };
 		095E9F422366EDD6003277A4 /* FTEvernoteActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTEvernoteActivity.swift; sourceTree = "<group>"; };
+		095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOpenAIResponse.swift; sourceTree = "<group>"; };
+		095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDigitalInkRecognitionTaskProcessor.swift; sourceTree = "<group>"; };
 		096016C31FEA6E320028830C /* FTOneDriveBackupPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOneDriveBackupPublisher.swift; sourceTree = "<group>"; };
 		096016C51FEA6E580028830C /* FTOneDrivePublishRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOneDrivePublishRequest.swift; sourceTree = "<group>"; };
 		096016C71FEA6E830028830C /* FTOneDriveBackupEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOneDriveBackupEntry.swift; sourceTree = "<group>"; };
@@ -2265,6 +2304,9 @@
 		096497C322DD8E9700A6993D /* FTPageViewController_GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageViewController_GestureHandler.swift; sourceTree = "<group>"; };
 		0964A6C22338A99600337464 /* FTScanDocumentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTScanDocumentService.swift; sourceTree = "<group>"; };
 		0964CB672201704A0001E506 /* FTAnnotationBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotationBaseView.swift; sourceTree = "<group>"; };
+		0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Noteshelf3 Thumbnail.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProvider.swift; sourceTree = "<group>"; };
+		0964D06D2AB9C27500C79C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09668A061EC5720B00E042F4 /* FTRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTRootViewController.swift; sourceTree = "<group>"; };
 		09668A0C1EC594C600E042F4 /* FTDropboxError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDropboxError.swift; sourceTree = "<group>"; };
 		0966EE4E213FE7A000B2B456 /* FTSharedGroupID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSharedGroupID.swift; sourceTree = "<group>"; };
@@ -2278,6 +2320,8 @@
 		0971841E2A82230D00656B36 /* FTPremiumBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPremiumBanner.swift; sourceTree = "<group>"; };
 		097184232A825C1300656B36 /* IAPAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = IAPAssets.xcassets; sourceTree = "<group>"; };
 		097184272A82668200656B36 /* IAPEssentials.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = IAPEssentials.storyboard; sourceTree = "<group>"; };
+		097449DF2ABDB51A0008C6B6 /* AICommands.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AICommands.strings; sourceTree = "<group>"; };
+		097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAttributedString_OpenAI_Extension.swift; sourceTree = "<group>"; };
 		09745D561EC03BAC001AC8D8 /* FTExternalScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTExternalScreenViewController.swift; sourceTree = "<group>"; };
 		09771C8720E64B1400B73FC0 /* FTDocumentPasswordValidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPasswordValidate.swift; sourceTree = "<group>"; };
 		097BD8A621CCB034007CEC26 /* FTOffscreenWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOffscreenWritingViewController.swift; sourceTree = "<group>"; };
@@ -2396,6 +2440,7 @@
 		099C92102A8CC23500C1FD07 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/MyScriptLanguageLocalizable.strings"; sourceTree = "<group>"; };
 		099C92112A8CC23700C1FD07 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MyScriptLanguageLocalizable.strings; sourceTree = "<group>"; };
 		099C92122A8CC23A00C1FD07 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MyScriptLanguageLocalizable.strings; sourceTree = "<group>"; };
+		099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 Thumbnail.entitlements"; sourceTree = "<group>"; };
 		099F722020526FC7004D3518 /* default_paper_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_paper_image.png; sourceTree = "<group>"; };
 		099F722120526FC7004D3518 /* default_cover_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_cover_image.png; sourceTree = "<group>"; };
 		09A3870D210763F4005E4000 /* FTAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotation.swift; sourceTree = "<group>"; };
@@ -2446,6 +2491,7 @@
 		09B924BC1EC5F8C400030EAA /* FTSmartProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSmartProgressView.swift; sourceTree = "<group>"; };
 		09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfSplitViewController_Mac_Extension.swift; sourceTree = "<group>"; };
 		09BB70AC21F84EF20065B781 /* FTBackgroundTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBackgroundTexture.swift; sourceTree = "<group>"; };
+		09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQLThumbnail_Error.swift; sourceTree = "<group>"; };
 		09BD1DC021FAF59C000D73D5 /* FTAudioUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTAudioUtils.h; sourceTree = "<group>"; };
 		09C0066E1E49C15400C491F8 /* FTLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLogger.swift; sourceTree = "<group>"; };
 		09C0B6D5240D2178009F5E91 /* FTVerticalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTVerticalLayout.swift; sourceTree = "<group>"; };
@@ -2483,6 +2529,10 @@
 		09C3697A2A5EBB06009BCC3F /* glyphs_font.ns */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = glyphs_font.ns; sourceTree = "<group>"; };
 		09C3697C2A5EBB1D009BCC3F /* stroke_text_map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stroke_text_map.json; sourceTree = "<group>"; };
 		09C3697E2A5EBB35009BCC3F /* FTTextToStrokeDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextToStrokeDataProvider.swift; sourceTree = "<group>"; };
+		09C404622AD4095200CCFF22 /* FTAITokenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAITokenInfo.swift; sourceTree = "<group>"; };
+		09C404642AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemWrapper_AIToken.swift; sourceTree = "<group>"; };
+		09C404662AD40A0A00CCFF22 /* Date_Extension_AIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date_Extension_AIToken.swift; sourceTree = "<group>"; };
+		09C404682AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSUbiquitousKeyValueStore_AIToken.swift; sourceTree = "<group>"; };
 		09C5DC6A1F446EA600033BAC /* FTShelfCollectionSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCollectionSystem.swift; sourceTree = "<group>"; };
 		09C5DC6C1F44700100033BAC /* FTFTShelfCollectionMigration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTFTShelfCollectionMigration.swift; sourceTree = "<group>"; };
 		09C5FB262A6A720900D30FCB /* FTKeyCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTKeyCommands.swift; sourceTree = "<group>"; };
@@ -2909,6 +2959,8 @@
 		42D8BC3628C8778300B4AED0 /* FTThumbnailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailsCell.swift; sourceTree = "<group>"; };
 		470492701E1CB25A00848DAC /* FTTargetsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTargetsTableViewCell.swift; sourceTree = "<group>"; };
 		470492731E1CB47800848DAC /* FTTargetCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTargetCollectionViewCell.swift; sourceTree = "<group>"; };
+		4709F4232AE161040085A8C9 /* FTTagItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTagItemModel.swift; sourceTree = "<group>"; };
+		4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCachedDocumentPlist.swift; sourceTree = "<group>"; };
 		470B9E7D1EC3181000A5B0EB /* FTCenteredCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCenteredCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		471A47391FA1AB7500E8E3DF /* FTCustomCoverStyleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomCoverStyleProtocol.swift; sourceTree = "<group>"; };
 		471A473B1FA1ABBF00E8E3DF /* FTNoBandCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoBandCoverStyle.swift; sourceTree = "<group>"; };
@@ -2926,7 +2978,6 @@
 		473EA5EF1FB45A3400D7614F /* FTThemeableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThemeableLabel.swift; sourceTree = "<group>"; };
 		473EA5F11FB460A000D7614F /* ActionLabel_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionLabel_Extension.swift; sourceTree = "<group>"; };
 		473F073F1F4477A800D79F9E /* FTPrivateProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPrivateProtocols.h; sourceTree = "<group>"; };
-		4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTTagsView+ContextMenu.swift"; sourceTree = "<group>"; };
 		47446B921EFCF5E60006EFC5 /* ENSyncRecord_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSyncRecord_Extension.swift; sourceTree = "<group>"; };
 		47447CBB1FA0540900E70023 /* FTCustomCoverStyleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomCoverStyleCollectionViewCell.swift; sourceTree = "<group>"; };
 		4744E4722A28B18C00A9795A /* FTModalScaleUpPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTModalScaleUpPresentationController.swift; sourceTree = "<group>"; };
@@ -3005,7 +3056,6 @@
 		47C7C439297E633600AE4648 /* FTShelfContentCompactView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfContentCompactView.swift; sourceTree = "<group>"; };
 		47C7C43A297E633600AE4648 /* FTShelfCompactContentContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCompactContentContainerView.swift; sourceTree = "<group>"; };
 		47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsPlist.swift; sourceTree = "<group>"; };
-		47CA207E291E52200066C429 /* FTDocumentPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPlist.swift; sourceTree = "<group>"; };
 		47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTSidebarViewModel+Tags.swift"; sourceTree = "<group>"; };
 		47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCacheTagsProcessor.swift; sourceTree = "<group>"; tabWidth = 4; };
 		47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsRepresentableView.swift; sourceTree = "<group>"; };
@@ -3489,6 +3539,8 @@
 		BA11637B227ACAD500CCC153 /* FTDocumentRenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentRenderViewController.swift; sourceTree = "<group>"; };
 		BA11637E227ACAD500CCC153 /* FTDocumentView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTDocumentView.storyboard; sourceTree = "<group>"; };
 		BA1265452302CDB500AD4647 /* FTPageProtocol_Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageProtocol_Additions.swift; sourceTree = "<group>"; };
+		BA183D2C2AC15F070011EA01 /* export_options.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = export_options.plist; path = fastlane/export_options.plist; sourceTree = SOURCE_ROOT; };
+		BA183D2D2AC15F070011EA01 /* export_options_mac.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = export_options_mac.plist; path = fastlane/export_options_mac.plist; sourceTree = SOURCE_ROOT; };
 		BA1963522A9609FF000C47FA /* FTNSiCloudManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNSiCloudManager.swift; sourceTree = "<group>"; };
 		BA1963692A977214000C47FA /* FTShelfCollectioniCloudRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfCollectioniCloudRoot.swift; sourceTree = "<group>"; };
 		BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeveloperOptionsViewController.swift; sourceTree = "<group>"; };
@@ -3631,6 +3683,9 @@
 		BA799912216F65FC001DC0D5 /* FTRecentItemEditMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecentItemEditMenuCell.swift; sourceTree = "<group>"; };
 		BA799914216F6EC0001DC0D5 /* FTRecentsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRecentsHeaderView.swift; sourceTree = "<group>"; };
 		BA799916216F6ECC001DC0D5 /* FTRecentsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTRecentsHeaderView.xib; sourceTree = "<group>"; };
+		BA7A5F332AB06951006D5284 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
+		BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Thumbnail.swift"; sourceTree = "<group>"; };
 		BA7D891121F07DD300883D82 /* FTWatchRecordingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider.swift; sourceTree = "<group>"; };
 		BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLayouter.swift; sourceTree = "<group>"; };
 		BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomPresentationDelegate.swift; sourceTree = "<group>"; };
@@ -3985,8 +4040,6 @@
 		E7AE4048287562C300C0F3EC /* FTResourceFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTResourceFetcher.swift; sourceTree = "<group>"; };
 		E7AE4D9E2899480A004CF608 /* FTShapeShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeShortcutView.swift; sourceTree = "<group>"; };
 		E7AE4DA628995093004CF608 /* FTFavoriteShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShapeView.swift; sourceTree = "<group>"; };
-		E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTQuadrantDetector.swift; sourceTree = "<group>"; };
-		E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutQuadrant.swift; sourceTree = "<group>"; };
 		E7AF476D28EC53F4005F90E8 /* FTDeskModeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeskModeHelper.swift; sourceTree = "<group>"; };
 		E7AFD9462637E28000652DD6 /* FTPopOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPopOver.swift; sourceTree = "<group>"; };
 		E7B02190296C446B00EBD49A /* UIHostingController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIHostingController+Extension.swift"; sourceTree = "<group>"; };
@@ -4251,6 +4304,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0964D0652AB9C27400C79C01 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0964D0692AB9C27400C79C01 /* QuickLookThumbnailing.framework in Frameworks */,
+				BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1228730F5800DE801B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4404,6 +4466,15 @@
 			path = Migration3o1;
 			sourceTree = "<group>";
 		};
+		09415E2E2ACFFB5800BB1EAA /* Credits */ = {
+			isa = PBXGroup;
+			children = (
+				09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */,
+				09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */,
+			);
+			path = Credits;
+			sourceTree = "<group>";
+		};
 		094348BA20359D4800757884 /* Search Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -4470,6 +4541,14 @@
 			path = "Migration UI";
 			sourceTree = "<group>";
 		};
+		095F042F2ACE89A500205BF7 /* Google  MLKit */ = {
+			isa = PBXGroup;
+			children = (
+				095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */,
+			);
+			path = "Google  MLKit";
+			sourceTree = "<group>";
+		};
 		096016C11FEA6E0A0028830C /* OneDrive */ = {
 			isa = PBXGroup;
 			children = (
@@ -4501,6 +4580,17 @@
 				0964A6C22338A99600337464 /* FTScanDocumentService.swift */,
 			);
 			path = Scanner;
+			sourceTree = "<group>";
+		};
+		0964D06A2AB9C27500C79C01 /* Noteshelf3 Thumbnail */ = {
+			isa = PBXGroup;
+			children = (
+				099D235A2ABAE2B900636C42 /* Noteshelf3 Thumbnail.entitlements */,
+				0964D06B2AB9C27500C79C01 /* ThumbnailProvider.swift */,
+				09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */,
+				0964D06D2AB9C27500C79C01 /* Info.plist */,
+			);
+			path = "Noteshelf3 Thumbnail";
 			sourceTree = "<group>";
 		};
 		0966EE4C213FE79100B2B456 /* Shared Group Container Related */ = {
@@ -4539,6 +4629,7 @@
 			isa = PBXGroup;
 			children = (
 				09953E7D1F1F2A7F00753F70 /* FTDocumentCreateInfo.swift */,
+				BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */,
 				EDAE759F22AE517800053B05 /* FTDocumentValidator.swift */,
 				BA666A4B2A790B96002FF383 /* FTDocumentMigration.swift */,
 				09953E7E1F1F2A7F00753F70 /* FTDocumentFactory.swift */,
@@ -5059,6 +5150,7 @@
 				09ABDC9C2A790F93008F144D /* private */,
 				09ABDCA32A790F93008F144D /* FTNoteshelfAIViewController.swift */,
 				09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */,
+				0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */,
 			);
 			path = OpenAI;
 			sourceTree = "<group>";
@@ -5069,6 +5161,7 @@
 				09ABDC982A790F93008F144D /* FTOpenAICommand.swift */,
 				09ABDC992A790F93008F144D /* FTOpenAICommandType.swift */,
 				09ABDC9A2A790F93008F144D /* FTOpenAI.swift */,
+				095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */,
 			);
 			path = "OpenAI Commands";
 			sourceTree = "<group>";
@@ -5076,12 +5169,14 @@
 		09ABDC9C2A790F93008F144D /* private */ = {
 			isa = PBXGroup;
 			children = (
+				09C404612AD4092800CCFF22 /* Tokens Related */,
 				09DBD5252A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift */,
 				09ABDC9D2A790F93008F144D /* FTNoteshelfAIFooterViewController.swift */,
 				09ABDC9E2A790F93008F144D /* FTNoteshelfAITextViewViewController.swift */,
 				09ABDC9F2A790F93008F144D /* FTNoteshelfAITranslateViewController.swift */,
 				09ABDCA02A790F93008F144D /* FTNoteshelfAIOptionsViewController.swift */,
 				09DBD5272A7CDABE00987ED1 /* FTNoteshelfAI_String_Extension.swift */,
+				09415E2E2ACFFB5800BB1EAA /* Credits */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -5092,6 +5187,7 @@
 				09103B842A86275800739602 /* FTNoteshelfAILocalized.strings */,
 				09ABDCA22A790F93008F144D /* NoteshelfAI.storyboard */,
 				09ABDC9B2A790F93008F144D /* NoteshelfAI.xcassets */,
+				097449DF2ABDB51A0008C6B6 /* AICommands.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -5295,6 +5391,17 @@
 			path = "FTThemeDownloader Private";
 			sourceTree = "<group>";
 		};
+		09C404612AD4092800CCFF22 /* Tokens Related */ = {
+			isa = PBXGroup;
+			children = (
+				09C404622AD4095200CCFF22 /* FTAITokenInfo.swift */,
+				09C404642AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift */,
+				09C404662AD40A0A00CCFF22 /* Date_Extension_AIToken.swift */,
+				09C404682AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift */,
+			);
+			path = "Tokens Related";
+			sourceTree = "<group>";
+		};
 		09C5DF771EB0C29200EFD4D1 /* Text Input View */ = {
 			isa = PBXGroup;
 			children = (
@@ -5456,6 +5563,7 @@
 			children = (
 				091482BB2A725800009E49C2 /* FTWordWrapStrokeRender.swift */,
 				091482B92A7257EF009E49C2 /* FTCharWrapStrokeRender.swift */,
+				097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */,
 			);
 			path = private;
 			sourceTree = "<group>";
@@ -5991,6 +6099,7 @@
 				BAA84E442873105500DE801B /* FTCommon.framework */,
 				BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */,
 				BAF0DD6D2A6FE675006D293B /* FTTemplatesStore.framework */,
+				0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6882,6 +6991,7 @@
 				52550EBE2A70FCC000E7A1E7 /* FTTemplatesStore */,
 				52550E3F2A70FCAD00E7A1E7 /* FTNewNotebook */,
 				BAA84E452873105500DE801B /* FTCommon */,
+				0964D06A2AB9C27500C79C01 /* Noteshelf3 Thumbnail */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				8BA031271A060E8300891239 /* Resources */,
 				211E39121E028265007B5CAD /* Third Party */,
@@ -6900,6 +7010,8 @@
 				5288FB202A54520200EBC37C /* SSZipArchive.framework */,
 				52560AD32A544A4D0075BD2D /* SSZipArchive.framework */,
 				F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */,
+				BA7A5F332AB06951006D5284 /* QuickLook.framework */,
+				BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -7253,7 +7365,8 @@
 				477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */,
 				47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */,
 				47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */,
-				47CA207E291E52200066C429 /* FTDocumentPlist.swift */,
+				4709F4232AE161040085A8C9 /* FTTagItemModel.swift */,
+				4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */,
 				47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */,
 				4747C4242A962F0800B1AB59 /* FTAnalyticsConstants.swift */,
 			);
@@ -7264,7 +7377,6 @@
 			isa = PBXGroup;
 			children = (
 				476450192924E24200B6113B /* FTTagsView.swift */,
-				4740231F29275F8F00AF0DE8 /* FTTagsView+ContextMenu.swift */,
 				476450152924E24200B6113B /* FTTagCollectionCell.swift */,
 				476450172924E24200B6113B /* FTTagCollectionCell.xib */,
 				476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */,
@@ -9054,6 +9166,8 @@
 		BAA46233241A4705008F6AAE /* XCConfigurations */ = {
 			isa = PBXGroup;
 			children = (
+				BA183D2D2AC15F070011EA01 /* export_options_mac.plist */,
+				BA183D2C2AC15F070011EA01 /* export_options.plist */,
 				BAC369822A83D4510005F635 /* Fastfile */,
 				BA50E027295981E000CDC0FD /* Noteshelf-beta.xcconfig */,
 				0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */,
@@ -9927,8 +10041,6 @@
 		E7AF392628D1AA9E009EE145 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E7AF392728D1AAA9009EE145 /* FTQuadrantDetector.swift */,
-				E7AF392928D1AB3D009EE145 /* FTShortcutQuadrant.swift */,
 				090CC9802AB4609700B43A3F /* FTShortcutPlacement.swift */,
 			);
 			name = Helpers;
@@ -10551,6 +10663,7 @@
 		ED5639CF233E4C58000C2F2D /* Handwriting */ = {
 			isa = PBXGroup;
 			children = (
+				095F042F2ACE89A500205BF7 /* Google  MLKit */,
 				ED22107921DDE29E00E88085 /* FTRecognitionTaskManager.swift */,
 				ED8722DC21DA3759007825DC /* FTRecognitionTaskProcessor.swift */,
 				ED8722E021DA375A007825DC /* FTRecognitionTask.swift */,
@@ -10835,6 +10948,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0964D0722AB9C27C00C79C01 /* Build configuration list for PBXNativeTarget "Noteshelf3 Thumbnail" */;
+			buildPhases = (
+				0964D0642AB9C27400C79C01 /* Sources */,
+				0964D0652AB9C27400C79C01 /* Frameworks */,
+				0964D0662AB9C27400C79C01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BADB2D182ACECA0200B1B52A /* PBXTargetDependency */,
+			);
+			name = "Noteshelf3 Thumbnail";
+			productName = FTQLThumbnail;
+			productReference = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BAA84E1428730F5800DE801B /* FTStyles */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAA84E1F28730F5900DE801B /* Build configuration list for PBXNativeTarget "FTStyles" */;
@@ -10933,12 +11064,14 @@
 				BAF395A92859ADF10067CA9F /* Swiftlint */,
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
-				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
+				BAB258B8295B1B400072AEBB /* Embed App Extensions */,
 				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
+				977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				09BC39172ACC3F880011D8B0 /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
@@ -10990,10 +11123,13 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = FT;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Fluid Touch Pte Ltd";
 				TargetAttributes = {
+					0964D0672AB9C27400C79C01 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					BAA84E1428730F5800DE801B = {
 						CreatedOnToolsVersion = 13.4;
 					};
@@ -11054,6 +11190,7 @@
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
 				C8140D30232667B60053FC86 /* Noteshelf3 Action */,
+				0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */,
 				BAB689A72862E7A400FACF11 /* GenerateLocalization */,
 				BAA84E1428730F5800DE801B /* FTStyles */,
 				BAA84E432873105500DE801B /* FTCommon */,
@@ -11064,6 +11201,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0964D0662AB9C27400C79C01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1328730F5800DE801B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11259,6 +11403,7 @@
 				BAF38FE42859ADF00067CA9F /* FTSettingsCommonTableViewCell.xib in Resources */,
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
+				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
 				BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */,
 				E7AE404428755D4500C0F3EC /* themes_v8_ja.plist in Resources */,
 				BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */,
@@ -11347,6 +11492,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MLKitDigitalInkRecognition/MLKitDigitalInkRecognition_resource.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MLKitDigitalInkRecognition_resource.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BA909A3A2990E69C00260538 /* GoogleService Info */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -11475,13 +11638,16 @@
 				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseRemoteConfig/FirebaseRemoteConfig.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/MSAL/MSAL.framework",
 				"${BUILT_PRODUCTS_DIR}/MSGraphClientSDK/MSGraphClientSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/MSGraphMSALAuthProvider/MSGraphMSALAuthProvider.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
@@ -11502,13 +11668,16 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseRemoteConfig.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSAL.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphClientSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MSGraphMSALAuthProvider.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPInAppReceipt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUISDK.framework",
@@ -11527,6 +11696,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0964D0642AB9C27400C79C01 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */,
+				09BC391A2ACC4B370011D8B0 /* URL_WatchRecord_Extension.swift in Sources */,
+				0964D06C2AB9C27500C79C01 /* ThumbnailProvider.swift in Sources */,
+				09BC391B2ACC4B9D0011D8B0 /* URL+ImagePath.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BAA84E1128730F5800DE801B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -11580,7 +11760,6 @@
 				E7A51E652A051614003C0DC0 /* FTPopoverPresentationController.swift in Sources */,
 				472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */,
 				BA88C9282A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift in Sources */,
-				471B90ED29F0ED7F00861A2B /* FTTagsView+ContextMenu.swift in Sources */,
 				E7B77CDE29B0657B0013E794 /* FTImagePicker.swift in Sources */,
 				E7B77CF129B06C1A0013E794 /* UIWindow+Extension.swift in Sources */,
 				E7B77CEF29B06A960013E794 /* UIAlertController+Extension.swift in Sources */,
@@ -11905,6 +12084,7 @@
 				BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */,
 				BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */,
 				BAF390F92859ADF00067CA9F /* UIScrollView_Extension.swift in Sources */,
+				BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */,
 				BAF390FA2859ADF00067CA9F /* FTSettingsButton.swift in Sources */,
 				BAF390FD2859ADF00067CA9F /* FTAnnotationBaseView.swift in Sources */,
 				97A663C429966D08006F13C8 /* FTNotebookShape.swift in Sources */,
@@ -12109,6 +12289,7 @@
 				BAF391A62859ADF00067CA9F /* FTCloudBackup.swift in Sources */,
 				E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */,
 				5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */,
+				09C404692AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift in Sources */,
 				E7A87F0628DAEBBE0038CF90 /* FTDoneButton.swift in Sources */,
 				1439372029D6E02700D93033 /* FTStickerCategoriesView.swift in Sources */,
 				BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */,
@@ -12176,6 +12357,7 @@
 				BA2D9120285CAFCC001BB495 /* FTShelfItemViewModel.swift in Sources */,
 				BAF391EB2859ADF00067CA9F /* FTLegalTemplateFormat.swift in Sources */,
 				BAF391EC2859ADF00067CA9F /* FTMonthlyCalendarInfo.swift in Sources */,
+				09C404672AD40A0A00CCFF22 /* Date_Extension_AIToken.swift in Sources */,
 				BAF391ED2859ADF00067CA9F /* FTWatchAudioActionsViewController.swift in Sources */,
 				E7C71A68288E795A00AF2598 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
 				BAF391F02859ADF00067CA9F /* FTModernDiaryTemplateAssetGenerator.swift in Sources */,
@@ -12256,6 +12438,7 @@
 				BAF392272859ADF00067CA9F /* FTModernDiaryDayTemplate.swift in Sources */,
 				BAF392282859ADF00067CA9F /* NSDate_Extension.swift in Sources */,
 				979BC281288FE9D500208B21 /* FTSideBarItemView.swift in Sources */,
+				09C404632AD4095200CCFF22 /* FTAITokenInfo.swift in Sources */,
 				E7B5769C292368F70066BA45 /* FTToastView.swift in Sources */,
 				520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */,
 				973652E22A82786800FD4326 /* FTSidebarViewModel + NS2.swift in Sources */,
@@ -12428,6 +12611,7 @@
 				BAF392BF2859ADF00067CA9F /* UIImage+.swift in Sources */,
 				BAF392C12859ADF00067CA9F /* FTRecognitionCache.swift in Sources */,
 				BAF392C22859ADF00067CA9F /* FTPageViewController_GestureHandler.swift in Sources */,
+				4709F4242AE161050085A8C9 /* FTTagItemModel.swift in Sources */,
 				E7AE25A1288FD47200402413 /* FTCommonThemeStorage.swift in Sources */,
 				090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */,
 				BAF392C32859ADF00067CA9F /* LastModifiedBy.swift in Sources */,
@@ -12440,6 +12624,7 @@
 				BAF392C92859ADF00067CA9F /* FTStylusDisconnectTableViewCell.swift in Sources */,
 				BAF392CA2859ADF00067CA9F /* FTNoteshelfDocument_FileItems.swift in Sources */,
 				1438A3CA2A5C146100861C34 /* FTAppearanceViewHostingController.swift in Sources */,
+				095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */,
 				976F27372A16090800034D5A /* FTShelfView+Extensions.swift in Sources */,
 				E7CCA90D29DC007B0010D619 /* FTToolbarConfig.swift in Sources */,
 				BAF392CC2859ADF00067CA9F /* FTBookOpeningSpinner.swift in Sources */,
@@ -12493,6 +12678,7 @@
 				42A971D828B758FF00EDAC90 /* FTAudioCollectionCell.swift in Sources */,
 				BAF392F92859ADF00067CA9F /* FTWhatsNewHelper.swift in Sources */,
 				BAF392FB2859ADF00067CA9F /* SwiftSimplify.swift in Sources */,
+				4709F4262AE168120085A8C9 /* FTCachedDocumentPlist.swift in Sources */,
 				BAF392FC2859ADF00067CA9F /* FTGoogleDriveClient.swift in Sources */,
 				972B53222A45CB7A001158D9 /* FTNotebookShadowView.swift in Sources */,
 				BAF392FD2859ADF00067CA9F /* FTShelfItemSearching.swift in Sources */,
@@ -12503,6 +12689,7 @@
 				F3EACF3328C731B900DC4E6D /* FTAddMenuSelectItemDelegate.swift in Sources */,
 				BAF393002859ADF00067CA9F /* FTPenRackViewController.swift in Sources */,
 				BAF393012859ADF00067CA9F /* FTTextView.swift in Sources */,
+				09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */,
 				97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */,
 				97F60C0E291E13A80050C3F3 /* FTShelfViewControllerNew.swift in Sources */,
 				3DAB582129519BE30098282A /* FTTextColorViewController.swift in Sources */,
@@ -12660,6 +12847,7 @@
 				BAF393852859ADF00067CA9F /* HTTPMethod.swift in Sources */,
 				BAF393862859ADF00067CA9F /* FTOneDriveBackupPublisher.swift in Sources */,
 				BAF393872859ADF00067CA9F /* FTPasswordPolicy.swift in Sources */,
+				09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */,
 				BAF393892859ADF00067CA9F /* FTDocumentItemSpotLightWrapper.swift in Sources */,
 				BAF3938C2859ADF00067CA9F /* FTWatchRecordingProvider_Private.swift in Sources */,
 				97B411D929ED1CA800ADFE1F /* FTSidebarItemContextualOption.swift in Sources */,
@@ -12737,6 +12925,7 @@
 				BA2D90B9285C4416001BB495 /* View+Extensions.swift in Sources */,
 				09DEFBD72A725E6F00F41C1E /* FTCharStrokeInfo.swift in Sources */,
 				09ABDCAC2A790F94008F144D /* FTNoteshelfAIOptionsViewController.swift in Sources */,
+				095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */,
 				BAF393D12859ADF00067CA9F /* FTBlurredBandCoverStyle.swift in Sources */,
 				BAF393D22859ADF00067CA9F /* FTThemeStorage_Migrate3o1.swift in Sources */,
 				E7ADA7972888262D00309D16 /* FTGridDataProvider.swift in Sources */,
@@ -12744,7 +12933,6 @@
 				E7B9474D291244AE00BE4430 /* FTShareFormatHostingController.swift in Sources */,
 				BAF393D52859ADF00067CA9F /* FTNoInternetReusableView.swift in Sources */,
 				BAF393D62859ADF00067CA9F /* FTSlideInPresentAnimator.swift in Sources */,
-				BA50E0382959CB3600CDC0FD /* FTDocumentPlist.swift in Sources */,
 				BAF393D72859ADF00067CA9F /* FTiOSShelfCategoryHeaderView.swift in Sources */,
 				BAF393D92859ADF00067CA9F /* FTDocumentErrorCodes.swift in Sources */,
 				4747C4092A95EC2A00B1AB59 /* FTAnalytics.swift in Sources */,
@@ -12838,6 +13026,7 @@
 				BAF394232859ADF00067CA9F /* FTThemeableButton.swift in Sources */,
 				BAF394242859ADF00067CA9F /* FTAudioTracksListViewController.m in Sources */,
 				42871B9C289808DC000E17B0 /* FTMoreOptionsModel.swift in Sources */,
+				0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */,
 				BAF394272859ADF00067CA9F /* UITextViewBulletsAndIndentation+Extension.swift in Sources */,
 				BAF394282859ADF00067CA9F /* FileSystemInfo.swift in Sources */,
 				BAF3942A2859ADF00067CA9F /* FTBackgroundTexture.swift in Sources */,
@@ -12907,6 +13096,7 @@
 				974E8A6A2A011B5800EFF8D8 /* FTShelfHomeViewController.swift in Sources */,
 				BAF3946C2859ADF00067CA9F /* FTShelfItemPublishRequest_Extension.swift in Sources */,
 				BAF3946D2859ADF00067CA9F /* FTMidnightDiaryMonthTemplate.swift in Sources */,
+				09C404652AD409B000CCFF22 /* KeychainItemWrapper_AIToken.swift in Sources */,
 				E7B9475129124E3500BE4430 /* FTShareFormatViewModel.swift in Sources */,
 				BAF3946E2859ADF00067CA9F /* NSString_Backup_Additions.m in Sources */,
 				BAF394702859ADF00067CA9F /* FTOneDriveAlertHandler.swift in Sources */,
@@ -13048,7 +13238,6 @@
 				BAF394E82859ADF10067CA9F /* NSUbiquitousKeyValueStore_Extension.swift in Sources */,
 				BAF394E92859ADF10067CA9F /* FTResizable_Extesnion.swift in Sources */,
 				E7C71A63288E795A00AF2598 /* EnvironmentValues+TrackRange.swift in Sources */,
-				E7AF392828D1AAAA009EE145 /* FTQuadrantDetector.swift in Sources */,
 				BAF394EC2859ADF10067CA9F /* FTDropboxBackupEntry.swift in Sources */,
 				BAF394ED2859ADF10067CA9F /* FTExportFileListViewController.swift in Sources */,
 				E7A9767F28C0B476009B43DC /* FTPenShapeModel.swift in Sources */,
@@ -13095,6 +13284,7 @@
 				1439371E29D6E02700D93033 /* FTStickerContainerView.swift in Sources */,
 				BAF395222859ADF10067CA9F /* FTShelfProviderConstants.swift in Sources */,
 				BAF395232859ADF10067CA9F /* FTLogger.swift in Sources */,
+				097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */,
 				5283D39C2A5BEAE200C6C125 /* FTShareItemsFetchModel.swift in Sources */,
 				BAF395242859ADF10067CA9F /* FTAutoTriggerButton.swift in Sources */,
 				BAF395262859ADF10067CA9F /* FTClassicDiaryTemplateFormat.swift in Sources */,
@@ -13136,7 +13326,6 @@
 				E7AF476E28EC53F4005F90E8 /* FTDeskModeHelper.swift in Sources */,
 				E7B333002860804F002C5BBE /* FTPasswordView.swift in Sources */,
 				E7ADB528288173BB005E03B7 /* FTPenColorEditView.swift in Sources */,
-				E7AF392A28D1AB3D009EE145 /* FTShortcutQuadrant.swift in Sources */,
 				BAF395482859ADF10067CA9F /* FTPDFSelectionView.swift in Sources */,
 				BAF395492859ADF10067CA9F /* FTPenRackUtils.swift in Sources */,
 				E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */,
@@ -13219,6 +13408,7 @@
 				4209FE7D295C5FFD00ACC02E /* FTDynamicTemplateGenerator.swift in Sources */,
 				4209FEC9295C6E7C00ACC02E /* FTThemesStorage_Favorites.swift in Sources */,
 				4209FEA5295C624700ACC02E /* FTThumbnailCache.swift in Sources */,
+				099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */,
 				4209FE7B295C5FE000ACC02E /* FTHashTable.swift in Sources */,
 				4209FEA9295C626800ACC02E /* FTDocumentErrorCodes.swift in Sources */,
 				4209FE71295C5F4700ACC02E /* FTShelfCollectionSystem.swift in Sources */,
@@ -13284,6 +13474,7 @@
 				0938F4172361B06400DFC7F3 /* FTShelfProviderConstants.swift in Sources */,
 				4209FEB5295C638000ACC02E /* FTShelfItemCollectionICloud.swift in Sources */,
 				C8054ADD23350C4B0083BB04 /* FTSharedAction.swift in Sources */,
+				BA73AA8E2AEB826D00B4A2A3 /* FTDeveloperOptionsViewController.swift in Sources */,
 				4209FEA2295C61F500ACC02E /* FTLegalTemplateFormat.swift in Sources */,
 				4209FEC4295C6BC800ACC02E /* FTNoteshelfDocument_FileItems.swift in Sources */,
 				4209FE9F295C61E900ACC02E /* FTPlainTemplateFormat.swift in Sources */,
@@ -13304,6 +13495,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		09BC39172ACC3F880011D8B0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */;
+			targetProxy = 09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */;
+		};
 		5283D3A72A5E7AA000C6C125 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
@@ -13328,6 +13524,11 @@
 			isa = PBXTargetDependency;
 			target = C8140D30232667B60053FC86 /* Noteshelf3 Action */;
 			targetProxy = BAB258B6295B1B400072AEBB /* PBXContainerItemProxy */;
+		};
+		BADB2D182ACECA0200B1B52A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BAA84E432873105500DE801B /* FTCommon */;
+			targetProxy = BADB2D172ACECA0200B1B52A /* PBXContainerItemProxy */;
 		};
 		BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -13500,12 +13701,144 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0964D0732AB9C27C00C79C01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.thumbnail";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = Debug;
+		};
+		0964D0742AB9C27C00C79C01 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.thumbnail;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0964D0752AB9C27C00C79C01 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta.thumbnail";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
 		97F36F9E126D620C00FA092E /* Beta */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.2;
-				APP_VERSION_MAC = 1.2;
+				APP_VERSION = 1.2.1;
+				APP_VERSION_MAC = 1.2.1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -13542,6 +13875,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -14224,6 +14558,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Resources/Noteshelf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14310,6 +14645,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Resources/Noteshelf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14375,6 +14711,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Resources/Noteshelf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14414,8 +14751,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.2;
-				APP_VERSION_MAC = 1.2;
+				APP_VERSION = 1.2.1;
+				APP_VERSION_MAC = 1.2.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14455,6 +14792,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -14478,8 +14816,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.2;
-				APP_VERSION_MAC = 1.2;
+				APP_VERSION = 1.2.1;
+				APP_VERSION_MAC = 1.2.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14517,6 +14855,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = "$(APP_VERSION)";
@@ -14679,6 +15018,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0964D0722AB9C27C00C79C01 /* Build configuration list for PBXNativeTarget "Noteshelf3 Thumbnail" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0964D0732AB9C27C00C79C01 /* Debug */,
+				0964D0742AB9C27C00C79C01 /* Release */,
+				0964D0752AB9C27C00C79C01 /* Beta */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BAA84E1F28730F5900DE801B /* Build configuration list for PBXNativeTarget "FTStyles" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

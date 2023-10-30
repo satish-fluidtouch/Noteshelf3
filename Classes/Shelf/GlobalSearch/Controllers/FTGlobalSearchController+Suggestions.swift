@@ -15,11 +15,13 @@ extension FTGlobalSearchController: FTUISearchDelegate {
             let token = FTSearchSuggestionHelper.shared.searchToken(for: suggestionItem)
             textField.text = ""
             textField.insertToken(token, at:  textField.tokens.count)
-            self.searchKey = ""
+            searchInputInfo.textKey = ""
+            self.updateUICondictionally(with: "", tokens: textField.tokens)
         } else {
-            self.searchKey = searchController.searchBar.searchTextField.text ?? ""
-            self.updateUICondictionally(with: self.searchKey)
+            let text = searchController.searchBar.searchTextField.text ?? ""
+            self.updateUICondictionally(with: text)
         }
+        self.searchController.resignSearchbarResponder()
         self.constructRecentItems()
     }
 
@@ -29,6 +31,7 @@ extension FTGlobalSearchController: FTUISearchDelegate {
 
     func textFieldDidEndEditing(key: String) {
         self.constructRecentItems()
+        self.searchController.dismiss(animated: false)
     }
 
     func textFieldDidChangeSelection(key: String) {
@@ -39,6 +42,7 @@ extension FTGlobalSearchController: FTUISearchDelegate {
     }
 
     func didTapOnCancelButton() {
+        self.cancelSearch();
         self.delegate?.willExitFromSearch(self)
     }
 }
@@ -51,7 +55,13 @@ extension FTGlobalSearchController {
         if !tokens.isEmpty {
             searchTokens = tokens
         }
+        let currentTags = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: self.searchController.searchTokens)
         if keyWord.isEmpty && searchTokens.isEmpty {
+            self.searchInputInfo.textKey = keyWord
+            self.searchInputInfo.tags = currentTags
+#if targetEnvironment(macCatalyst)
+            self.updateSearchText()
+#endif
             if !self.recentSearchList.isEmpty {
                 self.segmentInfoStackView.isHidden = true
                 self.collectionView.isHidden = true
@@ -63,12 +73,19 @@ extension FTGlobalSearchController {
                 self.segmentInfoStackView.isHidden = true
                 self.collectionView.isHidden = true
             }
+            self.cancelSearch()
         } else {
             self.recentsTableView.isHidden = true
             self.segmentInfoStackView.isHidden = false
             self.collectionView.isHidden = false
-            let currentTags = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: self.searchController.searchTokens)
-            self.searchForNotebooks(with: text, tags: currentTags)
+            if self.searchInputInfo.textKey != text || self.searchInputInfo.tags != currentTags {
+                self.searchInputInfo.textKey = text
+                self.searchInputInfo.tags = currentTags
+#if targetEnvironment(macCatalyst)
+                self.updateSearchText()
+#endif
+                self.searchForNotebooks(with: self.searchInputInfo)
+            }
         }
     }
 }

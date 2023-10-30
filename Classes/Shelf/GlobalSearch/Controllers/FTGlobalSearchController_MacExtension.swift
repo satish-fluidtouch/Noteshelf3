@@ -52,7 +52,17 @@ extension FTGlobalSearchController: FTMacGlobalSearchDelegate {
     }
 
     func textFieldDidTapClearButton(textField: UISearchTextField) {
+        self.searchInputInfo.textKey = ""
+        self.updateSearchText()
         self.delegate?.willExitFromSearch(self)
+    }
+}
+
+extension FTGlobalSearchController {
+    func updateSearchText() {
+        if let toolbar = self.view.toolbar as? FTShelfToolbar {
+            toolbar.updateSearchText(searchInputInfo.textKey)
+        }
     }
 }
 #endif

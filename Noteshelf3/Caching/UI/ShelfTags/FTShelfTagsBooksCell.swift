@@ -17,25 +17,31 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     var contextMenuSelectedIndexPath: IndexPath?
     weak var parentVC: UIViewController?
 
-    override class func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
+        initializeCollectionView()
+    }
 
+    private func initializeCollectionView() {
+        let layout = FTShelfPagesLayout()
+        layout.scrollDirection = .horizontal
+        self.collectionView.collectionViewLayout = layout
+        self.collectionView.allowsMultipleSelection = true
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     }
 
     func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState, parentVC: UIViewController) {
         self.books = books
         self.viewState = viewState
         self.parentVC = parentVC
-        let layout = FTShelfPagesLayout()
-        layout.scrollDirection = .horizontal
-        self.collectionView.collectionViewLayout = layout
-        self.collectionView.allowsMultipleSelection = true
 
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        collectionView.frame = self.bounds
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+
         let selection = collectionView.indexPathsForSelectedItems
         self.collectionView.reloadData()
-        if let items = selection {
+        if books.count > 0, let items = selection {
             for selectedItem in items {
                 self.collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: [])
             }
@@ -76,7 +82,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
 
         var size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
         var token : String?
-        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.shelfItem!, onCompletion: { [weak self](image, imageToken) in
+        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.documentItem!, onCompletion: { [weak self](image, imageToken) in
             if token == imageToken {
                 if let img = image {
                     if  img.size.width > img.size.height  { // landscape
@@ -123,7 +129,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
         self.delegate?.shouldEnableToolbarItems()
         if viewState == .none {
             let item = self.books[indexPath.row]
-            if let shelf = item.shelfItem {
+            if let shelf = item.documentItem {
                 self.delegate?.openNotebook(shelfItem: shelf, page: 0)
                 track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
             }

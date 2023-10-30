@@ -45,7 +45,7 @@ class FTShelfContentPhotoViewController: UIHostingController<FTShelfContentPhoto
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = NSLocalizedString("Photo", comment: "Photo")
+        self.title = "sidebar.photos".localized
         self.view.backgroundColor = UIColor.appColor(.secondaryBG)
     }
 }

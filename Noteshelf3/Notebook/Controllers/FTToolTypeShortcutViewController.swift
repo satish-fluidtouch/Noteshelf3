@@ -42,18 +42,18 @@ class FTToolTypeShortcutViewController: UIViewController {
         self.rackType = rack.type
         if rack.type == .pen || rack.type == .highlighter {
             let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: self)
+            FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: self)
+            FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let shortcutView = FTPenShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTPenShortcutHostingController(rootView: shortcutView)
             self.add(hostingVc, frame: self.view.bounds)
             self.colorModel = _colorModel;
         } else if rack.type == .shape {
             let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: self)
+            FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: self)
+            FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: self)
             let shortcutView = FTShapeShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTShapeShortcutHostingController(rootView: shortcutView)
@@ -84,7 +84,8 @@ extension FTToolTypeShortcutViewController: FTFavoriteColorEditDelegate {
         }
         var arrowOffset: CGFloat = 0.0
         let step: CGFloat = 32.0
-
+        self.view.transform = .identity
+        var rect: CGRect = self.view.bounds
         // To position the arrow correctly from swiftUI view while presenting the popover
         // Better solution would be appericiated
         if rack.type == .pen || rack.type == .highlighter {
@@ -106,11 +107,21 @@ extension FTToolTypeShortcutViewController: FTFavoriteColorEditDelegate {
                 arrowOffset -= (3 * step)
             }
         }
-        var rect = self.view.bounds
-        rect.origin.y = self.view.bounds.origin.y - arrowOffset
+        rect.origin.y -=  arrowOffset
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        var arrowDirections: UIPopoverArrowDirection = .any
+        if placement == .top {
+            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            arrowDirections = [UIPopoverArrowDirection.up]
+        } else if placement == .bottom {
+            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            arrowDirections = [UIPopoverArrowDirection.down]
+        } else {
+            arrowDirections = [UIPopoverArrowDirection.left, UIPopoverArrowDirection.right]
+        }
         hostingVc.ftPresentationDelegate.source = self.view
         hostingVc.ftPresentationDelegate.sourceRect = rect
-        hostingVc.ftPresentationDelegate.permittedArrowDirections = [UIPopoverArrowDirection.left, UIPopoverArrowDirection.right]
+        hostingVc.ftPresentationDelegate.permittedArrowDirections = arrowDirections
         self.ftPresentPopover(vcToPresent: hostingVc, contentSize: contentSize, hideNavBar: true)
     }
 }
@@ -165,9 +176,21 @@ extension FTToolTypeShortcutViewController: FTShapeShortcutEditDelegate {
         } else if position == .third {
             arrowOffset -= (2 * step)
         }
-        let rect = CGRect(x: self.view.bounds.origin.x, y: self.view.bounds.origin.y - arrowOffset, width: self.view.bounds.width, height: self.view.bounds.height)
-
-        let controller = FTShapesRackViewController.showPopOver(presentingController: self, sourceView: self.view as Any, sourceRect: rect, arrowDirections: [.left, .right]) as? FTShapesRackViewController
+        self.view.transform = .identity
+        var rect = self.view.bounds
+        rect.origin.y -= arrowOffset
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        var arrowDirections: UIPopoverArrowDirection = .any
+        if placement == .top {
+            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            arrowDirections = [UIPopoverArrowDirection.up]
+        } else if placement == .bottom {
+            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            arrowDirections = [UIPopoverArrowDirection.down]
+        } else {
+            arrowDirections = [UIPopoverArrowDirection.left, UIPopoverArrowDirection.right]
+        }
+        let controller = FTShapesRackViewController.showPopOver(presentingController: self, sourceView: self.view as Any, sourceRect: rect, arrowDirections: arrowDirections) as? FTShapesRackViewController
         controller?.shapeEditDelegate = self
     }
 

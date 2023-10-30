@@ -307,6 +307,7 @@ private extension FTPageViewController
             }
         }
     }
+    
     func isZoomModeEnabled() -> Bool {
         return self.isInZoomMode()
     }
