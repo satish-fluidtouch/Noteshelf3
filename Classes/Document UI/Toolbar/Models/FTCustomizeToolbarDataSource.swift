@@ -79,7 +79,7 @@ class FTCustomizeToolbarDataSource: NSObject {
     }
 
     func resetToDefaults() {
-        var types: [FTDeskCenterPanelTool] = [.pen, .highlighter, .eraser, .shapes, .textMode, .presenter, .hand]
+        var types: [FTDeskCenterPanelTool] = [.pen, .highlighter, .eraser, .shapes, .textMode, .lasso, .hand]
         if FTNoteshelfAI.supportsNoteshelfAI {
             types.append(.openAI)
         }
