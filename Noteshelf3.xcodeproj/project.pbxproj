@@ -335,6 +335,7 @@
 		471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450152924E24200B6113B /* FTTagCollectionCell.swift */; };
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
+		4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */; };
 		472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472BDF8329E7E9FF001BE43A /* FTDataCache.swift */; };
 		473310782A1F2DFC008DC0DB /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */; };
 		473C1F8029C864E4003BD6BB /* FTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */; };
@@ -2962,6 +2963,7 @@
 		471A47431FA1ADA900E8E3DF /* FTMosaicPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMosaicPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		471A47451FA1ADB800E8E3DF /* FTCutOutPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCutOutPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		472770E31E2F65A400100A54 /* FTPDFRenderViewController+Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTPDFRenderViewController+Export.swift"; sourceTree = "<group>"; };
+		4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTBookmarksProvider.swift; sourceTree = "<group>"; };
 		472BDF8329E7E9FF001BE43A /* FTDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDataCache.swift; sourceTree = "<group>"; };
 		473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 		4738DC191E2CF3AA004E62E6 /* FormSheetPresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSheetPresentationManager.swift; sourceTree = "<group>"; };
@@ -7392,6 +7394,7 @@
 				47C2EA2D297A803500D0494A /* FTShelfBookmarksViewController+ContextMenu.swift */,
 				4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */,
 				4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */,
+				4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */,
 			);
 			path = ShelfBookmarks;
 			sourceTree = "<group>";
@@ -13002,6 +13005,7 @@
 				BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */,
 				3DAA689E2911041900848434 /* FTTextColorCollectionView.swift in Sources */,
 				BAF394352859ADF00067CA9F /* FTGoogleDriveBackupPublisher.swift in Sources */,
+				4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */,
 				BAF394362859ADF00067CA9F /* FTGoogleDriveBackupEntry.swift in Sources */,
 				47C7C43D297E633600AE4648 /* FTShelfCompactContentContainerView.swift in Sources */,
 				BAF394382859ADF00067CA9F /* FTDynamicTemplateFormat.swift in Sources */,

@@ -23,6 +23,7 @@ class FTShelfBookmarksViewController: UIViewController {
     private var currentSize: CGSize = .zero
 
     weak var delegate: FTShelfBookmarksPageDelegate?
+    private var activityIndicator = UIActivityIndicatorView(style: .medium)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +32,16 @@ class FTShelfBookmarksViewController: UIViewController {
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.allowsMultipleSelection = true
         self.collectionView?.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+
+        // Add activity indicator in the view
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
         loadtagBookmarkPages()
-        // Do any additional setup after loading the view.
     }
 
     override func viewDidLayoutSubviews() {
@@ -66,21 +75,28 @@ class FTShelfBookmarksViewController: UIViewController {
 
     private func loadtagBookmarkPages() {
         viewModel = FTShelfBookmarksPageModel()
-        let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "")
-        Task {
-            await viewModel?.buildCache()
-            loadingIndicatorViewController.hide {
-                if let result = self.viewModel?.bookmarksResult {
-                    self.bookmarkItems = result.bookmarkItems
-                    if self.bookmarkItems.isEmpty {
-                        self.showPlaceholderView()
-                    } else {
-                        self.hidePlaceholderView()
-                    }
-                    self.collectionView?.reloadData()
-                }
+        showActivityIndicator()
+        viewModel?.buildCache(completion: { result in
+            self.bookmarkItems = result
+            if self.bookmarkItems.isEmpty {
+                self.showPlaceholderView()
+            } else {
+                self.hidePlaceholderView()
             }
-        }
+            self.collectionView?.reloadData()
+            self.hideActivityIndicator()
+        })
+
+    }
+
+    private func showActivityIndicator() {
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
     }
 
     private func showPlaceholderView() {
@@ -95,35 +111,12 @@ class FTShelfBookmarksViewController: UIViewController {
     }
 
     func removeBookmarkForItem(item: FTBookmarksItem, at indexPath: IndexPath) {
-        Task.detached(priority: .background) {
-            try await self.removeBookmarForItem(item: item)
-        }
-        self.bookmarkItems.remove(at: indexPath.row)
-        self.collectionView?.reloadData()
-        if self.bookmarkItems.isEmpty {
-            self.showPlaceholderView()
-        }
-    }
-
-    private func removeBookmarForItem(item: FTBookmarksItem) async throws {
-        do {
-            if let shelfItem = item.shelfItem, shelfItem.documentUUID != nil {
-                let document =  FTNoteshelfDocument(fileURL: shelfItem.URL)
-                let isOpen = try await document.openDocument(purpose: FTDocumentOpenPurpose.write)
-                if isOpen {
-                    let docPages = document.pages()
-                    let pages = docPages.filter {$0.pageIndex() == item.pageIndex}
-                    if let page = pages.first as? FTPageTagsProtocol {
-                        document.removePageBookmark(page: page as! FTThumbnailable)
-                    }
-                }
-                _ = await document.saveAndClose()
-                if let docUUID = shelfItem.documentUUID {
-                    FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
-                }
+        FTBookmarksProvider.shared.removeBookmarkFor(item: item) { success in
+            self.bookmarkItems.remove(at: indexPath.row)
+            self.collectionView?.reloadData()
+            if self.bookmarkItems.isEmpty {
+                self.showPlaceholderView()
             }
-        } catch {
-            cacheLog(.error, error, item.shelfItem!.URL.lastPathComponent)
         }
     }
 
@@ -151,26 +144,20 @@ extension FTShelfBookmarksViewController: UICollectionViewDataSource, UICollecti
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.bookmarkItems[indexPath.row]
-        if let shelf = item.shelfItem {
-            self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex ?? 0)
+         let shelf = item.shelfItem
+        self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex)
             track(EventName.shelf_bookmark_page_tap, screenName: ScreenName.shelf_bookmarks)
-        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let item = self.bookmarkItems[indexPath.row]
         let columnWidth = columnWidthForSize(self.view.frame.size) - 12
-        let size = CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
 
-        if let page = item.page {
-            if  page.pdfPageRect.size.width > page.pdfPageRect.size.height  { // landscape
-                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding + 20)
-            } else {
-                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding + 20)
-            }
-
+        if  item.pdfKitPageRect.size.width > item.pdfKitPageRect.size.height  { // landscape
+            return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
+        } else {
+            return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
         }
-        return size
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

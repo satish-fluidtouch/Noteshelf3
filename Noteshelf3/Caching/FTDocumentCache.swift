@@ -229,6 +229,7 @@ extension FTDocumentCache {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
                 let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
                 FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
+                FTBookmarksProvider.shared.updateBookmarkItemFor(documentUUID: documentUUID)
             } catch {
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
