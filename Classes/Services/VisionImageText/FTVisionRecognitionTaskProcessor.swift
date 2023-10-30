@@ -129,6 +129,7 @@ class FTVisionRecognitionTaskProcessor: NSObject {
 extension FTVisionRecognitionTaskProcessor: FTBackgroundTaskProcessor {
     func startTask(_ task: FTBackgroundTask, onCompletion: (() -> (Void))?) {
         if FTUserDefaults.isInSafeMode() {
+            (task as? FTVisionRecognitionTask)?.onCompletion?(nil, nil)
             onCompletion?()
             return
         }

@@ -15,7 +15,10 @@ enum LogType {
     case success
 }
 
+private let shouldCacheLog: Bool = false
+
 func cacheLog(_ type: LogType = .info, _ items: Any...) {
+    guard shouldCacheLog else { return }
     #if DEBUG
     let icon: String
     switch type {
