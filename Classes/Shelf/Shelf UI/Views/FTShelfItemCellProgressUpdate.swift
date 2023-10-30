@@ -109,7 +109,7 @@ extension FTShelfItemCellProgressUpdate
                 self.animType = .download;
                 self.startDownloadAnimation();
                 self.pieProgressView?.progress = progress;
-            } else if(documentItem.URL.downloadStatus() == .notDownloaded) {
+            } else if !documentItem.isDownloaded {
                 self.statusImageView?.image = self.cloudImage;
             }
             

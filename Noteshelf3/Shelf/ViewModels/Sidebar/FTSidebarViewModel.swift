@@ -336,7 +336,7 @@ extension FTSidebarViewModel {
         // As the main function is called in serial queue and below operation to be called on main thread
         func favoriteShelfItem() {
             runInMainThread {
-                if let item = shelfItem, item.URL.downloadStatus() == .downloaded {
+                if let item = shelfItem as? FTDocumentItemProtocol, item.isDownloaded {
                     self.dropDelegate?.favoriteShelfItem(item, toPin: true)
                 }
             }
@@ -562,7 +562,7 @@ extension FTSidebarViewModel {
             if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
                 tagsSection.items = self.tags
             }
-            if self.selectedSideBarItemType == .tag {
+            if self.selectedSideBarItemType == .tag || self.selectedSideBarItemType == .allTags {
                 self.setSideBarItemSelection()
             }
        }

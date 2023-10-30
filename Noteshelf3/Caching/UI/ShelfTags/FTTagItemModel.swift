@@ -12,9 +12,10 @@ import FTCommon
 class FTTagItemModel {
     let id: UUID = UUID()
     let tag: FTTagModel
-    var documentIds : [String]
+    private var documentIds : [String]
+    private let tagModelLock = NSRecursiveLock();
+    
     private var shelfTagItems: [FTShelfTagsItem]
-
     private var loadingCallbacks = [(([FTShelfTagsItem]) -> Void)]();
     
     init(tag: FTTagModel, documentIds : [String] = [], shelfItems: [FTShelfTagsItem] = []) {
@@ -23,10 +24,62 @@ class FTTagItemModel {
         self.shelfTagItems = shelfItems
     }
 
-    func updateDocumentIds(docIds: [String]) {
+    func setDocumentIds(docIds: [String]) {
+        tagModelLock.lock();
         self.documentIds = docIds
+        tagModelLock.unlock();
     }
 
+    func getShelfTagItems() -> [FTShelfTagsItem] {
+        let items: [FTShelfTagsItem]
+        tagModelLock.lock();
+        let sortedShelfTagItems = self.shelfTagItems.sorted { (item1, item2) -> Bool in
+            if let title1 = item1.documentItem?.displayTitle, let title2 = item2.documentItem?.displayTitle {
+                if title1 != title2 {
+                    return title1 < title2
+                }
+            }
+            return item1.pageIndex < item2.pageIndex
+        }
+
+        items = sortedShelfTagItems;
+        tagModelLock.unlock();
+        return items;
+    }
+    
+    func setShelfTagItems(items: [FTShelfTagsItem]) {
+        tagModelLock.lock();
+        self.shelfTagItems = items;
+        tagModelLock.unlock();
+    }
+    
+    func getDocumentIDS() -> [String] {
+        let ids: [String]
+        tagModelLock.lock();
+        ids = self.documentIds;
+        tagModelLock.unlock();
+        return ids;
+    }
+    
+    private func fetchAllTags(_ tags: [FTTagItemModel]
+                              ,fetchedItems: Set<FTShelfTagsItem>
+                              ,onCompletion: @escaping (([FTShelfTagsItem]) -> ())) {
+        DispatchQueue.global().async {
+            var shelfTaggeditems = fetchedItems;
+            var currentTags = tags;
+            if !currentTags.isEmpty {
+                let tag = currentTags.removeFirst();
+                tag.getTaggedItems { items in
+                    shelfTaggeditems.formUnion(Set(items));
+                    self.fetchAllTags(currentTags, fetchedItems: shelfTaggeditems, onCompletion: onCompletion);
+                }
+            }
+            else {
+                onCompletion(Array(shelfTaggeditems));
+            }
+        }
+    }
+    
     private var isLoading = false;
     func getTaggedItems(completion: @escaping ([FTShelfTagsItem]) -> Void) {
         loadingCallbacks.append(completion);
@@ -38,7 +91,7 @@ class FTTagItemModel {
         func callCallbacks() {
             runInMainThread {
                 self.loadingCallbacks.forEach { eachCallback in
-                    eachCallback(self.shelfTagItems);
+                    eachCallback(self.getShelfTagItems());
                 }
                 self.loadingCallbacks.removeAll();
                 self.isLoading = false;
@@ -52,32 +105,23 @@ class FTTagItemModel {
             }
             if allTags.count > 0 {
                 if self.tag.text.isEmpty {
-                    DispatchQueue.global().async {
-                        let group = DispatchGroup();
-                        var shelfTaggeditems = Set<FTShelfTagsItem>();
-                        allTags.forEach { eachTag in
-                            group.enter();
-                            eachTag.getTaggedItems { items in
-                                shelfTaggeditems.formUnion(Set(items));
-                                group.leave();
-                            }
-                        }
-                        group.notify(queue: DispatchQueue.main) {
-                            self.shelfTagItems = Array(shelfTaggeditems);
-                            callCallbacks();
-                        }
+                    let shelfTaggeditems = Set<FTShelfTagsItem>();
+                    self.fetchAllTags(allTags, fetchedItems: shelfTaggeditems) { items in
+                        self.setShelfTagItems(items: Array(Set(items)));
+                        callCallbacks();
                     }
                     return;
                 }
                 
-                let shelfTagDocIds = Set(self.shelfTagItems.map({$0.documentUUID!}));
-                let currentIDS = Set(self.documentIds);
+                let _shelfTagItems = self.getShelfTagItems();
+                let shelfTagDocIds = Set(_shelfTagItems.map({$0.documentUUID!}));
+                let currentIDS = Set(self.getDocumentIDS());
                 
-                if self.shelfTagItems.count > 0 && currentIDS == shelfTagDocIds {
+                if _shelfTagItems.count > 0 && currentIDS == shelfTagDocIds {
                     callCallbacks();
                 } else {
                     self.taggedItemsFor(selectedTag: self.tag.text, allTags: allTags) { [weak self] shelftagItems in
-                        self?.shelfTagItems = shelftagItems
+                        self?.setShelfTagItems(items: shelftagItems)
                         callCallbacks();
                     }
                 }
@@ -89,23 +133,25 @@ class FTTagItemModel {
     }
 
     private func updateShelfTagItems(items: [FTShelfTagsItem]) {
-        self.shelfTagItems = items
+        self.setShelfTagItems(items: items);
         let docIds = items.compactMap({$0.documentUUID})
-        self.documentIds = Array(Set(docIds))
+        self.setDocumentIds(docIds: Array(Set(docIds)));
     }
 
     func removeDocumentId(docId: String) {
+        tagModelLock.lock();
         self.documentIds.removeAll(where: {$0 == docId})
         self.shelfTagItems.removeAll(where: {$0.documentUUID == docId})
         self.shelfTagItems.forEach { shelfTagItem in
             if docId == shelfTagItem.documentUUID {
                 if shelfTagItem.type == .page, let pageUUID = shelfTagItem.pageUUID {
-                    FTTagsProvider.shared.shelfTagsItems.removeValue(forKey: "\(docId)_\(pageUUID)")
+                    FTTagsProvider.shared.removeTag("\(docId)_\(pageUUID)");
                 } else {
-                    FTTagsProvider.shared.shelfTagsItems.removeValue(forKey: docId)
+                    FTTagsProvider.shared.removeTag(docId);
                 }
             }
         }
+        tagModelLock.unlock();
     }
 
     func updateTagForShelfTagItem(shelfTagItems: [FTShelfTagsItem], completion: @escaping ([FTShelfTagsItem]) -> Void) {
@@ -217,11 +263,13 @@ class FTTagItemModel {
     }
 
     func deleteTagItem() {
+        tagModelLock.lock();
         for item in shelfTagItems {
             if let index = item.tags.firstIndex(where: {$0.text == self.tag.text}) {
                 item.tags.remove(at: index)
             }
         }
+        tagModelLock.unlock();
 
         FTTagsProvider.shared.getAllTags { allTags in
             var _allTags = allTags
@@ -241,11 +289,11 @@ class FTTagItemModel {
         var totalTagItems: [FTShelfTagsItem] = [FTShelfTagsItem]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             DispatchQueue.global(qos: .background).async {
-                let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+                let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
                 var docIds = [String]()
                 if !selectedTag.isEmpty {
-                    docIds = self.documentIds
+                    docIds = self.getDocumentIDS()
                 } else {
                     let returnDocids = allTags.compactMap { $0.documentIds }.joined()
                     docIds = Array(Set(returnDocids))
@@ -301,6 +349,11 @@ class FTTagItemModel {
 }
 
 class FTTagsProvider {
+    private let allTagsLock = NSRecursiveLock();
+    private let shelfTagLock = NSRecursiveLock();
+    private let callbackLock = NSRecursiveLock();
+    private var callBacks = [(([FTTagItemModel]) -> Void)]();
+
     static let shared = FTTagsProvider()
     private var allTags = [FTTagItemModel]()
 
@@ -314,66 +367,75 @@ class FTTagsProvider {
                     plistTags.removeObject(forKey: key)
                 } else if let tagName = key as? String, let ids = value as? [String] {
                     if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tagName) {
-                        tagItem.updateDocumentIds(docIds: ids)
+                        debugLog("existing tag item");
+                        tagItem.setDocumentIds(docIds: ids)
                         allTags.append(tagItem)
                     } else {
                         allTags.append(FTTagItemModel(tag: FTTagModel(text: tagName), documentIds: ids))
                     }
                 }
             }
-            runInMainThread {
-                completion(allTags)
-            }
+            completion(allTags)
         }
     }
 
     func getAllTags(completion: (([FTTagItemModel]) -> Void)? = nil) {
-        if allTags.isEmpty  {
-            loadAllTagsFromPlist { [weak self] allTags in
-                guard let self = self else {
-                    completion?(allTags)
-                    return
-                }
-                self.allTags = allTags
+        let _allTags = self.getTags();
+        if _allTags.isEmpty  {
+            loadAllTagsFromPlist { allTags in
                 completion?(allTags)
             }
         } else {
-            completion?(allTags)
+            completion?(_allTags)
         }
     }
 
     func updateTags() {
         loadAllTagsFromPlist { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+            runInMainThread {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
+            }
         }
     }
-
+        
     private func loadAllTagsFromPlist(completion: (([FTTagItemModel]) -> Void)? = nil) {
-        self.getPlistTags(completion: { [weak self]allTags in
-            guard let self = self else {
-                completion?(allTags)
-                return
-            }
-            self.allTags = allTags
-            completion?(allTags)
-        })
+        self.callbackLock.lock();
+        let shouldFetch = self.callBacks.isEmpty;
+        if let callback = completion {
+            self.callBacks.append(callback);
+        }
+        self.callbackLock.unlock();
+        if shouldFetch {
+            self.getPlistTags(completion: { [weak self] allTags in
+                self?.setAllTags(allTags);
+                self?.callbackLock.lock();
+                self?.callBacks.forEach({ eachCallback in
+                    eachCallback(allTags);
+                })
+                self?.callBacks.removeAll();
+                self?.callbackLock.unlock();
+            })
+        }
     }
 
     func getAllSortedTags(completion: @escaping ([FTTagItemModel]) -> Void) {
         self.getAllTags { tags in
             let sortedArray = tags.sorted(by: { $0.tag.text.localizedCaseInsensitiveCompare($1.tag.text) == .orderedAscending })
-            completion(sortedArray)
+            runInMainThread {
+                completion(sortedArray)
+            }
         }
     }
 
     func updateAllTagsWith(updatedTags: [FTTagItemModel]) {
         let sortedArray = updatedTags.sorted(by: { $0.tag.text.localizedCaseInsensitiveCompare($1.tag.text) == .orderedAscending })
-        self.allTags = sortedArray
+        self.setAllTags(sortedArray);
     }
 
     func getAllTagItemsFor(_ tagNames:[String]) -> [FTTagItemModel] {
         var tagToReturn = [FTTagItemModel]()
-        allTags.forEach { eachItem in
+        let _allTags = getTags();
+        _allTags.forEach { eachItem in
             if tagNames.contains(eachItem.tag.text) {
                 eachItem.tag.isSelected = true
             } else {
@@ -386,7 +448,8 @@ class FTTagsProvider {
 
     func getTagItemsFor(_ tagNames:[String]) -> [FTTagItemModel] {
         var tagToReturn = [FTTagItemModel]()
-        allTags.forEach { eachItem in
+        let _allTags = self.getTags();
+        _allTags.forEach { eachItem in
             if tagNames.contains(eachItem.tag.text) {
                 tagToReturn.append(eachItem)
             }
@@ -397,18 +460,21 @@ class FTTagsProvider {
     func addTag(tagName: String) -> FTTagItemModel {
        let tagItem = FTTagItemModel(tag: FTTagModel(text: tagName))
         tagItem.tag.isSelected = true
-        allTags.append(tagItem)
+        self.addTagItem(tagItem);
         return tagItem
     }
 
     func deleteTagItem(tagItem: FTTagItemModel) {
+        allTagsLock.lock();
         self.allTags.removeAll { tag in
             tag.tag.text == tagItem.tag.text
         }
+        allTagsLock.unlock();
     }
 
     func getTagItemFor(tagName: String) -> FTTagItemModel? {
-        var returnTag = allTags.filter {$0.tag.text == tagName}.first
+        let _allTags = getTags();
+        var returnTag = _allTags.filter {$0.tag.text == tagName}.first
         if returnTag == nil {
             returnTag = FTTagItemModel(tag: FTTagModel(text: tagName))
         }
@@ -416,11 +482,12 @@ class FTTagsProvider {
     }
 
     func addNewTagItemIfNeeded(tagItem: FTTagItemModel) {
-        if allTags.count == 0 {
+        let _allTags = getTags();
+        if _allTags.count == 0 {
              self.getAllTags(completion: { alltagItems in
                  let index = alltagItems.firstIndex(where: {$0.tag.text == tagItem.tag.text})
                  if index == nil {
-                     self.allTags.append(tagItem)
+                     self.addTagItem(tagItem);
                      runInMainThread {
                          NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tagItem.tag.text, "type": "add", "renamedTag": ""])
                      }
@@ -430,9 +497,11 @@ class FTTagsProvider {
     }
 
     func removeDocumentId(docId: String) {
+        allTagsLock.lock();
         allTags.forEach { tagItemModel in
             tagItemModel.removeDocumentId(docId: docId)
         }
+        allTagsLock.unlock();
     }
 
     func shelfTagsItemForBook(documentItem: FTDocumentItemProtocol) -> FTShelfTagsItem {
@@ -448,19 +517,6 @@ class FTTagsProvider {
             }
         }
         return FTShelfTagsItem(documentItem: documentItem, documentUUID: documentItem.documentUUID, type: .book)
-    }
-
-    private func tagItem(_ uuid: String) -> FTShelfTagsItem? {
-        objc_sync_enter(self.shelfTagsItems);
-        let shelfTagItem  = self.shelfTagsItems[uuid]
-        objc_sync_exit(self.shelfTagsItems);
-        return shelfTagItem;
-    }
-    
-    private func setTagItem(_ item: FTShelfTagsItem, for uuid: String) {
-        objc_sync_enter(self.shelfTagsItems);
-        self.shelfTagsItems[uuid] = item
-        objc_sync_exit(self.shelfTagsItems);
     }
     
     func shelfTagsItemForPage(documentItem: FTDocumentItemProtocol, pageUUID: String, tags: [String]) -> FTShelfTagsItem {
@@ -507,4 +563,47 @@ class FTTagsProvider {
     }
 
 
+}
+
+private extension FTTagsProvider {
+    func setAllTags(_ tags: [FTTagItemModel]) {
+        self.allTagsLock.lock();
+        self.allTags = tags;
+        self.allTagsLock.unlock();
+    }
+    
+    func getTags() -> [FTTagItemModel] {
+        let tagsToReturn: [FTTagItemModel];
+        self.allTagsLock.lock();
+        tagsToReturn = self.allTags;
+        self.allTagsLock.unlock();
+        return tagsToReturn;
+    }
+    
+    func addTagItem(_ item: FTTagItemModel) {
+        self.allTagsLock.lock();
+        self.allTags.append(item);
+        self.allTagsLock.unlock();
+    }
+}
+
+extension FTTagsProvider {
+    fileprivate func removeTag(_ uuid: String) {
+        self.shelfTagLock.lock();
+        self.shelfTagsItems.removeValue(forKey: uuid)
+        self.shelfTagLock.unlock();
+    }
+    
+    private func tagItem(_ uuid: String) -> FTShelfTagsItem? {
+        self.shelfTagLock.lock();
+        let shelfTagItem  = self.shelfTagsItems[uuid]
+        self.shelfTagLock.unlock();
+        return shelfTagItem;
+    }
+    
+    private func setTagItem(_ item: FTShelfTagsItem, for uuid: String) {
+        self.shelfTagLock.lock();
+        self.shelfTagsItems[uuid] = item
+        self.shelfTagLock.unlock();
+    }
 }

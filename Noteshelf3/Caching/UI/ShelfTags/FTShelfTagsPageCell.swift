@@ -9,6 +9,7 @@
 import UIKit
 import FTStyles
 import FTCommon
+import FTNewNotebook
 
 class FTShelfTagsPageCell: UICollectionViewCell {
     @IBOutlet weak var thumbnail: UIImageView?
@@ -43,7 +44,6 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
         self.updateTagsViewWith(tags: sortedArray)
         self.thumbnail?.backgroundColor = .clear
-//        self.thumbnail?.image = nil
 
         if tagsItem.type == .page, let docUUID = tagsItem.documentUUID, let pageUUID = tagsItem.pageUUID {
             self.thumbnail?.layer.cornerRadius = 10
@@ -82,7 +82,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
                         let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
                         self?.shadowImageView.image = scalled
 
-                        self?.thumbnail?.image = UIImage(named: "no_cover")
+                        self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
                     }
                 }
             })

@@ -155,10 +155,14 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     // Bypassing the old thumnail setting approach
     override var thumbnailImage: UIImage? {
-        if self.URL.isNS2Book {
-            return self.shelfImage;
+        if FTDeveloperOption.useQuickLookThumbnailing {
+            if self.URL.isNS2Book {
+                return self.shelfImage;
+            } else {
+                return nil
+            }
         } else {
-            return nil
+            return self.shelfImage;
         }
     }
 
