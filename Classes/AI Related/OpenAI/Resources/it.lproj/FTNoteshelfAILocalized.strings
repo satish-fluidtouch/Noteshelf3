@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "Sintetizzare"; //summarize
 "noteshelf.ai.explain" = "Tradurre"; //explain
 "noteshelf.ai.translate" = "Translate"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "Traduci in %@";
 
 "noteshelf.ai.sendFeedback" = "Invia un feedback"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "Chiedi qualsiasi cosa..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "Inserisci il tema"; //enter_the_topic
 "noteshelf.ai.provideContent" = "Fornisci un argomento per creare note"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".Riassumi in 50-200 parole"; //summarize_command
-"noteshelf.ai.commandExplain" = ".Spiega in termini semplici"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".Fornisci i punti chiave"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "Traduci in %@"; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "Copia negli appunti"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "Aggiungi come testo"; //add_to_page
@@ -51,3 +47,15 @@
 "noteshelf.ai.noteshelfAIError" = "Impossibile connettersi al server. Riprova più tardi.";
 
 "noteshelf.ai.handwriteMessage" = "Noteshelf AI sarà in grado di comprendere la tua grafia solo se sei un utente Premium.";
+
+"noteshelf.ai.pressEnterToSend" = "Premi invio per inviare";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "Nessun credito rimasto";
+"noteshelf.ai.credit.bePremium" = "Aggiorna a Noteshelf Premium.";
+"noteshelf.ai.credit.creditsRunningOut" = "I crediti stanno per esaurirsi presto";
+"noteshelf.ai.credit.bePremiumInfo" = "Aggiorna a Noteshelf Premium per sbloccare 100 crediti mensili di AI e ottenere il riconoscimento della scrittura a mano";
+"noteshelf.ai.credit.upgradeNow" = "Aggiorna ora";
+"noteshelf.ai.credit.details" = "%d/%d crediti rimasti";
+"noteshelf.ai.credit.moreinfo" = "I crediti dell'IA si azzerano tra %d giorni";
+"noteshelf.ai.credit.moreOptions" = "Più opzioni";

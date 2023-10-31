@@ -26,7 +26,7 @@ class FTShelfBookmarksViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "sidebar.bookmarks.bookmark".localized
+        self.title = "sidebar.bookmarks".localized
         let layout = FTTagsAlignedCollectionViewFlowLayout(verticalAlignment: .bottom)
         self.collectionView?.collectionViewLayout = layout
         self.collectionView?.allowsMultipleSelection = true
@@ -119,7 +119,7 @@ class FTShelfBookmarksViewController: UIViewController {
                 }
                 _ = await document.saveAndClose()
                 if let docUUID = shelfItem.documentUUID {
-                    try FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
+                    FTDocumentCache.shared.cacheShelfItemFor(url: shelfItem.URL, documentUUID: docUUID)
                 }
             }
         } catch {
@@ -164,9 +164,9 @@ extension FTShelfBookmarksViewController: UICollectionViewDataSource, UICollecti
 
         if let page = item.page {
             if  page.pdfPageRect.size.width > page.pdfPageRect.size.height  { // landscape
-                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
+                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding + 20)
             } else {
-                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding)
+                return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.potraitAspectRation) + FTShelfTagsConstants.Page.extraHeightPadding + 20)
             }
 
         }

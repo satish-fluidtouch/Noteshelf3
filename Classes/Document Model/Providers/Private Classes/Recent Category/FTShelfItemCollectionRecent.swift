@@ -149,7 +149,14 @@ class  FTShelfItemCollectionRecent: NSObject,FTShelfItemCollection,FTShelfItemSo
             }
         }
     }
-    
+
+    func addShelfItemForDocument(_ path: Foundation.URL,
+                                 toTitle: String,
+                                 toGroup: FTGroupItemProtocol?,
+                                 onCompletion block: @escaping (NSError?, FTDocumentItemProtocol?) -> Void){
+        assert(false, "addShelfItemForDocument:toTitle:toGroup:onCompletion: is not supported by default")
+    }
+
     func updateQueryForChangeInRecentEntries()
     {
         let items = FTRecentEntries.allRecentEntries();

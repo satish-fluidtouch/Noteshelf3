@@ -18,7 +18,7 @@ class FTGroupCoverViewModel: ObservableObject {
             }
         }
     }
-    var coverImage: UIImage? = UIImage(named: "defaultNoCover")
+    
     @Published var groupNotebooks: [FTShelfItemViewModel] = []
     var groupCoverProperties:   FTShelfItemCoverViewProperties = .large
     private var cancellables = [AnyCancellable]()
@@ -42,15 +42,8 @@ class FTGroupCoverViewModel: ObservableObject {
             })
         }
     }
+
     // MARK: For Cover Image
-    func fetchCoverImageForShelfItem(_ item: FTShelfItemProtocol, completionhandler: @escaping (UIImage?) -> ()){
-        var token : String?
-        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item, onCompletion: { [weak self](image, imageToken) in
-            if token == imageToken {
-                completionhandler(self?.coverImage)
-            }
-        })
-    }
     func createShelfItemsFromData(_ shelfItemsData: [FTShelfItemProtocol]) -> [FTShelfItemViewModel]{
         let items: [FTShelfItemViewModel] = shelfItemsData.map { item -> FTShelfItemViewModel in
             return FTShelfItemViewModel(model: item)

@@ -29,7 +29,7 @@ protocol FTSideMenuViewControllerDelegate: AnyObject {
 
     //Bookmarks, tags
     func openBookmarks()
-    func openTags(for tag: String)
+    func openTags(for tag: String, isAllTags: Bool)
     func saveLastSelectedTag(_ tag:String)
     
     // Global search
@@ -79,6 +79,11 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         self.view.backgroundColor = UIColor.appColor(.sidebarBG)
         self.addOverlay()
         self.setUpNavigationBar()
+        viewModel.addNotificationObservers()
+    }
+
+    deinit {
+        disableUpdatesForSideBar()
     }
 
     func addBlurView() {
@@ -100,10 +105,20 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         }
     }
 
-    func selectSideMenuCollection(_ collection: FTShelfItemCollection) {
+    func upateSideMenuCurrentCollection(_ collection: FTShelfItemCollection) {
         if self.viewModel.selectedShelfItemCollection?.uuid != collection.uuid {
             self.viewModel.selectedShelfItemCollection = collection
         }
+    }
+
+    func selectSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection) {
+        self.viewModel.selectSidebarItemWithCollection(shelfItemCollection)
+    }
+    func showSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
+        self.viewModel.showSidebarItemWithCollection(shelfItemCollection)
+    }
+    func updateSideMenuItemsCollections(){ // Use this method to force update sidebar's categories sections related collections
+        viewModel.updateUserCreatedCategories()
     }
 
     private func addOverlay() {
@@ -149,9 +164,11 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
         case .audio:
             delegate?.openAudio()
         case .tag:
-            delegate?.openTags(for: item.title)
+            delegate?.openTags(for: item.title, isAllTags: false)
         case .bookmark:
             delegate?.openBookmarks()
+        case .allTags:
+            delegate?.openTags(for: item.title, isAllTags: true)
         }
     }
 
@@ -163,6 +180,14 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
             let attributes :  [NSAttributedString.Key : Any] = [.font : UIFont.clearFaceFont(for: .medium, with: 28)]
             navigationController.navigationBar.largeTitleTextAttributes = attributes
         }
+    }
+    
+    func enableUpdatesForSideBar() {
+        viewModel.addNotificationObservers()
+    }
+    
+    func disableUpdatesForSideBar() {
+        viewModel.removeNotificationObservers()
     }
 }
 

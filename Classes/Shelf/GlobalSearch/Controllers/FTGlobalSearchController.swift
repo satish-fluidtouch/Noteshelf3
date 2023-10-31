@@ -22,6 +22,17 @@ protocol FTGlobalSearchDelegate: NSObjectProtocol {
                                      type: FTShelfItemContexualOption)
     func performContextMenuPageShare(for page: FTPageProtocol, shelfItem: FTShelfItemProtocol)
     func performContextualMenuPin(for shelfItem: FTShelfItemProtocol, isToPin: Bool)
+    func selectSidebarWithCollection(_ collection: FTShelfItemCollection)
+}
+
+class FTSearchInputInfo: NSObject {
+    var textKey: String
+    var tags: [String]
+
+    init(textKey: String, tags: [String]) {
+        self.textKey = textKey
+        self.tags = tags
+    }
 }
 
 class FTGlobalSearchController: UIViewController {
@@ -38,7 +49,8 @@ class FTGlobalSearchController: UIViewController {
     internal var progressView: RPCircularProgress?
 
     internal var allTags = [FTTagModel]()
-    internal var searchKey: String = ""
+    private(set) var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
+
     internal var isRecentSelected: Bool = false
     internal var recentSearchList: [[FTRecentSearchedItem]] = []
     internal var searchController = FTUISearchController()
@@ -53,9 +65,17 @@ class FTGlobalSearchController: UIViewController {
     private var currentSize = CGSize.zero
     private let alignmentOffset: CGFloat = 550.0
 
+#if targetEnvironment(macCatalyst)
+    // This is used exclusively for updating search text when book is closed
+    private var toUpdateSearchText = false
+#endif
+
+    var navTitle: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.allTags = FTSearchSuggestionHelper.shared.fetchTags()
+        FTSearchSuggestionHelper.shared.fetchTags(completion: { allTags in
+            self.allTags = allTags
+       })
 #if !targetEnvironment(macCatalyst)
         self.configureSearchControllerIfNeeded()
 #endif
@@ -75,12 +95,30 @@ class FTGlobalSearchController: UIViewController {
         }
 #endif
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let shelfItemCollection {
+            self.delegate?.selectSidebarWithCollection(shelfItemCollection)
+        }
+#if targetEnvironment(macCatalyst)
+        self.toUpdateSearchText = presentedViewController is FTNoteBookSplitViewController
+#endif
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
+        if let toolbar = self.view.toolbar as? FTShelfToolbar, toUpdateSearchText {
+            toolbar.updateSearchText(self.searchInputInfo.textKey)
+        }
+#endif
+    }
 
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize != self.currentSize) {
             self.currentSize = currentFrameSize
-            self.updateProgressViewCenter()
             if self.currentSize.width > alignmentOffset {
                 self.segmentInfoStackView.axis = .horizontal
                 self.segmentInfoStackView.distribution = .fill
@@ -101,8 +139,8 @@ class FTGlobalSearchController: UIViewController {
 
     @IBAction func segmentValueChanged(_ sender: Any) {
         self.cancelSearch()
-        let currentTags = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: searchController.searchTokens)
-        self.searchForNotebooks(with: self.searchKey, tags: currentTags)
+        self.searchInputInfo.tags = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: searchController.searchTokens)
+        self.searchForNotebooks(with: searchInputInfo)
     }
 
     func cancelSearch() {
@@ -120,10 +158,8 @@ class FTGlobalSearchController: UIViewController {
 // MARK:  **** functions declared 'internal' here are intened to to use only inside this class extensions
 // and not for outside purpose ****
 extension FTGlobalSearchController {
-    internal func searchForNotebooks(with searchText: String, tags: [String] = []) {
+    internal func searchForNotebooks(with info: FTSearchInputInfo) {
         self.cancelSearch()
-        self.updateProgressViewCenter()
-        self.searchKey = searchText
 
         runInMainThread {
             var sectionIndexSet = IndexSet()
@@ -143,7 +179,7 @@ extension FTGlobalSearchController {
         if self.segmentControl.selectedSegmentIndex == 1, let collection = self.shelfItemCollection {
             shelfcatgories.append(collection)
         }
-        self.searchHelper?.fetchSearchResults(with: searchText, tags: tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
+        self.searchHelper?.fetchSearchResults(with: info.textKey, tags: info.tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
             guard let self = self, !items.isEmpty else {
                 return
             }
@@ -185,6 +221,7 @@ private extension FTGlobalSearchController {
     private func configureProgressView() {
         self.progressView = RPCircularProgress()
         self.progressView?.frame.size = CGSize(width: 25.0, height: 25.0)
+        self.progressView?.translatesAutoresizingMaskIntoConstraints = false
         self.progressView?.trackTintColor = UIColor(hexString: "76787C")
         self.progressView?.progressTintColor = .white
         self.progressView?.innerTintColor = .clear
@@ -192,6 +229,11 @@ private extension FTGlobalSearchController {
         self.progressView?.clockwiseProgress = true
         self.progressView?.thicknessRatio = 0.25
         self.searchController.searchBar.addSubview(progressView!)
+        self.progressView?.translatesAutoresizingMaskIntoConstraints = false
+        self.progressView?.trailingAnchor.constraint(equalTo: self.searchController.searchBar.searchTextField.trailingAnchor, constant: -40).isActive = true
+        self.progressView?.centerYAnchor.constraint(equalTo: self.searchController.searchBar.searchTextField.centerYAnchor, constant: 0.0).isActive = true
+        self.progressView?.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
+        self.progressView?.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
         self.progressView?.isHidden = true
     }
 
@@ -203,7 +245,9 @@ private extension FTGlobalSearchController {
         self.recentsTableView.isScrollEnabled = self.recentsTableView.contentSize.height > self.recentsTableView.frame.size.height
         self.recentsTableView.dataSource = self
         self.recentsTableView.delegate = self
+#if !targetEnvironment(macCatalyst)
         self.updateUICondictionally(with: "")
+#endif
     }
 
     private func configureSegmentControl() {
@@ -214,11 +258,6 @@ private extension FTGlobalSearchController {
         self.segmentControl.setTitle(segment2Title, forSegmentAt: 1)
         self.segmentControl.selectedSegmentIndex = 0
         self.hideSegmentControlIfNeeded(toHide: true)
-    }
-
-    private func updateProgressViewCenter() {
-        let searchbar = self.searchController.searchBar
-        self.progressView?.center = CGPoint(x: searchbar.frame.maxX-130.0, y: searchbar.center.y)
     }
 
     private func hideSegmentControlIfNeeded(toHide: Bool) {
@@ -245,11 +284,11 @@ private extension FTGlobalSearchController {
         let searchTokens = self.searchController.searchTokens
         var searchedCompundStr = ""
         if searchTokens.isEmpty {
-            searchedCompundStr = searchKey
+            searchedCompundStr = searchInputInfo.textKey
         } else {
             var searchedText = FTSearchSuggestionHelper.shared.fetchCurrentSelectedTagsText(using: searchController.searchTokens)
-            if !self.searchKey.isEmpty {
-                searchedText.append(self.searchKey)
+            if !searchInputInfo.textKey.isEmpty {
+                searchedText.append(searchInputInfo.textKey)
             }
             for (index, tagText) in searchedText.enumerated() {
                 if index == 0 {
@@ -324,10 +363,10 @@ extension FTGlobalSearchController: UICollectionViewDataSource{
         }
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: cellIdentifier, for: indexPath)
         if let headerCell = header as? FTSearchResultTitlesHeader {
-            headerCell.configureHeader(sectionContent, searchKey: self.searchKey)
+            headerCell.configureHeader(sectionContent, searchKey: searchInputInfo.textKey)
         }
         else if let headerCell = header as? FTSearchResultContentHeader {
-            headerCell.configureHeader(sectionContent, searchKey: self.searchKey)
+            headerCell.configureHeader(sectionContent, searchKey: searchInputInfo.textKey)
         }
         return header
     }

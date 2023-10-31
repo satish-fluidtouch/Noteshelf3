@@ -40,7 +40,7 @@ class FTShelfContentAudioViewController: UIHostingController<FTShelfContentAudio
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = NSLocalizedString("sidebar.recording", comment: "Recording")
+        self.title = "sidebar.recordings".localized
         self.view.backgroundColor = UIColor.appColor(.secondaryBG)
     }
 }

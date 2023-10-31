@@ -58,10 +58,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
     private var currentActiveShelfItem: FTCurrentShelfItem?
     private var groupItemCache = [String: FTGroupItemViewModel]();
     private var notebookItemCache = [String: FTShelfItemViewModel]();
-
+    private var closedDocumentItem: FTDocumentItem?
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
-
+    @Published var scrollToItemID: String?
     // MARK: Published variables
     @Published var mode: FTShelfMode = .normal {
         didSet {
@@ -86,7 +86,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
     @Published var reloadShelfItems: Bool = false
-    @Published var tagsForThisBook: [FTTagModel] = []
+    @Published var tagsForThisBook: [FTTagItemModel] = []
     @Published var allowHitTesting: Bool = true
     @Published var showCompactBottombar: Bool = false
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
@@ -275,9 +275,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
         self.removeObserversForShelfItems()
     }
     
-    func shelfViewDidMovedToFront() {
+    func shelfViewDidMovedToFront(with item : FTDocumentItem) {
+        self.closedDocumentItem = item
         self.addObserversForShelfItems()
-        self.reloadShelf(animate: true);
+        self.reloadShelf(animate: false);
     }
     
     func endDragAndDropOperation(){
@@ -467,13 +468,24 @@ extension FTShelfViewModel {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
                               , searchKey: nil) { [weak self] items in
+            guard let self = self else {
+                return
+            }
             if(animate) {
                 withAnimation {
-                    self?.setShelfItems(items);
+                    setShelfItems()
                 }
             }
             else {
-                self?.setShelfItems(items);
+              setShelfItems()
+            }
+            
+            func setShelfItems() {
+                self.setShelfItems(items);
+                if let item = self.closedDocumentItem {
+                    self.scrollToItemID = item.uuid
+                    self.closedDocumentItem = nil
+                }
             }
         }
         self.addObservers()
@@ -601,13 +613,14 @@ extension FTShelfViewModel {
         guard let document = shelfItemContextualMenuViewModel.shelfItem?.model as?  FTDocumentItemProtocol else {
             return
         }
-        // TODO: Show Loader
-        let tags = FTCacheTagsProcessor.shared.tagsForShelfItem(url: document.URL)
-        let sortedArray = FTCacheTagsProcessor.shared.tagsModelForTags(tags: tags)
-        displayTagsView(tags: sortedArray)
+        if let docUUID = document.documentUUID {
+            let tags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
+            let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
+            displayTagsView(tags: tagItems)
+        }
     }
-    
-    func displayTagsView(tags: [FTTagModel]) {
+
+    func displayTagsView(tags: [FTTagItemModel]) {
         // TODO: Dismiss Loader
         tagsForThisBook = tags
         shelfItemContextualMenuViewModel.shelfItem?.popoverType = .tags

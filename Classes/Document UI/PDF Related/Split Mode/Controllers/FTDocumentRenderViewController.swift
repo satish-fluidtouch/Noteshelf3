@@ -85,6 +85,8 @@ class FTDocumentRenderViewController: UIViewController {
     private weak var deskPanelActionDelegate: FTDeskPanelActionDelegate?
 
     var documentViewController: FTPDFRenderViewController!
+    private weak var loadingIndicator: FTLoadingIndicatorViewController?
+    private var showRenderingIndicator = false
 
     private var isReady = FTDeveloperOption.bookScaleAnim {
         didSet {
@@ -98,12 +100,17 @@ class FTDocumentRenderViewController: UIViewController {
         super.viewDidLoad()
         self.addToolbar()
         self.navigationController?.navigationBar.isHidden = true
+        self.showRenderingIndicator = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated);
         if(isReady) {
             refreshStatusBarAppearnce();
+        }
+        if showRenderingIndicator {
+            self.showRenderingIndicator = false
+            loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Loading", comment: "Loading..."), andDelay: 0.5);
         }
     }
     
@@ -210,15 +217,6 @@ class FTDocumentRenderViewController: UIViewController {
             (documentViewController.pdfDocument as? FTRecognitionHelper)?.visionRecognitionHelper?.startImageTextRecognition()
         }
     }
-
-    override func overrideTraitCollection(forChild childViewController: UIViewController) -> UITraitCollection? {
-        var superTraitCollection = super.overrideTraitCollection(forChild: childViewController) ?? self.traitCollection
-        if let overridableController = childViewController as? FTTraitCollectionOverridable {
-            superTraitCollection = overridableController.ftOverrideTraitCollection(forWindow: self.view.window) ?? self.traitCollection
-        }
-        return superTraitCollection
-    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
 #if DEBUG
@@ -244,6 +242,10 @@ extension FTDocumentRenderViewController: FTToolbarElements {
     //MARK: - Enable or Disable Toolbar for some synchronous internal actions
     func setToolbarEnabled(_ isEnabled:Bool) {
         self.toolBarView?.isUserInteractionEnabled = isEnabled
+        if isEnabled {
+            showRenderingIndicator = false
+            self.loadingIndicator?.hide()
+        }
     }
 
     //MARK: - Child Controllers Helper Methods

@@ -30,7 +30,7 @@ class FTShelfItems: ObservableObject,Identifiable {
         self.collection = collection
     }
     var isNotDownloaded: Bool {
-        notebook?.URL.downloadStatus() == .notDownloaded
+        (notebook as? FTDocumentItemProtocol)?.isDownloaded == false
     }
 }
 
@@ -64,7 +64,7 @@ class FTShelfNotebookItem: FTShelfItems {
         if let shelfItemProtocol = notebook {
             token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItemProtocol, onCompletion: { [weak self](image, imageToken) in
                 if token == imageToken {
-                    self?.coverImage = (nil == image ? UIImage(named: "defaultNoCover") : image)
+                    self?.coverImage = (nil == image ? UIImage.shelfDefaultNoCoverImage : image)
                     completionhandler(self?.coverImage)
                 }
             })

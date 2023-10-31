@@ -159,6 +159,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                animate anim: Bool,
                                onCompletion : (() -> Void)?)
     {
+        if let item = shelfItem?.documentItem as? FTDocumentItem {
+            self.rootContentViewController?.shelfViewDidMovedToFront(with: item);
+        }
         let animate : Bool = anim
         self.view.isUserInteractionEnabled = false;
         //added below code to resolve a crash related to EAGLCOntext setcurrentContext. This may resolve the issue.
@@ -174,7 +177,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         func finalizeBlock() {
             self.view.isUserInteractionEnabled = true;
-            self.rootContentViewController?.shelfViewDidMovedToFront();
             self.refreshStatusBarAppearnce();
             onCompletion?();
         }
@@ -328,13 +330,15 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 DispatchQueue.main.async {
                     FTNoteshelfDocumentProvider.shared.moveContentsFromCloudToLocal(onCompletion: { (_) in
                         FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
-
-                        loadingIndicatorViewController.hide();
-                        self.view.isUserInteractionEnabled = true;
                         FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
                             weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
+                                FTNoteshelfDocumentProvider.shared.resetProviderCache()
+                                (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
                                 weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
-                                weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
+                                weakSelf?.refreshShelfCollection(setToDefault: true) {
+                                    loadingIndicatorViewController.hide();
+                                    self.view.isUserInteractionEnabled = true;
+                                }
                             });
                         }
                     });
@@ -345,6 +349,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             let deleteFromLocal = UIAlertAction.init(title: NSLocalizedString("DeleteALocalCopy",comment:"Delete on my iPad"), style: .destructive, handler: { (_) in
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
+                (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
                 weakSelf?.refreshShelfCollection(setToDefault: false,onCompletion: nil);
             });
             controller.addAction(deleteFromLocal);
@@ -359,14 +364,14 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             DispatchQueue.main.async {
                 FTNoteshelfDocumentProvider.shared.moveContentsFromLocalToiCloud(onCompletion: { (_, error) in                    (error as NSError?)?.showAlert(from: self.view.window?.visibleViewController)
                     FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
-
                     FTNSiCloudManager.shared().setiCloudWas(on: true);
-                    loadingIndicatorViewController.hide();
-                    self.view.isUserInteractionEnabled = true;
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
                         weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
                             weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
-                            weakSelf?.refreshShelfCollection(setToDefault: true, onCompletion: nil)
+                            weakSelf?.refreshShelfCollection(setToDefault: true) {
+                                loadingIndicatorViewController.hide();
+                                self.view.isUserInteractionEnabled = true;
+                            }
                         });
                     }
                 });
@@ -413,18 +418,19 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.refreshStatusBarAppearnce();
             controller.didMove(toParent: self)
             self.rootContentViewController = controller
-            removeLaunchScreen(true)
         }
         else {
             let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category,.ns2Category]
             if collectionTypes.contains(where: {$0 == sideBarContentType}),let collection {
                 self.rootContentViewController?.shelfItemCollection = collection
+                (self.rootContentViewController as? FTShelfSplitViewController)?.sideMenuController?.showSidebarItemWithCollection(collection)
                 self.rootContentViewController?.currentShelfViewModel?.collection = collection
             } else {
                 self.rootContentViewController?.shelfItemCollection = nil
             }
         }
         configureSceneNotifications()
+        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
         return
     }
 
@@ -542,7 +548,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                  igrnoreIfNotDownloaded: true)
         { [weak self] (_, groupItem, itemToOpen) in
             if let shelfItem = itemToOpen, let selfObject = self {
-                let isPasswordEnabled = shelfItem.URL.isPinEnabledForDocument();
+                let isPasswordEnabled = shelfItem.isPinEnabledForDocument();
 
                 if (isPasswordEnabled && !selfObject.isOpeningDocument) {
                     selfObject.setLastOpenedGroup(nil);
@@ -581,7 +587,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
 
     fileprivate func maintainPreviousLaunchState() {
-        if(UserDefaults.standard.bool(forKey: "safe_mode_Identifier")) {
+        if FTUserDefaults.isInSafeMode() {
             self.setLastOpenedGroup(nil);
             self.setLastOpenedDocument(nil);
 
@@ -594,20 +600,24 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let document = lastOpenedDocument() {
             self.showLastOpenedDocument(relativePath: document, animate: false);
         } else {
-            if let group = self.userActivity?.lastOpenedGroup {
+            if let isInNonCollectionMode = self.isInNonCollectionMode(),
+               !isInNonCollectionMode,let group = self.userActivity?.lastOpenedGroup {
                 var resetGroup = true
                 self.getShelfItemDetails(relativePath: group,
                                          igrnoreIfNotDownloaded: true)
                 { [weak self] (_, groupItem, _) in
-                    if let group = groupItem {
-                        var reqParents:  [FTShelfItemProtocol] = []
-                        reqParents.append(group)
-                        reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
-                        for parent in reqParents.reversed() {
-                            resetGroup = false
-                            self?.rootContentViewController?.showGroup(with: parent, animate: false)
+                    let collectionName = self?.lastSelectedCollectionName();
+                    self?.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
+                        if let group = groupItem, group.shelfCollection.uuid == collectionToShow?.uuid {
+                            var reqParents:  [FTShelfItemProtocol] = []
+                            reqParents.append(group)
+                            reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
+                            for parent in reqParents.reversed() {
+                                resetGroup = false
+                                self?.rootContentViewController?.showGroup(with: parent, animate: false)
+                            }
                         }
-                    }
+                    })
                 }
                 if(resetGroup) {
                     self.setLastOpenedGroup(nil);
@@ -1059,7 +1069,7 @@ extension FTRootViewController
 
         self.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, shelfItem in
             if(nil != collection && nil != shelfItem) {
-                if(!bipassPassword && shelfItem!.URL.isPinEnabledForDocument()) {
+                if(!bipassPassword && shelfItem!.isPinEnabledForDocument()) {
                     finalizeBlock(indicatorView);
                     return;
                 }
@@ -1314,6 +1324,8 @@ extension FTRootViewController {
     }
 
     func setLastOpenedGroup(_ groupURL : URL?) {
+        FTUserDefaults.setNonCollectionModeTo(false)
+        self.userActivity?.isInNonCollectionMode = false
         self.userActivity?.lastOpenedGroup = groupURL?.relativePathWRTCollection()
     }
 

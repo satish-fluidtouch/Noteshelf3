@@ -667,13 +667,6 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                     self.hashTable.removeItemFromHashTable(item.URL);
                     if(currentGroup != nil) {
                         currentGroup?.removeChild(item);
-                        if(currentGroup!.childrens.isEmpty) {
-                            self.removeGroupItem(currentGroup!, onCompletion: { (error, groupItem) in
-                                if(ENABLE_SHELF_RPOVIDER_LOGS) {
-                                    debugPrint("\(#file.components(separatedBy: "/").last ?? ""): Group Deleted :\(String(describing: groupItem?.URL.lastPathComponent)) child count 0");
-                                }
-                            });
-                        }
                     }
                     else {
                         self.removeChild(item);
@@ -716,7 +709,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
             return groupItem;
         }
         
-        if let first = fileURL.pathRelativeTo(self.URL).components(separatedBy: "/").first {
+        if let first = fileURL.pathRelativeTo(self.URL).components(separatedBy: "/").first, first.hasSuffix(FTFileExtension.group) { // Ensuring url's first component has a group extension
             if let item = self.groupItemWithName(title: first) {
                 itemToReturn = item
             }

@@ -17,6 +17,24 @@ struct FTShortcutBarVisualEffectView: UIViewRepresentable {
     }
 }
 
+struct FTVibrancyEffectView: UIViewRepresentable {
+    @Environment(\.colorScheme) var colorScheme
+
+    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
+        let style = colorScheme == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
+        let blurEffect  = UIBlurEffect(style: style)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect);
+        return blurEffectView
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) {
+        let style = colorScheme == .dark ? UIBlurEffect.Style.extraLight : UIBlurEffect.Style.regular
+        let blurEffect = UIBlurEffect(style: style)
+        uiView.effect = blurEffect
+        uiView.backgroundColor = UIColor.appColor(.lock_icon_bgcolor)
+    }
+}
+
 extension View {
     func toolbarOverlay(radius: CGFloat = 100.0, borderWidth: CGFloat = 0.3) -> some View {
         modifier(FTToolbarBorder(radius: radius, borderColor: Color(uiColor: FTToolbarConfig.borderColor), borderWidth: borderWidth))

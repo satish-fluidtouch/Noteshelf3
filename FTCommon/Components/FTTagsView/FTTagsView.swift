@@ -22,7 +22,7 @@ public class FTTagModel: NSObject {
             }
         }
     }
-    
+
     public var image: UIImage?
     public var isSelected: Bool = false
 
@@ -57,9 +57,6 @@ public class FTTagViewConfiguration {
 public protocol TagsViewDelegate: AnyObject {
     func didSelectIndexPath(indexPath: IndexPath)
     func didAddNewTag(tag: String)
-    func didRenameTag(tag: FTTagModel)
-    func didDeleteTag(tag: FTTagModel)
-
 }
 
 public class FTTagsView: UIView {
