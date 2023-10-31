@@ -49,9 +49,9 @@ class FTBookmarksProvider {
     func updateBookmarkItemFor(documentUUID: String) {
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             let item = (allItems as! [FTDocumentItemProtocol]).first(where: {$0.documentUUID == documentUUID})
+            guard let documentItem = item  else { return }
             FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: documentUUID) { [weak self] docPlist in
                 guard let self = self else {return}
-                if let documentItem = item  {
                     let pages = docPlist?.pages
                     pages?.forEach { page in
                         if let index = self.bookmarkItems.firstIndex(where: {$0.pageUUID == page.uuid}) {
@@ -74,7 +74,6 @@ class FTBookmarksProvider {
                             }
                         }
                     }
-                }
             }
         }
     }
@@ -96,7 +95,7 @@ class FTBookmarksProvider {
         var totalBookmarksItems: [FTBookmarksItem] = [FTBookmarksItem]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
 
-        let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+            let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
             for case let item in items where item.documentUUID != nil {
                 dispatchGroup.enter()
