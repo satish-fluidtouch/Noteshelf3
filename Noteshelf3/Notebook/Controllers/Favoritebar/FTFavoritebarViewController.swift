@@ -8,6 +8,10 @@
 
 import Foundation
 
+protocol FTFavoriteActionDelegate: NSObjectProtocol {
+
+}
+
 class FTFavoritebarViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var sizeIndicator: UIButton!
@@ -16,6 +20,8 @@ class FTFavoritebarViewController: UIViewController {
 
     private var favorites: [FTPenSetProtocol] = []
     private let manager = FTFavoritePensetManager()
+
+    weak var delegate: FTFavoriteActionDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()

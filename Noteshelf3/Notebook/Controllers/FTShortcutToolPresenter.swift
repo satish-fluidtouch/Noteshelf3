@@ -16,58 +16,32 @@ protocol FTShortcutContainerDelegate: AnyObject {
 
 private var offset: CGFloat = 8.0
 
-@objcMembers class FTShortcutToolPresenter: NSObject {
-    private(set) var toolbarOffset: CGFloat = FTToolbarConfig.Height.regular + offset;
-    private(set) weak var parentVC: UIViewController?;
-    private(set) var rackType: FTRackType = .pen
-    var mode: FTScreenMode = .normal
-
-    private(set) weak var toolbarVc: FTToolTypeShortcutViewController!
+@objcMembers class FTShortcutToolPresenter: FTShortcutBasePresenter {
+    private var contentSize = CGSize.zero
     private weak var pensizeEditVc: FTPenSizeEditController?
 
     weak var delegate: FTShortcutContainerDelegate?
 
-    // Internal variables/functions for extension purpose, not intended for out world
-    internal var isMoving: Bool = false
-    internal var hasAddedSlots: Bool = false
-    internal var shortcutZoomMode: FTZoomShortcutMode = .auto
-    internal var animDuration: CGFloat = 0.3
-
-    var shortcutViewPlacement: FTShortcutPlacement {
-        if UIDevice.current.isIphone() {
-            return .top
-        }
-        let placement = FTShortcutPlacement.getSavedPlacement()
-        return placement
-    }
-
-    var shortcutView: UIView {
-        return self.toolbarVc.view;
-    }
-            
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(showToast(_:)), name: NSNotification.Name.PresetColorUpdate, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(exitZoomModeNotified(_:)), name: NSNotification.Name(FTAppDidEXitZoomMode), object: nil)
     }
 
-    func showToolbar(rackData: FTRackData
-                     ,on viewController: UIViewController) {
-        self.rackType = rackData.type
-        self.parentVC = viewController
-        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTToolTypeShortcutViewController.self))
-        guard let controller  = storyboard.instantiateViewController(withIdentifier: "FTToolTypeShortcutViewController") as? FTToolTypeShortcutViewController else {
-            fatalError("Programmer error, couldnot find FTToolTypeShortcutViewController")
+    func showToolbar(on viewController: UIViewController, for mode: RKDeskMode) {
+        super.configureToolbar(on: viewController, for: mode)
+        guard let controller = self.toolbarVc else {
+            fatalError("Programmer error, toolbar is no configured properly")
         }
-        self.toolbarVc = controller
-        self.toolbarVc.delegate = self
-        viewController.addChild(controller)
-        controller.didMove(toParent: viewController)
-
+        if let toolbarVc = controller as? FTToolTypeShortcutViewController {
+            toolbarVc.delegate = self
+        } else if let favBar = controller as? FTFavoritebarViewController {
+            favBar.delegate = self
+        }
+        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+        viewController.add(controller)
         self.shortcutView.frame.size = reqSize
-        viewController.view.addSubview(controller.view)
+
         self.shortcutView.transform = .identity
         if self.shortcutViewPlacement == .top || self.shortcutViewPlacement == .bottom {
             self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
@@ -75,17 +49,20 @@ private var offset: CGFloat = 8.0
         self.updateMinOffsetIfNeeded()
         let reqCenter = self.shortcutViewPlacement.placementCenter(forShortcutView: shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
         self.updateShortcutViewCenter(reqCenter)
-        self.toolbarVc?.showShortcutViewWrto(rack: rackData)
+
+        if mode != .deskModeFavorites {
+            let rackData = FTRackData(type: rackType, userActivity: viewController.view.window?.windowScene?.userActivity)
+            (controller as? FTToolTypeShortcutViewController)?.showShortcutViewWrto(rack: rackData)
+        }
         self.configurePanGesture()
     }
 
-    private var contentSize = CGSize.zero
     func updatePositionOnScreenSizeChange() {
         let curSize = self.parentVC?.view.frame.size ?? .zero;
         if(!curSize.equalTo(contentSize)) {
             contentSize = curSize
             self.updateMinOffsetIfNeeded()
-            self.configureShortcutView(with: mode)
+            self.configureShortcutView(with: screenMode)
             if let parent = self.parentVC as? FTPDFRenderViewController, let zoomVc = parent.zoomOverlayController {
                 self.handleZoomPanelFrameChange(zoomVc.view.frame, mode: zoomVc.shortcutModeZoom, completion: nil)
             }
@@ -102,7 +79,7 @@ private var offset: CGFloat = 8.0
     }
 
     func configureShortcutView(with mode: FTScreenMode, animate: Bool = false) {
-        self.mode = mode
+        self.screenMode = mode
         let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
         var reqCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
 
@@ -194,18 +171,6 @@ private var offset: CGFloat = 8.0
         NotificationCenter.default.removeObserver(self)
     }
 
-    internal func shortcutViewSizeWrToVertcalPlacement() -> CGSize {
-        var size: CGSize = .zero
-        if self.rackType == .pen || self.rackType == .highlighter {
-            size = penShortcutSize
-        } else if self.rackType == .shape {
-            size = shapeShortcutSize
-        } else if self.rackType == .presenter {
-            size = presenterShortcutSize
-        }
-        return size
-    }
-
     internal var zoomModeInfo: FTZoomModeInfo {
         var info = FTZoomModeInfo()
         if let pdfRender = self.parentVC as? FTPDFRenderViewController, pdfRender.isInZoomMode() {
@@ -293,6 +258,10 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
             sizeEditVc.view.removeFromSuperview()
         }
     }
+}
+
+extension FTShortcutToolPresenter: FTFavoriteActionDelegate {
+
 }
 
 extension FTShortcutToolPresenter {

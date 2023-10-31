@@ -12,34 +12,19 @@ import Foundation
 extension FTPDFRenderViewController {
     @objc func showToolbarShortcutControllerIfNeeded(mode: RKDeskMode) {
        self.removeShortcutContainerIfExists()
-        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeShape || mode == .deskModeLaser {
+        if mode == .deskModePen || mode == .deskModeMarker || mode == .deskModeShape || mode == .deskModeLaser || mode == .deskModeFavorites {
             self.addShortcutContainer(mode: mode)
         }
     }
 
     private func addShortcutContainer(mode: RKDeskMode) {
-        var rackType = FTRackType.pen
-
-        if mode == .deskModeMarker {
-            rackType = .highlighter
-        } else if mode == .deskModeShape {
-            rackType = .shape
-        } else if mode == .deskModeLaser {
-            rackType = .presenter
+        let toolbarContainer = FTShortcutToolPresenter()
+        if let toolbar = self.parent as? FTToolbarElements {
+            toolbarContainer.screenMode =  toolbar.isInFocusMode() ? .focus : .normal
         }
-        
-//        let toolbarContainer = FTShortcutToolPresenter();
-//        if let toolbar = self.parent as? FTToolbarElements {
-//            toolbarContainer.mode =  toolbar.isInFocusMode() ? .focus : .normal
-//        }
-//
-//        toolbarContainer.delegate = self
-//        self.toolTypeContainerVc = toolbarContainer
-//        let rackData = FTRackData(type: rackType, userActivity: self.view.window?.windowScene?.userActivity);
-//        toolbarContainer.showToolbar(rackData: rackData, on: self);
-
-        let favPresenter = FTFavoritebarPresenter()
-        favPresenter.showFavoriteToolbar(on: self)
+        toolbarContainer.delegate = self
+        self.toolTypeContainerVc = toolbarContainer
+        toolbarContainer.showToolbar(on: self, for: mode)
     }
 
     func showOrHideShortcutViewIfNeeded(_ mode: FTScreenMode) {
@@ -54,7 +39,7 @@ extension FTPDFRenderViewController {
    private func removeShortcutContainerIfExists() {
        if let controller = self.toolTypeContainerVc {
            controller.removeFromParent()
-           self.toolTypeContainerVc = nil;
+           self.toolTypeContainerVc = nil
        }
     }
 }

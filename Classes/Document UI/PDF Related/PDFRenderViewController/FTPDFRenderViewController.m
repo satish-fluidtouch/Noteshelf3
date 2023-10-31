@@ -1505,6 +1505,9 @@
     [self switchMode:kDeskModeClipboard];
 }
 
+-(void)favoritesButtonAction {
+    [self switchMode:kDeskModeFavorites];
+}
 
 -(void)iconsButtonAction
 {
