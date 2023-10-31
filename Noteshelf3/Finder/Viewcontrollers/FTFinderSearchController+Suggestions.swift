@@ -15,6 +15,13 @@ extension FTFinderSearchController: UITableViewDelegate, UITableViewDataSource, 
         return 1
     }
     
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            perfromSearchCancel()
+        }
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == recentsTableView {
             return FTFilterRecentsStorage.shared.availableRecents().count
