@@ -49,7 +49,7 @@ class FTToolTypeShortcutViewController: UIViewController, FTViewControllerSuppor
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 #if targetEnvironment(macCatalyst)
-        self.dismissPenColorEditPopoverIfExists()
+        self.dismissPresentedPopoverIfExists()
 #endif
     }
 
@@ -265,17 +265,15 @@ private extension FTToolTypeShortcutViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
     }
 
-    func dismissPenColorEditPopoverIfExists() {
-        if let colorEditVc = self.presentedViewController?.children.first as? FTPenColorEditController {
-            colorEditVc.dismiss(animated: false)
-        }
+    func dismissPresentedPopoverIfExists() {
+        self.presentedViewController?.dismiss(animated: false)
     }
 
     @objc func sceneWillResignActive(_ notification: Notification) {
         if(!self.canProceedSceneNotification(notification)) {
             return
         }
-        self.dismissPenColorEditPopoverIfExists()
+        self.dismissPresentedPopoverIfExists()
     }
 }
 #endif
