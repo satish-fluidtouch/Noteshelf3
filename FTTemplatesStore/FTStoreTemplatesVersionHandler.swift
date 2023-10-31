@@ -9,9 +9,9 @@
 import Foundation
 
 struct FTTemplateVerionItem: Codable {
-    var id = UUID()
-    var version: Int
-    var templateName: String
+    let id = UUID()
+    let version: Int
+    let templateName: String
     enum CodingKeys: String, CodingKey {
         case version
         case templateName

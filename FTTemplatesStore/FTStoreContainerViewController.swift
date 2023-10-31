@@ -56,7 +56,11 @@ public class FTStoreContainerViewController: UIViewController {
         super.viewDidLoad()
         self.title = "templatesStore.navbar.templates".localized
         self.setupView()
-        try? FTStoreTemplatesVersionHandler.shared.startVersionUpdateIfNeeded()
+        do {
+            try FTStoreTemplatesVersionHandler.shared.startVersionUpdateIfNeeded()
+        } catch {
+            debugPrint("Store Templates Version Update Error \(error)")
+        }
     }
 
     public static func templatesStoreViewController(delegate:FTStoreContainerDelegate?,premiumUser: FTPremiumUser) -> FTStoreContainerViewController {

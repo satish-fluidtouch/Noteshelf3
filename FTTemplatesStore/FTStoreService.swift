@@ -156,7 +156,8 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         if !fileManager.fileExists(atPath: path) && path != "" {
             do {
                 try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
-            } catch _ {
+            } catch {
+                debugPrint("Store Templates directory creation Error \(error)")
             }
         }
         return URL(fileURLWithPath: path)
@@ -172,7 +173,8 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         if !fileManager.fileExists(atPath: path) && path != "" {
             do {
                 try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
-            } catch _ {
+            } catch  {
+                debugPrint("Store Templates Thumbnail directory creation Error \(error)")
             }
         }
         return URL(fileURLWithPath: path)
@@ -188,7 +190,8 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         if !fileManager.fileExists(atPath: path) && path != "" {
             do {
                 try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
-            } catch _ {
+            } catch {
+                debugPrint("Store Stickers directory creation Error \(error)")
             }
         }
         return URL(fileURLWithPath: path)
