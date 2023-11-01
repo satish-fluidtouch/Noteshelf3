@@ -9,87 +9,79 @@
 import UIKit
 
 class FTWordWrapStrokeRender: FTCharToStrokeRender {
+    private var xMargin: CGFloat = 0;
     override func convertTextToStroke(for page: FTPageProtocol
-                                      , string: String
-                                      ,origin inOrigin: CGPoint) -> [FTAnnotation] {
-        self.updatePageProperties(page);
-        var origin = inOrigin;
-
-        string.enumerateLines { line, stop in
-            var currentWord: String = "";
-            line.forEach { eachChar in
-                if(eachChar.isWhitespace) {
-                    let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(currentWord);
-                    self.drawWord(wordInfo, origin: &origin)
-                    currentWord = "";
-                }
-                else {
-                    currentWord.append(eachChar);
-                }
-            }            
-            if(!currentWord.isEmpty) {
-                let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(currentWord);
-                self.drawWord(wordInfo, origin: &origin)
-                currentWord = ""
-            }
-            self.gotoNextParagraph(page, origin: &origin);
-        }
-        return strokesToAdd;
-    }
-    
-    override func convertTextToStroke(for page: FTPageProtocol
-                                      ,content: String
+                                      ,content aicontent: FTAIContent
                                       , origin inOrigin: CGPoint
                                       , onUpdate: @escaping FTStrokeRenderOnUpdateCallback
                                       , onComplete: @escaping FTStrokeRenderOnCompleteCallback) {
         self.updatePageProperties(page);
         var origin = inOrigin;
-
+        
         var currentPage = page;
         func _createNewPageIfNeeded(_ isLastChar: Bool) {
             if let newPage = self.createNewPageIfNeeded(origin: &origin
                                                         , isLastChar: isLastChar
                                                         , currentPage: currentPage
                                                         , createPageCallBack: onUpdate) {
+                if self.xMargin != 0 {
+                    origin.x = self.xMargin;
+                }
                 currentPage = newPage;
             }
         }
         
-        func drawCurrentWord(_ word: String,isLastChar: Bool) {
-            if isLastChar {
-                debugLog("ente");
-            }
-            let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(word);
-            if self.canFixWord(wordInfo, origin: &origin, pageScale: self.pageScale, currentPage: currentPage) {
-                self.drawWord(wordInfo, origin: &origin)
+        func drawCurrentWord(_ word: NSAttributedString,isLastChar: Bool) {
+            let wordInfo = FTTextToStrokeDataProvider.sharedInstance.strokeInfoForWord(word.string);
+            if self.canFitWord(wordInfo, origin: &origin, pageScale: self.pageScale, currentPage: currentPage) {
+                self.drawWord(wordInfo, content: word, origin: &origin)
             }
             else {
                 _createNewPageIfNeeded(isLastChar);
-                self.drawWord(wordInfo, origin: &origin)
+                self.drawWord(wordInfo, content: word, origin: &origin)
             }
-        }
-        var curindex = -1;
-        content.enumerateLines { line, stop in
-            curindex += 1;
-            var currentWord: String = "";
-            line.forEach { eachChar in
-                curindex += 1;
-                if(eachChar.isWhitespace) {
-                    drawCurrentWord(currentWord, isLastChar: (curindex == content.count));
-                    currentWord = "";
-                }
-                else {
-                    currentWord.append(eachChar);
-                }
-            }
-            if !currentWord.isEmpty {
-                drawCurrentWord(currentWord, isLastChar: (curindex == content.count));
-                currentWord = ""
-            }
-            self.gotoNextParagraph(currentPage, origin: &origin);
-            _createNewPageIfNeeded(content.last == currentWord.last);
         }
         
+        var currentLineCounter = 0;
+        if let lines = aicontent.attributedString?.lines() {
+            lines.forEach({ eachLineRange in
+                let eachLine = eachLineRange.attributedString;
+                currentLineCounter += 1;
+                self.xMargin = 0;
+                var currentLine = eachLine;
+                if let bulletList = eachLine.bulletLists,let bullet = bulletList.last {
+                    let trimmedEntries = eachLine.trimmingBullets(bulletlist: bulletList);
+                    currentLine = trimmedEntries.trimmed;
+                    var bulletString: String = "";
+                    if !bullet.isOrdered {
+                        if bulletList.count % 2 == 0 {                            
+                            bulletString = FTTextList.textListWithMarkerFormat("{hyphen}", option: 0).marker(forItemNumber: 0);
+                        }
+                        else {
+                            bulletString = FTTextList.textListWithMarkerFormat("{disc}", option: 0).marker(forItemNumber: 0);
+                        }
+                    }
+                    else {
+                        bulletString = trimmedEntries.bulletString;
+                    }
+                    drawCurrentWord(NSAttributedString(string: bulletString), isLastChar: false);
+                    self.xMargin = origin.x;
+                }
+                let words = currentLine.words()
+                let isLastLine = currentLineCounter == lines.count;
+                var isLastWord = false;
+                var currentWordCounter = 0;
+
+                words.forEach { eachWord in
+                    currentWordCounter += 1;
+                    isLastWord = currentWordCounter == words.count;
+                    drawCurrentWord(eachWord, isLastChar: (isLastLine && isLastWord));
+                }
+                
+                self.gotoNextParagraph(currentPage, origin: &origin);
+//                _createNewPageIfNeeded((isLastLine && isLastWord));
+            });
+        }
         if !self.strokesToAdd.isEmpty {
             _ = onUpdate(self.strokesToAdd,currentPage,false);
         }
@@ -97,16 +89,25 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         onComplete();
     }
 
-    private func drawWord(_ wordInfo: FTWordStrokeInfo
+    override var lineSpacing: CGFloat {
+        return 2;
+    }
+}
+
+private extension FTWordWrapStrokeRender {
+    func drawWord(_ wordInfo: FTWordStrokeInfo
+                          , content: NSAttributedString
                           , origin: inout CGPoint) {
         wordInfo.wordStrokesInfo.forEach { strokesInfo in
-            let info = self.drawStroke(strokesInfo: strokesInfo, origin: &origin);
+            let info = self.drawStroke(strokesInfo: strokesInfo, word: content,origin: &origin);
             strokesToAdd.append(contentsOf: info.strokes);
         }
-        origin.x += FTTextToStrokeProperties.spaceCharWidth;
+        if !wordInfo.wordStrokesInfo.isEmpty {
+            origin.x += FTTextToStrokeProperties.spaceCharWidth;
+        }
     }
     
-    private func canFixWord(_ wordInfo: FTWordStrokeInfo
+    func canFitWord(_ wordInfo: FTWordStrokeInfo
                             , origin: inout CGPoint
                             ,pageScale: CGFloat
                             ,currentPage: FTPageProtocol) -> Bool {
@@ -117,7 +118,15 @@ class FTWordWrapStrokeRender: FTCharToStrokeRender {
         
         if((self.pageRect.width - rightMargin) < (origin.x + maxWordWidth)) {
             gotoNextLine(currentPage, origin: &origin);
+            if self.xMargin != 0 {
+                origin.x = self.xMargin;
+            }
         }
         return !currentPage.isAtTheEndOfPage(origin)
     }
 }
+
+/*
+var effectiveRange: NSRange = NSRange(location: NSNotFound, length: 0);
+eachLineRange.attributedString.attribute(.paragraphStyle, at: eachLineRange.range.location, effectiveRange: &effectiveRange);
+*/

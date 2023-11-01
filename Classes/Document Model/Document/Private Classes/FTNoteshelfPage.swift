@@ -568,6 +568,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         dictRep["uuid"] = self.uuid as AnyObject?;
         dictRep["isBookmarked"] = NSNumber.init(value: self.isBookmarked as Bool);
         dictRep["isCover"] = NSNumber.init(value: self.isCover as Bool);
+
         dictRep["bookmarkTitle"] = self.bookmarkTitle
         dictRep["bookmarkColor"] = self.bookmarkColor
         dictRep["rotationAngle"] = self.rotationAngle
@@ -784,7 +785,15 @@ extension FTNoteshelfPage : FTPageTagsProtocol
         }
         return []
     }
-    
+
+    func addTags(tags: [String]) {
+        let newOrderedSet = NSMutableOrderedSet(array: tags)
+        self._tags = newOrderedSet.mutableCopy() as! NSMutableOrderedSet
+        if(!self.isInitializationInprogress) {
+            NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument);
+        }
+    }
+
     func addTag(_ tag : String)
     {
         self._tags.add(tag)
@@ -844,17 +853,23 @@ extension FTNoteshelfPage : FTPageSearchProtocol
         //-> If tag is present , get the page which has tags
         // If tags and key is present, get the tag first and then search key in tagged page
         // If no tags, and only key, get page which has text in it
-        var found = false;
-
         var searchableItems = [FTSearchableItem]();
-        for eachTag in tags {
-            found = self.tags().contains(where: { (element) -> Bool in
-                return element == eachTag
-            })
-            if !found {break}
+        let currentTags = Set(self.tags().map{$0.lowercased()});
+        let tagsToSearch = Set(tags.map{$0.lowercased()});
+        if currentTags.intersection(tagsToSearch) != tagsToSearch {
+            self.searchLock.signal();
+            return false;
         }
 
-        if !searchKey.isEmpty, let textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) {
+        guard !searchKey.isEmpty else {
+            self.searchLock.signal();
+            return true;
+        }
+        
+        var found = false;
+        //If any tags are present and found in this page, proceed further search is specific tagged page
+        //If no tags, also continue search with searchKey
+        if let textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) {
             if(!textAnnotations.isEmpty) {
                 found = true;
             }
@@ -1154,7 +1169,7 @@ extension FTNoteshelfPage : FTCopying {
         newPage.bottomMargin = self.bottomMargin;
         newPage.topMargin = self.topMargin;
         newPage.leftMargin = self.leftMargin;
-
+        newPage.isCover = self.isCover
         newPage.pdfKitPageRect = self.pdfKitPageRect;
         newPage.rotationAngle = self.rotationAngle
         newPage.pageBackgroundColor = self.pageBackgroundColor;
@@ -1306,6 +1321,10 @@ extension FTNoteshelfPage: FTThumbnailable {
 
 extension FTNoteshelfPage {
     func hasPDFText() -> Bool {
+        if FTUserDefaults.isInSafeMode() {
+            return false
+        }
+
         if self.hasContents == .unknown
             , let templateURL = self.templateFileItem()?.fileItemURL,
             let pdfDoc = PDFDocument.init(url: templateURL) {
@@ -1391,6 +1410,9 @@ private extension FTNoteshelfPage {
     }
 
     func canContinuePDFContentSearch() -> Bool {
+        if FTUserDefaults.isInSafeMode() {
+            return false
+        }
         var canContinue = false;
         let val = self.contentCache?.object(forKey: self.uuid) as? [String:Any] ?? [String:Any]();
         let timeStamp = (val[timeStampKey] as? TimeInterval) ?? 0;

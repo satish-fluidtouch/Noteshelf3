@@ -20,6 +20,7 @@ struct FTEditableView: View {
     @State var showEditableField: Bool = false
     var originalTitle: String = ""
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var viewModel: FTSidebarViewModel
 
     var body: some View {
                 Label {
@@ -30,16 +31,7 @@ struct FTEditableView: View {
                                 .focused($titleIsFocused)
                                 .foregroundColor(.appColor(.black1))
                                 .onSubmit {
-
-                                    if !item.title.isEmpty {
-                                        self.onButtonSubmit(item.title)
-                                    } else {
-                                        if originalTitle.isEmpty { // new category flow
-                                            showEditableField = false
-                                        } else {
-                                            item.title = originalTitle
-                                        }
-                                    }
+                                    didTapSubmitOrKeyboardHideOption()
                                 }
                                 .onAppear {
                                     runInMainThread(0.2) {
@@ -57,6 +49,7 @@ struct FTEditableView: View {
                             .contentShape(Rectangle())
                             .if(!showEditableField) { view in
                                 view.onTapGesture {
+                                    viewModel.endEditingActions()
                                     showEditableField = true
                                     track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
                                 }
@@ -83,17 +76,21 @@ struct FTEditableView: View {
                 }
             }
         .onReceive(keyboardHideNotification) { _ in
-
-            if !item.title.isEmpty {
-                self.onButtonSubmit(item.title)
-            } else {
-                if originalTitle.isEmpty { // new category flow
-                    showEditableField = false
-                } else {
-                    item.title = originalTitle
-                }
-            }
-
+            didTapSubmitOrKeyboardHideOption()
         }
+    }
+    private func didTapSubmitOrKeyboardHideOption(){
+        let newTitle = item.title
+        if !item.title.isEmpty {
+            if originalTitle.isEmpty { // New categpry case
+                item.title = ""
+            }
+        } else {
+            if !originalTitle.isEmpty {
+                item.title = originalTitle
+            }
+        }
+        self.onButtonSubmit(newTitle)
+        showEditableField = false
     }
 }

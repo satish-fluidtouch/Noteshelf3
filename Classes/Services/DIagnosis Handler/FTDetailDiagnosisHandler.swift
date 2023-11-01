@@ -69,7 +69,7 @@ class FTDetailDiagnosisHandler: NSObject,MFMailComposeViewControllerDelegate {
             let mailComposerViewController = MFMailComposeViewController.init();
             mailComposerViewController.mailComposeDelegate = self;
             mailComposerViewController.modalPresentationStyle = UIModalPresentationStyle.formSheet;
-            mailComposerViewController.setSubject("Noteshelf Log");
+            mailComposerViewController.setSubject("Noteshelf3 Log");
             mailComposerViewController.addSupportMailID();
             
             mailComposerViewController.addAttachmentData(attachmentPath, mimeType: "application/com.ramki.logs", fileName: "detailInfo.dat")

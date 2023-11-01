@@ -35,50 +35,21 @@ extension URL {
     
     var fileLastOpenedDate: Date {
         get {
-            var date: Date?;
-            do {
-                date = try self.resourceValues(forKeys: [.contentAccessDateKey]).contentAccessDate;
-            }
-            catch {
-                
-            }
-            return date ?? fileModificationDate;
+            return readLastOpenedDate() ?? fileModificationDate;
         }
     }
 
-    public func updateLastOpenedDate(_ date: Date) {
-        DispatchQueue.global().async {
-            let coordinator = NSFileCoordinator(filePresenter: nil);
-            var error: NSError?;
-            coordinator.coordinate(writingItemAt: self,
-                                   options: .contentIndependentMetadataOnly,
-                                   error: &error) { writingURL in
-                do {
-                    var inURL = writingURL;
-                    var resourceValue = URLResourceValues();
-                    resourceValue.contentAccessDate = date;
-                    try inURL.setResourceValues(resourceValue);
-                }
-                catch {
-                    
-                }
-            }
-        }
+    public mutating func updateLastOpenedDate(_ date: Date) {
+        let lastOpenAttribute = FileAttributeKey.ExtendedAttribute(key: .lastOpenDateKey, date: date)
+        try? self.setExtendedAttributes(attributes: [lastOpenAttribute])
     }
-    
-    public func readLastOpenedDate(_ completion : @escaping (Date)->()) {
-        DispatchQueue.global().async {
-            let coordinator = NSFileCoordinator(filePresenter: nil);
-            var error: NSError?;
-            coordinator.coordinate(readingItemAt: self,
-                                   options: .immediatelyAvailableMetadataOnly,
-                                   error: &error) { readingURL in
-                let date = readingURL.fileLastOpenedDate;
-                completion(date);
-            }
-            if nil != error {
-                completion(self.fileCreationDate);
-            }
+
+    public func readLastOpenedDate() -> Date? {
+        if let date = self.getExtendedAttribute(for: .lastOpenDateKey)?.dateValue {
+            return date
+        } else {
+            let date = try? self.resourceValues(forKeys: [.contentAccessDateKey]).contentAccessDate
+            return date
         }
     }
 }

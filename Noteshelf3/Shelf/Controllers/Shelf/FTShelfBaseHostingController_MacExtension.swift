@@ -38,7 +38,7 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
     }
 
     func toolbarDidBeginSearch(_ toolbarId: NSToolbar.Identifier, textField: UISearchTextField) {
-        if let splitVc = self.splitViewController as? FTShelfSplitViewController {
+        if let splitVc = self.splitViewController as? FTShelfSplitViewController, !self.isInSearchMode() {
             splitVc.navigateToGlobalSearch()
             self.delegate = splitVc.globalSearchController
             runInMainThread(0.1) {

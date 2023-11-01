@@ -49,6 +49,8 @@ class FTNoteshelfDocumentProvider: NSObject {
     var isProviderReady: Bool {
         return providerMode != nil
     }
+
+    fileprivate var isContentMoving: Bool = false // set this to true when content is being moved from iCloud to local and vice versa.
     /// This needs to be called only on initialization and whenever the iCloud Settings are modified.
     func updateProviderIfRequired(_ onCompletion :((_ isUpdated: Bool) -> Void)?) {
         FTNoteshelfDocumentProvider.documentProvider { provider in
@@ -192,11 +194,6 @@ class FTNoteshelfDocumentProvider: NSObject {
                     let favoritesShelfCollection = recentShelfCat.favoritesShelfItemCollection
                     let starredCategory = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("sidebar.topSection.starred", comment: "Starred"), type: .starred, categories: [favoritesShelfCollection]);
                     categoryCollection.append(starredCategory);
-
-                    let recentShelfCollection = recentShelfCat.recentShelfItemCollection
-                    let recentsCategory = FTShelfCategoryCollectionRecent.init(name: NSLocalizedString("Recents", comment: "Recents"), type: .recent, categories: [recentShelfCollection]);
-                    recentsCategory.type = .recent;
-                    categoryCollection.append(recentsCategory);
                 }
                 #endif
                 self.categorizedShelfs = categoryCollection
@@ -654,7 +651,12 @@ extension FTNoteshelfDocumentProvider {
     func moveContentsFromLocalToiCloud(onCompletion completion :@escaping ((Bool, Error?) -> Void)) {
         self.resetProviderCache();
         guard let icloudShelfCollection = cloudShelfCollectionRoot?.ns3Collection  as? FTShelfCollectioniCloud else { completion(false, nil); return }
-
+        isContentMoving = true
+        func enableUpdatesAndEndBGTask(_ bgTask: UIBackgroundTaskIdentifier) {
+            isContentMoving = false
+            self.cloudDocumentListener?.enableUpdates();
+            endBackgroundTask(bgTask)
+        }
         self.shelfs({ [weak self] (_) in
             self?.cloudDocumentListener?.disableUpdates();
             self?.localShelfCollectionRoot?.ns3Collection.shelfs({ (collections) in
@@ -663,18 +665,16 @@ extension FTNoteshelfDocumentProvider {
                                             toCloud: icloudShelfCollection,
                                             onCompletion: { error in
                                                 if(nil != error) {
-                                                    self?.cloudDocumentListener?.enableUpdates();
-                                                    endBackgroundTask(bgTask)
+                                                    enableUpdatesAndEndBGTask(bgTask)
                                                     completion(false, error);
                                                 } else {
                                                     self?.moveAudioContentsFromLocalToiCloud(onCompletion: { error in
-                                                        endBackgroundTask(bgTask)
+                                                        enableUpdatesAndEndBGTask(bgTask)
                                                         if(nil != error) {
                                                             completion(false, error);
                                                         } else {
                                                             completion(true, nil);
                                                         }
-                                                        self?.cloudDocumentListener?.enableUpdates();
                                                     });
                                                 }
                 });
@@ -689,6 +689,7 @@ extension FTNoteshelfDocumentProvider {
         guard let cloudURL = FTNSiCloudManager.shared().iCloudRootURL() else {
             return;
         }
+        self.isContentMoving = true
         self.resetProviderCache();
         if let cloudDocumentListener {
             cloudDocumentListener.disableUpdates();
@@ -702,6 +703,11 @@ extension FTNoteshelfDocumentProvider {
         let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: FTNSiCloudManager.shared().iCloudRootURL()!)
         _cloudDocumentListner.addListener(cloudWatchCollection)
 
+        func stopQueryAndEnableCloudUpdates(){
+            self.isContentMoving = false
+            _cloudDocumentListner.stopQuery();
+            self.cloudDocumentListener?.enableUpdates();
+        }
         _cloudDocumentListner.startQuery {
             ns3Collection.shelfs({ (cloudCollections) in
                 self.localShelfCollectionRoot?.ns3Collection.shelfs({ (_) in
@@ -712,20 +718,17 @@ extension FTNoteshelfDocumentProvider {
                         if(nil != error) {
                             endBackgroundTask(bgTask)
                             (error! as NSError).showAlert(from: Application.visibleViewController)
-                            _cloudDocumentListner.stopQuery();
-                            self.cloudDocumentListener?.enableUpdates();
+                            stopQueryAndEnableCloudUpdates()
                             completion(false);
                         } else {
                             self.moveAudioContentsFromiCloudToLocal(cloudWatchCollection: cloudWatchCollection, onCompletion: { error in
                                 endBackgroundTask(bgTask)
                                 if(nil != error) {
                                     (error! as NSError).showAlert(from: Application.visibleViewController)
-                                    _cloudDocumentListner.stopQuery();
-                                    self.cloudDocumentListener?.enableUpdates();
+                                    stopQueryAndEnableCloudUpdates()
                                     completion(false);
                                 } else {
-                                    _cloudDocumentListner.stopQuery();
-                                    self.cloudDocumentListener?.enableUpdates();
+                                    stopQueryAndEnableCloudUpdates()
                                     completion(true);
                                 }
                             });
@@ -1000,3 +1003,9 @@ extension URL {
     }
 }
 #endif
+
+extension FTNoteshelfDocumentProvider {
+    func isContentMovingInProgress() -> Bool {
+        self.isContentMoving
+    }
+}

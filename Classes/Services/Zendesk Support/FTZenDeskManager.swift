@@ -267,17 +267,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
     
     // MARK: - Custom Fields
 
-   @objc class func setLastConnectedStylus(_ lastConnectedStylus:String!) {
-        UserDefaults.standard.set(lastConnectedStylus, forKey:"LastConnectedStylus")
-        UserDefaults.standard.synchronize()
-    }
-
-    // MARK: Helpers
-    class func lastConnectedStylus() -> String? {
-        let stylusName = UserDefaults.standard.object(forKey: "LastConnectedStylus") as? String
-        return stylusName == nil ? "" : stylusName
-    }
-    
     class func freeDiskSpace() -> String {
         let diskSpace = UIDevice.current.freeDiskSpaceInGB;
         return diskSpace
@@ -303,63 +292,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         #endif
         return cloudUsed.componentsJoined(by: ", ")
     }
-    
-#if targetEnvironment(macCatalyst)
-    class func userIDForCrash() -> String! {
-        if UserDefaults.standard.string(forKey: "USER_ID_FOR_CRASH") == nil {
-            let userID = (FTUtils.getUUID() as NSString).substring(to: 8);
-            UserDefaults.standard.set(userID, forKey: "USER_ID_FOR_CRASH");
-            UserDefaults.standard.synchronize()
-        }
-        return UserDefaults.standard.string(forKey:"USER_ID_FOR_CRASH")
-    }
-    
-    class func customFields() -> [String : Any] {
-        var customFields = [String : Any]()
-        customFields = [
-            "User ID": self.userIDForCrash(),
-            "App Version": "\(appVersion()) (\(appBuildVersion()))",
-            "Sizes": "Free:\(self.freeDiskSpace())",
-            "Clouds Used": self.cloudUsed(),
-            "Device": "Mac" /* [FTUtils deviceModelFriendlyName], */,
-            "macOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
-            "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
-            "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
-            "Lang": FTUtils.currentLanguage(),
-            "Locale": NSLocale.current.identifier,
-            "HasMigratedItems": self.hasMigratedContents() ? "YES" : "NO",
-            "Recognition": FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO",
-            "Recog_Act": FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO",
-            "Battery" : UIDevice.current.batteryStateString,
-            "Screens" : UIScreen.screensDescription,
-            "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
-        ]
-            return customFields
-    }
-    
-    class func customFieldsString() -> String {
-        let customFields = self.customFields()
-
-        var string: String?
-        if let value = customFields["User ID"],
-           let value1 = customFields["App Version"],
-           let value2 = customFields["macOS"],
-           let value3 = customFields["Device"],
-           let value4 = customFields["Sizes"],
-           let value5 = customFields["Clouds Used"],
-           let value6 = customFields["iCloud"],
-           let value7 = customFields["Autobackup"],
-           let value8 = customFields["Lang"],
-           let value9 = customFields["Locale"],
-           let value10 = customFields["HasMigratedItems"],
-           let value11 = customFields["Battery"],
-           let value12 = customFields["Screens"],
-           let value13 = customFields["Premium"] {
-            string = "User ID: \(value) | Version: \(value1) | Premium: \(value13) | macOS: \(value2) | Device: \(value3) | Free: \(value4) | Cloud: \(value5) | iCloud: \(value6) | Autobackup: \(value7) | Lang: \(value8) | Locale: \(value9) | HasMigratedItems : \(value10) | Battery: \(value11) | Screens: \(value12)"
-        }
-        return string ?? ""
-    }
-#else
     class func customFields() -> [String : Any] {
         let isPaired = NSUbiquitousKeyValueStore.default.isWatchPaired()
         let isWatchAppInstalled = NSUbiquitousKeyValueStore.default.isWatchAppInstalled()
@@ -367,29 +299,29 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         if isWatchAppInstalled {
             watchStatus = "Installed"
         }
+        let deviceName = UIDevice().isMac() ? "Mac" : FTUtils.deviceModelFriendlyName()
         var customFields = [String : Any]()
         customFields = [
             "User ID": UserDefaults.standard.string(forKey: "USER_ID_FOR_CRASH") ?? "",
             "App Version": "\(appVersion()) (\(appBuildVersion()))",
-            "Last Connected Stylus": self.lastConnectedStylus() ?? "",
-            "Sizes": "Free:\(self.freeDiskSpace())",
+            "Sizes": "Free: \(self.freeDiskSpace())",
             "Clouds Used": self.cloudUsed(),
-            "Device": FTUtils.deviceModelFriendlyName(),
-            "iOS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
+            "Device": deviceName,
+            "OS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
             "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
             "ENPublish": UserDefaults.standard.bool(forKey: "EvernotePubUsed") ? "YES" : "NO",
             "Apple Pencil": UserDefaults.standard.bool(forKey: "isUsingApplePencil") ? "YES" : "NO",
             "Lang": FTUtils.currentLanguage(),
             "Locale": NSLocale.current.identifier,
-            "HasMigratedItems": self.hasMigratedContents() ? "YES" : "NO",
             "AppleWatch": watchStatus,
             "Recognition": FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO",
             "Recog_Act": FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO",
             "LayoutType": (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal",
             "Battery": UIDevice.current.batteryStateString,
             "Screens": UIScreen.screensDescription,
-            "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
+            "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO",
+            "NS2": FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO"
         ]
         return customFields
     }
@@ -399,9 +331,8 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         var string: String?
         if let userId = customFields["User ID"],
            let version = customFields["App Version"],
-           let iOS = customFields["iOS"],
+           let operatingSystem = customFields["OS"],
            let Device = customFields["Device"],
-           let stylus = customFields["Last Connected Stylus"],
            let sizes = customFields["Sizes"],
            let cloudUsed = customFields["Clouds Used"],
            let pencil = customFields["Apple Pencil"],
@@ -410,19 +341,17 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            let ENPublish = customFields["ENPublish"],
            let lang = customFields["Lang"],
            let locale = customFields["Locale"],
-           let hasMigratedItems = customFields["HasMigratedItems"],
            let appleWatch = customFields["AppleWatch"],
            let recognition = customFields["Recognition"],
            let recog_Act = customFields["Recog_Act"],
            let layoutType = customFields["LayoutType"],
            let battery = customFields["Battery"],
-           let premium = customFields["Premium"]{
-            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | iOS: \(iOS) | Device: \(Device) | Stylus: \(stylus) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | HasMigratedItems : \(hasMigratedItems) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription)"
+           let premium = customFields["Premium"],
+           let ns2 = customFields["NS2"]{
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2)"
         }
         return string ?? ""
     }
-
-#endif
     //ENBusinessSupport
     class func incrementENSyncEnabledForBusinessStore() {
         let key:String! = "ENBusinessStoreSyncEnabledBooksCount"
@@ -431,23 +360,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         UserDefaults.standard.set(numberOfCounts, forKey:key)
         UserDefaults.standard.synchronize()
     }
-
-    class func hasMigratedContents() -> Bool {
-        var hasMigratedContents = false
-        let fileURL = FTUtils.noteshelfDocumentsDirectory().appendingPathComponent("Migrated Documents")
-        var contents: [String]?
-        do {
-            contents = try FileManager.default.contentsOfDirectory(atPath: fileURL.path)
-        } catch {
-        }
-        for eachItem in contents ?? [] {
-            if eachItem.hasSuffix(FTFileExtension.shelf) {
-                hasMigratedContents = true
-                break
-            }
-        }
-        return hasMigratedContents
-    }
+     
 
     // MARK: - UINavigationControllerDelegate -
     func navigationController(_ navigationController:UINavigationController, willShow viewController:UIViewController, animated:Bool) {
@@ -490,7 +403,6 @@ private extension UIScreen {
         for screen in screens {
             let dimensions = "\(screen.bounds.width)x\(screen.bounds.height)"
             info.append(dimensions)
-            info.append(" | ")
         }
         return info
     }

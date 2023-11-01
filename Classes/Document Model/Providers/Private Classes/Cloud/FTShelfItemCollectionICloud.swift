@@ -741,9 +741,6 @@ extension FTShelfItemCollectionICloud: FTShelfCacheProtocol {
             if(currentGroup?.uuid != newGroupItem?.uuid) {
                 if let _currentGroup = currentGroup {
                     _currentGroup.removeChild(item);
-                    if _currentGroup.childrens.isEmpty {
-                        self.removeItemFromCache(_currentGroup.URL, shelfItem: _currentGroup);
-                    }
                 }else {
                     self.removeChild(item);
                 }
@@ -811,7 +808,8 @@ private extension FTShelfItemCollectionICloud {
             return groupItem;
         }
         
-        if let first = fileURL.pathRelativeTo(self.URL).components(separatedBy: "/").first {
+        if let first = fileURL.pathRelativeTo(self.URL).components(separatedBy: "/").first ,
+           first.hasSuffix(FTFileExtension.group) { // Ensuring url's first component has a group extension
             if let item = self.groupItemWithName(title: first) {
                 itemToReturn = item
             }

@@ -26,6 +26,10 @@ class FTVisionNotebookRecognitionHelper: NSObject {
     }
     
     @objc static var shouldProceedRecognition : Bool {
+        if FTUserDefaults.isInSafeMode() {
+            return false
+        }
+        
         if let langCode = FTLanguageResourceManager.shared.currentLanguageCode,
            langCode != languageCodeNone,
            Self.supportsImageToTextRecognition() {

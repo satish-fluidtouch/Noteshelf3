@@ -101,7 +101,7 @@ class FTShelfItemsViewModel: ObservableObject {
     }
     func fetchUserCreatedCategories() async {
         if collection == nil {
-            let collections = await FTNoteshelfDocumentProvider.shared.fetchAllCollections(includingUnCategorized: true)
+            let collections = await FTNoteshelfDocumentProvider.shared.fetchAllCollections()
             let items: [FTShelfItems] = collections.map { collection -> FTShelfItems in
                 let item = FTShelfItems(collection: collection)
                 return item

@@ -45,12 +45,12 @@ public extension URL {
 
             try FileManager.default.setAttributes(fileAttributes, ofItemAtPath: self.path)
 #if DEBUG
-            print("✅  xAttr set for \(attributes.map{$0.key})")
+            print("✅  xAttr set for \(attributes.map{$0.key.rawValue})")
 #endif
 
         } catch {
 #if DEBUG
-            print("⚠️  xAttr failed to set for \(attributes.map{$0.key})")
+            print("⚠️  xAttr failed to set for \(attributes.map{$0.key.rawValue})")
 #endif
             throw error
         }
@@ -60,7 +60,7 @@ public extension URL {
         let attributes = try? FileManager.default.attributesOfItem(atPath: self.path)
         if let xAttributes = attributes?.extendedAttributes,
            let data = xAttributes[key] as? Data {
-            return FileAttributeKey.ExtendedAttribute(key: key, value: data)
+            return FileAttributeKey.ExtendedAttribute(key: key, data: data)
         } else {
             return nil
         }
@@ -85,27 +85,42 @@ public extension URL {
 public extension FileAttributeKey {
     struct ExtendedAttribute {
         public let key: FileAttributeKey
-        public let value: Data
+        public let data: Data
 
-        public init(key: FileAttributeKey, value: Data) {
-            if dataToKilobytes(value) > 32 {
+        public init(key: FileAttributeKey, data: Data) {
+            if dataToKilobytes(data) > 32 {
 // https://developer.apple.com/documentation/fileprovider/nsfileprovideritemprotocol/3074511-extendedattributes
                 fatalError("ExtendedAttribute is more than permitted size")
             }
             self.key = key
-            self.value = value
-
+            self.data = data
         }
 
         public init(key: FileAttributeKey, string: String) {
             guard let data = string.data(using: String.Encoding.utf8) else {
                 fatalError("Inavlid String passed, unable to convert to data")
             }
-            self.init(key: key, value: data)
+            self.init(key: key, data: data)
+        }
+
+        public init(key: FileAttributeKey, date: Date) {
+             let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .secondsSince1970
+            guard let data = try? encoder.encode(date) else {
+                fatalError("unable to convert to data")
+            }
+            self.init(key: key, data: data)
         }
 
         public var stringValue: String? {
-            String(data: self.value, encoding: .utf8)
+            String(data: self.data, encoding: .utf8)
+        }
+
+        public var dateValue: Date? {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            let date = try? decoder.decode(Date.self, from: self.data)
+            return date
         }
     }
 }
@@ -116,13 +131,14 @@ public extension FileAttributeKey {
 
     // sub keys
     static let documentUUIDKey: ExtendedAttributeKey = ExtendedAttributeKey("ft.doc.id#S")
+    static let lastOpenDateKey: ExtendedAttributeKey = ExtendedAttributeKey("ft.doc.lod#S")
 }
 
 extension Sequence where Self == [FileAttributeKey.ExtendedAttribute] {
     var asDictionary: [AnyHashable: Data] {
         var attributes = [AnyHashable: Data]()
         self.forEach { attr in
-            attributes[attr.key] = attr.value
+            attributes[attr.key] = attr.data
         }
         return attributes
     }

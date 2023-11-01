@@ -8,59 +8,8 @@
 
 import UIKit
 
-private extension UserDefaults {
-    static func groupUserDefaults() -> UserDefaults {
-        return UserDefaults(suiteName: FTSharedGroupID.getAppGroupID())!;
-    }
-}
-
 extension URL {
-    /*
-    static func triggerICloud()
-    {
-        if UserDefaults.groupUserDefaults().bool(forKey: "iCloudOn"), (nil == icloudURL) {
-            if(FileManager().ubiquityIdentityToken != nil) {
-                let sema = DispatchSemaphore.init(value: 0);
-                DispatchQueue.global().async {
-                    icloudURL = FileManager().url(forUbiquityContainerIdentifier: nil);
-                    sema.signal();
-                }
-                sema.wait();
-            }
-        }
-    }
-     */
-    
-    func isUbiquitousFileExists() -> Bool
-    {
-        return FileManager().isUbiquitousItem(at: self)
-
-        // Old approach of checking Ubiquitous status removing now, to solve the intra container iCloud Status
-        /*
-        if #available(iOS 14.0, *) {
-            if(nil == icloudURL) {
-                URL.triggerICloud();
-            }
-
-            if let ubiPath = icloudURL?.urlByDeleteingPrivate().path,
-               self.urlByDeleteingPrivate().path.contains(ubiPath) {
-                if(FileManager().fileExists(atPath: self.path)) {
-                    return true;
-                }
-                let lastComp = self.lastPathComponent;
-                let metaCloudURL = self.deletingLastPathComponent().appendingPathComponent(".\(lastComp).icloud");
-                if(FileManager().fileExists(atPath: metaCloudURL.path)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        else {
-            return FileManager().isUbiquitousItem(at: self)
-        }
-         */
-    }
-    
+   
     func isCloudItem() -> Bool
     {
         if(self.isUbiquitousFileExists()) {

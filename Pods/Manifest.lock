@@ -82,6 +82,23 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleMLKit/DigitalInkRecognition (4.0.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitDigitalInkRecognition (~> 3.0.0)
+  - GoogleMLKit/MLKitCore (4.0.0):
+    - MLKitCommon (~> 9.0.0)
+  - GoogleToolboxForMac/DebugUtils (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - GoogleToolboxForMac/Defines (2.3.2)
+  - GoogleToolboxForMac/Logger (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
   - GoogleUtilities/AppDelegateSwizzler (7.10.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -101,6 +118,23 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.10.0):
     - GoogleUtilities/Logger
+  - GoogleUtilitiesComponents (1.1.0):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (2.3.0)
+  - MLKitCommon (9.0.0):
+    - GoogleDataTransport (~> 9.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - GoogleUtilitiesComponents (~> 1.0)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.1)
+  - MLKitDigitalInkRecognition (3.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitMDD (~> 5.0)
+    - SSZipArchive (~> 2.1)
+  - MLKitMDD (5.0.0):
+    - MLKitCommon (~> 9.0)
   - MSAL (1.0.7):
     - MSAL/app-lib (= 1.0.7)
   - MSAL/app-lib (1.0.7)
@@ -120,30 +154,32 @@ PODS:
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
   - Reachability (3.2)
+  - SSZipArchive (2.4.3)
   - SwiftLint (0.50.3)
   - TPInAppReceipt (3.3.4):
     - TPInAppReceipt/Core (= 3.3.4)
   - TPInAppReceipt/Core (3.3.4):
     - ASN1Swift (~> 1.2.3)
-  - ZendeskCommonUISDK (7.0.0)
-  - ZendeskCoreSDK (3.0.0)
-  - ZendeskMessagingAPISDK (4.0.0):
-    - ZendeskSDKConfigurationsSDK (= 2.0.0)
-  - ZendeskMessagingSDK (4.0.0):
-    - ZendeskCommonUISDK (= 7.0.0)
-    - ZendeskMessagingAPISDK (= 4.0.0)
-  - ZendeskSDKConfigurationsSDK (2.0.0)
-  - ZendeskSupportProvidersSDK (6.0.0):
-    - ZendeskCoreSDK (= 3.0.0)
-  - ZendeskSupportSDK (6.0.0):
-    - ZendeskMessagingSDK (= 4.0.0)
-    - ZendeskSupportProvidersSDK (= 6.0.0)
+  - ZendeskCommonUISDK (8.0.0)
+  - ZendeskCoreSDK (4.0.0)
+  - ZendeskMessagingAPISDK (5.0.0):
+    - ZendeskSDKConfigurationsSDK (~> 3.0.0)
+  - ZendeskMessagingSDK (5.0.0):
+    - ZendeskCommonUISDK (~> 8.0.0)
+    - ZendeskMessagingAPISDK (~> 5.0.0)
+  - ZendeskSDKConfigurationsSDK (3.0.0)
+  - ZendeskSupportProvidersSDK (7.0.0):
+    - ZendeskCoreSDK (~> 4.0.0)
+  - ZendeskSupportSDK (7.0.0):
+    - ZendeskMessagingSDK (~> 5.0.0)
+    - ZendeskSupportProvidersSDK (~> 7.0.0)
 
 DEPENDENCIES:
   - EvernoteSDK
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
+  - GoogleMLKit/DigitalInkRecognition
   - MSGraphMSALAuthProvider (from `https://github.com/AkshayFT/msgraph-sdk-objc-auth`)
   - Reachability
   - SwiftLint
@@ -164,12 +200,20 @@ SPEC REPOS:
     - FirebaseRemoteConfig
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleMLKit
+    - GoogleToolboxForMac
     - GoogleUtilities
+    - GoogleUtilitiesComponents
+    - GTMSessionFetcher
+    - MLKitCommon
+    - MLKitDigitalInkRecognition
+    - MLKitMDD
     - MSAL
     - MSGraphClientSDK
     - nanopb
     - PromisesObjC
     - Reachability
+    - SSZipArchive
     - SwiftLint
     - TPInAppReceipt
     - ZendeskCommonUISDK
@@ -202,23 +246,31 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfig: c24f767c17b0440ee63c7e93380d599173556113
   GoogleAppMeasurement: c7d6fff39bf2d829587d74088d582e32d75133c3
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
+  GoogleMLKit: 2bd0dc6253c4d4f227aad460f69215a504b2980e
+  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
+  GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
+  GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
+  MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
+  MLKitDigitalInkRecognition: fa1c9b25de5bc95dc564652d69c51806cf6e139c
+  MLKitMDD: 7d1354990908ae5eb820fceb5381860c12be6d60
   MSAL: e4c1cbcf59e04073b427ce9fbfc0346b54abb62e
   MSGraphClientSDK: ffc07a58a838e0702c7bf2a856367035d4a335d7
   MSGraphMSALAuthProvider: 8dcbccf26fe855644f0935f561932bc11895d26b
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   TPInAppReceipt: 75ff97f2484a463cf46c172fe7f94225612aeda1
-  ZendeskCommonUISDK: f06dbac6c9e74c3afff75ecdc6bec3832b23258c
-  ZendeskCoreSDK: ce6dbb5eb4d61d2d061547a92bd0b0fe98602e9d
-  ZendeskMessagingAPISDK: 95a99f1eab9482b4106ec88466b93a89f9f7c5fa
-  ZendeskMessagingSDK: 4f5f3d43766bb3b2ea6411d1331cfe609ff33618
-  ZendeskSDKConfigurationsSDK: a5c21010e17b71d02bc2cfe73dcc9da1efa0a7b2
-  ZendeskSupportProvidersSDK: 685b5d185af47ced0ec40564ec46355c838bbd06
-  ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
+  ZendeskCommonUISDK: d2dfaa56b9da2658dac0e078022bf918959b5854
+  ZendeskCoreSDK: bd3bc4e7ac4e508de20425a1eac3512a2d2c86bb
+  ZendeskMessagingAPISDK: 355f623d727620755b4041a42dffda4fb28ab90c
+  ZendeskMessagingSDK: 66b82e44c774359ac14f5fb21765aa73d0d174dd
+  ZendeskSDKConfigurationsSDK: 6b4b0941d46afd7352682c4ce764d5999535b7d4
+  ZendeskSupportProvidersSDK: 44f6639b5845815d4111b97ff00218f122ef9e33
+  ZendeskSupportSDK: cae2bd10740bed62d8f89b78e6eea42713cd1e3c
 
-PODFILE CHECKSUM: 3fa9e66068bc996337452f956edaa9d0fb4ecb59
+PODFILE CHECKSUM: 28ec703926a987c1694cc30104b1ef3fe78d24c6
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

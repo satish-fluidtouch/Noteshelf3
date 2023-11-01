@@ -9,9 +9,6 @@
 import Foundation
 import UIKit
 
-let FTPDFSwipeFromLeftGesture = "FTPDFSwipeFromLeftGesture";
-let FTPDFSwipeFromRightGesture = "FTPDFSwipeFromRightGesture";
-
 class FTGestureHelpTableViewCell : UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var subTitle: UILabel!

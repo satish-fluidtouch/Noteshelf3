@@ -826,6 +826,7 @@
 "Tag" = "Markieren";
 "Tagged" = "Markiert";
 "Tags" = "Schlagwörter";
+"Take beautiful notes effortlessly" = "Schöne Notizen mühelos machen";
 "TakePhoto" = "Foto aufnehmen";
 "TakeScreenshot" = "Screenshot aufnehmen";
 "TapToRate" = "Bewerten durch Antippen.";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "Hinzufügen als Handschrift auf neue Seite'";
 "noteshelf.ai.actionAddToNewPage" = "Als Text zu neuer Seite hinzufügen";
 "noteshelf.ai.actionAddToPage" = "Als Text hinzufügen";
+"noteshelf.ai.credit.bePremium" = "Aufwertung zu Noteshelf Premium";
+"noteshelf.ai.credit.bePremiumInfo" = "Upgrade auf Noteshelf Premium, um 100 monatliche KI-Guthaben freizuschalten und Handschrifterkennung zu erhalten";
+"noteshelf.ai.credit.creditsRunningOut" = "Credits werden bald aufgebraucht";
+"noteshelf.ai.credit.details" = "%d/%d verbleibende Guthaben";
+"noteshelf.ai.credit.moreOptions" = "Mehr Optionen";
+"noteshelf.ai.credit.moreinfo" = "AI-Guthaben wird in %d Tagen zurückgesetzt";
+"noteshelf.ai.credit.nocredits" = "Keine Guthaben mehr";
+"noteshelf.ai.pressEnterToSend" = "Drücken Sie die Eingabetaste, um zu senden";
 "numSelected" = "%ld Ausgewählt'";
 "objects" = "Objekte";
 "ok" = "Ok";
@@ -1475,7 +1484,7 @@
 "text.font.setAsDefault.thisAndFutureBooks" = "Dies und alle zukünftigen Notizbücher";
 "text.font.setAsDefault.thisBook" = "Dieses Notizbuch";
 "textmode.fonttitle" = "Schriftart/Textstil";
-"texttoolbar.fontselectionTitle" = "SCHRIFT AUSWÄHLEN";
+"texttoolbar.fontselectionTitle" = "Schrift Auswählen";
 "theams.unsplashDescription" = "Wählen Sie aus Unsplash aus, machen Sie ein Foto oder wählen Sie aus Ihrer Fotobibliothek, um Ihre individuellen Cover zu erstellen.";
 "trash.alert.cannotOpenNotebook" = "Dieses Notizbuch kann nicht geöffnet werden, da es gelöscht wurde. Um es wiederherzustellen, lange drücken und die Option aus dem Menü auswählen.";
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
@@ -1506,7 +1515,7 @@
 "welcome.nestedgroups" = "VERSCHACHTELTE GRUPPEN";
 "welcome.password" = "KENNWORT";
 "welcome.pixabay" = "PIXABAY";
-"welcome.presentMode" = "Gegenwart-Modus";
+"welcome.presentMode" = "PRÄSENTATIONSMODUS";
 "welcome.pressureSensitive" = "DRUCKEMPFINDLICH";
 "welcome.richText" = "FORMATIERTEM TEXT";
 "welcome.scanDocuments" = "DOKUMENTE SCANNEN";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 29 September 2023 at 11:49 AM
+// Last Synced by Akshay on 25 October 2023 at 12:13

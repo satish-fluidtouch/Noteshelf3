@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfHomeView: FTShelfBaseView {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -17,12 +18,13 @@ struct FTShelfHomeView: FTShelfBaseView {
 
     var body: some View {
         GeometryReader { geometry in
+            ScrollViewReader { proxy in
                 ScrollView(.vertical) {
                     VStack(alignment: .center,spacing:0) {
                         /*
-                            1. show description and top section in compact and ipad very first time
-                            2. once a notebook is created, dont show top section in compact but show in ipad.
-                            */
+                         1. show description and top section in compact and ipad very first time
+                         2. once a notebook is created, dont show top section in compact but show in ipad.
+                         */
                         if viewModel.shouldShowGetStartedInfo{
                             FTShelfGetStartedDescription()
                         }
@@ -34,17 +36,18 @@ struct FTShelfHomeView: FTShelfBaseView {
                                 .environmentObject(viewModel)
                         }
                     }
-                        homeShelfItemsViewForGeometrySize(geometry.size)
-                        if viewModel.shelfDidLoad {
-                            FTDiscoverWhatsNewView()
-                                .environmentObject(viewModel)
-                                .macOnlyPlainButtonStyle()
-                                .padding(.horizontal,gridHorizontalPadding)
-                                .padding(.top,40)
-                                .padding(.bottom,28)
-                        }
+                    homeShelfItemsViewForGeometrySize(geometry.size, scrollViewProxy: proxy)
+                    if viewModel.shelfDidLoad {
+                        FTDiscoverWhatsNewView()
+                            .environmentObject(viewModel)
+                            .macOnlyPlainButtonStyle()
+                            .padding(.horizontal,gridHorizontalPadding)
+                            .padding(.top,40)
+                            .padding(.bottom,28)
                     }
                 }
+            }
+        }
                 .overlay(content: {
                     if viewModel.showDropOverlayView {
                         withAnimation {
@@ -71,10 +74,10 @@ struct FTShelfHomeView: FTShelfBaseView {
                 }
                 .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
         }
-    private func homeShelfItemsViewForGeometrySize(_ size: CGSize) -> some View {
+    private func homeShelfItemsViewForGeometrySize(_ size: CGSize, scrollViewProxy: ScrollViewProxy) -> some View {
         let homeShelfItems = homeShelfItemsForScreenSize(size)
         return VStack(spacing:0) {
-            shelfGridView(items: homeShelfItems, size: size)
+            shelfGridView(items: homeShelfItems, size: size, scrollViewProxy: scrollViewProxy)
                 .if(viewModel.shelfItems.count > 0, transform: { view in
                     view.padding(.top,showSeeAllOption(shelfItemsCount: homeShelfItems.count) ? 16 : 20)
                 })
@@ -98,15 +101,14 @@ struct FTShelfHomeView: FTShelfBaseView {
                     .font(Font.appFont(for: .medium, with: 13))
                     .foregroundColor(Color.appColor(.black70))
             }
-            .frame(maxWidth:.infinity)
+            .frame(maxWidth:.infinity,alignment: .center)
             .frame(height: 36)
+            .background(Color.appColor(.seeAllBtnBG))
+            .cornerRadius(10)
+            .padding(.horizontal,gridHorizontalPadding)
+            .padding(.top,28)
         }
-    .frame(maxWidth:.infinity,alignment: .center)
-    .frame(height: 36)
-    .background(Color.appColor(.seeAllBtnBG))
-    .cornerRadius(10)
-    .padding(.horizontal,gridHorizontalPadding)
-    .padding(.top,28)
+        .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .slow))
     }
 
     private var seeAllNotesButtonTitle: String {

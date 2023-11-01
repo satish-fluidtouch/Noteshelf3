@@ -12,13 +12,14 @@ import FTCommon
 class FTSearchSuggestionHelper: NSObject {
     static let shared = FTSearchSuggestionHelper()
 
-    func fetchTags() -> [FTTagModel] {
-        let allTagStrs = FTCacheTagsProcessor.shared.cachedTags()
-        var tags = allTagStrs.map { FTTagModel(text: $0, isSelected: false) }
-        tags.sort { (tag1, tag2) -> Bool in
-            (tag1.text.compare(tag2.text, options: [.caseInsensitive, .numeric], range: nil, locale: nil) == .orderedAscending)
+    func fetchTags(completion: @escaping ([FTTagModel]) -> Void) {
+        FTTagsProvider.shared.getAllTags { allTagStrs in
+            var tags = allTagStrs.map { $0.tag}
+            tags.sort { (tag1, tag2) -> Bool in
+                (tag1.text.compare(tag2.text, options: [.caseInsensitive, .numeric], range: nil, locale: nil) == .orderedAscending)
+            }
+            completion(tags)
         }
-        return tags
     }
 
     func fetchCurrentSelectedTagsText(using tokens: [UISearchToken]) -> [String] {

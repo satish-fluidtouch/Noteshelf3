@@ -667,13 +667,9 @@
                         <color key="backgroundColor" name="formSheetBgColor"/>
                         <constraints>
                             <constraint firstItem="IvL-It-B7F" firstAttribute="top" secondItem="0Tq-0Y-i7N" secondAttribute="top" id="CVE-aN-00S"/>
-                            <constraint firstItem="IvL-It-B7F" firstAttribute="leading" secondItem="UjV-wf-QRY" secondAttribute="leading" id="FpB-Sg-Q1m">
-                                <variation key="heightClass=regular-widthClass=regular" constant="12"/>
-                            </constraint>
+                            <constraint firstItem="IvL-It-B7F" firstAttribute="leading" secondItem="0Tq-0Y-i7N" secondAttribute="leading" id="FpB-Sg-Q1m"/>
                             <constraint firstItem="IvL-It-B7F" firstAttribute="bottom" secondItem="0Tq-0Y-i7N" secondAttribute="bottom" id="M6j-ba-a34"/>
-                            <constraint firstItem="UjV-wf-QRY" firstAttribute="trailing" secondItem="IvL-It-B7F" secondAttribute="trailing" id="jeL-FX-aJf">
-                                <variation key="heightClass=regular-widthClass=regular" constant="20"/>
-                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="IvL-It-B7F" secondAttribute="trailing" id="jeL-FX-aJf"/>
                         </constraints>
                     </view>
                     <connections>

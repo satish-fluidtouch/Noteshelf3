@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -526,23 +526,20 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6V-Fw-XlN">
                                                             <rect key="frame" x="0.0" y="210" width="200" height="22"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE3-md-SIT" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                    <rect key="frame" x="0.0" y="1.3333333333333428" width="30" height="19.333333333333332"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="30" id="jBq-qg-oLU"/>
-                                                                    </constraints>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cE3-md-SIT" customClass="FTCustomLabel" customModule="FTCommon">
+                                                                    <rect key="frame" x="0.0" y="1.3333333333333428" width="39.666666666666664" height="19.333333333333332"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="0Lw-FB-xuw">
-                                                                    <rect key="frame" x="38" y="2" width="162" height="18"/>
+                                                                    <rect key="frame" x="47.666666666666671" y="2" width="152.33333333333331" height="18"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x9a-WA-ug0">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="121" height="18"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="111.33333333333333" height="18"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label tagsCounButton tagsCounButton tagsCounButton  " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNZ-yj-cRa">
-                                                                                    <rect key="frame" x="10" y="1.3333333333333419" width="101" height="15.666666666666664"/>
+                                                                                    <rect key="frame" x="10" y="1.3333333333333419" width="91.333333333333329" height="15.666666666666664"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <color key="textColor" name="accent"/>
                                                                                     <nil key="highlightedColor"/>
@@ -562,7 +559,7 @@
                                                                             </variation>
                                                                         </view>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hwU-46-mzx">
-                                                                            <rect key="frame" x="125" y="0.0" width="37" height="18"/>
+                                                                            <rect key="frame" x="115.33333333333334" y="0.0" width="37" height="18"/>
                                                                             <color key="backgroundColor" name="accentBg"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="18" id="A5l-Pg-V9o"/>
@@ -1307,7 +1304,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" name="bottomToolBarColor"/>
+                                <color key="backgroundColor" name="secondary_light_tabbar"/>
                                 <constraints>
                                     <constraint firstItem="rj5-hN-xlq" firstAttribute="leading" secondItem="xOt-by-R3i" secondAttribute="leading" id="2U8-XQ-MX5"/>
                                     <constraint firstAttribute="trailing" secondItem="35V-Rd-vlw" secondAttribute="trailing" id="ASl-3u-7id"/>
@@ -2032,11 +2029,11 @@
         <image name="play.circle.fill" catalog="system" width="128" height="123"/>
         <image name="plus.square.on.square" catalog="system" width="128" height="116"/>
         <image name="primaryButton" width="44" height="44"/>
-        <image name="rotate.right" catalog="system" width="117" height="128"/>
+        <image name="rotate.right" catalog="system" width="115" height="128"/>
         <image name="shelfItemSelectionMode" width="33" height="33"/>
-        <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="square.grid.2x2" catalog="system" width="128" height="114"/>
-        <image name="volume.2.fill" catalog="system" width="128" height="88"/>
+        <image name="volume.2.fill" catalog="system" width="32" height="32"/>
         <namedColor name="7f7f7f">
             <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -2067,9 +2064,6 @@
         <namedColor name="blueDodger">
             <color red="0.18823529411764706" green="0.36862745098039218" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="bottomToolBarColor">
-            <color red="0.98799997568130493" green="0.98799997568130493" blue="0.98000001907348633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="cellBackgroundColor">
             <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -2087,6 +2081,9 @@
         </namedColor>
         <namedColor name="lightTitleColor_70">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="secondary_light_tabbar">
+            <color red="1" green="0.98431372549019602" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="systemTabBar">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="0.89999997615814209" colorSpace="custom" customColorSpace="sRGB"/>

@@ -31,13 +31,12 @@ class FTDeskToolCell: UICollectionViewCell {
             guard let self = self else { return }
             self.deskToolBtnTapHandler?()
         }
-        self.handleObservers()
     }
 
     var isToolSelected: Bool = false {
         didSet {
             self.deskToolView?.isSelected = isToolSelected
-            self.applyTintIfNeeded()
+            self.applyTintIfNeeded(nil)
         }
     }
 
@@ -45,28 +44,27 @@ class FTDeskToolCell: UICollectionViewCell {
         self.toolType = type
         self.deskToolView?.toolType = type
         self.isToolSelected = isSelected
+        self.handleObservers()
     }
 
     private func handleObservers() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil, queue: .main) { [weak self] notification in
-            guard let strongSelf = self else {
-                return
-            }
-            if strongSelf.window == notification.object as? UIWindow, let type = strongSelf.toolType, let mode = strongSelf.delegate?.currentDeskMode() {
-                if FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: type) {
-                    strongSelf.isToolSelected = true
-                } else if type.toolMode != .shortcut {
-                    strongSelf.isToolSelected = false
-                }
-            }
-        }
+        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.addObserver(self, selector: #selector(validateToolbar), name: NSNotification.Name(rawValue: FTValidateToolBarNotificationName), object: nil)
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("FTPenTypeDisplayChange"), object: nil, queue: nil) { [weak self] notification in
-            self?.applyTintIfNeeded()
+        NotificationCenter.default.addObserver(self, selector: #selector(applyTintIfNeeded), name: .penTypeDisplayChange, object: self.window?.windowScene)
+    }
+
+    @objc func validateToolbar(_ notification: Notification?) {
+        if self.window == notification?.object as? UIWindow, let type = self.toolType, let mode = self.delegate?.currentDeskMode() {
+            if FTDeskModeHelper.isToSelectDeskTool(mode: mode, toolType: type) {
+                self.isToolSelected = true
+            } else if type.toolMode != .shortcut {
+                self.isToolSelected = false
+            }
         }
     }
 
-    private func applyTintIfNeeded() {
+    @objc func applyTintIfNeeded(_ notification: Notification?) {
         if self.toolType.isColorEditTool() && isToolSelected {
             let tintColor = self.delegate?.getCurrentToolColor(toolType: self.toolType)
             self.deskToolView?.applyTint(color: tintColor ?? .clear)

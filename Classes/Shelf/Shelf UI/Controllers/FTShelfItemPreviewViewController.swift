@@ -83,7 +83,7 @@ class FTShelfItemPreviewViewController: UIViewController {
             }
             
             if searchPageThumbNail == nil {
-                if item.URL.isPinEnabledForDocument() {
+                if item.isPinEnabledForDocument() {
                     var token : String?;
                     token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item, onCompletion: { [weak self] (image, imageToken) in
                         if let weakSelf = self {

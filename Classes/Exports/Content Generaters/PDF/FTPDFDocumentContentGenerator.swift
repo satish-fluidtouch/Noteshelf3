@@ -133,7 +133,7 @@ class FTPDFDocumentContentGenerator: FTExportContentGenerator {
         
         if let shelfItem = self.currentItem?.shelfItem {
             let url = shelfItem.URL;
-            if true == url.isPinEnabledForDocument() {
+            if true == shelfItem.isPinEnabledForDocument() {
                 guard let visibleController = self.presentingController else {
                     handler(NSError.init(domain: "NSExport", code: 101, userInfo: nil));
                     return;

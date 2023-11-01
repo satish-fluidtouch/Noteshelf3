@@ -101,7 +101,7 @@ extension NSNotification.Name {
     }
     
     //download progress info
-    var isDownloaded : Bool {
+    @objc dynamic var isDownloaded : Bool {
         get {
             return self.downloaded;
         }
@@ -139,7 +139,7 @@ extension NSNotification.Name {
         }
     };
     
-    var downloadProgress = Float(0) {
+    @objc dynamic var downloadProgress = Float(0) {
         willSet {
             if(newValue != self.downloadProgress) {
                 self.willChangeValue(forKey: "downloadProgress");
@@ -168,7 +168,7 @@ extension NSNotification.Name {
         }
     };
     
-    var isDownloading  : Bool = false {
+    @objc dynamic var isDownloading  : Bool = false {
         willSet {
             if(newValue != self.isDownloading) {
                 self.willChangeValue(forKey: "isDownloading");
@@ -190,7 +190,7 @@ extension NSNotification.Name {
     };
     
     //upload progress info
-    var isUploaded : Bool = true {
+    @objc dynamic var isUploaded : Bool = true {
         willSet {
             if(newValue != self.isUploaded) {
                 self.willChangeValue(forKey: "isUploaded");
@@ -203,7 +203,7 @@ extension NSNotification.Name {
         }
     };
     
-    var uploadProgress = Float(0) {
+    @objc dynamic var uploadProgress = Float(0) {
         willSet {
             if(newValue != self.uploadProgress) {
                 self.willChangeValue(forKey: "uploadProgress");
@@ -216,7 +216,7 @@ extension NSNotification.Name {
         }
     };
     
-    var isUploading  : Bool = false {
+    @objc dynamic var isUploading  : Bool = false {
         willSet {
             if(newValue != self.isUploading) {
                 self.willChangeValue(forKey: "isUploading");
@@ -281,20 +281,16 @@ private extension FTDocumentItem {
     }
     
     func updateIsDownloading(_ metadataItem: NSMetadataItem) {
-        
-        if let metadataValue = metadataItem.isDownloading() {
-            let value = metadataValue.boolValue;
-            if(value != self.isDownloading) {
-                self.isDownloading = value;
-                if(value) {
-                    self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!;
-                }
+        let metadataValue = metadataItem.isDownloading()
+        if metadataValue != self.isDownloading {
+            self.isDownloading = metadataValue;
+            if(metadataValue) {
+                self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!;
             }
         }
     }
     
     func updatePercenDownload(_ metadataItem: NSMetadataItem) {
-        
         if let metadataValue = metadataItem.percentDownloaded() {
             let value = metadataValue.floatValue;
             if(value != self.downloadProgress) {
@@ -305,25 +301,21 @@ private extension FTDocumentItem {
 
     func updateIsUploaded(_ metadataItem: NSMetadataItem) {
         
-        if let metadataValue = metadataItem.isUploaded() {
-            let value = metadataValue.boolValue;
-            if(value != self.isUploaded) {
-                self.isUploaded = value;
-                if(!value) {
-                    self.uploadProgress = Float(0);
-                }
+        let metadataValue = metadataItem.isUploaded()
+        if(metadataValue != self.isUploaded) {
+            self.isUploaded = metadataValue;
+            if(!metadataValue) {
+                self.uploadProgress = Float(0);
             }
         }
     }
 
     func updateIsUploading(_ metadataItem: NSMetadataItem) {
-        if let metadataValue = metadataItem.isUploading() {
-            let value = metadataValue.boolValue;
-            if(value != self.isUploading) {
-                self.isUploading = value;
-                if(value) {
-                    self.uploadProgress = (metadataItem.percentUploaded()?.floatValue)!;
-                }
+        let metadataValue = metadataItem.isUploading()
+        if(metadataValue != self.isUploading) {
+            self.isUploading = metadataValue;
+            if(metadataValue) {
+                self.uploadProgress = (metadataItem.percentUploaded()?.floatValue)!;
             }
         }
     }

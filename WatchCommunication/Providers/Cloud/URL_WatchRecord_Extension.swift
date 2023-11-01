@@ -9,7 +9,19 @@
 import UIKit
 import CloudKit
 
+@objc enum FTDownloadStatus : Int {
+    case notDownloaded
+    case downloading
+    case downloaded
+}
+
+let audioFileExtension : String = "m4a";
+let audioMetadataFileExtension : String = "plist";
+
 extension URL {
+    func isUbiquitousFileExists() -> Bool {
+        return FileManager().isUbiquitousItem(at: self)
+    }
     #if os(watchOS)
     func urlByDeleteingPrivate() -> URL  {
         var fileItemURL = self.standardizedFileURL;
@@ -74,14 +86,16 @@ extension URL {
             }
         }
         catch {
-            
+#if DEBUG
+            print("Error while fetching status \(error.localizedDescription)")
+#endif
         }
         return status;
     }
     
     private func isDownloaded() -> Bool {
         let status = self.urlDownloadStatus();
-        if(status == .current) {
+        if(status == .current || status == .downloaded) {
             return true;
         }
         return false;

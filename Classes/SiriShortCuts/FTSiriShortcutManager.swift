@@ -59,16 +59,23 @@ extension FTSiriShortcutManager {
     }
     
     func createSiriShortcut(for item:FTShelfItemProtocol, onController: UIViewController?) {
-        if let shelfImage = (item as? FTShelfImage)?.image, let imageData = shelfImage.pngData(), let uuid = (item as? FTDocumentItemProtocol)?.documentUUID {
-            runInMainThread {
-                let activity = NSUserActivity(siriShortcutActivity: .openNotebook(["coverImage" : imageData as AnyObject , "notebookURL" : item.URL as AnyObject , "title" : item.displayTitle as AnyObject , "uuid" : uuid as AnyObject]))
-                let shortcut = INShortcut(userActivity: activity)
-                #if !targetEnvironment(macCatalyst)
-                let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
-                viewController.modalPresentationStyle = .overFullScreen
-                viewController.delegate = self
-                onController?.present(viewController, animated: true, completion: nil)
-                #endif
+        var currentID: String?;
+        currentID = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item) { image,tokenID  in
+            if tokenID == currentID
+                , let shelfImage = image
+                , let imageData = shelfImage.pngData()
+                , let uuid = (item as? FTDocumentItemProtocol)?.documentUUID
+            {
+                runInMainThread {
+                    let activity = NSUserActivity(siriShortcutActivity: .openNotebook(["coverImage" : imageData as AnyObject , "notebookURL" : item.URL as AnyObject , "title" : item.displayTitle as AnyObject , "uuid" : uuid as AnyObject]))
+                    let shortcut = INShortcut(userActivity: activity)
+                    #if !targetEnvironment(macCatalyst)
+                    let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
+                    viewController.modalPresentationStyle = .overFullScreen
+                    viewController.delegate = self
+                    onController?.present(viewController, animated: true, completion: nil)
+                    #endif
+                }
             }
         }
     }
