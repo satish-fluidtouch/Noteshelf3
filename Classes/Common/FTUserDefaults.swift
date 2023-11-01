@@ -51,7 +51,6 @@ let LastSelectedNonCollectionTypeKey = "LastSelectedNonCollectionType"
 let LastSelectedTagKey = "LastSelectedTag"
 let NonCollectionModeKey = "NonCollectionMode"
 let isFirstLaunchKey = "isFirstLaunch"
-let isSidebarOpenKey = "isSidebarOpen"
 
 class FTUserDefaults : NSObject
 {
@@ -632,11 +631,4 @@ extension FTUserDefaults { // Saving this for Show or hide Home Get started sect
         return self.defaults().setValue(value, forKey: isFirstLaunchKey)
     }
 }
-extension FTUserDefaults { // Saving this for Show or hide Shelf side bar
-    static func isSidebarOpen() -> Bool {
-        return self.defaults().bool(forKey: isSidebarOpenKey)
-    }
-    static func setSidebarOpenorClose(_ value:Bool) {
-        return self.defaults().setValue(value, forKey: isSidebarOpenKey)
-    }
-}
+

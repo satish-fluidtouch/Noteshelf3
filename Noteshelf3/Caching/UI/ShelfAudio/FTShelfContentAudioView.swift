@@ -14,15 +14,10 @@ struct FTShelfContentAudioView: View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     @State private var orientation = UIDevice.current.orientation
 
-    private var gridItems: [GridItem] {
-        let isSidebarOpen = FTUserDefaults.isSidebarOpen()
+    private func gridItems(size viewSize: CGSize) -> [GridItem] {
         let isPortrait = orientation.isPortrait
         var numberOfColoums: Int
-        if isSidebarOpen {
-            numberOfColoums = isPortrait ? 3 : 4
-        } else {
-            numberOfColoums = isPortrait ? 4 : 5
-        }
+        numberOfColoums = viewSize.width > 1023 ? 5 : viewSize.width > 700 ? 4 : 3
         return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColoums)
     }
     var body: some View {
@@ -48,7 +43,7 @@ struct FTShelfContentAudioView: View {
     var contentView: some View {
         GeometryReader { proxy in
             ScrollView {
-                LazyVGrid(columns: gridItems, spacing: 2) {
+                LazyVGrid(columns: gridItems(size: proxy.size), spacing: 2) {
                     ForEach(viewModel.audio) { audio in
                         let size = itemSize(for: proxy.size)
                         FTShelfAudioItemView(audio: audio)
@@ -98,20 +93,11 @@ struct FTShelfContentAudioView: View {
     }
 
     private func itemSize(for viewSize: CGSize) -> CGSize {
-        let isSidebarOpen = FTUserDefaults.isSidebarOpen()
         let cellSpacing: CGFloat = 2
-        let isPortrait = orientation.isPortrait
         var itemsPerRow: CGFloat
-        if isSidebarOpen {
-            itemsPerRow = isPortrait ? 3 : 4
-        } else {
-            itemsPerRow = isPortrait ? 4 : 5
-        }
-        if horizontalSizeClass == .compact {
-            itemsPerRow = 2
-        }
+        itemsPerRow = viewSize.width > 1023 ? 5 : viewSize.width > 700 ? 4 : 3
+        itemsPerRow = horizontalSizeClass == .compact ? 2 : itemsPerRow
         let iterimSpacing: CGFloat = (itemsPerRow - 1)*cellSpacing
-
         let width: CGFloat = (viewSize.width-iterimSpacing)/itemsPerRow
         let size = CGSize(width: width, height: width)
         return size
