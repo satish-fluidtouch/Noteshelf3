@@ -24,6 +24,7 @@ enum FTCacheError: Error {
     case fileNotExists
     case cachingNotRequired
     case documentIsStillOpen
+    case pinEnabledDocument
 }
 #if DEBUG
 private let cleanOnNextLaunch: Bool = false
@@ -47,7 +48,7 @@ struct FTCacheFiles {
 
 final class FTDocumentCache {
     private let lock = NSRecursiveLock();
-    
+
     static let shared = FTDocumentCache()
     let cacheFolderURL: URL
 
@@ -257,6 +258,13 @@ private extension FTDocumentCache {
                 try? propertiList.writeUpdates(to: dest)
             }
         }
+        let destinationURL = cachedLocation(for: documentUUID)
+
+        guard !url.isPinEnabledForDocument() else {
+            // Cleanup the PIN enabled documents, if they have copied in earlier versions prior to v1.3.
+            try? FileManager.default.removeItem(at: destinationURL)
+            throw FTCacheError.pinEnabledDocument
+        }
 
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
@@ -265,7 +273,6 @@ private extension FTDocumentCache {
             throw FTCacheError.documentIsStillOpen
         }
 
-        let destinationURL = cachedLocation(for: documentUUID)
         let _fileManager = FileManager();
         if !_fileManager.fileExists(atPath: destinationURL.path) {
             do {
