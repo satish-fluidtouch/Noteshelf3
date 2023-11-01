@@ -137,10 +137,13 @@ struct FTShelfItemContextualMenuOptions: Identifiable {
         if !shelfItem.isNotDownloaded {
             section1.append((shelfItem.isFavorited ? .removeFromStarred : .addToStarred))
         }
-
+        var section2: [FTShelfItemContexualOption] = [.rename, .changeCover]
+        if !shelfItem.isNotDownloaded {
+            section2.append(.tags)
+        }
         return [
             section1,
-            [.rename, .changeCover, .tags,],
+            section2,
             [.duplicate, .move, .getInfo, .share,],
             [.trash]]
     }
