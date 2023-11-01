@@ -71,9 +71,13 @@ extension FTPDFRenderViewController: FTShortcutContainerDelegate {
                 reqMode = .deskModePen
             }
             let reqTool = FTDeskModeHelper.getEquivalentTool(for: reqMode)
+#if !targetEnvironment(macCatalyst)
             if let source = self.centerPanelToolbarSource(for: reqTool) {
                 self.switch(reqMode, sourceView: source)
             }
+#else // Mac
+            self.switch(reqMode, sourceView: nil)
+#endif
         }
     }
 
