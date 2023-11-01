@@ -1146,8 +1146,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         if(self.isPinEnabled()) {
             let propertyInfoPlist = self.fileURL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
             let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
-            dictionary.setObject(FTUtils.getUUID(), forKey: DOCUMENT_ID_KEY as NSCopying);
+            let docUUID = FTUtils.getUUID()
+            dictionary.setObject(docUUID, forKey: DOCUMENT_ID_KEY as NSCopying);
             dictionary.write(to: propertyInfoPlist, atomically: true);
+            
+            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
+            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
 
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){
