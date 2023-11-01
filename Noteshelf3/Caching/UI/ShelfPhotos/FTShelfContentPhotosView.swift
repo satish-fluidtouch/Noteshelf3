@@ -12,7 +12,6 @@ struct FTShelfContentPhotosView: View  {
     @ObservedObject var viewModel: FTShelfContentPhotosViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    @State private var orientation = UIDevice.current.orientation
 
     private func gridItems(size viewSize: CGSize) -> [GridItem] {
         var numberOfColumns: Int
@@ -27,7 +26,6 @@ struct FTShelfContentPhotosView: View  {
                 ProgressView()
             case .loaded:
                 contentView
-                    .detectOrientation($orientation)
             case .empty:
                 emptyStateView
             }

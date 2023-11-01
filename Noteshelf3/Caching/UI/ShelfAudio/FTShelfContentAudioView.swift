@@ -12,10 +12,8 @@ struct FTShelfContentAudioView: View {
     @ObservedObject var viewModel: FTShelfContentAudioViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    @State private var orientation = UIDevice.current.orientation
 
     private func gridItems(size viewSize: CGSize) -> [GridItem] {
-        let isPortrait = orientation.isPortrait
         var numberOfColoums: Int
         numberOfColoums = viewSize.width > 1023 ? 5 : viewSize.width > 700 ? 4 : 3
         return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColoums)
@@ -27,7 +25,6 @@ struct FTShelfContentAudioView: View {
                 ProgressView()
             case .loaded:
                 contentView
-                    .detectOrientation($orientation)
             case .empty:
                 emptyStateView
             }
