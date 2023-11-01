@@ -35,7 +35,7 @@ class FTShortcutBasePresenter: NSObject, FTShortcutPresenterProtocol {
         return placement
     }
 
-    func shortcutViewSizeWrToVertcalPlacement() -> CGSize {
+    func shortcutViewHorizantalSize() -> CGSize {
         var size: CGSize = .zero
 
         if self.deskMode == .deskModePen || self.deskMode == .deskModeMarker {
@@ -45,7 +45,7 @@ class FTShortcutBasePresenter: NSObject, FTShortcutPresenterProtocol {
         } else if self.deskMode == .deskModeLaser {
             size = presenterShortcutSize
         } else if self.deskMode == .deskModeFavorites {
-            size = CGSize(width: 293.0, height: 38.0)
+            size = favoriteShortcutSize
         }
         return size
     }

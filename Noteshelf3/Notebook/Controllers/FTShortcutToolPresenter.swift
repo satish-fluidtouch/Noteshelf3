@@ -38,13 +38,13 @@ private var offset: CGFloat = 8.0
         } else if let favBar = controller as? FTFavoritebarViewController {
             favBar.delegate = self
         }
-        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+        let reqSize = self.shortcutViewHorizantalSize()
         viewController.add(controller)
         self.shortcutView.frame.size = reqSize
 
         self.shortcutView.transform = .identity
-        if self.shortcutViewPlacement == .top || self.shortcutViewPlacement == .bottom {
-            self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+        if !self.shortcutViewPlacement.isHorizantalPlacement() {
+            self.shortcutView.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
         }
         self.updateMinOffsetIfNeeded()
         let reqCenter = self.shortcutViewPlacement.placementCenter(forShortcutView: shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
@@ -80,7 +80,7 @@ private var offset: CGFloat = 8.0
 
     func configureShortcutView(with mode: FTScreenMode, animate: Bool = false) {
         self.screenMode = mode
-        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+        let reqSize = self.shortcutViewHorizantalSize()
         var reqCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
 
         var options = UIView.AnimationOptions.curveEaseOut
@@ -114,7 +114,7 @@ private var offset: CGFloat = 8.0
     }
 
     @objc func exitZoomModeNotified(_ notification: Notification) {
-        let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+        let reqSize = self.shortcutViewHorizantalSize()
         let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
         UIView.animate(withDuration: 0.2) {
             self.updateShortcutViewCenter(actualCenter)
@@ -143,7 +143,7 @@ private var offset: CGFloat = 8.0
         }
 
         func updateShortcutIfRequired() {
-            let reqSize = self.shortcutViewSizeWrToVertcalPlacement()
+            let reqSize = self.shortcutViewHorizantalSize()
             let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
             self.updateShortcutViewCenter(actualCenter)
             if self.zoomModeInfo.overlayHeight == 0 {

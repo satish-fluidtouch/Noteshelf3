@@ -20,20 +20,20 @@ struct FTShapeShortcutView: View {
         ZStack {
             FTShortcutBarVisualEffectView()
                 .cornerRadius(100.0)
-            VStack(spacing: 0.0) {
+            HStack(spacing: 0.0) {
                 FTFavoriteShapesView()
                     .environmentObject(shapeModel)
-                    .padding(.vertical, 4.0)
+                    .padding(.horizontal, 4.0)
                 FTToolSeperator()
-                    .padding(.vertical, 2.0)
+                    .padding(.horizontal, 2.0)
                 FTPenColorShortcutView()
                     .environmentObject(colorModel)
-                    .padding(.vertical, 8.0)
+                    .padding(.horizontal, 8.0)
                 FTToolSeperator()
-                    .padding(.vertical, 2.0)
+                    .padding(.horizontal, 2.0)
                 FTPenSizeShortcutView()
                     .environmentObject(sizeModel)
-                    .padding(.vertical, 4.0)
+                    .padding(.horizontal, 4.0)
             }
         }
         .toolbarOverlay()
@@ -44,7 +44,7 @@ struct FTFavoriteShapesView: View {
     @EnvironmentObject var viewModel: FTFavoriteShapeViewModel
 
     var body: some View {
-        VStack(spacing: 6.0) {
+        HStack(spacing: 6.0) {
             ForEach(0..<viewModel.favoriteShapes.count, id: \.hashValue) { index in
                 let shapeModel = viewModel.favoriteShapes[index]
 
@@ -60,7 +60,7 @@ struct FTFavoriteShapesView: View {
                 }
             }
         }
-        .frame(width: shortcutWidth)
+        .frame(height: shortcutHeight)
         .onAppear {
              self.viewModel.fetchShapesData()
         }

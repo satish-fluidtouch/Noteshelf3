@@ -174,8 +174,8 @@ private extension FTShortcutToolPresenter {
                 return
             }
             self.shortcutView.transform = .identity
-            if placement == .top || placement == .bottom {
-                self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            if !placement.isHorizantalPlacement() {
+                self.shortcutView.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             }
             let reqCenter = placement.slotCenter(forSlotView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
             self.updateShortcutViewCenter(reqCenter)
