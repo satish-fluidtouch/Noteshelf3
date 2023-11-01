@@ -38,6 +38,7 @@ protocol FTFinderThumbnailsActionDelegate: FTCurrentShelfItemDelegate  {
     func finderViewController(_ finderVc: FTFinderViewController, didSelectTag pages: NSSet, from source: UIView)
     func didBeginSaveFinderPagesToCameraRoll(_ properties: FTExportProperties, option: FTShareOption)
     func didInsertPageFromFinder(_ item: FTPageType)
+    func cancelFinderSearchOperation()
 }
 
 

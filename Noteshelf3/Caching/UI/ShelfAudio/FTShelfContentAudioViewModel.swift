@@ -28,6 +28,14 @@ class FTShelfAudio: Identifiable {
         self.duration = duration
         self.dateAndTime = dateAndTime
     }
+
+    var isProtected: Bool {
+        guard let doc = document else {
+            return false
+        }
+
+        return doc.isPinEnabledForDocument()
+    }
 }
 
 final class FTShelfContentAudioViewModel: ObservableObject {
@@ -70,7 +78,7 @@ private extension FTShelfContentAudioViewModel {
         var totalMedia: [FTShelfAudio] = [FTShelfAudio]()
 
 
-        let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
             do {
@@ -85,7 +93,7 @@ private extension FTShelfContentAudioViewModel {
     }
 
     func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfAudio] {
-        guard let docUUID = docItem.documentUUID, docItem.URL.downloadStatus() == .downloaded else { throw FTCacheError.documentNotDownloaded }
+        guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
         let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
         let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")

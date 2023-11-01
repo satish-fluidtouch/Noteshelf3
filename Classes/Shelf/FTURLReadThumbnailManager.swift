@@ -18,6 +18,7 @@ class FTThumbReadCallbacks : NSObject
 
 @objcMembers class FTURLReadThumbnailManager: NSObject {
     static var sharedInstance : FTURLReadThumbnailManager = FTURLReadThumbnailManager();
+    private let recursiveLock = NSRecursiveLock();
     
     //*****************
     private var imageCache: FTThumbnailCacheProtocol = FTThumbnailCache()
@@ -29,6 +30,9 @@ class FTThumbReadCallbacks : NSObject
     private override init() {
         super.init();
 
+        thumbReadOperationQueue.name = "FTThumbnailREADER";
+        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
+        
         let notificationBlock : (_ noti:Notification) -> Void = { [weak self] (notification) in
             self?.thumbReadOperationQueue.cancelAllOperations();
         }
@@ -53,10 +57,12 @@ class FTThumbReadCallbacks : NSObject
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
-        guard item.URL.isNS2Book else {
-            return self.thumbnailForNS3Book(item, onCompletion: onCompletion);
+        if FTDeveloperOption.useQuickLookThumbnailing {
+            guard item.URL.isNS2Book else {
+                return self.thumbnailForNS3Book(item, onCompletion: onCompletion);
+            }
         }
-        
+
         let cachedImage = self.imageCache.cachedImageForItem(item: item)
         if(nil != cachedImage) {
             onCompletion(cachedImage,nil);
@@ -102,7 +108,7 @@ class FTThumbReadCallbacks : NSObject
             image = (item as? FTShelfImage)?.image;
             if(nil == image) {
                 #if !NS2_SIRI_APP && !NOTESHELF_ACTION
-                if item.URL.downloadStatus() != .downloaded {
+                if (item as? FTDocumentItemProtocol)?.isDownloaded == false {
                     completionBlockExecution(nil,item);
                     return
                 }
@@ -130,27 +136,29 @@ class FTThumbReadCallbacks : NSObject
 
 private extension FTURLReadThumbnailManager {
     func removeQLRequest(_ item: FTDiskItemProtocol) {
-        objc_sync_enter(self.QLRequestCache)
         let reqid = item.URL.hashKey;
+        recursiveLock.lock();
         self.QLRequestCache.removeValue(forKey: reqid);
-        objc_sync_exit(self.QLRequestCache)
+        recursiveLock.unlock();
     }
     
     func cancelPreviousQLRequest(_ item: FTDiskItemProtocol) {
-        objc_sync_enter(self.QLRequestCache)
         let reqid = item.URL.hashKey;
-        if let request = self.QLRequestCache[reqid] {
-            QLThumbnailGenerator.shared.cancel(request);
+        recursiveLock.lock();
+        let request = self.QLRequestCache[reqid]
+        recursiveLock.unlock();
+        
+        if let _request = request {
+            QLThumbnailGenerator.shared.cancel(_request);
             self.removeQLRequest(item);
         }
-        objc_sync_exit(self.QLRequestCache)
     }
     
     func addQLRequestToCache(_ item: FTDiskItemProtocol,request: QLThumbnailGenerator.Request) {
-        objc_sync_enter(self.QLRequestCache)
         let reqid = item.URL.hashKey;
+        recursiveLock.lock();
         self.QLRequestCache[reqid] = request;
-        objc_sync_exit(self.QLRequestCache)
+        recursiveLock.unlock();
     }
     
     func thumbnailForNS3Book(_ item : FTDiskItemProtocol,
@@ -159,11 +167,23 @@ private extension FTURLReadThumbnailManager {
         self.cancelPreviousQLRequest(item);
         
         func fetchImage() {
-            let request = item.URL.fetchQLThumbnail(completion: { [weak self] image in
-                self?.removeQLRequest(item)
-                onCompletion(image,token);
-            })
-            self.addQLRequestToCache(item, request: request);
+            let operation = FTThumbnailRequestOperation(url: item.URL);
+            operation.completionBlock = { [weak self] in
+                runInMainThread {
+                    self?.removeQLRequest(item)
+                    var imgToReturn = operation.thumbnailImage;
+                    if nil == imgToReturn {
+                        imgToReturn = self?.imageCache.cachedImageForItem(item: item);
+                    }
+                    onCompletion(imgToReturn,token);
+                }
+            };
+            operation.onStartRequest = { [weak self] request in
+                runInMainThread {
+                    self?.addQLRequestToCache(item, request: request);
+                }
+            }
+            thumbReadOperationQueue.addOperation(operation);
         }
 
         let modifiedime = item.URL.fileModificationDate.timeIntervalSinceReferenceDate;
@@ -178,5 +198,52 @@ private extension FTURLReadThumbnailManager {
             }
         }
         return token
+    }
+}
+
+private class FTThumbnailRequestOperation: Operation {
+    private var fileURL: URL;
+    private(set) var thumbnailImage: UIImage?;
+    var onStartRequest: ((QLThumbnailGenerator.Request)->())?;
+    
+    init(url: URL) {
+        fileURL = url;
+    }
+    
+    private var startedExecuting = false;
+    private var _isfinished: Bool = false {
+        willSet {
+            if startedExecuting {
+                self.willChangeValue(forKey: "isFinished")
+            }
+        }
+        didSet {
+            if startedExecuting {
+                self.didChangeValue(forKey: "isFinished");
+            }
+        }
+    }
+    
+    override var isAsynchronous: Bool {
+        return true;
+    }
+    
+    override var isFinished: Bool {
+        return _isfinished;
+    }
+    
+    override func main() {
+        self.startedExecuting = true;
+        let request = fileURL.fetchQLThumbnail(completion: { image in
+            self.thumbnailImage = image;
+            self._isfinished = true;
+        })
+        onStartRequest?(request);
+        onStartRequest = nil;
+    }
+    
+    override func cancel() {
+        super.cancel();
+        self._isfinished = true;
     }
 }

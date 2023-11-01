@@ -30,6 +30,14 @@ class FTShelfMedia: Identifiable {
         self.imageURL = imageURL
         self.document = document
     }
+
+    var isProtected: Bool {
+        guard let doc = document else {
+            return false
+        }
+
+        return doc.isPinEnabledForDocument()
+    }
 }
 
 final class FTShelfContentPhotosViewModel: ObservableObject {
@@ -71,7 +79,7 @@ private extension FTShelfContentPhotosViewModel {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
         var totalMedia: [FTShelfMedia] = [FTShelfMedia]()
 
-        let items: [FTDocumentItemProtocol] = allItems.filter({ ($0.URL.downloadStatus() == .downloaded) }).compactMap({ $0 as? FTDocumentItemProtocol })
+        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
             do {
@@ -86,7 +94,7 @@ private extension FTShelfContentPhotosViewModel {
     }
 
     func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfMedia] {
-        guard let docUUID = docItem.documentUUID, docItem.URL.downloadStatus() == .downloaded else { throw FTCacheError.documentNotDownloaded }
+        guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
         let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
         let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")
