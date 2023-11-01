@@ -32,13 +32,14 @@ class FTTouchByPassView : UIView {
 
 class FTAdBannerViewController: UIViewController {
     
-    @IBOutlet weak var contentView : UIView?
-    @IBOutlet weak var infoLabel : FTStyledLabel?
-    @IBOutlet weak var dismissButton : FTStyledButton?
-    @IBOutlet weak var remindLaterButton : FTStyledButton?
     @IBOutlet weak var contentWidthLayoutConstraint : NSLayoutConstraint?
     @IBOutlet weak var viewHeightLayoutConstraint : NSLayoutConstraint?
 
+    @IBOutlet weak var dismissBtn: FTStyledButton!
+    @IBOutlet weak var remindMeLaterBtn: FTStyledButton!
+    @IBOutlet weak var infoLbl: FTStyledLabel?
+
+    @IBOutlet weak var contentView: UIView!
     fileprivate var bottomConstraint : NSLayoutConstraint!;
     
 
@@ -123,10 +124,10 @@ class FTAdBannerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.remindLaterButton?.titleLabel?.adjustsFontSizeToFitWidth = true;
-        self.remindLaterButton?.titleLabel?.minimumScaleFactor = 0.5;
-        self.dismissButton?.titleLabel?.adjustsFontSizeToFitWidth = true;
-        self.dismissButton?.titleLabel?.minimumScaleFactor = 0.5;
+        self.remindMeLaterBtn?.titleLabel?.adjustsFontSizeToFitWidth = true;
+        self.remindMeLaterBtn?.titleLabel?.minimumScaleFactor = 0.5;
+        self.dismissBtn?.titleLabel?.adjustsFontSizeToFitWidth = true;
+        self.dismissBtn?.titleLabel?.minimumScaleFactor = 0.5;
 
         self.updateUIStyles();
         
@@ -169,44 +170,41 @@ class FTAdBannerViewController: UIViewController {
     
     fileprivate func updateUIStyles() {
         if(self.isRegularClass()) {
-            self.dismissButton?.style = FTButtonStyle.style8.rawValue;
-            self.remindLaterButton?.style = FTButtonStyle.style8.rawValue;
-            self.infoLabel?.style = FTLabelStyle.style4.rawValue;
+            self.dismissBtn?.style = FTButtonStyle.style8.rawValue;
+            self.remindMeLaterBtn?.style = FTButtonStyle.style8.rawValue;
+            self.infoLbl?.style = FTLabelStyle.style4.rawValue;
         }
         else {
-            self.remindLaterButton?.style = FTButtonStyle.style6.rawValue;
-            self.dismissButton?.style = FTButtonStyle.style6.rawValue;
-            self.infoLabel?.style = FTLabelStyle.style3.rawValue;
+            self.remindMeLaterBtn?.style = FTButtonStyle.style6.rawValue;
+            self.dismissBtn?.style = FTButtonStyle.style6.rawValue;
+            self.infoLbl?.style = FTLabelStyle.style3.rawValue;
         }
-        self.remindLaterButton?.setStyleTitle(NSLocalizedString("RemindMeLater", comment: "Remind Me Later"), for: UIControl.State.normal);
-        self.dismissButton?.setStyleTitle(NSLocalizedString("Dismiss", comment: "Dismiss"), for: UIControl.State.normal);
-        self.infoLabel?.styleText = NSLocalizedString("WatchAdInfo", comment: "Watch ad info");
+        self.remindMeLaterBtn?.setStyleTitle(NSLocalizedString("RemindMeLater", comment: "Remind Me Later"), for: UIControl.State.normal);
+        self.dismissBtn?.setStyleTitle(NSLocalizedString("Dismiss", comment: "Dismiss"), for: UIControl.State.normal);
+        self.infoLbl?.styleText = NSLocalizedString("WatchAdInfo", comment: "Watch ad info");
+        self.infoLbl?.tintColor = .label
+        self.contentView.backgroundColor = .appColor(.watchViewBg)
+        self.dismissBtn.borderColor = .label
+        self.remindMeLaterBtn.layer.borderColor = UIColor.label.cgColor
+        self.dismissBtn.layer.borderColor = UIColor.label.cgColor
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func didTapOnDismiss(_ sender : UIButton?)
-    {
+
+    @IBAction func dismissBtnTapped(_ sender: Any) {
         UserDefaults.standard.set(true, forKey: FTWatchAdDoNotShowDefaultsKey);
         UserDefaults.standard.synchronize();
         self.removeBannerAd(animated: true);
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FTBannerDidDismiss"),
-                                        object: nil);
     }
     
-    @IBAction func didTapOnRemindLater(_ sender : UIButton?)
-    {
-
+    @IBAction func remindMeLaterBtnTapped(_ sender: Any) {
         UserDefaults.standard.set(Date.timeIntervalSinceReferenceDate, forKey: FTWatchAdLastShownTimeDefaultsKey);
         UserDefaults.standard.synchronize();
         self.removeBannerAd(animated: true);
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "FTBannerDidDismiss"),
-                                        object: nil);
     }
-    
     static func canShowWatchBanner() -> Bool {
         let thresholdDuration = Double(60*60*24);
         let donotShow = UserDefaults.standard.bool(forKey: FTWatchAdDoNotShowDefaultsKey);

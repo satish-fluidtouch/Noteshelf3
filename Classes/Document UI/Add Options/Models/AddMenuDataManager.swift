@@ -13,7 +13,7 @@ enum FTPageType: String {
 }
 
 enum MediaType: String {
-    case photo, camera, audio, emojis, stickers, importMedia
+    case photo, camera, audio, emojis, stickers, importMedia, appleWatch
 }
 
 enum AttachmentType: String {
@@ -87,7 +87,14 @@ class AddMenuDataManager {
 
         let importMediaItem = MediaItem(image: UIImage(systemName: "square.and.arrow.down"), name: "add.menu.import.media".localized, type: .importMedia)
 
-        return [[photoItem, cameraItem], [audioItem, emojiItem, stickerItem], [importMediaItem]]
+        let appleWatchMediaItem = MediaItem(image: UIImage(systemName: "applewatch"), name: "AppleWatch".localized,showDiscloser: true, type: .appleWatch)
+        var itemsToReturn = [[photoItem, cameraItem], [audioItem, emojiItem, stickerItem]]
+        if (NSUbiquitousKeyValueStore.default.isWatchPaired()) {
+            itemsToReturn.append(contentsOf: [[importMediaItem, appleWatchMediaItem]])
+        } else {
+            itemsToReturn.append(contentsOf: [[importMediaItem]])
+        }
+        return itemsToReturn
     }
 
     func fetchAttachmentItems() -> [AttachmentItem] {

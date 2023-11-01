@@ -44,9 +44,13 @@ class FTRecentAudioCircle: SKScene {
     convenience required init(withSceneSize size: CGSize) {
         self.init(size: size)
         self.backgroundColor = UIColor.clear
-        
-        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
-        self.circleNode?.texture = SKTexture.init(imageNamed: "base-aqua-60")
+        self.circleNode = SKSpriteNode(texture: SKTexture(imageNamed: "base-aqua-60"))
+        self.circleNode?.color = UIColor.init(red: 136.0/255.0, green: 197.0/255.0, blue: 210.0/255.0, alpha: 0.6)
+        self.circleNode?.colorBlendFactor = 1.0
+        self.circleNode?.size = size
+
+//        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
+//        self.circleNode?.texture = SKTexture.init(imageNamed: "base-aqua-60")
             self.circleNode?.position = CGPoint.init(x: circleDiameter/2.0, y: circleDiameter/2.0)
         self.circleNode?.anchorPoint = CGPoint.init(x: 0.5, y: 0.5)
         self.addChild(self.circleNode!)
@@ -66,6 +70,7 @@ class FTRecentAudioCircle: SKScene {
         
         let Circle = SKShapeNode(circleOfRadius: innerCircleRadius) // Create circle
         Circle.position = CGPoint(x: 0, y: 0)
+//        Circle.strokeColor = SKColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0)
         Circle.strokeColor = SKColor.init(red: 26/255.0, green: 37/255.0, blue: 41/255.0, alpha: 1.0)
         Circle.fillColor = SKColor.clear
         Circle.lineWidth = 3.22
@@ -80,7 +85,8 @@ class FTRecentAudioCircle: SKScene {
             let x:CGFloat = (CGFloat)(newRadius * cos(zRotation)) + (newDiameter / 2.0);
             let y:CGFloat = (CGFloat)(newRadius * sin(zRotation)) + (newDiameter / 2.0);
             
-            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 138/255.0, green: 204/255.0, blue: 234/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: (index % 12 == 0) ? 2.0 : 1.0))
+//            self.highlightNode = SKSpriteNode.init(color: UIColor.red, size: CGSize.init(width: 13, height: (index % 12 == 0) ? 2.0 : 1.0))
+            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: (index % 12 == 0) ? 2.0 : 1.0))
             self.highlightNode.zRotation = zRotation
             self.highlightNode.colorBlendFactor = 1.0
             self.highlightNode.alpha = (index % 12 == 0) ? DEFAULT_ALPHA : INTERMEDIATE_ALPHA
@@ -250,7 +256,7 @@ class FTRecentAudioCircle: SKScene {
     internal func manageRecordingsListDisplay(){
         for stickIndex in 0...SUPPORTED_TOTAL_COUNT-1 {
             if((SUPPORTED_TOTAL_COUNT - stickIndex)%SUPPORTED_TOTAL_COUNT < Int(self.totalRecordCount)){
-                self.childrenNodes[stickIndex*12].color = UIColor.init(red: 138/255.0, green: 204/255.0, blue: 234/255.0, alpha: 1.0)
+                self.childrenNodes[stickIndex*12].color = UIColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0)
                 self.childrenNodes[stickIndex*12].alpha = DEFAULT_ALPHA
             }
             else

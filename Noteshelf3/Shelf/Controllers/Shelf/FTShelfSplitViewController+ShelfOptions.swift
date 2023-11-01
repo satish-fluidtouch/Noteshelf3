@@ -15,6 +15,139 @@ import FTTemplatesStore
 import SafariServices
 
 extension FTShelfSplitViewController: FTShelfViewModelProtocol {
+    func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio: FTWatchRecordedAudio, forAction actionType: FTAudioActionType) {
+        recordingsViewController.dismiss(animated: true) {
+            if(actionType == .exportAudio) {
+                let exporter = FTWatchAudioExporter(baseViewController: self)
+                exporter.performExport(watchRecording: recordedAudio,
+                                       onViewController: self)
+                FTCLSLog("Watch Recording : Export : Shelf");
+                return;
+            }
+            if actionType == FTAudioActionType.createNotebook{
+                FTCLSLog("Watch Recording : Create Notebook");
+
+                if(recordedAudio.audioStatus == FTWatchAudioStatus.unread){
+                    FTCLSLog("Watch Recording : mark as read");
+                    let newRecording = FTWatchRecordedAudio.initWithDictionary(recordedAudio.dictionaryRepresentation())
+                    newRecording.audioStatus = FTWatchAudioStatus.read
+                    newRecording.filePath = recordedAudio.filePath
+
+                    FTNoteshelfDocumentProvider.shared.updateRecording(item: newRecording, onCompletion: {[weak self] (error) in
+                        if(error == nil){
+                            FTCLSLog("Watch Recording : Updated record");
+                            self?.createNotebookWithAudio(newRecording)
+                        }
+                        else
+                        {
+                            (error! as NSError).showAlert(from: self)
+                        }
+                    })
+                }
+                else
+                {
+                    self.createNotebookWithAudio(recordedAudio)
+                }
+            }
+        }
+
+    }
+
+    internal func createNotebookWithAudio(_ recordedAudio: FTWatchRecordedAudio) {
+        FTCLSLog("Watch Recording : Creating Notebook");
+        
+        let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator,
+                                                                                   from: self,
+                                                                                   withText: NSLocalizedString("Creating", comment: "Creating..."))
+        
+        let itemAudio = FTAudioFileToImport.init(withURL: recordedAudio.filePath!,
+                                                 date: recordedAudio.date,
+                                                 fileName: nil);
+        createNotebookWithAudioItem(itemAudio, isiWatchDocument: true) {[weak self] (shelfItem, error) in
+            loadingIndicatorViewController.hide();
+            if error != nil {
+                runInMainThread {
+                    self?.showAlertForError(error)
+                }
+            }else {
+                if FTDeveloperOption.bookScaleAnim, let notebookItem = shelfItem {
+                    self?.showNotebookAskPasswordIfNeeded(notebookItem,
+                                                          animate: true,
+                                                          pin: nil,
+                                                          addToRecent: true,
+                                                          isQuickCreate: false, createWithAudio: true,
+                                                          onCompletion: nil);
+                }
+            }
+        }
+    }
+
+    @discardableResult private func createNotebookWithAudioItem(_ item : FTAudioFileToImport?,
+                                                                isiWatchDocument: Bool,
+                                                                onCompletion : ((FTShelfItemProtocol?,NSError?) -> Void)?) -> Progress {
+        let progress = Progress();
+        progress.totalUnitCount = 1;
+        progress.localizedDescription = NSLocalizedString("Creating", comment: "Creating...");
+
+        var items: [FTAudioFileToImport]?
+        if item != nil {
+            items = [item!]
+        }
+        self.createDocumentWithAudioFiles(urls: items,
+                                          isiWatchDocument: isiWatchDocument,
+                                          onCompletion: {[weak self] (document, error) in
+            progress.completedUnitCount += 1;
+            if(nil == error) {
+                FTCLSLog("Watch Recording : Document created");
+
+                let groupItem = self?.currentShelfViewModel?.groupItem;
+                if(groupItem != nil) {
+                    FTCLSLog("Watch Recording :  adding to group");
+                }
+                else {
+                    FTCLSLog("Watch Recording :  adding to shelf");
+                }
+                var fileName = item != nil ? item!.fileName : NSLocalizedString("Untitled", comment: "Untitled")
+                fileName = fileName?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines);
+                if nil == fileName || fileName!.isEmpty {
+                    fileName = NSLocalizedString("WatchRecording", comment: "Watch Recording")
+                }
+                self?.shelfItemCollection!.addShelfItemForDocument(document!.URL,
+                                                                   toTitle: fileName!,
+                                                                   toGroup: groupItem,
+                                                                   onCompletion:
+                                                                    { (inerror, item) in
+                    if(nil != item){
+
+                        //****************************** AutoBackup & AutoPublish
+                        if nil == inerror{
+                            FTENPublishManager.applyDefaultBackupPreferences(forItem: item, documentUUID: document!.documentUUID)
+                        }
+                        //******************************
+
+                        onCompletion?(item, inerror)
+                    }
+                    else {
+                        if let nserror = error as NSError? {
+                            nserror.showAlert(from: self)
+                        }
+                        onCompletion?(nil, error as NSError?)
+                    }
+
+                });
+            }
+            else {
+                FTCLSLog("Watch Recording : Document creation failed");
+                if let nserror = error as NSError? {
+                    nserror.showAlert(from: self)
+                }
+                onCompletion?(nil, error as NSError?)
+            }
+        });
+        return progress;
+    }
+
+
     func createNewNotebookInside(collection: FTShelfItemCollection,
                                  group: FTGroupItemProtocol?,
                                  notebookDetails: FTNewNotebookDetails?,

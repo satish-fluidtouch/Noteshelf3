@@ -30,8 +30,13 @@ class FTPlayerVisualizer: FTBaseVisualizerScene {
         self.visualizerType = FTVisualizerType.circularWave
         self.visualizerSettings = FTVisualizationSettings.circularVisualizerSettings()
         
-        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
-        self.circleNode?.texture = SKTexture.init(imageNamed: "base-aqua")
+        self.circleNode = SKSpriteNode(texture: SKTexture(imageNamed: "base-aqua"))
+        self.circleNode?.color = UIColor.init(red: 136.0/255.0, green: 197.0/255.0, blue: 210.0/255.0, alpha: 1)
+        self.circleNode?.colorBlendFactor = 1.0 
+        self.circleNode?.size = size
+
+//        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
+//        self.circleNode?.texture = SKTexture.init(imageNamed: "base-aqua")
         self.circleNode?.position = CGPoint.init(x: circleDiameter/2.0, y: circleDiameter/2.0)
         self.circleNode?.anchorPoint = CGPoint.init(x: 0.5, y: 0.5)
         self.addChild(self.circleNode!)
@@ -44,7 +49,7 @@ class FTPlayerVisualizer: FTBaseVisualizerScene {
         self.volumeRing = SKRingNode(diameter: innerCircleRadius * 2, thickness:0.07)
         self.volumeRing.setCenterImage(withName: "volume", andSize: CGSize.init(width: 30, height: 29))
         self.volumeRing.position = CGPoint.init(x: circleDiameter/2.0, y: circleDiameter/2.0)
-        self.volumeRing.color = UIColor.green
+        self.volumeRing.color = UIColor.init(red: 136.0/255.0, green: 197.0/255.0, blue: 210.0/255.0, alpha: 0.6)
         self.addChild(self.volumeRing)
         self.volumeRing.isHidden = true
 
@@ -69,7 +74,7 @@ class FTPlayerVisualizer: FTBaseVisualizerScene {
             let x:CGFloat = (CGFloat)(newRadius * cos(zRotation)) + (newDiameter / 2.0);
             let y:CGFloat = (CGFloat)(newRadius * sin(zRotation)) + (newDiameter / 2.0);
             
-            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 138/255.0, green: 204/255.0, blue: 234/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: 1.0))
+            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: 1.0))
             self.highlightNode.colorBlendFactor = 1.0
             self.highlightNode.zRotation = zRotation
             self.highlightNode.alpha = DEFAULT_ALPHA

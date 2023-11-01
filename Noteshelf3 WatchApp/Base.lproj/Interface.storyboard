@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="22154" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nhG-JS-WbX">
-    <device id="watch38"/>
+    <device id="watch44"/>
     <dependencies>
         <deployment identifier="watchOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="22022"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
     </dependencies>
     <scenes>
         <!--Watch Recordings List Controller-->
@@ -16,7 +17,7 @@
                                 <sceneKitScene width="156" height="156" alignment="center" verticalAlignment="center" id="whx-6X-fi1">
                                     <variation key="device=watch38mm" height="136" width="136"/>
                                 </sceneKitScene>
-                                <sceneKitScene width="156" height="156" alignment="center" verticalAlignment="center" id="G4f-KD-H51">
+                                <sceneKitScene width="146" height="146" alignment="center" verticalAlignment="center" id="G4f-KD-H51">
                                     <variation key="device=watch38mm" height="136" width="136"/>
                                 </sceneKitScene>
                                 <label alignment="center" verticalAlignment="center" hidden="YES" text="No recordings" textAlignment="center" minimumScaleFactor="0.5" id="ss6-uu-HOo">
@@ -98,12 +99,12 @@ to navigate.</string>
             </objects>
             <point key="canvasLocation" x="432" y="344"/>
         </scene>
-        <!--Record-->
+        <!--Recording-->
         <scene sceneID="PH6-L1-P6S">
             <objects>
-                <controller title="Record" spacing="0.0" id="nhG-JS-WbX" customClass="FTWatchRecordNewController" customModule="Noteshelf3_WatchApp" customModuleProvider="target">
+                <controller title="Recording" spacing="0.0" id="nhG-JS-WbX" customClass="FTWatchRecordNewController" customModule="Noteshelf3_WatchApp" customModuleProvider="target">
                     <items>
-                        <group width="156" height="156" alignment="center" verticalAlignment="center" layout="overlap" spacing="0.0" id="1kV-f6-4gN">
+                        <group width="148" height="148" alignment="center" verticalAlignment="center" layout="overlap" spacing="0.0" id="1kV-f6-4gN">
                             <items>
                                 <sceneKitScene width="156" height="156" alignment="center" verticalAlignment="center" id="7Kc-Gj-1l2">
                                     <variation key="device=watch38mm" height="136" width="136"/>
@@ -121,7 +122,7 @@ to navigate.</string>
                                     <items>
                                         <imageView width="32" height="32" alignment="center" verticalAlignment="center" image="paused" contentMode="scaleAspectFit" id="YWw-aD-iFW"/>
                                         <label width="60" alignment="center" verticalAlignment="bottom" text="Paused" textAlignment="center" minimumScaleFactor="0.5" id="3Cu-73-Nd2">
-                                            <color key="textColor" red="0.83921568629999999" green="0.3921568627" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" name="welcomeBtnColor"/>
                                             <fontDescription key="font" type="system" pointSize="13"/>
                                         </label>
                                     </items>
@@ -144,7 +145,7 @@ to navigate.</string>
                         </group>
                     </items>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <edgeInsets key="margins" left="1" right="1" top="0.0" bottom="0.0"/>
+                    <edgeInsets key="margins" left="1" right="0.0" top="0.0" bottom="0.0"/>
                     <connections>
                         <outlet property="pauseGroup" destination="qnc-DW-2Gp" id="Yl8-NY-QwR"/>
                         <outlet property="pausedLabel" destination="3Cu-73-Nd2" id="f4V-3V-ZRj"/>
@@ -162,7 +163,10 @@ to navigate.</string>
     <resources>
         <image name="Play-Smaller" width="15" height="15"/>
         <image name="paused" width="64" height="64"/>
-        <image name="record" width="47" height="47"/>
+        <image name="record" width="94" height="94"/>
         <image name="stop" width="26" height="26"/>
+        <namedColor name="welcomeBtnColor">
+            <color red="0.8784313725490196" green="0.43137254901960786" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

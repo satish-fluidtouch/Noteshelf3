@@ -41,6 +41,8 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func migrateBookToNS3(shelfItem: FTShelfItemProtocol)
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
+    func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
+
 }
 protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)

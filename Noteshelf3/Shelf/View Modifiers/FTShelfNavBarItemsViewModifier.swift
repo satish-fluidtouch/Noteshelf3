@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
@@ -22,9 +23,13 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
     var appState : AppState
 
     private var popOverHeight: CGFloat {
-        var height = horizontalSizeClass == .regular ? 436.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
+        var height = horizontalSizeClass == .regular ? 488.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
+        if(NSUbiquitousKeyValueStore.default.isWatchPaired()) {
+            height += 52
+        }
         return height
     }
+
      func newNoteViewModel() -> FTNewNotePopoverViewModel {
          let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
         shelfNewNoteViewModel.delegate = shelfViewModel
@@ -67,14 +72,18 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .font(Font.appFont(for: .regular , with: 15.5))
                                     .foregroundColor(Color.appColor(.accent))
                             }
-                                .popover(isPresented: $showingPopover) {
+                            .popover(isPresented: $showingPopover) {
+                                NavigationStack{
                                     FTShelfNewNotePopoverView(viewModel: newNoteViewModel(), popoverHeight: popOverHeight, appState: AppState(sizeClass: horizontalSizeClass ?? .regular),delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)
-                                    .presentationDetents([.height(popOverHeight)])
-                                    .presentationDragIndicator(.hidden)
-                                    .background(.regularMaterial)
-                                    .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
+                                        .background(.regularMaterial)
                                 }
+                                .frame(minWidth: 340.0,maxWidth: .infinity)
+                                .frame(height: popOverHeight)
+                                .presentationDetents([.height(popOverHeight)])
+                                .presentationDragIndicator(.hidden)
+                                .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
                             }
+                        }
                         if shelfViewModel.canShowSearchOption {
                             Button {
                                 if !shelfMenuOverlayInfo.isMenuShown {

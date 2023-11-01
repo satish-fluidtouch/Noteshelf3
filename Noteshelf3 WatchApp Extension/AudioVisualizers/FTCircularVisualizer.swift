@@ -29,15 +29,21 @@ class FTCircularVisualizer: FTBaseVisualizerScene {
         self.visualizerType = FTVisualizerType.circularWave
         self.visualizerSettings = FTVisualizationSettings.circularVisualizerSettings()
                 
-        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
+//        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
+        self.circleNode = SKSpriteNode(texture: SKTexture(imageNamed: "base"))
+        self.circleNode?.color = UIColor.init(red: 224/255.0, green: 110/255.0, blue: 81/255.0, alpha: 1.0)
+        self.circleNode?.colorBlendFactor = 1.0
+        self.circleNode?.size = size
+
         self.circleNode?.position = CGPoint.init(x: circleDiameter/2.0, y: circleDiameter/2.0)
-        self.circleNode?.texture = SKTexture.init(imageNamed: "base")
+//        self.circleNode?.texture = SKTexture.init(imageNamed: "base")
+
         self.circleNode?.anchorPoint = CGPoint.init(x: 0.5, y: 0.5)
         self.addChild(self.circleNode!)
         
         let Circle = SKShapeNode(circleOfRadius: innerCircleRadius) // Create circle
         Circle.position = CGPoint(x: circleDiameter/2.0, y: circleDiameter/2.0)  // Center (given scene anchor point is 0.5 for x&y)
-        Circle.strokeColor = SKColor.init(red: 248/255.0, green: 113/255.0, blue: 58/255.0, alpha: 1.0)
+        Circle.strokeColor = SKColor.init(red: 224/255.0, green: 110/255.0, blue: 81/255.0, alpha: 1.0)
         Circle.glowWidth = 0.0
         Circle.fillColor = SKColor.clear
         Circle.lineWidth = 2.0

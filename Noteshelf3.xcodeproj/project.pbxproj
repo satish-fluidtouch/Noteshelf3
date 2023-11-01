@@ -368,15 +368,12 @@
 		474B062A2AC1B71500A4D0F3 /* Play-Smaller@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B05FE2AC1B71500A4D0F3 /* Play-Smaller@2x.png */; };
 		474B062B2AC1B71500A4D0F3 /* FTVisualizationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474B05FF2AC1B71500A4D0F3 /* FTVisualizationSettings.swift */; };
 		474B062C2AC1B71500A4D0F3 /* FTRecentAudioCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474B06002AC1B71500A4D0F3 /* FTRecentAudioCircle.swift */; };
-		474B062D2AC1B71500A4D0F3 /* base-aqua-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06012AC1B71500A4D0F3 /* base-aqua-60.png */; };
 		474B062E2AC1B71500A4D0F3 /* ray-aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06022AC1B71500A4D0F3 /* ray-aqua.png */; };
 		474B062F2AC1B71500A4D0F3 /* base-aqua-less.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06032AC1B71500A4D0F3 /* base-aqua-less.png */; };
 		474B06302AC1B71500A4D0F3 /* rays@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06042AC1B71500A4D0F3 /* rays@2x.png */; };
 		474B06312AC1B71500A4D0F3 /* shine-new.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06052AC1B71500A4D0F3 /* shine-new.png */; };
-		474B06322AC1B71500A4D0F3 /* base-aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06062AC1B71500A4D0F3 /* base-aqua.png */; };
 		474B06332AC1B71500A4D0F3 /* FTPlayerVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474B06072AC1B71500A4D0F3 /* FTPlayerVisualizer.swift */; };
 		474B06342AC1B71500A4D0F3 /* Play-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06082AC1B71500A4D0F3 /* Play-Small@2x.png */; };
-		474B06352AC1B71500A4D0F3 /* base.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06092AC1B71500A4D0F3 /* base.png */; };
 		474B06362AC1B71500A4D0F3 /* shine-aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B060A2AC1B71500A4D0F3 /* shine-aqua.png */; };
 		474B06372AC1B71500A4D0F3 /* FTVisualizerConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474B060B2AC1B71500A4D0F3 /* FTVisualizerConstants.swift */; };
 		474B06382AC1B71500A4D0F3 /* ray.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B060C2AC1B71500A4D0F3 /* ray.png */; };
@@ -406,6 +403,7 @@
 		475E53492A5D6E75004AB827 /* FTShelfTagsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E53482A5D6E75004AB827 /* FTShelfTagsConstants.swift */; };
 		475E534B2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E534A2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift */; };
 		4766F6AA2A8DFB6E00F8FA27 /* FTNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4766F6A92A8DFB6E00F8FA27 /* FTNetwork.swift */; };
+		477646442AF0CFE4009DCC2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E4FDED52AC1B3AC0097FE16 /* Assets.xcassets */; };
 		477862DB2A5EB0A400202D00 /* FTShelfTagsPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47653CA4291CA8670068D7AE /* FTShelfTagsPageCell.swift */; };
 		477862FD2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */; };
 		478142BD2A85F33A0029378B /* templates_fr.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478142B42A85F33A0029378B /* templates_fr.plist */; };
@@ -445,6 +443,7 @@
 		47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
 		47F39E872A04DF7400CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F39E892A04E0FB00CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
+		47F5F2A42AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */; };
 		520DA2A52A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */; };
 		520DA2AA2A2DF3D8003A6F22 /* FTFinderUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4213C34E288955DB00A7A6F3 /* FTFinderUI.storyboard */; };
 		520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2BB2A2F493C003A6F22 /* FTBookmarkViewController.swift */; };
@@ -3175,6 +3174,7 @@
 		47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPropertyPlistItem.swift; sourceTree = "<group>"; };
 		47F4030E1F56C69F000D4C59 /* FTShelfCategoryCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCategoryCollection.swift; sourceTree = "<group>"; };
 		47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsUpdateHandler.swift; sourceTree = "<group>"; };
+		47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedListReprasentableView.swift; sourceTree = "<group>"; };
 		47F652CB1EB4C0290029EC68 /* FTThemeCoverflowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTThemeCoverflowView.swift; path = Notebook/FTThemeCoverflowView.swift; sourceTree = "<group>"; };
 		47F652CE1EB4C0440029EC68 /* FTThemeCoverflowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FTThemeCoverflowView.xib; path = Notebook/FTThemeCoverflowView.xib; sourceTree = "<group>"; };
 		47FBFD9F1EC9719B0083AA1E /* FTShelfItemPublishRequest_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemPublishRequest_Extension.swift; sourceTree = "<group>"; };
@@ -5532,6 +5532,7 @@
 				5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */,
 				5E47F5F5202C506600ED9345 /* FTWatchAudioActionsProvider.swift */,
 				09D13BFE2021FFE3000B4BB7 /* FTWatchRecordedListViewController.swift */,
+				47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */,
 				09E54FF0205F83CF005398CD /* FTWatchAudioExporter.swift */,
 				09D13BFD2021FFE3000B4BB7 /* FTWatchRecordedAudioCell.swift */,
 				5E47F5F2202C484700ED9345 /* FTWatchAudioActionsViewController.swift */,
@@ -11382,19 +11383,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				474B06382AC1B71500A4D0F3 /* ray.png in Resources */,
-				474B062D2AC1B71500A4D0F3 /* base-aqua-60.png in Resources */,
 				474B062F2AC1B71500A4D0F3 /* base-aqua-less.png in Resources */,
 				474B063A2AC1B71500A4D0F3 /* shine.png in Resources */,
 				474B063B2AC1B71500A4D0F3 /* volume-mute.png in Resources */,
 				474B06312AC1B71500A4D0F3 /* shine-new.png in Resources */,
 				474B06362AC1B71500A4D0F3 /* shine-aqua.png in Resources */,
+				477646442AF0CFE4009DCC2A /* Assets.xcassets in Resources */,
 				0E4FDEEA2AC1B3AD0097FE16 /* Assets.xcassets in Resources */,
 				474B062E2AC1B71500A4D0F3 /* ray-aqua.png in Resources */,
 				474B06292AC1B71500A4D0F3 /* volume.png in Resources */,
 				474B062A2AC1B71500A4D0F3 /* Play-Smaller@2x.png in Resources */,
-				474B06322AC1B71500A4D0F3 /* base-aqua.png in Resources */,
 				474B06302AC1B71500A4D0F3 /* rays@2x.png in Resources */,
-				474B06352AC1B71500A4D0F3 /* base.png in Resources */,
 				474B061F2AC1B71500A4D0F3 /* FTRecordScene.sks in Resources */,
 				474B063C2AC1B71500A4D0F3 /* paused.png in Resources */,
 				474B06342AC1B71500A4D0F3 /* Play-Small@2x.png in Resources */,
@@ -12394,6 +12393,7 @@
 				BAF3914B2859ADF00067CA9F /* FTRefreshViewController.swift in Sources */,
 				BAF3914C2859ADF00067CA9F /* FTMidnightDairyFormat.swift in Sources */,
 				BAF3914D2859ADF00067CA9F /* FTOnScreenWritingViewController.swift in Sources */,
+				47F5F2A42AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift in Sources */,
 				BAF3914F2859ADF00067CA9F /* FTExportActivityManager.swift in Sources */,
 				BAF391502859ADF00067CA9F /* FTSendAudioFileRequest.swift in Sources */,
 				BAF391522859ADF00067CA9F /* FTDiagnosticInstanceCounter.swift in Sources */,

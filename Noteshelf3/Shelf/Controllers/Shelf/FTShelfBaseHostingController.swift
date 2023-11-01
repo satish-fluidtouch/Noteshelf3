@@ -12,6 +12,8 @@ import Combine
 class FTShelfBaseHostingController: UIHostingController<AnyView> {
     var shelfViewModel: FTShelfViewModel!
     private var cancellables = [AnyCancellable]()
+    fileprivate weak var bannerAdController : FTAdBannerViewController?;
+
 #if targetEnvironment(macCatalyst)
     weak var delegate: FTMacGlobalSearchDelegate?
     var selectNoteCancellable = [AnyCancellable]()
@@ -24,6 +26,7 @@ class FTShelfBaseHostingController: UIHostingController<AnyView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupView()
+        self.addBannerIfNeeded()
 #if targetEnvironment(macCatalyst)
         if let toolbar = self.splitViewController?.view.toolbar as? FTShelfToolbar {
             self.observeShelfModelChanges(of: toolbar)
@@ -128,3 +131,36 @@ private extension FTShelfBaseHostingController {
         shelfViewModel.fetchShelfItems()
     }
 }
+//MARK:- Banner Ad -
+ extension FTShelfBaseHostingController
+ {
+     fileprivate func addBannerIfNeeded()
+     {
+         self.updateBannerAd(nil);
+         NotificationCenter.default.addObserver(self,
+                                                selector: #selector(self.updateBannerAd(_:)),
+                                                name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
+                                                object: nil)
+         NotificationCenter.default.addObserver(self,
+                                                selector: #selector(self.updateBannerAd(_:)),
+                                                name: NSNotification.Name(rawValue: FTUbiquitousKeyValueStoreChangedLocally),
+                                                object: nil)
+
+     }
+     @objc fileprivate func updateBannerAd(_ notification : Notification?)
+     {
+         if(NSUbiquitousKeyValueStore.default.isWatchPaired()) {
+             if (nil == self.bannerAdController) && !NSUbiquitousKeyValueStore.default.isWatchAppInstalled() {
+                 if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
+                     splitContorller.shelfMenuDisplayInfo.isMenuShown = true;
+                     self.bannerAdController = FTAdBannerViewController.showAdBannerOn(viewController: self);
+                 }
+             } else {
+                 if(nil != self.bannerAdController) {
+                     self.bannerAdController?.removeBannerAd();
+                 }
+             }
+         }
+     }
+
+ }

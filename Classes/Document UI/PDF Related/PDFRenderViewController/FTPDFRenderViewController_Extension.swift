@@ -261,15 +261,14 @@ extension FTPDFRenderViewController {
     }
 }
 
-extension FTPDFRenderViewController : FTWatchRecordedListViewControllerDelegate{
+extension FTPDFRenderViewController : FTWatchRecordedListViewControllerDelegate {
     func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio: FTWatchRecordedAudio, forAction actionType: FTAudioActionType) {
         self.dismiss(animated: true) {
             if(actionType == .exportAudio) {
                 guard let sourceView = self.rightPanelSource(for: FTDeskRightPanelTool.add) else { return }
                 let exporter = FTWatchAudioExporter(baseViewController: self);
                 exporter.performExport(watchRecording: recordedAudio,
-                                       onViewController: self.parent ?? self,
-                                       sourceRect: sourceView.bounds, sourceView: sourceView);
+                                       onViewController: self.parent ?? self);
                 FTCLSLog("Watch Recording: Export - Inside");
                 return;
             }

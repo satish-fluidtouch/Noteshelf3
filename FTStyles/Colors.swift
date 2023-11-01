@@ -127,6 +127,7 @@ public enum AssetsColor: String, CaseIterable {
     case white100
     case white20
     case white50
+    case watchViewBg
 
     //Red
     case destructiveRed

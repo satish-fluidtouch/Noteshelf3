@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hjt-Vn-gch">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hjt-Vn-gch">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Medium.otf">
-            <string>SFProText-Medium</string>
-        </array>
-        <array key="SF-Pro-Text-Regular.otf">
-            <string>SFProText-Regular</string>
-        </array>
-        <array key="SF-Pro-Text-Semibold.otf">
-            <string>SFProText-Semibold</string>
+        <array key="Clearface-Serial-Medium.ttf">
+            <string>Clearface-Serial-Medium-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -28,70 +24,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="503"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bM5-IR-vIp" userLabel="HeaderView" customClass="FTHeaderView" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mwz-ut-qvb" userLabel="HeaderView">
+                                <rect key="frame" x="0.0" y="40" width="320" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lgF-Yh-nWi" userLabel="backButton" customClass="FTStaticTextButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="34" width="40" height="40"/>
-                                        <accessibility key="accessibilityConfiguration" label="Back"/>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w38-no-DAd">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="KhO-6E-l2G"/>
-                                            <constraint firstAttribute="width" constant="40" id="PID-Lk-8FG"/>
+                                            <constraint firstAttribute="width" secondItem="w38-no-DAd" secondAttribute="height" multiplier="1:1" id="FRF-aT-opb"/>
+                                            <constraint firstAttribute="width" secondItem="w38-no-DAd" secondAttribute="height" multiplier="1:1" id="any-NF-VH3"/>
+                                            <constraint firstAttribute="width" constant="44" id="zwb-MK-tQt"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="19"/>
-                                        <color key="tintColor" name="imageTintColor"/>
-                                        <state key="normal" image="backDark">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" name="accent"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="chevron.left" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" weight="medium">
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="20"/>
+                                            </preferredSymbolConfiguration>
                                         </state>
-                                        <variation key="widthClass=compact">
-                                            <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
-                                        </variation>
                                         <connections>
-                                            <action selector="backButtonTapped:" destination="Hjt-Vn-gch" eventType="touchUpInside" id="fL9-Wu-ACb"/>
+                                            <action selector="backButtonTapped:" destination="Hjt-Vn-gch" eventType="touchUpInside" id="Bu3-2C-P2D"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple Watch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="4CI-pe-Wt6" customClass="FTStaticTextLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="111.5" y="44" width="97" height="20"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
-                                        <color key="textColor" name="headerColor"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watch Recordings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyJ-ox-PdC">
+                                        <rect key="frame" x="81" y="10" width="158" height="24"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="AppleWatch"/>
-                                        </userDefinedRuntimeAttributes>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nDT-G4-NPz">
-                                        <rect key="frame" x="230" y="38.5" width="67" height="31"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="4CI-pe-Wt6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lgF-Yh-nWi" secondAttribute="trailing" constant="5" id="1TG-f4-4sX"/>
-                                    <constraint firstItem="lgF-Yh-nWi" firstAttribute="leading" secondItem="bM5-IR-vIp" secondAttribute="leading" constant="10" id="9HL-je-Jdv"/>
-                                    <constraint firstItem="4CI-pe-Wt6" firstAttribute="centerX" secondItem="bM5-IR-vIp" secondAttribute="centerX" id="BEF-gN-EFb"/>
-                                    <constraint firstAttribute="height" constant="80" id="hzK-yL-WO9" userLabel="headerHeightConstraint" propertyAccessControl="none">
-                                        <variation key="heightClass=compact" constant="60"/>
-                                    </constraint>
-                                    <constraint firstItem="4CI-pe-Wt6" firstAttribute="centerY" secondItem="lgF-Yh-nWi" secondAttribute="centerY" id="k6E-D4-U6f"/>
-                                    <constraint firstAttribute="bottom" secondItem="lgF-Yh-nWi" secondAttribute="bottom" constant="6" id="oOx-B1-yL2"/>
-                                    <constraint firstItem="nDT-G4-NPz" firstAttribute="centerY" secondItem="4CI-pe-Wt6" secondAttribute="centerY" id="rgK-FR-2w2"/>
-                                    <constraint firstItem="nDT-G4-NPz" firstAttribute="leading" secondItem="4CI-pe-Wt6" secondAttribute="trailing" constant="17" id="smo-lx-va4"/>
+                                    <constraint firstAttribute="height" constant="44" id="02e-WE-WK3"/>
+                                    <constraint firstItem="w38-no-DAd" firstAttribute="leading" secondItem="Mwz-ut-qvb" secondAttribute="leading" id="1Bp-VS-ZeQ"/>
+                                    <constraint firstItem="fyJ-ox-PdC" firstAttribute="centerX" secondItem="Mwz-ut-qvb" secondAttribute="centerX" id="Jnk-cp-hqm"/>
+                                    <constraint firstItem="fyJ-ox-PdC" firstAttribute="centerY" secondItem="Mwz-ut-qvb" secondAttribute="centerY" id="ePF-wY-eKm"/>
+                                    <constraint firstItem="fyJ-ox-PdC" firstAttribute="centerY" secondItem="w38-no-DAd" secondAttribute="centerY" id="qJy-X7-bOa"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="nDT-G4-NPz"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ty-QK-LVW" userLabel="EmptyRecordingView">
-                                <rect key="frame" x="0.0" y="80" width="320" height="423"/>
+                                <rect key="frame" x="0.0" y="94" width="320" height="409"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G7U-Sh-e1B">
-                                        <rect key="frame" x="150" y="201.5" width="20" height="20"/>
+                                        <rect key="frame" x="150" y="194.5" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="26h-tC-yxA" userLabel="EmptyContentView">
-                                        <rect key="frame" x="0.0" y="100" width="320" height="153"/>
+                                        <rect key="frame" x="0.0" y="100" width="320" height="158.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iWatchEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="2W6-Iu-R1M">
                                                 <rect key="frame" x="128" y="5" width="64" height="64"/>
@@ -101,10 +78,9 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Apple Watch Recordings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poH-qR-oUR" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                <rect key="frame" x="78" y="74" width="164.5" height="16"/>
+                                                <rect key="frame" x="64" y="74" width="192" height="18"/>
                                                 <color key="tintColor" name="imageTintColor"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="13"/>
-                                                <color key="textColor" name="headerColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="style">
@@ -113,10 +89,10 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="NoAppleWatchRecordings"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add recordings in your Watch to import them here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xil-d2-BXP" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                <rect key="frame" x="15" y="95" width="290" height="28"/>
-                                                <fontDescription key="fontDescription" name="SFProText-Medium" family="SF Pro Text" pointSize="12"/>
-                                                <color key="textColor" name="headerColor"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recordings from the Noteshelf Apple Watch app will appear here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xil-d2-BXP" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="15" y="97" width="290" height="31.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" name="black70"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="style">
@@ -149,9 +125,9 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ujJ-1g-nL3">
-                                <rect key="frame" x="0.0" y="84" width="320" height="409"/>
+                                <rect key="frame" x="0.0" y="94" width="320" height="399"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" name="cellSeparatorColor"/>
+                                <color key="separatorColor" name="cellBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTWatchRecordedAudioCell" rowHeight="64" id="1TN-bR-KRb" customClass="FTWatchRecordedAudioCell" customModule="NS3_Beta" customModuleProvider="target">
@@ -167,8 +143,14 @@
                                                         <constraint firstAttribute="height" constant="40" id="5FO-GV-ml5"/>
                                                         <constraint firstAttribute="width" constant="40" id="iYy-ys-4JT"/>
                                                     </constraints>
-                                                    <state key="normal" image="iWatchPlay"/>
-                                                    <state key="selected" image="iWatchPause"/>
+                                                    <color key="tintColor" name="accent"/>
+                                                    <state key="normal">
+                                                        <imageReference key="image" image="play.circle.fill" catalog="system" symbolScale="default"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="medium">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <state key="selected" image="pause.circle.fill" catalog="system"/>
                                                 </button>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wnD-Z7-HNk">
                                                     <rect key="frame" x="26" y="22" width="20" height="20"/>
@@ -183,7 +165,7 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="progressTintColor">
-                                                            <color key="value" red="0.94901960784313721" green="0.73725490196078436" blue="0.14509803921568626" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="value" name="accent"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="trackTintColor">
                                                             <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -197,12 +179,11 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today at 09:59 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YA6-FT-eLf" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="72" y="14.5" width="134" height="19"/>
+                                                    <rect key="frame" x="72" y="14.5" width="144.5" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="MTF-Q6-NXb"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                                    <color key="textColor" name="headerColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="style">
@@ -211,12 +192,12 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioY-vF-dbs" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="72" y="34.5" width="58.5" height="19"/>
+                                                    <rect key="frame" x="72" y="34.5" width="64" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="r6I-oA-sGs"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
-                                                    <color key="textColor" name="lightTitleColor_50"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" name="black50"/>
                                                     <nil key="highlightedColor"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="style">
@@ -224,16 +205,15 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconChevron" translatesAutoresizingMaskIntoConstraints="NO" id="WrI-XF-K8H">
-                                                    <rect key="frame" x="260" y="24" width="12" height="16"/>
-                                                    <color key="tintColor" name="imageTintColor"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WrI-XF-K8H">
+                                                    <rect key="frame" x="260" y="26" width="12" height="12.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="gvn-dl-J0Z"/>
                                                         <constraint firstAttribute="height" constant="16" id="l5e-hK-DFI"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" name="bgColor"/>
+                                            <color key="backgroundColor" name="white60"/>
                                             <constraints>
                                                 <constraint firstItem="YEe-PP-q9X" firstAttribute="centerY" secondItem="4jq-Hw-dRl" secondAttribute="centerY" id="GYm-Or-ZWj"/>
                                                 <constraint firstItem="wnD-Z7-HNk" firstAttribute="centerX" secondItem="YEe-PP-q9X" secondAttribute="centerX" id="L8q-g4-E0y"/>
@@ -268,19 +248,19 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ehp-wa-zen"/>
-                        <color key="backgroundColor" name="popoverBGColor"/>
+                        <color key="backgroundColor" name="popoverBgColor"/>
                         <constraints>
-                            <constraint firstItem="6Ty-QK-LVW" firstAttribute="top" secondItem="bM5-IR-vIp" secondAttribute="bottom" id="4yu-Za-9lc"/>
+                            <constraint firstItem="6Ty-QK-LVW" firstAttribute="top" secondItem="Mwz-ut-qvb" secondAttribute="bottom" constant="10" id="87d-34-EbA"/>
                             <constraint firstAttribute="bottom" secondItem="6Ty-QK-LVW" secondAttribute="bottom" id="FI9-ee-h9j"/>
                             <constraint firstItem="Ehp-wa-zen" firstAttribute="bottom" secondItem="ujJ-1g-nL3" secondAttribute="bottom" constant="10" id="PXf-o8-g7w"/>
-                            <constraint firstItem="bM5-IR-vIp" firstAttribute="leading" secondItem="Ehp-wa-zen" secondAttribute="leading" id="R1c-38-ZLq"/>
-                            <constraint firstItem="bM5-IR-vIp" firstAttribute="top" secondItem="eCQ-Oh-msF" secondAttribute="top" id="ST5-tu-SMd"/>
-                            <constraint firstItem="Ehp-wa-zen" firstAttribute="trailing" secondItem="bM5-IR-vIp" secondAttribute="trailing" id="VXe-sl-syZ"/>
+                            <constraint firstItem="Mwz-ut-qvb" firstAttribute="top" secondItem="Ehp-wa-zen" secondAttribute="top" constant="20" id="bSs-PF-lDF"/>
                             <constraint firstItem="Ehp-wa-zen" firstAttribute="trailing" secondItem="ujJ-1g-nL3" secondAttribute="trailing" id="cXO-gV-5E2"/>
+                            <constraint firstItem="ujJ-1g-nL3" firstAttribute="top" secondItem="Mwz-ut-qvb" secondAttribute="bottom" constant="10" id="exC-Oe-y59"/>
                             <constraint firstItem="6Ty-QK-LVW" firstAttribute="leading" secondItem="Ehp-wa-zen" secondAttribute="leading" id="gs0-rE-LJH"/>
+                            <constraint firstAttribute="trailing" secondItem="Mwz-ut-qvb" secondAttribute="trailing" id="iGt-DY-zcc"/>
+                            <constraint firstItem="Mwz-ut-qvb" firstAttribute="leading" secondItem="eCQ-Oh-msF" secondAttribute="leading" id="qKg-GR-Nwh"/>
                             <constraint firstItem="Ehp-wa-zen" firstAttribute="trailing" secondItem="6Ty-QK-LVW" secondAttribute="trailing" id="wPx-sr-1Q8"/>
                             <constraint firstItem="ujJ-1g-nL3" firstAttribute="leading" secondItem="Ehp-wa-zen" secondAttribute="leading" id="yn1-y0-bEu"/>
-                            <constraint firstItem="ujJ-1g-nL3" firstAttribute="top" secondItem="bM5-IR-vIp" secondAttribute="bottom" constant="4" id="zRc-Bx-EaR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KUZ-Gz-NMu"/>
@@ -288,7 +268,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="503"/>
                     <connections>
-                        <outlet property="backButton" destination="lgF-Yh-nWi" id="f8I-S4-wgr"/>
                         <outlet property="loadingActivityView" destination="G7U-Sh-e1B" id="Dll-nQ-LVy"/>
                         <outlet property="noRecordingsContentView" destination="26h-tC-yxA" id="psN-a7-9T4"/>
                         <outlet property="noRecordingsView" destination="6Ty-QK-LVW" id="YYV-TB-Spu"/>
@@ -307,71 +286,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="503"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ytL-XO-Tol" userLabel="HeaderView" customClass="FTHeaderView" customModule="NS3_Beta" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyh-Oi-aXs" userLabel="HeaderView">
+                                <rect key="frame" x="0.0" y="40" width="320" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BQy-HQ-Dqj" userLabel="backButton" customClass="FTStaticTextButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="26" width="40" height="28"/>
-                                        <accessibility key="accessibilityConfiguration" label="Back"/>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="34k-eW-cvL">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="bk2-LH-Vp7"/>
-                                            <constraint firstAttribute="height" constant="40" id="y9s-oj-r5S"/>
+                                            <constraint firstAttribute="width" secondItem="34k-eW-cvL" secondAttribute="height" multiplier="1:1" id="1yg-5q-jg9"/>
+                                            <constraint firstAttribute="width" secondItem="34k-eW-cvL" secondAttribute="height" multiplier="1:1" id="Amf-kF-6pL"/>
+                                            <constraint firstAttribute="width" constant="44" id="DGs-NB-a60"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="19"/>
-                                        <color key="tintColor" name="imageTintColor"/>
-                                        <state key="normal" image="backDark">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" name="accent"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="chevron.left" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" weight="medium">
+                                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="20"/>
+                                            </preferredSymbolConfiguration>
                                         </state>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="y9s-oj-r5S"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="widthClass=compact">
-                                            <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
-                                        </variation>
                                         <connections>
-                                            <action selector="backButtonTapped:" destination="yxc-RD-Zx0" eventType="touchUpInside" id="qpw-h3-xl8"/>
+                                            <action selector="backButtonTapped:" destination="yxc-RD-Zx0" eventType="touchUpInside" id="eDU-Qw-lPK"/>
+                                            <action selector="backButtonTapped:" destination="Hjt-Vn-gch" eventType="touchUpInside" id="f9e-QL-knH"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WatchRecordings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="0ja-Vc-vqY" customClass="FTStaticTextLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="30" width="135" height="20"/>
-                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="19"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watch Actions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBU-Th-dfv">
+                                        <rect key="frame" x="97" y="9.5" width="126.5" height="25"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="WatchRecordings"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <variation key="widthClass=compact">
-                                            <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="17"/>
-                                        </variation>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="0ja-Vc-vqY" firstAttribute="centerY" secondItem="ytL-XO-Tol" secondAttribute="centerY" id="AC7-bd-d99"/>
-                                    <constraint firstItem="0ja-Vc-vqY" firstAttribute="leading" secondItem="BQy-HQ-Dqj" secondAttribute="trailing" id="Aue-oe-5QK"/>
-                                    <constraint firstAttribute="height" constant="80" id="GFy-cR-yZM" userLabel="headerHeightConstraint" propertyAccessControl="none">
-                                        <variation key="heightClass=compact" constant="60"/>
-                                    </constraint>
-                                    <constraint firstAttribute="bottom" secondItem="BQy-HQ-Dqj" secondAttribute="bottom" id="NRn-dX-XKa"/>
-                                    <constraint firstItem="BQy-HQ-Dqj" firstAttribute="leading" secondItem="ytL-XO-Tol" secondAttribute="leading" constant="10" id="esJ-4S-V0Q"/>
-                                    <constraint firstItem="BQy-HQ-Dqj" firstAttribute="centerY" secondItem="0ja-Vc-vqY" secondAttribute="centerY" id="wy0-vY-6jx"/>
+                                    <constraint firstItem="34k-eW-cvL" firstAttribute="leading" secondItem="cyh-Oi-aXs" secondAttribute="leading" id="0gu-8C-j4C"/>
+                                    <constraint firstItem="bBU-Th-dfv" firstAttribute="centerY" secondItem="34k-eW-cvL" secondAttribute="centerY" id="53Q-i3-z9y"/>
+                                    <constraint firstItem="bBU-Th-dfv" firstAttribute="centerX" secondItem="cyh-Oi-aXs" secondAttribute="centerX" id="5p8-Qz-OoX"/>
+                                    <constraint firstItem="bBU-Th-dfv" firstAttribute="centerY" secondItem="cyh-Oi-aXs" secondAttribute="centerY" id="OV3-wc-Zw6"/>
+                                    <constraint firstAttribute="height" constant="44" id="jzE-u9-zoI"/>
                                 </constraints>
-                                <variation key="heightClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="NRn-dX-XKa"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <exclude reference="NRn-dX-XKa"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="fch-Ec-m50">
-                                <rect key="frame" x="0.0" y="80" width="320" height="423"/>
+                                <rect key="frame" x="0.0" y="94" width="320" height="409"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" name="cellSeparatorColor"/>
+                                <color key="separatorColor" name="cellBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTWatchAudioOptionsCell" rowHeight="52" id="QUF-tT-Tbu" customClass="FTWatchAudioOptionsCell" customModule="NS3_Beta" customModuleProvider="target">
@@ -382,13 +338,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Notebook" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUp-Mt-I8e" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="16.5" width="122.5" height="19"/>
-                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="16"/>
-                                                    <color key="textColor" name="lightTitleColor_60"/>
+                                                    <rect key="frame" x="16" y="16.5" width="124" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="bgColor"/>
+                                            <color key="backgroundColor" name="white60"/>
                                             <constraints>
                                                 <constraint firstItem="uUp-Mt-I8e" firstAttribute="leading" secondItem="RX3-f9-uNL" secondAttribute="leading" constant="16" id="jXa-KE-sza"/>
                                                 <constraint firstItem="uUp-Mt-I8e" firstAttribute="centerY" secondItem="RX3-f9-uNL" secondAttribute="centerY" id="tms-lU-k79"/>
@@ -407,15 +362,15 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1ob-xZ-T0p"/>
-                        <color key="backgroundColor" name="popoverBGColor"/>
+                        <color key="backgroundColor" name="popoverBgColor"/>
                         <constraints>
-                            <constraint firstItem="ytL-XO-Tol" firstAttribute="leading" secondItem="1ob-xZ-T0p" secondAttribute="leading" id="1qB-JR-duc"/>
-                            <constraint firstItem="fch-Ec-m50" firstAttribute="top" secondItem="ytL-XO-Tol" secondAttribute="bottom" id="5SB-ph-Yb8"/>
                             <constraint firstItem="1ob-xZ-T0p" firstAttribute="trailing" secondItem="fch-Ec-m50" secondAttribute="trailing" id="7td-xa-Lzu"/>
                             <constraint firstAttribute="bottom" secondItem="fch-Ec-m50" secondAttribute="bottom" id="BJP-bu-8tn"/>
+                            <constraint firstItem="fch-Ec-m50" firstAttribute="top" secondItem="cyh-Oi-aXs" secondAttribute="bottom" constant="10" id="Bjx-wR-hZV"/>
                             <constraint firstItem="fch-Ec-m50" firstAttribute="leading" secondItem="1ob-xZ-T0p" secondAttribute="leading" id="DVA-VC-rwl"/>
-                            <constraint firstItem="ytL-XO-Tol" firstAttribute="top" secondItem="jqo-Kq-8AC" secondAttribute="top" id="KoH-KA-Z9t"/>
-                            <constraint firstItem="ytL-XO-Tol" firstAttribute="trailing" secondItem="1ob-xZ-T0p" secondAttribute="trailing" id="sQ8-1F-Znv"/>
+                            <constraint firstItem="cyh-Oi-aXs" firstAttribute="top" secondItem="1ob-xZ-T0p" secondAttribute="top" constant="20" id="QV3-MO-Jkm"/>
+                            <constraint firstItem="cyh-Oi-aXs" firstAttribute="trailing" secondItem="1ob-xZ-T0p" secondAttribute="trailing" id="jDH-XY-dwH"/>
+                            <constraint firstItem="cyh-Oi-aXs" firstAttribute="leading" secondItem="1ob-xZ-T0p" secondAttribute="leading" id="jvZ-PL-HOl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="h50-qX-A3g"/>
@@ -424,7 +379,6 @@
                     <size key="freeformSize" width="320" height="503"/>
                     <connections>
                         <outlet property="tableView" destination="fch-Ec-m50" id="LQt-IZ-j9t"/>
-                        <outlet property="titleLabel" destination="0ja-Vc-vqY" id="HYo-d1-2vz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oVO-Rs-0BX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -433,31 +387,34 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backDark" width="16" height="28"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="iWatchEmpty" width="64" height="64"/>
-        <image name="iWatchPause" width="32" height="32"/>
-        <image name="iWatchPlay" width="32" height="32"/>
-        <image name="iconChevron" width="13" height="16"/>
-        <namedColor name="bgColor">
-            <color red="0.9882352941176471" green="0.9882352941176471" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="pause.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="accent">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="cellSeparatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.12999999523162842" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="black50">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="headerColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="black70">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="cellBackgroundColor">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="imageTintColor">
             <color red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="lightTitleColor_50">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="popoverBgColor">
+            <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="lightTitleColor_60">
-            <color red="0.0" green="0.0" blue="0.0" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="white60">
+            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="popoverBGColor">
-            <color red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="0.94999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
