@@ -389,7 +389,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
         let fileName = theme.themeFileURL.lastPathComponent.deletingPathExtension;
         let defaultCover = FTThemesLibrary(libraryType: .covers).getDefaultTheme(defaultMode: .quickCreate)
         let notebookDetails = FTNewNotebookDetails(coverTheme: defaultCover, paperTheme: theme, documentPin: nil, title: fileName)
-        FTNotebookCreation().createNewNotebookInside(collection: collection, group: groupItem, notebookDetails: notebookDetails) { error, shelfItem in
+        FTNotebookCreation().createNewNotebookInside(collection: collection, group: groupItem, notebookDetails: notebookDetails,mode: .template) { error, shelfItem in
             progress.completedUnitCount += 1;
             if(error == nil) {
                 onCompletion!(shelfItem,error)

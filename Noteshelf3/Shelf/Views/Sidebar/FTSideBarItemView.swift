@@ -23,6 +23,9 @@ struct SideBarItemView : View {
     var viewWidth: CGFloat
     var body: some View {
         Button {
+            if self.viewModel.selectedSideBarItem == item, item.isEditing {
+                return
+            }
             self.viewModel.endEditingActions()
             self.viewModel.currentDraggedSidebarItem = nil
             self.viewModel.selectedSideBarItem = item

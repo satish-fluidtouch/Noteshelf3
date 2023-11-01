@@ -48,8 +48,9 @@
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>CNTLGGQX2J.com.fluidtouch.noteshelf3</string>
+		<string>$(AppIdentifierPrefix)CNTLGGQX2J.com.fluidtouch.noteshelf3</string>
 		<string>$(AppIdentifierPrefix)com.microsoft.adalcache</string>
+		<string>$(AppIdentifierPrefix)com.fluidtouch.noteshelf</string>
 	</array>
 </dict>
 </plist>
