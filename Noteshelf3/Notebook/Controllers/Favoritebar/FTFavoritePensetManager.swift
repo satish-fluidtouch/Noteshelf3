@@ -13,8 +13,13 @@ class FTFavoritePensetManager: NSObject {
 
     func fetchFavorites() -> [FTPenSetProtocol] {
         let favorites = dataManager.fetchFavorites().favorites
-        let favs = favorites.compactMap(({$0.getPenset()}))
-        return favs
+        var favs = favorites.compactMap(({$0.getPenset()}))
+        let reqFavs = favs + favs
+        return reqFavs
+    }
+
+    func saveFavorites() {
+
     }
 
     func addPenset(_ penset: FTPenSetProtocol) {

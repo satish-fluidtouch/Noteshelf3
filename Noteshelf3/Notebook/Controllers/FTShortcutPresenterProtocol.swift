@@ -28,9 +28,6 @@ class FTShortcutBasePresenter: NSObject, FTShortcutPresenterProtocol {
     }
 
     var shortcutViewPlacement: FTShortcutPlacement {
-        if UIDevice.current.isIphone() {
-            return .top
-        }
         let placement = FTShortcutPlacement.getSavedPlacement()
         return placement
     }

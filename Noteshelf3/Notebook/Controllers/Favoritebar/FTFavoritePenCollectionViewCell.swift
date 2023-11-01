@@ -73,19 +73,19 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
         didSet {
             if self.isFavoriteSelected {
                 self.btnBg.layer.borderWidth = borderWidth
-                self.penBottomConstraint.constant = -10.0
+                self.penBottomConstraint.constant = -12.0
                 self.btnBg.backgroundColor = UIColor(hexString: self.favorite?.color ?? blackColorHex, alpha: 0.3)
             }
             else {
                 self.btnBg.layer.borderWidth = 0.0
                 self.penBottomConstraint.constant = 3.0
-                self.btnBg.backgroundColor = UIColor.appColor(.black5)
+                self.btnBg.backgroundColor = UIColor.appColor(.favoriteEmptySlotColor)
             }
         }
     }
 }
 
-private extension FTPenType {
+extension FTPenType {
     //Shadow
     var favShadowImageName: String {
         switch self {

@@ -14,8 +14,6 @@ protocol FTShortcutContainerDelegate: AnyObject {
     func didStartPlacementChange() 
 }
 
-private var offset: CGFloat = 8.0
-
 @objcMembers class FTShortcutToolPresenter: FTShortcutBasePresenter {
     private var contentSize = CGSize.zero
     private weak var pensizeEditVc: FTPenSizeEditController?
@@ -35,9 +33,7 @@ private var offset: CGFloat = 8.0
         }
         if let toolbarVc = controller as? FTToolTypeShortcutViewController {
             toolbarVc.delegate = self
-        } else if let favBar = controller as? FTFavoritebarViewController {
-            favBar.delegate = self
-        }
+        } 
         let reqSize = self.shortcutViewHorizantalSize()
         viewController.add(controller)
         self.shortcutView.frame.size = reqSize
@@ -258,10 +254,6 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
             sizeEditVc.view.removeFromSuperview()
         }
     }
-}
-
-extension FTShortcutToolPresenter: FTFavoriteActionDelegate {
-
 }
 
 extension FTShortcutToolPresenter {

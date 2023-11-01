@@ -186,7 +186,10 @@ private extension FTShortcutToolPresenter {
             }
             if self.zoomModeInfo.isEnabled {
                 self.shortcutZoomMode = .manual
-            } 
+            }
+            if let favBarVc = self.toolbarVc as? FTFavoritebarViewController {
+                favBarVc.handleEndMovement()
+            }
         }
     }
 }
