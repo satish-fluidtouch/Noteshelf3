@@ -177,6 +177,9 @@ private extension FTShortcutToolPresenter {
             if !placement.isHorizantalPlacement() {
                 self.shortcutView.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             }
+            if let favBarVc = self.toolbarVc as? FTFavoritebarViewController {
+                favBarVc.handleEndMovement()
+            }
             let reqCenter = placement.slotCenter(forSlotView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
             self.updateShortcutViewCenter(reqCenter)
             self.removeAllSlots()
@@ -186,9 +189,6 @@ private extension FTShortcutToolPresenter {
             }
             if self.zoomModeInfo.isEnabled {
                 self.shortcutZoomMode = .manual
-            }
-            if let favBarVc = self.toolbarVc as? FTFavoritebarViewController {
-                favBarVc.handleEndMovement()
             }
         }
     }
