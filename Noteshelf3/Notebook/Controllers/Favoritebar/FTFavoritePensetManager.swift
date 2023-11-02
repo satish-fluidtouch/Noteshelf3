@@ -9,13 +9,12 @@
 import Foundation
 
 class FTFavoritePensetManager: NSObject {
-    let dataManager = FTFavoritePensetDataManager.shared
+    let dataManager = FTFavoritePensetDataManager()
 
     func fetchFavorites() -> [FTPenSetProtocol] {
         let favorites = dataManager.fetchFavorites().favorites
-        var favs = favorites.compactMap(({$0.getPenset()}))
-        let reqFavs = favs + favs
-        return reqFavs
+        let favs = favorites.compactMap(({$0.getPenset()}))
+        return favs
     }
 
     func saveFavorites() {
