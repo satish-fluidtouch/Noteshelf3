@@ -39,7 +39,13 @@ class FTPDFContentCache: NSObject {
         
         self.pdfContentSearchDidStart(pageProtocol.uuid);
 
-        let string = pdfPage.string ?? "";
+        let string: String;
+        if let sel = pdfPage.selection(for: pdfPage.bounds(for: .cropBox))  {
+            string = sel.string ?? "";
+        }
+        else {
+            string = pdfPage.string ?? "";
+        }
 
         var charRects = [CGRect]();
         for index in 0..<string.count {
