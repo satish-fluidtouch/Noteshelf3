@@ -33,17 +33,28 @@ class FTShelfMedia: Identifiable, ObservableObject {
     }
     
     func loadImageAsynchronously() async {
-        let urlString = self.imageURL.path
-        if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
-            await updateImage(image: imageFromCache)
-        } else {
-            if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage = await image.byPreparingThumbnail(ofSize: CGSize(width: 400, height: 400)) {
-                imageCache.setObject(thumbnailImage, forKey: urlString as AnyObject)
-                await updateImage(image: thumbnailImage)
+        let hash = self.imageURL.thumbnailCacheHash()
+        let cachedEntry = imageCache.object(forKey: hash as AnyObject)
+        if let imageFromCache = cachedEntry?.object(forKey: "image") as? UIImage, let storedDate = cachedEntry?.object(forKey: "date") as? Date {
+            if imageURL.fileModificationDate.compare(storedDate) != .orderedSame {
+                await addImageTocache()
+            } else {
+                await updateImage(image: imageFromCache)
             }
+        } else {
+            await addImageTocache()
         }
     }
     
+    func addImageTocache() async {
+        if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage = await image.byPreparingThumbnail(ofSize: CGSize(width: 400, height: 400)) {
+            let hash = self.imageURL.thumbnailCacheHash()
+            let entry: [String : Any] = ["image": image, "date": self.imageURL.fileModificationDate]
+            imageCache.setObject(entry as AnyObject, forKey: hash as AnyObject)
+            await updateImage(image: thumbnailImage)
+        }
+    }
+
     func unloadImage() {
         self.mediaImage =  nil
     }
