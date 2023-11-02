@@ -1352,6 +1352,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 }
                 self.recoveryInfoPlist()?.addPageIndex(page.pageIndex(), pageUUID: copiedPage.uuid);
                 self.documentInfoPlist()?.insertPage(copiedPage as! FTNoteshelfPage, atIndex: indexToInsert);
+                self.moveThumbnailFrom(page: page, to: copiedPage)
                 var modifiedCopiedPages: [FTPageProtocol] = copiedPages;
                 modifiedCopiedPages.append(copiedPage);
                 let newIndex = currentPageIndex + 1;
@@ -1388,6 +1389,21 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         return shouldIgnore;
     }
     
+    private func moveThumbnailFrom(page: FTPageProtocol, to moviedPage: FTPageProtocol) {
+        let thumbnailFolderPath = Foundation.URL.thumbnailFolderURL()
+        guard let pageDocId = page.parentDocument?.documentUUID else { return }
+        guard let movedPageDocId = moviedPage.parentDocument?.documentUUID else { return }
+        let documentPath = thumbnailFolderPath.appendingPathComponent(pageDocId)
+        let thumbnailPath  = documentPath.appendingPathComponent(page.uuid)
+
+        let moveToDocumentPath = thumbnailFolderPath.appendingPathComponent(movedPageDocId)
+        let moveToThumbnailPath  = moveToDocumentPath.appendingPathComponent(moviedPage.uuid)
+
+        if !FileManager.default.fileExists(atPath: moveToThumbnailPath.path) {
+            try? FileManager.default.moveItem(at: thumbnailPath, to: moveToThumbnailPath)
+        }
+    }
+
     func updateDocumentVersionToLatest()
     {
         if let propertyPlist = self.propertyInfoPlist() {

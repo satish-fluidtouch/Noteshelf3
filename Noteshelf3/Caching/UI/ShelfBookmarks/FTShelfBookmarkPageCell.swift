@@ -10,8 +10,8 @@ class FTShelfBookmarkPageCell: UICollectionViewCell {
         self.shadowImageView.isHidden = false
 
         self.bookTitleLbl?.text = bookmarkItem.shelfItem.displayTitle
-        self.bookmarkName.text = bookmarkItem.bookmarkTitle
-
+        self.bookmarkName.text = bookmarkItem.bookmarkTitle.isEmpty ? "untitled".localized  : bookmarkItem.bookmarkTitle
+ 
         let docUUID = bookmarkItem.documentUUID
         self.pageTitleLbl?.text = String(format: "sidebar.bookmarks.page".localized, String(describing: bookmarkItem.pageIndex + 1))
 

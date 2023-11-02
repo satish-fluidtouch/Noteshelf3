@@ -41,26 +41,12 @@ struct FTBookmarksItem: Identifiable {
 }
 
 final class FTShelfBookmarksPageModel: ObservableObject {
-    @Published private(set) var state: FTbookmarksPageLoadState = .loading
     var selectedTag: String = ""
 
     func buildCache(completion: @escaping ([FTBookmarksItem]) -> Void) {
-             startLoading()
-            FTBookmarksProvider.shared.getBookmarkItems {[weak self] items in
-                self?.setBookmarksPage(items)
+            FTBookmarksProvider.shared.getBookmarkItems { items in
                 completion(items)
             }
     }
 
-    private func startLoading() {
-        state = .loading
-    }
-
-    private func setBookmarksPage(_ bookmarksResult: [FTBookmarksItem]) {
-        if bookmarksResult.isEmpty {
-            state = .empty
-        } else {
-            state = .loaded
-        }
-    }
 }

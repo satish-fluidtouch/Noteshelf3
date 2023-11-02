@@ -24,7 +24,9 @@ class FTShelfBookmarksViewController: UIViewController {
 
     weak var delegate: FTShelfBookmarksPageDelegate?
     private var activityIndicator = UIActivityIndicatorView(style: .medium)
-
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "refreshBookmarks"), object: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "sidebar.bookmarks".localized
@@ -41,6 +43,7 @@ class FTShelfBookmarksViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: NSNotification.Name(rawValue: "refreshBookmarks"), object: nil)
         loadtagBookmarkPages()
     }
 
@@ -71,6 +74,10 @@ class FTShelfBookmarksViewController: UIViewController {
         let totalSpacing = FTShelfTagsConstants.Page.interItemSpacing * CGFloat(noOfColumns - 1)
         let itemWidth = (size.width - totalSpacing - (FTShelfTagsConstants.Page.gridHorizontalPadding * 2)) / CGFloat(noOfColumns)
         return itemWidth
+    }
+
+    @objc func reloadContent() {
+        loadtagBookmarkPages()
     }
 
     private func loadtagBookmarkPages() {
