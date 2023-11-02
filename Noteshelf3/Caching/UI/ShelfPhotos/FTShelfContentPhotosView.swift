@@ -61,8 +61,8 @@ struct FTShelfContentPhotosView: View  {
                                     .foregroundColor(Color.white)
                                     .padding()
                             }
-                            .task {
-                                await media.fetchImage()
+                            .onAppear {
+                                media.fetchImage()
                             }
                             .onDisappear {
                                 media.unloadImage()
