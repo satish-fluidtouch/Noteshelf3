@@ -17,7 +17,7 @@ enum FTMediaLoadState {
 
 fileprivate let imageCache = NSCache<AnyObject, AnyObject>()
 
-class FTShelfMedia: Identifiable, ObservableObject {
+class FTShelfMedia: NSObject, Identifiable, ObservableObject {
     let id: UUID = UUID()
     let page: Int
     let imageURL: URL
@@ -27,35 +27,39 @@ class FTShelfMedia: Identifiable, ObservableObject {
         document?.displayTitle ?? ""
     }
     
-    @MainActor
-    private func updateImage(image: UIImage?) {
-        self.mediaImage = image
+    func fetchImage() {
+        self.performSelector(inBackground: #selector(loadImageInBackground), with: nil)
     }
     
-    func loadImageAsynchronously() async {
+    @objc private func loadImageInBackground() {
         let hash = self.imageURL.thumbnailCacheHash()
         let cachedEntry = imageCache.object(forKey: hash as AnyObject)
         if let imageFromCache = cachedEntry?.object(forKey: "image") as? UIImage, let storedDate = cachedEntry?.object(forKey: "date") as? Date {
             if imageURL.fileModificationDate.compare(storedDate) != .orderedSame {
-                await addImageTocache()
+                 addImageTocache()
             } else {
-                await updateImage(image: imageFromCache)
+                runInMainThread {
+                    self.mediaImage = imageFromCache
+                }
             }
         } else {
-            await addImageTocache()
+             addImageTocache()
         }
     }
     
-    func addImageTocache() async {
-        if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage = await image.byPreparingThumbnail(ofSize: CGSize(width: 400, height: 400)) {
+    private func addImageTocache() {
+        if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage =  image.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
             let hash = self.imageURL.thumbnailCacheHash()
-            let entry: [String : Any] = ["image": image, "date": self.imageURL.fileModificationDate]
+            let entry: [String : Any] = ["image": thumbnailImage, "date": self.imageURL.fileModificationDate]
             imageCache.setObject(entry as AnyObject, forKey: hash as AnyObject)
-            await updateImage(image: thumbnailImage)
+            runInMainThread {
+                self.mediaImage = thumbnailImage
+            }
         }
     }
 
     func unloadImage() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadImageInBackground), object: nil)
         self.mediaImage =  nil
     }
   

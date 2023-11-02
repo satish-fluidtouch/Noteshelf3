@@ -62,7 +62,7 @@ struct FTShelfContentPhotosView: View  {
                                     .padding()
                             }
                             .task {
-                                await media.loadImageAsynchronously()
+                                await media.fetchImage()
                             }
                             .onDisappear {
                                 media.unloadImage()
