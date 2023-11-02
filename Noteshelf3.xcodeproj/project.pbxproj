@@ -871,6 +871,7 @@
 		BAA84E6D2873108800DE801B /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E5E2873108700DE801B /* UIColor+Extension.swift */; };
 		BAA84E6E2873108800DE801B /* NSCalendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E5F2873108800DE801B /* NSCalendar+Extension.swift */; };
 		BAA84E6F2873108800DE801B /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E602873108800DE801B /* FileManager+Extension.swift */; };
+		BAB142312AF3746E001114C0 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
@@ -2274,14 +2275,15 @@
 		};
 		BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				BAB142312AF3746E001114C0 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */,
 				47B0AF202AF22E4200C15810 /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BAF3959A2859ADF10067CA9F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -11348,7 +11350,6 @@
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
 				BAB258B8295B1B400072AEBB /* Embed Foundation Extensions */,
 				0E4FDEF02AC1B3AD0097FE16 /* Embed Watch Content */,
-				0E4FDEF42AC1B3AD0097FE16 /* Embed App Extensions */,
 				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 				977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */,
 			);
