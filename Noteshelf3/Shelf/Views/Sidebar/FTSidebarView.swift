@@ -68,6 +68,9 @@ struct FTSidebarView: View {
                     }
                 }
                 .ignoresSafeArea()
+//                .onReceive(keyboardHideNotification) { _ in
+//                    didTapSubmitOrKeyboardHideOption()
+//                }
                 .padding(.bottom,premiumUser.isPremiumUser ? 0 : 142)
             }
             .overlay(alignment: .bottom, content: {

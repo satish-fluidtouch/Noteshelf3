@@ -22,38 +22,62 @@ class FTGroupCoverViewModel: ObservableObject {
     @Published var groupNotebooks: [FTShelfItemViewModel] = []
     var groupCoverProperties:   FTShelfItemCoverViewProperties = .large
     private var cancellables = [AnyCancellable]()
-    @Published var refreshGroup: Bool = false
+    @Published var loadGroupItems: Bool = false
+    var isVisible: Bool = false
 
 
     init(groupItem: FTGroupItem? = nil) {
         self.groupItem = groupItem
     }
 
-    func fetchTopThreeGroupMembersOfGroup(_ group: FTGroupItemProtocol?, completionhandler: @escaping ([FTGroupCoverInfo]) -> ()) {
+    func fetchTopNotebookOfGroup(_ group: FTGroupItemProtocol?) {
+        if !isVisible {
+            return
+        }
         var currentOrder = FTUserDefaults.sortOrder()
         //        if let userActivity = self.window?.windowScene?.userActivity {
         //            currentOrder = userActivity.sortOrder
         //        }
+        loadGroupItems = false
         if (group as? FTGroupItem)?.shelfCollection != nil {
             (group as? FTGroupItem)?.fetchTopNotebooks(sortOrder: currentOrder,noOfBooksTofetch: 4, onCompletion: { [weak self ] top4Children in
-                if let shelfItems = self?.createShelfItemsFromData(top4Children) {
-                    self?.groupNotebooks = shelfItems
+                if !top4Children.isEmpty {
+                    self?.createGroupItemsFromData(top4Children, completion: { groupChildItems in
+                        self?.groupNotebooks = groupChildItems
+                        self?.loadGroupItems = true
+                    })
+                } else {
+                    self?.loadGroupItems = true
                 }
             })
         }
     }
 
     // MARK: For Cover Image
-    func createShelfItemsFromData(_ shelfItemsData: [FTShelfItemProtocol]) -> [FTShelfItemViewModel]{
-        let items: [FTShelfItemViewModel] = shelfItemsData.map { item -> FTShelfItemViewModel in
-            return FTShelfItemViewModel(model: item)
+    private func createGroupItemsFromData(_ shelfItems: [FTShelfItemProtocol], completion: @escaping ([FTShelfItemViewModel]) -> Void) {
+        let group = DispatchGroup()
+        var groupChildItems: [FTShelfItemViewModel] = []
+
+        for shelfItem in shelfItems {
+            group.enter()
+
+            var token: String?
+            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem) {(image, imageToken) in
+                let item = FTShelfItemViewModel(model: shelfItem)
+                if token == imageToken, let image {
+                    item.coverImage = image
+                }
+                groupChildItems.append(item)
+                group.leave()
+            }
         }
-        return items
+
+        group.notify(queue: .main) {
+            completion(groupChildItems)
+        }
     }
     @objc private func refreshGroupCover() {
-        self.fetchTopThreeGroupMembersOfGroup(self.groupItem) { groupCoverInfo in
-            print("fetched covers on cloud update")
-        }
+        self.fetchTopNotebookOfGroup(groupItem)
     }
     private func addGroupUpdatedObserver(){
         NotificationCenter.default.addObserver(self,
