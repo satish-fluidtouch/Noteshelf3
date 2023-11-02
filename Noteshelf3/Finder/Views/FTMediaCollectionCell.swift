@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+fileprivate let imageCache = NSCache<AnyObject, AnyObject>()
+
 class FTMediaCollectionViewCell: UICollectionViewCell {
     @IBOutlet var titleLabel: UILabel?
     @IBOutlet var thumbnailImage: UIImageView?
@@ -21,17 +23,16 @@ class FTMediaCollectionViewCell: UICollectionViewCell {
         self.thumbnailImage?.backgroundColor = .clear
         self.thumbnailImage?.contentMode = .scaleAspectFill
         titleLabel?.text = "\(index)"
-        let type = object.mediaType
-        if type == .photo, let imageAnn = object.annotation as? FTImageAnnotation, let image = imageAnn.image {
-            thumbnailImage?.image = image
-        } else if let stickerAnnotation = object.annotation as? FTStickerAnnotation, let image = stickerAnnotation.image {
-            thumbnailImage?.image = image
-        } else if let webclipAnnotation = object.annotation as? FTWebClipAnnotation, let image = webclipAnnotation.image {
-            thumbnailImage?.image = image
-        } else if type == .audio {
-//            self.durationLbl?.text = object.duration
-//            self.thumbnail?.image = object.getImage()
-//            self.thumbnail?.backgroundColor = collection?.journalColor
+        if let annotation = object.annotation {
+            let identifier = annotation.uuid
+            if let imageFromCache = imageCache.object(forKey: identifier as AnyObject) as? UIImage {
+                thumbnailImage?.image = imageFromCache
+            } else {
+                if let imageTypeAnn = object.annotation as? FTImageAnnotation, let image = imageTypeAnn.image?.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
+                    imageCache.setObject(image, forKey: identifier as AnyObject)
+                    thumbnailImage?.image = image
+                }
+            }
         }
     }
 

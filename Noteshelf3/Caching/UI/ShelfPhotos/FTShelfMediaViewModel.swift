@@ -15,16 +15,39 @@ enum FTMediaLoadState {
     case empty
 }
 
+fileprivate let imageCache = NSCache<AnyObject, AnyObject>()
 
-class FTShelfMedia: Identifiable {
+class FTShelfMedia: Identifiable, ObservableObject {
     let id: UUID = UUID()
     let page: Int
     let imageURL: URL
     weak var document: FTDocumentItemProtocol?
+    @Published var mediaImage : UIImage?
     var title: String {
         document?.displayTitle ?? ""
     }
-
+    
+    @MainActor
+    private func updateImage(image: UIImage?) {
+        self.mediaImage = image
+    }
+    
+    func loadImageAsynchronously() async {
+        let urlString = self.imageURL.path
+        if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+            await updateImage(image: imageFromCache)
+        } else {
+            if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage = await image.byPreparingThumbnail(ofSize: CGSize(width: 400, height: 400)) {
+                imageCache.setObject(thumbnailImage, forKey: urlString as AnyObject)
+                await updateImage(image: thumbnailImage)
+            }
+        }
+    }
+    
+    func unloadImage() {
+        self.mediaImage =  nil
+    }
+  
     init(imageURL: URL, page: Int, document: FTDocumentItemProtocol?) {
         self.page = page
         self.imageURL = imageURL
@@ -50,8 +73,7 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
     func buildCache() async {
         do {
             await startLoading()
-            let media = try await fetchMedia()
-            await setMedia(media)
+            try await fetchMedia()
         } catch {
             cacheLog(.error, error)
         }
@@ -63,34 +85,36 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
     }
 
     @MainActor
-    private func setMedia(_ media: [FTShelfMedia]) {
-        if media.isEmpty {
+    private func setState() {
+        if self.media.isEmpty {
             state = .empty
         } else {
             state = .loaded
         }
-        self.media = media
+    }
+    
+    @MainActor
+    private func updateMedia(items: [FTShelfMedia]) {
+        self.media.append(contentsOf: items)
+        setState()
     }
 }
 
 
 private extension FTShelfContentPhotosViewModel {
-    func fetchMedia() async throws -> [FTShelfMedia] {
+    func fetchMedia() async throws  {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
-        var totalMedia: [FTShelfMedia] = [FTShelfMedia]()
 
         let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
             do {
                 let media = try fetchMedia(docItem: item)
-                totalMedia.append(contentsOf: media)
+                await self.updateMedia(items: media)
             } catch {
                 continue
             }
         }
-        cacheLog(.success, totalMedia.count)
-        return totalMedia
     }
 
     func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfMedia] {

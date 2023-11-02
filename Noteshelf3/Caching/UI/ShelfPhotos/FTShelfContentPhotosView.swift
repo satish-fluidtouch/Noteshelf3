@@ -61,6 +61,12 @@ struct FTShelfContentPhotosView: View  {
                                     .foregroundColor(Color.white)
                                     .padding()
                             }
+                            .task {
+                                await media.loadImageAsynchronously()
+                            }
+                            .onDisappear {
+                                media.unloadImage()
+                            }
                             .onTapGesture {
                                 viewModel.onSelect?(media)
                                 track(EventName.shelf_photo_page_tap, screenName: ScreenName.shelf_photos)
@@ -104,7 +110,7 @@ struct FTShelfContentPhotosView: View  {
 }
 
 struct MediaItemView: View {
-    let media: FTShelfMedia
+    @ObservedObject var media: FTShelfMedia
 
     var body: some View {
         if media.isProtected {
@@ -114,18 +120,10 @@ struct MediaItemView: View {
                     Image(systemName: "lock")
                 }
         } else {
-            AsyncImage(url: media.imageURL) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
-            } placeholder: {
-                Color.gray
-                    .opacity(0.3)
-                    .overlay {
-                        ProgressView()
-                    }
-            }
+            Image(uiImage: media.mediaImage ?? UIImage.shelfDefaultNoCoverImage)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .clipped()
         }
     }
 }
