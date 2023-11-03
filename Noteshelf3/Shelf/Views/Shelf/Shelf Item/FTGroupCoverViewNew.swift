@@ -133,21 +133,19 @@ struct FTGroupCoverViewNew: View {
         VStack(alignment:.leading) {
             Grid(alignment:.leading ,horizontalSpacing: horizontalSpacing,verticalSpacing: verticalSpacing) {
                 // Top Row
-                if groupCoverViewModel.loadGroupItems {
-                    if self.hasOnlyPortThumbs() {
-                        portGridRowForItems(self.topPortItems())
-                    } else if self.hasOnlyLandThumbs()  ||
-                                landThumbs.count >= 1 {
-                        landGridRowForItem(self.topLandItem)
+                if self.hasOnlyPortThumbs() {
+                    portGridRowForItems(self.topPortItems())
+                } else if self.hasOnlyLandThumbs()  ||
+                            landThumbs.count >= 1 {
+                    landGridRowForItem(self.topLandItem)
+                }
+                // Bottom Row
+                if groupCoverViewModel.groupNotebooks.count > 1 {
+                    if self.hasOnlyLandThumbs() || self.showOnlyTwoLandThumbs() || landThumbs.count > 1 {
+                        landGridRowForItem(self.bottomLandItem)
                     }
-                    // Bottom Row
-                    if groupCoverViewModel.groupNotebooks.count > 1 {
-                        if self.hasOnlyLandThumbs() || self.showOnlyTwoLandThumbs() || landThumbs.count > 1 {
-                            landGridRowForItem(self.bottomLandItem)
-                        }
-                        else if (self.hasOnlyPortThumbs() && portThumbs.count > 2) ||  (!self.hasOnlyPortThumbs() && portThumbs.count >= 1){
-                            portGridRowForItems(self.bottomPortItems())
-                        }
+                    else if (self.hasOnlyPortThumbs() && portThumbs.count > 2) ||  (!self.hasOnlyPortThumbs() && portThumbs.count >= 1){
+                        portGridRowForItems(self.bottomPortItems())
                     }
                 }
             }
@@ -241,7 +239,9 @@ struct FTGroupCoverViewNew: View {
     }
 
     private var landThumbs: [FTShelfItemViewModel] {
-        groupCoverViewModel.groupNotebooks.filter({ $0.coverImage.isALandCover })
+        groupCoverViewModel.groupNotebooks.filter({ viewmodel in
+            return viewmodel.coverImage.size.width >  viewmodel.coverImage.size.height
+        })
     }
 
     private var portThumbs: [FTShelfItemViewModel] {
@@ -249,7 +249,7 @@ struct FTGroupCoverViewNew: View {
             if viewmodel.isNS2Book {
                 return true
             } else {
-                return viewmodel.coverImage.isAPortCover
+                return viewmodel.coverImage.size.height >  viewmodel.coverImage.size.width
             }
         })
     }
@@ -344,6 +344,12 @@ private struct GroupNotebookView: View {
                         radius: blurShadowRadius,
                         x:0,
                         y:blurShadowY)
+        }
+        .onAppear {
+            shelfItem.isVisible = true
+        }
+        .onDisappear {
+            shelfItem.isVisible = false
         }
         .frame(width: viewSize.width,
                    height: viewSize.height,

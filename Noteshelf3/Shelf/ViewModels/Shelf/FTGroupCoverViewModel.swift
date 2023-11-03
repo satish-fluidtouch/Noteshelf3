@@ -24,6 +24,7 @@ class FTGroupCoverViewModel: ObservableObject {
     private var cancellables = [AnyCancellable]()
     @Published var loadGroupItems: Bool = false
     var isVisible: Bool = false
+    private var groupNotebookItemsCache = [String: FTShelfItemViewModel]();
 
 
     init(groupItem: FTGroupItem? = nil) {
@@ -62,8 +63,12 @@ class FTGroupCoverViewModel: ObservableObject {
             group.enter()
 
             var token: String?
-            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem) {(image, imageToken) in
-                let item = FTShelfItemViewModel(model: shelfItem)
+            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem) { [weak self](image, imageToken) in
+                guard let self = self else {
+                    group.leave()
+                    return
+                }
+                let item = self.createShelfItemFromData(shelfItem)
                 if token == imageToken, let image {
                     item.coverImage = image
                 }
@@ -75,6 +80,20 @@ class FTGroupCoverViewModel: ObservableObject {
         group.notify(queue: .main) {
             completion(groupChildItems)
         }
+    }
+    private func createShelfItemFromData(_ shelfItemData: FTShelfItemProtocol) -> FTShelfItemViewModel{
+        let shelfItemToreturn: FTShelfItemViewModel
+        if let item = self.shelfItemFor(shelfItemData) {
+            shelfItemToreturn = item
+        }
+        else {
+            shelfItemToreturn = FTShelfItemViewModel(model: shelfItemData);
+        }
+        self.groupNotebookItemsCache[shelfItemData.uuid] = shelfItemToreturn
+        return shelfItemToreturn
+    }
+    private func shelfItemFor(_ item: FTShelfItemProtocol) -> FTShelfItemViewModel? {
+        return groupNotebookItemsCache[item.uuid];
     }
     @objc private func refreshGroupCover() {
         self.fetchTopNotebookOfGroup(groupItem)
