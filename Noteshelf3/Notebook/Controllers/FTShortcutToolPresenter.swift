@@ -20,6 +20,21 @@ protocol FTShortcutContainerDelegate: AnyObject {
 
     weak var delegate: FTShortcutContainerDelegate?
 
+    // Internal variables/functions for extension purpose, not intended for out world
+    internal var isMoving: Bool = false
+    internal var hasAddedSlots: Bool = false
+    internal var shortcutZoomMode: FTZoomShortcutMode = .auto
+    internal var animDuration: CGFloat = 0.3
+
+    var shortcutViewPlacement: FTShortcutPlacement {
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        return placement
+    }
+
+    var shortcutView: UIView {
+        return self.toolbarVc.view;
+    }
+            
     override init() {
         super.init()
         NotificationCenter.default.addObserver(self, selector: #selector(showToast(_:)), name: NSNotification.Name.PresetColorUpdate, object: nil)
