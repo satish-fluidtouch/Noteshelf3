@@ -286,9 +286,9 @@ class FTTagItemModel {
 
     private func taggedItemsFor(selectedTag: String, allTags: [FTTagItemModel], completion: @escaping ([FTShelfTagsItem]) -> Void)  {
         let dispatchGroup = DispatchGroup()
-        var totalTagItems: [FTShelfTagsItem] = [FTShelfTagsItem]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
             DispatchQueue.global(qos: .background).async {
+                var totalTagItems: [FTShelfTagsItem] = [FTShelfTagsItem]()
                 let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
                 var docIds = [String]()
