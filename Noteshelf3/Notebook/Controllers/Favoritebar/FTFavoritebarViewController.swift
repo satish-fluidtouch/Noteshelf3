@@ -41,8 +41,8 @@ class FTFavoritebarViewController: UIViewController {
     @IBAction func sizeIndicatorTapped(_ sender: Any) {
     }
 
-    func handleEndMovement() {
-        self.reloadFavoritesData()
+    func reloadFavoritesData() {
+        self.collectionView.reloadData()
     }
 }
 
@@ -52,10 +52,6 @@ private extension FTFavoritebarViewController {
         self.collectionView.dropDelegate = self
         self.collectionView.dragInteractionEnabled = true
         self.collectionView.isPagingEnabled = true
-    }
-
-    func reloadFavoritesData() {
-        self.collectionView.reloadData()
     }
 
     func getTheRotationAngleForDragPreviewContent() -> CGFloat {

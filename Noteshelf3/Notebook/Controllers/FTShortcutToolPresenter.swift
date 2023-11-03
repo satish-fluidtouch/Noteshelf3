@@ -15,13 +15,36 @@ protocol FTShortcutContainerDelegate: AnyObject {
 }
 
 private let offset: CGFloat = 8.0
-@objcMembers class FTShortcutToolPresenter: FTShortcutBasePresenter {
+@objcMembers class FTShortcutToolPresenter: NSObject {
     private var contentSize = CGSize.zero
     private weak var pensizeEditVc: FTPenSizeEditController?
+
+    var toolbarVc: UIViewController!
+    var screenMode: FTScreenMode = .normal
+    var deskMode: RKDeskMode = .deskModePen
+
+    weak var parentVC: UIViewController?
+    weak var delegate: FTShortcutContainerDelegate?
+
+    // Internal variables/functions for extension purpose, not intended for out world
+    internal var isMoving: Bool = false
+    internal var hasAddedSlots: Bool = false
+    internal var animDuration: CGFloat = 0.3
+    internal var shortcutZoomMode: FTZoomShortcutMode = .auto
     internal var toolbarOffset: CGFloat = FTToolbarConfig.Height.regular + offset
 
-    var screenMode: FTScreenMode = .normal
-    weak var delegate: FTShortcutContainerDelegate?
+    var shortcutView: UIView {
+        return self.toolbarVc.view
+    }
+
+    var rackType: FTRackType {
+        self.deskMode.rackType
+    }
+
+    var shortcutViewPlacement: FTShortcutPlacement {
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        return placement
+    }
 
     override init() {
         super.init()
@@ -30,15 +53,20 @@ private let offset: CGFloat = 8.0
     }
 
     func showToolbar(on viewController: UIViewController, for mode: RKDeskMode) {
-        super.configureToolbar(on: viewController, for: mode)
-        guard let controller = self.toolbarVc else {
-            fatalError("Programmer error, toolbar is no configured properly")
+        if !mode.canProceedToShowToolbar {
+            return
         }
-        if let toolbarVc = controller as? FTToolTypeShortcutViewController {
-            toolbarVc.delegate = self
-        } 
+        self.deskMode = mode
+        self.parentVC = viewController
+
+        if mode != .deskModeFavorites {
+            self.toolbarVc = FTToolTypeShortcutViewController()
+        } else {
+            self.toolbarVc = FTFavoriteShortcutViewController()
+        }
+
         let reqSize = self.shortcutViewHorizantalSize()
-        viewController.add(controller)
+        viewController.add(toolbarVc)
         self.shortcutView.frame.size = reqSize
 
         self.shortcutView.transform = .identity
@@ -51,7 +79,10 @@ private let offset: CGFloat = 8.0
 
         if mode != .deskModeFavorites {
             let rackData = FTRackData(type: rackType, userActivity: viewController.view.window?.windowScene?.userActivity)
-            (controller as? FTToolTypeShortcutViewController)?.showShortcutViewWrto(rack: rackData)
+            (toolbarVc as? FTToolTypeShortcutViewController)?.showShortcutViewWrto(rack: rackData)
+            (toolbarVc as? FTToolTypeShortcutViewController)?.delegate = self
+        } else {
+            (toolbarVc as? FTFavoriteShortcutViewController)?.addFavoritesView()
         }
         self.configurePanGesture()
     }
@@ -66,6 +97,10 @@ private let offset: CGFloat = 8.0
                 self.handleZoomPanelFrameChange(zoomVc.view.frame, mode: zoomVc.shortcutModeZoom, completion: nil)
             }
         }
+    }
+
+    internal func updateShortcutViewCenter(_ center: CGPoint) {
+        self.shortcutView.center = center
     }
 
     func removeFromParent() {
@@ -148,21 +183,6 @@ private let offset: CGFloat = 8.0
         }
     }
 
-    @objc private func showToast(_ notification: Notification) {
-        guard let info = notification.userInfo as? [String: String]
-                ,let _parentVC = self.parentVC else {
-            return
-        }
-        var toastMessage = "color.added".localized
-        if info["type"] == FTColorToastType.delete.rawValue {
-            toastMessage = "color.deleted".localized
-        } else if info["type"] == FTColorToastType.edit.rawValue {
-            toastMessage = "color.edited".localized
-        }
-        let config = FTToastConfiguration(title: toastMessage)
-        FTToastHostController.showToast(from: _parentVC, toastConfig: config)
-    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -180,6 +200,36 @@ private let offset: CGFloat = 8.0
 
 // Presentation of size edit screen
 private extension FTShortcutToolPresenter {
+    @objc func showToast(_ notification: Notification) {
+        guard let info = notification.userInfo as? [String: String]
+                ,let _parentVC = self.parentVC else {
+            return
+        }
+        var toastMessage = "color.added".localized
+        if info["type"] == FTColorToastType.delete.rawValue {
+            toastMessage = "color.deleted".localized
+        } else if info["type"] == FTColorToastType.edit.rawValue {
+            toastMessage = "color.edited".localized
+        }
+        let config = FTToastConfiguration(title: toastMessage)
+        FTToastHostController.showToast(from: _parentVC, toastConfig: config)
+    }
+
+    func shortcutViewHorizantalSize() -> CGSize {
+        var size: CGSize = .zero
+
+        if self.deskMode == .deskModePen || self.deskMode == .deskModeMarker {
+            size = penShortcutSize
+        } else if self.deskMode == .deskModeShape {
+            size = shapeShortcutSize
+        } else if self.deskMode == .deskModeLaser {
+            size = presenterShortcutSize
+        } else if self.deskMode == .deskModeFavorites {
+            size = favoriteShortcutSize
+        }
+        return size
+    }
+
     func getPenSizeEditViewCenter(at position: FavoriteSizePosition) -> CGPoint {
         let view = self.shortcutView
         var center: CGPoint = .zero
@@ -211,6 +261,34 @@ private extension FTShortcutToolPresenter {
             }
         }
         return center
+    }
+
+    func updateMinOffsetIfNeeded() {
+        guard let frame = self.parentVC?.view.frame else {
+            return
+        }
+#if targetEnvironment(macCatalyst)
+        self.toolbarOffset = offset
+#else
+        if UIDevice().isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
+            var extraOffset: CGFloat = 0.0
+            if UIDevice.current.isPhone() {
+                if let window = self.parentVC?.fetchCurrentWindow() {
+                    let topSafeAreaInset = window.safeAreaInsets.top
+                    if topSafeAreaInset > 0 {
+                        extraOffset = topSafeAreaInset
+                    }
+                }
+            }
+            self.toolbarOffset = FTToolbarConfig.Height.compact + offset + extraOffset
+        } else {
+            self.toolbarOffset = FTToolbarConfig.Height.regular + offset
+        }
+#endif
+    }
+
+    func shortcutViewCenter(for placement: FTShortcutPlacement) -> CGPoint {
+        return placement.placementCenter(forShortcutView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
     }
 }
 
@@ -256,36 +334,29 @@ extension FTShortcutToolPresenter: FTShorctcutActionDelegate,FTPenSizeEditContro
     }
 }
 
-extension FTShortcutToolPresenter {
-    internal func updateShortcutViewCenter(_ center: CGPoint) {
-        self.shortcutView.center = center
+private extension RKDeskMode {
+    var canProceedToShowToolbar: Bool {
+        var status = false
+        if self == .deskModePen || self == .deskModeMarker || self == .deskModeShape || self == .deskModeLaser || self == .deskModeFavorites {
+            status = true
+        }
+        return status
     }
 
-    func updateMinOffsetIfNeeded() {
-        guard let frame = self.parentVC?.view.frame else {
-            return
+    var rackType: FTRackType {
+        var type = FTRackType.pen
+        switch self {
+        case .deskModePen:
+            type = .pen
+        case .deskModeMarker:
+            type = .highlighter
+        case .deskModeLaser:
+            type = .presenter
+        case .deskModeShape:
+            type = .shape
+        default:
+            break
         }
-#if targetEnvironment(macCatalyst)
-        self.toolbarOffset = offset
-#else
-        if UIDevice().isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
-            var extraOffset: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = self.parentVC?.fetchCurrentWindow() {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraOffset = topSafeAreaInset
-                    }
-                }
-            }
-            self.toolbarOffset = FTToolbarConfig.Height.compact + offset + extraOffset
-        } else {
-            self.toolbarOffset = FTToolbarConfig.Height.regular + offset
-        }
-#endif
-    }
-
-    func shortcutViewCenter(for placement: FTShortcutPlacement) -> CGPoint {
-        return placement.placementCenter(forShortcutView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
+        return type
     }
 }

@@ -613,7 +613,6 @@
 		973653E12A851D4200FD4326 /* FTMigrationMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 973653E02A851D4200FD4326 /* FTMigrationMessageView.swift */; };
 		974E8A682A01192A00EFF8D8 /* FTShelfHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974E8A672A01192A00EFF8D8 /* FTShelfHomeView.swift */; };
 		974E8A6A2A011B5800EFF8D8 /* FTShelfHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974E8A692A011B5800EFF8D8 /* FTShelfHomeViewController.swift */; };
-		975FDAF22AC6CC8600E8BE87 /* FTShortcutPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975FDAF12AC6CC8600E8BE87 /* FTShortcutPresenterProtocol.swift */; };
 		976F27372A16090800034D5A /* FTShelfView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27362A16090800034D5A /* FTShelfView+Extensions.swift */; };
 		976F27392A16664900034D5A /* FTPopoverApperanceViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27382A16664900034D5A /* FTPopoverApperanceViewModifier.swift */; };
 		976F27692A1E533700034D5A /* UIImage+Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27682A1E533700034D5A /* UIImage+Cover.swift */; };
@@ -1864,6 +1863,7 @@
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
+		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
@@ -3337,7 +3337,6 @@
 		975A94CF26BBF4AA004471E1 /* FTDocumentFiveMinJournalPostOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentFiveMinJournalPostOperation.swift; sourceTree = "<group>"; };
 		975A94D626BCC85F004471E1 /* FTFiveMinJournalSampleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFiveMinJournalSampleTemplate.swift; sourceTree = "<group>"; };
 		975F7789261DD9560053F850 /* FTPresenterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
-		975FDAF12AC6CC8600E8BE87 /* FTShortcutPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShortcutPresenterProtocol.swift; sourceTree = "<group>"; };
 		975FFE8127204C8B004F2ECC /* FTRightTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRightTextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		97617EEB2649516100B5D250 /* FTMidnightDairyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMidnightDairyFormat.swift; sourceTree = "<group>"; };
 		97617EED264A6AF300B5D250 /* FTMidnightDiaryTemplateAssetGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTMidnightDiaryTemplateAssetGenerator.swift; sourceTree = "<group>"; };
@@ -3949,6 +3948,7 @@
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
 		E75516E2274F90B600401F45 /* FTExportDataFailedItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataFailedItemCell.xib; sourceTree = "<group>"; };
+		E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShortcutController.swift; sourceTree = "<group>"; };
 		E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTErrorInfoViewController.swift; sourceTree = "<group>"; };
 		E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BackUpErrorHandler.swift"; sourceTree = "<group>"; };
 		E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEvernoteFooterView.swift; sourceTree = "<group>"; };
@@ -9834,6 +9834,7 @@
 				97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */,
 				97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */,
 				97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */,
+				E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */,
 			);
 			path = Favoritebar;
 			sourceTree = "<group>";
@@ -10054,7 +10055,6 @@
 				E7A9767B28C0AF16009B43DC /* Shapes */,
 				E7B6040D2897F630007FEECD /* Pen-Highlighter */,
 				E7B0E4B72893D447007B031F /* FTToolTypeShortcutViewController.swift */,
-				975FDAF12AC6CC8600E8BE87 /* FTShortcutPresenterProtocol.swift */,
 				E7B0E4BB2893DC72007B031F /* FTShortcutToolPresenter.swift */,
 				42A5B19128D0556800C279E8 /* FTShortcutToolPresenter_GestureHandler.swift */,
 			);
@@ -12277,7 +12277,6 @@
 				BAF3919B2859ADF00067CA9F /* FTVisionNotebookRecognitionHelper.swift in Sources */,
 				BAF3919C2859ADF00067CA9F /* BEMAnimationManager.m in Sources */,
 				BAF3919D2859ADF00067CA9F /* FTShapePentagon.swift in Sources */,
-				975FDAF22AC6CC8600E8BE87 /* FTShortcutPresenterProtocol.swift in Sources */,
 				BAF3919E2859ADF00067CA9F /* FTFiveMinJournalMonthTemplate.swift in Sources */,
 				BAF3919F2859ADF00067CA9F /* FTDetailDiagnosisHandler.swift in Sources */,
 				BAF391A12859ADF00067CA9F /* FTAccountInfoRequestEvernote.swift in Sources */,
@@ -12449,6 +12448,7 @@
 				BA2D90B6285C4416001BB495 /* FTDocumentPicker.swift in Sources */,
 				BAF3922F2859ADF00067CA9F /* FTAppConfigHelper.m in Sources */,
 				BAF392302859ADF00067CA9F /* FTPageViewController_AnnotationEditing.swift in Sources */,
+				E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */,
 				972B52E02A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift in Sources */,
 				BAF392312859ADF00067CA9F /* Constants.swift in Sources */,
 				BAF392322859ADF00067CA9F /* FTSnappingView.swift in Sources */,
