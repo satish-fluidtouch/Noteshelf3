@@ -24,14 +24,8 @@ class FTMediaCollectionViewCell: UICollectionViewCell {
         self.thumbnailImage?.contentMode = .scaleAspectFill
         titleLabel?.text = "\(index)"
         if let annotation = object.annotation {
-            let identifier = annotation.uuid
-            if let imageFromCache = imageCache.object(forKey: identifier as AnyObject) as? UIImage {
-                thumbnailImage?.image = imageFromCache
-            } else {
-                if let imageTypeAnn = object.annotation as? FTImageAnnotation, let image = imageTypeAnn.image?.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
-                    imageCache.setObject(image, forKey: identifier as AnyObject)
-                    thumbnailImage?.image = image
-                }
+            if let imageTypeAnn = object.annotation as? FTImageAnnotation, let image = imageTypeAnn.image?.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
+                thumbnailImage?.image = image
             }
         }
     }
