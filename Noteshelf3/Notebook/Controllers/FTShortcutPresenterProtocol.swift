@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FTShortcutBasePresenter: NSObject, FTShortcutPresenterProtocol {
+class FTShortcutBasePresenter: NSObject {
     weak var parentVC: UIViewController?
     weak var toolbarVc: UIViewController!
     var deskMode: RKDeskMode = .deskModePen
@@ -66,35 +66,6 @@ class FTShortcutBasePresenter: NSObject, FTShortcutPresenterProtocol {
                 fatalError("Proggrammer error")
             }
             self.toolbarVc = controller
-        }
-    }
-}
-
-protocol FTShortcutPresenterProtocol: NSObjectProtocol {
-    var offset: CGFloat { get }
-    var toolbarOffset: CGFloat {get set}
-    var screenMode: FTScreenMode { get set }
-}
-
-extension FTShortcutPresenterProtocol {
-    var offset: CGFloat {
-        return 8.0
-    }
-
-    var screenMode: FTScreenMode {
-        get {
-            .normal
-        }
-        set {
-            // ll be set by concrete classe if needed
-        }
-    }
-
-    var toolbarOffset: CGFloat {
-        get {
-             FTToolbarConfig.Height.regular + offset
-        } set {
-            // ll be set by concrete classe if needed
         }
     }
 }

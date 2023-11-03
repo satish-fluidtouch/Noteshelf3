@@ -14,10 +14,13 @@ protocol FTShortcutContainerDelegate: AnyObject {
     func didStartPlacementChange() 
 }
 
+private let offset: CGFloat = 8.0
 @objcMembers class FTShortcutToolPresenter: FTShortcutBasePresenter {
     private var contentSize = CGSize.zero
     private weak var pensizeEditVc: FTPenSizeEditController?
+    internal var toolbarOffset: CGFloat = FTToolbarConfig.Height.regular + offset
 
+    var screenMode: FTScreenMode = .normal
     weak var delegate: FTShortcutContainerDelegate?
 
     override init() {
@@ -43,7 +46,7 @@ protocol FTShortcutContainerDelegate: AnyObject {
             self.shortcutView.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
         }
         self.updateMinOffsetIfNeeded()
-        let reqCenter = self.shortcutViewPlacement.placementCenter(forShortcutView: shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
+        let reqCenter = self.shortcutViewCenter(for: shortcutViewPlacement)
         self.updateShortcutViewCenter(reqCenter)
 
         if mode != .deskModeFavorites {
@@ -76,8 +79,7 @@ protocol FTShortcutContainerDelegate: AnyObject {
 
     func configureShortcutView(with mode: FTScreenMode, animate: Bool = false) {
         self.screenMode = mode
-        let reqSize = self.shortcutViewHorizantalSize()
-        var reqCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+        var reqCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement)
 
         var options = UIView.AnimationOptions.curveEaseOut
         if mode == .focus {
@@ -110,8 +112,7 @@ protocol FTShortcutContainerDelegate: AnyObject {
     }
 
     @objc func exitZoomModeNotified(_ notification: Notification) {
-        let reqSize = self.shortcutViewHorizantalSize()
-        let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+        let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement)
         UIView.animate(withDuration: 0.2) {
             self.updateShortcutViewCenter(actualCenter)
         } completion: { _ in
@@ -139,8 +140,7 @@ protocol FTShortcutContainerDelegate: AnyObject {
         }
 
         func updateShortcutIfRequired() {
-            let reqSize = self.shortcutViewHorizantalSize()
-            let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement, size: reqSize)
+            let actualCenter = self.shortcutViewCenter(for: self.shortcutViewPlacement)
             self.updateShortcutViewCenter(actualCenter)
             if self.zoomModeInfo.overlayHeight == 0 {
                 self.shortcutZoomMode = .auto
@@ -285,7 +285,7 @@ extension FTShortcutToolPresenter {
 #endif
     }
 
-    func shortcutViewCenter(for placement: FTShortcutPlacement, size: CGSize) -> CGPoint {
+    func shortcutViewCenter(for placement: FTShortcutPlacement) -> CGPoint {
         return placement.placementCenter(forShortcutView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
     }
 }
