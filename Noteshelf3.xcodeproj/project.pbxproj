@@ -1864,6 +1864,7 @@
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
+		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
@@ -3949,6 +3950,7 @@
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
 		E75516E2274F90B600401F45 /* FTExportDataFailedItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataFailedItemCell.xib; sourceTree = "<group>"; };
 		E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShortcutController.swift; sourceTree = "<group>"; };
+		E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteEditViewController.swift; sourceTree = "<group>"; };
 		E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTErrorInfoViewController.swift; sourceTree = "<group>"; };
 		E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BackUpErrorHandler.swift"; sourceTree = "<group>"; };
 		E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEvernoteFooterView.swift; sourceTree = "<group>"; };
@@ -9829,12 +9831,13 @@
 		E70705F82AC2B7A900A7B341 /* Favoritebar */ = {
 			isa = PBXGroup;
 			children = (
+				E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */,
 				E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */,
+				E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */,
 				97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */,
 				97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */,
 				97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */,
 				97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */,
-				E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */,
 			);
 			path = Favoritebar;
 			sourceTree = "<group>";
@@ -13002,6 +13005,7 @@
 				BAF394152859ADF00067CA9F /* FTDeleteItemRequest.swift in Sources */,
 				09DBD5262A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift in Sources */,
 				09CDCB4B2A55915A000340FB /* FTBookSessionRootViewController.swift in Sources */,
+				E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */,
 				09ABDCAA2A790F94008F144D /* FTNoteshelfAITextViewViewController.swift in Sources */,
 				BA2D9134285CB221001BB495 /* FTShelfItemAddNewTableViewCell.swift in Sources */,
 				BAF394172859ADF00067CA9F /* FTNotebookMoreOptionsViewController.swift in Sources */,
