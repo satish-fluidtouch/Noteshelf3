@@ -938,16 +938,17 @@
             </objects>
             <point key="canvasLocation" x="-172" y="-2228"/>
         </scene>
-        <!--View Controller-->
+        <!--Favorite Edit View Controller-->
         <scene sceneID="sBN-37-NFd">
             <objects>
-                <viewController id="L6V-4e-rRr" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FTFavoriteEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="L6V-4e-rRr" customClass="FTFavoriteEditViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C1m-K2-fAp">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="410"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="dzu-x9-d82"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <size key="freeformSize" width="320" height="410"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ls8-we-Fdo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

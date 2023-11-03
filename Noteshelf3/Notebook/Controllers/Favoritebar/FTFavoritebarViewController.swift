@@ -90,6 +90,15 @@ private extension FTFavoritebarViewController {
         }, completion: { (_) in
         })
     }
+
+    func showFavoriteEditScreen(with favorite: FTPenSetProtocol, sourceView: UIView) {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTFavoriteEditViewController.self))
+        guard let controller  = storyboard.instantiateViewController(withIdentifier: "FTFavoriteEditViewController") as? FTFavoriteEditViewController else {
+            fatalError("Proggrammer error")
+        }
+        controller.ftPresentationDelegate.source = sourceView
+        self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize)
+    }
 }
 
 extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -122,8 +131,9 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
         }
 
         if(indexPath.row < self.favorites.count) {
+            let favorite = self.favorites[indexPath.row]
             if(cell.isFavoriteSelected) {
-                // to show edit mode UI here
+                self.showFavoriteEditScreen(with: favorite, sourceView: cell)
             } else {
                 self.updateSelectionStatus(cell: cell)
             }
