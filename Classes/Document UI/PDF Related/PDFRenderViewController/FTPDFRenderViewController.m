@@ -97,6 +97,7 @@
 //@property (assign) NSInteger currentPageIndex;
 @property (assign) NSUInteger currentPageIndexToBeShown;
 @property (assign) CGFloat contentScaleInNormalMode;
+@property (strong) FTPageNumberView *pageNumberLabel;
 
 @end
 
@@ -595,6 +596,7 @@
 
     [self becomeFirstResponder];
     [[FTLanguageResourceManager shared] warnLanguageSelectionIfNeededOnController:self];
+    [self addPageNumberLabelToView];
 }
 
 -(void)viewDidLayoutSubviews
@@ -1132,6 +1134,9 @@
         }
     }
     [self triggerPageChangeNotification];
+    if(self.pageLayoutHelper.layoutType == FTPageLayoutHorizontal) {
+        [self setCurrentPageNoToPageNumberLabel];
+    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -1168,6 +1173,9 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(self.pageLayoutHelper.layoutType == FTPageLayoutVertical) {
+        [self setCurrentPageNoToPageNumberLabel];
+    }
     if(!self.mainScrollView.isZoomingInProgress && self.pageLayoutHelper.layoutType == FTPageLayoutVertical) {
         [self loadVisiblePages];
         NSArray *eachPageController = [self visiblePageViewControllers];
@@ -3195,7 +3203,25 @@
         }
     }];
 }
-
+#pragma mark - For current page number
+-(void)addPageNumberLabelToView
+{
+    self.pageNumberLabel = [[FTPageNumberView alloc] initWithFrame:CGRectMake(16, 16, 51, 26) page:self.currentlyVisiblePage];
+    [self.view addSubview:self.pageNumberLabel];
+    [self.view bringSubviewToFront:self.pageNumberLabel];
+    [self showPageNumberLabel];
+}
+-(void) showPageNumberLabel {
+    [self.pageNumberLabel setHidden:NO];
+    self.pageNumberLabel.alpha = 1.0;
+    [UIView animateWithDuration:2.0 animations:^{
+        self.pageNumberLabel.alpha = 0.0;
+    }];
+}
+-(void) setCurrentPageNoToPageNumberLabel {
+    [self.pageNumberLabel setCurrentPage:self.currentlyVisiblePage];
+    [self showPageNumberLabel];
+}
 #pragma mark - FTActiveStickerIndicatorView -
 - (void)activeStickyIndicatorViewDidTapCloseWithIndicatorView:(FTActiveStickyIndicatorViewController * _Nonnull)indicatorView
 {

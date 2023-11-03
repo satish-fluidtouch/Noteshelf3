@@ -21,9 +21,9 @@ import FTStyles
         self.isUserInteractionEnabled = false;
         let pageLabel = UILabel.init(frame: frame);
         pageLabel.textAlignment = NSTextAlignment.center;
-        pageLabel.backgroundColor = UIColor.appColor(.readOnlyModePageNumberBG)
-        pageLabel.font = UIFont.appFont(for: .semibold, with: 13)
-        pageLabel.layer.cornerRadius = 4.0
+        pageLabel.backgroundColor = UIColor.init(hexString: "#111111",alpha: 0.1)
+        pageLabel.font = UIFont.appFont(for: .medium, with: 15)
+        pageLabel.layer.cornerRadius = 6.0
         pageLabel.layer.masksToBounds = true
         self.addSubview(pageLabel);
         self.pageNumberInfoLabel = pageLabel;
@@ -41,7 +41,7 @@ import FTStyles
         if let document = page.parentDocument {
             let attributedPageNumberInfo = NSAttributedString(string: String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"),page.pageIndex()+1,document.pages().count))
             let pageNumberInfo = attributedPageNumberInfo.string
-            self.pageNumberInfoLabel?.frame = CGRect(x: 16, y: 16, width: (attributedPageNumberInfo.size().width + 32), height: 26)
+            self.pageNumberInfoLabel?.frame = CGRect(x: 8, y: 70.5, width: (attributedPageNumberInfo.size().width + 16), height: 24)
             self.pageNumberInfoLabel?.text =  pageNumberInfo
         }
         else {
@@ -57,7 +57,7 @@ import FTStyles
                 return;
         }
         _page.pageBackgroundColor { (color) in
-            self.pageNumberInfoLabel?.textColor = UIColor.appColor(.readOnlyModePageNumberTint);
+            self.pageNumberInfoLabel?.textColor = UIColor.appColor(.black70);
         }
     }
 }
