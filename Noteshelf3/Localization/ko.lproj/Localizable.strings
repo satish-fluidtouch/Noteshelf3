@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "%d와 %d 사이에 입력하세요.";
 "EnterPassword" = "암호를 입력하세요.";
 "EnterPasswordHint" = "비밀번호 힌트 입력";
-"EnterPasswordToOpenThisNotebook" = "이 노트북을 열려면 비밀번호를 입력하세요.";
+"EnterPasswordToOpenThisNotebook" = "%@을(를) 열려면 비밀번호를 입력하세요";
 "EnterThePasswordFor" = "%@에 대한 비밀번호를 입력하세요.";
 "EraseEntireStroke" = "전체 스트로크 지우기";
 "EraseHighlighterOnly" = "형광펜 지우개만";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "화이트보드 모드";
 "Wallpapers" = "배경화면";
 "Warning" = "주의";
-"WatchAdInfo" = "애플 워치에 Noteshelf 2를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfo" = "애플 워치에 Noteshelf 3를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
 "WatchNewRecords" = "귀하의 애플 워치에서 새로운 녹음 파일이 도착했습니다.";
 "WatchRecording" = "녹화 보기";
 "WatchRecordings" = "워치 녹화";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "모두 보기";
 "shelf.home.seeAllNotes" = "모든 노트 보기";
 "shelf.importfile.description" = "파일 앱에서 PDF 및 이미지 추가'";
+"shelf.migration.CompactDescription" = "Noteshelf 3로 복사본을 이동하려면 여기에 있는 어떤 노트북이라도 간단히 탭하세요. 이동된 노트북은 Noteshelf 3의 카테고리와 그룹에서 사용할 수 있습니다. ";
 "shelf.migration.Description" = "Noteshelf 3로 복사본을 이동하려면 여기에 있는 어떤 노트북이라도 간단히 탭하세요. 이동된 노트북은 Noteshelf 3의 카테고리와 그룹에서 사용할 수 있습니다. 전체 카테고리를 이동할 수 있는 기능은 곧 제공됩니다!";
 "shelf.migration.headerMessage" = "노트북을 Noteshelf 3로 이동하세요.";
 "shelf.navBar.deselectAll" = "모두 선택 해제";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Siva on 6 November 2023 at 11:22 AM

@@ -20,9 +20,9 @@ let SINGLE_PART_ANGLE:Double = 36.0 // (360 / SUPPORTED_TOTAL_COUNT)
 let SUPPORTED_TOTAL_COUNT:Int = 10
 
 class FTRecentAudioCircle: SKScene {
-    
+
     weak var circleDelegate:FTRecentAudioCircleDelegate?
-    
+
     let circleDiameter:CGFloat = screenWidth
     let DEFAULT_ALPHA: CGFloat = 0.3
     let INTERMEDIATE_LIGHT_ALPHA: CGFloat = 0.5
@@ -37,24 +37,20 @@ class FTRecentAudioCircle: SKScene {
     var currentIndex:Int = 0
     var recentStickIndex:Int = 0
     var totalRecordCount:Double = 0
-    
+
     var isCrownLocked = false
     var ignoreAttemptCount:Int = 20
-    
+
     convenience required init(withSceneSize size: CGSize) {
         self.init(size: size)
         self.backgroundColor = UIColor.clear
-        self.circleNode = SKSpriteNode(texture: SKTexture(imageNamed: "base-aqua-60"))
-        self.circleNode?.color = UIColor.init(red: 136.0/255.0, green: 197.0/255.0, blue: 210.0/255.0, alpha: 0.6)
-        self.circleNode?.colorBlendFactor = 1.0
-        self.circleNode?.size = size
 
-//        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
-//        self.circleNode?.texture = SKTexture.init(imageNamed: "base-aqua-60")
+        self.circleNode = SKSpriteNode.init(color: UIColor.clear, size: size)
+        self.circleNode?.texture = SKTexture.init(imageNamed: "base-aqua-60")
             self.circleNode?.position = CGPoint.init(x: circleDiameter/2.0, y: circleDiameter/2.0)
         self.circleNode?.anchorPoint = CGPoint.init(x: 0.5, y: 0.5)
         self.addChild(self.circleNode!)
-        
+
         shineNode = SKSpriteNode.init(color: UIColor.clear, size: CGSize.init(width: circleDiameter, height: circleDiameter))
         shineNode.blendMode = SKBlendMode.multiplyX2
         shineNode.texture = SKTexture.init(image: UIImage.init(named: "shine-new")!)
@@ -63,14 +59,13 @@ class FTRecentAudioCircle: SKScene {
 
         self.renderDefaultNodes()
     }
-    
+
     private func renderDefaultNodes(){
         self.circleNode?.removeAllChildren()
         self.childrenNodes.removeAll()
-        
+
         let Circle = SKShapeNode(circleOfRadius: innerCircleRadius) // Create circle
         Circle.position = CGPoint(x: 0, y: 0)
-//        Circle.strokeColor = SKColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0)
         Circle.strokeColor = SKColor.init(red: 26/255.0, green: 37/255.0, blue: 41/255.0, alpha: 1.0)
         Circle.fillColor = SKColor.clear
         Circle.lineWidth = 3.22
@@ -80,25 +75,24 @@ class FTRecentAudioCircle: SKScene {
         let newRadius:CGFloat = (innerCircleRadius + 6.0)
         let newDiameter:CGFloat = 134
         for index in 0...numOfBins-1{
-            
+
             let zRotation = CGFloat(Double(index) * (360.0 / Double(numOfBins)) * Double.pi) / 180.0
             let x:CGFloat = (CGFloat)(newRadius * cos(zRotation)) + (newDiameter / 2.0);
             let y:CGFloat = (CGFloat)(newRadius * sin(zRotation)) + (newDiameter / 2.0);
-            
-//            self.highlightNode = SKSpriteNode.init(color: UIColor.red, size: CGSize.init(width: 13, height: (index % 12 == 0) ? 2.0 : 1.0))
-            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: (index % 12 == 0) ? 2.0 : 1.0))
+
+            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 138/255.0, green: 204/255.0, blue: 234/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: (index % 12 == 0) ? 2.0 : 1.0))
             self.highlightNode.zRotation = zRotation
             self.highlightNode.colorBlendFactor = 1.0
             self.highlightNode.alpha = (index % 12 == 0) ? DEFAULT_ALPHA : INTERMEDIATE_ALPHA
             self.highlightNode.position = CGPoint.init(x: x - (newDiameter / 2.0), y: y - (newDiameter / 2.0))
             self.highlightNode.anchorPoint = CGPoint.init(x: 0.0, y: self.highlightNode.anchorPoint.y)
             self.circleNode?.addChild(self.highlightNode)
-            
+
             self.childrenNodes.append(self.highlightNode)
         }
         self.circleNode?.zRotation = CGFloat(90 * Float.pi / 180)
     }
-    
+
     func refreshNodesWithCount(_ totalCount:Int){
         self.totalRecordCount = min(Double(SUPPORTED_TOTAL_COUNT), Double(totalCount))
         self.currentIndex = 0
@@ -107,7 +101,7 @@ class FTRecentAudioCircle: SKScene {
 
         self.updateCrownPosition()
     }
-    
+
     //MARK:- Crown Sequencer Updates
     func didChangeCrownDelta(_ crownDelta:Double){
         if(self.totalRecordCount == 0 || audioServiceCurrentState == .recording){
@@ -124,7 +118,7 @@ class FTRecentAudioCircle: SKScene {
                 return
             }
         }
-        
+
         var newCrownDelta = (crownDelta * 1.0)
         if(crownDelta > 1.0){
             newCrownDelta = 1.0
@@ -140,7 +134,7 @@ class FTRecentAudioCircle: SKScene {
         {
             self.rotationDegrees += min(3.0, (newCrownDelta * SINGLE_PART_ANGLE * 5.0))
         }
-        
+
         if(self.rotationDegrees < 0.0){
             self.rotationDegrees = 0.0
             self.circleDelegate?.recentAudioCircleDidCrossMinLimit()
@@ -190,7 +184,7 @@ class FTRecentAudioCircle: SKScene {
             WKInterfaceDevice.current().play(.click)
             self.circleDelegate?.recentAudioCircleDidChange(withIndex: newIndex)
             self.manageRecordingsListDisplay()
-            
+
             var newStickIndex = ((SUPPORTED_TOTAL_COUNT - newIndex) % 10) * 12
             if(newStickIndex == 0){
                 newStickIndex = 119
@@ -256,7 +250,7 @@ class FTRecentAudioCircle: SKScene {
     internal func manageRecordingsListDisplay(){
         for stickIndex in 0...SUPPORTED_TOTAL_COUNT-1 {
             if((SUPPORTED_TOTAL_COUNT - stickIndex)%SUPPORTED_TOTAL_COUNT < Int(self.totalRecordCount)){
-                self.childrenNodes[stickIndex*12].color = UIColor.init(red: 136/255.0, green: 197/255.0, blue: 210/255.0, alpha: 1.0)
+                self.childrenNodes[stickIndex*12].color = UIColor.init(red: 138/255.0, green: 204/255.0, blue: 234/255.0, alpha: 1.0)
                 self.childrenNodes[stickIndex*12].alpha = DEFAULT_ALPHA
             }
             else

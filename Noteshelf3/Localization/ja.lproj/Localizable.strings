@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "%d と %d の間に入力してください";
 "EnterPassword" = "パスワードを入力してください";
 "EnterPasswordHint" = "パスワードのヒントを入力してください。";
-"EnterPasswordToOpenThisNotebook" = "このノートブックを開くにはパスワードを入力してください。";
+"EnterPasswordToOpenThisNotebook" = "%@ を復元するためのパスワードを入力してください";
 "EnterThePasswordFor" = "「%@のパスワードを入力してください」";
 "EraseEntireStroke" = "ストローク全体を削除";
 "EraseHighlighterOnly" = "ハイライトを消去するのみ";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "ホワイトボードモード";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "あなたのApple WatchにNoteshelf 2をインストールしてください。移動中にオーディオを録音し、後でメモを取ることができます。";
+"WatchAdInfo" = "あなたのApple WatchにNoteshelf 3をインストールしてください。移動中にオーディオを録音し、後でメモを取ることができます。";
 "WatchNewRecords" = "新しい録音があなたのApple Watchから届きました。";
 "WatchRecording" = "録画を見る";
 "WatchRecordings" = "ウォッチの録音";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "すべてを見る";
 "shelf.home.seeAllNotes" = "すべてのノートを見る";
 "shelf.importfile.description" = "FilesアプリからPDFと画像を追加";
+"shelf.migration.CompactDescription" = "ここでそれぞれのノートブックをタップして、Noteshelf 3 にコピーを移行してください。移行されたノートブックはNoteshelf 3 のカテゴリとグループで利用できます。";
 "shelf.migration.Description" = "ここでそれぞれのノートブックをタップして、Noteshelf 3 にコピーを移行してください。移行されたノートブックはNoteshelf 3 のカテゴリとグループで利用できます。カテゴリ全体を移行する機能は近日公開予定です！";
 "shelf.migration.headerMessage" = "Noteshelf 3にノートを移行";
 "shelf.navBar.deselectAll" = "すべて選択解除";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Siva on 6 November 2023 at 11:22 AM

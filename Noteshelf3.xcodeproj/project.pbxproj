@@ -459,6 +459,9 @@
 		47CE079F2A0A317A00E15028 /* FTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2CA51E027D72007B5CAD /* FTUtils.m */; };
 		47D3E3F02A8F5C83004C70A7 /* FTTemplateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D3E3EF2A8F5C83004C70A7 /* FTTemplateImageView.swift */; };
 		47D3E3F12A8F77F3004C70A7 /* IAPAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 097184232A825C1300656B36 /* IAPAssets.xcassets */; };
+		47F30B722AF8A5F90042C73B /* base-aqua-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06012AC1B71500A4D0F3 /* base-aqua-60.png */; };
+		47F30B732AF8A6030042C73B /* base-aqua.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06062AC1B71500A4D0F3 /* base-aqua.png */; };
+		47F30B742AF8A6080042C73B /* base.png in Resources */ = {isa = PBXBuildFile; fileRef = 474B06092AC1B71500A4D0F3 /* base.png */; };
 		47F39E872A04DF7400CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F39E892A04E0FB00CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F5F2A42AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */; };
@@ -11498,17 +11501,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F30B722AF8A5F90042C73B /* base-aqua-60.png in Resources */,
 				474B06382AC1B71500A4D0F3 /* ray.png in Resources */,
 				474B062F2AC1B71500A4D0F3 /* base-aqua-less.png in Resources */,
 				474B063A2AC1B71500A4D0F3 /* shine.png in Resources */,
 				474B063B2AC1B71500A4D0F3 /* volume-mute.png in Resources */,
 				474B06312AC1B71500A4D0F3 /* shine-new.png in Resources */,
+				47F30B742AF8A6080042C73B /* base.png in Resources */,
 				474B06362AC1B71500A4D0F3 /* shine-aqua.png in Resources */,
 				477646442AF0CFE4009DCC2A /* Assets.xcassets in Resources */,
 				0E4FDEEA2AC1B3AD0097FE16 /* Assets.xcassets in Resources */,
 				474B062E2AC1B71500A4D0F3 /* ray-aqua.png in Resources */,
 				474B06292AC1B71500A4D0F3 /* volume.png in Resources */,
 				474B062A2AC1B71500A4D0F3 /* Play-Smaller@2x.png in Resources */,
+				47F30B732AF8A6030042C73B /* base-aqua.png in Resources */,
 				474B06302AC1B71500A4D0F3 /* rays@2x.png in Resources */,
 				474B061F2AC1B71500A4D0F3 /* FTRecordScene.sks in Resources */,
 				474B063C2AC1B71500A4D0F3 /* paused.png in Resources */,

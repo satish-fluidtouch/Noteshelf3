@@ -58,9 +58,12 @@ struct FTAdBannerView: View{
                     }
                 }
             })
-            .backgroundStyle(Color.appColor(.watchViewBg))
+            .background(Color.appColor(.white50))
+            .background(.ultraThinMaterial)
+            .cornerRadius(12)
+            .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 4)
             .padding(.horizontal,sizeClass == .compact ? 8 : 30)
-//            .shadow(color: .gray, radius: 5, x: 0, y: 2)
+            .padding(.bottom, 4)
             .onAppear{
                 addBannerIfNeeded()
                 isBannerVisible = canShowWatchBanner()

@@ -258,7 +258,7 @@
 "DocumentSupport" = "¿El documento tiene algún problema? Envíanos el documento para que podamos investigar esto.";
 "DocumentSupportDisclaimer" = "DESCARGO DE RESPONSABILIDAD (Léalo detenidamente): Su documento ha sido adjuntado a este correo electrónico. Por favor, no envíe este correo electrónico si contiene información confidencial o sensible dentro del documento.";
 "DoesntRequirePassword" = "Ingrese la contraseña de esta libreta para eliminarla.";
-"Done" = "Hecho.";
+"Done" = "Hecho";
 "DontBackup" = "No hacer copia de seguridad";
 "DontShowForThisBook" = "No advertir nuevamente para este cuaderno";
 "DontShowHintAgain" = "No mostrar";
@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "Ingrese entre %d y %d.";
 "EnterPassword" = "Ingrese contraseña";
 "EnterPasswordHint" = "Ingrese una pista de contraseña";
-"EnterPasswordToOpenThisNotebook" = "Ingrese la contraseña para abrir este cuaderno.";
+"EnterPasswordToOpenThisNotebook" = "Ingrese la contraseña para abrir %@";
 "EnterThePasswordFor" = "Introduce la contraseña para %@";
 "EraseEntireStroke" = "Borrar trazo completo";
 "EraseHighlighterOnly" = "Borrar solo el resaltador";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "MODO PIZARRA";
 "Wallpapers" = "Fondos de pantalla";
 "Warning" = "Advertencia";
-"WatchAdInfo" = "Instala Noteshelf 2 en tu Apple Watch. Puedes grabar audio sobre la marcha y tomar notas más tarde.";
+"WatchAdInfo" = "Instala Noteshelf 3 en tu Apple Watch. Puedes grabar audio sobre la marcha y tomar notas más tarde.";
 "WatchNewRecords" = "Nuevas grabaciones llegaron desde tu Apple Watch.";
 "WatchRecording" = "Ver grabación";
 "WatchRecordings" = "Grabaciones del Watch";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "Ver todo";
 "shelf.home.seeAllNotes" = "Ver todas las notas";
 "shelf.importfile.description" = "Añade PDFs e imágenes desde tu aplicación de Archivos";
+"shelf.migration.CompactDescription" = "Simplemente toca cualquier cuaderno aquí para migrar una copia a Noteshelf 3. Los cuadernos migrados estarán disponibles en las categorías y grupos de Noteshelf 3.";
 "shelf.migration.Description" = "Simplemente toca cualquier cuaderno aquí para migrar una copia a Noteshelf 3. Los cuadernos migrados estarán disponibles en las categorías y grupos de Noteshelf 3. ¡Próximamente estará disponible la capacidad de migrar categorías completas!";
 "shelf.migration.headerMessage" = "Migra tus cuadernos a Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Deseleccionar todo";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Siva on 6 November 2023 at 11:22 AM
