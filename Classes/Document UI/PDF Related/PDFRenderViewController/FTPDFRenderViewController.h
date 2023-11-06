@@ -214,7 +214,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
                animate:(BOOL)animate;
 -(void)setContentScaleInNormalMode:(CGFloat)inContentScaleInNormalMode pageController:(FTPageViewController*)controller;
 -(void)validateMenuItems;
-
+-(void) updatePageNumberLabelFrame;
 @end
 
 @interface FTPDFRenderViewController (Internal)

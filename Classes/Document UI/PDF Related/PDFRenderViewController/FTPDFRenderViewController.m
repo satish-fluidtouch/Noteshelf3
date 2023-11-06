@@ -596,7 +596,6 @@
 
     [self becomeFirstResponder];
     [[FTLanguageResourceManager shared] warnLanguageSelectionIfNeededOnController:self];
-    [self addPageNumberLabelToView];
 }
 
 -(void)viewDidLayoutSubviews
@@ -1134,9 +1133,6 @@
         }
     }
     [self triggerPageChangeNotification];
-    if(self.pageLayoutHelper.layoutType == FTPageLayoutHorizontal) {
-        [self setCurrentPageNoToPageNumberLabel];
-    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -1173,7 +1169,9 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(self.pageLayoutHelper.layoutType == FTPageLayoutVertical) {
+    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+        [self addPageNumberLabelToView];
+    }else {
         [self setCurrentPageNoToPageNumberLabel];
     }
     if(!self.mainScrollView.isZoomingInProgress && self.pageLayoutHelper.layoutType == FTPageLayoutVertical) {
@@ -3206,11 +3204,14 @@
 #pragma mark - For current page number
 -(void)addPageNumberLabelToView
 {
-    self.pageNumberLabel = [[FTPageNumberView alloc] initWithFrame:CGRectMake(16, 16, 51, 26) page:self.currentlyVisiblePage];
+    CGFloat topOffset = [self getTopOffset];
+    self.pageNumberLabel = [[FTPageNumberView alloc] initWithFrame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
     [self.view addSubview:self.pageNumberLabel];
     [self.view bringSubviewToFront:self.pageNumberLabel];
-    [self showPageNumberLabel];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
+    [self performSelector:@selector(showPageNumberLabel)];
 }
+
 -(void) showPageNumberLabel {
     [self.pageNumberLabel setHidden:NO];
     self.pageNumberLabel.alpha = 1.0;
@@ -3220,7 +3221,16 @@
 }
 -(void) setCurrentPageNoToPageNumberLabel {
     [self.pageNumberLabel setCurrentPage:self.currentlyVisiblePage];
-    [self showPageNumberLabel];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
+    [self performSelector:@selector(showPageNumberLabel)];
+}
+-(void) updatePageNumberLabelFrame {
+    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+        [self addPageNumberLabelToView];
+    } else {
+        CGFloat topOffset = [self getTopOffset];
+        [self.pageNumberLabel udpateLabelFramesYPosition:topOffset];
+    }
 }
 #pragma mark - FTActiveStickerIndicatorView -
 - (void)activeStickyIndicatorViewDidTapCloseWithIndicatorView:(FTActiveStickyIndicatorViewController * _Nonnull)indicatorView
