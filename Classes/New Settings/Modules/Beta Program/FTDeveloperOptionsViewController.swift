@@ -18,7 +18,7 @@ struct FTDeveloperOption {
     static var enablePDFSelection: Bool = true
     static var textToStrokeWrapChar: Bool = false
     static var textToStrokeSnapToLineHeight: Bool = true
-    static var useQuickLookThumbnailing: Bool = false
+    static var useQuickLookThumbnailing: Bool = true
 
     static var showOnScreenBorder: Bool = false
     static var showTileBorder: Bool = false
