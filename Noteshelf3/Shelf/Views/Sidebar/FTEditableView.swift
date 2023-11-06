@@ -20,6 +20,7 @@ struct FTEditableView: View {
     @State var showEditableField: Bool = false
     var originalTitle: String = ""
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var viewModel: FTSidebarViewModel
 
     var body: some View {
                 Label {
@@ -48,6 +49,7 @@ struct FTEditableView: View {
                             .contentShape(Rectangle())
                             .if(!showEditableField) { view in
                                 view.onTapGesture {
+                                    viewModel.endEditingActions()
                                     showEditableField = true
                                     track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
                                 }

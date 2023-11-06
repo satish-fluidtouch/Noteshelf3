@@ -111,7 +111,7 @@ private extension FTEssentialsPaperSegmentViewController{
     //MARK: Template sizes menu
     private func configureTemplateSizesMenu() {
 
-        if self.traitCollection.isRegular {
+        if UIDevice.current.isMac() {
             self.paperSizeBtn.setTitle(varaintsData.selectedVariantsAndTheme.size.displayTitle, for: .normal)
             self.paperSizeBtn?.menu = templateSizeOptionsMenu
         } else {

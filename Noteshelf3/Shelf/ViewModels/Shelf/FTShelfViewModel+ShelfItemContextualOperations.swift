@@ -112,9 +112,14 @@ private extension FTShelfViewModel {
             if !item.isNotDownloaded {
                 section1.append((item.isFavorited ? .removeFromStarred : .addToStarred))
             }
+            
+            var section2: [FTShelfItemContexualOption] = [.rename, .changeCover]
+            if !item.isNotDownloaded {
+                section2.append(.tags)
+            }
             return [
                 section1,
-                [.rename,.changeCover,.tags],
+                section2,
                 [.duplicate,.move,.getInfo,.share],
                 [.trash]
             ]

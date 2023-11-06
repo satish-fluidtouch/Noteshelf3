@@ -48,9 +48,6 @@ struct FTSidebarView: View {
         menuView
             .macOnlyPlainButtonStyle() // added this to avoid gesture issue in ipad due to plain button style for mac, can be removed once we get better fix
         .onDrop(of: [.text], delegate: SideBarDropDelegate(viewModel: viewModel))
-        .onTapGesture {
-            self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
-        }
     }
 
     @ViewBuilder private var menuView: some View {
@@ -102,6 +99,7 @@ struct FTSidebarView: View {
                            showEditableField: editableField,
                            originalTitle: item.title)
             .environmentObject(item)
+            .environmentObject(viewModel)
         }
         .frame(height: 44.0, alignment: .leading)
         .background(Color.clear)
