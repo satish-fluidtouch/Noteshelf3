@@ -113,18 +113,10 @@ struct MediaItemView: View {
     @ObservedObject var media: FTShelfMedia
 
     var body: some View {
-        if media.isProtected {
-            Color.gray
-                .opacity(0.3)
-                .overlay {
-                    Image(systemName: "lock")
-                }
-        } else {
-            Image(uiImage: media.mediaImage ?? UIImage.shelfDefaultNoCoverImage)
+        Image(uiImage: media.mediaImage ?? UIImage.shelfDefaultNoCoverImage)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .clipped()
-        }
     }
 }
 
