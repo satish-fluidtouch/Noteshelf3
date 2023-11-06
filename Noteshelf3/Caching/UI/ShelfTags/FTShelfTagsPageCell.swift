@@ -18,6 +18,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     @IBOutlet weak var selectionBadge: UIImageView?
     @IBOutlet weak var shadowImageView: UIImageView!
 
+    @IBOutlet weak var thumbnailHeightConstraint: NSLayoutConstraint!
     override var isSelected: Bool {
         didSet {
             if let selectionBadge = selectionBadge {
@@ -67,7 +68,10 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem, onCompletion: { [weak self](image, imageToken) in
                 if token == imageToken {
                     if let img = image {
-                        self?.thumbnail?.contentMode = .scaleAspectFill
+                        if img.size.width > img.size.height {// Landscape
+                            let height = FTShelfTagsConstants.Book.landscapeSize.height
+                            self?.thumbnailHeightConstraint.constant = height
+                        }
                         self?.shadowImageView.layer.cornerRadius = 8
                         self?.thumbnail?.layer.cornerRadius = 8
 
