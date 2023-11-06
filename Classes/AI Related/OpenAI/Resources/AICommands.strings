@@ -1,0 +1,21 @@
+/* 
+  AICommands.strings
+  Noteshelf3
+
+  Created by Amar Udupa on 22/09/23.
+  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
+*/
+
+"noteshelf.ai.commandAskAnything" = "Ask Anything: In case input makes sense answer the input.\nGive appropriate headings if necessary.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
+
+"noteshelf.ai.commandSummarize" = "Summarize in bullet points.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
+
+"noteshelf.ai.commandExplain" = "Explain in simple terms.\nGive your response in %@ language.\nFormat the generated response in html.\nUse appropriate heading tags.";
+
+"noteshelf.ai.commandKeyPoints" = "In case input makes sense generate study notes on the input.\nGive appropriate headings.\nGive your response in %@ language.\nFormat the generated response in html.";
+
+"noteshelf.ai.commandTranslate" = "Translate to %@";
+
+"noteshelf.ai.cleanupContent" = "%@ correct grammar and spelling with minimum changes in the text provided. Generate response in html format. Keep headings if they exist. If the phrase is repeated, treat first repeated phrase as heading. In case of meeting minutes Keep the meeting minutes in proper format. Give response in html. Do not add or remove anything. Keep headings if they exist. Do not write style.";
+
+"noteshelf.ai.commandLanguageSuffix" = "Generate response in %@";

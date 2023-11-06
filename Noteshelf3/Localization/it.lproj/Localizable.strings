@@ -826,6 +826,7 @@
 "Tag" = "Etichetta";
 "Tagged" = "Etichettato";
 "Tags" = "Etichette";
+"Take beautiful notes effortlessly" = "Prendere appunti belli senza sforzo";
 "TakePhoto" = "Scatta foto";
 "TakeScreenshot" = "Cattura schermata";
 "TapToRate" = "Tocca per valutare";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "Aggiungi come scrittura a pagina Nuova";
 "noteshelf.ai.actionAddToNewPage" = "Aggiungi come testo a nuova pagina";
 "noteshelf.ai.actionAddToPage" = "Aggiungi come testo";
+"noteshelf.ai.credit.bePremium" = "Aggiorna a Noteshelf Premium.";
+"noteshelf.ai.credit.bePremiumInfo" = "Aggiorna a Noteshelf Premium per sbloccare 100 crediti mensili di AI e ottenere il riconoscimento della scrittura a mano";
+"noteshelf.ai.credit.creditsRunningOut" = "I crediti stanno per esaurirsi presto";
+"noteshelf.ai.credit.details" = "%d/%d crediti rimasti";
+"noteshelf.ai.credit.moreOptions" = "Più opzioni";
+"noteshelf.ai.credit.moreinfo" = "I crediti dell'IA si azzerano tra %d giorni";
+"noteshelf.ai.credit.nocredits" = "Nessun credito rimasto";
+"noteshelf.ai.pressEnterToSend" = "Premi invio per inviare";
 "numSelected" = "%ld Selezionato'";
 "objects" = "Oggetti";
 "ok" = "Ok";
@@ -1475,7 +1484,7 @@
 "text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri notebook";
 "text.font.setAsDefault.thisBook" = "Questo notebook";
 "textmode.fonttitle" = "Stile carattere/testo";
-"texttoolbar.fontselectionTitle" = "SELEZIONA CARATTERE";
+"texttoolbar.fontselectionTitle" = "Seleziona Carattere";
 "theams.unsplashDescription" = "Seleziona da Unsplash, scatta una foto o seleziona dalla tua Libreria di foto per creare le tue copertine personalizzate.";
 "trash.alert.cannotOpenNotebook" = "Questo notebook non può essere aperto poiché è stato eliminato. Per ripristinare, premi a lungo e seleziona l'opzione dal menu.";
 "trash.alert.title" = "Sei sicuro di voler svuotare il Cestino?";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 6 October 2023 at 10:26
+// Last Synced by Akshay on 25 October 2023 at 12:13

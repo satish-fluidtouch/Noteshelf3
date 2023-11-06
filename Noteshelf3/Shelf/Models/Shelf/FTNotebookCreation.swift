@@ -57,10 +57,11 @@ class FTNotebookCreation: NSObject {
                     docInfo.coverTemplateUrl = cover.themeFileURL.appendingPathComponent("template.pdf")
                     let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID())
                     let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL)
-
                     ftdocument.createDocument(docInfo){ (error, success) in
                         if(error == nil) {
-
+                            let shelfImageURL = ftdocument.URL.appending(path:"cover-shelf-image.png");
+                            let shelfImage = UIImage(contentsOfFile: shelfImageURL.path(percentEncoded:false));
+                            
                             let createBlock: ()->() = {
                                 collection.addShelfItemForDocument(ftdocument.URL, toTitle: title, toGroup: group, onCompletion: { (error, item) in
                                     if(nil != error) {
@@ -74,14 +75,7 @@ class FTNotebookCreation: NSObject {
                                     }
 
                                     item?.documentUUID = ftdocument.documentUUID
-
-                                    var shelfImage = (item as? FTShelfImage)?.image
-                                    if(nil == shelfItemImage && docInfo.overlayStyle == .default) {
-                                        shelfImage = shelfItemImage
-                                    }
-
                                     FTURLReadThumbnailManager.sharedInstance.addImageToCache(image: shelfImage, url: item!.URL)
-
                                     if let coverTheme = cover as? FTCoverTheme,mode == .basic {
                                         let coverLibrary =  FTThemesLibrary(libraryType: FTNThemeLibraryType.covers)
                                         coverLibrary.setDefaultTheme(coverTheme,defaultMode: .basic, withVariants: nil)

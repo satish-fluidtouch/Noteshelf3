@@ -27,7 +27,7 @@ extension FTGlobalSearchController {
     }
 
     internal func updateRecentSearchList() {
-        self.recentSearchList = FTRecentSearchStorage.shared.availableRecents()
+        self.recentSearchList = FTRecentSearchStorage.shared.availableRecents().filter { !$0.isEmpty }
     }
 }
 
@@ -68,15 +68,10 @@ extension FTGlobalSearchController: UITableViewDataSource, UITableViewDelegate {
         if !searchableText.isEmpty {
             searchbar.searchTextField.text = searchableText
         }
-        if let reqText = searchbar.searchTextField.text, !reqText.isEmpty {
-#if targetEnvironment(macCatalyst)
-            if let toolbar = self.view.toolbar as? FTShelfToolbar {
-                toolbar.updateSearchText(reqText)
-            }
-#else
-            self.updateUICondictionally(with: reqText)
-#endif
+        if let reqText = searchbar.searchTextField.text {
+            self.updateUICondictionally(with: reqText, tokens: searchTokens)
         }
+        self.searchController.resignSearchbarResponder()
         self.isRecentSelected = false
     }
 

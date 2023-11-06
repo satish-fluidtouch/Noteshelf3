@@ -21,7 +21,8 @@ protocol FTShapeSelectDelegate: AnyObject {
     func saveFavoriteShapes()
 }
 
-class FTToolTypeShortcutViewController: UIViewController {
+class FTToolTypeShortcutViewController: UIViewController, FTViewControllerSupportsScene {
+    var addedObserverOnScene: Bool = false
     weak var delegate: FTShorctcutActionDelegate?
     
     private weak var colorModel: FTFavoriteColorViewModel?
@@ -38,22 +39,36 @@ class FTToolTypeShortcutViewController: UIViewController {
         self.view.backgroundColor = .clear
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
+        self.configureSceneNotification()
+#endif
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+#if targetEnvironment(macCatalyst)
+        self.dismissPresentedPopoverIfExists()
+#endif
+    }
+
     func showShortcutViewWrto(rack: FTRackData) {
         self.rackType = rack.type
         if rack.type == .pen || rack.type == .highlighter {
             let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let shortcutView = FTPenShortcutView(colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTPenShortcutHostingController(rootView: shortcutView)
             self.add(hostingVc, frame: self.view.bounds)
             self.colorModel = _colorModel;
         } else if rack.type == .shape {
             let _colorModel =
-            FTFavoriteColorViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteColorViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let sizeModel =
-            FTFavoriteSizeViewModel(rackData: rack, delegate: self, window: self.view.window)
+            FTFavoriteSizeViewModel(rackData: rack, delegate: self, scene: self.view?.window?.windowScene)
             let _shapeModel = FTFavoriteShapeViewModel(rackData: rack, delegate: self)
             let shortcutView = FTShapeShortcutView(shapeModel: _shapeModel, colorModel: _colorModel, sizeModel: sizeModel)
             let hostingVc = FTShapeShortcutHostingController(rootView: shortcutView)
@@ -242,3 +257,23 @@ extension FTToolTypeShortcutViewController: FTColorEyeDropperPickerDelegate {
         self.penShortcutViewModel = nil
     }
 }
+
+#if targetEnvironment(macCatalyst)
+private extension FTToolTypeShortcutViewController {
+    func configureSceneNotification() {
+        // THis is needed when back/close of notebook is tapped, we need to close the pen color edit popover if exists(to fix memory leak caused by it)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
+    }
+
+    func dismissPresentedPopoverIfExists() {
+        self.presentedViewController?.dismiss(animated: false)
+    }
+
+    @objc func sceneWillResignActive(_ notification: Notification) {
+        if(!self.canProceedSceneNotification(notification)) {
+            return
+        }
+        self.dismissPresentedPopoverIfExists()
+    }
+}
+#endif

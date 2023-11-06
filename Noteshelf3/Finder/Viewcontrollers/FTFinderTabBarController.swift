@@ -306,6 +306,10 @@ extension FTFinderTabBarController: FTFinderThumbnailsActionDelegate {
         self.didTapOnItem()
     }
     
+    func cancelFinderSearchOperation() {
+        self.finderDelegate?.cancelFinderSearchOperation()
+    }
+    
     func finderViewController(_ finderViewController: FTFinderViewController, didSelectRotatePages pages: NSSet) {
         self.finderDelegate?.finderViewController(finderViewController, didSelectRotatePages: pages)
     }

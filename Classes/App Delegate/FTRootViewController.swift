@@ -430,6 +430,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
         configureSceneNotifications()
+        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
         return
     }
 
@@ -547,7 +548,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                  igrnoreIfNotDownloaded: true)
         { [weak self] (_, groupItem, itemToOpen) in
             if let shelfItem = itemToOpen, let selfObject = self {
-                let isPasswordEnabled = shelfItem.URL.isPinEnabledForDocument();
+                let isPasswordEnabled = shelfItem.isPinEnabledForDocument();
 
                 if (isPasswordEnabled && !selfObject.isOpeningDocument) {
                     selfObject.setLastOpenedGroup(nil);
@@ -1068,7 +1069,7 @@ extension FTRootViewController
 
         self.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, shelfItem in
             if(nil != collection && nil != shelfItem) {
-                if(!bipassPassword && shelfItem!.URL.isPinEnabledForDocument()) {
+                if(!bipassPassword && shelfItem!.isPinEnabledForDocument()) {
                     finalizeBlock(indicatorView);
                     return;
                 }

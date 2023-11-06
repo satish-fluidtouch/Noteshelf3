@@ -87,13 +87,25 @@ private extension FTBookSessionRootViewController {
                 let createWithAudio = userActivity.createWithAudio
                 let isQuickCreate = userActivity.isQuickCreate
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
-                    if let _docitem = docItem {
-                        let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem);
-                        docInfo.documentOpenToken = token;
-                        docItem?.isJustCreatedWithQuickNote = isQuickCreate
-                        self?.showNotebookView(docInfo);
-                        if createWithAudio {
-                            self?.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
+                    if let _docitem = docItem, let doc = _docitem as? FTNoteshelfDocument {
+                        let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
+                        if shouldInsertCover {
+                            doc.insertCoverForPasswordProtectedBooks { success, error in
+                                doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
+                                processDocumentOpen()
+                            }
+                        } else {
+                            processDocumentOpen()
+                        }
+                        func processDocumentOpen() {
+                            let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem);
+                            docInfo.documentOpenToken = token;
+                            docItem?.isJustCreatedWithQuickNote = isQuickCreate
+                            self?.showNotebookView(docInfo);
+                            FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                            if createWithAudio {
+                                self?.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
+                            }
                         }
                     }
                     else {

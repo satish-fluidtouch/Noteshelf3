@@ -34,9 +34,6 @@ private var offset: CGFloat = 8.0
     internal var animDuration: CGFloat = 0.3
 
     var shortcutViewPlacement: FTShortcutPlacement {
-        if UIDevice.current.isIphone() {
-            return .top
-        }
         let placement = FTShortcutPlacement.getSavedPlacement()
         return placement
     }
@@ -119,6 +116,10 @@ private var offset: CGFloat = 8.0
                 reqCenter.x -= 60.0
             } else if self.shortcutViewPlacement.isRightPlacement() {
                 reqCenter.x += 60.0
+            } else if self.shortcutViewPlacement == .top {
+                reqCenter.y -= 200.0
+            } else if self.shortcutViewPlacement == .bottom {
+                reqCenter.y += 200.0
             }
             UIView.animate(withDuration: animate ? animDuration : 0.0, delay: 0.0, options: options) { [weak self] in
                 self?.updateShortcutViewCenter(CGPoint(x: reqCenter.x, y: reqCenter.y))

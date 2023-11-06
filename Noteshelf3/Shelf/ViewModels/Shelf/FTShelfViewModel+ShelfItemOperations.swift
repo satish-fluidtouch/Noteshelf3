@@ -86,7 +86,7 @@ extension FTShelfViewModel {
     }
     func processNotebookOpeningFor(item: FTShelfItemViewModel){
         let shelfItemProtocol = item.model
-        if let documentItem = shelfItemProtocol as? FTDocumentItemProtocol, documentItem.isDownloaded, !shelfItemProtocol.shelfCollection.isTrash {
+        if let documentItem = shelfItemProtocol as? FTDocumentItemProtocol, documentItem.isDownloaded,let shelfCollection = shelfItemProtocol.shelfCollection ,!shelfCollection.isTrash {
             item.showLoader()
         }
         let notebookName = shelfItemProtocol.displayTitle

@@ -21,6 +21,9 @@ enum FTCacheError: Error {
     case invalidPath
     case corruptedDocument
     case documentNotDownloaded
+    case fileNotExists
+    case cachingNotRequired
+    case documentIsStillOpen
 }
 #if DEBUG
 private let cleanOnNextLaunch: Bool = false
@@ -29,15 +32,29 @@ private let cleanOnNextLaunch: Bool = false
 struct FTCacheFiles {
     static let cacheFolderName: String = "com.noteshelf.cache"
     static let cacheTagsPlist: String = "cacheTags.plist"
-    static let documentPlist: String = "Document.plist"
+    static let cacheDocumentPlist: String = "Document.plist"
+    static let cachePropertyPlist: String = "Metadata/Properties.plist"
+}
+
+ class FTItemToCache {
+    var fileUrl: URL;
+    var documentID : String;
+    init(url: URL, documentID docID: String) {
+        fileUrl = url;
+        documentID = docID;
+    }
 }
 
 final class FTDocumentCache {
+    private let lock = NSRecursiveLock();
+    
     static let shared = FTDocumentCache()
     let cacheFolderURL: URL
 
+    private var itemsToCache = [FTItemToCache]();
+    private var cacheDisabled = false;
+
     // MARK: Private
-    private let fileManager = FileManager()
     private let queue = DispatchQueue(label: FTCacheFiles.cacheFolderName, qos: .utility)
     private init() {
         guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last else {
@@ -50,9 +67,6 @@ final class FTDocumentCache {
         createCachesDirectoryIfNeeded()
         cacheLog(.info, cacheFolderURL)
 
-        FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
-        try? FTCacheTagsProcessor.shared.removeAllTagsFromPlist()
-
         addObservers()
     }
 
@@ -61,18 +75,19 @@ final class FTDocumentCache {
     }
 
     private func createCachesDirectoryIfNeeded() {
+        let _fileManager = FileManager()
 #if DEBUG
-        if cleanOnNextLaunch, fileManager.fileExists(atPath: cacheFolderURL.path) {
+        if cleanOnNextLaunch, _fileManager.fileExists(atPath: cacheFolderURL.path) {
             do {
-                try fileManager.removeItem(at: cacheFolderURL)
+                try _fileManager.removeItem(at: cacheFolderURL)
             } catch {
                 cacheLog(.error, error)
             }
         }
 #endif
-        if !fileManager.fileExists(atPath: cacheFolderURL.path) {
+        if !_fileManager.fileExists(atPath: cacheFolderURL.path) {
             do {
-                try fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
+                try _fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
             } catch {
                 cacheLog(.error, error)
             }
@@ -113,12 +128,6 @@ final class FTDocumentCache {
             do {
                 try self.removeCacheDocumentIfRequired(items)
             } catch {
-
-            }
-            if !items.isEmpty {
-                runInMainThread {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-                }
             }
         }
     }
@@ -139,26 +148,35 @@ final class FTDocumentCache {
 
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
         cacheLog(.info, "shelfitemDidUpdate", items.count)
-
-        // Perform all the operations on the secondary thread. This should never block the user interaction
+        var cacheItems = [FTItemToCache]()
         items.forEach { item in
-            if let docUUID = item.documentUUID, item.isDownloaded {
-                self.cacheShelfItemFor(url: item.URL, documentUUID: docUUID)
-            } else {
-                cacheLog(.info, "Ignoring \(item.URL.lastPathComponent)")
+            if let docId = item.documentUUID {
+                cacheItems.append(FTItemToCache(url: item.URL, documentID: docId))
             }
         }
-        if !items.isEmpty {
-            runInMainThread {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)
-            }
-        }
+
+        self.cacheShelfItems(items: cacheItems)
     }
 }
 
 // Interface for cache creation
-
 extension FTDocumentCache {
+    func disableCacheUpdates() {
+        self.cacheDisabled = true;
+    }
+
+    func enableCacheUpdates() {
+        self.cacheDisabled = false;
+        runInMainThread(0.1) {
+            self.lock.lock()
+            self.itemsToCache.forEach { eachItem in
+                self.cacheShelfItemFor(url: eachItem.fileUrl, documentUUID: eachItem.documentID);
+            }
+            self.itemsToCache.removeAll();
+            self.lock.unlock()
+        }
+    }
+
     func cachedLocation(for docUUID: String) -> URL {
         guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {
             fatalError("Unable to find cache directory")
@@ -167,31 +185,93 @@ extension FTDocumentCache {
         return destinationURL
     }
 
+    func cacheShelfItems(items: [FTItemToCache]) {
+
+        if self.cacheDisabled {
+            self.lock.lock()
+            items.forEach { eachItem in
+                self.itemsToCache.append(FTItemToCache(url: eachItem.fileUrl, documentID: eachItem.documentID))
+            }
+            self.lock.unlock()
+            return;
+        }
+
+        let dispatchGroup = DispatchGroup()
+        queue.async {
+            var itemsCached = [FTItemToCache]();
+            items.forEach { eachItem in
+                dispatchGroup.enter()
+                    do {
+                        try self.cacheShelfItemIfRequired(url: eachItem.fileUrl, documentUUID: eachItem.documentID )
+                        itemsCached.append(eachItem)
+                        dispatchGroup.leave()
+                    } catch {
+                        cacheLog(.error, error.localizedDescription, eachItem.fileUrl.lastPathComponent)
+                        dispatchGroup.leave()
+                    }
+            }
+            dispatchGroup.notify(queue: self.queue) {
+                FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: itemsCached)
+            }
+        }
+    }
+
     func cacheShelfItemFor(url: URL, documentUUID: String) {
+        if self.cacheDisabled {
+            self.lock.lock()
+            self.itemsToCache.append(FTItemToCache(url: url, documentID: documentUUID))
+            self.lock.unlock()
+            return;
+        }
+
         queue.async {
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
-                try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: url, documentUUID: documentUUID)
+                let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
+                FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
             } catch {
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
         }
     }
+
+    private func relativePathWRTCollectionFor(documentId: String) -> String? {
+        let destinationURL = cachedLocation(for: documentId)
+        let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
+        if let propertiList = FTFileItemPlist(url: dest, isDirectory: false), let relativePath = propertiList.object(forKey: "relativePath") as? String {
+            return relativePath
+        }
+        return nil
+    }
 }
 
 private extension FTDocumentCache {
     func cacheShelfItemIfRequired(url: URL, documentUUID: String) throws {
+
+        func updateMetadataPlistWithRelativePathFor(docUrl: URL, documentId: String) {
+            let destinationURL = cachedLocation(for: documentId)
+            let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
+            if let propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
+                let relativePath = docUrl.relativePathWRTCollection()
+                propertiList.setObject(relativePath, forKey: "relativePath")
+                try? propertiList.writeUpdates(to: dest)
+            }
+        }
+
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
+            updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
             cacheLog(.info, "Replace Ignored as already opened \(url.lastPathComponent)")
-            return
+            throw FTCacheError.documentIsStillOpen
         }
 
         let destinationURL = cachedLocation(for: documentUUID)
-        if !fileManager.fileExists(atPath: destinationURL.path) {
+        let _fileManager = FileManager();
+        if !_fileManager.fileExists(atPath: destinationURL.path) {
             do {
                 // Copy directly if the file doesn't exist at the cache location
-                try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
+                try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
+                updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                 cacheLog(.success, "Copy", url.lastPathComponent)
             } catch {
                 cacheLog(.error, "Copy", error.localizedDescription, url.lastPathComponent)
@@ -204,32 +284,36 @@ private extension FTDocumentCache {
 
             // Can be improved by checking for .orderedAscending/orderedDescending, for now we're just replacing the existing cache if the modification dates mismatches.
             let isLatestModified = existingmodified.compare(newModified) == .orderedAscending
-            cacheLog(.info, " \(isLatestModified) existing: \(existingmodified) new: \(newModified)", url.lastPathComponent)
+            cacheLog(.info, " \(isLatestModified) existing: \(existingmodified) new: \(newModified)", url)
 
             if isLatestModified {
                 do {
-                    try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
+                    try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
+                    updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                     cacheLog(.success, "Replace", url.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Replace", error.localizedDescription, url.lastPathComponent)
                     throw error
                 }
             } else {
+                updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                 cacheLog(.info, "Replace Ignored as there are no modifications", url.lastPathComponent)
+                throw FTCacheError.cachingNotRequired
             }
         }
     }
 
-    // TODO: (AK) Try using Async Sequences
     func removeCacheDocumentIfRequired(_ documents: [FTDocumentItemProtocol]) throws {
         for case let doc in documents where doc.documentUUID != nil {
             guard let docUUID = doc.documentUUID, doc.isDownloaded else { continue }
 
             let destinationURL = cachedLocation(for: docUUID)
-            if fileManager.fileExists(atPath: destinationURL.path) {
+            let relativePath = self.relativePathWRTCollectionFor(documentId: docUUID)
+            let _fileManger = FileManager();
+            if _fileManger.fileExists(atPath: destinationURL.path) && (doc.URL.relativePathWRTCollection() == relativePath || relativePath == nil){
                 do {
-                    try FTCacheTagsProcessor.shared.cacheTagsForDocument(url: doc.URL, documentUUID: docUUID)
-                    try fileManager.removeItem(at: destinationURL)
+                    FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
+                    try _fileManger.removeItem(at: destinationURL)
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)

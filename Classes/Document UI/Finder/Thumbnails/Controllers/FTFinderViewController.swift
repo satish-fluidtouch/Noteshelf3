@@ -57,6 +57,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     func didTapClearButton() {
         
     }
+    private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
+
     var outlinesViewController: FTOutlinesViewController?
     @IBOutlet weak var rotateButton: UIButton!
     private weak var addPageNotificationObserver: NSObjectProtocol?
@@ -450,7 +452,9 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
                         }
                     }
                 } else if type == .outline {
-                    itemSnapShot.appendItems([FTOutline(name: "outline")], toSection: .outline)
+                    if !(outlinesViewController?.outlinesList.isEmpty ?? false) {
+                        itemSnapShot.appendItems([FTOutline(name: "outline")], toSection: .outline)
+                    }
                 } else if type == .bookmark {
                     placeHolderVc?.updateView(for: .bookmark)
                     collectionView.backgroundView?.isHidden = true
@@ -1926,55 +1930,48 @@ extension FTFinderViewController {
 }
 
 extension FTFinderViewController: FTTagsViewControllerDelegate {
+
     func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
-        
+
+    }
+
+    func didDismissTags() {
+        let items = self.selectedTagItems.values.reversed();
+        self.selectedTagItems.removeAll()
+        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
     }
 
     func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
         controller.dismiss(animated: true, completion: nil)
-        //self.deselectAll();
     }
 
-    func didAddTag(tag: FTTagModel) async throws {
-        let items = selectedTagItems()
-        try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: items, updateType: .add)
-        refreshTagPills()
+    func didAddTag(tag: FTTagModel) {
+        updateShelfTagItemsFor(tag: tag)
     }
 
-    func didUnSelectTag(tag: FTTagModel) async throws {
-        let items = selectedTagItems()
-        try await FTShelfTagsUpdateHandler.shared.updateTag(tag, for: items, updateType: .remove)
-        refreshTagPills()
+    func didUnSelectTag(tag: FTTagModel) {
+        updateShelfTagItemsFor(tag: tag)
     }
 
-    func didRenameTag(tag: FTTagModel, renamedTag: FTTagModel) async throws {
-        let items = selectedTagItems()
-        if let currentDocument = items.first?.document {
-            try await FTShelfTagsUpdateHandler.shared.renameTag(tag: tag, with: renamedTag, for: currentDocument)
-            refreshTagPills()
-        }
-    }
-
-    func didDeleteTag(tag: FTTagModel) async throws {
-        let items = selectedTagItems()
-        if let currentDocument = items.first?.document {
-            try await FTShelfTagsUpdateHandler.shared.deleteTag(tag: tag, for: currentDocument)
-        }
-        refreshTagPills()
-    }
-
-    func selectedTagItems() -> [FTShelfTagsItem] {
+    func updateShelfTagItemsFor(tag: FTTagModel) {
         let pages = self.selectedPages.count > 0 ? self.selectedPages : contextMenuActivePages
-        var items = [FTShelfTagsItem]()
-        pages.forEach({ pickedPage in
-            if let page = pickedPage as? FTThumbnailable {
-                let item = FTShelfTagsItem(shelfItem: self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol, type: .page, page: page, pageIndex: page.pageIndex())
-                items.append(item)
+        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
+            if let _pages = pages.allObjects as? [FTThumbnailable], let documentItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
+                tagModel.updateTagForPages(documentItem: documentItem, pages: _pages) { [weak self] items in
+                    guard let self = self else { return }
+                    items.forEach { item in
+                        if let page = _pages.first(where: {$0.uuid == item.pageUUID}) {
+                            self.selectedTagItems[page.uuid] = item
+                            (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
+                        }
+                        self.refreshTagPills()
+                    }
+                }
             }
-        })
-        return items
+        }
+
     }
-    
+
     private func refreshTagPills() {
         var filteredPages = self.searchResultPages ?? self.document.documentPages();
         if self.selectedSegment == .bookmark {

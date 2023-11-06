@@ -14,8 +14,8 @@ enum FTPhotoMode {
     case clipBoard
 }
 
-private let MIN_IMAGE_VIEW_HEIGHT : CGFloat = 60;
-private let MIN_IMAGE_VIEW_WIDTH : CGFloat = 60;
+private let MIN_IMAGE_VIEW_HEIGHT : CGFloat = 30;
+private let MIN_IMAGE_VIEW_WIDTH : CGFloat = 30;
 
 private let CONTROL_POINT_SIZE : CGFloat = 40
 
@@ -112,7 +112,7 @@ class FTLineDashView : UIView
     @IBOutlet weak var angleIndicatorView  : FTLineDashView?;
     @IBOutlet weak var angleInfoView  : FTStyledLabel?;
     @IBOutlet weak var angleInfoHolderView : UIView?;
-    
+    private var angleToSnap: CGFloat?
     fileprivate var minSizeToMaintain : CGFloat
     {
         if(photoMode == .transform) {
@@ -569,6 +569,7 @@ extension FTImageResizeViewController {
                 
                 if(isAngleNearToSnapArea(byAddingAngle: angleDifference)) {
                     self.angleIndicatorView?.isHidden = false;
+                    angleToSnap = self.angleWRT360Degree(angleInRadians: self.currentViewAngle());
                     if(self.snapToNear90IfNeeded(byAddingAngle: angleDifference)) {
                         self.lastPrevPointInRotation = curPoint;
                     }
@@ -624,6 +625,10 @@ extension FTImageResizeViewController {
     fileprivate func finalizeonTouchEnd()
     {
         self.showAngleInfoView(false, animate: true);
+        if let angleToSnap, angleIndicatorView?.isHidden == false {
+            self.view.transform = CGAffineTransform(rotationAngle: angleToSnap * DEGREE_TO_RADIANS)
+            self.angleToSnap = nil
+        }
         self.angleIndicatorView?.isHidden = true;
         self.tapGesture?.isEnabled = self.allowsEditing;
         self.showControlPoints(animate: true)
@@ -692,6 +697,7 @@ extension FTImageResizeViewController
     {
         FTCLSLog("Image: Tapped On Rotation knob")
         if(tapGesture.state == .recognized) {
+            angleToSnap = nil
             let nearestAngle = self.nearestNextSnapAngle(angleInRadians: self.currentViewAngle());
             let currentAngle = self.angleWRT360Degree(angleInRadians: self.currentViewAngle());
             self.setRotationAngle((nearestAngle-currentAngle)*(DEGREE_TO_RADIANS));
@@ -1088,14 +1094,12 @@ private extension FTImageResizeViewController
                 newWidth = MIN_HEIGHT;
                 newHeight *= widthRatio;
             }
-            print(newHeight, "newHeight")
             
             if (newHeight < MIN_HEIGHT) {
                 let heightRatio = MIN_HEIGHT/frame.height;
                 newHeight = MIN_HEIGHT;
                 newWidth *= heightRatio;
             }
-            print(newWidth, "newWidth")
         }
         
         if(newWidth < self.currentFrame.width || newHeight < self.currentFrame.height) {

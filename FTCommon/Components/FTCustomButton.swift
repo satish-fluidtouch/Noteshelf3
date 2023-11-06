@@ -61,6 +61,8 @@ public struct FTMicroInteractionButtonStyle: ButtonStyle {
             .animation(.easeInOut(duration: AnimationValue.animatedValue), value: configuration.isPressed)
     }
 }
+
+// TODO: (RP) rename this to be appropriate for micro interaction.
 public struct AnimationValue {
     public static var animatedValue: Double = 0.3
 }

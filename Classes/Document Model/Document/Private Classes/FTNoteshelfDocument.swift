@@ -153,8 +153,17 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
         }
     }
+    // Bypassing the old thumnail setting approach
     override var thumbnailImage: UIImage? {
-        return self.shelfImage;
+        if FTDeveloperOption.useQuickLookThumbnailing {
+            if self.URL.isNS2Book {
+                return self.shelfImage;
+            } else {
+                return nil
+            }
+        } else {
+            return self.shelfImage;
+        }
     }
 
     var shelfImage: UIImage? {
@@ -183,7 +192,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     var hasAnyUnsavedChanges: Bool {
         let documentInfoPlist = self.documentInfoPlist();
         var changes = super.hasUnsavedChanges
-            || ((nil != documentInfoPlist) && documentInfoPlist!.isModified);
+            || ((nil != documentInfoPlist) && documentInfoPlist!.isModified)
 
         let allPages = self.pages()
         if(!changes){
@@ -852,9 +861,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                 safelyTo: url,
                                 for: saveOperation);
 
-        //writing fileattributes
+        let uuid = self.URL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue
+        // Ideally In-equality condition is not needed, just as a safety check we're adding.
+        if uuid == nil || uuid != self.documentUUID {
             let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: self.documentUUID)
             try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
+        }
     }
     
     fileprivate var isInRevertMode = false;
@@ -1134,8 +1146,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         if(self.isPinEnabled()) {
             let propertyInfoPlist = self.fileURL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
             let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
-            dictionary.setObject(FTUtils.getUUID(), forKey: DOCUMENT_ID_KEY as NSCopying);
+            let docUUID = FTUtils.getUUID()
+            dictionary.setObject(docUUID, forKey: DOCUMENT_ID_KEY as NSCopying);
             dictionary.write(to: propertyInfoPlist, atomically: true);
+            
+            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
+            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
 
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){

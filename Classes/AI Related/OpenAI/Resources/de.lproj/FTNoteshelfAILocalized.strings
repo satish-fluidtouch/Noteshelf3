@@ -10,6 +10,7 @@
 "noteshelf.ai.summarize" = "Zusammenfassen"; //summarize
 "noteshelf.ai.explain" = "Erklären"; //explain
 "noteshelf.ai.translate" = "Übersetzen"; //translate
+"noteshelf.ai.TranslateToPlaceHolder" = "Ins %@ übersetzen";
 
 "noteshelf.ai.sendFeedback" = "Feedback senden"; //send_feedback
 "noteshelf.ai.noteshelfAI" = "Noteshelf-AI"; //about_noteshelf_ai
@@ -18,11 +19,6 @@
 "noteshelf.ai.askAnything" = "Frag alles..."; //ai_assistant
 "noteshelf.ai.enterTopic" = "Geben Sie das Thema ein"; //enter_the_topic
 "noteshelf.ai.provideContent" = "Bitte geben Sie ein Thema an, um Notizen zu erstellen"; //please_provide_a_topic_to_create_notes
-
-"noteshelf.ai.commandSummarize" = ".Fassen Sie es in 50 bis 200 Wörtern zusammen"; //summarize_command
-"noteshelf.ai.commandExplain" = ".Erkläre es in einfachen Worten"; //explain_command
-"noteshelf.ai.commandKeyPoints" = ".Geben Sie die Hauptpunkte"; //generates_notes_command
-"noteshelf.ai.commandTranslate" = "Ins %@ übersetzen "; //translate_command
 
 "noteshelf.ai.actionCopyToClipboard" = "In Zwischenablage kopieren"; //copy_to_clipboard
 "noteshelf.ai.actionAddAsText" = "Als Text hinzufügen"; //add_to_page
@@ -51,3 +47,15 @@
 "noteshelf.ai.noteshelfAIError" = "Konnte keine Verbindung zum Server herstellen. Bitte versuchen Sie es später erneut.";
 
 "noteshelf.ai.handwriteMessage" = "Noteshelf AI wird Ihre Handschrift nur verstehen können, wenn Sie ein Premium-Benutzer sind.";
+
+"noteshelf.ai.pressEnterToSend" = "Drücken Sie die Eingabetaste, um zu senden";
+
+//Credits related
+"noteshelf.ai.credit.nocredits" = "Keine Guthaben mehr";
+"noteshelf.ai.credit.bePremium" = "Aufwertung zu Noteshelf Premium";
+"noteshelf.ai.credit.creditsRunningOut" = "Credits werden bald aufgebraucht";
+"noteshelf.ai.credit.bePremiumInfo" = "Upgrade auf Noteshelf Premium, um 100 monatliche KI-Guthaben freizuschalten und Handschrifterkennung zu erhalten";
+"noteshelf.ai.credit.upgradeNow" = "Jetzt aktualisieren";
+"noteshelf.ai.credit.details" = "%d/%d verbleibende Guthaben";
+"noteshelf.ai.credit.moreinfo" = "AI-Guthaben wird in %d Tagen zurückgesetzt";
+"noteshelf.ai.credit.moreOptions" = "Mehr Optionen";

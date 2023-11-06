@@ -49,7 +49,7 @@ class FTGlobalSearchController: UIViewController {
     internal var progressView: RPCircularProgress?
 
     internal var allTags = [FTTagModel]()
-    internal var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
+    private(set) var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
 
     internal var isRecentSelected: Bool = false
     internal var recentSearchList: [[FTRecentSearchedItem]] = []
@@ -64,10 +64,18 @@ class FTGlobalSearchController: UIViewController {
     private var searchedSections = [FTSearchSectionProtocol]()
     private var currentSize = CGSize.zero
     private let alignmentOffset: CGFloat = 550.0
+
+#if targetEnvironment(macCatalyst)
+    // This is used exclusively for updating search text when book is closed
+    private var toUpdateSearchText = false
+#endif
+
     var navTitle: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.allTags = FTSearchSuggestionHelper.shared.fetchTags()
+        FTSearchSuggestionHelper.shared.fetchTags(completion: { allTags in
+            self.allTags = allTags
+       })
 #if !targetEnvironment(macCatalyst)
         self.configureSearchControllerIfNeeded()
 #endif
@@ -80,7 +88,6 @@ class FTGlobalSearchController: UIViewController {
         self.collectionView.backgroundView?.isHidden = true
 
         self.collectionView?.register(UINib(nibName: "FTSearchResultContentHeader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FTSearchResultContentHeader")
-        self.title = navTitle
 #if !targetEnvironment(macCatalyst)
         runInMainThread(0.1) {
             self.searchController.bringSearchBarResponder()
@@ -93,12 +100,25 @@ class FTGlobalSearchController: UIViewController {
         if let shelfItemCollection {
             self.delegate?.selectSidebarWithCollection(shelfItemCollection)
         }
+#if targetEnvironment(macCatalyst)
+        self.toUpdateSearchText = presentedViewController is FTNoteBookSplitViewController
+#endif
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
+        if let toolbar = self.view.toolbar as? FTShelfToolbar, toUpdateSearchText {
+            toolbar.updateSearchText(self.searchInputInfo.textKey)
+        }
+#endif
+    }
+
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize != self.currentSize) {
             self.currentSize = currentFrameSize
-            self.updateProgressViewCenter()
             if self.currentSize.width > alignmentOffset {
                 self.segmentInfoStackView.axis = .horizontal
                 self.segmentInfoStackView.distribution = .fill
@@ -140,7 +160,6 @@ class FTGlobalSearchController: UIViewController {
 extension FTGlobalSearchController {
     internal func searchForNotebooks(with info: FTSearchInputInfo) {
         self.cancelSearch()
-        self.updateProgressViewCenter()
 
         runInMainThread {
             var sectionIndexSet = IndexSet()
@@ -202,6 +221,7 @@ private extension FTGlobalSearchController {
     private func configureProgressView() {
         self.progressView = RPCircularProgress()
         self.progressView?.frame.size = CGSize(width: 25.0, height: 25.0)
+        self.progressView?.translatesAutoresizingMaskIntoConstraints = false
         self.progressView?.trackTintColor = UIColor(hexString: "76787C")
         self.progressView?.progressTintColor = .white
         self.progressView?.innerTintColor = .clear
@@ -209,6 +229,11 @@ private extension FTGlobalSearchController {
         self.progressView?.clockwiseProgress = true
         self.progressView?.thicknessRatio = 0.25
         self.searchController.searchBar.addSubview(progressView!)
+        self.progressView?.translatesAutoresizingMaskIntoConstraints = false
+        self.progressView?.trailingAnchor.constraint(equalTo: self.searchController.searchBar.searchTextField.trailingAnchor, constant: -40).isActive = true
+        self.progressView?.centerYAnchor.constraint(equalTo: self.searchController.searchBar.searchTextField.centerYAnchor, constant: 0.0).isActive = true
+        self.progressView?.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
+        self.progressView?.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
         self.progressView?.isHidden = true
     }
 
@@ -220,7 +245,9 @@ private extension FTGlobalSearchController {
         self.recentsTableView.isScrollEnabled = self.recentsTableView.contentSize.height > self.recentsTableView.frame.size.height
         self.recentsTableView.dataSource = self
         self.recentsTableView.delegate = self
+#if !targetEnvironment(macCatalyst)
         self.updateUICondictionally(with: "")
+#endif
     }
 
     private func configureSegmentControl() {
@@ -231,11 +258,6 @@ private extension FTGlobalSearchController {
         self.segmentControl.setTitle(segment2Title, forSegmentAt: 1)
         self.segmentControl.selectedSegmentIndex = 0
         self.hideSegmentControlIfNeeded(toHide: true)
-    }
-
-    private func updateProgressViewCenter() {
-        let searchbar = self.searchController.searchBar
-        self.progressView?.center = CGPoint(x: searchbar.frame.maxX-130.0, y: searchbar.center.y)
     }
 
     private func hideSegmentControlIfNeeded(toHide: Bool) {

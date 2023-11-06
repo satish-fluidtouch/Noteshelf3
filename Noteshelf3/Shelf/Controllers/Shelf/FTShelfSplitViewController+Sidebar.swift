@@ -75,15 +75,16 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
     
-    func openTags(for tag: String){
+    func openTags(for tag: String, isAllTags: Bool) {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
-            controller.selectedTag = (tag == "sidebar.allTags".localized) ? nil : FTTagModel(text: tag)
+            controller.selectedTag = isAllTags ? nil : FTTagModel(text: tag)
             self.showDetailViewController(detailController, sender: self)
+            controller.reloadContent()
         } else {
             self.updateRootVCToDetailNavController(rootVC: getTagsVC(for: tag))
         }
     }
-    
+
     func showSettings() {
         let storyboard = UIStoryboard(name: "FTNewSettings", bundle: nil);
         if let settingsController = storyboard.instantiateViewController(withIdentifier: "FTGlobalSettingsController") as? FTGlobalSettingsController {
@@ -388,7 +389,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
         let fileName = theme.themeFileURL.lastPathComponent.deletingPathExtension;
         let defaultCover = FTThemesLibrary(libraryType: .covers).getDefaultTheme(defaultMode: .quickCreate)
         let notebookDetails = FTNewNotebookDetails(coverTheme: defaultCover, paperTheme: theme, documentPin: nil, title: fileName)
-        FTNotebookCreation().createNewNotebookInside(collection: collection, group: groupItem, notebookDetails: notebookDetails) { error, shelfItem in
+        FTNotebookCreation().createNewNotebookInside(collection: collection, group: groupItem, notebookDetails: notebookDetails,mode: .template) { error, shelfItem in
             progress.completedUnitCount += 1;
             if(error == nil) {
                 onCompletion!(shelfItem,error)

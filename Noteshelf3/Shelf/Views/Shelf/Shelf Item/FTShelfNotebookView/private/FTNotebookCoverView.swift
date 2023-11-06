@@ -29,26 +29,30 @@ struct FTNotebookCoverView: View {
                         ProgressView()
                     })
                 })
-                    .if(shelfItem.isDownloadingNotebook, transform: { view in
-                        view.overlay(alignment: Alignment.center, content: {
-                            FTCircularProgressView(progress: $shelfItem.progress)
-                                .frame(width: 32, height: 32, alignment: .center)
-                        })
+                .if(shelfItem.isDownloadingNotebook, transform: { view in
+                    view.overlay(alignment: Alignment.center, content: {
+                        FTCircularProgressView(progress: $shelfItem.progress)
+                            .frame(width: 32, height: 32, alignment: .center)
                     })
-                        .overlay(alignment: Alignment.bottom) {
+                })
+                .overlay(alignment: Alignment.bottom) {
                     if shelfItem.uploadDownloadInProgress {
+                        let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
+                        
                         let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
-                        Image(systemName: "icloud")
-                            .foregroundColor(Color.black.opacity(0.2))// For handlilng dark/light mode used black color
+                        Image(systemName: "icloud.and.arrow.up")
+                            .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
                             .frame(width: 24, height: 24, alignment: Alignment.center)
                             .font(font)
-                            .padding(.bottom, 8)
+                            .padding(.bottom, padding)
+                            .pulseAnimation()
+                        
                     } else if shelfItem.isNotDownloaded {
                         let imagSize: CGSize = shelfViewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 24, height: 24)
                         let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
                         let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
                         Image(systemName: "icloud.and.arrow.down")
-                            .foregroundColor(Color.black.opacity(0.2))// For handlilng dark/light mode used black color
+                            .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
                             .frame(width: imagSize.width, height: imagSize.height, alignment: Alignment.center)
                             .font(font)
                             .padding(.bottom, padding)
@@ -75,7 +79,7 @@ struct FTNotebookCoverView: View {
                     }
                 }
                 .overlay {
-                    if shelfItem.model.URL.isPinEnabledForDocument() {
+                    if shelfItem.model.isPinEnabledForDocument() {
                         FTLockIconView()
                     }
                 }
@@ -86,6 +90,13 @@ struct FTNotebookCoverView: View {
                     shelfItem.configureShelfItem(shelfItem.model)
                 })
         }
+        .onAppear(perform: {
+            shelfItem.isVisible = true;
+            self.shelfItem.fetchCoverImage();
+        })
+        .onDisappear(perform: {
+            shelfItem.isVisible = false;
+        })
         .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
         .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
     }
@@ -137,6 +148,7 @@ struct NS2BadgeView: View {
     }
 }
 
+
 struct FTLockIconView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.colorScheme) private var colorScheme
@@ -155,6 +167,25 @@ struct FTLockIconView: View {
                     .scaledToFit()
                     .frame(width:imageSize, height: imageSize)
             }
+        }
+    }
+}
+
+@available(iOS 17.0, *)
+struct PulseAnimationModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .symbolEffect(.pulse.byLayer)
+    }
+}
+
+extension View {
+    @ViewBuilder
+    func pulseAnimation() -> some View {
+        if #available(iOS 17.0, *) {
+            self.modifier(PulseAnimationModifier())
+        } else {
+            self
         }
     }
 }

@@ -826,6 +826,7 @@
 "Tag" = "Tag";
 "Tagged" = "Tagged";
 "Tags" = "Tags";
+"Take beautiful notes effortlessly" = "Take beautiful notes effortlessly";
 "TakePhoto" = "Take Photo";
 "TakeScreenshot" = "Take screenshot";
 "TapToRate" = "Tap to rate";
@@ -1159,7 +1160,7 @@
 "notebookSettings.allowHyperlinks" = "Allow Hyperlinks";
 "notebookSettings.autoBackup" = "Auto Backup";
 "notebookSettings.disableAutoLock" = "Disable Auto-Lock";
-"notebookSettings.hideAppUIInPresentMode" = "Hide App UI in Present Mode";
+"notebookSettings.hideAppUIInPresentMode" = "Hide App UI in Presentation Mode";
 "notebookSettings.password" = "Password";
 "notebookSettings.password.info" = "Note that there is no way to recover this notebook if you forget your password. Make sure to set up hints to prevent data loss.";
 "notebookSettings.scrolling" = "Scrolling";
@@ -1168,6 +1169,14 @@
 "noteshelf.ai.actionAddHandwritingNewPage" = "Add as Handwriting to New Page";
 "noteshelf.ai.actionAddToNewPage" = "Add as Text to New Page";
 "noteshelf.ai.actionAddToPage" = "Add as Text";
+"noteshelf.ai.credit.bePremium" = "Upgrade to Noteshelf Premium";
+"noteshelf.ai.credit.bePremiumInfo" = "Upgrade to Noteshelf Premium to unlock 100 monthly AI credits and to get handwriting recognition";
+"noteshelf.ai.credit.creditsRunningOut" = "Credits running out soon";
+"noteshelf.ai.credit.details" = "%d/%d credits left";
+"noteshelf.ai.credit.moreOptions" = "More Options";
+"noteshelf.ai.credit.moreinfo" = "AI credits reset in %d days";
+"noteshelf.ai.credit.nocredits" = "No credits left";
+"noteshelf.ai.pressEnterToSend" = "Press enter to send";
 "numSelected" = "%ld Selected";
 "objects" = "Objects";
 "ok" = "Ok";
@@ -1506,7 +1515,7 @@
 "welcome.nestedgroups" = "NESTED GROUPS";
 "welcome.password" = "PASSWORD";
 "welcome.pixabay" = "PIXABAY";
-"welcome.presentMode" = "PRESENT MODE";
+"welcome.presentMode" = "PRESENTATION MODE";
 "welcome.pressureSensitive" = "PRESSURE SENSITIVE";
 "welcome.richText" = "RICH TEXT";
 "welcome.scanDocuments" = "SCAN DOCUMENTS";
@@ -1523,4 +1532,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 6 October 2023 at 10:26
+// Last Synced by Akshay on 25 October 2023 at 12:13

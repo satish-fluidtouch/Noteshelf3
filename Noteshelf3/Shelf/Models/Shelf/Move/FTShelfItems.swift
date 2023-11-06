@@ -30,7 +30,7 @@ class FTShelfItems: ObservableObject,Identifiable {
         self.collection = collection
     }
     var isNotDownloaded: Bool {
-        notebook?.URL.downloadStatus() == .notDownloaded
+        (notebook as? FTDocumentItemProtocol)?.isDownloaded == false
     }
 }
 

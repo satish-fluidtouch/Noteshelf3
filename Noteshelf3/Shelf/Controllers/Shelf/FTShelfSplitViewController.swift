@@ -41,6 +41,7 @@ protocol FTShelfPresentable {
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
+    var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
 
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
     
@@ -83,15 +84,13 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         return nil
     }
     
-#if targetEnvironment(macCatalyst)
     override func showDetailViewController(_ vc: UIViewController, sender: Any?) {
-        super.showDetailViewController(vc, sender: sender);
+        super.showDetailViewController(vc, sender: sender)
         if let nav = vc as? UINavigationController {
-            nav.delegate = self;
+            nav.delegate = self
         }
     }
-#endif
-    
+
     var openingBookInProgress: Bool = false
     var cancellable = Set<AnyCancellable>()
     typealias ImportItems = [FTImportItem]
@@ -204,11 +203,14 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
 
     func shelfViewDidMovedToFront(with item : FTDocumentItem) {
-        currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
-        sideMenuController?.enableUpdatesForSideBar()
-        //Force refresh the UI to update with latest categories.
-        sideMenuController?.updateSideMenuItemsCollections()
-    }
+         currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
+         if let shelfTagsVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfTagsViewController {
+             shelfTagsVC.reloadContent()
+         }
+         sideMenuController?.enableUpdatesForSideBar()
+         //Force refresh the UI to update with latest categories.
+         sideMenuController?.updateSideMenuItemsCollections()
+     }
 
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?) {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -298,7 +300,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
 
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol) {
-        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.URL.isPinEnabledForDocument()) {
+        if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.isPinEnabledForDocument()) {
             self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
         }
     }
@@ -545,9 +547,9 @@ extension FTShelfSplitViewController {
                 return
             }
             let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
-            doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
             if shouldInsertCover {
                 doc.insertCoverForPasswordProtectedBooks { success, error in
+                    doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
                     processDocumentOpen()
                 }
             } else {
@@ -737,7 +739,7 @@ extension FTShelfSplitViewController {
         }
 
         guard shelfItem.URL.isNS2Book else { return }
-        guard shelfItem.URL.downloadStatus() == .downloaded else {
+        guard let documentItem = shelfItem as? FTDocumentItemProtocol,  documentItem.isDownloaded else {
             try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
             return
         }
@@ -749,10 +751,21 @@ extension FTShelfSplitViewController {
 
         FTDocumentMigration.showNS3MigrationAlert(on: self, onCopyAction: {
             let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText:"migration.progress.text".localized);
+            var documentPin: String?
+            let isPinEnabled = shelfItem.isPinEnabledForDocument()
+            let uuid = (shelfItem as? FTDocumentItem)?.documentUUID ?? ""
+            let isTouchIdEnabled = FTBiometricManager.isTouchIdEnabled(for: uuid)
+            if isPinEnabled && isTouchIdEnabled {
+                //Get pin with NS2 Item UUID
+                documentPin = FTBiometricManager.passwordForNS2Book(with: uuid)
+            }
             FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedURL, error in
                 runInMainThread {
                     loadingIndicatorViewController.hide()
                     if let migratedURL {
+                        if let documentPin, isPinEnabled {
+                            FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: migratedURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue)
+                        }
                         self.showOpenNowAlertForMigratedBook(migratedURL: migratedURL)
                     } else {
                         FTDocumentMigration.showNS3MigrationFailureAlert(on: self)

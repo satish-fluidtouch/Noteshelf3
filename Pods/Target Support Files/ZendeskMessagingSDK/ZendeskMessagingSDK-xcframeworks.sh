@@ -20,9 +20,6 @@ variant_for_slice()
   "MessagingSDK.xcframework/ios-arm64")
     echo ""
     ;;
-  "MessagingSDK.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "maccatalyst"
-    ;;
   "MessagingSDK.xcframework/ios-arm64_x86_64-simulator")
     echo "simulator"
     ;;
@@ -34,9 +31,6 @@ archs_for_slice()
   case "$1" in
   "MessagingSDK.xcframework/ios-arm64")
     echo "arm64"
-    ;;
-  "MessagingSDK.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "arm64 x86_64"
     ;;
   "MessagingSDK.xcframework/ios-arm64_x86_64-simulator")
     echo "arm64 x86_64"
@@ -123,5 +117,5 @@ install_xcframework() {
   echo "Copied $source to $destination"
 }
 
-install_xcframework "${PODS_ROOT}/ZendeskMessagingSDK/MessagingSDK.xcframework" "ZendeskMessagingSDK" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
+install_xcframework "${PODS_ROOT}/ZendeskMessagingSDK/MessagingSDK.xcframework" "ZendeskMessagingSDK" "framework" "ios-arm64" "ios-arm64_x86_64-simulator"
 

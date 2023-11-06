@@ -52,7 +52,7 @@ private extension FTCloudSetupManager {
     }
 
     static var evernoteConsumerSecret: String {
-        return "7c45c3fb78eb6dba";
+        return "d6cf9eb19478fc157ef4425036d0c13f06256fba1ee87d54aa816885";
     }
     
     static var oneDriveClientID : String {

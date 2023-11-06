@@ -35,6 +35,14 @@ extension String {
                                  , comment: self);
     }
     
+    var aiCommandString: String {
+        return NSLocalizedString(self
+                                 , tableName: "AICommands"
+                                 , bundle: Bundle(for: FTNoteshelfAIViewController.self)
+                                 , value: self
+                                 , comment: self);
+    }
+
     func appendBetalogo(font: UIFont) -> NSAttributedString {
         if let betabadge = UIImage(named: "beta badge") {
             return self.appendlogo(logo: betabadge, font: font);

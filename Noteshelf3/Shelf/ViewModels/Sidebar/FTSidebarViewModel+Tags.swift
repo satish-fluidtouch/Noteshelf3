@@ -7,38 +7,36 @@
 //
 
 import Foundation
+import FTCommon
 extension FTSidebarViewModel {
-    func renametag(_ tag: FTSideBarItem, toNewTitle newTitle: String) {
-        Task.detached(operation: {
-            do {
-                try await FTShelfTagsUpdateHandler.shared.renameTag(tag: FTTagModel(id: tag.id, text: tag.title), with: FTTagModel(id: tag.id, text: newTitle), for: nil)
-                await self.didUpdateRenameTag(tag: tag.title, with: newTitle)
-                tag.title = newTitle
-            } catch {
+    func renametag(_ tag: FTSideBarItem, oldTitle: String) {
+        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle) {
+            tagItem.renameTagItemWith(renamedString: tag.title)
+            self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
 
+            FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: tag.title) { success in
+                if success ?? false {
+                }
             }
-        })
+        }
     }
 
     func deleteTag(_ tag: FTSideBarItem) {
-
-        Task.detached(operation: {
-            do {
-                try await FTShelfTagsUpdateHandler.shared.deleteTag(tag: FTTagModel(text: tag.title), for: nil)
-                await self.updateShelfTagsAndSideMenu()
-            } catch {
-
+        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
+            FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag) { success in
+                if success ?? false {
+                    tagItem.deleteTagItem()
+                    self.updateShelfTagsAndSideMenu()
+                }
             }
-        })
+        }
     }
 
-    @MainActor
     func didUpdateRenameTag(tag: String, with newTag: String) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil, userInfo: ["tag": tag])
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil, userInfo: ["tag": newTag])
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil, userInfo: ["tag": tag, "type": "rename", "renamedTag": newTag])
     }
 
-    @MainActor
     func updateShelfTagsAndSideMenu() {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshSideMenu"), object: nil)

@@ -10,18 +10,20 @@ import UIKit
 import FTCommon
 
 struct FTDeveloperOption {
-    #if DEBUG
-    static var showOnScreenBorder: Bool = false
-    #else
-    static var showOnScreenBorder: Bool = false
-    #endif
+    // --------------------------------- //
+    // Never ever change these values without consent.
+    // USe Debug/Beta macro if required
     static var bookScaleAnim = true
-    static var showTileBorder: Bool = false
-    static var showTileInfo: Bool = false
+    static var cacheTextureTileImage: Bool = false
     static var enablePDFSelection: Bool = true
     static var textToStrokeWrapChar: Bool = false
     static var textToStrokeSnapToLineHeight: Bool = true
-    static var cacheTextureTileImage: Bool = false
+    static var useQuickLookThumbnailing: Bool = false
+
+    static var showOnScreenBorder: Bool = false
+    static var showTileBorder: Bool = false
+    static var showTileInfo: Bool = false
+    // --------------------------------- //
 
    fileprivate struct SliderOptions {
         let title: String
@@ -31,84 +33,42 @@ struct FTDeveloperOption {
     }
 }
 
+#if !NOTESHELF_ACTION
 class FTDeveloperOptionsViewController: UIViewController {
-
-    //Laser
-    @IBOutlet private weak var scaleView: FTDeveloperSliderView?
-    @IBOutlet private weak var scaleDurationView: FTDeveloperSliderView?
-    @IBOutlet private weak var fadeDurationView: FTDeveloperSliderView?
     @IBOutlet private weak var enablePDFSelection: UISwitch?
-
-    //Metal
-    @IBOutlet private weak var bgTilingSwitch: UISwitch?
     @IBOutlet private weak var offScreenRenderSwitch: UISwitch?
-
-    //Local
     @IBOutlet private weak var onscreenBorderSwitch: UISwitch?
     @IBOutlet private weak var showTileBorderSwitch: UISwitch?
     @IBOutlet private weak var showTileInfoSwitch: UISwitch?
-
-    //Book Open Anim
     @IBOutlet private weak var bookOpenAnimScale: UISwitch?
     @IBOutlet private weak var enablePremiumMode: UISwitch?
+    @IBOutlet private weak var useQLThumbnail: UISwitch?
 
     @IBOutlet private weak var textToStrokeWrapChar: UISwitch?
     @IBOutlet private weak var textToStrokeSnapToLineHeight: UISwitch?
-    
-    @IBOutlet private weak var aiTokenOption: UIView?
 
     @IBOutlet weak var speedLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTilingDevOptions()
-        configureLaserOptions()
+        updateSwitches()
         self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.configureNewNavigationBar(hideDoneButton: false,title: "🛠 Developer Options")
     }
-    
-    private func configureLaserOptions() {
-        enablePDFSelection?.isOn = FTDeveloperOption.enablePDFSelection
-        //Scale
-        let scaleOptions = FTDeveloperOption.SliderOptions(title: "Scale", minValue: 0.0, maxValue: 1.0, value: Float(FTLaserAnimationValues.scale))
-        scaleView?.configure(with: scaleOptions)
-        scaleView?.valueUpdated = { value in
-            FTLaserAnimationValues.scale = CGFloat(value)
-        }
 
-        //Scale duration
-        let scaleDurationOptions = FTDeveloperOption.SliderOptions(title: "Scale Duration", minValue: 0.0, maxValue: 0.2, value: Float(FTLaserAnimationValues.scaleDuration))
-        scaleDurationView?.configure(with: scaleDurationOptions)
-        scaleDurationView?.valueUpdated = { value in
-            FTLaserAnimationValues.scaleDuration = TimeInterval(value)
-        }
+    private func updateSwitches() {
 
-        //Fade out duration
-        let fadeOutDurationOptions = FTDeveloperOption.SliderOptions(title: "Fade Out Duration", minValue: 0.0, maxValue: 0.2, value: Float(FTLaserAnimationValues.fadeOutDuration))
-        fadeDurationView?.configure(with: fadeOutDurationOptions)
-        fadeDurationView?.valueUpdated = { value in
-            FTLaserAnimationValues.fadeOutDuration = TimeInterval(value)
-        }
-    }
-
-    private func configureTilingDevOptions() {
-        //Metal
-        bgTilingSwitch?.isOn = FTRenderConstants.USE_BG_TILING
         offScreenRenderSwitch?.isOn = FTRenderConstants.STOP_OFFSCREEN_RENDER
+        enablePDFSelection?.isOn = FTDeveloperOption.enablePDFSelection
 
         //Local
         onscreenBorderSwitch?.isOn = FTDeveloperOption.showOnScreenBorder
         showTileBorderSwitch?.isOn = FTDeveloperOption.showTileBorder
         showTileInfoSwitch?.isOn = FTDeveloperOption.showTileInfo
-        
-        updateSwitches()
-    }
 
-    private func updateSwitches() {
         if FTRenderConstants.USE_BG_TILING {
             showTileBorderSwitch?.isEnabled = true
         } else {
@@ -126,6 +86,7 @@ class FTDeveloperOptionsViewController: UIViewController {
         textToStrokeWrapChar?.isOn = FTDeveloperOption.textToStrokeWrapChar
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
+        useQLThumbnail?.isOn = FTDeveloperOption.useQuickLookThumbnailing
     }
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
@@ -171,28 +132,16 @@ class FTDeveloperOptionsViewController: UIViewController {
         FTDeveloperOption.enablePDFSelection = swicth.isOn
     }
 
-    @IBAction func clearRecents(sender: UIButton?) {
-#if DEBUG || ADHOC
-        FTRecentEntries.clearRecentList();
-#endif
-    }
-
-    @IBAction func clearStarred(sender: UIButton?) {
-#if DEBUG || ADHOC
-        FTRecentEntries.clearStarredList();
-#endif
+    @IBAction func toggleQLThumbnail(swicth: UISwitch) {
+        FTDeveloperOption.useQuickLookThumbnailing = swicth.isOn
     }
 
     @IBAction func resetAITokens(sender: UIButton?) {
-#if !RELEASE
-        UserDefaults.resetAITokens();
+#if DEBUG
+        FTNoteshelfAITokenManager.shared.resetAITokens();
 #endif
     }
 
-    @IBAction func resetTapped(sender: UIButton) {
-        FTLaserAnimationValues.reset()
-        configureLaserOptions()
-    }
     @IBAction func animationValueChanged(_ sender: UIStepper) {
         let value = sender.value
         speedLabel.text = "Animation Duration \(value)"
@@ -229,3 +178,4 @@ class FTDeveloperSliderView: UIView {
         valueUpdated?(slider.value)
     }
 }
+#endif

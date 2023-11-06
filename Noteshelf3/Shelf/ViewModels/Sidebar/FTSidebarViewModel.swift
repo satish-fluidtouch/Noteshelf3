@@ -77,7 +77,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
                              isEditable: true,
                              isEditing: false,
                              type: .category,
-                             allowsItemDropping: true)
+                             allowsItemDropping: false)
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
        didSet {
@@ -168,7 +168,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         for item in menuItems.flatMap({$0.items}) where item.isEditing {
             debugLog("editing item new title \(item.title)")
             item.isEditing = false
-            self.renameSideBarItem(item, toNewTitle: item.title)
+            self.renameSideBarItem(item, oldTitle: item.title)
         }
     }
     func selectSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
@@ -259,6 +259,16 @@ private extension FTSidebarViewModel {
                 } else if type == "delete", let tag = info["tag"] as? String {
                     tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
                 }
+                if var items = tagItems.first?.items {
+                    let allTags = items.first(where: {$0.type == .allTags})
+                    items.removeAll(where: {$0.type == .allTags})
+                    var sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
+                    if let allTags {
+                        sortedArray.insert(allTags, at: 0)
+                    }
+                    self.menuItems.first(where: {$0.type == .tags})?.items = sortedArray
+                    self.updateTagsSection(items: sortedArray)
+                }
                 self.setSideBarItemSelection()
             } else {
                 self.updateTags()
@@ -267,7 +277,7 @@ private extension FTSidebarViewModel {
             self.updateTags()
         }
     }
-    
+
     func addObservers() {
         self.menuItems.forEach({ menuItem in
             menuItem.objectWillChange
@@ -297,15 +307,11 @@ extension FTSidebarViewModel {
             self.deleteTag(item)
         }
     }
-    func renameSideBarItem(_ item: FTSideBarItem,toNewTitle newTitle:String) {
+    func renameSideBarItem(_ item: FTSideBarItem, oldTitle:String) {
         if item.type == .tag {
-            let tagItems = self.menuItems.filter {$0.type == .tags}
-            let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == newTitle})
-            if tagItem == nil {
-                self.renametag(item, toNewTitle: newTitle)
-            }
+            self.renametag(item, oldTitle: oldTitle)
         } else if item.type == .category {
-            self.renameCategory(item, toTitle: newTitle)
+            self.renameCategory(item)
         }
     }
     func emptyTrash(_ sideBarItem: FTSideBarItem){
@@ -330,7 +336,7 @@ extension FTSidebarViewModel {
         // As the main function is called in serial queue and below operation to be called on main thread
         func favoriteShelfItem() {
             runInMainThread {
-                if let item = shelfItem, item.URL.downloadStatus() == .downloaded {
+                if let item = shelfItem as? FTDocumentItemProtocol, item.isDownloaded {
                     self.dropDelegate?.favoriteShelfItem(item, toPin: true)
                 }
             }
@@ -390,42 +396,20 @@ extension FTSidebarViewModel {
             }
         }
     }
-    func renameCategory(_ category:FTSideBarItem, toTitle title:String){
+    func renameCategory(_ category:FTSideBarItem){
         guard let shelfCollection = category.shelfCollection else {
             return
         }
         let trashCategoryTitle = NSLocalizedString("Trash", comment: "Trash");
-        guard title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != trashCategoryTitle.lowercased() else {
+        guard category.title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != trashCategoryTitle.lowercased() else {
             return;
         }
-        if title != shelfCollection.displayTitle {
-            FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: title) { [weak self](error,shelfCollection) in
+        if category.title != shelfCollection.displayTitle {
+            FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: category.title) { [weak self](error,shelfCollection) in
                 if let _ = error {
                 } else if let shelfCollection = shelfCollection, self?.selectedShelfItemCollection?.uuid == shelfCollection.uuid {
                     self?.selectedShelfItemCollection = shelfCollection
                     self?.delegate?.didSidebarItemRenamed(category)
-                    //TODO: Check for EN
-//                    shelfCollection.shelfItems(.none,
-//                                          parent: nil,
-//                                          searchKey: nil,
-//                                          onCompletion:
-//                        { (items) in
-//                            items.forEach({ (eachItem) in
-//                                if let docItem = eachItem as? FTDocumentItemProtocol, let docID = docItem.documentUUID {
-//                                    let autoBackupItem = FTAutoBackupItem.init(URL: docItem.URL, documentUUID: docID);
-//                                    FTCloudBackUpManager.shared.shelfItemDidGetUpdated(autoBackupItem, dueToRename: true);
-//                                }
-//                                if let groupItem = eachItem as? FTGroupItemProtocol{
-//                                    for item in groupItem.childrens {
-//                                        if let docItem = item as? FTDocumentItemProtocol, let docID = docItem.documentUUID {
-//                                            let autoBackupItem = FTAutoBackupItem.init(URL: docItem.URL, documentUUID: docID);
-//                                            FTCloudBackUpManager.shared.shelfItemDidGetUpdated(autoBackupItem, dueToRename: true);
-//                                        }
-//                                    }
-//                                }
-//                            });
-//                            FTCloudBackUpManager.shared.startPublish();
-//                    });
                 }
             }
         }
@@ -486,6 +470,7 @@ extension FTSidebarViewModel {
     func configureUIOnViewLoad() {
         self.fetchSideBarData()
         self.fetchSidebarMenuItems()
+        self.fetchAllTags()
     }
 
     func updateUserCreatedCategories() {
@@ -537,27 +522,32 @@ extension FTSidebarViewModel {
     }
 
     private func allTagsSidebarItem() -> FTSideBarItem {
-        let allTags = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+        let allTags = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.allTags, allowsItemDropping: false)
         return allTags
     }
 
     private func fetchAllTags() {
-        let allTags = FTCacheTagsProcessor.shared.cachedTags()
-        var tags: [FTSideBarItem] = [FTSideBarItem]()
-        tags = allTags.map { tag -> FTSideBarItem in
-            let tagItem = FTTagModel(text: tag)
-            let item = FTSideBarItem(id: tagItem.id, title: tagItem.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
-            return item
-        }
-        self.tags.removeAll()
-        self.tags.append(allTagsSidebarItem())
-        self.tags += tags
-        if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
-            tagsSection.items = self.tags
-        }
-        if selectedSideBarItemType == .tag {
-            setSideBarItemSelection()
-        }
+        FTTagsProvider.shared.getAllSortedTags { tagItems in
+            var tags: [FTSideBarItem] = [FTSideBarItem]()
+            tags = tagItems.map { tagItem -> FTSideBarItem in
+                let tag = tagItem.tag
+                let item = FTSideBarItem(id: tag.id, title: tag.text, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+                return item
+            }
+            self.tags.removeAll()
+            self.tags.append(self.allTagsSidebarItem())
+            self.tags += tags
+            if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
+                tagsSection.items = self.tags
+            }
+            if self.selectedSideBarItemType == .tag || self.selectedSideBarItemType == .allTags {
+                self.setSideBarItemSelection()
+            }
+       }
+   }
+
+    func updateTagsSection(items: [FTSideBarItem]) {
+        self.tags = items
     }
 
     func updateUnfiledCategory() {
@@ -666,7 +656,7 @@ extension FTSidebarViewModel {
     }
     func setSideBarItemSelection(){
         let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio]
-        if selectedSideBarItemType == .tag {
+        if selectedSideBarItemType == .tag || selectedSideBarItemType == .allTags {
             if let selectedSideBarItem = self.selectedSideBarItem {
                 let selectedItem = menuItems.compactMap( { $0.items.first(where:{ $0.id == selectedSideBarItem.id })}).first
                 if selectedItem != nil {

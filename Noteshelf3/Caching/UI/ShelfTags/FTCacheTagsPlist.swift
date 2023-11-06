@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct FTCacheTagsPlist: Codable {
+class FTCacheTagsPlist: NSObject, Codable {
     typealias tagName = String
 
     var tags: [tagName: [String]]
-    init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         tags = try container.decode([tagName: [String]].self)
     }

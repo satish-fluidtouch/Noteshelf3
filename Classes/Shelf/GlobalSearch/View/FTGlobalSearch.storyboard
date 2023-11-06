@@ -445,7 +445,7 @@
                                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     </stackView>
                                                                                 </subviews>
-                                                                                <color key="backgroundColor" white="0.0" alpha="0.050000000000000003" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <color key="backgroundColor" name="black5"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="bottom" secondItem="Dfd-3B-bZS" secondAttribute="bottom" constant="8" id="JOh-I4-SfJ"/>
                                                                                     <constraint firstAttribute="width" constant="96" id="ZVY-bc-dfe">
@@ -824,6 +824,9 @@
         <image name="searchResultBook_shadow" width="176" height="229"/>
         <image name="searchResultPage_shadow" width="240" height="320"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
+        <namedColor name="black5">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="black50">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

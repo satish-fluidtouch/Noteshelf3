@@ -116,7 +116,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     func documentTags() -> [String] {
         if let documentInfoPlist = self.propertyInfoPlist() {
             if let tags = documentInfoPlist.object(forKey: DOCUMENT_TAGS_KEY) as? [String] {
-                return tags
+                return Array(Set(tags))
             }
         }
         return []
@@ -125,16 +125,20 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     func addTag(_ tag : String) {
         var tags = self.documentTags()
         tags.append(tag)
-        self.propertyInfoPlist()?.setObject(tags, forKey: DOCUMENT_TAGS_KEY)
+        self.updateDocumentTags(tags: tags)
     }
 
-    func deleteTags(_ tags : [String]) async {
+    func addTags(tags: [String]) {
+        self.updateDocumentTags(tags: tags)
+    }
+
+    func deleteTags(_ tags : [String]) {
         var docTags = self.documentTags()
         tags.forEach { tag in
             let index = docTags.firstIndex(where: {$0 == tag})
             if let idx = index {
                 docTags.remove(at: idx)
-                self.propertyInfoPlist()?.setObject(docTags, forKey: DOCUMENT_TAGS_KEY)
+                self.updateDocumentTags(tags: docTags)
             }
         }
 
@@ -143,6 +147,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
                 (page as? FTNoteshelfPage)?.removeTag(tag)
             }
         }
+
     }
 
     // This will remove tags from document
@@ -152,23 +157,22 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
             let index = docTags.firstIndex(where: {$0 == tag})
             if let idx = index {
                 docTags.remove(at: idx)
-                self.propertyInfoPlist()?.setObject(docTags, forKey: DOCUMENT_TAGS_KEY)
+                self.updateDocumentTags(tags: docTags)
             }
         }
     }
 
     func removeAllTags() async {
-        var docTags = self.documentTags()
-        self.propertyInfoPlist()?.setObject([], forKey: DOCUMENT_TAGS_KEY)
+        self.updateDocumentTags(tags: [])
     }
 
-    func renameTag(_ tag : String, with newTag: String) async {
+    func renameTag(_ tag : String, with newTag: String) {
         var docTags = self.documentTags()
         let index = docTags.firstIndex(where: {$0 == tag})
         if let idx = index {
             docTags.remove(at: idx)
             docTags.append(newTag)
-            self.propertyInfoPlist()?.setObject(docTags, forKey: DOCUMENT_TAGS_KEY)
+            self.updateDocumentTags(tags: docTags)
         }
 
         self.pages().forEach { page in
