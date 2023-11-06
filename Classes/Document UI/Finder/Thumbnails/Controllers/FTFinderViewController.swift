@@ -201,7 +201,6 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             self.cellSize = CGSize(width: 144, height: 176);
         }
         self.collectionView.collectionViewLayout.invalidateLayout()
-//        createSnapShot()
     }
     
     private func shouldShowNavBar(_ value: Bool) {
@@ -224,7 +223,6 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         updateFilterAndCreateSnapShot()
         configureMoreButton()
         configureEditButton()
-        (self.collectionView.collectionViewLayout as? FTFinderCollectionViewFlowLayout)?.sectionHeadersPinToVisibleBounds = true
         hideStandardNavBarAppearance()
         collectionView.backgroundView = _placeHolderVc().view
         collectionView.backgroundView?.isHidden = true
@@ -286,7 +284,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     
     func screenModeDidChange() {
         if screenMode == .normal {
-            self.createSnapShot()
+            refreshSnapShot()
             updateHeaderView()
         }
         self.updateContentInsets()
@@ -378,7 +376,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         hideTabBar(isEditMode)
         optionsToolBar.isHidden = !isEditMode
         self.disableEditOptions()
-        self.createSnapShot()
+        self.refreshSnapShot()
         setUpBarButtons()
         let title = (mode == .none) ? NSLocalizedString("Pages", comment: "Pages") : ""
         updateNavBar(with: title)
@@ -427,7 +425,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         return false
     }
     
-    internal func createSnapShot() {
+    internal func createSnapShot(shouldReload: Bool = false) {
         let sections = sectionsToReload()
         if dataSource == nil {
             return
@@ -476,14 +474,21 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             }
             self.snapShot = itemSnapShot
         }
-        self.dataSource.applySnapshotUsingReloadData(self.snapShot, completion: nil)
+        if shouldReload {
+            self.dataSource.applySnapshotUsingReloadData(self.snapShot)
+        } else {
+            self.dataSource.apply(self.snapShot, animatingDifferences: false)
+        }
+        if selectedTab == .search {
+            self.sectionHeader?.updateCountLabel(with: self.filteredPages.count)
+        }
     }
     
     func didChangeState(to screenState: FTFinderScreenState){
         if screenState == .fullScreen || screenState == .initial {
             self.configureViewItems()
             if selectedTab != .search {
-                self.createSnapShot()
+                refreshSnapShot()
             }
         }
     }
@@ -491,6 +496,13 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     func shouldStartWithFullScreen() -> Bool{
         return UserDefaults.standard.bool(forKey: "FT_Thumbnails_FullScreen")
     }
+    
+    func refreshSnapShot(with animation:Bool = false) {
+        var snapoShot = self.dataSource.snapshot()
+        snapoShot.reloadSections(sectionsToReload())
+        self.dataSource.apply(snapoShot, animatingDifferences: animation, completion: nil)
+    }
+   
     
     private func configureMoreButton() {
         var actions = [UIMenuElement]()
@@ -585,7 +597,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         updateHeaderUI()
         optionsToolBar.isHidden = !isEditMode
         self.disableEditOptions()
-        self.createSnapShot()
+        self.createSnapShot(shouldReload: true)
     }
 
     @IBAction func didTapDoneButton(_ sender: Any) {
@@ -672,7 +684,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         case .thumbnails:
             headerTitle = NSLocalizedString("Pages", comment: "Pages")
             self.selectedSegment = .pages
-            reloadFilteredItems(true)
+            reloadFilteredItems()
             if let previousScrollOffSet {
                 collectionView.contentOffset = previousScrollOffSet
             }
@@ -693,8 +705,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             } else {
                 editButton.isEnabled = true
                 collectionView.isHidden = false
-                self.collectionView.collectionViewLayout.invalidateLayout()
-                reloadFilteredData(withAnimation: false)
+                reloadFilteredItems()
                 compactEditButton?.isEnabled = true
             }
         case .outline:
@@ -787,7 +798,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
                 self.updateSelectAllUI()
             }
         }
-        self.reloadData()
+        self.refreshSnapShot()
     }
 
     @objc private func handleCurrentPageChangeNotifier(_ notification: Notification) {
@@ -798,7 +809,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         guard let sessionID = notification.object as? String, sessionID == currentSessionID else {
             return
         }
-        self.reloadData()
+        self.createSnapShot(shouldReload: true)
     }
 
     func didTapOnSegmentControl(_segmentControl: FTFinderSegmentControl) {
@@ -894,10 +905,11 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
                     shouldShowNavBar(false)
                 }
             }
-            reloadFilteredData()
+            reloadFilteredItems()
             self.editButton.isEnabled = !self.filteredPages.isEmpty
             //updateSegmentData(for: self.segmentControl)
             self.sectionHeader?.segmentControl.selectedSegmentIndex = self.selectedSegment.rawValue
+            (self.collectionView.collectionViewLayout as? FTFinderCollectionViewFlowLayout)?.sectionHeadersPinToVisibleBounds = (screenMode == .fullScreen)
         #endif
         if !shouldMoveToCurrentPage {
             shouldMoveToCurrentPage = true
@@ -911,7 +923,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         if(currentFrameSize != self.currentSize) {
             self.currentSize = currentFrameSize
             self.collectionView.layoutIfNeeded()
-            self.createSnapShot()
+            refreshSnapShot()
         }
     }
     
@@ -944,7 +956,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     
     func deselectAll() {
         self.selectedPages.removeAllObjects();
-        self.createSnapShot()
+        self.refreshSnapShot()
         self.selectAll = true;
         self.updateSelectAllUI();
     }
@@ -983,14 +995,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
     
     @objc func reloadData(withAnimation shouldAnimate: Bool = true) {
-        if !shouldAnimate {
-            UIView.performWithoutAnimation {
-                self.reloadItems(withAnimation: false);
-            }
-        }
-        else {
-            self.reloadItems();
-        }
+        reloadFilteredItems()
     }
 
     func switchToEditModeIfNeeded() {
@@ -1000,17 +1005,11 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         }
     }
 
-    private func reloadItems(withAnimation shouldAnimate: Bool = true) {
-        self.reloadFilteredData(withAnimation: shouldAnimate);
+    private func reloadItems() {
+        self.reloadFilteredItems();
     }
-
-    func reloadFilteredData(withAnimation shouldAnimate: Bool = true) {
-        UIView.performWithoutAnimation {
-            self.reloadFilteredItems(shouldAnimate);
-        };
-    }
-
-    private func reloadFilteredItems(_ animate : Bool) {
+    
+    internal func reloadFilteredItems() {
         var filteredPages = self.searchResultPages ?? self.document.documentPages();
         if selectedSegment == .bookmark {
             filteredPages = filteredPages.filter{$0.isBookmarked};
@@ -1019,7 +1018,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         if selectedTab == .search && isSearching {
             self.searchDelegate?.refreshSearchPagesUI()
         } else {
-            createSnapShot()
+            createSnapShot(shouldReload: true)
             self.moveToCurrentPageIfNeeded();
         }
     }
@@ -1094,7 +1093,6 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                     indexSelected = indexPath.item;
                 }
                 self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
-//                createSnapShot()
             }
             else if self.mode == .edit || mode == .selectPages {
                 let pageSelected = self.selectedPages.contains(where: { (element) -> Bool in
@@ -1424,7 +1422,7 @@ extension FTFinderViewController {
             self.selectedPages.addObjects(from: self.filteredPages)
         }
         UIView.performWithoutAnimation {
-            createSnapShot()
+            refreshSnapShot()
         };
         self.updateSelectionTitle();
         self.updateSelectAllUI();
@@ -1447,7 +1445,7 @@ extension FTFinderViewController {
             let toastConfig = FTToastConfiguration(title: "Bookmarked", subTitle: "Page \(page.pageIndex() + 1)")
             FTToastHostController.showToast(from: self, toastConfig: toastConfig)
         }
-        updateFilterAndCreateSnapShot()
+        refreshSnapShot()
     }
 }
 
@@ -1491,7 +1489,7 @@ extension FTFinderViewController {
                 endBackgroundTask(task)
                 DispatchQueue.main.async {
                     self?.hideLoading()
-                    self?.reloadData()
+                    self?.reloadFilteredItems()
                 }
             })
         }
@@ -1503,7 +1501,7 @@ extension FTFinderViewController {
         addPageNotificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FTDocumentDidAddedPageIndices"),
                                                                              object: doc,
                                                                              queue: nil) { [weak self] (_) in
-            self?.reloadData();
+            self?.reloadFilteredItems() ;
             self?.removeListenToPageAddChange();
         }
     }
@@ -1713,9 +1711,7 @@ extension FTFinderViewController {
     }
 
     func movePagestoTrash(from doc:FTDocumentProtocol,  pages: NSSet, completion: @escaping (Error?, FTShelfItemProtocol?) -> ()) {
-        let toastConfig = FTToastConfiguration(title: "Pages Deleted")
-        FTToastHostController.showToast(from: self, toastConfig: toastConfig)
-
+        self.showLoading(withMessage: NSLocalizedString("Deleting", comment: "Deleting"));
         let copiedPages = pages.allObjects as! [FTPageProtocol]
         let pagesToCopy = copiedPages.sorted(by: { (p1, p2) -> Bool in
             return (p1.pageIndex() < p2.pageIndex())
@@ -1758,8 +1754,11 @@ extension FTFinderViewController {
             self.searchResultPages = nil
             self.document.saveDocument(completionHandler: { [weak self] (_) in
                 if let weakSelf = self {
+                    weakSelf.hideLoading();
                     weakSelf.delegate?.finderViewController(weakSelf, didSelectRemovePagesWithIndices: IndexSet(indexes))
                     weakSelf.deselectAll();
+                    let toastConfig = FTToastConfiguration(title: "Pages Deleted")
+                    FTToastHostController.showToast(from: weakSelf, toastConfig: toastConfig)
                 }
             })
         }
@@ -2036,6 +2035,7 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
             self.collectionView.backgroundView?.isHidden = false
         }
         createSnapShot()
+        refreshSnapShot()
     }
 }
 

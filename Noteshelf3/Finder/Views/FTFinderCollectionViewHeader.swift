@@ -44,6 +44,15 @@ class FTFinderCollectionViewHeader: UICollectionReusableView {
         }
     }
     
+    func updateCountLabel(with count: Int) {
+        var text = "NothingFound".localized
+        if count > 0 {
+            let noofpages = "\(count)"
+            text =  String(format: NSLocalizedString("insidenotebook.share.pagescount", comment: "%@ pages "), noofpages)
+        }
+        self.descriptionLabel.text = text
+    }
+    
     func configureHeader(count: Int, mode: FTFinderScreenMode, tab: FTFinderSelectedTab) {
         titleLabel.isHidden = (tab == .thumnails)
         descriptionLabel.isHidden = (tab == .thumnails)
@@ -53,11 +62,6 @@ class FTFinderCollectionViewHeader: UICollectionReusableView {
         dividerView.isHidden = true
         self.selectedTab = tab
         self.titleLabel.text = "Pages".localized
-        var text = "NothingFound".localized
-        if count > 0 {
-            let noofpages = "\(count)"
-            text =  String(format: NSLocalizedString("insidenotebook.share.pagescount", comment: "%@ pages "), noofpages)
-        }
-        self.descriptionLabel.text = text
+        self.updateCountLabel(with: count)
     }
 }

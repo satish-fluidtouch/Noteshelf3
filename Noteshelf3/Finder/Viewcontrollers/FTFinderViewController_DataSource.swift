@@ -157,7 +157,7 @@ extension FTFinderViewController: FTBookmarkPageViewControllerDelegate, FTAddMen
             page.bookmarkColor = ""
             page.bookmarkTitle = ""
         }
-        reloadFilteredData()
+        reloadFilteredItems()
         if selectedSegment == .bookmark {
             deselectAll()
             let bookmarkedPages = self.document.documentPages().filter{$0.isBookmarked};
