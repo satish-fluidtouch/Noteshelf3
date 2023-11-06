@@ -15528,6 +15528,87 @@
             ]
           },
           {
+            "kind": "Var",
+            "name": "isInUse",
+            "printedName": "isInUse",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:11FTRenderKit13FTTextureTileC7isInUseSbvp",
+            "mangledName": "$s11FTRenderKit13FTTextureTileC7isInUseSbvp",
+            "moduleName": "FTRenderKit",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:11FTRenderKit13FTTextureTileC7isInUseSbvg",
+                "mangledName": "$s11FTRenderKit13FTTextureTileC7isInUseSbvg",
+                "moduleName": "FTRenderKit",
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:11FTRenderKit13FTTextureTileC7isInUseSbvs",
+                "mangledName": "$s11FTRenderKit13FTTextureTileC7isInUseSbvs",
+                "moduleName": "FTRenderKit",
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:11FTRenderKit13FTTextureTileC7isInUseSbvM",
+                "mangledName": "$s11FTRenderKit13FTTextureTileC7isInUseSbvM",
+                "moduleName": "FTRenderKit",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
             "kind": "Constructor",
             "name": "init",
             "printedName": "init(rect:index:)",
@@ -15556,8 +15637,7 @@
             "mangledName": "$s11FTRenderKit13FTTextureTileC4rect5indexACSo6CGRectV_Sitcfc",
             "moduleName": "FTRenderKit",
             "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
+              "AccessControl"
             ],
             "init_kind": "Designated"
           },
@@ -23504,254 +23584,261 @@
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 1594,
+      "offset": 1659,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 1622,
+      "offset": 1687,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 1629,
+      "offset": 1694,
       "length": 41,
       "value": "\"Error at CVPixelBufferCreate \""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 1669,
+      "offset": 1734,
       "length": 3,
       "value": "\"\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 1836,
+      "offset": 1901,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 1864,
+      "offset": 1929,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 1871,
+      "offset": 1936,
       "length": 47,
       "value": "\"Error at CVMetalTextureCacheCreate \""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 1917,
+      "offset": 1982,
       "length": 3,
       "value": "\"\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 2835,
+      "offset": 3120,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 2945,
+      "offset": 3238,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 2973,
+      "offset": 3368,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 2980,
+      "offset": 3375,
       "length": 63,
       "value": "\"Error at CVMetalTextureCacheCreateTextureFromImage \""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 3042,
+      "offset": 3437,
       "length": 3,
       "value": "\"\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 3265,
+      "offset": 3680,
       "length": 26,
       "value": "\"OFF_SCREEN_FINAL_TEXTURE\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
-      "kind": "BooleanLiteral",
-      "offset": 5339,
-      "length": 4,
-      "value": "true"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 5388,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5432,
-      "length": 1,
-      "value": "0"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
-      "kind": "IntegerLiteral",
-      "offset": 5997,
+      "offset": 6039,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 6725,
+      "offset": 6829,
       "length": 22,
       "value": "\"⏳ Off-screen Start\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 6926,
+      "offset": 7030,
       "length": 23,
       "value": "\"⏳ Off-screen FINISH\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
+      "kind": "StringLiteral",
+      "offset": 7226,
+      "length": 24,
+      "value": "\"⏳ Off-screen Waiting\""
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 7624,
+      "offset": 8062,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 7648,
+      "offset": 8086,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 7833,
+      "offset": 8271,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 7949,
+      "offset": 8387,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 7995,
+      "offset": 8433,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 10734,
+      "offset": 11172,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 10891,
+      "offset": 11329,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 11196,
+      "offset": 11634,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 11258,
+      "offset": 11696,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 11446,
+      "offset": 11884,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 11772,
+      "offset": 12210,
       "length": 1,
       "value": "8"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 11827,
+      "offset": 12265,
       "length": 2,
       "value": "32"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 11890,
+      "offset": 12328,
       "length": 1,
       "value": "4"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 12263,
+      "offset": 12701,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 12828,
+      "offset": 13266,
       "length": 44,
       "value": "\"Failed to create off-screen command buffer\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 13187,
+      "offset": 13910,
       "length": 4,
       "value": "true"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
+      "kind": "BooleanLiteral",
+      "offset": 14477,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14639,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTOffscreenMetalRenderer.swift",
+      "kind": "IntegerLiteral",
+      "offset": 14671,
+      "length": 1,
+      "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/CurrentStroke\/FTLaserTransientStroke.swift",
@@ -23882,168 +23969,154 @@
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 4382,
+      "offset": 4713,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 4421,
+      "offset": 4752,
       "length": 42,
       "value": "\"⏳ 🔴 Interrupted before BG Call 🔴\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 4491,
+      "offset": 4822,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 5830,
+      "offset": 6013,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 5944,
+      "offset": 6127,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 5980,
+      "offset": 6163,
       "length": 40,
       "value": "\"⏳ 🔴 Interrupted Annotation RENDER\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 6638,
+      "offset": 6821,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 7684,
+      "offset": 7867,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 9431,
+      "offset": 9743,
       "length": 5,
       "value": "false"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 9593,
+      "offset": 9905,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 9936,
+      "offset": 10248,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 10223,
+      "offset": 10535,
       "length": 4,
       "value": "true"
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
-      "kind": "StringLiteral",
-      "offset": 10507,
-      "length": 65,
-      "value": "\"BG_TILE_ARRAY_\""
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
-      "kind": "StringLiteral",
-      "offset": 10544,
-      "length": 1,
-      "value": "\"\/\""
-    },
-    {
-      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
-      "kind": "StringLiteral",
-      "offset": 10571,
-      "length": 21,
-      "value": "\"\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "BooleanLiteral",
-      "offset": 11368,
+      "offset": 10695,
       "length": 4,
       "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
-      "kind": "StringLiteral",
-      "offset": 11417,
-      "length": 12,
-      "value": "\"BG_TEXTURE\""
+      "kind": "BooleanLiteral",
+      "offset": 11087,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
+      "kind": "BooleanLiteral",
+      "offset": 11866,
+      "length": 4,
+      "value": "true"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 12358,
+      "offset": 12737,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 12491,
+      "offset": 12870,
       "length": 15,
       "value": "\"RENDER_STROKE\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 14927,
+      "offset": 15362,
       "length": 14,
       "value": "\"RENDER_IMAGE\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 15529,
+      "offset": 16130,
       "length": 27,
       "value": "\"Sub class should override\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "IntegerLiteral",
-      "offset": 15685,
+      "offset": 16286,
       "length": 4,
       "value": "1000"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 15719,
+      "offset": 16320,
       "length": 7,
       "value": "\"%0.3f\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/FTRenderKit\/Renderer\/FTMetalRenderer.swift",
       "kind": "StringLiteral",
-      "offset": 15732,
+      "offset": 16333,
       "length": 4,
       "value": "\"ms\""
     },
@@ -25274,23 +25347,58 @@
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3627,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "StringLiteral",
-      "offset": 3829,
+      "offset": 4236,
       "length": 52,
       "value": "\"\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "StringLiteral",
-      "offset": 3843,
+      "offset": 4250,
       "length": 1,
       "value": "\"_\""
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "StringLiteral",
-      "offset": 3880,
+      "offset": 4287,
       "length": 1,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
+      "kind": "StringLiteral",
+      "offset": 4444,
+      "length": 6,
+      "value": "\"Rest\""
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
+      "kind": "StringLiteral",
+      "offset": 4453,
+      "length": 7,
+      "value": "\"Other\""
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
+      "kind": "StringLiteral",
+      "offset": 4488,
+      "length": 27,
+      "value": "\"Texture in use \""
+    },
+    {
+      "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
+      "kind": "StringLiteral",
+      "offset": 4514,
+      "length": 3,
       "value": "\"\""
     },
     {
@@ -25303,42 +25411,42 @@
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "IntegerLiteral",
-      "offset": 4539,
+      "offset": 5147,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "IntegerLiteral",
-      "offset": 4701,
+      "offset": 5309,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "IntegerLiteral",
-      "offset": 4724,
+      "offset": 5332,
       "length": 1,
       "value": "1"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "IntegerLiteral",
-      "offset": 4896,
+      "offset": 5504,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "IntegerLiteral",
-      "offset": 5059,
+      "offset": 5667,
       "length": 1,
       "value": "0"
     },
     {
       "filePath": "\/Volumes\/Storage\/Projects\/Noteshelf 3\/NS2MetalDemo\/FTRenderKit\/Classes\/Encoders\/Tile\/FTTextureTile.swift",
       "kind": "IntegerLiteral",
-      "offset": 5082,
+      "offset": 5690,
       "length": 1,
       "value": "1"
     }

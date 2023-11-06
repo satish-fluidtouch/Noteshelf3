@@ -480,6 +480,7 @@ typedef SWIFT_ENUM(NSInteger, FTWritingMode, open) {
 
 
 
+
 #endif
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
@@ -965,6 +966,7 @@ typedef SWIFT_ENUM(NSInteger, FTWritingMode, open) {
   FTWritingModeHighlighter = 1,
   FTWritingModeLaser = 2,
 };
+
 
 
 
