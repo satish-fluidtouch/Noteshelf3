@@ -101,6 +101,18 @@ import Foundation
     }
 }
 
+extension FTRackType {
+    var sizeRange: ClosedRange<CGFloat> {
+        var range = CGFloat(0.0)...CGFloat(8.0)
+        if self == .highlighter {
+            range = CGFloat(1.0)...CGFloat(6.0)
+        } else if self == .shape {
+            range = CGFloat(1.0)...CGFloat(8.0)
+        }
+        return range
+    }
+}
+
  extension FTPenType {
     
     public var rackType : FTRackType

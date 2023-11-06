@@ -17,19 +17,11 @@ class FTFavoritePensetManager: NSObject {
         return favs
     }
 
-    func saveFavorites() {
-
-    }
-
-    func addPenset(_ penset: FTPenSetProtocol) {
-
-    }
-
-    func deletePenset(_ penset: FTPenSetProtocol) {
-
-    }
-
-    func updatePenset(_ penset: FTPenSetProtocol) {
-
+    func saveFavorites(_ favorites: [FTPenSetProtocol]) {
+        var dataModel = dataManager.fetchFavorites()
+        dataModel.favorites = favorites.compactMap({ penset in
+            FTFavoritePenset(type: penset.type.rawValue, color: penset.color, size: CGFloat(penset.size.rawValue), preciseSize: String(Float(penset.preciseSize)))
+        })
+        self.dataManager.saveFavorites(dataModel)
     }
 }
