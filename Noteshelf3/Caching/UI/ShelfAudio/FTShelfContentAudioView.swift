@@ -12,11 +12,10 @@ struct FTShelfContentAudioView: View {
     @ObservedObject var viewModel: FTShelfContentAudioViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    private var gridItems: [GridItem] {
-        var numberOfColoums = 4
-        if horizontalSizeClass == .compact {
-            numberOfColoums = 3
-        }
+
+    private func gridItems(size viewSize: CGSize) -> [GridItem] {
+        var numberOfColoums: Int
+        numberOfColoums = (viewSize.width > 1125) ? 6 : (viewSize.width > 1023 ? 5 : (viewSize.width > 700 ? 4 : 3))
         return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColoums)
     }
     var body: some View {
@@ -41,7 +40,7 @@ struct FTShelfContentAudioView: View {
     var contentView: some View {
         GeometryReader { proxy in
             ScrollView {
-                LazyVGrid(columns: gridItems, spacing: 2) {
+                LazyVGrid(columns: gridItems(size: proxy.size), spacing: 2) {
                     ForEach(viewModel.audio) { audio in
                         let size = itemSize(for: proxy.size)
                         FTShelfAudioItemView(audio: audio)
@@ -53,6 +52,14 @@ struct FTShelfContentAudioView: View {
                                     .scaledToFill()
                                     .frame(width: size.width, height: size.width/2)
                                     .clipped()
+                            }
+                            .overlay(alignment: .bottomLeading) {
+                                Text(audio.title)
+                                    .appFont(for: .medium, with: 14)
+                                    .multilineTextAlignment(.leading)
+                                    .lineLimit(1)
+                                    .foregroundColor(Color.white)
+                                    .padding(.all,8)
                             }
                             .onTapGesture {
                                 viewModel.onSelect?(audio)
@@ -84,13 +91,10 @@ struct FTShelfContentAudioView: View {
 
     private func itemSize(for viewSize: CGSize) -> CGSize {
         let cellSpacing: CGFloat = 2
-        var itemsPerRow: CGFloat = 4
-        if horizontalSizeClass == .compact {
-            itemsPerRow = 3
-        }
-
+        var itemsPerRow: CGFloat
+        itemsPerRow =  (viewSize.width > 1125) ? 6 : (viewSize.width > 1023 ? 5 : (viewSize.width > 700 ? 4 : 3))
+        itemsPerRow = horizontalSizeClass == .compact ? 2 : itemsPerRow
         let iterimSpacing: CGFloat = (itemsPerRow - 1)*cellSpacing
-
         let width: CGFloat = (viewSize.width-iterimSpacing)/itemsPerRow
         let size = CGSize(width: width, height: width)
         return size
@@ -102,21 +106,29 @@ struct FTShelfAudioItemView: View {
     let audio: FTShelfAudio
 
     var body: some View {
-        Color(.appColor(.accent)).overlay(content: {
-            VStack(spacing: 4) {
-                Image(systemName: "volume.2.fill")
-                    .font(.title)
-                VStack{
-                    Text(audio.audioTitle)
-                        .foregroundColor(.white)
-                    Text(audio.duration)
-                        .foregroundColor(.white.opacity(0.6))
+        Color(.appColor(.accent))
+            .overlay(content: {
+                HStack{
+                    VStack(alignment: .leading,spacing: 8) {
+                        Image(systemName: "volume.2.fill")
+                            .frame(width: 28,height: 24)
+                            .   font(.appFont(for: .medium, with: 20))
+                        VStack(alignment: .leading,spacing: 2){
+                            Text(audio.audioTitle)
+                                .lineLimit(2)
+                                .foregroundColor(.white)
+                            Text(audio.duration)
+                                .foregroundColor(.white.opacity(0.6))
+                        }
+                        .appFont(for: .medium, with: 13)
+                        Spacer()
+                    }
+                    Spacer()
                 }
-                .appFont(for: .medium, with: 13)
-            }
-            .appFont(for: .medium, with: 10)
-            .foregroundColor(Color.white)
-        })
+                .padding(.all,8)
+                .appFont(for: .medium, with: 10)
+                .foregroundColor(Color.white)
+            })
     }
 }
 
