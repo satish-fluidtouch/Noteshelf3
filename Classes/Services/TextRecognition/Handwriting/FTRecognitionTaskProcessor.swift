@@ -126,12 +126,6 @@ extension FTRecognitionTaskProcessor: FTBackgroundTaskProcessor {
     }
     
     func startTask(_ task: FTBackgroundTask, onCompletion: (() -> (Void))?){
-        if FTUserDefaults.isInSafeMode() {
-            (task as? FTRecognitionTask)?.onCompletion?(nil, nil)
-            onCompletion?()
-            return
-        }
-
         self.canAcceptNewTask = false
         if let currentTask = task as? FTRecognitionTask{
             if(currentTask.languageCode != self.languageCode){

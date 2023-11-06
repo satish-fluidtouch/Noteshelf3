@@ -13,8 +13,8 @@ class FTNS2BookURLThumbnailReader: NSObject {
 
     @discardableResult
     func thumbnail(for item: FTDiskItemProtocol
-                   , isNS2Book: Bool = false
-                   , reuseToken: String? = nil
+                   , isNS2Book: Bool
+                   , reuseToken: String?
                    , queue: OperationQueue
                    , cache: FTThumbnailCacheProtocol
                    , onCompletion: @escaping (UIImage?,String?) -> ()) -> String {
