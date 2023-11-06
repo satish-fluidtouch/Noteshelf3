@@ -86,16 +86,15 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                             let enml = FTENSyncUtilities.enmlRepresentation(withResources: note.resources as? [EDAMResource], syncRecords: pagesForENContent);
                             note.content = String.init(format: EVERNOTE_NOTE_TEMPLATE, enml!);
 
-                            var lastUpdated = pageRecord.lastUpdated.doubleValue;
+                            var lastUpdated = NSDate(timeIntervalSince1970: pageRecord.lastUpdated.doubleValue).enedamTimestamp()
 
                             let filePath = pageRecord.parent.fullURLPath;
                             if ((nil != filePath) && (FileManager.default.fileExists(atPath: filePath!))) {
                                 let url = URL(fileURLWithPath: filePath!);
-                                lastUpdated = url.fileModificationDate.timeIntervalSinceReferenceDate;
+                                lastUpdated = (url.fileModificationDate as NSDate).enedamTimestamp();
                             }
 
-                            note.updated = Int64(lastUpdated)
-
+                            note.updated = lastUpdated
                             guard EvernoteSession.shared().isAuthenticated else {
                                 let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
                                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));

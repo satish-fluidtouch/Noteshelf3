@@ -166,7 +166,7 @@
     NSString *publishByString = [NSString stringWithFormat:NSLocalizedString(@"PublishedByNoteshelf", @"Published by Noteshelf"),@"Noteshelf"];
 	[contentString appendFormat:@"<br/>%@</en-note>",publishByString];
 	[note setContent:contentString];
-	[note setCreated:(int64_t)[[NSDate date] timeIntervalSince1970] * 1000];
+	[note setCreated:[[NSDate date] enedamTimestamp]];
 	
     //Set tags
     note.tagNames = [[item.tags allObjects] mutableCopy];
@@ -199,7 +199,7 @@
             title = [item.exportFileName stringByDeletingPathExtension];
         }
         [note setTitle:title];
-        [note setCreated: (int64_t)[[NSDate date] timeIntervalSince1970] * 1000];
+        [note setCreated: [[NSDate date] enedamTimestamp]];
         note.content = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"><en-note></en-note>";
         
         EvernoteNoteStore *noteStore = [[EvernoteNoteStore alloc] initWithSession:EvernoteSession.sharedSession];
@@ -252,7 +252,7 @@
     [self.evernoteNote setResources:imageArray];
     NSString *enml = [FTENSyncUtilities enmlRepresentationWithResources:imageArray];
     [self.evernoteNote setContent:[[NSString alloc] initWithFormat:EVERNOTE_NOTE_TEMPLATE,enml]];
-    [self.evernoteNote setUpdated:(int64_t)[[NSDate date] timeIntervalSince1970] * 1000];
+    [self.evernoteNote setUpdated:[[NSDate date] enedamTimestamp]];
 
     ////////////////////////////////////////
     //Publish tags to Evernote
