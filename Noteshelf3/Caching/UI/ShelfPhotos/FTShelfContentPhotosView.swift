@@ -15,7 +15,7 @@ struct FTShelfContentPhotosView: View  {
 
     private func gridItems(size viewSize: CGSize) -> [GridItem] {
         var numberOfColumns: Int
-        numberOfColumns = viewSize.width > 1023 ? 5 : viewSize.width > 700 ? 4 : 3
+        numberOfColumns =  (viewSize.width > 1125) ? 6 : (viewSize.width > 1023 ? 5 : (viewSize.width > 700 ? 4 : 3))
         numberOfColumns = horizontalSizeClass == .compact ? 2 : numberOfColumns
         return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColumns)
     }
@@ -93,7 +93,7 @@ struct FTShelfContentPhotosView: View  {
     private func itemSize(for viewSize: CGSize) -> CGSize {
         let cellSpacing: CGFloat = 2
         var itemsPerRow: CGFloat
-        itemsPerRow = viewSize.width > 1023 ? 5 : viewSize.width > 700 ? 4 : 3
+        itemsPerRow =  (viewSize.width > 1125) ? 6 : (viewSize.width > 1023 ? 5 : (viewSize.width > 700 ? 4 : 3))
         itemsPerRow = horizontalSizeClass == .compact ? 2 : itemsPerRow
         let iterimSpacing: CGFloat = (itemsPerRow - 1)*cellSpacing
         let width: CGFloat = (viewSize.width-iterimSpacing)/itemsPerRow
