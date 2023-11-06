@@ -179,7 +179,8 @@ extension FTGlobalSearchController {
         if self.segmentControl.selectedSegmentIndex == 1, let collection = self.shelfItemCollection {
             shelfcatgories.append(collection)
         }
-        self.searchHelper?.fetchSearchResults(with: info.textKey, tags: info.tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
+        let reqSearchKey = info.textKey.trimmingCharacters(in: .whitespaces)
+        self.searchHelper?.fetchSearchResults(with: reqSearchKey, tags: info.tags, shelfCategories: shelfcatgories, onSectionFinding: {[weak self] (items) in
             guard let self = self, !items.isEmpty else {
                 return
             }
