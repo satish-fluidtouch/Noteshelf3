@@ -14,7 +14,6 @@ struct FTDiscoverItemModel: Identifiable {
     var title: String
     var description: String
     var url:URL?
-    var showBetaBadge: Bool = false
     var eventTrackName: String
 }
 struct FTDiscoverWhatsNewView: View {
@@ -39,27 +38,20 @@ struct FTDiscoverWhatsNewView: View {
                                     .frame(width: 248,height:165,alignment:.top)
 
                                 VStack(alignment: .leading,spacing: 2) {
-                                    HStack(alignment:.center, spacing:4.0) {
-                                        Text(item.title.localized)
-                                            .foregroundColor(.appColor(.black1))
-                                            .font(.clearFaceFont(for: .regular, with: 17))
-                                            .multilineTextAlignment(.leading)
-                                        if item.showBetaBadge {
-                                            betaBadge
-                                        }
-                                        Spacer()
-                                    }
-                                    .frame(maxWidth:.infinity,maxHeight:22,alignment:.leading)
-                                    .padding(.horizontal,12)
-                                    .padding(.top,12)
+                                    Text(item.title.localized)
+                                        .frame(maxWidth:.infinity,maxHeight:22,alignment:.leading)
+                                        .foregroundColor(.appColor(.black1))
+                                        .font(.clearFaceFont(for: .regular, with: 17))
+                                        .multilineTextAlignment(.leading)
+                                        .padding(.top,12)
 
                                     Text(item.description.localized)
                                         .frame(maxWidth:.infinity, alignment:.leading)
                                         .foregroundColor(.appColor(.black70))
                                         .font(.appFont(for: .regular, with: 12))
                                         .multilineTextAlignment(.leading)
-                                        .padding(.horizontal,12)
                                 }
+                                .padding(.horizontal,12)
                                 .frame(width: 248,height: 95,alignment: .top)
                                 .background(Color.appColor(.white100))
                             }
@@ -93,22 +85,11 @@ struct FTDiscoverWhatsNewView: View {
         .background(Color.appColor(.black5))
         .cornerRadius(16)
     }
-    private var betaBadge: some View {
-        HStack {
-            Text("Beta")
-                .font(.appFont(for: .medium, with: 12))
-                .foregroundColor(.appColor(.groupNotesCountTint))
-                .padding(.horizontal,4)
-        }
-        .frame(height: 17,alignment: .leading)
-        .background(Color.appColor(.groupNotesCountTint).opacity(0.1))
-        .cornerRadius(6.0)
-    }
     private var discoverItemsDatasource: [FTDiscoverItemModel] {
         return [
             FTDiscoverItemModel(imageName: "whatsNew", title: "shelf.discover.whatsNewTitle", description: "shelf.discover.whatsNewDescription", url: URL(string: "https://medium.com/noteshelf/introducing-all-new-noteshelf-3-3a89f78fd240"), eventTrackName: "What’s new in Noteshelf"),
             FTDiscoverItemModel(imageName: "ns2ToNS3Migration", title: "shelf.discover.migrationTitle", description: "shelf.discover.migrationDescription", url: URL(string: "https://noteshelf-support.fluidtouch.biz/hc/en-us/articles/22064417946777-How-to-migrate-notes-from-Noteshelf-2-to-Noteshelf-3-"), eventTrackName: "Migrate from Noteshelf 2"),
-            FTDiscoverItemModel(imageName: "aiAssited", title: "shelf.discover.aiAssitedNotesTitle", description: "shelf.discover.aiAssitedDescription", url: URL(string: "https://medium.com/noteshelf/introducing-noteshelf-ai-beta-b629dea9964b"),showBetaBadge: true, eventTrackName: "Ai-assited notes"),
+            FTDiscoverItemModel(imageName: "aiAssited", title: "shelf.discover.aiAssitedNotesTitle", description: "shelf.discover.aiAssitedDescription", url: URL(string: "https://medium.com/noteshelf/introducing-noteshelf-ai-beta-b629dea9964b"), eventTrackName: "Ai-assited notes"),
             FTDiscoverItemModel(imageName: "getInspired", title: "shelf.discover.getInspiredTitle", description: "shelf.discover.getInspiredDescription", url: URL(string: "https://d1amf23cmdhalo.cloudfront.net/Get_Inspired.pdf"), eventTrackName: "Get inspired"),
             FTDiscoverItemModel(imageName: "covers", title: "shelf.discover.coversTitle", description: "shelf.discover.coversDescription", url: URL(string: "https://medium.com/noteshelf/covers-that-match-your-style-4eec967cbfa"), eventTrackName: "Covers to match your style"),
             FTDiscoverItemModel(imageName: "templates", title: "shelf.discover.templatesTitle", description: "shelf.discover.templatesDescription", url: URL(string: "https://medium.com/noteshelf/a-template-for-every-need-7292ca51294c"), eventTrackName: "A template for every need"),

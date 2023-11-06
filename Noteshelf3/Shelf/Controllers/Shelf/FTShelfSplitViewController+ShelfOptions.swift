@@ -527,7 +527,7 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
 
     //TODO: (AK) Discuss with RK
     func openNotebook(_ shelfItem: FTShelfItemProtocol, shelfItemDetails: FTCurrentShelfItem?, animate: Bool, isQuickCreate: Bool, pageIndex: Int?) {
-        if !shelfItem.shelfCollection.isTrash  {
+        if let shelfCollection = shelfItem.shelfCollection ,!shelfCollection.isTrash  {
             if !self.openingBookInProgress {
                 self.openNotebookAndAskPasswordIfNeeded(shelfItem, animate: animate, presentWithAnimation: false, pin: shelfItemDetails?.pin, addToRecent: true, isQuickCreate: isQuickCreate,createWithAudio: false, pageIndex: pageIndex, onCompletion: nil)
             }else {
