@@ -12,6 +12,7 @@ import FTCommon
 protocol FTThumbnailCacheProtocol: NSObjectProtocol {
     func addImageToCache(image : UIImage?, url: URL)
     func cachedImageForItem(item: FTDiskItemProtocol) -> UIImage?
+    func removeImageCache(url: URL);
     func clearStoredThumbnailCache()
 }
 
@@ -76,7 +77,7 @@ class FTThumbnailCache: NSObject, FTThumbnailCacheProtocol {
         }
     }
     
-    private func removeImageCache(url: URL)
+    func removeImageCache(url: URL)
     {
         //**********
         let hash = url.thumbnailCacheHash()

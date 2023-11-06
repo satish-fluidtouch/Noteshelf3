@@ -321,7 +321,8 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "Battery": UIDevice.current.batteryStateString,
             "Screens": UIScreen.screensDescription,
             "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO",
-            "NS2": FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO"
+            "NS2": FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO",
+            "SafeMode": FTUserDefaults.isInSafeMode() ? "YES" : "NO"
         ]
         return customFields
     }
@@ -347,8 +348,9 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
            let layoutType = customFields["LayoutType"],
            let battery = customFields["Battery"],
            let premium = customFields["Premium"],
-           let ns2 = customFields["NS2"]{
-            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2)"
+           let ns2 = customFields["NS2"],
+           let safemode = customFields["SafeMode"]{
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode)"
         }
         return string ?? ""
     }

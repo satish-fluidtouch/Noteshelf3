@@ -74,9 +74,9 @@ extension FTPageResultSectionCell: UICollectionViewDataSource {
             cell.imageViewPage?.image = UIImage(named: "finder-empty-pdf-page")
 
             if let contentSection = self.contentSection as? FTSearchSectionContentProtocol {
-                if let item = contentSection.items[indexPath.row] as? FTSearchResultPageProtocol {
+                if let item = contentSection.items[indexPath.row] as? FTSearchResultPageProtocol, let info = item.searchingInfo {
+                    cell.pageLabel?.text = "globalSearch.page".localized + " \(info.pageIndex + 1)"
                     if let associatedPage = contentSection.associatedPage(forItem: item) {
-                        cell.pageLabel?.text = "globalSearch.page".localized + " \(associatedPage.pageIndex() + 1)"
                         if let pageItem = gridItem as? FTSearchResultPageProtocol, (associatedPage as? FTPageProtocol)?.parentDocument != nil {
                             (associatedPage as? FTNoteshelfPage)?.searchingInfo = pageItem.searchingInfo
                             var size = isRegular ? GlobalSearchConstants.PageThumbnailSize.Portrait.regular : GlobalSearchConstants.PageThumbnailSize.Portrait.compact
@@ -87,9 +87,6 @@ extension FTPageResultSectionCell: UICollectionViewDataSource {
                             cell.pdfSize = aspectFitSize
                             cell.setThumbnailImage(usingPage: associatedPage)
                         }
-                    }
-                    else{
-                        cell.pageLabel?.text = ""
                     }
                 }
             }
