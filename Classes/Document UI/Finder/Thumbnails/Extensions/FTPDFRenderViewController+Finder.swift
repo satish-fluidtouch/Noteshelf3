@@ -99,6 +99,10 @@ extension FTPDFRenderViewController: FTFinderThumbnailsActionDelegate {
         //});
     }
     
+    func cancelFinderSearchOperation() {
+        self.cancelSearchOperation(onCompletion: nil)
+    }
+    
     //MARK:- FTFinderViewControllerEditingDelegate
     func finderViewController(_ finderViewController: FTFinderViewController, didSelectInsertAboveForPage page: FTPageProtocol?) {
         if let currentPage = page{

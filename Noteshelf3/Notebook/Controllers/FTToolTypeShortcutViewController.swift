@@ -21,7 +21,8 @@ protocol FTShapeSelectDelegate: AnyObject {
     func saveFavoriteShapes()
 }
 
-class FTToolTypeShortcutViewController: UIViewController {
+class FTToolTypeShortcutViewController: UIViewController, FTViewControllerSupportsScene {
+    var addedObserverOnScene: Bool = false
     weak var delegate: FTShorctcutActionDelegate?
     
     private weak var colorModel: FTFavoriteColorViewModel?
@@ -36,6 +37,20 @@ class FTToolTypeShortcutViewController: UIViewController {
         self.view.translatesAutoresizingMaskIntoConstraints = false;
         self.view.autoresizingMask = UIView.AutoresizingMask(rawValue: 0);
         self.view.backgroundColor = .clear
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
+        self.configureSceneNotification()
+#endif
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+#if targetEnvironment(macCatalyst)
+        self.dismissPresentedPopoverIfExists()
+#endif
     }
 
     func showShortcutViewWrto(rack: FTRackData) {
@@ -242,3 +257,23 @@ extension FTToolTypeShortcutViewController: FTColorEyeDropperPickerDelegate {
         self.penShortcutViewModel = nil
     }
 }
+
+#if targetEnvironment(macCatalyst)
+private extension FTToolTypeShortcutViewController {
+    func configureSceneNotification() {
+        // THis is needed when back/close of notebook is tapped, we need to close the pen color edit popover if exists(to fix memory leak caused by it)
+        NotificationCenter.default.addObserver(self, selector: #selector(sceneWillResignActive(_:)), name: UIApplication.sceneWillResignActive, object: self.sceneToObserve)
+    }
+
+    func dismissPresentedPopoverIfExists() {
+        self.presentedViewController?.dismiss(animated: false)
+    }
+
+    @objc func sceneWillResignActive(_ notification: Notification) {
+        if(!self.canProceedSceneNotification(notification)) {
+            return
+        }
+        self.dismissPresentedPopoverIfExists()
+    }
+}
+#endif

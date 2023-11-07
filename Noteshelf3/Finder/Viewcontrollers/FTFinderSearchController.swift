@@ -550,11 +550,16 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        perfromSearchCancel()
+    }
+    
+    internal func perfromSearchCancel() {
         self.isSearching = false
         hideLoadingIndicator()
         updateSubViews(isSearching: self.isSearching)
         recentsTableView.reloadData()
         recentsTableView.isHidden = false
+        self.delegate?.cancelFinderSearchOperation()
     }
 
     private func populateSearchSuggestion(for query: String) {

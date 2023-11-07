@@ -16,6 +16,7 @@ enum FTSearchContentType {
 
 //================================ SECTION ITEM
 protocol FTSearchSectionProtocol: NSObjectProtocol {
+    var uuid: String {get set}
     var searchKey: String {get set}
     var contentType: FTSearchContentType {get}
     var title: String {get}

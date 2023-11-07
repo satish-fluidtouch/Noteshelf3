@@ -751,10 +751,21 @@ extension FTShelfSplitViewController {
 
         FTDocumentMigration.showNS3MigrationAlert(on: self, onCopyAction: {
             let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText:"migration.progress.text".localized);
+            var documentPin: String?
+            let isPinEnabled = shelfItem.isPinEnabledForDocument()
+            let uuid = (shelfItem as? FTDocumentItem)?.documentUUID ?? ""
+            let isTouchIdEnabled = FTBiometricManager.isTouchIdEnabled(for: uuid)
+            if isPinEnabled && isTouchIdEnabled {
+                //Get pin with NS2 Item UUID
+                documentPin = FTBiometricManager.passwordForNS2Book(with: uuid)
+            }
             FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedURL, error in
                 runInMainThread {
                     loadingIndicatorViewController.hide()
                     if let migratedURL {
+                        if let documentPin, isPinEnabled {
+                            FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: migratedURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue)
+                        }
                         self.showOpenNowAlertForMigratedBook(migratedURL: migratedURL)
                     } else {
                         FTDocumentMigration.showNS3MigrationFailureAlert(on: self)
