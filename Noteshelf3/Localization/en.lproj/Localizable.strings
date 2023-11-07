@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "Enter between %d and %d";
 "EnterPassword" = "Enter Password";
 "EnterPasswordHint" = "Enter a password hint";
-"EnterPasswordToOpenThisNotebook" = "Enter the password to open this notebook";
+"EnterPasswordToOpenThisNotebook" = "Enter the password to open %@";
 "EnterThePasswordFor" = "Enter the password for %@";
 "EraseEntireStroke" = "Erase Entire Stroke";
 "EraseHighlighterOnly" = "Erase Highlighter Only";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "See All";
 "shelf.home.seeAllNotes" = "See All Notes";
 "shelf.importfile.description" = "Add PDFs and images from your Files app";
+"shelf.migration.CompactDescription" = "Simply tap on any notebook here to migrate a copy of it to Noteshelf 3. Migrated notebooks will be available in the Noteshelf 3 categories and groups.";
 "shelf.migration.Description" = "Simply tap on any notebook here to migrate a copy of it to Noteshelf 3. Migrated notebooks will be available in the Noteshelf 3 categories and groups. Ability to migrate entire categories is coming soon!";
 "shelf.migration.headerMessage" = "Migrate your notebooks to Noteshelf 3";
 "shelf.navBar.deselectAll" = "Deselect All";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM

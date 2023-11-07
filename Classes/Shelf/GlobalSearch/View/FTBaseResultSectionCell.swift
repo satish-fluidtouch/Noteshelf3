@@ -34,7 +34,11 @@ class FTBaseResultSectionCell: UICollectionViewCell {
             self.collectionView?.reloadData()
         }
     }
-    
+
+    func updateContentSection(_ section: FTSearchSectionProtocol) {
+        self.contentSection = section
+    }
+
     func getAnimationInfo(for indexPath: IndexPath) -> FTOpenAnimationInfo? {
         //Subclass should override this
         return nil
@@ -157,9 +161,7 @@ extension FTBaseResultSectionCell {
                     var pageIndex : Int?;
                     if let contentSection = section as? FTSearchSectionContentProtocol {
                         if let item = contentSection.items[indexPath.row] as? FTSearchResultPageProtocol {
-                            if let associatedPage = contentSection.associatedPage(forItem: item) as? FTPageProtocol {
-                                pageIndex = associatedPage.pageIndex();
-                            }
+                            pageIndex = item.searchingInfo?.pageIndex
                         }
                     }
                     self?.delegate?.performContextMenuOperation(for: shelfItem,
@@ -198,9 +200,7 @@ extension FTBaseResultSectionCell {
 
                     if let contentSection = section as? FTSearchSectionContentProtocol {
                         if let item = contentSection.items[indexPath.row] as? FTSearchResultPageProtocol {
-                            if let associatedPage = contentSection.associatedPage(forItem: item) as? FTPageProtocol {
-                                pageIndex = associatedPage.pageIndex()
-                            }
+                            pageIndex = item.searchingInfo?.pageIndex
                         }
                     }
 
