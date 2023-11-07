@@ -9,6 +9,7 @@
 import UIKit
 
 class FTSearchSectionCategories: NSObject, FTSearchSectionProtocol {
+    var uuid = UUID().uuidString
     var searchKey: String = ""
     var contentType: FTSearchContentType {
         return .category

@@ -68,6 +68,7 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
                     let pageItem = FTSearchResultPage.init()
                     pageItem.parentSection = searchSectionItem
                     searchingInfo.pageUUID = eachPageInfo.pageUUID
+                    searchingInfo.pageIndex = eachPageInfo.pageIndex
                     pageItem.searchingInfo = searchingInfo
                     pageItem.shelfItem = eachPageInfo.documentItem
                     searchSectionItem.addSearchItem(pageItem)

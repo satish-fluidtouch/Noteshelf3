@@ -31,14 +31,22 @@ class FTOpenAI: NSObject {
         
         currentcommand = command;
         
+#if DEBUG || ADHOC
+        let commandString: String = command.debugCommand;
+#else
         let commandString: String = command.command();
-        let response = FTOpenAIResponse();
+#endif
+       let response = FTOpenAIResponse();
         var messages = [Chat]();
         messages.append(Chat(role: .system, content: commandString));
         messages.append(Chat(role: .user, content: command.contentToExecute));
 
         var targettedError: Error?;
+#if DEBUG || ADHOC
+        let query = ChatQuery(model: FTOpenAI.debugModel, messages: messages,temperature: 0.2)
+#else
         let query = ChatQuery(model: .gpt3_5Turbo, messages: messages,temperature: 0.2)
+#endif
         openAI.chatsStream(query: query) { partialResult in
             guard self.currentcommand == command else {
                 return;

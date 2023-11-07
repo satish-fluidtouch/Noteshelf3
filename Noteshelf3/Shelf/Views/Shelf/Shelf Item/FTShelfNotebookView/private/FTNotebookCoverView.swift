@@ -12,6 +12,7 @@ import SwiftUI
 struct FTNotebookCoverView: View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @Environment(\.colorScheme) var colorScheme
 
     var isHighlighted = false;
 
@@ -29,17 +30,16 @@ struct FTNotebookCoverView: View {
                         ProgressView()
                     })
                 })
-                    .if(shelfItem.isDownloadingNotebook, transform: { view in
-                        view.overlay(alignment: Alignment.center, content: {
-                            FTCircularProgressView(progress: $shelfItem.progress)
-                                .frame(width: 32, height: 32, alignment: .center)
-                        })
+                .if(shelfItem.isDownloadingNotebook, transform: { view in
+                    view.overlay(alignment: Alignment.center, content: {
+                        FTCircularProgressView(progress: $shelfItem.progress)
+                            .frame(width: 32, height: 32, alignment: .center)
                     })
-                        .overlay(alignment: Alignment.bottom) {
+                })
+                .overlay(alignment: Alignment.bottom) {
                     if shelfItem.uploadDownloadInProgress {
-                        let imagSize: CGSize = shelfViewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 24, height: 24)
                         let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
-
+                        
                         let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
                         Image(systemName: "icloud.and.arrow.up")
                             .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
@@ -47,7 +47,7 @@ struct FTNotebookCoverView: View {
                             .font(font)
                             .padding(.bottom, padding)
                             .pulseAnimation()
-
+                        
                     } else if shelfItem.isNotDownloaded {
                         let imagSize: CGSize = shelfViewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 24, height: 24)
                         let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
@@ -91,8 +91,16 @@ struct FTNotebookCoverView: View {
                     shelfItem.configureShelfItem(shelfItem.model)
                 })
         }
+        .onAppear(perform: {
+            shelfItem.isVisible = true;
+            self.shelfItem.fetchCoverImage();
+        })
+        .onDisappear(perform: {
+            shelfItem.isVisible = false;
+        })
         .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
         .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+        .border(shelfItem.coverImage.hasNoCover && colorScheme == .dark ? Color.white.opacity(0.1) : .clear, width: 2.0,cornerRadius: 10)
     }
     
     private var leftCornerRadius: CGFloat {

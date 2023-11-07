@@ -93,6 +93,9 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                                         pageItem.searchingInfo = searchingInfo
                                         pageItem.shelfItem = shelfItem
                                         searchSectionItem.addSearchItem(pageItem)
+                                        if !searchSectionItem.items.isEmpty {
+                                            self.onSectionFinding?([searchSectionItem], self.token)
+                                        }
                                     }
                                 }
                         }, onCompletion: {[weak self] (isCancelled) in

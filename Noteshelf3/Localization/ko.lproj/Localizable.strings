@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "%d와 %d 사이에 입력하세요.";
 "EnterPassword" = "암호를 입력하세요.";
 "EnterPasswordHint" = "비밀번호 힌트 입력";
-"EnterPasswordToOpenThisNotebook" = "이 노트북을 열려면 비밀번호를 입력하세요.";
+"EnterPasswordToOpenThisNotebook" = "%@을(를) 열려면 비밀번호를 입력하세요";
 "EnterThePasswordFor" = "%@에 대한 비밀번호를 입력하세요.";
 "EraseEntireStroke" = "전체 스트로크 지우기";
 "EraseHighlighterOnly" = "형광펜 지우개만";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "모두 보기";
 "shelf.home.seeAllNotes" = "모든 노트 보기";
 "shelf.importfile.description" = "파일 앱에서 PDF 및 이미지 추가'";
+"shelf.migration.CompactDescription" = "Noteshelf 3로 복사본을 이동하려면 여기에 있는 어떤 노트북이라도 간단히 탭하세요. 이동된 노트북은 Noteshelf 3의 카테고리와 그룹에서 사용할 수 있습니다. ";
 "shelf.migration.Description" = "Noteshelf 3로 복사본을 이동하려면 여기에 있는 어떤 노트북이라도 간단히 탭하세요. 이동된 노트북은 Noteshelf 3의 카테고리와 그룹에서 사용할 수 있습니다. 전체 카테고리를 이동할 수 있는 기능은 곧 제공됩니다!";
 "shelf.migration.headerMessage" = "노트북을 Noteshelf 3로 이동하세요.";
 "shelf.navBar.deselectAll" = "모두 선택 해제";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM

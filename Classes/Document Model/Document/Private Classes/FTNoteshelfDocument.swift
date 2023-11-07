@@ -37,9 +37,8 @@ private class FTNSDocumentListener: NSObject {
     weak var documentDelegate: FTNoteshelfDocumentDelegate?;
 }
 
-class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,FTDocumentProtocolInternal,FTCacheProtocol
+class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,FTDocumentProtocolInternal
 {
-    var cache: FTCache?;
     fileprivate var searchOperationQueue = OperationQueue();
     fileprivate var openPurpose = FTDocumentOpenPurpose.write;
     
@@ -55,6 +54,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     private var documentListners = [NSInteger : FTNSDocumentListener]();
     
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+    private(set) var pdfContentCache: FTPDFContentCache?;
     private weak var _recognitionHelper: FTNotebookRecognitionHelper?
     private weak var _visionRecognitionHelper: FTVisionNotebookRecognitionHelper?
     lazy var recognitionCache: FTRecognitionCache? = {
@@ -562,6 +562,8 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             //initialize local cache
             self.localCacheWrapper = FTLocalMetadataCache.init(documentUUID: documentUUID,documentRect:documentInfoFileItem!.defaultPageRect);
             self.localCacheWrapper?.loadMetadataCache();
+            
+            self.pdfContentCache = FTPDFContentCache(documentUUID:self.documentUUID);
             #endif
             //notification observers
             self.addObservers();
@@ -1146,8 +1148,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         if(self.isPinEnabled()) {
             let propertyInfoPlist = self.fileURL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
             let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
-            dictionary.setObject(FTUtils.getUUID(), forKey: DOCUMENT_ID_KEY as NSCopying);
+            let docUUID = FTUtils.getUUID()
+            dictionary.setObject(docUUID, forKey: DOCUMENT_ID_KEY as NSCopying);
             dictionary.write(to: propertyInfoPlist, atomically: true);
+            
+            let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
+            try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
 
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){
@@ -1497,6 +1503,7 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
         let allPages = self.pages();
         searchProgress.totalUnitCount = Int64(allPages.count)
 
+        let t1 = Date.timeIntervalSinceReferenceDate;
         for eachPage in allPages {
             let operation = BlockOperation();
             operation.addExecutionBlock { [weak eachPage,weak searchProgress,weak operation] in
@@ -1518,6 +1525,8 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
 
         };
         operation.completionBlock = {
+            let t2 = Date.timeIntervalSinceReferenceDate;
+            debugPrint("Time Taken: Document Search: \(t2-t1)");
             DispatchQueue.main.async(execute: {
                 onCompletion(operation.isCancelled);
             });
@@ -1831,3 +1840,9 @@ extension FTNoteshelfDocument: FTNoteshelfDocumentDelegate {
         }
     }
 }
+
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+extension FTNoteshelfDocument: FTPDFContentCacheProtocol {
+    
+}
+#endif

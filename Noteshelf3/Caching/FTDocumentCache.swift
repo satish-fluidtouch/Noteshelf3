@@ -24,6 +24,7 @@ enum FTCacheError: Error {
     case fileNotExists
     case cachingNotRequired
     case documentIsStillOpen
+    case pinEnabledDocument
 }
 #if DEBUG
 private let cleanOnNextLaunch: Bool = false
@@ -46,6 +47,8 @@ struct FTCacheFiles {
 }
 
 final class FTDocumentCache {
+    private let lock = NSRecursiveLock();
+
     static let shared = FTDocumentCache()
     let cacheFolderURL: URL
 
@@ -53,7 +56,6 @@ final class FTDocumentCache {
     private var cacheDisabled = false;
 
     // MARK: Private
-    private let fileManager = FileManager()
     private let queue = DispatchQueue(label: FTCacheFiles.cacheFolderName, qos: .utility)
     private init() {
         guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last else {
@@ -74,18 +76,19 @@ final class FTDocumentCache {
     }
 
     private func createCachesDirectoryIfNeeded() {
+        let _fileManager = FileManager()
 #if DEBUG
-        if cleanOnNextLaunch, fileManager.fileExists(atPath: cacheFolderURL.path) {
+        if cleanOnNextLaunch, _fileManager.fileExists(atPath: cacheFolderURL.path) {
             do {
-                try fileManager.removeItem(at: cacheFolderURL)
+                try _fileManager.removeItem(at: cacheFolderURL)
             } catch {
                 cacheLog(.error, error)
             }
         }
 #endif
-        if !fileManager.fileExists(atPath: cacheFolderURL.path) {
+        if !_fileManager.fileExists(atPath: cacheFolderURL.path) {
             do {
-                try fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
+                try _fileManager.createDirectory(at: cacheFolderURL, withIntermediateDirectories: true)
             } catch {
                 cacheLog(.error, error)
             }
@@ -166,12 +169,12 @@ extension FTDocumentCache {
     func enableCacheUpdates() {
         self.cacheDisabled = false;
         runInMainThread(0.1) {
-            objc_sync_enter(self.itemsToCache)
+            self.lock.lock()
             self.itemsToCache.forEach { eachItem in
                 self.cacheShelfItemFor(url: eachItem.fileUrl, documentUUID: eachItem.documentID);
             }
             self.itemsToCache.removeAll();
-            objc_sync_exit(self.itemsToCache)
+            self.lock.unlock()
         }
     }
 
@@ -186,11 +189,11 @@ extension FTDocumentCache {
     func cacheShelfItems(items: [FTItemToCache]) {
 
         if self.cacheDisabled {
-            objc_sync_enter(self.itemsToCache)
+            self.lock.lock()
             items.forEach { eachItem in
                 self.itemsToCache.append(FTItemToCache(url: eachItem.fileUrl, documentID: eachItem.documentID))
             }
-            objc_sync_exit(self.itemsToCache)
+            self.lock.unlock()
             return;
         }
 
@@ -216,9 +219,9 @@ extension FTDocumentCache {
 
     func cacheShelfItemFor(url: URL, documentUUID: String) {
         if self.cacheDisabled {
-            objc_sync_enter(self.itemsToCache)
+            self.lock.lock()
             self.itemsToCache.append(FTItemToCache(url: url, documentID: documentUUID))
-            objc_sync_exit(self.itemsToCache)
+            self.lock.unlock()
             return;
         }
 
@@ -255,6 +258,13 @@ private extension FTDocumentCache {
                 try? propertiList.writeUpdates(to: dest)
             }
         }
+        let destinationURL = cachedLocation(for: documentUUID)
+
+        guard !url.isPinEnabledForDocument() else {
+            // Cleanup the PIN enabled documents, if they have copied in earlier versions prior to v1.3.
+            try? FileManager.default.removeItem(at: destinationURL)
+            throw FTCacheError.pinEnabledDocument
+        }
 
         // Ignore the documents which are already open
         guard !FTNoteshelfDocumentManager.shared.isDocumentAlreadyOpen(for: url) else {
@@ -263,11 +273,11 @@ private extension FTDocumentCache {
             throw FTCacheError.documentIsStillOpen
         }
 
-        let destinationURL = cachedLocation(for: documentUUID)
-        if !fileManager.fileExists(atPath: destinationURL.path) {
+        let _fileManager = FileManager();
+        if !_fileManager.fileExists(atPath: destinationURL.path) {
             do {
                 // Copy directly if the file doesn't exist at the cache location
-                try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
+                try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
                 updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                 cacheLog(.success, "Copy", url.lastPathComponent)
             } catch {
@@ -285,7 +295,7 @@ private extension FTDocumentCache {
 
             if isLatestModified {
                 do {
-                    try fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
+                    try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
                     updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                     cacheLog(.success, "Replace", url.lastPathComponent)
                 } catch {
@@ -306,10 +316,11 @@ private extension FTDocumentCache {
 
             let destinationURL = cachedLocation(for: docUUID)
             let relativePath = self.relativePathWRTCollectionFor(documentId: docUUID)
-            if fileManager.fileExists(atPath: destinationURL.path) && (doc.URL.relativePathWRTCollection() == relativePath || relativePath == nil){
+            let _fileManger = FileManager();
+            if _fileManger.fileExists(atPath: destinationURL.path) && (doc.URL.relativePathWRTCollection() == relativePath || relativePath == nil){
                 do {
                     FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
-                    try fileManager.removeItem(at: destinationURL)
+                    try _fileManger.removeItem(at: destinationURL)
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)

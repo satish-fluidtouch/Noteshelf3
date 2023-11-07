@@ -172,6 +172,7 @@ class FTNoteshelfAITextViewViewController: UIViewController {
         self.moreOptionsButton?.menu = UIMenu(children: [menuItem]);
         self.moreOptionsButton?.showsMenuAsPrimaryAction = true;
         self.updateButtonStates();
+        self.showActionOptions(false);
     }
          
     deinit {

@@ -77,7 +77,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
                              isEditable: true,
                              isEditing: false,
                              type: .category,
-                             allowsItemDropping: true)
+                             allowsItemDropping: false)
     }()
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
        didSet {
@@ -311,7 +311,7 @@ extension FTSidebarViewModel {
         if item.type == .tag {
             self.renametag(item, oldTitle: oldTitle)
         } else if item.type == .category {
-            self.renameCategory(item, toTitle: oldTitle)
+            self.renameCategory(item)
         }
     }
     func emptyTrash(_ sideBarItem: FTSideBarItem){
@@ -396,42 +396,20 @@ extension FTSidebarViewModel {
             }
         }
     }
-    func renameCategory(_ category:FTSideBarItem, toTitle title:String){
+    func renameCategory(_ category:FTSideBarItem){
         guard let shelfCollection = category.shelfCollection else {
             return
         }
         let trashCategoryTitle = NSLocalizedString("Trash", comment: "Trash");
-        guard title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != trashCategoryTitle.lowercased() else {
+        guard category.title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != trashCategoryTitle.lowercased() else {
             return;
         }
-        if title != shelfCollection.displayTitle {
-            FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: title) { [weak self](error,shelfCollection) in
+        if category.title != shelfCollection.displayTitle {
+            FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: category.title) { [weak self](error,shelfCollection) in
                 if let _ = error {
                 } else if let shelfCollection = shelfCollection, self?.selectedShelfItemCollection?.uuid == shelfCollection.uuid {
                     self?.selectedShelfItemCollection = shelfCollection
                     self?.delegate?.didSidebarItemRenamed(category)
-                    //TODO: Check for EN
-//                    shelfCollection.shelfItems(.none,
-//                                          parent: nil,
-//                                          searchKey: nil,
-//                                          onCompletion:
-//                        { (items) in
-//                            items.forEach({ (eachItem) in
-//                                if let docItem = eachItem as? FTDocumentItemProtocol, let docID = docItem.documentUUID {
-//                                    let autoBackupItem = FTAutoBackupItem.init(URL: docItem.URL, documentUUID: docID);
-//                                    FTCloudBackUpManager.shared.shelfItemDidGetUpdated(autoBackupItem, dueToRename: true);
-//                                }
-//                                if let groupItem = eachItem as? FTGroupItemProtocol{
-//                                    for item in groupItem.childrens {
-//                                        if let docItem = item as? FTDocumentItemProtocol, let docID = docItem.documentUUID {
-//                                            let autoBackupItem = FTAutoBackupItem.init(URL: docItem.URL, documentUUID: docID);
-//                                            FTCloudBackUpManager.shared.shelfItemDidGetUpdated(autoBackupItem, dueToRename: true);
-//                                        }
-//                                    }
-//                                }
-//                            });
-//                            FTCloudBackUpManager.shared.startPublish();
-//                    });
                 }
             }
         }
@@ -562,7 +540,7 @@ extension FTSidebarViewModel {
             if let tagsSection = self.menuItems.filter({$0.type == .tags}).first {
                 tagsSection.items = self.tags
             }
-            if self.selectedSideBarItemType == .tag {
+            if self.selectedSideBarItemType == .tag || self.selectedSideBarItemType == .allTags {
                 self.setSideBarItemSelection()
             }
        }

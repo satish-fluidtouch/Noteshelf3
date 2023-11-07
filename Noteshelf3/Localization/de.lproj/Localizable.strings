@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "Geben Sie eine Zahl zwischen %d und %d ein.";
 "EnterPassword" = "Geben Sie das Passwort ein.";
 "EnterPasswordHint" = "Geben Sie einen Passworthinweis ein.";
-"EnterPasswordToOpenThisNotebook" = "Geben Sie das Passwort ein, um dieses Notizbuch zu öffnen.";
+"EnterPasswordToOpenThisNotebook" = "Geben Sie das Passwort ein, um %@ zu öffnen";
 "EnterThePasswordFor" = "Geben Sie das Passwort für %@ ein.";
 "EraseEntireStroke" = "Gesamten Strich löschen";
 "EraseHighlighterOnly" = "Lösche nur Textmarker";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "Alle anzeigen";
 "shelf.home.seeAllNotes" = "Alle Notizen anzeigen";
 "shelf.importfile.description" = "Fügen Sie PDFs und Bilder von Ihrer Dateien-App hinzu.";
+"shelf.migration.CompactDescription" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung.";
 "shelf.migration.Description" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung. Die Möglichkeit, ganze Kategorien zu migrieren, kommt bald!";
 "shelf.migration.headerMessage" = "Migrieren Sie Ihre Notizbücher zu Noteshelf 3";
 "shelf.navBar.deselectAll" = "Abwählen";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM

@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "Entrer entre %d et %d";
 "EnterPassword" = "Entrez le mot de passe";
 "EnterPasswordHint" = "Entrez un indice de mot de passe";
-"EnterPasswordToOpenThisNotebook" = "Entrez le mot de passe pour ouvrir ce cahier";
+"EnterPasswordToOpenThisNotebook" = "Entrez le mot de passe pour ouvrir %@";
 "EnterThePasswordFor" = "Entrez le mot de passe pour %@.";
 "EraseEntireStroke" = "Effacer le trait entier";
 "EraseHighlighterOnly" = "Effacer surligneur uniquement.";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "Voir tout";
 "shelf.home.seeAllNotes" = "Voir toutes les notes.";
 "shelf.importfile.description" = "Ajouter des PDF et des images depuis votre application Fichiers";
+"shelf.migration.CompactDescription" = "Il suffit de toucher n'importe quel cahier ici pour en faire une copie dans Noteshelf 3. Les cahiers migrés seront disponibles dans les catégories et groupes de Noteshelf 3.";
 "shelf.migration.Description" = "Il suffit de toucher n'importe quel cahier ici pour en faire une copie dans Noteshelf 3. Les cahiers migrés seront disponibles dans les catégories et groupes de Noteshelf 3. La possibilité de migrer des catégories entières arrive bientôt !";
 "shelf.migration.headerMessage" = "Migrez vos carnets vers Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Désélectionner tout.";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
