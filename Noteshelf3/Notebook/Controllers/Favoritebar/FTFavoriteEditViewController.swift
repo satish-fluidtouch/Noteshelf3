@@ -11,36 +11,60 @@ import FTCommon
 
 protocol FTFavoriteEditDelegate: NSObjectProtocol {
     func didChangeFavorite(_ penset: FTPenSetProtocol)
+    func didChangeRackType(_ rackType: FTRackType)
 }
 
 class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     static let contentSize = CGSize(width: 340, height: 410)
   
-    var favorite: FTPenSetProtocol = FTDefaultPenSet()
+    @IBOutlet private weak var segmentControl: UISegmentedControl!
+
     private var sizeEditController: FTFavoriteSizeEditController?
     private var colorEditController: FTFavoriteColorEditController?
+    private var penTypeEditController: FTFavoritePenTypeEditController?
 
     weak var delegate: FTFavoriteEditDelegate?
+    var rack = FTRackData(type: .pen, userActivity: nil)
+
+    private var favorite: FTPenSetProtocol {
+        self.rack.currentPenset
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Favorite"
-        self.addNavigationItems()
+        self.addPenSizeColorEditViews()
+        self.configureSegmentControl()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if segue.identifier == "FTFavoritePenTypeEditController", let penTypeEditVc = segue.destination as? FTFavoritePenTypeEditController {
+            penTypeEditVc.rack = self.rack
+            self.penTypeEditController = penTypeEditVc
+        }
+    }
+
+    @IBAction private func eyeDropperTapped(_ sender: Any) {
+    }
+
+    @IBAction private func deleteTapped(_ sender: Any) {
+    }
+
+    @objc func segmentChanged() {
+        var type = FTRackType.pen
+        if segmentControl.selectedSegmentIndex == 1 {
+            type = .highlighter
+        }
+        self.delegate?.didChangeRackType(type)
+        self.penTypeEditController?.reloadPenTypes()
+        self.colorEditController?.remove()
+        self.sizeEditController?.remove()
         self.addPenSizeColorEditViews()
     }
 }
 
 private extension FTFavoriteEditViewController {
-    func addNavigationItems() {
-        let leftButtonImage = UIImage(systemName: "eyedropper")?.withTintColor(UIColor.appColor(.accent))
-        let leftButton = UIBarButtonItem(image: leftButtonImage, style: .plain, target: self, action: #selector(eyeDropperTapped))
-        navigationItem.leftBarButtonItem = leftButton
-        let rightButtonImage = UIImage(systemName: "trash")?.withTintColor(UIColor.appColor(.destructiveRed))
-        let rightButton = UIBarButtonItem(image: rightButtonImage, style: .plain, target: self, action: #selector(deleteTapped))
-        navigationItem.rightBarButtonItem = rightButton
-    }
-
     func addPenSizeColorEditViews() {
         // Size edit view
         let sizeController = FTFavoriteSizeEditController(size: favorite.preciseSize, penType: favorite.type)
@@ -65,11 +89,13 @@ private extension FTFavoriteEditViewController {
         self.colorEditController = colorController
     }
 
-
-    @objc func eyeDropperTapped() {
-    }
-
-    @objc func deleteTapped() {
+    func configureSegmentControl() {
+        self.segmentControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        if favorite.type.rackType == .highlighter {
+            self.segmentControl.selectedSegmentIndex = 1
+        } else {
+            self.segmentControl.selectedSegmentIndex = 0
+        }
     }
 }
 
@@ -84,6 +110,7 @@ extension FTFavoriteEditViewController: FTFavoriteSizeUpdateDelegate, FTFavorite
 
     func didChangeColor(_ color: String) {
         self.favorite.color = color
+        self.penTypeEditController?.reloadPenTypes()
         self.delegate?.didChangeFavorite(self.favorite)
     }
 }

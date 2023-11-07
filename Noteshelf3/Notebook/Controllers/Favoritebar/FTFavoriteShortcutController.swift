@@ -18,11 +18,12 @@ class FTFavoriteShortcutViewController: UIViewController {
         self.view.backgroundColor = .clear
     }
 
-    func addFavoritesView() {
+    func addFavoritesView(userActivity: NSUserActivity?) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTFavoritebarViewController.self))
         guard let controller  = storyboard.instantiateViewController(withIdentifier: "FTFavoritebarViewController") as? FTFavoritebarViewController else {
             fatalError("Proggrammer error")
         }
+        controller.activity = userActivity
         self.favbarVc = controller
         self.add(controller, frame: self.view.bounds)
     }

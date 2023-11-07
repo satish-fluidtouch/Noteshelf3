@@ -76,13 +76,13 @@ private let offset: CGFloat = 8.0
         self.updateMinOffsetIfNeeded()
         let reqCenter = self.shortcutViewCenter(for: shortcutViewPlacement)
         self.updateShortcutViewCenter(reqCenter)
-
+        let userActivity = viewController.view.window?.windowScene?.userActivity
         if mode != .deskModeFavorites {
-            let rackData = FTRackData(type: rackType, userActivity: viewController.view.window?.windowScene?.userActivity)
+            let rackData = FTRackData(type: rackType, userActivity: userActivity)
             (toolbarVc as? FTToolTypeShortcutViewController)?.showShortcutViewWrto(rack: rackData)
             (toolbarVc as? FTToolTypeShortcutViewController)?.delegate = self
         } else {
-            (toolbarVc as? FTFavoriteShortcutViewController)?.addFavoritesView()
+            (toolbarVc as? FTFavoriteShortcutViewController)?.addFavoritesView(userActivity: userActivity)
         }
         self.configurePanGesture()
     }

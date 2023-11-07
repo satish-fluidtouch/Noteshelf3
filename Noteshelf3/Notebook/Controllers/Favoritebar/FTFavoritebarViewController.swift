@@ -27,10 +27,14 @@ class FTFavoritebarViewController: UIViewController {
     private let manager = FTFavoritePensetManager()
     private var editFavoriteCurrentIndex: Int?
     private let maximumSupportedFavorites = 100
+    private var rack = FTRackData(type: .pen, userActivity: nil)
+
+    var activity: NSUserActivity?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addVisualEffectBlur(cornerRadius: 19.0)
+        self.rack = FTRackData(type: .pen, userActivity: activity)
         self.configureDragAndDrop()
         self.favorites = manager.fetchFavorites()
         self.showSizeDisplay(10.0)
@@ -93,14 +97,14 @@ private extension FTFavoritebarViewController {
         })
     }
 
-    func showFavoriteEditScreen(with favorite: FTPenSetProtocol, sourceView: UIView) {
+    func showFavoriteEditScreen(with rack: FTRackData, sourceView: UIView) {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: FTFavoriteEditViewController.self))
         guard let controller  = storyboard.instantiateViewController(withIdentifier: "FTFavoriteEditViewController") as? FTFavoriteEditViewController else {
             fatalError("Proggrammer error")
         }
         controller.delegate = self
         controller.ftPresentationDelegate.source = sourceView
-        controller.favorite = favorite
+        controller.rack = rack
         self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize)
     }
 }
@@ -137,8 +141,10 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
         if(indexPath.row < self.favorites.count) {
             editFavoriteCurrentIndex = indexPath.row
             let favorite = self.favorites[indexPath.row]
+            self.rack.currentPenset = favorite
+            self.rack.saveCurrentSelection()
             if(cell.isFavoriteSelected) {
-                self.showFavoriteEditScreen(with: favorite, sourceView: cell)
+                self.showFavoriteEditScreen(with: rack, sourceView: cell)
             } else {
                 self.updateSelectionStatus(cell: cell)
             }
@@ -278,7 +284,7 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
     func didChangeFavorite(_ penset: FTPenSetProtocol) {
         if let index = editFavoriteCurrentIndex, index < maximumSupportedFavorites {
             if let currentCell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell {
-                currentCell.isFavoriteSelected = true
+                currentCell.configure(favorite: penset, currentPenset: penset)
             }
             if(index < self.favorites.count) {
                 self.favorites[index] = penset
@@ -287,5 +293,9 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
             }
             self.manager.saveFavorites(favorites)
         }
+    }
+
+    func didChangeRackType(_ rackType: FTRackType) {
+        self.rack = FTRackData(type: rackType, userActivity: activity)
     }
 }

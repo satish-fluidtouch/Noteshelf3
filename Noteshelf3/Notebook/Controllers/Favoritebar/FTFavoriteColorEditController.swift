@@ -21,10 +21,12 @@ class FTFavoriteColorEditController: UIHostingController<AnyView> {
         let viewmodel = FTPenShortcutViewModel(rackData: FTRackData(type: penType.rackType, userActivity: activity))
         let hostView = FTPresetColorsView(selectedPage: 0)
         super.init(rootView: AnyView(hostView.environmentObject(viewmodel)))
-        viewmodel.$currentSelectedColor.sink { newValue in
-            self.delegate?.didChangeColor(viewmodel.currentSelectedColor)
-        }
-        .store(in: &self.cancellables)
+        viewmodel.$currentSelectedColor
+            .dropFirst()
+            .sink { newValue in
+                self.delegate?.didChangeColor(newValue)
+            }
+            .store(in: &self.cancellables)
     }
 
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {

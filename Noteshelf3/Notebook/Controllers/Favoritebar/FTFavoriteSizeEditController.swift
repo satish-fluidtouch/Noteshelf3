@@ -22,8 +22,8 @@ class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView> {
         self.sizeEditModel = FTPenSizeEditModel(currentSize: size)
         let hostView = FTPenSizeEditView(penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel)
         super.init(rootView: hostView)
-        self.sizeEditModel.objectWillChange
-            .receive(on: DispatchQueue.main)
+        self.sizeEditModel.$currentSize
+            .dropFirst()
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 self.delegate?.didChangeSize(sizeEditModel.currentSize)
