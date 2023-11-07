@@ -68,14 +68,6 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
         self.imageURL = imageURL
         self.document = document
     }
-
-    var isProtected: Bool {
-        guard let doc = document else {
-            return false
-        }
-
-        return doc.isPinEnabledForDocument()
-    }
 }
 
 final class FTShelfContentPhotosViewModel: ObservableObject {

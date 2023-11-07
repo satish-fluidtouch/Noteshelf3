@@ -28,14 +28,6 @@ class FTShelfAudio: Identifiable {
         self.duration = duration
         self.dateAndTime = dateAndTime
     }
-
-    var isProtected: Bool {
-        guard let doc = document else {
-            return false
-        }
-
-        return doc.isPinEnabledForDocument()
-    }
 }
 
 final class FTShelfContentAudioViewModel: ObservableObject {
@@ -48,8 +40,7 @@ final class FTShelfContentAudioViewModel: ObservableObject {
     func buildCache() async {
         do {
             await startLoading()
-            let media = try await fetchAudio()
-            await setMedia(media)
+            try await fetchAudio()
         } catch {
             cacheLog(.error, error)
         }
@@ -61,35 +52,34 @@ final class FTShelfContentAudioViewModel: ObservableObject {
     }
 
     @MainActor
-    private func setMedia(_ audio: [FTShelfAudio]) {
-        if audio.isEmpty {
+    private func setState() {
+        if self.audio.isEmpty {
             state = .empty
         } else {
             state = .loaded
         }
-        self.audio = audio
+    }
+    
+    @MainActor
+    private func updateMedia(items: [FTShelfAudio]) {
+        self.audio.append(contentsOf: items)
+        setState()
     }
 }
 
 //TODO:(AK) Refactor to remove duplicate code from media
 private extension FTShelfContentAudioViewModel {
-    func fetchAudio() async throws -> [FTShelfAudio] {
+    func fetchAudio() async throws {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
-        var totalMedia: [FTShelfAudio] = [FTShelfAudio]()
-
-
         let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
-
         for case let item in items where item.documentUUID != nil {
             do {
                 let media = try fetchMedia(docItem: item)
-                totalMedia.append(contentsOf: media)
+                await self.updateMedia(items: media)
             } catch {
                 continue
             }
         }
-        cacheLog(.success, totalMedia.count)
-        return totalMedia
     }
 
     func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfAudio] {
