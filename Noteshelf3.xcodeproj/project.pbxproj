@@ -117,6 +117,9 @@
 		09F81DC4291544ED0040E023 /* FTToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F81DC3291544ED0040E023 /* FTToolbarView.swift */; };
 		1408AB7B2A14F9A500EF4B6D /* FTSettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */; };
 		14126F092A8CDBE500C3F903 /* FTStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14126F082A8CDBE500C3F903 /* FTStepperView.swift */; };
+		142D37E42AFA22FC0012EFEA /* FTAnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142D37E32AFA22FC0012EFEA /* FTAnnouncementView.swift */; };
+		142D37E62AFA245C0012EFEA /* Announcement.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 142D37E52AFA245C0012EFEA /* Announcement.bundle */; };
+		142D37FA2AFA25B70012EFEA /* migrationAnnouncementContent.md in Resources */ = {isa = PBXBuildFile; fileRef = 142D37FC2AFA25B70012EFEA /* migrationAnnouncementContent.md */; };
 		142DB8892A72855C00469B5E /* FTStickerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142DB8882A72855C00469B5E /* FTStickerModels.swift */; };
 		143570522A42D37D0088B4EB /* FTWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143570512A42D37D0088B4EB /* FTWelcomeView.swift */; };
 		143570542A42D4080088B4EB /* FTGetStartedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */; };
@@ -2631,6 +2634,18 @@
 		09FF73EB20316FFA0034A3B3 /* FTWatchRecordingProvider_Private.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider_Private.swift; sourceTree = "<group>"; };
 		1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingsAboutView.swift; sourceTree = "<group>"; };
 		14126F082A8CDBE500C3F903 /* FTStepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStepperView.swift; sourceTree = "<group>"; };
+		142D37E32AFA22FC0012EFEA /* FTAnnouncementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnouncementView.swift; sourceTree = "<group>"; };
+		142D37E52AFA245C0012EFEA /* Announcement.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Announcement.bundle; sourceTree = "<group>"; };
+		142D37FB2AFA25B70012EFEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Base; path = Base.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D37FD2AFA25BB0012EFEA /* en */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D38002AFA25C40012EFEA /* fr */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = fr; path = fr.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D38012AFA25C60012EFEA /* de */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = de; path = de.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D38022AFA25C70012EFEA /* it */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = it; path = it.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D38032AFA25EC0012EFEA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/migrationAnnouncementContent.md"; sourceTree = "<group>"; };
+		142D38042AFA25EF0012EFEA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hant"; path = "zh-Hant.lproj/migrationAnnouncementContent.md"; sourceTree = "<group>"; };
+		142D38062AFA25F40012EFEA /* ko */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ko; path = ko.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D38072AFA25F60012EFEA /* es */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = es; path = es.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
+		142D38152AFA41E40012EFEA /* ja */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ja; path = ja.lproj/migrationAnnouncementContent.md; sourceTree = "<group>"; };
 		142DB8882A72855C00469B5E /* FTStickerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickerModels.swift; sourceTree = "<group>"; };
 		143570512A42D37D0088B4EB /* FTWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWelcomeView.swift; sourceTree = "<group>"; };
 		143570532A42D4080088B4EB /* FTGetStartedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGetStartedItemViewModel.swift; sourceTree = "<group>"; };
@@ -8693,6 +8708,7 @@
 			children = (
 				E7B77D0829B072B60013E794 /* SwiftUI */,
 				E7B77D0A29B078F30013E794 /* Others */,
+				142D37E52AFA245C0012EFEA /* Announcement.bundle */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -10264,6 +10280,8 @@
 				BA2D90C8285C45E0001BB495 /* FTIcon.swift */,
 				BA2D90AD285C4415001BB495 /* FTPopover.swift */,
 				BA2D90AE285C4415001BB495 /* FTModifiers.swift */,
+				142D37FC2AFA25B70012EFEA /* migrationAnnouncementContent.md */,
+				142D37E32AFA22FC0012EFEA /* FTAnnouncementView.swift */,
 				E7B5769B292368F60066BA45 /* FTToastView.swift */,
 				BA2D90A5285C4415001BB495 /* FTFormsheet.swift */,
 				BA2D90AC285C4415001BB495 /* FTColorPicker.swift */,
@@ -11324,6 +11342,7 @@
 				52B34E0129E5684400360F10 /* Montserrat-ExtraLight.otf in Resources */,
 				E7AC024E2A14E46B009AE92A /* FTPenTypeCollectionViewCell.xib in Resources */,
 				52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */,
+				142D37E62AFA245C0012EFEA /* Announcement.bundle in Resources */,
 				52BBD4FA29E95BC9003088AE /* Inter-Regular.ttf in Resources */,
 				52BBD4FB29E95BC9003088AE /* Inter-Medium.ttf in Resources */,
 				52BBD4FC29E95BC9003088AE /* Inter-Light.ttf in Resources */,
@@ -11418,6 +11437,7 @@
 				BAF38FE62859ADF00067CA9F /* FTShelfCategoryHeaderView.xib in Resources */,
 				BAF38FE82859ADF00067CA9F /* FTConvertToTextViewController.xib in Resources */,
 				097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */,
+				142D37FA2AFA25B70012EFEA /* migrationAnnouncementContent.md in Resources */,
 				BAF38FE92859ADF00067CA9F /* FTFontPickerViewController.xib in Resources */,
 				E7AE404428755D4500C0F3EC /* themes_v8_ja.plist in Resources */,
 				BAF38FEB2859ADF00067CA9F /* iRate.bundle in Resources */,
@@ -12389,6 +12409,7 @@
 				146E2BD72A0A5785004A9B3A /* FTHandWritingView.swift in Sources */,
 				1439371529D6E02700D93033 /* FTStickerDataSource.swift in Sources */,
 				E7B9474F2912499A00BE4430 /* FTShareViewModel.swift in Sources */,
+				142D37E42AFA22FC0012EFEA /* FTAnnouncementView.swift in Sources */,
 				BAF391FE2859ADF00067CA9F /* FTMigrationPopupController.swift in Sources */,
 				E7B31F7A2935EEAD00E39CA8 /* FTCategoryResultSectionCell.swift in Sources */,
 				BAF391FF2859ADF00067CA9F /* FTImportStorageManager.swift in Sources */,
@@ -13622,6 +13643,23 @@
 				099C92122A8CC23A00C1FD07 /* de */,
 			);
 			name = MyScriptLanguageLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		142D37FC2AFA25B70012EFEA /* migrationAnnouncementContent.md */ = {
+			isa = PBXVariantGroup;
+			children = (
+				142D37FB2AFA25B70012EFEA /* Base */,
+				142D37FD2AFA25BB0012EFEA /* en */,
+				142D38002AFA25C40012EFEA /* fr */,
+				142D38012AFA25C60012EFEA /* de */,
+				142D38022AFA25C70012EFEA /* it */,
+				142D38032AFA25EC0012EFEA /* zh-Hans */,
+				142D38042AFA25EF0012EFEA /* zh-Hant */,
+				142D38062AFA25F40012EFEA /* ko */,
+				142D38072AFA25F60012EFEA /* es */,
+				142D38152AFA41E40012EFEA /* ja */,
+			);
+			name = migrationAnnouncementContent.md;
 			sourceTree = "<group>";
 		};
 		52550E592A70FCAD00E7A1E7 /* FTNewNotebook.storyboard */ = {

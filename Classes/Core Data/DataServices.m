@@ -35,6 +35,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DataServices)
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"isAlreadyInstalled"]) {
         [[NSUserDefaults standardUserDefaults] setBool: TRUE forKey:@"quickCreateTipToShow"];
+        [[NSUserDefaults standardUserDefaults] setBool: TRUE forKey:@"migrationAnnoucementViewToShow"];
         [self firstTimeInitialize];
     }
     else

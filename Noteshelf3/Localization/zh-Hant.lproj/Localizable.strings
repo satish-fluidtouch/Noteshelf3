@@ -1,4 +1,5 @@
 
+" " = "輕鬆地記錄美麗的筆記";
 "ADDALLCAPS" = "全部大寫";
 "AboutNoteshelf" = "關於 Noteshelf";
 "AboutOptionRateOnAppStore" = "在App Store給我們評分";
@@ -826,7 +827,6 @@
 "Tag" = "標籤";
 "Tagged" = "標記";
 "Tags" = "標籤";
-"Take beautiful notes effortlessly" = "輕鬆地記錄美麗的筆記";
 "TakePhoto" = "拍照";
 "TakeScreenshot" = "截圖";
 "TapToRate" = "點擊評分";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 2。 您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 3。 您可以在行進中錄製音頻，並稍後進行記錄。";
 "WatchNewRecords" = "您的Apple Watch有新錄音。";
 "WatchRecording" = "觀看錄影";
 "WatchRecordings" = "手錶錄音";
@@ -1491,6 +1491,7 @@
 "trash.alert.title" = "你確定要清空垃圾箱嗎？";
 "unsplash.search.alertMessage" = "清單視圖";
 "untitled" = "無標題";
+"updatemigration.title" = "遷移更新";
 "useSticker" = "使用貼紙";
 "welcome.appleWatch" = "蘋果手錶";
 "welcome.audioNotes" = "音訊筆記";
@@ -1533,4 +1534,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Rakesh on 7 November 2023 at 3:23 PM

@@ -130,3 +130,13 @@ class FTNSItemProviderImage: NSObject, NSItemProviderWriting {
     }
 }
 
+public func readAnnouncement(contentFilename: String) -> LocalizedStringKey {
+    do {
+        let fileURL = Bundle.main.url(forResource: contentFilename, withExtension: "md")!
+        let contents = try Data(contentsOf: fileURL)
+        let string = String(bytes: contents, encoding: String.Encoding.utf8)!
+        return LocalizedStringKey(string)
+    } catch {
+        fatalError("Bundle had issue")
+    }
+}

@@ -1,4 +1,5 @@
 
+" " = "아름다운 노트를 쉽게 만들다";
 "ADDALLCAPS" = "모두 대문자로 추가";
 "AboutNoteshelf" = "노트셸프에 대하여";
 "AboutOptionRateOnAppStore" = "앱 스토어에서 평가해주세요.";
@@ -826,7 +827,6 @@
 "Tag" = "태그";
 "Tagged" = "태그된";
 "Tags" = "태그";
-"Take beautiful notes effortlessly" = "아름다운 노트를 쉽게 만들다";
 "TakePhoto" = "사진 촬영";
 "TakeScreenshot" = "화면 캡처";
 "TapToRate" = "평가하려면 터치하세요";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "화이트보드 모드";
 "Wallpapers" = "배경화면";
 "Warning" = "주의";
-"WatchAdInfo" = "애플 워치에 Noteshelf 2를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfo" = "애플 워치에 Noteshelf 3를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
 "WatchNewRecords" = "귀하의 애플 워치에서 새로운 녹음 파일이 도착했습니다.";
 "WatchRecording" = "녹화 보기";
 "WatchRecordings" = "워치 녹화";
@@ -1491,6 +1491,7 @@
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
 "untitled" = "무제";
+"updatemigration.title" = "마이그레이션 업데이트";
 "useSticker" = "스티커 사용";
 "welcome.appleWatch" = "애플 워치";
 "welcome.audioNotes" = "오디오 노트";
@@ -1533,4 +1534,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Rakesh on 7 November 2023 at 3:23 PM

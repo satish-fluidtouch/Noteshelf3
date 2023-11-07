@@ -1,4 +1,5 @@
 
+" " = "Prendre des notes magnifiques sans effort";
 "ADDALLCAPS" = "Ajouter en majuscules";
 "AboutNoteshelf" = "À propos de Noteshelf";
 "AboutOptionRateOnAppStore" = "Évaluez-nous sur l'App Store.";
@@ -826,7 +827,6 @@
 "Tag" = "Étiqueter";
 "Tagged" = "Étiqueté";
 "Tags" = "Étiquettes";
-"Take beautiful notes effortlessly" = "Prendre des notes magnifiques sans effort";
 "TakePhoto" = "Prendre une photo";
 "TakeScreenshot" = "Prendre une capture d'écran";
 "TapToRate" = "Appuyez pour évaluer";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "MODE TABLEAU BLANC";
 "Wallpapers" = "Fonds d'écran";
 "Warning" = "Avertissement";
-"WatchAdInfo" = "Installez Noteshelf 2 sur votre Apple Watch. Vous pouvez enregistrer de l'audio en déplacement et prendre des notes plus tard.";
+"WatchAdInfo" = "Installez Noteshelf 3 sur votre Apple Watch. Vous pouvez enregistrer de l'audio en déplacement et prendre des notes plus tard.";
 "WatchNewRecords" = "De nouvelles enregistrements sont arrivés de votre Apple Watch.";
 "WatchRecording" = "Regarder l'enregistrement.";
 "WatchRecordings" = "Enregistrements de la Watch";
@@ -1491,6 +1491,7 @@
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
 "untitled" = "Sans titre";
+"updatemigration.title" = "Mise à jour sur la migration";
 "useSticker" = "Utiliser l'autocollant";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "NOTES AUDIO";
@@ -1533,4 +1534,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Rakesh on 7 November 2023 at 3:23 PM

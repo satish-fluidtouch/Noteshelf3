@@ -1,4 +1,5 @@
 
+" " = "Tomar apuntes hermosos sin esfuerzo";
 "ADDALLCAPS" = "Agregar todo en mayúsculas";
 "AboutNoteshelf" = "Acerca de Noteshelf.";
 "AboutOptionRateOnAppStore" = "Califícanos en la App Store";
@@ -10,10 +11,10 @@
 "Add" = "Agregar";
 "AddBtnNameInAlert" = "Añadir";
 "AddMedia" = "Añadir medios";
-"AddNew" = "Añadir";
+"AddNew" = "Añadir nuevo";
 "AddNewCategory" = "Añadir Nueva Categoría";
 "AddNewPage" = "Añadir nueva página.";
-"AddNewPageHint" = "Deslizar con 1 o 2 dedos en la primera o última página.";
+"AddNewPageHint" = "Deslizar con 1 o 2 dedos en la primera o en la última página.";
 "AddNewRecording" = "Añadir nueva grabación.";
 "AddPage" = "Añadir página";
 "AddTag" = "Añadir etiqueta";
@@ -21,7 +22,7 @@
 "AddTags" = "Añadir etiquetas.";
 "AddToCurrentPage" = "Agregar a la página actual";
 "AddToNewCategory" = "Añadir nueva categoría.";
-"AddToNewNotebook" = "Agregar nueva libreta";
+"AddToNewNotebook" = "Agregar nuevo cuaderno";
 "AddToNewPage" = "Agregar a nueva página";
 "AddToNotebook" = "Añadir al cuaderno";
 "AddToSiri" = "Agregar a Siri";
@@ -39,14 +40,14 @@
 "AllNotes" = "Todas las notas";
 "AllNotesGroupingError" = "No se puede crear un grupo en esta categoría.";
 "AllPages" = "Todas las páginas";
-"AlreadyInFavorites" = "¡Ya en Favoritos!";
+"AlreadyInFavorites" = "¡Ya está en Favoritos!";
 "Animals" = "Animales";
 "ApplePencilDetectedMessage" = "Activa el soporte del Apple Pencil desde la configuración para obtener un mejor rechazo de la palma.";
 "ApplePencilDetectedTitle" = "Lápiz de Apple detectado";
 "ApplePencilFeatureInfo" = "La acción de doble toque del Apple Pencil está actualmente configurada como la opción predeterminada del sistema (Herramienta seleccionada). Para más opciones, visita Configuración de Noteshelf -> Stylus -> Apple Pencil.";
 "ApplePencilSettingsTitle" = "Configuración del lápiz de Apple";
 "AppleWatch" = "Reloj de Apple";
-"AppleWatchRecording" = "Grabación de Apple Watch";
+"AppleWatchRecording" = "Grabación del reloj de Apple.";
 "Apply" = "Aplicar";
 "Arts" = "Artes";
 "Athletics" = "Atletismo";
@@ -63,25 +64,25 @@
 "AutoBACKUP" = "Auto-copia de seguridad";
 "AutoBackup" = "Copia de seguridad automática";
 "AutoBackupNotebooks" = "Respaldo automático de cuadernos";
-"AutoBackupONMessage" = "Esto habilitará la copia de seguridad automática para todas las libretas que crees. ¿Deseas continuar?";
+"AutoBackupONMessage" = "Esto habilitará la copia de seguridad automática para todos los cuadernos que crees. ¿Deseas continuar?";
 "AutoSelectPreviousTool" = "Auto-seleccionar herramienta anterior";
 "Back" = "Atrás";
 "BackUpFailed" = "Copia de seguridad fallida";
 "BackUpInProgress" = "Copia de seguridad en progreso...'";
-"BackUpPending" = "Reserva pendiente";
+"BackUpPending" = "Respaldo pendiente ";
 "BackUpTo" = "Copia de seguridad a";
 "BackingUpTo" = "Haciendo una copia de seguridad en %@.";
-"Backup" = "Reserva";
+"Backup" = " Respaldo ";
 "BackupFormat" = "Formato de respaldo";
 "BackupLocation" = "Ubicación de respaldo";
 "BackupNotSelected" = "No seleccionado para respaldo";
 "BackupNotebooks" = "Cuadernos de respaldo";
 "BackupOff" = "Apagado";
-"BackupOnWiFiOnly" = "Copia de seguridad solo en WiFi";
+"BackupOnWiFiOnly" = "Copia de seguridad solo con WiFi";
 "BackupTo" = "Copia de seguridad en %@";
 "BackupToWebDAV" = "Copia de seguridad a WebDAV";
 "BackupUpToDate" = "Respaldo actualizado";
-"BadResponseFromServer" = "Respuesta incorrecta del servidor. Por favor, inténtalo de nuevo más tarde.";
+"BadResponseFromServer" = "Respuesta del servidor incorrecta. Por favor, inténtalo de nuevo más tarde.";
 "Basic" = "Básico";
 "BetaFeedback" = "Comentarios de Beta";
 "BlurredBand" = "Banda borrosa";
@@ -258,7 +259,7 @@
 "DocumentSupport" = "¿El documento tiene algún problema? Envíanos el documento para que podamos investigar esto.";
 "DocumentSupportDisclaimer" = "DESCARGO DE RESPONSABILIDAD (Léalo detenidamente): Su documento ha sido adjuntado a este correo electrónico. Por favor, no envíe este correo electrónico si contiene información confidencial o sensible dentro del documento.";
 "DoesntRequirePassword" = "Ingrese la contraseña de esta libreta para eliminarla.";
-"Done" = "Hecho.";
+"Done" = "Hecho";
 "DontBackup" = "No hacer copia de seguridad";
 "DontShowForThisBook" = "No advertir nuevamente para este cuaderno";
 "DontShowHintAgain" = "No mostrar";
@@ -295,7 +296,7 @@
 "EmptyTrash" = "Vaciar papelera";
 "EmptyTrashConfirmation" = "¿Estás seguro/a de que quieres eliminar permanentemente los elementos de la Papelera?";
 "Enable" = "Habilitar";
-"EnableAdonit" = "Permitir Adonit";
+"EnableAdonit" = "Habilitar Adonit";
 "EnableApplePencil" = "Habilitar Apple Pencil.";
 "EnableNotebookPassword" = "Habilitar contraseña de cuaderno";
 "EnableWacom" = "Habilitar Wacom.";
@@ -419,7 +420,7 @@
 "IncorrectCredentials" = "Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.";
 "IncorrectPassword" = "Contraseña incorrecta";
 "IncorrectTermSelected" = "Término incorrecto seleccionado.";
-"Indexing" = "Indizando...";
+"Indexing" = "Indexando…";
 "IndexingPageN" = "Indexando página %d";
 "Info" = "Información";
 "Insert" = "Insertar";
@@ -526,16 +527,16 @@
 "NewGroup" = "Nuevo grupo";
 "NewNotebook" = "Nuevo Cuaderno";
 "NewPassword" = "Nueva contraseña";
-"NewWindow" = "Ventana nueva";
+"NewWindow" = "Nueva ventana";
 "Next" = "Siguiente";
 "No" = "No";
-"NoAppleWatchRecordings" = "No grabaciones de Apple Watch";
+"NoAppleWatchRecordings" = "No hay grabaciones de Apple Watch";
 "NoBackupBooksChoosen" = "No se han seleccionado cuadernos para hacer copias de seguridad";
 "NoBand" = "Sin banda";
 "NoBookmarksDescription" = "Toca el ícono de marcador <ICON> en las páginas para agregarlas a esta vista. Mantén presionado para agregar título y color.";
 "NoBookmarksPage" = "No hay páginas marcadas.";
 "NoCameraInfo" = "No se puede acceder a la cámara. Por favor, intenta reiniciar tu dispositivo.";
-"NoFavoritePens" = "No Bolígrafos Favoritos";
+"NoFavoritePens" = "No hay Bolígrafos Favoritos";
 "NoFavoritePensDescription" = "Toque la estrella <ICON> en el panel de herramientas de escritura para marcar como favorito el lápiz activo.";
 "NoImportsKey" = "¡No hay importaciones disponibles!";
 "NoInternetConnection" = "Por favor, verifica tu conexión a internet o intenta de nuevo más tarde.";
@@ -826,7 +827,6 @@
 "Tag" = "Etiqueta";
 "Tagged" = "Etiquetado";
 "Tags" = "Etiquetas";
-"Take beautiful notes effortlessly" = "Tomar apuntes hermosos sin esfuerzo";
 "TakePhoto" = "Tomar foto";
 "TakeScreenshot" = "Capturar pantalla";
 "TapToRate" = "Toque para calificar";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "MODO PIZARRA";
 "Wallpapers" = "Fondos de pantalla";
 "Warning" = "Advertencia";
-"WatchAdInfo" = "Instala Noteshelf 2 en tu Apple Watch. Puedes grabar audio sobre la marcha y tomar notas más tarde.";
+"WatchAdInfo" = "Instala Noteshelf 3 en tu Apple Watch. Puedes grabar audio sobre la marcha y tomar notas más tarde.";
 "WatchNewRecords" = "Nuevas grabaciones llegaron desde tu Apple Watch.";
 "WatchRecording" = "Ver grabación";
 "WatchRecordings" = "Grabaciones del Watch";
@@ -1063,7 +1063,7 @@
 "gesture.activeFocusMode.title" = "Activar modo de enfoque";
 "gesture.undoredo.subTitle" = "Toque único de 2 dedos o 3 dedos.";
 "gesture.undoredo.title" = "Deshacer o Rehacer";
-"getInspired.bulletJournal" = "Diario de balas";
+"getInspired.bulletJournal" = "Diario de viñetas";
 "getInspired.business" = "Plan de Marketing";
 "getInspired.student" = "Notas de estudio.";
 "globalSearch.page" = "página";
@@ -1130,7 +1130,7 @@
 "more.settings.footer" = "Estas configuraciones se aplican globalmente a todas tus notas.";
 "moreInfo" = "Más información...";
 "move" = "Mover";
-"newnotebook" = "NUEVA CUADERNO";
+"newnotebook" = "NUEVO CUADERNO";
 "newnotebook.create" = "Crear";
 "newnotebook.exitalert.message" = "¿Te gustaría continuar?";
 "newnotebook.exitalert.title" = "Esto cerrará la pantalla de la Nueva Libreta y te redirigirá a la vista de Plantillas en la Estante.";
@@ -1491,6 +1491,7 @@
 "trash.alert.title" = "¿Estás seguro de que quieres vaciar tu Papelera?";
 "unsplash.search.alertMessage" = "Introducir texto para buscar'";
 "untitled" = "Sin título";
+"updatemigration.title" = "Actualización sobre Migración";
 "useSticker" = "Usar etiqueta";
 "welcome.appleWatch" = "RELOJ DE APPLE";
 "welcome.audioNotes" = "NOTAS DE AUDIO";
@@ -1533,4 +1534,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Rakesh on 7 November 2023 at 3:23 PM

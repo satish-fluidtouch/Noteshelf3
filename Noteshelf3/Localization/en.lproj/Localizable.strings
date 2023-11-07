@@ -1,4 +1,5 @@
 
+" " = "Take beautiful notes effortlessly";
 "ADDALLCAPS" = "Add all caps";
 "AboutNoteshelf" = "About Noteshelf";
 "AboutOptionRateOnAppStore" = "Rate us on the App Store";
@@ -826,7 +827,6 @@
 "Tag" = "Tag";
 "Tagged" = "Tagged";
 "Tags" = "Tags";
-"Take beautiful notes effortlessly" = "Take beautiful notes effortlessly";
 "TakePhoto" = "Take Photo";
 "TakeScreenshot" = "Take screenshot";
 "TapToRate" = "Tap to rate";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "WHITEBOARD MODE";
 "Wallpapers" = "Wallpapers";
 "Warning" = "Warning";
-"WatchAdInfo" = "Install Noteshelf 2 on your Apple Watch. You can record audio on-the-go and take notes later.";
+"WatchAdInfo" = "Install Noteshelf 3 on your Apple Watch. You can record audio on-the-go and take notes later.";
 "WatchNewRecords" = "New recordings arrived from your Apple Watch.";
 "WatchRecording" = "Watch Recording";
 "WatchRecordings" = "Watch Recordings";
@@ -1491,6 +1491,7 @@
 "trash.alert.title" = "Are you sure you want empty your Trash?";
 "unsplash.search.alertMessage" = "Enter text to search";
 "untitled" = "Untitled";
+"updatemigration.title" = "Update on Migration";
 "useSticker" = "Use Sticker";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "AUDIO NOTES";
@@ -1533,4 +1534,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Rakesh on 7 November 2023 at 3:23 PM
