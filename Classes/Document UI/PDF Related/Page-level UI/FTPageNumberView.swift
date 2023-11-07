@@ -14,6 +14,7 @@ import FTStyles
     fileprivate weak var pageNumberInfoLabel : UILabel?
     fileprivate var page : FTPageProtocol?
     fileprivate var labelFrame: CGRect = .zero
+    fileprivate let visualEffectView = UIVisualEffectView()
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -22,13 +23,18 @@ import FTStyles
         self.isUserInteractionEnabled = false;
         let pageLabel = UILabel.init(frame: frame);
         pageLabel.textAlignment = NSTextAlignment.center;
-        pageLabel.backgroundColor = UIColor.init(hexString: "#E5E5E5",alpha: 1.0)
         pageLabel.font = UIFont.appFont(for: .medium, with: 15)
         pageLabel.layer.cornerRadius = 6.0
+        visualEffectView.frame = frame
+        visualEffectView.effect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .regular),style: UIVibrancyEffectStyle.label)
+        visualEffectView.backgroundColor = UIColor.init(hexString: "#E5E5E5",alpha: 1.0)
+        visualEffectView.layer.cornerRadius = 6.0
         pageLabel.layer.masksToBounds = true
-        self.addSubview(pageLabel);
-        self.pageNumberInfoLabel = pageLabel;
-        self.pageNumberInfoLabel?.textColor = UIColor.appColor(.black70);
+        self.addSubview(visualEffectView)
+        self.addSubview(pageLabel)
+        pageLabel.bringSubviewToFront(self)
+        self.pageNumberInfoLabel = pageLabel
+        self.pageNumberInfoLabel?.textColor = UIColor.appColor(.black70)
         self.page = page
         self.labelFrame = frame
         self.setCurrentPage(page)
@@ -44,7 +50,9 @@ import FTStyles
             let attributedPageNumberInfo = NSAttributedString(string: String.init(format: NSLocalizedString("NofNAlt", comment: "%d of %d"),page.pageIndex()+1,document.pages().count))
 
             let pageNumberInfo = attributedPageNumberInfo.string
-            self.pageNumberInfoLabel?.frame = CGRect(x:labelFrame.minX,y: labelFrame.minY,width: (attributedPageNumberInfo.size().width + 32), height: 24)
+            let newFrame = CGRect(x:labelFrame.minX,y: labelFrame.minY,width: (attributedPageNumberInfo.size().width + 32), height: 24)
+            self.pageNumberInfoLabel?.frame = newFrame
+            visualEffectView.frame = newFrame
             self.pageNumberInfoLabel?.text =  pageNumberInfo
         }
         else {
@@ -54,7 +62,9 @@ import FTStyles
     }
     func udpateLabelFramesYPosition(_ newYPosition: CGFloat) {
         self.labelFrame.origin = CGPoint(x: self.labelFrame.minX, y: newYPosition)
-        self.pageNumberInfoLabel?.frame = CGRect(x: labelFrame.minX, y: labelFrame.minY, width: ((pageNumberInfoLabel?.text?.size().width ?? 0) + 32), height: 24)
+        let newFrame = CGRect(x: labelFrame.minX, y: labelFrame.minY, width: ((pageNumberInfoLabel?.text?.size().width ?? 0) + 32), height: 24)
+        self.pageNumberInfoLabel?.frame = newFrame
+        visualEffectView.frame = newFrame
         self.setNeedsLayout()
     }
     
@@ -66,7 +76,7 @@ import FTStyles
                 return;
         }
         _page.pageBackgroundColor { (color) in
-            self.pageNumberInfoLabel?.textColor = UIColor.appColor(.black70);
+            self.pageNumberInfoLabel?.textColor = UIColor.black.withAlphaComponent(0.7);
         }
     }
 }
