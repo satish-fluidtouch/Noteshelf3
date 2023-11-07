@@ -50,6 +50,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     @IBOutlet weak var seperatorViewTopConstraint: NSLayoutConstraint!
     let activityIndicator = UIActivityIndicatorView(style: .medium)
     var hideSuggestions: Bool = false
+    private(set) var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
     override func viewWillLayoutSubviews() {
            super.viewWillLayoutSubviews()
     }
@@ -411,13 +412,20 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
 
 extension FTFinderSearchController {
     @objc func initiateSearch() {
-        isSearching = true
-        showLoadingIndicator()
-        finderController?.configureForSearchTab()
-        finderController?.isSearching = true
-        finderController?.filterOptionsController(didChangeSearchText: self.searchText, onFinding: searchOptions.onFinding,  onCompletion: searchOptions.onCompletion)
-        constructRecentItems()
-       updateSubViews(isSearching: true)
+        let tags = searchOptions.selectedTags.map { eachModel in
+            return eachModel.text
+        }
+        if searchInputInfo.textKey != self.searchText || searchInputInfo.tags != tags {
+            isSearching = true
+            showLoadingIndicator()
+            finderController?.configureForSearchTab()
+            finderController?.isSearching = true
+            searchInputInfo.tags = tags
+            searchInputInfo.textKey = searchText
+            finderController?.filterOptionsController(didChangeSearchText: self.searchText, onFinding: searchOptions.onFinding,  onCompletion: searchOptions.onCompletion)
+            constructRecentItems()
+            updateSubViews(isSearching: true)
+        }
     }
     
     private func constructRecentItems() {
@@ -560,6 +568,7 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
         recentsTableView.reloadData()
         recentsTableView.isHidden = false
         self.delegate?.cancelFinderSearchOperation()
+        self.searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
     }
 
     private func populateSearchSuggestion(for query: String) {
