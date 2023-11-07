@@ -9,6 +9,7 @@
 import UIKit
 import QuickLookThumbnailing
 import AVFoundation
+import FTDocumentFramework
 
 class ThumbnailProvider: QLThumbnailProvider {
     override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
@@ -19,35 +20,18 @@ class ThumbnailProvider: QLThumbnailProvider {
             handler(nil,FTQLThumbnailError.notDownloaded);
             return;
         }
-        let coordinator = NSFileCoordinator(filePresenter: nil);
-        var error: NSError?;
-        coordinator.coordinate(readingItemAt: request.fileURL,
-                               error: &error,
-                               byAccessor: { readingURL in
-            let thumbURL = readingURL.appendingPathComponent("cover-shelf-image.png")
-            if let image = UIImage(contentsOfFile: thumbURL.path(percentEncoded: false)) {
-                let r = CGRect(origin: .zero, size: image.size)
-//#if DEBUG
-//                NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(request.fileURL.path)")
-//#endif
-                let reply = QLThumbnailReply(contextSize: r.size, currentContextDrawing: {
-                    image.draw(in: CGRect(origin: .zero, size: r.size));
-                    return true;
-                })
-                handler(reply, nil)
-            }
-            else {
+
+        var nsError: NSError?
+        
+        NSFileCoordinator().coordinate(readingItemAt: request.fileURL, options: .immediatelyAvailableMetadataOnly, error: &nsError) { readingURL in
+            self.URLBasedResponse(readingURL, handler: handler);
+//            self.contextBasedResponse(readingURL, handler: handler);
+        }
+        if let error = nsError {
 #if DEBUG
                 NSLog("🌄 🔴🔴 Thumbnail coverNotFound for \(request.fileURL.path) ")
 #endif
-                handler(nil,FTQLThumbnailError.coverNotFound);
-            }
-        })
-        if let _error = error {
-#if DEBUG
-                NSLog("🌄 🔴🔴 Thumbnail coverNotFound for \(request.fileURL.path) ")
-#endif
-            handler(nil, _error);
+            handler(nil, error)
         }
     }
 
@@ -68,5 +52,59 @@ class ThumbnailProvider: QLThumbnailProvider {
         }
     }
 #endif
-
 }
+
+private extension ThumbnailProvider {
+    func URLBasedResponse(_ packageURL: URL, handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
+        guard let tempPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else {
+#if DEBUG
+            NSLog("🌄 🔴🔴 Thumbnail coverNotFound for \(packageURL.path) ")
+#endif
+            handler(nil, FTQLThumbnailError.coverNotFound)
+            return;
+        }
+        
+        let thumbURL = packageURL.appendingPathComponent("cover-shelf-image.png")
+        let cache = packageURL.path(percentEncoded: false).hashValue;
+        let pathToCopy = URL(filePath: tempPath).appending(path: "\(cache).png");
+        do {
+            let fileManager = FileManager()
+            try? fileManager.removeItem(at: pathToCopy);
+            try fileManager.copyItem(at: thumbURL, to: pathToCopy);
+            
+#if DEBUG
+            NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(packageURL.path)")
+#endif
+            let reply = QLThumbnailReply(imageFileURL: pathToCopy);
+            handler(reply, nil)
+        }
+        catch {
+#if DEBUG
+            NSLog("🌄 🔴🔴 Thumbnail coverNotFound for \(packageURL.path) ")
+#endif
+            handler(nil, error)
+        }
+    }
+    
+    func contextBasedResponse(_ packageURL: URL, handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
+        let thumbURL = packageURL.appendingPathComponent("cover-shelf-image.png")
+        if let image = UIImage(contentsOfFile: thumbURL.path(percentEncoded: false)) {
+            let r = CGRect(origin: .zero, size: image.size)
+#if DEBUG
+            NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(packageURL.path)")
+#endif
+            let reply = QLThumbnailReply(contextSize: r.size, currentContextDrawing: {
+                image.draw(in: CGRect(origin: .zero, size: r.size));
+                return true;
+            })
+            handler(reply, nil)
+        }
+        else {
+#if DEBUG
+            NSLog("🌄 🔴🔴 Thumbnail coverNotFound for \(packageURL.path) ")
+#endif
+            handler(nil,FTQLThumbnailError.coverNotFound);
+        }
+    }
+}
+

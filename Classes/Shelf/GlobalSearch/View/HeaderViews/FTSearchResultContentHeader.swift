@@ -22,10 +22,6 @@ class FTSearchResultContentHeader: FTSearchResultHeader {
             }
             self.lblCategory?.text = categoryName
         }
-        var pagesString = "\(section.items.count) \(NSLocalizedString("Pages", comment: "Pages"))"
-        if section.items.count == 1 {
-            pagesString = "\(section.items.count) \(NSLocalizedString("Page", comment: "Page"))"
-        }
-        self.lblMatchCount?.text = pagesString.lowercased()
+        self.updatePageCount(section)
     }
 }

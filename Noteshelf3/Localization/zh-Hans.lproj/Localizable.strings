@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁纸";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安装Noteshelf 3。您可以在行进中录制音频，并稍后进行记录。";
+"WatchAdInfo" = "在你的Apple Watch上安装Noteshelf 2。您可以在行进中录制音频，并稍后进行记录。";
 "WatchNewRecords" = "您的Apple Watch有新录音。";
 "WatchRecording" = "观看录像";
 "WatchRecordings" = "手表录音";
@@ -1533,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 6 November 2023 at 11:22 AM
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM

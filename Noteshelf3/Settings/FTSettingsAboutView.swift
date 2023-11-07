@@ -20,13 +20,12 @@ struct FTSettingsAboutView: View {
     @State private var showWebview: Bool = false
     @State private var showWelcome: Bool = false
 
-
+    @Environment(\.horizontalSizeClass) var sizeClass
     let columns = [
-        GridItem(.flexible())
+        GridItem(.fixed(44))
     ]
 
     var body: some View {
-        GeometryReader{ proxy in
             ScrollView {
                 headerSection
                 
@@ -34,9 +33,7 @@ struct FTSettingsAboutView: View {
                 
                 footerSection
             }
-            .frame(width: proxy.size.width,height: proxy.size.height)
             .background(Color.appColor(.formSheetBgColor))
-        }
 #if !targetEnvironment(macCatalyst)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -150,12 +147,11 @@ struct FTSettingsAboutView: View {
     @ViewBuilder
     private var footerSection: some View{
         VStack{
-            LazyHGrid(rows: columns,alignment: .center, spacing:32){
+            LazyHGrid(rows: columns,alignment: .center, spacing: sizeClass == .compact ? 16 : 32){
                 ForEach(SocialMediaTypes.allCases, id: \.self.url) { type in
                     Image(type.icon)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 44,height: 44)
                         .onTapGesture {
 #if targetEnvironment(macCatalyst)
                             if let url = URL(string: type.url) {
@@ -167,6 +163,7 @@ struct FTSettingsAboutView: View {
 #endif
                         }
                 }
+
             }
             .if(selectedStyle != nil, transform: { view in
                 view.fullScreenCover(isPresented: $showWebview) {
@@ -175,13 +172,13 @@ struct FTSettingsAboutView: View {
                     }
                 }
             })
-                Text(viewModel.copyrightMessage)
+            Text(viewModel.copyrightMessage)
                 .font(.appFont(for: .regular, with: 13))
                 .foregroundColor(Color.label).opacity(0.7)
                 .lineLimit(1)
         }
-        .frame(height: 120)
-        .padding(.bottom,22)
+            .frame(height: 120)
+            .padding(.bottom,22)
     }
 }
 
