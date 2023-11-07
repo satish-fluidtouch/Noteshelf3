@@ -151,9 +151,12 @@ extension FTShelfBookmarksViewController: UICollectionViewDataSource, UICollecti
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.bookmarkItems[indexPath.row]
-         let shelf = item.shelfItem
-        self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex)
-            track(EventName.shelf_bookmark_page_tap, screenName: ScreenName.shelf_bookmarks)
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
+                self.delegate?.openNotebook(shelfItem: shelfItem, page: item.pageIndex)
+                track(EventName.shelf_bookmark_page_tap, screenName: ScreenName.shelf_bookmarks)
+            }
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

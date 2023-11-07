@@ -48,7 +48,6 @@ class FTBookmarksProvider {
 
     func updateBookmarkItemsFor(cacheItems: [FTItemToCache]) {
         let dispatchGroup = DispatchGroup()
-        var refreshBookmarksPage = false
 
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
 
@@ -64,7 +63,6 @@ class FTBookmarksProvider {
                     let pages = docPlist?.pages
                     pages?.forEach { page in
                         let matchedItem = matchedItems.first(where: {$0.pageUUID == page.uuid})
-                        refreshBookmarksPage = matchedItem?.isBookmarked != page.isBookmarked
                         if page.isBookmarked {
                             var pageIndex = 0
                             if let index = pages?.firstIndex(where: { $0.uuid == page.uuid }) {
