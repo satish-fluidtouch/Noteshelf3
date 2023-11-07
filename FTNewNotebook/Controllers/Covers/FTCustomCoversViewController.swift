@@ -198,6 +198,28 @@ extension FTCustomCoversViewController: UICollectionViewDataSource, UICollection
             return spacing
         }
     }
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
+        for indexPath in indexPaths {
+            if indexPath.section == 1 {
+                return UIContextMenuConfiguration(actionProvider:  { [weak self]actions in
+                    return UIMenu(children: [
+                        UIAction(title: "Delete", attributes: .destructive) { _ in
+                            guard let self = self else {
+                                return
+                            }
+                            let customCover = self.viewModel.recentCovers[indexPath.row]
+                            self.deletionCustomCover(customCover.themeable)
+                            self.updateCoverPreviewIfNeeded(recentDeletedCover: customCover)
+                        }
+                    ])
+                })
+            } else {
+                return nil
+            }
+        }
+        return nil
+    }
+
 }
 
 extension FTCustomCoversViewController: FTPHPickerDelegate, FTImagePickerDelegate {
@@ -223,6 +245,29 @@ extension FTCustomCoversViewController: FTPHPickerDelegate, FTImagePickerDelegat
     func didFinishPicking(image: UIImage, picker: UIImagePickerController) {
         picker.dismiss(animated: true) {
             self.processSelectedImage(image)
+        }
+    }
+}
+//MARK: Custom cover deletion
+extension FTCustomCoversViewController {
+    func deletionCustomCover(_ customCover:FTThemeable){
+        if FileManager().fileExists(atPath: customCover.themeFileURL.path) {
+            do {
+                try FileManager.init().removeItem(at: customCover.themeFileURL)
+                viewModel.deleteCustomCoverFromRecents(customCover)
+                self.collectionView.reloadSections(IndexSet(integer: 1))
+            } catch let failError as NSError{
+                debugPrint("error occured while deleting custom cover with reason",failError.localizedDescription)
+            }
+        }
+    }
+    func updateCoverPreviewIfNeeded(recentDeletedCover: FTCoverThemeModel){
+        if recentDeletedCover.themeable.themeFileURL.urlByDeleteingPrivate() ==
+            FTCurrentCoverSelection.shared.selectedCover?.themeFileURL.urlByDeleteingPrivate() ,
+           let coverStyleVC = self.navigationController?.children.first(where: {$0 is FTCoverStyleViewController}) as? FTCoverStyleViewController,
+           let noCoverTheme = coverStyleVC.noCoverTheme(){
+            self.delegate?.didSelectCover(noCoverTheme)
+            coverStyleVC.setDefaultCover(noCoverTheme.themeable)
         }
     }
 }
