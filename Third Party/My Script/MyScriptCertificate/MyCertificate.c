@@ -1230,8 +1230,7 @@ static const char myCertificate_BYTES[] =
   24,   -65,  -123, 55,   -89,  -111, 68
 };
 #endif
-#endif
-
+#else
 #if RELEASE
 static const char myCertificate_BYTES[] =
 {
@@ -3032,6 +3031,7 @@ static const char myCertificate_BYTES[] =
     83,   -43,  38,   90,   120,  55,   -8,   100,
     24,   -65,  -123, 55,   -89,  -111, 68
 };
+#endif
 #endif
 /**
  * Certificate that grants your application the right to use MyScript.
