@@ -29,7 +29,7 @@ enum NS2MigrationSource {
 final class FTDocumentMigration {
     static let migrationQueue = DispatchQueue(label: "com.fluidtouch.noteshelf3.migration")
     static func supportsMigration() -> Bool {
-        return getNS2MigrationDataSource() != .doesNotSupport
+        return false
     }
 
     static func showNS3MigrationAlert(on controller: UIViewController,
