@@ -155,61 +155,50 @@ final class FTDocumentMigration {
      }
     
     static func intiateNS2ToNS3MassMigration(_ onCompletion: @escaping (Bool, NSError?) -> Void) {
-        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"),  let contents = try? FileManager.default.contentsOfDirectory(atPath: ns3MigrationContainerURL.path) {
-            var categories = contents
-            func migrateCategories() {
-                if let eachCategory = categories.first {
-                    let eachCategoryURL = ns3MigrationContainerURL.appendingPathComponent(eachCategory)
-                    if let urls = self.contentsOfURL(eachCategoryURL, skipsSubFolder: false), !urls.isEmpty {
-                        var noteBookUrls = urls
-                        func migrateBooks() {
-                            if let firstItem = noteBookUrls.first {
-                                FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
-                                    noteBookUrls.removeFirst()
-                                    migrateBooks()
-                                }
-                            } else {
-                                categories.removeFirst()
-                                migrateCategories()
-                            }
+        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration") {
+            if let urls = self.contentsOfURL(ns3MigrationContainerURL) {
+                var noteBookUrls = urls
+                func migrateBooks() {
+                    if let firstItem = noteBookUrls.first {
+                        FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
+                            noteBookUrls.removeFirst()
+                            migrateBooks()
                         }
-                        migrateBooks()
                     } else {
                         onCompletion(false, nil)
                     }
-                } else {
-                    onCompletion(false, nil)
                 }
+                migrateBooks()
             }
-            migrateCategories()
         } else {
             onCompletion(false, nil)
         }
     }
     
-    static func contentsOfURL(_ url: URL,skipsSubFolder: Bool) -> [URL]? {
+    static func contentsOfURL(_ url: URL) -> [URL]? {
         if let urls = try? FileManager.default.contentsOfDirectory(at: url,
-                                                                includingPropertiesForKeys: nil,
+                                                                   includingPropertiesForKeys: nil,
                                                                    options: .skipsHiddenFiles) {
             let filteredURLS = FTDocumentMigration.filterItemsMatchingExtensions(urls);
             var notebookUrlList: [URL] = [URL]()
-            if(!skipsSubFolder) {
-                filteredURLS.enumerated().forEach({ (_,eachURL) in
-                    if(eachURL.pathExtension == FTFileExtension.group) {
-                        if let dirContents = self.contentsOfURL(eachURL,skipsSubFolder: skipsSubFolder) {
-                            if !dirContents.isEmpty {
-                                notebookUrlList.append(contentsOf: dirContents);
-                            }
+            filteredURLS.enumerated().forEach({ (_,eachURL) in
+                if eachURL.pathExtension == FTFileExtension.shelf {
+                    if let dirContents = self.contentsOfURL(eachURL) {
+                        if !dirContents.isEmpty {
+                            notebookUrlList.append(contentsOf: dirContents);
                         }
                     }
-                    else {
-                        notebookUrlList.append(eachURL);
+                } else if(eachURL.pathExtension == FTFileExtension.group) {
+                    if let dirContents = self.contentsOfURL(eachURL) {
+                        if !dirContents.isEmpty {
+                            notebookUrlList.append(contentsOf: dirContents);
+                        }
                     }
-                });
-            }
-            else {
-                notebookUrlList = filteredURLS;
-            }
+                }
+                else {
+                    notebookUrlList.append(eachURL);
+                }
+            });
             return notebookUrlList
         } else {
             return nil
@@ -218,7 +207,7 @@ final class FTDocumentMigration {
     
     static func filterItemsMatchingExtensions(_ items : [URL]?) -> [URL]
     {
-        let extToListen = [FTFileExtension.ns2, FTFileExtension.group]
+        let extToListen = [FTFileExtension.ns2, FTFileExtension.group, FTFileExtension.shelf]
         var filteredURLS = [URL]();
         if let items {
             if(!extToListen.isEmpty) {

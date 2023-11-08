@@ -163,7 +163,7 @@ final class FTAppIntentHandler {
             track("today_widget", params: ["type": "Open Notebook"])
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
-        } else if (url.scheme == "com.fluidtouch.noteshelf3-dev") {
+        } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
             startMigration(url: url)
         }
         return false
