@@ -539,6 +539,13 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                             bipassPassword: true);
         }
     }
+    
+    func startNS2ToNS3Migration() {
+        let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Sit back and relax, we are importing", comment: "Sit back and relax, we are importing"));
+        FTDocumentMigration.intiateNS2ToNS3MassMigration { success, error in
+            loadingIndicator.hide()
+        }
+    }
 
     // MARK: - Last Opened document/Group/Collection -
     fileprivate func showLastOpenedDocument(relativePath docPath: String,
