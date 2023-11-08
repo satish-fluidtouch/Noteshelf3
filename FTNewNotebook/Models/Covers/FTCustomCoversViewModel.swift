@@ -72,5 +72,6 @@ class FTCustomCoversViewModel: NSObject {
     }
     func deleteCustomCoverFromRecents(_ customCover:FTThemeable) {
         self.recentCovers.removeAll(where: {$0.themeable.themeFileURL == customCover.themeFileURL})
+        customCover.deleteThumbnailFromCache()
     }
 }

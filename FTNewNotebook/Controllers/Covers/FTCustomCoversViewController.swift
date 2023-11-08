@@ -198,26 +198,59 @@ extension FTCustomCoversViewController: UICollectionViewDataSource, UICollection
             return spacing
         }
     }
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemsAt indexPaths: [IndexPath], point: CGPoint) -> UIContextMenuConfiguration? {
-        for indexPath in indexPaths {
-            if indexPath.section == 1 {
-                return UIContextMenuConfiguration(actionProvider:  { [weak self]actions in
-                    return UIMenu(children: [
-                        UIAction(title: "Delete", attributes: .destructive) { _ in
-                            guard let self = self else {
-                                return
-                            }
-                            let customCover = self.viewModel.recentCovers[indexPath.row]
-                            self.deletionCustomCover(customCover.themeable)
-                            self.updateCoverPreviewIfNeeded(recentDeletedCover: customCover)
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if indexPath.section == 1 {
+            let identifier = indexPath as NSIndexPath
+            return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider:  { [weak self]actions in
+                return UIMenu(children: [
+                    UIAction(title: "Delete", attributes: .destructive) { _ in
+                        guard let self = self else {
+                            return
                         }
-                    ])
-                })
-            } else {
-                return nil
+                        let customCover = self.viewModel.recentCovers[indexPath.row]
+                        self.deletionCustomCover(customCover.themeable)
+                        self.updateCoverPreviewIfNeeded(recentDeletedCover: customCover)
+                    }
+                ])
+            })
+        }
+        return nil
+    }
+    private func targetedPreview(for cell:UICollectionViewCell) -> UITargetedPreview? {
+        guard let _ = cell.window else {
+            return nil;
+        }
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        var view = cell.contentView
+        if let coverCell = cell as? FTCoverCollectionViewCell, let imgView = coverCell.imgView {
+            view = imgView
+        }
+        let shape = FTPreviewShape(leftRaidus: 3, rightRadius: 7.5)
+        let bezierPath = UIBezierPath(cgPath: shape.path(in: view.bounds).cgPath)
+        parameters.visiblePath = bezierPath
+        let preview = UITargetedPreview.init(view: view, parameters: parameters)
+        return preview
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        if let indexPath = configuration.identifier as? IndexPath, let cell = collectionView.cellForItem(at: indexPath){
+            return self.targetedPreview(for: cell);
+        }
+        return nil
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        if let identifier = configuration.identifier as? IndexPath {
+            if let cell = self.collectionView?.cellForItem(at: identifier) {
+                return self.targetedPreview(for: cell);
             }
         }
         return nil
+    }
+
+    func collectionView(_ collectionView: UICollectionView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        animator.preferredCommitStyle = .dismiss
     }
 
 }
@@ -256,6 +289,7 @@ extension FTCustomCoversViewController {
                 try FileManager.init().removeItem(at: customCover.themeFileURL)
                 viewModel.deleteCustomCoverFromRecents(customCover)
                 self.collectionView.reloadSections(IndexSet(integer: 1))
+                self.relayoutCollectionView()
             } catch let failError as NSError{
                 debugPrint("error occured while deleting custom cover with reason",failError.localizedDescription)
             }

@@ -173,9 +173,8 @@ class FTTheme: NSObject, FTThemeable {
         }
         return nil
     };
-
-    func willDelete() {
-
+    func deleteThumbnailFromCache() {
+        fatalError("subclasses should implement this method")
     }
 }
 
