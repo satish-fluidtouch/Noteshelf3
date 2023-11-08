@@ -853,21 +853,31 @@
                                                                 <constraint firstItem="WQ5-ez-TNy" firstAttribute="bottom" secondItem="Bpl-4I-hGe" secondAttribute="bottom" id="upm-gI-rao"/>
                                                             </constraints>
                                                         </view>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusImage" translatesAutoresizingMaskIntoConstraints="NO" id="XWq-eN-TK2">
+                                                            <rect key="frame" x="10" y="15" width="8" height="8"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="8" id="M3V-vp-e6R"/>
+                                                                <constraint firstAttribute="width" constant="8" id="YWj-1m-Iyn"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="ipJ-U7-U7e" firstAttribute="top" secondItem="wKo-tG-iLs" secondAttribute="top" id="4F8-Xg-OOV"/>
                                                         <constraint firstItem="wKo-tG-iLs" firstAttribute="centerX" secondItem="3sE-ki-xf9" secondAttribute="centerX" id="7xK-FE-eHh"/>
+                                                        <constraint firstItem="XWq-eN-TK2" firstAttribute="centerX" secondItem="3sE-ki-xf9" secondAttribute="centerX" id="8Zv-LT-5Rq"/>
                                                         <constraint firstItem="ipJ-U7-U7e" firstAttribute="height" secondItem="wKo-tG-iLs" secondAttribute="height" id="C1h-yp-XEi"/>
                                                         <constraint firstItem="ipJ-U7-U7e" firstAttribute="width" secondItem="wKo-tG-iLs" secondAttribute="width" id="LFs-dw-s6w"/>
                                                         <constraint firstItem="ipJ-U7-U7e" firstAttribute="leading" secondItem="wKo-tG-iLs" secondAttribute="leading" id="Owp-ax-HfE"/>
                                                         <constraint firstItem="wKo-tG-iLs" firstAttribute="top" secondItem="3sE-ki-xf9" secondAttribute="top" constant="5" id="WTz-fV-701"/>
                                                         <constraint firstItem="wKo-tG-iLs" firstAttribute="width" secondItem="3sE-ki-xf9" secondAttribute="width" id="bB3-pO-24M"/>
+                                                        <constraint firstItem="XWq-eN-TK2" firstAttribute="centerY" secondItem="3sE-ki-xf9" secondAttribute="centerY" id="bYY-FY-kFZ"/>
                                                     </constraints>
                                                 </collectionViewCellContentView>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <size key="customSize" width="28" height="38"/>
                                                 <connections>
+                                                    <outlet property="addFavoriteImageView" destination="XWq-eN-TK2" id="zpa-Xp-JKn"/>
                                                     <outlet property="btnBg" destination="wKo-tG-iLs" id="MYT-2Q-Qdj"/>
                                                     <outlet property="imgEffect" destination="WQ5-ez-TNy" id="dFJ-rK-dhh"/>
                                                     <outlet property="imgMask" destination="SgH-eH-jUr" id="QeX-n6-myq"/>
@@ -936,7 +946,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCr-Az-aCI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-172" y="-2228"/>
+            <point key="canvasLocation" x="-172.55859375" y="-2228.2576866764275"/>
         </scene>
         <!--Favorite Edit View Controller-->
         <scene sceneID="sBN-37-NFd">
@@ -1021,6 +1031,7 @@
                     <size key="freeformSize" width="320" height="410"/>
                     <connections>
                         <outlet property="segmentControl" destination="AxQ-Sq-rol" id="HAN-a4-0KT"/>
+                        <outlet property="topView" destination="rbh-ou-k8D" id="jQg-BF-p0y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ls8-we-Fdo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1038,7 +1049,7 @@
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="P6P-7Z-n9d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="108"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="8" minimumInteritemSpacing="0.0" id="khS-A1-s0H">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="khS-A1-s0H">
                                     <size key="itemSize" width="72" height="108"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -1093,6 +1104,7 @@
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
         <image name="noBookmarks" width="64" height="64"/>
         <image name="noTags" width="64" height="64"/>
+        <image name="plusImage" width="10" height="10"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
         <image name="tag" catalog="system" width="128" height="118"/>
         <image name="tag.slash" catalog="system" width="128" height="118"/>

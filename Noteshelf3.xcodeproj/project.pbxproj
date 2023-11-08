@@ -9883,6 +9883,7 @@
 		E70705F82AC2B7A900A7B341 /* Favoritebar */ = {
 			isa = PBXGroup;
 			children = (
+				E757FD322AFBB2150014E901 /* Views */,
 				E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */,
 				E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */,
 				E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */,
@@ -9933,6 +9934,13 @@
 				E75516E2274F90B600401F45 /* FTExportDataFailedItemCell.xib */,
 			);
 			path = ExportDataCells;
+			sourceTree = "<group>";
+		};
+		E757FD322AFBB2150014E901 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E7654DEE2966A88B00E0F7A7 /* Settings */ = {

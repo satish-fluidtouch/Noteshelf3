@@ -1782,6 +1782,10 @@
             }
         }
             break;
+        case kDeskModeFavorites:
+            [[self.pdfDocument localMetadataCache] setCurrentDeskMode:mode];
+            break;
+            
         default:
             break;
     }

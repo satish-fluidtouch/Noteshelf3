@@ -25,8 +25,10 @@ class FTFavoritebarViewController: UIViewController {
 
     private var favorites: [FTPenSetProtocol] = []
     private let manager = FTFavoritePensetManager()
+
+    private var isDisplayedEditPenRack: Bool = false
+    private var isAddingNewPenSet: Bool = false
     private var editFavoriteCurrentIndex: Int?
-    private let maximumSupportedFavorites = 100
     private var rack = FTRackData(type: .pen, userActivity: nil)
 
     var activity: NSUserActivity?
@@ -44,15 +46,48 @@ class FTFavoritebarViewController: UIViewController {
         super.viewWillAppear(animated)
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        if self.isDisplayedEditPenRack {
+            self.dismiss(animated: false, completion: nil)
+            self.handleEditScreenDismissal()
+        }
+    }
+
     @IBAction func sizeIndicatorTapped(_ sender: Any) {
     }
 
     func reloadFavoritesData() {
         self.collectionView.reloadData()
     }
+
+    private func updateDisplay() {
+        let penType = self.rack.currentPenset.type
+        let penSize = self.rack.currentPenset.size
+        let maxWidth = penSize.maxDisplaySize(penType: penType)
+        let scale = penSize.scaleToApply(penType: penType, preciseSize: self.rack.currentPenset.preciseSize)
+        var revisedScale = scale
+        if penType == .highlighter || penType == .flatHighlighter {
+            revisedScale = scale*0.8
+        }
+        self.sizeDisplayView?.isHidden = false
+//        sizeIndicatorImageView.image = nil
+        self.sizeDisplayView?.backgroundColor = UIColor(named: "toolSizeColorSelected")
+        self.sizeDisplayWidthConstraint?.constant = maxWidth*revisedScale
+        self.sizeDisplayView?.layer.cornerRadius = maxWidth*revisedScale*0.5
+        self.sizeDisplayView?.layer.masksToBounds = false
+        self.sizeDisplayView?.clipsToBounds = true
+    }
 }
 
 private extension FTFavoritebarViewController {
+    func handleEditScreenDismissal() {
+        self.collectionView.isScrollEnabled = true
+        self.isDisplayedEditPenRack = false
+        self.isAddingNewPenSet = false
+        self.updateDisplay()
+        self.collectionView.reloadData()
+    }
+    
     func configureDragAndDrop() {
         self.collectionView.dragDelegate = self
         self.collectionView.dropDelegate = self
@@ -107,6 +142,12 @@ private extension FTFavoritebarViewController {
         controller.rack = rack
         self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize, hideNavBar: true)
     }
+
+    func updateRackDataIfNeeded(with rackType: FTRackType) {
+        if rackType != self.rack.type {
+            self.rack = FTRackData(type: rackType, userActivity: activity)
+        }
+    }
 }
 
 extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -119,11 +160,15 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
         guard let cell = cell as? FTFavoritePenCollectionViewCell else {
             fatalError("Programmer error - FTFavoritePenCollectionViewCell not found")
         }
+        cell.addFavoriteImageView.isHidden = true
         if indexPath.row < self.favorites.count {
             let favorite = self.favorites[indexPath.row]
             cell.configure(favorite: favorite, currentPenset: FTDefaultPenSet())
         } else {
             cell.configureEmptySlot()
+            if indexPath.row == self.favorites.count {
+                cell.addFavoriteImageView.isHidden = false
+            }
         }
     }
 
@@ -137,21 +182,30 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
         guard let cell = collectionView.cellForItem(at: indexPath) as? FTFavoritePenCollectionViewCell else {
             fatalError("Programmer error - FTFavoritePenCollectionViewCell not found")
         }
-
         if(indexPath.row < self.favorites.count) {
             editFavoriteCurrentIndex = indexPath.row
             let favorite = self.favorites[indexPath.row]
+            self.updateRackDataIfNeeded(with: favorite.type.rackType)
             self.rack.currentPenset = favorite
             self.rack.saveCurrentSelection()
             if(cell.isFavoriteSelected) {
                 self.showFavoriteEditScreen(with: rack, sourceView: cell)
             } else {
+                if(self.isDisplayedEditPenRack) {
+                    self.showFavoriteEditScreen(with: rack, sourceView: cell)
+                }
                 self.updateSelectionStatus(cell: cell)
             }
-        } else if indexPath.row == self.favorites.count {
-
-        } else {
-
+        } else if indexPath.row == self.favorites.count && !self.isAddingNewPenSet {
+            editFavoriteCurrentIndex = indexPath.row
+            cell.addFavoriteImageView.isHidden = true
+            self.isAddingNewPenSet = true
+            let currentPenset = self.rack.currentPenset
+            self.favorites.append(currentPenset)
+            self.manager.saveFavorites(favorites)
+            cell.configure(favorite: currentPenset, currentPenset: currentPenset)
+            self.updateSelectionStatus(cell: cell)
+            self.showFavoriteEditScreen(with: rack, sourceView: cell)
         }
     }
 }
@@ -282,7 +336,7 @@ extension FTFavoritebarViewController: UICollectionViewDropDelegate {
 
 extension FTFavoritebarViewController: FTFavoriteEditDelegate {
     func didChangeFavorite(_ penset: FTPenSetProtocol) {
-        if let index = editFavoriteCurrentIndex, index < maximumSupportedFavorites {
+        if let index = editFavoriteCurrentIndex, index < self.favorites.count {
             if let currentCell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell {
                 currentCell.configure(favorite: penset, currentPenset: penset)
             }
@@ -295,7 +349,22 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
         }
     }
 
-    func didChangeRackType(_ rackType: FTRackType) {
-        self.rack = FTRackData(type: rackType, userActivity: activity)
+    func didChangeRackType(_ rackType: FTRackType) -> FTRackData {
+        self.updateRackDataIfNeeded(with: rackType)
+        return self.rack
+    }
+
+    func didDeleteFavorite(_ favorite: FTPenSetProtocol) {
+        if let index = editFavoriteCurrentIndex, index < self.favorites.count {
+            self.favorites.remove(at: index)
+            self.manager.saveFavorites(favorites)
+            self.dismiss(animated: false)
+            self.reloadFavoritesData()
+            self.isAddingNewPenSet = false
+        }
+    }
+
+    func didDismissEditModeScreen() {
+        self.handleEditScreenDismissal()
     }
 }

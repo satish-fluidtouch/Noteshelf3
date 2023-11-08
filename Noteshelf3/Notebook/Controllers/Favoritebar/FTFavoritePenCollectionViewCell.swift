@@ -16,6 +16,7 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
     @IBOutlet private weak var imgOverlay: UIImageView! // Color
     @IBOutlet private weak var imgShadow: UIImageView! // Shadow
     @IBOutlet private weak var imgEffect: UIImageView! // Effect
+    @IBOutlet weak var addFavoriteImageView: UIImageView!
 
     @IBOutlet private weak var penBottomConstraint: NSLayoutConstraint!
 
@@ -114,7 +115,7 @@ extension FTPenType {
         case .caligraphy:
             return "Favorites/fountain_color"
         case .pen:
-            return "PenRFavoritesack/ballpoint_color"
+            return "Favorites/ballpoint_color"
         case .pencil:
             return "Favorites/pencil_color"
         case .highlighter:

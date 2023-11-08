@@ -8,16 +8,20 @@
 
 import Foundation
 import FTCommon
+import SwiftUI
 
 protocol FTFavoriteEditDelegate: NSObjectProtocol {
     func didChangeFavorite(_ penset: FTPenSetProtocol)
-    func didChangeRackType(_ rackType: FTRackType)
+    func didChangeRackType(_ rackType: FTRackType) -> FTRackData
+    func didDeleteFavorite(_ favorite: FTPenSetProtocol)
+    func didDismissEditModeScreen()
 }
 
 class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     static let contentSize = CGSize(width: 340, height: 410)
   
+    @IBOutlet private weak var topView: UIView!
     @IBOutlet private weak var segmentControl: UISegmentedControl!
 
     private var sizeEditController: FTFavoriteSizeEditController?
@@ -37,10 +41,19 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
         self.configureSegmentControl()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.delegate = self
+    }
+
+    deinit {
+        self.delegate?.didDismissEditModeScreen()
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if segue.identifier == "FTFavoritePenTypeEditController", let penTypeEditVc = segue.destination as? FTFavoritePenTypeEditController {
-            penTypeEditVc.rack = self.rack
+            penTypeEditVc.delegate = self
             self.penTypeEditController = penTypeEditVc
         }
     }
@@ -49,6 +62,7 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     }
 
     @IBAction private func deleteTapped(_ sender: Any) {
+        self.delegate?.didDeleteFavorite(favorite)
     }
 
     @objc func segmentChanged() {
@@ -56,11 +70,13 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
         if segmentControl.selectedSegmentIndex == 1 {
             type = .highlighter
         }
-        self.delegate?.didChangeRackType(type)
-        self.penTypeEditController?.reloadPenTypes()
-        self.colorEditController?.remove()
-        self.sizeEditController?.remove()
-        self.addPenSizeColorEditViews()
+        if let rack = self.delegate?.didChangeRackType(type) {
+            self.rack = rack
+            self.penTypeEditController?.reloadPenTypes()
+            self.colorEditController?.remove()
+            self.sizeEditController?.remove()
+            self.addPenSizeColorEditViews()
+        }
     }
 }
 
@@ -99,7 +115,7 @@ private extension FTFavoriteEditViewController {
     }
 }
 
-extension FTFavoriteEditViewController: FTFavoriteSizeUpdateDelegate, FTFavoriteColorUpdateDelegate {
+extension FTFavoriteEditViewController: FTFavoriteSizeUpdateDelegate, FTFavoriteColorUpdateDelegate, FTFavoritePenTypeUpdateDelegate {
     func didChangeSize(_ size: CGFloat) {
         if let penSize = FTPenSize(rawValue: Int(size)) {
             self.favorite.size = penSize
@@ -112,5 +128,20 @@ extension FTFavoriteEditViewController: FTFavoriteSizeUpdateDelegate, FTFavorite
         self.favorite.color = color
         self.penTypeEditController?.reloadPenTypes()
         self.delegate?.didChangeFavorite(self.favorite)
+    }
+
+    func didChangePenType(_ type: FTPenType) {
+        self.favorite.type = type
+        self.delegate?.didChangeFavorite(self.favorite)
+    }
+}
+
+extension FTFavoriteEditViewController: UINavigationControllerDelegate {
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if viewController is FTFavoriteEditViewController {
+            navigationController.setNavigationBarHidden(true, animated: false)
+        } else {
+            navigationController.setNavigationBarHidden(false, animated: false)
+        }
     }
 }

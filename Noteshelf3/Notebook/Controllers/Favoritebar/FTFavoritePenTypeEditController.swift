@@ -8,11 +8,15 @@
 
 import Foundation
 
+protocol FTFavoritePenTypeUpdateDelegate: NSObjectProtocol {
+    func didChangePenType(_ type: FTPenType)
+}
+
 class FTFavoritePenTypeEditController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     private let cellIdentifier = "PenType"
 
-    var rack = FTRackData(type: .pen, userActivity: nil)
+    weak var delegate: FTFavoritePenTypeUpdateDelegate?
 
     private var type: FTRackType {
         return self.rack.type
@@ -20,6 +24,13 @@ class FTFavoritePenTypeEditController: UIViewController {
 
     private var penTypeOrder: [FTPenType] {
         return self.type.penTypes
+    }
+
+    private var rack: FTRackData {
+        if let parent = self.parent as? FTFavoriteEditViewController {
+            return parent.rack
+        }
+        return FTRackData(type: .pen, userActivity: nil)
     }
 
     override func viewDidLoad() {
@@ -45,6 +56,8 @@ extension FTFavoritePenTypeEditController: UICollectionViewDataSource, UICollect
         }
         let penType = self.penTypeOrder[indexPath.item]
         cell.configure(penType: penType, currentPenSet: self.rack.currentPenset, color: self.rack.currentPenset.color)
+        cell.contentView.transform = .identity
+        cell.contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         return cell
     }
 
@@ -56,7 +69,7 @@ extension FTFavoritePenTypeEditController: UICollectionViewDataSource, UICollect
         }
         self.rack.currentPenset.type = penType
         self.rack.saveCurrentSelection()
-
+        self.delegate?.didChangePenType(penType)
         collectionView.indexPathsForVisibleItems.forEach({ (penTypeIndexPath) in
             if let cell = collectionView.cellForItem(at: penTypeIndexPath) as? FTPenTypeCollectionViewCell {
                 let penType = self.penTypeOrder[penTypeIndexPath.item]
@@ -74,11 +87,15 @@ extension FTFavoritePenTypeEditController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let cellDimension = 72
         let cellCount = self.penTypeOrder.count
-        let cellSpacing = 8
+        let cellSpacing = 4
         let totalWidth = cellDimension * cellCount
         let totalSpacingWidth = cellSpacing * (cellCount - 1)
         let horizantalInset = (collectionView.frame.width - CGFloat(totalWidth + totalSpacingWidth)) / 2
         let vertInset = (collectionView.frame.height - CGFloat(cellDimension))/2
         return UIEdgeInsets(top: vertInset, left: horizantalInset, bottom: vertInset, right: horizantalInset)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 4.0
     }
 }

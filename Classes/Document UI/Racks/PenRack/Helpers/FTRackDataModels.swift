@@ -16,22 +16,21 @@ import Foundation
     case text
     case shape
     case presenter
-    
+    case favorite
+
     public var displayName: String {
-        
+
         switch self {
-            case .pen:
-                return "PEN"
-            case .highlighter:
-                return "Highlighter"
-            case .eraser:
-                return "Eraser"
-            case .text:
-                return ""
-            case .shape:
-                return "SHAPES"
-            case .presenter:
-                return ""
+        case .pen:
+            return "PEN"
+        case .highlighter:
+            return "Highlighter"
+        case .eraser:
+            return "Eraser"
+        case .shape:
+            return "SHAPES"
+        default:
+            return ""
         }
     }
 
@@ -49,6 +48,8 @@ import Foundation
             return "FTDefaultShapeRack"
         case .presenter:
             return "FTDefaultPresenterRack"
+        case .favorite:
+            return "FTDefaultFavoriteRack"
         }
     }
     
@@ -63,6 +64,8 @@ import Foundation
             pens = [.pen,.caligraphy,.pilotPen,.pencil,.flatHighlighter,.highlighter];
         case .presenter:
             pens = [.pen];
+        case .favorite:
+            pens = [.pen,.caligraphy,.pilotPen,.pencil,.flatHighlighter,.highlighter];
         default:
             break;
         }
