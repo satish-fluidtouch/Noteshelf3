@@ -105,7 +105,7 @@ private extension FTFavoritebarViewController {
         controller.delegate = self
         controller.ftPresentationDelegate.source = sourceView
         controller.rack = rack
-        self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize)
+        self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize, hideNavBar: true)
     }
 }
 

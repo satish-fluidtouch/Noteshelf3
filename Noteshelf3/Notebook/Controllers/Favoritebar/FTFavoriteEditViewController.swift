@@ -84,7 +84,7 @@ private extension FTFavoriteEditViewController {
         colorController.view.translatesAutoresizingMaskIntoConstraints = false
         let left = colorController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 16)
         let right = colorController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -16)
-        let bottom = colorController.view.bottomAnchor.constraint(equalTo: sizeController.view.topAnchor, constant: -16)
+        let bottom = colorController.view.bottomAnchor.constraint(equalTo: sizeController.view.topAnchor, constant: 0)
         NSLayoutConstraint.activate([left, right, bottom])
         self.colorEditController = colorController
     }

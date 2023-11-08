@@ -947,7 +947,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rbh-ou-k8D">
-                                <rect key="frame" x="0.0" y="24" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="16" width="320" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9c-nb-fNL">
                                         <rect key="frame" x="8" y="0.0" width="44" height="44"/>
@@ -985,7 +985,7 @@
                                         </segments>
                                     </segmentedControl>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="AxQ-Sq-rol" firstAttribute="centerX" secondItem="rbh-ou-k8D" secondAttribute="centerX" id="456-o8-SYK"/>
                                     <constraint firstAttribute="trailing" secondItem="Obc-og-nY2" secondAttribute="trailing" constant="8" id="5i5-TV-eJP"/>
@@ -997,8 +997,8 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cA-Bv-DVp">
-                                <rect key="frame" x="0.0" y="92" width="320" height="108"/>
-                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <rect key="frame" x="0.0" y="68" width="320" height="108"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="108" id="iU4-5R-tSo"/>
                                 </constraints>
@@ -1013,9 +1013,9 @@
                             <constraint firstItem="4cA-Bv-DVp" firstAttribute="leading" secondItem="dzu-x9-d82" secondAttribute="leading" id="13r-vx-Kme"/>
                             <constraint firstItem="rbh-ou-k8D" firstAttribute="leading" secondItem="dzu-x9-d82" secondAttribute="leading" id="DaX-LH-iVb"/>
                             <constraint firstItem="dzu-x9-d82" firstAttribute="trailing" secondItem="4cA-Bv-DVp" secondAttribute="trailing" id="KV8-tL-57g"/>
-                            <constraint firstItem="4cA-Bv-DVp" firstAttribute="top" secondItem="rbh-ou-k8D" secondAttribute="bottom" constant="24" id="R8L-cq-7zB"/>
+                            <constraint firstItem="4cA-Bv-DVp" firstAttribute="top" secondItem="rbh-ou-k8D" secondAttribute="bottom" constant="8" id="R8L-cq-7zB"/>
                             <constraint firstItem="dzu-x9-d82" firstAttribute="trailing" secondItem="rbh-ou-k8D" secondAttribute="trailing" id="gh5-dm-fqn"/>
-                            <constraint firstItem="rbh-ou-k8D" firstAttribute="top" secondItem="C1m-K2-fAp" secondAttribute="top" constant="24" id="iZL-UN-Qqf"/>
+                            <constraint firstItem="rbh-ou-k8D" firstAttribute="top" secondItem="C1m-K2-fAp" secondAttribute="top" constant="16" id="iZL-UN-Qqf"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="320" height="410"/>
@@ -1062,6 +1062,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="adx-Eb-U5e"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="P6P-7Z-n9d" secondAttribute="trailing" id="NpV-Sf-sWf"/>
@@ -1128,12 +1129,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
