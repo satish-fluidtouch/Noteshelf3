@@ -48,8 +48,9 @@ class FTNSiCloudManager: FTiCloudManager {
 extension FTNSiCloudManager {
     struct iCloudContainerID {
         static let ns2: String = "iCloud.com.fluidtouch.noteshelf"
-
-#if DEBUG
+#if ENTERPRISE_EDITION
+        static let ns3: String = "iCloud.com.fluidtouch.noteshelf3"
+#elseif DEBUG
         static let ns3: String = "iCloud.com.fluidtouch.noteshelf3-dev"
 #elseif BETA
         static let ns3: String = "iCloud.com.fluidtouch.noteshelf3-beta"

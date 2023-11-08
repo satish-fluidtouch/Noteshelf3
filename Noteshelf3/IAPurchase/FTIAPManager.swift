@@ -94,7 +94,9 @@ class FTIAPManager: NSObject {
     
     private override init() {
         super.init()
+#if !ENTERPRISE_EDITION
         SKPaymentQueue.default().add(self);
+#endif
         FTStoreContainerHandler.shared.premiumUser = premiumUser
     }
     
@@ -121,13 +123,13 @@ extension FTIAPManager {
         return formatter.string(from: product.price)
     }
     
-    func startObserving() {
-        SKPaymentQueue.default().add(self)
-    }
-    
-    func stopObserving() {
-        SKPaymentQueue.default().remove(self)
-    }
+//    func startObserving() {
+//        SKPaymentQueue.default().add(self)
+//    }
+//    
+//    func stopObserving() {
+//        SKPaymentQueue.default().remove(self)
+//    }
     
     func canMakePayments() -> Bool {
         return SKPaymentQueue.canMakePayments()
@@ -162,8 +164,7 @@ extension FTIAPManager {
         onBuyProductHandler = handler
         totalRestoredPurchases = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
-    }
-    
+    }    
 }
 
 // MARK: - SKPaymentTransactionObserver
