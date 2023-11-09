@@ -452,6 +452,7 @@ open class FTOffScreenTileImageRequest : FTRenderKit.FTOffScreenRenderRequest {
   open var transparentBackground: Swift.Bool {
     get
   }
+  public var imageAsCopy: Swift.Bool
   public var annotations: [any FTRenderKit.FTAnnotationProtocol]
   public var renderingProperties: FTRenderKit.FTMetalRenderingProperties
   public var backgroundTexture: (any Metal.MTLTexture)?

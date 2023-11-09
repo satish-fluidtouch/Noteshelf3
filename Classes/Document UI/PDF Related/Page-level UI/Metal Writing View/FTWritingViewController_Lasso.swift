@@ -74,6 +74,7 @@ extension FTWritingViewController : FTLassoProtocol {
                             tileRect.origin.x = CGFloat(eachCol)*tileRect.width;
                             tileRect.origin.y = CGFloat(eachRow)*tileRect.height;
                             let request = FTOffScreenTileImageRequest(with: windowHash);
+                            request.imageAsCopy = false;
                             request.label = "LASSO_TILE_MOVE"
                             request.backgroundColor = bgColor
                             request.areaToRefresh = tileRect;
