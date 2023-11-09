@@ -2460,7 +2460,7 @@
 		09A67BF22AE8F25100C5500D /* FTCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCache.swift; sourceTree = "<group>"; };
 		09A7A5511E23579D007CE620 /* FTCloudBackupIgnoreList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCloudBackupIgnoreList.swift; sourceTree = "<group>"; };
 		09AAC0001EEA6314009B5922 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		09AB3A3F2AFCC46B0062E43C /* Noteshelf3 ActionRelease Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 ActionRelease Enterprise.entitlements"; sourceTree = "<group>"; };
+		09AB3A3F2AFCC46B0062E43C /* Release Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Release Enterprise.entitlements"; sourceTree = "<group>"; };
 		09AB9D711E77D8410041A0F5 /* FTDocumentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentItem.swift; sourceTree = "<group>"; };
 		09AB9D731E77D8490041A0F5 /* FTGroupItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGroupItem.swift; sourceTree = "<group>"; };
 		09AB9D751E77D8570041A0F5 /* FTShelfItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemProtocols.swift; sourceTree = "<group>"; };
@@ -2486,9 +2486,9 @@
 		09ABDCA32A790F93008F144D /* FTNoteshelfAIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAIViewController.swift; sourceTree = "<group>"; };
 		09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageViewController_OpenAIExtension.swift; sourceTree = "<group>"; };
 		09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPremiumUser.swift; sourceTree = "<group>"; };
-		09AD81002AFBB48D0049022B /* Noteshelf3Release Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3Release Enterprise.entitlements"; sourceTree = "<group>"; };
-		09AD81012AFBB49C0049022B /* Noteshelf3Debug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3Debug Enterprise.entitlements"; sourceTree = "<group>"; };
-		09AD81022AFBC30B0049022B /* Noteshelf3 ActionDebug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 ActionDebug Enterprise.entitlements"; sourceTree = "<group>"; };
+		09AD81002AFBB48D0049022B /* Release Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Release Enterprise.entitlements"; sourceTree = "<group>"; };
+		09AD81012AFBB49C0049022B /* Debug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Debug Enterprise.entitlements"; sourceTree = "<group>"; };
+		09AD81022AFBC30B0049022B /* Debug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Debug Enterprise.entitlements"; sourceTree = "<group>"; };
 		09B267A0214B917D006B2163 /* FTSiriShortcutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSiriShortcutManager.swift; sourceTree = "<group>"; };
 		09B267A1214B917D006B2163 /* FTShortcutStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShortcutStorage.swift; sourceTree = "<group>"; };
 		09B267A2214B917D006B2163 /* NSUserActivity+SiriShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+SiriShortcuts.swift"; sourceTree = "<group>"; };
@@ -5269,6 +5269,24 @@
 			path = SiriShortCuts;
 			sourceTree = "<group>";
 		};
+		09B33FD72AFCFBBC002C7F35 /* Enterprise */ = {
+			isa = PBXGroup;
+			children = (
+				09AB3A3F2AFCC46B0062E43C /* Release Enterprise.entitlements */,
+				09AD81022AFBC30B0049022B /* Debug Enterprise.entitlements */,
+			);
+			path = Enterprise;
+			sourceTree = "<group>";
+		};
+		09B33FD82AFCFD08002C7F35 /* Enterprise */ = {
+			isa = PBXGroup;
+			children = (
+				09AD81012AFBB49C0049022B /* Debug Enterprise.entitlements */,
+				09AD81002AFBB48D0049022B /* Release Enterprise.entitlements */,
+			);
+			path = Enterprise;
+			sourceTree = "<group>";
+		};
 		09C0066C1E49C14800C491F8 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
@@ -7021,8 +7039,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				09AB3A3F2AFCC46B0062E43C /* Noteshelf3 ActionRelease Enterprise.entitlements */,
-				09AD81022AFBC30B0049022B /* Noteshelf3 ActionDebug Enterprise.entitlements */,
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
 				0904BC5D2373F31400239DB8 /* MacCatalyst */,
 				211E2C3B1E027D72007B5CAD /* Classes */,
@@ -8677,8 +8693,6 @@
 		BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */ = {
 			isa = PBXGroup;
 			children = (
-				09AD81012AFBB49C0049022B /* Noteshelf3Debug Enterprise.entitlements */,
-				09AD81002AFBB48D0049022B /* Noteshelf3Release Enterprise.entitlements */,
 				47BC0AF22A77CBEE00163A0A /* IAPurchase */,
 				143570502A42D33E0088B4EB /* Onboarding */,
 				E7654DEE2966A88B00E0F7A7 /* Settings */,
@@ -9187,6 +9201,7 @@
 		BA909A3D299106A200260538 /* Entitlements */ = {
 			isa = PBXGroup;
 			children = (
+				09B33FD82AFCFD08002C7F35 /* Enterprise */,
 				BAC3697C2A83AA270005F635 /* Entitlements-AppStore.entitlements */,
 				BAC369802A83AC440005F635 /* Entitlements-Beta.entitlements */,
 				BAC3697F2A83AC440005F635 /* Entitlements-Dev.entitlements */,
@@ -9515,6 +9530,7 @@
 		C8140D32232667B60053FC86 /* Noteshelf Action */ = {
 			isa = PBXGroup;
 			children = (
+				09B33FD72AFCFBBC002C7F35 /* Enterprise */,
 				4209FED4295C799700ACC02E /* ViewControllers */,
 				4209FED1295C798100ACC02E /* Views */,
 				4209FECC295C797500ACC02E /* Models */,
@@ -13915,7 +13931,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.enterprise;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG ENTERPRISE_EDITION";
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[sdk=iphonesimulator*]" = "TARGET_OS_SIMULATOR $(inherited)";
@@ -13938,9 +13954,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3/Noteshelf3Debug Enterprise.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Enterprise/Debug Enterprise.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -14009,7 +14028,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 ActionDebug Enterprise.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Enterprise/Debug Enterprise.entitlements";
 				DEVELOPMENT_ASSET_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -14394,7 +14413,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3/Noteshelf3Release Enterprise.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Enterprise/Release Enterprise.entitlements";
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
@@ -14461,7 +14480,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 ActionRelease Enterprise.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Enterprise/Release Enterprise.entitlements";
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
