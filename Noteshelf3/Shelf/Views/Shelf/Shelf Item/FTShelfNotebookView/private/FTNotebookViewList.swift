@@ -38,7 +38,7 @@ struct FTNotebookViewList : View {
             .ignoresSafeArea()
 
         }, notebookShape: {
-            return FTNotebookShape(raidus: 10);
+            return FTPreviewShape(raidus: 10);
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true;
             hideShadow = true
