@@ -13,7 +13,7 @@ import SwiftUI
 struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentable {
     
     @ViewBuilder let preview : () -> Content;
-    let notebookShape: ()-> FTNotebookShape?;
+    let notebookShape: ()-> FTPreviewShape?;
     
     let onAppearActon: (() -> Void)?;
     let onDisappearActon: (() -> Void)?;

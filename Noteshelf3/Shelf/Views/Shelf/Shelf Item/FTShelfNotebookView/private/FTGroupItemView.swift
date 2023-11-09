@@ -27,7 +27,7 @@ struct FTGroupItemView: View {
                 coverView
                     .ignoresSafeArea()
             }, notebookShape: {
-                return FTNotebookShape(raidus: 10)
+                return FTPreviewShape(raidus: 10)
             }, onAppearActon: {
                 shelfMenuOverlayInfo.isMenuShown = true;
                 // Track event
