@@ -9,28 +9,36 @@
 import UIKit
 
 public class FTSharedGroupID {
+#if ENTERPRISE_EDITION
     public static func getAppGroupID() -> String {
-        #if ENTERPRISE_EDITION
-        return "group.com.fluidtouch.noteshelf3"
-        #elseif DEBUG
-        return "group.com.fluidtouch.noteshelf3-dev"
-        #elseif BETA
-        return "group.com.fluidtouch.noteshelf3-beta"
-        #else
-        return "group.com.fluidtouch.noteshelf3"
-        #endif
+#if DEBUG
+        return "group.com.fluidtouch.noteshelf3.enterprise-dev"
+#else
+        return "group.com.fluidtouch.noteshelf3.enterprise"
+#endif
     }
+#else
+    public static func getAppGroupID() -> String {
+#if DEBUG
+        return "group.com.fluidtouch.noteshelf3-dev"
+#elseif BETA
+        return "group.com.fluidtouch.noteshelf3-beta"
+#else
+        return "group.com.fluidtouch.noteshelf3"
+#endif
+    }
+#endif
     
     public static func getAppGroupIdForNS1Migration() -> String {
-        #if DEBUG
+#if DEBUG
         return "group.com.fluidtouch.noteshelf-1to2-migration-dev"
-        #elseif BETA
+#elseif BETA
         return "group.com.fluidtouch.noteshelf-1to2-migration-beta"
-        #else
+#else
         return "group.com.fluidtouch.noteshelf-1to2-migration"
-        #endif
+#endif
     }
-
+    
     public static func getNS2AppGroupID() -> String {
         return "group.com.fluidtouch.noteshelf"
     }

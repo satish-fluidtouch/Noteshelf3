@@ -2460,6 +2460,7 @@
 		09A67BF22AE8F25100C5500D /* FTCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCache.swift; sourceTree = "<group>"; };
 		09A7A5511E23579D007CE620 /* FTCloudBackupIgnoreList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCloudBackupIgnoreList.swift; sourceTree = "<group>"; };
 		09AAC0001EEA6314009B5922 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		09AB3A3F2AFCC46B0062E43C /* Noteshelf3 ActionRelease Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 ActionRelease Enterprise.entitlements"; sourceTree = "<group>"; };
 		09AB9D711E77D8410041A0F5 /* FTDocumentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentItem.swift; sourceTree = "<group>"; };
 		09AB9D731E77D8490041A0F5 /* FTGroupItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGroupItem.swift; sourceTree = "<group>"; };
 		09AB9D751E77D8570041A0F5 /* FTShelfItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemProtocols.swift; sourceTree = "<group>"; };
@@ -7020,6 +7021,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				09AB3A3F2AFCC46B0062E43C /* Noteshelf3 ActionRelease Enterprise.entitlements */,
 				09AD81022AFBC30B0049022B /* Noteshelf3 ActionDebug Enterprise.entitlements */,
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
 				0904BC5D2373F31400239DB8 /* MacCatalyst */,
@@ -13860,7 +13862,7 @@
 		09AD80EE2AFBB38B0049022B /* Debug Enterprise */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_DISPLAY_NAME = "NS3 Dev";
+				APP_DISPLAY_NAME = "NS3 EE Dev";
 				APP_VERSION = 1.3;
 				APP_VERSION_MAC = 1.3;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
@@ -14459,7 +14461,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Noteshelf Action.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 ActionRelease Enterprise.entitlements";
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
