@@ -541,10 +541,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
     
     func startNS2ToNS3Migration() {
-        let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: NSLocalizedString("Sit back and relax, we are importing", comment: "Sit back and relax, we are importing"));
-        FTDocumentMigration.intiateNS2ToNS3MassMigration { success, error in
-            loadingIndicator.hide()
-        }
+        FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { success, error in }
     }
 
     // MARK: - Last Opened document/Group/Collection -
