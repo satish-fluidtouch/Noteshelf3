@@ -3211,10 +3211,10 @@
 #pragma mark - For current page number
 -(void)addPageNumberLabelToView
 {
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
     CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
-    self.pageNumberLabel = [[FTPageNumberView alloc] initWithFrame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
+    self.pageNumberLabel = [[FTPageNumberView alloc] initWithEffect:blurEffect frame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
     [self.view addSubview:self.pageNumberLabel];
-    [self.view bringSubviewToFront:self.pageNumberLabel];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
     [self performSelector:@selector(showPageNumberLabel)];
 }
