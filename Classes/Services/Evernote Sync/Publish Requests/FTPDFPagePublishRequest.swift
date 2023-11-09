@@ -86,15 +86,15 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                             let enml = FTENSyncUtilities.enmlRepresentation(withResources: note.resources as? [EDAMResource], syncRecords: pagesForENContent);
                             note.content = String.init(format: EVERNOTE_NOTE_TEMPLATE, enml!);
 
-                            var lastUpdated = NSDate(timeIntervalSince1970: pageRecord.lastUpdated.doubleValue).enedamTimestamp()
+                            var lastUpdated = pageRecord.lastUpdated.doubleValue;
 
                             let filePath = pageRecord.parent.fullURLPath;
                             if ((nil != filePath) && (FileManager.default.fileExists(atPath: filePath!))) {
                                 let url = URL(fileURLWithPath: filePath!);
-                                lastUpdated = (url.fileModificationDate as NSDate).enedamTimestamp();
+                                lastUpdated = url.fileModificationDate.timeIntervalSinceReferenceDate
                             }
 
-                            note.updated = lastUpdated
+                            note.updated = EDAMTimestamp(lastUpdated)
                             guard EvernoteSession.shared().isAuthenticated else {
                                 let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
                                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
@@ -209,9 +209,37 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
             return;
         }
-        EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: true, withResourcesAlternateData: false) { note in
+        if FTENPublishManager.shared.ftENNotebook?.edamNote == nil {
+            EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: true, withResourcesAlternateData: false) { note in
+                self.executeBlock {
+                    FTENPublishManager.shared.ftENNotebook?.edamNote = note
+                    if let resources = note?.resources as? [EDAMResource] {
+                        FTENPublishManager.shared.ftENNotebook?.edamResources = resources
+                    }
+                    updateNote()
+                }
+            } failure: { error in
+                if let error = error {
+                    self.executeBlock(onPublishQueue: {
+                        if((error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue))
+                        {
+                            self.noteDidGetDeletedFromEvernote();
+                        }
+                        else
+                        {
+                            FTENSyncUtilities.recordSyncLog(String(format: "Failed with error:%@",error as CVarArg));
+                            self.delegate?.didCompletePublishRequestWithError!(error);
+                        }
+                    });
+                }
+            }
+        }
+        else {
+            updateNote()
+        }
+        func updateNote()  {
             self.executeBlock {
-                if let note,!note.active {
+                guard let note = FTENPublishManager.shared.ftENNotebook?.edamNote,note.active else {
                     self.noteDidGetDeletedFromEvernote();
                     return;
                 }
@@ -219,7 +247,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                 do {
                     if let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {
 
-                        if pageRecord.parent.nsGUID == FTENPublishManager.shared.currentOpenedDocumentUUID {
+                        if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: pageRecord.parent.nsGUID) {
                             FTENPublishManager.recordSyncLog(String(format: "Evernote Publish Skip - Document is in open state"));
                             self.delegate?.didCompletePublishRequestWithError!(nil);
                             return;
@@ -231,13 +259,14 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 var contentSizeForFlurry: Int32 = 0;
 
                                 var resourcesMappedForAllPages = [EDAMResource]();
-                                if let resources = note?.resources as? [EDAMResource] {
+                                var orderedResources = [EDAMResource]()
+                                if let resources = FTENPublishManager.shared.ftENNotebook?.edamResources {
                                     resourcesMappedForAllPages.append(contentsOf: resources);
+                                    orderedResources = resources
                                 }
 
                                 var resource: EDAMResource?
-                                if let note,
-                                   let orderedResources = note.resources as? [EDAMResource],orderedResources.contains(where: {nil != pageRecord.enGUID && ($0 as AnyObject).guid == pageRecord.enGUID}) {
+                                if orderedResources.contains(where: {nil != pageRecord.enGUID && ($0 as AnyObject).guid == pageRecord.enGUID}) {
                                     if pageRecord.isContentDirty {
                                         let items = FTENSyncUtilities.fetchItems(withEntity: "ENSyncRecord", predicate: NSPredicate(format: "enGUID == %@",pageRecord.enGUID));
                                         if((items?.count)! > 1) {
@@ -289,20 +318,20 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 let pagesForENContent = FTENSyncUtilities.fetchItems(withEntity: "ENSyncRecord", predicate: predicateForResourcedPages, sortDescriptors: sortDescriptors) as? [ENSyncRecord];
 
                                 if let enml = FTENSyncUtilities.enmlRepresentation(withResources: resourcesMappedForAllPages, syncRecords: pagesForENContent) {
-                                    note?.content = String.init(format: EVERNOTE_NOTE_TEMPLATE, enml);
+                                    note.content = String.init(format: EVERNOTE_NOTE_TEMPLATE, enml);
                                 }
 
-                                note?.resources = NSMutableArray(array:  resourcesMappedForAllPages);
+                                note.resources = NSMutableArray(array:  resourcesMappedForAllPages);
 
                                 if(pageRecord.isContentDirty)
                                 {
-                                    FTENSyncUtilities.recordSyncLog(String(format: "Updating content of page (%ld of %ld) of notebook: %@", pdfPage.pageIndex()+1, self.pdfDocument.pages().count, (note?.title)!));
+                                    FTENSyncUtilities.recordSyncLog(String(format: "Updating content of page (%ld of %ld) of notebook: %@", pdfPage.pageIndex()+1, self.pdfDocument.pages().count, (note.title)!));
 
-                                    note?.updated =  Int64(pdfPage.lastUpdated.doubleValue);
+                                    note.updated = NSDate(timeIntervalSinceReferenceDate: pdfPage.lastUpdated.doubleValue).enedamTimestamp()
                                 }
                                 else
                                 {
-                                    FTENSyncUtilities.recordSyncLog(String(format: "Updating content of page (Content not modified) (%ld of %ld) of notebook: %@", pdfPage.pageIndex()+1, self.pdfDocument.pages().count, (note?.title)!));
+                                    FTENSyncUtilities.recordSyncLog(String(format: "Updating content of page (Content not modified) (%ld of %ld) of notebook: %@", pdfPage.pageIndex()+1, self.pdfDocument.pages().count, (note.title)!));
                                 }
                                 //Before updating the note, we set the isDirty flag to NO. if the update fails we reset it back to YES.
                                 pageRecord.isDirty = false;
@@ -316,14 +345,14 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 ////////////////////////////////////////
 
                                 let tags = NSMutableSet();
-                                if nil == note?.tagNames {
-                                    note?.tagNames = NSMutableArray();
+                                if nil == note.tagNames {
+                                    note.tagNames = NSMutableArray();
                                 }
                                 if(pdfPage is FTPageTagsProtocol) {
-                                    (pdfPage as! FTPageTagsProtocol).tags().forEach{note?.tagNames.add($0 as String)};
+                                    (pdfPage as! FTPageTagsProtocol).tags().forEach{note.tagNames.add($0 as String)};
                                 }
-                                note?.tagNames?.forEach{tags.add($0 )};
-                                note?.tagNames = NSMutableArray(array: tags.allObjects)
+                                note.tagNames?.forEach{tags.add($0 )};
+                                note.tagNames = NSMutableArray(array: tags.allObjects)
                                 self.closeDocumentIfNeeded();
 
                                 guard EvernoteSession.shared().isAuthenticated else {
@@ -332,7 +361,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                     self.delegate?.didCompletePublishRequestWithError!(error);
                                     return;
                                 }
-                                EvernoteNoteStore(session: session).update(note!) { updatedNote in
+                                EvernoteNoteStore(session: session).update(note) { updatedNote in
                                     self.executeBlock {
                                         do {
                                             if let updatedNote, let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {
@@ -340,8 +369,11 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                                     FTENSyncUtilities.recordSyncLog("Updating page-completed");
                                                 }
 
+                                                FTENPublishManager.shared.ftENNotebook?.edamNote = updatedNote
                                                 if let _ = resource {
                                                     if let edamResources = updatedNote.resources as? [EDAMResource] {
+
+                                                        FTENPublishManager.shared.ftENNotebook?.edamResources = edamResources
                                                         edamResources.filter({ (edamResource) -> Bool in
                                                             var fileName: NSString = edamResource.attributes.fileName as NSString;
                                                             fileName = fileName.deletingPathExtension as NSString;
@@ -427,20 +459,11 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                 }
 
             }
+        }
+        EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: true, withResourcesAlternateData: false) { note in
+
         } failure: { error in
-                        if let error = error {
-                            self.executeBlock(onPublishQueue: {
-                                if((error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue))
-                                {
-                                    self.noteDidGetDeletedFromEvernote();
-                                }
-                                else
-                                {
-                                    FTENSyncUtilities.recordSyncLog(String(format: "Failed with error:%@",error as CVarArg));
-                                    self.delegate?.didCompletePublishRequestWithError!(error);
-                                }
-                            });
-                        }
+
         }
     }
     #endif

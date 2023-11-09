@@ -60,6 +60,10 @@ extension FTShelfItemPublishRequest {
                         shelfItemRecord.isDirty = false;
                         shelfItemRecord.enGUID = note?.guid;
                         self.commitDataChanges();
+                        FTENPublishManager.shared.ftENNotebook?.edamNote = note
+                        if let resources = note?.resources as? [EDAMResource]{
+                            FTENPublishManager.shared.ftENNotebook?.edamResources = resources
+                        }
                         FTENSyncUtilities.recordSyncLog("Note created successfully");
 
                         self.delegate?.didCompletePublishRequestWithError!(nil);

@@ -18,11 +18,19 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     case evernoteAccountUnknown
 }
 
+class FTENNotebook: NSObject {
+    var edamNote: EDAMNote?
+    var edamResources = [EDAMResource]();
+}
+
 @objcMembers class FTENPublishManager: NSObject, FTBasePublishRequestDelegate {
     var shouldCancelPublishing = false
     private var currentlyPublingNotebookId: String?
     private var publishInProgress = false
     private var taskId: UIBackgroundTaskIdentifier!
+    
+    private(set) var ftENNotebook: FTENNotebook?;
+    
     //TODO: FLURRY
     /*
      Event Name: Evernote Sync Enabled {Parameter: New or Existing, From: Shelf/ Notebook}
@@ -228,14 +236,20 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
         
         if FTENIgnoreListManager.shared.ignoredNotebooksID().contains(currentlyPublingNotebookId ?? "") {
             currentlyPublingNotebookId = nil
+            ftENNotebook = nil;
         }
         
         if currentlyPublingNotebookId == currentOpenedDocumentUUID {
             currentlyPublingNotebookId = nil
+            ftENNotebook = nil;
         }
         if (currentlyPublingNotebookId == nil) {
             chooseNotebookToPublish()
+            if(currentlyPublingNotebookId != nil) {
+                ftENNotebook = FTENNotebook();
+            }
         }
+        
         if (currentlyPublingNotebookId != nil) {
             var predicate = NSPredicate(format: "nsGUID==%@", currentlyPublingNotebookId!)
             let parentRecord = FTENSyncUtilities.fetchTopManagedObject(withEntity: "ENSyncRecord", predicate: predicate) as? ENSyncRecord
@@ -336,7 +350,8 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             logFlurry = true
             self.showAlertForRelogin(onError: error)
             #if !targetEnvironment(macCatalyst)
-            switch UInt32(error.code) {
+            let enErrorCode = UInt32(error.code)
+            switch  enErrorCode {
             case EDAMErrorCode_UNKNOWN.rawValue:
                 logFlurry = true;
                 showSupportAction = true;
@@ -382,8 +397,8 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             case EDAMErrorCode_RATE_LIMIT_REACHED.rawValue:
                 failureReason = "Rate limit reached"
             default:
-                //NSURL related error codes are always negative. We would like to show a neat error. Hence going into the userinfo dict of the Evernote error and getting teh details of NSURL error.
-                if error.code < 0 && (failureReason == "Unknown") {
+                // EN error codes are only (1-19) hence We would like to show a neat error so going into the userinfo dict of the Evernote error and getting the details of NSURL error.
+                if (enErrorCode != 0 && enErrorCode > 19) && (failureReason == "Unknown") {
                     let errorInfoDict = error.userInfo
                     if let urlError = errorInfoDict["error"] as? NSError, urlError.responds(to: #selector(getter: error.localizedDescription)){
                         failureReason = urlError.localizedDescription
