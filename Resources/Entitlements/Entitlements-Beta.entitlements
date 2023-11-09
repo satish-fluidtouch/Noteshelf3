@@ -48,7 +48,7 @@
 	<array>
 		<string>$(AppIdentifierPrefix)CNTLGGQX2J.com.fluidtouch.noteshelf3-beta</string>
 		<string>$(AppIdentifierPrefix)com.microsoft.adalcache</string>
-		<string>$(AppIdentifierPrefix)com.fluidtouch.noteshelf</string>
+		<string>$(AppIdentifierPrefix)com.fluidtouch.noteshelf-beta</string>
 	</array>
 </dict>
 </plist>
