@@ -18,19 +18,32 @@ class FTFavoritePenTypeEditController: UIViewController {
 
     weak var delegate: FTFavoritePenTypeUpdateDelegate?
 
-    private var type: FTRackType {
-        return self.rack.type
-    }
-
     private var penTypeOrder: [FTPenType] {
-        return self.type.penTypes
+        var penTypes: [FTPenType] = []
+        if let parent = self.parent as? FTFavoriteEditViewController {
+            let selSegment = parent.getCurrentSelectedSegment()
+            if selSegment == .pen {
+                penTypes = FTRackType.pen.penTypes
+            } else {
+                penTypes = FTRackType.highlighter.penTypes
+            }
+        }
+        return penTypes
     }
 
-    private var rack: FTRackData {
-        if let parent = self.parent as? FTFavoriteEditViewController {
-            return parent.rack
+    private var manager: FTFavoritePensetManager {
+        guard let parent = self.parent as? FTFavoriteEditViewController else {
+            fatalError("Hanlde hierarchy chnages")
         }
-        return FTRackData(type: .pen, userActivity: nil)
+        return parent.manager
+    }
+
+    private var currentPenset: FTPenSetProtocol {
+        guard let parent = self.parent as? FTFavoriteEditViewController else {
+            fatalError("Hanlde hierarchy chnages")
+        }
+        let selSegment = parent.getCurrentSelectedSegment()
+        return self.manager.fetchCurrentPenset(for: selSegment)
     }
 
     override func viewDidLoad() {
@@ -55,7 +68,7 @@ extension FTFavoritePenTypeEditController: UICollectionViewDataSource, UICollect
             fatalError("Programmer error, Couldnot find FTPenTypeCollectionViewCell")
         }
         let penType = self.penTypeOrder[indexPath.item]
-        cell.configure(penType: penType, currentPenSet: self.rack.currentPenset, color: self.rack.currentPenset.color)
+        cell.configure(penType: penType, currentPenSet: self.currentPenset, color: self.currentPenset.color)
         cell.contentView.transform = .identity
         cell.contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         return cell
@@ -63,12 +76,12 @@ extension FTFavoritePenTypeEditController: UICollectionViewDataSource, UICollect
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let penType = self.penTypeOrder[indexPath.item]
-        let currentPenSet = self.rack.currentPenset
+        let currentPenSet = self.currentPenset
         if currentPenSet.type == penType {
             return
         }
-        self.rack.currentPenset.type = penType
-        self.rack.saveCurrentSelection()
+        currentPenSet.type = penType
+        self.manager.saveCurrentSelection(penSet: currentPenSet)
         self.delegate?.didChangePenType(penType)
         collectionView.indexPathsForVisibleItems.forEach({ (penTypeIndexPath) in
             if let cell = collectionView.cellForItem(at: penTypeIndexPath) as? FTPenTypeCollectionViewCell {

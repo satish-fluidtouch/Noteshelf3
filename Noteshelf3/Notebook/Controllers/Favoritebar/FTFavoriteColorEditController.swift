@@ -13,15 +13,14 @@ protocol FTFavoriteColorUpdateDelegate: NSObjectProtocol {
     func didChangeColor(_ color: String)
 }
 
-class FTFavoriteColorEditController: UIHostingController<AnyView> {
+class FTFavoriteColorEditController: UIHostingController<FTFavoritePresetColorsView> {
     private var cancellables = Set<AnyCancellable>()
     weak var delegate: FTFavoriteColorUpdateDelegate?
 
-    init(penType: FTPenType, activity: NSUserActivity?) {
-        let viewmodel = FTPenShortcutViewModel(rackData: FTRackData(type: penType.rackType, userActivity: activity))
-        let hostView = FTPresetColorsView(selectedPage: 0)
-        super.init(rootView: AnyView(hostView.environmentObject(viewmodel)))
-        viewmodel.$currentSelectedColor
+    init(viewModel: FTFavoritePresetsViewModel) {
+        let hostView = FTFavoritePresetColorsView(viewModel: viewModel, selectedPage: 0)
+        super.init(rootView: hostView)
+        viewModel.$currentSelectedColor
             .dropFirst()
             .sink { newValue in
                 self.delegate?.didChangeColor(newValue)

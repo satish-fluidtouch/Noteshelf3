@@ -1873,6 +1873,9 @@
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
+		E75A6EAE2AFCAB770039D25D /* FTFavoritePresetColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */; };
+		E75A6EB02AFCAC580039D25D /* FTFavoritePresetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */; };
+		E75A6EB22AFCC2820039D25D /* FTFavoriteColorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */; };
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
@@ -3965,6 +3968,9 @@
 		E75516E2274F90B600401F45 /* FTExportDataFailedItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataFailedItemCell.xib; sourceTree = "<group>"; };
 		E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShortcutController.swift; sourceTree = "<group>"; };
 		E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteEditViewController.swift; sourceTree = "<group>"; };
+		E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePresetColorsView.swift; sourceTree = "<group>"; };
+		E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePresetsViewModel.swift; sourceTree = "<group>"; };
+		E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteColorGridView.swift; sourceTree = "<group>"; };
 		E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTErrorInfoViewController.swift; sourceTree = "<group>"; };
 		E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BackUpErrorHandler.swift"; sourceTree = "<group>"; };
 		E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEvernoteFooterView.swift; sourceTree = "<group>"; };
@@ -9894,6 +9900,9 @@
 				97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */,
 				97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */,
 				97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */,
+				E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */,
+				E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */,
+				E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */,
 			);
 			path = Favoritebar;
 			sourceTree = "<group>";
@@ -12647,6 +12656,7 @@
 				BAF392A42859ADF00067CA9F /* FTPDFRenderViewController_KeyboardListener.swift in Sources */,
 				979AF829290159EE00A288FE /* FTShlefSplitViewController+AddItemOptions.swift in Sources */,
 				E7B947472912347400BE4430 /* FTShareContentView.swift in Sources */,
+				E75A6EAE2AFCAB770039D25D /* FTFavoritePresetColorsView.swift in Sources */,
 				0935E0DC2AE9058800BC1017 /* FTPDFPageContent.swift in Sources */,
 				97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */,
 				BAF392A52859ADF00067CA9F /* FTUserDefaults_Migration3o1.swift in Sources */,
@@ -12869,6 +12879,7 @@
 				BAF393532859ADF00067CA9F /* FTURLReadThumbnailManager.swift in Sources */,
 				4747C4162A95EC5200B1AB59 /* FTMetrics.swift in Sources */,
 				BAF393542859ADF00067CA9F /* GoogleDriveAPI.swift in Sources */,
+				E75A6EB22AFCC2820039D25D /* FTFavoriteColorGridView.swift in Sources */,
 				BAF393552859ADF00067CA9F /* FTSlideShowTimeTracker.swift in Sources */,
 				BAF393562859ADF00067CA9F /* FTFinderViewController+ContextMenu.swift in Sources */,
 				BAF393582859ADF00067CA9F /* FTNoteshelfPage_UndoManagement.swift in Sources */,
@@ -13168,6 +13179,7 @@
 				E7B9475129124E3500BE4430 /* FTShareFormatViewModel.swift in Sources */,
 				BAF3946E2859ADF00067CA9F /* NSString_Backup_Additions.m in Sources */,
 				BAF394702859ADF00067CA9F /* FTOneDriveAlertHandler.swift in Sources */,
+				E75A6EB02AFCAC580039D25D /* FTFavoritePresetsViewModel.swift in Sources */,
 				BAF394732859ADF00067CA9F /* FTUnsplashPostService.swift in Sources */,
 				BAF394762859ADF00067CA9F /* FTWatchAudioOptionsCell.swift in Sources */,
 				3DAA68B32911578A00848434 /* FTNewTextStyleViewController_Extension.swift in Sources */,

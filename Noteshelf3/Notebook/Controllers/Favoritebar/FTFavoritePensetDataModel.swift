@@ -10,10 +10,10 @@ import Foundation
 
 struct FTFavoritePensetDataModel: Codable {
     let version: String
-    var favorites: [FTFavoritePenset]
+    var favorites: [FTFavoritePenInfo]
 }
 
-struct FTFavoritePenset: Codable {
+struct FTFavoritePenInfo: Codable {
     let type: Int
     let color: String
     let size: CGFloat

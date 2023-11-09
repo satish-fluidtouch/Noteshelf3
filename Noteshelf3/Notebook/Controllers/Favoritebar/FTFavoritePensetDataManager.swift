@@ -108,15 +108,15 @@ private extension FTFavoritePensetDataManager {
         return (false, [])
     }
 
-    func prepareNS3Favorites(using ns2Favorites: [[String: Any]]) -> [FTFavoritePenset]  {
-        let reqFavorites: [FTFavoritePenset] = ns2Favorites.map { oldFavorite in
+    func prepareNS3Favorites(using ns2Favorites: [[String: Any]]) -> [FTFavoritePenInfo]  {
+        let reqFavorites: [FTFavoritePenInfo] = ns2Favorites.map { oldFavorite in
             if let type = oldFavorite["Type"] as? Int,
                let color = oldFavorite["Color"] as? String,
                let size = oldFavorite["Size"] as? Int,
                let preciseSize = oldFavorite["PreciseSize"] as? CGFloat {
-                return FTFavoritePenset(type: type, color: color, size: CGFloat(size), preciseSize: String(Float(preciseSize)))
+                return FTFavoritePenInfo(type: type, color: color, size: CGFloat(size), preciseSize: String(Float(preciseSize)))
             }
-            return FTFavoritePenset(type: 0, color: "000000", size: 3, preciseSize: "3.0")
+            return FTFavoritePenInfo(type: 0, color: "000000", size: 3, preciseSize: "3.0")
         }
         return reqFavorites
     }

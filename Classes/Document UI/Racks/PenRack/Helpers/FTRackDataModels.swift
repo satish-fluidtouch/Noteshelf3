@@ -16,7 +16,6 @@ import Foundation
     case text
     case shape
     case presenter
-    case favorite
 
     public var displayName: String {
 
@@ -48,8 +47,6 @@ import Foundation
             return "FTDefaultShapeRack"
         case .presenter:
             return "FTDefaultPresenterRack"
-        case .favorite:
-            return "FTDefaultFavoriteRack"
         }
     }
     
@@ -64,8 +61,6 @@ import Foundation
             pens = [.pen,.caligraphy,.pilotPen,.pencil,.flatHighlighter,.highlighter];
         case .presenter:
             pens = [.pen];
-        case .favorite:
-            pens = [.pen,.caligraphy,.pilotPen,.pencil,.flatHighlighter,.highlighter];
         default:
             break;
         }

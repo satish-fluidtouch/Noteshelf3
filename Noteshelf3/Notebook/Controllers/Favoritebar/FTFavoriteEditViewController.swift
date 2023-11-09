@@ -12,7 +12,6 @@ import SwiftUI
 
 protocol FTFavoriteEditDelegate: NSObjectProtocol {
     func didChangeFavorite(_ penset: FTPenSetProtocol)
-    func didChangeRackType(_ rackType: FTRackType) -> FTRackData
     func didDeleteFavorite(_ favorite: FTPenSetProtocol)
     func didDismissEditModeScreen()
 }
@@ -29,11 +28,9 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     private var penTypeEditController: FTFavoritePenTypeEditController?
 
     weak var delegate: FTFavoriteEditDelegate?
-    var rack = FTRackData(type: .pen, userActivity: nil)
-
-    private var favorite: FTPenSetProtocol {
-        self.rack.currentPenset
-    }
+    var favorite: FTPenSetProtocol!
+    var manager: FTFavoritePensetManager!
+    var activity: NSUserActivity?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +45,14 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
 
     deinit {
         self.delegate?.didDismissEditModeScreen()
+    }
+
+    func getCurrentSelectedSegment() -> FTFavoriteRackSegment {
+        var value = FTFavoriteRackSegment.pen
+        if self.favorite.type.rackType == .highlighter {
+            value = FTFavoriteRackSegment.highlighter
+        }
+        return value
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -66,17 +71,18 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     }
 
     @objc func segmentChanged() {
-        var type = FTRackType.pen
+        var type = FTFavoriteRackSegment.pen
         if segmentControl.selectedSegmentIndex == 1 {
             type = .highlighter
         }
-        if let rack = self.delegate?.didChangeRackType(type) {
-            self.rack = rack
-            self.penTypeEditController?.reloadPenTypes()
-            self.colorEditController?.remove()
-            self.sizeEditController?.remove()
-            self.addPenSizeColorEditViews()
-        }
+        let currentPenset = self.manager.fetchCurrentPenset(for: type)
+        self.favorite = currentPenset
+        self.delegate?.didChangeFavorite(self.favorite)
+        self.manager.saveCurrentSelection(penSet: self.favorite)
+        self.penTypeEditController?.reloadPenTypes()
+        self.colorEditController?.remove()
+        self.sizeEditController?.remove()
+        self.addPenSizeColorEditViews()
     }
 }
 
@@ -94,7 +100,8 @@ private extension FTFavoriteEditViewController {
         self.sizeEditController = sizeController
         
         // Color edit view
-        let colorController = FTFavoriteColorEditController(penType: favorite.type, activity: self.view.window?.userActivity)
+        let viewModel = FTFavoritePresetsViewModel(segment: self.getCurrentSelectedSegment(), currentSelectedColor: self.favorite.color, userActivity: self.activity)
+        let colorController = FTFavoriteColorEditController(viewModel: viewModel)
         colorController.delegate = self
         self.add(colorController)
         colorController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -120,18 +127,21 @@ extension FTFavoriteEditViewController: FTFavoriteSizeUpdateDelegate, FTFavorite
         if let penSize = FTPenSize(rawValue: Int(size)) {
             self.favorite.size = penSize
             self.favorite.preciseSize = size
+            self.manager.saveCurrentSelection(penSet: self.favorite)
             self.delegate?.didChangeFavorite(self.favorite)
         }
     }
 
     func didChangeColor(_ color: String) {
         self.favorite.color = color
+        self.manager.saveCurrentSelection(penSet: self.favorite)
         self.penTypeEditController?.reloadPenTypes()
         self.delegate?.didChangeFavorite(self.favorite)
     }
 
     func didChangePenType(_ type: FTPenType) {
         self.favorite.type = type
+        self.manager.saveCurrentSelection(penSet: self.favorite)
         self.delegate?.didChangeFavorite(self.favorite)
     }
 }
