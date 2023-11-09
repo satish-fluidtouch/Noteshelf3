@@ -174,7 +174,7 @@ class FTTheme: NSObject, FTThemeable {
         return nil
     };
     func deleteThumbnailFromCache() {
-        fatalError("subclasses should implement this method")
+        NSException.init(name: NSExceptionName(rawValue: "Theme"), reason: "subclass should override ", userInfo: nil).raise();
     }
 }
 
