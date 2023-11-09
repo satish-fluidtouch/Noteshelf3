@@ -158,7 +158,7 @@ extension FTTemplatePreviewViewController {
         let maxWidth = CGFloat(previewImageViews.count) * scrollView.frame.width
         scrollView.contentSize = CGSize(width: maxWidth, height:scrollView.frame.size.height)
         topScrollView.contentSize = CGSize(width: CGFloat(previewImageViews.count) * topScrollView.frame.width, height:topScrollView.frame.size.height)
-
+        viewModel.thumbnailSize = aspectSize
         if let styles {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 let collectionVidth = CGFloat(self.collectionView.contentSize.width) + CGFloat((styles.count - 1) * 6)
@@ -346,10 +346,7 @@ private extension FTTemplatePreviewViewController {
                         await self.startActivityIndicator()
                         do {
                             var thumbUrl = style.thumbnailPath()
-                            if !FileManager.default.fileExists(atPath: thumbUrl.path) {
-                                thumbUrl = try await self.viewModel.downloadTemplateFor(style: style)
-                            }
-
+                            thumbUrl = try await self.viewModel.downloadTemplateFor(style: style)
                             var name = thumbUrl.lastPathComponent.deletingPathExtension
                             if await self.thumbnailOrientation == .potrait {
                                 name = name.replacingOccurrences(of: "_port", with: "")

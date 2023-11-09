@@ -260,7 +260,6 @@
 		4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7050CD24F644C1009CA613 /* StoreTemplateFormat.swift */; };
 		4209FEAE295C62DE00ACC02E /* URL_Attributes_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF2BFF249B52CD0089A2A3 /* URL_Attributes_Extension.swift */; };
 		4209FEAF295C62E500ACC02E /* Siri+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297F6642535E042009F8F5A /* Siri+Common.swift */; };
-		4209FEB0295C630F00ACC02E /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
 		4209FEB1295C634500ACC02E /* NSDate_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA376E2223BE134D00B27012 /* NSDate_Extension.swift */; };
 		4209FEB2295C635300ACC02E /* FTDynamicTemplateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8525A24F62CEA00EF893A /* FTDynamicTemplateInfo.swift */; };
 		4209FEB3295C636700ACC02E /* FTShelfItemSearching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E11E85024B0003DA80 /* FTShelfItemSearching.swift */; };
@@ -364,6 +363,10 @@
 		475E53492A5D6E75004AB827 /* FTShelfTagsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E53482A5D6E75004AB827 /* FTShelfTagsConstants.swift */; };
 		475E534B2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E534A2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift */; };
 		4766F6AA2A8DFB6E00F8FA27 /* FTNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4766F6A92A8DFB6E00F8FA27 /* FTNetwork.swift */; };
+		477646482AF0D562009DCC2A /* FT24HrEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882C24426B29A1000C84B52 /* FT24HrEventLogger.swift */; };
+		477646492AF0D566009DCC2A /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
+		4776464A2AF0D566009DCC2A /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
+		4776464B2AF0D569009DCC2A /* FTLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BA910AFD224CA38A002869D3 /* FTLogger.m */; };
 		477862DB2A5EB0A400202D00 /* FTShelfTagsPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47653CA4291CA8670068D7AE /* FTShelfTagsPageCell.swift */; };
 		477862FD2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */; };
 		478142BD2A85F33A0029378B /* templates_fr.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478142B42A85F33A0029378B /* templates_fr.plist */; };
@@ -1046,7 +1049,6 @@
 		BAF390F12859ADF00067CA9F /* FTAudioSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2D751E027D72007B5CAD /* FTAudioSlider.m */; };
 		BAF390F22859ADF00067CA9F /* FTDocumentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE759F22AE517800053B05 /* FTDocumentValidator.swift */; };
 		BAF390F32859ADF00067CA9F /* FTPDFOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED98787B2227A724006D83A1 /* FTPDFOutline.swift */; };
-		BAF390F42859ADF00067CA9F /* FT24HrEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882C24426B29A1000C84B52 /* FT24HrEventLogger.swift */; };
 		BAF390F52859ADF00067CA9F /* FTItemToExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E61ED52005F80100234CCC /* FTItemToExport.swift */; };
 		BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA376E3123BE134D00B27012 /* FTDiaryYearRectsInfo.swift */; };
 		BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47446B921EFCF5E60006EFC5 /* ENSyncRecord_Extension.swift */; };
@@ -1202,7 +1204,6 @@
 		BAF391C92859ADF00067CA9F /* FTCustomTextRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C617A266DFA0800512DF2 /* FTCustomTextRange.swift */; };
 		BAF391CA2859ADF00067CA9F /* FTSettingsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8051A9D2213C9C3007EDC90 /* FTSettingsLabel.swift */; };
 		BAF391CB2859ADF00067CA9F /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297F6672535F82F009F8F5A /* UIFont+Extensions.swift */; };
-		BAF391CC2859ADF00067CA9F /* FTLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BA910AFD224CA38A002869D3 /* FTLogger.m */; };
 		BAF391CE2859ADF00067CA9F /* FTRecognitionServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40DBB02322406C00995DA9 /* FTRecognitionServiceProvider.swift */; };
 		BAF391D02859ADF00067CA9F /* FTSegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8520024F5176400EF893A /* FTSegmentStyle.swift */; };
 		BAF391D12859ADF00067CA9F /* FTNBKZipFileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8BFAA260DBDFA00864BC7 /* FTNBKZipFileImporter.swift */; };
@@ -1805,7 +1806,6 @@
 		BAF395192859ADF10067CA9F /* FTPinRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F20E321F0C9D12002AAF96 /* FTPinRequestViewController.swift */; };
 		BAF3951D2859ADF10067CA9F /* FTBottomDashedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B7D5BF1EA7A3AF00B17482 /* FTBottomDashedLineView.swift */; };
 		BAF395222859ADF10067CA9F /* FTShelfProviderConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E81E852B7A0003DA80 /* FTShelfProviderConstants.swift */; };
-		BAF395232859ADF10067CA9F /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
 		BAF395242859ADF10067CA9F /* FTAutoTriggerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C831292485167900BE1DBD /* FTAutoTriggerButton.swift */; };
 		BAF395262859ADF10067CA9F /* FTClassicDiaryTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F3C3B326B9247F00E3B75E /* FTClassicDiaryTemplateFormat.swift */; };
 		BAF395272859ADF10067CA9F /* FTAudioPlayerController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FC62323A216D8002C318F /* FTAudioPlayerController_Extension.swift */; };
@@ -12092,7 +12092,6 @@
 				BAF390F12859ADF00067CA9F /* FTAudioSlider.m in Sources */,
 				BAF390F22859ADF00067CA9F /* FTDocumentValidator.swift in Sources */,
 				BAF390F32859ADF00067CA9F /* FTPDFOutline.swift in Sources */,
-				BAF390F42859ADF00067CA9F /* FT24HrEventLogger.swift in Sources */,
 				BAF390F52859ADF00067CA9F /* FTItemToExport.swift in Sources */,
 				BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */,
 				BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */,
@@ -12187,6 +12186,7 @@
 				BAF391422859ADF00067CA9F /* FTMidnightDiaryWeekTemplate.swift in Sources */,
 				F3A63A7F2892792A00B7D3DF /* FTLassoRackViewController.swift in Sources */,
 				520DA2BE2A2F55C4003A6F22 /* FTBookmarkColorCell.swift in Sources */,
+				4776464B2AF0D569009DCC2A /* FTLogger.m in Sources */,
 				BA1963532A9609FF000C47FA /* FTNSiCloudManager.swift in Sources */,
 				F305FD8228DC5C36000D670F /* FTEmojiCategoryHeaderView.swift in Sources */,
 				BAF391462859ADF00067CA9F /* FTInfoTipView.swift in Sources */,
@@ -12340,7 +12340,6 @@
 				BAF391CB2859ADF00067CA9F /* UIFont+Extensions.swift in Sources */,
 				E7B8DAB828803A7600F0AE78 /* FTPenShortcutViewModel.swift in Sources */,
 				E7B947492912350900BE4430 /* FTShareContentModels.swift in Sources */,
-				BAF391CC2859ADF00067CA9F /* FTLogger.m in Sources */,
 				BAF391CE2859ADF00067CA9F /* FTRecognitionServiceProvider.swift in Sources */,
 				BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */,
 				BAF391D02859ADF00067CA9F /* FTSegmentStyle.swift in Sources */,
@@ -12591,6 +12590,7 @@
 				BAF392A32859ADF00067CA9F /* FTAnnotation_Selection.swift in Sources */,
 				BAF392A42859ADF00067CA9F /* FTPDFRenderViewController_KeyboardListener.swift in Sources */,
 				979AF829290159EE00A288FE /* FTShlefSplitViewController+AddItemOptions.swift in Sources */,
+				477646482AF0D562009DCC2A /* FT24HrEventLogger.swift in Sources */,
 				E7B947472912347400BE4430 /* FTShareContentView.swift in Sources */,
 				0935E0DC2AE9058800BC1017 /* FTPDFPageContent.swift in Sources */,
 				97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */,
@@ -13085,6 +13085,7 @@
 				E7A63EC3286C6BC0003F538C /* FTBaseCategoryDatasource.swift in Sources */,
 				BAF394562859ADF00067CA9F /* FTRendererProvider.swift in Sources */,
 				BAF394582859ADF00067CA9F /* FTMidnightDiaryPrioritiesTemplate.swift in Sources */,
+				477646492AF0D566009DCC2A /* FTLogger.swift in Sources */,
 				BAF394592859ADF00067CA9F /* FTBrushTextureCache.swift in Sources */,
 				BAF3945A2859ADF00067CA9F /* StoreTemplateFormat.swift in Sources */,
 				BAF3945B2859ADF00067CA9F /* FTWhatsNewSlideViewController.swift in Sources */,
@@ -13294,7 +13295,6 @@
 				BAF3951D2859ADF10067CA9F /* FTBottomDashedLineView.swift in Sources */,
 				1439371E29D6E02700D93033 /* FTStickerContainerView.swift in Sources */,
 				BAF395222859ADF10067CA9F /* FTShelfProviderConstants.swift in Sources */,
-				BAF395232859ADF10067CA9F /* FTLogger.swift in Sources */,
 				097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */,
 				5283D39C2A5BEAE200C6C125 /* FTShareItemsFetchModel.swift in Sources */,
 				BAF395242859ADF10067CA9F /* FTAutoTriggerButton.swift in Sources */,
@@ -13374,6 +13374,7 @@
 			files = (
 				4209FEB4295C637100ACC02E /* CommonExtensions.swift in Sources */,
 				4209FE96295C617600ACC02E /* FTCoverTheme.swift in Sources */,
+				4776464A2AF0D566009DCC2A /* FTLogger.swift in Sources */,
 				4209FE60295C5CA800ACC02E /* FTNoteshelfDocumentProvider.swift in Sources */,
 				4209FE76295C5F7000ACC02E /* FTShelfItemProtocols_Extension.swift in Sources */,
 				EDFF3ECF241A1214003D6E29 /* FTExternMethods.m in Sources */,
@@ -13457,7 +13458,6 @@
 				47CE079D2A0A317800E15028 /* FTUtils.m in Sources */,
 				5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */,
 				C85AFDEF2331FF4000D25D5F /* BEMCheckBoxGroup.m in Sources */,
-				4209FEB0295C630F00ACC02E /* FTLogger.swift in Sources */,
 				4209FE93295C614F00ACC02E /* FTDateInfo.swift in Sources */,
 				0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */,
 				4209FE6D295C5F0200ACC02E /* FTDocumentFileItemFactory.swift in Sources */,
