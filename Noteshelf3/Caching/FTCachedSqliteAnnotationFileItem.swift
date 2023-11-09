@@ -145,6 +145,7 @@ private extension FTCachedSqliteAnnotationFileItem {
             let model = FTAudioRecordingModel.init(dict: dict["recordingModel"] as? Dictionary<String,Any>)
             let name = dict["audioName"] as? String
             return (name, model)
+                
         } catch {
             return  (nil, nil)
         }

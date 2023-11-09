@@ -104,7 +104,7 @@ extension FTShelfSplitViewController {
     private var selectedPaperTheme: FTThemeable {
         FTThemesLibrary(libraryType: .papers).getDefaultTheme(defaultMode: .basic)
     }
-    private func setDefaultCoverTheme(_ theme: FTThemeable) {
+    func setDefaultCoverTheme(_ theme: FTThemeable) {
         FTThemesLibrary(libraryType: .covers).setDefaultTheme(theme, defaultMode:.basic, withVariants: nil)
     }
     private func udpatePaperThemeAndVariants(_ themeWithVariants: FTNewNotebook.FTSelectedPaperVariantsAndTheme) {

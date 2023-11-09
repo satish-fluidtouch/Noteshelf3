@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "Inserisci tra %d e %d";
 "EnterPassword" = "Inserisci password";
 "EnterPasswordHint" = "Inserisci un suggerimento per la password.";
-"EnterPasswordToOpenThisNotebook" = "Inserisci la password per aprire questo notebook";
+"EnterPasswordToOpenThisNotebook" = "Inserisci la password per aprire %@";
 "EnterThePasswordFor" = "Inserisci la password per %@.";
 "EraseEntireStroke" = "Cancella l'intero tratto";
 "EraseHighlighterOnly" = "Cancella solo evidenziatore";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "Vedi tutto";
 "shelf.home.seeAllNotes" = "Vedi tutte le note";
 "shelf.importfile.description" = "Aggiungi PDF e immagini dalla tua app File.";
+"shelf.migration.CompactDescription" = "Basta toccare su qualsiasi notebook qui per migrarne una copia su Noteshelf 3. I quaderni migrati saranno disponibili nelle categorie e gruppi di Noteshelf 3.";
 "shelf.migration.Description" = "Basta toccare su qualsiasi notebook qui per migrarne una copia su Noteshelf 3. I quaderni migrati saranno disponibili nelle categorie e gruppi di Noteshelf 3. La possibilità di migrare intere categorie verrà presto introdotta!";
 "shelf.migration.headerMessage" = "Migra i tuoi notebook su Noteshelf 3";
 "shelf.navBar.deselectAll" = "Deseleziona tutto";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM

@@ -70,7 +70,10 @@ struct FTDeviceOrientationViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-                orientation = UIDevice.current.orientation
+                let currentOrientation = UIDevice.current.orientation
+                if currentOrientation.isPortrait || currentOrientation.isLandscape && orientation != currentOrientation{
+                    orientation = currentOrientation
+                }
             }
     }
 }

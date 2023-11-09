@@ -222,7 +222,7 @@ struct FTTemplateStyle: Codable, Hashable {
     }
 
     func thumbnailPath() -> URL {
-        var pdfUrl = FTTemplatesCache().templatesFolder
+        var thumbnailUrl = FTTemplatesCache().templatesThumbnailsFolder
         var fileName = self.templateName
         if self.type == FTDiscoveryItemType.diary.rawValue {
             fileName = self.stylePath ?? self.templateName
@@ -232,8 +232,8 @@ struct FTTemplateStyle: Codable, Hashable {
         } else {
             fileName += "_land"
         }
-        pdfUrl = pdfUrl.appendingPathComponent(fileName).appendingPathExtension("png")
-        return pdfUrl
+        thumbnailUrl = thumbnailUrl.appendingPathComponent(fileName).appendingPathExtension("png")
+        return thumbnailUrl
     }
 
     var thumbnailUrl: URL? {
