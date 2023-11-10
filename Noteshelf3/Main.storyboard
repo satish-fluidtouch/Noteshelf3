@@ -1104,7 +1104,7 @@
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
         <image name="noBookmarks" width="64" height="64"/>
         <image name="noTags" width="64" height="64"/>
-        <image name="plusImage" width="10" height="10"/>
+        <image name="plusImage" width="11" height="11"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
         <image name="tag" catalog="system" width="128" height="118"/>
         <image name="tag.slash" catalog="system" width="128" height="118"/>

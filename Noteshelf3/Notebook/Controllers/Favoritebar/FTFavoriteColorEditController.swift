@@ -16,8 +16,10 @@ protocol FTFavoriteColorUpdateDelegate: NSObjectProtocol {
 class FTFavoriteColorEditController: UIHostingController<FTFavoritePresetColorsView> {
     private var cancellables = Set<AnyCancellable>()
     weak var delegate: FTFavoriteColorUpdateDelegate?
+    private(set) var viewModel: FTFavoritePresetsViewModel!
 
     init(viewModel: FTFavoritePresetsViewModel) {
+        self.viewModel = viewModel
         let hostView = FTFavoritePresetColorsView(viewModel: viewModel, selectedPage: 0)
         super.init(rootView: hostView)
         viewModel.$currentSelectedColor

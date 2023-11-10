@@ -32,6 +32,10 @@ class FTFavoritebarViewController: UIViewController {
 
     var activity: NSUserActivity?
 
+    // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing edit controller)
+    // Better solution would be appericiated
+    internal var presetViewModel: FTFavoritePresetsViewModel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addVisualEffectBlur(cornerRadius: 19.0)
@@ -419,5 +423,37 @@ extension FTFavoritebarViewController: FTFavoriteSizeUpdateDelegate {
 
     func didDismissCurrentsizeEditScreen() {
         self.collectionView.reloadData()
+    }
+}
+
+extension FTFavoritebarViewController: FTColorEyeDropperPickerDelegate {
+    func colorPicker(picker: FTColorEyeDropperPickerController,didPickColor color:UIColor) {
+        let hexColor = color.hexString
+        if let index = editFavoriteCurrentIndex, index < self.favorites.count {
+            let penset = self.favorites[index]
+            penset.color = hexColor
+            if let currentCell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell {
+                currentCell.configure(favorite: penset, currentPenset: penset)
+            }
+            if(index < self.favorites.count) {
+                self.favorites[index] = penset
+            } else if index == self.favorites.count {
+                self.favorites.append(penset)
+            }
+            self.manager.saveFavorites(favorites)
+        }
+        if let vm = self.presetViewModel {
+            vm.updateCurrentSelection(colorHex: hexColor)
+            if let editIndex = vm.presetEditIndex {
+                vm.updatePresetColor(hex: color.hexString, index: editIndex)
+                NotificationCenter.default.post(name: .PresetColorUpdate, object: nil, userInfo: ["type": FTColorToastType.edit.rawValue])
+            }
+            else {
+                vm.addSelectedColorToPresets()
+                NotificationCenter.default.post(name: .PresetColorUpdate, object: nil, userInfo: ["type": FTColorToastType.add.rawValue])
+            }
+            vm.updateCurrentColors()
+        }
+        self.presetViewModel = nil
     }
 }

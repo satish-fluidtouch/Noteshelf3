@@ -20,6 +20,10 @@ enum FTFavoriteRackSegment: String {
     }
 }
 
+protocol FTFavoritePresetEditDelegate: NSObjectProtocol {
+    func didTapEyeDropper()
+}
+
 class FTFavoritePresetsViewModel: ObservableObject {
     private let segment: FTFavoriteRackSegment
     @Published var presetColors: [FTPenColorModel] = []
@@ -31,6 +35,8 @@ class FTFavoritePresetsViewModel: ObservableObject {
     @Published var currentDraggedItem: FTPenColorModel?
     private var rackData = FTRackData(type: .pen, userActivity: nil)
 
+    private weak var presetEditDelegate: FTFavoritePresetEditDelegate?
+
     init(segment: FTFavoriteRackSegment, currentSelectedColor: String, userActivity: NSUserActivity?) {
         self.segment = segment
         self.currentSelectedColor = currentSelectedColor
@@ -40,6 +46,10 @@ class FTFavoritePresetsViewModel: ObservableObject {
         } else {
             self.rackData = FTRackData(type: .highlighter, userActivity: userActivity)
         }
+    }
+
+    func createEditDelegate(_ del: FTFavoritePresetEditDelegate) {
+        self.presetEditDelegate = del
     }
 
     func fetchCurrentColors() {
@@ -103,6 +113,10 @@ class FTFavoritePresetsViewModel: ObservableObject {
             self.presetColors.append(FTPenColorModel(hex: "", isSelected: false))
 //            self.editDelegate?.didDeletePresetColor()
         }
+    }
+
+    func didTapOnColorEyeDropper() {
+        self.presetEditDelegate?.didTapEyeDropper()
     }
 }
 

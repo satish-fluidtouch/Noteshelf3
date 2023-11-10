@@ -165,7 +165,7 @@ struct FTFavoriteColorGridView: View {
                     .foregroundColor(Color.appColor(.accent))
                     .font(Font.appFont(for: .regular, with: 16.0))
                     .onTapGesture {
-//                        self.viewModel.didTapOnColorEyeDropper()
+                        self.viewModel.didTapOnColorEyeDropper()
                     }
             }
             Spacer()

@@ -64,6 +64,7 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     }
 
     @IBAction private func eyeDropperTapped(_ sender: Any) {
+        self.showEyeDropper()
     }
 
     @IBAction private func deleteTapped(_ sender: Any) {
@@ -87,6 +88,19 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
 }
 
 private extension FTFavoriteEditViewController {
+    func showEyeDropper() {
+        let controller = self.presentingViewController
+        let presetVm = self.colorEditController?.viewModel
+        if let presentingVc = controller {
+            self.dismiss(animated: true) {
+                if let favBarVc = self.delegate as? FTFavoritebarViewController {
+                    favBarVc.presetViewModel = presetVm
+                    FTColorEyeDropperPickerController.showEyeDropperOn(presentingVc,delegate: favBarVc)
+                }
+            }
+        }
+    }
+
     func addPenSizeColorEditViews() {
         // Size edit view
         let sizeController = FTFavoriteSizeEditController(size: favorite.preciseSize, penType: favorite.type)
@@ -101,6 +115,7 @@ private extension FTFavoriteEditViewController {
         
         // Color edit view
         let viewModel = FTFavoritePresetsViewModel(segment: self.getCurrentSelectedSegment(), currentSelectedColor: self.favorite.color, userActivity: self.activity)
+        viewModel.createEditDelegate(self)
         let colorController = FTFavoriteColorEditController(viewModel: viewModel)
         colorController.delegate = self
         self.add(colorController)
@@ -153,5 +168,11 @@ extension FTFavoriteEditViewController: UINavigationControllerDelegate {
         } else {
             navigationController.setNavigationBarHidden(false, animated: false)
         }
+    }
+}
+
+extension FTFavoriteEditViewController: FTFavoritePresetEditDelegate {
+    func didTapEyeDropper() {
+        self.showEyeDropper()
     }
 }
