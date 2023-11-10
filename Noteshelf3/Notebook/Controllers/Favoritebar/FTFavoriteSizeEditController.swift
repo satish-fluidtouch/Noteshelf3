@@ -8,19 +8,27 @@
 
 import SwiftUI
 import Combine
+import FTCommon
 
 protocol FTFavoriteSizeUpdateDelegate: NSObjectProtocol {
     func didChangeSize(_ size: CGFloat)
+    func didDismissCurrentsizeEditScreen()
 }
 
-class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView> {
+extension FTFavoriteSizeUpdateDelegate {
+    func didDismissCurrentsizeEditScreen() {}
+}
+
+class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView>, FTPopoverPresentable {
+    var ftPresentationDelegate = FTPopoverPresentation()
+
     private let sizeEditModel: FTPenSizeEditModel!
     weak var delegate: FTFavoriteSizeUpdateDelegate?
     private var cancellables = Set<AnyCancellable>()
 
-    init(size: CGFloat, penType: FTPenType) {
+    init(size: CGFloat, penType: FTPenType, displayMode: FTPenSizeEditViewDisplayMode = .favoriteEdit) {
         self.sizeEditModel = FTPenSizeEditModel(currentSize: size)
-        let hostView = FTPenSizeEditView(displayMode: .favoriteEdit, penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel)
+        let hostView = FTPenSizeEditView(displayMode: displayMode, penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel)
         super.init(rootView: hostView)
         self.sizeEditModel.$currentSize
             .dropFirst()
@@ -30,6 +38,10 @@ class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView> {
             } .store(in: &cancellables)
     }
     
+    deinit {
+        self.delegate?.didDismissCurrentsizeEditScreen()
+    }
+
     @MainActor
     dynamic required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

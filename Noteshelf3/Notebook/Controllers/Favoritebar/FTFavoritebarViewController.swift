@@ -49,6 +49,14 @@ class FTFavoritebarViewController: UIViewController {
     }
 
     @IBAction func sizeIndicatorTapped(_ sender: Any) {
+        let curPenset = self.getCurrentPenset()
+        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .normal)
+        sizeEditVc.delegate = self
+        if let btn = sender as? UIButton {
+            sizeEditVc.ftPresentationDelegate.source = btn
+            sizeEditVc.ftPresentationDelegate.sourceRect = btn.bounds
+        }
+        self.ftPresentPopover(vcToPresent: sizeEditVc, contentSize: CGSize(width: 320.0, height: 80.0), hideNavBar: true)
     }
 
     func reloadFavoritesData() {
@@ -56,7 +64,7 @@ class FTFavoritebarViewController: UIViewController {
     }
 
     private func updateDisplay() {
-        let currentPenset = self.manager.fetchCurrentPenset()
+        let currentPenset = self.getCurrentPenset()
         let penType = currentPenset.type
         let penSize = currentPenset.size
         let maxWidth = penSize.maxDisplaySize(penType: penType)
@@ -161,6 +169,10 @@ private extension FTFavoritebarViewController {
         controller.ftPresentationDelegate.source = sourceView
         self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize, hideNavBar: true)
     }
+
+    private func getCurrentPenset() -> FTPenSetProtocol {
+        return self.manager.fetchCurrentPenset()
+    }
 }
 
 extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -176,7 +188,7 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
         cell.addFavoriteImageView.isHidden = true
         if indexPath.row < self.favorites.count {
             let favorite = self.favorites[indexPath.row]
-            cell.configure(favorite: favorite, currentPenset: self.manager.fetchCurrentPenset())
+            cell.configure(favorite: favorite, currentPenset: self.getCurrentPenset())
         } else {
             cell.configureEmptySlot()
             if indexPath.row == self.favorites.count {
@@ -391,5 +403,21 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
 
     func didDismissEditModeScreen() {
         self.handleEditScreenDismissal()
+    }
+}
+
+extension FTFavoritebarViewController: FTFavoriteSizeUpdateDelegate {
+    func didChangeSize(_ size: CGFloat) {
+        let curPenset = self.getCurrentPenset()
+        if let size = FTPenSize(rawValue: Int(Float(size))) {
+            curPenset.size = size
+        }
+        curPenset.preciseSize = size
+        self.manager.saveCurrentSelection(penSet: curPenset)
+        self.updateDisplay()
+    }
+
+    func didDismissCurrentsizeEditScreen() {
+        self.collectionView.reloadData()
     }
 }

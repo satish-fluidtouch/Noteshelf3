@@ -58,8 +58,25 @@ class FTFavoritePensetManager: NSObject {
     }
 
     public func fetchCurrentPenset(for segment: FTFavoriteRackSegment) -> FTPenSetProtocol {
-        let key = favoriteKey + segment.rackType.displayName
-        return self.getCurrentPenSet(for: key)
+        let key = getFavoriteKey(for: segment.rackType)
+        guard let curPenset = getCurrentPenSet(for: key) else {
+            // This will be executed only once
+            if let penset = fetchFavorites().first {
+                // To avoid first time issue of segment change(The other rack type current pen set is saved as default penset)
+                if penset.type.rackType == .pen {
+                    saveCurrentSelection(penSet: FTDefaultHighlighterSet())
+                } else {
+                    saveCurrentSelection(penSet: FTDefaultHighlighterSet())
+                }
+                saveCurrentSelection(penSet: penset)
+                return penset // recent saved penset ll be available
+            } else { // this is for safe check, ll never be executed
+                let penset: FTPenSetProtocol = (segment == .pen) ? FTDefaultPenSet() : FTDefaultHighlighterSet()
+                saveCurrentSelection(penSet: penset)
+                return penset
+            }
+        }
+        return curPenset
     }
 
     public func saveCurrentSelection(penSet: FTPenSetProtocol) {
@@ -73,7 +90,12 @@ class FTFavoritePensetManager: NSObject {
 }
 
 private extension FTFavoritePensetManager {
-    private func getCurrentPenSet(for key: String) -> FTPenSetProtocol {
+    private func getFavoriteKey(for rackType: FTRackType) -> String {
+        let key = favoriteKey + rackType.persistencekey
+        return key
+    }
+
+    private func getCurrentPenSet(for key: String) -> FTPenSetProtocol? {
         if let penSet = self.currentPenSetFromUserActivity(for: key) {
             return penSet
         }
@@ -81,9 +103,7 @@ private extension FTFavoritePensetManager {
             self.saveCurrentPenSetInfForQuickAccess(penSet)
             return penSet
         }
-        else {
-            return self.fetchFavorites().first ?? FTDefaultPenSet()
-        }
+        return nil
     }
 
     private func currentPenSetFromUserActivity(for key: String) -> FTPenSetProtocol? {
@@ -121,15 +141,15 @@ private extension FTFavoritePensetManager {
         penSetDictionary[FTRackPersistanceKey.PenSet.type.rawValue] = _penSet.type.rawValue as AnyObject?
         penSetDictionary[FTRackPersistanceKey.PenSet.color.rawValue] = _penSet.color as AnyObject?
         penSetDictionary[FTRackPersistanceKey.PenSet.preciseSize.rawValue] = _penSet.preciseSize as AnyObject?
-        let postFixKey = _penSet.type.rackType.displayName
-        standardUserDefaults.setValue(penSetDictionary, forKey: favoriteKey + postFixKey)
+        let key = self.getFavoriteKey(for: _penSet.type.rackType)
+        standardUserDefaults.setValue(penSetDictionary, forKey: key)
         standardUserDefaults.setValue(_penSet.type.rackType.rawValue, forKey: previousFavMode)
 
         standardUserDefaults.synchronize()
         if self.userActivity?.userInfo == nil {
             self.userActivity?.userInfo = [AnyHashable:Any]()
         }
-        self.userActivity?.userInfo?[favoriteKey + postFixKey] = penSetDictionary
+        self.userActivity?.userInfo?[key] = penSetDictionary
         self.userActivity?.userInfo?[previousFavMode] = [previousFavMode : _penSet.type.rackType.rawValue]
     }
 

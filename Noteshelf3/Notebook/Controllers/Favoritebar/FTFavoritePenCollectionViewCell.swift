@@ -56,7 +56,7 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
 
         DispatchQueue.main.async {
             self.isFavoriteSelected = currentPenset.isEqual(favorite)
-            self.imgShadow?.isHidden = !(self.isSelected)
+            self.imgShadow?.isHidden = !(self.isFavoriteSelected)
         }
 
         self.btnBg.backgroundColor = UIColor(hexString: favorite.color, alpha: 0.3)
