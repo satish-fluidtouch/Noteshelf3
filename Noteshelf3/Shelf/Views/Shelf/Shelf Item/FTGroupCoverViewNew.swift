@@ -384,7 +384,7 @@ private struct GroupNotebookView: View {
                 shelfItem.configureShelfItem(shelfItem.model)
             })
             .overlay(alignment: Alignment.bottom) {
-                if coverViewPurpose == .shelf && shelfItem.isNotDownloaded {
+                if coverViewPurpose == .shelf && !((shelfItem.model as? FTDocumentItem)?.isDownloaded ?? false) {
                     Image(systemName: "icloud.and.arrow.down")
                         .symbolRenderingMode(SymbolRenderingMode.palette)
                         .foregroundColor(Color.appColor(.black20))
