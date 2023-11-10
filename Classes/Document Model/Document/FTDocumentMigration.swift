@@ -155,29 +155,28 @@ final class FTDocumentMigration {
      }
     
     static func intiateNS2ToNS3MassMigration(on controller: UIViewController, _ onCompletion: @escaping (Bool, NSError?) -> Void) {
-        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration") {
-            if let urls = self.contentsOfURL(ns3MigrationContainerURL) {
-                var noteBookUrls = urls
-                let totalItems = noteBookUrls.count
-                let progress = Progress();
-                let smartProgress = FTDocumentMigration.addProgress(totalItems, on: controller, progress: progress)
-                func migrateBooks() {
-                    let currentProcessingIndex = totalItems - noteBookUrls.count + 1;
-                    let statusMsg = "Importing... \n\(currentProcessingIndex) of \(totalItems)" 
-                    progress.localizedDescription = statusMsg;
-                    if let firstItem = noteBookUrls.first {
-                        FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
-                            progress.completedUnitCount += 1;
-                            noteBookUrls.removeFirst()
-                            migrateBooks()
-                        }
-                    } else {
-                        smartProgress.hideProgressIndicator()
-                        onCompletion(false, nil)
+        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let urls = self.contentsOfURL(ns3MigrationContainerURL) {
+            var noteBookUrls = urls
+            let totalItems = noteBookUrls.count
+            let progress = Progress();
+            let smartProgress = FTDocumentMigration.addProgress(totalItems, on: controller, progress: progress)
+            FTCLSLog("---Migration In Progress---")
+            func migrateBooks() {
+                let currentProcessingIndex = totalItems - noteBookUrls.count + 1;
+                let statusMsg = "Importing... \n\(currentProcessingIndex) of \(totalItems)"
+                progress.localizedDescription = statusMsg;
+                if let firstItem = noteBookUrls.first {
+                    FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
+                        progress.completedUnitCount += 1;
+                        noteBookUrls.removeFirst()
+                        migrateBooks()
                     }
+                } else {
+                    smartProgress.hideProgressIndicator()
+                    onCompletion(true, nil)
                 }
-                migrateBooks()
             }
+            migrateBooks()
         } else {
             onCompletion(false, nil)
         }

@@ -541,7 +541,25 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
     
     func startNS2ToNS3Migration() {
-        FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { success, error in }
+        if nil == rootContentViewController {
+            self.updateProvider {
+                runInMainThread {
+                    self.removeLaunchScreen(true);
+                }
+                startProcess()
+            }
+        } else {
+            startProcess()
+        }
+        func startProcess() {
+            FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
+            FTCLSLog("---Migration Started---")
+            FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { success, error in
+                let status = success ? "Migration Completed" : "Migration Failed"
+                FTCLSLog("---\(status)---")
+                FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+            }
+        }
     }
 
     // MARK: - Last Opened document/Group/Collection -
