@@ -503,6 +503,10 @@ public enum FTTileEvictionMode {
   final public let rect: CoreFoundation.CGRect
   final public let index: Swift.Int
   public var lastAccessTime: Foundation.TimeInterval
+  public var isInUse: Swift.Bool {
+    get
+    set
+  }
   public init(rect: CoreFoundation.CGRect, index: Swift.Int)
   @objc override dynamic public var description: Swift.String {
     @objc get
