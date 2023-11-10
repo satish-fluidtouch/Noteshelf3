@@ -541,17 +541,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     }
     
     func startNS2ToNS3Migration() {
-        if nil == rootContentViewController {
-            self.updateProvider {
-                runInMainThread {
-                    self.removeLaunchScreen(true);
-                }
-                startProcess()
-            }
-        } else {
-            startProcess()
-        }
-        func startProcess() {
+        self.prepareProviderIfNeeded {
             FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
             FTCLSLog("---Migration Started---")
             FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { success, error in
@@ -559,6 +549,23 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 FTCLSLog("---\(status)---")
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
             }
+        }
+    }
+    
+    func prepareProviderIfNeeded(onCompletion: (() -> ())?) {
+        if(nil == self.rootContentViewController) {
+            //This need to be un commented once we add the new migration UI
+            //self.isFirstTime = false;
+            self.setLastOpenedGroup(nil);
+            self.setLastOpenedDocument(nil);
+            self.updateProvider {
+                runInMainThread {
+                    self.removeLaunchScreen(true);
+                }
+                onCompletion?()
+            };
+        } else {
+            onCompletion?()
         }
     }
 
