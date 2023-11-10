@@ -2492,6 +2492,8 @@
 		09B267A0214B917D006B2163 /* FTSiriShortcutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSiriShortcutManager.swift; sourceTree = "<group>"; };
 		09B267A1214B917D006B2163 /* FTShortcutStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShortcutStorage.swift; sourceTree = "<group>"; };
 		09B267A2214B917D006B2163 /* NSUserActivity+SiriShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+SiriShortcuts.swift"; sourceTree = "<group>"; };
+		09B33FDB2AFE230D002C7F35 /* GoogleService-Dev-EE-info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Dev-EE-info.plist"; sourceTree = "<group>"; };
+		09B33FDC2AFE2375002C7F35 /* GoogleService-Prod-EE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Prod-EE-Info.plist"; sourceTree = "<group>"; };
 		09B6331A21D0B154006318D9 /* FTOnScreenDrawingViewController_FTStylusPenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOnScreenDrawingViewController_FTStylusPenDelegate.swift; sourceTree = "<group>"; };
 		09B665DE1E84FC310003DA80 /* FTShelfItemSorting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemSorting.swift; sourceTree = "<group>"; };
 		09B665E11E85024B0003DA80 /* FTShelfItemSearching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemSearching.swift; sourceTree = "<group>"; };
@@ -9191,6 +9193,8 @@
 		BA909A3C2991067F00260538 /* GoogleService-Info */ = {
 			isa = PBXGroup;
 			children = (
+				09B33FDC2AFE2375002C7F35 /* GoogleService-Prod-EE-Info.plist */,
+				09B33FDB2AFE230D002C7F35 /* GoogleService-Dev-EE-info.plist */,
 				2197AA531E4B3825007A2B83 /* GoogleService-Dev-Info.plist */,
 				216BD5EA1F5808A00004488B /* GoogleService-Beta-Info.plist */,
 				2169CA941F284B3B00D85402 /* GoogleService-Prod-Info.plist */,
@@ -11568,7 +11572,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "GOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nDEST_GOOGLE_FILE_NAME=\"GoogleService-Info.plist\"\n\necho \"Started $PLATFORM_NAME Copying: $GOOGLE_FILE_NAME to dest: $DEST_GOOGLE_FILE_NAME\"\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Beta\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Beta-Info.plist\"\nelse\nGOOGLE_FILE_NAME=\"GoogleService-Prod-Info.plist\"\nfi\n\nif [[ \"$PLATFORM_NAME\" == \"macosx\" ]]; then\nDEST_GOOGLE_FILE_NAME=\"Contents/Resources/$DEST_GOOGLE_FILE_NAME\"\nfi\n\necho \"Copying ${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME directory to ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\ncp -R \"${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\n\necho \"Copy Complete\"\n";
+			shellScript = "GOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nDEST_GOOGLE_FILE_NAME=\"GoogleService-Info.plist\"\n\necho \"Started $PLATFORM_NAME Copying: $GOOGLE_FILE_NAME to dest: $DEST_GOOGLE_FILE_NAME\"\n\nif [ \"${CONFIGURATION}\" = \"Debug Enterprise\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Dev-EE-info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Release Enterprise\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Prod-EE-Info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Beta\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Beta-Info.plist\"\nelse\nGOOGLE_FILE_NAME=\"GoogleService-Prod-Info.plist\"\nfi\n\nif [[ \"$PLATFORM_NAME\" == \"macosx\" ]]; then\nDEST_GOOGLE_FILE_NAME=\"Contents/Resources/$DEST_GOOGLE_FILE_NAME\"\nfi\n\necho \"Copying ${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME directory to ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\ncp -R \"${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\n\necho \"Copy Complete\"\n";
 		};
 		BAB689AC2862E7AD00FACF11 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
