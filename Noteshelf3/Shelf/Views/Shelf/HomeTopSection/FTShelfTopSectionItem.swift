@@ -33,7 +33,7 @@ struct FTShelfTopSectionItem: View {
                 .padding()
                 .background(isFirsttime && shelfViewModel.isInHomeMode ? Color.appColor(.secondaryLight) : Color.appColor(.white20))
                 .cornerRadius(16)
-                .border(Color.appColor(.accentBg),
+                .border(Color.appColor(.accentBorder),
                         width:1.0,
                         cornerRadius: 16)
         }

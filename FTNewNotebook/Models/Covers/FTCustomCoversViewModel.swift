@@ -70,4 +70,8 @@ class FTCustomCoversViewModel: NSObject {
     func generateCoverTheme(image: UIImage, coverType: FTCoverSelectedType) -> FTThemeable? {
         return self.delegate?.generateCoverTheme(image: image, coverType: coverType)
     }
+    func deleteCustomCoverFromRecents(_ customCover:FTThemeable) {
+        self.recentCovers.removeAll(where: {$0.themeable.themeFileURL == customCover.themeFileURL})
+        customCover.deleteThumbnailFromCache()
+    }
 }

@@ -147,7 +147,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
         if coverImage.needEqualCorners {
             return AnyShape(RoundedRectangle(cornerRadius:FTShelfItemProperties.Constants.Notebook.landCoverCornerRadius));
         }
-        return AnyShape(FTNotebookShape())
+        return AnyShape(FTPreviewShape(leftRaidus: FTShelfItemProperties.Constants.Notebook.portNBCoverleftCornerRadius, rightRadius: FTShelfItemProperties.Constants.Notebook.portNBCoverRightCornerRadius))
     }
 }
 

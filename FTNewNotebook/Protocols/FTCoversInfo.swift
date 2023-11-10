@@ -30,6 +30,7 @@ public protocol FTCoverUpdateDelegate: AnyObject {
     func animateShowContentViewBasedOn(themeType:FTThemeType)
     func animateHideContentViewBasedOn(themeType: FTThemeType)
     func handleShowAnimationCompletion(themeType: FTThemeType)
+    func setDefaultCoverToNoCover(_ cover: FTThemeable)
 }
 
 public extension FTCoverUpdateDelegate {
@@ -40,6 +41,7 @@ public extension FTCoverUpdateDelegate {
     func animateShowContentViewBasedOn(themeType:FTThemeType) {}
     func animateHideContentViewBasedOn(themeType: FTThemeType) {}
     func handleShowAnimationCompletion(themeType: FTThemeType) {}
+    func setDefaultCoverToNoCover(_ cover: FTThemeable){}
 }
 
 protocol FTCoverSelectionDelegate: AnyObject {
@@ -48,4 +50,5 @@ protocol FTCoverSelectionDelegate: AnyObject {
     func didSelectCover(_ themeModel: FTCoverThemeModel)
     func didSelectCustomImage(_ image: UIImage)
     func didSelectUnsplash(of url: String)
+    func setDefaultCoverToNoCover(_ cover: FTThemeable)
 }

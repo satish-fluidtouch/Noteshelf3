@@ -12,6 +12,7 @@ import SwiftUI
 struct FTNotebookCoverView: View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @Environment(\.colorScheme) var colorScheme
 
     var isHighlighted = false;
 
@@ -99,6 +100,7 @@ struct FTNotebookCoverView: View {
         })
         .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
         .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+        .border(shelfItem.coverImage.hasNoCover && colorScheme == .dark ? Color.white.opacity(0.1) : .clear, width: 2.0,cornerRadius: 10)
     }
     
     private var leftCornerRadius: CGFloat {

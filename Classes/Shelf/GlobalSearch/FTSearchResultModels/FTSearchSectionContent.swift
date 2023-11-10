@@ -9,11 +9,17 @@
 import UIKit
 
 class FTSearchSectionContent: NSObject, FTSearchSectionContentProtocol {
+    var uuid = UUID().uuidString
     var searchKey: String = ""
     var onStatusChange: ((_ section: FTSearchSectionProtocol?, _ isActive: Bool) -> Void)?
-    
+
     private var contentAccessCounter: Int = 0
-    
+    private var document: FTDocumentProtocol?
+    private var documentOpenToken: FTDocumentOpenToken = FTDocumentOpenToken()
+    private(set) var items: [FTSearchResultProtocol] = [FTSearchResultBookProtocol]()
+
+    weak var sectionHeaderItem: FTDiskItemProtocol?//FTShelfItem
+
     var contentType: FTSearchContentType {
         return .page
     }
@@ -21,29 +27,22 @@ class FTSearchSectionContent: NSObject, FTSearchSectionContentProtocol {
     var title: String {
         return self.sectionHeaderItem?.displayTitle ?? ""
     }
-    
-    private(set) var items: [FTSearchResultProtocol] = [FTSearchResultBookProtocol]()
-    private var associatedPages: [FTPageProtocol]?
-    
-    func associatedPage(forItem item : FTSearchResultPageProtocol) -> FTThumbnailable?
-    {
-        if nil != self.document {
-            let index = self.items.firstIndex { (eachItem) -> Bool in
-                return (eachItem.hash == item.hash);
-            }
-            
-            if let ind = index,ind < associatedPages?.count ?? 0 {
-                return associatedPages?[ind] as? FTThumbnailable;
+
+    func associatedPage(forItem item : FTSearchResultPageProtocol) -> FTThumbnailable? {
+        var reqPage: FTThumbnailable?
+        if let doc = self.document, let index = item.searchingInfo?.pageIndex {
+            let pages = doc.pages()
+            if index < pages.count {
+                let page = pages[index]
+                reqPage = page as? FTThumbnailable
+                if nil == reqPage {
+                    reqPage = pages.first(where: { $0.uuid == page.uuid }) as? FTThumbnailable
+                }
             }
         }
-        return nil;
+        return reqPage
     }
     
-    weak var sectionHeaderItem: FTDiskItemProtocol?//FTShelfItem
-    
-    private var document: FTDocumentProtocol?;
-    private var documentOpenToken: FTDocumentOpenToken = FTDocumentOpenToken();
-
     deinit {
         self.deactivate()
         #if DEBUG
@@ -88,23 +87,7 @@ class FTSearchSectionContent: NSObject, FTSearchSectionContentProtocol {
                         return
                     }
                     self.document = notebook
-                    self.documentOpenToken = token;
-                    let allPages = self.document?.pages();
-                    
-                    var set = Set<String>();
-                    self.items.forEach({ (eachItem) in
-                        
-                        if let gridItem = eachItem as? FTSearchResultPageProtocol,
-                           let pageUUID = gridItem.searchingInfo?.pageUUID {
-                            set.insert(pageUUID);
-                        }
-                    });
-                    self.associatedPages = []
-                    allPages?.forEach { (eachPage) in
-                        if(set.contains(eachPage.uuid)) {
-                            self.associatedPages?.append(eachPage);
-                        }
-                    };
+                    self.documentOpenToken = token
                     self.onStatusChange?(self, true)
                 }
             }
@@ -117,7 +100,6 @@ class FTSearchSectionContent: NSObject, FTSearchSectionContentProtocol {
                                                             token: self.documentOpenToken,
                                                             onCompletion: nil);
             self.document = nil
-            self.associatedPages = nil
             self.onStatusChange?(self, false)
         }
     }

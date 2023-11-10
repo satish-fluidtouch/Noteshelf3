@@ -65,6 +65,18 @@ public extension URL {
             return nil
         }
     }
+    func urlByDeleteingPrivate() -> URL
+    {
+        var fileItemURL = self.standardizedFileURL;
+        let filePath = fileItemURL.path;
+        let searchString = "/private";
+        if(filePath.hasPrefix(searchString)) {
+            let range = filePath.startIndex..<filePath.endIndex;
+
+            fileItemURL = URL.init(fileURLWithPath: filePath.replacingOccurrences(of: searchString, with: "", options: String.CompareOptions.anchored, range: range));
+        }
+        return fileItemURL;
+    }
 }
 
 public extension URL {
