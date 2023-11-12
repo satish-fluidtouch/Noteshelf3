@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Migration View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="FTMigrationViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="gON-1w-ND3">
+                                <rect key="frame" x="224.5" y="384" width="575" height="598.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="migration_intro" translatesAutoresizingMaskIntoConstraints="NO" id="va2-Yk-WPE">
+                                        <rect key="frame" x="0.0" y="0.0" width="575" height="235"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qEn-ep-MXY" userLabel="InProgressView">
+                                        <rect key="frame" x="0.0" y="267" width="575" height="204"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Migrating...." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGu-ct-ht7">
+                                                <rect key="frame" x="0.0" y="0.0" width="575" height="41"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
+                                                </variation>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="buw-Sx-RV5">
+                                                <rect key="frame" x="74" y="73" width="427" height="4"/>
+                                                <color key="progressTintColor" name="betaBgColor"/>
+                                            </progressView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAN-sc-yeY">
+                                                <rect key="frame" x="285.5" y="93" width="4" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="⚠︎ Please do not exit this screen before the migration process is completed" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rxv-IJ-Ju9">
+                                                <rect key="frame" x="52.5" y="143" width="470.5" height="41"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" name="destructiveRed"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="Rxv-IJ-Ju9" firstAttribute="top" secondItem="mAN-sc-yeY" secondAttribute="bottom" constant="32" id="0lb-SP-qfZ"/>
+                                            <constraint firstItem="Rxv-IJ-Ju9" firstAttribute="centerX" secondItem="qEn-ep-MXY" secondAttribute="centerX" id="5XI-R2-vHP"/>
+                                            <constraint firstItem="zGu-ct-ht7" firstAttribute="leading" secondItem="qEn-ep-MXY" secondAttribute="leading" id="LxF-tq-tFw"/>
+                                            <constraint firstAttribute="trailing" secondItem="buw-Sx-RV5" secondAttribute="trailing" constant="74" id="Oh9-fW-zfH"/>
+                                            <constraint firstItem="mAN-sc-yeY" firstAttribute="centerX" secondItem="buw-Sx-RV5" secondAttribute="centerX" id="RFL-bo-OzJ"/>
+                                            <constraint firstAttribute="bottom" secondItem="Rxv-IJ-Ju9" secondAttribute="bottom" constant="20" symbolic="YES" id="cQU-Ig-2Yj"/>
+                                            <constraint firstItem="mAN-sc-yeY" firstAttribute="top" secondItem="buw-Sx-RV5" secondAttribute="bottom" constant="16" id="dQI-0S-ceE"/>
+                                            <constraint firstItem="Rxv-IJ-Ju9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qEn-ep-MXY" secondAttribute="leading" constant="5" id="fax-MX-9SR"/>
+                                            <constraint firstItem="zGu-ct-ht7" firstAttribute="top" secondItem="qEn-ep-MXY" secondAttribute="top" id="feX-mc-VCm"/>
+                                            <constraint firstItem="mAN-sc-yeY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qEn-ep-MXY" secondAttribute="leading" constant="5" id="flD-MD-cRe"/>
+                                            <constraint firstAttribute="trailing" secondItem="zGu-ct-ht7" secondAttribute="trailing" id="hVe-WT-LH4"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mAN-sc-yeY" secondAttribute="trailing" constant="5" id="lD4-ig-oKd"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rxv-IJ-Ju9" secondAttribute="trailing" constant="5" id="t4B-T3-2H0"/>
+                                            <constraint firstItem="buw-Sx-RV5" firstAttribute="top" secondItem="zGu-ct-ht7" secondAttribute="bottom" constant="32" id="wzw-Zv-FuD"/>
+                                            <constraint firstItem="buw-Sx-RV5" firstAttribute="leading" secondItem="qEn-ep-MXY" secondAttribute="leading" constant="74" id="yZB-Nb-I8G"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="D3G-5X-Ue8">
+                                        <rect key="frame" x="0.0" y="503" width="575" height="95.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Migration Success!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aV7-DA-kWh">
+                                                <rect key="frame" x="140.5" y="0.0" width="294.5" height="41"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
+                                                </variation>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bda-ez-w89">
+                                                <rect key="frame" x="207.5" y="61" width="160" height="34.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="XQp-f9-Vz3"/>
+                                                </constraints>
+                                                <color key="tintColor" name="Ns3btnBgColor"/>
+                                                <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="filled" title="Done" cornerStyle="medium" buttonSize="medium">
+                                                    <color key="baseBackgroundColor" name="credits_progress_normal"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="doneTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="X1X-A8-kce"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="575" id="DI3-V5-yNG">
+                                        <variation key="widthClass=compact" constant="320"/>
+                                    </constraint>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siM-H5-TFo">
+                                <rect key="frame" x="415" y="1291.5" width="194" height="34.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="194" id="ZXc-EO-7U4"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Cancel Migration" cornerStyle="large">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Ltp-9C-hnv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="gON-1w-ND3" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="KFt-Hb-Qgn"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="siM-H5-TFo" secondAttribute="bottom" constant="20" id="TcR-1w-Qsy"/>
+                            <constraint firstItem="siM-H5-TFo" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="Xbd-iK-Pkg"/>
+                            <constraint firstItem="siM-H5-TFo" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gON-1w-ND3" secondAttribute="bottom" priority="999" constant="20" id="flb-5V-mqu"/>
+                            <constraint firstItem="gON-1w-ND3" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="uf2-2P-3oa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="siM-H5-TFo" id="VE9-J2-Obw"/>
+                        <outlet property="descriptionLabel" destination="mAN-sc-yeY" id="eZ6-bd-4hr"/>
+                        <outlet property="doneButton" destination="bda-ez-w89" id="nw1-Rt-iZg"/>
+                        <outlet property="inProgressView" destination="qEn-ep-MXY" id="H3r-yT-EJD"/>
+                        <outlet property="migratedSuccessTextLabel" destination="aV7-DA-kWh" id="FA5-Fw-4WJ"/>
+                        <outlet property="migrationTitle" destination="zGu-ct-ht7" id="HaZ-sY-NIi"/>
+                        <outlet property="progressView" destination="buw-Sx-RV5" id="kIj-aQ-VZT"/>
+                        <outlet property="successView" destination="D3G-5X-Ue8" id="evg-4P-olY"/>
+                        <outlet property="view" destination="5EZ-qb-Rvc" id="jjR-uZ-mq5"/>
+                        <outlet property="warningTitle" destination="Rxv-IJ-Ju9" id="7ln-w4-mM5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138" y="5"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="migration_intro" width="306.5" height="235"/>
+        <namedColor name="Ns3btnBgColor">
+            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="betaBgColor">
+            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="credits_progress_normal">
+            <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="destructiveRed">
+            <color red="0.86274509803921573" green="0.070588235294117646" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

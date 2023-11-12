@@ -154,25 +154,30 @@ final class FTDocumentMigration {
          }
      }
     
-    static func intiateNS2ToNS3MassMigration(on controller: UIViewController, _ onCompletion: @escaping (Bool, NSError?) -> Void) {
+    static func intiateNS2ToNS3MassMigration(on controller: UIViewController, _ onCompletion: @escaping (Bool, NSError?) -> Void) -> Progress {
+
+        let progress = Progress()
+        progress.isCancellable = true
         if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let urls = self.contentsOfURL(ns3MigrationContainerURL) {
             var noteBookUrls = urls
             let totalItems = noteBookUrls.count
-            let progress = Progress();
-            let smartProgress = FTDocumentMigration.addProgress(totalItems, on: controller, progress: progress)
+            progress.totalUnitCount = Int64(totalItems)
             FTCLSLog("---Migration In Progress---")
             func migrateBooks() {
+                guard !progress.isCancelled else {
+                    onCompletion(false, nil)
+                    return
+                }
+
                 let currentProcessingIndex = totalItems - noteBookUrls.count + 1;
-                let statusMsg = "Importing... \n\(currentProcessingIndex) of \(totalItems)"
-                progress.localizedDescription = statusMsg;
                 if let firstItem = noteBookUrls.first {
                     FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
+                        progress.localizedDescription = url?.lastPathComponent.deletingPathExtension ?? "";
                         progress.completedUnitCount += 1;
                         noteBookUrls.removeFirst()
                         migrateBooks()
                     }
                 } else {
-                    smartProgress.hideProgressIndicator()
                     onCompletion(true, nil)
                 }
             }
@@ -180,19 +185,9 @@ final class FTDocumentMigration {
         } else {
             onCompletion(false, nil)
         }
+        return progress
     }
-    
-    static func addProgress(_ count: Int, on controller: UIViewController, progress: Progress) ->FTSmartProgressView {
-        let totalItemsSelected = count
-        progress.isCancellable = false;
-        progress.totalUnitCount = Int64(totalItemsSelected);
-        progress.localizedDescription = "Importing... \n\(1) of \(totalItemsSelected)"
-        let smartProgress = FTSmartProgressView.init(progress: progress);
-        smartProgress.showProgressIndicator(progress.localizedDescription,
-                                            onViewController: controller);
-        return smartProgress
-    }
-    
+
     static func contentsOfURL(_ url: URL) -> [URL]? {
         if let urls = try? FileManager.default.contentsOfDirectory(at: url,
                                                                    includingPropertiesForKeys: nil,
