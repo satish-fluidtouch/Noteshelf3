@@ -97,9 +97,9 @@ private extension FTFavoritebarViewController {
         self.favorites = favTuple.uniqueElements
         self.manager.saveFavorites(favorites)
         self.updateDisplay()
-        self.reloadFavoritesData()
         if(favTuple.duplicateExists) {
             FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: "AlreadyInFavorites".localized))
+            self.reloadFavoritesData()
         } else {
             if(isAddingNewPenSet) {
                 FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: "FavoriteAddedNotification".localized))

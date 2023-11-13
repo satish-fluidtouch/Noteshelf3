@@ -25,7 +25,7 @@ struct FTFavoriteColorGridView: View {
     var showDeleteButton: Bool = false
 
     var body: some View {
-        ZStack {
+        ScrollView {
             VStack(spacing: FTSpacing.small) {
                 self.colorsGridView
                 self.hexFieldView

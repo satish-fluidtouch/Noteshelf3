@@ -57,6 +57,21 @@ class FTFavoritePensetManager: NSObject {
         }
     }
 
+    func fetchPreviousRackMode() -> FTRackType {
+        if let prevInfo = self.userActivity?.userInfo?[previousFavMode] as? [String: Any], let rackRawValue = prevInfo[previousFavMode] as? NSNumber {
+            if let type = FTRackType(rawValue: Int(truncating: rackRawValue)) {
+                return type
+            }
+        } else {
+            let standardUserDefaults = UserDefaults.standard
+            let rackRawValue = standardUserDefaults.integer(forKey: previousFavMode)
+            if let type = FTRackType(rawValue: Int(truncating: rackRawValue as NSNumber)) {
+                return type
+            }
+        }
+        return .pen
+    }
+
     public func fetchCurrentPenset(for segment: FTFavoriteRackSegment) -> FTPenSetProtocol {
         let key = getFavoriteKey(for: segment.rackType)
         guard let curPenset = getCurrentPenSet(for: key) else {
@@ -151,20 +166,5 @@ private extension FTFavoritePensetManager {
         }
         self.userActivity?.userInfo?[key] = penSetDictionary
         self.userActivity?.userInfo?[previousFavMode] = [previousFavMode : _penSet.type.rackType.rawValue]
-    }
-
-    func fetchPreviousRackMode() -> FTRackType {
-        if let prevInfo = self.userActivity?.userInfo?[previousFavMode] as? [String: Any], let rackRawValue = prevInfo[previousFavMode] as? NSNumber {
-            if let type = FTRackType(rawValue: Int(truncating: rackRawValue)) {
-                return type
-            }
-        } else {
-            let standardUserDefaults = UserDefaults.standard
-            let rackRawValue = standardUserDefaults.integer(forKey: previousFavMode)
-            if let type = FTRackType(rawValue: Int(truncating: rackRawValue as NSNumber)) {
-                return type
-            }
-        }
-        return .pen
     }
 }
