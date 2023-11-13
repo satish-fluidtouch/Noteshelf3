@@ -73,6 +73,16 @@ class FTIAPManager: NSObject {
         case productRequestFailed
     }
     
+    static var ns2_ns3PremiumIdentifier: String {
+#if DEBUG
+        return "com.fluidtouch.noteshelf3.devpremium.ns2user"
+#elseif ADHOC
+        return "com.fluidtouch.noteshelf3.betapremium.ns2user"
+#else
+        return "com.fluidtouch.noteshelf3_premium.ns2user"
+#endif
+    }
+
     static var ns3PremiumIdentifier: String {
 #if DEBUG
         return "com.fluidtouch.noteshelf3.devpremium"
@@ -84,7 +94,6 @@ class FTIAPManager: NSObject {
     }
 
     // MARK: - Properties
-    let productIdentifiers: Set<ProductIdentifier> = [FTIAPManager.ns3PremiumIdentifier]
     static let shared = FTIAPManager()
     
     var onReceiveProductsHandler: ((Result<[SKProduct], FTIAPHelperError>) -> Void)?
@@ -140,7 +149,7 @@ extension FTIAPManager {
         onReceiveProductsHandler = productsReceiveHandler
         
         // Initialize a product request.
-        let request = SKProductsRequest(productIdentifiers: productIdentifiers)
+        let request = SKProductsRequest(productIdentifiers: self.iapProductsIdentifier())
         
         // Set self as the its delegate.
         request.delegate = self
@@ -262,5 +271,16 @@ extension FTIAPManager.FTIAPHelperError: LocalizedError {
             message = "iap.paymentWasCancelled"
         }
         return message.localized
+    }
+}
+
+extension FTIAPManager {
+    func iapProductsIdentifier() -> Set<String> {
+        var productsIdentifier = Set<String>();
+        productsIdentifier.insert(FTIAPManager.ns3PremiumIdentifier);
+        if FTDocumentMigration.isNS2AppInstalled() {
+            productsIdentifier.insert(FTIAPManager.ns2_ns3PremiumIdentifier);
+        }
+        return productsIdentifier
     }
 }

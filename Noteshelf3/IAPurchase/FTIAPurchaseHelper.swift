@@ -66,9 +66,15 @@ final class FTIAPurchaseHelper {
 
     private func isIAPPurchasedViaReceipt() -> Bool {
         var isPremium = false
-        if let receipt = try? InAppReceipt.localReceipt(),
-           receipt.containsPurchase(ofProductIdentifier: FTIAPManager.ns3PremiumIdentifier) {
-            isPremium = true
+        if let receipt = try? InAppReceipt.localReceipt() {
+            let purchases = receipt.purchases;
+            let items = FTIAPManager.shared.iapProductsIdentifier()
+            for eachPurchase in purchases {
+                if items.contains(eachPurchase.productIdentifier) {
+                    isPremium = true;
+                    break;
+                }
+            }
         }
         return isPremium;
     }

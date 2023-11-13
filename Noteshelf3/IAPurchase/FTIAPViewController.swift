@@ -27,6 +27,8 @@ class FTIAPViewController: UIViewController {
     @IBOutlet weak var subheadingLabel: UILabel?;
     @IBOutlet weak var messageLabel: UILabel?;
 
+    private var productToBuy: SKProduct?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredContentSize = CGSize(width: 700, height: 740);
@@ -78,7 +80,7 @@ class FTIAPViewController: UIViewController {
 
     @IBAction func purchaseAction(_ sender: Any) {
         track(EventName.premium_purchase_tap, screenName: ScreenName.iap)
-        if let product = viewModel.getProduct(at: 0), !self.viewModel.purchase(product: product) {
+        if let product = self.productToBuy, !self.viewModel.purchase(product: product) {
             self.showAlert(withMessage: "iap.purchaseNotAllowed".localized)
         }
     }
@@ -104,7 +106,7 @@ class FTIAPViewController: UIViewController {
     }
     private func setTitleToPurchaseButton(title:String) {
         let attributedTitle = NSAttributedString(string: title,
-                                                 attributes: [.font: UIFont.clearFaceFont(for: .medium, with: 20)])
+                                                 attributes: self.upgradeTitleAttributes)
         self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
     }
 }
@@ -112,9 +114,42 @@ class FTIAPViewController: UIViewController {
 // MARK: - ViewModelDelegate
 extension FTIAPViewController: FTIAPViewModelDelegate {
     func didfinishLoadingProducts() {
-        if let product = viewModel.getProduct(at: 0) {
-            guard let price = FTIAPManager.shared.getPriceFormatted(for: product) else { return }
-            let title = String(format: "iap.purchase".localized, price);
+        guard let ns3product = viewModel.ns3PremiumProduct()
+        ,let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product) else {
+            return;
+        }
+        
+        let iapPurchaseTitle = "iap.purchase".localized;
+        
+        if let ns2Product = viewModel.ns3PremiumForNS2UserProduct()
+            ,let ns2Price = FTIAPManager.shared.getPriceFormatted(for: ns2Product) {
+            productToBuy = ns2Product;
+
+            let atts: [NSAttributedString.Key:Any] = self.upgradeTitleAttributes;
+            let attributedTitle = NSMutableAttributedString(string: iapPurchaseTitle,attributes:atts);
+            
+            var strikeThroughAttr : [NSAttributedString.Key:Any] = atts;
+            strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
+            strikeThroughAttr[.strikethroughColor] =  UIColor.label;
+            
+            let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
+            priceString.append(NSAttributedString(string: " ", attributes: atts));
+            priceString.append(NSAttributedString(string: ns2Price,attributes: atts));
+            
+            if let range = iapPurchaseTitle.range(of: "%@") {
+                let nsRange = NSRange(range,in: iapPurchaseTitle);
+                attributedTitle.replaceCharacters(in: nsRange, with: priceString)
+                self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
+                productToBuy = ns2Product;
+            }
+            else {
+                let title = String(format: iapPurchaseTitle, ns2Price);
+                self.setTitleToPurchaseButton(title:title)
+            }
+        }
+        else {
+            productToBuy = ns3product;
+            let title = String(format: iapPurchaseTitle, ns3Price);
             self.setTitleToPurchaseButton(title:title)
         }
     }
@@ -142,5 +177,11 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
 
     func didFinishRestoringPurchasedProducts() {
         showAlert(withMessage: "iap.restoreSuccess".localized,closeOnOk: true)
+    }
+}
+
+private extension FTIAPViewController {
+    var upgradeTitleAttributes: [NSAttributedString.Key : Any] {
+        return [.font: UIFont.clearFaceFont(for: .medium, with: 20)];
     }
 }

@@ -12,7 +12,11 @@ import FTCommon
 #if targetEnvironment(macCatalyst)
 private let ns2URLScheme = "maccatalyst.com.fluidtouch.noteshelf://"
 #else
+#if DEBUG
+private let ns2URLScheme = "com.fluidtouch.noteshelf-dev://"
+#else
 private let ns2URLScheme = "com.fluidtouch.noteshelf://"
+#endif
 #endif
 
 enum FTMigrationError: Error {
