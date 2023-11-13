@@ -59,6 +59,9 @@ enum FTShortcutPlacement: String, CaseIterable {
     }
 
     static func getSavedPlacement() -> FTShortcutPlacement {
+        if UIDevice.current.isIphone() {
+            return .top
+        }
         var placement: FTShortcutPlacement = .centerLeft
         if let value = UserDefaults.standard.string(forKey: "FTShortcutPlacement") {
             placement = FTShortcutPlacement(rawValue: value) ?? .centerLeft

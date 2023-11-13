@@ -400,7 +400,7 @@ extension FTQuickPageNavigatorViewController {
             return
         }
 
-        var tipContainerSize = CGSize.init(width: numberOfPages > 99 ? 80 : 50, height: 30)
+        let tipContainerSize = CGSize.init(width: numberOfPages > 99 ? 100 : 60, height: 30)
         infoContainer.frame = CGRect.init(origin: CGPoint.zero, size: CGSize.init(width: 20 + tipContainerSize.width, height: 125))
         var tipViewFrame = tipView.frame
         

@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "在%d和%d之間輸入";
 "EnterPassword" = "輸入密碼";
 "EnterPasswordHint" = "輸入密碼提示";
-"EnterPasswordToOpenThisNotebook" = "請輸入密碼以開啟此筆記本";
+"EnterPasswordToOpenThisNotebook" = "輸入密碼開啟%@";
 "EnterThePasswordFor" = "請輸入 %@ 的密碼";
 "EraseEntireStroke" = "擦掉整個字跡";
 "EraseHighlighterOnly" = "只擦拭螢光筆";
@@ -1292,6 +1292,7 @@
 "shelf.home.seeAll" = "查看全部";
 "shelf.home.seeAllNotes" = "查看所有笔记";
 "shelf.importfile.description" = "從您的文件應用程式中新增PDF和圖片";
+"shelf.migration.CompactDescription" = "只需點擊這裡的任何筆記本，即可將其副本遷移到Noteshelf 3。 遷移後的筆記本將在Noteshelf 3的分類和分組中可用。";
 "shelf.migration.Description" = "只需點擊這裡的任何筆記本，即可將其副本遷移到Noteshelf 3。 遷移後的筆記本將在Noteshelf 3的分類和分組中可用。 遷移整個分類的功能即將推出！";
 "shelf.migration.headerMessage" = "將您的筆記遷移到Noteshelf 3";
 "shelf.navBar.deselectAll" = "取消选择全部";
@@ -1532,4 +1533,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
