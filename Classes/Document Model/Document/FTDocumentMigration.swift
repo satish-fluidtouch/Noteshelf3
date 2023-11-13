@@ -29,11 +29,7 @@ enum NS2MigrationSource {
 final class FTDocumentMigration {
     static let migrationQueue = DispatchQueue(label: "com.fluidtouch.noteshelf3.migration")
     static func supportsMigration() -> Bool {
-#if ENTERPRISE_EDITION
         return false;
-#else
-        return getNS2MigrationDataSource() != .doesNotSupport
-#endif
     }
 
     static func showNS3MigrationAlert(on controller: UIViewController,
@@ -113,6 +109,130 @@ final class FTDocumentMigration {
             debugLog("Migration Error \(error)")
             onCompletion?(nil, error)
         }
+    }
+    
+     static func performNS2toNs3MassMigration(url: URL,
+                                              onCompletion: ((_ url: URL?, _ error: Error?) -> Void)?) {
+         do {
+             let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory()).appending(path: "NS3Migration")
+             if(!FileManager().fileExists(atPath: temporaryDirectory.path)) {
+                 try? FileManager().createDirectory(at: temporaryDirectory, withIntermediateDirectories: true, attributes: nil);
+             }
+             let fileName = url.lastPathComponent.deletingPathExtension
+             let documentTemporaryLocation = temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+
+             let lastModificationDate = url.fileModificationDate
+             let fileCreationDate = url.fileCreationDate
+             // Remove if something already exists
+             try? FileManager().removeItem(at: documentTemporaryLocation);
+
+             // Copy the notebook to temporary location with new extension
+             try FileManager().coordinatedMove(fromURL: url, toURL: documentTemporaryLocation)
+             // When the user choses copy option, we must regenrate Document UUID, for this purpose, we're using the existing approach.
+             FTDocumentFactory.prepareForImportingAtURL(documentTemporaryLocation) { error, document in
+                 if let fileURL = document?.URL {
+                     do {
+                         try? (fileURL as NSURL).setResourceValue(lastModificationDate, forKey: URLResourceKey.contentModificationDateKey)
+
+                         try? (fileURL as NSURL).setResourceValue(fileCreationDate, forKey: URLResourceKey.creationDateKey)
+
+                         let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: url.relativePathWRTCollection())
+
+                         // TODO: Pass the document
+                         onCompletion?(migratedURL, nil)
+                     } catch {
+                         onCompletion?(nil, FTMigrationError.unableToCreateDocument)
+                     }
+                 }
+                 else {
+                     onCompletion?(nil, FTMigrationError.unableToCreateDocument)
+                 }
+             }
+         } catch {
+             debugLog("Migration Error \(error)")
+             onCompletion?(nil, error)
+         }
+     }
+    
+    static func intiateNS2ToNS3MassMigration(on controller: UIViewController, _ onCompletion: @escaping (Bool, NSError?) -> Void) -> Progress {
+
+        let progress = Progress()
+        progress.isCancellable = true
+        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let urls = self.contentsOfURL(ns3MigrationContainerURL) {
+            var noteBookUrls = urls
+            let totalItems = noteBookUrls.count
+            progress.totalUnitCount = Int64(totalItems)
+            FTCLSLog("---Migration In Progress---")
+            func migrateBooks() {
+                guard !progress.isCancelled else {
+                    onCompletion(false, nil)
+                    return
+                }
+
+                let currentProcessingIndex = totalItems - noteBookUrls.count + 1;
+                if let firstItem = noteBookUrls.first {
+                    FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
+                        progress.localizedDescription = url?.lastPathComponent.deletingPathExtension ?? "";
+                        progress.completedUnitCount += 1;
+                        noteBookUrls.removeFirst()
+                        migrateBooks()
+                    }
+                } else {
+                    onCompletion(true, nil)
+                }
+            }
+            migrateBooks()
+        } else {
+            onCompletion(false, nil)
+        }
+        return progress
+    }
+
+    static func contentsOfURL(_ url: URL) -> [URL]? {
+        if let urls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                                   includingPropertiesForKeys: nil,
+                                                                   options: .skipsHiddenFiles) {
+            let filteredURLS = FTDocumentMigration.filterItemsMatchingExtensions(urls);
+            var notebookUrlList: [URL] = [URL]()
+            filteredURLS.enumerated().forEach({ (_,eachURL) in
+                if eachURL.pathExtension == FTFileExtension.shelf {
+                    if let dirContents = self.contentsOfURL(eachURL) {
+                        if !dirContents.isEmpty {
+                            notebookUrlList.append(contentsOf: dirContents);
+                        }
+                    }
+                } else if(eachURL.pathExtension == FTFileExtension.group) {
+                    if let dirContents = self.contentsOfURL(eachURL) {
+                        if !dirContents.isEmpty {
+                            notebookUrlList.append(contentsOf: dirContents);
+                        }
+                    }
+                }
+                else {
+                    notebookUrlList.append(eachURL);
+                }
+            });
+            return notebookUrlList
+        } else {
+            return nil
+        }
+    }
+    
+    static func filterItemsMatchingExtensions(_ items : [URL]?) -> [URL]
+    {
+        let extToListen = [FTFileExtension.ns2, FTFileExtension.group, FTFileExtension.shelf]
+        var filteredURLS = [URL]();
+        if let items {
+            if(!extToListen.isEmpty) {
+                filteredURLS = items.filter({ (eachURL) -> Bool in
+                    if(extToListen.contains(eachURL.pathExtension)) {
+                        return true
+                    }
+                    return false
+                });
+            }
+        }
+        return filteredURLS
     }
 }
 

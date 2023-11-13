@@ -539,6 +539,31 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                             bipassPassword: true);
         }
     }
+    
+    func startNS2ToNS3Migration() {
+        self.prepareProviderIfNeeded {
+            self.closeAnyActiveOpenedBook {
+                FTMigrationViewController.showMigration(on: self)
+            }
+        }
+    }
+    
+    func prepareProviderIfNeeded(onCompletion: (() -> ())?) {
+        if(nil == self.rootContentViewController) {
+            //This need to be un commented once we add the new migration UI
+            //self.isFirstTime = false;
+            self.setLastOpenedGroup(nil);
+            self.setLastOpenedDocument(nil);
+            self.updateProvider {
+                runInMainThread {
+                    self.removeLaunchScreen(true);
+                }
+                onCompletion?()
+            };
+        } else {
+            onCompletion?()
+        }
+    }
 
     // MARK: - Last Opened document/Group/Collection -
     fileprivate func showLastOpenedDocument(relativePath docPath: String,
