@@ -9,6 +9,8 @@
 import Foundation
 import TPInAppReceipt
 
+let premiumUserStatus = "premiumUserStatus"
+
 final class FTIAPurchaseHelper {
 
     static let shared = FTIAPurchaseHelper()
@@ -44,17 +46,23 @@ final class FTIAPurchaseHelper {
 
     var isPremiumUser: Bool {
         get {
-            var isPremierUser = FTUserDefaults.isPremiumUser()
+//            #if ADHOC
+//            return true;
+//            #else
+            var isPremierUser = UserDefaults.standard.bool(forKey: premiumUserStatus)
             if !isPremierUser {
                 isPremierUser = isIAPPurchasedViaReceipt();
                 if(isPremierUser) {
                     self.isPremiumUser = isPremierUser;
                 }
             }
+            updatePremiumUserInfoToNS2(isPremium: isPremierUser)
             return isPremierUser;
+//            #endif
         } set {
             FTIAPManager.shared.premiumUser.isPremiumUser = newValue;
-            FTUserDefaults.setIsPremiumUser(value: isPremiumUser)
+            UserDefaults.standard.set(newValue, forKey: premiumUserStatus)
+            updatePremiumUserInfoToNS2(isPremium: newValue)
         }
     }
 
@@ -65,5 +73,12 @@ final class FTIAPurchaseHelper {
             isPremium = true
         }
         return isPremium;
+    }
+}
+
+private extension FTIAPurchaseHelper {
+    func updatePremiumUserInfoToNS2(isPremium: Bool) {
+        let ns2Defaults = UserDefaults(suiteName: FTSharedGroupID.getNS2AppGroupID())
+        ns2Defaults?.set(isPremium, forKey: premiumUserStatus)
     }
 }

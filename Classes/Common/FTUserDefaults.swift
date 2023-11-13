@@ -51,7 +51,7 @@ let LastSelectedNonCollectionTypeKey = "LastSelectedNonCollectionType"
 let LastSelectedTagKey = "LastSelectedTag"
 let NonCollectionModeKey = "NonCollectionMode"
 let isFirstLaunchKey = "isFirstLaunch"
-let premiumUserStatus = "premiumUserStatus"
+
 class FTUserDefaults : NSObject
 {
     class func configure() {
@@ -61,10 +61,6 @@ class FTUserDefaults : NSObject
 
         }
         FTUserDefaults.registerDefault(value: NSNumber(value: true), forKey: "isRandomCoverEnabled")
-
-        // Migrating Premium status from standard User defaults to Group user defaults.
-        let existingPremiumStatus = UserDefaults.standard.bool(forKey: premiumUserStatus)
-        FTUserDefaults.registerDefault(value: existingPremiumStatus, forKey: premiumUserStatus)
     }
 
     //MARK: - Shared user defaults
@@ -636,19 +632,3 @@ extension FTUserDefaults { // Saving this for Show or hide Home Get started sect
     }
 }
 
-// MARK: Premium
-extension FTUserDefaults {
-    static func isPremiumUser() -> Bool {
-        if let isPremium = self.defaults().value(forKey: premiumUserStatus) as? Bool {
-            return isPremium
-        } else {
-            let isPremium = UserDefaults.standard.bool(forKey: premiumUserStatus)
-            setIsPremiumUser(value: isPremium)
-            return isPremium
-        }
-    }
-
-    static func setIsPremiumUser(value: Bool) {
-        self.defaults().setValue(value, forKey: premiumUserStatus)
-    }
-}
