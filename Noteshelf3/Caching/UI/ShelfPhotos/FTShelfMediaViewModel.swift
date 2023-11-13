@@ -112,6 +112,11 @@ private extension FTShelfContentPhotosViewModel {
     func fetchMedia() async throws  {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
 
+        guard !allItems.isEmpty else {
+            await self.updateMedia(items: [])
+            return
+        }
+
         let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
