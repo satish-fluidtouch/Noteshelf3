@@ -158,6 +158,7 @@ final class FTDocumentMigration {
 
         let progress = Progress()
         progress.isCancellable = true
+        progress.isPausable = true
         if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let urls = self.contentsOfURL(ns3MigrationContainerURL) {
             var noteBookUrls = urls
             let totalItems = noteBookUrls.count
@@ -166,6 +167,9 @@ final class FTDocumentMigration {
             func migrateBooks() {
                 guard !progress.isCancelled else {
                     onCompletion(false, nil)
+                    return
+                }
+                guard !progress.isPaused else {
                     return
                 }
 
@@ -182,9 +186,13 @@ final class FTDocumentMigration {
                 }
             }
             migrateBooks()
+            progress.resumingHandler = {
+                migrateBooks()
+            }
         } else {
             onCompletion(false, nil)
         }
+        
         return progress
     }
 

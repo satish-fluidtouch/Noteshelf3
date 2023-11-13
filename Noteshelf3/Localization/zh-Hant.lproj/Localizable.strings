@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 2。 您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 3。 您可以在行進中錄製音頻，並稍後進行記錄。";
 "WatchNewRecords" = "您的Apple Watch有新錄音。";
 "WatchRecording" = "觀看錄影";
 "WatchRecordings" = "手錶錄音";
@@ -1122,7 +1122,11 @@
 "migration.alert.migrate" = "遷移";
 "migration.alert.open" = "前往位置";
 "migration.alert.title" = "您想將此筆記本的副本移轉到Noteshelf 3嗎？";
-"migration.progress.text" = "遷移";
+"migration.cancel" = "取消遷移";
+"migration.cancel.alert" = "您確定要取消遷移嗎？";
+"migration.exitScreen" = "請在遷移過程完成前不要離開此畫面";
+"migration.progress.text" = "正在遷移...";
+"migration.succes" = "遷移成功！";
 "migration.success.alert.message" = "成功！ 您遷移的筆記已放置在：%@";
 "months" = "月";
 "more" = "更多";
@@ -1491,6 +1495,7 @@
 "trash.alert.title" = "你確定要清空垃圾箱嗎？";
 "unsplash.search.alertMessage" = "清單視圖";
 "untitled" = "無標題";
+"updatemigration.title" = "遷移更新";
 "useSticker" = "使用貼紙";
 "welcome.appleWatch" = "蘋果手錶";
 "welcome.audioNotes" = "音訊筆記";
@@ -1533,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
