@@ -46,6 +46,8 @@ class FTMigrationViewController: UIViewController {
         warningTitle?.text = "migration.exitScreen".localized
         migratedSuccessTextLabel.text = "migration.succes".localized
         cancelButton?.titleLabel?.text = "migration.cancel".localized
+        self.view.backgroundColor = UIColor.init(hexString: "F0EEEB")
+        self.overrideUserInterfaceStyle = .light
     }
 
     override func viewDidAppear(_ animated: Bool) {

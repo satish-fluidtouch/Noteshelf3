@@ -111,8 +111,27 @@ final class FTDocumentMigration {
         }
     }
     
+    static func uuidFromURL(_ url: URL) -> String? {
+        var uuid: String?
+        let dest = url.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
+        let propertiList = FTFileItemPlist(url: dest, isDirectory: false)
+        if let docId = propertiList?.object(forKey: DOCUMENT_ID_KEY) as? String {
+            uuid = docId
+        }
+        return uuid
+    }
+    
      static func performNS2toNs3MassMigration(url: URL,
                                               onCompletion: ((_ url: URL?, _ error: Error?) -> Void)?) {
+         var documentPin: String?
+         let isPinEnabled = isPinEnabledForDownloadedDocument(url: url)
+         if let uuid = FTDocumentMigration.uuidFromURL(url) {
+             let isTouchIdEnabled = FTBiometricManager.isTouchIdEnabled(for: uuid)
+             if isPinEnabled && isTouchIdEnabled {
+                 //Get pin with NS2 Item UUID
+                 documentPin = FTBiometricManager.passwordForNS2Book(with: uuid)
+             }
+         }
          do {
              let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory()).appending(path: "NS3Migration")
              if(!FileManager().fileExists(atPath: temporaryDirectory.path)) {
@@ -139,6 +158,9 @@ final class FTDocumentMigration {
                          let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: url.relativePathWRTCollection())
 
                          // TODO: Pass the document
+                         if let migratedURL, let documentPin, isPinEnabled {
+                             FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: migratedURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue)
+                         }
                          onCompletion?(migratedURL, nil)
                      } catch {
                          onCompletion?(nil, FTMigrationError.unableToCreateDocument)
@@ -194,6 +216,14 @@ final class FTDocumentMigration {
         }
         
         return progress
+    }
+    
+    private static func isPinEnabledForDownloadedDocument(url: URL) -> Bool {
+        let securityPath = url.appendingPathComponent("secure.plist");
+        if(FileManager().fileExists(atPath: securityPath.path)) {
+            return true;
+        }
+        return false;
     }
 
     static func contentsOfURL(_ url: URL) -> [URL]? {
