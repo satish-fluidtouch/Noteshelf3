@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "desk_tool_favoritesSelected.pdf",
+      "filename" : "icon (11).pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "icon (12).pdf",
       "idiom" : "universal"
     }
   ],

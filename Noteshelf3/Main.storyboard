@@ -819,20 +819,20 @@
                                                             <rect key="frame" x="0.0" y="5" width="28" height="28"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="Z1k-rO-uFr" userLabel="imageViewShadow">
-                                                                    <rect key="frame" x="5" y="-43" width="18" height="68"/>
+                                                                    <rect key="frame" x="5" y="-49" width="18" height="74"/>
                                                                 </imageView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_mask" translatesAutoresizingMaskIntoConstraints="NO" id="SgH-eH-jUr" userLabel="imageViewIconMask">
-                                                                    <rect key="frame" x="5" y="-43" width="18" height="68"/>
+                                                                    <rect key="frame" x="5" y="-49" width="18" height="74"/>
                                                                 </imageView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_color" translatesAutoresizingMaskIntoConstraints="NO" id="Bpl-4I-hGe" userLabel="imageViewIconOverlay">
-                                                                    <rect key="frame" x="5" y="-43" width="18" height="68"/>
+                                                                    <rect key="frame" x="5" y="-49" width="18" height="74"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="68" id="K2A-HK-Lks"/>
+                                                                        <constraint firstAttribute="height" constant="74" id="K2A-HK-Lks"/>
                                                                         <constraint firstAttribute="width" constant="18" id="h6o-ca-YFg"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorites/felt_effect" translatesAutoresizingMaskIntoConstraints="NO" id="WQ5-ez-TNy">
-                                                                    <rect key="frame" x="5" y="-43" width="18" height="68"/>
+                                                                    <rect key="frame" x="5" y="-49" width="18" height="74"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1092,10 +1092,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Favorites/felt_color" width="18" height="68"/>
-        <image name="Favorites/felt_effect" width="18" height="68"/>
-        <image name="Favorites/felt_mask" width="54" height="204"/>
-        <image name="Favorites/felt_shadow" width="20" height="75"/>
+        <image name="Favorites/felt_color" width="18" height="74"/>
+        <image name="Favorites/felt_effect" width="18" height="74"/>
+        <image name="Favorites/felt_mask" width="18" height="74"/>
+        <image name="Favorites/felt_shadow" width="20" height="78"/>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
         <image name="books.vertical" catalog="system" width="128" height="107"/>
         <image name="circlebadge" catalog="system" width="128" height="122"/>
