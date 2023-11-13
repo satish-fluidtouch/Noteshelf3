@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "MODE TABLEAU BLANC";
 "Wallpapers" = "Fonds d'écran";
 "Warning" = "Avertissement";
-"WatchAdInfo" = "Installez Noteshelf 2 sur votre Apple Watch. Vous pouvez enregistrer de l'audio en déplacement et prendre des notes plus tard.";
+"WatchAdInfo" = "Installez Noteshelf 3 sur votre Apple Watch. Vous pouvez enregistrer de l'audio en déplacement et prendre des notes plus tard.";
 "WatchNewRecords" = "De nouvelles enregistrements sont arrivés de votre Apple Watch.";
 "WatchRecording" = "Regarder l'enregistrement.";
 "WatchRecordings" = "Enregistrements de la Watch";
@@ -1029,6 +1029,8 @@
 "export_description2" = "Les données exportées contenant vos cahiers, groupes et catégories seront sauvegardées sous forme de fichier .zip. Vos cahiers seront sauvegardés dans le format .noteshelf.";
 "export_description_1" = "Il est fortement recommandé de sauvegarder une copie de vos données sur votre appareil local. Les données exportées seront sauvegardées sous forme de fichier .zip et contiendront tous vos cahiers, groupes et catégories.";
 "failed_following" = "Échec de sauvegarde des cahiers suivants:";
+"favoritebar.singleFavoriteDelete.message" = "Au moins un élément doit être conservé dans la barre d'outils Favoris.";
+"favoritebar.singleFavoriteDelete.title" = "Impossible de supprimer le favori";
 "finalizing" = "Finalisation";
 "finder.addPageAfter" = "Ajouter une page après";
 "finder.addPageBefore" = "Ajouter une page avant";
@@ -1122,7 +1124,11 @@
 "migration.alert.migrate" = "Migrer";
 "migration.alert.open" = "Aller à l'emplacement.";
 "migration.alert.title" = "Souhaitez-vous migrer une copie de ce cahier vers Noteshelf 3 ?";
-"migration.progress.text" = "Migration";
+"migration.cancel" = "Annuler la migration";
+"migration.cancel.alert" = "Êtes-vous sûr de vouloir annuler la migration ?";
+"migration.exitScreen" = "Veuillez ne pas quitter cet écran avant la fin du processus de migration";
+"migration.progress.text" = "En cours de migration...";
+"migration.succes" = "Succès de la migration !";
 "migration.success.alert.message" = "Succès ! Votre cahier migré a été placé dans : %@";
 "months" = "Mois";
 "more" = "Plus";
@@ -1491,6 +1497,7 @@
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
 "untitled" = "Sans titre";
+"updatemigration.title" = "Mise à jour sur la migration";
 "useSticker" = "Utiliser l'autocollant";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "NOTES AUDIO";
@@ -1533,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Ramakrishna on 13 November 2023 at 6:11 PM

@@ -14,7 +14,6 @@ private let previousFavMode = "FTFavoritePreviousMode"
 class FTFavoritePensetManager: NSObject {
     let dataManager = FTFavoritePensetDataManager()
     private let userActivity: NSUserActivity?
-    private var _currentPresetColors: [String] = []
     private var _currentPenSet: FTPenSetProtocol!
 
     init(activity: NSUserActivity?) {
