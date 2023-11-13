@@ -104,7 +104,7 @@ private extension FTFavoritebarViewController {
         self.favorites = favTuple.uniqueElements
         self.manager.saveFavorites(favorites)
         self.updateDisplay()
-        self.collectionView.reloadData()
+        self.reloadFavoritesData()
         if(favTuple.duplicateExists) {
             FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: "AlreadyInFavorites".localized))
         } else {
@@ -422,7 +422,7 @@ extension FTFavoritebarViewController: FTFavoriteSizeUpdateDelegate {
     }
 
     func didDismissCurrentsizeEditScreen() {
-        self.collectionView.reloadData()
+        self.reloadFavoritesData()
     }
 }
 

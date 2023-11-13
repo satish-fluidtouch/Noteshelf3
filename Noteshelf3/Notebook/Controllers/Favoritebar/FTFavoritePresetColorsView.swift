@@ -19,7 +19,7 @@ struct FTFavoritePresetColorsView: View {
                 FTFavoritePresetSectionView(section: index, viewModel: viewModel)
             }
         }.tabViewStyle(.page)
-            .frame(width: 300.0, height: 190.0)
+            .frame(width: 308.0, height: 190.0)
             .onAppear {
                 UIPageControl.appearance().currentPageIndicatorTintColor = .label
                 UIPageControl.appearance().pageIndicatorTintColor = UIColor.label.withAlphaComponent(0.2)
@@ -50,7 +50,7 @@ struct FTFavoritePresetSectionView: View {
                                 self.handleTapGesture(for: presetColor)
                             }
                     }
-                    .frame(width: 54.0, height: 40.0)
+                    .frame(width: 55.0, height: 40.0)
                     .onDrag {
                         self.viewModel.presetEditIndex = nil
                         self.viewModel.currentDraggedItem = presetColor
@@ -88,7 +88,7 @@ struct FTFavoritePresetSectionView: View {
         .onAppear {
             self.findSectionColors()
         }
-        .background(Color.appColor(.black4))
+        .background(Color.appColor(.white60))
         .background(self.getNavlinkForSelectedItem())
         .cornerRadius(10.0)
         .padding(.horizontal, FTSpacing.small)
@@ -130,7 +130,7 @@ struct FTFavoritePresetSectionView: View {
     }
 
     private var gridItemLayout: [GridItem] {
-        return Array.init(repeating: GridItem(.fixed(50.0), spacing: 0, alignment: .center), count: 5)
+        return Array.init(repeating: GridItem(.fixed(55.0), spacing: 0, alignment: .center), count: 5)
     }
 
     @ViewBuilder
