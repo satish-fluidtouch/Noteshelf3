@@ -9,8 +9,6 @@
 import Foundation
 import TPInAppReceipt
 
-let premiumUserStatus = "premiumUserStatus"
-
 final class FTIAPurchaseHelper {
 
     static let shared = FTIAPurchaseHelper()
@@ -46,10 +44,7 @@ final class FTIAPurchaseHelper {
 
     var isPremiumUser: Bool {
         get {
-//            #if ADHOC
-//            return true;
-//            #else
-            var isPremierUser = UserDefaults.standard.bool(forKey: premiumUserStatus)
+            var isPremierUser = FTUserDefaults.isPremiumUser()
             if !isPremierUser {
                 isPremierUser = isIAPPurchasedViaReceipt();
                 if(isPremierUser) {
@@ -57,10 +52,9 @@ final class FTIAPurchaseHelper {
                 }
             }
             return isPremierUser;
-//            #endif
         } set {
             FTIAPManager.shared.premiumUser.isPremiumUser = newValue;
-            UserDefaults.standard.set(newValue, forKey: premiumUserStatus)
+            FTUserDefaults.setIsPremiumUser(value: isPremiumUser)
         }
     }
 
