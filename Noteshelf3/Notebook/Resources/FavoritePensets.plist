@@ -10,7 +10,7 @@
 			<key>type</key>
 			<integer>0</integer>
 			<key>color</key>
-			<string>151515</string>
+			<string>1D31A8</string>
 			<key>size</key>
 			<integer>4</integer>
 			<key>preciseSize</key>
@@ -20,7 +20,7 @@
 			<key>type</key>
 			<integer>1</integer>
 			<key>color</key>
-			<string>06438B</string>
+			<string>E0430E</string>
 			<key>size</key>
 			<integer>7</integer>
 			<key>preciseSize</key>
@@ -40,7 +40,17 @@
 			<key>type</key>
 			<integer>3</integer>
 			<key>color</key>
-			<string>F8E81C</string>
+			<string>FFE800</string>
+			<key>size</key>
+			<integer>4</integer>
+			<key>preciseSize</key>
+			<string>4</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<integer>4</integer>
+			<key>color</key>
+			<string>1488A1</string>
 			<key>size</key>
 			<integer>4</integer>
 			<key>preciseSize</key>
