@@ -14,7 +14,6 @@ private let previousFavMode = "FTFavoritePreviousMode"
 class FTFavoritePensetManager: NSObject {
     let dataManager = FTFavoritePensetDataManager()
     private let userActivity: NSUserActivity?
-    private var _currentPresetColors: [String] = []
     private var _currentPenSet: FTPenSetProtocol!
 
     init(activity: NSUserActivity?) {
@@ -55,6 +54,21 @@ class FTFavoritePensetManager: NSObject {
         } else {
             return self.fetchCurrentPenset(for: .highlighter)
         }
+    }
+
+    func fetchPreviousRackMode() -> FTRackType {
+        if let prevInfo = self.userActivity?.userInfo?[previousFavMode] as? [String: Any], let rackRawValue = prevInfo[previousFavMode] as? NSNumber {
+            if let type = FTRackType(rawValue: Int(truncating: rackRawValue)) {
+                return type
+            }
+        } else {
+            let standardUserDefaults = UserDefaults.standard
+            let rackRawValue = standardUserDefaults.integer(forKey: previousFavMode)
+            if let type = FTRackType(rawValue: Int(truncating: rackRawValue as NSNumber)) {
+                return type
+            }
+        }
+        return .pen
     }
 
     public func fetchCurrentPenset(for segment: FTFavoriteRackSegment) -> FTPenSetProtocol {
@@ -151,20 +165,5 @@ private extension FTFavoritePensetManager {
         }
         self.userActivity?.userInfo?[key] = penSetDictionary
         self.userActivity?.userInfo?[previousFavMode] = [previousFavMode : _penSet.type.rackType.rawValue]
-    }
-
-    func fetchPreviousRackMode() -> FTRackType {
-        if let prevInfo = self.userActivity?.userInfo?[previousFavMode] as? [String: Any], let rackRawValue = prevInfo[previousFavMode] as? NSNumber {
-            if let type = FTRackType(rawValue: Int(truncating: rackRawValue)) {
-                return type
-            }
-        } else {
-            let standardUserDefaults = UserDefaults.standard
-            let rackRawValue = standardUserDefaults.integer(forKey: previousFavMode)
-            if let type = FTRackType(rawValue: Int(truncating: rackRawValue as NSNumber)) {
-                return type
-            }
-        }
-        return .pen
     }
 }

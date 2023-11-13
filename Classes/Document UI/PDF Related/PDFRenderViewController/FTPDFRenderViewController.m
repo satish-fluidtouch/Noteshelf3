@@ -1783,6 +1783,7 @@
         }
             break;
         case kDeskModeFavorites:
+            [self.pdfDocument.localMetadataCache setLastPenMode:mode];
             [[self.pdfDocument localMetadataCache] setCurrentDeskMode:mode];
             break;
             
@@ -3254,6 +3255,9 @@
                 break;
             case kDeskModeShape:
                 [self shapesButtonAction];
+                break;
+            case kDeskModeFavorites:
+                [self favoritesButtonAction];
                 break;
             default:
                 break;

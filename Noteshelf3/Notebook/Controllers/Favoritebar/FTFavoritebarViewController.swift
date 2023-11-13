@@ -54,7 +54,7 @@ class FTFavoritebarViewController: UIViewController {
 
     @IBAction func sizeIndicatorTapped(_ sender: Any) {
         let curPenset = self.getCurrentPenset()
-        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .normal)
+        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .favoriteEdit)
         sizeEditVc.delegate = self
         if let btn = sender as? UIButton {
             sizeEditVc.ftPresentationDelegate.source = btn
@@ -70,19 +70,12 @@ class FTFavoritebarViewController: UIViewController {
     private func updateDisplay() {
         let currentPenset = self.getCurrentPenset()
         let penType = currentPenset.type
-        let penSize = currentPenset.size
-        let maxWidth = penSize.maxDisplaySize(penType: penType)
-        let scale = penSize.scaleToApply(penType: penType, preciseSize: currentPenset.preciseSize)
-        var revisedScale = scale
-        if penType == .highlighter || penType == .flatHighlighter {
-            revisedScale = scale*0.8
-        }
+        let reqWidth = penType.getIndicatorSize(using: currentPenset.preciseSize).width
         self.sizeDisplayView?.isHidden = false
-        //        sizeIndicatorImageView.image = nil
         self.sizeDisplayView?.backgroundColor = UIColor.label
-        self.sizeDisplayWidthConstraint?.constant = maxWidth*revisedScale
+        self.sizeDisplayWidthConstraint?.constant = reqWidth
         self.sizeDisplayView.layoutIfNeeded()
-        self.sizeDisplayView?.layer.cornerRadius = maxWidth*revisedScale*0.5
+        self.sizeDisplayView?.layer.cornerRadius = reqWidth*0.5
         self.sizeDisplayView?.layer.masksToBounds = false
         self.sizeDisplayView?.clipsToBounds = true
     }
@@ -104,12 +97,13 @@ private extension FTFavoritebarViewController {
         self.favorites = favTuple.uniqueElements
         self.manager.saveFavorites(favorites)
         self.updateDisplay()
-        self.reloadFavoritesData()
         if(favTuple.duplicateExists) {
             FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: "AlreadyInFavorites".localized))
+            self.reloadFavoritesData()
         } else {
             if(isAddingNewPenSet) {
                 FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: "FavoriteAddedNotification".localized))
+                self.reloadFavoritesData()
             }
         }
         self.collectionView.isScrollEnabled = true
@@ -171,6 +165,8 @@ private extension FTFavoritebarViewController {
         controller.manager = self.manager
         controller.activity = self.activity
         controller.ftPresentationDelegate.source = sourceView
+        controller.ftPresentationDelegate.compactGrabFurther = false
+
         self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize, hideNavBar: true)
     }
 
@@ -229,7 +225,7 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
                 editFavoriteCurrentIndex = indexPath.row
                 cell.addFavoriteImageView.isHidden = true
                 self.isAddingNewPenSet = true
-                let currentPenset = self.manager.fetchCurrentPenset(for: .pen)
+                let currentPenset = self.manager.fetchCurrentPenset()
                 self.favorites.append(currentPenset)
                 self.manager.saveFavorites(favorites)
                 cell.configure(favorite: currentPenset, currentPenset: currentPenset)
@@ -365,6 +361,13 @@ extension FTFavoritebarViewController: UICollectionViewDropDelegate {
             coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
         }
     }
+
+    private func showAlertForSingleFavoriteDeletion() {
+        let alertController = UIAlertController(title: "favoritebar.singleFavoriteDelete.title".localized, message: "favoritebar.singleFavoriteDelete.message".localized, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension FTFavoritebarViewController: FTFavoriteEditDelegate {
@@ -379,29 +382,33 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
                 self.favorites.append(penset)
             }
             self.manager.saveFavorites(favorites)
+            self.updateDisplay()
         }
     }
 
     func didDeleteFavorite(_ favorite: FTPenSetProtocol) {
         if self.favorites.count == 1 {
-            return
-        }
-        if let index = editFavoriteCurrentIndex, index < self.favorites.count {
-            self.favorites.remove(at: index)
-            self.manager.saveFavorites(favorites)
-            self.dismiss(animated: false)
-            // After removal of favorite, we need to make the one comes in the slot as current penset or, the last one
-            if index < self.favorites.count {
-                let immediateFav = self.favorites[index]
-                self.manager.saveCurrentSelection(penSet: immediateFav)
-            } else if let last = self.favorites.last {
-                self.manager.saveCurrentSelection(penSet: last)
+            self.dismiss(animated: false, completion: {
+                self.showAlertForSingleFavoriteDeletion()
+            })
+        } else {
+            if let index = editFavoriteCurrentIndex, index < self.favorites.count {
+                self.favorites.remove(at: index)
+                self.manager.saveFavorites(favorites)
+                self.dismiss(animated: false)
+                // After removal of favorite, we need to make the one comes in the slot as current penset or, the last one
+                if index < self.favorites.count {
+                    let immediateFav = self.favorites[index]
+                    self.manager.saveCurrentSelection(penSet: immediateFav)
+                } else if let last = self.favorites.last {
+                    self.manager.saveCurrentSelection(penSet: last)
+                }
+                self.reloadFavoritesData()
+                self.isAddingNewPenSet = false
+                self.isDisplayedEditPenRack = false
+                self.collectionView.isScrollEnabled = true
+                self.updateDisplay()
             }
-            self.reloadFavoritesData()
-            self.isAddingNewPenSet = false
-            self.isDisplayedEditPenRack = false
-            self.collectionView.isScrollEnabled = true
-            self.updateDisplay()
         }
     }
 
