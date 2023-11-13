@@ -54,7 +54,7 @@ class FTFavoritebarViewController: UIViewController {
 
     @IBAction func sizeIndicatorTapped(_ sender: Any) {
         let curPenset = self.getCurrentPenset()
-        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .normal)
+        let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .favoriteEdit)
         sizeEditVc.delegate = self
         if let btn = sender as? UIButton {
             sizeEditVc.ftPresentationDelegate.source = btn
@@ -70,19 +70,12 @@ class FTFavoritebarViewController: UIViewController {
     private func updateDisplay() {
         let currentPenset = self.getCurrentPenset()
         let penType = currentPenset.type
-        let penSize = currentPenset.size
-        let maxWidth = penSize.maxDisplaySize(penType: penType)
-        let scale = penSize.scaleToApply(penType: penType, preciseSize: currentPenset.preciseSize)
-        var revisedScale = scale
-        if penType == .highlighter || penType == .flatHighlighter {
-            revisedScale = scale*0.8
-        }
+        let reqWidth = penType.getIndicatorSize(using: currentPenset.preciseSize).width
         self.sizeDisplayView?.isHidden = false
-        //        sizeIndicatorImageView.image = nil
         self.sizeDisplayView?.backgroundColor = UIColor.label
-        self.sizeDisplayWidthConstraint?.constant = maxWidth*revisedScale
+        self.sizeDisplayWidthConstraint?.constant = reqWidth
         self.sizeDisplayView.layoutIfNeeded()
-        self.sizeDisplayView?.layer.cornerRadius = maxWidth*revisedScale*0.5
+        self.sizeDisplayView?.layer.cornerRadius = reqWidth*0.5
         self.sizeDisplayView?.layer.masksToBounds = false
         self.sizeDisplayView?.clipsToBounds = true
     }
@@ -229,7 +222,7 @@ extension FTFavoritebarViewController: UICollectionViewDataSource, UICollectionV
                 editFavoriteCurrentIndex = indexPath.row
                 cell.addFavoriteImageView.isHidden = true
                 self.isAddingNewPenSet = true
-                let currentPenset = self.manager.fetchCurrentPenset(for: .pen)
+                let currentPenset = self.manager.fetchCurrentPenset()
                 self.favorites.append(currentPenset)
                 self.manager.saveFavorites(favorites)
                 cell.configure(favorite: currentPenset, currentPenset: currentPenset)
@@ -379,6 +372,7 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
                 self.favorites.append(penset)
             }
             self.manager.saveFavorites(favorites)
+            self.updateDisplay()
         }
     }
 

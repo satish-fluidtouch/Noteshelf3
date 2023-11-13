@@ -56,7 +56,6 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
 
         DispatchQueue.main.async {
             self.isFavoriteSelected = currentPenset.isEqual(favorite)
-            self.imgShadow?.isHidden = !(self.isFavoriteSelected)
         }
 
         self.btnBg.backgroundColor = UIColor(hexString: favorite.color, alpha: 0.3)
@@ -73,11 +72,13 @@ class FTFavoritePenCollectionViewCell: FTPenStyleCollectionViewCell {
      var isFavoriteSelected: Bool = false {
         didSet {
             if self.isFavoriteSelected {
+                self.imgShadow?.isHidden = false
                 self.btnBg.layer.borderWidth = borderWidth
                 self.penBottomConstraint.constant = -12.0
                 self.btnBg.backgroundColor = UIColor(hexString: self.favorite?.color ?? blackColorHex, alpha: 0.3)
             }
             else {
+                self.imgShadow?.isHidden = true
                 self.btnBg.layer.borderWidth = 0.0
                 self.penBottomConstraint.constant = 3.0
                 self.btnBg.backgroundColor = UIColor.appColor(.favoriteEmptySlotColor)
