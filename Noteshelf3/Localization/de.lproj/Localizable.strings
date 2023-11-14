@@ -1029,8 +1029,6 @@
 "export_description2" = "Die exportierten Daten, die Ihre Notizbücher, Gruppen und Kategorien enthalten, werden als .zip-Datei gespeichert. Ihre Notizbücher werden im .noteshelf Format gespeichert.";
 "export_description_1" = "Es wird dringend empfohlen, eine Kopie Ihrer Daten auf Ihrem lokalen Gerät zu speichern. Die exportierten Daten werden als .zip-Datei gespeichert und enthalten alle Ihre Notizbücher, Gruppen und Kategorien.";
 "failed_following" = "Fehler beim Sichern der folgenden Notizbücher:";
-"favoritebar.singleFavoriteDelete.message" = "Mindestens ein Element muss in der Favoriten-Symbolleiste verbleiben.";
-"favoritebar.singleFavoriteDelete.title" = "Der Favorit konnte nicht gelöscht werden";
 "finalizing" = "Abschließen";
 "finder.addPageAfter" = "Seite hinzufügen";
 "finder.addPageBefore" = "Seite hinzufügen";
@@ -1540,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 13 November 2023 at 6:11 PM
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM

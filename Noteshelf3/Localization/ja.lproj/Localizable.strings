@@ -1029,8 +1029,6 @@
 "export_description2" = "エクスポートされたデータは、ノートブック、グループ、カテゴリを含んだ.zipファイルとして保存されます。ノートブックは.noteshelf形式で保存されます。";
 "export_description_1" = "あなたのデータのコピーをローカルデバイスに保存することを強くおすすめします。エクスポートされたデータは、.zipファイルとして保存され、すべてのノートブック、グループ、カテゴリを含みます。";
 "failed_following" = "次のノートブックのバックアップに失敗しました。";
-"favoritebar.singleFavoriteDelete.message" = "少なくとも 1 つの項目をお気に入りツールバーに保持する必要があります。";
-"favoritebar.singleFavoriteDelete.title" = "お気に入りを削除できません";
 "finalizing" = "完成する";
 "finder.addPageAfter" = "この単語の後にページを追加";
 "finder.addPageBefore" = "この単語の前にページを追加";
@@ -1540,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 13 November 2023 at 6:11 PM
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM

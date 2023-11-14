@@ -342,6 +342,7 @@
 		471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450152924E24200B6113B /* FTTagCollectionCell.swift */; };
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
+		4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */; };
 		472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472BDF8329E7E9FF001BE43A /* FTDataCache.swift */; };
 		473310782A1F2DFC008DC0DB /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */; };
 		473C1F8029C864E4003BD6BB /* FTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */; };
@@ -826,6 +827,8 @@
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
+		BAB4D5052AFFF337009124EF /* FTMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */; };
+		BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB4D5062AFFF34D009124EF /* Migration.storyboard */; };
 		BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2990,6 +2993,7 @@
 		471A47431FA1ADA900E8E3DF /* FTMosaicPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMosaicPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		471A47451FA1ADB800E8E3DF /* FTCutOutPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCutOutPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		472770E31E2F65A400100A54 /* FTPDFRenderViewController+Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTPDFRenderViewController+Export.swift"; sourceTree = "<group>"; };
+		4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTBookmarksProvider.swift; sourceTree = "<group>"; };
 		472BDF8329E7E9FF001BE43A /* FTDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDataCache.swift; sourceTree = "<group>"; };
 		473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 		4738DC191E2CF3AA004E62E6 /* FormSheetPresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSheetPresentationManager.swift; sourceTree = "<group>"; };
@@ -3789,6 +3793,8 @@
 		BAB2589B2959D07E0072AEBB /* Noteshelf ActionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf ActionDebug.entitlements"; sourceTree = "<group>"; };
 		BAB2589C2959D08C0072AEBB /* Noteshelf ActionBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf ActionBeta.entitlements"; sourceTree = "<group>"; };
 		BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUtils_Swift_Common.swift; sourceTree = "<group>"; };
+		BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMigrationViewController.swift; sourceTree = "<group>"; };
+		BAB4D5062AFFF34D009124EF /* Migration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Migration.storyboard; sourceTree = "<group>"; };
 		BABCB8D522FD3FA200551DAC /* FTThumbnailGenerationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailGenerationRequest.swift; sourceTree = "<group>"; };
 		BABCB8D822FD4E0100551DAC /* FTThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailGenerator.swift; sourceTree = "<group>"; };
 		BAC095E4265FC189001DF931 /* FTShape_SQLiteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShape_SQLiteHelper.swift; sourceTree = "<group>"; };
@@ -7466,6 +7472,7 @@
 				47C2EA2D297A803500D0494A /* FTShelfBookmarksViewController+ContextMenu.swift */,
 				4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */,
 				4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */,
+				4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */,
 			);
 			path = ShelfBookmarks;
 			sourceTree = "<group>";
@@ -9321,6 +9328,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		BAB4D5032AFFF311009124EF /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */,
+				BAB4D5062AFFF34D009124EF /* Migration.storyboard */,
+			);
+			path = Migration;
+			sourceTree = "<group>";
+		};
 		BABD257222E0383A00F9CA5C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -9954,6 +9970,7 @@
 		E7654DEE2966A88B00E0F7A7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BAB4D5032AFFF311009124EF /* Migration */,
 				E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */,
 				1438A3CF2A5C2EC500861C34 /* FTGlobalSettingsTableViewCell.swift */,
 				14AF7DA42A03B4AD00C835AB /* FTGeneralSettingsView.swift */,
@@ -11460,6 +11477,7 @@
 				BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */,
 				52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */,
 				E7AE404628755D4500C0F3EC /* themes_v8_fr.plist in Resources */,
+				BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */,
 				E7AE403928755D4500C0F3EC /* themes_v8_zh-Hant.plist in Resources */,
 				BAF38FC72859ADF00067CA9F /* WhatsNewLocalizable.strings in Resources */,
 				E7AE403B28755D4500C0F3EC /* themes_v8_es.plist in Resources */,
@@ -12401,6 +12419,7 @@
 				BAF391CB2859ADF00067CA9F /* UIFont+Extensions.swift in Sources */,
 				E7B8DAB828803A7600F0AE78 /* FTPenShortcutViewModel.swift in Sources */,
 				E7B947492912350900BE4430 /* FTShareContentModels.swift in Sources */,
+				BAB4D5052AFFF337009124EF /* FTMigrationViewController.swift in Sources */,
 				BAF391CE2859ADF00067CA9F /* FTRecognitionServiceProvider.swift in Sources */,
 				BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */,
 				BAF391D02859ADF00067CA9F /* FTSegmentStyle.swift in Sources */,
@@ -13121,6 +13140,7 @@
 				BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */,
 				3DAA689E2911041900848434 /* FTTextColorCollectionView.swift in Sources */,
 				BAF394352859ADF00067CA9F /* FTGoogleDriveBackupPublisher.swift in Sources */,
+				4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */,
 				BAF394362859ADF00067CA9F /* FTGoogleDriveBackupEntry.swift in Sources */,
 				47C7C43D297E633600AE4648 /* FTShelfCompactContentContainerView.swift in Sources */,
 				BAF394382859ADF00067CA9F /* FTDynamicTemplateFormat.swift in Sources */,
@@ -13923,8 +13943,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.3;
-				APP_VERSION_MAC = 1.3;
+				APP_VERSION = 1.3.1;
+				APP_VERSION_MAC = 1.3.1;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -14834,8 +14854,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.3;
-				APP_VERSION_MAC = 1.3;
+				APP_VERSION = 1.3.1;
+				APP_VERSION_MAC = 1.3.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14899,8 +14919,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.3;
-				APP_VERSION_MAC = 1.3;
+				APP_VERSION = 1.3.1;
+				APP_VERSION_MAC = 1.3.1;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
