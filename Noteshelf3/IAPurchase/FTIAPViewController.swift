@@ -146,6 +146,7 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
                 let title = String(format: iapPurchaseTitle, ns2Price);
                 self.setTitleToPurchaseButton(title:title)
             }
+//            self.discountedPercentage(ns3product, ns2Product: ns2Product);
         }
         else {
             productToBuy = ns3product;
@@ -183,5 +184,12 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
 private extension FTIAPViewController {
     var upgradeTitleAttributes: [NSAttributedString.Key : Any] {
         return [.font: UIFont.clearFaceFont(for: .medium, with: 20)];
+    }
+    
+    func discountedPercentage(_ ns3Product: SKProduct, ns2Product: SKProduct) {
+        let ns2Value = ns2Product.price.floatValue;
+        let ns3Value = ns3Product.price.floatValue;
+        let percentage = ((Int)((ns2Value/ns3Value) * 10))*10
+        debugPrint("roundupvalue: \(percentage)");
     }
 }
