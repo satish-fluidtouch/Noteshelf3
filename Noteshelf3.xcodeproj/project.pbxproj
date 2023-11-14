@@ -884,7 +884,6 @@
 		BAF38FB92859ADF00067CA9F /* FTTooltipMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED06532F1F7A5A1D002D17E1 /* FTTooltipMessageViewController.xib */; };
 		BAF38FBC2859ADF00067CA9F /* FTWatchRecordings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */; };
 		BAF38FBE2859ADF00067CA9F /* FTExportDataInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */; };
-		BAF38FBF2859ADF00067CA9F /* FTMigrationPopupController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED02B4A01F67B1FD002EAF8A /* FTMigrationPopupController.xib */; };
 		BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C825338A213D085C00110CA4 /* FTConvertPreferencesViewController.xib */; };
 		BAF38FC72859ADF00067CA9F /* WhatsNewLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BACC33D124C7084F00CD3ED5 /* WhatsNewLocalizable.strings */; };
 		BAF38FD22859ADF00067CA9F /* FTZoomOverlay.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B807164324444BF40089363C /* FTZoomOverlay.storyboard */; };
@@ -1237,7 +1236,6 @@
 		BAF391FA2859ADF00067CA9F /* FTEraserRackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFDC52224F4F50E00D8025D /* FTEraserRackViewController.swift */; };
 		BAF391FB2859ADF00067CA9F /* FTWebdavRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978755E825DAB4F600CB766F /* FTWebdavRequest.swift */; };
 		BAF391FD2859ADF00067CA9F /* FTCustomTextPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C6179266DFA0800512DF2 /* FTCustomTextPosition.swift */; };
-		BAF391FE2859ADF00067CA9F /* FTMigrationPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02B49F1F67B1FD002EAF8A /* FTMigrationPopupController.swift */; };
 		BAF391FF2859ADF00067CA9F /* FTImportStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860736D23275E5D009658F1 /* FTImportStorageManager.swift */; };
 		BAF392012859ADF00067CA9F /* FTBackgroundTaskProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED22107321DDDA8500E88085 /* FTBackgroundTaskProtocols.swift */; };
 		BAF392022859ADF00067CA9F /* FTNoteshelfDocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B861713D255C00EA009A6AB7 /* FTNoteshelfDocumentManager.swift */; };
@@ -1504,7 +1502,6 @@
 		BAF3935F2859ADF00067CA9F /* FTShelfItemSorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665DE1E84FC310003DA80 /* FTShelfItemSorting.swift */; };
 		BAF393602859ADF00067CA9F /* FTStylusPenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E316E1E027D73007B5CAD /* FTStylusPenManager.m */; };
 		BAF393632859ADF00067CA9F /* FTStylusChooseActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C805C2FE220AE50B00A08EFC /* FTStylusChooseActionViewController.swift */; };
-		BAF393642859ADF00067CA9F /* FTIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED02B4A31F67C231002EAF8A /* FTIndicatorView.swift */; };
 		BAF393662859ADF00067CA9F /* FTInfiniteWave.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57A1EEC1EE83C9700154996 /* FTInfiniteWave.swift */; };
 		BAF393672859ADF00067CA9F /* FTSelectionHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094348BB20359D6D00757884 /* FTSelectionHighlightView.swift */; };
 		BAF393682859ADF00067CA9F /* FTBezierGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA649AC626393AD40050FF94 /* FTBezierGenerator.swift */; };
@@ -4143,9 +4140,6 @@
 		E7F479DB288591C800577D1E /* FTPersistanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPersistanceData.swift; sourceTree = "<group>"; };
 		E7F9EA93298A8EA400504BE1 /* FTUISearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUISearchController.swift; sourceTree = "<group>"; };
 		E7F9EA95298A9B6A00504BE1 /* FTGlobalSearchController+Recents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTGlobalSearchController+Recents.swift"; sourceTree = "<group>"; };
-		ED02B49F1F67B1FD002EAF8A /* FTMigrationPopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMigrationPopupController.swift; sourceTree = "<group>"; };
-		ED02B4A01F67B1FD002EAF8A /* FTMigrationPopupController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTMigrationPopupController.xib; sourceTree = "<group>"; };
-		ED02B4A31F67C231002EAF8A /* FTIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTIndicatorView.swift; sourceTree = "<group>"; };
 		ED03C37F222E505400E34874 /* CITreeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CITreeViewController.swift; sourceTree = "<group>"; };
 		ED03C380222E505400E34874 /* CITreeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CITreeView.swift; sourceTree = "<group>"; };
 		ED03C381222E505400E34874 /* CITreeViewNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CITreeViewNode.swift; sourceTree = "<group>"; };
@@ -6167,7 +6161,6 @@
 				ED8656D520A41D130048FEC6 /* FTTooltips */,
 				ED7D936C1F5D2C9C00BC99EA /* ImageScanner */,
 				211E2FB01E027D73007B5CAD /* Imports */,
-				ED02B49D1F67B1DD002EAF8A /* MigrationView */,
 				211E2FE11E027D73007B5CAD /* New Document */,
 				C80B2F4321E6074500294B9D /* New Settings */,
 				211E2FF61E027D73007B5CAD /* Services */,
@@ -10509,16 +10502,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		ED02B49D1F67B1DD002EAF8A /* MigrationView */ = {
-			isa = PBXGroup;
-			children = (
-				ED02B49F1F67B1FD002EAF8A /* FTMigrationPopupController.swift */,
-				ED02B4A01F67B1FD002EAF8A /* FTMigrationPopupController.xib */,
-				ED02B4A31F67C231002EAF8A /* FTIndicatorView.swift */,
-			);
-			path = MigrationView;
-			sourceTree = "<group>";
-		};
 		ED03C37E222E505400E34874 /* CITreeView */ = {
 			isa = PBXGroup;
 			children = (
@@ -11414,7 +11397,6 @@
 				BAF38FBC2859ADF00067CA9F /* FTWatchRecordings.storyboard in Resources */,
 				423E8793295EF2DD002C082F /* cover_template.pdf in Resources */,
 				BAF38FBE2859ADF00067CA9F /* FTExportDataInfoCell.xib in Resources */,
-				BAF38FBF2859ADF00067CA9F /* FTMigrationPopupController.xib in Resources */,
 				BA50E02A2959BF9400CDC0FD /* AppIcon.xcassets in Resources */,
 				BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */,
 				52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */,
@@ -12407,7 +12389,6 @@
 				146E2BD72A0A5785004A9B3A /* FTHandWritingView.swift in Sources */,
 				1439371529D6E02700D93033 /* FTStickerDataSource.swift in Sources */,
 				E7B9474F2912499A00BE4430 /* FTShareViewModel.swift in Sources */,
-				BAF391FE2859ADF00067CA9F /* FTMigrationPopupController.swift in Sources */,
 				E7B31F7A2935EEAD00E39CA8 /* FTCategoryResultSectionCell.swift in Sources */,
 				BAF391FF2859ADF00067CA9F /* FTImportStorageManager.swift in Sources */,
 				BAF392012859ADF00067CA9F /* FTBackgroundTaskProtocols.swift in Sources */,
@@ -12843,7 +12824,6 @@
 				BAF393602859ADF00067CA9F /* FTStylusPenManager.m in Sources */,
 				1439371629D6E02700D93033 /* FTStickersStorageManager.swift in Sources */,
 				BAF393632859ADF00067CA9F /* FTStylusChooseActionViewController.swift in Sources */,
-				BAF393642859ADF00067CA9F /* FTIndicatorView.swift in Sources */,
 				BAF393662859ADF00067CA9F /* FTInfiniteWave.swift in Sources */,
 				BA2D912D285CAFCC001BB495 /* FTShelfBottomBarMoreOptionsView.swift in Sources */,
 				BAF393672859ADF00067CA9F /* FTSelectionHighlightView.swift in Sources */,
