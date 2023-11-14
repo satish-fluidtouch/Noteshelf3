@@ -24,7 +24,7 @@ struct FTShelfTagsConstants {
         static let potraitSize = CGSize(width: 136, height: 189)
         static let landscapeSize = CGSize(width: 136, height: 97)
         static let interItemSpacing: CGFloat = 16.0
-        static let minInterItemSpacing: CGFloat = 28.0
+        static let minInterItemSpacing: CGFloat = 16.0
         static let gridHorizontalPadding: CGFloat = 32.0
         static let extraHeightPadding: CGFloat = 56.0
         static let potraitAspectRation: CGFloat = (136/189)

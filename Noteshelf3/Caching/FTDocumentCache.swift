@@ -212,7 +212,10 @@ extension FTDocumentCache {
                     }
             }
             dispatchGroup.notify(queue: self.queue) {
-                FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: itemsCached)
+                if itemsCached.count > 0 {
+                    FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: itemsCached)
+                    FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: itemsCached)
+                }
             }
         }
     }
@@ -230,6 +233,7 @@ extension FTDocumentCache {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
                 let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
                 FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
+                FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: [itemToCache])
             } catch {
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
@@ -320,6 +324,7 @@ private extension FTDocumentCache {
             if _fileManger.fileExists(atPath: destinationURL.path) && (doc.URL.relativePathWRTCollection() == relativePath || relativePath == nil){
                 do {
                     FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
+                    FTBookmarksProvider.shared.removeBookmarkFor(documentId: docUUID)
                     try _fileManger.removeItem(at: destinationURL)
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {

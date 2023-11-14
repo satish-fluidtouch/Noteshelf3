@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "WHITEBOARD MODE";
 "Wallpapers" = "Wallpapers";
 "Warning" = "Warning";
-"WatchAdInfo" = "Install Noteshelf 2 on your Apple Watch. You can record audio on-the-go and take notes later.";
+"WatchAdInfo" = "Install Noteshelf 3 on your Apple Watch. You can record audio on-the-go and take notes later.";
 "WatchNewRecords" = "New recordings arrived from your Apple Watch.";
 "WatchRecording" = "Watch Recording";
 "WatchRecordings" = "Watch Recordings";
@@ -1122,7 +1122,11 @@
 "migration.alert.migrate" = "Migrate";
 "migration.alert.open" = "Go to Location";
 "migration.alert.title" = "Would you like to migrate a copy of this notebook to Noteshelf 3? ";
-"migration.progress.text" = "Migrating";
+"migration.cancel" = "Cancel Migration";
+"migration.cancel.alert" = "Are you sure you want to cancel the migration?";
+"migration.exitScreen" = "Please do not exit this screen before the migration process is completed";
+"migration.progress.text" = "Migrating...";
+"migration.succes" = "Migration Success!";
 "migration.success.alert.message" = "Success! Your migrated notebook has been placed in: %@";
 "months" = "Months";
 "more" = "More";
@@ -1491,6 +1495,7 @@
 "trash.alert.title" = "Are you sure you want empty your Trash?";
 "unsplash.search.alertMessage" = "Enter text to search";
 "untitled" = "Untitled";
+"updatemigration.title" = "Update on Migration";
 "useSticker" = "Use Sticker";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "AUDIO NOTES";
@@ -1533,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM

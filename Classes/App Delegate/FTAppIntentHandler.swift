@@ -81,6 +81,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithAudio()
     func createNotebookWithCameraPhoto()
     func createNotebookWithScannedPhoto()
+    func startNS2ToNS3Migration()
 }
 
 
@@ -157,8 +158,20 @@ final class FTAppIntentHandler {
             track("today_widget", params: ["type": "Open Notebook"])
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
+        } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
+            startMigration(url: url)
         }
         return false
+    }
+    
+    func startMigration(url: URL) {
+        if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+            , let queryitem = urlcomponents.queryItems?.first
+            , queryitem.name == "intent"
+            , queryitem.value == "NS2Migration"
+        {
+            intentHandler?.startNS2ToNS3Migration()
+        }
     }
 
     @discardableResult
