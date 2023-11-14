@@ -68,7 +68,14 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     }
 
     @IBAction private func deleteTapped(_ sender: Any) {
-        self.delegate?.didDeleteFavorite(favorite)
+        let alert = UIAlertController(title: "DeleteFavoriteAlertTitle".localized, message: "DeleteFavoriteAlertMessage".localized, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { [weak self] _ in
+            guard let self else { return }
+            self.delegate?.didDeleteFavorite(favorite)
+            self.dismiss(animated: false, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "No".localized, style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     @objc func segmentChanged() {
