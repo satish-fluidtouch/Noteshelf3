@@ -771,18 +771,13 @@
                                             <constraint firstAttribute="width" constant="44" id="mNC-3L-WnO"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXw-SB-ve6">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQH-V1-XwU">
                                         <rect key="frame" x="0.0" y="0.0" width="44" height="38"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="7aW-H8-f3k"/>
+                                            <constraint firstAttribute="width" constant="44" id="dY6-vF-oKO"/>
                                         </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain"/>
-                                        <connections>
-                                            <action selector="sizeIndicatorTapped:" destination="BVz-qb-JGz" eventType="touchUpInside" id="i4O-Dd-gQb"/>
-                                        </connections>
-                                    </button>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fr-Uy-dr5">
                                         <rect key="frame" x="44" y="0.0" width="1" height="38"/>
                                         <color key="backgroundColor" name="black5"/>
@@ -901,17 +896,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="QsK-io-s5z" secondAttribute="bottom" constant="-20" id="31i-BU-QCc"/>
+                                    <constraint firstAttribute="bottom" secondItem="uQH-V1-XwU" secondAttribute="bottom" id="8IV-yb-epd"/>
                                     <constraint firstItem="QsK-io-s5z" firstAttribute="top" secondItem="V49-jA-mWI" secondAttribute="top" constant="-20" id="8Vy-4I-17g"/>
-                                    <constraint firstItem="aXw-SB-ve6" firstAttribute="leading" secondItem="V49-jA-mWI" secondAttribute="leading" id="CYl-vj-ehQ"/>
                                     <constraint firstAttribute="bottom" secondItem="8fr-Uy-dr5" secondAttribute="bottom" id="GEt-gk-8ae"/>
-                                    <constraint firstItem="T0S-6V-Xbs" firstAttribute="centerY" secondItem="aXw-SB-ve6" secondAttribute="centerY" id="Hl5-08-V0C"/>
+                                    <constraint firstItem="uQH-V1-XwU" firstAttribute="centerX" secondItem="T0S-6V-Xbs" secondAttribute="centerX" id="Iel-33-hDc"/>
+                                    <constraint firstItem="uQH-V1-XwU" firstAttribute="top" secondItem="V49-jA-mWI" secondAttribute="top" id="QZL-AB-bxC"/>
                                     <constraint firstAttribute="trailing" secondItem="QsK-io-s5z" secondAttribute="trailing" constant="5" id="TEY-at-ZiW"/>
-                                    <constraint firstItem="T0S-6V-Xbs" firstAttribute="centerX" secondItem="aXw-SB-ve6" secondAttribute="centerX" id="cT8-5K-oan"/>
-                                    <constraint firstItem="aXw-SB-ve6" firstAttribute="top" secondItem="V49-jA-mWI" secondAttribute="top" id="fVO-Nf-Ut0"/>
+                                    <constraint firstItem="uQH-V1-XwU" firstAttribute="centerY" secondItem="T0S-6V-Xbs" secondAttribute="centerY" id="bz0-xT-a7I"/>
                                     <constraint firstItem="QsK-io-s5z" firstAttribute="leading" secondItem="8fr-Uy-dr5" secondAttribute="trailing" constant="5" id="fyy-y7-rlj"/>
                                     <constraint firstItem="8fr-Uy-dr5" firstAttribute="top" secondItem="V49-jA-mWI" secondAttribute="top" id="ptC-pJ-6L7"/>
-                                    <constraint firstItem="8fr-Uy-dr5" firstAttribute="leading" secondItem="aXw-SB-ve6" secondAttribute="trailing" id="rn5-QS-FTN"/>
-                                    <constraint firstAttribute="bottom" secondItem="aXw-SB-ve6" secondAttribute="bottom" id="vCI-8P-Pou"/>
+                                    <constraint firstItem="8fr-Uy-dr5" firstAttribute="leading" secondItem="uQH-V1-XwU" secondAttribute="trailing" id="xZv-8i-sas"/>
+                                    <constraint firstItem="uQH-V1-XwU" firstAttribute="leading" secondItem="V49-jA-mWI" secondAttribute="leading" id="yOi-Lw-x4s"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -945,7 +940,7 @@
                         <outlet property="previewShadow" destination="Fw4-Fw-Oeo" id="aUF-Xe-V8a"/>
                         <outlet property="sizeDisplayView" destination="T0S-6V-Xbs" id="4ni-oI-QeN"/>
                         <outlet property="sizeDisplayWidthConstraint" destination="mNC-3L-WnO" id="W6y-Oy-1Dq"/>
-                        <outlet property="sizeIndicator" destination="aXw-SB-ve6" id="OD0-36-c2O"/>
+                        <outlet property="sizeTapView" destination="uQH-V1-XwU" id="xaE-cB-Hfh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCr-Az-aCI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1096,10 +1091,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Favorites/felt_color" width="18" height="74"/>
-        <image name="Favorites/felt_effect" width="18" height="74"/>
-        <image name="Favorites/felt_mask" width="72" height="296"/>
-        <image name="Favorites/felt_shadow" width="20" height="78"/>
+        <image name="Favorites/felt_color" width="112" height="296"/>
+        <image name="Favorites/felt_effect" width="112" height="296"/>
+        <image name="Favorites/felt_mask" width="112" height="296"/>
+        <image name="Favorites/felt_shadow" width="112" height="311"/>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
         <image name="books.vertical" catalog="system" width="128" height="107"/>
         <image name="circlebadge" catalog="system" width="128" height="122"/>

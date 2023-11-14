@@ -10,7 +10,7 @@ import Foundation
 
 class FTFavoritebarViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
-    @IBOutlet private weak var sizeIndicator: UIButton!
+    @IBOutlet private weak var sizeTapView: UIView!
     @IBOutlet private weak var sizeDisplayView: UIView!
     @IBOutlet private weak var sizeDisplayWidthConstraint: NSLayoutConstraint?
 
@@ -39,6 +39,7 @@ class FTFavoritebarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addVisualEffectBlur(cornerRadius: 19.0)
+        self.sizeTapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(sizeTapped)))
         self.manager = FTFavoritePensetManager(activity: activity)
         self.configureDragAndDrop()
         self.favorites = manager.fetchFavorites()
@@ -52,14 +53,12 @@ class FTFavoritebarViewController: UIViewController {
         }
     }
 
-    @IBAction func sizeIndicatorTapped(_ sender: Any) {
+    @objc func sizeTapped() {
         let curPenset = self.getCurrentPenset()
         let sizeEditVc = FTFavoriteSizeEditController(size: curPenset.preciseSize, penType: curPenset.type, displayMode: .favoriteEdit)
         sizeEditVc.delegate = self
-        if let btn = sender as? UIButton {
-            sizeEditVc.ftPresentationDelegate.source = btn
-            sizeEditVc.ftPresentationDelegate.sourceRect = btn.bounds
-        }
+        sizeEditVc.ftPresentationDelegate.source = sizeTapView
+        sizeEditVc.ftPresentationDelegate.sourceRect = sizeTapView.bounds
         self.ftPresentPopover(vcToPresent: sizeEditVc, contentSize: CGSize(width: 320.0, height: 80.0), hideNavBar: true)
     }
 
