@@ -947,21 +947,23 @@ extension FTNoteshelfDocumentProvider {
         do {
             // Path until final location
             let parentURL = destinationURL.deletingLastPathComponent()
-
-            // Change to unique name if required
-//            if(FileManager().fileExists(atPath: destinationURL.path)) {
-//                let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
-//                destinationURL = parentURL.appendingPathComponent(uniqueName);
-//            }
-
             if providerMode == .cloud {
-                if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                if (FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false))), checkIfDatesAreEqual(for: url, destUrl: destinationURL) {
+                    FileManager.replaceCoordinatedItem(atURL: destinationURL, fromLocalURL: url) { error in
+                    }
+                } else {
+                    if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
+                        try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                    }
+                    if(FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false))) {
+                        let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+                        destinationURL = parentURL.appendingPathComponent(uniqueName);
+                    }
+                    //TODO: (Discuss with Akshay) We should set Ubiquitous on background thread. Might need to move this to background, if we are on main thread.
+                    try FileManager().setUbiquitous(true,
+                                                    itemAt: url,
+                                                    destinationURL: destinationURL);
                 }
-                //TODO: (Discuss with Akshay) We should set Ubiquitous on background thread. Might need to move this to background, if we are on main thread.
-                try FileManager().setUbiquitous(true,
-                                                itemAt: url,
-                                                destinationURL: destinationURL);
             } else {
                 // TODO: Take control if required
                 // Create the parent directory if required
@@ -970,23 +972,23 @@ extension FTNoteshelfDocumentProvider {
                 }
                 let localProvider = self.localShelfCollectionRoot?.ns3Collection
                 //If book is not modified in ns3 and same book is being migrated from ns2, just replace the book.
-                if FileManager().fileExists(atPath: destinationURL.path), checkIfDatesAreEqual(for: url, destUrl: destinationURL) {
+                if FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false)), checkIfDatesAreEqual(for: url, destUrl: destinationURL) {
                     FileManager.replaceCoordinatedItem(atURL: destinationURL, fromLocalURL: url) { error in
                     }
                 } else {
-                    if(FileManager().fileExists(atPath: destinationURL.path)) {
+                    if(FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false))) {
                         let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
                         destinationURL = parentURL.appendingPathComponent(uniqueName);
                     }
                     if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
-                        if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                        if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
                             try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                         }
                         try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
                         collection.addItemsToCache([destinationURL])
                     } else {
                         localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
-                            if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                            if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
                                 try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                             }
                             try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
@@ -1002,10 +1004,13 @@ extension FTNoteshelfDocumentProvider {
         }
     }
     
-    func checkIfDatesAreEqual(for url: URL, destUrl: URL) -> Bool {
+    private func checkIfDatesAreEqual(for url: URL, destUrl: URL) -> Bool {
         let migratedItems = FTDocumentMigration.fetchMigratedPlist()
         let displayPath = url.displayRelativePathWRTCollection()
-        if let itemsDict = migratedItems[displayPath] as? [String: Any] , let data = itemsDict["modifiedDate"] as? Data, let unarchivedDate = data.date, destUrl.fileModificationDate.compare(unarchivedDate) == .orderedSame {
+        //Modification date is being rounded when we open and close the NS3 book, Hence checking the difference between both dates
+        //2023-11-14  10:53:01 +0000 - timeIntervalSinceReferenceDate : 721651981.9387126(Saved Date)
+        //2023-11-14  10:53:01 +0000 - timeIntervalSinceReferenceDate : 721651981.938713(NS3 book date)
+        if let itemsDict = migratedItems[displayPath] as? [String: Any] , let data = itemsDict["modifiedDate"] as? Data, let unarchivedDate = data.date, abs(unarchivedDate.timeIntervalSinceReferenceDate - destUrl.fileModificationDate.timeIntervalSinceReferenceDate) < 1  {
             return true
         }
         return false
