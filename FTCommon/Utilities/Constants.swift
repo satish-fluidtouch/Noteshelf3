@@ -14,7 +14,6 @@ public let UTI_TYPE_NOTESHELF_BOOK = "com.fluidtouch.noteshelfbook"
 public let nsBookExtension = "noteshelf"
 public let noteshelfDocumentsExt = "nsdata"
 public let nsTemplateExtension = "nstemplate"
-public let NS2_BUNDLE_ID = "com.fluidtouch.noteshelf"
 
 public func supportedUTITypesForDownload() -> [String] {
     var supportedUTITypes = [String]()

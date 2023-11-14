@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "WEIßTAFELMODUS";
 "Wallpapers" = "Hintergrundbilder";
 "Warning" = "Achtung";
-"WatchAdInfo" = "Installiere Noteshelf 2 auf deiner Apple Watch. Du kannst Audio unterwegs aufnehmen und später Notizen machen.";
+"WatchAdInfo" = "Installiere Noteshelf 3 auf deiner Apple Watch. Du kannst Audio unterwegs aufnehmen und später Notizen machen.";
 "WatchNewRecords" = "Neue Aufnahmen sind von deiner Apple Watch eingegangen.";
 "WatchRecording" = "Aufzeichnung ansehen.";
 "WatchRecordings" = "Aufzeichnungen anzeigen";
@@ -1122,7 +1122,11 @@
 "migration.alert.migrate" = "Migrieren";
 "migration.alert.open" = "Gehe zu Standort";
 "migration.alert.title" = "Möchten Sie eine Kopie dieses Notizbuches nach Noteshelf 3 migrieren?";
-"migration.progress.text" = "Umzug";
+"migration.cancel" = "Migration abbrechen";
+"migration.cancel.alert" = "Sind Sie sicher, dass Sie die Migration abbrechen möchten?";
+"migration.exitScreen" = "Bitte verlassen Sie diesen Bildschirm nicht, bevor der Migrationsprozess abgeschlossen ist.";
+"migration.progress.text" = "Migrieren...";
+"migration.succes" = "Migration erfolgreich!";
 "migration.success.alert.message" = "Erfolg! Ihr migriertes Notizbuch wurde platziert in: %@";
 "months" = "Monate";
 "more" = "Mehr";
@@ -1491,6 +1495,7 @@
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
 "untitled" = "Unbenannt";
+"updatemigration.title" = "Aktualisierung zur Migration";
 "useSticker" = "Benutze Aufkleber";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "AUDIO NOTIZEN";
@@ -1533,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
