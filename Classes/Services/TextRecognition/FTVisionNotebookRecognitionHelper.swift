@@ -45,8 +45,9 @@ class FTVisionNotebookRecognitionHelper: NSObject {
     }
     
     func startImageTextRecognition(){
-        if (self.isRecognitionInProgress == true ||  FTVisionNotebookRecognitionHelper.shouldProceedRecognition == false
-            || FTUserDefaults.isInSafeMode()){
+        if (self.isRecognitionInProgress == true ||
+            FTVisionNotebookRecognitionHelper.shouldProceedRecognition == false ||
+            FTUserDefaults.isInSafeMode()) {
             return
         }
         self.isRecognitionInProgress = true

@@ -149,6 +149,9 @@ extension FTFinderViewController: FTBookmarkPageViewControllerDelegate, FTAddMen
                 }
             }
         }
+        if let _pages = pages as? [FTThumbnailable], let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
+            FTBookmarksProvider.shared.updateBoodmarkItemFor(pages: _pages, shelfItem: shelfItem)
+        }
     }
     
     func removeBookMark(for pages: [FTPageProtocol]) {
@@ -165,6 +168,9 @@ extension FTFinderViewController: FTBookmarkPageViewControllerDelegate, FTAddMen
                 mode = .none
                 validateHeaderView()
             }
+        }
+        if let _pages = pages as? [FTThumbnailable], let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
+            FTBookmarksProvider.shared.updateBoodmarkItemFor(pages: _pages, shelfItem: shelfItem)
         }
     }
     
