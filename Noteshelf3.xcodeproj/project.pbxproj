@@ -725,6 +725,8 @@
 		97C5A22E29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5A22D29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift */; };
 		97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5A22F29F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift */; };
 		97C73415294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C73414294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift */; };
+		97C799302B035129001877B2 /* FTENUserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7992E2B035129001877B2 /* FTENUserInfoTableViewCell.swift */; };
+		97C799312B035129001877B2 /* FTENUserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C7992F2B035129001877B2 /* FTENUserInfoTableViewCell.xib */; };
 		97CBAB5D2AEB98DB00267A17 /* ENOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CBAB5C2AEB98DA00267A17 /* ENOAuthViewController.m */; };
 		97E4006A29139CAD00E0E0D7 /* FTDropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */; };
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
@@ -3588,6 +3590,8 @@
 		97C5A22D29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSidebarItemContextualMenuVM.swift; sourceTree = "<group>"; };
 		97C5A22F29F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTSidebarVM+ItemContexualOperations.swift"; sourceTree = "<group>"; };
 		97C73414294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitViewController+Sidebar.swift"; sourceTree = "<group>"; };
+		97C7992E2B035129001877B2 /* FTENUserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTENUserInfoTableViewCell.swift; sourceTree = "<group>"; };
+		97C7992F2B035129001877B2 /* FTENUserInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTENUserInfoTableViewCell.xib; sourceTree = "<group>"; };
 		97C851FD24F5176300EF893A /* FTSegmentScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentScrollView.swift; sourceTree = "<group>"; };
 		97C851FF24F5176400EF893A /* FTSegmentConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentConstants.swift; sourceTree = "<group>"; };
 		97C8520024F5176400EF893A /* FTSegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentStyle.swift; sourceTree = "<group>"; };
@@ -5098,6 +5102,8 @@
 				E765250D27574FB500ABBAEC /* FTBackUpOptionsFooterView.xib */,
 				E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */,
 				E75BAE272769BE840084043F /* FTEvernoteFooterView.xib */,
+				97C7992E2B035129001877B2 /* FTENUserInfoTableViewCell.swift */,
+				97C7992F2B035129001877B2 /* FTENUserInfoTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -11740,6 +11746,7 @@
 				BAF38F6A2859ADF00067CA9F /* BrushAssets_V3.xcassets in Resources */,
 				E7AE404228755D4500C0F3EC /* Midnight.plist in Resources */,
 				BAF38F6E2859ADF00067CA9F /* FTBrandLogoView.xib in Resources */,
+				97C799312B035129001877B2 /* FTENUserInfoTableViewCell.xib in Resources */,
 				BAF38F702859ADF00067CA9F /* FTNotebookMoreOptions.storyboard in Resources */,
 				09103B862A86275800739602 /* FTNoteshelfAILocalized.strings in Resources */,
 				E7AE403A28755D4500C0F3EC /* themes_v8_zh-Hans.plist in Resources */,
@@ -13038,6 +13045,7 @@
 				BAF392BF2859ADF00067CA9F /* UIImage+.swift in Sources */,
 				BAF392C12859ADF00067CA9F /* FTRecognitionCache.swift in Sources */,
 				BAF392C22859ADF00067CA9F /* FTPageViewController_GestureHandler.swift in Sources */,
+				97C799302B035129001877B2 /* FTENUserInfoTableViewCell.swift in Sources */,
 				4709F4242AE161050085A8C9 /* FTTagItemModel.swift in Sources */,
 				E7AE25A1288FD47200402413 /* FTCommonThemeStorage.swift in Sources */,
 				090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */,

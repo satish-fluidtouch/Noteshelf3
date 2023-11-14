@@ -14,9 +14,21 @@ import FTCommon
 protocol FTEvernoteSettingsTableViewControllerDelegate {
     func loggedOut(_ evernoteSettingsTableViewController: FTEvernoteSettingsViewController)
 }
-
-struct FTEvernoteError {
-    var description: String?
+enum FTEvernoteInfoType {
+    case user
+    case error
+}
+protocol FTEvernoteInfo {
+    var description: NSAttributedString { get set }
+    var infoType: FTEvernoteInfoType { get set}
+}
+struct FTEvernoteUserInfo: FTEvernoteInfo {
+    var description: NSAttributedString
+    var infoType: FTEvernoteInfoType = .user
+}
+struct FTEvernoteError: FTEvernoteInfo {
+    var description: NSAttributedString
+    var infoType: FTEvernoteInfoType = .error
     var image: String?
 }
 
@@ -33,35 +45,71 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
     let Row_SyncOnWifiOnly = 1;
 
     var errorSectionsCount = 0;
-    var arrayDynamicSections = [[FTEvernoteError]]();
+    var arrayDynamicSections = [[FTEvernoteInfo]]();
     var hideBackButton: Bool = false
+    private var accountInfo: FTCloudAccountInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         account = .evernote
         let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(account);
         accountInfoRequest.accountInfo(onUpdate: { accountInfo in
-            self.updateInfo(withAccounfInfo: accountInfo);
+            self.relayoutIfNeeded();
             }, onCompletion: { accountInfo, error in
-                self.updateInfo(withAccounfInfo: accountInfo);
+                self.accountInfo = accountInfo
+                self.setAccountInfo(accountInfo)
+                self.updateUI()
+                self.relayoutIfNeeded();
         });
 
         self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
-        var arrayErrorAndSync = [FTEvernoteError]()
+        self.setAccountInfo(accountInfo)
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
+        self.updateUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureNewNavigationBar(hideDoneButton: false,title: "Evernote".localized)
+        let indexPathToReload = IndexPath(row: Row_PublishNotebooks, section: Section_Actions)
+        self.tableView?.reloadRows(at: [indexPathToReload], with: .automatic)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    private func setAccountInfo(_ accountInfo:FTCloudAccountInfo?) {
+        self.arrayDynamicSections.removeAll()
+        var arrayErrorAndSync = [FTEvernoteInfo]()
         let standardUserDefaults = UserDefaults.standard
 
+        let accountInfoAttributedString = NSMutableAttributedString()
+        if let info = accountInfo {
+                let spaceUsedInfo = NSAttributedString(string: info.spaceUsedFormatString() + " Evernote" + "\n",attributes: [.font: UIFont.appFont(for: .medium, with: 15), .foregroundColor : UIColor.appColor(.black1)])
+                accountInfoAttributedString.append(spaceUsedInfo)
+                let userInfo = NSAttributedString(string: info.usernameFormatString() + "\n",attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black70)])
+                accountInfoAttributedString.append(userInfo)
+            if let lastPublishTime = standardUserDefaults.object(forKey: EVERNOTE_LAST_PUBLISH_TIME) as? TimeInterval {
+                let dateString = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: lastPublishTime), dateStyle: .short, timeStyle: .short);
+                let loc = "LastsuccessfulsyncAtFormat".localized
+                let description = String(format: loc, dateString);
+                let syncInfo = NSAttributedString(string: description,attributes: [.font: UIFont.appFont(for: .regular, with: 13), .foregroundColor : UIColor.appColor(.accent)])
+                accountInfoAttributedString.append(syncInfo)
+            }
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 2.0
+            paragraphStyle.alignment = .center
+            accountInfoAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: accountInfoAttributedString.length))
+            arrayErrorAndSync.append(FTEvernoteUserInfo(description: accountInfoAttributedString))
+        } else {
+            arrayErrorAndSync.append(FTEvernoteUserInfo(description: accountInfoAttributedString))
+        }
+
         if let evernoteError = standardUserDefaults.object(forKey: EVERNOTE_PUBLISH_ERROR) {
-            arrayErrorAndSync.append(FTEvernoteError(description: "Sync failed with reason: \(evernoteError)", image: "en-error-red"));
+            let errorInfo = NSAttributedString(string: "Sync failed with reason: \(evernoteError)",attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black1)])
+            arrayErrorAndSync.append(FTEvernoteError(description: errorInfo, image: "en-error-red"));
         }
-
-        if let lastPublishTime = standardUserDefaults.object(forKey: EVERNOTE_LAST_PUBLISH_TIME) as? TimeInterval {
-
-            let dateString = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: lastPublishTime), dateStyle: .short, timeStyle: .short);
-            let loc = "LastsuccessfulsyncAtFormat".localized
-            let description = String(format: loc, dateString);
-            arrayErrorAndSync.append(FTEvernoteError(description: description, image: "iconCheckBadge"))
-        }
-
         if !arrayErrorAndSync.isEmpty {
             self.arrayDynamicSections.append(arrayErrorAndSync);
         }
@@ -79,28 +127,13 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
                 } else {
                     message = "\(title)\nUnknown Reason";
                 }
-
-                arrayIgnoredNotebooks.append(FTEvernoteError(description: message, image: "en-error-orange"));
+                let ignoredNotebooksInfo = NSAttributedString(string: message,attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.accent)])
+                arrayIgnoredNotebooks.append(FTEvernoteError(description: ignoredNotebooksInfo, image: "en-error-orange"));
             }
             self.arrayDynamicSections.append(arrayIgnoredNotebooks);
         }
 
-        self.tableView?.delegate = self
-        self.tableView?.dataSource = self
-        self.updateUI()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.configureNewNavigationBar(hideDoneButton: false,title: "Evernote".localized)
-        let indexPathToReload = IndexPath(row: Row_PublishNotebooks, section: Section_Actions)
-        self.tableView?.reloadRows(at: [indexPathToReload], with: .automatic)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let selectNotebookController = segue.destination as? FTSelectNotebookForBackupViewController {
@@ -109,7 +142,7 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
     }
 
     // MARK: - UI
-    func updateInfo(withAccounfInfo accountInfo: FTCloudAccountInfo) {
+    func relayoutIfNeeded() {
         runInMainThread(0.001) {
             self.tableView?.setNeedsLayout();
             self.tableView?.layoutIfNeeded();
@@ -158,14 +191,25 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
                 return cell!
             }
         } else if indexPath.section < tableView.numberOfSections {
-            let error = self.arrayDynamicSections[indexPath.section - FixedSectionsCount][indexPath.row];
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellErrorOrSuccess", for: indexPath) as? FTSettingsBaseTableViewCell;
-
-            cell?.imageViewIcon?.image = UIImage(named: error.image ?? "");
-            cell?.labelTitle?.text = error.description ?? "";
-
-            return cell!
+            let enInfo = self.arrayDynamicSections[indexPath.section - FixedSectionsCount][indexPath.row];
+            if enInfo.infoType == .user {
+                guard let userInfoView = Bundle.main.loadNibNamed("FTENUserInfoTableViewCell", owner: nil, options: nil)?.first as? FTENUserInfoTableViewCell else {
+                    return UITableViewCell()
+                }
+                userInfoView.updateInfoLabel(attrText: enInfo.description)
+                userInfoView.updateSubviewsVisibility()
+                if let usagePercentage = accountInfo?.percentage {
+                    userInfoView.progressView?.progress =  usagePercentage / 100.0
+                }
+                return userInfoView
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellErrorOrSuccess", for: indexPath) as? FTSettingsBaseTableViewCell,let erroInfo = enInfo as? FTEvernoteError else {
+                    return UITableViewCell()
+                }
+                cell.imageViewIcon?.image = UIImage(named: erroInfo.image ?? "");
+                cell.labelTitle?.attributedText = erroInfo.description;
+                return cell
+            }
         }
         return UITableViewCell();
     }
