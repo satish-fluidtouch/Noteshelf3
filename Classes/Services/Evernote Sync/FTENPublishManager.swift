@@ -81,6 +81,7 @@ class FTENNotebook: NSObject {
             publishQueue = DispatchQueue.init(label: "com.fluidtouch.noteshelf.evernotePublish", qos: dispacthQOS)
         }
         instance.addAppStateNotificationObservers()
+        instance.addMemoryWarningNotificationObserver()
         return instance
     }()
     func evernotePublishFeaturePurchased() -> Bool {
@@ -690,6 +691,18 @@ class FTENNotebook: NSObject {
             parentRecord?.syncEnabled = false
             self?.commitDataChanges()
         })
+    }
+    private func addMemoryWarningNotificationObserver(){
+    #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] (_) in
+            guard let self = self else {
+                return;
+            }
+            self.executeBlock {
+                self.ftENNotebook = nil
+            }
+        };
+    #endif
     }
     // MARK:- App State Notification-
     func addAppStateNotificationObservers() {
