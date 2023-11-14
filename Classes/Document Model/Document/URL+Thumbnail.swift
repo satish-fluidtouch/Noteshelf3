@@ -12,9 +12,9 @@ import QuickLookThumbnailing
 import UniformTypeIdentifiers
 
 extension URL {
-    func fetchQLThumbnail(completion: @escaping ((UIImage?) -> Void)) -> QLThumbnailGenerator.Request {
+    func fetchQLThumbnail(completion: @escaping ((UIImage?,Error?) -> Void)) -> QLThumbnailGenerator.Request {
         let request = QLThumbnailGenerator.Request(fileAt: self,
-                                                   size: portraitCoverSize,
+                                                   size: CGSize(width: 300, height: 300),
                                                    scale: 2,
                                                    representationTypes: .thumbnail)
 #if DEBUG
@@ -30,17 +30,17 @@ extension URL {
 #if DEBUG
                     NSLog("🌄 Thumbnail Fetched for \(self)")
 #endif
-                    completion(thumbnail.uiImage)
+                    completion(thumbnail.uiImage,error)
                 } else if let error {
 #if DEBUG
                     NSLog("🌄 Thumbnail Error \(error)")
 #endif
-                    completion(nil)
+                    completion(nil,error)
                 } else {
 #if DEBUG
                     NSLog("🌄 Thumbnail Unknown Error")
 #endif
-                    completion(nil)
+                    completion(nil,error)
                 }
             }
         }

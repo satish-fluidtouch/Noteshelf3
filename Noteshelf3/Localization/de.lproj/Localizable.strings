@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "Geben Sie eine Zahl zwischen %d und %d ein.";
 "EnterPassword" = "Geben Sie das Passwort ein.";
 "EnterPasswordHint" = "Geben Sie einen Passworthinweis ein.";
-"EnterPasswordToOpenThisNotebook" = "Geben Sie das Passwort ein, um dieses Notizbuch zu öffnen.";
+"EnterPasswordToOpenThisNotebook" = "Geben Sie das Passwort ein, um %@ zu öffnen";
 "EnterThePasswordFor" = "Geben Sie das Passwort für %@ ein.";
 "EraseEntireStroke" = "Gesamten Strich löschen";
 "EraseHighlighterOnly" = "Lösche nur Textmarker";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "WEIßTAFELMODUS";
 "Wallpapers" = "Hintergrundbilder";
 "Warning" = "Achtung";
-"WatchAdInfo" = "Installiere Noteshelf 2 auf deiner Apple Watch. Du kannst Audio unterwegs aufnehmen und später Notizen machen.";
+"WatchAdInfo" = "Installiere Noteshelf 3 auf deiner Apple Watch. Du kannst Audio unterwegs aufnehmen und später Notizen machen.";
 "WatchNewRecords" = "Neue Aufnahmen sind von deiner Apple Watch eingegangen.";
 "WatchRecording" = "Aufzeichnung ansehen.";
 "WatchRecordings" = "Aufzeichnungen anzeigen";
@@ -1122,7 +1122,11 @@
 "migration.alert.migrate" = "Migrieren";
 "migration.alert.open" = "Gehe zu Standort";
 "migration.alert.title" = "Möchten Sie eine Kopie dieses Notizbuches nach Noteshelf 3 migrieren?";
-"migration.progress.text" = "Umzug";
+"migration.cancel" = "Migration abbrechen";
+"migration.cancel.alert" = "Sind Sie sicher, dass Sie die Migration abbrechen möchten?";
+"migration.exitScreen" = "Bitte verlassen Sie diesen Bildschirm nicht, bevor der Migrationsprozess abgeschlossen ist.";
+"migration.progress.text" = "Migrieren...";
+"migration.succes" = "Migration erfolgreich!";
 "migration.success.alert.message" = "Erfolg! Ihr migriertes Notizbuch wurde platziert in: %@";
 "months" = "Monate";
 "more" = "Mehr";
@@ -1292,6 +1296,7 @@
 "shelf.home.seeAll" = "Alle anzeigen";
 "shelf.home.seeAllNotes" = "Alle Notizen anzeigen";
 "shelf.importfile.description" = "Fügen Sie PDFs und Bilder von Ihrer Dateien-App hinzu.";
+"shelf.migration.CompactDescription" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung.";
 "shelf.migration.Description" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung. Die Möglichkeit, ganze Kategorien zu migrieren, kommt bald!";
 "shelf.migration.headerMessage" = "Migrieren Sie Ihre Notizbücher zu Noteshelf 3";
 "shelf.navBar.deselectAll" = "Abwählen";
@@ -1490,6 +1495,7 @@
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
 "untitled" = "Unbenannt";
+"updatemigration.title" = "Aktualisierung zur Migration";
 "useSticker" = "Benutze Aufkleber";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "AUDIO NOTIZEN";
@@ -1532,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM

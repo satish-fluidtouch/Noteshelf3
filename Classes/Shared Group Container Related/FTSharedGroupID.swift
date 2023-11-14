@@ -30,6 +30,32 @@ public class FTSharedGroupID {
     }
 
     public static func getNS2AppGroupID() -> String {
+        #if DEBUG
+        return "group.com.fluidtouch.noteshelf-dev"
+        #elseif BETA
+        return "group.com.fluidtouch.noteshelf-beta"
+        #else
         return "group.com.fluidtouch.noteshelf"
+        #endif
+    }
+    
+    public static func getAppBundleID() -> String {
+        #if DEBUG
+        return "com.fluidtouch.noteshelf3-dev"
+        #elseif BETA
+        return "com.fluidtouch.noteshelf3-beta"
+        #else
+        return "com.fluidtouch.noteshelf3"
+        #endif
+    }
+    
+    public static func getNS2AppBundleID() -> String {
+        #if DEBUG
+        return "com.fluidtouch.noteshelf-dev"
+        #elseif BETA
+        return "com.fluidtouch.noteshelf-beta"
+        #else
+        return "com.fluidtouch.noteshelf"
+        #endif
     }
 }

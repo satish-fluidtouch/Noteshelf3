@@ -7,14 +7,14 @@
 //
 
 import UIKit
-#if !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst) && !targetEnvironment(simulator)
 import MLKit
 #endif
 
 class FTDigitalInkRecognitionManager: NSObject {
     static let shared = FTDigitalInkRecognitionManager();
     func configure() {
-#if !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst) && !targetEnvironment(simulator)
         if let inkModel = self.digitalINkModel(for: FTUtils.currentLanguage()),!inkModel.isDownloaded {
             inkModel.startDownloading();
         }
@@ -24,7 +24,7 @@ class FTDigitalInkRecognitionManager: NSObject {
 #endif
     }
     
-#if !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst) && !targetEnvironment(simulator)
     @objc private func inkModelDownloadSuccess(_ notification: Notification) {
         if let userInfo = notification.userInfo,
            let model = userInfo[ModelDownloadUserInfoKey.remoteModel.rawValue] as? DigitalInkRecognitionModel {
@@ -62,7 +62,7 @@ class FTDigitalInkRecognitionManager: NSObject {
 
 class FTDigitalInkRecognitionTaskProcessor: NSObject,FTRecognitionProcessor {
     private var language = "en";
-#if !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst) && !targetEnvironment(simulator)
     private var recognizer: DigitalInkRecognizer?;
 #endif
     
@@ -74,7 +74,7 @@ class FTDigitalInkRecognitionTaskProcessor: NSObject,FTRecognitionProcessor {
         guard let currentTask = task as? FTRecognitionTask else {
             fatalError("task should be of FTRecognitionTask");
         }
-#if targetEnvironment(macCatalyst)
+#if targetEnvironment(macCatalyst) || targetEnvironment(simulator)
         onCompletion?();
         currentTask.onCompletion?(nil,nil);
 #else
@@ -87,7 +87,7 @@ class FTDigitalInkRecognitionTaskProcessor: NSObject,FTRecognitionProcessor {
     }
 }
 
-#if !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst) && !targetEnvironment(simulator)
 private extension FTDigitalInkRecognitionTaskProcessor {
     func getRecognitionText(for annotations: [FTAnnotationProtocol],
                             viewSize:CGSize,
@@ -174,7 +174,7 @@ private extension FTDigitalInkRecognitionTaskProcessor {
 }
 #endif
 
-#if !targetEnvironment(macCatalyst)
+#if !targetEnvironment(macCatalyst) && !targetEnvironment(simulator)
 extension DigitalInkRecognitionModel {
     var isDownloaded: Bool {
         return ModelManager.modelManager().isModelDownloaded(self);

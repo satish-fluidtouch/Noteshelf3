@@ -631,3 +631,4 @@ extension FTUserDefaults { // Saving this for Show or hide Home Get started sect
         return self.defaults().setValue(value, forKey: isFirstLaunchKey)
     }
 }
+

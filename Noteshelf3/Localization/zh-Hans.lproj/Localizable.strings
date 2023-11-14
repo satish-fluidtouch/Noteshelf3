@@ -306,7 +306,7 @@
 "EnterBetweenNandN" = "在%d和%d之间输入";
 "EnterPassword" = "输入密码";
 "EnterPasswordHint" = "输入密码提示";
-"EnterPasswordToOpenThisNotebook" = "请输入密码以打开此笔记本";
+"EnterPasswordToOpenThisNotebook" = "输入密码打开%@";
 "EnterThePasswordFor" = "请输入 %@ 的密码";
 "EraseEntireStroke" = "擦掉整个字迹";
 "EraseHighlighterOnly" = "只擦拭荧光笔";
@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁纸";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安装Noteshelf 2。您可以在行进中录制音频，并稍后进行记录。";
+"WatchAdInfo" = "在你的Apple Watch上安装Noteshelf 3。您可以在行进中录制音频，并稍后进行记录。";
 "WatchNewRecords" = "您的Apple Watch有新录音。";
 "WatchRecording" = "观看录像";
 "WatchRecordings" = "手表录音";
@@ -1122,7 +1122,11 @@
 "migration.alert.migrate" = "迁移";
 "migration.alert.open" = "前往位置";
 "migration.alert.title" = "您想将此笔记本的副本迁移到Noteshelf 3吗？";
-"migration.progress.text" = "迁移";
+"migration.cancel" = "取消迁移";
+"migration.cancel.alert" = "您确定要取消迁移吗？";
+"migration.exitScreen" = "请在迁移过程完成之前不要退出此屏幕";
+"migration.progress.text" = "正在迁移...";
+"migration.succes" = "迁移成功！";
 "migration.success.alert.message" = "成功！您迁移的笔记已放置在：%@";
 "months" = "月份";
 "more" = "更多";
@@ -1292,6 +1296,7 @@
 "shelf.home.seeAll" = "查看全部";
 "shelf.home.seeAllNotes" = "查看所有笔记";
 "shelf.importfile.description" = "从您的文件应用中添加PDF和图片";
+"shelf.migration.CompactDescription" = "只需点击这里的任何笔记本，即可将其副本迁移到Noteshelf 3。迁移后的笔记本将在Noteshelf 3的分类和分组中可用。";
 "shelf.migration.Description" = "只需点击这里的任何笔记本，即可将其副本迁移到Noteshelf 3。迁移后的笔记本将在Noteshelf 3的分类和分组中可用。迁移整个分类的功能即将推出！";
 "shelf.migration.headerMessage" = "将您的笔记迁移到Noteshelf 3";
 "shelf.navBar.deselectAll" = "取消选择全部";
@@ -1490,6 +1495,7 @@
 "trash.alert.title" = "你确定要清空垃圾箱吗？";
 "unsplash.search.alertMessage" = "列表视图";
 "untitled" = "无标题";
+"updatemigration.title" = "关于迁移的更新";
 "useSticker" = "使用贴纸";
 "welcome.appleWatch" = "苹果手表";
 "welcome.audioNotes" = "音频笔记";
@@ -1532,4 +1538,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM

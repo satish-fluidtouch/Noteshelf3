@@ -13,6 +13,7 @@ import Network
 
 private let storeTemplatesFolderName: String = "com.ns3.storeTemplates"
 private let storeStickersFolderName: String = "com.ns3.storeStickers"
+private let storeTemplatesThumbnailsFolderName: String = "com.ns3.storeTemplatesThumbnails"
 
 enum FTTemplatesServiceError: String, Error {
     case fileNotFound = "Unable to find the requested File."
@@ -76,7 +77,6 @@ class FTLocalService: FTLocalServiceApi {
 }
 
 class FTStoreService: FTStoreServiceApi {
-
     func downloadTemplateFor(url: URL) async throws -> URL {
         let session = URLSession.shared
         return try await withCheckedThrowingContinuation { continuation in
@@ -87,9 +87,10 @@ class FTStoreService: FTStoreServiceApi {
                 if let tempUrl = responseUrl {
                     let dest = FTTemplatesCache().templatesFolder.appendingPathComponent(url.lastPathComponent)
                     do {
-                        if !FileManager.default.fileExists(atPath: dest.path) {
-                            try FileManager.default.moveItem(at: tempUrl, to: dest)
+                        if FileManager.default.fileExists(atPath: dest.path) {
+                            try FileManager.default.removeItem(at: dest)
                         }
+                        try FileManager.default.moveItem(at: tempUrl, to: dest)
                         continuation.resume(returning: dest)
                     } catch {
                         continuation.resume(throwing: error)
@@ -138,6 +139,7 @@ class FTStoreService: FTStoreServiceApi {
 
 protocol FTTemplatesCacheService {
     var templatesFolder: URL { get }
+    var templatesThumbnailsFolder: URL { get }
 }
 
 public class FTTemplatesCache: FTTemplatesCacheService {
@@ -154,7 +156,25 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         if !fileManager.fileExists(atPath: path) && path != "" {
             do {
                 try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
-            } catch _ {
+            } catch {
+                debugPrint("Store Templates directory creation Error \(error)")
+            }
+        }
+        return URL(fileURLWithPath: path)
+    }
+
+    var templatesThumbnailsFolder: URL {
+        var path = ""
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
+        if let url = urls.last {
+            path = "\(url.path.appending("/\(storeTemplatesThumbnailsFolderName)"))"
+        }
+        if !fileManager.fileExists(atPath: path) && path != "" {
+            do {
+                try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
+            } catch  {
+                debugPrint("Store Templates Thumbnail directory creation Error \(error)")
             }
         }
         return URL(fileURLWithPath: path)
@@ -170,7 +190,8 @@ public class FTTemplatesCache: FTTemplatesCacheService {
         if !fileManager.fileExists(atPath: path) && path != "" {
             do {
                 try fileManager.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
-            } catch _ {
+            } catch {
+                debugPrint("Store Stickers directory creation Error \(error)")
             }
         }
         return URL(fileURLWithPath: path)

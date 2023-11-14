@@ -13,11 +13,11 @@
 		<key>com.fluidtouch.noteshelf3.noteshelf-action</key>
 		<string>Noteshelf 3 Action Mac AppStore</string>
 		<key>com.fluidtouch.noteshelf3-beta</key>
-		<string>Noteshelf3 Catalyst beta TestFlight</string>
-		<key>com.fluidtouch.noteshelf3-beta.thumbnail</key>
-		<string>Noteshelf3 Thumbnail  Catalyst beta TestFlight</string>
+		<string>NS3 Beta Catalyst TestFlight</string>
 		<key>com.fluidtouch.noteshelf3-beta.noteshelf-action</key>
-		<string>Noteshelf3 Action Catalyst beta TestFlight</string>
+		<string>NS3 Beta Catalyst Action TestFlight</string>
+		<key>com.fluidtouch.noteshelf3-beta.thumbnail</key>
+		<string>NS3 Beta Catalyst Thumbnail TestFlight</string>
 	</dict>
 	<key>signingStyle</key>
 	<string>manual</string>
