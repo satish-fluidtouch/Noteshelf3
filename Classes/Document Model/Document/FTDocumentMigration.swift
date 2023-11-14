@@ -174,6 +174,8 @@ final class FTDocumentMigration {
                     }
                 } else {
                     FTDocumentMigration.updateMigratedPlist(dict: migratedItems)
+                    // TODO: Continue the Pinning process as last step, once the migration process is completed for booka
+                    FTDocumentMigration.getPinnedItemsRelativePaths()
                     onCompletion(true, nil)
                 }
             }
@@ -278,5 +280,22 @@ extension FTDocumentMigration {
 
         let isNS2iCloudOn = ns2UserDefaults.iCloudOn
         return isNS2iCloudOn
+    }
+}
+
+
+extension FTDocumentMigration {
+    class func getPinnedItemsRelativePaths() -> [String] {
+        let pinnedItems = FTPinnedItemsMigration.getNS2PinnedEntries()
+        let relativePaths = pinnedItems.compactMap { info -> String? in
+            if let fullPath = info["path"] {
+                let url = URL(fileURLWithPath: fullPath)
+                return url.relativePathWRTCollection()
+            } else {
+                return nil
+            }
+        }
+        print("pinned", relativePaths)
+        return relativePaths
     }
 }
