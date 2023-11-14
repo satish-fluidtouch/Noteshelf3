@@ -11,6 +11,8 @@ import FTStyles
 
 struct FTMigrationMessageView: View,FTShelfBaseView {
     var viewModel: FTShelfViewModel
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
     var body: some View {
         HStack(alignment: .center, spacing:16) {
             Image(uiImage: UIImage(named: "migrationIcon")!)
@@ -21,7 +23,7 @@ struct FTMigrationMessageView: View,FTShelfBaseView {
                     .font(.appFont(for: .medium, with: 13))
                     .foregroundColor(.appColor(.black1))
 
-                Text(NSLocalizedString("shelf.migration.Description", comment: "To migrate your book to Noteshef 3, tap on it or long-press  and choose the migration option from the menu."))
+                Text(horizontalSizeClass == .compact ? "shelf.migration.CompactDescription".localized :  "shelf.migration.Description".localized)
                     .font(.appFont(for: .regular, with: 13))
                     .foregroundColor(.appColor(.black1))
                     .multilineTextAlignment(.leading)

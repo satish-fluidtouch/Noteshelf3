@@ -15,28 +15,58 @@ enum FTMediaLoadState {
     case empty
 }
 
+fileprivate let imageCache = NSCache<AnyObject, AnyObject>()
 
-class FTShelfMedia: Identifiable {
+class FTShelfMedia: NSObject, Identifiable, ObservableObject {
     let id: UUID = UUID()
     let page: Int
     let imageURL: URL
     weak var document: FTDocumentItemProtocol?
+    @Published var mediaImage : UIImage?
     var title: String {
         document?.displayTitle ?? ""
     }
+    
+    func fetchImage() {
+        self.performSelector(inBackground: #selector(loadImageInBackground), with: nil)
+    }
+    
+    @objc private func loadImageInBackground() {
+        let hash = self.imageURL.thumbnailCacheHash()
+        let cachedEntry = imageCache.object(forKey: hash as AnyObject)
+        if let imageFromCache = cachedEntry?.object(forKey: "image") as? UIImage, let storedDate = cachedEntry?.object(forKey: "date") as? Date {
+            if imageURL.fileModificationDate.compare(storedDate) != .orderedSame {
+                 addImageTocache()
+            } else {
+                runInMainThread {
+                    self.mediaImage = imageFromCache
+                }
+            }
+        } else {
+             addImageTocache()
+        }
+    }
+    
+    private func addImageTocache() {
+        if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage =  image.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
+            let hash = self.imageURL.thumbnailCacheHash()
+            let entry: [String : Any] = ["image": thumbnailImage, "date": self.imageURL.fileModificationDate]
+            imageCache.setObject(entry as AnyObject, forKey: hash as AnyObject)
+            runInMainThread {
+                self.mediaImage = thumbnailImage
+            }
+        }
+    }
 
+    func unloadImage() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadImageInBackground), object: nil)
+        self.mediaImage =  nil
+    }
+  
     init(imageURL: URL, page: Int, document: FTDocumentItemProtocol?) {
         self.page = page
         self.imageURL = imageURL
         self.document = document
-    }
-
-    var isProtected: Bool {
-        guard let doc = document else {
-            return false
-        }
-
-        return doc.isPinEnabledForDocument()
     }
 }
 
@@ -50,8 +80,7 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
     func buildCache() async {
         do {
             await startLoading()
-            let media = try await fetchMedia()
-            await setMedia(media)
+            try await fetchMedia()
         } catch {
             cacheLog(.error, error)
         }
@@ -63,34 +92,41 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
     }
 
     @MainActor
-    private func setMedia(_ media: [FTShelfMedia]) {
-        if media.isEmpty {
+    private func setState() {
+        if self.media.isEmpty {
             state = .empty
         } else {
             state = .loaded
         }
-        self.media = media
+    }
+    
+    @MainActor
+    private func updateMedia(items: [FTShelfMedia]) {
+        self.media.append(contentsOf: items)
+        setState()
     }
 }
 
 
 private extension FTShelfContentPhotosViewModel {
-    func fetchMedia() async throws -> [FTShelfMedia] {
+    func fetchMedia() async throws  {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
-        var totalMedia: [FTShelfMedia] = [FTShelfMedia]()
+
+        guard !allItems.isEmpty else {
+            await self.updateMedia(items: [])
+            return
+        }
 
         let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
             do {
                 let media = try fetchMedia(docItem: item)
-                totalMedia.append(contentsOf: media)
+                await self.updateMedia(items: media)
             } catch {
                 continue
             }
         }
-        cacheLog(.success, totalMedia.count)
-        return totalMedia
     }
 
     func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfMedia] {

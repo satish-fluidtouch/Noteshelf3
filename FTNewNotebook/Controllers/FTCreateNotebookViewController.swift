@@ -14,6 +14,7 @@ public protocol FTCoversInfoDelegate: FTCustomCoverInfoDelegate {
     func fetchNoCoverTheme() -> FTThemeable?
     func fetchPreviousSelectedCoverTheme() -> FTThemeable
     func didUpdateCover(_ theme: FTThemeable?)
+    func setDefaultCoverTheme(_ cover: FTThemeable)
 }
 
 public protocol FTPapersInfoDelegate: AnyObject {
@@ -540,6 +541,16 @@ extension FTCreateNotebookViewController: FTPaperPickerDelegate {
 }
 
 extension FTCreateNotebookViewController: FTCoverUpdateDelegate {
+    public func setDefaultCoverToNoCover(_ cover: FTThemeable) {
+        self.delegate?.setDefaultCoverTheme(cover)
+        if let selectedCover = self.newNotebookDetails?.selectedCoverTheme,selectedCover.isCustom,!FileManager.default.fileExists(atPath: selectedCover.themeFileURL.path) {
+            FTCurrentCoverSelection.shared.selectedCover = cover
+            self.updateCoverImage(cover.themeThumbnail())
+            self.newNotebookDetails?.selectedCoverTheme = cover
+            self.setNoCoverTextIfNeeded()
+        }
+    }
+
     public func fetchCoverViewFrame() -> CGRect {
         self.view.layoutIfNeeded()
         var rect: CGRect = .zero

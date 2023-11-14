@@ -35,4 +35,15 @@ class FTSearchResultHeader: UICollectionReusableView {
             }
         }
     }
+
+    func updatePageCount(_ section: FTSearchSectionProtocol) {
+        guard section.contentType == .page else {
+            return
+        }
+        var pagesString = "\(section.items.count) \("Pages".localized)"
+        if section.items.count == 1 {
+            pagesString = "\(section.items.count) \("Page".localized))"
+        }
+        self.lblMatchCount?.text = pagesString.lowercased()
+    }
 }

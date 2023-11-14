@@ -31,6 +31,7 @@ private struct FabircKeys {
     static let Layout = "Layout"
     static let Premium = "Premium"
     static let Noteshelf2 = "NS2"
+    static let SafeMode = "SafeMode"
 
 }
 
@@ -63,6 +64,7 @@ class FabricHelper: NSObject {
         keys[FabircKeys.Layout] = (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal";
         keys[FabircKeys.Premium] = FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
         keys[FabircKeys.Noteshelf2] = FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO"
+        keys[FabircKeys.SafeMode] = FTUserDefaults.isInSafeMode() ? "YES" : "NO"
         Crashlytics.crashlytics().setCustomValue(keys, forKey: "Startup Keys")
     }
 

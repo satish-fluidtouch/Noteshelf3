@@ -153,6 +153,7 @@ class FTNotebookAllSearchProcessor: NSObject, FTSearchProcessor {
         processingToken = self.currentProcessor!.startProcessing()
         self.progress.addChild(self.currentProcessor!.progress, withPendingUnitCount: Int64(self.shelfItems.count))
         
+        let t1 = Date.timeIntervalSinceReferenceDate;
         //=============================
         self.currentProcessor?.onSectionFinding = {[weak self] (items, token) in
             if processingToken == token {
@@ -161,6 +162,8 @@ class FTNotebookAllSearchProcessor: NSObject, FTSearchProcessor {
         }
         //=============================
         self.currentProcessor?.onCompletion = {[weak self] (token) in
+            let t2 = Date.timeIntervalSinceReferenceDate;
+            debugPrint("Time Taken: Global search content: \(t2-t1)");
             if processingToken == token {
                 self?.onCompletion?(self?.token ?? "")
             }

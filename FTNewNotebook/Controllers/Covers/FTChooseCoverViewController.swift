@@ -353,6 +353,10 @@ private extension FTChooseCoverViewController {
 }
 
 extension FTChooseCoverViewController: FTCoverSelectionDelegate {
+    func setDefaultCoverToNoCover(_ cover: FTThemeable) {
+        self.coverUpdateDelegate?.setDefaultCoverToNoCover(cover)
+    }
+
     func didTapCancelbutton() {
         self.updatePreviewModeIfNeeded(.justPreview)
         self.closePreview(isCancelled: true) {

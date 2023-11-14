@@ -73,13 +73,19 @@ class FTCoverTheme: FTTheme {
         }
         return nil
     }
-    
-    #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-    override func willDelete() {
-        let key = SDWebImageManager.shared.cacheKey(for: self.thumbnailURL);
-        SDImageCache.shared.removeImage(forKey:  key, withCompletion: nil);
+
+    override func deleteThumbnailFromCache() { // will be used incase of custom cover deletion.
+        let uniqueKey = self.themeFileURL.lastPathComponent.deletingPathExtension
+        let reqURL = self.cachedFolderURL.appendingPathComponent(uniqueKey)
+        if FileManager.default.fileExists(atPath: reqURL.path) {
+            do {
+                try FileManager.default.removeItem(at: reqURL)
+            }
+            catch {
+                debugPrint("Failed delete the cover thumbnail due to reason",error.localizedDescription)
+            }
+        }
     }
-    #endif
 }
 
 private extension FTCoverTheme {

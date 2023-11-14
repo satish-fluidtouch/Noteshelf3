@@ -173,9 +173,8 @@ class FTTheme: NSObject, FTThemeable {
         }
         return nil
     };
-
-    func willDelete() {
-
+    func deleteThumbnailFromCache() {
+        NSException.init(name: NSExceptionName(rawValue: "Theme"), reason: "subclass should override ", userInfo: nil).raise();
     }
 }
 
