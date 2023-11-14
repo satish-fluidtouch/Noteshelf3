@@ -282,7 +282,7 @@ extension FTOnScreenWritingViewController
             if self.currentDrawingMode == .deskModeMarker {
                 writingMode = .highlighter;
             } else if self.currentDrawingMode == .deskModeFavorites {
-                let mode = FTFavoritePensetManager(activity: self.view.userActivity).fetchPreviousRackMode()
+                let mode = FTFavoritePensetManager(activity: self.view.userActivity).fetchCurrentFavoriteMode()
                 if mode == .highlighter {
                     writingMode = .highlighter
                 }

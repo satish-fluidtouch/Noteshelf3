@@ -9,7 +9,7 @@
 import Foundation
 
 private let favoriteKey = "FTDefaultFavoriteInfo"
-private let previousFavMode = "FTFavoritePreviousMode"
+private let currentFavMode = "FTFavoriteCurrentMode"
 
 class FTFavoritePensetManager: NSObject {
     let dataManager = FTFavoritePensetDataManager()
@@ -48,7 +48,7 @@ class FTFavoritePensetManager: NSObject {
     }
 
     public func fetchCurrentPenset() -> FTPenSetProtocol {
-        let prevRackMode = self.fetchPreviousRackMode()
+        let prevRackMode = self.fetchCurrentFavoriteMode()
         if prevRackMode == .pen {
             return self.fetchCurrentPenset(for: .pen)
         } else {
@@ -56,14 +56,14 @@ class FTFavoritePensetManager: NSObject {
         }
     }
 
-    func fetchPreviousRackMode() -> FTRackType {
-        if let prevInfo = self.userActivity?.userInfo?[previousFavMode] as? [String: Any], let rackRawValue = prevInfo[previousFavMode] as? NSNumber {
+    func fetchCurrentFavoriteMode() -> FTRackType {
+        if let prevInfo = self.userActivity?.userInfo?[currentFavMode] as? [String: Any], let rackRawValue = prevInfo[currentFavMode] as? NSNumber {
             if let type = FTRackType(rawValue: Int(truncating: rackRawValue)) {
                 return type
             }
         } else {
             let standardUserDefaults = UserDefaults.standard
-            let rackRawValue = standardUserDefaults.integer(forKey: previousFavMode)
+            let rackRawValue = standardUserDefaults.integer(forKey: currentFavMode)
             if let type = FTRackType(rawValue: Int(truncating: rackRawValue as NSNumber)) {
                 return type
             }
@@ -157,13 +157,13 @@ private extension FTFavoritePensetManager {
         penSetDictionary[FTRackPersistanceKey.PenSet.preciseSize.rawValue] = _penSet.preciseSize as AnyObject?
         let key = self.getFavoriteKey(for: _penSet.type.rackType)
         standardUserDefaults.setValue(penSetDictionary, forKey: key)
-        standardUserDefaults.setValue(_penSet.type.rackType.rawValue, forKey: previousFavMode)
+        standardUserDefaults.setValue(_penSet.type.rackType.rawValue, forKey: currentFavMode)
 
         standardUserDefaults.synchronize()
         if self.userActivity?.userInfo == nil {
             self.userActivity?.userInfo = [AnyHashable:Any]()
         }
         self.userActivity?.userInfo?[key] = penSetDictionary
-        self.userActivity?.userInfo?[previousFavMode] = [previousFavMode : _penSet.type.rackType.rawValue]
+        self.userActivity?.userInfo?[currentFavMode] = [currentFavMode : _penSet.type.rackType.rawValue]
     }
 }

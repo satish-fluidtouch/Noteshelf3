@@ -1997,7 +1997,8 @@
         if (!(self.currentDeskMode == kDeskModePen
               || self.currentDeskMode == kDeskModeMarker
               || self.currentDeskMode == kDeskModeEraser
-              || self.currentDeskMode == kDeskModeShape)) {
+              || self.currentDeskMode == kDeskModeShape
+              || self.currentDeskMode == kDeskModeFavorites)) {
             [self switchMode:kDeskModePen];
         }
 
@@ -3706,6 +3707,13 @@
                 shouldValidate = false;
             }
             break;
+        case kDeskModeFavorites:
+            if(self.currentDeskMode != kDeskModeFavorites) {
+                [self favoritesButtonAction];
+                shouldValidate = false;
+            }
+            break;
+
         default:
             break;
     }

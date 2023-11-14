@@ -82,7 +82,6 @@ class FTFavoritePresetsViewModel: ObservableObject {
         let curretSelectedColor = self.currentSelectedColor
         if let index = self.fetchFirstAvailableEmptySlot(), index < self.presetColors.count {
             self.updatePresetColor(hex: curretSelectedColor, index: index)
-//            self.editDelegate?.didAddPresetColor()
         } else {
             // All slots are filled
         }
@@ -111,7 +110,6 @@ class FTFavoritePresetsViewModel: ObservableObject {
         }), index < self.presetColors.count {
             self.presetColors.remove(at: index)
             self.presetColors.append(FTPenColorModel(hex: "", isSelected: false))
-//            self.editDelegate?.didDeletePresetColor()
         }
     }
 
