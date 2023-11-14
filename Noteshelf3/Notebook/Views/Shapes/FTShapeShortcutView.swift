@@ -51,6 +51,7 @@ struct FTFavoriteShapesView: View {
                 if self.canShowShapeView(favShape: shapeModel) {
                     FTFavoriteShapeView(isSelected: shapeModel.isSelected, shapeType: shapeModel.shape)
                         .hoverEffect()
+                        .rotationEffect(viewModel.contentTransformation)
                         .onTapGesture {
                             self.handleTapAction(shapeModel: shapeModel, index: index)
                         }

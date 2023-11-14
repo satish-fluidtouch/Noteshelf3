@@ -20,6 +20,7 @@ struct FTPresenterShortcutView: View {
                 self.pointerView
                 self.penView
                 self.moreOptionsView
+                    .rotationEffect(self.viewModel.contentTransformation)
                     .hoverScaleEffect(scale: 1.3)
             }
         }
