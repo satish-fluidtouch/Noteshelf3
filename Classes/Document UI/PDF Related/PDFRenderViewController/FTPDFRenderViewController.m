@@ -97,6 +97,7 @@
 //@property (assign) NSInteger currentPageIndex;
 @property (assign) NSUInteger currentPageIndexToBeShown;
 @property (assign) CGFloat contentScaleInNormalMode;
+@property (strong) FTPageNumberView *pageNumberLabel;
 
 @end
 
@@ -1132,6 +1133,13 @@
         }
     }
     [self triggerPageChangeNotification];
+    if (self.pageLayoutType == FTPageLayoutHorizontal) {
+        if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+            [self addPageNumberLabelToView];
+        }else {
+            [self setCurrentPageNoToPageNumberLabel];
+        }
+    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -1168,6 +1176,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+        [self addPageNumberLabelToView];
+    }else {
+        [self setCurrentPageNoToPageNumberLabel];
+    }
     if(!self.mainScrollView.isZoomingInProgress && self.pageLayoutHelper.layoutType == FTPageLayoutVertical) {
         [self loadVisiblePages];
         NSArray *eachPageController = [self visiblePageViewControllers];
@@ -3195,7 +3208,47 @@
         }
     }];
 }
+#pragma mark - For current page number
+-(void)addPageNumberLabelToView
+{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+    CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
+    self.pageNumberLabel = [[FTPageNumberView alloc] initWithEffect:blurEffect frame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
+    [self.view addSubview:self.pageNumberLabel];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
+    [self performSelector:@selector(showPageNumberLabel)];
+}
 
+-(void) showPageNumberLabel {
+    [self.pageNumberLabel setHidden:NO];
+    self.pageNumberLabel.alpha = 1.0;
+    [UIView animateWithDuration:2.0 animations:^{
+        self.pageNumberLabel.alpha = 0.0;
+    }];
+}
+-(CGFloat) audioPlayerHeight {
+    CGFloat audioPlayerHeight = 0.0;
+    if([self currentToolBarState] != FTScreenModeFocus && self.playerController && [self.playerController isExpanded]){
+        audioPlayerHeight += 47.0;// Audio player height
+        audioPlayerHeight += 8.0;// top padding to audio player view
+    }
+    return audioPlayerHeight;
+}
+-(void) setCurrentPageNoToPageNumberLabel {
+    if(self.currentlyVisiblePage != nil) {
+        [self.pageNumberLabel setCurrentPage:self.currentlyVisiblePage];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
+        [self performSelector:@selector(showPageNumberLabel)];
+    }
+}
+-(void) updatePageNumberLabelFrame {
+    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+        [self addPageNumberLabelToView];
+    } else {
+        CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
+        [self.pageNumberLabel udpateLabelFramesYPosition:topOffset];
+    }
+}
 #pragma mark - FTActiveStickerIndicatorView -
 - (void)activeStickyIndicatorViewDidTapCloseWithIndicatorView:(FTActiveStickyIndicatorViewController * _Nonnull)indicatorView
 {
@@ -3590,6 +3643,7 @@
     [self collapseContentHolderViewForAudioController];
     [self updateActiveEmojiViewFrame];
     [self endActiveEditingAnnotations];
+    [self updatePageNumberLabelFrame];
 }
 - (void)audioPlayer:(FTAudioPlayerController *)controller navigateToAnnotation:(FTAudioAnnotation *)audioAnnotation
 {
@@ -3615,11 +3669,13 @@
 - (void)audioPlayerDidExpand:(FTAudioPlayerController *)controller
 {
     [self expandContentHolderViewForAudioController:true];
+    [self updatePageNumberLabelFrame];
 }
 
 - (void)audioPlayerDidCollapse:(FTAudioPlayerController *)controller
 {
     [self collapseContentHolderViewForAudioController];
+    [self updatePageNumberLabelFrame];
 }
 
 -(NSUndoManager*)undoManager
