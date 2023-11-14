@@ -949,12 +949,10 @@ extension FTNoteshelfDocumentProvider {
             let parentURL = destinationURL.deletingLastPathComponent()
 
             // Change to unique name if required
-            if(FileManager().fileExists(atPath: destinationURL.path)) {
-
-                // TODO: Take control if required
-                let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
-                destinationURL = parentURL.appendingPathComponent(uniqueName);
-            }
+//            if(FileManager().fileExists(atPath: destinationURL.path)) {
+//                let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+//                destinationURL = parentURL.appendingPathComponent(uniqueName);
+//            }
 
             if providerMode == .cloud {
                 if !FileManager.default.fileExists(atPath: parentURL.path()) {
@@ -971,29 +969,46 @@ extension FTNoteshelfDocumentProvider {
                     throw FTMigrationError.moveToNS3Error
                 }
                 let localProvider = self.localShelfCollectionRoot?.ns3Collection
-
-                if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
-                    if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                        try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                //If book is not modified in ns3 and same book is being migrated from ns2, just replace the book.
+                if FileManager().fileExists(atPath: destinationURL.path), checkIfDatesAreEqual(for: url, destUrl: destinationURL) {
+                    FileManager.replaceCoordinatedItem(atURL: destinationURL, fromLocalURL: url) { error in
                     }
-                    try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
-                    _ = collection.addItemsToCache([destinationURL])
                 } else {
-                    localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
+                    if(FileManager().fileExists(atPath: destinationURL.path)) {
+                        let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+                        destinationURL = parentURL.appendingPathComponent(uniqueName);
+                    }
+                    if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
                         if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                            try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                            try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                         }
-                        try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
-                        _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
-                    })
+                        try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                        collection.addItemsToCache([destinationURL])
+                    } else {
+                        localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
+                            if !FileManager.default.fileExists(atPath: parentURL.path()) {
+                                try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                            }
+                            try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                            _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
+                        })
+                    }
                 }
             }
-
             return destinationURL
         } catch {
             debugLog(">>>>> Migration Failure \(error)")
             throw FTMigrationError.moveToNS3Error
         }
+    }
+    
+    func checkIfDatesAreEqual(for url: URL, destUrl: URL) -> Bool {
+        let migratedItems = FTDocumentMigration.fetchMigratedPlist()
+        let displayPath = url.displayRelativePathWRTCollection()
+        if let itemsDict = migratedItems[displayPath] as? [String: Any] , let data = itemsDict["modifiedDate"] as? Data, let unarchivedDate = data.date, destUrl.fileModificationDate.compare(unarchivedDate) == .orderedSame {
+            return true
+        }
+        return false
     }
 }
 
@@ -1007,5 +1022,18 @@ extension URL {
 extension FTNoteshelfDocumentProvider {
     func isContentMovingInProgress() -> Bool {
         self.isContentMoving
+    }
+}
+
+extension Date {
+    var data: Data? {
+        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+
+    }
+}
+
+extension Data {
+    var date: Date? {
+       return try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSDate.self, from: self) as? Date
     }
 }
