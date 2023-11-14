@@ -25,23 +25,28 @@ class FTDocumentFactory : NSObject
     }
     
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-    static func duplicateDocumentAtURL(_ url : URL,onCompletion : @escaping (NSError?,FTDocumentProtocol?) -> Void)
+    static func duplicateDocumentAt(_ documentItem : FTShelfItemProtocol, onCompletion : @escaping (NSError?,FTDocumentProtocol?) -> Void)
     {
         let path = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
-        FileManager.copyCoordinatedItemAtURL(url, toNonCoordinatedURL: path) { (_, error) in
+        FileManager.copyCoordinatedItemAtURL(documentItem.URL, toNonCoordinatedURL: path) { (_, error) in
             if(nil != error) {
                 onCompletion(error,nil);
             }
             else {
                 if let document = FTDocumentFactory.documentForItemAtURL(path) as? FTPrepareForImporting{
                     document.prepareForImporting({ (_, error) in
+                        if let duplicatedDocument = document as? FTDocumentProtocol {
+                            if let docUUID = (documentItem as? FTDocumentItemProtocol)?.documentUUID {
+                                self.duplicateThumbnailsFrom(documentId: docUUID, to: duplicatedDocument.documentUUID)
+                            }
+                        }
                         onCompletion(error, document as? FTDocumentProtocol);
                     });
                 }
             }
         }
     }
-    
+
     static func prepareForImportingAtURL(_ url : URL,onCompletion : @escaping (NSError?,FTDocumentProtocol?) -> Void)
     {
         if let document = FTDocumentFactory.documentForItemAtURL(url) as? FTPrepareForImporting {
@@ -50,5 +55,15 @@ class FTDocumentFactory : NSObject
             });
         }
     }
+
+    static func duplicateThumbnailsFrom(documentId: String, to duplicatedDocumentId: String) {
+        let thumbnailFolderPath = URL.thumbnailFolderURL()
+        let documentPath = thumbnailFolderPath.appendingPathComponent(documentId)
+        let duplicatedPath = thumbnailFolderPath.appendingPathComponent(duplicatedDocumentId)
+        if !FileManager.default.fileExists(atPath: duplicatedPath.path) {
+            try? FileManager.default.copyItem(atPath: documentPath.path, toPath: duplicatedPath.path)
+        }
+    }
+
     #endif
 }
