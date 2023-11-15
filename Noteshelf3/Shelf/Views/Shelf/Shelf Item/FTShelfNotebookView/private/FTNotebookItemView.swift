@@ -48,12 +48,12 @@ struct FTNotebookItemView: View {
                     FTNotebookCoverView(isHighlighted: (shelfViewModel.highlightItem == shelfItem))
                         .ignoresSafeArea()
                 }, notebookShape: {
-                    let shape: FTNotebookShape;
+                    let shape: FTPreviewShape;
                     if shelfItem.coverImage.needEqualCorners || shelfViewModel.isNS2Collection {
-                        shape = FTNotebookShape(raidus: leftCornerRadius);
+                        shape = FTPreviewShape(raidus: leftCornerRadius);
                     }
                     else {
-                        shape = FTNotebookShape(leftRaidus: leftCornerRadius, rightRadius: rightCornerRadius);
+                        shape = FTPreviewShape(leftRaidus: leftCornerRadius, rightRadius: rightCornerRadius);
                     }
                     return shape;
                 }, onAppearActon: {

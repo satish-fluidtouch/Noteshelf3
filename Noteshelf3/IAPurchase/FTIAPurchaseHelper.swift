@@ -56,11 +56,13 @@ final class FTIAPurchaseHelper {
                     self.isPremiumUser = isPremierUser;
                 }
             }
+            updatePremiumUserInfoToNS2(isPremium: isPremierUser)
             return isPremierUser;
 //            #endif
         } set {
             FTIAPManager.shared.premiumUser.isPremiumUser = newValue;
             UserDefaults.standard.set(newValue, forKey: premiumUserStatus)
+            updatePremiumUserInfoToNS2(isPremium: newValue)
         }
     }
 
@@ -71,5 +73,12 @@ final class FTIAPurchaseHelper {
             isPremium = true
         }
         return isPremium;
+    }
+}
+
+private extension FTIAPurchaseHelper {
+    func updatePremiumUserInfoToNS2(isPremium: Bool) {
+        let ns2Defaults = UserDefaults(suiteName: FTSharedGroupID.getNS2AppGroupID())
+        ns2Defaults?.set(isPremium, forKey: premiumUserStatus)
     }
 }
