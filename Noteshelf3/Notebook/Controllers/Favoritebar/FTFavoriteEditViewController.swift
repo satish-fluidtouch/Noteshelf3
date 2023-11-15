@@ -19,9 +19,10 @@ protocol FTFavoriteEditDelegate: NSObjectProtocol {
 class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     static let contentSize = CGSize(width: 340, height: 410)
-  
+
     @IBOutlet private weak var topView: UIView!
     @IBOutlet private weak var segmentControl: UISegmentedControl!
+    @IBOutlet private weak var topConstraint: NSLayoutConstraint?
 
     private var sizeEditController: FTFavoriteSizeEditController?
     private var colorEditController: FTFavoriteColorEditController?
@@ -36,6 +37,12 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
         super.viewDidLoad()
         self.addPenSizeColorEditViews()
         self.configureSegmentControl()
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        if placement.isHorizantalPlacement() {
+            self.topConstraint?.constant = 16.0
+        } else {
+            self.topConstraint?.constant = 6.0
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {

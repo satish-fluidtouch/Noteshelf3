@@ -1030,6 +1030,7 @@
                     <size key="freeformSize" width="320" height="410"/>
                     <connections>
                         <outlet property="segmentControl" destination="AxQ-Sq-rol" id="HAN-a4-0KT"/>
+                        <outlet property="topConstraint" destination="iZL-UN-Qqf" id="yQx-Jl-6DG"/>
                         <outlet property="topView" destination="rbh-ou-k8D" id="jQg-BF-p0y"/>
                     </connections>
                 </viewController>
