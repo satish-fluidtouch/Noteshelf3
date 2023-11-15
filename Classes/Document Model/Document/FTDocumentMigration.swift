@@ -103,10 +103,6 @@ final class FTDocumentMigration {
              }
          }
          do {
-             let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory()).appending(path: "NS3Migration")
-             if(!FileManager().fileExists(atPath: temporaryDirectory.path)) {
-                 try? FileManager().createDirectory(at: temporaryDirectory, withIntermediateDirectories: true, attributes: nil);
-             }
              let lastModificationDate = url.fileModificationDate
              let fileCreationDate = url.fileCreationDate
              // When the user choses copy option, we must regenrate Document UUID, for this purpose, we're using the existing approach.
