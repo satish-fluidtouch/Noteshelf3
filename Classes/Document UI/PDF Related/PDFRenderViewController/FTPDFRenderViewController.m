@@ -3215,6 +3215,7 @@
     CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
     self.pageNumberLabel = [[FTPageNumberView alloc] initWithEffect:blurEffect frame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
     [self.view addSubview:self.pageNumberLabel];
+    [self.view bringSubviewToFront:self.pageNumberLabel];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
     [self performSelector:@selector(showPageNumberLabel)];
 }
@@ -3236,6 +3237,7 @@
 }
 -(void) setCurrentPageNoToPageNumberLabel {
     if(self.currentlyVisiblePage != nil) {
+        [self.view bringSubviewToFront:self.pageNumberLabel];
         [self.pageNumberLabel setCurrentPage:self.currentlyVisiblePage];
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
         [self performSelector:@selector(showPageNumberLabel)];
