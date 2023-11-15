@@ -14,6 +14,7 @@ protocol FTFavoriteEditDelegate: NSObjectProtocol {
     func didChangeFavorite(_ penset: FTPenSetProtocol)
     func didDeleteFavorite(_ favorite: FTPenSetProtocol)
     func didDismissEditModeScreen()
+    func currentFavoriteCount() -> Int
 }
 
 class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
@@ -75,14 +76,19 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
     }
 
     @IBAction private func deleteTapped(_ sender: Any) {
-        let alert = UIAlertController(title: "DeleteFavoriteAlertTitle".localized, message: "DeleteFavoriteAlertMessage".localized, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            self.delegate?.didDeleteFavorite(favorite)
-            self.dismiss(animated: false, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "No".localized, style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        guard let favCount = self.delegate?.currentFavoriteCount() else { return }
+        if favCount == 1 {
+            self.showAlertForSingleFavoriteDeletion()
+        } else {
+            let alert = UIAlertController(title: "DeleteFavoriteAlertTitle".localized, message: "DeleteFavoriteAlertMessage".localized, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { [weak self] _ in
+                guard let self else { return }
+                self.delegate?.didDeleteFavorite(favorite)
+                self.dismiss(animated: false, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "No".localized, style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     @objc func segmentChanged() {
@@ -102,6 +108,13 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
 }
 
 private extension FTFavoriteEditViewController {
+     func showAlertForSingleFavoriteDeletion() {
+        let alertController = UIAlertController(title: "favoritebar.singleFavoriteDelete.title".localized, message: "favoritebar.singleFavoriteDelete.message".localized, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     func showEyeDropper() {
         let controller = self.presentingViewController
         let presetVm = self.colorEditController?.viewModel

@@ -360,13 +360,6 @@ extension FTFavoritebarViewController: UICollectionViewDropDelegate {
             coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
         }
     }
-
-    private func showAlertForSingleFavoriteDeletion() {
-        let alertController = UIAlertController(title: "favoritebar.singleFavoriteDelete.title".localized, message: "favoritebar.singleFavoriteDelete.message".localized, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK".localized, style: .default, handler: nil)
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
 }
 
 extension FTFavoritebarViewController: FTFavoriteEditDelegate {
@@ -386,33 +379,31 @@ extension FTFavoritebarViewController: FTFavoriteEditDelegate {
     }
 
     func didDeleteFavorite(_ favorite: FTPenSetProtocol) {
-        if self.favorites.count == 1 {
-            self.dismiss(animated: false, completion: {
-                self.showAlertForSingleFavoriteDeletion()
-            })
-        } else {
-            if let index = editFavoriteCurrentIndex, index < self.favorites.count {
-                self.favorites.remove(at: index)
-                self.manager.saveFavorites(favorites)
-                self.dismiss(animated: false)
-                // After removal of favorite, we need to make the one comes in the slot as current penset or, the last one
-                if index < self.favorites.count {
-                    let immediateFav = self.favorites[index]
-                    self.manager.saveCurrentSelection(penSet: immediateFav)
-                } else if let last = self.favorites.last {
-                    self.manager.saveCurrentSelection(penSet: last)
-                }
-                self.reloadFavoritesData()
-                self.isAddingNewPenSet = false
-                self.isDisplayedEditPenRack = false
-                self.collectionView.isScrollEnabled = true
-                self.updateDisplay()
+        if let index = editFavoriteCurrentIndex, index < self.favorites.count {
+            self.favorites.remove(at: index)
+            self.manager.saveFavorites(favorites)
+            self.dismiss(animated: false)
+            // After removal of favorite, we need to make the one comes in the slot as current penset or, the last one
+            if index < self.favorites.count {
+                let immediateFav = self.favorites[index]
+                self.manager.saveCurrentSelection(penSet: immediateFav)
+            } else if let last = self.favorites.last {
+                self.manager.saveCurrentSelection(penSet: last)
             }
+            self.reloadFavoritesData()
+            self.isAddingNewPenSet = false
+            self.isDisplayedEditPenRack = false
+            self.collectionView.isScrollEnabled = true
+            self.updateDisplay()
         }
     }
 
     func didDismissEditModeScreen() {
         self.handleEditScreenDismissal()
+    }
+
+    func currentFavoriteCount() -> Int {
+        return self.favorites.count
     }
 }
 
