@@ -61,7 +61,6 @@ class FTThumbReadCallbacks : NSObject
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
         if FTDeveloperOption.useQuickLookThumbnailing {
-            guard item.URL.isNS2Book else {
                 return ns3ThumbnailReader.thumbnail(for: item, queue: thumbReadOperationQueue) { image, token, fetchError in
                     if nil != fetchError {
                         self.ns2ThumbnailReader.thumbnail(for: item
@@ -75,7 +74,6 @@ class FTThumbReadCallbacks : NSObject
                         onCompletion(image,token);
                     }
                 }
-            }
         }
         return self.ns2ThumbnailReader.thumbnail(for: item
                                                  , isNS2Book: true

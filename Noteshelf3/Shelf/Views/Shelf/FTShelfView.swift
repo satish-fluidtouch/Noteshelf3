@@ -42,12 +42,6 @@ struct FTShelfView: View,FTShelfBaseView {
                                     .padding(.top,10)
                                     .environmentObject(viewModel)
                                 
-                            } else if viewModel.shouldShowNS3MigrationHeader {
-                                FTMigrationMessageView(viewModel: viewModel)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.horizontal,gridHorizontalPadding)
-                                    .padding(.bottom,8)
-                                    .padding(.top,20)
                             }
                             shelfGridView(items: viewModel.shelfItems, size: geometry.size, scrollViewProxy: proxy)
                                 .padding(.top,20)
@@ -97,31 +91,26 @@ struct FTShelfView: View,FTShelfBaseView {
 
     //MARK: Views
     private func emptyShelfItemsView() -> some View {
-        if viewModel.collection.isNS2Collection() {
-            return FTNoResultsView(noResultsImageName: "nons2CategoryItems",
-                                   title: NSLocalizedString("shelf.ns2Category.noCategoryItemsTitle", comment: "No items in this category"))
+        if viewModel.collection.isTrash {
+            return FTNoResultsView(noResultsImageName: "noTrashItems",
+                                   title: NSLocalizedString("shelf.trash.noTrashTitle", comment: "shelf.trash.noTrashTitle"),
+                                   description: NSLocalizedString("shelf.trash.noTrashDescrption", comment: "Deleted notes will remain here for 30 days."))
+        } else if viewModel.collection.isStarred{
+            return FTNoResultsView(noResultsImageName: "noFavoritesIcon",
+                                   title: NSLocalizedString("shelf.starred.noStarredTitle", comment: "No starred notes"),
+                                   description: NSLocalizedString("shelf.starred.noStarredDescription", comment: "Star your important notes to access them all in one place"))
+        } else if viewModel.collection.isUnfiledNotesShelfItemCollection {
+            let title = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes") :NSLocalizedString("shelf.group.noGroupItemsTitle", comment: "This group is empty")
+            let description = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here.") : NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones.")
+            let imageName = self.viewModel.groupItem == nil ? "noUnCategorizedIcon" : "noCategoryItems"
+            return FTNoResultsView(noResultsImageName: imageName,
+                                   title: title,
+                                   description: description)
         } else {
-            if viewModel.collection.isTrash {
-                return FTNoResultsView(noResultsImageName: "noTrashItems",
-                                       title: NSLocalizedString("shelf.trash.noTrashTitle", comment: "shelf.trash.noTrashTitle"),
-                                       description: NSLocalizedString("shelf.trash.noTrashDescrption", comment: "Deleted notes will remain here for 30 days."))
-            } else if viewModel.collection.isStarred{
-                return FTNoResultsView(noResultsImageName: "noFavoritesIcon",
-                                       title: NSLocalizedString("shelf.starred.noStarredTitle", comment: "No starred notes"),
-                                       description: NSLocalizedString("shelf.starred.noStarredDescription", comment: "Star your important notes to access them all in one place"))
-            } else if viewModel.collection.isUnfiledNotesShelfItemCollection {
-                let title = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.starred.noUnfiledTitle", comment: "No unfiled notes") :NSLocalizedString("shelf.group.noGroupItemsTitle", comment: "This group is empty")
-                let description = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.starred.noUnfiledDescription", comment: "All notebooks and groups which aren’t in any categories will appear here.") : NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones.")
-                let imageName = self.viewModel.groupItem == nil ? "noUnCategorizedIcon" : "noCategoryItems"
-                return FTNoResultsView(noResultsImageName: imageName,
-                                       title: title,
-                                       description: description)
-            } else {
-                let title = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty") :NSLocalizedString("shelf.group.noGroupItemsTitle", comment: "This group is empty")
-                 return FTNoResultsView(noResultsImageName: "noCategoryItems",
-                                       title: title,
-                                       description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
-            }
+            let title = self.viewModel.groupItem == nil ? NSLocalizedString("shelf.category.noCategoryItemsTitle", comment: "This category is empty") :NSLocalizedString("shelf.group.noGroupItemsTitle", comment: "This group is empty")
+            return FTNoResultsView(noResultsImageName: "noCategoryItems",
+                                   title: title,
+                                   description: NSLocalizedString("shelf.category.noCategoryItemsDescription", comment: "Tap on the options above to create new notes or move existing ones."))
         }
     }
 }

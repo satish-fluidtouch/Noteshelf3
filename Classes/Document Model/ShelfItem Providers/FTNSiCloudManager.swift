@@ -16,17 +16,7 @@ class FTNSiCloudManager: FTiCloudManager {
     override func updateiCloudStatus(_ containerID: String!, withCompletionHandler completionBlock: ((Bool) -> Void)!) {
         super.updateiCloudStatus(containerID, withCompletionHandler: { available in
 #if !NOTESHELF_ACTION
-            if FTDocumentMigration.supportsMigration() {
-                DispatchQueue.global().async {
-                    self.nsProductionURL = FileManager().url(forUbiquityContainerIdentifier: iCloudContainerID.ns2);
-                    DispatchQueue.main.async {
-                        completionBlock(available || (nil != self.nsProductionURL));
-                    }
-                }
-            }
-            else {
-                completionBlock(available && self.iCloudOn());
-            }
+            completionBlock(available && self.iCloudOn());
 #else
             completionBlock(available);
 #endif
@@ -38,17 +28,12 @@ class FTNSiCloudManager: FTiCloudManager {
         if self.iCloudOn(), let cloudURL = self.iCloudRootURL() {
             urlsToListen.append(cloudURL);
         }
-        if let nsProductionURL {
-            urlsToListen.append(nsProductionURL)
-        }
         return urlsToListen;
     }
 }
 
 extension FTNSiCloudManager {
     struct iCloudContainerID {
-        static let ns2: String = "iCloud.com.fluidtouch.noteshelf"
-
 #if DEBUG
         static let ns3: String = "iCloud.com.fluidtouch.noteshelf3-dev"
 #elseif BETA

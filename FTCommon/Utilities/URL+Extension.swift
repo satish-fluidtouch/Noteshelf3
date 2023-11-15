@@ -83,13 +83,6 @@ public extension URL {
     var isSuportedBookExtension: Bool {
         return [FTFileExtension.ns2, FTFileExtension.ns3].contains(self.pathExtension)
     }
-
-    var isNS2Book: Bool {
-        if self.pathExtension == FTFileExtension.ns2 {
-            return true
-        }
-        return false
-    }
 }
 
 //Reference: https://eclecticlight.co/2023/07/21/icloud-drive-changes-extended-attributes/

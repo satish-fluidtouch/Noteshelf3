@@ -116,9 +116,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 [weak self] in
                 self?.addShelfToolbar();
                 self?.updateProvider({
-                    //                    if !UserDefaults.standard.bool(forKey: "allNotes_tracked") {
-                    //                        self.trackAllNotes()
-                    //                    }
                 });
             });
             self.refreshStatusBarAppearnce();
@@ -214,19 +211,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         splitVC.view.layoutIfNeeded();
         
         return splitVC;
-    }
-    
-    fileprivate func showDesk(docInfo: FTDocumentOpenInfo) {
-        
-        let splitVC = deskController(docInfo: docInfo);
-        self.noteBookSplitController = splitVC
-        self.addChild(splitVC)
-        self.contentView.addSubview(splitVC.view)
-        self.addConstraintForView(splitVC.view, withrespectTo: self.contentView)
-        splitVC.didMove(toParent: self)
-        
-        splitVC.view.layoutIfNeeded();
-        docuemntViewController?.didMove(toParent: splitVC);
     }
 
     // MARK: - Provider update -
@@ -943,28 +927,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         });
         alertController.addAction(createNew);
         self.present(alertController, animated: true, completion: nil);
-    }
-
-    func buildSpotlightSearch(onCompletion : @escaping () -> Void) {
-        if(nil != self.rootContentViewController) {
-            let task = startBackgroundTask();
-            DispatchQueue.global().async {
-                FTNoteshelfDocumentProvider.shared.shelfs({ (categoryCollections) in
-                    var items = [FTShelfItemProtocol]();
-                    for categoryCollection in categoryCollections {
-                        for category in categoryCollection.categories {
-                            items.append(contentsOf: category.childrens);
-                        }
-                    }
-                    let spotLighter = FTDocumentsSpotlightIndexManager();
-                    spotLighter.prepareSpotLightIndexForItems(items: items);
-                    DispatchQueue.main.async {
-                        endBackgroundTask(task);
-                        onCompletion();
-                    }
-                });
-            }
-        }
     }
 
     // MARK: - Spot light open -

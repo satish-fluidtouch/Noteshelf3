@@ -51,7 +51,6 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     private(set) var sidebarItemContexualMenuVM: FTSidebarItemContextualMenuVM = FTSidebarItemContextualMenuVM()
     private var systemItems: [FTSideBarItem] = []
     private var categoriesItems: [FTSideBarItem] = []
-    private var ns2categoriesItems: [FTSideBarItem] = []
     private var contentItems: [FTSideBarItem] = []
     private var newCollectionAddedOrUpdated: Bool = false
     private var cancellables = [AnyCancellable]()
@@ -200,12 +199,11 @@ class FTSidebarViewModel: NSObject, ObservableObject {
 }
 private extension FTSidebarViewModel {
     func updateCurrentSidebarItemCollection(){
-        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category, .ns2Category]
+        let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category]
         if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
-            let currentCollectionSidebarItemType: FTSideBarItemType = (selectedShelfItemCollection?.isNS2Collection() ?? false) ? .ns2Category : .category
             if selectedSideBarItem != nil,
                selectedSideBarItem?.shelfCollection != nil,
-               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle, selectedSideBarItem?.type == currentCollectionSidebarItemType {
+               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
                 selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
             }
         }
@@ -218,8 +216,6 @@ private extension FTSidebarViewModel {
                 selectedSideBarItemType = .trash
             } else if collection.isUnfiledNotesShelfItemCollection {
                 selectedSideBarItemType = .unCategorized
-            } else if collection.isNS2Collection(){
-                selectedSideBarItemType = .ns2Category
             } else {
                 selectedSideBarItemType = .category
             }
@@ -504,20 +500,7 @@ extension FTSidebarViewModel {
             if let unCategorizedCollection = collections.first(where: {$0.isUnfiledNotesShelfItemCollection}) {
                 self.setCollectionToSystemType(.unCategorized, collection: unCategorizedCollection)
             }
-            FTNoteshelfDocumentProvider.shared.ns2Shelfs { collections in
-                let NS2Items = collections.map { shelfItem -> FTSideBarItem in
-                    let item = FTSideBarItem(shelfCollection: shelfItem)
-                    item.id = shelfItem.uuid
-                    item.isEditable = false
-                    item.allowsItemDropping = false
-                    item.type = .ns2Category
-                    return item
-                }
-                self.ns2categoriesItems.removeAll()
-                self.ns2categoriesItems.append(contentsOf: NS2Items)
-                onCompeltion(newlyCreatedSidebarItems)
-            }
-//            onCompeltion(newlyCreatedSidebarItems)
+            onCompeltion(newlyCreatedSidebarItems)
         }
     }
 
@@ -560,8 +543,6 @@ extension FTSidebarViewModel {
 
     private func fetchSidebarMenuItems() {
 
-        // Fetching ns2 categories
-
         //First section items creation
         self.buildSystemMenuOptions()
 
@@ -578,22 +559,17 @@ extension FTSidebarViewModel {
         FTNoteshelfDocumentProvider.shared.trashShelfItemCollection { trashCollection in
             self.setCollectionToSystemType(.trash, collection: trashCollection)
         }
+        self.updateUnfiledCategory()
         self.tags = [allTagsSidebarItem()]
         self.buildMediaMenuOptions()
-        fetchNS2Categories { [weak self] items in
-            guard let self else { return }
-            self.ns2categoriesItems.removeAll()
-            self.ns2categoriesItems.append(contentsOf: items)
-            //TODO: To be refactored
-            self.buildSideMenuItems()
-            DispatchQueue.global().async {
-                self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(self.categoriesItems,performURLResolving: true)
-                runInMainThread {
-                    self.buildSideMenuItems()
-                }
+        self.buildSideMenuItems()
+        DispatchQueue.global().async {
+            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(self.categoriesItems,performURLResolving: true)
+            runInMainThread {
+                self.buildSideMenuItems()
             }
         }
-        self.updateUnfiledCategory()
+
     }
     static private func getTemplatesSideBarItem() -> FTSideBarItem {
         return FTSideBarItem(title: NSLocalizedString("Templates", comment: "Templates"),
@@ -647,9 +623,6 @@ extension FTSidebarViewModel {
         self.menuItems.removeAll()
         self.menuItems.append(contentsOf: [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)])
         self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))
-        if !ns2categoriesItems.isEmpty {
-            self.menuItems.append(FTSidebarSection(type: .ns2Categories, items: self.ns2categoriesItems,supportsRearrangeOfItems: false))
-        }
         self.menuItems.append(FTSidebarSection(type: .media, items: self.contentItems,supportsRearrangeOfItems: false))
         self.menuItems.append(FTSidebarSection(type: .tags, items: self.tags,supportsRearrangeOfItems: false))
         self.setSideBarItemSelection()
