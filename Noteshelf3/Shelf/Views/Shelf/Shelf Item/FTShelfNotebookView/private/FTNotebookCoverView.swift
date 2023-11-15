@@ -13,6 +13,7 @@ struct FTNotebookCoverView: View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.colorScheme) var colorScheme
+    @Binding var isPressed: Bool
 
     var isHighlighted = false;
 
@@ -91,6 +92,19 @@ struct FTNotebookCoverView: View {
                     shelfItem.configureShelfItem(shelfItem.model)
                 })
         }
+        .onTapGesture(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                shelfViewModel.didTapOnShelfItem(shelfItem)
+            }
+        })
+
+        .onLongPressGesture(perform: {
+
+        }, onPressingChanged: { _ in
+            withAnimation {
+                isPressed.toggle()
+            }
+        })
         .onAppear(perform: {
             shelfItem.isVisible = true;
             self.shelfItem.fetchCoverImage();

@@ -162,6 +162,10 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
             #endif
         })
     }
+    func renameShelfItem(_ shelfItem: FTShelfItemViewModel){
+        let item = shelfItem.model
+        self.renameShelfItems([item])
+    }
     func duplicateShelfItems(){
         let selectedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
         duplicateShelfItems(selectedItems)
