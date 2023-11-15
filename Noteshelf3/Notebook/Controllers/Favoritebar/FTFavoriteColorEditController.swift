@@ -26,6 +26,10 @@ class FTFavoriteColorEditController: UIHostingController<FTFavoritePresetColorsV
             .dropFirst()
             .sink { [weak self] newValue in
                 guard let self = self else { return }
+                if let index = self.viewModel.presetEditIndex {
+                    self.viewModel.updatePresetColor(hex: newValue, index: index)
+                    self.viewModel.updateCurrentColors()
+                }
                 self.delegate?.didChangeColor(newValue)
             }
             .store(in: &self.cancellables)

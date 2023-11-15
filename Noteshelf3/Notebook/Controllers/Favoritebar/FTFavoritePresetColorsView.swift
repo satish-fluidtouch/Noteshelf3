@@ -20,10 +20,11 @@ struct FTFavoritePresetColorsView: View {
             }
         }.tabViewStyle(.page)
             .frame(width: 308.0, height: 190.0)
-            .onAppear {
+            .onFirstAppear {
                 UIPageControl.appearance().currentPageIndicatorTintColor = .label
                 UIPageControl.appearance().pageIndicatorTintColor = UIColor.label.withAlphaComponent(0.2)
                 self.viewModel.fetchCurrentColors()
+            }.onAppear {
                 self.selectedPage = self.viewModel.requiredPresetPage()
             }
     }
@@ -63,12 +64,6 @@ struct FTFavoritePresetSectionView: View {
                     }
                     .onDrop(of: [.text],
                             delegate: FTFavoriteColorDropInDelegate(item: presetColor, viewModel: viewModel))
-                    .onChange(of: viewModel.currentSelectedColor) { hex in
-                        if let index = self.viewModel.presetEditIndex {
-                            self.viewModel.updatePresetColor(hex: hex, index: index)
-                            self.viewModel.updateCurrentColors()
-                        }
-                    }
                     .onChange(of: viewModel.presetColors) { colors in
                         if nil != self.viewModel.presetEditIndex {
                             self.findSectionColors()

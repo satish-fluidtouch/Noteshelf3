@@ -67,6 +67,7 @@ extension FTFavoritePenTypeEditController: UICollectionViewDataSource, UICollect
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? FTPenTypeCollectionViewCell else {
             fatalError("Programmer error, Couldnot find FTPenTypeCollectionViewCell")
         }
+        cell.displayMode = .favoriteEditRack
         let penType = self.penTypeOrder[indexPath.item]
         cell.configure(penType: penType, currentPenSet: self.currentPenset, color: self.currentPenset.color)
         cell.contentView.transform = .identity

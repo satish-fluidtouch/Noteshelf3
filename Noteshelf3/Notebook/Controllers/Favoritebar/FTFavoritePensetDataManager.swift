@@ -35,7 +35,6 @@ public class FTFavoritePensetDataManager {
             try copyDefaultDataIfNecessary()
             let migratedData = try Data(contentsOf: plistUrl)
             favoriteInfo = try PropertyListDecoder().decode(FTFavoritePensetDataModel.self, from: migratedData)
-//            favoriteInfo.favorites = [favoriteInfo.favorites.first!]
             if UserDefaults.standard.bool(forKey: toMigrateNS2Favorites) {
                 let migrationInfo = self.checkMigrationPossibilityForNS2Favorites()
                 if migrationInfo.canMigrate {

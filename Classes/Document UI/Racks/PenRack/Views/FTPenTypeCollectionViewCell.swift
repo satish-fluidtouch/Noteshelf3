@@ -9,6 +9,11 @@
 import UIKit
 import FTCommon
 
+enum FTPenTypeDisplayMode: String {
+    case penRack
+    case favoriteEditRack
+}
+
 class FTPenTypeCollectionViewCell: FTPenStyleCollectionViewCell {
     @IBOutlet weak var buttonBackground: UIButton!
     @IBOutlet weak var viewPenImage: UIView!
@@ -21,10 +26,12 @@ class FTPenTypeCollectionViewCell: FTPenStyleCollectionViewCell {
     @IBOutlet private weak var imageViewNoiseTop: UIImageView! // top noise
 
     @IBOutlet private weak var penBottomConstraint: NSLayoutConstraint!
-    
+
     private var currentViewSize = CGSize.zero
     private var penColor: String?
     private var penType: FTPenType?
+
+    var displayMode = FTPenTypeDisplayMode.penRack
 
     override func awakeFromNib() {
         self.imageViewNoiseTop?.layer.compositingFilter = "multiplyBlendMode"
@@ -57,18 +64,13 @@ class FTPenTypeCollectionViewCell: FTPenStyleCollectionViewCell {
         self.imageViewIconMask.image = UIImage(named: penType.maskImageName, in: Bundle(for: FTPenTypeCollectionViewCell.self), compatibleWith: nil)
 
         self.imageViewIconOverlay.image = UIImage(named: penType.overlayImageName, in: Bundle(for: FTPenTypeCollectionViewCell.self), compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
-        self.imageViewIconOverlay.tintColor = self.increseBrightnessBy(0.10, for: color)
 
         self.imageViewEffect.image = UIImage(named: penType.effectImageName, in: Bundle(for: FTPenTypeCollectionViewCell.self), compatibleWith: nil)
         self.imageViewNoiseTop.image = UIImage(named: penType.noiseTopImageName, in: Bundle(for: FTPenTypeCollectionViewCell.self), compatibleWith: nil)
         self.imageViewNoiseBottom.image = UIImage(named: penType.noiseBottomImageName, in: Bundle(for: FTPenTypeCollectionViewCell.self), compatibleWith: nil)
 
         self.imageViewNoiseTop.alpha = UIColor(hexString: color).isLightColor() ? 0.1 : 0.16
-
-        DispatchQueue.main.async {
-            self.isSelected = currentPenSet.type == penType
-            self.imageViewShadow?.isHidden = !(self.isSelected)
-        }
+        self.isPenTypeSelected = currentPenSet.type == penType
     }
 
     private func selectedBottomConstraint() -> CGFloat {
@@ -81,15 +83,20 @@ class FTPenTypeCollectionViewCell: FTPenStyleCollectionViewCell {
         return value
     }
 
-    override var isSelected: Bool {
+    var isPenTypeSelected: Bool = false {
         didSet {
-            if self.isSelected {
+            self.imageViewIconOverlay.tintColor = self.increseBrightnessBy(0.10, for: self.penColor ?? blackColorHex)
+            self.imageViewShadow?.isHidden = !(self.isPenTypeSelected)
+            if self.isPenTypeSelected {
                 self.buttonBackground.backgroundColor = UIColor(hexString: self.penColor ?? blackColorHex, alpha: 0.3)
                 self.penBottomConstraint.constant = self.selectedBottomConstraint()
             }
             else {
                 self.buttonBackground.backgroundColor = UIColor.appColor(.black5)
                 self.penBottomConstraint.constant = -12
+                if self.displayMode == .favoriteEditRack {
+                    self.imageViewIconOverlay.tintColor = UIColor.appColor(.black10)
+                }
             }
         }
     }
