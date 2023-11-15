@@ -444,6 +444,11 @@ extension FTNoteshelfDocumentProvider {
             return error;
         }
     }
+    
+    //This is used while migrating NS2 to NS3
+    func addUrlToFavorites(_ url : URL) {
+        (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection.addShelfItemToList(url);
+    }
 
     func removeShelfItemFromList(_ shelfItems: [FTShelfItemProtocol], mode: FTRecentItemType) {
         var urls = [URL]();
@@ -938,7 +943,7 @@ extension FTNoteshelfDocumentProvider {
 // MARK: Migration to NS3
 extension FTNoteshelfDocumentProvider {
 
-    func migrateNS2BookToNS3(url: URL, relativePath: String) throws -> URL? {
+    func migrateNS2BookToNS3(url: URL, relativePath: String, isFavorite: Bool) throws -> URL? {
         var destinationURL = self.currentCollection().documentsDirectory().appending(path: relativePath)
 
         // Change Destination Path extesion to `ns3`
@@ -997,6 +1002,9 @@ extension FTNoteshelfDocumentProvider {
                     }
                 }
             }
+            if isFavorite {
+                FTNoteshelfDocumentProvider.shared.addUrlToFavorites(destinationURL)
+            }
             return destinationURL
         } catch {
             debugLog(">>>>> Migration Failure \(error)")
@@ -1027,18 +1035,5 @@ extension URL {
 extension FTNoteshelfDocumentProvider {
     func isContentMovingInProgress() -> Bool {
         self.isContentMoving
-    }
-}
-
-extension Date {
-    var data: Data? {
-        return try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
-
-    }
-}
-
-extension Data {
-    var date: Date? {
-       return try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSDate.self, from: self) as? Date
     }
 }

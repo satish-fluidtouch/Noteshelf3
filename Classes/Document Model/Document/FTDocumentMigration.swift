@@ -91,7 +91,7 @@ final class FTDocumentMigration {
         return uuid
     }
     
-     static func performNS2toNs3MassMigration(url: URL,
+    static func performNS2toNs3MassMigration(url: URL, isFavorite: Bool,
                                               onCompletion: ((_ url: URL?, _ error: Error?) -> Void)?) {
          var documentPin: String?
          let isPinEnabled = isPinEnabledForDownloadedDocument(url: url)
@@ -112,7 +112,7 @@ final class FTDocumentMigration {
                          try? (fileURL as NSURL).setResourceValue(lastModificationDate, forKey: URLResourceKey.contentModificationDateKey)
 
                          try? (fileURL as NSURL).setResourceValue(fileCreationDate, forKey: URLResourceKey.creationDateKey)
-                         let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: url.relativePathWRTCollection())
+                         let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: url.relativePathWRTCollection(), isFavorite: isFavorite)
 
                          // TODO: Pass the document
                          if let migratedURL, let documentPin, isPinEnabled {
@@ -156,6 +156,7 @@ final class FTDocumentMigration {
         if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let migrationContainerData = self.contentsOfURL(ns3MigrationContainerURL) {
             var noteBookUrls = migrationContainerData.bookUrls ?? [URL]()
             var sortIndexUrls = migrationContainerData.indexUrls ?? [URL]()
+            let pinnedItems = FTDocumentMigration.getPinnedItemsRelativePaths()
             let totalItems = noteBookUrls.count + sortIndexUrls.count
             progress.totalUnitCount = Int64(totalItems)
             FTCLSLog("---Migration In Progress---")
@@ -177,9 +178,6 @@ final class FTDocumentMigration {
                         copyIndexes()
                     }
                 } else {
-                    FTDocumentMigration.updateMigratedPlist(dict: migratedItems)
-                    // TODO: Continue the Pinning process as last step, once the migration process is completed for booka
-                    FTDocumentMigration.getPinnedItemsRelativePaths()
                     onCompletion(true, nil)
                 }
             }
@@ -193,10 +191,12 @@ final class FTDocumentMigration {
                 }
                 if let firstItem = noteBookUrls.first {
                     let displayPath = firstItem.displayRelativePathWRTCollection()
+                    let isFavorite = pinnedItems.contains(displayPath)
                     let fileModificationDate = firstItem.fileModificationDate.data
-                    FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem) { url, error in
+                    FTDocumentMigration.performNS2toNs3MassMigration(url: firstItem, isFavorite: isFavorite) { url, error in
                         progress.localizedDescription = url?.lastPathComponent.deletingPathExtension ?? "";
                         migratedItems[displayPath] = ["modifiedDate": fileModificationDate]
+                        FTDocumentMigration.updateMigratedPlist(dict: migratedItems)
                         progress.completedUnitCount += 1;
                         noteBookUrls.removeFirst()
                         migrateBooks()
@@ -332,7 +332,7 @@ extension FTDocumentMigration {
         let relativePaths = pinnedItems.compactMap { info -> String? in
             if let fullPath = info["path"] {
                 let url = URL(fileURLWithPath: fullPath)
-                return url.relativePathWRTCollection()
+                return url.displayRelativePathWRTCollection()
             } else {
                 return nil
             }
