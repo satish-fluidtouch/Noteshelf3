@@ -1,5 +1,5 @@
 //
-//  FTNotebookShape.swift
+//  FTPreviewShape.swift
 //  Noteshelf3
 //
 //  Created by Ramakrishna on 10/02/23.
@@ -9,22 +9,22 @@
 import Foundation
 import SwiftUI
 
-struct FTNotebookShape: Shape {
-    private var leftCornerRadius: CGFloat;
-    private var rightCornerRadius: CGFloat;
+public struct FTPreviewShape: Shape {
+    public var leftCornerRadius: CGFloat;
+    public var rightCornerRadius: CGFloat;
     
-    init(raidus: CGFloat) {
+    public init(raidus: CGFloat) {
         leftCornerRadius = raidus;
         rightCornerRadius = raidus;
     }
 
-    init(leftRaidus: CGFloat = FTShelfItemProperties.Constants.Notebook.portNBCoverleftCornerRadius
-         ,rightRadius: CGFloat = FTShelfItemProperties.Constants.Notebook.portNBCoverRightCornerRadius) {
+    public init(leftRaidus: CGFloat
+         ,rightRadius: CGFloat) {
         leftCornerRadius = leftRaidus;
         rightCornerRadius = rightRadius;
     }
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         Path { path in
             let frame = rect;
            

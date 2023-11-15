@@ -25,7 +25,7 @@ extension FTShelfBookmarksViewController {
             let openNewWindowAction = UIAction(title: "sidebar.bookmarks.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
                 let item = self.bookmarkItems[indexPath.row]
-                self.openItemInNewWindow(item.shelfItem!, pageIndex: item.pageIndex)
+                self.openItemInNewWindow(item.shelfItem, pageIndex: item.pageIndex)
                 track(EventName.shelf_bookmark_openinnewwindow_tap, screenName: ScreenName.shelf_bookmarks)
 
             }

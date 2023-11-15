@@ -89,6 +89,7 @@ class FTNotebookRecognitionHelper: NSObject {
             ||  FTNotebookRecognitionHelper.shouldProceedRecognition == false
             || !FTNotebookRecognitionHelper.myScriptActivated
             || !supportsHWRecognition
+            || FTUserDefaults.isInSafeMode()
         ){
             return
         }

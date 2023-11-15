@@ -52,6 +52,15 @@ class FTCoverStyleViewController: UIViewController {
             self.coversVc?.scrollDelegate = coverStyleVariantsVc
         }
     }
+    func noCoverTheme() -> FTCoverThemeModel? {
+        if let noCoverTheme = self.viewModel.delegate?.fetchNoCoverTheme() {
+            return FTCoverThemeModel(name: "covers.category.noCover".localized, themeable: noCoverTheme)
+        }
+        return nil
+    }
+    func setDefaultCover(_ cover: FTThemeable){
+        self.selectionDelegate?.setDefaultCoverToNoCover(cover)
+    }
 }
 
 extension FTCoverStyleViewController: FTBarButtonItemDelegate {

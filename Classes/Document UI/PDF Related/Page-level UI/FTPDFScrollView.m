@@ -71,7 +71,6 @@ const CGFloat _zoomModeMinZoomScale = 1.0f;
 @property (nonatomic, strong) FTTouchGestureRecognizer *toucheGestureRecognizer;
 
 @property (strong) FTPageFooterView *footerView;
-@property (strong) FTPageNumberView *pageNumberLabel;
 @property (strong) UIView *snapshotView;
 
 @end
@@ -156,7 +155,6 @@ parentViewController:(FTPageViewController*)controller
         [self initializeWithPDFPage:page];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enableGestures:) name:FTPDFEnableGestures object:self.window];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disableGestures:) name:FTPDFDisableGestures object:self.window];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePageNumberViewVisibility:) name:@"FTPDFReadOnlyMode" object:nil];
         [self addSearchObserver];
         
         [self.panGestureRecognizer addTarget:self action:@selector(didEndScrollViewPanning:)];
@@ -225,14 +223,6 @@ parentViewController:(FTPageViewController*)controller
     imageView.hidden = true;
     self.backgroundImageView = imageView;
     [self.contentHolderView addSubview:self.backgroundImageView];
-    self.pageNumberLabel = [[FTPageNumberView alloc] initWithFrame:CGRectMake(16, 16, 51, 26) page:self.pdfPage];
-    [self addSubview:self.pageNumberLabel];
-    [self bringSubviewToFront:self.pageNumberLabel];
-    if (self.writingView.currentDrawingMode == kDeskModeReadOnly){
-        [self showPageNumberInReadOnlyMode];
-    }else{
-        [self.pageNumberLabel setHidden:YES];
-    }
 }
 
 -(void)updateThumnailbgColor{
@@ -349,21 +339,8 @@ parentViewController:(FTPageViewController*)controller
     CGFloat scale = [self.writingView scale];
     self.footerView.frame = CGRectMake(0, bounds.size.height-[FTPageFooterView footerHeight]*scale, bounds.size.width, [FTPageFooterView footerHeight]*scale);
     self.footerView.hidden = [self shouldHidePageFooter];
-    if (self.writingView.currentDrawingMode == kDeskModeReadOnly){
-        [self.pageNumberLabel setCurrentPage:self.pdfPage];
-        [self showPageNumberInReadOnlyMode];
-    }else{
-        [self.pageNumberLabel setHidden:YES];
-    }
 }
 
--(void) showPageNumberInReadOnlyMode {
-    [self.pageNumberLabel setHidden:NO];
-    self.pageNumberLabel.alpha = 1.0;
-    [UIView animateWithDuration:2.0 animations:^{
-        self.pageNumberLabel.alpha = 0.0;
-    }];
-}
 -(BOOL)shouldHidePageFooter
 {
     if(self.shouldHideFooter) {
@@ -1079,17 +1056,7 @@ CGPoint lastPoint1,lastPoint2;
     [self enablePinchDetection];
     [self enablePanDetection];
 }
--(void)updatePageNumberViewVisibility:(NSNotification*)notification {
-    
-    if (![self isSameSceneWindow:self.window notification:notification]){
-        return;
-    }
-    if ([notification.userInfo[@"isOn"] boolValue]){
-        [self showPageNumberInReadOnlyMode];
-    }else{
-        [self.pageNumberLabel setHidden:YES];
-    }
-}
+
 -(BOOL)isSameSceneWindow:(UIWindow*)window  notification:(NSNotification*) notification {
     if (window == (UIWindow *)notification.object){
         return YES;
