@@ -49,7 +49,7 @@ extension FTPDFRenderViewController {
         if let fileURL = item.importItem as? URL, isImageFile(fileURL.path) {
             var imageData : Data?
             do {
-                 imageData = try Data(contentsOf: fileURL)
+                imageData = try Data(contentsOf: fileURL)
             } catch {
                 print(error.localizedDescription)
             }
@@ -59,30 +59,29 @@ extension FTPDFRenderViewController {
             self.pdfDocument.isDirty = true
             progress.completedUnitCount += 1;
             onCompletion(true,nil);
-
-            }
-      else  if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
-            if isSupportedAudioFile(fileURL.path) {
-                let item = FTAudioFileToImport.init(withURL: fileURL)
-                if let subProgress = self.addRecordingToPage(actionType: .addToCurrentPage,
-                                                             audio: item,
-                                                             onCompletion: onCompletion) {
-                    progress.addChild(subProgress, withPendingUnitCount: 1);
-                }
-                else {
+        } else if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
+                if isSupportedAudioFile(fileURL.path) {
+                    let item = FTAudioFileToImport.init(withURL: fileURL)
+                    item.fileName = fileURL.deletingPathExtension().lastPathComponent
+                    if let subProgress = self.addRecordingToPage(actionType: .addToCurrentPage,
+                                                                 audio: item,
+                                                                 onCompletion: onCompletion) {
+                        progress.addChild(subProgress, withPendingUnitCount: 1);
+                    }
+                    else {
+                        progress.completedUnitCount += 1;
+                        onCompletion(true,nil);
+                    }
+                } else {
                     progress.completedUnitCount += 1;
-                    onCompletion(true,nil);
+                    onCompletion(false,nil);
+                    let alertController = UIAlertController(title: "",
+                                                            message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
+                                                            preferredStyle: .alert);
+                    let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: nil);
+                    alertController.addAction(cancelAction);
+                    self.present(alertController, animated: true, completion: nil);
                 }
-            } else {
-                progress.completedUnitCount += 1;
-                onCompletion(false,nil);
-                let alertController = UIAlertController(title: "",
-                                                        message: NSLocalizedString("NotSupportedFormat", comment: "Note supported format"),
-                                                        preferredStyle: .alert);
-                let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: nil);
-                alertController.addAction(cancelAction);
-                self.present(alertController, animated: true, completion: nil);
-            }
         }
         else {
             let subProgress = importer.pdfFileFrom(item) { (filePath, error, _) in
@@ -243,20 +242,21 @@ extension FTPDFRenderViewController {
 
 extension FTPDFRenderViewController : FTWatchRecordedListViewControllerDelegate {
     func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio: FTWatchRecordedAudio, forAction actionType: FTAudioActionType) {
+        var audioItem = recordedAudio
         self.dismiss(animated: true) {
             if(actionType == .exportAudio) {
                 guard let sourceView = self.rightPanelSource(for: FTDeskRightPanelTool.add) else { return }
                 let exporter = FTWatchAudioExporter(baseViewController: self);
-                exporter.performExport(watchRecording: recordedAudio,
+                exporter.performExport(watchRecording: audioItem,
                                        onViewController: self.parent ?? self);
                 FTCLSLog("Watch Recording: Export - Inside");
                 return;
             }
             
-            if(recordedAudio.audioStatus == FTWatchAudioStatus.unread){
-                let newRecording = FTWatchRecordedAudio.initWithDictionary(recordedAudio.dictionaryRepresentation())
+            if(audioItem.audioStatus == FTWatchAudioStatus.unread){
+                let newRecording = FTWatchRecordedAudio.initWithDictionary(audioItem.dictionaryRepresentation())
                 newRecording.audioStatus = FTWatchAudioStatus.read
-                newRecording.filePath = recordedAudio.filePath
+                newRecording.filePath = audioItem.filePath
                 FTNoteshelfDocumentProvider.shared.updateRecording(item: newRecording, onCompletion: { (error) in
                     if(error == nil){
                         self.continueToProcessRecording(withRecording: newRecording, andAction: actionType)
@@ -269,7 +269,7 @@ extension FTPDFRenderViewController : FTWatchRecordedListViewControllerDelegate 
             }
             else
             {
-                self.continueToProcessRecording(withRecording: recordedAudio, andAction: actionType)
+                self.continueToProcessRecording(withRecording: audioItem, andAction: actionType)
             }
         }
     }
@@ -277,7 +277,8 @@ extension FTPDFRenderViewController : FTWatchRecordedListViewControllerDelegate 
         
         let item = FTAudioFileToImport.init(withURL: recordedAudio.filePath!,
                                             date: recordedAudio.date,
-                                            fileName: nil);
+                                            fileName: recordedAudio.audioTitle,
+                                            isWatchRecording: true);
 
         addRecordingToPage(actionType: actionType, audio: item, onCompletion: nil)
     }

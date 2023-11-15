@@ -87,7 +87,7 @@ class AddMenuDataManager {
 
         let importMediaItem = MediaItem(image: UIImage(systemName: "square.and.arrow.down"), name: "add.menu.import.media".localized, type: .importMedia)
 
-        let appleWatchMediaItem = MediaItem(image: UIImage(systemName: "applewatch"), name: "AppleWatch".localized,showDiscloser: true, type: .appleWatch)
+        let appleWatchMediaItem = MediaItem(image: UIImage(systemName: "applewatch"), name: "WatchRecordings".localized,showDiscloser: true, type: .appleWatch)
         var itemsToReturn = [[photoItem, cameraItem], [audioItem, emojiItem, stickerItem]]
         if (NSUbiquitousKeyValueStore.default.isWatchPaired()) {
             itemsToReturn.append(contentsOf: [[importMediaItem, appleWatchMediaItem]])

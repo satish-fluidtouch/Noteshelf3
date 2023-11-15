@@ -12,65 +12,65 @@ struct FTAdBannerView: View{
     fileprivate let FTWatchAdDoNotShowDefaultsKey = "watch_banner_do_not_show";
     fileprivate let FTWatchAdLastShownTimeDefaultsKey = "watch_banner_last_shown";
     @State private var isBannerVisible = true
-    @Environment(\.horizontalSizeClass) var sizeClass
 
     var body: some View{
+        let learnMore = "LearnMore".localized
         if isBannerVisible{
-            GroupBox(content: {
-                HStack(spacing: 20){
+            ZStack {
+                HStack(spacing: 22){
                     Image("banner_watch_Icon")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 80,height: 80)
+                        .frame(width: 17,height: 29)
 
-                    VStack(alignment: .leading,spacing: 20){
+                    HStack{
                         Text("WatchAdInfo".localized)
                             .foregroundColor(Color.label)
                             .font(.system(size: 14))
-                            .multilineTextAlignment(.leading)
+                        +
+                        Text("  [\(learnMore)](https://www.noteshelf.net)")
+                            .foregroundColor(.appColor(.accent))
+                            .font(.appFont(for: .medium, with: 14))
+                    }
 
-                        HStack(spacing: 30){
-                            Button {
-                                UserDefaults.standard.set(true, forKey: FTWatchAdDoNotShowDefaultsKey);
-                                UserDefaults.standard.synchronize()
-                                self.removeBannerAd()
-                            } label: {
-                                Text("Dismiss".localized)
-                                    .padding()
-                                    .font(.system(size: 15))
-                                    .foregroundColor(Color.label)
-                                    .frame(height: 30)
-                                    .border(.appColor(.black70), width: 0.5, cornerRadius: 4.0)
-                            }
-                            Button {
-                                UserDefaults.standard.set(Date.now + 2.0, forKey: FTWatchAdLastShownTimeDefaultsKey)
-                                UserDefaults.standard.synchronize()
-                                self.removeBannerAd()
-                            } label: {
-                                Text("RemindMeLater".localized)
-                                    .padding()
-                                    .font(.system(size: 15))
-                                    .foregroundColor(Color.label)
-                                    .frame(height: 30)
-                                    .border(.appColor(.black70), width: 0.5, cornerRadius: 4.0)
-                            }
-                        }
+                    Menu {
+                        Button("Dismiss".localized, action: dismissAction)
+                        Button("RemindMeLater".localized, action: remindMelaterAction)
+                    } label: {
+                        Label("", image: "close_banner_icon")
                     }
                 }
-            })
+                .padding(.vertical,4)
+                .padding(.leading,16)
+                .padding(.trailing,0)
+                .frame(maxWidth: .infinity,minHeight: 58.0)
+            }
             .background(Color.appColor(.white50))
             .background(.ultraThinMaterial)
-            .cornerRadius(12)
             .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 4)
-            .padding(.horizontal,sizeClass == .compact ? 8 : 30)
-            .padding(.bottom, 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .inset(by: 0.25)
+                    .stroke(Color.appColor(.toolbarOutline), lineWidth: 0.5)
+            )
+            .cornerRadius(12)
+            .padding(.horizontal, 8)
             .onAppear{
                 addBannerIfNeeded()
-                isBannerVisible = canShowWatchBanner()
             }
-        }else{
+        } else{
             EmptyView()
         }
+    }
+    func remindMelaterAction(){
+        UserDefaults.standard.set(Date.timeIntervalSinceReferenceDate, forKey: FTWatchAdLastShownTimeDefaultsKey)
+        UserDefaults.standard.synchronize()
+        self.removeBannerAd()
+    }
+    func dismissAction(){
+        UserDefaults.standard.set(true, forKey: FTWatchAdDoNotShowDefaultsKey);
+        UserDefaults.standard.synchronize()
+        self.removeBannerAd()
     }
     private func canShowWatchBanner() -> Bool {
         let thresholdDuration = Double(60*60*24);
@@ -86,24 +86,27 @@ struct FTAdBannerView: View{
         }
         return false
     }
+    
     private func addBannerIfNeeded() {
-            self.updateBannerAd(nil)
-            NotificationCenter.default.addObserver(forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: nil, queue: nil) { notification in
-                self.updateBannerAd(notification)
-            }
-
-            NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTUbiquitousKeyValueStoreChangedLocally), object: nil, queue: nil) { notification in
-                self.updateBannerAd(notification)
-            }
+        self.updateBannerAd(nil)
+        NotificationCenter.default.addObserver(forName: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: nil, queue: nil) { notification in
+            self.updateBannerAd(notification)
         }
+
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: FTUbiquitousKeyValueStoreChangedLocally), object: nil, queue: nil) { notification in
+            self.updateBannerAd(notification)
+        }
+    }
     private func updateBannerAd(_ notification: Notification?) {
         if(NSUbiquitousKeyValueStore.default.isWatchPaired()) {
             if !NSUbiquitousKeyValueStore.default.isWatchAppInstalled() {
-                isBannerVisible = true
+                isBannerVisible = canShowWatchBanner()
             } else {
                 //remove
                 removeBannerAd()
             }
+        } else {
+            isBannerVisible = false
         }
     }
     private func removeBannerAd() {

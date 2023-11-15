@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="22154" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nhG-JS-WbX">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="22155" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nhG-JS-WbX">
     <device id="watch44"/>
     <dependencies>
         <deployment identifier="watchOS"/>
@@ -12,7 +12,7 @@
             <objects>
                 <controller id="itW-vA-cE6" customClass="FTWatchRecordingsListController" customModule="Noteshelf3_WatchApp" customModuleProvider="target">
                     <items>
-                        <group width="156" height="156" alignment="center" verticalAlignment="center" layout="overlap" spacing="0.0" id="lom-OZ-OAu">
+                        <group width="146" height="146" alignment="center" verticalAlignment="center" layout="overlap" spacing="0.0" id="lom-OZ-OAu">
                             <items>
                                 <sceneKitScene width="156" height="156" alignment="center" verticalAlignment="center" id="whx-6X-fi1">
                                     <variation key="device=watch38mm" height="136" width="136"/>
@@ -104,7 +104,7 @@ to navigate.</string>
             <objects>
                 <controller title="Recording" spacing="0.0" id="nhG-JS-WbX" customClass="FTWatchRecordNewController" customModule="Noteshelf3_WatchApp" customModuleProvider="target">
                     <items>
-                        <group width="148" height="148" alignment="center" verticalAlignment="center" layout="overlap" spacing="0.0" id="1kV-f6-4gN">
+                        <group width="146" height="146" alignment="center" verticalAlignment="center" layout="overlap" spacing="0.0" id="1kV-f6-4gN">
                             <items>
                                 <sceneKitScene width="156" height="156" alignment="center" verticalAlignment="center" id="7Kc-Gj-1l2">
                                     <variation key="device=watch38mm" height="136" width="136"/>

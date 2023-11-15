@@ -161,6 +161,11 @@ import AVFoundation
     }
 
     func processAudioDeleteAction(for audio:FTWatchRecording) {
+        let isCurrentAudio = (self.currentPlayingGUID == audio.GUID)
+        if isCurrentAudio {
+            self.currentPlayingGUID = ""
+            self.resetAudioPlayer()
+        }
 
         FTNoteshelfDocumentProvider.shared.deleteRecording(item: audio, onCompletion: { [weak self](error) in
             if(nil != error){

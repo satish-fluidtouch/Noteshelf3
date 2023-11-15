@@ -128,6 +128,8 @@ extension FTShelfSplitViewController {
         }else if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
             if isSupportedAudioFile(fileURL.path) {
                 let audioItem = FTAudioFileToImport.init(withURL: fileURL)
+                audioItem.fileName = fileURL.deletingPathExtension().lastPathComponent
+                audioItem.isWatchRecording = false
                 if let importInfo = item.imporItemInfo {
                     self.fetchCollectionDetails(with: importInfo) { _shelfItemColleciton, _groupItem in
                         let subProgress = self.createNotebookWithAudioItem(audioItem,

@@ -72,9 +72,9 @@ private extension ThumbnailProvider {
             try? fileManager.removeItem(at: pathToCopy);
             try fileManager.copyItem(at: thumbURL, to: pathToCopy);
             
-#if DEBUG
-            NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(packageURL.path)")
-#endif
+//#if DEBUG
+//            NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(packageURL.path)")
+//#endif
             let reply = QLThumbnailReply(imageFileURL: pathToCopy);
             handler(reply, nil)
         }
@@ -90,9 +90,9 @@ private extension ThumbnailProvider {
         let thumbURL = packageURL.appendingPathComponent("cover-shelf-image.png")
         if let image = UIImage(contentsOfFile: thumbURL.path(percentEncoded: false)) {
             let r = CGRect(origin: .zero, size: image.size)
-#if DEBUG
-            NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(packageURL.path)")
-#endif
+//#if DEBUG
+//            NSLog("🌄 ✅✅✅ Thumbnail generated and sent modified at \(thumbURL.fileModificationDate) \(packageURL.path)")
+//#endif
             let reply = QLThumbnailReply(contextSize: r.size, currentContextDrawing: {
                 image.draw(in: CGRect(origin: .zero, size: r.size));
                 return true;

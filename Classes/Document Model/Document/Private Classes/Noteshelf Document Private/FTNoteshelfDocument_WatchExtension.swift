@@ -15,11 +15,13 @@ import FTNewNotebook
     var url : URL;
     var fileName : String?
     var date : Date!
-    
-    public init(withURL url: URL,date : Date,fileName : String?) {
+    var isWatchRecording = false
+
+    public init(withURL url: URL,date : Date,fileName : String?, isWatchRecording: Bool = false) {
         self.url = url;
         self.fileName = fileName;
         self.date = date;
+        self.isWatchRecording = isWatchRecording;
         super.init();
     }
     
@@ -68,6 +70,8 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                     documentInfo.isNewBook = true
                     documentInfo.coverTemplateImage = info.coverTemplateImage
                     documentInfo.insertAt = 0
+                    documentInfo.annotationInfo = theme.annotationInfo
+
                     self.createDocument(documentInfo) { (error, success) in
                         if(nil != error) {
                             DispatchQueue.main.async {
@@ -203,7 +207,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
     {
         var localAnnotations = annotations;
         if(index >= urls.count) {
-            if let annInfo = info?.annotationInfo {
+            if let annInfo = info?.annotationInfo, urls.first?.isWatchRecording ?? false {
                 if let titleAnnotation = annInfo["titleAnnotation"] as? [String : Any] {
                     var title = urls.first?.fileName;
                     if(nil == title) {
@@ -249,6 +253,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                                                    page: toPage) { (annotation) in
                                                     if(nil != annotation) {
                                                         var rect = annotation!.boundingRect;
+                                                        (annotation as? FTAudioAnnotation)?.audioFileName = item.fileName ?? "Recording"
 //                                                        if let annInfo = info?.annotationInfo {
 //                                                            if  let audioInfo = annInfo["audioAnnotation"] as? [String : Any] {
 //                                                                let frame = NSCoder.cgRect(for: audioInfo["boundingRect"] as! String)

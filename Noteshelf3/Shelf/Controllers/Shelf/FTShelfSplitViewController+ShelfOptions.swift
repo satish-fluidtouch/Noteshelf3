@@ -62,7 +62,8 @@ extension FTShelfSplitViewController: FTShelfViewModelProtocol {
         
         let itemAudio = FTAudioFileToImport.init(withURL: recordedAudio.filePath!,
                                                  date: recordedAudio.date,
-                                                 fileName: nil);
+                                                 fileName: recordedAudio.audioTitle,
+                                                 isWatchRecording: true);
         createNotebookWithAudioItem(itemAudio, isiWatchDocument: true) {[weak self] (shelfItem, error) in
             loadingIndicatorViewController.hide();
             if error != nil {
