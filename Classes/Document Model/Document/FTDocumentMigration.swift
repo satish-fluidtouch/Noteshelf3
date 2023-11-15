@@ -26,6 +26,16 @@ enum NS2MigrationSource {
     case doesNotSupport
 }
 
+struct FTMigrationContainerData {
+    var bookUrls: [URL]?
+    var indexUrls: [URL]?
+     
+    init(bookUrls: [URL], indexUrls: [URL]) {
+        self.bookUrls = bookUrls
+        self.indexUrls = indexUrls
+    }
+}
+
 final class FTDocumentMigration {
     static let migrationQueue = DispatchQueue(label: "com.fluidtouch.noteshelf3.migration")
     static var migratedPlistUrl : URL? {
@@ -147,12 +157,36 @@ final class FTDocumentMigration {
         let progress = Progress()
         progress.isCancellable = true
         progress.isPausable = true
-        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let urls = self.contentsOfURL(ns3MigrationContainerURL) {
-            var noteBookUrls = urls
-            let totalItems = noteBookUrls.count
+        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let migrationContainerData = self.contentsOfURL(ns3MigrationContainerURL) {
+            var noteBookUrls = migrationContainerData.bookUrls ?? [URL]()
+            var sortIndexUrls = migrationContainerData.indexUrls ?? [URL]()
+            let totalItems = noteBookUrls.count + sortIndexUrls.count
             progress.totalUnitCount = Int64(totalItems)
             FTCLSLog("---Migration In Progress---")
             var migratedItems = fetchMigratedPlist()
+            func copyIndexes() {
+                guard !progress.isCancelled else {
+                    onCompletion(false, nil)
+                    return
+                }
+                guard !progress.isPaused else {
+                    return
+                }
+                if let indexUrl = sortIndexUrls.first, indexUrl.pathExtension == FTFileExtension.sortIndex {
+                    runInMainThread {
+                        FTDocumentMigration.copyIndexItem(indexUrl)
+                        progress.localizedDescription = "Indexing"
+                        progress.completedUnitCount += 1;
+                        sortIndexUrls.removeFirst()
+                        copyIndexes()
+                    }
+                } else {
+                    FTDocumentMigration.updateMigratedPlist(dict: migratedItems)
+                    // TODO: Continue the Pinning process as last step, once the migration process is completed for booka
+                    FTDocumentMigration.getPinnedItemsRelativePaths()
+                    onCompletion(true, nil)
+                }
+            }
             func migrateBooks() {
                 guard !progress.isCancelled else {
                     onCompletion(false, nil)
@@ -161,7 +195,6 @@ final class FTDocumentMigration {
                 guard !progress.isPaused else {
                     return
                 }
-                let currentProcessingIndex = totalItems - noteBookUrls.count + 1;
                 if let firstItem = noteBookUrls.first {
                     let displayPath = firstItem.displayRelativePathWRTCollection()
                     let fileModificationDate = firstItem.fileModificationDate.data
@@ -173,10 +206,7 @@ final class FTDocumentMigration {
                         migrateBooks()
                     }
                 } else {
-                    FTDocumentMigration.updateMigratedPlist(dict: migratedItems)
-                    // TODO: Continue the Pinning process as last step, once the migration process is completed for booka
-                    FTDocumentMigration.getPinnedItemsRelativePaths()
-                    onCompletion(true, nil)
+                    copyIndexes()
                 }
             }
             migrateBooks()
@@ -190,6 +220,21 @@ final class FTDocumentMigration {
         return progress
     }
     
+    static func copyIndexItem(_ indexUrl: URL) {
+        do {
+            let destUrl =  FTUtils.noteshelfDocumentsDirectory().appendingPathComponent("User Documents").appendingPathComponent(indexUrl.relativePathWRTCollection())
+            let parentURL = destUrl.deletingLastPathComponent()
+            if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
+                try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+            }
+            if !FileManager().fileExists(atPath: destUrl.path(percentEncoded: false)) {
+                try FileManager.default.coordinatedMove(fromURL: indexUrl, toURL: destUrl)
+            }
+        }  catch {
+            debugLog(error.localizedDescription)
+        }
+    }
+    
     private static func isPinEnabledForDownloadedDocument(url: URL) -> Bool {
         let securityPath = url.appendingPathComponent("secure.plist");
         if(FileManager().fileExists(atPath: securityPath.path)) {
@@ -198,31 +243,32 @@ final class FTDocumentMigration {
         return false;
     }
 
-    static func contentsOfURL(_ url: URL) -> [URL]? {
+    static func contentsOfURL(_ url: URL) -> FTMigrationContainerData? {
         if let urls = try? FileManager.default.contentsOfDirectory(at: url,
                                                                    includingPropertiesForKeys: nil,
                                                                    options: .skipsHiddenFiles) {
             let filteredURLS = FTDocumentMigration.filterItemsMatchingExtensions(urls);
             var notebookUrlList: [URL] = [URL]()
+            var sortIndexUrls: [URL] = [URL]()
             filteredURLS.enumerated().forEach({ (_,eachURL) in
-                if eachURL.pathExtension == FTFileExtension.shelf {
-                    if let dirContents = self.contentsOfURL(eachURL) {
-                        if !dirContents.isEmpty {
-                            notebookUrlList.append(contentsOf: dirContents);
+                if eachURL.pathExtension == FTFileExtension.shelf || eachURL.pathExtension == FTFileExtension.group {
+                    let data = self.contentsOfURL(eachURL)
+                    if let bookUrls = data?.bookUrls, let indexUrls = data?.indexUrls {
+                        if !bookUrls.isEmpty {
+                            notebookUrlList.append(contentsOf: bookUrls);
+                        }
+                        if !indexUrls.isEmpty {
+                            sortIndexUrls.append(contentsOf: indexUrls);
                         }
                     }
-                } else if(eachURL.pathExtension == FTFileExtension.group) {
-                    if let dirContents = self.contentsOfURL(eachURL) {
-                        if !dirContents.isEmpty {
-                            notebookUrlList.append(contentsOf: dirContents);
-                        }
-                    }
-                }
-                else {
+                } else if eachURL.pathExtension == FTFileExtension.sortIndex {
+                    sortIndexUrls.append(eachURL);
+                } else {
                     notebookUrlList.append(eachURL);
                 }
             });
-            return notebookUrlList
+            let migrationData = FTMigrationContainerData(bookUrls: notebookUrlList, indexUrls: sortIndexUrls)
+            return migrationData
         } else {
             return nil
         }
@@ -230,7 +276,7 @@ final class FTDocumentMigration {
     
     static func filterItemsMatchingExtensions(_ items : [URL]?) -> [URL]
     {
-        let extToListen = [FTFileExtension.ns2, FTFileExtension.group, FTFileExtension.shelf]
+        let extToListen = [FTFileExtension.ns2, FTFileExtension.group, FTFileExtension.shelf, FTFileExtension.sortIndex]
         var filteredURLS = [URL]();
         if let items {
             if(!extToListen.isEmpty) {
