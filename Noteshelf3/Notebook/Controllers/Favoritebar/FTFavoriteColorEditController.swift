@@ -24,7 +24,8 @@ class FTFavoriteColorEditController: UIHostingController<FTFavoritePresetColorsV
         super.init(rootView: hostView)
         viewModel.$currentSelectedColor
             .dropFirst()
-            .sink { newValue in
+            .sink { [weak self] newValue in
+                guard let self = self else { return }
                 self.delegate?.didChangeColor(newValue)
             }
             .store(in: &self.cancellables)
