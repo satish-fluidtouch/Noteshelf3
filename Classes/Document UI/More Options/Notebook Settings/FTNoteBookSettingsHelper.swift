@@ -23,11 +23,12 @@ enum FTNoteBookSettingCellTye {
     case scrolling
     case hideUiInPresentMode
     case allowHyperLinks
+    case evernoteSync
     
     func cellType() -> FTNoteBookSettingCellTye {
         var cellType = FTNoteBookSettingCellTye.toggle
         switch self {
-        case .autoBackup, .autoLock, .hideUiInPresentMode, .allowHyperLinks :
+        case .autoBackup, .autoLock, .hideUiInPresentMode, .allowHyperLinks,.evernoteSync :
             cellType = .toggle
         case .password, .stylus, .addToSiri :
             cellType = .disclosure
@@ -56,6 +57,8 @@ enum FTNoteBookSettingCellTye {
             title = "notebookSettings.hideAppUIInPresentMode"
         case .allowHyperLinks:
             title = "notebookSettings.allowHyperlinks"
+        case .evernoteSync:
+            title = "EvernoteSync"
         }
         return title.localized
     }

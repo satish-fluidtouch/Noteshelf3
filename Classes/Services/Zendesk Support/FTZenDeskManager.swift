@@ -284,7 +284,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         {cloudUsed.add("OneDrive")}
 
         #if !targetEnvironment(macCatalyst)
-        let evernoteLinked:Bool = ENSession.shared.isAuthenticated
+        let evernoteLinked:Bool = EvernoteSession.shared().isAuthenticated
         if evernoteLinked
         {
             cloudUsed.add("Evernote")

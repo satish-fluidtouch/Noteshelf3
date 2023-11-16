@@ -131,12 +131,6 @@
     else
         return NO;
 }
-#if !TARGET_OS_MACCATALYST
-- (ENNoteStoreClient *)noteStoreClient {
-    ENSession *evernoteSession = [ENSession sharedSession];
-    return self.isBusinessNote ? evernoteSession.businessNoteStore : evernoteSession.primaryNoteStore;
-}
-#endif
 
 -(BOOL)isDeleted
 {

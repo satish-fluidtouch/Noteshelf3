@@ -12,7 +12,6 @@ import FTCommon
 import CoreSpotlight
 import SwiftyDropbox
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
 import GoogleSignIn
 #endif
 
@@ -122,10 +121,6 @@ final class FTAppIntentHandler {
                 intentHandler?.importItem(item)
             }
             return true
-        } else if (url.scheme == "en-noteshelf3-3461") {
-            #if !targetEnvironment(macCatalyst)
-            return ENSession.shared.handleOpenURL(url)
-            #endif
         } else if let googleURLScheme = FTAppIntentHandler.googleURLScheme, url.scheme == googleURLScheme {
             #if !targetEnvironment(macCatalyst)
             GIDSignIn.sharedInstance.handle(url);

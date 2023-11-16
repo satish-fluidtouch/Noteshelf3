@@ -1,6 +1,5 @@
 PODS:
   - ASN1Swift (1.2.3)
-  - EvernoteSDK (3.0.0)
   - Firebase/Analytics (10.3.0):
     - Firebase/Core
   - Firebase/Core (10.3.0):
@@ -175,7 +174,6 @@ PODS:
     - ZendeskSupportProvidersSDK (~> 7.0.0)
 
 DEPENDENCIES:
-  - EvernoteSDK
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
@@ -189,7 +187,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - ASN1Swift
-    - EvernoteSDK
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -235,7 +232,6 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   ASN1Swift: 73ba94f1d97c1c1d059d180708ad42845aeac4f9
-  EvernoteSDK: 7e9de762a9c281e714f3e6d0ae10657db3046792
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
   FirebaseABTesting: e6660693429b4663573c82f8d2f1041deff1753a
   FirebaseAnalytics: 036232b6a1e2918e5f67572417be1173576245f3
@@ -271,6 +267,6 @@ SPEC CHECKSUMS:
   ZendeskSupportProvidersSDK: 44f6639b5845815d4111b97ff00218f122ef9e33
   ZendeskSupportSDK: cae2bd10740bed62d8f89b78e6eea42713cd1e3c
 
-PODFILE CHECKSUM: 28ec703926a987c1694cc30104b1ef3fe78d24c6
+PODFILE CHECKSUM: 16d7175d5a1be3689ee6f4ad46f85933d07d8055
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.11.3

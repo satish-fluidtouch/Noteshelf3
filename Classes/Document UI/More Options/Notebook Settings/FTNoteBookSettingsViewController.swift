@@ -35,6 +35,7 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
         var firstSection: [FTNoteBookSettings] = [.password]
 #if !targetEnvironment(macCatalyst)
         firstSection.append(.addToSiri)
+        firstSection.append(.evernoteSync)
 #endif
         var secondSection : [FTNoteBookSettings] = [.scrolling, .hideUiInPresentMode, .allowHyperLinks, .autoLock]
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -118,9 +119,13 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             cell.accessoryType = .none
             let toggleSwitch = UISwitch(frame: CGRect.zero)
             toggleSwitch.preferredStyle = .sliding
-            updateToggleSwitch(uiSwitch: toggleSwitch, for: eachSetting)
+            if eachSetting == .evernoteSync {
+                self.updateEvernoteToggleSwitch(uiSwitch: toggleSwitch, withStatus: FTENPublishManager.shared.isSyncEnabled(forDocumentUUID: notebookDocument.documentUUID))
+            } else {
+                updateToggleSwitch(uiSwitch: toggleSwitch, for: eachSetting)
+            }
             toggleSwitch.addAction(UIAction(handler: {[weak self] action in
-                self?.switchvalueChanged(for: eachSetting)
+                self?.switchvalueChanged(for: eachSetting, toggleSwitch)
             }), for: .valueChanged)
             cell.accessoryView = toggleSwitch
         } else if eachSetting.cellType() == .disclosure {
@@ -141,8 +146,11 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             self.updateIdleTimerDisabledStatus()
         }
     }
+    func updateEvernoteToggleSwitch(uiSwitch: UISwitch, withStatus status:Bool){
+        uiSwitch.isOn = status
+    }
     
-    fileprivate func switchvalueChanged(for setting: FTNoteBookSettings) {
+    fileprivate func switchvalueChanged(for setting: FTNoteBookSettings,_ uiSwitch:UISwitch) {
         if setting == .allowHyperLinks {
             let hyperlinkDisabled = FTUserDefaults.isHyperlinkDisabled()
             FTUserDefaults.disableHyperlink(!hyperlinkDisabled)
@@ -154,6 +162,8 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
             let disableAutoLock = FTUserDefaults.disableAutoLock
             FTUserDefaults.disableAutoLock = !disableAutoLock
             self.updateIdleTimerDisabledStatus()
+        } else if setting == .evernoteSync {
+            toggleEvernoteSyncStatusFor(uiSwitch: uiSwitch)
         }
     }
 
@@ -176,5 +186,55 @@ class FTNoteBookSettingsViewController: UIViewController, UITableViewDelegate, U
 
     private func updateIdleTimerDisabledStatus(){
         FTDeviceAutoLockHelper.share.autoLockUsingDisableAutoLockStatus()
+    }
+}
+
+//MARK: Evernote settings
+extension FTNoteBookSettingsViewController {
+    func toggleEvernoteSyncStatusFor(uiSwitch: UISwitch) {
+#if NOTESHELF_RETAIL_DEMO
+        UIAlertController.showDemoLimitationAlert(withMessageID: "AutoPublishLimitation", onController: self)
+        return
+#endif
+
+        guard let localShelfItem = self.notebookShelfItem as? FTDocumentItemProtocol else {
+            FTLogError("EN Sync Backup Failed", attributes: ["reason": "shelf item not found"]);
+            return;
+        }
+        let evernotePublishManager = FTENPublishManager.shared;
+        evernotePublishManager.checkENSyncPrerequisite(from: self) { success in
+            if success {
+                let documentItemProtocol = localShelfItem ;
+                if let documentUUID = documentItemProtocol.documentUUID {
+                    if evernotePublishManager.isSyncEnabled(forDocumentUUID: documentItemProtocol.documentUUID!) {
+                        FTENPublishManager.recordSyncLog("User disabled Sync for notebook \(documentUUID)");
+                        self.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
+                        evernotePublishManager.disableSync(for: documentItemProtocol);
+                        evernotePublishManager.disableBackupForShelfItem(withUUID: documentUUID);
+                    } else {
+                        FTENPublishManager.recordSyncLog("User enabled Sync for notebook: \(documentUUID)");
+                        evernotePublishManager.showAccountChooser(self, withCompletionHandler: { [weak self] accountType in
+                            if accountType != EvernoteAccountType.evernoteAccountUnknown {
+                                guard let strongSelf = self else { return }
+
+                                strongSelf.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: true);
+
+                                if let pin = (strongSelf.notebookDocument as? FTDocument)?.pin {
+                                    FTDocument.keychainSet(pin, forKey: strongSelf.notebookDocument.documentUUID)
+                                }
+
+                                evernotePublishManager.enableSync(for: documentItemProtocol);
+                                evernotePublishManager.updateSyncRecord(forShelfItem: localShelfItem, withDocumentUUID: documentUUID);
+                                evernotePublishManager.updateSyncRecord(forShelfItemAtURL: localShelfItem.URL, withDeleteOption: true, andAccountType: accountType);
+                            } else {
+                                self?.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
+                            }
+                        });
+                    }
+                }
+            } else {
+                self.updateEvernoteToggleSwitch(uiSwitch: uiSwitch, withStatus: false);
+            }
+        }
     }
 }
