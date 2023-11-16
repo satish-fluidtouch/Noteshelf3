@@ -351,7 +351,7 @@ class FTENNotebook: NSObject {
             logFlurry = true
             self.showAlertForRelogin(onError: error)
             #if !targetEnvironment(macCatalyst)
-            let enErrorCode = UInt32(error.code)
+            let enErrorCode = UInt32(abs(error.code))
             switch  enErrorCode {
             case EDAMErrorCode_UNKNOWN.rawValue:
                 logFlurry = true;
@@ -398,8 +398,8 @@ class FTENNotebook: NSObject {
             case EDAMErrorCode_RATE_LIMIT_REACHED.rawValue:
                 failureReason = "Rate limit reached"
             default:
-                // EN error codes are only (1-19) hence We would like to show a neat error so going into the userinfo dict of the Evernote error and getting the details of NSURL error.
-                if (enErrorCode != 0 && enErrorCode > 19) && (failureReason == "Unknown") {
+                    // EN error codes are only (1-19) hence We would like to show a neat error so going into the userinfo dict of the Evernote error and getting the details of NSURL error.
+                if failureReason == "Unknown" {
                     let errorInfoDict = error.userInfo
                     if let urlError = errorInfoDict["error"] as? NSError, urlError.responds(to: #selector(getter: error.localizedDescription)){
                         failureReason = urlError.localizedDescription
