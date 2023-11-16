@@ -32,9 +32,9 @@ class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView>, FTPo
         super.init(rootView: hostView)
         self.sizeEditModel.$currentSize
             .dropFirst()
-            .sink { [weak self] _ in
+            .sink { [weak self] newValue in
                 guard let self = self else { return }
-                self.delegate?.didChangeSize(sizeEditModel.currentSize)
+                self.delegate?.didChangeSize(newValue)
             } .store(in: &cancellables)
     }
     
