@@ -482,6 +482,13 @@ private extension FTZoomOverlayViewController
         self.delegate?.zoomPanelDidChangeTool(.deskModeShape);
     }
     
+    func favoriteButtonAction(_ sender: UIView) {
+        if self.currentDeskMode == .deskModeFavorites {
+            return
+        }
+        self.delegate?.zoomPanelDidChangeTool(.deskModeFavorites)
+    }
+
     func settingsButtonAction(_ action: UIButton?) {
         if(self.isSettingsShown) {
             action?.backgroundColor = .clear
@@ -628,6 +635,8 @@ extension FTZoomOverlayViewController: FTZoomPanelViewControllerDelegate {
             self.eraserButtonAction(view)
         case .shape:
             self.shapeButtonAction(view)
+        case .favorite:
+            self.favoriteButtonAction(view)
         case .settings:
             self.settingsButtonAction(view as? UIButton)
         case .undo:

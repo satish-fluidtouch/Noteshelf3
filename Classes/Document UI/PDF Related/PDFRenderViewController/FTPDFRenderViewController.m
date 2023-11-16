@@ -1518,6 +1518,9 @@
     [self switchMode:kDeskModeClipboard];
 }
 
+-(void)favoritesButtonAction {
+    [self switchMode:kDeskModeFavorites];
+}
 
 -(void)iconsButtonAction
 {
@@ -1792,6 +1795,11 @@
             }
         }
             break;
+        case kDeskModeFavorites:
+            [self.pdfDocument.localMetadataCache setLastPenMode:mode];
+            [[self.pdfDocument localMetadataCache] setCurrentDeskMode:mode];
+            break;
+            
         default:
             break;
     }
@@ -2002,7 +2010,8 @@
         if (!(self.currentDeskMode == kDeskModePen
               || self.currentDeskMode == kDeskModeMarker
               || self.currentDeskMode == kDeskModeEraser
-              || self.currentDeskMode == kDeskModeShape)) {
+              || self.currentDeskMode == kDeskModeShape
+              || self.currentDeskMode == kDeskModeFavorites)) {
             [self switchMode:kDeskModePen];
         }
 
@@ -3303,6 +3312,9 @@
             case kDeskModeShape:
                 [self shapesButtonAction];
                 break;
+            case kDeskModeFavorites:
+                [self favoritesButtonAction];
+                break;
             default:
                 break;
         }
@@ -3753,6 +3765,13 @@
                 shouldValidate = false;
             }
             break;
+        case kDeskModeFavorites:
+            if(self.currentDeskMode != kDeskModeFavorites) {
+                [self favoritesButtonAction];
+                shouldValidate = false;
+            }
+            break;
+
         default:
             break;
     }

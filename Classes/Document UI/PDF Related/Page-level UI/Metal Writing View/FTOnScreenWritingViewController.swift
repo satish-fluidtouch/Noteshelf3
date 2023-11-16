@@ -281,6 +281,11 @@ extension FTOnScreenWritingViewController
             var writingMode: FTWritingMode = .pen;
             if self.currentDrawingMode == .deskModeMarker {
                 writingMode = .highlighter;
+            } else if self.currentDrawingMode == .deskModeFavorites {
+                let mode = FTFavoritePensetManager(activity: self.view.userActivity).fetchCurrentFavoriteMode()
+                if mode == .highlighter {
+                    writingMode = .highlighter
+                }
             }
             self.currentRenderer?.publishChanges(mode: writingMode, onCompletion: nil)
         }
@@ -557,18 +562,16 @@ extension FTOnScreenWritingViewController
         if let penAttributesProvider = self.delegate?.penAttributesProvider {
             return penAttributesProvider.penAttributes();
         }
-        var userActivity : NSUserActivity?;
-        if #available(iOS 13.0, *) {
-            userActivity = self.view.window?.windowScene?.userActivity
-        }
-        if(self.currentDrawingMode == .deskModePen) {
-            return FTRackData(type: FTRackType.pen,userActivity: userActivity).getCurrentPenSet();
-        }
-        else if(self.currentDrawingMode == .deskModeShape) {
-            return FTRackData(type: FTRackType.shape, userActivity: userActivity).getCurrentPenSet()
-        }
-        else {
+        let userActivity = self.view.window?.windowScene?.userActivity
+
+        if(self.currentDrawingMode == .deskModeFavorites) {
+            return FTFavoritePensetManager(activity: userActivity).fetchCurrentPenset()
+        } else if self.currentDrawingMode == .deskModeMarker {
             return FTRackData(type: FTRackType.highlighter,userActivity: userActivity).getCurrentPenSet();
+        } else if(self.currentDrawingMode == .deskModeShape) {
+            return FTRackData(type: FTRackType.shape, userActivity: userActivity).getCurrentPenSet()
+        } else {
+            return FTRackData(type: FTRackType.pen,userActivity: userActivity).getCurrentPenSet();
         }
     }
 }
