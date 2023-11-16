@@ -16,22 +16,20 @@ import Foundation
     case text
     case shape
     case presenter
-    
+
     public var displayName: String {
-        
+
         switch self {
-            case .pen:
-                return "PEN"
-            case .highlighter:
-                return "Highlighter"
-            case .eraser:
-                return "Eraser"
-            case .text:
-                return ""
-            case .shape:
-                return "SHAPES"
-            case .presenter:
-                return ""
+        case .pen:
+            return "PEN"
+        case .highlighter:
+            return "Highlighter"
+        case .eraser:
+            return "Eraser"
+        case .shape:
+            return "SHAPES"
+        default:
+            return ""
         }
     }
 
@@ -101,6 +99,18 @@ import Foundation
     }
 }
 
+extension FTRackType {
+    var sizeRange: ClosedRange<CGFloat> {
+        var range = CGFloat(0.0)...CGFloat(8.0)
+        if self == .highlighter {
+            range = CGFloat(1.0)...CGFloat(6.0)
+        } else if self == .shape {
+            range = CGFloat(1.0)...CGFloat(8.0)
+        }
+        return range
+    }
+}
+
  extension FTPenType {
     
     public var rackType : FTRackType
@@ -127,123 +137,6 @@ import Foundation
              return "highlighterRack.flat".localized
              default:
                  return "Pen"
-         }
-     }
-     
-     //Shadow
-     public var shadowImageName: String {
-         switch self {
-             case .pilotPen: // Felt tip
-                 return "PenRack/felt_shadow"
-             case .caligraphy: // Fountain
-                 return "PenRack/fountain_shadow"
-             case .pen: // Ballpoint
-                 return "PenRack/ballpoint_shadow"
-             case .pencil: // Pencil
-                 return "PenRack/pencil_shadow"
-             case .highlighter:
-                 return "PenRack/highlighter_round_shadow"
-             case .flatHighlighter:
-                 return "PenRack/highlighter_flat_shadow"
-             default:
-                 return "PenRack/felt_tip_shadow";
-         }
-     }
-     
-     //Color
-     public var overlayImageName: String {
-         switch self {
-             case .pilotPen:
-                 return "PenRack/felt_color"
-             case .caligraphy:
-                 return "PenRack/fountain_color"
-             case .pen:
-                 return "PenRack/ballpoint_color"
-             case .pencil:
-                 return "PenRack/pencil_color"
-             case .highlighter:
-                 return "PenRack/highlighter_round_color"
-             case .flatHighlighter:
-                 return "PenRack/highlighter_flat_color"
-             default:
-                 return "PenRack/ballpoint_color"
-         }
-     }
-     
-     //Mask
-     public var maskImageName: String {
-         switch self {
-             case .pilotPen:
-                 return "PenRack/felt_mask"
-             case .caligraphy:
-              return "PenRack/fountain_mask"
-             case .pen:
-                 return "PenRack/ballpoint_mask"
-             case .pencil:
-                 return "PenRack/pencil_mask"
-             case .highlighter:
-                 return "PenRack/highlighter_round_mask"
-             case .flatHighlighter:
-                 return "PenRack/highlighter_flat_mask"
-             default:
-                 return "PenRack/pilot_mask"
-         }
-     }
-
-     public var effectImageName: String {
-         switch self {
-         case .pilotPen:
-             return "PenRack/felt_effect"
-         case .caligraphy:
-             return "PenRack/fountain_effect"
-         case .pen:
-             return "PenRack/ballpoint_effect"
-         case .pencil:
-             return "PenRack/pencil_effect"
-         case .highlighter:
-             return "PenRack/highlighter_round_effect"
-         case .flatHighlighter:
-             return "PenRack/highlighter_flat_effect"
-         default:
-             return "PenRack/ballpoint_effect"
-         }
-     }
-
-     public var noiseTopImageName: String {
-         switch self {
-         case .pilotPen:
-             return "PenRack/felt_noiseTop"
-         case .caligraphy:
-             return "PenRack/fountain_noiseTop"
-         case .pen:
-             return "PenRack/ballpoint_noiseTop"
-         case .pencil:
-             return "PenRack/pencil_noiseTop"
-         case .highlighter:
-             return "PenRack/highlighter_round_noiseTop"
-         case .flatHighlighter:
-             return "PenRack/highlighter_flat_noiseTop"
-         default:
-             return "PenRack/pilot_noiseTop"
-         }
-     }
-
-     public var noiseBottomImageName: String {
-         switch self {
-         case .pilotPen:
-             return "PenRack/felt_noiseBottom"
-         case .caligraphy:
-             return "PenRack/fountain_noiseBottom"
-         case .pen:
-             return "PenRack/ballpoint_noiseBottom"
-         case .pencil:
-             return "PenRack/pencil_noiseBottom"
-         case .highlighter:
-             return "PenRack/highlighter_round_noiseBottom"
-         case .flatHighlighter:
-             return "PenRack/highlighter_flat_noiseBottom"
-         default:
-             return "PenRack/pilot_noiseBottom"
          }
      }
 }
