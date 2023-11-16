@@ -28,18 +28,18 @@ class FTENUserInfoTableViewCell: UITableViewCell {
                                          options: .usesLineFragmentOrigin,
                                          context: nil)
         let totalHeight = ceil(rect.size.height)
-        self.infoLabelHeightConstraint?.constant = totalHeight
         self.labelInfo?.attributedText = attrText
+        self.infoLabelHeightConstraint?.constant = totalHeight
         self.layoutIfNeeded();
     }
     func updateSubviewsVisibility(){
         if labelInfo?.text?.isEmpty ?? true {
             activityIndicator?.isHidden = false
-            progressView?.isHidden = true
+            activityIndicator?.startAnimating()
             labelInfo?.isHidden = true
         } else {
+            activityIndicator?.stopAnimating()
             activityIndicator?.isHidden = true
-            progressView?.isHidden = false
             labelInfo?.isHidden = false
         }
     }

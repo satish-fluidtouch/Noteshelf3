@@ -58,8 +58,10 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
             }, onCompletion: { accountInfo, error in
                 self.accountInfo = accountInfo
                 self.setAccountInfo(accountInfo)
-                self.updateUI()
-                self.relayoutIfNeeded();
+                runInMainThread {
+                    self.updateUI()
+                    self.relayoutIfNeeded();
+                }
         });
 
         self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
@@ -86,13 +88,15 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
 
         let accountInfoAttributedString = NSMutableAttributedString()
         if let info = accountInfo {
-                let spaceUsedInfo = NSAttributedString(string: info.spaceUsedFormatString() + " Evernote" + "\n",attributes: [.font: UIFont.appFont(for: .medium, with: 15), .foregroundColor : UIColor.appColor(.black1)])
+            if !info.spaceUsedFormatString().isEmpty {
+                let spaceUsedInfo = NSAttributedString(string: info.spaceUsedFormatString() + " Evernote",attributes: [.font: UIFont.appFont(for: .medium, with: 15), .foregroundColor : UIColor.appColor(.black1)])
                 accountInfoAttributedString.append(spaceUsedInfo)
-                let userInfo = NSAttributedString(string: info.usernameFormatString() + "\n",attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black70)])
-                accountInfoAttributedString.append(userInfo)
+            }
+            let userInfo = NSAttributedString(string: "\n" + info.usernameFormatString(),attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black70)])
+            accountInfoAttributedString.append(userInfo)
             if let lastPublishTime = standardUserDefaults.object(forKey: EVERNOTE_LAST_PUBLISH_TIME) as? TimeInterval {
                 let dateString = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: lastPublishTime), dateStyle: .short, timeStyle: .short);
-                let loc = "LastsuccessfulsyncAtFormat".localized
+                let loc = "\n" + "LastsuccessfulsyncAtFormat".localized
                 let description = String(format: loc, dateString);
                 let syncInfo = NSAttributedString(string: description,attributes: [.font: UIFont.appFont(for: .regular, with: 13), .foregroundColor : UIColor.appColor(.accent)])
                 accountInfoAttributedString.append(syncInfo)
@@ -199,7 +203,10 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
                 userInfoView.updateInfoLabel(attrText: enInfo.description)
                 userInfoView.updateSubviewsVisibility()
                 if let usagePercentage = accountInfo?.percentage {
+                    userInfoView.progressView?.isHidden = false
                     userInfoView.progressView?.progress =  usagePercentage / 100.0
+                } else {
+                    userInfoView.progressView?.isHidden = true
                 }
                 return userInfoView
             } else {
