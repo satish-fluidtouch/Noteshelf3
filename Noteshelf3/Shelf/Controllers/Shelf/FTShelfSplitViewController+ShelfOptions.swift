@@ -780,11 +780,8 @@ extension FTShelfSplitViewController {
                                         }
                                      })
                 } else {
-                    FTDocumentFactory.duplicateDocumentAtURL(doucmentItem.URL, onCompletion: { (_, document) in
+                    FTDocumentFactory.duplicateDocumentAt(doucmentItem, onCompletion: { (_, document) in
                         if let duplicatedDocument = document {
-                            if let docUUID = (doucmentItem as? FTDocumentItemProtocol)?.documentUUID {
-                                self.duplicateThumbnailsFrom(documentId: docUUID, to: duplicatedDocument.documentUUID)
-                            }
                             doucmentItem.shelfCollection.addShelfItemForDocument(duplicatedDocument.URL,
                                                                                  toTitle: doucmentItem.title,
                                                                                  toGroup: doucmentItem.parent,
@@ -817,16 +814,6 @@ extension FTShelfSplitViewController {
         else {
             onCompletion(duplicatedList);
         }
-    }
-
-    private func duplicateThumbnailsFrom(documentId: String, to duplicatedDocumentId: String) {
-        let thumbnailFolderPath = URL.thumbnailFolderURL()
-        let documentPath = thumbnailFolderPath.appendingPathComponent(documentId)
-        let duplicatedPath = thumbnailFolderPath.appendingPathComponent(duplicatedDocumentId)
-        if !FileManager.default.fileExists(atPath: duplicatedPath.path) {
-            try? FileManager.default.copyItem(atPath: documentPath.path, toPath: duplicatedPath.path)
-        }
-
     }
     
     private func createGroup(name: String?,
@@ -873,7 +860,7 @@ extension FTShelfSplitViewController {
             }
         }
         else {
-            FTDocumentFactory.duplicateDocumentAtURL(eachItem.URL) { (error, document) in
+            FTDocumentFactory.duplicateDocumentAt(eachItem) { (error, document) in
                 if let doc = document {
                     toGroup?.shelfCollection.addShelfItemForDocument(doc.URL,
                         toTitle: eachItem.title,

@@ -213,6 +213,7 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
                 self.showOrHideShortcutViewIfNeeded(mode)
                 self.performLayout()
             }
+            self.updatePageNumberLabelFrame()
         }
     }
     
@@ -255,5 +256,32 @@ extension FTPDFRenderViewController: UITextFieldDelegate {
             }
         }
         return isValid
+    }
+}
+extension FTPDFRenderViewController {
+    @objc func getTopOffset() -> CGFloat {
+        let yPadding: CGFloat = 8.0
+        var offset: CGFloat = 0.0
+        if self.currentToolBarState() == .shortCompact {
+            var extraHeight: CGFloat = 0.0
+            if UIDevice.current.isPhone() {
+                if let window = UIApplication.shared.keyWindow {
+                    let topSafeAreaInset = window.safeAreaInsets.top
+                    if topSafeAreaInset > 0 {
+                        extraHeight = topSafeAreaInset
+                    }
+                }
+            }
+            offset = FTToolbarConfig.Height.compact + extraHeight + yPadding
+        } else if self.currentToolBarState() == .normal {
+#if targetEnvironment(macCatalyst)
+            offset = 0.0 + yPadding
+#else
+            offset = FTToolbarConfig.Height.regular + yPadding
+#endif
+        } else {
+            offset = yPadding
+        }
+        return offset
     }
 }

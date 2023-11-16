@@ -206,6 +206,8 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
          currentShelfViewModel?.shelfViewDidMovedToFront(with: item)
          if let shelfTagsVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfTagsViewController {
              shelfTagsVC.reloadContent()
+         } else if let shelfBookmarksVC = (self.viewController(for: .secondary) as? UINavigationController)?.viewControllers.first as? FTShelfBookmarksViewController {
+             shelfBookmarksVC.reloadContent()
          }
          sideMenuController?.enableUpdatesForSideBar()
          //Force refresh the UI to update with latest categories.
