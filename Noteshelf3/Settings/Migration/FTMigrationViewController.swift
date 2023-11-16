@@ -66,6 +66,10 @@ class FTMigrationViewController: UIViewController {
             runInMainThread {
                 let status = success ? "Migration Completed" : "Migration Failed"
                 FTCLSLog("---\(status)---")
+
+                // TODO: (AK) Move to a proper location
+                FTTextStyleManager.shared.migrateNS2TextStyles()
+
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
                 self?.updateSuccessUI()
                 UIApplication.shared.isIdleTimerDisabled = false

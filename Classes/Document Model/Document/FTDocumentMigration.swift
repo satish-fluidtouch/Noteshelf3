@@ -114,7 +114,6 @@ final class FTDocumentMigration {
                          try? (fileURL as NSURL).setResourceValue(fileCreationDate, forKey: URLResourceKey.creationDateKey)
                          let migratedURL = try FTNoteshelfDocumentProvider.shared.migrateNS2BookToNS3(url: fileURL, relativePath: url.relativePathWRTCollection(), isFavorite: isFavorite)
 
-                         // TODO: Pass the document
                          if let migratedURL, let documentPin, isPinEnabled {
                              FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: migratedURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue)
                          }
@@ -337,7 +336,59 @@ extension FTDocumentMigration {
                 return nil
             }
         }
-        print("pinned", relativePaths)
         return relativePaths
+    }
+}
+
+// MARK: Text Styles Migration
+extension FTTextStyleManager {
+    func migrateNS2TextStyles() {
+        // 1. Fetch all the textstyles, which are neither default / Nor modified.
+        // 2. convert them into NS3 text styles.
+        // 3. insert them into NS3.
+
+        let ns2TextStylesURL = FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("text_styles_migration.plist")
+        if FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
+            if let ns2Styles = NSMutableArray(contentsOf: ns2TextStylesURL) as? [[String : String]] {
+                for item in ns2Styles {
+                    if let styleItem = FTTextStyleItem.styleFromNS2Style(ns2Info: item) {
+                        self.insertNewTextStyle(styleItem)
+                    }
+                }
+                let ns2Defaults = UserDefaults.init(suiteName: FTSharedGroupID.getNS2AppGroupID())!
+                ns2Defaults.set(true, forKey: "isTextStylesMigrated")
+            }
+        }
+    }
+}
+
+// FTTextStyle
+extension FTTextStyleItem {
+    static func styleFromNS2Style(ns2Info: [String: String]) -> FTTextStyleItem? {
+        guard let displayName = ns2Info["displayName"],
+              let fontName = ns2Info["fontName"],
+              let fontSize = ns2Info["fontSize"],
+              let textColor = ns2Info["textColor"],
+              let isUnderlined = ns2Info["isUnderlined"], // L small in NS2
+              let font = UIFont(name: fontName, size: 10)
+        else {
+            return nil
+        }
+
+        var ns3Info = [String: Any]()
+
+        let styleItem = FTTextStyleItem()
+        styleItem.displayName = displayName
+        styleItem.fontName = fontName
+        styleItem.fontSize = Int(fontSize) ?? defaultFontSize
+        styleItem.textColor = textColor
+        styleItem.isUnderLined = (isUnderlined as NSString).integerValue == 0 ? false : true
+        styleItem.strikeThrough = false
+        styleItem.fontId = UUID().uuidString
+        styleItem.allowsEdit = true
+        styleItem.isDefault = false
+        styleItem.fontFamily = font.familyName
+
+        return styleItem
     }
 }
