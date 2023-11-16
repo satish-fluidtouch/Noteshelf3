@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "WHITEBOARD MODE";
 "Wallpapers" = "Wallpapers";
 "Warning" = "Warning";
-"WatchAdInfo" = "Install Noteshelf 2 on your Apple Watch. You can record audio on-the-go and take notes later.";
+"WatchAdInfo" = "Install Noteshelf 3 on your Apple Watch. You can record audio on-the-go and take notes later.";
 "WatchNewRecords" = "New recordings arrived from your Apple Watch.";
 "WatchRecording" = "Watch Recording";
 "WatchRecordings" = "Watch Recordings";
@@ -1029,6 +1029,8 @@
 "export_description2" = "The exported data containing your notebooks, groups and categories will be saved as a .zip file. Your notebooks will be saved in the .noteshelf format.";
 "export_description_1" = "It is highly recommended that you save a copy of your data on your local device. The exported data will be saved as a .zip file and will contain all your notebooks, groups and categories.";
 "failed_following" = "Failed to backup the following notebooks:";
+"favoritebar.singleFavoriteDelete.message" = "Atleast one item must be retained in the Favorite bar.";
+"favoritebar.singleFavoriteDelete.title" = "Unable to delete Favorite";
 "finalizing" = "Finalizing";
 "finder.addPageAfter" = "Add Page After";
 "finder.addPageBefore" = "Add Page Before";
@@ -1122,7 +1124,11 @@
 "migration.alert.migrate" = "Migrate";
 "migration.alert.open" = "Go to Location";
 "migration.alert.title" = "Would you like to migrate a copy of this notebook to Noteshelf 3? ";
-"migration.progress.text" = "Migrating";
+"migration.cancel" = "Cancel Migration";
+"migration.cancel.alert" = "Are you sure you want to cancel the migration?";
+"migration.exitScreen" = "Please do not exit this screen before the migration process is completed";
+"migration.progress.text" = "Migrating...";
+"migration.succes" = "Migration Success!";
 "migration.success.alert.message" = "Success! Your migrated notebook has been placed in: %@";
 "months" = "Months";
 "more" = "More";
@@ -1491,6 +1497,7 @@
 "trash.alert.title" = "Are you sure you want empty your Trash?";
 "unsplash.search.alertMessage" = "Enter text to search";
 "untitled" = "Untitled";
+"updatemigration.title" = "Update on Migration";
 "useSticker" = "Use Sticker";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "AUDIO NOTES";
@@ -1533,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

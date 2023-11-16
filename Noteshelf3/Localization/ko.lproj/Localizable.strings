@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "화이트보드 모드";
 "Wallpapers" = "배경화면";
 "Warning" = "주의";
-"WatchAdInfo" = "애플 워치에 Noteshelf 2를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfo" = "애플 워치에 Noteshelf 3를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
 "WatchNewRecords" = "귀하의 애플 워치에서 새로운 녹음 파일이 도착했습니다.";
 "WatchRecording" = "녹화 보기";
 "WatchRecordings" = "워치 녹화";
@@ -1029,6 +1029,8 @@
 "export_description2" = "내 서랍, 그룹 및 카테고리를 포함한 내보낸 데이터는 .zip 파일로 저장됩니다. 노트는 .noteshelf 형식으로 저장됩니다.";
 "export_description_1" = "당신의 데이터의 사본을 로컬 기기에 저장하는 것이 강력히 권장됩니다. 내보낸 데이터는 .zip 파일로 저장되며 모든 노트북, 그룹 및 카테고리를 포함합니다.";
 "failed_following" = "다음 노트북을 백업하지 못했습니다.";
+"favoritebar.singleFavoriteDelete.message" = "즐겨찾기 도구 모음에는 하나 이상의 항목이 유지되어야 합니다.";
+"favoritebar.singleFavoriteDelete.title" = "즐겨찾기를 삭제할 수 없습니다.";
 "finalizing" = "완료";
 "finder.addPageAfter" = "이 단어 뒤에 페이지 추가";
 "finder.addPageBefore" = "앞에 페이지 추가";
@@ -1122,7 +1124,11 @@
 "migration.alert.migrate" = "이주하다";
 "migration.alert.open" = "장소로 이동";
 "migration.alert.title" = "이 노트북의 사본을 Noteshelf 3로 이전하시겠습니까?";
-"migration.progress.text" = "이동";
+"migration.cancel" = "마이그레이션 취소";
+"migration.cancel.alert" = "마이그레이션을 취소하시겠습니까?";
+"migration.exitScreen" = "마이그레이션 프로세스가 완료되기 전에 이 화면을 종료하지 마세요";
+"migration.progress.text" = "이동...";
+"migration.succes" = "마이그레이션 성공!";
 "migration.success.alert.message" = "성공! 이주된 노트북이 다음 위치에 배치되었습니다: %@";
 "months" = "달";
 "more" = "더";
@@ -1491,6 +1497,7 @@
 "trash.alert.title" = "당신은 휴지통을 비우시겠습니까?";
 "unsplash.search.alertMessage" = "텍스트를 검색하세요";
 "untitled" = "무제";
+"updatemigration.title" = "마이그레이션 업데이트";
 "useSticker" = "스티커 사용";
 "welcome.appleWatch" = "애플 워치";
 "welcome.audioNotes" = "오디오 노트";
@@ -1533,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

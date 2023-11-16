@@ -15,7 +15,7 @@ enum LogType {
     case success
 }
 
-private let shouldCacheLog: Bool = false
+private let shouldCacheLog: Bool = true
 
 func cacheLog(_ type: LogType = .info, _ items: Any...) {
     guard shouldCacheLog else { return }

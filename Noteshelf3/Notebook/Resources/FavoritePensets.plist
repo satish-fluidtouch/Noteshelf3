@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>version</key>
+	<string>1.0</string>
+	<key>favorites</key>
+	<array>
+		<dict>
+			<key>type</key>
+			<integer>0</integer>
+			<key>color</key>
+			<string>1D31A8</string>
+			<key>size</key>
+			<integer>4</integer>
+			<key>preciseSize</key>
+			<string>4</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<integer>1</integer>
+			<key>color</key>
+			<string>E0430E</string>
+			<key>size</key>
+			<integer>7</integer>
+			<key>preciseSize</key>
+			<string>7</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<integer>4</integer>
+			<key>color</key>
+			<string>151515</string>
+			<key>size</key>
+			<integer>4</integer>
+			<key>preciseSize</key>
+			<string>4</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<integer>3</integer>
+			<key>color</key>
+			<string>FFE800</string>
+			<key>size</key>
+			<integer>4</integer>
+			<key>preciseSize</key>
+			<string>4</string>
+		</dict>
+		<dict>
+			<key>type</key>
+			<integer>4</integer>
+			<key>color</key>
+			<string>1488A1</string>
+			<key>size</key>
+			<integer>4</integer>
+			<key>preciseSize</key>
+			<string>4</string>
+		</dict>
+	</array>
+</dict>
+</plist>

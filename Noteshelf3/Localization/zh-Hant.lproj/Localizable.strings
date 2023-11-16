@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 2。 您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 3。 您可以在行進中錄製音頻，並稍後進行記錄。";
 "WatchNewRecords" = "您的Apple Watch有新錄音。";
 "WatchRecording" = "觀看錄影";
 "WatchRecordings" = "手錶錄音";
@@ -1029,6 +1029,8 @@
 "export_description2" = "您的筆記本、分組和分類的匯出資料將儲存為.zip檔。 您的筆記本將以.noteshelf格式儲存。";
 "export_description_1" = "強烈建議您在本機裝置上儲存資料副本。 匯出的資料將儲存為.zip文件，包含您所有的筆記本、群組和分類。";
 "failed_following" = "備份以下筆記本失敗：";
+"favoritebar.singleFavoriteDelete.message" = "收藏夾工具列中必須至少保留一項。";
+"favoritebar.singleFavoriteDelete.title" = "無法刪除收藏夾";
 "finalizing" = "完成";
 "finder.addPageAfter" = "在此後面新增頁面";
 "finder.addPageBefore" = "在此前面新增頁面";
@@ -1122,7 +1124,11 @@
 "migration.alert.migrate" = "遷移";
 "migration.alert.open" = "前往位置";
 "migration.alert.title" = "您想將此筆記本的副本移轉到Noteshelf 3嗎？";
-"migration.progress.text" = "遷移";
+"migration.cancel" = "取消遷移";
+"migration.cancel.alert" = "您確定要取消遷移嗎？";
+"migration.exitScreen" = "請在遷移過程完成前不要離開此畫面";
+"migration.progress.text" = "正在遷移...";
+"migration.succes" = "遷移成功！";
 "migration.success.alert.message" = "成功！ 您遷移的筆記已放置在：%@";
 "months" = "月";
 "more" = "更多";
@@ -1491,6 +1497,7 @@
 "trash.alert.title" = "你確定要清空垃圾箱嗎？";
 "unsplash.search.alertMessage" = "清單視圖";
 "untitled" = "無標題";
+"updatemigration.title" = "遷移更新";
 "useSticker" = "使用貼紙";
 "welcome.appleWatch" = "蘋果手錶";
 "welcome.audioNotes" = "音訊筆記";
@@ -1533,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

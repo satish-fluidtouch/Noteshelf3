@@ -78,6 +78,7 @@ typedef NS_ENUM(NSInteger,RKDeskMode) {
     kDeskModeLaser,
     kDeskModeShape,
     kDeskModeReadOnly,
+    kDeskModeFavorites,
 } ;
 
 typedef enum {
