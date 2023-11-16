@@ -1176,7 +1176,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+    if(![self.view.subviews containsObject:self.pageNumberLabel] && self.currentlyVisiblePage != nil) {
         [self addPageNumberLabelToView];
     }else {
         [self setCurrentPageNoToPageNumberLabel];
