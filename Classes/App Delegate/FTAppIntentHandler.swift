@@ -82,10 +82,16 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithCameraPhoto()
     func createNotebookWithScannedPhoto()
     func startNS2ToNS3Migration()
+    func showPremiumUpgradeScreen()
 }
 
 
 final class FTAppIntentHandler {
+    // This should be in sync with NS2
+    enum NS3LaunchIntent: String {
+       case migration = "NS2Migration"
+       case premiumUpgrade = "purchasePremium"
+    }
 
     private let supportedPathExts = [nsBookExtension
                                      ,nsThemePackExtension
@@ -168,9 +174,12 @@ final class FTAppIntentHandler {
         if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
             , let queryitem = urlcomponents.queryItems?.first
             , queryitem.name == "intent"
-            , queryitem.value == "NS2Migration"
         {
-            intentHandler?.startNS2ToNS3Migration()
+            if queryitem.value == NS3LaunchIntent.migration.rawValue {
+                intentHandler?.startNS2ToNS3Migration()
+            } else {
+                intentHandler?.showPremiumUpgradeScreen()
+            }
         }
     }
 
