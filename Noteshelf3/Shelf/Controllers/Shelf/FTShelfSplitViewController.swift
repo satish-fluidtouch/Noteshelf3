@@ -442,15 +442,6 @@ extension FTShelfSplitViewController {
                                              createWithAudio: Bool,
                                              pageIndex: Int?,
                                              onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
-
-        //----------- Migration for NS3 ------------------- //
-        guard !shelfItem.URL.isNS2Book else {
-            migrateBookToNS3(shelfItem: shelfItem)
-            onCompletion?(nil,true);
-            return
-        }
-        //----------- Migration for NS3 ------------------- //
-
         let downloadStatus = shelfItem.URL.downloadStatus();
         if downloadStatus != .downloaded {
             if downloadStatus == .notDownloaded {
@@ -498,13 +489,6 @@ extension FTShelfSplitViewController {
                                             createWithAudio: Bool,
                                             pageIndex: Int?,
                                             onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
-        //----------- Migration for NS3 ------------------- //
-        guard !shelfItem.URL.isNS2Book else {
-            migrateBookToNS3(shelfItem: shelfItem)
-            return
-        }
-        //----------- Migration for NS3 ------------------- //
-
         let notebookName = shelfItem.displayTitle
         FTCLSLog("Book: \(notebookName): Show")
         self.view.isUserInteractionEnabled = false
@@ -730,88 +714,5 @@ extension FTShelfSplitViewController {
 extension FTShelfSplitViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?){
         controller.dismiss(animated: true, completion: nil)
-    }
-}
-
-// MARK: Migration
-extension FTShelfSplitViewController {
-    func migrateBookToNS3(shelfItem: FTShelfItemProtocol) {
-        defer {
-            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
-        }
-
-        guard shelfItem.URL.isNS2Book else { return }
-        guard let documentItem = shelfItem as? FTDocumentItemProtocol,  documentItem.isDownloaded else {
-            try? FileManager().startDownloadingUbiquitousItem(at: shelfItem.URL)
-            return
-        }
-
-        guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: 1) else {
-            FTIAPurchaseHelper.shared.showIAPAlert(on: self);
-            return
-        }
-
-        FTDocumentMigration.showNS3MigrationAlert(on: self, onCopyAction: {
-            let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText:"migration.progress.text".localized);
-            var documentPin: String?
-            let isPinEnabled = shelfItem.isPinEnabledForDocument()
-            let uuid = (shelfItem as? FTDocumentItem)?.documentUUID ?? ""
-            let isTouchIdEnabled = FTBiometricManager.isTouchIdEnabled(for: uuid)
-            if isPinEnabled && isTouchIdEnabled {
-                //Get pin with NS2 Item UUID
-                documentPin = FTBiometricManager.passwordForNS2Book(with: uuid)
-            }
-            FTDocumentMigration.performNS2toNs3Migration(shelfItem: shelfItem) { migratedURL, error in
-                runInMainThread {
-                    loadingIndicatorViewController.hide()
-                    if let migratedURL {
-                        if let documentPin, isPinEnabled {
-                            FTBiometricManager.keychainSetIsTouchIDEnabled(FTBiometricManager().isTouchIDEnabled(), withPin: documentPin, forKey: migratedURL.getExtendedAttribute(for: .documentUUIDKey)?.stringValue)
-                        }
-                        self.showOpenNowAlertForMigratedBook(migratedURL: migratedURL)
-                    } else {
-                        FTDocumentMigration.showNS3MigrationFailureAlert(on: self)
-                    }
-                }
-            }
-        })
-    }
-
-    private func showOpenNowAlertForMigratedBook(migratedURL: URL) {
-        let displayPath = migratedURL.displayRelativePathWRTCollection().deletingLastPathComponent
-        FTDocumentMigration.showNS3MigrationSuccessAlert(on: self, relativePath: displayPath) {
-            let relativePath = migratedURL.relativePathWRTCollection()
-            FTNoteshelfDocumentProvider.shared.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, _ in
-                // Check for collection and select on the sidebar
-                if let collection {
-                    self?.navigateToLocation(collection: collection, group: group)
-                } else {
-                    FTLogError("Migration Navigate colleciton nil")
-                }
-            }
-        }
-    }
-
-    private func navigateToLocation(collection: FTShelfItemCollection, group: FTGroupItemProtocol?) {
-        var controllers = [UIViewController]()
-
-        // Build Category Controller
-        self.saveLastSelectedCollection(collection)
-        self.shelfItemCollection = collection
-        let categoryControllers = getSecondaryViewControllerWith(collection: collection, groupItem: nil)
-        self.sideMenuController?.selectSidebarItemWithCollection(collection)
-        controllers.append(categoryControllers)
-
-        // Build Group Controllers
-        if let group {
-            var reqParents:  [FTGroupItemProtocol] = []
-            reqParents.append(group)
-            reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
-            for parent in reqParents.reversed() {
-                let groupController = getSecondaryViewControllerWith(collection: collection, groupItem: parent)
-                controllers.append(groupController)
-            }
-        }
-        detailNavigationController?.setViewControllers(controllers, animated: false)
     }
 }
