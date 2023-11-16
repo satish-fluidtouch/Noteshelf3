@@ -1176,7 +1176,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+    if(![self.view.subviews containsObject:self.pageNumberLabel] && self.currentlyVisiblePage != nil) {
         [self addPageNumberLabelToView];
     }else {
         [self setCurrentPageNoToPageNumberLabel];
@@ -1518,6 +1518,9 @@
     [self switchMode:kDeskModeClipboard];
 }
 
+-(void)favoritesButtonAction {
+    [self switchMode:kDeskModeFavorites];
+}
 
 -(void)iconsButtonAction
 {
@@ -1792,6 +1795,11 @@
             }
         }
             break;
+        case kDeskModeFavorites:
+            [self.pdfDocument.localMetadataCache setLastPenMode:mode];
+            [[self.pdfDocument localMetadataCache] setCurrentDeskMode:mode];
+            break;
+            
         default:
             break;
     }
@@ -2002,7 +2010,8 @@
         if (!(self.currentDeskMode == kDeskModePen
               || self.currentDeskMode == kDeskModeMarker
               || self.currentDeskMode == kDeskModeEraser
-              || self.currentDeskMode == kDeskModeShape)) {
+              || self.currentDeskMode == kDeskModeShape
+              || self.currentDeskMode == kDeskModeFavorites)) {
             [self switchMode:kDeskModePen];
         }
 
@@ -3215,6 +3224,7 @@
     CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
     self.pageNumberLabel = [[FTPageNumberView alloc] initWithEffect:blurEffect frame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
     [self.view addSubview:self.pageNumberLabel];
+    [self.view bringSubviewToFront:self.pageNumberLabel];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
     [self performSelector:@selector(showPageNumberLabel)];
 }
@@ -3236,6 +3246,7 @@
 }
 -(void) setCurrentPageNoToPageNumberLabel {
     if(self.currentlyVisiblePage != nil) {
+        [self.view bringSubviewToFront:self.pageNumberLabel];
         [self.pageNumberLabel setCurrentPage:self.currentlyVisiblePage];
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
         [self performSelector:@selector(showPageNumberLabel)];
@@ -3300,6 +3311,9 @@
                 break;
             case kDeskModeShape:
                 [self shapesButtonAction];
+                break;
+            case kDeskModeFavorites:
+                [self favoritesButtonAction];
                 break;
             default:
                 break;
@@ -3751,6 +3765,13 @@
                 shouldValidate = false;
             }
             break;
+        case kDeskModeFavorites:
+            if(self.currentDeskMode != kDeskModeFavorites) {
+                [self favoritesButtonAction];
+                shouldValidate = false;
+            }
+            break;
+
         default:
             break;
     }

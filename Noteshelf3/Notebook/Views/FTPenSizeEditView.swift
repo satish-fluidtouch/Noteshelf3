@@ -9,71 +9,118 @@
 import SwiftUI
 import FTStyles
 
+enum FTPenSizeEditViewDisplayMode: String {
+    case normal
+    case favoriteEdit
+
+    var contentSize: CGSize {
+        var size = CGSize(width: FTPenSizeEditController.viewSize.width, height: 36.0)
+        if self == .normal {
+            size.width -= 16.0
+        }
+        return size
+    }
+
+    var containerSize: CGSize {
+        return CGSize(width: FTPenSizeEditController.viewSize.width, height: 52.0)
+    }
+
+    var contentColor: Color {
+        var color = Color.appColor(.toolbarOutline)
+        if self == .favoriteEdit {
+            color = Color.appColor(.white60)
+        }
+        return color
+    }
+
+    var contentBorderWidth: CGFloat {
+        var width: CGFloat = 0.5
+        if self == .favoriteEdit {
+            width = 0.0
+        }
+        return width
+    }
+}
+
 struct FTPenSizeEditView: View {
-   @StateObject var viewModel: FTFavoriteSizeViewModel
-    let editIndex: Int
-    let favoriteSizeValue: CGFloat
+    var displayMode = FTPenSizeEditViewDisplayMode.normal
+    let penType: FTPenType
+    @State var favoriteSizeValue: CGFloat
+    @ObservedObject var sizeEditModel: FTPenSizeEditModel
+
+    @State private var sliderTapped = false
+    @State private var selected: Bool = true
+    @State private var showIndicator: Bool = true
+    private let overlaySize: CGSize = FTPenSizeEditController.overlaySize
 
     var body: some View {
         VStack {
             VStack {
             }
-            .frame(width: FTPenSizeEditController.viewSize.width - 16.0, height: 36.0)
-            .background(Color.appColor(.toolbarOutline))
+            .frame(width: displayMode.contentSize.width, height: displayMode.contentSize.height)
+            .background(displayMode.contentColor)
             .cornerRadius(10.0)
-            .border(Color.appColor(.toolbarOutline), width: 0.5, cornerRadius: 10.0)
+            .border(Color.appColor(.toolbarOutline), width: displayMode.contentBorderWidth, cornerRadius: 10.0)
         }
-        .frame(width: FTPenSizeEditController.viewSize.width, height: 52.0)
-        .background(Color.appColor(.popoverBgColor))
-        .cornerRadius(16.0)
-        .background(Color.appColor(.black20)
-            .shadow(color: Color.appColor(.black20), radius: 60, x: 0, y: 10)
-            .blur(radius: 30, opaque: false))
+        .frame(width: displayMode.containerSize.width, height: displayMode.containerSize.height)
+        .containerStyle(displayMode: self.displayMode)
         .overlay(
-            FTPenSizeOverlay(editingSize: favoriteSizeValue, editIndex: editIndex)
-            .environmentObject(viewModel)
+            ZStack {
+                ValueSlider(value: $favoriteSizeValue, in: penType.rackType.sizeRange, step: 0.1, tapped: $sliderTapped) { edited in
+                }.valueSliderStyle(
+                    HorizontalValueSliderStyle(
+                        track:
+                            HorizontalRangeTrack(
+                                view:
+                                    VStack {
+                                    })
+                            .background(Image("sliderBg").resizable().frame(width: overlaySize.width,height: 8)).contentShape(Rectangle()),
+                        thumb: FTPenSizeView(isSelected: selected, showIndicator: showIndicator, viewSize: penType.getIndicatorSize(using: favoriteSizeValue), favoriteSizeValue: favoriteSizeValue),
+                        thumbSize: CGSize(width: 40, height: 40),
+                        options: .interactiveTrack
+                    )
+                )
+            }
+            .frame(width: overlaySize.width, height: overlaySize.height)
         )
+        .onAppear {
+            self.favoriteSizeValue = self.sizeEditModel.currentSize
+        }
+        .onChange(of: self.favoriteSizeValue) { size in
+            var reqSize = size
+            if self.sliderTapped {
+                reqSize = CGFloat(Int(size.rounded()))
+            }
+            self.favoriteSizeValue = reqSize
+            self.sizeEditModel.currentSize = reqSize
+        }
     }
 }
 
-struct FTPenSizeOverlay: View {
-    @State var editingSize: CGFloat = 4.0
-    @State private var selected: Bool = true
-    @State private var showIndicator: Bool = true
-    @State private var sliderTapped: Bool = false
-    @EnvironmentObject var sizeViewModel: FTFavoriteSizeViewModel
-    private let overlaySize: CGSize = FTPenSizeEditController.overlaySize
-    let editIndex: Int
+private struct ContainerModifier: ViewModifier {
+    private let mode: FTPenSizeEditViewDisplayMode
 
-    var body: some View {
-        ZStack {
-            ValueSlider(value: $editingSize, in: sizeViewModel.sizeRange, step: 0.1, tapped: $sliderTapped) { edited in
-            }.valueSliderStyle(
-                HorizontalValueSliderStyle(
-                    track:
-                        HorizontalRangeTrack(
-                            view:
-                                VStack {
-                                })
-                        .background(Image("sliderBg").resizable().frame(width: overlaySize.width,height: 8)).contentShape(Rectangle()),
-                    thumb: FTPenSizeView(isSelected: selected, showIndicator: showIndicator, viewSize: self.sizeViewModel.getViewSize(using: editingSize), favoriteSizeValue: editingSize),
-                    thumbSize: CGSize(width: 40, height: 40),
-                    options: .interactiveTrack
-                )
-            )
+    init(mode: FTPenSizeEditViewDisplayMode) {
+        self.mode = mode
+    }
+
+    func body(content: Content) -> some View {
+        if mode == .favoriteEdit {
+            content
+        } else {
+            content
+                .background(Color.appColor(.popoverBgColor))
+                .cornerRadius(16.0)
+                .background(Color.appColor(.black20)
+                    .shadow(color: Color.appColor(.black20), radius: 60, x: 0, y: 10)
+                    .blur(radius: 30, opaque: false))
         }
-        .frame(width: overlaySize.width, height: overlaySize.height)
-        .onChange(of: self.editingSize) { size in
-            if editIndex < self.sizeViewModel.favoritePenSizes.count {
-                var reqSize = size
-                if self.sliderTapped {
-                    reqSize = CGFloat(Int(size.rounded()))
-                }
-                self.editingSize = reqSize
-                self.sizeViewModel.updateCurrentPenSize(size: reqSize, sizeMode: .sizeEdit)
-                self.sizeViewModel.updateFavoriteSize(with: reqSize, at: editIndex)
-            }
-        }
+    }
+}
+
+private extension View {
+    func containerStyle(displayMode: FTPenSizeEditViewDisplayMode) -> some View {
+        self.modifier(ContainerModifier(mode: displayMode))
     }
 }
 

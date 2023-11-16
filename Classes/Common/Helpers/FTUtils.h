@@ -28,6 +28,7 @@ CG_EXTERN NSString* _Nonnull noteshelfDocuments(void);
 +(NSString* _Nonnull )deviceModel;
 +(NSString* _Nonnull )deviceModelFriendlyName;
 
++(NSURL* _Nonnull )ns2ApplicationDocumentsDirectory;
 +(NSURL* _Nonnull )noteshelfDocumentsDirectory;
 +(NSURL* _Nonnull)ns2DocumentsDirectory;
 +(NSURL* _Nonnull )noteshelfDocumentsDirectoryInSharedLoc;

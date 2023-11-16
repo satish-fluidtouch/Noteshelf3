@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -42,7 +42,7 @@
                                     <constraint firstAttribute="height" constant="163" id="ROl-s3-R9g"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_penEffect" translatesAutoresizingMaskIntoConstraints="NO" id="BqT-3t-Avx">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_effect" translatesAutoresizingMaskIntoConstraints="NO" id="BqT-3t-Avx">
                                 <rect key="frame" x="3" y="-55" width="66" height="163"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PenRack/ballpoint_noiseBottom" translatesAutoresizingMaskIntoConstraints="NO" id="KpT-xL-KVx">
@@ -106,10 +106,10 @@
     </objects>
     <resources>
         <image name="PenRack/ballpoint_color" width="66" height="163"/>
+        <image name="PenRack/ballpoint_effect" width="66" height="163"/>
         <image name="PenRack/ballpoint_mask" width="198" height="489"/>
         <image name="PenRack/ballpoint_noiseBottom" width="66" height="163"/>
         <image name="PenRack/ballpoint_noiseTop" width="66" height="163"/>
-        <image name="PenRack/ballpoint_penEffect" width="66" height="163"/>
         <image name="PenRack/ballpoint_shadow" width="66" height="167"/>
     </resources>
 </document>

@@ -100,6 +100,9 @@ extension FTPDFRenderViewController: FTDeskPanelActionDelegate {
             
         case .lasso:
             self.lassoButtonAction()
+
+        case .favorites:
+            self.favoritesButtonAction()
             
         case .photo:
             self.executer?.execute(type: .photo)
