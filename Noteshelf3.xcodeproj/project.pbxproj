@@ -11554,8 +11554,8 @@
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
 				BAB258B8295B1B400072AEBB /* Embed App Extensions */,
-				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 				977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */,
+				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
