@@ -59,7 +59,7 @@ class FTFavoritebarViewController: UIViewController {
         sizeEditVc.delegate = self
         sizeEditVc.ftPresentationDelegate.source = sizeTapView
         sizeEditVc.ftPresentationDelegate.sourceRect = sizeTapView.bounds
-        self.ftPresentPopover(vcToPresent: sizeEditVc, contentSize: CGSize(width: 320.0, height: 80.0), hideNavBar: true)
+        self.ftPresentPopover(vcToPresent: sizeEditVc, contentSize: CGSize(width: 340.0, height: 80.0), hideNavBar: true)
     }
 
     func reloadFavoritesData() {
@@ -143,7 +143,7 @@ private extension FTFavoritebarViewController {
     }
 
      func updateSelectionStatus(cell: FTFavoritePenCollectionViewCell?) {
-        UIView.animate(withDuration: 0.1, delay: 0, options: UIView.AnimationOptions.curveLinear, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
             for index in self.favorites.indices where (self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell)?.isFavoriteSelected == true {
                 let prevCell = self.collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? FTFavoritePenCollectionViewCell
                 prevCell?.isFavoriteSelected = false
