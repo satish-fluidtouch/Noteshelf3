@@ -1029,6 +1029,8 @@
 "export_description2" = "Los datos exportados que contienen tus cuadernos, grupos y categorías se guardarán como un archivo .zip. Tus cuadernos se guardarán en el formato .noteshelf.";
 "export_description_1" = "Se recomienda encarecidamente que guardes una copia de tus datos en tu dispositivo local. Los datos exportados se guardarán como un archivo .zip y contendrán todas tus libretas, grupos y categorías.";
 "failed_following" = "No se pudo hacer una copia de seguridad de los siguientes cuadernos:";
+"favoritebar.singleFavoriteDelete.message" = "Se debe conservar al menos un elemento en la barra de herramientas Favoritos.";
+"favoritebar.singleFavoriteDelete.title" = "No se puede eliminar favorito";
 "finalizing" = "Finalizando";
 "finder.addPageAfter" = "Agregar página después";
 "finder.addPageBefore" = "Añadir página antes.";
@@ -1538,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

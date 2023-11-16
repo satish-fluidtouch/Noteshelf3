@@ -1029,6 +1029,8 @@
 "export_description2" = "내 서랍, 그룹 및 카테고리를 포함한 내보낸 데이터는 .zip 파일로 저장됩니다. 노트는 .noteshelf 형식으로 저장됩니다.";
 "export_description_1" = "당신의 데이터의 사본을 로컬 기기에 저장하는 것이 강력히 권장됩니다. 내보낸 데이터는 .zip 파일로 저장되며 모든 노트북, 그룹 및 카테고리를 포함합니다.";
 "failed_following" = "다음 노트북을 백업하지 못했습니다.";
+"favoritebar.singleFavoriteDelete.message" = "즐겨찾기 도구 모음에는 하나 이상의 항목이 유지되어야 합니다.";
+"favoritebar.singleFavoriteDelete.title" = "즐겨찾기를 삭제할 수 없습니다.";
 "finalizing" = "완료";
 "finder.addPageAfter" = "이 단어 뒤에 페이지 추가";
 "finder.addPageBefore" = "앞에 페이지 추가";
@@ -1538,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

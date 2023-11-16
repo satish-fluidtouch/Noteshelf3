@@ -73,10 +73,10 @@ class FTFavoritebarViewController: UIViewController {
         self.sizeDisplayView?.isHidden = false
         self.sizeDisplayView?.backgroundColor = UIColor.label
         self.sizeDisplayWidthConstraint?.constant = reqWidth
-        self.sizeDisplayView.layoutIfNeeded()
         self.sizeDisplayView?.layer.cornerRadius = reqWidth*0.5
-        self.sizeDisplayView?.layer.masksToBounds = false
-        self.sizeDisplayView?.clipsToBounds = true
+        self.sizeDisplayView?.layer.shouldRasterize = true
+        self.sizeDisplayView?.layer.rasterizationScale = UIScreen.main.scale
+        self.sizeDisplayView.layoutIfNeeded()
     }
 }
 

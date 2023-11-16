@@ -1029,6 +1029,8 @@
 "export_description2" = "您的笔记本、分组和分类的导出数据将保存为.zip文件。您的笔记本将以.noteshelf格式保存。";
 "export_description_1" = "强烈建议您在本地设备上保存数据副本。导出的数据将保存为.zip文件，包含您所有的笔记本、组和分类。";
 "failed_following" = "备份以下笔记本失败：";
+"favoritebar.singleFavoriteDelete.message" = "收藏夹工具栏中必须至少保留一项。";
+"favoritebar.singleFavoriteDelete.title" = "无法删除收藏夹";
 "finalizing" = "完成";
 "finder.addPageAfter" = "在此后面添加页面";
 "finder.addPageBefore" = "在此前面添加页面";
@@ -1538,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM
