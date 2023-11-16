@@ -46,7 +46,7 @@ final class FTIAPurchaseHelper {
 
     var isPremiumUser: Bool {
         get {
-//            #if ADHOC
+//            #if BETA
 //            return true;
 //            #else
             var isPremierUser = UserDefaults.standard.bool(forKey: premiumUserStatus)

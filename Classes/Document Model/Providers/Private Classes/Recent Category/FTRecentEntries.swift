@@ -156,7 +156,7 @@ class FTRecentEntries: NSObject {
         defaults.synchronize();
     }
     
-    #if DEBUG || ADHOC
+    #if DEBUG || BETA
     static func clearRecentList() {
         recentDataProvider.reset();
     }

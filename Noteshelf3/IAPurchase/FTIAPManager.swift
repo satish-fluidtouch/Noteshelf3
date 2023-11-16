@@ -76,7 +76,7 @@ class FTIAPManager: NSObject {
     static var ns2_ns3PremiumIdentifier: String {
 #if DEBUG
         return "com.fluidtouch.noteshelf3.devpremium.ns2user"
-#elseif ADHOC
+#elseif BETA
         return "com.fluidtouch.noteshelf3.betapremium.ns2user"
 #else
         return "com.fluidtouch.noteshelf3_premium.ns2user"
@@ -86,7 +86,7 @@ class FTIAPManager: NSObject {
     static var ns3PremiumIdentifier: String {
 #if DEBUG
         return "com.fluidtouch.noteshelf3.devpremium"
-#elseif ADHOC
+#elseif BETA
         return "com.fluidtouch.noteshelf3.betapremium"
 #else
         return "com.fluidtouch.noteshelf3_premium"
