@@ -305,7 +305,7 @@
 		<string>msauth</string>
 		<string>msauthv2</string>
 		<string>msauthv3</string>
-		<string>com.fluidtouch.noteshelf</string>
+		<string>$(NS2_APP_URL_SCHEME)</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
