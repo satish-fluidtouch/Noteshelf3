@@ -39,6 +39,9 @@ extension FTPDFRenderViewController {
         case .lasso:
             self.switchMode(.deskModeClipboard, toolbarItem: toolbarItem)
 
+        case .favorites:
+            self.switchMode(.deskModeFavorites, toolbarItem: toolbarItem)
+            
         case .photo:
             self.executer?.execute(type: .photo)
 

@@ -25,20 +25,13 @@ class FTNS3BookURLThumbnailReader: NSObject {
         }
         
         func fetchImage() {
-            let operation = FTThumbnailRequestOperation(url: item.URL);
-            operation.completionBlock = { [weak self] in
-                runInMainThread {
+            let request = item.URL.fetchQLThumbnail { image, error in
+                runInMainThread { [weak self] in
                     self?.removeQLRequest(item)
-                    let imgToReturn = operation.thumbnailImage;
-                    onCompletion(imgToReturn,token,operation.fetchError);
-                }
-            };
-            operation.onStartRequest = { [weak self] request in
-                runInMainThread {
-                    self?.addQLRequestToCache(item, request: request);
+                    onCompletion(image,token,error);
                 }
             }
-            queue.addOperation(operation);
+            self.addQLRequestToCache(item, request: request);
         }
         let modifiedime = item.URL.fileModificationDate.timeIntervalSinceReferenceDate;
         let currentTime = Date().timeIntervalSinceReferenceDate;

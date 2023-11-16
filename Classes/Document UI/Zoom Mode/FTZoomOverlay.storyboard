@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9ZK-i7-ngC">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9ZK-i7-ngC">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -111,7 +111,7 @@
             <objects>
                 <viewController storyboardIdentifier="FTZoomPanelViewController" id="wxc-SN-I5W" customClass="FTZoomPanelViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qdg-NV-BXU">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="65"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="56"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toolbar_shadow_top" translatesAutoresizingMaskIntoConstraints="NO" id="27E-CM-512" userLabel="Shadow Top">
@@ -146,7 +146,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQb-kv-hOX" userLabel="Nav View">
-                                <rect key="frame" x="0.0" y="-13" width="390" height="44"/>
+                                <rect key="frame" x="0.0" y="-22" width="390" height="44"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DNZ-6B-U7Y" userLabel="Settings View">
                                         <rect key="frame" x="16" y="0.0" width="120" height="44"/>
@@ -230,7 +230,7 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLj-bx-0Oo" userLabel="Tools View">
-                                        <rect key="frame" x="115" y="0.0" width="160" height="44"/>
+                                        <rect key="frame" x="95" y="0.0" width="200" height="44"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gTq-BC-19M" userLabel="Pen" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
@@ -262,6 +262,14 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="MZ4-U6-mev"/>
                                                     <constraint firstAttribute="height" constant="44" id="fLR-I1-c79"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhP-GK-6Rm" userLabel="Shape" customClass="FTDeskToolView" customModule="NS3_Beta" customModuleProvider="target">
+                                                <rect key="frame" x="160" y="0.0" width="40" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="OUg-XT-hU4"/>
+                                                    <constraint firstAttribute="width" constant="40" id="fgt-iH-QjL"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -400,6 +408,7 @@
                         <outlet property="arrowsTrailingConstraint" destination="Hig-Kz-bUo" id="1pw-HY-cgr"/>
                         <outlet property="arrowsView" destination="JJu-ay-l7N" id="041-FE-arO"/>
                         <outlet property="eraserToolView" destination="UcT-n7-5IO" id="0zn-4h-sDi"/>
+                        <outlet property="favoriteToolView" destination="rhP-GK-6Rm" id="ncl-rP-Diq"/>
                         <outlet property="highlighterToolView" destination="Ecl-fs-6Ip" id="dgd-3Z-jWf"/>
                         <outlet property="panDownButton" destination="akE-uN-odH" id="Jrh-xx-4bn"/>
                         <outlet property="panGestureRecognizer" destination="ZqC-1Y-qX6" id="856-sR-xTl"/>
@@ -518,7 +527,7 @@
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemFillColor">
             <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>

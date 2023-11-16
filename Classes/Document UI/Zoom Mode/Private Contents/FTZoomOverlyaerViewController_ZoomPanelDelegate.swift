@@ -28,7 +28,7 @@ extension FTZoomOverlayViewController {
             let currentMode = strongSelf.currentDeskMode;
             
             let inImpactedRect = impactedRectValue.cgRectValue;
-            if (currentMode == .deskModePen || currentMode == .deskModeMarker),
+            if (currentMode == .deskModePen || currentMode == .deskModeMarker || currentMode == .deskModeFavorites),
                 docCache.zoomPanelAutoAdvanceEnabled
             {
                 if nil != strongSelf.autoscrollTimer {
