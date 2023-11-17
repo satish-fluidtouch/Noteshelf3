@@ -51,6 +51,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
     case share
     case hand
     case openAI
+    case favorites
 
     // Add Menu
     case photo
@@ -98,6 +99,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_share"
         case .openAI:
             name = "desk_tool_openAI"
+        case .favorites:
+            name = "desk_tool_favorites"
+
         case .photo:
             name = "desk_tool_photo"
         case .audio:
@@ -149,6 +153,9 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             name = "desk_tool_openAISelected"
         case .presenter:
             name = "desk_tool_presenterSelected"
+        case .favorites:
+            name = "desk_tool_favoritesSelected"
+            
         case .photo:
             name = "desk_tool_photoSelected"
         case .audio:
@@ -194,6 +201,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "noteshelf.ai.noteshelfAI".aiLocalizedString
         case .share:
             str = "customizeToolbar.share".localized
+        case .favorites:
+            str = "Favorites".localized
 
             // Media
         case .photo:
@@ -259,6 +268,8 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
             str = "noteshelf.ai.noteshelfAI".aiLocalizedString
         case .share:
             str = "customizeToolbar.share".localizedEnglish
+        case .favorites:
+            str = "Favorites".localizedEnglish
 
             // Media
         case .photo:
@@ -300,7 +311,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
 
     var toolMode: FTDeskCenterPanelToolMode {
         var mode: FTDeskCenterPanelToolMode = .shortcut
-        if self == .pen || self == .highlighter || self == .eraser || self == .shapes || self == .textMode || self == .presenter || self == .lasso || self == .hand {
+        if self == .pen || self == .highlighter || self == .eraser || self == .shapes || self == .textMode || self == .presenter || self == .lasso || self == .hand || self == .favorites {
             mode = .deskModeTool
         }
         return mode

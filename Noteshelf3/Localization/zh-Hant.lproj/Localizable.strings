@@ -1029,6 +1029,8 @@
 "export_description2" = "您的筆記本、分組和分類的匯出資料將儲存為.zip檔。 您的筆記本將以.noteshelf格式儲存。";
 "export_description_1" = "強烈建議您在本機裝置上儲存資料副本。 匯出的資料將儲存為.zip文件，包含您所有的筆記本、群組和分類。";
 "failed_following" = "備份以下筆記本失敗：";
+"favoritebar.singleFavoriteDelete.message" = "收藏夾工具列中必須至少保留一項。";
+"favoritebar.singleFavoriteDelete.title" = "無法刪除收藏夾";
 "finalizing" = "完成";
 "finder.addPageAfter" = "在此後面新增頁面";
 "finder.addPageBefore" = "在此前面新增頁面";
@@ -1538,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

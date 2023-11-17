@@ -9,7 +9,7 @@
 import Foundation
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
+// import EvernoteSDK
 #endif
 #endif
 import PDFKit

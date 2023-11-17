@@ -66,7 +66,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         self.perform(#selector(self.hideQuickPageNavigator), with: nil, afterDelay: 0.1)
         FTRefreshViewController.addObserversForHideNewPageOptions()
         
-        let supportedModes: [RKDeskMode] = [.deskModePen,.deskModeMarker,.deskModeLaser,.deskModeEraser,.deskModeShape];
+        let supportedModes: [RKDeskMode] = [.deskModePen,.deskModeMarker,.deskModeLaser,.deskModeEraser,.deskModeShape, .deskModeFavorites];
         guard supportedModes.contains(self.currentDrawingMode) else {
             return;
         }
@@ -92,7 +92,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(self.currentDrawingMode == RKDeskMode.deskModePen
             || self.currentDrawingMode == RKDeskMode.deskModeMarker
             || self.currentDrawingMode == RKDeskMode.deskModeShape
-            || self.currentDrawingMode == RKDeskMode.deskModeLaser) {
+           || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.strokeInProgress = true
             self.processVertex(touch: touch, vertexType: .FirstVertex);
             self.displayLink?.isPaused = false;
@@ -125,7 +125,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(self.currentDrawingMode == RKDeskMode.deskModePen
             || self.currentDrawingMode == RKDeskMode.deskModeMarker
             || self.currentDrawingMode == RKDeskMode.deskModeShape
-            || self.currentDrawingMode == RKDeskMode.deskModeLaser) {
+           || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.strokeInProgress = true
             self.processVertex(touch: touch, vertexType: .InterimVertex);
             self.displayLink?.isPaused = false;
@@ -157,7 +157,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(self.currentDrawingMode == RKDeskMode.deskModePen
         || self.currentDrawingMode == RKDeskMode.deskModeMarker
         || self.currentDrawingMode == RKDeskMode.deskModeShape
-        || self.currentDrawingMode == RKDeskMode.deskModeLaser) {
+           || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.processVertex(touch: touch, vertexType: .LastVertex,isShapeEnabled: isShapeEnabled)
         }
         if(self.currentDrawingMode == RKDeskMode.deskModeEraser) {

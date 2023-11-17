@@ -165,6 +165,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 -(void)textButtonAction;
 -(void)presenterButtonAction;
 -(void)lassoButtonAction;
+-(void)favoritesButtonAction;
 -(void)delayedZoomButtonAction;
 -(void)settingsButtonAction;
 -(void)finderButtonAction:(BOOL)animated;

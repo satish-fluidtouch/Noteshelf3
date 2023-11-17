@@ -156,7 +156,7 @@ class FTRecentEntries: NSObject {
         defaults.synchronize();
     }
     
-    #if DEBUG || ADHOC
+    #if DEBUG || BETA
     static func clearRecentList() {
         recentDataProvider.reset();
     }
@@ -337,3 +337,15 @@ private class FTRecentDataProvider {
         }
     }
 }
+
+// NS2 pinned items migration
+final class FTPinnedItemsMigration {
+    class func getNS2PinnedEntries() -> [FTRecentItem] {
+        let defaults = UserDefaults.init(suiteName: FTSharedGroupID.getNS2AppGroupID())!
+        guard let items = defaults.array(forKey: "FTPinnedEntries") as? [FTRecentItem] else {
+            return [FTRecentItem]()
+        }
+        return items
+    }
+}
+

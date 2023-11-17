@@ -14,10 +14,6 @@
     #import "FTDefaults.h"
     #import "FTUtils.h"
     #import "NSStringAdditions.h"
-    
-#if !TARGET_OS_MACCATALYST
-    #import <EvernoteSDK/EvernoteSDK.h>
-#endif
     #import <FirebaseCrashlytics/FirebaseCrashlytics.h>
     #import "FTDiagonosisHeader.h"
     #import "FTStrokeConstants.h"

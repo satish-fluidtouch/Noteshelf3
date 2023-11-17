@@ -31,7 +31,7 @@ class FTOpenAI: NSObject {
         
         currentcommand = command;
         
-#if DEBUG || ADHOC
+#if DEBUG || BETA
         let commandString: String = command.debugCommand;
 #else
         let commandString: String = command.command();
@@ -42,7 +42,7 @@ class FTOpenAI: NSObject {
         messages.append(Chat(role: .user, content: command.contentToExecute));
 
         var targettedError: Error?;
-#if DEBUG || ADHOC
+#if DEBUG || BETA
         let query = ChatQuery(model: FTOpenAI.debugModel, messages: messages,temperature: 0.2)
 #else
         let query = ChatQuery(model: .gpt3_5Turbo, messages: messages,temperature: 0.2)

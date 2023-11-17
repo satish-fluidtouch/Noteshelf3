@@ -16,10 +16,11 @@ struct FTPresenterShortcutView: View {
         ZStack {
             FTShortcutBarVisualEffectView()
                 .cornerRadius(100.0)
-            VStack(spacing: FTSpacing.small) {
+            HStack(spacing: FTSpacing.small) {
                 self.pointerView
                 self.penView
                 self.moreOptionsView
+                    .rotationEffect(self.viewModel.contentTransformation)
                     .hoverScaleEffect(scale: 1.3)
             }
         }
@@ -33,7 +34,7 @@ struct FTPresenterShortcutView: View {
         ZStack {
             Image(self.viewModel.selectedPresenterType == .pen ? "laserPointer" : "laserPointerSelected")
         }
-        .frame(width: shortcutWidth, height: 44.0)
+        .frame(width: 44.0, height: shortcutHeight)
         .contentShape(Rectangle())
         .hoverEffect()
         .onTapGesture {
@@ -42,14 +43,14 @@ struct FTPresenterShortcutView: View {
     }
 
     private var penView: some View {
-        VStack(spacing: FTSpacing.zero) {
+        HStack(spacing: FTSpacing.zero) {
             ForEach(0..<viewModel.laserPenColors.count, id: \.self) { index in
                 let color = viewModel.laserPenColors[index]
                 VStack {
                     FTPresenterColorCircleView(hexColor: color, isSelected: self.isSelected(color: color))
                         .hoverEffect()
                 }
-                .frame(width: shortcutWidth, height: 34.0)
+                .frame(width: 34.0, height: shortcutHeight)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     self.viewModel.saveSelection(type: .pen, color: color)
@@ -82,7 +83,7 @@ struct FTPresenterShortcutView: View {
                 Image(systemName: "ellipsis.circle")
                     .font(Font.appFont(for: .medium, with: 18))
                     .foregroundColor(Color.label.opacity(0.96))
-            }.frame(width: shortcutWidth, height: 44.0)
+            }.frame(width: 44.0, height: shortcutHeight)
         }.menuOrder(.fixed)
     }
 }

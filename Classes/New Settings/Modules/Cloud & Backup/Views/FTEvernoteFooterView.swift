@@ -17,8 +17,6 @@ class FTEvernoteFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.signOutBtn.layer.cornerRadius = 8.0
-        self.signOutBtn.layer.borderColor = UIColor.separator.cgColor
-        self.signOutBtn.layer.borderWidth = 1.0
         self.signOutBtn.setTitleColor(UIColor.appColor(.signoutBtnColor), for: .normal)
         self.signOutBtn.titleLabel?.font = UIFont.appFont(for: .regular, with: 15)
         self.signOutBtn.setTitle(NSLocalizedString("shelf.evernote.signout", comment: "Sign Out from Evernote"), for: .normal)
