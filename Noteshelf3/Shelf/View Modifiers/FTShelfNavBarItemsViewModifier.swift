@@ -35,9 +35,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             content
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
-                    if enPublishError.hasError {
-                        ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarTrailing)  {
-
+                    ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                        if enPublishError.hasError {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {
@@ -47,65 +46,57 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .frame(width: 24.0, height: 24.0)
                             }
                         }
-                    }
 
                         if backUpError.hasError {
-                            ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarTrailing)  {
-                                Button {
-                                    self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
-                                } label: {
-                                    Image("cloud-error")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 24.0, height: 24.0)
-                                }
+                            Button {
+                                self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
+                            } label: {
+                                Image("cloud-error")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 24.0, height: 24.0)
                             }
                         }
 
                         if shelfViewModel.canShowNewNoteNavOption {
-                            ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarTrailing)  {
-                                Button {
-                                    showingPopover = true
-                                    track(EventName.shelf_addmenu_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                                } label: {
-                                    Image(icon: .plus)
-                                        .font(Font.appFont(for: .regular , with: 15.5))
-                                        .foregroundColor(Color.appColor(.accent))
-                                }
+                            Button {
+                                showingPopover = true
+                                track(EventName.shelf_addmenu_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
+                            } label: {
+                                Image(icon: .plus)
+                                    .font(Font.appFont(for: .regular , with: 15.5))
+                                    .foregroundColor(Color.appColor(.accent))
+                            }
                                 .popover(isPresented: $showingPopover) {
                                     FTShelfNewNotePopoverView(viewModel: newNoteViewModel(), popoverHeight: popOverHeight, appState: AppState(sizeClass: horizontalSizeClass ?? .regular),delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)
-                                        .presentationDetents([.height(popOverHeight)])
-                                        .presentationDragIndicator(.hidden)
-                                        .background(.regularMaterial)
-                                        .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
+                                    .presentationDetents([.height(popOverHeight)])
+                                    .presentationDragIndicator(.hidden)
+                                    .background(.regularMaterial)
+                                    .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
                                 }
-                            }
                             }
                         if shelfViewModel.canShowSearchOption {
-                            ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarTrailing)  {
-                                Button {
-                                    if !shelfMenuOverlayInfo.isMenuShown {
-                                        shelfViewModel.searchTapped()
-                                        let locationName = shelfViewModel.shelfLocation()
-                                        track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
-                                    }
-                                } label: {
-                                    Image(icon: .search)
-                                        .font(Font.appFont(for: .regular , with: 15.5))
-                                        .foregroundColor(Color.appColor(.accent))
+                            Button {
+                                if !shelfMenuOverlayInfo.isMenuShown {
+                                    shelfViewModel.searchTapped()
+                                    let locationName = shelfViewModel.shelfLocation()
+                                    track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
                                 }
-                                .frame(width: 44,height: 44,alignment: .center)
+                            } label: {
+                                Image(icon: .search)
+                                    .font(Font.appFont(for: .regular , with: 15.5))
+                                    .foregroundColor(Color.appColor(.accent))
                             }
+                            .frame(width: 44,height: 44,alignment: .center)
                         }
-                    ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarTrailing)  {
                         FTShelfSelectAndSettingsView(viewModel: shelfViewModel)
                             .frame(width: 44,height: 44,alignment: .center)
                     }
-                    }
+                }
             })
                 .if(shelfViewModel.mode == .selection, transform: { view in
                     view.toolbar {
-                        ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarTrailing) {
+                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
                             Button {
                                 shelfViewModel.mode = .normal
                                 shelfViewModel.finalizeShelfItemsEdit()
@@ -123,7 +114,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                             .frame(height: 44)
                         }
-                        ToolbarItem(id:UUID().uuidString,placement: ToolbarItemPlacement.navigationBarLeading) {
+                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                             if shelfViewModel.areAllItemsSelected {
                                 Button {
                                     // Track Event
