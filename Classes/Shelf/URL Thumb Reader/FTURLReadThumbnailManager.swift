@@ -36,7 +36,7 @@ class FTThumbReadCallbacks : NSObject
         super.init();
 
         thumbReadOperationQueue.name = "FTThumbnailREADER";
-        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
+//        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
         
         let notificationBlock : (_ noti:Notification) -> Void = { [weak self] (notification) in
             self?.thumbReadOperationQueue.cancelAllOperations();

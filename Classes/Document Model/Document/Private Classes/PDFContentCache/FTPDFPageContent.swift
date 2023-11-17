@@ -52,7 +52,8 @@ class FTPDFPageContent: NSObject,NSSecureCoding {
                 let index = nsRange.location;
                 var rect = CGRect.null
                 for i in 0..<searchkeyLength {
-                    rect = rect.union(charRects[index + i]);
+                    let rectindex = min(index + i,charRects.count-1);
+                    rect = rect.union(charRects[rectindex]);
                 }
                 if !rect.isNull {
                     rectsToReturn.append(rect);
