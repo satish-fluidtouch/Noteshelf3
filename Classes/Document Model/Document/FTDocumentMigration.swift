@@ -382,11 +382,9 @@ extension FTTextStyleItem {
             return nil
         }
 
-        var ns3Info = [String: Any]()
-
         let styleItem = FTTextStyleItem()
         styleItem.displayName = displayName
-        styleItem.fontName = fontName
+        styleItem.fontName = font.fontName
         styleItem.fontSize = Int(fontSize) ?? defaultFontSize
         styleItem.textColor = textColor
         styleItem.isUnderLined = (isUnderlined as NSString).integerValue == 0 ? false : true
