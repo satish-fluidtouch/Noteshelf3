@@ -62,6 +62,7 @@ class FTTextStyleItem: NSObject, Decodable {
         return false
     }
     
+    // Compares display name too
     func isFullyEqual(_ object: Any?) -> Bool {
         let lhs = self;
         if let rhs = object as? FTTextStyleItem {

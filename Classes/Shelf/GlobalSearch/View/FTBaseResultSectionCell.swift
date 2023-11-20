@@ -84,10 +84,10 @@ extension FTBaseResultSectionCell {
         else if let bookCell = cell as? FTSearchResultBookCell, let coverImgView = bookCell.coverPreviewContainer {
             view = coverImgView
             if bookCell.toShowEqualCorners {
-                let shape = FTNotebookShape(raidus: GlobalSearchConstants.BookCoverThumbnailRadius.equiRadius)
+                let shape = FTPreviewShape(raidus: GlobalSearchConstants.BookCoverThumbnailRadius.equiRadius)
                 bezierPath = UIBezierPath(cgPath: shape.path(in: view.bounds).cgPath)
             } else {
-                let shape = FTNotebookShape(leftRaidus: GlobalSearchConstants.BookCoverThumbnailRadius.left, rightRadius: GlobalSearchConstants.BookCoverThumbnailRadius.right)
+                let shape = FTPreviewShape(leftRaidus: GlobalSearchConstants.BookCoverThumbnailRadius.left, rightRadius: GlobalSearchConstants.BookCoverThumbnailRadius.right)
                 bezierPath = UIBezierPath(cgPath: shape.path(in: view.bounds).cgPath)
             }
         }

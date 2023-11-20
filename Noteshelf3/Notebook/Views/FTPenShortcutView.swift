@@ -17,15 +17,15 @@ struct FTPenShortcutView: View {
         ZStack {
             FTShortcutBarVisualEffectView()
                 .cornerRadius(100.0)
-            VStack(spacing: 0.0) {
+            HStack(spacing: 0.0) {
                 FTPenColorShortcutView()
                     .environmentObject(colorModel)
-                    .padding(.vertical, 8.0)
+                    .padding(.horizontal, 8.0)
                 FTToolSeperator()
-                    .padding(.vertical, 2.0)
+                    .padding(.horizontal, 2.0)
                 FTPenSizeShortcutView()
                     .environmentObject(sizeModel)
-                    .padding(.vertical, 6.0)
+                    .padding(.horizontal, 6.0)
             }
         }
         .toolbarOverlay()

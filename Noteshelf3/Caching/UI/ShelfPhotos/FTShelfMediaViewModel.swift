@@ -91,19 +91,15 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
         state = .loading
     }
 
-    @MainActor
-    private func setState() {
-        if self.media.isEmpty {
-            state = .empty
-        } else {
-            state = .loaded
-        }
-    }
-    
-    @MainActor
     private func updateMedia(items: [FTShelfMedia]) {
-        self.media.append(contentsOf: items)
-        setState()
+        runInMainThread {
+            self.media.append(contentsOf: items)
+            if self.state == .loaded, self.media.isEmpty {
+                self.state = .empty
+            } else {
+                self.state = .loaded
+            }
+        }
     }
 }
 
@@ -112,35 +108,42 @@ private extension FTShelfContentPhotosViewModel {
     func fetchMedia() async throws  {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
 
+        guard !allItems.isEmpty else {
+            self.updateMedia(items: [])
+            self.state = .loaded
+            return
+        }
+
         let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
         for case let item in items where item.documentUUID != nil {
             do {
-                let media = try fetchMedia(docItem: item)
-                await self.updateMedia(items: media)
+                try fetchMedia(docItem: item, onMediaFound: { [weak self] media in
+                    self?.updateMedia(items: media)
+                })
             } catch {
                 continue
             }
         }
     }
 
-    func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfMedia] {
+    func fetchMedia(docItem: FTDocumentItemProtocol, onMediaFound: (_ media: [FTShelfMedia]) -> Void) throws {
         guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
         let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
         let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")
         guard FileManager.default.fileExists(atPath: annotationsFolder) else {
-            return []
+            onMediaFound([])
+            return
         }
         var sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
-        var totalMedia: [FTShelfMedia] = [FTShelfMedia]()
 
         for sqliteFile in sqliteFiles {
             let sqlitePath = annotationsFolder.appending(sqliteFile)
             let cachedFile = FTCachedSqliteAnnotationFileItem(url: URL(fileURLWithPath: sqlitePath), isDirectory: false, documentItem: docItem)
             var media = cachedFile.annotataionsWithResources()
-            totalMedia.append(contentsOf: media)
+            onMediaFound(media)
         }
-        return totalMedia
+        onMediaFound([])
     }
 }

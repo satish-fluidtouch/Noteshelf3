@@ -262,7 +262,6 @@
 		4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7050CD24F644C1009CA613 /* StoreTemplateFormat.swift */; };
 		4209FEAE295C62DE00ACC02E /* URL_Attributes_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AF2BFF249B52CD0089A2A3 /* URL_Attributes_Extension.swift */; };
 		4209FEAF295C62E500ACC02E /* Siri+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297F6642535E042009F8F5A /* Siri+Common.swift */; };
-		4209FEB0295C630F00ACC02E /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
 		4209FEB1295C634500ACC02E /* NSDate_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA376E2223BE134D00B27012 /* NSDate_Extension.swift */; };
 		4209FEB2295C635300ACC02E /* FTDynamicTemplateInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8525A24F62CEA00EF893A /* FTDynamicTemplateInfo.swift */; };
 		4209FEB3295C636700ACC02E /* FTShelfItemSearching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E11E85024B0003DA80 /* FTShelfItemSearching.swift */; };
@@ -345,6 +344,7 @@
 		471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450152924E24200B6113B /* FTTagCollectionCell.swift */; };
 		471B90EF29F0ED8800861A2B /* FTTagsAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476450162924E24200B6113B /* FTTagsAlignedCollectionViewFlowLayout.swift */; };
 		472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */; };
+		4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */; };
 		472BDF8429E7E9FF001BE43A /* FTDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472BDF8329E7E9FF001BE43A /* FTDataCache.swift */; };
 		473310782A1F2DFC008DC0DB /* RPCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */; };
 		473C1F8029C864E4003BD6BB /* FTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AF3B424C0486D007F7276 /* FTSegmentedControl.swift */; };
@@ -366,6 +366,10 @@
 		475E53492A5D6E75004AB827 /* FTShelfTagsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E53482A5D6E75004AB827 /* FTShelfTagsConstants.swift */; };
 		475E534B2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475E534A2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift */; };
 		4766F6AA2A8DFB6E00F8FA27 /* FTNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4766F6A92A8DFB6E00F8FA27 /* FTNetwork.swift */; };
+		477646482AF0D562009DCC2A /* FT24HrEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882C24426B29A1000C84B52 /* FT24HrEventLogger.swift */; };
+		477646492AF0D566009DCC2A /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
+		4776464A2AF0D566009DCC2A /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
+		4776464B2AF0D569009DCC2A /* FTLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BA910AFD224CA38A002869D3 /* FTLogger.m */; };
 		477862DB2A5EB0A400202D00 /* FTShelfTagsPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47653CA4291CA8670068D7AE /* FTShelfTagsPageCell.swift */; };
 		477862FD2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */; };
 		478142BD2A85F33A0029378B /* templates_fr.plist in Resources */ = {isa = PBXBuildFile; fileRef = 478142B42A85F33A0029378B /* templates_fr.plist */; };
@@ -613,6 +617,55 @@
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
 		8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */; };
+		9715E00D2AEA9D2C00EC48D4 /* ENCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF902AEA9D2C00EC48D4 /* ENCredentials.m */; };
+		9715E00E2AEA9D2C00EC48D4 /* ENApplicationBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF972AEA9D2C00EC48D4 /* ENApplicationBridge.m */; };
+		9715E00F2AEA9D2C00EC48D4 /* ENAuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF982AEA9D2C00EC48D4 /* ENAuthenticationRequest.m */; };
+		9715E0102AEA9D2C00EC48D4 /* ENNoteViewRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF9C2AEA9D2C00EC48D4 /* ENNoteViewRequest.m */; };
+		9715E0112AEA9D2C00EC48D4 /* ENResourceAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF9D2AEA9D2C00EC48D4 /* ENResourceAttachment.m */; };
+		9715E0122AEA9D2C00EC48D4 /* ENLinkNotebookRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF9E2AEA9D2C00EC48D4 /* ENLinkNotebookRequest.m */; };
+		9715E0132AEA9D2C00EC48D4 /* ENNewNoteRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFA02AEA9D2C00EC48D4 /* ENNewNoteRequest.m */; };
+		9715E0142AEA9D2C00EC48D4 /* ENSearchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFA12AEA9D2C00EC48D4 /* ENSearchRequest.m */; };
+		9715E0152AEA9D2C00EC48D4 /* ENNoteImportRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFA32AEA9D2C00EC48D4 /* ENNoteImportRequest.m */; };
+		9715E0162AEA9D2C00EC48D4 /* EvernoteSDK.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9715DFA62AEA9D2C00EC48D4 /* EvernoteSDK.strings */; };
+		9715E0172AEA9D2C00EC48D4 /* ENAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFAA2AEA9D2C00EC48D4 /* ENAPI.m */; };
+		9715E0182AEA9D2C00EC48D4 /* ENCredentialStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFAB2AEA9D2C00EC48D4 /* ENCredentialStore.m */; };
+		9715E01C2AEA9D2C00EC48D4 /* EvernoteSDK_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFB02AEA9D2C00EC48D4 /* EvernoteSDK_iOS.m */; };
+		9715E01D2AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFB52AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.m */; };
+		9715E01E2AEA9D2C00EC48D4 /* NSDataBase64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFB62AEA9D2C00EC48D4 /* NSDataBase64Additions.m */; };
+		9715E01F2AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFB72AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.m */; };
+		9715E0202AEA9D2C00EC48D4 /* ENMLUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFBC2AEA9D2C00EC48D4 /* ENMLUtility.m */; };
+		9715E0212AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9715DFBD2AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Info.plist */; };
+		9715E0222AEA9D2C00EC48D4 /* EvernoteSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFBE2AEA9D2C00EC48D4 /* EvernoteSession.m */; };
+		9715E0232AEA9D2C00EC48D4 /* KSXMLAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFC12AEA9D2C00EC48D4 /* KSXMLAttributes.m */; };
+		9715E0242AEA9D2C00EC48D4 /* KSHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFC82AEA9D2C00EC48D4 /* KSHTMLWriter.m */; };
+		9715E0252AEA9D2C00EC48D4 /* NSString+XMLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFC92AEA9D2C00EC48D4 /* NSString+XMLAdditions.m */; };
+		9715E0262AEA9D2C00EC48D4 /* KSXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFCA2AEA9D2C00EC48D4 /* KSXMLWriter.m */; };
+		9715E0272AEA9D2C00EC48D4 /* KSWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFCB2AEA9D2C00EC48D4 /* KSWriter.m */; };
+		9715E0292AEA9D2C00EC48D4 /* KSForwardingWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFCD2AEA9D2C00EC48D4 /* KSForwardingWriter.m */; };
+		9715E02B2AEA9D2C00EC48D4 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFD12AEA9D2C00EC48D4 /* SSKeychain.m */; };
+		9715E02C2AEA9D2C00EC48D4 /* TMemoryBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFD52AEA9D2C00EC48D4 /* TMemoryBuffer.m */; };
+		9715E02D2AEA9D2C00EC48D4 /* THTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFD72AEA9D2C00EC48D4 /* THTTPClient.m */; };
+		9715E02E2AEA9D2C00EC48D4 /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFDB2AEA9D2C00EC48D4 /* TTransportException.m */; };
+		9715E0302AEA9D2C00EC48D4 /* TApplicationException.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFDF2AEA9D2C00EC48D4 /* TApplicationException.m */; };
+		9715E0312AEA9D2C00EC48D4 /* TProtocolUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFE22AEA9D2C00EC48D4 /* TProtocolUtil.m */; };
+		9715E0322AEA9D2C00EC48D4 /* TBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFE62AEA9D2C00EC48D4 /* TBinaryProtocol.m */; };
+		9715E0332AEA9D2C00EC48D4 /* TProtocolException.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFE82AEA9D2C00EC48D4 /* TProtocolException.m */; };
+		9715E0342AEA9D2C00EC48D4 /* TException.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFEB2AEA9D2C00EC48D4 /* TException.m */; };
+		9715E0362AEA9D2C00EC48D4 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFF02AEA9D2C00EC48D4 /* NSString+URLEncoding.m */; };
+		9715E0372AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFF32AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.m */; };
+		9715E0382AEA9D2C00EC48D4 /* NSData+ENBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFF52AEA9D2C00EC48D4 /* NSData+ENBase64.m */; };
+		9715E03A2AEA9D2C00EC48D4 /* ENGCOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFF92AEA9D2C00EC48D4 /* ENGCOAuth.m */; };
+		9715E03B2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFFA2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.m */; };
+		9715E03C2AEA9D2C00EC48D4 /* EvernoteNoteStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFFB2AEA9D2C00EC48D4 /* EvernoteNoteStore.m */; };
+		9715E03D2AEA9D2D00EC48D4 /* EvernoteUserStore+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFFC2AEA9D2C00EC48D4 /* EvernoteUserStore+Extras.m */; };
+		9715E03E2AEA9D2D00EC48D4 /* EvernoteUserStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFFD2AEA9D2C00EC48D4 /* EvernoteUserStore.m */; };
+		9715E03F2AEA9D2D00EC48D4 /* EvernoteNoteStore+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFFE2AEA9D2C00EC48D4 /* EvernoteNoteStore+Extras.m */; };
+		9715E0402AEA9D2D00EC48D4 /* ENConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DFFF2AEA9D2C00EC48D4 /* ENConstants.m */; };
+		9715E0412AEA9D2D00EC48D4 /* EDAMTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E0082AEA9D2C00EC48D4 /* EDAMTypes.m */; };
+		9715E0422AEA9D2D00EC48D4 /* EDAMErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E0092AEA9D2C00EC48D4 /* EDAMErrors.m */; };
+		9715E0432AEA9D2D00EC48D4 /* EDAMLimits.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E00A2AEA9D2C00EC48D4 /* EDAMLimits.m */; };
+		9715E0442AEA9D2D00EC48D4 /* EDAMUserStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E00B2AEA9D2C00EC48D4 /* EDAMUserStore.m */; };
+		9715E0452AEA9D2D00EC48D4 /* EDAMNoteStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E00C2AEA9D2C00EC48D4 /* EDAMNoteStore.m */; };
 		972B52BE2A406FEF001158D9 /* StockPapers_Watch.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 972B52BD2A406FEF001158D9 /* StockPapers_Watch.bundle */; };
 		972B52E02A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B52DF2A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift */; };
 		972B53222A45CB7A001158D9 /* FTNotebookShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B53212A45CB7A001158D9 /* FTNotebookShadowView.swift */; };
@@ -649,7 +702,6 @@
 		979BC28B2893E47200208B21 /* FTShelfTextfieldAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979BC28A2893E47200208B21 /* FTShelfTextfieldAlertView.swift */; };
 		97A606D629BB368A00B01E03 /* FTTemplateInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A606D529BB368A00B01E03 /* FTTemplateInfoModel.swift */; };
 		97A606D829BB3D3500B01E03 /* FTCoverDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A606D729BB3D3500B01E03 /* FTCoverDataSource.swift */; };
-		97A663C429966D08006F13C8 /* FTNotebookShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTNotebookShape.swift */; };
 		97A8D9AC28DADEA1008853BF /* FTShelfItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8D9AB28DADEA0008853BF /* FTShelfItemsView.swift */; };
 		97A8D9AE28DADEB9008853BF /* FTShelfItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8D9AD28DADEB9008853BF /* FTShelfItemsViewModel.swift */; };
 		97A8D9B228DAFBE6008853BF /* FTShelfItemCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8D9B128DAFBE6008853BF /* FTShelfItemCategoryView.swift */; };
@@ -676,9 +728,18 @@
 		97C5A22E29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5A22D29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift */; };
 		97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C5A22F29F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift */; };
 		97C73415294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C73414294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift */; };
+		97C799302B035129001877B2 /* FTENUserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C7992E2B035129001877B2 /* FTENUserInfoTableViewCell.swift */; };
+		97C799312B035129001877B2 /* FTENUserInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C7992F2B035129001877B2 /* FTENUserInfoTableViewCell.xib */; };
+		97CBAB5D2AEB98DB00267A17 /* ENOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CBAB5C2AEB98DA00267A17 /* ENOAuthViewController.m */; };
+		97D2A4FA2AC6E8E800A0E509 /* FTFavoritePensetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */; };
+		97D2A4FC2AC6EE0600A0E509 /* FavoritePensets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97D2A4FB2AC6EE0600A0E509 /* FavoritePensets.plist */; };
+		97D2A4FE2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */; };
+		97D2A5002AC6F09900A0E509 /* FTFavoritePensetDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */; };
 		97E4006A29139CAD00E0E0D7 /* FTDropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */; };
+		97E65E162ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */; };
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
+		97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTPreviewShape.swift */; };
 		97F60BFC291D32A30050C3F3 /* FTGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60BFB291D32A30050C3F3 /* FTGrouping.swift */; };
 		97F60BFE291D33080050C3F3 /* FTNotebookCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60BFD291D33080050C3F3 /* FTNotebookCreation.swift */; };
 		97F60C0E291E13A80050C3F3 /* FTShelfViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97907E8B2862F47A0052ED98 /* FTShelfViewControllerNew.swift */; };
@@ -820,6 +881,8 @@
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAB258B5295B1B3B0072AEBB /* Noteshelf3 Action.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C8140D31232667B60053FC86 /* Noteshelf3 Action.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB46652296FD98A004FCBDC /* OpenCV in Frameworks */ = {isa = PBXBuildFile; productRef = BAB46651296FD98A004FCBDC /* OpenCV */; };
+		BAB4D5052AFFF337009124EF /* FTMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */; };
+		BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAB4D5062AFFF34D009124EF /* Migration.storyboard */; };
 		BADB2D152ACECA0200B1B52A /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; };
 		BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BAF0DCCA2A6FE2A9006D293B /* FTNewNotebook.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1048,7 +1111,6 @@
 		BAF390F12859ADF00067CA9F /* FTAudioSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2D751E027D72007B5CAD /* FTAudioSlider.m */; };
 		BAF390F22859ADF00067CA9F /* FTDocumentValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDAE759F22AE517800053B05 /* FTDocumentValidator.swift */; };
 		BAF390F32859ADF00067CA9F /* FTPDFOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED98787B2227A724006D83A1 /* FTPDFOutline.swift */; };
-		BAF390F42859ADF00067CA9F /* FT24HrEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882C24426B29A1000C84B52 /* FT24HrEventLogger.swift */; };
 		BAF390F52859ADF00067CA9F /* FTItemToExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E61ED52005F80100234CCC /* FTItemToExport.swift */; };
 		BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA376E3123BE134D00B27012 /* FTDiaryYearRectsInfo.swift */; };
 		BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47446B921EFCF5E60006EFC5 /* ENSyncRecord_Extension.swift */; };
@@ -1204,7 +1266,6 @@
 		BAF391C92859ADF00067CA9F /* FTCustomTextRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82C617A266DFA0800512DF2 /* FTCustomTextRange.swift */; };
 		BAF391CA2859ADF00067CA9F /* FTSettingsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8051A9D2213C9C3007EDC90 /* FTSettingsLabel.swift */; };
 		BAF391CB2859ADF00067CA9F /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4297F6672535F82F009F8F5A /* UIFont+Extensions.swift */; };
-		BAF391CC2859ADF00067CA9F /* FTLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = BA910AFD224CA38A002869D3 /* FTLogger.m */; };
 		BAF391CE2859ADF00067CA9F /* FTRecognitionServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40DBB02322406C00995DA9 /* FTRecognitionServiceProvider.swift */; };
 		BAF391D02859ADF00067CA9F /* FTSegmentStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8520024F5176400EF893A /* FTSegmentStyle.swift */; };
 		BAF391D12859ADF00067CA9F /* FTNBKZipFileImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8BFAA260DBDFA00864BC7 /* FTNBKZipFileImporter.swift */; };
@@ -1807,7 +1868,6 @@
 		BAF395192859ADF10067CA9F /* FTPinRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F20E321F0C9D12002AAF96 /* FTPinRequestViewController.swift */; };
 		BAF3951D2859ADF10067CA9F /* FTBottomDashedLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B7D5BF1EA7A3AF00B17482 /* FTBottomDashedLineView.swift */; };
 		BAF395222859ADF10067CA9F /* FTShelfProviderConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E81E852B7A0003DA80 /* FTShelfProviderConstants.swift */; };
-		BAF395232859ADF10067CA9F /* FTLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C0066E1E49C15400C491F8 /* FTLogger.swift */; };
 		BAF395242859ADF10067CA9F /* FTAutoTriggerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C831292485167900BE1DBD /* FTAutoTriggerButton.swift */; };
 		BAF395262859ADF10067CA9F /* FTClassicDiaryTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F3C3B326B9247F00E3B75E /* FTClassicDiaryTemplateFormat.swift */; };
 		BAF395272859ADF10067CA9F /* FTAudioPlayerController_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1FC62323A216D8002C318F /* FTAudioPlayerController_Extension.swift */; };
@@ -1861,15 +1921,22 @@
 		C85AFDF323324A2800D25D5F /* NSFileManager_UniqueFileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AB9DA51E7C18580041A0F5 /* NSFileManager_UniqueFileName.swift */; };
 		C85AFDF423324C0E00D25D5F /* NSString_Backup_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E30201E027D73007B5CAD /* NSString_Backup_Additions.m */; };
 		DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAD78EB2A08C550001D8B21 /* SDWebImage */; };
+		E70705FA2AC2B7D500A7B341 /* FTFavoritebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */; };
 		E713D9AB299CC1CF008FDC77 /* FTConvertPreferencesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */; };
 		E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */; };
 		E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */; };
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
+		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
+		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
+		E75A6EAE2AFCAB770039D25D /* FTFavoritePresetColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */; };
+		E75A6EB02AFCAC580039D25D /* FTFavoritePresetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */; };
+		E75A6EB22AFCC2820039D25D /* FTFavoriteColorGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */; };
 		E75B19F32A7A32D3004ECFEC /* FTErrorInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */; };
 		E75B19F52A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */; };
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
+		E75E1EB32AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */; };
 		E75E67BD2A9F7442009F5B2E /* FTTextStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */; };
 		E76023392A4EC45000B16084 /* FTSearchSuggestionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */; };
 		E760233B2A4EFBA100B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
@@ -2027,6 +2094,8 @@
 		E7C71A76288E795A00AF2598 /* EnvironmentValues+TrackValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A5F288E795900AF2598 /* EnvironmentValues+TrackValue.swift */; };
 		E7C71A77288E795A00AF2598 /* VerticalValueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C71A61288E795900AF2598 /* VerticalValueTrack.swift */; };
 		E7CCA90D29DC007B0010D619 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */; };
+		E7CD243D2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */; };
+		E7CD243F2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CD243E2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift */; };
 		E7D4AC0C2A1259BC0083F4D9 /* FTNavBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D4AC0B2A1259BC0083F4D9 /* FTNavBarButtonItem.swift */; };
 		E7D87C9B29CEF59A00E1FD1E /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D87C9A29CEF59A00E1FD1E /* UIFont+Extension.swift */; };
 		E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */; };
@@ -2462,6 +2531,7 @@
 		09A67BF22AE8F25100C5500D /* FTCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCache.swift; sourceTree = "<group>"; };
 		09A7A5511E23579D007CE620 /* FTCloudBackupIgnoreList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCloudBackupIgnoreList.swift; sourceTree = "<group>"; };
 		09AAC0001EEA6314009B5922 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		09AB3A3F2AFCC46B0062E43C /* Release Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Release Enterprise.entitlements"; sourceTree = "<group>"; };
 		09AB9D711E77D8410041A0F5 /* FTDocumentItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDocumentItem.swift; sourceTree = "<group>"; };
 		09AB9D731E77D8490041A0F5 /* FTGroupItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGroupItem.swift; sourceTree = "<group>"; };
 		09AB9D751E77D8570041A0F5 /* FTShelfItemProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemProtocols.swift; sourceTree = "<group>"; };
@@ -2487,9 +2557,14 @@
 		09ABDCA32A790F93008F144D /* FTNoteshelfAIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAIViewController.swift; sourceTree = "<group>"; };
 		09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageViewController_OpenAIExtension.swift; sourceTree = "<group>"; };
 		09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPremiumUser.swift; sourceTree = "<group>"; };
+		09AD81002AFBB48D0049022B /* Release Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Release Enterprise.entitlements"; sourceTree = "<group>"; };
+		09AD81012AFBB49C0049022B /* Debug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Debug Enterprise.entitlements"; sourceTree = "<group>"; };
+		09AD81022AFBC30B0049022B /* Debug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Debug Enterprise.entitlements"; sourceTree = "<group>"; };
 		09B267A0214B917D006B2163 /* FTSiriShortcutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSiriShortcutManager.swift; sourceTree = "<group>"; };
 		09B267A1214B917D006B2163 /* FTShortcutStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShortcutStorage.swift; sourceTree = "<group>"; };
 		09B267A2214B917D006B2163 /* NSUserActivity+SiriShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+SiriShortcuts.swift"; sourceTree = "<group>"; };
+		09B33FDB2AFE230D002C7F35 /* GoogleService-Dev-EE-info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Dev-EE-info.plist"; sourceTree = "<group>"; };
+		09B33FDC2AFE2375002C7F35 /* GoogleService-Prod-EE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Prod-EE-Info.plist"; sourceTree = "<group>"; };
 		09B6331A21D0B154006318D9 /* FTOnScreenDrawingViewController_FTStylusPenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOnScreenDrawingViewController_FTStylusPenDelegate.swift; sourceTree = "<group>"; };
 		09B665DE1E84FC310003DA80 /* FTShelfItemSorting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemSorting.swift; sourceTree = "<group>"; };
 		09B665E11E85024B0003DA80 /* FTShelfItemSearching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemSearching.swift; sourceTree = "<group>"; };
@@ -2841,6 +2916,7 @@
 		2169CA941F284B3B00D85402 /* GoogleService-Prod-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Prod-Info.plist"; sourceTree = "<group>"; };
 		216BD5EA1F5808A00004488B /* GoogleService-Beta-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Beta-Info.plist"; sourceTree = "<group>"; };
 		2197AA531E4B3825007A2B83 /* GoogleService-Dev-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Dev-Info.plist"; sourceTree = "<group>"; };
+		2270A4854C2774F881E13A12 /* Pods-Noteshelf3.release enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.release enterprise.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.release enterprise.xcconfig"; sourceTree = "<group>"; };
 		3D08645524C813A4008FF0AA /* FTShelfItemPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemPreviewViewController.swift; sourceTree = "<group>"; };
 		3D2AFB93247FA0C000FD34DB /* FTPasteBoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasteBoardManager.swift; sourceTree = "<group>"; };
 		3D663C4A28F9652900024B3D /* FTRefreshPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTRefreshPageView.xib; sourceTree = "<group>"; };
@@ -2978,6 +3054,7 @@
 		471A47431FA1ADA900E8E3DF /* FTMosaicPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMosaicPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		471A47451FA1ADB800E8E3DF /* FTCutOutPhotoCoverStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCutOutPhotoCoverStyle.swift; sourceTree = "<group>"; };
 		472770E31E2F65A400100A54 /* FTPDFRenderViewController+Export.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTPDFRenderViewController+Export.swift"; sourceTree = "<group>"; };
+		4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTBookmarksProvider.swift; sourceTree = "<group>"; };
 		472BDF8329E7E9FF001BE43A /* FTDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDataCache.swift; sourceTree = "<group>"; };
 		473310772A1F2DFC008DC0DB /* RPCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RPCircularProgress.swift; sourceTree = "<group>"; };
 		4738DC191E2CF3AA004E62E6 /* FormSheetPresentationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSheetPresentationManager.swift; sourceTree = "<group>"; };
@@ -3288,6 +3365,7 @@
 		5EAD03C6202B0A150031A4BB /* FTMobileCommunicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTMobileCommunicationManager.swift; sourceTree = "<group>"; };
 		5EEAAA5A2020395D0073E9F9 /* FTWatchRecordedAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedAudio.swift; sourceTree = "<group>"; };
 		5EFEF3121FFCD2C000CFF9B3 /* FTSelectExportFormatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSelectExportFormatViewController.swift; sourceTree = "<group>"; };
+		766E9F561A596682FA7F6E73 /* Pods-Noteshelf3.debug enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.debug enterprise.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.debug enterprise.xcconfig"; sourceTree = "<group>"; };
 		8BA0318B1A06107500891239 /* Noteshelf-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Noteshelf-Info.plist"; path = "Resources/Noteshelf-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8BBAE17124FE14DC0007931A /* FTFontPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFontPickerViewController.swift; sourceTree = "<group>"; };
 		8BBAE17224FE14DC0007931A /* FTFontPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTFontPickerViewController.xib; sourceTree = "<group>"; };
@@ -3305,6 +3383,117 @@
 		8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeskToolView.swift; sourceTree = "<group>"; };
 		8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTDeskToolView.xib; sourceTree = "<group>"; };
 		92305088215E09F40043F646 /* URL+ImagePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ImagePath.swift"; sourceTree = "<group>"; };
+		9715DF872AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EvernoteSDK-Mac-Prefix.pch"; sourceTree = "<group>"; };
+		9715DF882AEA9D2C00EC48D4 /* EvernoteSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteSession.h; sourceTree = "<group>"; };
+		9715DF892AEA9D2C00EC48D4 /* EvernoteUserStore+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EvernoteUserStore+Extras.h"; sourceTree = "<group>"; };
+		9715DF8A2AEA9D2C00EC48D4 /* EvernoteNoteStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteNoteStore.h; sourceTree = "<group>"; };
+		9715DF8B2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EDAMNoteStoreClient+Utilities.h"; sourceTree = "<group>"; };
+		9715DF8C2AEA9D2C00EC48D4 /* EvernoteSDK_iOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EvernoteSDK_iOS-Prefix.pch"; sourceTree = "<group>"; };
+		9715DF8E2AEA9D2C00EC48D4 /* ENCredentialStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENCredentialStore.h; sourceTree = "<group>"; };
+		9715DF8F2AEA9D2C00EC48D4 /* ENAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAPI.h; sourceTree = "<group>"; };
+		9715DF902AEA9D2C00EC48D4 /* ENCredentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENCredentials.m; sourceTree = "<group>"; };
+		9715DF922AEA9D2C00EC48D4 /* ENResourceAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENResourceAttachment.h; sourceTree = "<group>"; };
+		9715DF932AEA9D2C00EC48D4 /* ENNoteViewRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENNoteViewRequest.h; sourceTree = "<group>"; };
+		9715DF942AEA9D2C00EC48D4 /* ENLinkNotebookRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENLinkNotebookRequest.h; sourceTree = "<group>"; };
+		9715DF952AEA9D2C00EC48D4 /* ENSearchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENSearchRequest.h; sourceTree = "<group>"; };
+		9715DF962AEA9D2C00EC48D4 /* ENNewNoteRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENNewNoteRequest.h; sourceTree = "<group>"; };
+		9715DF972AEA9D2C00EC48D4 /* ENApplicationBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENApplicationBridge.m; sourceTree = "<group>"; };
+		9715DF982AEA9D2C00EC48D4 /* ENAuthenticationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENAuthenticationRequest.m; sourceTree = "<group>"; };
+		9715DF992AEA9D2C00EC48D4 /* ENNoteImportRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENNoteImportRequest.h; sourceTree = "<group>"; };
+		9715DF9A2AEA9D2C00EC48D4 /* ENApplicationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENApplicationRequest.h; sourceTree = "<group>"; };
+		9715DF9B2AEA9D2C00EC48D4 /* EvernoteBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteBridge.h; sourceTree = "<group>"; };
+		9715DF9C2AEA9D2C00EC48D4 /* ENNoteViewRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENNoteViewRequest.m; sourceTree = "<group>"; };
+		9715DF9D2AEA9D2C00EC48D4 /* ENResourceAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENResourceAttachment.m; sourceTree = "<group>"; };
+		9715DF9E2AEA9D2C00EC48D4 /* ENLinkNotebookRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENLinkNotebookRequest.m; sourceTree = "<group>"; };
+		9715DF9F2AEA9D2C00EC48D4 /* ENApplicationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENApplicationBridge.h; sourceTree = "<group>"; };
+		9715DFA02AEA9D2C00EC48D4 /* ENNewNoteRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENNewNoteRequest.m; sourceTree = "<group>"; };
+		9715DFA12AEA9D2C00EC48D4 /* ENSearchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENSearchRequest.m; sourceTree = "<group>"; };
+		9715DFA22AEA9D2C00EC48D4 /* ENApplicationBridge_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENApplicationBridge_Private.h; sourceTree = "<group>"; };
+		9715DFA32AEA9D2C00EC48D4 /* ENNoteImportRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENNoteImportRequest.m; sourceTree = "<group>"; };
+		9715DFA42AEA9D2C00EC48D4 /* ENAuthenticationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAuthenticationRequest.h; sourceTree = "<group>"; };
+		9715DFA62AEA9D2C00EC48D4 /* EvernoteSDK.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = EvernoteSDK.strings; sourceTree = "<group>"; };
+		9715DFA72AEA9D2C00EC48D4 /* ENOAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENOAuthViewController.h; sourceTree = "<group>"; };
+		9715DFA92AEA9D2C00EC48D4 /* ENOAuthProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENOAuthProtocol.h; sourceTree = "<group>"; };
+		9715DFAA2AEA9D2C00EC48D4 /* ENAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENAPI.m; sourceTree = "<group>"; };
+		9715DFAB2AEA9D2C00EC48D4 /* ENCredentialStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENCredentialStore.m; sourceTree = "<group>"; };
+		9715DFAC2AEA9D2C00EC48D4 /* ENCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENCredentials.h; sourceTree = "<group>"; };
+		9715DFB02AEA9D2C00EC48D4 /* EvernoteSDK_iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteSDK_iOS.m; sourceTree = "<group>"; };
+		9715DFB12AEA9D2C00EC48D4 /* EvernoteNoteStore+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EvernoteNoteStore+Extras.h"; sourceTree = "<group>"; };
+		9715DFB22AEA9D2C00EC48D4 /* ENConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENConstants.h; sourceTree = "<group>"; };
+		9715DFB32AEA9D2C00EC48D4 /* EvernoteUserStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteUserStore.h; sourceTree = "<group>"; };
+		9715DFB52AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+EDAMAdditions.m"; sourceTree = "<group>"; };
+		9715DFB62AEA9D2C00EC48D4 /* NSDataBase64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataBase64Additions.m; sourceTree = "<group>"; };
+		9715DFB72AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+EvernoteSDK_iOS.m"; sourceTree = "<group>"; };
+		9715DFB82AEA9D2C00EC48D4 /* ENMLUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENMLUtility.h; sourceTree = "<group>"; };
+		9715DFB92AEA9D2C00EC48D4 /* NSDataBase64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataBase64Additions.h; sourceTree = "<group>"; };
+		9715DFBA2AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+EDAMAdditions.h"; sourceTree = "<group>"; };
+		9715DFBB2AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+EvernoteSDK_iOS.h"; sourceTree = "<group>"; };
+		9715DFBC2AEA9D2C00EC48D4 /* ENMLUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENMLUtility.m; sourceTree = "<group>"; };
+		9715DFBD2AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EvernoteSDK-Mac-Info.plist"; sourceTree = "<group>"; };
+		9715DFBE2AEA9D2C00EC48D4 /* EvernoteSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteSession.m; sourceTree = "<group>"; };
+		9715DFC12AEA9D2C00EC48D4 /* KSXMLAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSXMLAttributes.m; sourceTree = "<group>"; };
+		9715DFC22AEA9D2C00EC48D4 /* KSXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSXMLWriter.h; sourceTree = "<group>"; };
+		9715DFC32AEA9D2C00EC48D4 /* NSString+XMLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLAdditions.h"; sourceTree = "<group>"; };
+		9715DFC42AEA9D2C00EC48D4 /* KSHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSHTMLWriter.h; sourceTree = "<group>"; };
+		9715DFC52AEA9D2C00EC48D4 /* KSWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWriter.h; sourceTree = "<group>"; };
+		9715DFC62AEA9D2C00EC48D4 /* KSForwardingWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSForwardingWriter.h; sourceTree = "<group>"; };
+		9715DFC72AEA9D2C00EC48D4 /* KSXMLAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSXMLAttributes.h; sourceTree = "<group>"; };
+		9715DFC82AEA9D2C00EC48D4 /* KSHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSHTMLWriter.m; sourceTree = "<group>"; };
+		9715DFC92AEA9D2C00EC48D4 /* NSString+XMLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLAdditions.m"; sourceTree = "<group>"; };
+		9715DFCA2AEA9D2C00EC48D4 /* KSXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSXMLWriter.m; sourceTree = "<group>"; };
+		9715DFCB2AEA9D2C00EC48D4 /* KSWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWriter.m; sourceTree = "<group>"; };
+		9715DFCD2AEA9D2C00EC48D4 /* KSForwardingWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSForwardingWriter.m; sourceTree = "<group>"; };
+		9715DFD02AEA9D2C00EC48D4 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		9715DFD12AEA9D2C00EC48D4 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		9715DFD32AEA9D2C00EC48D4 /* TProcessorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProcessorFactory.h; sourceTree = "<group>"; };
+		9715DFD52AEA9D2C00EC48D4 /* TMemoryBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMemoryBuffer.m; sourceTree = "<group>"; };
+		9715DFD62AEA9D2C00EC48D4 /* TTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTransport.h; sourceTree = "<group>"; };
+		9715DFD72AEA9D2C00EC48D4 /* THTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THTTPClient.m; sourceTree = "<group>"; };
+		9715DFD82AEA9D2C00EC48D4 /* TTransportException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTransportException.h; sourceTree = "<group>"; };
+		9715DFD92AEA9D2C00EC48D4 /* TMemoryBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMemoryBuffer.h; sourceTree = "<group>"; };
+		9715DFDA2AEA9D2C00EC48D4 /* THTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THTTPClient.h; sourceTree = "<group>"; };
+		9715DFDB2AEA9D2C00EC48D4 /* TTransportException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTransportException.m; sourceTree = "<group>"; };
+		9715DFDD2AEA9D2C00EC48D4 /* Thrift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thrift.h; sourceTree = "<group>"; };
+		9715DFDE2AEA9D2C00EC48D4 /* TObjective-C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TObjective-C.h"; sourceTree = "<group>"; };
+		9715DFDF2AEA9D2C00EC48D4 /* TApplicationException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TApplicationException.m; sourceTree = "<group>"; };
+		9715DFE02AEA9D2C00EC48D4 /* TException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TException.h; sourceTree = "<group>"; };
+		9715DFE22AEA9D2C00EC48D4 /* TProtocolUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TProtocolUtil.m; sourceTree = "<group>"; };
+		9715DFE32AEA9D2C00EC48D4 /* TProtocolException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocolException.h; sourceTree = "<group>"; };
+		9715DFE42AEA9D2C00EC48D4 /* TBinaryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBinaryProtocol.h; sourceTree = "<group>"; };
+		9715DFE52AEA9D2C00EC48D4 /* TProtocolUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocolUtil.h; sourceTree = "<group>"; };
+		9715DFE62AEA9D2C00EC48D4 /* TBinaryProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBinaryProtocol.m; sourceTree = "<group>"; };
+		9715DFE72AEA9D2C00EC48D4 /* TProtocolFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocolFactory.h; sourceTree = "<group>"; };
+		9715DFE82AEA9D2C00EC48D4 /* TProtocolException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TProtocolException.m; sourceTree = "<group>"; };
+		9715DFE92AEA9D2C00EC48D4 /* TProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProtocol.h; sourceTree = "<group>"; };
+		9715DFEA2AEA9D2C00EC48D4 /* TProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TProcessor.h; sourceTree = "<group>"; };
+		9715DFEB2AEA9D2C00EC48D4 /* TException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TException.m; sourceTree = "<group>"; };
+		9715DFEC2AEA9D2C00EC48D4 /* TApplicationException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TApplicationException.h; sourceTree = "<group>"; };
+		9715DFEE2AEA9D2C00EC48D4 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		9715DFF02AEA9D2C00EC48D4 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		9715DFF22AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENAFURLConnectionOperation.h; sourceTree = "<group>"; };
+		9715DFF32AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENAFURLConnectionOperation.m; sourceTree = "<group>"; };
+		9715DFF52AEA9D2C00EC48D4 /* NSData+ENBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ENBase64.m"; sourceTree = "<group>"; };
+		9715DFF72AEA9D2C00EC48D4 /* ENGCOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ENGCOAuth.h; sourceTree = "<group>"; };
+		9715DFF82AEA9D2C00EC48D4 /* NSData+ENBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ENBase64.h"; sourceTree = "<group>"; };
+		9715DFF92AEA9D2C00EC48D4 /* ENGCOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENGCOAuth.m; sourceTree = "<group>"; };
+		9715DFFA2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EDAMNoteStoreClient+Utilities.m"; sourceTree = "<group>"; };
+		9715DFFB2AEA9D2C00EC48D4 /* EvernoteNoteStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteNoteStore.m; sourceTree = "<group>"; };
+		9715DFFC2AEA9D2C00EC48D4 /* EvernoteUserStore+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EvernoteUserStore+Extras.m"; sourceTree = "<group>"; };
+		9715DFFD2AEA9D2C00EC48D4 /* EvernoteUserStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvernoteUserStore.m; sourceTree = "<group>"; };
+		9715DFFE2AEA9D2C00EC48D4 /* EvernoteNoteStore+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EvernoteNoteStore+Extras.m"; sourceTree = "<group>"; };
+		9715DFFF2AEA9D2C00EC48D4 /* ENConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENConstants.m; sourceTree = "<group>"; };
+		9715E0002AEA9D2C00EC48D4 /* EvernoteSDK_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteSDK_iOS.h; sourceTree = "<group>"; };
+		9715E0022AEA9D2C00EC48D4 /* EDAMErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAMErrors.h; sourceTree = "<group>"; };
+		9715E0032AEA9D2C00EC48D4 /* EDAMTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAMTypes.h; sourceTree = "<group>"; };
+		9715E0042AEA9D2C00EC48D4 /* EDAMUserStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAMUserStore.h; sourceTree = "<group>"; };
+		9715E0052AEA9D2C00EC48D4 /* EDAMLimits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAMLimits.h; sourceTree = "<group>"; };
+		9715E0062AEA9D2C00EC48D4 /* EDAM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAM.h; sourceTree = "<group>"; };
+		9715E0072AEA9D2C00EC48D4 /* EDAMNoteStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDAMNoteStore.h; sourceTree = "<group>"; };
+		9715E0082AEA9D2C00EC48D4 /* EDAMTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMTypes.m; sourceTree = "<group>"; };
+		9715E0092AEA9D2C00EC48D4 /* EDAMErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMErrors.m; sourceTree = "<group>"; };
+		9715E00A2AEA9D2C00EC48D4 /* EDAMLimits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMLimits.m; sourceTree = "<group>"; };
+		9715E00B2AEA9D2C00EC48D4 /* EDAMUserStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMUserStore.m; sourceTree = "<group>"; };
+		9715E00C2AEA9D2C00EC48D4 /* EDAMNoteStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMNoteStore.m; sourceTree = "<group>"; };
 		97197DE626EA31F100BA2C49 /* FTClassicDiaryCalendarTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryCalendarTemplate.swift; sourceTree = "<group>"; };
 		972B52BD2A406FEF001158D9 /* StockPapers_Watch.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = StockPapers_Watch.bundle; sourceTree = "<group>"; };
 		972B52DF2A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSideBarItemContextMenuPreview.swift; sourceTree = "<group>"; };
@@ -3392,7 +3581,7 @@
 		97A1A834269C882A00594BB6 /* FTFiveMinJournalMonthTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFiveMinJournalMonthTemplate.swift; sourceTree = "<group>"; };
 		97A606D529BB368A00B01E03 /* FTTemplateInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTTemplateInfoModel.swift; path = papers/FTTemplateInfoModel.swift; sourceTree = "<group>"; };
 		97A606D729BB3D3500B01E03 /* FTCoverDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTCoverDataSource.swift; path = Networking/FTCoverDataSource.swift; sourceTree = "<group>"; };
-		97A663C329966D08006F13C8 /* FTNotebookShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookShape.swift; sourceTree = "<group>"; };
+		97A663C329966D08006F13C8 /* FTPreviewShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPreviewShape.swift; sourceTree = "<group>"; };
 		97A8D9AB28DADEA0008853BF /* FTShelfItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemsView.swift; sourceTree = "<group>"; };
 		97A8D9AD28DADEB9008853BF /* FTShelfItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemsViewModel.swift; sourceTree = "<group>"; };
 		97A8D9AF28DAF531008853BF /* FTShelfItemsViewControllerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemsViewControllerNew.swift; sourceTree = "<group>"; };
@@ -3429,6 +3618,8 @@
 		97C5A22D29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSidebarItemContextualMenuVM.swift; sourceTree = "<group>"; };
 		97C5A22F29F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTSidebarVM+ItemContexualOperations.swift"; sourceTree = "<group>"; };
 		97C73414294745FA00F18497 /* FTShelfSplitViewController+Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitViewController+Sidebar.swift"; sourceTree = "<group>"; };
+		97C7992E2B035129001877B2 /* FTENUserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTENUserInfoTableViewCell.swift; sourceTree = "<group>"; };
+		97C7992F2B035129001877B2 /* FTENUserInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTENUserInfoTableViewCell.xib; sourceTree = "<group>"; };
 		97C851FD24F5176300EF893A /* FTSegmentScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentScrollView.swift; sourceTree = "<group>"; };
 		97C851FF24F5176400EF893A /* FTSegmentConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentConstants.swift; sourceTree = "<group>"; };
 		97C8520024F5176400EF893A /* FTSegmentStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSegmentStyle.swift; sourceTree = "<group>"; };
@@ -3467,8 +3658,14 @@
 		97C8526224F62D0E00EF893A /* FTCheckedTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCheckedTemplateFormat.swift; sourceTree = "<group>"; };
 		97C8529E24F65AB800EF893A /* CommonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
 		97C852A224F6708D00EF893A /* FTThemeStorage_Migrate3o1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThemeStorage_Migrate3o1.swift; sourceTree = "<group>"; };
+		97CBAB5C2AEB98DA00267A17 /* ENOAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ENOAuthViewController.m; sourceTree = "<group>"; };
+		97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePensetManager.swift; sourceTree = "<group>"; };
+		97D2A4FB2AC6EE0600A0E509 /* FavoritePensets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FavoritePensets.plist; sourceTree = "<group>"; };
+		97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePensetDataManager.swift; sourceTree = "<group>"; };
+		97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePensetDataModel.swift; sourceTree = "<group>"; };
 		97D470092624852700D29C4E /* FTPresenterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
 		97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDropOverlayView.swift; sourceTree = "<group>"; };
+		97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenCollectionViewCell.swift; sourceTree = "<group>"; };
 		97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitController+CreateNotebookDelegates.swift"; sourceTree = "<group>"; };
 		97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordHostController.swift; sourceTree = "<group>"; };
 		97F3C3B326B9247F00E3B75E /* FTClassicDiaryTemplateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryTemplateFormat.swift; sourceTree = "<group>"; };
@@ -3772,6 +3969,8 @@
 		BAB2589B2959D07E0072AEBB /* Noteshelf ActionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf ActionDebug.entitlements"; sourceTree = "<group>"; };
 		BAB2589C2959D08C0072AEBB /* Noteshelf ActionBeta.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf ActionBeta.entitlements"; sourceTree = "<group>"; };
 		BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTUtils_Swift_Common.swift; sourceTree = "<group>"; };
+		BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMigrationViewController.swift; sourceTree = "<group>"; };
+		BAB4D5062AFFF34D009124EF /* Migration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Migration.storyboard; sourceTree = "<group>"; };
 		BABCB8D522FD3FA200551DAC /* FTThumbnailGenerationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailGenerationRequest.swift; sourceTree = "<group>"; };
 		BABCB8D822FD4E0100551DAC /* FTThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailGenerator.swift; sourceTree = "<group>"; };
 		BAC095E4265FC189001DF931 /* FTShape_SQLiteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShape_SQLiteHelper.swift; sourceTree = "<group>"; };
@@ -3933,6 +4132,7 @@
 		DAC6A84F23BDF8A2007E4123 /* Quotes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Quotes.plist; sourceTree = "<group>"; };
 		DAC77D3E2448615E002A5A03 /* FTGoogleDriveBackupPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGoogleDriveBackupPublisher.swift; sourceTree = "<group>"; };
 		DC887DE594A853A3DE110AAC /* Pods-Noteshelf3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.release.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.release.xcconfig"; sourceTree = "<group>"; };
+		E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritebarViewController.swift; sourceTree = "<group>"; };
 		E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTConvertPreferencesCell.xib; sourceTree = "<group>"; };
 		E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTCustomDictViewController.xib; sourceTree = "<group>"; };
 		E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpellCheckManager.swift; sourceTree = "<group>"; };
@@ -3948,11 +4148,17 @@
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
 		E75516E2274F90B600401F45 /* FTExportDataFailedItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataFailedItemCell.xib; sourceTree = "<group>"; };
+		E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteShortcutController.swift; sourceTree = "<group>"; };
+		E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteEditViewController.swift; sourceTree = "<group>"; };
+		E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePresetColorsView.swift; sourceTree = "<group>"; };
+		E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePresetsViewModel.swift; sourceTree = "<group>"; };
+		E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteColorGridView.swift; sourceTree = "<group>"; };
 		E75B19F22A7A32D3004ECFEC /* FTErrorInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTErrorInfoViewController.swift; sourceTree = "<group>"; };
 		E75B19F42A7A56A1004ECFEC /* FTShelfViewModel+BackUpErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BackUpErrorHandler.swift"; sourceTree = "<group>"; };
 		E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEvernoteFooterView.swift; sourceTree = "<group>"; };
 		E75BAE272769BE840084043F /* FTEvernoteFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTEvernoteFooterView.xib; sourceTree = "<group>"; };
 		E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBaseHostingController_MacExtension.swift; sourceTree = "<group>"; };
+		E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenTypeEditController.swift; sourceTree = "<group>"; };
 		E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		E75FCB2826C0EB5700E5FF75 /* FTGlobalSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTGlobalSearch.storyboard; sourceTree = "<group>"; };
 		E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchSuggestionHelper.swift; sourceTree = "<group>"; };
@@ -4127,6 +4333,8 @@
 		E7C71A61288E795900AF2598 /* VerticalValueTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalValueTrack.swift; sourceTree = "<group>"; };
 		E7C980C3251DE2F600AA37C9 /* FTShapeUtility+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShapeUtility+extension.swift"; sourceTree = "<group>"; };
 		E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTToolbarConfig.swift; sourceTree = "<group>"; };
+		E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteSizeEditController.swift; sourceTree = "<group>"; };
+		E7CD243E2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoriteColorEditController.swift; sourceTree = "<group>"; };
 		E7D4AC0B2A1259BC0083F4D9 /* FTNavBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNavBarButtonItem.swift; sourceTree = "<group>"; };
 		E7D87C9A29CEF59A00E1FD1E /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		E7E3EC3929A4882E004372B6 /* FTAddMenuItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAddMenuItemCell.swift; sourceTree = "<group>"; };
@@ -4940,6 +5148,8 @@
 				E765250D27574FB500ABBAEC /* FTBackUpOptionsFooterView.xib */,
 				E75BAE252769BE4E0084043F /* FTEvernoteFooterView.swift */,
 				E75BAE272769BE840084043F /* FTEvernoteFooterView.xib */,
+				97C7992E2B035129001877B2 /* FTENUserInfoTableViewCell.swift */,
+				97C7992F2B035129001877B2 /* FTENUserInfoTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5265,6 +5475,24 @@
 				09B267A2214B917D006B2163 /* NSUserActivity+SiriShortcuts.swift */,
 			);
 			path = SiriShortCuts;
+			sourceTree = "<group>";
+		};
+		09B33FD72AFCFBBC002C7F35 /* Enterprise */ = {
+			isa = PBXGroup;
+			children = (
+				09AB3A3F2AFCC46B0062E43C /* Release Enterprise.entitlements */,
+				09AD81022AFBC30B0049022B /* Debug Enterprise.entitlements */,
+			);
+			path = Enterprise;
+			sourceTree = "<group>";
+		};
+		09B33FD82AFCFD08002C7F35 /* Enterprise */ = {
+			isa = PBXGroup;
+			children = (
+				09AD81012AFBB49C0049022B /* Debug Enterprise.entitlements */,
+				09AD81002AFBB48D0049022B /* Release Enterprise.entitlements */,
+			);
+			path = Enterprise;
 			sourceTree = "<group>";
 		};
 		09C0066C1E49C14800C491F8 /* Logger */ = {
@@ -6978,6 +7206,7 @@
 		211E39121E028265007B5CAD /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				9715DF862AEA9D2C00EC48D4 /* EvernoteSDK */,
 				9787571625DBD46A00CB766F /* WebdavFramework */,
 				B86B7B2F24B6DB9100B57783 /* FTDocumentFramework */,
 				09D18F4121BFA25300882B19 /* FTRenderKit */,
@@ -7442,6 +7671,7 @@
 				47C2EA2D297A803500D0494A /* FTShelfBookmarksViewController+ContextMenu.swift */,
 				4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */,
 				4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */,
+				4728E0532AEF7DAF002DBB5C /* FTBookmarksProvider.swift */,
 			);
 			path = ShelfBookmarks;
 			sourceTree = "<group>";
@@ -8156,6 +8386,237 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		9715DF862AEA9D2C00EC48D4 /* EvernoteSDK */ = {
+			isa = PBXGroup;
+			children = (
+				9715DF872AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Prefix.pch */,
+				9715DF882AEA9D2C00EC48D4 /* EvernoteSession.h */,
+				9715DF892AEA9D2C00EC48D4 /* EvernoteUserStore+Extras.h */,
+				9715DF8A2AEA9D2C00EC48D4 /* EvernoteNoteStore.h */,
+				9715DF8B2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.h */,
+				9715DF8C2AEA9D2C00EC48D4 /* EvernoteSDK_iOS-Prefix.pch */,
+				9715DF8D2AEA9D2C00EC48D4 /* internal */,
+				9715DFB02AEA9D2C00EC48D4 /* EvernoteSDK_iOS.m */,
+				9715DFB12AEA9D2C00EC48D4 /* EvernoteNoteStore+Extras.h */,
+				9715DFB22AEA9D2C00EC48D4 /* ENConstants.h */,
+				9715DFB32AEA9D2C00EC48D4 /* EvernoteUserStore.h */,
+				9715DFB42AEA9D2C00EC48D4 /* Utilities */,
+				9715DFBD2AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Info.plist */,
+				9715DFBE2AEA9D2C00EC48D4 /* EvernoteSession.m */,
+				9715DFBF2AEA9D2C00EC48D4 /* 3rdParty */,
+				9715DFFA2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.m */,
+				9715DFFB2AEA9D2C00EC48D4 /* EvernoteNoteStore.m */,
+				9715DFFC2AEA9D2C00EC48D4 /* EvernoteUserStore+Extras.m */,
+				9715DFFD2AEA9D2C00EC48D4 /* EvernoteUserStore.m */,
+				9715DFFE2AEA9D2C00EC48D4 /* EvernoteNoteStore+Extras.m */,
+				9715DFFF2AEA9D2C00EC48D4 /* ENConstants.m */,
+				9715E0002AEA9D2C00EC48D4 /* EvernoteSDK_iOS.h */,
+				9715E0012AEA9D2C00EC48D4 /* EDAM */,
+			);
+			path = EvernoteSDK;
+			sourceTree = "<group>";
+		};
+		9715DF8D2AEA9D2C00EC48D4 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				9715DF8E2AEA9D2C00EC48D4 /* ENCredentialStore.h */,
+				9715DF8F2AEA9D2C00EC48D4 /* ENAPI.h */,
+				9715DF902AEA9D2C00EC48D4 /* ENCredentials.m */,
+				9715DF912AEA9D2C00EC48D4 /* Bridge */,
+				9715DFA52AEA9D2C00EC48D4 /* Resources */,
+				9715DFA72AEA9D2C00EC48D4 /* ENOAuthViewController.h */,
+				97CBAB5C2AEB98DA00267A17 /* ENOAuthViewController.m */,
+				9715DFA92AEA9D2C00EC48D4 /* ENOAuthProtocol.h */,
+				9715DFAA2AEA9D2C00EC48D4 /* ENAPI.m */,
+				9715DFAB2AEA9D2C00EC48D4 /* ENCredentialStore.m */,
+				9715DFAC2AEA9D2C00EC48D4 /* ENCredentials.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		9715DF912AEA9D2C00EC48D4 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				9715DF922AEA9D2C00EC48D4 /* ENResourceAttachment.h */,
+				9715DF932AEA9D2C00EC48D4 /* ENNoteViewRequest.h */,
+				9715DF942AEA9D2C00EC48D4 /* ENLinkNotebookRequest.h */,
+				9715DF952AEA9D2C00EC48D4 /* ENSearchRequest.h */,
+				9715DF962AEA9D2C00EC48D4 /* ENNewNoteRequest.h */,
+				9715DF972AEA9D2C00EC48D4 /* ENApplicationBridge.m */,
+				9715DF982AEA9D2C00EC48D4 /* ENAuthenticationRequest.m */,
+				9715DF992AEA9D2C00EC48D4 /* ENNoteImportRequest.h */,
+				9715DF9A2AEA9D2C00EC48D4 /* ENApplicationRequest.h */,
+				9715DF9B2AEA9D2C00EC48D4 /* EvernoteBridge.h */,
+				9715DF9C2AEA9D2C00EC48D4 /* ENNoteViewRequest.m */,
+				9715DF9D2AEA9D2C00EC48D4 /* ENResourceAttachment.m */,
+				9715DF9E2AEA9D2C00EC48D4 /* ENLinkNotebookRequest.m */,
+				9715DF9F2AEA9D2C00EC48D4 /* ENApplicationBridge.h */,
+				9715DFA02AEA9D2C00EC48D4 /* ENNewNoteRequest.m */,
+				9715DFA12AEA9D2C00EC48D4 /* ENSearchRequest.m */,
+				9715DFA22AEA9D2C00EC48D4 /* ENApplicationBridge_Private.h */,
+				9715DFA32AEA9D2C00EC48D4 /* ENNoteImportRequest.m */,
+				9715DFA42AEA9D2C00EC48D4 /* ENAuthenticationRequest.h */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		9715DFA52AEA9D2C00EC48D4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFA62AEA9D2C00EC48D4 /* EvernoteSDK.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9715DFB42AEA9D2C00EC48D4 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFB52AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.m */,
+				9715DFB62AEA9D2C00EC48D4 /* NSDataBase64Additions.m */,
+				9715DFB72AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.m */,
+				9715DFB82AEA9D2C00EC48D4 /* ENMLUtility.h */,
+				9715DFB92AEA9D2C00EC48D4 /* NSDataBase64Additions.h */,
+				9715DFBA2AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.h */,
+				9715DFBB2AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.h */,
+				9715DFBC2AEA9D2C00EC48D4 /* ENMLUtility.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		9715DFBF2AEA9D2C00EC48D4 /* 3rdParty */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFC02AEA9D2C00EC48D4 /* KSHTMLWriter */,
+				9715DFCE2AEA9D2C00EC48D4 /* SSKeychain */,
+				9715DFD22AEA9D2C00EC48D4 /* Thrift */,
+				9715DFED2AEA9D2C00EC48D4 /* NSString+URLEncoding */,
+				9715DFF12AEA9D2C00EC48D4 /* AFNetworking */,
+				9715DFF42AEA9D2C00EC48D4 /* cocoa-oauth */,
+			);
+			path = 3rdParty;
+			sourceTree = "<group>";
+		};
+		9715DFC02AEA9D2C00EC48D4 /* KSHTMLWriter */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFC12AEA9D2C00EC48D4 /* KSXMLAttributes.m */,
+				9715DFC22AEA9D2C00EC48D4 /* KSXMLWriter.h */,
+				9715DFC32AEA9D2C00EC48D4 /* NSString+XMLAdditions.h */,
+				9715DFC42AEA9D2C00EC48D4 /* KSHTMLWriter.h */,
+				9715DFC52AEA9D2C00EC48D4 /* KSWriter.h */,
+				9715DFC62AEA9D2C00EC48D4 /* KSForwardingWriter.h */,
+				9715DFC72AEA9D2C00EC48D4 /* KSXMLAttributes.h */,
+				9715DFC82AEA9D2C00EC48D4 /* KSHTMLWriter.m */,
+				9715DFC92AEA9D2C00EC48D4 /* NSString+XMLAdditions.m */,
+				9715DFCA2AEA9D2C00EC48D4 /* KSXMLWriter.m */,
+				9715DFCB2AEA9D2C00EC48D4 /* KSWriter.m */,
+				9715DFCD2AEA9D2C00EC48D4 /* KSForwardingWriter.m */,
+			);
+			path = KSHTMLWriter;
+			sourceTree = "<group>";
+		};
+		9715DFCE2AEA9D2C00EC48D4 /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFD02AEA9D2C00EC48D4 /* SSKeychain.h */,
+				9715DFD12AEA9D2C00EC48D4 /* SSKeychain.m */,
+			);
+			path = SSKeychain;
+			sourceTree = "<group>";
+		};
+		9715DFD22AEA9D2C00EC48D4 /* Thrift */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFD32AEA9D2C00EC48D4 /* TProcessorFactory.h */,
+				9715DFD42AEA9D2C00EC48D4 /* transport */,
+				9715DFDD2AEA9D2C00EC48D4 /* Thrift.h */,
+				9715DFDE2AEA9D2C00EC48D4 /* TObjective-C.h */,
+				9715DFDF2AEA9D2C00EC48D4 /* TApplicationException.m */,
+				9715DFE02AEA9D2C00EC48D4 /* TException.h */,
+				9715DFE12AEA9D2C00EC48D4 /* protocol */,
+				9715DFEA2AEA9D2C00EC48D4 /* TProcessor.h */,
+				9715DFEB2AEA9D2C00EC48D4 /* TException.m */,
+				9715DFEC2AEA9D2C00EC48D4 /* TApplicationException.h */,
+			);
+			path = Thrift;
+			sourceTree = "<group>";
+		};
+		9715DFD42AEA9D2C00EC48D4 /* transport */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFD52AEA9D2C00EC48D4 /* TMemoryBuffer.m */,
+				9715DFD62AEA9D2C00EC48D4 /* TTransport.h */,
+				9715DFD72AEA9D2C00EC48D4 /* THTTPClient.m */,
+				9715DFD82AEA9D2C00EC48D4 /* TTransportException.h */,
+				9715DFD92AEA9D2C00EC48D4 /* TMemoryBuffer.h */,
+				9715DFDA2AEA9D2C00EC48D4 /* THTTPClient.h */,
+				9715DFDB2AEA9D2C00EC48D4 /* TTransportException.m */,
+			);
+			path = transport;
+			sourceTree = "<group>";
+		};
+		9715DFE12AEA9D2C00EC48D4 /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFE22AEA9D2C00EC48D4 /* TProtocolUtil.m */,
+				9715DFE32AEA9D2C00EC48D4 /* TProtocolException.h */,
+				9715DFE42AEA9D2C00EC48D4 /* TBinaryProtocol.h */,
+				9715DFE52AEA9D2C00EC48D4 /* TProtocolUtil.h */,
+				9715DFE62AEA9D2C00EC48D4 /* TBinaryProtocol.m */,
+				9715DFE72AEA9D2C00EC48D4 /* TProtocolFactory.h */,
+				9715DFE82AEA9D2C00EC48D4 /* TProtocolException.m */,
+				9715DFE92AEA9D2C00EC48D4 /* TProtocol.h */,
+			);
+			path = protocol;
+			sourceTree = "<group>";
+		};
+		9715DFED2AEA9D2C00EC48D4 /* NSString+URLEncoding */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFEE2AEA9D2C00EC48D4 /* NSString+URLEncoding.h */,
+				9715DFF02AEA9D2C00EC48D4 /* NSString+URLEncoding.m */,
+			);
+			path = "NSString+URLEncoding";
+			sourceTree = "<group>";
+		};
+		9715DFF12AEA9D2C00EC48D4 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFF22AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.h */,
+				9715DFF32AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		9715DFF42AEA9D2C00EC48D4 /* cocoa-oauth */ = {
+			isa = PBXGroup;
+			children = (
+				9715DFF52AEA9D2C00EC48D4 /* NSData+ENBase64.m */,
+				9715DFF72AEA9D2C00EC48D4 /* ENGCOAuth.h */,
+				9715DFF82AEA9D2C00EC48D4 /* NSData+ENBase64.h */,
+				9715DFF92AEA9D2C00EC48D4 /* ENGCOAuth.m */,
+			);
+			path = "cocoa-oauth";
+			sourceTree = "<group>";
+		};
+		9715E0012AEA9D2C00EC48D4 /* EDAM */ = {
+			isa = PBXGroup;
+			children = (
+				9715E0022AEA9D2C00EC48D4 /* EDAMErrors.h */,
+				9715E0032AEA9D2C00EC48D4 /* EDAMTypes.h */,
+				9715E0042AEA9D2C00EC48D4 /* EDAMUserStore.h */,
+				9715E0052AEA9D2C00EC48D4 /* EDAMLimits.h */,
+				9715E0062AEA9D2C00EC48D4 /* EDAM.h */,
+				9715E0072AEA9D2C00EC48D4 /* EDAMNoteStore.h */,
+				9715E0082AEA9D2C00EC48D4 /* EDAMTypes.m */,
+				9715E0092AEA9D2C00EC48D4 /* EDAMErrors.m */,
+				9715E00A2AEA9D2C00EC48D4 /* EDAMLimits.m */,
+				9715E00B2AEA9D2C00EC48D4 /* EDAMUserStore.m */,
+				9715E00C2AEA9D2C00EC48D4 /* EDAMNoteStore.m */,
+			);
+			path = EDAM;
+			sourceTree = "<group>";
+		};
 		9741222E2A73E041002D3DDB /* Discover */ = {
 			isa = PBXGroup;
 			children = (
@@ -8221,7 +8682,7 @@
 		97A663C029966CAF006F13C8 /* ShelfItemShapes */ = {
 			isa = PBXGroup;
 			children = (
-				97A663C329966D08006F13C8 /* FTNotebookShape.swift */,
+				97A663C329966D08006F13C8 /* FTPreviewShape.swift */,
 			);
 			path = ShelfItemShapes;
 			sourceTree = "<group>";
@@ -8361,7 +8822,6 @@
 			isa = PBXGroup;
 			children = (
 				09C714562A407C8100E69E4A /* FTShelfNotebookView */,
-				97A663C029966CAF006F13C8 /* ShelfItemShapes */,
 				9790985928C8C2B700AE9528 /* FTShelfItemContextualMenuButtons.swift */,
 				97F60C17291E26CE0050C3F3 /* FTShelfItemInfoView.swift */,
 				97C5A22429EFD6A600B8E251 /* FTGroupCoverViewNew.swift */,
@@ -9172,6 +9632,8 @@
 		BA909A3C2991067F00260538 /* GoogleService-Info */ = {
 			isa = PBXGroup;
 			children = (
+				09B33FDC2AFE2375002C7F35 /* GoogleService-Prod-EE-Info.plist */,
+				09B33FDB2AFE230D002C7F35 /* GoogleService-Dev-EE-info.plist */,
 				2197AA531E4B3825007A2B83 /* GoogleService-Dev-Info.plist */,
 				216BD5EA1F5808A00004488B /* GoogleService-Beta-Info.plist */,
 				2169CA941F284B3B00D85402 /* GoogleService-Prod-Info.plist */,
@@ -9182,6 +9644,7 @@
 		BA909A3D299106A200260538 /* Entitlements */ = {
 			isa = PBXGroup;
 			children = (
+				09B33FD82AFCFD08002C7F35 /* Enterprise */,
 				BAC3697C2A83AA270005F635 /* Entitlements-AppStore.entitlements */,
 				BAC369802A83AC440005F635 /* Entitlements-Beta.entitlements */,
 				BAC3697F2A83AC440005F635 /* Entitlements-Dev.entitlements */,
@@ -9296,6 +9759,15 @@
 				BAAEB854220D7D7D00FA8483 /* FTNotebookMoreOption.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		BAB4D5032AFFF311009124EF /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				BAB4D5042AFFF337009124EF /* FTMigrationViewController.swift */,
+				BAB4D5062AFFF34D009124EF /* Migration.storyboard */,
+			);
+			path = Migration;
 			sourceTree = "<group>";
 		};
 		BABD257222E0383A00F9CA5C /* Presentation */ = {
@@ -9510,6 +9982,7 @@
 		C8140D32232667B60053FC86 /* Noteshelf Action */ = {
 			isa = PBXGroup;
 			children = (
+				09B33FD72AFCFBBC002C7F35 /* Enterprise */,
 				4209FED4295C799700ACC02E /* ViewControllers */,
 				4209FED1295C798100ACC02E /* Views */,
 				4209FECC295C797500ACC02E /* Models */,
@@ -9862,6 +10335,27 @@
 			path = DynamicGeneration;
 			sourceTree = "<group>";
 		};
+		E70705F82AC2B7A900A7B341 /* Favoritebar */ = {
+			isa = PBXGroup;
+			children = (
+				E757FD322AFBB2150014E901 /* Views */,
+				E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */,
+				E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */,
+				E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */,
+				E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */,
+				E7CD243C2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift */,
+				E7CD243E2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift */,
+				97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */,
+				97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */,
+				97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */,
+				97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */,
+				E75A6EAF2AFCAC580039D25D /* FTFavoritePresetsViewModel.swift */,
+				E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */,
+				E75A6EB12AFCC2820039D25D /* FTFavoriteColorGridView.swift */,
+			);
+			path = Favoritebar;
+			sourceTree = "<group>";
+		};
 		E713D9AE299CC251008FDC77 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -9900,9 +10394,17 @@
 			path = ExportDataCells;
 			sourceTree = "<group>";
 		};
+		E757FD322AFBB2150014E901 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E7654DEE2966A88B00E0F7A7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				BAB4D5032AFFF311009124EF /* Migration */,
 				E7654DEF2966A8AA00E0F7A7 /* FTGlobalSettingsController.swift */,
 				1438A3CF2A5C2EC500861C34 /* FTGlobalSettingsTableViewCell.swift */,
 				14AF7DA42A03B4AD00C835AB /* FTGeneralSettingsView.swift */,
@@ -10071,6 +10573,7 @@
 		E7B0E4B62893D3DA007B031F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E70705F82AC2B7A900A7B341 /* Favoritebar */,
 				09C369652A5EA6EB009BCC3F /* Eye Dropper */,
 				E7B947422912332300BE4430 /* Share */,
 				E7B4E18D28C1D44800285FA2 /* Presenter */,
@@ -10203,6 +10706,7 @@
 		E7B77D0429B071050013E794 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				97A663C029966CAF006F13C8 /* ShelfItemShapes */,
 				E7A51E622A0515DC003C0DC0 /* FTPresentation */,
 				E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */,
 				42A702F5293773DB00970A94 /* UIImage+RounderCorner.swift */,
@@ -10492,6 +10996,7 @@
 			isa = PBXGroup;
 			children = (
 				E7ADA794288825A200309D16 /* GridColors.plist */,
+				97D2A4FB2AC6EE0600A0E509 /* FavoritePensets.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -10924,6 +11429,8 @@
 				517DC74247BEB79AB799009B /* Pods-Noteshelf3.debug.xcconfig */,
 				DC887DE594A853A3DE110AAC /* Pods-Noteshelf3.release.xcconfig */,
 				004D8C7640CF35A3AF74AFEF /* Pods-Noteshelf3.beta.xcconfig */,
+				766E9F561A596682FA7F6E73 /* Pods-Noteshelf3.debug enterprise.xcconfig */,
+				2270A4854C2774F881E13A12 /* Pods-Noteshelf3.release enterprise.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -11083,8 +11590,8 @@
 				BAF395AA2859ADF10067CA9F /* Embed Third Party Framework for Device */,
 				BAF395AB2859ADF10067CA9F /* [CP] Embed Pods Frameworks */,
 				BAB258B8295B1B400072AEBB /* Embed App Extensions */,
-				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 				977B1DFC2A82A40E89761BCC /* [CP] Copy Pods Resources */,
+				BAF395A72859ADF10067CA9F /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -11350,6 +11857,7 @@
 				BAF38F6A2859ADF00067CA9F /* BrushAssets_V3.xcassets in Resources */,
 				E7AE404228755D4500C0F3EC /* Midnight.plist in Resources */,
 				BAF38F6E2859ADF00067CA9F /* FTBrandLogoView.xib in Resources */,
+				97C799312B035129001877B2 /* FTENUserInfoTableViewCell.xib in Resources */,
 				BAF38F702859ADF00067CA9F /* FTNotebookMoreOptions.storyboard in Resources */,
 				09103B862A86275800739602 /* FTNoteshelfAILocalized.strings in Resources */,
 				E7AE403A28755D4500C0F3EC /* themes_v8_zh-Hans.plist in Resources */,
@@ -11362,6 +11870,7 @@
 				BAF38F862859ADF00067CA9F /* FTSettings_Stylus.storyboard in Resources */,
 				BAF38F872859ADF00067CA9F /* recognition-assets-zh_CN in Resources */,
 				BAF38F892859ADF00067CA9F /* FTRefresh.storyboard in Resources */,
+				9715E0162AEA9D2C00EC48D4 /* EvernoteSDK.strings in Resources */,
 				BAF38F8A2859ADF00067CA9F /* FTShelf_iOS13.storyboard in Resources */,
 				BAF38F8B2859ADF00067CA9F /* FTConvertToTextCell.xib in Resources */,
 				BAF38F8F2859ADF00067CA9F /* FTCommon.storyboard in Resources */,
@@ -11406,6 +11915,7 @@
 				BAF38FC02859ADF00067CA9F /* FTConvertPreferencesViewController.xib in Resources */,
 				52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */,
 				E7AE404628755D4500C0F3EC /* themes_v8_fr.plist in Resources */,
+				BAB4D5072AFFF34D009124EF /* Migration.storyboard in Resources */,
 				E7AE403928755D4500C0F3EC /* themes_v8_zh-Hant.plist in Resources */,
 				BAF38FC72859ADF00067CA9F /* WhatsNewLocalizable.strings in Resources */,
 				E7AE403B28755D4500C0F3EC /* themes_v8_es.plist in Resources */,
@@ -11435,6 +11945,7 @@
 				BAF38FF82859ADF00067CA9F /* FTDocumentEntity.storyboard in Resources */,
 				97BEB93D294215BA00147961 /* FTSideBar.plist in Resources */,
 				5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */,
+				9715E0212AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Info.plist in Resources */,
 				09C3697D2A5EBB1D009BCC3F /* stroke_text_map.json in Resources */,
 				BAF38FFA2859ADF00067CA9F /* FTWhatsNew.storyboard in Resources */,
 				149B649A2A714C0A0086926F /* Stickers.xcassets in Resources */,
@@ -11474,6 +11985,7 @@
 				BAF3903B2859ADF00067CA9F /* FTNewSettings.storyboard in Resources */,
 				BAF3903D2859ADF00067CA9F /* recognition-assets-en_US in Resources */,
 				8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */,
+				97D2A4FC2AC6EE0600A0E509 /* FavoritePensets.plist in Resources */,
 				BAF3903E2859ADF00067CA9F /* Tips.plist in Resources */,
 				E7AC024B2A14E420009AE92A /* FTPenRack.storyboard in Resources */,
 				E7AE404128755D4500C0F3EC /* FiveMinJournal.plist in Resources */,
@@ -11544,7 +12056,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "GOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nDEST_GOOGLE_FILE_NAME=\"GoogleService-Info.plist\"\n\necho \"Started $PLATFORM_NAME Copying: $GOOGLE_FILE_NAME to dest: $DEST_GOOGLE_FILE_NAME\"\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Beta\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Beta-Info.plist\"\nelse\nGOOGLE_FILE_NAME=\"GoogleService-Prod-Info.plist\"\nfi\n\nif [[ \"$PLATFORM_NAME\" == \"macosx\" ]]; then\nDEST_GOOGLE_FILE_NAME=\"Contents/Resources/$DEST_GOOGLE_FILE_NAME\"\nfi\n\necho \"Copying ${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME directory to ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\ncp -R \"${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\n\necho \"Copy Complete\"\n";
+			shellScript = "GOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nDEST_GOOGLE_FILE_NAME=\"GoogleService-Info.plist\"\n\necho \"Started $PLATFORM_NAME Copying: $GOOGLE_FILE_NAME to dest: $DEST_GOOGLE_FILE_NAME\"\n\nif [ \"${CONFIGURATION}\" = \"Debug Enterprise\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Dev-EE-info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Release Enterprise\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Prod-EE-Info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Dev-Info.plist\"\nelif [ \"${CONFIGURATION}\" = \"Beta\" ]; then\nGOOGLE_FILE_NAME=\"GoogleService-Beta-Info.plist\"\nelse\nGOOGLE_FILE_NAME=\"GoogleService-Prod-Info.plist\"\nfi\n\nif [[ \"$PLATFORM_NAME\" == \"macosx\" ]]; then\nDEST_GOOGLE_FILE_NAME=\"Contents/Resources/$DEST_GOOGLE_FILE_NAME\"\nfi\n\necho \"Copying ${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME directory to ${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\ncp -R \"${SRCROOT}/Resources/GoogleService-Info/$GOOGLE_FILE_NAME\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/$DEST_GOOGLE_FILE_NAME\"\n\necho \"Copy Complete\"\n";
 		};
 		BAB689AC2862E7AD00FACF11 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -11648,7 +12160,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework",
-				"${BUILT_PRODUCTS_DIR}/EvernoteSDK/EvernoteSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
@@ -11678,7 +12189,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASN1Swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EvernoteSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseABTesting.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
@@ -11769,6 +12279,7 @@
 				E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */,
 				E79E84382A31B1DD00683B23 /* FTCustomButton.swift in Sources */,
 				471B90EE29F0ED8300861A2B /* FTTagCollectionCell.swift in Sources */,
+				97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */,
 				09C5FB272A6A720900D30FCB /* FTKeyCommands.swift in Sources */,
 				BAA84E612873108800DE801B /* Date+Extension.swift in Sources */,
 				BAA84E6F2873108800DE801B /* FileManager+Extension.swift in Sources */,
@@ -11929,19 +12440,23 @@
 				97C52E4D292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift in Sources */,
 				1439371229D6E02700D93033 /* FTDownloadedStickerViewModel.swift in Sources */,
 				E76023392A4EC45000B16084 /* FTSearchSuggestionHelper.swift in Sources */,
+				9715E03E2AEA9D2D00EC48D4 /* EvernoteUserStore.m in Sources */,
 				BAF390552859ADF00067CA9F /* FTGlobalSearchProvider.swift in Sources */,
 				BAF390562859ADF00067CA9F /* FTExportBaseCollectionViewCell.swift in Sources */,
 				098007862AF11128002C5C9A /* FTNS3BookURLThumbnailReader.swift in Sources */,
 				BAF390572859ADF00067CA9F /* ParalleloGramView.swift in Sources */,
+				97D2A4FE2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift in Sources */,
 				BAF3905B2859ADF00067CA9F /* FTShapeRombusResizing.swift in Sources */,
 				BAF3905C2859ADF00067CA9F /* FTPenBrushBuilder_v5.swift in Sources */,
 				BAF3905E2859ADF00067CA9F /* FTDeviceDataManager.swift in Sources */,
+				9715E0412AEA9D2D00EC48D4 /* EDAMTypes.m in Sources */,
 				BAF390602859ADF00067CA9F /* EditImageOptionBarViewController.swift in Sources */,
 				42B2F34728A13BF2002430C5 /* FTFinderTabHostingController.swift in Sources */,
 				BAF390632859ADF00067CA9F /* FTTouch.m in Sources */,
 				BAF390642859ADF00067CA9F /* FTHorizontalTransitionDelegate.swift in Sources */,
 				BA19636A2A977214000C47FA /* FTShelfCollectioniCloudRoot.swift in Sources */,
 				BAF390662859ADF00067CA9F /* FTGestureHelpViewController.swift in Sources */,
+				9715E0112AEA9D2C00EC48D4 /* ENResourceAttachment.m in Sources */,
 				BAF390672859ADF00067CA9F /* FTSiriShortcutManager.swift in Sources */,
 				09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */,
 				BAF390682859ADF00067CA9F /* FTTileMap.swift in Sources */,
@@ -11957,6 +12472,7 @@
 				97C5A22529EFD6A600B8E251 /* FTGroupCoverViewNew.swift in Sources */,
 				BAF390702859ADF00067CA9F /* FTPlannerDiaryTemplateFormat.swift in Sources */,
 				42A119FF28C8AC7E0018FC13 /* FTFinderViewController_DataSource.swift in Sources */,
+				9715E0122AEA9D2C00EC48D4 /* ENLinkNotebookRequest.m in Sources */,
 				BAF390712859ADF00067CA9F /* FTOneDriveBackupEntry.swift in Sources */,
 				BAF390722859ADF00067CA9F /* NSUserActivity_Extension.swift in Sources */,
 				BAF390742859ADF00067CA9F /* FTPDFRenderViewController_Password.swift in Sources */,
@@ -11981,6 +12497,7 @@
 				E7654DF02966A8AA00E0F7A7 /* FTGlobalSettingsController.swift in Sources */,
 				BAF3908D2859ADF00067CA9F /* EditImageToolBarViewController.swift in Sources */,
 				F3AB0FF4288AB70000CAC959 /* TextFieldAlert.swift in Sources */,
+				9715E0222AEA9D2C00EC48D4 /* EvernoteSession.m in Sources */,
 				BAF3908E2859ADF00067CA9F /* FTStylusesViewController+StylusOptionsList.swift in Sources */,
 				BAF3908F2859ADF00067CA9F /* FTEvernoteActivity.swift in Sources */,
 				BAF390912859ADF00067CA9F /* FTGestureHelpOptions.swift in Sources */,
@@ -11988,10 +12505,12 @@
 				BAF390942859ADF00067CA9F /* FTClassicDiaryiPhoneFormat.swift in Sources */,
 				BAF390972859ADF00067CA9F /* FTMarkerBrushBuilder_V3.swift in Sources */,
 				BAF390982859ADF00067CA9F /* FTModernDiaryYearTemplate.swift in Sources */,
+				9715E03C2AEA9D2C00EC48D4 /* EvernoteNoteStore.m in Sources */,
 				BAF390992859ADF00067CA9F /* FTAudioAnnotationView.swift in Sources */,
 				BAF3909A2859ADF00067CA9F /* FTSegmentConstants.swift in Sources */,
 				42D8BC3728C8778300B4AED0 /* FTThumbnailsCell.swift in Sources */,
 				BA6C51D428DC728F006504EB /* FileManager+Async.swift in Sources */,
+				9715E0152AEA9D2C00EC48D4 /* ENNoteImportRequest.m in Sources */,
 				BAF3909C2859ADF00067CA9F /* PressurePenEngine.m in Sources */,
 				E7F479D9288589D700577D1E /* FTRackDataManager.swift in Sources */,
 				BAF3909D2859ADF00067CA9F /* NSData256+Extension.swift in Sources */,
@@ -12025,6 +12544,7 @@
 				BAF390B72859ADF00067CA9F /* SMRippleView.swift in Sources */,
 				BAF390B82859ADF00067CA9F /* ParametersEncoding.swift in Sources */,
 				F3A482DB28C080CA00476A16 /* FTAddMenuPageViewController.swift in Sources */,
+				9715E03A2AEA9D2C00EC48D4 /* ENGCOAuth.m in Sources */,
 				BAF390B92859ADF00067CA9F /* FTPDFRenderViewController_UIDropInteraction.swift in Sources */,
 				BAF390BA2859ADF00067CA9F /* FTThemeCategory_UIExtension.swift in Sources */,
 				97E4006A29139CAD00E0E0D7 /* FTDropOverlayView.swift in Sources */,
@@ -12091,12 +12611,12 @@
 				BAF390ED2859ADF00067CA9F /* FTShelfCollection.swift in Sources */,
 				BAF390EE2859ADF00067CA9F /* FTMediaLibraryModel.swift in Sources */,
 				BA2D912B285CAFCC001BB495 /* FTNotebookItemView.swift in Sources */,
+				9715E01E2AEA9D2C00EC48D4 /* NSDataBase64Additions.m in Sources */,
 				BAF390EF2859ADF00067CA9F /* FTNotebookMoreOption.swift in Sources */,
 				BAF390F02859ADF00067CA9F /* FTWhatsNewButton.swift in Sources */,
 				BAF390F12859ADF00067CA9F /* FTAudioSlider.m in Sources */,
 				BAF390F22859ADF00067CA9F /* FTDocumentValidator.swift in Sources */,
 				BAF390F32859ADF00067CA9F /* FTPDFOutline.swift in Sources */,
-				BAF390F42859ADF00067CA9F /* FT24HrEventLogger.swift in Sources */,
 				BAF390F52859ADF00067CA9F /* FTItemToExport.swift in Sources */,
 				BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */,
 				BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */,
@@ -12104,7 +12624,6 @@
 				BA7A5F5E2AB0766E006D5284 /* URL+Thumbnail.swift in Sources */,
 				BAF390FA2859ADF00067CA9F /* FTSettingsButton.swift in Sources */,
 				BAF390FD2859ADF00067CA9F /* FTAnnotationBaseView.swift in Sources */,
-				97A663C429966D08006F13C8 /* FTNotebookShape.swift in Sources */,
 				3DAC3FCC29190FE5009B7BC7 /* FTTextBackgroundProtocol.swift in Sources */,
 				BAF390FE2859ADF00067CA9F /* FTPhotosViewController.swift in Sources */,
 				BAF390FF2859ADF00067CA9F /* FTPageViewController_LassoSelection.swift in Sources */,
@@ -12132,6 +12651,7 @@
 				BAF391102859ADF00067CA9F /* FTShapeTriangle.swift in Sources */,
 				BAF391112859ADF00067CA9F /* FTPDFRenderViewController+Export.swift in Sources */,
 				BAF391132859ADF00067CA9F /* URL+ImagePath.swift in Sources */,
+				9715E0422AEA9D2D00EC48D4 /* EDAMErrors.m in Sources */,
 				BAF391142859ADF00067CA9F /* FTMigrationToV5.swift in Sources */,
 				BAF391152859ADF00067CA9F /* FTDocumentFromPages.swift in Sources */,
 				BAF391162859ADF00067CA9F /* FTShortcutStorage.swift in Sources */,
@@ -12146,6 +12666,7 @@
 				E7B5A343299E3EBD0031A87E /* FTConvertToTextViewController+MenuHandler.swift in Sources */,
 				BAF3911E2859ADF00067CA9F /* FTPageProtocol.swift in Sources */,
 				42835D432892C23900B041A3 /* FTFinderPresentable.swift in Sources */,
+				9715E0332AEA9D2C00EC48D4 /* TProtocolException.m in Sources */,
 				BAF391202859ADF00067CA9F /* FTRecognitionCachePlistItem.swift in Sources */,
 				E7A05A222934C63000D758C0 /* FTBaseResultSectionCell.swift in Sources */,
 				BAF391212859ADF00067CA9F /* FTOutlineTableCell.swift in Sources */,
@@ -12191,6 +12712,7 @@
 				BAF391422859ADF00067CA9F /* FTMidnightDiaryWeekTemplate.swift in Sources */,
 				F3A63A7F2892792A00B7D3DF /* FTLassoRackViewController.swift in Sources */,
 				520DA2BE2A2F55C4003A6F22 /* FTBookmarkColorCell.swift in Sources */,
+				4776464B2AF0D569009DCC2A /* FTLogger.m in Sources */,
 				BA1963532A9609FF000C47FA /* FTNSiCloudManager.swift in Sources */,
 				F305FD8228DC5C36000D670F /* FTEmojiCategoryHeaderView.swift in Sources */,
 				BAF391462859ADF00067CA9F /* FTInfoTipView.swift in Sources */,
@@ -12199,6 +12721,7 @@
 				BAF391492859ADF00067CA9F /* FTBackUpOptionsFooterView.swift in Sources */,
 				BAF3914A2859ADF00067CA9F /* FTPageProtocol_MetalExtension.swift in Sources */,
 				BAF3914B2859ADF00067CA9F /* FTRefreshViewController.swift in Sources */,
+				9715E0232AEA9D2C00EC48D4 /* KSXMLAttributes.m in Sources */,
 				BAF3914C2859ADF00067CA9F /* FTMidnightDairyFormat.swift in Sources */,
 				BAF3914D2859ADF00067CA9F /* FTOnScreenWritingViewController.swift in Sources */,
 				BAF3914F2859ADF00067CA9F /* FTExportActivityManager.swift in Sources */,
@@ -12249,6 +12772,7 @@
 				09A67BF32AE8F25100C5500D /* FTCache.swift in Sources */,
 				BAF391722859ADF00067CA9F /* FTShelfItemCollectionLocal.swift in Sources */,
 				F3B6B88F28BE15BA00ABFF1C /* FTAddMenuMediaViewController.swift in Sources */,
+				E70705FA2AC2B7D500A7B341 /* FTFavoritebarViewController.swift in Sources */,
 				BAF391742859ADF00067CA9F /* FTPenAttributes.swift in Sources */,
 				09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */,
 				BAF391762859ADF00067CA9F /* FTNoteshelfPage_PDFExportHelper.swift in Sources */,
@@ -12271,10 +12795,12 @@
 				BAF391872859ADF00067CA9F /* FTTiledTextureCreation.swift in Sources */,
 				09CDCB492A55913F000340FB /* FTBookOpenSceneDelegate.swift in Sources */,
 				42C825C328E8BB9A00CA8286 /* FTFinderViewController_Delegates.swift in Sources */,
+				97CBAB5D2AEB98DB00267A17 /* ENOAuthViewController.m in Sources */,
 				BAF3918B2859ADF00067CA9F /* FTTextAnnotationViewController.swift in Sources */,
 				BAF3918C2859ADF00067CA9F /* FTLaserPresentationViewController.swift in Sources */,
 				E7E3EC3B29A4882F004372B6 /* FTAddMenuItemCell.swift in Sources */,
 				BAF3918E2859ADF00067CA9F /* FTCustomTextSelectionRect.swift in Sources */,
+				9715E03D2AEA9D2D00EC48D4 /* EvernoteUserStore+Extras.m in Sources */,
 				978771DF2A8DF1DB00ABE982 /* FTDiscoverWhatsNewView.swift in Sources */,
 				BAF3918F2859ADF00067CA9F /* FTQuickPageNavigatorViewController.swift in Sources */,
 				BAF391912859ADF00067CA9F /* FTAccountInfoRequestGoogleDrive.swift in Sources */,
@@ -12285,6 +12811,7 @@
 				BAF391942859ADF00067CA9F /* FTAdBannerViewController.swift in Sources */,
 				BAF391952859ADF00067CA9F /* FTPDFRenderViewController_Extension.swift in Sources */,
 				BAF391962859ADF00067CA9F /* FTNewNotebookSettingTableViewCell.swift in Sources */,
+				9715E01D2AEA9D2C00EC48D4 /* NSDate+EDAMAdditions.m in Sources */,
 				BAF391972859ADF00067CA9F /* FTPresenterSet.swift in Sources */,
 				BA50E03A2959CB3C00CDC0FD /* FTCacheTagsProcessor.swift in Sources */,
 				BAF391982859ADF00067CA9F /* FTAudioAnnotationViewController.swift in Sources */,
@@ -12306,6 +12833,7 @@
 				E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */,
 				5238E7D72A0B7C2A00F8F171 /* FTNoteBookSegmentCell.swift in Sources */,
 				09C404692AD40AA400CCFF22 /* NSUbiquitousKeyValueStore_AIToken.swift in Sources */,
+				9715E0402AEA9D2D00EC48D4 /* ENConstants.m in Sources */,
 				E7A87F0628DAEBBE0038CF90 /* FTDoneButton.swift in Sources */,
 				1439372029D6E02700D93033 /* FTStickerCategoriesView.swift in Sources */,
 				BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */,
@@ -12344,7 +12872,7 @@
 				BAF391CB2859ADF00067CA9F /* UIFont+Extensions.swift in Sources */,
 				E7B8DAB828803A7600F0AE78 /* FTPenShortcutViewModel.swift in Sources */,
 				E7B947492912350900BE4430 /* FTShareContentModels.swift in Sources */,
-				BAF391CC2859ADF00067CA9F /* FTLogger.m in Sources */,
+				BAB4D5052AFFF337009124EF /* FTMigrationViewController.swift in Sources */,
 				BAF391CE2859ADF00067CA9F /* FTRecognitionServiceProvider.swift in Sources */,
 				BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */,
 				BAF391D02859ADF00067CA9F /* FTSegmentStyle.swift in Sources */,
@@ -12365,6 +12893,7 @@
 				BAF391E22859ADF00067CA9F /* FTTooltipMessageViewController.swift in Sources */,
 				52C01E132A00F4880038C21A /* FTFinderHelper.swift in Sources */,
 				BAF391E32859ADF00067CA9F /* FTDiagnosisHandler.swift in Sources */,
+				9715E0372AEA9D2C00EC48D4 /* ENAFURLConnectionOperation.m in Sources */,
 				BAF391E42859ADF00067CA9F /* FTMidnightDiaryTemplateFormat.swift in Sources */,
 				BAF391E52859ADF00067CA9F /* FTDefaultTextStyle.swift in Sources */,
 				BAF391E62859ADF00067CA9F /* FTWebdavManager.swift in Sources */,
@@ -12395,6 +12924,7 @@
 				E7B9474F2912499A00BE4430 /* FTShareViewModel.swift in Sources */,
 				BAF391FE2859ADF00067CA9F /* FTMigrationPopupController.swift in Sources */,
 				E7B31F7A2935EEAD00E39CA8 /* FTCategoryResultSectionCell.swift in Sources */,
+				9715E01C2AEA9D2C00EC48D4 /* EvernoteSDK_iOS.m in Sources */,
 				BAF391FF2859ADF00067CA9F /* FTImportStorageManager.swift in Sources */,
 				BAF392012859ADF00067CA9F /* FTBackgroundTaskProtocols.swift in Sources */,
 				BAF392022859ADF00067CA9F /* FTNoteshelfDocumentManager.swift in Sources */,
@@ -12439,6 +12969,7 @@
 				BAF392202859ADF00067CA9F /* FTPDFDocumentPDFContentGenerator.swift in Sources */,
 				429E0C76292362C600C75E37 /* FTFinderCollectionviewFlowLayout.swift in Sources */,
 				BAF392212859ADF00067CA9F /* FTStylusPenApplePencil.swift in Sources */,
+				97D2A5002AC6F09900A0E509 /* FTFavoritePensetDataModel.swift in Sources */,
 				E7AE25A4288FD5E900402413 /* FTThemesStorage_Favorites.swift in Sources */,
 				E7B4E18A28C1BF2E00285FA2 /* FTPresenterColorCircleView.swift in Sources */,
 				BAF392232859ADF00067CA9F /* FTSlideInDismissAnimator.swift in Sources */,
@@ -12456,6 +12987,7 @@
 				E7B5769C292368F70066BA45 /* FTToastView.swift in Sources */,
 				520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */,
 				973652E22A82786800FD4326 /* FTSidebarViewModel + NS2.swift in Sources */,
+				9715E0142AEA9D2C00EC48D4 /* ENSearchRequest.m in Sources */,
 				144AA3332A44279E00C969AC /* FTSettingsAboutViewModel.swift in Sources */,
 				E7AE4DA728995093004CF608 /* FTFavoriteShapeView.swift in Sources */,
 				14C76ADC2A092DBA004251B5 /* FTWrittingAndStylusModel.swift in Sources */,
@@ -12467,6 +12999,7 @@
 				BA2D90B6285C4416001BB495 /* FTDocumentPicker.swift in Sources */,
 				BAF3922F2859ADF00067CA9F /* FTAppConfigHelper.m in Sources */,
 				BAF392302859ADF00067CA9F /* FTPageViewController_AnnotationEditing.swift in Sources */,
+				E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */,
 				972B52E02A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift in Sources */,
 				BAF392312859ADF00067CA9F /* Constants.swift in Sources */,
 				BAF392322859ADF00067CA9F /* FTSnappingView.swift in Sources */,
@@ -12491,13 +13024,16 @@
 				BAF392492859ADF00067CA9F /* FTPDFRenderViewController+DocumentEntity.swift in Sources */,
 				BAF3924B2859ADF00067CA9F /* FTSegmentCache.m in Sources */,
 				BAF3924C2859ADF00067CA9F /* BEMCheckBoxGroup.m in Sources */,
+				97E65E162ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift in Sources */,
 				E7B5DD492938C42E0022F73F /* FTShareCoordinator.swift in Sources */,
 				BAF3924D2859ADF00067CA9F /* UIImageColors.swift in Sources */,
 				BAF3924E2859ADF00067CA9F /* FTHorizontalDismissAnimator.swift in Sources */,
+				9715E02D2AEA9D2C00EC48D4 /* THTTPClient.m in Sources */,
 				BAF3924F2859ADF00067CA9F /* FTMorePopoverSections.swift in Sources */,
 				F3C7D50C28C19A29000D3BE1 /* AddMenuDataManager.swift in Sources */,
 				526C56482A0B5E9C008E3891 /* FTNoteBookTexfieldCell.swift in Sources */,
 				BAF392502859ADF00067CA9F /* FTNavigation+Extension.swift in Sources */,
+				9715E0262AEA9D2C00EC48D4 /* KSXMLWriter.m in Sources */,
 				E7B143B6299CB8F000C7EA56 /* FTConvertToViewModel.swift in Sources */,
 				BAF392512859ADF00067CA9F /* FTPlannerDiaryTemplateAssetGenerator.swift in Sources */,
 				BAF392532859ADF00067CA9F /* FTEmojiesCategoryElement.swift in Sources */,
@@ -12505,6 +13041,7 @@
 				09CDCB262A541C6F000340FB /* FTDeskCenterPanelTool_Mac_Extension.swift in Sources */,
 				09C7145F2A4082BF00E69E4A /* FTGroupViewList.swift in Sources */,
 				BAF392572859ADF00067CA9F /* FTImageTileProvider.m in Sources */,
+				9715E0342AEA9D2C00EC48D4 /* TException.m in Sources */,
 				BAF392582859ADF00067CA9F /* FTExternalMediaViewController.swift in Sources */,
 				09CDCB582A580593000340FB /* NoteshelfAppDelegate_Mac_Menu.swift in Sources */,
 				BAF392592859ADF00067CA9F /* FTNSDocumentInfoPlistItem.swift in Sources */,
@@ -12517,6 +13054,7 @@
 				BA2D90BA285C4416001BB495 /* FTColorPicker.swift in Sources */,
 				BAF3925E2859ADF00067CA9F /* FTPilotPenBrushBuilder_V3.swift in Sources */,
 				BAF3925F2859ADF00067CA9F /* FTModernDiaryiPadFormat.swift in Sources */,
+				9715E0182AEA9D2C00EC48D4 /* ENCredentialStore.m in Sources */,
 				BAF392602859ADF00067CA9F /* FTShelfCategoryHeaderView.swift in Sources */,
 				14E385E92A305D9B00843F56 /* FTGeneralViewHostingController.swift in Sources */,
 				BAF392612859ADF00067CA9F /* FTThemeableImageView.swift in Sources */,
@@ -12574,6 +13112,7 @@
 				F3CB8B6D28F95C5F001E34ED /* FTAddMenuPixabayViewController.swift in Sources */,
 				BA6C51D528DC728F006504EB /* Cache+Log.swift in Sources */,
 				BAF3928D2859ADF00067CA9F /* FTPageFooterView.swift in Sources */,
+				9715E03F2AEA9D2D00EC48D4 /* EvernoteNoteStore+Extras.m in Sources */,
 				BAF3928E2859ADF00067CA9F /* FTTooltipBubbleView.swift in Sources */,
 				BAF3928F2859ADF00067CA9F /* FTShadowView.swift in Sources */,
 				BAF392912859ADF00067CA9F /* FTEvernoteExporter.m in Sources */,
@@ -12595,7 +13134,9 @@
 				BAF392A32859ADF00067CA9F /* FTAnnotation_Selection.swift in Sources */,
 				BAF392A42859ADF00067CA9F /* FTPDFRenderViewController_KeyboardListener.swift in Sources */,
 				979AF829290159EE00A288FE /* FTShlefSplitViewController+AddItemOptions.swift in Sources */,
+				477646482AF0D562009DCC2A /* FT24HrEventLogger.swift in Sources */,
 				E7B947472912347400BE4430 /* FTShareContentView.swift in Sources */,
+				E75A6EAE2AFCAB770039D25D /* FTFavoritePresetColorsView.swift in Sources */,
 				0935E0DC2AE9058800BC1017 /* FTPDFPageContent.swift in Sources */,
 				97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */,
 				BAF392A52859ADF00067CA9F /* FTUserDefaults_Migration3o1.swift in Sources */,
@@ -12608,11 +13149,13 @@
 				BAF392AD2859ADF00067CA9F /* UIView_AppStyleExtension.swift in Sources */,
 				09CDCAEF2A4EF988000340FB /* FTNotebookToolbar.swift in Sources */,
 				09ABDCA52A790F93008F144D /* FTOpenAICommand.swift in Sources */,
+				97D2A4FA2AC6E8E800A0E509 /* FTFavoritePensetManager.swift in Sources */,
 				BAF392AF2859ADF00067CA9F /* FTRecognitionTaskProcessor.swift in Sources */,
 				BAF392B02859ADF00067CA9F /* FTShelfItemCollectionAll.swift in Sources */,
 				BAF392B12859ADF00067CA9F /* FTMidnightDiaryLandscapeDayTemplate.swift in Sources */,
 				BAF392B22859ADF00067CA9F /* FTDairyGenerator.swift in Sources */,
 				BAF392B32859ADF00067CA9F /* FTNBKFormatImporter.swift in Sources */,
+				E7CD243D2AF8EA7100BB8AE5 /* FTFavoriteSizeEditController.swift in Sources */,
 				BAF392B52859ADF00067CA9F /* FTShelfCategoryTableViewCell.swift in Sources */,
 				4747C4232A96129800B1AB59 /* FTIAPAnalytics.swift in Sources */,
 				BAF392B62859ADF00067CA9F /* SyncLog.m in Sources */,
@@ -12624,6 +13167,7 @@
 				BAF392BF2859ADF00067CA9F /* UIImage+.swift in Sources */,
 				BAF392C12859ADF00067CA9F /* FTRecognitionCache.swift in Sources */,
 				BAF392C22859ADF00067CA9F /* FTPageViewController_GestureHandler.swift in Sources */,
+				97C799302B035129001877B2 /* FTENUserInfoTableViewCell.swift in Sources */,
 				4709F4242AE161050085A8C9 /* FTTagItemModel.swift in Sources */,
 				E7AE25A1288FD47200402413 /* FTCommonThemeStorage.swift in Sources */,
 				090CC9812AB4609700B43A3F /* FTShortcutPlacement.swift in Sources */,
@@ -12715,9 +13259,11 @@
 				E7A56ADD2967FD6100DE5FAE /* FTGlobalSettingsOptions.swift in Sources */,
 				E7E3EC4029A48C92004372B6 /* FTStickersListCollectionViewCell.swift in Sources */,
 				BAF393082859ADF00067CA9F /* FTTile.m in Sources */,
+				9715E0272AEA9D2C00EC48D4 /* KSWriter.m in Sources */,
 				BAF393092859ADF00067CA9F /* FTENSyncUtilities.swift in Sources */,
 				BAF3930A2859ADF00067CA9F /* FTArrowUtility.swift in Sources */,
 				97A8D9AC28DADEA1008853BF /* FTShelfItemsView.swift in Sources */,
+				9715E0292AEA9D2C00EC48D4 /* KSForwardingWriter.m in Sources */,
 				BAF3930B2859ADF00067CA9F /* FTSelectExportFormatViewController.swift in Sources */,
 				BAF3930C2859ADF00067CA9F /* FTRecognitionTask.swift in Sources */,
 				BAF3930D2859ADF00067CA9F /* FTPlannerDiaryMonthTemplateFormat.swift in Sources */,
@@ -12726,6 +13272,7 @@
 				BAF3930F2859ADF00067CA9F /* FTFromTopPresentationController.swift in Sources */,
 				4213C3572889605300A7A6F3 /* FTNoteBookSplitViewController.swift in Sources */,
 				09CDDCFE2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift in Sources */,
+				9715E0432AEA9D2D00EC48D4 /* EDAMLimits.m in Sources */,
 				42A971DA28B782D600EDAC90 /* FTAudioTrackController.swift in Sources */,
 				BAF393112859ADF00067CA9F /* FTAudioRecordingModel.m in Sources */,
 				BAF393132859ADF00067CA9F /* FTSearchResultCategoryCell.swift in Sources */,
@@ -12753,11 +13300,13 @@
 				BAF393212859ADF00067CA9F /* FTMarchingAntsView.swift in Sources */,
 				BAF393232859ADF00067CA9F /* FTPlannerDiaryiPhoneFormat.swift in Sources */,
 				BAF393242859ADF00067CA9F /* FTExternalScreenViewController.swift in Sources */,
+				9715E00F2AEA9D2C00EC48D4 /* ENAuthenticationRequest.m in Sources */,
 				09C714532A405BD200E69E4A /* FTShelfBaseView.swift in Sources */,
 				BAF393252859ADF00067CA9F /* FTBrushBuilder_v2.swift in Sources */,
 				BAF393262859ADF00067CA9F /* FTPageThumbnailProtocol.swift in Sources */,
 				BAF393272859ADF00067CA9F /* FTShapeAnnotationController_MenuHandler.swift in Sources */,
 				520DA2A52A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift in Sources */,
+				9715E0312AEA9D2C00EC48D4 /* TProtocolUtil.m in Sources */,
 				BAF393282859ADF00067CA9F /* FTMosaicPhotoCoverStyle.swift in Sources */,
 				BAF393292859ADF00067CA9F /* FTImportActionManager.swift in Sources */,
 				BAF3932A2859ADF00067CA9F /* FTFileSizeGenerator.m in Sources */,
@@ -12816,6 +13365,7 @@
 				BAF393532859ADF00067CA9F /* FTURLReadThumbnailManager.swift in Sources */,
 				4747C4162A95EC5200B1AB59 /* FTMetrics.swift in Sources */,
 				BAF393542859ADF00067CA9F /* GoogleDriveAPI.swift in Sources */,
+				E75A6EB22AFCC2820039D25D /* FTFavoriteColorGridView.swift in Sources */,
 				BAF393552859ADF00067CA9F /* FTSlideShowTimeTracker.swift in Sources */,
 				BAF393562859ADF00067CA9F /* FTFinderViewController+ContextMenu.swift in Sources */,
 				BAF393582859ADF00067CA9F /* FTNoteshelfPage_UndoManagement.swift in Sources */,
@@ -12853,6 +13403,7 @@
 				BA8E567A2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */,
 				BAF3937D2859ADF00067CA9F /* FTAnnotation_GuestureHandler.swift in Sources */,
 				BAF3937F2859ADF00067CA9F /* FTVerticalLayout.swift in Sources */,
+				9715E03B2AEA9D2C00EC48D4 /* EDAMNoteStoreClient+Utilities.m in Sources */,
 				BAF393802859ADF00067CA9F /* FTCoverTheme.swift in Sources */,
 				BAF393812859ADF00067CA9F /* FTPlannerDiaryExtrasTemplateFormat.swift in Sources */,
 				BAF393822859ADF00067CA9F /* FTShelfCollectionSystem.swift in Sources */,
@@ -12936,6 +13487,7 @@
 				E7A9768228C0C5F1009B43DC /* FTPresenterShortcutView.swift in Sources */,
 				BAF393D02859ADF00067CA9F /* FTRenderProperties.swift in Sources */,
 				BA2D90B9285C4416001BB495 /* View+Extensions.swift in Sources */,
+				9715E0172AEA9D2C00EC48D4 /* ENAPI.m in Sources */,
 				09DEFBD72A725E6F00F41C1E /* FTCharStrokeInfo.swift in Sources */,
 				09ABDCAC2A790F94008F144D /* FTNoteshelfAIOptionsViewController.swift in Sources */,
 				095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */,
@@ -12960,6 +13512,7 @@
 				BAF393E42859ADF00067CA9F /* FTOneDriveFileListTask.swift in Sources */,
 				4747C4132A95EC4A00B1AB59 /* FTEventsTracker.m in Sources */,
 				BAF393E52859ADF00067CA9F /* FTNotebookContentSearchProcessor.swift in Sources */,
+				9715E0252AEA9D2C00EC48D4 /* NSString+XMLAdditions.m in Sources */,
 				E7ADB526288172C3005E03B7 /* FTPenColorShortcutView.swift in Sources */,
 				BAF393E62859ADF00067CA9F /* FTShelfItemProtocols_Extension.swift in Sources */,
 				BA6C51D028DC728F006504EB /* FTShelfContentPhotosView.swift in Sources */,
@@ -12976,12 +13529,14 @@
 				14BF48BB2A139EDB002B09A9 /* FTEvernoteFooterView.swift in Sources */,
 				BAF393EF2859ADF00067CA9F /* FTNoteshelfDocumentProvider_FetchItem.swift in Sources */,
 				BAF393F02859ADF00067CA9F /* FTEmojisViewController.swift in Sources */,
+				E75E1EB32AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift in Sources */,
 				BAF393F12859ADF00067CA9F /* FTBackupInfoTableViewCell.swift in Sources */,
 				BAF393F22859ADF00067CA9F /* FTAutoTemplateGenerator.swift in Sources */,
 				BAF393F32859ADF00067CA9F /* FTThemeableLabel.swift in Sources */,
 				BAF393F42859ADF00067CA9F /* CADisplayLink_Extension.m in Sources */,
 				BAF393F62859ADF00067CA9F /* FTDynamicTemplateInfo.swift in Sources */,
 				BAF393F72859ADF00067CA9F /* CCLocalMaximum.m in Sources */,
+				9715E00D2AEA9D2C00EC48D4 /* ENCredentials.m in Sources */,
 				3DAC16202938AED20090F23A /* FTTextInputAcessoryViewProtocol.swift in Sources */,
 				BAF393F92859ADF00067CA9F /* FTNoteshelfPage_FTPageEvernoteSyncProtocol.swift in Sources */,
 				BA2D911A285CAFCC001BB495 /* FTSidebarSection.swift in Sources */,
@@ -13019,6 +13574,7 @@
 				BAF394152859ADF00067CA9F /* FTDeleteItemRequest.swift in Sources */,
 				09DBD5262A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift in Sources */,
 				09CDCB4B2A55915A000340FB /* FTBookSessionRootViewController.swift in Sources */,
+				E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */,
 				09ABDCAA2A790F94008F144D /* FTNoteshelfAITextViewViewController.swift in Sources */,
 				BA2D9134285CB221001BB495 /* FTShelfItemAddNewTableViewCell.swift in Sources */,
 				BAF394172859ADF00067CA9F /* FTNotebookMoreOptionsViewController.swift in Sources */,
@@ -13035,6 +13591,7 @@
 				BA2D9129285CAFCC001BB495 /* FTSidebarView.swift in Sources */,
 				4747C4252A962F0800B1AB59 /* FTAnalyticsConstants.swift in Sources */,
 				BAF394222859ADF00067CA9F /* FTCreateNotebookOptionsViewController.swift in Sources */,
+				9715E0102AEA9D2C00EC48D4 /* ENNoteViewRequest.m in Sources */,
 				E7F9EA94298A8EA400504BE1 /* FTUISearchController.swift in Sources */,
 				BAF394232859ADF00067CA9F /* FTThemeableButton.swift in Sources */,
 				BAF394242859ADF00067CA9F /* FTAudioTracksListViewController.m in Sources */,
@@ -13055,6 +13612,7 @@
 				BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */,
 				3DAA689E2911041900848434 /* FTTextColorCollectionView.swift in Sources */,
 				BAF394352859ADF00067CA9F /* FTGoogleDriveBackupPublisher.swift in Sources */,
+				4728E0542AEF7DB0002DBB5C /* FTBookmarksProvider.swift in Sources */,
 				BAF394362859ADF00067CA9F /* FTGoogleDriveBackupEntry.swift in Sources */,
 				47C7C43D297E633600AE4648 /* FTShelfCompactContentContainerView.swift in Sources */,
 				BAF394382859ADF00067CA9F /* FTDynamicTemplateFormat.swift in Sources */,
@@ -13069,9 +13627,11 @@
 				09C714552A405E4400E69E4A /* FTShelfDisplayStyle.swift in Sources */,
 				1438A3D02A5C2EC500861C34 /* FTGlobalSettingsTableViewCell.swift in Sources */,
 				BAF394422859ADF00067CA9F /* CropView.swift in Sources */,
+				9715E0132AEA9D2C00EC48D4 /* ENNewNoteRequest.m in Sources */,
 				BAF394442859ADF00067CA9F /* FTDownloadOperation.swift in Sources */,
 				BAF394472859ADF00067CA9F /* URLSessionProtocol.swift in Sources */,
 				BAF394482859ADF00067CA9F /* FTRecentsHeaderView.swift in Sources */,
+				9715E0302AEA9D2C00EC48D4 /* TApplicationException.m in Sources */,
 				9790985A28C8C2B700AE9528 /* FTShelfItemContextualMenuButtons.swift in Sources */,
 				1449D16A29F8258400C7EC49 /* FTShelfTopSectionItem.swift in Sources */,
 				97F60BFE291D33080050C3F3 /* FTNotebookCreation.swift in Sources */,
@@ -13089,10 +13649,12 @@
 				E7A63EC3286C6BC0003F538C /* FTBaseCategoryDatasource.swift in Sources */,
 				BAF394562859ADF00067CA9F /* FTRendererProvider.swift in Sources */,
 				BAF394582859ADF00067CA9F /* FTMidnightDiaryPrioritiesTemplate.swift in Sources */,
+				477646492AF0D566009DCC2A /* FTLogger.swift in Sources */,
 				BAF394592859ADF00067CA9F /* FTBrushTextureCache.swift in Sources */,
 				BAF3945A2859ADF00067CA9F /* StoreTemplateFormat.swift in Sources */,
 				BAF3945B2859ADF00067CA9F /* FTWhatsNewSlideViewController.swift in Sources */,
 				BAF3945C2859ADF00067CA9F /* FTFiveMinJournalTemplateAssetGenerator.swift in Sources */,
+				9715E0202AEA9D2C00EC48D4 /* ENMLUtility.m in Sources */,
 				BAF3945D2859ADF00067CA9F /* FTDropboxBackupPublisher.swift in Sources */,
 				BAF3945E2859ADF00067CA9F /* FTShelfItemCollectionRecentProtocol.swift in Sources */,
 				42ADB82028C1D339002E489A /* FTMediaFilterCell.swift in Sources */,
@@ -13113,6 +13675,8 @@
 				E7B9475129124E3500BE4430 /* FTShareFormatViewModel.swift in Sources */,
 				BAF3946E2859ADF00067CA9F /* NSString_Backup_Additions.m in Sources */,
 				BAF394702859ADF00067CA9F /* FTOneDriveAlertHandler.swift in Sources */,
+				9715E01F2AEA9D2C00EC48D4 /* NSData+EvernoteSDK_iOS.m in Sources */,
+				E75A6EB02AFCAC580039D25D /* FTFavoritePresetsViewModel.swift in Sources */,
 				BAF394732859ADF00067CA9F /* FTUnsplashPostService.swift in Sources */,
 				BAF394762859ADF00067CA9F /* FTWatchAudioOptionsCell.swift in Sources */,
 				3DAA68B32911578A00848434 /* FTNewTextStyleViewController_Extension.swift in Sources */,
@@ -13131,11 +13695,15 @@
 				F3B8B20628D0A78A00F3BE50 /* FTAddMenuUnsplashViewModel.swift in Sources */,
 				BAF394832859ADF10067CA9F /* FTNoteshelfDocumentProvider.swift in Sources */,
 				E7C71A71288E795A00AF2598 /* DefaultHorizontalValueView.swift in Sources */,
+				9715E02C2AEA9D2C00EC48D4 /* TMemoryBuffer.m in Sources */,
 				BAF394842859ADF10067CA9F /* FTThumbnailGenerator.swift in Sources */,
 				E7B9474B2912388C00BE4430 /* FTShareHostingController.swift in Sources */,
+				9715E0442AEA9D2D00EC48D4 /* EDAMUserStore.m in Sources */,
 				BAF394862859ADF10067CA9F /* FTImageAnnotation.swift in Sources */,
 				E7C71A72288E795A00AF2598 /* DefaultThumb.swift in Sources */,
+				9715E02B2AEA9D2C00EC48D4 /* SSKeychain.m in Sources */,
 				BAF394872859ADF10067CA9F /* FTSpinnerView.m in Sources */,
+				9715E0382AEA9D2C00EC48D4 /* NSData+ENBase64.m in Sources */,
 				098007892AF1134A002C5C9A /* FTNS2BookURLThumbnailReader.swift in Sources */,
 				09CDCABA2A4AFB3E000340FB /* FTShelfToolbarItems.swift in Sources */,
 				BAF394882859ADF10067CA9F /* FTWeekInfo.swift in Sources */,
@@ -13144,6 +13712,7 @@
 				42835D04289009EF00B041A3 /* FTFinderCollectionViewHeader.swift in Sources */,
 				BAF394892859ADF10067CA9F /* FTShapeUtility+extension.swift in Sources */,
 				BAF3948A2859ADF10067CA9F /* FTPlannerDiaryFormat.swift in Sources */,
+				9715E02E2AEA9D2C00EC48D4 /* TTransportException.m in Sources */,
 				BAF3948C2859ADF10067CA9F /* FTPDFRenderViewController.m in Sources */,
 				BAF3948D2859ADF10067CA9F /* FTStroke_Migration.swift in Sources */,
 				E7B4E18C28C1D39800285FA2 /* FTPenShortcutHostingController.swift in Sources */,
@@ -13152,6 +13721,7 @@
 				E7AE259F288FD25900402413 /* FTBasicTemplatesDataSource.swift in Sources */,
 				475E534B2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift in Sources */,
 				BAF3948F2859ADF10067CA9F /* FTShapeParallelogram.swift in Sources */,
+				9715E0322AEA9D2C00EC48D4 /* TBinaryProtocol.m in Sources */,
 				BA50E0302959CB2100CDC0FD /* FTShelfTagsViewController.swift in Sources */,
 				BA2D9116285CAFCC001BB495 /* FTGroupItemViewModel.swift in Sources */,
 				BAF394902859ADF10067CA9F /* FTDocumentScrollView.swift in Sources */,
@@ -13234,6 +13804,7 @@
 				BAF394D62859ADF10067CA9F /* FTPDFRenderViewController+PageNavigation.swift in Sources */,
 				4747C41C2A95EC5B00B1AB59 /* FirebaseMetricsService.swift in Sources */,
 				E7B423F828DD9872008415D2 /* FTCustomizeToolbarController.swift in Sources */,
+				E7CD243F2AF8F37500BB8AE5 /* FTFavoriteColorEditController.swift in Sources */,
 				BAF394D72859ADF10067CA9F /* FTNoBandCoverStyle.swift in Sources */,
 				BAF394DA2859ADF10067CA9F /* FTZoomOverlyaerViewController_ZoomPanelDelegate.swift in Sources */,
 				BAF394DD2859ADF10067CA9F /* FTZoomAreaView.swift in Sources */,
@@ -13260,14 +13831,17 @@
 				E7AD96C9291A85B0002A6DB2 /* FTPHPicker.swift in Sources */,
 				BAF394F22859ADF10067CA9F /* FTDocumentItemWrapperObject.swift in Sources */,
 				BAF394F32859ADF10067CA9F /* FTFinderSearchOptions.swift in Sources */,
+				9715E0452AEA9D2D00EC48D4 /* EDAMNoteStore.m in Sources */,
 				BAF394F42859ADF10067CA9F /* CommonExtensions.swift in Sources */,
 				E7C71A6B288E795A00AF2598 /* HorizontalValueSliderStyle.swift in Sources */,
 				E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */,
+				9715E0242AEA9D2C00EC48D4 /* KSHTMLWriter.m in Sources */,
 				BAF394F52859ADF10067CA9F /* FTBaseRenderViewController.m in Sources */,
 				BAF394F62859ADF10067CA9F /* FTDeviceModalsTableViewCell.swift in Sources */,
 				BAF394F72859ADF10067CA9F /* UIColor+Additions.swift in Sources */,
 				BAF394F92859ADF10067CA9F /* FTDocumentFiveMinJournalPostOperation.swift in Sources */,
 				BAF394FA2859ADF10067CA9F /* FTPageEraseTouchHandler.swift in Sources */,
+				9715E00E2AEA9D2C00EC48D4 /* ENApplicationBridge.m in Sources */,
 				BAF394FD2859ADF10067CA9F /* FTConvertToTextViewController.swift in Sources */,
 				979BC28B2893E47200208B21 /* FTShelfTextfieldAlertView.swift in Sources */,
 				BAF394FE2859ADF10067CA9F /* FTWatchRecordedListViewController.swift in Sources */,
@@ -13298,7 +13872,6 @@
 				BAF3951D2859ADF10067CA9F /* FTBottomDashedLineView.swift in Sources */,
 				1439371E29D6E02700D93033 /* FTStickerContainerView.swift in Sources */,
 				BAF395222859ADF10067CA9F /* FTShelfProviderConstants.swift in Sources */,
-				BAF395232859ADF10067CA9F /* FTLogger.swift in Sources */,
 				097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */,
 				5283D39C2A5BEAE200C6C125 /* FTShareItemsFetchModel.swift in Sources */,
 				BAF395242859ADF10067CA9F /* FTAutoTriggerButton.swift in Sources */,
@@ -13319,6 +13892,7 @@
 				8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */,
 				BAF6A8F72A1CC5EF00A755DB /* FTTextToolbarButton.swift in Sources */,
 				BA50E03B2959CB3F00CDC0FD /* FTSidebarViewModel+Tags.swift in Sources */,
+				9715E0362AEA9D2C00EC48D4 /* NSString+URLEncoding.m in Sources */,
 				BAF395362859ADF10067CA9F /* FTWatchRecordedAudioCell.swift in Sources */,
 				BA2D9109285CAFCC001BB495 /* FTShelfBottomToolbarViewModel.swift in Sources */,
 				4213C351288958C900A7A6F3 /* FTMediaViewController.swift in Sources */,
@@ -13378,6 +13952,7 @@
 			files = (
 				4209FEB4295C637100ACC02E /* CommonExtensions.swift in Sources */,
 				4209FE96295C617600ACC02E /* FTCoverTheme.swift in Sources */,
+				4776464A2AF0D566009DCC2A /* FTLogger.swift in Sources */,
 				4209FE60295C5CA800ACC02E /* FTNoteshelfDocumentProvider.swift in Sources */,
 				4209FE76295C5F7000ACC02E /* FTShelfItemProtocols_Extension.swift in Sources */,
 				EDFF3ECF241A1214003D6E29 /* FTExternMethods.m in Sources */,
@@ -13461,7 +14036,6 @@
 				47CE079D2A0A317800E15028 /* FTUtils.m in Sources */,
 				5292B2362A27323B00216330 /* FTUserDefaults.swift in Sources */,
 				C85AFDEF2331FF4000D25D5F /* BEMCheckBoxGroup.m in Sources */,
-				4209FEB0295C630F00ACC02E /* FTLogger.swift in Sources */,
 				4209FE93295C614F00ACC02E /* FTDateInfo.swift in Sources */,
 				0938F4262363119900DFC7F3 /* UIColor+Additions.swift in Sources */,
 				4209FE6D295C5F0200ACC02E /* FTDocumentFileItemFactory.swift in Sources */,
@@ -13851,12 +14425,13 @@
 			};
 			name = Beta;
 		};
-		97F36F9E126D620C00FA092E /* Beta */ = {
+		09AD80EE2AFBB38B0049022B /* Debug Enterprise */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_DISPLAY_NAME = "NS3 Beta";
+				APP_DISPLAY_NAME = "NS3 EE Dev";
 				APP_VERSION = 1.3;
 				APP_VERSION_MAC = 1.3;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -13883,6 +14458,891 @@
 				CURRENT_PROJECT_VERSION = 240;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"ENTERPRISE_EDITION=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
+				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.enterprise-dev";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG ENTERPRISE_EDITION";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[sdk=iphonesimulator*]" = "TARGET_OS_SIMULATOR $(inherited)";
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_WORKSPACE = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80EF2AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0904BC622373F31400239DB8 /* Noteshelf-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Enterprise/Debug Enterprise.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GTM_USE_SESSION_FETCHER=1",
+					"BETA_IAP_RESTORE=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Third Party\"/**",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Resources/Noteshelf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Third Party\"/**",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fcxx-modules",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DSR_DEBUG -Xfrontend -debug-time-function-bodies";
+				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = NO;
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/App Delegate/Noteshelf-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "Noteshelf-Swift.h";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				TODAY_SCHEME_NEW_NOTEBOOK = "noteshelf3widgetcreatenewnotebook-dev";
+				TODAY_SCHEME_OPEN_NOTEBOOK = "noteshelf3widgetopennotebook-dev";
+				VALIDATE_WORKSPACE = NO;
+				WARNING_CFLAGS = (
+					"$(inherited)",
+					"-Wno-nullability-completeness",
+				);
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F02AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Enterprise/Debug Enterprise.entitlements";
+				DEVELOPMENT_ASSET_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					NOTESHELF_ACTION,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Noteshelf Action/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_ACTION -D DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited).noteshelf-action";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf Action/NoteshelfAction-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F12AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited).thumbnail";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F22AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F32AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTStyles;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F42AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTCommon;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F52AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTNewNotebook;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F62AFBB38B0049022B /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTTemplatesStore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Debug Enterprise";
+		};
+		09AD80F72AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_DISPLAY_NAME = "Noteshelf 3";
+				APP_VERSION = 1.3;
+				APP_VERSION_MAC = 1.3;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 42;
+				"DEBUG_INFORMATION_FORMAT[sdk=macosx*]" = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "ENTERPRISE_EDITION=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = "$(APP_VERSION)";
+				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.enterprise;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "RELEASE ENTERPRISE_EDITION";
+				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[sdk=iphonesimulator*]" = "TARGET_OS_SIMULATOR ${inherited}";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_WORKSPACE = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Release Enterprise";
+		};
+		09AD80F82AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0904BC632373F31400239DB8 /* Noteshelf-release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Prod";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accent;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "Resources/Entitlements/Enterprise/Release Enterprise.entitlements";
+				DEFINES_MODULE = YES;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"RELEASE=1",
+					"GTM_USE_SESSION_FETCHER=1",
+					"$(inherited)",
+				);
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Third Party\"/**",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Resources/Noteshelf-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Third Party\"/**",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-fcxx-modules",
+				);
+				PRODUCT_NAME = "$(APP_DISPLAY_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/App Delegate/Noteshelf-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "Noteshelf-Swift.h";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				TODAY_SCHEME_NEW_NOTEBOOK = noteshelf3widgetcreatenewnotebook;
+				TODAY_SCHEME_OPEN_NOTEBOOK = noteshelf3widgetopennotebook;
+				VALIDATE_WORKSPACE = NO;
+				WARNING_CFLAGS = (
+					"$(inherited)",
+					"-Wno-nullability-completeness",
+				);
+			};
+			name = "Release Enterprise";
+		};
+		09AD80F92AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf Action/Enterprise/Release Enterprise.entitlements";
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NOTESHELF_ACTION,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Noteshelf Action/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_ACTION";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited).noteshelf-action";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf Action/NoteshelfAction-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release Enterprise";
+		};
+		09AD80FA2AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Noteshelf3 Thumbnail/Noteshelf3 Thumbnail.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Noteshelf3 Thumbnail/Info.plist";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(APP_VERSION)";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited).thumbnail";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release Enterprise";
+		};
+		09AD80FB2AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release Enterprise";
+		};
+		09AD80FC2AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTStyles;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Release Enterprise";
+		};
+		09AD80FD2AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++17";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTCommon;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Release Enterprise";
+		};
+		09AD80FE2AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTNewNotebook;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Release Enterprise";
+		};
+		09AD80FF2AFBB3910049022B /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 27;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.FTTemplatesStore;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSION_INFO_PREFIX = "";
+			};
+			name = "Release Enterprise";
+		};
+		97F36F9E126D620C00FA092E /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APP_DISPLAY_NAME = "NS3 Beta";
+				APP_VERSION = 1.3.2;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 46;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -13900,8 +15360,9 @@
 				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-beta";
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "BETA ADHOC";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = BETA;
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[sdk=iphonesimulator*]" = "TARGET_OS_SIMULATOR $(inherited)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 5.0;
@@ -14559,6 +16020,10 @@
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				ENABLE_MODULE_VERIFIER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Third\\ Party/**",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -14586,6 +16051,7 @@
 				);
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				NS2_APP_URL_SCHEME = "com.fluidtouch.noteshelf-dev";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-fcxx-modules",
@@ -14597,7 +16063,6 @@
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "${inherited}";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/App Delegate/Noteshelf-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "Noteshelf-Swift.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -14648,6 +16113,11 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_MODULE_VERIFIER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Third\\ Party",
+					"$(PROJECT_DIR)/Third\\ Party",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14672,6 +16142,7 @@
 				);
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				NS2_APP_URL_SCHEME = com.fluidtouch.noteshelf;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-fcxx-modules",
@@ -14681,7 +16152,6 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/App Delegate/Noteshelf-Bridging-Header.h";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "Noteshelf-Swift.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -14712,6 +16182,11 @@
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				ENABLE_MODULE_VERIFIER = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Third\\ Party",
+					"$(PROJECT_DIR)/Third\\ Party",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Classes/App Delegate/Noteshelf_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14737,6 +16212,7 @@
 				);
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				NS2_APP_URL_SCHEME = "com.fluidtouch.noteshelf-beta";
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-fcxx-modules",
@@ -14766,8 +16242,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.3;
-				APP_VERSION_MAC = 1.3;
+				APP_VERSION = 1.3.2;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14792,7 +16267,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 240;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -14815,6 +16290,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[sdk=iphonesimulator*]" = "TARGET_OS_SIMULATOR $(inherited)";
@@ -14831,8 +16307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.3;
-				APP_VERSION_MAC = 1.3;
+				APP_VERSION = 1.3.2;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14857,7 +16332,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 240;
+				CURRENT_PROJECT_VERSION = 46;
 				"DEBUG_INFORMATION_FORMAT[sdk=macosx*]" = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -14877,6 +16352,7 @@
 				"MARKETING_VERSION[sdk=macosx*]" = "$(APP_VERSION_MAC)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				"SWIFT_ACTIVE_COMPILATION_CONDITIONS[sdk=iphonesimulator*]" = "TARGET_OS_SIMULATOR ${inherited}";
@@ -14928,7 +16404,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Noteshelf Action/NoteshelfAction-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -15034,7 +16509,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0964D0732AB9C27C00C79C01 /* Debug */,
+				09AD80F12AFBB38B0049022B /* Debug Enterprise */,
 				0964D0742AB9C27C00C79C01 /* Release */,
+				09AD80FA2AFBB3910049022B /* Release Enterprise */,
 				0964D0752AB9C27C00C79C01 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15044,7 +16521,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAA84E2028730F5900DE801B /* Debug */,
+				09AD80F32AFBB38B0049022B /* Debug Enterprise */,
 				BAA84E2128730F5900DE801B /* Release */,
+				09AD80FC2AFBB3910049022B /* Release Enterprise */,
 				BAA84E2228730F5900DE801B /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15054,7 +16533,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAA84E4F2873105500DE801B /* Debug */,
+				09AD80F42AFBB38B0049022B /* Debug Enterprise */,
 				BAA84E502873105500DE801B /* Release */,
+				09AD80FD2AFBB3910049022B /* Release Enterprise */,
 				BAA84E512873105500DE801B /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15064,7 +16545,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAB689A82862E7A400FACF11 /* Debug */,
+				09AD80F22AFBB38B0049022B /* Debug Enterprise */,
 				BAB689A92862E7A400FACF11 /* Release */,
+				09AD80FB2AFBB3910049022B /* Release Enterprise */,
 				BAB689AA2862E7A400FACF11 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15074,7 +16557,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAF0DCD32A6FE2AA006D293B /* Debug */,
+				09AD80F52AFBB38B0049022B /* Debug Enterprise */,
 				BAF0DCD42A6FE2AA006D293B /* Release */,
+				09AD80FE2AFBB3910049022B /* Release Enterprise */,
 				BAF0DCD52A6FE2AA006D293B /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15084,7 +16569,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAF0DD762A6FE676006D293B /* Debug */,
+				09AD80F62AFBB38B0049022B /* Debug Enterprise */,
 				BAF0DD772A6FE676006D293B /* Release */,
+				09AD80FF2AFBB3910049022B /* Release Enterprise */,
 				BAF0DD782A6FE676006D293B /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15094,7 +16581,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BAF395AE2859ADF10067CA9F /* Debug */,
+				09AD80EF2AFBB38B0049022B /* Debug Enterprise */,
 				BAF395AF2859ADF10067CA9F /* Release */,
+				09AD80F82AFBB3910049022B /* Release Enterprise */,
 				BAF395B02859ADF10067CA9F /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15104,7 +16593,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
+				09AD80EE2AFBB38B0049022B /* Debug Enterprise */,
 				C01FCF5008A954540054247B /* Release */,
+				09AD80F72AFBB3910049022B /* Release Enterprise */,
 				97F36F9E126D620C00FA092E /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -15114,7 +16605,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C8140D3D232667B60053FC86 /* Debug */,
+				09AD80F02AFBB38B0049022B /* Debug Enterprise */,
 				C8140D3E232667B60053FC86 /* Release */,
+				09AD80F92AFBB3910049022B /* Release Enterprise */,
 				C8140D3F232667B60053FC86 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;

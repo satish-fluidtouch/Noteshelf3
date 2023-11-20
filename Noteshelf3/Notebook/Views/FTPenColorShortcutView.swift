@@ -15,14 +15,14 @@ struct FTPenColorShortcutView: View {
     @State private var isContextMenuVisible = false
 
     var body: some View {
-        VStack(spacing: FTSpacing.small) {
+        HStack(spacing: FTSpacing.small) {
             ForEach(0..<viewModel.favoriteColors.count, id: \.self) { index in
                 let favColor = viewModel.favoriteColors[index]
                 self.buildContentView(for: favColor, at: index)
                     .macOnlyPlainButtonStyle()
             }
         }
-        .frame(width: shortcutWidth)
+        .frame(height: shortcutHeight)
         .onAppear {
             self.viewModel.fetchColorData()
         }

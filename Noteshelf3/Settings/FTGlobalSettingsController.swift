@@ -31,16 +31,15 @@ class FTGlobalSettingsController: UITableViewController {
     
 #else
     lazy var settingsSections: [[FTGlobalSettingsOptions]] = {
-        var sections = [[FTGlobalSettingsOptions]]();
-        var section1 : [FTGlobalSettingsOptions]  = [.appearance, .applePencil, .handwriting, .cloudAndBackup]
+        var sections = [[FTGlobalSettingsOptions]]()
+
+        let section1 : [FTGlobalSettingsOptions]
         if UIDevice.current.userInterfaceIdiom == .phone {
             section1 = [.appearance, .handwriting, .cloudAndBackup]
+        } else {
+            section1 = [.appearance, .applePencil, .handwriting, .cloudAndBackup]
         }
-#if DEBUG
-        let section2 : [FTGlobalSettingsOptions] = [.about,.rateOnAppStore,.noteshelfHelp]
-#else
-        let section2 : [FTGlobalSettingsOptions] = [.about,.noteshelfHelp]
-#endif
+        let section2 : [FTGlobalSettingsOptions] = [.about, .noteshelfHelp]
         sections.append(section1)
         sections.append(section2)
         return sections;
@@ -49,7 +48,7 @@ class FTGlobalSettingsController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-#if DEBUG
+#if DEBUG || BETA
         settingsSections.append([FTGlobalSettingsOptions.developerOptions])
 #endif
         self.isModalInPresentation = true
@@ -82,7 +81,11 @@ class FTGlobalSettingsController: UITableViewController {
 #endif
     }
     private func openAppStore() {
+        #if ENTERPRISE_EDITION
+        let url = URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8")        
+        #else
         let url = URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8")
+        #endif
         if url != nil, UIApplication.shared.canOpenURL(url!) {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }

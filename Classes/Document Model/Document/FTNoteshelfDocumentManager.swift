@@ -98,6 +98,19 @@ typealias FTDocumentOpenCallBack = ((FTDocumentOpenToken,FTDocumentProtocol?,Err
 
         return isAlredyOpen
     }
+    
+    func isDocumentOpen(for documentUUID: String) -> Bool {
+        let isAlredyOpen = self.documentsInUse.contains(where: { docInUse in
+            if let doc = docInUse.document, doc.documentUUID == documentUUID {
+                return true
+            } else {
+                return false
+            }
+        })
+
+        return isAlredyOpen
+    }
+
 }
 
 private extension FTNoteshelfDocumentManager {

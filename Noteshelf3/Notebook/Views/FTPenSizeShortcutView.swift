@@ -13,10 +13,10 @@ struct FTPenSizeShortcutView: View {
     @EnvironmentObject var viewModel: FTFavoriteSizeViewModel
 
     var body: some View {
-        VStack(spacing: 6.0) {
+        HStack(spacing: 6.0) {
             ForEach(0..<viewModel.favoritePenSizes.count, id: \.hashValue) { index in
                 let favSize = viewModel.favoritePenSizes[index]
-                let viewSize = viewModel.getViewSize(using: favSize.size)
+                let viewSize = viewModel.currentPenset.type.getIndicatorSize(using: favSize.size)
 
                 if self.canShowSizeView(favSize: favSize) {
                     FTPenSizeView(isSelected: favSize.isSelected, showIndicator: false, viewSize: viewSize, favoriteSizeValue: favSize.size)
@@ -30,7 +30,7 @@ struct FTPenSizeShortcutView: View {
                 }
             }
         }
-        .frame(width: shortcutWidth)
+        .frame(height: shortcutHeight)
         .onAppear {
              self.viewModel.fetchSizesData()
         }

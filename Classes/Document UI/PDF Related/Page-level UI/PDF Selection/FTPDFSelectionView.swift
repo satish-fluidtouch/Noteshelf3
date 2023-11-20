@@ -386,7 +386,7 @@ class FTPDFSelectionView: UIView {
         guard supportsPDFSelection,nil == self.longtextInteraction else {
             return;
         }
-#if DEBUG || ADHOC
+#if DEBUG || BETA
         guard FTDeveloperOption.enablePDFSelection else {
             return;
         }
@@ -898,7 +898,7 @@ extension FTPDFSelectionView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool
     {
         let point = touch.location(in: self.contentView);
-#if DEBUG || ADHOC
+#if DEBUG || BETA
         guard FTDeveloperOption.enablePDFSelection else {
             logIfNeeded("PDFSelection : interactionShouldBegin level1 false")
             canInitiateSelection = false;
