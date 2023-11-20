@@ -129,6 +129,6 @@ class FTMigrationViewController: UIViewController {
         #if targetEnvironment(macCatalyst)
         self.nsToolbar?.isVisible = true
         #endif
-        self.dismiss(animated: false)
+        self.dismiss(animated: true)
     }
 }
