@@ -210,7 +210,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             if let annInfo = info?.annotationInfo, urls.first?.isWatchRecording ?? false {
                 if let titleAnnotation = annInfo["titleAnnotation"] as? [String : Any] {
                     var title = urls.first?.fileName;
-                    if(nil == title) {
+                    if(nil == title || urls.first?.isWatchRecording ?? false) {
                         title = NSLocalizedString("AppleWatchRecording", comment: "Apple Watch Recording");
                     }
                     title = title?.appending("\n");

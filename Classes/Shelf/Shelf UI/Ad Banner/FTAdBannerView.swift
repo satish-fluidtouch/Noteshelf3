@@ -103,6 +103,7 @@ struct FTAdBannerView: View{
                 isBannerVisible = canShowWatchBanner()
             } else {
                 //remove
+                isBannerVisible = false
                 removeBannerAd()
             }
         } else {
