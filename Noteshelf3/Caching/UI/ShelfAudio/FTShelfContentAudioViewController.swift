@@ -43,4 +43,8 @@ class FTShelfContentAudioViewController: UIHostingController<FTShelfContentAudio
         self.title = "sidebar.recordings".localized
         self.view.backgroundColor = UIColor.appColor(.secondaryBG)
     }
+
+    deinit {
+        self.viewModel.stopFetching()
+    }
 }

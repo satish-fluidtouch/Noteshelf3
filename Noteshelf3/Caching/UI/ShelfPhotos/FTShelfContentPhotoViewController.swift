@@ -48,4 +48,8 @@ class FTShelfContentPhotoViewController: UIHostingController<FTShelfContentPhoto
         self.title = "sidebar.photos".localized
         self.view.backgroundColor = UIColor.appColor(.secondaryBG)
     }
+
+    deinit {
+        self.mediaViewModel.stopFetching()
+    }
 }

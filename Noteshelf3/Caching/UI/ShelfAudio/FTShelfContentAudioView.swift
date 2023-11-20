@@ -27,6 +27,12 @@ struct FTShelfContentAudioView: View {
                 contentView
             case .empty:
                 emptyStateView
+            case .partiallyLoaded:
+                if !viewModel.audio.isEmpty {
+                    contentView
+                } else {
+                    ProgressView()
+                }
             }
         }
         .padding(.horizontal, 0)

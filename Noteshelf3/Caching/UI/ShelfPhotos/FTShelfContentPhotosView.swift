@@ -28,6 +28,12 @@ struct FTShelfContentPhotosView: View  {
                 contentView
             case .empty:
                 emptyStateView
+            case .partiallyLoaded:
+                if !viewModel.media.isEmpty {
+                    contentView
+                } else {
+                    ProgressView()
+                }
             }
         }
         .padding(.horizontal, 0)
@@ -112,7 +118,7 @@ struct MediaItemView: View {
     @ObservedObject var media: FTShelfMedia
 
     var body: some View {
-        Image(uiImage: media.mediaImage ?? UIImage.shelfDefaultNoCoverImage)
+        Image(uiImage: media.mediaImage ?? UIImage(systemName: "photo")!)
             .resizable()
             .aspectRatio(contentMode: .fill)
             .clipped()
