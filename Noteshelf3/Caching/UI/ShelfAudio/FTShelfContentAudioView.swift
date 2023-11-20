@@ -11,6 +11,7 @@ import SwiftUI
 struct FTShelfContentAudioView: View {
     @ObservedObject var viewModel: FTShelfContentAudioViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var menuOverlayInfo : FTShelfMenuOverlayInfo
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     private func gridItems(size viewSize: CGSize) -> [GridItem] {
@@ -75,7 +76,11 @@ struct FTShelfContentAudioView: View {
                             } preview: {
                                 FTAudioPreviewPageView(audio: audio)
                                     .onAppear {
+                                        menuOverlayInfo.isMenuShown = true
                                         track(EventName.shelf_recording_page_longpress, screenName: ScreenName.shelf_recordings)
+                                    }
+                                    .onDisappear {
+                                        menuOverlayInfo.isMenuShown = false
                                     }
                             }
                     }

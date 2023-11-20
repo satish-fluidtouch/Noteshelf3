@@ -13,15 +13,14 @@ protocol FTShelfMediaDelegate: AnyObject {
     func openNotebook(shelfItem: FTShelfItemProtocol, page: Int)
 }
 
-class FTShelfContentPhotoViewController: UIHostingController<FTShelfContentPhotosView> {
+class FTShelfContentPhotoViewController: UIHostingController<AnyView> {
     private var mediaViewModel: FTShelfContentPhotosViewModel
     private weak var delegate: FTShelfMediaDelegate?
 
-    init(mediaViewModel: FTShelfContentPhotosViewModel = FTShelfContentPhotosViewModel(), delegate: FTShelfMediaDelegate?) {
+    init(mediaViewModel: FTShelfContentPhotosViewModel = FTShelfContentPhotosViewModel(), delegate: FTShelfMediaDelegate?, menuOverlayInfo: FTShelfMenuOverlayInfo) {
         self.mediaViewModel = mediaViewModel
         self.delegate = delegate
-        let view = FTShelfContentPhotosView(viewModel: mediaViewModel)
-        super.init(rootView: view)
+        super.init(rootView: AnyView(FTShelfContentPhotosView(viewModel: mediaViewModel).environmentObject(menuOverlayInfo)));
 
         self.mediaViewModel.onSelect = { [weak self] media in
             guard let shelfItem = media.document else {

@@ -9,15 +9,14 @@
 import SwiftUI
 import UIKit
 
-class FTShelfContentAudioViewController: UIHostingController<FTShelfContentAudioView> {
+class FTShelfContentAudioViewController: UIHostingController<AnyView> {
     private var viewModel: FTShelfContentAudioViewModel
     private weak var delegate: FTShelfMediaDelegate?
 
-    init(viewModel: FTShelfContentAudioViewModel = FTShelfContentAudioViewModel(), delegate: FTShelfMediaDelegate?) {
+    init(viewModel: FTShelfContentAudioViewModel = FTShelfContentAudioViewModel(), delegate: FTShelfMediaDelegate?, menuOverlayInfo: FTShelfMenuOverlayInfo) {
         self.viewModel = viewModel
         self.delegate = delegate
-        let view = FTShelfContentAudioView(viewModel: viewModel)
-        super.init(rootView: view)
+        super.init(rootView: AnyView(FTShelfContentAudioView(viewModel: viewModel).environmentObject(menuOverlayInfo)));
 
         self.viewModel.onSelect = { [weak self] audio in
             guard let shelfItem = audio.document else {
