@@ -92,7 +92,7 @@ extension URL {
     
     private func isDownloaded() -> Bool {
         let status = self.urlDownloadStatus();
-        if(status == .current || status == .downloaded) {
+        if(status == .current) {
             return true;
         }
         return false;

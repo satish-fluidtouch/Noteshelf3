@@ -37,8 +37,7 @@ extension NSMetadataItem
     {
         var isDownloaded = false;
         if let value = self.value(forAttribute: NSMetadataUbiquitousItemDownloadingStatusKey) as? String,
-            (value == NSMetadataUbiquitousItemDownloadingStatusCurrent ||
-             value == NSMetadataUbiquitousItemDownloadingStatusDownloaded) {
+            (value == NSMetadataUbiquitousItemDownloadingStatusCurrent) {
             isDownloaded = true;
         }
         return isDownloaded;

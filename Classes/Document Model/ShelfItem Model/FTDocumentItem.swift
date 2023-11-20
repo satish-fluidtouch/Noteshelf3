@@ -282,14 +282,15 @@ private extension FTDocumentItem {
     
     func updateIsDownloading(_ metadataItem: NSMetadataItem) {
         let metadataValue = metadataItem.isDownloading()
-        if metadataValue != self.isDownloading {
-            self.isDownloading = metadataValue;
+
+        if(metadataValue != self.isDownloading) {
+            self.isDownloading = metadataValue
             if(metadataValue) {
-                self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!;
+                self.downloadProgress = (metadataItem.percentDownloaded()?.floatValue)!
             }
         }
     }
-    
+
     func updatePercenDownload(_ metadataItem: NSMetadataItem) {
         if let metadataValue = metadataItem.percentDownloaded() {
             let value = metadataValue.floatValue;
@@ -300,7 +301,6 @@ private extension FTDocumentItem {
     }
 
     func updateIsUploaded(_ metadataItem: NSMetadataItem) {
-        
         let metadataValue = metadataItem.isUploaded()
         if(metadataValue != self.isUploaded) {
             self.isUploaded = metadataValue;
@@ -321,10 +321,11 @@ private extension FTDocumentItem {
     }
 
     func updatePercentUpload(_ metadataItem: NSMetadataItem) {
-        if let metadataValue = metadataItem.percentUploaded() {
-            let value = metadataValue.floatValue;
-            if(value != self.uploadProgress) {
-                self.uploadProgress = value;
+        let metadataValue = metadataItem.isUploading()
+        if(metadataValue != self.isUploading) {
+            self.isUploading = metadataValue;
+            if(metadataValue) {
+                self.uploadProgress = (metadataItem.percentUploaded()?.floatValue)!;
             }
         }
     }
