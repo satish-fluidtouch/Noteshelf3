@@ -27,6 +27,9 @@ class FTEvernoteFooterView: UITableViewHeaderFooterView {
         let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(account)
         accountInfoRequest.logOut({ success in
             if success {
+                UserDefaults.standard.set("",forKey:EN_LOGGED_USERNAME)
+                UserDefaults.standard.set("",forKey: EN_USEDSPACE)
+                UserDefaults.standard.set(0.0, forKey: EN_USEDSPACEPERCENT)
                 runInMainThread({
                     if let navVc = self.evernoteVc?.navigationController {
                         if nil == navVc.popViewController(animated: true) {
