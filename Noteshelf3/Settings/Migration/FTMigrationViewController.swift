@@ -88,6 +88,9 @@ class FTMigrationViewController: UIViewController {
         self.messageObserver?.invalidate()
         self.messageObserver = nil
         UIApplication.shared.isIdleTimerDisabled = false
+        #if targetEnvironment(macCatalyst)
+        self.nsToolbar?.isVisible = true
+        #endif
     }
     
     private func updateSuccessUI() {
@@ -113,12 +116,19 @@ class FTMigrationViewController: UIViewController {
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Stop Migration", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.progressView?.observedProgress?.cancel()
-            self?.dismiss(animated: true)
+            self?.dismiss()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
 
     @IBAction func doneTapped(_ sender: UIButton){
-        self.dismiss(animated: false)
+        self.dismiss()
+    }
+    
+    func dismiss() {
+        #if targetEnvironment(macCatalyst)
+        self.nsToolbar?.isVisible = true
+        #endif
+        self.dismiss(animated: true)
     }
 }
