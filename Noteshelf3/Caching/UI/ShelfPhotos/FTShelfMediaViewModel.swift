@@ -39,7 +39,7 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
             if imageURL.fileModificationDate.compare(storedDate) != .orderedSame {
                  addImageTocache()
             } else {
-                runInMainThread(0.5) {
+                runInMainThread {
                     self.mediaImage = imageFromCache
                 }
             }
