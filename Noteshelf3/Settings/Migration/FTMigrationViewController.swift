@@ -52,7 +52,7 @@ class FTMigrationViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        runInMainThread(2) {
+        runInMainThread(0.5) {
             self.processMigration()
         }
     }
