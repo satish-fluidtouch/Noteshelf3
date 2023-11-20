@@ -1024,11 +1024,14 @@
 "downloadedStickers" = "已下载贴纸";
 "duplicate" = "复制";
 "eraser.auto" = "自动";
+"evernote.userInfo.fetchFailureMessage" = "此时无法获取账户信息";
 "export_data" = "导出数据";
 "export_description1" = "强烈建议您在本地设备上保存数据的副本。";
 "export_description2" = "您的笔记本、分组和分类的导出数据将保存为.zip文件。您的笔记本将以.noteshelf格式保存。";
 "export_description_1" = "强烈建议您在本地设备上保存数据副本。导出的数据将保存为.zip文件，包含您所有的笔记本、组和分类。";
 "failed_following" = "备份以下笔记本失败：";
+"favoritebar.singleFavoriteDelete.message" = "收藏夹工具栏中必须至少保留一项。";
+"favoritebar.singleFavoriteDelete.title" = "无法删除收藏夹";
 "finalizing" = "完成";
 "finder.addPageAfter" = "在此后面添加页面";
 "finder.addPageBefore" = "在此前面添加页面";
@@ -1082,15 +1085,19 @@
 "iCloudUserTurnedOff" = "iCloud 关闭";
 "iCloudUserTurnedOffMessage" = "您的文件的副本将保留在iCloud中。您想对此设备上当前的文件做什么？";
 "iap.bannerTitle" = "升级到高级";
+"iap.bannerTitle1" = "以@%折扣获取高级版";
+"iap.bannerTitle2" = "仅限Noteshelf 2用户";
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以确保已删除的笔记本不会计入您的配额，或解锁完整应用程序以获取无限笔记本";
 "iap.booklimitReachedTitle" = "您已达到免费笔记本限制";
 "iap.booksleft" = "%@ 留下的注释";
 "iap.featureLimitMessage" = "此功能已锁定。立即升级解锁。";
 "iap.featureLimitTitle" = "立即升级";
 "iap.message" = "获取无限笔记、手写识别和搜索以及Noteshelf高级版的数字日记。";
+"iap.messageNew" = "仅限有限时间内，Noteshelf 2用户可以享受此特别优惠，并解锁Noteshelf 3的所有功能和优势。";
 "iap.noProductIDsFound" = "找不到任何应用内购买产品标识符。";
 "iap.noProductsFound" = "没有发现应用内购买。";
 "iap.onetimepurchase" = "一次购买。永久拥有。";
+"iap.onetimepurchasenew" = "%@ 一次性购买";
 "iap.paymentWasCancelled" = "应用内购买流程已取消。";
 "iap.privacy" = "隐私政策";
 "iap.productRequestFailed" = "当前无法获取可用的应用内购买产品。";
@@ -1102,6 +1109,7 @@
 "iap.termsnconditions" = "条款和条件";
 "iap.title" = "通过Noteshelf Premium获得完整体验";
 "iap.upgradeNow" = "立即升级";
+"iap.upgradeToPremiumNow" = "立即升级至高级版";
 "icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
 "iconlabels" = "图标标签";
 "import" = "导入";
@@ -1538,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
+// Last Synced by Akshay on 20 November 2023 at 15:41

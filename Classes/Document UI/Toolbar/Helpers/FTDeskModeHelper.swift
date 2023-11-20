@@ -13,7 +13,7 @@ struct FTDeskModeHelper {
         var selected: Bool = false
 
         if toolType.toolMode == .deskModeTool {
-            if mode == .deskModePen && toolType == .pen || mode == .deskModeMarker && toolType == .highlighter || mode == .deskModeEraser && toolType == .eraser || mode == .deskModeShape && toolType == .shapes || mode == .deskModeText && toolType == .textMode || mode == .deskModeLaser && toolType == .presenter || mode == .deskModeReadOnly && toolType == .hand || mode == .deskModeClipboard && toolType == .lasso {
+            if mode == .deskModePen && toolType == .pen || mode == .deskModeMarker && toolType == .highlighter || mode == .deskModeEraser && toolType == .eraser || mode == .deskModeShape && toolType == .shapes || mode == .deskModeText && toolType == .textMode || mode == .deskModeLaser && toolType == .presenter || mode == .deskModeReadOnly && toolType == .hand || mode == .deskModeClipboard && toolType == .lasso || mode == .deskModeFavorites && toolType == .favorites {
                 selected = true
             }
         }
@@ -53,6 +53,8 @@ struct FTDeskModeHelper {
             reqTool = .textMode
         } else if mode == .deskModeView {
             reqTool = .hand
+        } else if mode == .deskModeFavorites {
+            reqTool = .favorites
         }
         return reqTool
     }

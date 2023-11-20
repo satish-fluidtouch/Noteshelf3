@@ -52,7 +52,7 @@ class FTMigrationViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        runInMainThread(2) {
+        runInMainThread(0.5) {
             self.processMigration()
         }
     }
@@ -63,11 +63,17 @@ class FTMigrationViewController: UIViewController {
 
         FTCLSLog("---Migration Started---")
         let progress = FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { [weak self] success, error in
-            let status = success ? "Migration Completed" : "Migration Failed"
-            FTCLSLog("---\(status)---")
-            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
-            self?.updateSuccessUI()
-            UIApplication.shared.isIdleTimerDisabled = false
+            runInMainThread {
+                let status = success ? "Migration Completed" : "Migration Failed"
+                FTCLSLog("---\(status)---")
+
+                // TODO: (AK) Move to a proper location
+                FTTextStyleManager.shared.migrateNS2TextStyles()
+
+                FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                self?.updateSuccessUI()
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
         }
 
         progressView?.observedProgress = progress
@@ -82,10 +88,12 @@ class FTMigrationViewController: UIViewController {
         self.messageObserver?.invalidate()
         self.messageObserver = nil
         UIApplication.shared.isIdleTimerDisabled = false
+        #if targetEnvironment(macCatalyst)
+        self.nsToolbar?.isVisible = true
+        #endif
     }
     
     private func updateSuccessUI() {
-        // TODO: To be updated with new UI, this is just temporary
         self.inProgressView?.isHidden = true
         self.successView?.isHidden = false
         self.cancelButton?.isHidden = true
@@ -108,12 +116,19 @@ class FTMigrationViewController: UIViewController {
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Stop Migration", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.progressView?.observedProgress?.cancel()
-            self?.dismiss(animated: true)
+            self?.dismiss()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
 
     @IBAction func doneTapped(_ sender: UIButton){
-        self.dismiss(animated: false)
+        self.dismiss()
+    }
+    
+    func dismiss() {
+        #if targetEnvironment(macCatalyst)
+        self.nsToolbar?.isVisible = true
+        #endif
+        self.dismiss(animated: true)
     }
 }

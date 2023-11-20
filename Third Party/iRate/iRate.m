@@ -188,9 +188,13 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
         
         //bundle id
         self.applicationBundleID = [[NSBundle mainBundle] bundleIdentifier];
+#if ENTERPRISE_EDITION
+        self.applicationBundleID = @"com.fluidtouch.noteshelf3.enterprise";
+        [self setAppStoreIDOnMainThread:@"6471592545"];
+#else
         self.applicationBundleID = @"com.fluidtouch.noteshelf3";
-        
         [self setAppStoreIDOnMainThread:@"6458735203"];
+#endif
 
         //default settings
         self.useAllAvailableLanguages = YES;

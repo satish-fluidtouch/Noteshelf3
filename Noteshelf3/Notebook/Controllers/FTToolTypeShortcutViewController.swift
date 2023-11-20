@@ -122,16 +122,15 @@ extension FTToolTypeShortcutViewController: FTFavoriteColorEditDelegate {
                 arrowOffset -= (3 * step)
             }
         }
-        rect.origin.y -=  arrowOffset
+        rect.origin.x -=  arrowOffset
         let placement = FTShortcutPlacement.getSavedPlacement()
         var arrowDirections: UIPopoverArrowDirection = .any
         if placement == .top {
-            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
             arrowDirections = [UIPopoverArrowDirection.up]
         } else if placement == .bottom {
-            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
             arrowDirections = [UIPopoverArrowDirection.down]
         } else {
+            self.view.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             arrowDirections = [UIPopoverArrowDirection.left, UIPopoverArrowDirection.right]
         }
         hostingVc.ftPresentationDelegate.source = self.view
@@ -193,16 +192,15 @@ extension FTToolTypeShortcutViewController: FTShapeShortcutEditDelegate {
         }
         self.view.transform = .identity
         var rect = self.view.bounds
-        rect.origin.y -= arrowOffset
+        rect.origin.x -= arrowOffset
         let placement = FTShortcutPlacement.getSavedPlacement()
         var arrowDirections: UIPopoverArrowDirection = .any
         if placement == .top {
-            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
             arrowDirections = [UIPopoverArrowDirection.up]
         } else if placement == .bottom {
-            self.view.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
             arrowDirections = [UIPopoverArrowDirection.down]
         } else {
+            self.view.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             arrowDirections = [UIPopoverArrowDirection.left, UIPopoverArrowDirection.right]
         }
         let controller = FTShapesRackViewController.showPopOver(presentingController: self, sourceView: self.view as Any, sourceRect: rect, arrowDirections: arrowDirections) as? FTShapesRackViewController

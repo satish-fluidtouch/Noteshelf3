@@ -181,10 +181,10 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         return FTStoreContainerViewController.templatesStoreViewController(delegate: self,premiumUser: FTIAPManager.shared.premiumUser)
     }
     private func getPhotosVC() -> UIViewController {
-        FTShelfContentPhotoViewController(delegate: self)
+        FTShelfContentPhotoViewController(delegate: self, menuOverlayInfo: shelfMenuDisplayInfo)
     }
     private func getAudioVC() -> UIViewController {
-        FTShelfContentAudioViewController(delegate: self)
+        FTShelfContentAudioViewController(delegate: self, menuOverlayInfo: shelfMenuDisplayInfo)
     }
     private func getBookmarkVC() -> UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

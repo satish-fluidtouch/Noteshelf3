@@ -37,6 +37,7 @@ protocol FTDocumentRecoverPages: NSObjectProtocol {
 protocol FTDocumentProtocolInternal: NSObjectProtocol {
     var documentState : UIDocument.State  {get};
     var URL : Foundation.URL {get};
+    var documentUUID : String {get};
     func openDocument(purpose: FTDocumentOpenPurpose, completionHandler: ((Bool,NSError?) -> Void)?);
     func closeDocument(completionHandler: ((Bool) -> Void)?);
     func prepareForClosing();

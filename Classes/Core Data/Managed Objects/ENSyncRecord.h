@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #if !TARGET_OS_MACCATALYST
-@import EvernoteSDK;
 #endif
 #pragma GCC diagnostic ignored "-Wproperty-attribute-mismatch"
 
@@ -34,9 +33,6 @@
 
 @property (nonatomic) BOOL isBusinessNote;
 @property (nonatomic, strong) NSString *url;
-#if !TARGET_OS_MACCATALYST
-- (ENNoteStoreClient *)noteStoreClient;
-#endif
 - (BOOL)isDeleted;
 
 @end

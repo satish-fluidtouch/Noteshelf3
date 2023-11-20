@@ -6,7 +6,7 @@
 //  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 class FTPresenterShortcutViewModel: ObservableObject {
     private let rackData: FTRackData
@@ -17,6 +17,7 @@ class FTPresenterShortcutViewModel: ObservableObject {
 
     @Published private(set) var selectedPresenterType: FTPresenterType = .pointer
     @Published private(set) var currentSelectedColor: String = ""
+    @Published private(set) var contentTransformation = Angle.zero
 
     private weak var delegate: FTPresenterShortcutDelegate?
 
@@ -28,6 +29,12 @@ class FTPresenterShortcutViewModel: ObservableObject {
             self.currentPenset = presenterset
             self.currentSelectedColor = presenterset.color
         }
+        self.updateContentTransfromIfNeeded()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleViewMovementEnded), name: NSNotification.Name("ViewMovementEnded"), object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     func fetchPresenterData() {
@@ -40,6 +47,18 @@ class FTPresenterShortcutViewModel: ObservableObject {
         } else {
             self.selectedPresenterType = .pointer
         }
+    }
+
+    private func updateContentTransfromIfNeeded() {
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        self.contentTransformation = .zero
+        if placement.isLeftPlacement() || placement.isRightPlacement() {
+            self.contentTransformation = .degrees(-90)
+        }
+    }
+
+    @objc private func handleViewMovementEnded() {
+        self.updateContentTransfromIfNeeded()
     }
 
     func saveSelection(type: FTPresenterType, color: String) {

@@ -1024,11 +1024,14 @@
 "downloadedStickers" = "Heruntergeladene Aufkleber";
 "duplicate" = "Duplikat";
 "eraser.auto" = "Auto";
+"evernote.userInfo.fetchFailureMessage" = "Zurzeit können keine Kontoinformationen abgerufen werden.";
 "export_data" = "Daten exportieren";
 "export_description1" = "Es wird dringend empfohlen, eine Kopie Ihrer Daten auf Ihrem lokalen Gerät zu speichern.";
 "export_description2" = "Die exportierten Daten, die Ihre Notizbücher, Gruppen und Kategorien enthalten, werden als .zip-Datei gespeichert. Ihre Notizbücher werden im .noteshelf Format gespeichert.";
 "export_description_1" = "Es wird dringend empfohlen, eine Kopie Ihrer Daten auf Ihrem lokalen Gerät zu speichern. Die exportierten Daten werden als .zip-Datei gespeichert und enthalten alle Ihre Notizbücher, Gruppen und Kategorien.";
 "failed_following" = "Fehler beim Sichern der folgenden Notizbücher:";
+"favoritebar.singleFavoriteDelete.message" = "Mindestens ein Element muss in der Favoriten-Symbolleiste verbleiben.";
+"favoritebar.singleFavoriteDelete.title" = "Der Favorit konnte nicht gelöscht werden";
 "finalizing" = "Abschließen";
 "finder.addPageAfter" = "Seite hinzufügen";
 "finder.addPageBefore" = "Seite hinzufügen";
@@ -1082,15 +1085,19 @@
 "iCloudUserTurnedOff" = "iCloud ausgeschaltet";
 "iCloudUserTurnedOffMessage" = "Eine Kopie Ihrer Dokumente bleibt in iCloud gespeichert. Was möchten Sie mit den Dokumenten tun, die sich derzeit auf diesem Gerät befinden?";
 "iap.bannerTitle" = "Premium-Upgrade";
+"iap.bannerTitle1" = "Erhalten Sie Premium mit @% RABATT";
+"iap.bannerTitle2" = "Nur für Noteshelf 2 Benutzer.";
 "iap.booklimitReachedMessage" = "Entleeren Sie Ihren Papierkorb, um sicherzustellen, dass gelöschte Notizbücher nicht zu Ihrem Kontingent gezählt werden, oder entsperren Sie die vollständige App für unbegrenzte Notizbücher.";
 "iap.booklimitReachedTitle" = "Sie haben das kostenlose Notizbuch-Limit erreicht.";
 "iap.booksleft" = "%@ Notizen übrig";
 "iap.featureLimitMessage" = "Diese Funktion ist gesperrt. Freischalten durch ein Upgrade jetzt.";
 "iap.featureLimitTitle" = "Jetzt aktualisieren.";
 "iap.message" = "Erhalten Sie Zugang zu unbegrenzten Notizen, Handschrifterkennung und Suche sowie digitalen Tagebüchern mit Noteshelf Premium.";
+"iap.messageNew" = "Für eine begrenzte Zeit können Noteshelf 2-Benutzer von diesem speziellen Angebot profitieren und alle Funktionen und Vorteile von Noteshelf 3 freischalten.";
 "iap.noProductIDsFound" = "Es wurden keine In-App-Kauf-Produktkennungen gefunden.";
 "iap.noProductsFound" = "Es wurden keine In-App-Käufe gefunden.";
 "iap.onetimepurchase" = "EINMALIGER KAUF. FÜR IMMER DEIN.";
+"iap.onetimepurchasenew" = "%@ Einmaliger Kauf ";
 "iap.paymentWasCancelled" = "Der In-App-Kaufvorgang wurde abgebrochen.";
 "iap.privacy" = "Datenschutzbestimmungen";
 "iap.productRequestFailed" = "Derzeit keine verfügbaren In-App-Kaufprodukte abrufbar.";
@@ -1102,6 +1109,7 @@
 "iap.termsnconditions" = "Allgemeine Geschäftsbedingungen";
 "iap.title" = "Holen Sie sich das volle Erlebnis mit Noteshelf Premium";
 "iap.upgradeNow" = "Jetzt aktualisieren";
+"iap.upgradeToPremiumNow" = "Jetzt auf Premium upgraden.";
 "icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
@@ -1429,7 +1437,7 @@
 "sidebar.photo" = "Foto";
 "sidebar.photos" = "Fotos";
 "sidebar.recording" = "Aufnahme";
-"sidebar.recordings" = "Andaufnahmen";
+"sidebar.recordings" = "Audioaufnahmen";
 "sidebar.topSection.home" = "Zuhause";
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
@@ -1538,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Sameer Hussain on 13 November 2023 at 11:34 AM
+// Last Synced by Akshay on 20 November 2023 at 15:41

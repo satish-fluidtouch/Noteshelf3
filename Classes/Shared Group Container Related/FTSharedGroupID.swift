@@ -9,53 +9,77 @@
 import UIKit
 
 public class FTSharedGroupID {
+#if ENTERPRISE_EDITION
     public static func getAppGroupID() -> String {
-        #if DEBUG
-        return "group.com.fluidtouch.noteshelf3-dev"
-        #elseif BETA
-        return "group.com.fluidtouch.noteshelf3-beta"
-        #else
-        return "group.com.fluidtouch.noteshelf3"
-        #endif
+#if DEBUG
+        return "group.com.fluidtouch.noteshelf3.enterprise-dev"
+#else
+        return "group.com.fluidtouch.noteshelf3.enterprise"
+#endif
     }
+#else
+    public static func getAppGroupID() -> String {
+#if DEBUG
+        return "group.com.fluidtouch.noteshelf3-dev"
+#elseif BETA
+        return "group.com.fluidtouch.noteshelf3-beta"
+#else
+        return "group.com.fluidtouch.noteshelf3"
+#endif
+    }
+#endif
     
     public static func getAppGroupIdForNS1Migration() -> String {
-        #if DEBUG
+#if DEBUG
         return "group.com.fluidtouch.noteshelf-1to2-migration-dev"
-        #elseif BETA
+#elseif BETA
         return "group.com.fluidtouch.noteshelf-1to2-migration-beta"
-        #else
+#else
         return "group.com.fluidtouch.noteshelf-1to2-migration"
-        #endif
+#endif
     }
-
+    
+#if ENTERPRISE_EDITION
     public static func getNS2AppGroupID() -> String {
-        #if DEBUG
-        return "group.com.fluidtouch.noteshelf-dev"
-        #elseif BETA
-        return "group.com.fluidtouch.noteshelf-beta"
-        #else
         return "group.com.fluidtouch.noteshelf"
-        #endif
     }
     
     public static func getAppBundleID() -> String {
-        #if DEBUG
-        return "com.fluidtouch.noteshelf3-dev"
-        #elseif BETA
-        return "com.fluidtouch.noteshelf3-beta"
-        #else
-        return "com.fluidtouch.noteshelf3"
-        #endif
+#if DEBUG
+        return "com.fluidtouch.noteshelf3.enterprise-dev"
+#else
+        return "com.fluidtouch.noteshelf3.enterprise"
+#endif
+    }
+#else
+    public static func getNS2AppGroupID() -> String {
+#if DEBUG
+        return "group.com.fluidtouch.noteshelf-dev"
+#elseif BETA
+        return "group.com.fluidtouch.noteshelf-beta"
+#else
+        return "group.com.fluidtouch.noteshelf"
+#endif
     }
     
+    public static func getAppBundleID() -> String {
+#if DEBUG
+        return "com.fluidtouch.noteshelf3-dev"
+#elseif BETA
+        return "com.fluidtouch.noteshelf3-beta"
+#else
+        return "com.fluidtouch.noteshelf3"
+#endif
+    }
+#endif
+    
     public static func getNS2AppBundleID() -> String {
-        #if DEBUG
+#if DEBUG
         return "com.fluidtouch.noteshelf-dev"
-        #elseif BETA
+#elseif BETA
         return "com.fluidtouch.noteshelf-beta"
-        #else
+#else
         return "com.fluidtouch.noteshelf"
-        #endif
+#endif
     }
 }

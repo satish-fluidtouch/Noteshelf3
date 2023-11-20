@@ -34,8 +34,20 @@ final class FTShelfContentAudioViewModel: ObservableObject {
     @Published private(set) var audio: [FTShelfAudio] = []
     @Published private(set) var state: FTMediaLoadState = .loading
 
+    private var progress = Progress()
+    private var cancellables = Set<AnyCancellable>()
+
     var onSelect: ((_ audio: FTShelfAudio) -> Void)?
     var openInNewWindow: ((_ audio: FTShelfAudio) -> Void)?
+    
+    init() {
+        self.progress.publisher(for: \.isFinished).sink { [weak self] isfinished in
+            runInMainThread {
+                self?.state = .loaded
+                self?.updateMedia(items: [])
+            }
+        }.store(in: &cancellables)
+    }
 
     func buildCache() async {
         do {
@@ -46,24 +58,24 @@ final class FTShelfContentAudioViewModel: ObservableObject {
         }
     }
 
+    func stopFetching() {
+        progress.cancel()
+    }
+
     @MainActor
     private func startLoading() {
         state = .loading
     }
 
-    @MainActor
-    private func setState() {
-        if self.audio.isEmpty {
-            state = .empty
-        } else {
-            state = .loaded
-        }
-    }
-    
-    @MainActor
     private func updateMedia(items: [FTShelfAudio]) {
-        self.audio.append(contentsOf: items)
-        setState()
+        runInMainThread {
+            self.audio.append(contentsOf: items)
+            if self.state == .loaded, self.audio.isEmpty {
+                self.state = .empty
+            } else {
+                self.state = .partiallyLoaded
+            }
+        }
     }
 }
 
@@ -71,40 +83,46 @@ final class FTShelfContentAudioViewModel: ObservableObject {
 private extension FTShelfContentAudioViewModel {
     func fetchAudio() async throws {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
-        
-        guard !allItems.isEmpty else {
-            await self.updateMedia(items: [])
+
+        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
+        progress.totalUnitCount = Int64(items.count)
+
+        guard !items.isEmpty else {
+            self.state = .loaded
+            progress.completedUnitCount = progress.totalUnitCount
+            self.updateMedia(items: [])
             return
         }
 
-        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
-        for case let item in items where item.documentUUID != nil {
+        for case let item in items where !progress.isCancelled {
             do {
-                let media = try fetchMedia(docItem: item)
-                await self.updateMedia(items: media)
+                try fetchMedia(docItem: item) { [weak self] media in
+                    self?.updateMedia(items: media)
+                }
+                progress.completedUnitCount += 1
             } catch {
+                progress.completedUnitCount += 1
                 continue
             }
         }
     }
 
-    func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfAudio] {
+    func fetchMedia(docItem: FTDocumentItemProtocol, onMediaFound: (_ media: [FTShelfAudio]) -> Void) throws {
         guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
         let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
         let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")
         guard FileManager.default.fileExists(atPath: annotationsFolder) else {
-            return []
+            onMediaFound([])
+            return
         }
         let sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
-        var totalMedia: [FTShelfAudio] = [FTShelfAudio]()
 
-        for sqliteFile in sqliteFiles {
+        for sqliteFile in sqliteFiles where !progress.isCancelled {
             let sqlitePath = annotationsFolder.appending(sqliteFile)
             let cachedFile = FTCachedSqliteAnnotationFileItem(url: URL(fileURLWithPath: sqlitePath), isDirectory: false, documentItem: docItem)
             let media = cachedFile.audioAnnotataions()
-            totalMedia.append(contentsOf: media)
+            onMediaFound(media)
         }
-        return totalMedia
     }
 }

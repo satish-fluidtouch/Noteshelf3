@@ -543,11 +543,22 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     func startNS2ToNS3Migration() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
+                #if targetEnvironment(macCatalyst)
+                self.nsToolbar?.isVisible = false
+                #endif
                 FTMigrationViewController.showMigration(on: self)
             }
         }
     }
-    
+
+    func showPremiumUpgradeScreen() {
+        self.prepareProviderIfNeeded {
+            self.closeAnyActiveOpenedBook {
+                self.rootContentViewController?.didTapOnUpgradeNow()
+            }
+        }
+    }
+
     func prepareProviderIfNeeded(onCompletion: (() -> ())?) {
         if(nil == self.rootContentViewController) {
             //This need to be un commented once we add the new migration UI

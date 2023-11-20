@@ -9,7 +9,7 @@
 import UIKit
 import OpenAI
 
-#if DEBUG || ADHOC
+#if DEBUG || BETA
 extension FTOpenAI {
     static var debugModel: Model = .gpt3_5Turbo;
 }
