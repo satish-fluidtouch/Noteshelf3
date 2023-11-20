@@ -17,6 +17,7 @@ class FTMigrationViewController: UIViewController {
         controller.present(migrationController, animated: true)
     }
     
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var migrationTitle: UILabel?
     @IBOutlet weak var descriptionLabel: UILabel?
     @IBOutlet weak var migratedSuccessTextLabel: UILabel!
@@ -26,6 +27,7 @@ class FTMigrationViewController: UIViewController {
     @IBOutlet weak var doneButton: UIButton?
     @IBOutlet weak var progressView: UIProgressView?
 
+    @IBOutlet weak var successIndicator: BEMCheckBox!
     @IBOutlet weak var inProgressView: UIView?
     @IBOutlet weak var successView: UIView?
     private var messageObserver: NSKeyValueObservation?
@@ -35,6 +37,17 @@ class FTMigrationViewController: UIViewController {
 
         self.inProgressView?.isHidden = false
         self.successView?.isHidden = true
+        self.successIndicator?.onCheckColor = UIColor.white
+        self.successIndicator?.onFillColor = UIColor.init(hexString: "F97641")
+        self.successIndicator?.onTintColor = UIColor.init(hexString: "F97641")
+        self.successIndicator?.lineWidth = 6.0
+        self.successIndicator?.onAnimationType = BEMAnimationType.bounce
+        migrationTitle?.text = "migration.progress.text".localized
+        warningTitle?.text = "migration.exitScreen".localized
+        migratedSuccessTextLabel.text = "migration.succes".localized
+        cancelButton?.titleLabel?.text = "migration.cancel".localized
+        self.view.backgroundColor = UIColor.init(hexString: "F0EEEB")
+        self.overrideUserInterfaceStyle = .light
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -50,11 +63,17 @@ class FTMigrationViewController: UIViewController {
 
         FTCLSLog("---Migration Started---")
         let progress = FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { [weak self] success, error in
-            let status = success ? "Migration Completed" : "Migration Failed"
-            FTCLSLog("---\(status)---")
-            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
-            self?.updateSuccessUI()
-            UIApplication.shared.isIdleTimerDisabled = false
+            runInMainThread {
+                let status = success ? "Migration Completed" : "Migration Failed"
+                FTCLSLog("---\(status)---")
+
+                // TODO: (AK) Move to a proper location
+                FTTextStyleManager.shared.migrateNS2TextStyles()
+
+                FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                self?.updateSuccessUI()
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
         }
 
         progressView?.observedProgress = progress
@@ -72,17 +91,25 @@ class FTMigrationViewController: UIViewController {
     }
     
     private func updateSuccessUI() {
-        // TODO: To be updated with new UI, this is just temporary
         self.inProgressView?.isHidden = true
         self.successView?.isHidden = false
         self.cancelButton?.isHidden = true
+        imageView.isHidden = true
+        showSuccessIndicator()
+    }
+    
+    private func showSuccessIndicator() {
+        self.successIndicator?.isHidden = false;
+        UIView.animate(withDuration: 1.5, animations: {
+            self.successIndicator?.setOn(true, animated: true)
+        })
     }
 
-    @IBAction func cancelButtonTapped(_ sender: UIButton){
-        //TODO: Update localization
-        let alertController = UIAlertController(title: NSLocalizedString("Would you like to Cancel the Migration?", comment: ""), message: "", preferredStyle: .alert)
-
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        self.progressView?.observedProgress?.pause()
+        let alertController = UIAlertController(title: "migration.cancel.alert".localized, message: "", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Continue", comment: ""), style: .default, handler: { _ in
+            self.progressView?.observedProgress?.resume()
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Stop Migration", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.progressView?.observedProgress?.cancel()

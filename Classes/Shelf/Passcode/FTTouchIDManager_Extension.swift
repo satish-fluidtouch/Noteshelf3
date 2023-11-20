@@ -148,7 +148,7 @@ extension FTBiometricManager: UITextFieldDelegate {
     
     static func passwordForNS2Book(with uuid: String) -> String? {
         var passwordToReturn: String?
-        let keyChain = KeychainItemWrapper(identifier: NS2_BUNDLE_ID, accessGroup: nil)
+        let keyChain = KeychainItemWrapper(identifier: FTSharedGroupID.getNS2AppBundleID(), accessGroup: nil)
         if let data = keyChain?.object(forKey: kSecValueData) as? Data {
             let dict = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self],from: data) as? [String:Any]
             passwordToReturn = dict?[uuid] as? String ?? ""
@@ -158,7 +158,7 @@ extension FTBiometricManager: UITextFieldDelegate {
     
     static func isTouchIdEnabled(for uuid: String) -> Bool {
         var isTouchEnabled = false
-        let keyChain = KeychainItemWrapper(identifier: NS2_BUNDLE_ID, accessGroup: nil)
+        let keyChain = KeychainItemWrapper(identifier: FTSharedGroupID.getNS2AppBundleID(), accessGroup: nil)
         if let data = keyChain?.object(forKey: kSecValueData) as? Data {
             if let dict = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self],from: data) as? [String:Any] {
                 let passwordToReturn = dict[uuid+"_TouchID"] as? Int ?? 0

@@ -38,7 +38,6 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func showGlobalSearchController()
     func showInEnclosingFolder(forItem shelfItem: FTShelfItemProtocol)
     func createNewNotebookInside(collection: FTShelfItemCollection, group: FTGroupItemProtocol?,notebookDetails: FTNewNotebookDetails?,isQuickCreate: Bool, mode:ThemeDefaultMode, onCompletion: @escaping (NSError?, _ shelfItem:FTShelfItemProtocol?) -> ())
-    func migrateBookToNS3(shelfItem: FTShelfItemProtocol)
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
 }

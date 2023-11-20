@@ -503,9 +503,11 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
         if viewState == .none {
             if indexPath.section == 1 {
                 let item = pages[indexPath.row]
-                if let shelf = item.documentItem {
-                    self.delegate?.openNotebook(shelfItem: shelf, page: item.pageIndex)
-                    track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
+                FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                    if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
+                        self.delegate?.openNotebook(shelfItem: shelfItem, page: item.pageIndex)
+                        track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
+                    }
                 }
             }
         }

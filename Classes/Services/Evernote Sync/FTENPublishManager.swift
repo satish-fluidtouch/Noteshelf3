@@ -8,6 +8,8 @@
 
 import Reachability
 import FTCommon
+// import EvernoteSDK
+import CoreData
 
 typealias GenericCompletionBlockWithStatus = (Bool) -> Void
 @objc enum EvernoteAccountType : Int {
@@ -16,11 +18,19 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     case evernoteAccountUnknown
 }
 
+class FTENNotebook: NSObject {
+    var edamNote: EDAMNote?
+    var edamResources = [EDAMResource]();
+}
+
 @objcMembers class FTENPublishManager: NSObject, FTBasePublishRequestDelegate {
     var shouldCancelPublishing = false
     private var currentlyPublingNotebookId: String?
     private var publishInProgress = false
     private var taskId: UIBackgroundTaskIdentifier!
+    
+    private(set) var ftENNotebook: FTENNotebook?;
+    
     //TODO: FLURRY
     /*
      Event Name: Evernote Sync Enabled {Parameter: New or Existing, From: Shelf/ Notebook}
@@ -71,6 +81,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             publishQueue = DispatchQueue.init(label: "com.fluidtouch.noteshelf.evernotePublish", qos: dispacthQOS)
         }
         instance.addAppStateNotificationObservers()
+        instance.addMemoryWarningNotificationObserver()
         return instance
     }()
     func evernotePublishFeaturePurchased() -> Bool {
@@ -79,7 +90,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     
     func isLoggedin() -> Bool {
         #if !targetEnvironment(macCatalyst)
-        return ENSession.shared.isAuthenticated
+        return EvernoteSession.shared().isAuthenticated
         #else
         return false
         #endif
@@ -95,7 +106,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
         }
         //Check if logged in to Evernote
         #if !targetEnvironment(macCatalyst)
-        if ENSession.shared.isAuthenticated && shouldProceedWithPublishing() {
+        if EvernoteSession.shared().isAuthenticated && shouldProceedWithPublishing() {
             publishInProgress = true
             executeBlock(onPublishQueue: { [self] in
                 if self.isPublishPending(){
@@ -112,7 +123,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
                 let currentTimeInterval = Date.timeIntervalSinceReferenceDate
                 let lastAlertTimeInterval = TimeInterval(UserDefaults.standard.double(forKey: "EVERNOTE_LAST_LOGIN_ALERT_TIME"))
                 if (currentTimeInterval - lastAlertTimeInterval) > 60 {
-                    showAlertForRelogin(onError: NSError(domain: ENErrorDomain, code: ENErrorCode.authExpired.rawValue, userInfo: nil))
+                    showAlertForRelogin(onError: NSError(domain: "EDAMErrorDomain", code: Int(EDAMErrorCode_AUTH_EXPIRED.rawValue)))
                 }
             }
         }
@@ -154,23 +165,23 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     }
     func loginToEvernote(with viewController: UIViewController,  completionHandler :@escaping GenericCompletionBlockWithStatus) {
         #if !targetEnvironment(macCatalyst)
-        let session = ENSession.shared
-        session.authenticate(
-            with: viewController,
-            preferRegistration: false) { error in
-                
-                if error != nil || !session.isAuthenticated {
-                    let alertController = UIAlertController(title: "", message: NSLocalizedString("EvernoteAuthenticationFailed", comment: "Unable to authenticate with Evernote"), preferredStyle: .alert)
-                    
-                    let action = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .cancel, handler: nil)
-                    alertController.addAction(action)
-                    viewController.present(alertController, animated: true)
-                    completionHandler(false)
-                } else {
-                    UserDefaults.standard.removeObject(forKey: "EVERNOTE_LAST_LOGIN_ALERT_TIME")
-                    completionHandler(true)
-                }
+        guard let session = EvernoteSession.shared() else {
+            completionHandler(false)
+            return
         }
+        session.authenticate(with: viewController, completionHandler: { error in
+            if error != nil || !session.isAuthenticated {
+                let alertController = UIAlertController(title: "", message: NSLocalizedString("EvernoteAuthenticationFailed", comment: "Unable to authenticate with Evernote"), preferredStyle: .alert)
+
+                let action = UIAlertAction(title: NSLocalizedString("OK", comment: "OK"), style: .cancel, handler: nil)
+                alertController.addAction(action)
+                viewController.present(alertController, animated: true)
+                completionHandler(false)
+            } else {
+                UserDefaults.standard.removeObject(forKey: "EVERNOTE_LAST_LOGIN_ALERT_TIME")
+                completionHandler(true)
+            }
+        })
         #endif
     }
     // MARK:- Core Data related
@@ -226,14 +237,20 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
         
         if FTENIgnoreListManager.shared.ignoredNotebooksID().contains(currentlyPublingNotebookId ?? "") {
             currentlyPublingNotebookId = nil
+            ftENNotebook = nil;
         }
         
         if currentlyPublingNotebookId == currentOpenedDocumentUUID {
             currentlyPublingNotebookId = nil
+            ftENNotebook = nil;
         }
         if (currentlyPublingNotebookId == nil) {
             chooseNotebookToPublish()
+            if(currentlyPublingNotebookId != nil) {
+                ftENNotebook = FTENNotebook();
+            }
         }
+        
         if (currentlyPublingNotebookId != nil) {
             var predicate = NSPredicate(format: "nsGUID==%@", currentlyPublingNotebookId!)
             let parentRecord = FTENSyncUtilities.fetchTopManagedObject(withEntity: "ENSyncRecord", predicate: predicate) as? ENSyncRecord
@@ -334,31 +351,29 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             logFlurry = true
             self.showAlertForRelogin(onError: error)
             #if !targetEnvironment(macCatalyst)
-            switch error.code {
-            case ENErrorCode.unknown.rawValue:
+            let enErrorCode = UInt32(abs(error.code))
+            switch  enErrorCode {
+            case EDAMErrorCode_UNKNOWN.rawValue:
                 logFlurry = true;
                 showSupportAction = true;
                 failureReason = "Unknown";
-            case ENErrorCode.authExpired.rawValue:
+            case EDAMErrorCode_AUTH_EXPIRED.rawValue:
                 logFlurry = true;
                 failureReason = "Auth Expired. Please login Again"
-            case ENErrorCode.invalidData.rawValue:
-                /*can be any one of the following:
-                 EDAMErrorCode_BAD_DATA_FORMAT:
-                 EDAMErrorCode_DATA_REQUIRED:
-                 EDAMErrorCode_LEN_TOO_LONG:
-                 EDAMErrorCode_LEN_TOO_SHORT:
-                 EDAMErrorCode_TOO_FEW:
-                 EDAMErrorCode_TOO_MANY:
-                 */
+            case EDAMErrorCode_BAD_DATA_FORMAT.rawValue,
+                EDAMErrorCode_DATA_REQUIRED.rawValue,
+                EDAMErrorCode_LEN_TOO_LONG.rawValue,
+                EDAMErrorCode_LEN_TOO_SHORT.rawValue,
+                EDAMErrorCode_TOO_FEW.rawValue,
+                EDAMErrorCode_TOO_MANY.rawValue :
                 logFlurry = true;
                 showSupportAction = true;
                 let errorCode = ((error as NSError).userInfo["EDAMErrorCode"] as? NSNumber)?.intValue ?? 0
                 failureReason = String(format: "Invalid Data - %ld", errorCode)
-            case ENErrorCode.notFound.rawValue:
+            case EDAMErrorCode_SHARD_UNAVAILABLE.rawValue:
                 logFlurry = true;
                 failureReason = "Data not found"
-            case ENErrorCode.permissionDenied.rawValue:
+            case EDAMErrorCode_PERMISSION_DENIED.rawValue,EDAMErrorCode_INVALID_AUTH.rawValue:
                 /*
                  EDAMErrorCode_INVALID_AUTH
                  EDAMErrorCode_PERMISSION_DENIED
@@ -367,24 +382,24 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
                 showSupportAction = true;
                 let errorCode = ((error as NSError).userInfo["EDAMErrorCode"] as? NSNumber)?.intValue ?? 0
                 failureReason = String(format: "Permission Denied - %ld", errorCode)
-            case ENErrorCode.limitReached.rawValue:
+            case EDAMErrorCode_LIMIT_REACHED.rawValue:
                 continuePublish = true;
                 failureReason = "Limit Reached"
-            case ENErrorCode.quotaReached.rawValue:
+            case EDAMErrorCode_QUOTA_REACHED.rawValue:
                 failureReason = "Quota Reached"
-            case ENErrorCode.dataConflict.rawValue:
+            case EDAMErrorCode_DATA_CONFLICT.rawValue:
                 logFlurry = true;
                 showSupportAction = true;
                 failureReason = "Data conflict"
-            case ENErrorCode.enmlInvalid.rawValue:
+            case EDAMErrorCode_ENML_VALIDATION.rawValue:
                 logFlurry = true;
                 showSupportAction = true;
                 failureReason = "Permission Denied"
-            case ENErrorCode.rateLimitReached.rawValue:
+            case EDAMErrorCode_RATE_LIMIT_REACHED.rawValue:
                 failureReason = "Rate limit reached"
             default:
-                //NSURL related error codes are always negative. We would like to show a neat error. Hence going into the userinfo dict of the Evernote error and getting teh details of NSURL error.
-                if error.code < 0 && (failureReason == "Unknown") {
+                    // EN error codes are only (1-19) hence We would like to show a neat error so going into the userinfo dict of the Evernote error and getting the details of NSURL error.
+                if failureReason == "Unknown" {
                     let errorInfoDict = error.userInfo
                     if let urlError = errorInfoDict["error"] as? NSError, urlError.responds(to: #selector(getter: error.localizedDescription)){
                         failureReason = urlError.localizedDescription
@@ -585,7 +600,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     }
     func showAlertForRelogin(onError error: Error?) {
         #if !targetEnvironment(macCatalyst)
-        if (error as NSError?)?.code == ENErrorCode.authExpired.rawValue {
+        if let errorCode = (error as NSError?)?.code, errorCode == EDAMErrorCode_AUTH_EXPIRED.rawValue {
             let alertViewController = UIAlertController(title: NSLocalizedString("EvernoteAuthTokenExpiredTitle", comment: "Evernote Token Expired"), message: nil, preferredStyle: .alert)
             
             let action = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in
@@ -616,7 +631,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
     // MARK: - ENBusinessSupport
     func showAccountChooser(_ fromViewController: UIViewController?, withCompletionHandler completionHandler: @escaping (_ evernoteAccountType: EvernoteAccountType) -> Void) {
         #if !targetEnvironment(macCatalyst)
-        if !ENSession.shared.isBusinessUser {
+        if (EvernoteSession.shared().businessUser == nil) {
             completionHandler(EvernoteAccountType.evernoteAccountPersonal)
             return
         }
@@ -649,7 +664,7 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             let standardUserDefaults = UserDefaults.standard
             if let evernoteBusinessSupportHelpValue = standardUserDefaults.value(forKey: kEvernoteBusinessSupportHelp) as? String, !(evernoteBusinessSupportHelpValue == kEvernoteBusinessSupportHelpDisplayed) {
                 #if !targetEnvironment(macCatalyst)
-                if ENSession.shared.isBusinessUser {
+                if EvernoteSession.shared().businessUser != nil {
                     FTLogError("EN Business Alert Shown", attributes: nil)
                     FTCLSLog("EN Business Alert Shown")
                     let alertController = UIAlertController(title: "Good news!", message: "Noteshelf now supports auto-publish to Evernote Business notebooks. You can choose between Business and Personal when you enable Evernote Sync on a specific notebook.", preferredStyle: .alert)
@@ -676,6 +691,18 @@ typealias GenericCompletionBlockWithStatus = (Bool) -> Void
             parentRecord?.syncEnabled = false
             self?.commitDataChanges()
         })
+    }
+    private func addMemoryWarningNotificationObserver(){
+    #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] (_) in
+            guard let self = self else {
+                return;
+            }
+            self.executeBlock {
+                self.ftENNotebook = nil
+            }
+        };
+    #endif
     }
     // MARK:- App State Notification-
     func addAppStateNotificationObservers() {
@@ -711,7 +738,7 @@ extension FTENPublishManager{
                     evernotePublishManager.enableSync(for: item);
                     evernotePublishManager.updateSyncRecord(forShelfItem: item, withDocumentUUID: documentUUID);
                     #if !targetEnvironment(macCatalyst)
-                    evernotePublishManager.updateSyncRecord(forShelfItemAtURL: item.URL, withDeleteOption: true, andAccountType: (ENSession.shared.isBusinessUser ? EvernoteAccountType.evernoteAccountBusiness : EvernoteAccountType.evernoteAccountPersonal))
+                    evernotePublishManager.updateSyncRecord(forShelfItemAtURL: item.URL, withDeleteOption: true, andAccountType: (EvernoteSession.shared().businessUser != nil ? EvernoteAccountType.evernoteAccountBusiness : EvernoteAccountType.evernoteAccountPersonal))
                     #endif
                 });
             }

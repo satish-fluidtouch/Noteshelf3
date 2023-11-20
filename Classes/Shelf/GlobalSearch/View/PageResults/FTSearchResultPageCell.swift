@@ -83,7 +83,7 @@ class FTSearchResultPageCell: UICollectionViewCell {
             self.imageViewPageHeightConstraint?.constant = pageSize.height
         }
 
-        self.page?.thumbnail()?.cachedThumbnailInfo(onCompletion: { [weak self] (image, uuidString) in
+        let blockToExecute: (UIImage?,String) -> Void = { [weak self] (image, uuidString) in
             if let currentPage = self?.page, currentPage.uuid == uuidString {
                 self?.imageViewPage?.image = image;
                 var isImageLoaded: Bool = false;
@@ -103,7 +103,10 @@ class FTSearchResultPageCell: UICollectionViewCell {
                     self?.didChangeSearchresults(nil);
                 }
             }
-        });
+        }
+        self.page?.thumbnail()?.thumbnailImage(onUpdate: blockToExecute);
+        
+//        self.page?.thumbnail()?.cachedThumbnailInfo(onCompletion: blockToExecute);
     }
 
     private func updateShadow() {

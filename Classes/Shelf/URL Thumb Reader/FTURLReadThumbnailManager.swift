@@ -36,7 +36,7 @@ class FTThumbReadCallbacks : NSObject
         super.init();
 
         thumbReadOperationQueue.name = "FTThumbnailREADER";
-        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
+//        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
         
         let notificationBlock : (_ noti:Notification) -> Void = { [weak self] (notification) in
             self?.thumbReadOperationQueue.cancelAllOperations();
@@ -60,28 +60,37 @@ class FTThumbReadCallbacks : NSObject
     func thumnailForItem(_ item : FTDiskItemProtocol,
                          onCompletion : @escaping (UIImage?,String?) -> Void) -> String?
     {
+
+        @discardableResult
+        func readThumbnailFromCache(reuseToken: String?) -> String {
+            return self.ns2ThumbnailReader.thumbnail(for: item
+                                                     , isNS2Book: item.URL.isNS2Book
+                                                     , reuseToken: reuseToken
+                                                     , queue: self.thumbReadOperationQueue
+                                                     , cache: self.imageCache
+                                                     , onCompletion: onCompletion);
+        }
+
+        // For NS2 we are keeping the old approach of image caching
+        guard !item.URL.isNS2Book else {
+            return readThumbnailFromCache(reuseToken: nil)
+        }
+
         if FTDeveloperOption.useQuickLookThumbnailing {
-            guard item.URL.isNS2Book else {
-                return ns3ThumbnailReader.thumbnail(for: item, queue: thumbReadOperationQueue) { image, token, fetchError in
-                    if nil != fetchError {
-                        self.ns2ThumbnailReader.thumbnail(for: item
-                                                          , reuseToken: token
-                                                          , queue: self.thumbReadOperationQueue
-                                                          , cache: self.imageCache
-                                                          , onCompletion: onCompletion);
-                    }
-                    else {
-                        self.imageCache.removeImageCache(url: item.URL);
-                        onCompletion(image,token);
-                    }
+            // For NS3 we will be using QLThumbnail, if it fails, we will fallback to old image reading approach
+            return ns3ThumbnailReader.thumbnail(for: item, queue: thumbReadOperationQueue) { image, token, fetchError in
+                if nil != fetchError {
+                    readThumbnailFromCache(reuseToken: token)
+                }
+                else {
+                    self.imageCache.removeImageCache(url: item.URL);
+                    onCompletion(image,token);
                 }
             }
+        } else {
+            // If we explicilty disabled the QL thumbnail
+            return readThumbnailFromCache(reuseToken: nil)
         }
-        return self.ns2ThumbnailReader.thumbnail(for: item
-                                                 , isNS2Book: true
-                                                 , queue: self.thumbReadOperationQueue
-                                                 , cache: self.imageCache
-                                                 , onCompletion: onCompletion);
     }
     
     func addImageToCache(image: UIImage?, url: URL)

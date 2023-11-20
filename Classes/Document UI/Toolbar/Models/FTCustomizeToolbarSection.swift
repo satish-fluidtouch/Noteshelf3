@@ -69,6 +69,7 @@ final class FTBasicToolsSection: FTToolbarSection {
         ,.lasso
         ,.hand
         ,.zoomBox
+        ,.favorites
     ]
 
     var displayTools: [FTDeskCenterPanelTool] = []

@@ -30,17 +30,7 @@ final class FTCloudSetupManager {
         FTGoogleDriveClient.shared.signInSilently();
         //Evernote session setup
         #if !targetEnvironment(macCatalyst)
-        ENSession.setSharedSessionConsumerKey(EVERNOTE_CONSUMER_KEY,
-                                              consumerSecret: evernoteConsumerSecret,
-                                              optionalHost: nil)
-        
-        //Evernote Sandbox Session setup
-        //Enable below line for sandbox
-//        ENSession.setSharedSessionConsumerKey(EVERNOTE_CONSUMER_KEY,
-//                                              consumerSecret: evernoteConsumerSecret,
-//                                              optionalHost: ENSessionHostSandbox)
-        
-        ENSession.shared.logger = nil
+        EvernoteSession.setSharedSessionHost("www.evernote.com", consumerKey: EVERNOTE_CONSUMER_KEY, consumerSecret: evernoteConsumerSecret)
         #endif
     }
 }

@@ -39,26 +39,26 @@ extension FTNoteshelfPage : FTPageEvernoteSyncProtocol
             let imageDataHash = (myFileData as NSData).enmd5;
             
             let edamData = EDAMData();
-            edamData.bodyHash = imageDataHash;
-            edamData.size = NSNumber(value: myFileData.count as Int);
-            edamData.body = myFileData;
+            edamData?.bodyHash = imageDataHash();
+            edamData?.size = Int32(myFileData.count);
+            edamData?.body = myFileData;
             
             let attributes = EDAMResourceAttributes();
-            attributes.fileName = (self.uuid as NSString).appendingPathExtension("jpg");
+            attributes?.fileName = (self.uuid as NSString).appendingPathExtension("jpg");
             
             let resource = EDAMResource();
-            resource.guid = self.uuid;
-            resource.noteGuid = nil;
-            resource.data = edamData;
-            resource.mime = mime;
-            resource.width = NSNumber(value: Float(image.size.width) as Float);
-            resource.height = NSNumber(value: Float(image.size.height) as Float);
-            resource.duration = NSNumber(value: 0 as Int16);
-            resource.active =  true;
-            resource.recognition = nil;
-            resource.attributes = attributes;
-            resource.updateSequenceNum = nil;
-            resource.alternateData = nil;
+            resource?.guid = self.uuid;
+            resource?.noteGuid = nil;
+            resource?.data = edamData;
+            resource?.mime = mime;
+            resource?.width = Int16(Float(image.size.width) as Float)
+            resource?.height = Int16(Float(image.size.height) as Float)
+            resource?.duration = Int16();
+            resource?.active =  true;
+            resource?.recognition = nil;
+            resource?.attributes = attributes;
+            resource?.updateSequenceNum = Int32();
+            resource?.alternateData = nil;
             
             return resource;
         }

@@ -918,7 +918,7 @@
 "WHITEBOARDMODE" = "ホワイトボードモード";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "あなたのApple WatchにNoteshelf 2をインストールしてください。移動中にオーディオを録音し、後でメモを取ることができます。";
+"WatchAdInfo" = "あなたのApple WatchにNoteshelf 3をインストールしてください。移動中にオーディオを録音し、後でメモを取ることができます。";
 "WatchNewRecords" = "新しい録音があなたのApple Watchから届きました。";
 "WatchRecording" = "録画を見る";
 "WatchRecordings" = "ウォッチの録音";
@@ -1029,6 +1029,8 @@
 "export_description2" = "エクスポートされたデータは、ノートブック、グループ、カテゴリを含んだ.zipファイルとして保存されます。ノートブックは.noteshelf形式で保存されます。";
 "export_description_1" = "あなたのデータのコピーをローカルデバイスに保存することを強くおすすめします。エクスポートされたデータは、.zipファイルとして保存され、すべてのノートブック、グループ、カテゴリを含みます。";
 "failed_following" = "次のノートブックのバックアップに失敗しました。";
+"favoritebar.singleFavoriteDelete.message" = "少なくとも 1 つの項目をお気に入りツールバーに保持する必要があります。";
+"favoritebar.singleFavoriteDelete.title" = "お気に入りを削除できません";
 "finalizing" = "完成する";
 "finder.addPageAfter" = "この単語の後にページを追加";
 "finder.addPageBefore" = "この単語の前にページを追加";
@@ -1122,7 +1124,11 @@
 "migration.alert.migrate" = "移行";
 "migration.alert.open" = "場所に移動する";
 "migration.alert.title" = "このノートブックのコピーをNoteshelf 3に移行しますか？";
-"migration.progress.text" = "移行";
+"migration.cancel" = "移行をキャンセル";
+"migration.cancel.alert" = "移行をキャンセルしてもよろしいですか?";
+"migration.exitScreen" = "移行処理が完了するまで、この画面を閉じないでください";
+"migration.progress.text" = "移行中...";
+"migration.succes" = "移行成功！";
 "migration.success.alert.message" = "成功しました！移行されたノートブックは次の場所に配置されました：%@";
 "months" = "月";
 "more" = "もっと";
@@ -1491,6 +1497,7 @@
 "trash.alert.title" = "ゴミ箱を空にしますか？";
 "unsplash.search.alertMessage" = "検索するテキストを入力してください";
 "untitled" = "無題";
+"updatemigration.title" = "移行の更新";
 "useSticker" = "ステッカーを使用する";
 "welcome.appleWatch" = "アップルウォッチ";
 "welcome.audioNotes" = "オーディオノート";
@@ -1533,4 +1540,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 25 October 2023 at 3:58 PM
+// Last Synced by Narayana on 16 November 2023 at 1:02 PM

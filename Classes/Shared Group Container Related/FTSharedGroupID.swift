@@ -72,4 +72,14 @@ public class FTSharedGroupID {
 #endif
     }
 #endif
+    
+    public static func getNS2AppBundleID() -> String {
+#if DEBUG
+        return "com.fluidtouch.noteshelf-dev"
+#elseif BETA
+        return "com.fluidtouch.noteshelf-beta"
+#else
+        return "com.fluidtouch.noteshelf"
+#endif
+    }
 }

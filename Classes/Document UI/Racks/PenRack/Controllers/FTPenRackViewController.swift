@@ -95,7 +95,7 @@ extension FTPenRackViewController: UICollectionViewDataSource {
         }
         let penType = self.penTypeOrder[indexPath.item]
         let color = self.penTypeRack.lastSelectedColor(for: penType)
-        cell.configure(penType: penType, penSet: penTypeRack.currentPenset, color: color)
+        cell.configure(penType: penType, currentPenSet: penTypeRack.currentPenset, color: color)
         return cell
     }
 }
@@ -130,7 +130,7 @@ extension FTPenRackViewController : UICollectionViewDelegate {
             if let cell = collectionView.cellForItem(at: penTypeIndexPath) as? FTPenTypeCollectionViewCell {
                 let penType = self.penTypeOrder[penTypeIndexPath.item]
                 let color = self.penTypeRack.lastSelectedColor(for: penType)
-                cell.configure(penType: penType, penSet: currentPenSet, color: color)
+                cell.configure(penType: penType, currentPenSet: currentPenSet, color: color)
             }
         })
         

@@ -100,3 +100,14 @@
 #import "GPUImageGaussianBlurFilter.h"
 #import "GPUImagePicture.h"
 #endif
+
+//Evernote
+#import "EDAMTypes.h"
+#import "EvernoteSession.h"
+#import "EvernoteNoteStore.h"
+#import "EvernoteUserStore.h"
+#import "NSData+EvernoteSDK_iOS.h"
+#import "ENMLUtility.h"
+#import "EvernoteNoteStore+Extras.h"
+#import "EDAMNoteStore.h"
+#import "NSDate+EDAMAdditions.h"

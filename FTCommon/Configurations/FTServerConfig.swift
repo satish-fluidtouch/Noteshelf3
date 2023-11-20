@@ -9,7 +9,7 @@
 import UIKit
 
 #if DEBUG || BETA
-let userProductionServer = false; //turn it to false if wants to test of dev and beta bucket in debug or adhoc builds
+let userProductionServer = false; //turn it to false if wants to test of dev and beta bucket in debug or BETA builds
 #endif
 
 public class FTServerConfig: NSObject {
