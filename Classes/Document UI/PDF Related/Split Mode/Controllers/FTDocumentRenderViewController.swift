@@ -442,7 +442,7 @@ extension FTDocumentRenderViewController: FTTextToolbarControllerDelegate {
 #if targetEnvironment(macCatalyst)
             let container = self.prepareAndFetchTextToolbarContainer()
             controller.view.addFullConstraints(container)
-        #else
+#else
             controller.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: textToolbarHeight)
             annot.textInputView.inputAccessoryView = controller.view
             self.toolBarView?.isHidden = false
