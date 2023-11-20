@@ -46,9 +46,9 @@ final class FTIAPurchaseHelper {
 
     var isPremiumUser: Bool {
         get {
-//            #if ADHOC
-//            return true;
-//            #else
+#if ENTERPRISE_EDITION
+            return true;
+#else
             var isPremierUser = UserDefaults.standard.bool(forKey: premiumUserStatus)
             if !isPremierUser {
                 isPremierUser = isIAPPurchasedViaReceipt();
@@ -58,7 +58,7 @@ final class FTIAPurchaseHelper {
             }
             updatePremiumUserInfoToNS2(isPremium: isPremierUser)
             return isPremierUser;
-//            #endif
+#endif
         } set {
             FTIAPManager.shared.premiumUser.isPremiumUser = newValue;
             UserDefaults.standard.set(newValue, forKey: premiumUserStatus)
@@ -68,9 +68,15 @@ final class FTIAPurchaseHelper {
 
     private func isIAPPurchasedViaReceipt() -> Bool {
         var isPremium = false
-        if let receipt = try? InAppReceipt.localReceipt(),
-           receipt.containsPurchase(ofProductIdentifier: FTIAPManager.ns3PremiumIdentifier) {
-            isPremium = true
+        if let receipt = try? InAppReceipt.localReceipt() {
+            let purchases = receipt.purchases;
+            let items = FTIAPManager.shared.iapProductsIdentifier()
+            for eachPurchase in purchases {
+                if items.contains(eachPurchase.productIdentifier) {
+                    isPremium = true;
+                    break;
+                }
+            }
         }
         return isPremium;
     }

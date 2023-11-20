@@ -99,7 +99,13 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitDigitalInkRecognition/MLKitDigitalInkRecognition_resource.bundle"
 fi
+if [[ "$CONFIGURATION" == "Debug Enterprise" ]]; then
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitDigitalInkRecognition/MLKitDigitalInkRecognition_resource.bundle"
+fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitDigitalInkRecognition/MLKitDigitalInkRecognition_resource.bundle"
+fi
+if [[ "$CONFIGURATION" == "Release Enterprise" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitDigitalInkRecognition/MLKitDigitalInkRecognition_resource.bundle"
 fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then

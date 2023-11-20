@@ -8,7 +8,7 @@
 import UIKit
 
 enum FTOpenAICommandType: Int {
-#if DEBUG || ADHOC
+#if DEBUG || BETA
     static let supportedCommands̉: [FTOpenAICommandType] = [.generateNotes,.summarize,.explain,.langTranslate,.cleanUp];
 #else
     static let supportedCommands̉: [FTOpenAICommandType] = [.generateNotes,.summarize,.explain,.langTranslate]; //.cleanUp

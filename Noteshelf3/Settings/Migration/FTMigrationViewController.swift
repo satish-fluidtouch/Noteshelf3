@@ -52,7 +52,7 @@ class FTMigrationViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        runInMainThread(2) {
+        runInMainThread(0.5) {
             self.processMigration()
         }
     }
@@ -63,11 +63,17 @@ class FTMigrationViewController: UIViewController {
 
         FTCLSLog("---Migration Started---")
         let progress = FTDocumentMigration.intiateNS2ToNS3MassMigration(on: self) { [weak self] success, error in
-            let status = success ? "Migration Completed" : "Migration Failed"
-            FTCLSLog("---\(status)---")
-            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
-            self?.updateSuccessUI()
-            UIApplication.shared.isIdleTimerDisabled = false
+            runInMainThread {
+                let status = success ? "Migration Completed" : "Migration Failed"
+                FTCLSLog("---\(status)---")
+
+                // TODO: (AK) Move to a proper location
+                FTTextStyleManager.shared.migrateNS2TextStyles()
+
+                FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
+                self?.updateSuccessUI()
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
         }
 
         progressView?.observedProgress = progress
@@ -85,7 +91,6 @@ class FTMigrationViewController: UIViewController {
     }
     
     private func updateSuccessUI() {
-        // TODO: To be updated with new UI, this is just temporary
         self.inProgressView?.isHidden = true
         self.successView?.isHidden = false
         self.cancelButton?.isHidden = true

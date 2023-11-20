@@ -635,8 +635,10 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
     func moveItemInCache(_ shelfItem: FTDiskItemProtocol, toURL: Foundation.URL) -> Bool {
         if let item = shelfItem as? FTShelfItemProtocol {
             objc_sync_enter(self);
+            var shoupUpdateCache = true;
             if(self.isGroup(toURL)) {
                 //Change the url of the document to new url.
+                shoupUpdateCache = false;
                 self.hashTable.removeItemFromHashTable(item.URL);
                 item.URL = toURL;
                 self.hashTable.addItemToHashTable(item, forKey: item.URL);
@@ -679,10 +681,15 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                         self.addChild(item);
                     }
                     self.hashTable.addItemToHashTable(item, forKey: toURL);
+                    shoupUpdateCache = false;
                 }
                 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 //Recent:
                 if(toURL != item.URL) {
+                    if shoupUpdateCache {
+                        self.hashTable.removeItemFromHashTable(item.URL);
+                        self.hashTable.addItemToHashTable(item, forKey: toURL);
+                    }
                     NotificationCenter.default.post(name: .shelfItemDidGetMovedInternal, object: self, userInfo: [FTOldURLS : [item.URL],FTNewURLS : [toURL]]);
                 }
                 #endif

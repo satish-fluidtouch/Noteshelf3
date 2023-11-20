@@ -173,8 +173,11 @@ struct FTGroupCoverViewNew: View {
         .background(bgColor)
         .cornerRadius(cornerRadius)
         .onAppear {
-            groupCoverViewModel.fetchTopThreeGroupMembersOfGroup(groupModel, completionhandler: { _ in
-            })
+            groupCoverViewModel.isVisible = true
+            groupCoverViewModel.fetchTopNotebookOfGroup(groupModel)
+        }
+        .onDisappear {
+            groupCoverViewModel.isVisible = false
         }
     }
     private func landGridRowForItem(_ shelfItem:FTShelfItemViewModel?) -> some View {
@@ -228,20 +231,22 @@ struct FTGroupCoverViewNew: View {
     }
 
     private func hasOnlyPortThumbs() -> Bool { // to check if top thumbnails has all portraits
-        portThumbs.count == groupCoverViewModel.groupNotebooks.count
+        (groupCoverViewModel.groupNotebooks.count > 0 && portThumbs.count == groupCoverViewModel.groupNotebooks.count)
     }
 
     private func hasOnlyLandThumbs() -> Bool { // to check if top thumbnails has all landscaped
-        landThumbs.count == groupCoverViewModel.groupNotebooks.count
+        (groupCoverViewModel.groupNotebooks.count > 0 && landThumbs.count == groupCoverViewModel.groupNotebooks.count)
     }
 
     private var landThumbs: [FTShelfItemViewModel] {
-        groupCoverViewModel.groupNotebooks.filter({ $0.coverImage.isALandCover })
+        groupCoverViewModel.groupNotebooks.filter({ viewmodel in
+            return viewmodel.coverImage.size.width >  viewmodel.coverImage.size.height
+        })
     }
 
     private var portThumbs: [FTShelfItemViewModel] {
         groupCoverViewModel.groupNotebooks.filter({ viewmodel in
-            return viewmodel.coverImage.isAPortCover
+            return viewmodel.coverImage.size.height >  viewmodel.coverImage.size.width
         })
     }
 
@@ -336,13 +341,12 @@ private struct GroupNotebookView: View {
                         x:0,
                         y:blurShadowY)
         }
-        .onAppear(perform: {
-            shelfItem.isVisible = true;
-            shelfItem.fetchCoverImage();
-        })
-        .onDisappear(perform: {
-            shelfItem.isVisible = false;
-        })
+        .onAppear {
+            shelfItem.isVisible = true
+        }
+        .onDisappear {
+            shelfItem.isVisible = false
+        }
         .frame(width: viewSize.width,
                    height: viewSize.height,
                    alignment: .top)
@@ -368,7 +372,7 @@ private struct GroupNotebookView: View {
                 shelfItem.configureShelfItem(shelfItem.model)
             })
             .overlay(alignment: Alignment.bottom) {
-                if coverViewPurpose == .shelf && shelfItem.isNotDownloaded {
+                if coverViewPurpose == .shelf && !((shelfItem.model as? FTDocumentItem)?.isDownloaded ?? false) {
                     Image(systemName: "icloud.and.arrow.down")
                         .symbolRenderingMode(SymbolRenderingMode.palette)
                         .foregroundColor(Color.appColor(.black20))

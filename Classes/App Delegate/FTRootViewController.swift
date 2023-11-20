@@ -549,7 +549,15 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
     }
-    
+
+    func showPremiumUpgradeScreen() {
+        self.prepareProviderIfNeeded {
+            self.closeAnyActiveOpenedBook {
+                self.rootContentViewController?.didTapOnUpgradeNow()
+            }
+        }
+    }
+
     func prepareProviderIfNeeded(onCompletion: (() -> ())?) {
         if(nil == self.rootContentViewController) {
             //This need to be un commented once we add the new migration UI

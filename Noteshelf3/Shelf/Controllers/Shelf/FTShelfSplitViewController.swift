@@ -37,7 +37,7 @@ protocol FTShelfPresentable {
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol)
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
-
+    func didTapOnUpgradeNow()
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {

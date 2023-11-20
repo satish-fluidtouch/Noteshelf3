@@ -369,6 +369,11 @@ extension FTNoteshelfDocumentProvider {
             return error;
         }
     }
+    
+    //This is used while migrating NS2 to NS3
+    func addUrlToFavorites(_ url : URL) {
+        (self.recentShelfCollection as? FTShelfCollectionRecent)?.favoritesShelfItemCollection.addShelfItemToList(url);
+    }
 
     func removeShelfItemFromList(_ shelfItems: [FTShelfItemProtocol], mode: FTRecentItemType) {
         var urls = [URL]();
@@ -863,7 +868,7 @@ extension FTNoteshelfDocumentProvider {
 // MARK: Migration to NS3
 extension FTNoteshelfDocumentProvider {
 
-    func migrateNS2BookToNS3(url: URL, relativePath: String) throws -> URL? {
+    func migrateNS2BookToNS3(url: URL, relativePath: String, isFavorite: Bool) throws -> URL? {
         var destinationURL = self.currentCollection().documentsDirectory().appending(path: relativePath)
 
         // Change Destination Path extesion to `ns3`
@@ -872,23 +877,23 @@ extension FTNoteshelfDocumentProvider {
         do {
             // Path until final location
             let parentURL = destinationURL.deletingLastPathComponent()
-
-            // Change to unique name if required
-            if(FileManager().fileExists(atPath: destinationURL.path)) {
-
-                // TODO: Take control if required
-                let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
-                destinationURL = parentURL.appendingPathComponent(uniqueName);
-            }
-
             if providerMode == .cloud {
-                if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                    try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                if (FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false))), checkIfDatesAreEqual(for: url, destUrl: destinationURL) {
+                    FileManager.replaceCoordinatedItem(atURL: destinationURL, fromLocalURL: url) { error in
+                    }
+                } else {
+                    if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
+                        try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                    }
+                    if(FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false))) {
+                        let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+                        destinationURL = parentURL.appendingPathComponent(uniqueName);
+                    }
+                    //TODO: (Discuss with Akshay) We should set Ubiquitous on background thread. Might need to move this to background, if we are on main thread.
+                    try FileManager().setUbiquitous(true,
+                                                    itemAt: url,
+                                                    destinationURL: destinationURL);
                 }
-                //TODO: (Discuss with Akshay) We should set Ubiquitous on background thread. Might need to move this to background, if we are on main thread.
-                try FileManager().setUbiquitous(true,
-                                                itemAt: url,
-                                                destinationURL: destinationURL);
             } else {
                 // TODO: Take control if required
                 // Create the parent directory if required
@@ -896,29 +901,52 @@ extension FTNoteshelfDocumentProvider {
                     throw FTMigrationError.moveToNS3Error
                 }
                 let localProvider = self.localShelfCollectionRoot?.ns3Collection
-
-                if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
-                    if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                        try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                //If book is not modified in ns3 and same book is being migrated from ns2, just replace the book.
+                if FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false)), checkIfDatesAreEqual(for: url, destUrl: destinationURL) {
+                    FileManager.replaceCoordinatedItem(atURL: destinationURL, fromLocalURL: url) { error in
                     }
-                    try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
-                    _ = collection.addItemsToCache([destinationURL])
                 } else {
-                    localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
-                        if !FileManager.default.fileExists(atPath: parentURL.path()) {
-                            try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                    if(FileManager().fileExists(atPath: destinationURL.path(percentEncoded: false))) {
+                        let uniqueName = FileManager.uniqueFileName(destinationURL.lastPathComponent, inFolder: parentURL)
+                        destinationURL = parentURL.appendingPathComponent(uniqueName);
+                    }
+                    if let collection = localProvider?.collection(withTitle: collectionTitle) as? FTShelfItemCollectionLocal {
+                        if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
+                            try FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
                         }
-                        try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
-                        _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
-                    })
+                        try FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                        collection.addItemsToCache([destinationURL])
+                    } else {
+                        localProvider?.createShelf(collectionTitle, onCompletion: { error, collection in
+                            if !FileManager.default.fileExists(atPath: parentURL.path(percentEncoded: false)) {
+                                try? FileManager.default.createDirectory(at: parentURL, withIntermediateDirectories: true)
+                            }
+                            try? FileManager.default.coordinatedMove(fromURL: url, toURL: destinationURL)
+                            _ = (collection as? FTShelfItemCollectionLocal)?.addItemsToCache([destinationURL])
+                        })
+                    }
                 }
             }
-
+            if isFavorite {
+                FTNoteshelfDocumentProvider.shared.addUrlToFavorites(destinationURL)
+            }
             return destinationURL
         } catch {
             debugLog(">>>>> Migration Failure \(error)")
             throw FTMigrationError.moveToNS3Error
         }
+    }
+    
+    private func checkIfDatesAreEqual(for url: URL, destUrl: URL) -> Bool {
+        let migratedItems = FTDocumentMigration.fetchMigratedPlist()
+        let displayPath = url.displayRelativePathWRTCollection()
+        //Modification date is being rounded when we open and close the NS3 book, Hence checking the difference between both dates
+        //2023-11-14  10:53:01 +0000 - timeIntervalSinceReferenceDate : 721651981.9387126(Saved Date)
+        //2023-11-14  10:53:01 +0000 - timeIntervalSinceReferenceDate : 721651981.938713(NS3 book date)
+        if let itemsDict = migratedItems[displayPath] as? [String: Any] , let data = itemsDict["modifiedDate"] as? Data, let unarchivedDate = data.date, abs(unarchivedDate.timeIntervalSinceReferenceDate - destUrl.fileModificationDate.timeIntervalSinceReferenceDate) < 1  {
+            return true
+        }
+        return false
     }
 }
 

@@ -202,7 +202,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .share:
             str = "customizeToolbar.share".localized
         case .favorites:
-            str = "Favorites"
+            str = "Favorites".localized
 
             // Media
         case .photo:
@@ -269,7 +269,7 @@ enum FTCustomizeToolbarSectionType: Int, CaseIterable {
         case .share:
             str = "customizeToolbar.share".localizedEnglish
         case .favorites:
-            str = "Favorites"
+            str = "Favorites".localizedEnglish
 
             // Media
         case .photo:
