@@ -48,7 +48,7 @@ final class FTDocumentMigration {
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("migratedBooks.plist")
     }
     static func supportsMigration() -> Bool {
-        return false
+        return false;
     }
 
     static func showNS3MigrationAlert(on controller: UIViewController,

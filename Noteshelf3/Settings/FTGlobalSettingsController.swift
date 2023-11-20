@@ -82,7 +82,11 @@ class FTGlobalSettingsController: UITableViewController {
 #endif
     }
     private func openAppStore() {
+        #if ENTERPRISE_EDITION
+        let url = URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6471592545?mt=8")        
+        #else
         let url = URL(string: "https://itunes.apple.com/us/app/noteshelf-3/id6458735203?mt=8")
+        #endif
         if url != nil, UIApplication.shared.canOpenURL(url!) {
             UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
