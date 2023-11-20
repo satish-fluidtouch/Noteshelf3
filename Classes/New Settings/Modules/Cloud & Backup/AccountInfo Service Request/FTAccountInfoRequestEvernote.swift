@@ -37,6 +37,8 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
                     username = FTEmptyDisplayName;
                 }
                 account.userName = username;
+                UserDefaults.standard.set(username,forKey:EN_LOGGED_USERNAME)
+
                 self.fetchUsageDetails(account, user: user, onCompelltion: completionBlock);
             } failure: { error in
                 account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
@@ -67,19 +69,9 @@ class FTAccountInfoRequestEvernote: FTAccountInfoRequest {
             account.totalBytes = accountingInfo?.uploadLimit ?? 0;
             account.consumedBytes = edamSyncState?.uploaded;
 
-            let usedSize = account.spaceUsedFormatString();
-            if(account.userName == FTEmptyDisplayName) {
-                account.statusText = usedSize;
-            } else {
-                let userName = account.usernameFormatString();
-                //Added condition to check for totalbytes which will return as 0 when there is no internet connection while quering.
-                //Instead of showing empty used ,here we will be just shwoing the logged user name/id
-                if(account.totalBytes! > 0) {
-                    account.statusText = "\(userName)\n\(usedSize)"
-                } else {
-                    account.statusText = "\(userName)\n";
-                }
-            }
+            let usedSize = account.spaceUsedFormatString() + " Evernote";
+            UserDefaults.standard.set(usedSize,forKey: EN_USEDSPACE)
+            UserDefaults.standard.set(account.percentage, forKey: EN_USEDSPACEPERCENT)
             completionBlock(account, nil);
         } failure: { error in
             account.statusText = NSLocalizedString("ErrorConnecting", comment: "Error Connecting");
