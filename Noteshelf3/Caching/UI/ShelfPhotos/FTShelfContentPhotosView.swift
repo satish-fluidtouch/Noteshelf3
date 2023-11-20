@@ -11,6 +11,7 @@ import SwiftUI
 struct FTShelfContentPhotosView: View  {
     @ObservedObject var viewModel: FTShelfContentPhotosViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var menuOverlayInfo : FTShelfMenuOverlayInfo
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     private func gridItems(size viewSize: CGSize) -> [GridItem] {
@@ -82,7 +83,11 @@ struct FTShelfContentPhotosView: View  {
                             } preview: {
                                 FTMediaPreviewPageView(media: media)
                                     .onAppear {
+                                        menuOverlayInfo.isMenuShown = true
                                         track(EventName.shelf_photo_page_longpress, screenName: ScreenName.shelf_photos)
+                                    }
+                                    .onDisappear {
+                                        menuOverlayInfo.isMenuShown = false
                                     }
                             }
                     }
