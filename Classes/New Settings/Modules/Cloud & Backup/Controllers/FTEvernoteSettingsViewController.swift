@@ -52,14 +52,14 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
         super.viewDidLoad()
         account = .evernote
         let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(account);
-        accountInfoRequest.accountInfo(onUpdate: { _ in
-            self.relayoutIfNeeded();
-            }, onCompletion: { _ , error in
-                self.setAccountInfo()
-                runInMainThread {
-                    self.updateUI()
-                    self.relayoutIfNeeded();
-                }
+        accountInfoRequest.accountInfo(onUpdate: {[weak self] _ in
+            self?.relayoutIfNeeded();
+        }, onCompletion: { [weak self] _,_  in
+            self?.setAccountInfo()
+            runInMainThread {
+                self?.updateUI()
+                self?.relayoutIfNeeded();
+            }
         });
 
         self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
