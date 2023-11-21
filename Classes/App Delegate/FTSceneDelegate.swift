@@ -27,6 +27,7 @@ class FTSceneDelegate: UIResponder,UIWindowSceneDelegate {
     }
     
     func openUrl(with context: UIOpenURLContext) {
+        #if targetEnvironment(macCatalyst)
         let session = UIApplication.shared.shelfSceen();
         if let userActivity = session?.scene?.userActivity {
             var userInfo = userActivity.userInfo ?? [AnyHashable : Any]();
@@ -37,6 +38,7 @@ class FTSceneDelegate: UIResponder,UIWindowSceneDelegate {
             userActivity.userInfo = userInfo
             UIApplication.shared.requestSceneSessionActivation(session, userActivity: userActivity, options: nil);
         }
+        #endif
     }
 }
 
