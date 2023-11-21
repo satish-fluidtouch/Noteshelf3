@@ -205,7 +205,7 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
         self.delegate?.emptyTrash(collection, showConfirmationAlert: showConfirmationAlert, onCompletion: onCompletion)
     }
     func didTapOnSidebarItem(_ item: FTSideBarItem) {
-        let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio,.tag,.home]
+        let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio,.tag,.home,.allTags]
         if nonCollectionTypes.contains(where: { $0 == item.type}) {
             self.delegate?.saveLastSelectedNonCollectionType(item.type)
             if item.type == .tag {
