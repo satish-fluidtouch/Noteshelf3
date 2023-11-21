@@ -17,16 +17,22 @@ struct FTAdBannerView: View{
         let learnMore = "LearnMore".localized
         if isBannerVisible{
             ZStack {
-                HStack(spacing: 22){
-                    Image("banner_watch_Icon")
+                HStack(spacing: 16){
+                    Image("iWatchEmpty")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 17,height: 29)
+                        .frame(width: 32,height: 32)
 
                     HStack{
-                        Text("WatchAdInfo".localized)
+                        Text("WatchAdInfoTitle".localized)
                             .foregroundColor(Color.label)
-                            .font(.system(size: 14))
+                            .font(.system(size: 15).weight(.bold))
+                        +
+                        Text("\n")
+                        +
+                        Text("WatchAdInfoSubTitle".localized)
+                            .foregroundColor(Color.label)
+                            .font(.system(size: 13))
                         +
                         Text("  [\(learnMore)](https://www.noteshelf.net)")
                             .foregroundColor(.appColor(.accent))

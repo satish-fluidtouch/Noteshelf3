@@ -22,7 +22,7 @@ class FTNewNotePopoverViewModel: ObservableObject {
             FTNewNotePopoverModel(newNoteOption: .scanDocument),
             FTNewNotePopoverModel(newNoteOption: .takePhoto)
         ]
-        if (NSUbiquitousKeyValueStore.default.isWatchPaired()) {
+        if (NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled()) {
             options.append(FTNewNotePopoverModel(newNoteOption: .appleWatch))
         }
         return options

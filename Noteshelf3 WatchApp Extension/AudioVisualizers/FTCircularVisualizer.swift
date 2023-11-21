@@ -37,7 +37,7 @@ class FTCircularVisualizer: FTBaseVisualizerScene {
 
         let Circle = SKShapeNode(circleOfRadius: innerCircleRadius) // Create circle
         Circle.position = CGPoint(x: circleDiameter/2.0, y: circleDiameter/2.0)  // Center (given scene anchor point is 0.5 for x&y)
-        Circle.strokeColor = SKColor.init(red: 248/255.0, green: 113/255.0, blue: 58/255.0, alpha: 1.0)
+        Circle.strokeColor = SKColor.init(red: 243/255.0, green: 88/255.0, blue: 49/255.0, alpha: 1.0)
         Circle.glowWidth = 0.0
         Circle.fillColor = SKColor.clear
         Circle.lineWidth = 2.0
@@ -70,7 +70,8 @@ class FTCircularVisualizer: FTBaseVisualizerScene {
             let x:CGFloat = (CGFloat)(newRadius * cos(zRotation)) + (newDiameter / 2.0);
             let y:CGFloat = (CGFloat)(newRadius * sin(zRotation)) + (newDiameter / 2.0);
 
-            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 210/255.0, green: 100/255.0, blue: 52/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: 1.0))
+//            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 210/255.0, green: 100/255.0, blue: 52/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: 1.0))
+            self.highlightNode = SKSpriteNode.init(color: UIColor.init(red: 243/255.0, green: 88/255.0, blue: 49/255.0, alpha: 1.0), size: CGSize.init(width: 13, height: 1.0))
             self.highlightNode.colorBlendFactor = 1.0
             self.highlightNode.zRotation = zRotation
             self.highlightNode.alpha = DEFAULT_ALPHA

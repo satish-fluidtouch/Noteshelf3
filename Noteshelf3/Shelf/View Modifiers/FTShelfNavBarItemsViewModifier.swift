@@ -24,7 +24,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
 
     private var popOverHeight: CGFloat {
         var height = horizontalSizeClass == .regular ? 488.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
-        if(NSUbiquitousKeyValueStore.default.isWatchPaired()) {
+        if(NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled() ) {
             height += 52
         }
         return height
