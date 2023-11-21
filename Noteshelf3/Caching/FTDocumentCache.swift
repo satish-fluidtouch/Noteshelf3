@@ -48,7 +48,10 @@ struct FTCacheFiles {
 
 final class FTDocumentCache {
     private let lock = NSRecursiveLock();
-
+    private (set) lazy var imageResourceCache: FTImageResourceCacheHandler = {
+        return FTImageResourceCacheHandler();
+    }();
+        
     static let shared = FTDocumentCache()
     let cacheFolderURL: URL
 
@@ -250,6 +253,8 @@ extension FTDocumentCache {
     }
 }
 
+private var useNewApproach = true;
+
 private extension FTDocumentCache {
     func cacheShelfItemIfRequired(url: URL, documentUUID: String) throws {
 
@@ -281,7 +286,8 @@ private extension FTDocumentCache {
         if !_fileManager.fileExists(atPath: destinationURL.path) {
             do {
                 // Copy directly if the file doesn't exist at the cache location
-                try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
+                try FTFileCacheManager.cacheDocumentAt(url, destination: destinationURL);
+//                try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: false)
                 updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                 cacheLog(.success, "Copy", url.lastPathComponent)
             } catch {
@@ -299,7 +305,7 @@ private extension FTDocumentCache {
 
             if isLatestModified {
                 do {
-                    try _fileManager.coordinatedCopy(fromURL: url, toURL: destinationURL, force: true)
+                    try FTFileCacheManager.cacheDocumentAt(url, destination: destinationURL);
                     updateMetadataPlistWithRelativePathFor(docUrl: url, documentId: documentUUID)
                     cacheLog(.success, "Replace", url.lastPathComponent)
                 } catch {

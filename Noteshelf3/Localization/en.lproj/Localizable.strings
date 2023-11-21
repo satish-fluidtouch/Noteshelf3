@@ -1085,7 +1085,7 @@
 "iCloudUserTurnedOff" = "iCloud turned off";
 "iCloudUserTurnedOffMessage" = "A copy of your documents will remain stored in iCloud. What would you like to do with the documents currently on this device?";
 "iap.bannerTitle" = "Upgrade for Premium";
-"iap.bannerTitle1" = "Get Premium at @% OFF";
+"iap.bannerTitle1" = "Get Premium at %@ OFF";
 "iap.bannerTitle2" = "only for Noteshelf 2 users";
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
 "iap.booklimitReachedTitle" = "You have reached the free notebook limit";
@@ -1546,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM

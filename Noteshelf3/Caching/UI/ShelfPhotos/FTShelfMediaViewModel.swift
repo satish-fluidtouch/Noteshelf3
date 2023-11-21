@@ -29,38 +29,16 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
     }
     
     func fetchImage() {
-        self.performSelector(inBackground: #selector(loadImageInBackground), with: nil)
-    }
-    
-    @objc private func loadImageInBackground() {
-        let hash = self.imageURL.thumbnailCacheHash()
-        let cachedEntry = imageCache.object(forKey: hash as AnyObject)
-        if let imageFromCache = cachedEntry?.object(forKey: "image") as? UIImage, let storedDate = cachedEntry?.object(forKey: "date") as? Date {
-            if imageURL.fileModificationDate.compare(storedDate) != .orderedSame {
-                 addImageTocache()
-            } else {
+        if let documentID = document?.documentUUID {
+            FTDocumentCache.shared.imageResourceCache.mediaResource(documentID, resourceURL: imageURL) { image in
                 runInMainThread {
-                    self.mediaImage = imageFromCache
+                    self.mediaImage = image;
                 }
-            }
-        } else {
-             addImageTocache()
-        }
-    }
-    
-    private func addImageTocache() {
-        if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage =  image.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
-            let hash = self.imageURL.thumbnailCacheHash()
-            let entry: [String : Any] = ["image": thumbnailImage, "date": self.imageURL.fileModificationDate]
-            imageCache.setObject(entry as AnyObject, forKey: hash as AnyObject)
-            runInMainThread {
-                self.mediaImage = thumbnailImage
             }
         }
     }
 
     func unloadImage() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadImageInBackground), object: nil)
         self.mediaImage =  nil
     }
   
