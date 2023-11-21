@@ -1085,7 +1085,7 @@
 "iCloudUserTurnedOff" = "아이클라우드가 꺼졌습니다.";
 "iCloudUserTurnedOffMessage" = "이 문서의 사본은 iCloud에 저장됩니다. 현재 이 장치에 있는 문서를 어떻게 하시겠습니까?";
 "iap.bannerTitle" = "프리미엄으로 업그레이드";
-"iap.bannerTitle1" = "@% 할인으로 프리미엄 받기";
+"iap.bannerTitle1" = "%@ 할인으로 프리미엄 받기";
 "iap.bannerTitle2" = "Noteshelf 2 사용자 전용";
 "iap.booklimitReachedMessage" = "휴지통을 비우세요. 삭제된 노트북이 할당량에 포함되지 않도록 하거나, 무제한 노트북을 위해 전체 앱을 잠금 해제하세요.";
 "iap.booklimitReachedTitle" = "무료 노트북 제한에 도달했습니다.";
@@ -1546,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM

@@ -1085,7 +1085,7 @@
 "iCloudUserTurnedOff" = "iCloud 關閉";
 "iCloudUserTurnedOffMessage" = "您的文件的副本將保留在iCloud中。 您想對此設備上目前的文件做什麼？";
 "iap.bannerTitle" = "升級到高級";
-"iap.bannerTitle1" = "以@%折扣獲得高級版";
+"iap.bannerTitle1" = "以%@ 折扣獲得高級版";
 "iap.bannerTitle2" = "僅供Noteshelf 2使用者";
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以確保已刪除的筆記本不會計入您的配額，或解鎖完整應用程式以獲取無限筆記本";
 "iap.booklimitReachedTitle" = "您已達到免費筆記本限制";
@@ -1546,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM

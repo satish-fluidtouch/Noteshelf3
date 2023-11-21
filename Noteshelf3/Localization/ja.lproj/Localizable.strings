@@ -1085,7 +1085,7 @@
 "iCloudUserTurnedOff" = "iCloudオフ";
 "iCloudUserTurnedOffMessage" = "あなたの文書のコピーはiCloudに保存されたままです。現在このデバイスにある文書に対して何をしますか？";
 "iap.bannerTitle" = "プレミアムへのアップグレード";
-"iap.bannerTitle1" = "@% OFFでプレミアムを入手";
+"iap.bannerTitle1" = "%@ OFFでプレミアムを入手";
 "iap.bannerTitle2" = "Noteshelf 2 ユーザー専用";
 "iap.booklimitReachedMessage" = "ごみ箱を空にして、削除したノートブックがクオータにカウントされないようにしてください。または、無制限のノートブックのためにフルアプリをロック解除してください。";
 "iap.booklimitReachedTitle" = "無料のノートブックの制限に達しました。";
@@ -1546,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM

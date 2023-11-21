@@ -25,6 +25,21 @@ class FTSceneDelegate: UIResponder,UIWindowSceneDelegate {
         removeThemeObserver();
         debugLog("\(#file) : \(#function) : \(#line)");
     }
+    
+    func openUrl(with context: UIOpenURLContext) {
+        #if targetEnvironment(macCatalyst)
+        let session = UIApplication.shared.shelfSceen();
+        if let userActivity = session?.scene?.userActivity {
+            var userInfo = userActivity.userInfo ?? [AnyHashable : Any]();
+            userInfo["url"] = context.url
+            userInfo["annotation"] = context.options.annotation
+            userInfo["sourceApplication"] = context.options.sourceApplication
+            userInfo["openInPlace"] = context.options.openInPlace
+            userActivity.userInfo = userInfo
+            UIApplication.shared.requestSceneSessionActivation(session, userActivity: userActivity, options: nil);
+        }
+        #endif
+    }
 }
 
 private extension FTSceneDelegate {
