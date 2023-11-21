@@ -1024,6 +1024,7 @@
 "downloadedStickers" = "Downloaded Stickers";
 "duplicate" = "Duplicate";
 "eraser.auto" = "Auto";
+"evernote.userInfo.fetchFailureMessage" = "Unable to fetch account info at this time";
 "export_data" = "Export Data";
 "export_description1" = "It is highly recommended that you save a copy of your data on your local device.";
 "export_description2" = "The exported data containing your notebooks, groups and categories will be saved as a .zip file. Your notebooks will be saved in the .noteshelf format.";
@@ -1084,15 +1085,19 @@
 "iCloudUserTurnedOff" = "iCloud turned off";
 "iCloudUserTurnedOffMessage" = "A copy of your documents will remain stored in iCloud. What would you like to do with the documents currently on this device?";
 "iap.bannerTitle" = "Upgrade for Premium";
+"iap.bannerTitle1" = "Get Premium at %@ OFF";
+"iap.bannerTitle2" = "only for Noteshelf 2 users";
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
 "iap.booklimitReachedTitle" = "You have reached the free notebook limit";
 "iap.booksleft" = "%@ notes left";
 "iap.featureLimitMessage" = "This feature is locked. Unlock by upgrading now";
 "iap.featureLimitTitle" = "Upgrade now";
 "iap.message" = "Get access to unlimited notes, handwriting recognition and search, and digital diaries with Noteshelf Premium.";
+"iap.messageNew" = " For a limited time only, Noteshelf 2 users can avail this special offer and unlock all the features and benefits of Noteshelf 3";
 "iap.noProductIDsFound" = "No In-App Purchase product identifiers were found.";
 "iap.noProductsFound" = "No In-App Purchases were found.";
 "iap.onetimepurchase" = "ONE-TIME PURCHASE. YOURS FOREVER.";
+"iap.onetimepurchasenew" = "%@ one-time purchase";
 "iap.paymentWasCancelled" = "In-App Purchase process was cancelled.";
 "iap.privacy" = "Privacy Policy";
 "iap.productRequestFailed" = "Unable to fetch available In-App Purchase products at the moment.";
@@ -1104,6 +1109,7 @@
 "iap.termsnconditions" = "Terms and Conditions";
 "iap.title" = "Get the full experience with Noteshelf Premium";
 "iap.upgradeNow" = "Upgrade now";
+"iap.upgradeToPremiumNow" = "Upgrade to Premium Now";
 "icloud.sync.issue.message" = "Unable to reach iCloud. Please make sure iCloud is turned on in settings.";
 "iconlabels" = "Icon Labels";
 "import" = "Import";
@@ -1540,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 16 November 2023 at 1:02 PM
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM
