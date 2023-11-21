@@ -910,6 +910,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func savePresentedItemChanges(completionHandler: @escaping (Error?) -> Void) {
+        guard self.hasUnsavedChanges else {
+            FTCLSLog("savePresentedItemChanges: Internal changes haschanges:\(self.hasUnsavedChanges)");
+            super.savePresentedItemChanges(completionHandler: completionHandler);
+            return;
+        }
+        
         FTCLSLog("savePresentedItemChanges: haschanges:\(self.hasUnsavedChanges)");
         if(!Thread.current.isMainThread) {
             DispatchQueue.main.async {
