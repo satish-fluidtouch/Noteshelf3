@@ -163,6 +163,9 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
         })
     }
     func renameShelfItem(_ shelfItem: FTShelfItemViewModel){
+        if collection.isTrash { // Renaming notebook in trash is not supported.
+            return
+        }
         let item = shelfItem.model
         self.renameShelfItems([item])
     }
