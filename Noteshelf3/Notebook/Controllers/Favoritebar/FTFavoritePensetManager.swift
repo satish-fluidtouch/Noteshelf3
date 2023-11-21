@@ -12,7 +12,7 @@ private let favoriteKey = "FTDefaultFavoriteInfo"
 private let currentFavMode = "FTFavoriteCurrentMode"
 
 class FTFavoritePensetManager: NSObject {
-    let dataManager = FTFavoritePensetDataManager()
+    let dataManager = FTFavoritePensetDataManager.shared
     private let userActivity: NSUserActivity?
     private var _currentPenSet: FTPenSetProtocol!
 
