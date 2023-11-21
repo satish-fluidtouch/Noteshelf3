@@ -49,6 +49,7 @@
                     <constraint firstItem="npX-iL-gDZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="1xY-JM-BaJ"/>
                     <constraint firstAttribute="trailing" secondItem="UXL-k2-z80" secondAttribute="trailing" constant="25" id="3ki-Zd-4ZS"/>
                     <constraint firstAttribute="trailing" secondItem="npX-iL-gDZ" secondAttribute="trailing" constant="25" id="70k-E3-zHA"/>
+                    <constraint firstItem="UXL-k2-z80" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="44" id="FHV-3S-s1E"/>
                     <constraint firstAttribute="bottom" secondItem="UXL-k2-z80" secondAttribute="bottom" constant="12" id="LkE-K9-aRG"/>
                     <constraint firstItem="npX-iL-gDZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="U4c-br-G3j"/>
                     <constraint firstItem="UXL-k2-z80" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="fKO-Qg-ek7"/>
@@ -65,6 +66,7 @@
                 <outlet property="infoLabelHeightConstraint" destination="rUL-MR-Z35" id="Fuw-yx-6NW"/>
                 <outlet property="labelInfo" destination="UXL-k2-z80" id="axt-A9-ZCL"/>
                 <outlet property="progressView" destination="npX-iL-gDZ" id="9eW-4k-zdl"/>
+                <outlet property="userInfoLabelTopConstraint" destination="FHV-3S-s1E" id="APN-5w-FfD"/>
             </connections>
             <point key="canvasLocation" x="-9.9236641221374047" y="-1.7605633802816902"/>
         </tableViewCell>

@@ -48,7 +48,7 @@ final class FTDocumentMigration {
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("migratedBooks.plist")
     }
     static func supportsMigration() -> Bool {
-        return false
+        return false;
     }
 
     static func showNS3MigrationAlert(on controller: UIViewController,
@@ -354,14 +354,15 @@ extension FTTextStyleManager {
         // 3. insert them into NS3.
 
         let ns2TextStylesURL = FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("text_styles_migration.plist")
-        if FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
+        let ns2Defaults = UserDefaults.init(suiteName: FTSharedGroupID.getNS2AppGroupID())!
+        let isAlreadyMigrated = ns2Defaults.bool(forKey: "isTextStylesMigrated")
+        if !isAlreadyMigrated, FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
             if let ns2Styles = NSMutableArray(contentsOf: ns2TextStylesURL) as? [[String : String]] {
                 for item in ns2Styles {
                     if let styleItem = FTTextStyleItem.styleFromNS2Style(ns2Info: item) {
                         self.insertNewTextStyle(styleItem)
                     }
                 }
-                let ns2Defaults = UserDefaults.init(suiteName: FTSharedGroupID.getNS2AppGroupID())!
                 ns2Defaults.set(true, forKey: "isTextStylesMigrated")
             }
         }
@@ -381,11 +382,9 @@ extension FTTextStyleItem {
             return nil
         }
 
-        var ns3Info = [String: Any]()
-
         let styleItem = FTTextStyleItem()
         styleItem.displayName = displayName
-        styleItem.fontName = fontName
+        styleItem.fontName = font.fontName
         styleItem.fontSize = Int(fontSize) ?? defaultFontSize
         styleItem.textColor = textColor
         styleItem.isUnderLined = (isUnderlined as NSString).integerValue == 0 ? false : true

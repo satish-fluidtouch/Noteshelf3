@@ -98,6 +98,8 @@ class FTTextToolBarViewController: UIViewController {
         return items
     }
     
+    private var previousTraitCollection: UITraitCollection?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         switchMode()
@@ -582,13 +584,19 @@ extension FTTextToolBarViewController: FTTextStyleCompactDelegate {
 extension FTTextToolBarViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if !self.traitCollection.containsTraits(in: previousTraitCollection) {
-            switchMode()
-            self.updateToolBarSelectionForattributes(self.attributes, scale: self.scale)
-            if let textView = self.toolBarDelegate?.currentTextInputView() {
-                textView.inputView = nil
-                textView.reloadInputViews()
-            }
+        
+        guard let traitCollection = self.view.window?.traitCollection else {
+            return;
+        }
+        guard self.previousTraitCollection != traitCollection else {
+            return;
+        }
+        self.previousTraitCollection = traitCollection;
+        switchMode()
+        self.updateToolBarSelectionForattributes(self.attributes, scale: self.scale)
+        if let textView = self.toolBarDelegate?.currentTextInputView() {
+            textView.inputView = nil
+            textView.reloadInputViews()
         }
     }
 }

@@ -47,25 +47,23 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
     var errorSectionsCount = 0;
     var arrayDynamicSections = [[FTEvernoteInfo]]();
     var hideBackButton: Bool = false
-    private var accountInfo: FTCloudAccountInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         account = .evernote
         let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(account);
-        accountInfoRequest.accountInfo(onUpdate: { accountInfo in
-            self.relayoutIfNeeded();
-            }, onCompletion: { accountInfo, error in
-                self.accountInfo = accountInfo
-                self.setAccountInfo(accountInfo)
-                runInMainThread {
-                    self.updateUI()
-                    self.relayoutIfNeeded();
-                }
+        accountInfoRequest.accountInfo(onUpdate: {[weak self] _ in
+            self?.relayoutIfNeeded();
+        }, onCompletion: { [weak self] _,_  in
+            self?.setAccountInfo()
+            runInMainThread {
+                self?.updateUI()
+                self?.relayoutIfNeeded();
+            }
         });
 
         self.view.backgroundColor = UIColor.appColor(.formSheetBgColor)
-        self.setAccountInfo(accountInfo)
+        self.setAccountInfo()
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.updateUI()
@@ -81,33 +79,36 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    private func setAccountInfo(_ accountInfo:FTCloudAccountInfo?) {
+    private func setAccountInfo() {
         self.arrayDynamicSections.removeAll()
         var arrayErrorAndSync = [FTEvernoteInfo]()
         let standardUserDefaults = UserDefaults.standard
 
         let accountInfoAttributedString = NSMutableAttributedString()
-        if let info = accountInfo {
-            if !info.spaceUsedFormatString().isEmpty {
-                let spaceUsedInfo = NSAttributedString(string: info.spaceUsedFormatString() + " Evernote",attributes: [.font: UIFont.appFont(for: .medium, with: 15), .foregroundColor : UIColor.appColor(.black1)])
-                accountInfoAttributedString.append(spaceUsedInfo)
-            }
-            let userInfo = NSAttributedString(string: "\n" + info.usernameFormatString(),attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black70)])
-            accountInfoAttributedString.append(userInfo)
-            if let lastPublishTime = standardUserDefaults.object(forKey: EVERNOTE_LAST_PUBLISH_TIME) as? TimeInterval {
-                let dateString = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: lastPublishTime), dateStyle: .short, timeStyle: .short);
-                let loc = "\n" + "LastsuccessfulsyncAtFormat".localized
-                let description = String(format: loc, dateString);
-                let syncInfo = NSAttributedString(string: description,attributes: [.font: UIFont.appFont(for: .regular, with: 13), .foregroundColor : UIColor.appColor(.accent)])
-                accountInfoAttributedString.append(syncInfo)
-            }
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 2.0
-            paragraphStyle.alignment = .center
-            accountInfoAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: accountInfoAttributedString.length))
+        if let usedSpace = standardUserDefaults.string(forKey: EN_USEDSPACE),!usedSpace.isEmpty {
+            let spaceUsedInfo = NSAttributedString(string: usedSpace,attributes: [.font: UIFont.appFont(for: .medium, with: 15), .foregroundColor : UIColor.appColor(.black1)])
+            accountInfoAttributedString.append(spaceUsedInfo)
+        }
+        if let username = standardUserDefaults.string(forKey: EN_LOGGED_USERNAME),!username.isEmpty {
+            let usernameAttrString = NSAttributedString(string: "\n" + username,attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black70)])
+            accountInfoAttributedString.append(usernameAttrString)
+        }
+        if let lastPublishTime = standardUserDefaults.object(forKey: EVERNOTE_LAST_PUBLISH_TIME) as? TimeInterval {
+            let dateString = DateFormatter.localizedString(from: Date(timeIntervalSinceReferenceDate: lastPublishTime), dateStyle: .short, timeStyle: .short);
+            let loc = "\n" + "LastsuccessfulsyncAtFormat".localized
+            let description = String(format: loc, dateString);
+            let syncInfo = NSAttributedString(string: description,attributes: [.font: UIFont.appFont(for: .regular, with: 13), .foregroundColor : UIColor.appColor(.accent)])
+            accountInfoAttributedString.append(syncInfo)
+        }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 2.0
+        paragraphStyle.alignment = .center
+        accountInfoAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: accountInfoAttributedString.length))
+        if !accountInfoAttributedString.string.isEmpty {
             arrayErrorAndSync.append(FTEvernoteUserInfo(description: accountInfoAttributedString))
         } else {
-            arrayErrorAndSync.append(FTEvernoteUserInfo(description: accountInfoAttributedString))
+            let fetchErrorInfo = NSAttributedString(string:"evernote.userInfo.fetchFailureMessage".localized,attributes: [.font: UIFont.appFont(for: .regular, with: 15), .foregroundColor : UIColor.appColor(.black70)])
+            arrayErrorAndSync.append(FTEvernoteUserInfo(description:fetchErrorInfo))
         }
 
         if let evernoteError = standardUserDefaults.object(forKey: EVERNOTE_PUBLISH_ERROR) {
@@ -136,7 +137,6 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
             }
             self.arrayDynamicSections.append(arrayIgnoredNotebooks);
         }
-
     }
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -202,10 +202,13 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
                 }
                 userInfoView.updateInfoLabel(attrText: enInfo.description)
                 userInfoView.updateSubviewsVisibility()
-                if let usagePercentage = accountInfo?.percentage {
+                if let usedSpace = UserDefaults.standard.string(forKey: EN_USEDSPACE),!usedSpace.isEmpty {
+                    let spaceUsedPercent = UserDefaults.standard.float(forKey: EN_USEDSPACEPERCENT)
                     userInfoView.progressView?.isHidden = false
-                    userInfoView.progressView?.progress =  usagePercentage / 100.0
+                    userInfoView.userInfoLabelTopConstraint?.constant = 44.0
+                    userInfoView.progressView?.progress =  spaceUsedPercent / 100.0
                 } else {
+                    userInfoView.userInfoLabelTopConstraint?.constant = 16.0
                     userInfoView.progressView?.isHidden = true
                 }
                 return userInfoView

@@ -35,7 +35,7 @@ class FTIAPViewController: UIViewController {
         initializeActivityIndicator()
 
         self.attributedTitleText()
-        self.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 44);
+//        self.titleLabel?.font = UIFont.clearFaceFont(for: .bold, with: 44);
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
         
         self.messageLabel?.text = "iap.messageNew".localized
@@ -73,7 +73,7 @@ class FTIAPViewController: UIViewController {
     private func attributedTitleText(){
         let discountpercentage = 50
         let localisedText = NSLocalizedString("iap.bannerTitle1", comment: "Get Premium at %@ OFF")
-        let range = (localisedText as NSString).range(of: "%@ OFF")
+        let range = (localisedText as NSString).range(of: "%@")
 
         let title1 =  String(format: localisedText,"\(discountpercentage)%")
         let title2 = NSLocalizedString("iap.bannerTitle2", comment: "")

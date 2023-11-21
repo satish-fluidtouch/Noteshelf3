@@ -234,15 +234,8 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
          initialize(block: { [self] error in
             if error == nil {
                 let requestConfig = RequestUiConfiguration()
-            #if DEBUG
-                let tag = "NS3-Dev"
-            #elseif RELEASE
-                let tag = "Noteshelf-3"
-            #else
-                let tag = "NS3-Beta"
-            #endif
                 var tags = extraTags;
-                tags.append(tag);
+                tags.append(self.appTag);
                 
                 let customField = CustomField(fieldId:360015598614, value:FTZenDeskManager.customFieldsString())
                 requestConfig.customFields = [customField]
@@ -485,3 +478,27 @@ extension FTZenDeskManager: MFMailComposeViewControllerDelegate {
     }
 }
 #endif
+
+private extension FTZenDeskManager {
+#if ENTERPRISE_EDITION
+    var appTag: String {
+#if DEBUG
+        let tag = "NS3-EE-Dev"
+#else
+        let tag = "Noteshelf-3-EE"
+#endif
+        return tag;
+    }
+#else
+    var appTag: String {
+#if DEBUG
+        let tag = "NS3-Dev"
+#elseif RELEASE
+        let tag = "Noteshelf-3"
+#else
+        let tag = "NS3-Beta"
+#endif
+        return tag;
+    }
+#endif
+}
