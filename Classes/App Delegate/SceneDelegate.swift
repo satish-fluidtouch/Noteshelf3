@@ -119,6 +119,17 @@ class SceneDelegate: FTSceneDelegate {
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if let userInfo =  userActivity.userInfo, let url = userInfo["url"] as? URL, let openInPlace = userInfo["openInPlace"] as? Bool  {
+            let sourceApplication = userInfo["sourceApplication"] as? String
+            let annotation = userInfo["annotation"]
+            var options = FTURLOptions(sourceApplication: sourceApplication,
+                                       annotation: annotation)
+            if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol {
+                let handler = FTAppIntentHandler(with: handlingController)
+                options.openInPlace = openInPlace;
+                handler.open(url, options: options)
+            }
+        }
         if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol {
             let handler = FTAppIntentHandler(with: handlingController)
             handler.continueUserActivity(userActivity)

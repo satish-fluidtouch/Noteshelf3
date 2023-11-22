@@ -34,10 +34,8 @@ extension UIMenu {
                                   , onAction:((FTShelfSortOrder,UIAction.Identifier?) -> ())?)  -> UIMenuElement {
         var items = [UIMenuElement]()
         
-        var styles = FTShelfSortOrder.supportedSortOptions()
-        if mode == .ns2 {
-            styles = FTShelfSortOrder.supportedSortOptionsForNS2Books()
-        }
+        let styles = FTShelfSortOrder.supportedSortOptions()
+
         styles.forEach { eachStyle in
             let menuItem = UIAction(title: eachStyle.displayTitle
                                     , identifier: eachStyle.menuIdentifier

@@ -9,6 +9,7 @@
 import UIKit
 
 class FTENUserInfoTableViewCell: UITableViewCell {
+    @IBOutlet weak var userInfoLabelTopConstraint: NSLayoutConstraint?
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView?
     @IBOutlet weak var labelInfo: UILabel?
     @IBOutlet weak var progressView: UIProgressView?

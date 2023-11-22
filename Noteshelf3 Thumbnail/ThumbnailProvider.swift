@@ -9,7 +9,6 @@
 import UIKit
 import QuickLookThumbnailing
 import AVFoundation
-import FTDocumentFramework
 
 class ThumbnailProvider: QLThumbnailProvider {
     override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {

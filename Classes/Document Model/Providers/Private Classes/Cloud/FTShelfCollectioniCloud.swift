@@ -16,7 +16,6 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
 
     fileprivate var shelfCollections = [FTShelfItemCollection]();
     fileprivate let iCloudDocumentsURL: URL
-    fileprivate let isNS2Collection: Bool
 
     fileprivate var hashTable = FTHashTable();
 
@@ -31,9 +30,8 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
         #endif
     }
 
-    required init(rootURL: URL, isNS2Collection: Bool) {
+    required init(rootURL: URL) {
         self.iCloudDocumentsURL = rootURL.appendingPathComponent("Documents").urlByDeleteingPrivate()
-        self.isNS2Collection = isNS2Collection
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -79,10 +77,6 @@ class FTShelfCollectioniCloud: NSObject, FTUniqueNameProtocol {
 
 // MARK: - FTShelfCollection -
 extension FTShelfCollectioniCloud: FTShelfCollection {
-    // TODO: (AK) Think about a refactor
-    func belongsToNS2() -> Bool {
-        isNS2Collection
-    }
 
     func createShelf(_ title: String, onCompletion: @escaping ((NSError?, FTShelfItemCollection?) -> Void)) {
         self.disableUpdates()

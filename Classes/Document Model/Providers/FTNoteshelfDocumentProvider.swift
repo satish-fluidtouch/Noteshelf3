@@ -171,16 +171,6 @@ class FTNoteshelfDocumentProvider: NSObject {
         self.cloudObserver = nil;
     }
 
-    func ns2Shelfs(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
-        guard let ns2Collection = self.currentNS2Collection() else {
-            completion([])
-            return
-        }
-        ns2Collection.shelfs { items in
-            completion(self.sortedCollections(items))
-        }
-    }
-
     func shelfs(_ completion : @escaping (([FTShelfCategoryCollection]) -> Void))
     {
         if categorizedShelfs.isEmpty {
@@ -259,17 +249,6 @@ class FTNoteshelfDocumentProvider: NSObject {
         }
     }
 
-    fileprivate func fetchNS2CloudCollections(_ completion : @escaping (([FTShelfItemCollection]) -> Void)) {
-        guard let listener = cloudDocumentListener, let cloudcollection = cloudShelfCollectionRoot?.ns2Collection else {
-            completion([FTShelfItemCollection]());
-            return
-        }
-
-        listener.startQuery {
-            cloudcollection.shelfs(completion);
-        }
-    }
-
     func createShelf(_ name: String, onCompletion : @escaping ((NSError?, FTShelfItemCollection?) -> Void)) {
         self.currentCollection().createShelf(name, onCompletion: onCompletion);
     }
@@ -284,22 +263,6 @@ class FTNoteshelfDocumentProvider: NSObject {
 
     fileprivate func rootDocumentsURL() -> URL {
         return self.currentCollection().documentsDirectory();
-    }
-
-
-    fileprivate func currentNS2Collection() -> FTShelfCollection? {
-#if !NOTESHELF_ACTION
-        switch FTDocumentMigration.getNS2MigrationDataSource() {
-        case .cloud:
-            return self.cloudShelfCollectionRoot?.ns2Collection
-        case .local:
-            return self.localShelfCollectionRoot?.ns2Collection
-        case .doesNotSupport:
-            return nil
-        }
-#else
-        return nil
-#endif
     }
 
     fileprivate func currentCollection() -> FTShelfCollection {
@@ -354,49 +317,11 @@ extension FTNoteshelfDocumentProvider {
             completion(shelfCollections);
 #endif
         }
-
-#if !NOTESHELF_ACTION
-        if FTDocumentMigration.supportsMigration() {
-            //if ns2 cloud or ns3 cloud
-            if providerMode == .local {
-                self.currentCollection().shelfs { items in
-                    if FTDocumentMigration.getNS2MigrationDataSource() == .cloud {
-                        self.fetchNS2CloudCollections { _ in
-                            shelfsCompletionBlock(items);
-                        }
-                    }
-                    else{
-                        shelfsCompletionBlock(items);
-                    }
-                }
-            }
-            else {
-                self.fetchCloudCollections { items in
-                    if FTDocumentMigration.getNS2MigrationDataSource() == .local {
-                        self.currentNS2Collection()?.shelfs({ _ in
-                            shelfsCompletionBlock(items);
-                        })
-                    }
-                    else{
-                        shelfsCompletionBlock(items);
-                    }
-                }
-            }
-        }
-        else {
-            if providerMode == .cloud {
-                self.fetchCloudCollections(shelfsCompletionBlock);
-            } else {
-                self.currentCollection().shelfs(shelfsCompletionBlock);
-            }
-        }
-#else
         if providerMode == .cloud {
             self.fetchCloudCollections(shelfsCompletionBlock);
         } else {
             self.currentCollection().shelfs(shelfsCompletionBlock);
         }
-#endif
     }
 
     func uncategorizedNotesCollection(_ onCompletion : @escaping ((FTShelfItemCollection?) -> Void)){
@@ -702,7 +627,7 @@ extension FTNoteshelfDocumentProvider {
 
         let _cloudDocumentListner = FTCloudDocumentListener(rootURLs: [cloudURL]);
 
-        let ns3Collection = FTShelfCollectioniCloud(rootURL: cloudURL, isNS2Collection: false);
+        let ns3Collection = FTShelfCollectioniCloud(rootURL: cloudURL);
         _cloudDocumentListner.addListener(ns3Collection)
 
         let cloudWatchCollection = FTWatchRecordingCollection_Cloud(cloudURL: FTNSiCloudManager.shared().iCloudRootURL()!)

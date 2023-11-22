@@ -36,7 +36,7 @@ class FTThumbReadCallbacks : NSObject
         super.init();
 
         thumbReadOperationQueue.name = "FTThumbnailREADER";
-        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
+//        thumbReadOperationQueue.maxConcurrentOperationCount = 1;
         
         let notificationBlock : (_ noti:Notification) -> Void = { [weak self] (notification) in
             self?.thumbReadOperationQueue.cancelAllOperations();
@@ -64,16 +64,10 @@ class FTThumbReadCallbacks : NSObject
         @discardableResult
         func readThumbnailFromCache(reuseToken: String?) -> String {
             return self.ns2ThumbnailReader.thumbnail(for: item
-                                                     , isNS2Book: item.URL.isNS2Book
                                                      , reuseToken: reuseToken
                                                      , queue: self.thumbReadOperationQueue
                                                      , cache: self.imageCache
                                                      , onCompletion: onCompletion);
-        }
-
-        // For NS2 we are keeping the old approach of image caching
-        guard !item.URL.isNS2Book else {
-            return readThumbnailFromCache(reuseToken: nil)
         }
 
         if FTDeveloperOption.useQuickLookThumbnailing {

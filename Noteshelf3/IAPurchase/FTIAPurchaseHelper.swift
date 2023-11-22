@@ -46,9 +46,9 @@ final class FTIAPurchaseHelper {
 
     var isPremiumUser: Bool {
         get {
-//            #if BETA
-//            return true;
-//            #else
+#if ENTERPRISE_EDITION
+            return true;
+#else
             var isPremierUser = UserDefaults.standard.bool(forKey: premiumUserStatus)
             if !isPremierUser {
                 isPremierUser = isIAPPurchasedViaReceipt();
@@ -58,7 +58,7 @@ final class FTIAPurchaseHelper {
             }
             updatePremiumUserInfoToNS2(isPremium: isPremierUser)
             return isPremierUser;
-//            #endif
+#endif
         } set {
             FTIAPManager.shared.premiumUser.isPremiumUser = newValue;
             UserDefaults.standard.set(newValue, forKey: premiumUserStatus)

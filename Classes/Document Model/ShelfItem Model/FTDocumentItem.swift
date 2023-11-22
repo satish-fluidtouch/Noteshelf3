@@ -39,10 +39,10 @@ extension NSNotification.Name {
     
     private var _fileLastOpenedDate: Date?;
     var fileLastOpenedDate: Date {
-        if isDownloaded {
-            return self.URL.fileLastOpenedDate;
+        if isDownloaded, nil == _fileLastOpenedDate {
+            _fileLastOpenedDate = self.URL.fileLastOpenedDate;
         }
-        return fileModificationDate;
+        return _fileLastOpenedDate ?? self.fileModificationDate;
     }
     
     required init(fileURL : Foundation.URL)
@@ -129,7 +129,7 @@ extension NSNotification.Name {
             }
             else {
                 if(newValue) {
-                    self._fileLastOpenedDate = self.URL.fileLastOpenedDate;
+                    self._fileLastOpenedDate = nil;
                     self.downloaded = newValue;
                 }
                 else {

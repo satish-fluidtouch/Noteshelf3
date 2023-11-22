@@ -129,7 +129,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
-        canShowCreateNBButtons = !isNS2Collection
     }
     
     init(sidebarItemType: FTSideBarItemType){
@@ -171,16 +170,16 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return (collection.isAllNotesShelfItemCollection || collection.isMigratedCollection || collection.isDefaultCollection)
     }
     var canShowNewNoteNavOption: Bool {
-        return !(collection.isStarred || collection.isTrash || hideNS3NotesCreationOptions)
+        return !(collection.isStarred || collection.isTrash)
     }
     var canShowStarredIconOnNB: Bool {
         return !(collection.isTrash)
     }
     var supportsDragAndDrop: Bool {
-        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash || isNS2Collection)
+        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash)
     }
     var supportsDrop: Bool {
-       (isInHomeMode || !(collection.isStarred || collection.isTrash || isNS2Collection))
+       (isInHomeMode || !(collection.isStarred || collection.isTrash))
     }
     var disableBottomBarItems: Bool {
         !shelfItems.contains(where: { $0.isSelected })
@@ -194,30 +193,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return selectedItems
     }
 
-    var isNS2Collection: Bool {
-        if collection.isNS2Collection() {
-            return true
-        }
-        return false
-    }
-
-    var hideNS3NotesCreationOptions: Bool {
-        return isNS2Collection
-    }
-
-    var canShowSearchOption: Bool {
-        return !isNS2Collection
-    }
-
-    var canShowNotebookUpdateOptions: Bool {
-        return !isNS2Collection
-    }
-
-    var shouldShowNS3MigrationHeader: Bool {
-        return isNS2Collection
-    }
-    
-    
     // MARK: Mutating functions
     func selectAllItems() {
         updateShelfItemsSelectionStatusTo(true)
@@ -752,10 +727,6 @@ extension FTShelfViewModel {
         let itemProvider = NSItemProvider(object: shelfItem)
         itemProvider.registerObject(userActivity, visibility: .all)
         return itemProvider
-    }
-
-    func hasNS2BookItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {
-        return (shelfItems.first(where: {$0.model.URL.isNS2Book}) != nil)
     }
 
     func hasAGroupShelfItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {

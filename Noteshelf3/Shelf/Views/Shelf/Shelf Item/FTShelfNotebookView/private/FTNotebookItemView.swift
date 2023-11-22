@@ -49,7 +49,7 @@ struct FTNotebookItemView: View {
                         .ignoresSafeArea()
                 }, notebookShape: {
                     let shape: FTPreviewShape;
-                    if shelfItem.coverImage.needEqualCorners || shelfViewModel.isNS2Collection {
+                    if shelfItem.coverImage.needEqualCorners {
                         shape = FTPreviewShape(raidus: leftCornerRadius);
                     }
                     else {

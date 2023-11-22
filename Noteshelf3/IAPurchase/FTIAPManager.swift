@@ -29,11 +29,6 @@ extension FTPremiumUser {
         guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
             return;
         }
-
-        if let collection = notification?.object as? FTShelfItemCollection
-            ,collection.isNS2Collection() {
-            return;
-        }
         self.updateNoOfBooks(nil);
     }
     
@@ -103,7 +98,9 @@ class FTIAPManager: NSObject {
     
     private override init() {
         super.init()
+#if !ENTERPRISE_EDITION
         SKPaymentQueue.default().add(self);
+#endif
         FTStoreContainerHandler.shared.premiumUser = premiumUser
     }
     
@@ -130,13 +127,13 @@ extension FTIAPManager {
         return formatter.string(from: product.price)
     }
     
-    func startObserving() {
-        SKPaymentQueue.default().add(self)
-    }
-    
-    func stopObserving() {
-        SKPaymentQueue.default().remove(self)
-    }
+//    func startObserving() {
+//        SKPaymentQueue.default().add(self)
+//    }
+//    
+//    func stopObserving() {
+//        SKPaymentQueue.default().remove(self)
+//    }
     
     func canMakePayments() -> Bool {
         return SKPaymentQueue.canMakePayments()
@@ -171,8 +168,7 @@ extension FTIAPManager {
         onBuyProductHandler = handler
         totalRestoredPurchases = 0
         SKPaymentQueue.default().restoreCompletedTransactions()
-    }
-    
+    }    
 }
 
 // MARK: - SKPaymentTransactionObserver

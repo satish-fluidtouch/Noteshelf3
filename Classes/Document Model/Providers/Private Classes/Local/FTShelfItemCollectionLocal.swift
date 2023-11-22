@@ -818,10 +818,6 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         onCompletion(destFileName);
     }
 
-    func isNS2Collection() -> Bool {
-        let belongs = self.parent?.belongsToNS2()
-        return belongs ?? false
-    }
 }
 
 //MARK:- Manual Sorting

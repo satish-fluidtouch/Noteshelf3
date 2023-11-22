@@ -164,8 +164,17 @@ private extension FTFavoritebarViewController {
         controller.manager = self.manager
         controller.activity = self.activity
         controller.ftPresentationDelegate.source = sourceView
+        var rect = sourceView.bounds
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        // To fix the arrow position
+        let offset: CGFloat = 8.0
+        if placement == .top || placement.isRightPlacement() {
+            rect.origin.y += offset
+        } else if placement.isLeftPlacement() {
+            rect.origin.y -= offset
+        }
+        controller.ftPresentationDelegate.sourceRect = rect
         controller.ftPresentationDelegate.compactGrabFurther = false
-
         self.ftPresentPopover(vcToPresent: controller, contentSize: FTFavoriteEditViewController.contentSize, hideNavBar: true)
     }
 

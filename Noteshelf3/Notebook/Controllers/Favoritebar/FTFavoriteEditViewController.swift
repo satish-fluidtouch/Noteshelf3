@@ -83,7 +83,7 @@ class FTFavoriteEditViewController: UIViewController, FTPopoverPresentable {
             let alert = UIAlertController(title: "DeleteFavoriteAlertTitle".localized, message: "DeleteFavoriteAlertMessage".localized, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes".localized, style: .default, handler: { [weak self] _ in
                 guard let self else { return }
-                self.delegate?.didDeleteFavorite(favorite)
+                self.delegate?.didDeleteFavorite(self.favorite)
                 self.dismiss(animated: false, completion: nil)
             }))
             alert.addAction(UIAlertAction(title: "No".localized, style: .cancel, handler: nil))

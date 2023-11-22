@@ -51,5 +51,10 @@ class FTPreferenceSceneDelegate: FTSceneDelegate {
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         debugLog("\(Self.className()) userActivity: \(userActivity)");
     }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let context = URLContexts.first else { return }
+        self.openUrl(with: context)
+    }
 }
 #endif

@@ -188,7 +188,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
         else {
             if let currentViewM = self.currentShelfViewModel {
-                currentViewM.reloadItems(animate: true) {
+                currentViewM.reloadItems(animate: animate) {
                     onCompletion()
                 }
             } else {
@@ -442,6 +442,7 @@ extension FTShelfSplitViewController {
                                              createWithAudio: Bool,
                                              pageIndex: Int?,
                                              onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+
         let downloadStatus = shelfItem.URL.downloadStatus();
         if downloadStatus != .downloaded {
             if downloadStatus == .notDownloaded {
@@ -489,6 +490,7 @@ extension FTShelfSplitViewController {
                                             createWithAudio: Bool,
                                             pageIndex: Int?,
                                             onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+
         let notebookName = shelfItem.displayTitle
         FTCLSLog("Book: \(notebookName): Show")
         self.view.isUserInteractionEnabled = false

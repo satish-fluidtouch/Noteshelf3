@@ -57,17 +57,15 @@ class FTGlobalSearchProvider: NSObject {
         self.searchProcessor = FTSearchProcessorFactory.getProcessor(forType: FTGlobalSearchType.all, searchKey: searchKey, tags: tags)
 
         if shelfCategories.isEmpty {
-            let nonNs2Books = self.allShelfItems.filter { !$0.URL.isNS2Book }
-            fetchResults(items: nonNs2Books)
+            fetchResults(items: self.allShelfItems)
         } else {
             let options = FTFetchShelfItemOptions()
             let token = UUID().uuidString;
             self.currentProcessorToken = token;
 
             FTNoteshelfDocumentProvider.shared.fetchShelfItems(forCollections: shelfCategories, option: options, parent: nil) { [self] (shelfItems) in
-                let nonNs2Books = shelfItems.filter { !$0.URL.isNS2Book }
                 if token == self.currentProcessorToken {
-                    fetchResults(items: nonNs2Books)
+                    fetchResults(items: shelfItems)
                 }
             }
         }

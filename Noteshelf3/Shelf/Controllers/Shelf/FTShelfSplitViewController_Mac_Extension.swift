@@ -143,9 +143,7 @@ extension FTShelfSplitViewController: UINavigationControllerDelegate {
             } else if self.checkIfShelfContentViewControllerExists(from: navigationController) {
                 toolbar.switchMode(.content)
             } else if let shelfController = viewController as? FTShelfViewControllerNew, let collection = shelfController.shelfItemCollection {
-                if collection.isNS2Collection() {
-                    toolbar.switchMode(.ns2)
-                } else if collection.isTrash {
+                if collection.isTrash {
                     toolbar.switchMode(.trash)
                 } else {
                     toolbar.switchMode(.shelf)

@@ -52,7 +52,7 @@ class FTMigrationViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        runInMainThread(2) {
+        runInMainThread(0.5) {
             self.processMigration()
         }
     }
@@ -69,6 +69,7 @@ class FTMigrationViewController: UIViewController {
 
                 // TODO: (AK) Move to a proper location
                 FTTextStyleManager.shared.migrateNS2TextStyles()
+                FTFavoritePensetDataManager.shared.migrateNS2Favorites()
 
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
                 self?.updateSuccessUI()
@@ -88,6 +89,9 @@ class FTMigrationViewController: UIViewController {
         self.messageObserver?.invalidate()
         self.messageObserver = nil
         UIApplication.shared.isIdleTimerDisabled = false
+        #if targetEnvironment(macCatalyst)
+        self.nsToolbar?.isVisible = true
+        #endif
     }
     
     private func updateSuccessUI() {
@@ -113,12 +117,19 @@ class FTMigrationViewController: UIViewController {
         }))
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Stop Migration", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.progressView?.observedProgress?.cancel()
-            self?.dismiss(animated: true)
+            self?.dismiss()
         }))
         self.present(alertController, animated: true, completion: nil)
     }
 
     @IBAction func doneTapped(_ sender: UIButton){
-        self.dismiss(animated: false)
+        self.dismiss()
+    }
+    
+    func dismiss() {
+        #if targetEnvironment(macCatalyst)
+        self.nsToolbar?.isVisible = true
+        #endif
+        self.dismiss(animated: true)
     }
 }

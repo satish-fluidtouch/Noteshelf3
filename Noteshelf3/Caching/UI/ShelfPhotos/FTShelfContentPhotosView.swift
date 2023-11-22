@@ -11,6 +11,7 @@ import SwiftUI
 struct FTShelfContentPhotosView: View  {
     @ObservedObject var viewModel: FTShelfContentPhotosViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var menuOverlayInfo : FTShelfMenuOverlayInfo
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     private func gridItems(size viewSize: CGSize) -> [GridItem] {
@@ -28,6 +29,12 @@ struct FTShelfContentPhotosView: View  {
                 contentView
             case .empty:
                 emptyStateView
+            case .partiallyLoaded:
+                if !viewModel.media.isEmpty {
+                    contentView
+                } else {
+                    ProgressView()
+                }
             }
         }
         .padding(.horizontal, 0)
@@ -82,7 +89,11 @@ struct FTShelfContentPhotosView: View  {
                             } preview: {
                                 FTMediaPreviewPageView(media: media)
                                     .onAppear {
+                                        menuOverlayInfo.isMenuShown = true
                                         track(EventName.shelf_photo_page_longpress, screenName: ScreenName.shelf_photos)
+                                    }
+                                    .onDisappear {
+                                        menuOverlayInfo.isMenuShown = false
                                     }
                             }
                     }
@@ -112,10 +123,15 @@ struct MediaItemView: View {
     @ObservedObject var media: FTShelfMedia
 
     var body: some View {
-        Image(uiImage: media.mediaImage ?? UIImage.shelfDefaultNoCoverImage)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .clipped()
+        if let image = media.mediaImage {
+            Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipped()
+        } else {
+            Color.gray
+                .opacity(0.3)
+        }
     }
 }
 
