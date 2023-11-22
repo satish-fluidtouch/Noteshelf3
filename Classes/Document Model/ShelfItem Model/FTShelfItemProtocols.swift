@@ -30,10 +30,6 @@ enum RKShelfItemType: Int {
     static func supportedSortOptions() -> [FTShelfSortOrder] {
         return [.byLastOpenedDate, .byModifiedDate, .byName, .manual]
     }
-
-    static func supportedSortOptionsForNS2Books() -> [FTShelfSortOrder] {
-        return [.byModifiedDate, .byName]
-    }
     
     var displayTitle: String {
         switch self {
