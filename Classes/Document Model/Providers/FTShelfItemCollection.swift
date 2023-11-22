@@ -81,8 +81,6 @@ protocol FTShelfItemCollection: FTDiskItemProtocol, FTDroppable {
     func removeGroupItem(_ groupItem: FTGroupItemProtocol,
                                 onCompletion block:@escaping (NSError?, FTGroupItemProtocol?) -> Void)
 
-    // For NS3 Migration
-    func isNS2Collection() -> Bool
 }
 
 extension FTShelfItemCollection {
@@ -191,9 +189,7 @@ extension FTShelfItemCollection //for searching
             return NSLocalizedString("sidebar.topSection.starred", comment: self.title);
         }
         else if self.title == uncategorizedShefItemCollectionTitle {
-            let localisationKey = isNS2Collection() ? "Uncategorized" : "sidebar.topSection.unfiled"
-            let comment = isNS2Collection() ? "Uncategorized" : "Unfiled"
-            return NSLocalizedString(localisationKey, comment: comment);
+            return NSLocalizedString("sidebar.topSection.unfiled", comment: "Unfiled");
         }
         return self.title;
     }

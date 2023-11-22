@@ -29,11 +29,6 @@ extension FTPremiumUser {
         guard FTNoteshelfDocumentProvider.shared.isProviderReady else {
             return;
         }
-
-        if let collection = notification?.object as? FTShelfItemCollection
-            ,collection.isNS2Collection() {
-            return;
-        }
         self.updateNoOfBooks(nil);
     }
     

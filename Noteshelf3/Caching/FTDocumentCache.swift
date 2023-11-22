@@ -120,10 +120,6 @@ final class FTDocumentCache {
             return
         }
 
-        guard !shelfItemCollection.isNS2Collection() else {
-            return
-        }
-
         guard let items = notification.userInfo?["items"] as? [FTDocumentItemProtocol] else { return }
         cacheLog(.info, "shelfItemDidRemove", items.count)
 
@@ -143,10 +139,6 @@ final class FTDocumentCache {
 
         // Ignore the items which are updated in Trash
         if shelfItemCollection is FTShelfItemCollectionSystem {
-            return
-        }
-
-        guard !shelfItemCollection.isNS2Collection() else {
             return
         }
 
