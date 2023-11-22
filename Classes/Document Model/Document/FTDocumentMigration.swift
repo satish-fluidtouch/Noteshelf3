@@ -8,6 +8,7 @@
 
 import Foundation
 import FTCommon
+import FTTemplatesStore
 
 #if targetEnvironment(macCatalyst)
 private let ns2URLScheme = "maccatalyst.com.fluidtouch.noteshelf://"
@@ -47,6 +48,12 @@ final class FTDocumentMigration {
     static var migratedPlistUrl : URL? {
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("migratedBooks.plist")
     }
+
+    static var libraryURL : URL {
+        let sharedGroupLocation = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTUtils.getNS2GroupId());
+        return sharedGroupLocation!.appendingPathComponent("Library");
+    }
+
     static func supportsMigration() -> Bool {
         return false;
     }
@@ -343,6 +350,36 @@ extension FTDocumentMigration {
             }
         }
         return relativePaths
+    }
+
+     func migrateNS2CustomTemplates() {
+        let library = FTThemesStorage(themeLibraryType: FTNThemeLibraryType.papers)
+         let customFolderURL = FTDocumentMigration.libraryURL.appendingPathComponent("papers_v2/custom/")
+         do {
+             let subcontents = try FileManager().contentsOfDirectory(at: customFolderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+             try subcontents.forEach { url in
+                 let subcontents1 = try FileManager().contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+                 try subcontents1.forEach({ subUrl in
+                     let fileName = url.deletingPathExtension().lastPathComponent
+                     let pathExtention = subUrl.pathExtension
+                     if subUrl.deletingPathExtension().lastPathComponent == "template" {
+                         let ns3TemplateFile = subUrl.deletingLastPathComponent().appendingPathComponent(fileName).appendingPathExtension(pathExtention)
+                         try FileManager().moveItem(at: subUrl, to: ns3TemplateFile)
+                     }
+                 })
+                 let ns3CustomFile = url.deletingPathExtension()
+                 try FileManager().moveItem(at: url, to: ns3CustomFile)
+
+                 let fileName = ns3CustomFile.lastPathComponent
+                 let ns3CustomTemplatesFolder = FTStoreCustomTemplatesHandler.shared.customTemplatesFolder
+                 let destUrl = ns3CustomTemplatesFolder.appendingPathComponent(fileName)
+                 if !FileManager().fileExists(atPath: destUrl.path) {
+                     try FileManager().copyItem(at: ns3CustomFile, to: destUrl)
+                 }
+             }
+         } catch {
+             FTCLSLog("--- Custom Templates Migration Failed with error \(error.localizedDescription)")
+         }
     }
 }
 
