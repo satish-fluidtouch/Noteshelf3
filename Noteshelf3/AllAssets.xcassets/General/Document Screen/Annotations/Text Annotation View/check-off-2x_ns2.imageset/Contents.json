@@ -1,11 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "check-off.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "iap_promo.png",
+      "filename" : "check-off@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

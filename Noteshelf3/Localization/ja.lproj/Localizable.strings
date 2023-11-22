@@ -1024,6 +1024,7 @@
 "downloadedStickers" = "ダウンロード済みステッカー";
 "duplicate" = "複製";
 "eraser.auto" = "自動";
+"evernote.userInfo.fetchFailureMessage" = "この時点ではアカウント情報を取得できません。";
 "export_data" = "データのエクスポート";
 "export_description1" = "「ローカルデバイスにデータのコピーを保存することを強くお勧めします。」";
 "export_description2" = "エクスポートされたデータは、ノートブック、グループ、カテゴリを含んだ.zipファイルとして保存されます。ノートブックは.noteshelf形式で保存されます。";
@@ -1084,15 +1085,19 @@
 "iCloudUserTurnedOff" = "iCloudオフ";
 "iCloudUserTurnedOffMessage" = "あなたの文書のコピーはiCloudに保存されたままです。現在このデバイスにある文書に対して何をしますか？";
 "iap.bannerTitle" = "プレミアムへのアップグレード";
+"iap.bannerTitle1" = "%@ OFFでプレミアムを入手";
+"iap.bannerTitle2" = "Noteshelf 2 ユーザー専用";
 "iap.booklimitReachedMessage" = "ごみ箱を空にして、削除したノートブックがクオータにカウントされないようにしてください。または、無制限のノートブックのためにフルアプリをロック解除してください。";
 "iap.booklimitReachedTitle" = "無料のノートブックの制限に達しました。";
 "iap.booksleft" = "残り%@件のノート";
 "iap.featureLimitMessage" = "この機能はロックされています。今すぐアップグレードして解除します。";
 "iap.featureLimitTitle" = "今すぐアップグレード";
 "iap.message" = "「Noteshelfプレミアムで無制限のノートへのアクセス、手書き認識と検索、そしてデジタルダイアリーを手に入れましょう。」";
+"iap.messageNew" = "期間限定で、Noteshelf 2のユーザーはこの特別オファーを利用して、Noteshelf 3のすべての機能と利点を解除できます。";
 "iap.noProductIDsFound" = "In-App Purchaseの製品識別子が見つかりませんでした。";
 "iap.noProductsFound" = "アプリ内での購入は見つかりませんでした。";
 "iap.onetimepurchase" = "ワンタイム購入。永遠にあなたのものです。";
+"iap.onetimepurchasenew" = "%@ ワンタイム購入";
 "iap.paymentWasCancelled" = "アプリ内購入プロセスはキャンセルされました。";
 "iap.privacy" = "プライバシーポリシー";
 "iap.productRequestFailed" = "現在、利用可能なアプリ内購入商品を取得できません。";
@@ -1104,6 +1109,7 @@
 "iap.termsnconditions" = "利用規約";
 "iap.title" = "Noteshelf Premium で完全なエクスペリエンスを手に入れましょう";
 "iap.upgradeNow" = "今すぐアップグレード";
+"iap.upgradeToPremiumNow" = "今すぐプレミアムにアップグレード";
 "icloud.sync.issue.message" = "iCloud に接続できません。 設定でiCloudがオンになっていることをご確認ください。";
 "iconlabels" = "アイコンラベル";
 "import" = "インポート";
@@ -1540,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 16 November 2023 at 1:02 PM
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM

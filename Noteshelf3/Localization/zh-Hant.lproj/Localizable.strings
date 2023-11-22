@@ -1024,6 +1024,7 @@
 "downloadedStickers" = "已下載貼紙";
 "duplicate" = "複製";
 "eraser.auto" = "自動";
+"evernote.userInfo.fetchFailureMessage" = "此時無法獲取帳戶資訊";
 "export_data" = "匯出數據";
 "export_description1" = "強烈建議您在本機裝置上儲存資料的副本。";
 "export_description2" = "您的筆記本、分組和分類的匯出資料將儲存為.zip檔。 您的筆記本將以.noteshelf格式儲存。";
@@ -1084,15 +1085,19 @@
 "iCloudUserTurnedOff" = "iCloud 關閉";
 "iCloudUserTurnedOffMessage" = "您的文件的副本將保留在iCloud中。 您想對此設備上目前的文件做什麼？";
 "iap.bannerTitle" = "升級到高級";
+"iap.bannerTitle1" = "以%@ 折扣獲得高級版";
+"iap.bannerTitle2" = "僅供Noteshelf 2使用者";
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以確保已刪除的筆記本不會計入您的配額，或解鎖完整應用程式以獲取無限筆記本";
 "iap.booklimitReachedTitle" = "您已達到免費筆記本限制";
 "iap.booksleft" = "%@ 留下的註釋";
 "iap.featureLimitMessage" = "此功能已鎖定。 立即升級解鎖。";
 "iap.featureLimitTitle" = "立即升級";
 "iap.message" = "取得無限筆記、手寫辨識和搜尋以及Noteshelf高級版的數位日記。";
+"iap.messageNew" = "只限有限的時間內，Noteshelf 2用戶可以享受此特別優惠，解鎖Noteshelf 3的所有功能和好處。";
 "iap.noProductIDsFound" = "找不到任何應用程式內購買產品識別碼。";
 "iap.noProductsFound" = "沒有發現應用程式內購買。";
 "iap.onetimepurchase" = "一次購買。 永久擁有。";
+"iap.onetimepurchasenew" = "%@ 單次購買";
 "iap.paymentWasCancelled" = "應用程式內購買流程已取消。";
 "iap.privacy" = "隱私權政策";
 "iap.productRequestFailed" = "目前無法取得可用的應用程式內購買產品。";
@@ -1104,6 +1109,7 @@
 "iap.termsnconditions" = "條款與條件";
 "iap.title" = "透過Noteshelf Premium獲得完整體驗";
 "iap.upgradeNow" = "立即升級";
+"iap.upgradeToPremiumNow" = "立即升級至高級版";
 "icloud.sync.issue.message" = "無法連接到 iCloud。 請確保 iCloud 在設定中已開啟。";
 "iconlabels" = "圖標標籤";
 "import" = "導入";
@@ -1540,4 +1546,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 16 November 2023 at 1:02 PM
+// Last Synced by Rakesh on 21 November 2023 at 10:28 AM

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
@@ -15,28 +16,31 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @StateObject var enPublishError: FTCloudBackupENPublishError = FTCloudBackupENPublishError(type: .enPublish);
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @State private var showingPopover:Bool = false
     @State private  var isAnyPopoverShown: Bool = false
+    @State private var toolbarID: String = UUID().uuidString
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var appState : AppState
 
     private var popOverHeight: CGFloat {
-        var height = horizontalSizeClass == .regular ? 436.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
+        let height = horizontalSizeClass == .regular ? 436.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
         return height
     }
-     func newNoteViewModel() -> FTNewNotePopoverViewModel {
-         let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
+    func newNoteViewModel() -> FTNewNotePopoverViewModel {
+        let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
         shelfNewNoteViewModel.delegate = shelfViewModel
         return shelfNewNoteViewModel
     }
-   
+
     func body(content: Content) -> some View {
-            content
+        content
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
-                    ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
-                        if enPublishError.hasError {
+                    if enPublishError.hasError {
+                        ToolbarItem(id:"ENError" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 self.shelfViewModel.delegate?.showEvernoteErrorInfoScreen()
                             } label: {
@@ -46,8 +50,11 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .frame(width: 24.0, height: 24.0)
                             }
                         }
+                    }
 
-                        if backUpError.hasError {
+                    if backUpError.hasError {
+                        ToolbarItem(id:"Cloud Error" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 self.shelfViewModel.delegate?.showDropboxErrorInfoScreen()
                             } label: {
@@ -57,8 +64,11 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .frame(width: 24.0, height: 24.0)
                             }
                         }
+                    }
 
-                        if shelfViewModel.canShowNewNoteNavOption {
+                    if shelfViewModel.canShowNewNoteNavOption {
+                        ToolbarItem(id:"Add Menu" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
                             Button {
                                 showingPopover = true
                                 track(EventName.shelf_addmenu_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
@@ -67,26 +77,32 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                                     .font(Font.appFont(for: .regular , with: 15.5))
                                     .foregroundColor(Color.appColor(.accent))
                             }
-                                .popover(isPresented: $showingPopover) {
-                                    FTShelfNewNotePopoverView(viewModel: newNoteViewModel(), popoverHeight: popOverHeight, appState: AppState(sizeClass: horizontalSizeClass ?? .regular),delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)
+                            .popover(isPresented: $showingPopover) {
+                                FTShelfNewNotePopoverView(viewModel: newNoteViewModel(), popoverHeight: popOverHeight, appState: AppState(sizeClass: horizontalSizeClass ?? .regular),delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)
                                     .presentationDetents([.height(popOverHeight)])
                                     .presentationDragIndicator(.hidden)
                                     .background(.regularMaterial)
                                     .popoverApperanceOperations(popoverIsShown: $isAnyPopoverShown)
-                                }
                             }
-                            Button {
-                                if !shelfMenuOverlayInfo.isMenuShown {
-                                    shelfViewModel.searchTapped()
-                                    let locationName = shelfViewModel.shelfLocation()
-                                    track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
-                                }
-                            } label: {
-                                Image(icon: .search)
-                                    .font(Font.appFont(for: .regular , with: 15.5))
-                                    .foregroundColor(Color.appColor(.accent))
+                        }
+                    }
+                    ToolbarItem(id:"Search" + toolbarID,
+                                placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                        Button {
+                            if !shelfMenuOverlayInfo.isMenuShown {
+                                shelfViewModel.searchTapped()
+                                let locationName = shelfViewModel.shelfLocation()
+                                track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
                             }
-                            .frame(width: 44,height: 44,alignment: .center)
+                        } label: {
+                            Image(icon: .search)
+                                .font(Font.appFont(for: .regular , with: 15.5))
+                                .foregroundColor(Color.appColor(.accent))
+                        }
+                        .frame(width: 44,height: 44,alignment: .center)
+                    }
+                    ToolbarItem(id:"Menu options" + toolbarID,
+                                placement: ToolbarItemPlacement.navigationBarTrailing)  {
                         FTShelfSelectAndSettingsView(viewModel: shelfViewModel)
                             .frame(width: 44,height: 44,alignment: .center)
                     }
@@ -94,7 +110,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
             })
                 .if(shelfViewModel.mode == .selection, transform: { view in
                     view.toolbar {
-                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                        ToolbarItem(id:"Done" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarTrailing) {
                             Button {
                                 shelfViewModel.mode = .normal
                                 shelfViewModel.finalizeShelfItemsEdit()
@@ -112,7 +129,8 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                             .frame(height: 44)
                         }
-                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                        ToolbarItem(id:"Select" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarLeading) {
                             if shelfViewModel.areAllItemsSelected {
                                 Button {
                                     // Track Event
@@ -139,6 +157,12 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                         }
                     }
                 })
-                    .disabled(shelfViewModel.showDropOverlayView)
+                .disabled(shelfViewModel.showDropOverlayView)
+                .onChange(of: horizontalSizeClass) { _ in
+                    toolbarID = UUID().uuidString
+                }
+                .onChange(of: verticalSizeClass) { _ in
+                    toolbarID = UUID().uuidString
+                }
     }
 }

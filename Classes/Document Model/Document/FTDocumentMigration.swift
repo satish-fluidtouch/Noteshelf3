@@ -354,16 +354,18 @@ extension FTTextStyleManager {
         // 3. insert them into NS3.
 
         let ns2TextStylesURL = FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("text_styles_migration.plist")
-        let ns2Defaults = UserDefaults.init(suiteName: FTSharedGroupID.getNS2AppGroupID())!
-        let isAlreadyMigrated = ns2Defaults.bool(forKey: "isTextStylesMigrated")
-        if !isAlreadyMigrated, FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
+        if FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
             if let ns2Styles = NSMutableArray(contentsOf: ns2TextStylesURL) as? [[String : String]] {
+                let ns3StyleItems = self.fetchTextStylesFromPlist().styles // available styles in NS3
                 for item in ns2Styles {
-                    if let styleItem = FTTextStyleItem.styleFromNS2Style(ns2Info: item) {
-                        self.insertNewTextStyle(styleItem)
+                    if let ns2StyleItem = FTTextStyleItem.styleFromNS2Style(ns2Info: item) {
+                        if !ns3StyleItems.contains(where: { ns3StyleItem in
+                            ns3StyleItem.isFullyEqual(ns2StyleItem)
+                        }) { // If ns3 style items doesnot have ns2 style item configuration, then ll be inserting
+                            self.insertNewTextStyle(ns2StyleItem)
+                        }
                     }
                 }
-                ns2Defaults.set(true, forKey: "isTextStylesMigrated")
             }
         }
     }
@@ -382,11 +384,9 @@ extension FTTextStyleItem {
             return nil
         }
 
-        var ns3Info = [String: Any]()
-
         let styleItem = FTTextStyleItem()
         styleItem.displayName = displayName
-        styleItem.fontName = fontName
+        styleItem.fontName = font.fontName
         styleItem.fontSize = Int(fontSize) ?? defaultFontSize
         styleItem.textColor = textColor
         styleItem.isUnderLined = (isUnderlined as NSString).integerValue == 0 ? false : true

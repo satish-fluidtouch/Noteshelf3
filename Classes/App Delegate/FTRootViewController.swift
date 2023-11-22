@@ -545,6 +545,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     func startNS2ToNS3Migration() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
+                #if targetEnvironment(macCatalyst)
+                self.nsToolbar?.isVisible = false
+                #endif
                 FTMigrationViewController.showMigration(on: self)
             }
         }
