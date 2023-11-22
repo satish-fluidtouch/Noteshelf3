@@ -46,12 +46,12 @@ struct FTMigrationContainerData {
 final class FTDocumentMigration {
     static let migrationQueue = DispatchQueue(label: "com.fluidtouch.noteshelf3.migration")
     static var migratedPlistUrl : URL? {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("migratedBooks.plist")
+        FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("migratedBooks.plist")
     }
 
     static var libraryURL : URL {
-        let sharedGroupLocation = FileManager().containerURL(forSecurityApplicationGroupIdentifier: FTUtils.getNS2GroupId());
-        return sharedGroupLocation!.appendingPathComponent("Library");
+        let sharedGroupLocation = FTUtils.ns2ApplicationDocumentsDirectory()
+        return sharedGroupLocation.appendingPathComponent("Library");
     }
 
     static func supportsMigration() -> Bool {
@@ -165,7 +165,8 @@ final class FTDocumentMigration {
         let progress = Progress()
         progress.isCancellable = true
         progress.isPausable = true
-        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let migrationContainerData = self.contentsOfURL(ns3MigrationContainerURL) {
+        let ns3MigrationContainerURL =  FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("Noteshelf3_migration")
+        if let migrationContainerData = self.contentsOfURL(ns3MigrationContainerURL) {
             var noteBookUrls = migrationContainerData.bookUrls ?? [URL]()
             var sortIndexUrls = migrationContainerData.indexUrls ?? [URL]()
             let pinnedItems = FTDocumentMigration.getPinnedItemsRelativePaths()
@@ -353,7 +354,6 @@ extension FTDocumentMigration {
     }
 
      func migrateNS2CustomTemplates() {
-        let library = FTThemesStorage(themeLibraryType: FTNThemeLibraryType.papers)
          let customFolderURL = FTDocumentMigration.libraryURL.appendingPathComponent("papers_v2/custom/")
          do {
              let subcontents = try FileManager().contentsOfDirectory(at: customFolderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
