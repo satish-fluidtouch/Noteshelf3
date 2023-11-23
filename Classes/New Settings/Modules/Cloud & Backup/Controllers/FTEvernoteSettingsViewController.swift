@@ -230,7 +230,7 @@ class FTEvernoteSettingsViewController: UIViewController, UITableViewDelegate, U
    }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if section == tableView.numberOfSections - 1 {
+        if section == tableView.numberOfSections - 1 && EvernoteSession.shared().isAuthenticated {
             guard let footerView = Bundle.main.loadNibNamed("FTEvernoteFooterView", owner: nil, options: nil)?.first as? FTEvernoteFooterView else {
                 return nil
             }
