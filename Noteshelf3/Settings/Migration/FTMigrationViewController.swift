@@ -43,9 +43,14 @@ class FTMigrationViewController: UIViewController {
         self.successIndicator?.lineWidth = 6.0
         self.successIndicator?.onAnimationType = BEMAnimationType.bounce
         migrationTitle?.text = "migration.progress.text".localized
-        warningTitle?.text = "migration.exitScreen".localized
+        warningTitle?.text = "⚠︎ " + "migration.exitScreen".localized
         migratedSuccessTextLabel.text = "migration.succes".localized
         cancelButton?.titleLabel?.text = "migration.cancel".localized
+        doneButton?.layer.shadowColor = UIColor.init(hexString: "186F81").cgColor
+        doneButton?.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        doneButton?.layer.shadowOpacity = 0.24
+        doneButton?.layer.shadowRadius = 4.0
+
         self.view.backgroundColor = UIColor.init(hexString: "F0EEEB")
         self.overrideUserInterfaceStyle = .light
     }
