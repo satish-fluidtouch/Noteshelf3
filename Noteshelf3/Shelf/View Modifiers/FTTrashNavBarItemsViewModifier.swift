@@ -7,14 +7,19 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTTrashNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @State private var toolbarID: String = UUID().uuidString
     func body(content: Content) -> some View {
             content
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
-                    ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarLeading) {
+                    ToolbarItem(id:"Empty Trash" + toolbarID,
+                                placement: ToolbarItemPlacement.navigationBarLeading)  {
                         Button {
                             shelfViewModel.emptyTrash()
                             // Track Event
@@ -29,7 +34,8 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                             view.foregroundColor(Color.appColor(.destructiveRed))
                         })
                     }
-                    ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                    ToolbarItem(id:"Select" + toolbarID,
+                                placement: ToolbarItemPlacement.navigationBarTrailing) {
                         Button {
                             shelfViewModel.mode = .selection
                         } label: {
@@ -46,7 +52,8 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
             })
                 .if(shelfViewModel.mode == .selection, transform: { view in
                     view.toolbar {
-                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                        ToolbarItem(id:"Done" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarTrailing) {
                             Button {
                                 shelfViewModel.mode = .normal
                                 shelfViewModel.finalizeShelfItemsEdit()
@@ -59,7 +66,8 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                             }
                             .frame(height: 44)
                         }
-                        ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
+                        ToolbarItem(id:"SelectAllOrNone" + toolbarID,
+                                    placement: ToolbarItemPlacement.navigationBarLeading) {
                             if shelfViewModel.areAllItemsSelected {
                                 Button {
                                     shelfViewModel.deselectAllItems()
@@ -86,5 +94,11 @@ struct FTTrashNavBarItemsViewModifier: ViewModifier {
                         }
                     }
                 })
+                .onChange(of: horizontalSizeClass) { _ in
+                    toolbarID = UUID().uuidString
+                }
+                .onChange(of: verticalSizeClass) { _ in
+                    toolbarID = UUID().uuidString
+                }
     }
 }

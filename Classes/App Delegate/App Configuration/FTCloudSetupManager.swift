@@ -30,8 +30,22 @@ final class FTCloudSetupManager {
         FTGoogleDriveClient.shared.signInSilently();
         //Evernote session setup
         #if !targetEnvironment(macCatalyst)
+        self.migrateENOldSDKToNewSDK();
         EvernoteSession.setSharedSessionHost("www.evernote.com", consumerKey: EVERNOTE_CONSUMER_KEY, consumerSecret: evernoteConsumerSecret)
         #endif
+    }
+    private static func migrateENOldSDKToNewSDK() {
+        if let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first {
+            let filePath = URL(fileURLWithPath: path).appendingPathComponent( "Preferences/com.evernote.evernote-sdk-ios.plist");
+            if let data = try? Data(contentsOf: filePath)
+                ,let dictionray = try? PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil) as? [String:Any] {
+                if !(dictionray.isEmpty) {
+                    try? FileManager().removeItem(atPath: filePath.path);
+                    UserDefaults.standard.removeObject(forKey: "EVERNOTE_LAST_LOGIN_ALERT_TIME");
+                    UserDefaults.standard.setValue("Auth Expired. Please login Again", forKey: EVERNOTE_PUBLISH_ERROR);
+                }
+            }
+        }
     }
 }
 
