@@ -748,6 +748,17 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         }
         return resourceFileNames;
     }
+     func annotationsWithResources() -> [FTAnnotation]
+    {
+        var resourceFileNames = [FTAnnotation]();
+
+        if let annotatiions = self.sqliteFileItem()?.annotataionsWithResources() {
+            resourceFileNames = annotatiions
+        }
+        return resourceFileNames;
+    }
+    
+    
     #endif
     
     //MARK:- Template Info -

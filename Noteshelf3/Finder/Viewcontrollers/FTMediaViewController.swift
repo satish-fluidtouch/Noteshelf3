@@ -76,15 +76,16 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         super.viewDidLoad()
         self.setUpData()
         self.initializeCollectionView()
-        self.updateAndReloadCollectionView()
+//        self.updateAndReloadCollectionView()
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
+        noMediaView.isHidden = true
     }
     
     @objc private func didUpdateMedia(_ notification: Notification) {
         setUpData()
-        updateAndReloadCollectionView()
+//        updateAndReloadCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -291,21 +292,53 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     }
     
     private func setUpData() {
-        let pages = document.documentPages()
-        self.mediaObjects.removeAll()
-        pages.forEach { eachPage in
-            if let page = eachPage as? FTPageProtocol {
-                let eachPageAnnotations = page.annotations()
-                eachPageAnnotations.forEach { eachAnnotation in
-                    if eachAnnotation.annotationType == .image || eachAnnotation.annotationType == .audio || eachAnnotation.annotationType == .sticker || eachAnnotation.annotationType == .webclip {
-                        let mediaObject = FTMediaObject(page: eachPage, annotation: eachAnnotation)
-                        self.mediaObjects.append(mediaObject)
+        DispatchQueue.global().async {[weak self] in
+            guard let self = self else {
+                return
+            }
+            let pages = document.documentPages()
+            self.mediaObjects.removeAll()
+            pages.forEach { eachPage in
+                if let page = eachPage as? FTNoteshelfPage {
+                    let eachPageAnnotations = page.annotationsWithResources()
+                    runInMainThread {
+                        var arrayToAppend = [FTMediaObject]()
+                        var indexPathsToInsert = [IndexPath]()
+                        eachPageAnnotations.forEach { eachAnnotation in
+                            if eachAnnotation.annotationType == .image || eachAnnotation.annotationType == .audio || eachAnnotation.annotationType == .sticker || eachAnnotation.annotationType == .webclip {
+                                let mediaObject = FTMediaObject(page: eachPage, annotation: eachAnnotation)
+                                arrayToAppend.append(mediaObject)
+                                let indexPath = IndexPath(item: self.filteredMediaObjects.count - 1 + arrayToAppend.count, section: 0)
+                                indexPathsToInsert.append(indexPath)
+                            }
+                        }
+                        //if !arrayToAppend.isEmpty {
+                            self.mediaObjects.append(contentsOf: arrayToAppend)
+                            self.filteredMediaObjects = self.objectsToLoad()
+                            self.collectionView.performBatchUpdates {
+                                self.collectionView?.insertItems(at: indexPathsToInsert)
+                            }
+                        //}
+//                        self.updateNoMediaView()
                     }
                 }
             }
         }
     }
-    
+
+    func objectsToLoad() -> [FTMediaItem] {
+        var objectsToLoad = [FTMediaItem]()
+        let selectedMedia = currentSelectedMedia()
+        for eachObj in mediaObjects {
+            if selectedMedia == FTMediaType.allMedia {
+                objectsToLoad.append(eachObj)
+            } else if eachObj.mediaType == selectedMedia {
+                objectsToLoad.append(eachObj)
+            }
+        }
+        return objectsToLoad
+    }
+
     private func updateAndReloadCollectionView() {
         self.filteredMediaObjects.removeAll()
         let selectedMedia = currentSelectedMedia()
