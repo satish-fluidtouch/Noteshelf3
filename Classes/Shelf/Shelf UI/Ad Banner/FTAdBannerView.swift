@@ -23,20 +23,20 @@ struct FTAdBannerView: View{
                         .scaledToFit()
                         .frame(width: 32,height: 32)
 
-                    HStack{
+                    VStack(alignment: .leading){
                         Text("WatchAdInfoTitle".localized)
                             .foregroundColor(Color.label)
                             .font(.system(size: 15).weight(.bold))
-                        +
-                        Text("\n")
-                        +
-                        Text("WatchAdInfoSubTitle".localized)
-                            .foregroundColor(Color.label)
-                            .font(.system(size: 13))
-                        +
-                        Text("  [\(learnMore)](https://www.noteshelf.net)")
-                            .foregroundColor(.appColor(.accent))
-                            .font(.appFont(for: .medium, with: 14))
+
+                        HStack {
+                            Text("WatchAdInfoSubTitle".localized)
+                                .foregroundColor(Color.label)
+                                .font(.system(size: 13))
+                            +
+                            Text("  [\(learnMore)](https://www.noteshelf.net)")
+                                .foregroundColor(.appColor(.accent))
+                                .font(.appFont(for: .medium, with: 14))
+                        }
                     }
 
                     Menu {
@@ -46,10 +46,8 @@ struct FTAdBannerView: View{
                         Label("", image: "close_banner_icon")
                     }
                 }
-                .padding(.vertical,4)
-                .padding(.leading,16)
-                .padding(.trailing,0)
-                .frame(maxWidth: .infinity,minHeight: 58.0)
+                .frame(minHeight: 58.0)
+                .padding(EdgeInsets(top: 4.0, leading: 4.0, bottom: 4.0, trailing: 4.0))
             }
             .background(Color.appColor(.white50))
             .background(.ultraThinMaterial)
@@ -60,7 +58,6 @@ struct FTAdBannerView: View{
                     .stroke(Color.appColor(.toolbarOutline), lineWidth: 0.5)
             )
             .cornerRadius(12)
-            .padding(.horizontal, 8)
             .onAppear{
                 addBannerIfNeeded()
             }

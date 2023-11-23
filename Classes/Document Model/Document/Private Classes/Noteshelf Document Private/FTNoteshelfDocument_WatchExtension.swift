@@ -282,20 +282,14 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             rectToConsider = UIScreen.main.bounds;
         }
         
-        if(rectToConsider.width > rectToConsider.height) {
+        if(UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.phone && rectToConsider.width > rectToConsider.height) {
             templateName = templateName.appending("_Landscape");
         }
         
         if(UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone) {
             templateName = templateName.appending("_iPhone");
         }
-        let defaultTemplate = templateName;
-        templateName = templateName.appending("_\(FTUtils.currentLanguage())");
-        
         var url = Bundle.main.url(forResource: templateName, withExtension: "nsp", subdirectory: "StockPapers_Watch.bundle");
-        if(nil == url) {
-            url = Bundle.main.url(forResource: defaultTemplate, withExtension: "nsp", subdirectory: "StockPapers_Watch.bundle");
-        }
         let theme = FTTheme.theme(url: url!, themeType: FTSelectedThemeType.papers);
         return theme!;
     }

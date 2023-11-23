@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hjt-Vn-gch">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hjt-Vn-gch">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -124,10 +124,9 @@
                                     <constraint firstItem="26h-tC-yxA" firstAttribute="width" secondItem="6Ty-QK-LVW" secondAttribute="width" id="rq9-3i-CEu"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="64" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ujJ-1g-nL3">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="52" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ujJ-1g-nL3">
                                 <rect key="frame" x="0.0" y="94" width="320" height="399"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" name="cellBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTWatchRecordedAudioCell" rowHeight="64" id="1TN-bR-KRb" customClass="FTWatchRecordedAudioCell" customModule="NS3_Beta" customModuleProvider="target">
@@ -138,26 +137,26 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YEe-PP-q9X" userLabel="Audio Record" customClass="FTBaseButton" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="12" width="40" height="40"/>
+                                                    <rect key="frame" x="16" y="22" width="20" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="5FO-GV-ml5"/>
-                                                        <constraint firstAttribute="width" constant="40" id="iYy-ys-4JT"/>
+                                                        <constraint firstAttribute="width" secondItem="YEe-PP-q9X" secondAttribute="height" multiplier="1:1" id="NY2-FC-048"/>
+                                                        <constraint firstAttribute="width" constant="20" id="qau-C2-RWo"/>
                                                     </constraints>
                                                     <color key="tintColor" name="accent"/>
                                                     <state key="normal">
                                                         <imageReference key="image" image="play.circle.fill" catalog="system" symbolScale="default"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="medium">
-                                                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         </preferredSymbolConfiguration>
                                                     </state>
                                                     <state key="selected" image="pause.circle.fill" catalog="system"/>
                                                 </button>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="wnD-Z7-HNk">
-                                                    <rect key="frame" x="26" y="22" width="20" height="20"/>
+                                                    <rect key="frame" x="16" y="22" width="20" height="20"/>
                                                     <color key="color" red="0.1647058824" green="0.74117647060000003" blue="0.76078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </activityIndicatorView>
                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H0s-dP-9e9" customClass="RPCircularProgress" customModule="FTCommon">
-                                                    <rect key="frame" x="21.5" y="17.5" width="29" height="29"/>
+                                                    <rect key="frame" x="11.5" y="17.5" width="29" height="29"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="H0s-dP-9e9" secondAttribute="height" multiplier="1:1" id="O53-ak-5H8"/>
@@ -179,7 +178,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today at 09:59 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YA6-FT-eLf" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="72" y="14.5" width="144.5" height="19"/>
+                                                    <rect key="frame" x="52" y="14.5" width="144.5" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="MTF-Q6-NXb"/>
                                                     </constraints>
@@ -192,7 +191,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioY-vF-dbs" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                    <rect key="frame" x="72" y="34.5" width="64" height="19"/>
+                                                    <rect key="frame" x="52" y="34.5" width="64" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19" id="r6I-oA-sGs"/>
                                                     </constraints>
@@ -309,7 +308,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watch Actions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bBU-Th-dfv">
-                                        <rect key="frame" x="97" y="9.5" width="126.5" height="25"/>
+                                        <rect key="frame" x="97" y="10" width="126.5" height="24.5"/>
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
                                         <nil key="textColor"/>
@@ -327,7 +326,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="fch-Ec-m50">
                                 <rect key="frame" x="0.0" y="94" width="320" height="409"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="separatorColor" name="cellBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FTWatchAudioOptionsCell" rowHeight="52" id="QUF-tT-Tbu" customClass="FTWatchAudioOptionsCell" customModule="NS3_Beta" customModuleProvider="target">
@@ -400,9 +398,6 @@
         </namedColor>
         <namedColor name="black70">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="cellBackgroundColor">
-            <color red="1" green="1" blue="1" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="imageTintColor">
             <color red="0.2196078431372549" green="0.2196078431372549" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

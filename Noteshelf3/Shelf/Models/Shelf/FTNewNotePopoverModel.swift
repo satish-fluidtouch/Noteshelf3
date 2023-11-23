@@ -34,7 +34,7 @@ enum FTNewNotePopoverOptions {
         case .scanDocument:
             title = NSLocalizedString("shelf.newNote.scanDocument", comment: "Scan Document")
         case .appleWatch:
-            title = NSLocalizedString("WatchRecordings", comment: "Apple Watch")
+            title = NSLocalizedString("AppleWatchRecordings", comment: "Apple Watch")
         case .takePhoto:
             title = NSLocalizedString("shelf.newNote.takePhoto", comment: "Take Photo")
         case .newGroup:

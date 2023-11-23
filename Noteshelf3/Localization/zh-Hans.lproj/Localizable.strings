@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Apple Pencil 设置";
 "AppleWatch" = "苹果手表";
 "AppleWatchRecording" = "苹果手表录音";
+"AppleWatchRecordings" = "来自 Apple Watch 的录音";
 "Apply" = "应用";
 "Arts" = "艺术";
 "Athletics" = "体育";
@@ -1547,4 +1548,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 21 November 2023 at 3:05 PM
+// Last Synced by Siva on 23 November 2023 at 5:40 PM

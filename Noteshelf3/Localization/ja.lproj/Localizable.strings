@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "アップルペンシルの設定";
 "AppleWatch" = "アップルウォッチ";
 "AppleWatchRecording" = "アップルウォッチの録音";
+"AppleWatchRecordings" = "Apple Watchからの録音";
 "Apply" = "申し込む";
 "Arts" = "芸術";
 "Athletics" = "陸上";
@@ -1547,4 +1548,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 21 November 2023 at 3:05 PM
+// Last Synced by Siva on 23 November 2023 at 5:40 PM
