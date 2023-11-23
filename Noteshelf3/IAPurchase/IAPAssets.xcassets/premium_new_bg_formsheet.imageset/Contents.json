@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "premium_bg_formsheet (1).pdf",
+      "filename" : "premium_bg_formsheet.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "premium_bg_formsheet_dark.pdf",
+      "filename" : "premium_bg_formsheet 1.pdf",
       "idiom" : "universal"
     }
   ],
