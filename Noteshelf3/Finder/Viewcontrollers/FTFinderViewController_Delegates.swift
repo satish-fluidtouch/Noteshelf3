@@ -286,7 +286,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
     }
 
     func shelfItemsViewController(_ viewController: FTShelfItemsViewControllerNew, didFinishPickingShelfItem shelfItem: FTShelfItemProtocol, isNewlyCreated: Bool) {
-        guard self.document.fileURL.resolvingSymlinksInPath() != shelfItem.URL.resolvingSymlinksInPath() else {
+        guard self.document.fileURL != shelfItem.URL else {
             UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("CannotMoveToSameNotebook", comment: "Cannot move to same notebook"), from: viewController, withCompletionHandler: nil)
             return;
         }

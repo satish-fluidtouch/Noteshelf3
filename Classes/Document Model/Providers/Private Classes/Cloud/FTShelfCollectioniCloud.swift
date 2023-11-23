@@ -330,7 +330,7 @@ extension FTShelfCollectioniCloud: FTMetadataCachingProtocol {
 extension FTShelfCollectioniCloud: FTShelfCacheProtocol {
 
     func addItemToCache(_ inFileURL: URL) -> FTDiskItemProtocol? {
-        let fileURL = inFileURL.standardizedFileURL;
+        let fileURL = inFileURL.urlByDeleteingPrivate();
         if(!self.belongsToDocumentsFolder(fileURL)) {
             return nil;
         }

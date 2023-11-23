@@ -15,10 +15,16 @@
 
 @end
 
+@interface NSURL (FTDocumentAdditions)
+
+-(NSURL*)resolvedURL;
+
+@end
+    
 @interface FTDocumentUtils : NSObject
 
 + (NSString*)UUIDString;
-+ (NSURL*)urlByDeletingLeadingSlash:(NSURL*)fileURL;
++ (NSURL*)resolvedURL:(NSURL*)fileURL;
 
 @end
 
