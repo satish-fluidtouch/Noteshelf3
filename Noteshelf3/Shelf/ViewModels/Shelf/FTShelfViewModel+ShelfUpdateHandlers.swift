@@ -46,8 +46,7 @@ extension FTShelfViewModel {
                 if(self.collection.uuid == shelfCollection.uuid) {
                     if let items = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
                         items.forEach { (eachItem) in
-                            let itemUrl = eachItem.URL
-                            if itemUrl.pathExtension == FTFileExtension.group,let parent = eachItem as? FTGroupItem, !parent.isDownloading {
+                            if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
                                 parent.invalidateTop3Notebooks()
                                 parent.isUpdated = true
                                 parent.resetCachedDates()
@@ -103,8 +102,7 @@ extension FTShelfViewModel {
             if(self.collection.uuid == shelfCollection.uuid) {
                 if let removedItems = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
                     removedItems.forEach { (eachItem) in
-                        let itemUrl = eachItem.URL
-                        if itemUrl.pathExtension == FTFileExtension.group,let parent = eachItem as? FTGroupItem, !parent.isDownloading  {
+                        if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading  {
                             parent.invalidateTop3Notebooks()
                             parent.isUpdated = true
                         }
