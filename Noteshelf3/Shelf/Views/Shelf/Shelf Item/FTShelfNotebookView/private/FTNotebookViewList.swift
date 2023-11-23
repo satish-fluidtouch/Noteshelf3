@@ -68,6 +68,9 @@ struct FTNotebookViewList : View {
         })
         .contentShape(RoundedRectangle(cornerRadius: 10))
         .centeredWithDivider
+        .onTapGesture(perform: {
+            shelfViewModel.didTapOnShelfItem(shelfItem)
+        })
     }
     @ViewBuilder
     private var coverView: some View {
@@ -75,7 +78,7 @@ struct FTNotebookViewList : View {
             ZStack(alignment:.bottom) {
                 FTNotebookShadowView(shelfItem: shelfItem,thumbnailSize: shelfImageSize)
                     .isHidden((hideShadow || colorScheme == .dark))
-                FTNotebookCoverView(isHighlighted: false)
+                FTNotebookCoverView(isPressed: .constant(false), isHighlighted: false)
                     .frame(width: shelfImageSize.width,height: shelfImageSize.height,alignment: .center)
                     .padding(coverPadding)
             }

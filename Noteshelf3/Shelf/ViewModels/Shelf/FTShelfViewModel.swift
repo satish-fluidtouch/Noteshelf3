@@ -731,3 +731,30 @@ extension FTShelfViewModel {
         return (shelfItems.first(where: {$0 is FTGroupItemViewModel}) != nil)
     }
 }
+//MARK: Tap actions of notebook and group
+extension FTShelfViewModel {
+    func didTapOnShelfItem(_ shelfItem: FTShelfItemViewModel){
+        if(mode == .selection) {
+            shelfItem.isSelected.toggle()
+            // Track Event
+            track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+            track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+    }
+    func didTapGroupItem(_ groupItem: FTGroupItemViewModel){
+        if(self.mode == .selection) {
+            groupItem.isSelected.toggle();
+            // Track Event
+            track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            self.delegate?.setLastOpenedGroup(groupItem.model.URL)
+            self.groupViewOpenDelegate?.didTapOnShelfItem(groupItem.model);
+            // Track Event
+            track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+    }
+}
