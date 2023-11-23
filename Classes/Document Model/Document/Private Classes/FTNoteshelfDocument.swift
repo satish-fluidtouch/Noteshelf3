@@ -1156,23 +1156,37 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             
             let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
             try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
-
+            
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: annotationFolderPath, withIntermediateDirectories: true, attributes: nil);
             }
-
+            
             let resourcesFolderPath = self.fileURL.appendingPathComponent(RESOURCES_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: resourcesFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: resourcesFolderPath, withIntermediateDirectories: true, attributes: nil);
             }
+            #if !NOTESHELF_ACTION
+            self.updateCoverForMigratedPinEnabledBooks()
+            #endif
             onCompletion(true , nil);
         }
         else {
             self.openDocument(purpose: .write) { (success, error) in
                 if(success) {
                     self.documentUUID = FTUtils.getUUID();
+                    
+                    #if !NOTESHELF_ACTION
+                    if self.URL.isNS2Book {
+                        self.updateCoverForMigratedBooks { success, error in
+                            saveAndClose()
+                        }
+                    } else {
+                        saveAndClose()
+                    }
+                    #else
                     saveAndClose()
+                    #endif
                     func saveAndClose() {
                         self.saveAndCloseWithCompletionHandler({ (success) in
                             onCompletion(success , success ? nil : FTDocumentTemplateImportErrorCode.error(.prepareForImportFailed));
@@ -1191,7 +1205,24 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     #if !NOTESHELF_ACTION
-
+    func updateCoverForMigratedPinEnabledBooks() {
+        if self.URL.isNS2Book {
+            let imageUrl = self.fileURL.appendingPathComponent("cover-shelf-image.png")
+            if FileManager().fileExists(atPath: imageUrl.path) {
+                let image = UIImage(contentsOfFile: imageUrl.path)
+                if image?.coverStyle() == .default {
+                    let propertyInfoPlist = self.fileURL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
+                    let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
+                    dictionary.setValue(true, forKey: INSERTCOVER)
+                    dictionary.write(to: propertyInfoPlist, atomically: true);
+                } else {
+                    if let lockedImage = UIImage(named: "locked") {
+                        try? lockedImage.pngData()?.write(to: imageUrl)
+                    }
+                }
+            }
+        }
+    }
     func insertCoverForPasswordProtectedBooks(onCompletion : @escaping ((Bool,NSError?) -> Void)) {
         self.updateCoverForMigratedBooks(onCompletion: onCompletion)
     }

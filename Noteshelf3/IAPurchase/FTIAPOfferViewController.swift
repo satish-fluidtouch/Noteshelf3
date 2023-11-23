@@ -1,8 +1,8 @@
 //
-//  FTIAPViewController.swift
+//  FTIAPOfferViewController.swift
 //  Noteshelf3
 //
-//  Created by Siva on 14/03/23.
+//  Created by Rakesh on 23/11/23.
 //  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 //
 
@@ -10,17 +10,14 @@ import UIKit
 import StoreKit
 import SafariServices
 
-class FTIAPViewController: UIViewController {
+class FTIAPOfferViewController: UIViewController {
     private var products: [SKProduct] = []
     var viewModel = FTIAPViewModel()
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?;
     @IBOutlet weak var upgradeButton: UIButton?;
-    
     @IBOutlet weak var restorePurchaseButton: UIButton?;
     @IBOutlet weak var privacyButton: UIButton?;
 
-    @IBOutlet weak var activityProgressView: UIView?;
     @IBOutlet weak var activityProgressHolderView: UIView?;
 
     @IBOutlet weak var titleLabel: UILabel?;
@@ -28,23 +25,19 @@ class FTIAPViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel?;
 
     private var productToBuy: SKProduct?;
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredContentSize = CGSize(width: 700, height: 740);
-        
-        initializeActivityIndicator()
-
-        self.setTitleToPurchaseButton(title:"")
-
-        self.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 44);
-        self.subheadingLabel?.font = UIFont.appFont(for: .bold, with: 13);
+        self.attributedTitleText()
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
-
-        self.titleLabel?.text = "iap.title".localized
-        self.subheadingLabel?.text = "iap.onetimepurchase".localized
-        self.messageLabel?.text = "iap.message".localized
-        
+        self.messageLabel?.text = "iap.messageNew".localized
+        self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
+        self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20)
+        self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
+        self.upgradeButton?.layer.shadowOpacity = 0.2
+        self.upgradeButton?.layer.shadowRadius = 8.0
+        self.upgradeButton?.layer.shadowOffset = CGSize(width: 0, height: 12.0)
 
         self.privacyButton?.setTitle("iap.privacy".localized, for: .normal);
         self.restorePurchaseButton?.setTitle("iap.restorePurchase".localized, for: .normal);
@@ -60,14 +53,31 @@ class FTIAPViewController: UIViewController {
             self.upgradeButton?.layer.cornerRadius = frame.height * 0.5;
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.viewDidSetup()
     }
 
-    private func initializeActivityIndicator() {
+    private func attributedTitleText(){
+        let discountpercentage = 50
+        let localisedText = NSLocalizedString("iap.bannerTitle1", comment: "Get Premium at %@ OFF")
+        let range = (localisedText as NSString).range(of: "%@")
 
+        let title1 =  String(format: localisedText,"\(discountpercentage)%")
+        let title2 = NSLocalizedString("iap.bannerTitle2", comment: "")
+        let fullText = "\(title1) \n \(title2)"
+        let redAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.red
+        ]
+        let blackAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black
+        ]
+        let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
+        attributedString.addAttributes(redAttributes, range: NSRange(location: range.location, length: range.length + 1))
+
+        attributedString.addAttributes(redAttributes, range: range)
+        self.titleLabel?.attributedText = attributedString
     }
 
     private func showAlert(withMessage message: String,closeOnOk: Bool = false) {
@@ -101,7 +111,7 @@ class FTIAPViewController: UIViewController {
             self.present(safariController, animated: true);
         }
     }
-        
+
     @IBAction func closeAction(_ sender: Any) {
         track(EventName.premium_close_tap, screenName: ScreenName.iap)
         self.dismiss(animated: true)
@@ -109,19 +119,19 @@ class FTIAPViewController: UIViewController {
     private func setTitleToPurchaseButton(title:String) {
         let attributedTitle = NSAttributedString(string: title,
                                                  attributes: self.upgradeTitleAttributes)
-        self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
+        self.subheadingLabel?.attributedText = attributedTitle
     }
 }
 
 // MARK: - ViewModelDelegate
-extension FTIAPViewController: FTIAPViewModelDelegate {
+extension FTIAPOfferViewController: FTIAPViewModelDelegate {
     func didfinishLoadingProducts() {
         guard let ns3product = viewModel.ns3PremiumProduct()
         ,let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product) else {
             return;
         }
-        
-        let iapPurchaseTitle = "iap.purchase".localized;
+
+        let iapPurchaseTitle = "iap.onetimepurchasenew".localized;
 
         if let ns2Product = viewModel.ns3PremiumForNS2UserProduct()
             ,let ns2Price = FTIAPManager.shared.getPriceFormatted(for: ns2Product) {
@@ -129,10 +139,11 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
 
             let atts: [NSAttributedString.Key:Any] = self.upgradeTitleAttributes;
             let attributedTitle = NSMutableAttributedString(string: iapPurchaseTitle,attributes:atts);
-            
+
             var strikeThroughAttr : [NSAttributedString.Key:Any] = atts;
             strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-            strikeThroughAttr[.strikethroughColor] =  UIColor.white
+            strikeThroughAttr[.strikethroughColor] =  UIColor.black.withAlphaComponent(0.5);
+            strikeThroughAttr[.foregroundColor] = UIColor.black.withAlphaComponent(0.5)
 
             let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
             priceString.append(NSAttributedString(string: " ", attributes: atts));
@@ -141,8 +152,8 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
             if let range = iapPurchaseTitle.range(of: "%@") {
                 let nsRange = NSRange(range,in: iapPurchaseTitle);
                 attributedTitle.replaceCharacters(in: nsRange, with: priceString)
-                attributedTitle.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: nsRange)
-                self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
+                attributedTitle.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black.withAlphaComponent(0.5), range: nsRange)
+                self.subheadingLabel?.attributedText = attributedTitle
                 productToBuy = ns2Product;
             }
             else {
@@ -184,11 +195,11 @@ extension FTIAPViewController: FTIAPViewModelDelegate {
     }
 }
 
-private extension FTIAPViewController {
+private extension FTIAPOfferViewController {
     var upgradeTitleAttributes: [NSAttributedString.Key : Any] {
-        return [.font: UIFont.clearFaceFont(for: .medium, with: 20)];
+        return [.font: UIFont.appFont(for: .medium, with: 13)];
     }
-    
+
     func discountedPercentage(_ ns3Product: SKProduct, ns2Product: SKProduct) {
         let ns2Value = ns2Product.price.floatValue;
         let ns3Value = ns3Product.price.floatValue;
