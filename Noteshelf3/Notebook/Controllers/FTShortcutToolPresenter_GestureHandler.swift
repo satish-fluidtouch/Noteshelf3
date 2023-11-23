@@ -181,7 +181,7 @@ private extension FTShortcutToolPresenter {
             if let favBarVc = self.toolbarVc as? FTFavoriteShortcutViewController {
                 favBarVc.handleEndMovement()
             }
-            let reqCenter = placement.slotCenter(forSlotView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
+            let reqCenter = placement.slotCenter(forSlotView: self.shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
             self.updateShortcutViewCenter(reqCenter)
             self.removeAllSlots()
         } completion: { [weak self] _ in

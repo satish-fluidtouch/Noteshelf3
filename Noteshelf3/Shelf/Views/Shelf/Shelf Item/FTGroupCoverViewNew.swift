@@ -246,11 +246,7 @@ struct FTGroupCoverViewNew: View {
 
     private var portThumbs: [FTShelfItemViewModel] {
         groupCoverViewModel.groupNotebooks.filter({ viewmodel in
-            if viewmodel.isNS2Book {
-                return true
-            } else {
-                return viewmodel.coverImage.size.height >  viewmodel.coverImage.size.width
-            }
+            return viewmodel.coverImage.size.height >  viewmodel.coverImage.size.width
         })
     }
 
@@ -362,14 +358,6 @@ private struct GroupNotebookView: View {
     @ViewBuilder private var coverView: some View {
         Image(uiImage: shelfItem.coverImage)
             .resizable()
-            .overlay(alignment: .topLeading, content: {
-                if coverViewPurpose == .shelf {
-                    NS2BadgeView()
-                        .scaleEffect(CGSize(width: 0.5, height: 0.5), anchor: .topLeading)
-                        .environmentObject(shelfItem)
-                        .environmentObject(shelfViewModel)
-                }
-            })
             .overlay {
                 if shelfItem.model.isPinEnabledForDocument() && coverViewPurpose == .shelf {
                     FTLockIconView()

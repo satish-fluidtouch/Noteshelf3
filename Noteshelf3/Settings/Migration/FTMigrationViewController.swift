@@ -69,6 +69,8 @@ class FTMigrationViewController: UIViewController {
 
                 // TODO: (AK) Move to a proper location
                 FTTextStyleManager.shared.migrateNS2TextStyles()
+                FTFavoritePensetDataManager.shared.migrateNS2Favorites()
+                FTDocumentMigration().migrateNS2CustomTemplates()
 
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
                 self?.updateSuccessUI()

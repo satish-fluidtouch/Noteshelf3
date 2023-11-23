@@ -13,15 +13,7 @@ struct FTShelfSelectAndSettingsView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    var sortOptions: [FTShelfSortOrder] {
-        let sortOptions : [FTShelfSortOrder]
-        if viewModel.isNS2Collection {
-            sortOptions = FTShelfSortOrder.supportedSortOptionsForNS2Books()
-        } else {
-            sortOptions =  FTShelfSortOrder.supportedSortOptions()
-        }
-        return sortOptions
-    }
+    var sortOptions: [FTShelfSortOrder] = FTShelfSortOrder.supportedSortOptions()
     
     var body: some View {
         Menu(content: {
@@ -70,11 +62,9 @@ struct FTShelfSelectAndSettingsView: View {
     }
     private var menuView: some View {
         return VStack {
-            if viewModel.canShowNotebookUpdateOptions {
-                getMoreSectionitem(.selectNotes, viewmodel: viewModel)
-                    .disabled(viewModel.shelfItems.isEmpty)
-                Divider()
-            }
+            getMoreSectionitem(.selectNotes, viewmodel: viewModel)
+                .disabled(viewModel.shelfItems.isEmpty)
+            Divider()
             sortView
             Divider()
             FTShelfDisplayStyleView()

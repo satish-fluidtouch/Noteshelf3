@@ -156,11 +156,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     // Bypassing the old thumnail setting approach
     override var thumbnailImage: UIImage? {
         if FTDeveloperOption.useQuickLookThumbnailing {
-            if self.URL.isNS2Book {
-                return self.shelfImage;
-            } else {
-                return nil
-            }
+            return nil
         } else {
             return self.shelfImage;
         }
@@ -910,6 +906,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func savePresentedItemChanges(completionHandler: @escaping (Error?) -> Void) {
+        guard self.hasUnsavedChanges else {
+            FTCLSLog("savePresentedItemChanges: Internal changes haschanges:\(self.hasUnsavedChanges)");
+            super.savePresentedItemChanges(completionHandler: completionHandler);
+            return;
+        }
+        
         FTCLSLog("savePresentedItemChanges: haschanges:\(self.hasUnsavedChanges)");
         if(!Thread.current.isMainThread) {
             DispatchQueue.main.async {
@@ -1164,27 +1166,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             if(!FileManager().fileExists(atPath: resourcesFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: resourcesFolderPath, withIntermediateDirectories: true, attributes: nil);
             }
-            #if !NOTESHELF_ACTION
-            self.updateCoverForMigratedPinEnabledBooks()
-            #endif
             onCompletion(true , nil);
         }
         else {
             self.openDocument(purpose: .write) { (success, error) in
                 if(success) {
                     self.documentUUID = FTUtils.getUUID();
-
-                    #if !NOTESHELF_ACTION
-                        if self.URL.isNS2Book {
-                            self.updateCoverForMigratedBooks { success, error in
-                                saveAndClose()
-                            }
-                        } else {
-                            saveAndClose()
-                        }
-                    #else
-                        saveAndClose()
-                    #endif
+                    saveAndClose()
                     func saveAndClose() {
                         self.saveAndCloseWithCompletionHandler({ (success) in
                             onCompletion(success , success ? nil : FTDocumentTemplateImportErrorCode.error(.prepareForImportFailed));
@@ -1203,25 +1191,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     #if !NOTESHELF_ACTION
-    func updateCoverForMigratedPinEnabledBooks() {
-        if self.URL.isNS2Book {
-            let imageUrl = self.fileURL.appendingPathComponent("cover-shelf-image.png")
-            if FileManager().fileExists(atPath: imageUrl.path) {
-                let image = UIImage(contentsOfFile: imageUrl.path)
-                if image?.coverStyle() == .default {
-                    let propertyInfoPlist = self.fileURL.appendingPathComponent(METADATA_FOLDER_NAME).appendingPathComponent(PROPERTIES_PLIST);
-                    let dictionary = NSMutableDictionary(contentsOf: propertyInfoPlist) ?? NSMutableDictionary();
-                    dictionary.setValue(true, forKey: INSERTCOVER)
-                    dictionary.write(to: propertyInfoPlist, atomically: true);
-                } else {
-                    if let lockedImage = UIImage(named: "locked") {
-                        try? lockedImage.pngData()?.write(to: imageUrl)
-                    }
-                }
-            }
-        }
-    }
-    
+
     func insertCoverForPasswordProtectedBooks(onCompletion : @escaping ((Bool,NSError?) -> Void)) {
         self.updateCoverForMigratedBooks(onCompletion: onCompletion)
     }

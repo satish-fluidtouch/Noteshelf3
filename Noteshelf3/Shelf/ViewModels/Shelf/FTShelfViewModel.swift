@@ -127,7 +127,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
-        canShowCreateNBButtons = !isNS2Collection
     }
     
     init(sidebarItemType: FTSideBarItemType){
@@ -169,16 +168,16 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return (collection.isAllNotesShelfItemCollection || collection.isMigratedCollection || collection.isDefaultCollection)
     }
     var canShowNewNoteNavOption: Bool {
-        return !(collection.isStarred || collection.isTrash || hideNS3NotesCreationOptions)
+        return !(collection.isStarred || collection.isTrash)
     }
     var canShowStarredIconOnNB: Bool {
         return !(collection.isTrash)
     }
     var supportsDragAndDrop: Bool {
-        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash || isNS2Collection)
+        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash)
     }
     var supportsDrop: Bool {
-       (isInHomeMode || !(collection.isStarred || collection.isTrash || isNS2Collection))
+       (isInHomeMode || !(collection.isStarred || collection.isTrash))
     }
     var disableBottomBarItems: Bool {
         !shelfItems.contains(where: { $0.isSelected })
@@ -192,30 +191,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return selectedItems
     }
 
-    var isNS2Collection: Bool {
-        if collection.isNS2Collection() {
-            return true
-        }
-        return false
-    }
-
-    var hideNS3NotesCreationOptions: Bool {
-        return isNS2Collection
-    }
-
-    var canShowSearchOption: Bool {
-        return !isNS2Collection
-    }
-
-    var canShowNotebookUpdateOptions: Bool {
-        return !isNS2Collection
-    }
-
-    var shouldShowNS3MigrationHeader: Bool {
-        return isNS2Collection
-    }
-    
-    
     // MARK: Mutating functions
     func selectAllItems() {
         updateShelfItemsSelectionStatusTo(true)
@@ -752,11 +727,34 @@ extension FTShelfViewModel {
         return itemProvider
     }
 
-    func hasNS2BookItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {
-        return (shelfItems.first(where: {$0.model.URL.isNS2Book}) != nil)
-    }
-
     func hasAGroupShelfItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {
         return (shelfItems.first(where: {$0 is FTGroupItemViewModel}) != nil)
+    }
+}
+//MARK: Tap actions of notebook and group
+extension FTShelfViewModel {
+    func didTapOnShelfItem(_ shelfItem: FTShelfItemViewModel){
+        if(mode == .selection) {
+            shelfItem.isSelected.toggle()
+            // Track Event
+            track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+            track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+    }
+    func didTapGroupItem(_ groupItem: FTGroupItemViewModel){
+        if(self.mode == .selection) {
+            groupItem.isSelected.toggle();
+            // Track Event
+            track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            self.delegate?.setLastOpenedGroup(groupItem.model.URL)
+            self.groupViewOpenDelegate?.didTapOnShelfItem(groupItem.model);
+            // Track Event
+            track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
     }
 }

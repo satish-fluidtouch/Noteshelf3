@@ -50,8 +50,8 @@ class FTPenSizeEditController: UIHostingController<FTPenSizeEditView>, FTPopover
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 if let editIndex = self.viewModel.sizeEditPostion?.rawValue, editIndex < self.viewModel.favoritePenSizes.count{
-                    self.viewModel.updateCurrentPenSize(size: sizeEditModel.currentSize, sizeMode: .sizeEdit)
-                    self.viewModel.updateFavoriteSize(with: sizeEditModel.currentSize, at: editIndex)
+                    self.viewModel.updateCurrentPenSize(size: self.sizeEditModel.currentSize, sizeMode: .sizeEdit)
+                    self.viewModel.updateFavoriteSize(with: self.sizeEditModel.currentSize, at: editIndex)
                 }
             } .store(in: &cancellables)
     }

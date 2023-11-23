@@ -19,7 +19,6 @@ struct FTShelfItemView: View {
     @ObservedObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @State private var isPressed: Bool = false
 
     var shelfItemWidth: CGFloat = 212
     var shelfItemHeight: CGFloat = 334
@@ -44,7 +43,7 @@ struct FTShelfItemView: View {
                             shelfItemHeight: shelfItemHeight)
         }
         else {
-            FTGroupItemView(isPressed: $isPressed,groupItemWidth: shelfItemWidth,
+            FTGroupItemView(groupItemWidth: shelfItemWidth,
                             groupItemHeight: shelfItemHeight)
         }
     }
@@ -53,28 +52,6 @@ struct FTShelfItemView: View {
     func groupViewFor(groupItem: FTGroupItemViewModel) -> some View {
         groupView()
             .environmentObject(groupItem)
-            .onTapGesture(perform: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                    if(self.shelfViewModel.mode == .selection) {
-                        groupItem.isSelected.toggle();
-                        // Track Event
-                        track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                    }
-                    else {
-                        self.shelfViewModel.delegate?.setLastOpenedGroup(groupItem.model.URL)
-                        self.shelfViewModel.groupViewOpenDelegate?.didTapOnShelfItem(groupItem.model);
-                        // Track Event
-                        track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                    }
-                }
-            })
-            .onLongPressGesture(perform: {
-
-            }, onPressingChanged: { _ in
-                withAnimation {
-                    isPressed.toggle()
-                }
-            })
             .onDrop(of: [.content],
                     delegate: FTShelfItemViewDropDelegate(item: groupItem, viewModel: shelfViewModel, shelfItemSize: shelfItemSize, dropRect: groupDropRect))
             .if(shelfViewModel.fadeDraggedShelfItem == groupItem, transform: { view in
@@ -92,7 +69,7 @@ struct FTShelfItemView: View {
             FTNotebookViewList(shelfItemWidth: shelfItemWidth, isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
         }
         else {
-            FTNotebookItemView(isPressed: $isPressed,shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
+            FTNotebookItemView(shelfItemWidth: shelfItemWidth,shelfItemHeight: shelfItemHeight,isAnyNBActionPopoverShown: $isAnyNBActionPopoverShown)
         }
     }
     
@@ -108,28 +85,6 @@ struct FTShelfItemView: View {
                                                               viewModel: shelfViewModel,
                                                               shelfItemSize: thumbnailSize,
                                                               dropRect: NotebookDropRect))
-            .onTapGesture(perform: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                    if(shelfViewModel.mode == .selection) {
-                        shelfItem.isSelected.toggle()
-                        // Track Event
-                        track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                    }
-                    else {
-                        shelfViewModel.openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
-                        track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfViewModel.shelfLocation()], screenName: ScreenName.shelf)
-                    }
-                }
-            })
-
-            .onLongPressGesture(perform: {
-
-            }, onPressingChanged: { _ in
-                withAnimation {
-                    isPressed.toggle()
-                }
-            })
-
             .if(shelfViewModel.fadeDraggedShelfItem == shelfItem, transform: { view in
                 withAnimation(.easeInOut(duration: 1)) {
                     view.opacity(0.2)}

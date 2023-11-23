@@ -311,7 +311,7 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
                             let fileManager = FileManager.init();
                             do {
                                 try fileManager.createDirectory(at: groupURL, withIntermediateDirectories: true, attributes: nil);
-                                groupModel = self.addItemToCache(groupURL.standardizedFileURL) as? FTGroupItemProtocol;
+                                groupModel = self.addItemToCache(groupURL.urlByDeleteingPrivate()) as? FTGroupItemProtocol;
                             }
                             catch let error as NSError {
                                 fileError = error;
@@ -818,10 +818,6 @@ class FTShelfItemCollectionLocal : NSObject,FTShelfItemCollection,FTLocalQueryGa
         onCompletion(destFileName);
     }
 
-    func isNS2Collection() -> Bool {
-        let belongs = self.parent?.belongsToNS2()
-        return belongs ?? false
-    }
 }
 
 //MARK:- Manual Sorting

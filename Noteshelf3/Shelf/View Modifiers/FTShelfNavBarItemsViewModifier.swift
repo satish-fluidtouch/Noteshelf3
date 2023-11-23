@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 
 struct FTShelfNavBarItemsViewModifier: ViewModifier {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
@@ -27,14 +28,14 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
         let height = horizontalSizeClass == .regular ? 436.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
         return height
     }
-     func newNoteViewModel() -> FTNewNotePopoverViewModel {
-         let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
+    func newNoteViewModel() -> FTNewNotePopoverViewModel {
+        let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
         shelfNewNoteViewModel.delegate = shelfViewModel
         return shelfNewNoteViewModel
     }
-   
+
     func body(content: Content) -> some View {
-            content
+        content
             .if(shelfViewModel.mode == .normal, transform: { view in
                 view.toolbar {
                     if enPublishError.hasError {
@@ -85,22 +86,20 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                         }
                     }
-                    if shelfViewModel.canShowSearchOption {
-                        ToolbarItem(id:"Search" + toolbarID,
-                                    placement: ToolbarItemPlacement.navigationBarTrailing)  {
-                            Button {
-                                if !shelfMenuOverlayInfo.isMenuShown {
-                                    shelfViewModel.searchTapped()
-                                    let locationName = shelfViewModel.shelfLocation()
-                                    track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
-                                }
-                            } label: {
-                                Image(icon: .search)
-                                    .font(Font.appFont(for: .regular , with: 15.5))
-                                    .foregroundColor(Color.appColor(.accent))
+                    ToolbarItem(id:"Search" + toolbarID,
+                                placement: ToolbarItemPlacement.navigationBarTrailing)  {
+                        Button {
+                            if !shelfMenuOverlayInfo.isMenuShown {
+                                shelfViewModel.searchTapped()
+                                let locationName = shelfViewModel.shelfLocation()
+                                track(EventName.shelf_search_tap, params: [EventParameterKey.location: locationName], screenName: ScreenName.shelf)
                             }
-                            .frame(width: 44,height: 44,alignment: .center)
+                        } label: {
+                            Image(icon: .search)
+                                .font(Font.appFont(for: .regular , with: 15.5))
+                                .foregroundColor(Color.appColor(.accent))
                         }
+                        .frame(width: 44,height: 44,alignment: .center)
                     }
                     ToolbarItem(id:"Menu options" + toolbarID,
                                 placement: ToolbarItemPlacement.navigationBarTrailing)  {
@@ -161,9 +160,9 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                 .disabled(shelfViewModel.showDropOverlayView)
                 .onChange(of: horizontalSizeClass) { _ in
                     toolbarID = UUID().uuidString
-                    }
+                }
                 .onChange(of: verticalSizeClass) { _ in
                     toolbarID = UUID().uuidString
-                    }
+                }
     }
 }
