@@ -27,14 +27,14 @@ class FTWatchAudioExporter: NSObject {
         super.init();
         self.presentingViewController = baseViewController;
     }
-    
+
+    private var onViewController: UIViewController!
+
     func performExport(watchRecording recordedAudio : FTWatchRecording,
-                       onViewController : UIViewController,
-                       sourceRect : CGRect,
-                       sourceView : UIView)
+                       onViewController : UIViewController)
     {
         let loadingIndicatorViewController =  FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: onViewController, withText: NSLocalizedString("Exporting", comment: "Exporting..."));
-        
+        self.onViewController = onViewController
         let fileName = "Watch Recording_".appending(recordedAudio.audioTitle);
         let tempURL = URL.init(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName).appendingPathExtension(audioFileExtension);
         try? FileManager().removeItem(at: tempURL);
@@ -53,10 +53,8 @@ class FTWatchAudioExporter: NSObject {
                 self.audioShareInteractionController = UIDocumentInteractionController.init(url: tempURL)
                 self.audioShareInteractionController?.name = fileName
                 self.audioShareInteractionController?.delegate = self;
-                self.audioShareInteractionController?.presentOptionsMenu(from: sourceRect,
-                                                                               in: sourceView,
-                                                                               animated: true);
-                
+                self.audioShareInteractionController?.presentPreview(animated: true);
+
                 self.completionExecution = {
                     if let contentURL = self.audioShareInteractionController?.url {
                         try? FileManager().removeItem(at: contentURL);
@@ -72,6 +70,10 @@ class FTWatchAudioExporter: NSObject {
 
 #if !targetEnvironment(macCatalyst)
 extension FTWatchAudioExporter : UIDocumentInteractionControllerDelegate {
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+        return onViewController
+    }
+
     func documentInteractionControllerDidDismissOptionsMenu(_ controller: UIDocumentInteractionController) {
         if(!self.audioExportIsSendingToOtherApp) {
             self.completionExecution?();

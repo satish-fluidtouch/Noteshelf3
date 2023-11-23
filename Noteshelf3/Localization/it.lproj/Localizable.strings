@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Impostazioni Apple Pencil";
 "AppleWatch" = "Apple Watch";
 "AppleWatchRecording" = "Registrazione Apple Watch";
+"AppleWatchRecordings" = "Registrazioni Apple Watch";
 "Apply" = "Applica";
 "Arts" = "Arte";
 "Athletics" = "Atletica";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "MODALITÀ WHITEBOARD";
 "Wallpapers" = "Sfondi";
 "Warning" = "Attenzione";
-"WatchAdInfo" = "Installa Noteshelf 3 sul tuo Apple Watch. Puoi registrare audio in movimento e prendere appunti in seguito.";
+"WatchAdInfoSubTitle" = "Puoi registrare audio in movimento e prendere appunti in seguito.";
+"WatchAdInfoTitle" = "Installa Noteshelf 3 sul tuo Apple Watch. ";
 "WatchNewRecords" = "Nuove registrazioni arrivate dal tuo Apple Watch.";
 "WatchRecording" = "registrazione in corso";
 "WatchRecordings" = "Registrazioni in corso";
@@ -1546,4 +1548,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 21 November 2023 at 10:28 AM
+// Last Synced by Siva on 23 November 2023 at 5:40 PM

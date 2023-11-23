@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "applewatch.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "applewatch@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "applewatch@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "Group.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

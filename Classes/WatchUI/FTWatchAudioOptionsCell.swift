@@ -22,7 +22,7 @@ class FTWatchAudioOptionsCell: UITableViewCell {
     
     func applyActionStyle(_ style:FTAudioActionStyle){
         if(style == .regular){
-            self.titleLabel.textColor = UIColor.appColor(.accent)
+            self.titleLabel.textColor = UIColor.label
         }
         else if(style == .destructive){
             self.titleLabel.textColor = UIColor.appColor(.destructiveRed)
