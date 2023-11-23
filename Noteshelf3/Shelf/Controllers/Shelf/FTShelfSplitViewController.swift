@@ -341,7 +341,11 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
             // Based on orientation and display mode, we are showing the bottom bar with only icons or icons with text.
-            updateBottomToolBarCompactStatus()
+        let currentSize = self.view.frame.size
+        if !self.size.equalTo(currentSize) {
+            self.size = currentSize
+            self.updateBottomToolBarCompactStatus()
+        }
     }
     private func updateBottomToolBarCompactStatus(){
 #if !targetEnvironment(macCatalyst)

@@ -84,7 +84,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNoShelfItemsView: Bool = false
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
-    @Published var reloadShelfItems: Bool = false
     @Published var tagsForThisBook: [FTTagItemModel] = []
     @Published var allowHitTesting: Bool = true
     @Published var showCompactBottombar: Bool = false
@@ -340,11 +339,12 @@ private extension FTShelfViewModel {
         }
     }
     func updateGetStartedInfoWithDelay(){
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateShowingGetStartedInfoStatus), object: nil)
         self.perform(#selector(updateShowingGetStartedInfoStatus), with: nil, afterDelay: 0.7)
     }
     @objc func updateShowingGetStartedInfoStatus() {
-        withAnimation {
-            if isInHomeMode {
+        if isInHomeMode {
+            withAnimation {
                 if shelfItems.count > 0 {
                     FTUserDefaults.setFirstLaunch(false)
                     self.shouldShowGetStartedInfo = false
@@ -354,11 +354,11 @@ private extension FTShelfViewModel {
                         self.shouldShowGetStartedInfo = true
                     }
                 }
-            }else {
-                if shelfItems.count > 0 {
-                    FTUserDefaults.setFirstLaunch(false)
-                    self.shouldShowGetStartedInfo = false
-                }
+            }
+        } else {
+            if shelfItems.count > 0 {
+                FTUserDefaults.setFirstLaunch(false)
+                self.shouldShowGetStartedInfo = false
             }
         }
     }

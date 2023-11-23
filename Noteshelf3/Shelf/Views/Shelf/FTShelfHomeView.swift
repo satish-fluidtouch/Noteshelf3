@@ -56,7 +56,6 @@ struct FTShelfHomeView: FTShelfBaseView {
                         }
                     }
                 })
-                .detectOrientation($viewModel.orientation)
                 .shelfNavBarItems()
                 .allowsHitTesting(viewModel.allowHitTesting)
                 .navigationTitle(viewModel.navigationTitle)
@@ -65,7 +64,6 @@ struct FTShelfHomeView: FTShelfBaseView {
 #else
                 .navigationBarBackButtonHidden(viewModel.mode == .selection)
 #endif
-                .environmentObject(viewModel)
                 .shelfBottomToolbar()
                 .environmentObject(viewModel.toolbarViewModel)
                 .environmentObject(viewModel)
