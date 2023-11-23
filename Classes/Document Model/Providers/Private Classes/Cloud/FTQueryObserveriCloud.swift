@@ -45,7 +45,7 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
         self.stopQuery();
         self.query = self.searchQuery();
         #if DEBUG
-            //print("☁️ Query Started");
+        print("\(Date.now):☁️ Query Started");
         #endif
         NotificationCenter.default.addObserver(self, selector: #selector(FTiCloudQueryObserver.processiCloudFilesForInitialGathering(_:)), name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
         self.query?.start();
@@ -77,6 +77,7 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
 
     // MARK: - Notifications
     @objc fileprivate func processiCloudFilesForInitialGathering(_ notification: Notification) {
+        print("\(Date.now): ☁️ Query Gather complete")
         self.disableUpdates();
 
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NSMetadataQueryDidFinishGathering, object: nil);
@@ -86,6 +87,8 @@ class FTiCloudQueryObserver: FTQueryListenerProtocol {
             self.delegate?.ftiCloudQueryObserver(self, didFinishGathering: self.query?.results as? [NSMetadataItem]);
         }
 
+        print("\(Date.now): ☁️ Query complete")
+        
         //After initial gathering start observing for query results array for any changes
 
         NotificationCenter.default.addObserver(self, selector: #selector(FTiCloudQueryObserver.metaDataQueryDidUpdated(_:)), name: NSNotification.Name.NSMetadataQueryDidUpdate, object: self.query);
