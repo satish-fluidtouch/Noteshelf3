@@ -15,11 +15,13 @@ import FTNewNotebook
     var url : URL;
     var fileName : String?
     var date : Date!
-    
-    public init(withURL url: URL,date : Date,fileName : String?) {
+    var isWatchRecording = false
+
+    public init(withURL url: URL,date : Date,fileName : String?, isWatchRecording: Bool = false) {
         self.url = url;
         self.fileName = fileName;
         self.date = date;
+        self.isWatchRecording = isWatchRecording;
         super.init();
     }
     
@@ -68,6 +70,8 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                     documentInfo.isNewBook = true
                     documentInfo.coverTemplateImage = info.coverTemplateImage
                     documentInfo.insertAt = 0
+                    documentInfo.annotationInfo = theme.annotationInfo
+
                     self.createDocument(documentInfo) { (error, success) in
                         if(nil != error) {
                             DispatchQueue.main.async {
@@ -203,10 +207,10 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
     {
         var localAnnotations = annotations;
         if(index >= urls.count) {
-            if let annInfo = info?.annotationInfo {
+            if let annInfo = info?.annotationInfo, urls.first?.isWatchRecording ?? false {
                 if let titleAnnotation = annInfo["titleAnnotation"] as? [String : Any] {
                     var title = urls.first?.fileName;
-                    if(nil == title) {
+                    if(nil == title || urls.first?.isWatchRecording ?? false) {
                         title = NSLocalizedString("AppleWatchRecording", comment: "Apple Watch Recording");
                     }
                     title = title?.appending("\n");
@@ -249,6 +253,7 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
                                                    page: toPage) { (annotation) in
                                                     if(nil != annotation) {
                                                         var rect = annotation!.boundingRect;
+                                                        (annotation as? FTAudioAnnotation)?.audioFileName = item.fileName ?? "Recording"
 //                                                        if let annInfo = info?.annotationInfo {
 //                                                            if  let audioInfo = annInfo["audioAnnotation"] as? [String : Any] {
 //                                                                let frame = NSCoder.cgRect(for: audioInfo["boundingRect"] as! String)
@@ -277,20 +282,14 @@ extension FTNoteshelfDocument : FTDocumentCreateWatchExtension {
             rectToConsider = UIScreen.main.bounds;
         }
         
-        if(rectToConsider.width > rectToConsider.height) {
+        if(UIDevice.current.userInterfaceIdiom != UIUserInterfaceIdiom.phone && rectToConsider.width > rectToConsider.height) {
             templateName = templateName.appending("_Landscape");
         }
         
         if(UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.phone) {
             templateName = templateName.appending("_iPhone");
         }
-        let defaultTemplate = templateName;
-        templateName = templateName.appending("_\(FTUtils.currentLanguage())");
-        
         var url = Bundle.main.url(forResource: templateName, withExtension: "nsp", subdirectory: "StockPapers_Watch.bundle");
-        if(nil == url) {
-            url = Bundle.main.url(forResource: defaultTemplate, withExtension: "nsp", subdirectory: "StockPapers_Watch.bundle");
-        }
         let theme = FTTheme.theme(url: url!, themeType: FTSelectedThemeType.papers);
         return theme!;
     }

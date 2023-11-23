@@ -924,6 +924,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         let insertHere = UIAlertAction(title: NSLocalizedString("InsertHere", comment: "Insert Here"), style: .default, handler: { _ in
             let item = FTAudioFileToImport.init(withURL: url);
+            item.fileName = url.deletingPathExtension().lastPathComponent;
             docController?.addRecordingToPage(actionType: .addToCurrentPage, audio: item, onCompletion: { complted, _ in
                 onCompletion?(complted)
             })
@@ -932,6 +933,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         let createNew = UIAlertAction(title: NSLocalizedString("CreateNew", comment: "Create New"), style: .default, handler: { _ in
             let item = FTAudioFileToImport.init(withURL: url);
+            item.fileName = url.deletingPathExtension().lastPathComponent;
             docController?.addRecordingToPage(actionType: .addToNewPage, audio: item, onCompletion: { complted, _ in
                 onCompletion?(complted)
             })

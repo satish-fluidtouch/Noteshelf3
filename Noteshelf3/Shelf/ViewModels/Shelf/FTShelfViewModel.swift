@@ -40,6 +40,8 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func createNewNotebookInside(collection: FTShelfItemCollection, group: FTGroupItemProtocol?,notebookDetails: FTNewNotebookDetails?,isQuickCreate: Bool, mode:ThemeDefaultMode, onCompletion: @escaping (NSError?, _ shelfItem:FTShelfItemProtocol?) -> ())
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
+    func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
+
 }
 protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)

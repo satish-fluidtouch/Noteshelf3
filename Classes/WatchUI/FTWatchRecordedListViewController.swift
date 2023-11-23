@@ -32,7 +32,7 @@ import AVFoundation
     fileprivate var onDimissCallback : (()->())?;
     
 
-    private var actionContext = FTAudioActionContext.shelf;
+    var actionContext = FTAudioActionContext.shelf;
     
     var currentPlayingGUID:String! = "" {
         willSet {
@@ -47,11 +47,16 @@ import AVFoundation
     
     var recordedAudioFiles:[FTWatchRecording] = [FTWatchRecording]();
     
-    weak var delegate: FTWatchRecordedListViewControllerDelegate?;
+    weak var delegate: FTShelfViewModelProtocol?;
+
+    weak var watchDelegate: FTWatchRecordedListViewControllerDelegate?
+
     var audioPlayer:AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.title = "AppleWatch".localized
         self.popoverPresentationController?.delegate = self
         self.tempPlusButton?.isHidden = true
         #if DEBUG
@@ -108,7 +113,7 @@ import AVFoundation
             self.noRecordingsContentView?.isHidden = false
         });
     }
-    
+
     //MARK:- FTWatchAudioActionsDelegate
     func actionsViewController(_ actionsViewController: FTWatchAudioActionsViewController, didSelectAction audioAction: FTAudioAction) {
         
@@ -150,10 +155,17 @@ import AVFoundation
         else
         {
             self.delegate?.recordingViewController(self, didSelectRecording: selectedAudio as! FTWatchRecordedAudio, forAction: audioAction.actionType)
+            self.watchDelegate?.recordingViewController(self, didSelectRecording: selectedAudio as! FTWatchRecordedAudio, forAction: audioAction.actionType)
+
         }
     }
 
     func processAudioDeleteAction(for audio:FTWatchRecording) {
+        let isCurrentAudio = (self.currentPlayingGUID == audio.GUID)
+        if isCurrentAudio {
+            self.currentPlayingGUID = ""
+            self.resetAudioPlayer()
+        }
 
         FTNoteshelfDocumentProvider.shared.deleteRecording(item: audio, onCompletion: { [weak self](error) in
             if(nil != error){
@@ -172,7 +184,7 @@ import AVFoundation
 
 
     //MARK:- Presentation
-    class func showRecordingsPopover(withDelegate delegate: FTWatchRecordedListViewControllerDelegate,
+    class func showRecordingsPopover(withDelegate delegate: FTShelfViewModelProtocol,
                                      fromSourceView sourceView: UIView,
                                      onViewController viewController: UIViewController,
                                      context : FTAudioActionContext,
@@ -191,7 +203,7 @@ import AVFoundation
         return recordingsViewController;
     }
     
-    @objc class func pushToRecordings(withDelegate delegate: FTWatchRecordedListViewControllerDelegate,
+     class func pushToRecordings(withDelegate delegate: FTShelfViewModelProtocol,
                                       fromSourceView sourceView: UIView,
                                       onViewController viewController: UIViewController,
                                       context : FTAudioActionContext) {
@@ -244,20 +256,16 @@ import AVFoundation
         cell.activityIndicator.isHidden = true
 
         cell.audioFileUUID = audioFile.GUID;
-        
+        cell.circularProgressView.isHidden = true
         if(audioFile.downloadStatus == .downloaded){
-            cell.playButton.setImage(UIImage.init(named: "iWatchPlay"), for: UIControl.State.normal)
-            cell.playButton.setImage(UIImage.init(named: "iWatchPause"), for: UIControl.State.selected)
+            cell.playButton.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
+            cell.playButton.setImage(UIImage(systemName: "pause.circle.fill"), for: .selected)
             cell.playButton.isSelected = (self.currentPlayingGUID == audioFile.GUID)
-        }
-        else if(audioFile.downloadStatus == .notDownloaded)
-        {
+        } else if(audioFile.downloadStatus == .notDownloaded) {
             cell.playButton.isSelected = false
-            cell.playButton.setImage(UIImage.init(named: "iCloud-notDownloaded"), for: UIControl.State.normal)
-            cell.playButton.setImage(UIImage.init(named: "iCloud-notDownloaded"), for: UIControl.State.selected)
-        }
-        else if(audioFile.downloadStatus == .downloading)
-        {
+            cell.playButton.setImage(UIImage.init(systemName: "icloud.and.arrow.down"), for: .normal)
+            cell.playButton.setImage(UIImage.init(systemName: "icloud.and.arrow.down"), for: .selected)
+        } else if(audioFile.downloadStatus == .downloading) {
             cell.playButton.isHidden = true
             cell.activityIndicator.isHidden = false
             cell.activityIndicator.startAnimating()
