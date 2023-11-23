@@ -43,6 +43,26 @@ public class FTStoreCustomTemplatesHandler {
     }
 }
 
+public extension FTStoreCustomTemplatesHandler {
+    var customTemplatesFolder: URL {
+        return rootURL
+    }
+
+    func saveFileFrom(url : URL, to fileName: String) throws -> URL? {
+        let uniqueName = fileManager.uniqueFileName(directoryURL: rootURL, fileName: fileName)
+        let destUrl = rootURL.appendingPathComponent(uniqueName)
+        try fileManager.createDirectory(at: destUrl, withIntermediateDirectories: true)
+        let templateURL = destUrl.appendingPathComponent(uniqueName).appendingPathExtension(url.pathExtension)
+        if fileManager.fileExists(atPath: templateURL.path) {
+            return templateURL
+        }
+        try fileManager.copyItem(at: url, to: templateURL)
+        templateURL.generateThumbnailForPdf(thumbnailName: "thumbnail@2x", completion: nil)
+        return templateURL
+    }
+
+}
+
 extension FTStoreCustomTemplatesHandler {
 
     func templates() throws -> [FTTemplateStyle] {
@@ -62,19 +82,6 @@ extension FTStoreCustomTemplatesHandler {
             customTemplates.append(template)
         }
         return customTemplates
-    }
-
-    public func saveFileFrom(url : URL, to fileName: String) throws -> URL? {
-        let uniqueName = fileManager.uniqueFileName(directoryURL: rootURL, fileName: fileName)
-        let destUrl = rootURL.appendingPathComponent(uniqueName)
-        try fileManager.createDirectory(at: destUrl, withIntermediateDirectories: true)
-        let templateURL = destUrl.appendingPathComponent(uniqueName).appendingPathExtension(url.pathExtension)
-        if fileManager.fileExists(atPath: templateURL.path) {
-            return templateURL
-        }
-        try fileManager.copyItem(at: url, to: templateURL)
-        templateURL.generateThumbnailForPdf(thumbnailName: "thumbnail@2x", completion: nil)
-        return templateURL
     }
 
     func tempLocationForFile(url: URL) throws -> URL? {
