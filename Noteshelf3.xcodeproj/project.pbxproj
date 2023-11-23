@@ -145,6 +145,7 @@
 		1439372129D6E02700D93033 /* FTReusableComponentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439370B29D6E02700D93033 /* FTReusableComponentViews.swift */; };
 		1439372629D6E06400D93033 /* Stickers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1439372529D6E06400D93033 /* Stickers.plist */; };
 		143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */; };
+		1445AA352B0F3DC700A52545 /* FTIAPOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AA342B0F3DC700A52545 /* FTIAPOfferViewController.swift */; };
 		1449D16429F8256C00C7EC49 /* FTShelfHomeTopSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D15F29F8256700C7EC49 /* FTShelfHomeTopSectionModel.swift */; };
 		1449D16829F8256C00C7EC49 /* FTShelfTopSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D16329F8256B00C7EC49 /* FTShelfTopSectionView.swift */; };
 		1449D16A29F8258400C7EC49 /* FTShelfTopSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D16929F8258400C7EC49 /* FTShelfTopSectionItem.swift */; };
@@ -2732,6 +2733,7 @@
 		1439370B29D6E02700D93033 /* FTReusableComponentViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTReusableComponentViews.swift; sourceTree = "<group>"; };
 		1439372529D6E06400D93033 /* Stickers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Stickers.plist; sourceTree = "<group>"; };
 		143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-RegularItalic.ttf"; sourceTree = "<group>"; };
+		1445AA342B0F3DC700A52545 /* FTIAPOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTIAPOfferViewController.swift; sourceTree = "<group>"; };
 		1449D15F29F8256700C7EC49 /* FTShelfHomeTopSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfHomeTopSectionModel.swift; sourceTree = "<group>"; };
 		1449D16329F8256B00C7EC49 /* FTShelfTopSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfTopSectionView.swift; sourceTree = "<group>"; };
 		1449D16929F8258400C7EC49 /* FTShelfTopSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTopSectionItem.swift; sourceTree = "<group>"; };
@@ -7715,6 +7717,7 @@
 				47BC0AF32A77CBEE00163A0A /* FTIAPManager.swift */,
 				09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */,
 				47BC0AF42A77CBEE00163A0A /* FTIAPViewController.swift */,
+				1445AA342B0F3DC700A52545 /* FTIAPOfferViewController.swift */,
 				47BC0AF52A77CBEE00163A0A /* FTIAPurchaseHelper.swift */,
 				47BC0AF62A77CBEE00163A0A /* FTIAPViewModel.swift */,
 				0971841E2A82230D00656B36 /* FTPremiumBanner.swift */,
@@ -12854,6 +12857,7 @@
 				BAF391BF2859ADF00067CA9F /* FTShelfItemProtocols.swift in Sources */,
 				BAF391C12859ADF00067CA9F /* FTCalPenBrushBuilder_V2.swift in Sources */,
 				BAF391C32859ADF00067CA9F /* FTApplePencilDoubleTapViewController.swift in Sources */,
+				1445AA352B0F3DC700A52545 /* FTIAPOfferViewController.swift in Sources */,
 				E7C71A76288E795A00AF2598 /* EnvironmentValues+TrackValue.swift in Sources */,
 				BAF391C42859ADF00067CA9F /* FTDocumentPostProcessOperation.swift in Sources */,
 				BAF391C52859ADF00067CA9F /* FTExportContentGenerator.swift in Sources */,
