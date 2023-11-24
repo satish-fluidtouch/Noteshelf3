@@ -30,9 +30,10 @@ protocol FTSidebarViewDelegate: AnyObject {
 }
 struct FTSidebarView: View {
 
-    @StateObject var viewModel : FTSidebarViewModel
+    //@StateObject var viewModel : FTSidebarViewModel
     @EnvironmentObject var shelfMenuOverlayInfo : FTShelfMenuOverlayInfo
     @EnvironmentObject var premiumUser : FTPremiumUser
+    @EnvironmentObject var viewModel : FTSidebarViewModel
 
     @State private var searchText: String = ""
     @State private var showOverlay: Bool = false
@@ -45,6 +46,7 @@ struct FTSidebarView: View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
+        let _ = Self._printChanges()
         menuView
             .macOnlyPlainButtonStyle() // added this to avoid gesture issue in ipad due to plain button style for mac, can be removed once we get better fix
         .onDrop(of: [.text], delegate: SideBarDropDelegate(viewModel: viewModel))
@@ -136,7 +138,10 @@ struct FTSidebarView: View {
                             }
                         }
                     } else {
-                        SideBarItemView(viewWidth: availableWidth)
+                        SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
+                                        itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
+                                        numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
+                                        viewWidth: availableWidth)
                             .environmentObject(viewModel)
                             .environmentObject(menuSection)
                             .environmentObject(item)

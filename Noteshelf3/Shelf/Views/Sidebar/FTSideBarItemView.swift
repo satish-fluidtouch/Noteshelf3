@@ -18,10 +18,14 @@ struct SideBarItemView : View {
     // alerts
     @State private var showTrashAlert: Bool = false
     @State private var alertInfo: TrashAlertInfo?
-
+    @State var itemBgColor: Color = .clear
+    @State var itemTitleTint: Color = .clear
+    @State var numberOfChildren: Int = 0
+    
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var viewWidth: CGFloat
     var body: some View {
+        let _ = Self._printChanges()
         Button {
             if self.viewModel.selectedSideBarItem == item, item.isEditing {
                 return
@@ -52,8 +56,8 @@ struct SideBarItemView : View {
                     .font(Font.appFont(for: .regular, with: 20))
             }
             Spacer()
-            if viewModel.shouldShowNumberOfNotebooksCountFor(item: item) && item.numberOfChildren > 0 {
-                Text("\(item.numberOfChildren)")
+            if viewModel.shouldShowNumberOfNotebooksCountFor(item: item) && numberOfChildren > 0 {
+                Text("\(numberOfChildren)")
                     .fontWeight(.medium)
                     .appFont(for: .regular, with: 15)
                     .foregroundColor(viewModel.getRowForegroundColorFor(item: item))
@@ -97,11 +101,17 @@ struct SideBarItemView : View {
                     view.opacity(1.0)
                 }
             })
+            .onChange(of: viewModel.selectedSideBarItem, perform: { newValue in
+                updateItemBGAndTintColor()
+            })
+            .onChange(of: viewModel.highlightItem, perform: { newValue in
+                updateItemBGAndTintColor()
+            })
             .background(RoundedRectangle(
                 cornerRadius: 10,
                 style: .continuous
-            ).fill(viewModel.getRowSelectionColorFor(item: item)))
-            .foregroundColor(viewModel.getRowForegroundColorFor(item: item))
+            ).fill(itemBgColor))
+            .foregroundColor(itemTitleTint)
             .if(item.isEditable, transform: { view in
                 view.contextMenu(menuItems: {
                     FTSideBarItemContexualMenuButtons(showTrashAlert: $showTrashAlert,
@@ -133,5 +143,16 @@ struct SideBarItemView : View {
         } message: { info in
             Text(info.message)
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue:shelfCollectionItemsCountNotification)), perform: { notification in
+            if let userInfo = notification.userInfo {
+                if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int , count != numberOfChildren {
+                    numberOfChildren = count
+                }
+            }
+        })
+    }
+    private func updateItemBGAndTintColor() {
+        itemBgColor = viewModel.getRowSelectionColorFor(item: item);
+        itemTitleTint = viewModel.getRowForegroundColorFor(item: item)
     }
 }

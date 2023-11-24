@@ -14,10 +14,12 @@ struct FTSidebarTopSectionGridItemView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showTrashAlert: Bool = false
     @State private var alertInfo: TrashAlertInfo?
+    @State var numberOfChildren: Int = 0
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var item: FTSideBarItem
 
     var body: some View {
+        let _ = Self._printChanges()
         FTSideBarItemContextMenuPreview(preview: {
             gridItemView
                 .ignoresSafeArea()
@@ -40,8 +42,8 @@ struct FTSidebarTopSectionGridItemView: View {
                     .foregroundColor(getIconTintColorForTopSectionItem(item))
                     .font(.appFont(for: .regular, with: 20))
                 Spacer()
-                if (canShowNoOfBooksForItem(item) && item.numberOfChildren > 0) {
-                    Text("\(item.numberOfChildren)")
+                if (canShowNoOfBooksForItem(item) && numberOfChildren > 0) {
+                    Text("\(numberOfChildren)")
                         .foregroundColor(.white)
                 }else {
                     EmptyView()
@@ -76,6 +78,13 @@ struct FTSidebarTopSectionGridItemView: View {
         } message: { info in
             Text(info.message)
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue:shelfCollectionItemsCountNotification)), perform: { notification in
+            if let userInfo = notification.userInfo {
+                if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int , count != numberOfChildren {
+                    numberOfChildren = count
+                }
+            }
+        })
     }
     @ViewBuilder
     private var icon: some View {

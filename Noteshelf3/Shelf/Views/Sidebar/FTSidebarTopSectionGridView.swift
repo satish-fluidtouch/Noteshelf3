@@ -16,6 +16,7 @@ struct FTSidebarTopSectionGridView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
+        let _ = Self._printChanges()
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
             GridRow {
                 gridItemFor(sidebarItemForType(.home))
@@ -51,7 +52,8 @@ struct FTSidebarTopSectionGridView: View {
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
         } label: {
-            FTSidebarTopSectionGridItemView(viewModel: viewModel)
+            FTSidebarTopSectionGridItemView(viewModel: viewModel,
+                                            numberOfChildren: sideBarItem.shelfCollection?.childrens.count ?? 0)
                 .environmentObject(sideBarItem)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))

@@ -437,7 +437,6 @@ extension FTShelfViewModel {
 //MARK: Code for shelf items fetching from backend
 extension FTShelfViewModel {
     
-    @MainActor
     func fetchShelfItems(animate: Bool = true)  {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
@@ -445,51 +444,52 @@ extension FTShelfViewModel {
             guard let self = self else {
                 return
             }
-            if(animate) {
-                withAnimation {
-                    setShelfItems()
-                }
-            }
-            else {
-              setShelfItems()
-            }
-            
-            func setShelfItems() {
-                self.setShelfItems(items);
-                if let item = self.closedDocumentItem {
-                    self.scrollToItemID = item.uuid
-                    self.closedDocumentItem = nil
-                }
+            self.setShelfItems(items,animate:animate);
+            if let item = self.closedDocumentItem {
+                self.scrollToItemID = item.uuid
+                self.closedDocumentItem = nil
             }
         }
         self.addObservers()
     }
     
-    private func setShelfItems(_ items: [FTShelfItemProtocol]) {
+    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
         self.resetShelfModeTo(.normal)
-        let _shelfItems = self.createShelfItemsFromData(items);
-        self.shelfItems = _shelfItems
-        
-        self.showNoShelfItemsView = self.shelfItems.isEmpty
-        
-        if !shelfDidLoad {
-            shelfDidLoad = true
-        }
-        if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-            NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+        DispatchQueue.global().async {
+            let _shelfItems = self.createShelfItemsFromData(items);
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if(animate) {
+                    withAnimation {
+                        self.shelfItems = _shelfItems
+                    }
+                }
+                else {
+                    self.shelfItems = _shelfItems
+                }
+
+                
+                self.showNoShelfItemsView = self.shelfItems.isEmpty
+
+                if !self.shelfDidLoad {
+                    self.shelfDidLoad = true
+                }
+                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+                }
+            }
         }
     }
-    
     func reloadItems(animate: Bool = true, _ onCompletion: (() -> Void)? = nil) {
         let block : (Bool, [FTShelfItemProtocol]) ->() = { [weak self] (animate,items) in
             if(animate) {
                 withAnimation {
-                    self?.setShelfItems(items)
+                    self?.setShelfItems(items,animate: animate)
                     onCompletion?();
                 }
             }
             else {
-                self?.setShelfItems(items)
+                self?.setShelfItems(items, animate: animate)
                 onCompletion?();
             }
         };

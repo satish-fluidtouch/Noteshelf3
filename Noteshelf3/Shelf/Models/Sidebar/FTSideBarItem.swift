@@ -40,7 +40,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         }
     }
 
-    @Published var numberOfChildren: Int = 0
+    var numberOfChildren: Int = 0
 
     convenience init(id: String = UUID().uuidString,title: String,
                      icon: FTIcon,
@@ -66,14 +66,10 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         self.type = .category
         self.allowsItemDropping = true
         self.shelfCollection = shelfCollection
-        if let collection = self.shelfCollection {
-            self.numberOfChildren = collection.childrens.count
-        }
     }
 
     override init() {
         super.init()
-        self.addObserverForCollectionChildrenCount()
     }
     func rename(newName: String) {
         self.title = newName
@@ -87,19 +83,6 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         lhs.isEditable == rhs.isEditable &&
         lhs.isEditing == rhs.isEditing &&
         lhs.id == rhs.id
-    }
-    func addObserverForCollectionChildrenCount(){
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateChildrenCountIfRequired(_:)), name: NSNotification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil)
-    }
-    @objc func updateChildrenCountIfRequired(_ notification : Notification){
-        if let userInfo = notification.userInfo {
-            if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int , count != numberOfChildren {
-                numberOfChildren = count
-            }
-        }
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil)
     }
 }
 extension FTSideBarItem: NSItemProviderWriting {
