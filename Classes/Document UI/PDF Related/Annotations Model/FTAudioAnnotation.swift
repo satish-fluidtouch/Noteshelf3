@@ -477,7 +477,7 @@ extension FTAudioAnnotation
     @objc func prepareAnnotationForExport(onUpdate : @escaping (Float)->(),
                                     onCompletion : @escaping (URL?,Error?) -> ())
     {
-        self.recordingModel.combineTracks(onUpdate: onUpdate, onCompletion: onCompletion);
+        self.recordingModel.combineTracks(for: self, update: onUpdate, onCompletion: onCompletion)
     }
 }
 

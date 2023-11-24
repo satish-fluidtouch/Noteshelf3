@@ -28,49 +28,33 @@ struct FTShelfNewNotePopoverView: View {
             if appState.sizeClass == .compact {
                 Spacer()
             }
-            mainContentView
-        }.macOnlyColorSchemeFixer()
-    }
-    private var mainContentView: some View {
-                ZStack {
-                    contentView
-                        .navigationBarTitle("")
-                        .navigationBarHidden(true)
-                }
+            contentView
                 .if(appState.sizeClass == .compact, transform: { view in
-                    view.padding(.horizontal, 8)
+                    view .padding(.horizontal, 16)
                         .padding(.top,16)
                 })
                 .frame(height: popoverHeight)
+        }
+        .macOnlyColorSchemeFixer()
     }
     private var contentView: some View {
-            VStack {
-                VStack {
-                    VStack(spacing:16.0) {
-                        FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate)
-                            .padding(.top,10)
-                        LazyVGrid(columns: gridItemLayout(), spacing: 0.0, content: {
-                            newNoteSection
-                        })
-                        .background(Color.appColor(.white60))
-                        .cornerRadius(16.0, corners: .allCorners)
-                    }
-                    .padding(.horizontal,appState.sizeClass == .compact ? 0 : 16)
-                    .padding(.bottom,16)
-                    .listRowBackground(Color.clear)
-                }
-                .background(Color.clear)
-                .cornerRadius(16, corners: .allCorners)
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
-                if appState.sizeClass == .compact {
-                    cancelView
-                }
-            }
-            .if(appState.sizeClass == .compact, transform: { view in
-                view
-                    .cornerRadius(16.0, corners: .allCorners)
+        VStack(spacing:16.0) {
+            FTNewNoteTopSectionView(viewModel: viewModel, delegate: delegate)
+                .padding(.top,10)
+            LazyVGrid(columns: gridItemLayout(), spacing: 0.0, content: {
+                newNoteSection
             })
+            .background(Color.appColor(.white60))
+            .cornerRadius(16.0, corners: .allCorners)
+            if appState.sizeClass == .compact {
+                cancelView
+            }
+        }
+        .padding(.horizontal,appState.sizeClass == .compact ? 0 : 16)
+        .padding(.bottom,16)
+        .listRowBackground(Color.clear)
+        .background(Color.clear)
+        .cornerRadius(16, corners: .allCorners)
     }
     private func gridItemLayout() -> [GridItem] {
         let spacing = 0.0
@@ -80,20 +64,14 @@ struct FTShelfNewNotePopoverView: View {
     private var newNoteSection: some View {
         ForEach(viewModel.displayableOptions.indices, id: \.self) { index in
             VStack(alignment:.center,spacing: 0.0) {
-                HStack(alignment: .center){
-                    getLabelWithTitle(viewModel.displayableOptions[index].newNoteOption.displayTitle,
-                                      image: viewModel.displayableOptions[index].newNoteOption.icon.name,
-                                      foregroundColor: Color.appColor(.accent),
-                                      isSystemImage: viewModel.displayableOptions[index].newNoteOption.icon.isSystemIcon)
-                    Spacer()
-                    if viewModel.displayableOptions[index].newNoteOption.showChevron {
-                        Image(systemName: "chevron.right")
-                            .frame(width: 10, height: 24, alignment: SwiftUI.Alignment.center)
-                            .padding(.trailing,16)
-                            .font(Font.appFont(for: .regular, with: 15))
-                            .foregroundColor(Color.appColor(.black50))
+                if viewModel.displayableOptions[index].newNoteOption == .appleWatch {
+                    NavigationLink(destination: FTWatchRecordedListReprasentableView(delegate: shelfViewModel.delegate).navigationBarBackButtonHidden(true)){
+                        newNoteSectionitem(index: index)
                     }
+                }else{
+                    newNoteSectionitem(index: index)
                 }
+            }
                 .contentShape(Rectangle())
                 .onTapGesture {
                     self.dismiss()
@@ -103,19 +81,35 @@ struct FTShelfNewNotePopoverView: View {
                 }
                 .disabled(shouldDisableRow(for: index))
                 .opacity(shouldDisableRow(for: index) ? 0.4 : 1)
+        
                 if index != (viewModel.displayableOptions.count - 1) {
-                    Rectangle()
-                        .frame(height: 0.5)
-                        .foregroundColor(.appColor(.black10))
+                    FTDividerLine()
                 }
             }
+        }
+
+    private func newNoteSectionitem(index: Int) -> some View {
+        HStack(alignment: .center){
+            getLabelWithTitle(viewModel.displayableOptions[index].newNoteOption.displayTitle,
+                              image: viewModel.displayableOptions[index].newNoteOption.icon.name,
+                              foregroundColor: Color.appColor(.accent),
+                              isSystemImage: viewModel.displayableOptions[index].newNoteOption.icon.isSystemIcon)
+            Spacer()
+            if viewModel.displayableOptions[index].newNoteOption.showChevron {
+                Image(systemName: "chevron.right")
+                    .frame(width: 10, height: 24, alignment: SwiftUI.Alignment.center)
+                    .padding(.trailing,16)
+                    .font(Font.appFont(for: .regular, with: 15))
+                    .foregroundColor(Color.appColor(.black50))
+            }
+
         }
     }
     private func performActionBasedOn(option: FTNewNotePopoverModel){
 
-        if option.newNoteOption != .appleWatch { // only incase of watch recordings we are showing the recordings inside popover itself.
-            viewDelegate?.dismissPopover()
-        }
+//        if option.newNoteOption != .appleWatch { // only incase of watch recordings we are showing the recordings inside popover itself.
+//            viewDelegate?.dismissPopover()
+//        }
 
         // Track Event
         shelfViewModel.trackEventForAddMenuoption(option: option.newNoteOption)
@@ -137,8 +131,8 @@ struct FTShelfNewNotePopoverView: View {
             delegate?.didTapAudioNote()
         case .newGroup:
             delegate?.didTapOnNewGroup()
-        case .appleWatch: break
-           // viewDelegate?.didTapOnWatchRecordings()
+        case .appleWatch:
+            viewDelegate?.didTapOnWatchRecordings()
         }
     }
     private var cancelView: some View {

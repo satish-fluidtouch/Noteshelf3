@@ -47,6 +47,8 @@ class FTShelfNewNoteController: UIHostingController<AnyView>, FTPopoverPresentab
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
+        self.viewModel.viewDelegate = self
+
         var popOverHeight: CGFloat = appState.sizeClass == .regular ? 384.0 : 420
 #if targetEnvironment(macCatalyst)
         popOverHeight = 340.0
@@ -62,13 +64,13 @@ extension FTShelfNewNoteController: FTShelfNewNotePopoverViewDelegate {
         self.dismiss(animated: true)
     }
     func didTapOnWatchRecordings(){
-        /*let storyboard = UIStoryboard(name: "FTWatchRecordings", bundle: nil);
+        let storyboard = UIStoryboard(name: "FTWatchRecordings", bundle: nil);
 
         let watchRecordingController = storyboard.instantiateViewController(withIdentifier: FTWatchRecordedListViewController.className) as! FTWatchRecordedListViewController;
         let popOverHeight: CGFloat = self.appState.sizeClass == .regular ? 320 : 420
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationController?.preferredContentSize = CGSize(width: 330, height: popOverHeight)
-        self.navigationController?.pushViewController(watchRecordingController, animated: true)*/
+        self.navigationController?.pushViewController(watchRecordingController, animated: true)
     }
 }
