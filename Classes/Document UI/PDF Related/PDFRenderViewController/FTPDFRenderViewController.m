@@ -237,10 +237,14 @@
 }
 
 - (void)performUndoOperation {
+    [self.firstPageController.writingView cancelCurrentStroke];
+    [self showToastWith: NSLocalizedString(@"ButtonActionUndo", @"Undo")];
     [self undo];
 }
 
 - (void)performRedoOperation {
+    [self.firstPageController.writingView cancelCurrentStroke];
+    [self showToastWith: NSLocalizedString(@"ButtonActionRedo", @"Saving")];
     [self redo];
 }
 

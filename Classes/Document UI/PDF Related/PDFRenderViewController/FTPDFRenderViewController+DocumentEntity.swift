@@ -21,6 +21,10 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         let undoRedoGestureDetector = FTPageUndoRedoGestureDetector(delegate: self, contentHolderView: self.contentHolderView)
         self.undoRedoGestureDetector = undoRedoGestureDetector
     }
+    
+    @objc func showToastWith(_ message: String) {
+        FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: message))
+    }
 
     /// Photo Library,  Take Photo
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource) {
