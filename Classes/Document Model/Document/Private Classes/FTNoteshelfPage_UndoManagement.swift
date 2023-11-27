@@ -80,7 +80,7 @@ extension FTNoteshelfPage: FTPageUndoManagement {
                 selfObject.postUndoRedoNotification(filteredItem.refreshArea)
             })
         }
-        NotificationCenter.default.post(name: .didUpdateMedia, object: nil)
+        NotificationCenter.default.post(name: .didUpdateMedia, object: nil, userInfo: ["page" : self])
         self.isDirty = pageModified;
     }
 
@@ -102,7 +102,7 @@ extension FTNoteshelfPage: FTPageUndoManagement {
                 selfObject.postUndoRedoNotification(filteredItem.refreshArea);
             })
         }
-        NotificationCenter.default.post(name: .didUpdateMedia, object: nil)
+        NotificationCenter.default.post(name: .didUpdateMedia, object: nil, userInfo: ["page" : self])
         self.isDirty = pageModified;
     }
 
