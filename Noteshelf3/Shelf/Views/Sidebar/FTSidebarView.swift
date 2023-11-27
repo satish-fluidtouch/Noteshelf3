@@ -141,22 +141,11 @@ struct FTSidebarView: View {
                         SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
                                         itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
                                         numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
+                                        showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem == item),
                                         viewWidth: availableWidth)
                             .environmentObject(viewModel)
                             .environmentObject(menuSection)
                             .environmentObject(item)
-                        .if(menuSection.supportsRearrangeOfItems, transform: { view in
-                            view.onDrag {
-                                self.viewModel.currentDraggedSidebarItem = item
-                                self.viewModel.activeReorderingSidebarSectionType = menuSection.type
-                                return NSItemProvider(item: nil, typeIdentifier: item.shelfCollection?.uuid)
-                            } preview: {
-                                view
-                                    .frame(width:availableWidth)
-                                    .fixedSize(horizontal: true, vertical: true)
-                                    .contentShape(RoundedRectangle(cornerRadius: 10))
-                            }
-                        })
                     }
                 }
                 if menuSection.type == .categories {
