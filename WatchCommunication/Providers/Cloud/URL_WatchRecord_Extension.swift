@@ -19,6 +19,9 @@ let audioFileExtension : String = "m4a";
 let audioMetadataFileExtension : String = "plist";
 
 extension URL {
+    func isUbiquitousFileExists() -> Bool {
+        return FileManager().isUbiquitousItem(at: self)
+    }
     #if os(watchOS)
     func urlByDeleteingPrivate() -> URL  {
         var filePath = self.path;

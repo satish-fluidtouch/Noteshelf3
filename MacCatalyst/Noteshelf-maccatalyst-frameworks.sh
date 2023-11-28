@@ -229,7 +229,7 @@ if [[ "$CONFIGURATION" == "Debug Enterprise" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework"
 fi
-if [[ "$CONFIGURATION" == "Release " ]]; then
+if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ASN1Swift/ASN1Swift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/FirebaseABTesting/FirebaseABTesting.framework"

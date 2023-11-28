@@ -14,15 +14,22 @@ protocol FTNewNotePopoverDelegate: NSObject {
 }
 
 class FTNewNotePopoverViewModel: ObservableObject {
-    var newNoteOptions: [FTNewNotePopoverModel] = [
-        FTNewNotePopoverModel(newNoteOption: .newGroup),
-        FTNewNotePopoverModel(newNoteOption: .photoLibrary),
-        FTNewNotePopoverModel(newNoteOption: .audioNote),
-        FTNewNotePopoverModel(newNoteOption: .scanDocument),
-        FTNewNotePopoverModel(newNoteOption: .takePhoto),
-        //        FTNewNotePopoverModel(newNoteOption: .appleWatch)
-    ]
+    var newNoteOptions: [FTNewNotePopoverModel] {
+        var options = [
+            FTNewNotePopoverModel(newNoteOption: .newGroup),
+            FTNewNotePopoverModel(newNoteOption: .photoLibrary),
+            FTNewNotePopoverModel(newNoteOption: .audioNote),
+            FTNewNotePopoverModel(newNoteOption: .scanDocument),
+            FTNewNotePopoverModel(newNoteOption: .takePhoto)
+        ]
+        if (NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled()) {
+            options.append(FTNewNotePopoverModel(newNoteOption: .appleWatch))
+        }
+        return options
+    }
+
     weak var delegate: FTNewNotePopoverDelegate?
+    weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
 
     var displayableOptions: [FTNewNotePopoverModel] {
 #if !targetEnvironment(macCatalyst)

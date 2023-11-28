@@ -397,10 +397,10 @@ CGFloat audioRecordSize = 56;
 }
 - (IBAction)importWatchRecordingsClicked:(id)sender
 {
-    [FTWatchRecordedListViewController pushToRecordingsWithDelegate:self
-                                                     fromSourceView:sender
-                                                   onViewController:self
-                                                            context:FTAudioActionContextInsideNotebook];
+//    [FTWatchRecordedListViewController pushToRecordingsWithDelegate:self
+//                                                     fromSourceView:sender
+//                                                   onViewController:self
+//                                                            context:FTAudioActionContextInsideNotebook];
 }
 
 #pragma mark show/dismiss popover
