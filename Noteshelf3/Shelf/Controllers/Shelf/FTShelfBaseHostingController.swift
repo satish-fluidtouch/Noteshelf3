@@ -12,6 +12,7 @@ import Combine
 class FTShelfBaseHostingController: UIHostingController<AnyView> {
     var shelfViewModel: FTShelfViewModel!
     private var cancellables = [AnyCancellable]()
+
 #if targetEnvironment(macCatalyst)
     weak var delegate: FTMacGlobalSearchDelegate?
     var selectNoteCancellable = [AnyCancellable]()

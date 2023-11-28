@@ -79,6 +79,10 @@ struct FTShelfView: View,FTShelfBaseView {
                 }
                 .onDrop(of: supportedDropTypes, delegate: FTShelfScrollViewDropDelegate(viewModel: viewModel))
             }
+            .overlay(alignment: .bottom, content: {
+                    FTAdBannerView()
+                        .padding(.bottom,8)
+            })
         }
     }
 

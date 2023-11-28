@@ -493,9 +493,9 @@ fileprivate extension FTShelfCategoryViewController
         }
         
         let shelfItemCollections = category.items;
-        let itemToCompare = urlItem.standardizedFileURL;
+        let itemToCompare = urlItem.urlByDeleteingPrivate();
         let index = shelfItemCollections.index(where: { (item) -> Bool in
-            if(item.URL.standardizedFileURL == itemToCompare) {
+            if(item.URL.urlByDeleteingPrivate() == itemToCompare) {
                 return true;
             }
             return false;

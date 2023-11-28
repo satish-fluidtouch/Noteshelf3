@@ -56,6 +56,11 @@ struct FTShelfHomeView: FTShelfBaseView {
                         }
                     }
                 })
+                .overlay(alignment: .bottom, content: {
+                        FTAdBannerView()
+                            .padding(.bottom,8)
+                })
+                .detectOrientation($viewModel.orientation)
                 .shelfNavBarItems()
                 .allowsHitTesting(viewModel.allowHitTesting)
                 .navigationTitle(viewModel.navigationTitle)

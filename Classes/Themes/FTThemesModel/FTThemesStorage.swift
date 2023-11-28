@@ -201,13 +201,13 @@ extension FTThemesStorage {
     func setDefaultTheme(themeInfo : (url:URL,title:String, dynamicId: Int),defaultMode : ThemeDefaultMode, withVariants variants : FTPaperVariants?,isCustom : Bool, hasCover: Bool) {
         let key = defaultMode.defaultModeKey()+"_\(self.themeLibraryType.themeURLDefaultKey())";
         let titleKey = defaultMode.defaultModeKey()+"_\(self.themeLibraryType.themeTitleDefaultKey())";
-        let path = themeInfo.url.standardizedFileURL.path;
-        let stockThemeURLPath = self.stockThemesURL.standardizedFileURL.path;
+        let path = themeInfo.url.urlByDeleteingPrivate().path;
+        let stockThemeURLPath = self.stockThemesURL.urlByDeleteingPrivate().path;
         if path.hasPrefix(stockThemeURLPath) {
             FTUserDefaults.defaults().set(path.replacingOccurrences(of: stockThemeURLPath, with: ""), forKey: key);
         }
         else {
-            let localThemesPath = self.pathToLocalThemesFolder.standardizedFileURL.path;
+            let localThemesPath = self.pathToLocalThemesFolder.urlByDeleteingPrivate().path;
             FTUserDefaults.defaults().set(path.replacingOccurrences(of: localThemesPath, with: ""), forKey: key);
         }
         if themeLibraryType == .papers {
@@ -258,12 +258,12 @@ extension FTThemesStorage {
             if dynamicId == FTTemplateType.storeTemplate.rawValue, FileManager().fileExists(atPath: templatePath.path) {
                 return DefaultThemeProperties(themeURL: templatePath, themeDisplayName: title!, isCustom: isCustom, hasCover: hasCover, variants: variants, dynamicId: dynamicId)
             } else if isCustom && themeLibraryType == .covers {
-                let customFolderUrl = self.pathToLocalThemesFolder.standardizedFileURL.appendingPathComponent(storedPath)
+                let customFolderUrl = self.pathToLocalThemesFolder.urlByDeleteingPrivate().appendingPathComponent(storedPath)
                 if(FileManager().fileExists(atPath: customFolderUrl.path)) {
                     return DefaultThemeProperties(themeURL: customFolderUrl, themeDisplayName: title!, isCustom: isCustom, hasCover: hasCover, variants: variants, dynamicId: dynamicId)
                 }
             } else {
-                let stockThemeURL = self.stockThemesURL.standardizedFileURL.appendingPathComponent(storedPath);
+                let stockThemeURL = self.stockThemesURL.urlByDeleteingPrivate().appendingPathComponent(storedPath);
                 if(FileManager().fileExists(atPath: stockThemeURL.path)) {
                     return DefaultThemeProperties(themeURL: stockThemeURL, themeDisplayName: title!, isCustom: isCustom, hasCover: hasCover, variants: variants, dynamicId: dynamicId)
                 }

@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "애플 펜슬 설정";
 "AppleWatch" = "애플 워치";
 "AppleWatchRecording" = "애플 워치 녹음";
+"AppleWatchRecordings" = "Apple Watch 녹음";
 "Apply" = "적용";
 "Arts" = "예술";
 "Athletics" = "운동";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "화이트보드 모드";
 "Wallpapers" = "배경화면";
 "Warning" = "주의";
-"WatchAdInfo" = "애플 워치에 Noteshelf 3를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfoSubTitle" = "이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfoTitle" = "애플 워치에 Noteshelf 3를 설치하세요. ";
 "WatchNewRecords" = "귀하의 애플 워치에서 새로운 녹음 파일이 도착했습니다.";
 "WatchRecording" = "녹화 보기";
 "WatchRecordings" = "워치 녹화";
@@ -1546,4 +1548,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 21 November 2023 at 10:28 AM
+// Last Synced by Siva on 23 November 2023 at 5:40 PM

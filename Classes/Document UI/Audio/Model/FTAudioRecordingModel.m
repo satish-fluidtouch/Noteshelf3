@@ -11,6 +11,7 @@
 #import "FTAudioSession.h"
 #import "FTAudioSessionManager.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Noteshelf-Swift.h"
 
 @interface FTAudioRecordingModel ()
 @property(nonatomic,strong) NSMutableArray *audioTracks;
@@ -277,8 +278,9 @@
     return isRecording;
 }
 
--(void)combineTracksOnUpdate:(void(^)(float progress))updateBlock
-                onCompletion:(void(^)(NSURL *fileURL,NSError *error))completionBlock
+-(void)combineTracksFor: (FTAudioAnnotation *) audioItem
+            updateBlock: (void(^)(float progress))updateBlock
+           onCompletion: (void(^)(NSURL *fileURL,NSError *error))completionBlock
 {
     NSString *tempDirectory = NSTemporaryDirectory();
     
@@ -319,8 +321,9 @@
             completionBlock(nil,[NSError errorWithDomain:@"Audio Export" code:1001 userInfo:nil]);
             return;
         }
-        
-        NSString *soundOneNew = [tempDirectory stringByAppendingPathComponent:@"noteshelf_recording.m4a"];
+
+        NSString *audioTitle = [audioItem.audioName stringByAppendingString:@".m4a"];
+        NSString *soundOneNew = [tempDirectory stringByAppendingPathComponent:audioTitle];
         [[NSFileManager defaultManager] removeItemAtPath:soundOneNew error:nil];
         //NSLog(@"Output file path - %@",soundOneNew);
         

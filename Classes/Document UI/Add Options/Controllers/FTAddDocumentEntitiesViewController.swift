@@ -30,12 +30,13 @@ enum AddMenuType: Int {
     }
 }
 
-protocol FTAddDocumentEntitiesViewControllerDelegate: StickerSelectionDelegate, FTAddMenuSelectImageProtocal, FTMediaLibrarySelectionDelegate {
+protocol FTAddDocumentEntitiesViewControllerDelegate: StickerSelectionDelegate, FTAddMenuSelectImageProtocal, FTMediaLibrarySelectionDelegate, FTWatchRecordedListViewControllerDelegate {
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource)
     func didFinishPickingImportItems(_ items: [FTImportItem]?)
     func didTapPage(_ item: FTPageType)
     func didTapMedia(_ item: MediaType)
     func didTapAttachment(_ item: AttachmentType)
+    func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
 }
 
 class FTAddDocumentEntitiesViewController: UIViewController, FTPopoverPresentable {
@@ -174,10 +175,21 @@ extension FTAddDocumentEntitiesViewController: FTAddMenuMediaViewControllerDeleg
             pushEmojisViewController()
         } else if item == .stickers {
             pushStickersViewController()
-        } else {
+        } else if item == .appleWatch {
+            pushWatchRecordings()
+        }
+        else {
             self.dismiss(animated: true)
             self.delegate?.didTapMedia(item)
         }
+    }
+    private func pushWatchRecordings(){
+        let storyboard = UIStoryboard(name: "FTWatchRecordings", bundle: nil);
+
+        let watchRecordingController = storyboard.instantiateViewController(withIdentifier: FTWatchRecordedListViewController.className) as! FTWatchRecordedListViewController
+        watchRecordingController.watchDelegate = self.delegate
+        watchRecordingController.actionContext = .insideNotebook
+        self.navigationController?.pushViewController(watchRecordingController, animated: true)
     }
 
     private func pushStickersViewController() {
