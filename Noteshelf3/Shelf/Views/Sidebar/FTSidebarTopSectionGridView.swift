@@ -16,7 +16,6 @@ struct FTSidebarTopSectionGridView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     var body: some View {
-        let _ = Self._printChanges()
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
             GridRow {
                 gridItemFor(sidebarItemForType(.home))

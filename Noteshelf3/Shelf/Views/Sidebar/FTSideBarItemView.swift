@@ -26,7 +26,6 @@ struct SideBarItemView : View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var viewWidth: CGFloat
     var body: some View {
-        let _ = Self._printChanges()
         Button {
             if self.viewModel.selectedSideBarItem == item, item.isEditing {
                 return

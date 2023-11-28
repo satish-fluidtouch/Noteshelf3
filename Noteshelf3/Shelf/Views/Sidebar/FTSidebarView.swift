@@ -46,7 +46,6 @@ struct FTSidebarView: View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
-        let _ = Self._printChanges()
         menuView
             .macOnlyPlainButtonStyle() // added this to avoid gesture issue in ipad due to plain button style for mac, can be removed once we get better fix
         .onDrop(of: [.text], delegate: SideBarDropDelegate(viewModel: viewModel))

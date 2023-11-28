@@ -40,8 +40,6 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         }
     }
 
-    var numberOfChildren: Int = 0
-
     convenience init(id: String = UUID().uuidString,title: String,
                      icon: FTIcon,
                      isEditable: Bool = true,

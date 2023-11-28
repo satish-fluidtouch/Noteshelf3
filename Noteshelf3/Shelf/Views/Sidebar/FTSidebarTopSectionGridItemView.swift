@@ -19,7 +19,6 @@ struct FTSidebarTopSectionGridItemView: View {
     @EnvironmentObject var item: FTSideBarItem
 
     var body: some View {
-        let _ = Self._printChanges()
         FTSideBarItemContextMenuPreview(preview: {
             gridItemView
                 .ignoresSafeArea()
