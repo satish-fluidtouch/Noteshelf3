@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
+class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
     override func renderCalendarPage(context: CGContext, months: [FTMonthlyCalendarInfo], calendarYear: FTYearFormatInfo) {
 
@@ -30,7 +30,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.InterMedium(yearNewFontSize),
                                                         .kern: 1.6,
-                                                        .foregroundColor: getTextTintColor()]
+                                                        .foregroundColor: textTintColor]
         if let startYear = months.first?.year {
             var year: String = "\(startYear)"
             if let endYear = months.last?.year, endYear != startYear {
@@ -60,7 +60,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             let monthNewFontSize = UIFont.getScaledFontSizeFor(font: monthFont, screenSize: currentPageRect.size, minPointSize: 8)
             let monthAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterMedium(monthNewFontSize),
                                                               NSAttributedString.Key.kern : 1.6,
-                                                              .foregroundColor : getTextTintColor(),
+                                                              .foregroundColor : textTintColor,
                                                               .paragraphStyle :paragraphStyle]
             let monthString = NSMutableAttributedString(string: month.fullMonth.uppercased(), attributes: monthAttrs)
             var widthFactor = currMonthIndex.truncatingRemainder(dividingBy: columnCount) * (cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100))
@@ -71,8 +71,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             let monthRectHeighPercnt = formatInfo.customVariants.isLandscape ? 2.59 : 1.90
             let monthRectHeight = currentPageRect.size.height*monthRectHeighPercnt/100
             let monthRect =  CGRect(x: monthX, y: monthY + (monthRectHeight/2) - (monthString.size().height/2), width: cellWidth, height: monthRectHeight)
-            let monthStripsColorsDict = getMonthStripColorsDict()
-            if let bandColor = monthStripsColorsDict["\(month.fullMonth.uppercased())"] {
+            if let bandColor = monthStripColors["\(month.fullMonth.uppercased())"] {
                 self.drawColorBandsWith(xAxis: monthX, yAxis: monthY, context: context, width: cellWidth, height: monthRectHeight, bandColor: UIColor(hexString: bandColor))
             }
             monthString.draw(in: monthRect)
@@ -95,7 +94,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
             let symbolAttrs: [NSAttributedString.Key : Any] =  [.font :UIFont.InterLight(weekSymbolNewFontSize),
                                                                 NSAttributedString.Key.kern : 1.6,
-                                                                .foregroundColor : getTextTintColor(),
+                                                                .foregroundColor : textTintColor,
                                                                 .paragraphStyle: paragraphStyle];
 
             var symbolX = (currentPageRect.size.width*templateInfo.baseBoxX/100) + widthFactor //+ monthStringX
@@ -177,17 +176,17 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let titleAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(yearPlannerNewFontSize),
                                                        NSAttributedString.Key.kern : 1.6,
-                                                       .foregroundColor : getTextTintColor()];
+                                                       .foregroundColor : textTintColor];
         let yearAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(yearNewFontSize),
                                                        NSAttributedString.Key.kern : 1.6,
-                                                       .foregroundColor : getTextTintColor()];
+                                                       .foregroundColor : textTintColor];
 
         if self.layoutRequiresExplicitFont(){
             yearPlannerNewFontSize = 15
         }
         let yearPlannerAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterRegular(yearPlannerNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor(),
+                                                          .foregroundColor : textTintColor,
                                                          .paragraphStyle : paragraphStyle1]
 
         let yearplannerString = NSMutableAttributedString(string: "Yearly Planner".uppercased(), attributes: yearPlannerAttrs)
@@ -234,15 +233,14 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let monthNewFontSize = UIFont.getScaledFontSizeFor(font: monthFont, screenSize: currentPageRect.size, minPointSize: 8)
         let monthAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterMedium(monthNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor(),
+                                                          .foregroundColor : textTintColor,
                                                           .paragraphStyle :paragraphStyle]
 
 
         // month colors band rendering
         var monthRects : [CGRect] = []
         for i in 1...numberOfMonthBoxes {
-            let monthStripsColorsDict = getMonthStripColorsDict()
-            if let bandColor = monthStripsColorsDict["\(months[numberOfMonthBoxes*(index - 1) + (i - 1)].monthTitle.uppercased())"] {
+            if let bandColor = monthStripColors["\(months[numberOfMonthBoxes*(index - 1) + (i - 1)].monthTitle.uppercased())"] {
                 self.drawYearPageMonthColorBandsWith(xAxis: monthBoxesXAXis, yAxis: monthBoxesYAxis, context: context, width: widthPerBox, height: colorBandHeight, bandColor:UIColor(hexString: bandColor))
                 monthRects.append(self.getLinkRect(location: CGPoint(x: monthBoxesXAXis, y: monthBoxesYAxis), frameSize: CGSize(width: widthPerBox, height: colorBandHeight)))
             }
@@ -285,7 +283,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let monthAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.InterRegular(newFontSize),
                                                          .kern: 1.6,
-                                                        .foregroundColor: getTextTintColor()]
+                                                        .foregroundColor: textTintColor]
 
         let monthString = NSMutableAttributedString.init(string: monthInfo.fullMonth.uppercased() + " " + monthInfo.year, attributes: monthAttrs)
         let monthLocation = CGPoint(x: monthX, y: monthY )
@@ -342,17 +340,16 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         var weekNumberStripColorIndex  :Int = 1
         for week in weekNumbers {
-            let dayForeGroundColor = getTextTintColor()
+            let dayForeGroundColor = textTintColor
             weekNumberTextAttribute[.foregroundColor] = dayForeGroundColor
             let weekString = NSMutableAttributedString.init(string: week.weekNumber,attributes: weekNumberTextAttribute)
             let weekNumWidth = weekString.size().width
             let weekRect = CGRect(x: weekX - weekNumWidth - 3, y: weekY + (weekRectHeight/2) - (weekString.size().height/2) + 0.5, width: weekNumWidth, height: weekRectHeight)
-            let weekNumberStripColorsDict = getWeekNumberStripBGColorsDict()
-            if week.isActive, let stripColor = weekNumberStripColorsDict[weekNumberStripColorIndex]{
+            if week.isActive, let stripColor = weekNumberStripColors[weekNumberStripColorIndex]{
                 self.drawColorBandsWith(xAxis: weekX - weekNumWidth - 6, yAxis: weekY, context: context, width: weekNumWidth + 6, height: weekRectHeight, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
             }
             else{
-                self.drawColorBandsWith(xAxis: weekX - weekNumWidth - 6, yAxis: weekY, context: context, width: weekNumWidth + 6, height: weekRectHeight, bandColor: getNotesBandBGColor(),cornerRadius: colorBGCornerRaidus)
+                self.drawColorBandsWith(xAxis: weekX - weekNumWidth - 6, yAxis: weekY, context: context, width: weekNumWidth + 6, height: weekRectHeight, bandColor: notesBandBGColor,cornerRadius: colorBGCornerRaidus)
             }
             weekNumberStripColorIndex += 1
             weekString.draw(in: weekRect)
@@ -390,7 +387,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         var index = 1;
 
         var weekDayBGColorIndex = 1;
-        var weekDayBgColor = getWeekNumberStripBGColorsDict()[weekDayBGColorIndex];
+        var weekDayBgColor = weekNumberStripColors[weekDayBGColorIndex];
 
 
         let dayFont = UIFont.InterRegular(screenInfo.fontsInfo.monthPageDetails.dayFontSize)
@@ -412,7 +409,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         })
 
         monthInfo.dayInfo.forEach({(day) in
-            let dayForeGroundColor = (day.belongsToSameMonth && isBelongToCalendarYear(currentDate: day.date)) ? getTextTintColor() : getTextTintColor().withAlphaComponent(0.6)
+            let dayForeGroundColor = (day.belongsToSameMonth && isBelongToCalendarYear(currentDate: day.date)) ? textTintColor : textTintColor.withAlphaComponent(0.6)
 
             dayAttrs[.foregroundColor] = dayForeGroundColor
             let dayString = NSMutableAttributedString.init(string: day.dayString, attributes: dayAttrs)
@@ -428,7 +425,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             }
             if(index % 7 == 0) {
                 weekDayBGColorIndex += 1
-                weekDayBgColor = getWeekNumberStripBGColorsDict()[weekDayBGColorIndex]
+                weekDayBgColor = weekNumberStripColors[weekDayBGColorIndex]
                 dayX = (currentPageRect.width*templateInfo.baseBoxX/100) + cellWidth;
                 linkX = (currentPageRect.width*templateInfo.baseBoxX/100)
                 dayY += cellHeight + (currentPageRect.height*cellOffsetY/100);
@@ -467,10 +464,10 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let titleAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(titleNewFontSize),
                                                        NSAttributedString.Key.kern : 1.6,
-                                                       .foregroundColor : getTextTintColor()];
+                                                       .foregroundColor : textTintColor];
         let weekAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(weekNewFontSize),
                                                        NSAttributedString.Key.kern : 1.6,
-                                                       .foregroundColor : getTextTintColor()];
+                                                       .foregroundColor : textTintColor];
 
         if let weekNumber = weeklyInfo.dayInfo.first?.weekNumber {
 
@@ -505,7 +502,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         var weekDayRects : [CGRect] = []
         let numberOfDaysInRow = isLandscaped ? 4 : 5
         weeklyInfo.dayInfo.forEach(({(weekDay) in
-            let dayTextColor = isBelongToCalendarYear(currentDate: weekDay.date) ? getTextTintColor() : getTextTintColor().withAlphaComponent(0.6)
+            let dayTextColor = isBelongToCalendarYear(currentDate: weekDay.date) ? textTintColor : textTintColor.withAlphaComponent(0.6)
             let weekAttrs: [NSAttributedString.Key: Any] = [.font: weekDayfont,
                                                             .kern: 1.6,
                                                             .foregroundColor: dayTextColor]
@@ -516,7 +513,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
             let weekDayRect = CGRect(x: weekDayInfoX + 5 + 3.5 , y:weekDayInfoY + 6 + (weekDayRectHeigth/2) - (weekAndDayString.size().height/2), width: weekAndDayStringWidth, height: weekDayRectHeigth)
             if isBelongToCalendarYear(currentDate: weekDay.date){
-                let weekDayPastalColorsDict = getWeekDaysPastalColors()
+                let weekDayPastalColorsDict = weekDaysPastalColors
                 self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 6, context: context, width: weekAndDayStringWidth + 6, height: weekDayRectHeigth, bandColor: UIColor(hexString: weekDayPastalColorsDict[index]), cornerRadius: 2)
             }
             weekAndDayString.draw(in: weekDayRect)
@@ -545,7 +542,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let notesAttr : [NSAttributedString.Key: Any] = [.font: weekDayfont,
                                                                         .kern: 1.6,
-                                                                        .foregroundColor: getTextTintColor()]
+                                                                        .foregroundColor: textTintColor]
 
         let notesRectX = currentPageRect.width*notesRectXPercnt/100
         let notesRectY = currentPageRect.height*notesRectYPercnt/100
@@ -553,7 +550,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let notesRect = CGRect(x: notesRectX + 6 + 3.5, y: notesRectY  + (weekDayRectHeigth/2) - (notesString.size().height/2) + 6 , width: notesString.size().width + 6, height: weekDayRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: notesRectX + 6, yAxis: notesRectY + 6, context: context, width: notesString.size().width + 6, height: weekDayRectHeigth, bandColor: getNotesBandBGColor(), cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: notesRectX + 6, yAxis: notesRectY + 6, context: context, width: notesString.size().width + 6, height: weekDayRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         notesString.draw(in: notesRect)
 
     }
@@ -590,7 +587,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let titleAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(titleNewFontSize),
                                                        NSAttributedString.Key.kern : letterSpacing,
-                                                       .foregroundColor : getTextTintColor()];
+                                                       .foregroundColor : textTintColor];
         let titleString = NSMutableAttributedString.init(string: titleText, attributes: titleAttrs)
         let titleRect = CGRect(x: titleX, y: titleY, width: titleString.size().width, height: titleString.size().height)
         titleString.draw(in: titleRect)
@@ -600,7 +597,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let yearAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(yearNewFontSize),
                                                        NSAttributedString.Key.kern : letterSpacing,
-                                                       .foregroundColor : getTextTintColor()];
+                                                       .foregroundColor : textTintColor];
 
         let yearString = NSMutableAttributedString.init(string: "\(monthInfo.year)", attributes: yearAttrs)
         let yearRect = CGRect(x: titleX, y: titleY + titleString.size().height, width: yearString.size().width, height: yearString.size().height)
@@ -622,12 +619,12 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let goalsAttr : [NSAttributedString.Key: Any] = [.font: goalsFont,
                                                                         .kern: 1.6,
-                                                                        .foregroundColor: getTextTintColor()]
+                                                                        .foregroundColor: textTintColor]
         let goalsString = NSMutableAttributedString.init(string: "Goals".uppercased(), attributes: goalsAttr)
         let goalRect = CGRect(x: goalsX + 5 + 3.5, y: goalsY  + 6 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: goalsString.size().width + 6, height: goalsRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: goalsX + 5, yAxis: goalsY + 6, context: context, width: goalsString.size().width + 6, height: goalsRectHeigth, bandColor: getNotesBandBGColor(), cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: goalsX + 5, yAxis: goalsY + 6, context: context, width: goalsString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         goalsString.draw(in: goalRect)
 
         //to do rendering
@@ -655,7 +652,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let notesRect = CGRect(x: notesX + 5 + 3.5, y: notesY  + 6 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: notesString.size().width + 6, height: goalsRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: notesX + 5, yAxis: notesY + 6, context: context, width: notesString.size().width + 6, height: goalsRectHeigth, bandColor: getNotesBandBGColor(), cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: notesX + 5, yAxis: notesY + 6, context: context, width: notesString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         notesString.draw(in: notesRect)
 
         //Schedule Rendering
@@ -698,7 +695,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let titleAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterRegular(titleNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor(),
+                                                          .foregroundColor : textTintColor,
                                                          .paragraphStyle : paragraphStyle1]
 
         let titleString = NSMutableAttributedString(string: "Notes".uppercased(), attributes: titleAttrs)
@@ -721,8 +718,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let numberOfDashedLines = CGFloat(Int((self.currentPageRect.height - bezierlinesBottom - writingAreaLineYAxis)/verticalGapBWbezierlines))
 
         let heightToBeColored = (numberOfDashedLines*verticalGapBWbezierlines) + (numberOfDashedLines*0.5)
-        let monthStripColorsDict = getMonthStripColorsDict()
-        if let highlightColor = monthStripColorsDict["\(monthInfo.fullMonth.uppercased())"] {
+        if let highlightColor = monthStripColors["\(monthInfo.fullMonth.uppercased())"] {
             self.drawColorBandsWith(xAxis: writingAreaLinesXAxis, yAxis: writingAreaLineYAxis, context: context, width: writingAreaLineWidth, height: heightToBeColored, bandColor: UIColor(hexString: highlightColor,alpha: 0.7))
         }
     }
@@ -750,7 +746,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let monthAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterRegular(monthNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor(),
+                                                          .foregroundColor : textTintColor,
                                                          .paragraphStyle : paragraphStyle1]
 
         let monthString = NSMutableAttributedString(string: monthInfo.fullMonth.uppercased() + " " + monthInfo.year, attributes: monthAttrs)
@@ -769,7 +765,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let habitsNewFontSize = UIFont.getScaledFontSizeFor(font: habitsFont, screenSize: currentPageRect.size, minPointSize: 8)
         let habitsAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterMedium(habitsNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor(),
+                                                          .foregroundColor : textTintColor,
                                                          .paragraphStyle : paragraphStyle1]
 
         let habitsString = NSMutableAttributedString(string: "habits".uppercased(), attributes: habitsAttrs)
@@ -809,7 +805,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let weekDayNewFontSize = UIFont.getScaledFontSizeFor(font: weekDayFont, screenSize: currentPageRect.size, minPointSize: 8)
         let weekDayAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterMedium(weekDayNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor(),
+                                                          .foregroundColor : textTintColor,
                                                          .paragraphStyle : paragraphStyle1]
         for weekDay in getWeekDayNames(monthInfo: monthInfo) {
             let WeekDayString = NSAttributedString(string: weekDay.uppercased(), attributes: weekDayAttrs)
@@ -829,7 +825,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let dayNewFontSize = UIFont.getScaledFontSizeFor(font: dayFont, screenSize: currentPageRect.size, minPointSize: minDayFont)
         let dayAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterRegular(dayNewFontSize),
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor()
+                                                          .foregroundColor : textTintColor
                                                          ]
 
         let moodBoxHeightPercnt = isLandscaped ? 7.01 : 5.15
@@ -893,7 +889,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let isLandscaped = self.formatInfo.customVariants.isLandscape
         let monthStripTitles = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
-        let monthStripColors : [String: String] = getSideStripMonthColorsDict()
+        let monthStripColors : [String: String] = sideStripMonthColorsDict
 
         let stripColor =  UIColor(hexString: "#000000", alpha: 0.2)
         let stripShadowColor = UIColor(hexString: "#000000", alpha: 0.08)
@@ -917,7 +913,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let attrs : [NSAttributedString.Key: Any] = [.font : sideStripTextFont,
                                                           NSAttributedString.Key.kern : 1.35,
-                                                          .foregroundColor : getTextTintColor()]
+                                                          .foregroundColor : textTintColor]
 
 
         context.saveGState()
@@ -932,7 +928,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let calendarTitleString = NSAttributedString.init(string: "Calendar".uppercased(), attributes: attrs)
         let stripYAxis =  (stripWidth/2) - (calendarTitleString.size().height/2)
         let stripXAxis = (stripHeight/2) - (calendarTitleString.size().width/2)
-        let calendarStripColor = highlightCalenderStrip ? getTemplateBackgroundColor() : getCalenderSideStripBGColor()
+        let calendarStripColor = highlightCalenderStrip ? getTemplateBackgroundColor() : calendarStripColor
         self.drawColorBandsWith(xAxis: 0, yAxis: 0, context: context, width: stripHeight , height: stripWidth, bandColor: calendarStripColor)
         calendarTitleString.draw(at: CGPoint(x: stripXAxis, y: stripYAxis + 1 ))
         plannerDiarySideNavigationRectsInfo.calendarRect = self.getLinkRectForModifiedAxis(location: CGPoint(x: currentPageRect.width - stripWidth, y:  currentPageRect.height - stripHeight), frameSize: CGSize(width:stripWidth, height:  stripHeight))
@@ -944,7 +940,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let yearTitleString = NSAttributedString.init(string: " yearly\nplanner".uppercased(), attributes: attrs)
         let yearTitleYAxis =  (stripWidth/2) - (yearTitleString.size().height/2)
         let yearTitleXAxis = sideStripBandHeight + (yearStripHeight/2) - (yearTitleString.size().width/2)
-        let yearStripColor = highlightYearStrip ? getTemplateBackgroundColor() : getCalenderSideStripBGColor()
+        let yearStripColor = highlightYearStrip ? getTemplateBackgroundColor() : calendarStripColor
         self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width:yearStripHeight , height: stripWidth, bandColor: yearStripColor)
         self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight, y:0, width: stripWidth,height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
         yearTitleString.draw(at: CGPoint(x: yearTitleXAxis, y: yearTitleYAxis))
@@ -987,7 +983,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let extrasTitleString = NSAttributedString.init(string: "Extras".uppercased(), attributes: attrs)
         let extrasTitleYAxis =  (stripWidth/2) - (extrasTitleString.size().height/2)
         let extrasTitleXAxis = sideStripBandHeight + (extrasStripHeight/2) - (extrasTitleString.size().width/2)
-        let extrasStripColor = highlightExtrasStrip ? getTemplateBackgroundColor() : getCalenderSideStripBGColor()
+        let extrasStripColor = highlightExtrasStrip ? getTemplateBackgroundColor() : calendarStripColor
         self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width:extrasStripHeight , height: stripWidth, bandColor: extrasStripColor)
         self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight , y:0, width: stripWidth, height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
         extrasTitleString.draw(at: CGPoint(x: extrasTitleXAxis, y: extrasTitleYAxis))
@@ -1018,7 +1014,6 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let pageNumWidth = self.currentPageRect.width*pageNumWidthPercnt/100
         let pageNumHeight = self.currentPageRect.height*pageNumHeightPercnt/100
 
-        let pageNumHighlightColor = getPageNumberHightlightBGColor()
         var pageNumFont = UIFont.InterMedium(9)
         var pageNumBGCornerRadius : CGFloat = 3.0
         if self.layoutRequiresExplicitFont(){
@@ -1029,10 +1024,10 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         let pageNumAttr : [NSAttributedString.Key: Any] = [.font : pageNumFont,
                                                           NSAttributedString.Key.kern : 1.6,
-                                                          .foregroundColor : getTextTintColor()]
+                                                          .foregroundColor : textTintColor]
         for index in 1...numberOfPages {
             if index == currentPageIndex {
-                self.drawColorBandsWith(xAxis: xAxis, yAxis: yAxis, context: context, width: pageNumWidth, height: pageNumHeight, bandColor: pageNumHighlightColor, cornerRadius: pageNumBGCornerRadius)
+                self.drawColorBandsWith(xAxis: xAxis, yAxis: yAxis, context: context, width: pageNumWidth, height: pageNumHeight, bandColor: pageNumberHighlightBGColor, cornerRadius: pageNumBGCornerRadius)
             }
             currentPageNumRects.append(getLinkRect(location: CGPoint(x: xAxis, y: yAxis - pageNumHeight/2), frameSize: CGSize(width: pageNumWidth, height: pageNumHeight*2)))
             let pageNumString = NSAttributedString.init(string: "\(index)", attributes: pageNumAttr)
@@ -1059,7 +1054,6 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let widgetElementsXOffset = self.currentPageRect.width*widgetElementsXOffsetPercnt/100
         let widgetElementHeight = self.currentPageRect.height*widgetElementHeightPercnt/100
 
-        let widgetElementHighlightColor = getPageNumberHightlightBGColor()
         var widgetElementsFont = UIFont.InterMedium(9)
         var widgetElementsBGCornerRadius : CGFloat = 3.0
         var letterSpacing : CGFloat = 1.5
@@ -1072,19 +1066,19 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         var widgetElementAttr : [NSAttributedString.Key: Any] = [.font : widgetElementsFont,
                                                           NSAttributedString.Key.kern : letterSpacing]
-        var elementTextForegroundColor = getTextTintColor().withAlphaComponent(0.6)
+        var elementTextForegroundColor = textTintColor.withAlphaComponent(0.6)
         for element in widgetElementTypes {
             if element == type {
-                elementTextForegroundColor = getTextTintColor()
+                elementTextForegroundColor = textTintColor
             }else{
-                elementTextForegroundColor = getTextTintColor().withAlphaComponent(0.6)
+                elementTextForegroundColor = textTintColor.withAlphaComponent(0.6)
             }
             widgetElementAttr[.foregroundColor] = elementTextForegroundColor
             if let widgetTitle = widgetsTitles[element] {
                 let widgetElementString = NSAttributedString.init(string: widgetTitle, attributes: widgetElementAttr)
                 xAxis -= widgetElementString.size().width
                 if element == type {
-                    self.drawColorBandsWith(xAxis: xAxis, yAxis: yAxis, context: context, width: widgetElementString.size().width + 6, height: widgetElementHeight, bandColor: widgetElementHighlightColor, cornerRadius: widgetElementsBGCornerRadius)
+                    self.drawColorBandsWith(xAxis: xAxis, yAxis: yAxis, context: context, width: widgetElementString.size().width + 6, height: widgetElementHeight, bandColor: pageNumberHighlightBGColor, cornerRadius: widgetElementsBGCornerRadius)
                 }
                 pageNavigationRects[element] = getLinkRect(location: CGPoint(x: xAxis, y: yAxis - widgetElementHeight/2), frameSize: CGSize(width: widgetElementString.size().width + 6, height: widgetElementHeight*2))
                 let widgetElementRect = CGRect(x: xAxis + 3.5, y: yAxis + (widgetElementHeight/2) - (widgetElementString.size().height/2), width: widgetElementString.size().width, height: widgetElementString.size().height)

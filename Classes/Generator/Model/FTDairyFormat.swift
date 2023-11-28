@@ -281,9 +281,9 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     
     func getColumnCount() -> CGFloat {
         if formatInfo.screenType == FTScreenType.Ipad {
-            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 4
+            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 2
         } else {
-            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 4
+            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 2
         }
     }
     
@@ -479,9 +479,15 @@ extension FTDairyFormat {
                 formatInfo.screenSize = formatInfo.screenType.rawValue
                 formatInfo.supportsForAllLocales = false
             }
-        case "Digital_Diaries_Colorful_Planner":
-            format = FTPlannerDiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
+        case "Digital_Diaries_Colorful_Planner2024":
+            /*format = FTPlannerDiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let plannerDiayFormat = format as? FTPlannerDiaryFormat {
+                formatInfo.screenType = plannerDiayFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
+                formatInfo.screenSize = formatInfo.screenType.rawValue
+                formatInfo.supportsForAllLocales = false
+            }*/
+            format = FTPlanner2024DiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
+            if let plannerDiayFormat = format as? FTPlanner2024DiaryFormat {
                 formatInfo.screenType = plannerDiayFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
                 formatInfo.supportsForAllLocales = false

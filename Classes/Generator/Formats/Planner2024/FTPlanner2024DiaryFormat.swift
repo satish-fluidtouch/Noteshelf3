@@ -9,7 +9,7 @@
 import Foundation
 import PDFKit
 
-class FTPlannerDiaryFormat : FTDairyFormat {
+class FTPlanner2024DiaryFormat : FTDairyFormat {
     //*********** Normal Planner colors ***********//
     let textTintColor: UIColor = UIColor(hexString: "#363636")
     let monthStripColors : [String: String] = ["JANUARY" :"#AAEBF1","FEBRUARY":"#C4F2E7","MARCH":"#F3E3B5","APRIL":"#F0CBC2","MAY":"#F1C7EA","JUNE":"#DDC3F2","JULY":"#AAEBF1","AUGUST":"#C4F2E7","SEPTEMBER":"#F3E3B5","OCTOBER":"#F0CBC2","NOVEMBER":"#F1C7EA","DECEMBER":"#DDC3F2"]
@@ -22,20 +22,6 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     let notesBandBGColor = UIColor(hexString: "#E7E7E7")
     //**************************************************//
 
-
-    //*********** Dark Planner colors ***********//
-    let darkPlannerTextTintColor: UIColor = UIColor(hexString: "#FEFEF5")
-    let darkPlannerMonthStripColors : [String: String] = ["JANUARY" :"#6EB8BF","FEBRUARY":"#45B298","MARCH":"#BAA15C","APRIL":"#B27D6F","MAY":"#BD7AB2","JUNE":"#A889C2","JULY":"#6EB8BF","AUGUST":"#45B298","SEPTEMBER":"#BAA15C","OCTOBER":"#B27D6F","NOVEMBER":"#BD7AB2","DECEMBER":"#A889C2"]
-    let darkPlannerSideStripMonthColorsDict : [String: String] = ["jan" :"#6EB8BF","feb":"#45B298","mar":"#BAA15C","apr":"#B27D6F","may":"#BD7AB2","jun":"#A889C2","jul":"#6EB8BF","aug":"#45B298","sep":"#BAA15C","oct":"#B27D6F","nov":"#BD7AB2","dec":"#A889C2"]
-    let darkPlannerCalendarStripColor = UIColor(hexString: "#504F4F")
-    let darkplannerStripHighlightColor = UIColor(hexString: "#131313")
-    let darkPlannerPageNumberHighlightBGColor = UIColor(hexString: "#6EB8BF")
-    let darkPlannerWeekNumberStripColors : [Int: String] = [1 :"#6EB8BF",2:"#45B298",3:"#BAA15C",4:"#B27D6F",5:"#BD7AB2",6:"#A889C2"]
-    let darkPlannerWeekDaysPastalColors = ["#6EB8BF","#45B298","#BAA15C","#B27D6F","#BD7AB2","#A889C2","#6EB8BF","#45B298"]
-    let darkPlannerNotesBandBGColor = UIColor(hexString: "#504F4F")
-    //**************************************************//
-
-
     var customVariants : FTPaperVariants
     var weekNumbers : [FTPlannerWeekNumber] = []
     var currentYearRectInfo : FTDiaryYearRectsInfo = FTDiaryYearRectsInfo()
@@ -47,10 +33,8 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     var plannerDiaryExtrasTabRectsInfo : FTPlannerDiaryExtrasTabRectInfo =  FTPlannerDiaryExtrasTabRectInfo();
     var renderFirstWeek : Bool = true
     var monthCalendarInfo = [FTMonthlyCalendarInfo]()
-    var isDarkTemplate: Bool = false
-    required init(customVariants : FTPaperVariants, isDarkTemplate:Bool = false){
+    required init(customVariants : FTPaperVariants){
         self.customVariants = customVariants
-        self.isDarkTemplate = isDarkTemplate
         super.init()
     }
 
@@ -58,7 +42,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         return true
     }
     override var yearTemplate: String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.year, customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.year, customVariants: formatInfo.customVariants)
     }
 
     var _monthPagePDFDocument: PDFDocument?;
@@ -73,7 +57,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     }
     
     override var monthTemplate: String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.month, customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.month, customVariants: formatInfo.customVariants)
     }
 
     var _weekPagePDFDocument: PDFDocument?;
@@ -88,7 +72,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     }
 
     override var weekTemplate: String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.week, customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.week, customVariants: formatInfo.customVariants)
     }
     
     var _dayPagePDFDocument: PDFDocument?;
@@ -103,13 +87,13 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     }
     
     override var dayTemplate: String {
-        let templateType : FTPlannerDiaryTemplateType = .day
+        let templateType : FTPlanner2024DiaryTemplateType = .day
         let path = getPlannerAssetPDFPath(ofType: templateType, customVariants: formatInfo.customVariants);
         return path;
     }
     
     var calendarTemplate : String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.calendar,customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.calendar,customVariants: formatInfo.customVariants)
     }
     var _notesPagePDFDocument: PDFDocument?;
     var notesPagePDFDocument: PDFDocument? {
@@ -122,7 +106,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         }
     }
     var notesTemplate : String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.notes,customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.notes,customVariants: formatInfo.customVariants)
     }
     var _trackerPagePDFDocument: PDFDocument?;
     var trackerPagePDFDocument: PDFDocument? {
@@ -135,21 +119,17 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         }
     }
     var trackerTemplate : String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.tracker,customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.tracker,customVariants: formatInfo.customVariants)
     }
     var extrasTemplate : String {
-        return getPlannerAssetPDFPath(ofType: FTPlannerDiaryTemplateType.extras,customVariants: formatInfo.customVariants)
+        return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.extras,customVariants: formatInfo.customVariants)
     }
     
     override func getTemplateBackgroundColor() -> UIColor {
-        if isDarkTemplate {
-            return UIColor(hexString: "#131313")
-        }else {
-            return UIColor(red: 254/255, green: 254/255, blue: 254/255, alpha: 1.0)
-        }
+        return UIColor(red: 254/255, green: 254/255, blue: 254/255, alpha: 1.0)
     }
 
-    func getPlannerAssetPDFPath(ofType type : FTPlannerDiaryTemplateType, customVariants variants: FTPaperVariants) -> String {
+    func getPlannerAssetPDFPath(ofType type : FTPlanner2024DiaryTemplateType, customVariants variants: FTPaperVariants) -> String {
         var customVariants = variants
         let journalScreenType : String =  self.isiPad ? "ipad" :"iphone"
         let isiPad = (journalScreenType == "ipad") ? "1" : "0"
@@ -162,25 +142,25 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         let orientation = customVariants.isLandscape ? "Land" : "Port"
         let screenType = customVariants.selectedDevice.isiPad ? "iPad" : "iPhone"
         let screenSize = FTModernDiaryFormat.getScreenSize(fromVariants: customVariants)
-        let displayName = isDarkTemplate ? type.displayName + "(Dark)" : type.displayName
+        let displayName = type.displayName
         let key = displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
             + "\(screenSize.height)"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
-        if FileManager().fileExists(atPath: pdfURL.path) , let data = try? Data(contentsOf: pdfURL), !data.isEmpty {
-            return pdfURL.path
-        } else {
-            let templateDiaryInfo = FTPlannerDiaryTemplateInfo(templateType: type,customVariants: customVariants,isDarkTemplate: isDarkTemplate)
-            let generator = FTPlannerDiaryTemplateAssetGenerator(templateInfo: templateDiaryInfo)
+//        if FileManager().fileExists(atPath: pdfURL.path) , let data = try? Data(contentsOf: pdfURL), !data.isEmpty {
+//            return pdfURL.path
+//        } else {
+            let templateDiaryInfo = FTPlanner2024DiaryTemplateInfo(templateType: type,customVariants: customVariants)
+            let generator = FTPlanner2024DiaryTemplateAssetGenerator(templateInfo: templateDiaryInfo)
             let generatedPDFURL = generator.generate()
             return generatedPDFURL.path
-        }
+        //}
     }
 
-    class func getFormatBasedOn(variants: FTPaperVariants, isDarkTemplate: Bool = false) -> FTPlannerDiaryFormat {
+    class func getFormatBasedOn(variants: FTPaperVariants, isDarkTemplate: Bool = false) -> FTPlanner2024DiaryFormat {
         if !variants.selectedDevice.isiPad {
-            return FTPlannerDiaryiPhoneFormat(customVariants: variants,isDarkTemplate: isDarkTemplate)
+            return FTPlanner2024DiaryiPadFormat(customVariants: variants)
         }
-        return  FTPlannerDiaryiPadFormat(customVariants: variants,isDarkTemplate: isDarkTemplate)
+        return  FTPlanner2024DiaryiPadFormat(customVariants: variants)
     }
 
     class func getScreenSize(fromVariants variants: FTPaperVariants) -> CGSize {
@@ -765,7 +745,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     }
 
 }
-extension FTPlannerDiaryFormat {
+extension FTPlanner2024DiaryFormat {
     
     func addBezierLineWith(rect: CGRect, toContext context: CGContext, withColor lineColor: UIColor, shadowColor: UIColor, shadowOffset : CGSize, shadowBlurRadius : CGFloat) {
         //Shadow Declarations
@@ -785,75 +765,5 @@ extension FTPlannerDiaryFormat {
         context.addPath(bezierLinePath.cgPath)
         bezierLinePath.stroke()
         //context.setShadow(offset: shadowOffset, blur: shadowBlurRadius,  color: (shadow as UIColor).cgColor)
-    }
-}
-class FTPlannerWeekNumber : NSObject {
-    var weekNumber : String = ""
-    var isActive : Bool = false
-}
-
-extension FTPlannerDiaryFormat {
-    func getTextTintColor() -> UIColor {
-        if isDarkTemplate {
-            return self.darkPlannerTextTintColor
-        }else {
-            return self.textTintColor
-        }
-    }
-    func getMonthStripColorsDict() -> [String:String] {
-        if isDarkTemplate {
-            return self.darkPlannerMonthStripColors
-        }else {
-            return self.monthStripColors
-        }
-    }
-    func getSideStripMonthColorsDict() -> [String:String] {
-        if isDarkTemplate {
-            return darkPlannerSideStripMonthColorsDict
-        }else {
-            return sideStripMonthColorsDict
-        }
-    }
-    func getCalenderSideStripBGColor() -> UIColor {
-        if isDarkTemplate {
-            return darkPlannerCalendarStripColor
-        } else {
-            return calendarStripColor
-        }
-    }
-    func getStripHighlightBGColor() -> UIColor {
-        if isDarkTemplate {
-            return darkplannerStripHighlightColor
-        }else {
-            return stripHighlightColor
-        }
-    }
-    func getPageNumberHightlightBGColor() -> UIColor {
-        if isDarkTemplate {
-            return darkPlannerPageNumberHighlightBGColor
-        }else {
-            return pageNumberHighlightBGColor
-        }
-    }
-    func getWeekNumberStripBGColorsDict() -> [Int:String] {
-        if isDarkTemplate {
-            return darkPlannerWeekNumberStripColors
-        }else {
-            return weekNumberStripColors
-        }
-    }
-    func getWeekDaysPastalColors() -> [String] {
-        if isDarkTemplate {
-            return darkPlannerWeekDaysPastalColors
-        }else {
-            return weekDaysPastalColors
-        }
-    }
-    func getNotesBandBGColor() -> UIColor {
-        if isDarkTemplate {
-            return darkPlannerNotesBandBGColor
-        }else {
-            return notesBandBGColor
-        }
     }
 }
