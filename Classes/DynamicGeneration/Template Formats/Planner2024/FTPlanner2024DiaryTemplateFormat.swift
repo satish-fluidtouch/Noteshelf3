@@ -224,6 +224,13 @@ class FTPlanner2024DiaryTemplateFormat : FTDigitalDiaryTemplateFormat {
     class func getTemplateBackgroundColor() -> UIColor {
         return UIColor(hexString: "#FEFEFE")
     }
+    func addSpreadLineSeperator(toContext context : CGContext){
+        let spredLinesImagePercent: CGFloat = 50.0
+        let spredLinesX = CGFloat(templateInfo.screenSize.width)*spredLinesImagePercent/100
+        if let spredLinesImage = UIImage(named: "spreadLines") {
+            spredLinesImage.draw(at: CGPoint(x: spredLinesX - spredLinesImage.size.width/2, y: 0))
+        }
+    }
     
 }
 
