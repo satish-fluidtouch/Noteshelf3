@@ -32,9 +32,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     fileprivate var isImportInProgress = false
     fileprivate lazy var importItemsQueue = [FTImportItem]()
-
-    fileprivate var shouldShowMigrationViewOnlaunch = false;
-
     fileprivate weak var launchScreenController : UIViewController?;
 
     fileprivate weak var pencilInteraction : NSObject?;
@@ -73,9 +70,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 activityView.startAnimating();
             }
         }
-
-
-        NotificationCenter.default.addObserver(self, selector: #selector(FTRootViewController.showMigrationCompleteScreen(_:)), name: NSNotification.Name(rawValue: FTSuccessfullyMigratedNS1Notification), object: nil);
 
         DispatchQueue.main.async {
             self.updateProviderIfNeeded();
@@ -122,9 +116,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 [weak self] in
                 self?.addShelfToolbar();
                 self?.updateProvider({
-                    //                    if !UserDefaults.standard.bool(forKey: "allNotes_tracked") {
-                    //                        self.trackAllNotes()
-                    //                    }
                 });
             });
             self.refreshStatusBarAppearnce();
@@ -221,19 +212,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         
         return splitVC;
     }
-    
-    fileprivate func showDesk(docInfo: FTDocumentOpenInfo) {
-        
-        let splitVC = deskController(docInfo: docInfo);
-        self.noteBookSplitController = splitVC
-        self.addChild(splitVC)
-        self.contentView.addSubview(splitVC.view)
-        self.addConstraintForView(splitVC.view, withrespectTo: self.contentView)
-        splitVC.didMove(toParent: self)
-        
-        splitVC.view.layoutIfNeeded();
-        docuemntViewController?.didMove(toParent: splitVC);
-    }
 
     // MARK: - Provider update -
     fileprivate func updateProviderIfNeeded() {
@@ -293,7 +271,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         case .kiCloudStartUsingMessageAction:
             let controller = UIAlertController(title: NSLocalizedString("iCloudAvailable", comment: "iCloudAvailable"), message: NSLocalizedString("iCloudAvailableMessage", comment: "Automatically store your documents.."), preferredStyle: UIAlertController.Style.alert);
             let laterAction = UIAlertAction(title: NSLocalizedString("Later", comment: "Later"), style: .cancel, handler: { _ in
-                weakSelf?.refreshShelfCollection(setToDefault:false,onCompletion: nil)
+                weakSelf?.refreshShelfCollection(setToDefault:false, animate: false,onCompletion: nil)
             });
             laterAction.accessibilityLabel = "iCloudLater";
             controller.addAction(laterAction);
@@ -335,7 +313,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                 FTNoteshelfDocumentProvider.shared.resetProviderCache()
                                 (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
                                 weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
-                                weakSelf?.refreshShelfCollection(setToDefault: true) {
+                                weakSelf?.refreshShelfCollection(setToDefault: true, animate: true) {
                                     loadingIndicatorViewController.hide();
                                     self.view.isUserInteractionEnabled = true;
                                 }
@@ -350,7 +328,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 FTURLReadThumbnailManager.sharedInstance.clearStoredThumbnailCache()
                 FTNoteshelfDocumentProvider.shared.resetProviderCache();
                 (weakSelf?.rootContentViewController as? FTShelfSplitViewController)?.updateSidebarCollections()
-                weakSelf?.refreshShelfCollection(setToDefault: false,onCompletion: nil);
+                weakSelf?.refreshShelfCollection(setToDefault: false, animate: true,onCompletion: nil);
             });
             controller.addAction(deleteFromLocal);
 
@@ -368,7 +346,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     FTNoteshelfDocumentProvider.shared.refreshCurrentShelfCollection {
                         weakSelf?.shelfCollection(title: nil, pickDefault: false, onCompeltion: { (collection) in
                             weakSelf?.rootContentViewController?.currentShelfViewModel?.collection = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection;
-                            weakSelf?.refreshShelfCollection(setToDefault: true) {
+                            weakSelf?.refreshShelfCollection(setToDefault: true, animate: true) {
                                 loadingIndicatorViewController.hide();
                                 self.view.isUserInteractionEnabled = true;
                             }
@@ -377,25 +355,37 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 });
             };
         default:
-            self.refreshShelfCollection(setToDefault: false, onCompletion: nil)
+            self.refreshShelfCollection(setToDefault: false, animate: false, onCompletion: nil)
         }
     }
 
-    fileprivate func refreshShelfCollection(setToDefault: Bool, onCompletion : (() -> Void)?) {
-        self.rootContentViewController?.refreshShelfCollection(setToDefault: setToDefault,animate: true, onCompletion: { [weak self] in
-            if let strongSelf = self, strongSelf.isFirstTime {
-                strongSelf.isFirstTime = false;
-                if(strongSelf.shouldShowMigrationViewOnlaunch) {
-                    strongSelf.showMigrationCompleteScreen(nil);
-                    strongSelf.shouldShowMigrationViewOnlaunch = false;
-                } else {
-                    strongSelf.maintainPreviousLaunchState();
-                }
-            }
+    fileprivate func refreshShelfCollection(setToDefault: Bool,animate: Bool, onCompletion : (() -> Void)?) {
+        self.rootContentViewController?.refreshShelfCollection(setToDefault: setToDefault,animate: animate, onCompletion: { [weak self] in
+            self?.maintainPreviousLaunchStateIfNeeded();
             onCompletion?()
         })
     }
 
+    fileprivate func maintainPreviousLaunchStateIfNeeded() {
+        if self.isFirstTime {
+            self.isFirstTime = false;
+            self.setupSafeModeIfNeeded()
+            if let document = self.lastOpenedDocument() {
+                self.showLastOpenedDocument(relativePath: document, animate: false);
+            }
+            else if let isInNonCollectionMode = self.isInNonCollectionMode(),
+                    !isInNonCollectionMode,let lastOpenedGroup = self.userActivity?.lastOpenedGroup {
+                self.getShelfItemDetails(relativePath: lastOpenedGroup,
+                                         igrnoreIfNotDownloaded: true)
+                { [weak self] (_, groupItem, _) in
+                    if let group = groupItem, group.shelfCollection.uuid == self?.rootContentViewController?.shelfItemCollection?.uuid {
+                        self?.showLastOpenedGroup(group)
+                    }
+                }
+            }
+            self.removeLaunchScreen(true);
+        }
+    }
     // MARK: - Show Shelf -
     fileprivate func showShelf(updateWithLastSelected collection:FTShelfItemCollection? = FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection ,
                                isInNonCollectionMode: Bool = false,
@@ -433,7 +423,19 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         FTCacheTagsProcessor.shared.createCacheTagsPlistIfNeeded()
         return
     }
-
+    private func showLastOpenedGroup(_ group: FTShelfItemProtocol) {
+        var resetGroup = true
+        var reqParents:  [FTShelfItemProtocol] = []
+        reqParents.append(group)
+        reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
+        for parent in reqParents.reversed() {
+            resetGroup = false
+            self.rootContentViewController?.showGroup(with: parent, animate: false)
+        }
+        if(resetGroup) {
+            self.setLastOpenedGroup(nil);
+        }
+    }
     // MARK: - Show shelf for add new
     func  quickOpenShelfForAddNew() {
         /*if let trashMode = self.shelfViewController?.shelfItemCollection.isTrash, trashMode == true {
@@ -543,11 +545,22 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     func startNS2ToNS3Migration() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
+                #if targetEnvironment(macCatalyst)
+                self.nsToolbar?.isVisible = false
+                #endif
                 FTMigrationViewController.showMigration(on: self)
             }
         }
     }
-    
+
+    func showPremiumUpgradeScreen() {
+        self.prepareProviderIfNeeded {
+            self.closeAnyActiveOpenedBook {
+                self.rootContentViewController?.didTapOnUpgradeNow()
+            }
+        }
+    }
+
     func prepareProviderIfNeeded(onCompletion: (() -> ())?) {
         if(nil == self.rootContentViewController) {
             //This need to be un commented once we add the new migration UI
@@ -610,8 +623,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         };
     }
-
-    fileprivate func maintainPreviousLaunchState() {
+    fileprivate func setupSafeModeIfNeeded() {
         if FTUserDefaults.isInSafeMode() {
             self.setLastOpenedGroup(nil);
             self.setLastOpenedDocument(nil);
@@ -619,38 +631,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.removeLaunchScreen(true);
             return;
         }
-
         switchToCrashSafeModeIfNeeded()
-
-        if let document = lastOpenedDocument() {
-            self.showLastOpenedDocument(relativePath: document, animate: false);
-        } else {
-            if let isInNonCollectionMode = self.isInNonCollectionMode(),
-               !isInNonCollectionMode,let group = self.userActivity?.lastOpenedGroup {
-                var resetGroup = true
-                self.getShelfItemDetails(relativePath: group,
-                                         igrnoreIfNotDownloaded: true)
-                { [weak self] (_, groupItem, _) in
-                    let collectionName = self?.lastSelectedCollectionName();
-                    self?.shelfCollection(title: collectionName, pickDefault: false, onCompeltion: { collectionToShow in
-                        if let group = groupItem, group.shelfCollection.uuid == collectionToShow?.uuid {
-                            var reqParents:  [FTShelfItemProtocol] = []
-                            reqParents.append(group)
-                            reqParents.append(contentsOf: group.getParentsOfShelfItemTillRootParent())
-                            for parent in reqParents.reversed() {
-                                resetGroup = false
-                                self?.rootContentViewController?.showGroup(with: parent, animate: false)
-                            }
-                        }
-                    })
-                }
-                if(resetGroup) {
-                    self.setLastOpenedGroup(nil);
-                }
-            }
-
-            self.removeLaunchScreen(true);
-        }
     }
     fileprivate func lastSelectedCollectionName() -> String? {
         var collectionName : String?
@@ -732,10 +713,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
     // MARK: - Open In -
     func openInFileForURL(_ url: URL, completion : (() -> Void)?) {
-        if(self.shouldShowMigrationViewOnlaunch) {
-            return;
-        }
-
         if(nil == self.rootContentViewController) {
             self.isFirstTime = false;
             self.setLastOpenedGroup(nil);
@@ -947,6 +924,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         let insertHere = UIAlertAction(title: NSLocalizedString("InsertHere", comment: "Insert Here"), style: .default, handler: { _ in
             let item = FTAudioFileToImport.init(withURL: url);
+            item.fileName = url.deletingPathExtension().lastPathComponent;
             docController?.addRecordingToPage(actionType: .addToCurrentPage, audio: item, onCompletion: { complted, _ in
                 onCompletion?(complted)
             })
@@ -955,34 +933,13 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
         let createNew = UIAlertAction(title: NSLocalizedString("CreateNew", comment: "Create New"), style: .default, handler: { _ in
             let item = FTAudioFileToImport.init(withURL: url);
+            item.fileName = url.deletingPathExtension().lastPathComponent;
             docController?.addRecordingToPage(actionType: .addToNewPage, audio: item, onCompletion: { complted, _ in
                 onCompletion?(complted)
             })
         });
         alertController.addAction(createNew);
         self.present(alertController, animated: true, completion: nil);
-    }
-
-    func buildSpotlightSearch(onCompletion : @escaping () -> Void) {
-        if(nil != self.rootContentViewController) {
-            let task = startBackgroundTask();
-            DispatchQueue.global().async {
-                FTNoteshelfDocumentProvider.shared.shelfs({ (categoryCollections) in
-                    var items = [FTShelfItemProtocol]();
-                    for categoryCollection in categoryCollections {
-                        for category in categoryCollection.categories {
-                            items.append(contentsOf: category.childrens);
-                        }
-                    }
-                    let spotLighter = FTDocumentsSpotlightIndexManager();
-                    spotLighter.prepareSpotLightIndexForItems(items: items);
-                    DispatchQueue.main.async {
-                        endBackgroundTask(task);
-                        onCompletion();
-                    }
-                });
-            }
-        }
     }
 
     // MARK: - Spot light open -
@@ -1014,46 +971,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 //        }
 //    }
 #endif
-
-    // MARK: - Notification -
-    @objc func showMigrationCompleteScreen(_ notification: Notification?) {
-        if(nil == self.rootContentViewController) {
-            self.shouldShowMigrationViewOnlaunch = true;
-            return;
-        }
-        self.setLastOpenedGroup(nil);
-        self.setLastOpenedDocument(nil);
-        self.removeLaunchScreen(true);
-
-        let showMigrationAlert : () -> Void = {
-            let migrationController = FTMigrationPopupController(nibName: "FTMigrationPopupController", bundle: nil)
-            //            if(self.rootContentViewController != nil) {
-            //                let frame = self.rootContentViewController?.currentShelfVc?.shelfToolbarController!.categoryActionLabel!.frame;
-            //                migrationController.indicatorFrame = frame;
-            //            }
-            migrationController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-
-            self.present(migrationController, animated: true);
-        };
-
-        weak var weakSelf = self;
-        if(self.docuemntViewController != nil) {
-            self.switchToShelf(self.docuemntViewController?.documentItemObject, documentViewController: self.docuemntViewController, animate: true, onCompletion: {
-                weakSelf?.showMigrationCompleteScreen(notification);
-            });
-            return;
-        } else {
-            if((self.rootContentViewController?.isInGroupMode)!) {
-                var animate = true
-#if targetEnvironment(macCatalyst)
-                animate = false
-#endif
-                self.rootContentViewController?.hideGroup(animate: animate, onCompletion: {
-                    weakSelf?.showMigrationCompleteScreen(notification)
-                })
-            }
-        }
-    }
 
     // MARK: - KVO
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -1486,9 +1403,6 @@ extension FTRootViewController {
 
         if(false == FTNoteshelfDocumentProvider.shared.isProviderReady) {
             isOpeningDocument = true
-            if(self.shouldShowMigrationViewOnlaunch) {
-                return;
-            }
             self.setLastOpenedGroup(nil);
             self.setLastOpenedDocument(NSURL(fileURLWithPath: relativePath) as URL);
             return;

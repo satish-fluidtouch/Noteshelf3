@@ -35,6 +35,8 @@ extension FTDeskCenterPanelTool {
             return .deskModeClipboard;
         case .textMode:
             return .deskModeText;
+        case .favorites:
+            return .deskModeFavorites;
         default:
             return nil
         }
@@ -50,6 +52,7 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.lasso.toolbarIdentifier
             ,FTDeskCenterPanelTool.presenter.toolbarIdentifier
             ,FTDeskCenterPanelTool.hand.toolbarIdentifier
+            ,FTDeskCenterPanelTool.favorites.toolbarIdentifier
             ,FTDeskCenterPanelTool.photo.toolbarIdentifier
             ,FTDeskCenterPanelTool.audio.toolbarIdentifier
             ,FTDeskCenterPanelTool.unsplash.toolbarIdentifier
@@ -99,6 +102,7 @@ extension FTDeskCenterPanelTool {
             ,FTDeskCenterPanelTool.lasso.toolbarIdentifier
             ,FTDeskCenterPanelTool.presenter.toolbarIdentifier
             ,FTDeskCenterPanelTool.hand.toolbarIdentifier
+            ,FTDeskCenterPanelTool.favorites.toolbarIdentifier
         ]
     }
     
@@ -120,6 +124,8 @@ extension FTDeskCenterPanelTool {
             return FTDeskCenterPanelTool.presenter;
         case .deskModeView:
             return FTDeskCenterPanelTool.hand;
+        case .deskModeFavorites:
+            return FTDeskCenterPanelTool.favorites;
         default:
             break;
         }

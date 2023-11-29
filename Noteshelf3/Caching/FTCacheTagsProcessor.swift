@@ -59,7 +59,7 @@ final class FTCacheTagsProcessor {
         var itemsToCahe = [FTItemToCache]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { [weak self] allItems in
             guard let self = self else {return}
-            queue.async {
+            self.queue.async {
                 let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
                 for item in items {
                     dispatchGroup.enter()

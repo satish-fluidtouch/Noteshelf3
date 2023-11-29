@@ -12,6 +12,7 @@ import Foundation
 enum FTMediaLoadState {
     case loading
     case loaded
+    case partiallyLoaded
     case empty
 }
 
@@ -22,44 +23,22 @@ class FTShelfMedia: NSObject, Identifiable, ObservableObject {
     let page: Int
     let imageURL: URL
     weak var document: FTDocumentItemProtocol?
-    @Published var mediaImage : UIImage?
+    @Published private(set) var mediaImage : UIImage?
     var title: String {
         document?.displayTitle ?? ""
     }
     
     func fetchImage() {
-        self.performSelector(inBackground: #selector(loadImageInBackground), with: nil)
-    }
-    
-    @objc private func loadImageInBackground() {
-        let hash = self.imageURL.thumbnailCacheHash()
-        let cachedEntry = imageCache.object(forKey: hash as AnyObject)
-        if let imageFromCache = cachedEntry?.object(forKey: "image") as? UIImage, let storedDate = cachedEntry?.object(forKey: "date") as? Date {
-            if imageURL.fileModificationDate.compare(storedDate) != .orderedSame {
-                 addImageTocache()
-            } else {
+        if let documentID = document?.documentUUID {
+            FTDocumentCache.shared.imageResourceCache.mediaResource(documentID, resourceURL: imageURL) { image in
                 runInMainThread {
-                    self.mediaImage = imageFromCache
+                    self.mediaImage = image;
                 }
-            }
-        } else {
-             addImageTocache()
-        }
-    }
-    
-    private func addImageTocache() {
-        if let image = UIImage(contentsOfFile: self.imageURL.path()),  let thumbnailImage =  image.preparingThumbnail(of: CGSize(width: 400, height: 400)) {
-            let hash = self.imageURL.thumbnailCacheHash()
-            let entry: [String : Any] = ["image": thumbnailImage, "date": self.imageURL.fileModificationDate]
-            imageCache.setObject(entry as AnyObject, forKey: hash as AnyObject)
-            runInMainThread {
-                self.mediaImage = thumbnailImage
             }
         }
     }
 
     func unloadImage() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadImageInBackground), object: nil)
         self.mediaImage =  nil
     }
   
@@ -74,8 +53,20 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
     @Published private(set) var media: [FTShelfMedia] = []
     @Published private(set) var state: FTMediaLoadState = .loading
 
+    private(set) var progress: Progress = Progress()
+    private var cancellables = Set<AnyCancellable>()
+
     var onSelect: ((_ media: FTShelfMedia) -> Void)?
     var openInNewWindow: ((_ media: FTShelfMedia) -> Void)?
+    
+    init() {
+        self.progress.publisher(for: \.isFinished).sink { [weak self] isfinished in
+            runInMainThread {
+                self?.state = .loaded
+                self?.updateMedia(items: [])
+            }
+        }.store(in: &cancellables)
+    }
 
     func buildCache() async {
         do {
@@ -85,25 +76,25 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
             cacheLog(.error, error)
         }
     }
+    
+    func stopFetching() {
+        progress.cancel()
+    }
 
     @MainActor
     private func startLoading() {
         state = .loading
     }
 
-    @MainActor
-    private func setState() {
-        if self.media.isEmpty {
-            state = .empty
-        } else {
-            state = .loaded
-        }
-    }
-    
-    @MainActor
     private func updateMedia(items: [FTShelfMedia]) {
-        self.media.append(contentsOf: items)
-        setState()
+        runInMainThread {
+            self.media.append(contentsOf: items)
+            if self.state == .loaded, self.media.isEmpty {
+                self.state = .empty
+            } else {
+                self.state = .partiallyLoaded
+            }
+        }
     }
 }
 
@@ -111,41 +102,46 @@ final class FTShelfContentPhotosViewModel: ObservableObject {
 private extension FTShelfContentPhotosViewModel {
     func fetchMedia() async throws  {
         let allItems = await FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.byName, parent: nil, searchKey: nil)
+        
+        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
+        progress.totalUnitCount = Int64(items.count)
 
-        guard !allItems.isEmpty else {
-            await self.updateMedia(items: [])
+        guard !items.isEmpty else {
+            self.state = .loaded
+            self.updateMedia(items: [])
+            progress.completedUnitCount = progress.totalUnitCount
             return
         }
 
-        let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
-
-        for case let item in items where item.documentUUID != nil {
+        for case let item in items where !progress.isCancelled {
             do {
-                let media = try fetchMedia(docItem: item)
-                await self.updateMedia(items: media)
+                try fetchMedia(docItem: item, onMediaFound: { [weak self] media in
+                    self?.updateMedia(items: media)
+                })
+                progress.completedUnitCount += 1
             } catch {
+                progress.completedUnitCount += 1
                 continue
             }
         }
     }
 
-    func fetchMedia(docItem: FTDocumentItemProtocol) throws -> [FTShelfMedia] {
+    func fetchMedia(docItem: FTDocumentItemProtocol, onMediaFound: (_ media: [FTShelfMedia]) -> Void) throws {
         guard let docUUID = docItem.documentUUID, docItem.isDownloaded else { throw FTCacheError.documentNotDownloaded }
 
         let cachedLocationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
         let annotationsFolder = cachedLocationURL.path.appending("/Annotations/")
         guard FileManager.default.fileExists(atPath: annotationsFolder) else {
-            return []
+            onMediaFound([])
+            return
         }
-        var sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
-        var totalMedia: [FTShelfMedia] = [FTShelfMedia]()
+        let sqliteFiles = try FileManager.default.contentsOfDirectory(atPath: annotationsFolder)
 
-        for sqliteFile in sqliteFiles {
+        for sqliteFile in sqliteFiles where !progress.isCancelled {
             let sqlitePath = annotationsFolder.appending(sqliteFile)
             let cachedFile = FTCachedSqliteAnnotationFileItem(url: URL(fileURLWithPath: sqlitePath), isDirectory: false, documentItem: docItem)
-            var media = cachedFile.annotataionsWithResources()
-            totalMedia.append(contentsOf: media)
+            let media = cachedFile.annotataionsWithResources()
+            onMediaFound(media)
         }
-        return totalMedia
     }
 }

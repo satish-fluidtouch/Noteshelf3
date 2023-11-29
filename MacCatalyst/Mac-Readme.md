@@ -13,7 +13,6 @@
     - OpenGLES
 
 3. Under `Pods Project -> pods-noteshelf target -> Dependencies` to be changed for iOS only
-    - EvernoteSDK
     - FirebasePhoneAuthUI
     - FirebaseUI
     - ZendeskCommonSDK

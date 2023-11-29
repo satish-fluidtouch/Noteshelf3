@@ -9,7 +9,7 @@ public struct FTStyles {
 
     public static func registerFonts() {
         ClearFace.allCases.forEach {
-            registerFont(bundle: .this, fontName: $0.rawValue, fontExtension: "ttf")
+            registerFont(bundle: .this, fontName: $0.rawValue, fontExtension:  $0.fileExtension)
         }
     }
 

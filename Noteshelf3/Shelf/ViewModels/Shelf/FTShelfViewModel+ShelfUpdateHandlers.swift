@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FTCommon
 class FTShelfRefreshOperation : NSObject
 {
     var newShelfItems = [FTShelfItemProtocol]();
@@ -46,9 +47,9 @@ extension FTShelfViewModel {
                     if let items = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
                         items.forEach { (eachItem) in
                             if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
+                                parent.invalidateTop3Notebooks()
                                 parent.isUpdated = true
                                 parent.resetCachedDates()
-                                parent.invalidateTop3Notebooks()
                             }
                         }
                         reloadItems()
@@ -101,7 +102,7 @@ extension FTShelfViewModel {
             if(self.collection.uuid == shelfCollection.uuid) {
                 if let removedItems = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
                     removedItems.forEach { (eachItem) in
-                        if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
+                        if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading  {
                             parent.invalidateTop3Notebooks()
                             parent.isUpdated = true
                         }

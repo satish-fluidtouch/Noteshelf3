@@ -131,7 +131,7 @@ private extension FTEssentialsPaperSegmentViewController{
             let state: UIMenuElement.State = isSelected ? .on : .off
             let action = UIAction(title: displayTitle,state: state) { [weak self]action in
                 guard let self = self else { return }
-                let orientation = templateSizeModel.size == .mobile ? FTTemplateOrientation.portrait.title : varaintsData.selectedVariantsAndTheme.orientation.title
+                let orientation = templateSizeModel.size == .mobile ? FTTemplateOrientation.portrait.title : self.varaintsData.selectedVariantsAndTheme.orientation.title
                 let paperSizeWithOrientationTitle = self.traitCollection.isRegular ? action.title : action.title + " (\(String(describing: orientation)))"
                 self.paperSizeBtn.setTitle(paperSizeWithOrientationTitle, for: .normal)
                 self.varaintsData.selectedVariantsAndTheme.size = templateSizeModel.size
@@ -159,7 +159,7 @@ private extension FTEssentialsPaperSegmentViewController{
                guard let self = self else { return }
                 self.varaintsData.selectedVariantsAndTheme.orientation = orientation
                let orientationType = self.varaintsData.selectedVariantsAndTheme.size == .mobile ? FTTemplateOrientation.portrait.title : orientation.title
-               let paperSizeWithOrientationTitle = self.traitCollection.isRegular ? varaintsData.selectedVariantsAndTheme.size.displayTitle : varaintsData.selectedVariantsAndTheme.size.displayTitle + " (\(String(describing: orientationType)))"
+               let paperSizeWithOrientationTitle = self.traitCollection.isRegular ? self.varaintsData.selectedVariantsAndTheme.size.displayTitle : self.varaintsData.selectedVariantsAndTheme.size.displayTitle + " (\(String(describing: orientationType)))"
                self.paperSizeBtn.setTitle(paperSizeWithOrientationTitle, for: .normal)
                 if let templateSizeMenu = self.paperSizeBtn?.menu {
                     self.paperSizeBtn?.menu = self.updateOrientationSubTitleInMenu(orientation, menu: templateSizeMenu)

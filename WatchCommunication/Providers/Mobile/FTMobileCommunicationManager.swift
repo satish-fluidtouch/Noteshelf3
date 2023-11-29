@@ -141,7 +141,7 @@ class FTMobileCommunicationManager: FTBaseCommunicationManager, WCSessionDelegat
             let logger = FTLogger.init(fileName: "WatchOS-watchsynclog.txt", createIfNeeded: false);
             let path = logger.logPath();
             try? FileManager().removeItem(at: path)
-            try? FileManager().moveItem(at: file.fileURL.standardizedFileURL, to: path);
+            try? FileManager().moveItem(at: file.fileURL.urlByDeleteingPrivate(), to: path);
             return;
         }
         self.writeLogString("Received file : \(file.fileURL.lastPathComponent)");

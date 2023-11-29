@@ -38,7 +38,7 @@ class FTPaperTheme: FTTheme, FTPaperThemeable {
     static func paperTheme(url: URL) -> FTPaperTheme? {
         var themeObj : FTPaperTheme?
         let metaDataURL = url.appendingPathComponent("metadata.plist");
-        if FileManager.default.fileExists(atPath: metaDataURL.standardizedFileURL.path), let metaData = NSDictionary(contentsOf: metaDataURL) {
+        if FileManager.default.fileExists(atPath: metaDataURL.urlByDeleteingPrivate().path), let metaData = NSDictionary(contentsOf: metaDataURL) {
             if let dynamicId = (metaData.value(forKey: "dynamic_id") as? Int) {
                 if dynamicId == 1 {
                     themeObj = FTAutoTemlpateDiaryTheme(url: url, metaData: metaData);

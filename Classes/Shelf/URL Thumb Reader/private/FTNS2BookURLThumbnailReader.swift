@@ -13,8 +13,7 @@ class FTNS2BookURLThumbnailReader: NSObject {
 
     @discardableResult
     func thumbnail(for item: FTDiskItemProtocol
-                   , isNS2Book: Bool = false
-                   , reuseToken: String? = nil
+                   , reuseToken: String?
                    , queue: OperationQueue
                    , cache: FTThumbnailCacheProtocol
                    , onCompletion: @escaping (UIImage?,String?) -> ()) -> String {
@@ -52,9 +51,6 @@ class FTNS2BookURLThumbnailReader: NSObject {
             
             let nsURL = item.URL as NSURL;
             var image : UIImage?;
-            if isNS2Book {
-                image = (item as? FTShelfImage)?.image;
-            }
             if(nil == image) {
 #if !NS2_SIRI_APP && !NOTESHELF_ACTION
                 if (item as? FTDocumentItemProtocol)?.isDownloaded == false {

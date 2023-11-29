@@ -281,6 +281,11 @@ extension FTOnScreenWritingViewController
             var writingMode: FTWritingMode = .pen;
             if self.currentDrawingMode == .deskModeMarker {
                 writingMode = .highlighter;
+            } else if self.currentDrawingMode == .deskModeFavorites {
+                let mode = FTFavoritePensetManager(activity: self.view.userActivity).fetchCurrentFavoriteMode()
+                if mode == .highlighter {
+                    writingMode = .highlighter
+                }
             }
             self.currentRenderer?.publishChanges(mode: writingMode, onCompletion: nil)
         }
@@ -557,18 +562,16 @@ extension FTOnScreenWritingViewController
         if let penAttributesProvider = self.delegate?.penAttributesProvider {
             return penAttributesProvider.penAttributes();
         }
-        var userActivity : NSUserActivity?;
-        if #available(iOS 13.0, *) {
-            userActivity = self.view.window?.windowScene?.userActivity
-        }
-        if(self.currentDrawingMode == .deskModePen) {
-            return FTRackData(type: FTRackType.pen,userActivity: userActivity).getCurrentPenSet();
-        }
-        else if(self.currentDrawingMode == .deskModeShape) {
-            return FTRackData(type: FTRackType.shape, userActivity: userActivity).getCurrentPenSet()
-        }
-        else {
+        let userActivity = self.view.window?.windowScene?.userActivity
+
+        if(self.currentDrawingMode == .deskModeFavorites) {
+            return FTFavoritePensetManager(activity: userActivity).fetchCurrentPenset()
+        } else if self.currentDrawingMode == .deskModeMarker {
             return FTRackData(type: FTRackType.highlighter,userActivity: userActivity).getCurrentPenSet();
+        } else if(self.currentDrawingMode == .deskModeShape) {
+            return FTRackData(type: FTRackType.shape, userActivity: userActivity).getCurrentPenSet()
+        } else {
+            return FTRackData(type: FTRackType.pen,userActivity: userActivity).getCurrentPenSet();
         }
     }
 }
@@ -613,7 +616,7 @@ extension FTOnScreenWritingViewController
                 self?.isEraseRenderInProgress = false
                 self?.refreshViewForEraser()
                 self?.eraseInProgress = false;
-                
+
                 guard let strongSelf = self else { return }
                 var shouldPostNotification = false;
                 let eraseFullStroke = FTUserDefaults.shouldEraseEntireStroke();
@@ -651,7 +654,7 @@ extension FTOnScreenWritingViewController
                     }
                 }
                 
-                NotificationCenter.default.post(name: NSNotification.Name.init("FTDidEndEraserOperationNotification"), object: nil);
+                NotificationCenter.default.post(name: NSNotification.Name.init("FTDidEndEraserOperationNotification"), object: self);
             })
         case .cancelled:
             FTCLSLog("Erase Cancel")
@@ -842,7 +845,7 @@ extension FTOnScreenWritingViewController : FTDocumentClosing
         var operations = ["eraser"];
         
         let completionCallBack : (String)->() = { (refID) in
-            if let index = operations.index(of: refID) {
+            if let index = operations.firstIndex(of: refID) {
                 operations.remove(at: index);
             }
             if operations.isEmpty {
@@ -867,11 +870,11 @@ extension FTOnScreenWritingViewController : FTDocumentClosing
                                                                                      queue: OperationQueue.main,
                                                                                      using:
                                                                                         { [weak self] (_) in
-                                                                                            if let strongSelf = self?.eraserStopObserver {
-                                                                                                NotificationCenter.default.removeObserver(strongSelf);
-                                                                                            }
-                                                                                            completionBlock(true,"eraser");
-                                                                                        });
+                        if let strongSelf = self?.eraserStopObserver {
+                            NotificationCenter.default.removeObserver(strongSelf);
+                        }
+                        completionBlock(true,"eraser");
+                    });
                 }
                 else {
                     DispatchQueue.main.async {

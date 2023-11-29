@@ -90,14 +90,12 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     @Published var progress: CGFloat = 0.0
     @Published var uploadDownloadInProgress: Bool = false
     @Published var popoverType: FTNotebookPopoverType?
-    @Published var isNS2Book: Bool = false
 
     init(model: FTShelfItemProtocol) {
         self.model = model
         super.init()
         self.updateDownloadStatusFor(item: model);
         self.isFavorited = FTRecentEntries.isFavorited(model.URL)
-        self.isNS2Book = model.URL.isNS2Book
     }
         
     func configureShelfItem(_ item: FTShelfItemProtocol){

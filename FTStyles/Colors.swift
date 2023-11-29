@@ -105,6 +105,7 @@ public enum AssetsColor: String, CaseIterable {
     case shortcutSlotBgColor
     case shortcutSlotBorderColor
     case shortcutSlotHighlightBorderColor
+    case favoriteEmptySlotColor
     case lock_icon_bgcolor
 
     // System
@@ -132,6 +133,7 @@ public enum AssetsColor: String, CaseIterable {
     case white100
     case white20
     case white50
+    case watchViewBg
 
     //Red
     case destructiveRed

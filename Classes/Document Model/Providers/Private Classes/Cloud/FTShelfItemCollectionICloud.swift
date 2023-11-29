@@ -57,11 +57,6 @@ class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSear
 
 // MARK: - FTShelfItemCollection -
 extension FTShelfItemCollectionICloud: FTShelfItemCollection {
-    func isNS2Collection() -> Bool {
-        //TODO: (AK) Think about a refactor
-        let belongs = self.parent?.belongsToNS2()
-        return belongs ?? false
-    }
 
     func shelfItemCollection(for metadata: NSMetadataItem) -> FTShelfItemProtocol? {
         return self.hashTable.itemFromHashTable(metadata) as? FTShelfItemProtocol
@@ -283,7 +278,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                             try fileManager.createDirectory(at: tempURL, withIntermediateDirectories: true, attributes: nil);
                             try fileManager.setUbiquitous(true, itemAt: tempURL, destinationURL: groupURL);
                         }
-                        let groupModel = self.addItemToCache(groupURL.standardizedFileURL) as? FTGroupItemProtocol;
+                        let groupModel = self.addItemToCache(groupURL.urlByDeleteingPrivate()) as? FTGroupItemProtocol;
                         
                         if let _items = items, !_items.isEmpty {
                             self.moveShelfItems(_items,
@@ -435,7 +430,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                                                 toGroupURL: destURL,
                                                                 onCompletion: { error in
                                                                     if(nil == error) {
-                                                                        renamedGroupItem = self.groupItemForURL(destURL.standardizedFileURL);
+                                                                        renamedGroupItem = self.groupItemForURL(destURL.urlByDeleteingPrivate());
                                                                     }
                                                                     if let renamedGroupTitle = renamedGroupItem?.sortIndexHash {
                                                                         self.indexCache?.updateNotebookTitle(from: fromTitle, to: renamedGroupTitle)
@@ -453,7 +448,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                                                                     self.indexCache?.updateNotebookTitle(from: fromTitle, to: groupItem.sortIndexHash)
                                                                     DispatchQueue.main.async(execute: {
                                                                         if(nil == error) {
-                                                                            _ = self.moveItemInCache(groupItem, toURL: destURL.standardizedFileURL);
+                                                                            _ = self.moveItemInCache(groupItem, toURL: destURL.urlByDeleteingPrivate());
                                                                         }
                                                                         block(error, groupItem);
                                                                         self.parent?.enableUpdates()

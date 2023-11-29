@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import FTRenderKit
 import FTDocumentFramework
 
 class FTNSqliteAnnotationFileItem : FTFileItemSqlite
@@ -49,7 +49,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
     
     func removeAnnotation(_ annotation : FTAnnotation)
     {
-        let index = annotationsArray?.index(of: annotation);
+        let index = annotationsArray?.firstIndex(of: annotation);
         if (index != nil && index != NSNotFound)
         {
             self.annotations.remove(at: index!);
@@ -63,7 +63,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
     }
 
     func move(annotation: FTAnnotation, to index: Int) {
-        if let indexToRemove = annotationsArray?.index(of: annotation) {
+        if let indexToRemove = annotationsArray?.firstIndex(of: annotation) {
             self.annotations.remove(at: indexToRemove)
             if(index == -1) || (index > self.annotations.count) {
                 self.annotations.append(annotation);

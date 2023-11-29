@@ -40,7 +40,7 @@ class FTReceivedAudioFileRequest: NSObject,FTRequestProtocol {
         let url = URL.init(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(newRecording.GUID).appendingPathExtension(audioFileExtension);
         try? FileManager().removeItem(at: url)
         do {
-            try FileManager().moveItem(at: self.audioFile.fileURL.standardizedFileURL, to: url);
+            try FileManager().moveItem(at: self.audioFile.fileURL.urlByDeleteingPrivate(), to: url);
         }
             
         catch let error as NSError{

@@ -22,7 +22,7 @@ struct FTNotebookItemView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme
-    @Binding var isPressed: Bool
+    @State private var isPressed: Bool = false
 
     var shelfItemWidth: CGFloat = 212
     var shelfItemHeight: CGFloat = 334
@@ -45,11 +45,11 @@ struct FTNotebookItemView: View {
                 FTNotebookShadowView(shelfItem: shelfItem,thumbnailSize: thumbnailSize)
                     .isHidden((hideShadow || colorScheme == .dark))
                 FTShelfItemContextMenuPreview(preview: {
-                    FTNotebookCoverView(isHighlighted: (shelfViewModel.highlightItem == shelfItem))
+                    FTNotebookCoverView(isPressed: $isPressed, isHighlighted: (shelfViewModel.highlightItem == shelfItem))
                         .ignoresSafeArea()
                 }, notebookShape: {
                     let shape: FTPreviewShape;
-                    if shelfItem.coverImage.needEqualCorners || shelfViewModel.isNS2Collection {
+                    if shelfItem.coverImage.needEqualCorners {
                         shape = FTPreviewShape(raidus: leftCornerRadius);
                     }
                     else {
@@ -90,11 +90,14 @@ struct FTNotebookItemView: View {
             VStack(alignment: .center, content: {
                 FTNotebookTitleView()
                     .frame(height: 60)
+                    .onTapGesture {
+                        shelfViewModel.renameShelfItem(shelfItem)
+                    }
             })
             .frame(height: titleRectHeight,alignment:.bottom)
         })            
     }
-    
+
     private var viewSize: CGSize {
         return CGSize(width:viewWidth, height: viewHeight)
     }

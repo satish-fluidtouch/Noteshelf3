@@ -16,8 +16,6 @@ class FTWatchAudioActionsViewController: UIViewController,UITableViewDataSource,
     
     var actionContext = FTAudioActionContext.shelf;
 
-    @IBOutlet var titleLabel:UILabel?
-    
     @IBOutlet var tableView:UITableView!
     var audioActions:[FTAudioAction]! = []
     var currentSelectedAudio:FTWatchRecordedAudio?
@@ -25,8 +23,12 @@ class FTWatchAudioActionsViewController: UIViewController,UITableViewDataSource,
     var audioActionsProvider:FTWatchAudioActionsProvider! = FTWatchAudioActionsProvider()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButton
+
         self.audioActions = self.audioActionsProvider.actionsForAudio(self.currentSelectedAudio, actionContext: self.actionContext)
-        self.titleLabel?.text = self.currentSelectedAudio!.audioTitle;
+        self.title = self.currentSelectedAudio!.audioTitle;
     }
     
     deinit {
