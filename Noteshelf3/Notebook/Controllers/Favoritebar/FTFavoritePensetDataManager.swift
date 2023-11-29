@@ -110,8 +110,10 @@ private extension FTFavoritePensetDataManager {
             let isFavEnabled = self.isFavoritebarEnabledInNS2()
             if isFavEnabled {
                 var tools = FTCurrentToolbarSection().displayTools
-                tools.append(.favorites)
-                FTCurrentToolbarSection.saveCurrentToolTypes(tools)
+                if !tools.contains(FTDeskCenterPanelTool.favorites) {
+                    tools.append(.favorites)
+                    FTCurrentToolbarSection.saveCurrentToolTypes(tools)
+                }
                 UserDefaults.standard.set(true, forKey: "IsFavoriteStatusHandled")
             }
         }
