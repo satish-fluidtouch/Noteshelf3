@@ -6,7 +6,9 @@ public extension PDFPage {
         let pageRect = self.bounds(for: .cropBox);
         let ratio = pageRect.width/pageRect.height;
         let thumbSize = CGSize.init(width: 256,height: Int(256/ratio));
+        FTCLSLog("PDFPage - pageRect: \(pageRect), ratio: \(ratio), thumbSize: \(thumbSize)")
         let image = self.thumbnail(of: thumbSize, for: .cropBox);
+        FTCLSLog("PDFPage - image: \(image)")
         return image.getPixelColor(CGPoint(x: 1, y: 1));
     }
 }
@@ -47,6 +49,7 @@ extension CGImage {
         // Now we can get a pointer to the image data associated with the bitmap
         // context.
         let color = cgctx.readColorAt(x: Int(point.x), y: Int(point.y))
+        FTCLSLog("CGImage - color: \(color)")
         return color;
     }
 }
@@ -137,6 +140,7 @@ extension CGContext {
         let blue = data[offset]
         let alpha = data[offset+3]
 
+        FTCLSLog("CGContext - width: \(width), height: \(height), rowOffset: \(rowOffset), offset: \(offset), red: \(red), green: \(green), blue: \(blue), alpha: \(alpha)")
         return UIColor(red: CGFloat(red)/255.0, green: CGFloat(green)/255.0, blue: CGFloat(blue)/255.0, alpha: CGFloat(alpha)/255.0)
     }
 }
