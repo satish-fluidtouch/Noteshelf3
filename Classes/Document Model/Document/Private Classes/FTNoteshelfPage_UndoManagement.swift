@@ -80,7 +80,7 @@ extension FTNoteshelfPage: FTPageUndoManagement {
                 selfObject.postUndoRedoNotification(filteredItem.refreshArea)
             })
         }
-        NotificationCenter.default.post(name: .didAddRemoveMedia, object: nil, userInfo: ["page" : self, "annotations": undoableAnnotations])
+        NotificationCenter.default.post(name: .didAddMedia, object: nil, userInfo: ["page" : self, "annotations": undoableAnnotations])
         self.isDirty = pageModified;
     }
 
@@ -102,7 +102,7 @@ extension FTNoteshelfPage: FTPageUndoManagement {
                 selfObject.postUndoRedoNotification(filteredItem.refreshArea);
             })
         }
-        NotificationCenter.default.post(name: .didAddRemoveMedia, object: nil, userInfo: ["page" : self, "annotations": undoableAnnotations])
+        NotificationCenter.default.post(name: .didRemoveMedia, object: nil, userInfo: ["page" : self, "annotations": undoableAnnotations])
         self.isDirty = pageModified;
     }
 

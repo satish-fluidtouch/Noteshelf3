@@ -11,9 +11,9 @@ import UIKit
 import FTCommon
 
 extension Notification.Name {
-    static let didAddRemoveMedia = Notification.Name(rawValue: "FTDidAddRemoveMedia")
+    static let didRemoveMedia = Notification.Name(rawValue: "FTDidRemoveMedia")
     static let didUpdateMedia = Notification.Name(rawValue: "FTDidUpdateMedia")
-
+    static let didAddMedia = Notification.Name(rawValue: "FTDidAddMedia")
 }
 
 protocol FTMediaDelegate: AnyObject {
@@ -100,7 +100,8 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         createAndApplySnapshot()
         showPlaceHolderView(true)
         self.setUpData()
-        NotificationCenter.default.addObserver(self, selector: #selector(didAddRemoveMedia(_:)), name: .didAddRemoveMedia, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didRemoveMedia(_:)), name: .didRemoveMedia, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didAddMedia(_:)), name: .didAddMedia, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
@@ -159,29 +160,51 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         return itemsToReturn
     }
     
-    @objc private func didAddRemoveMedia(_ notification: Notification) {
-        if let userInfo = notification.userInfo, let currentPage = userInfo["page"] as? FTNoteshelfPage {
+    @objc private func didAddMedia(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let noteshelfPage = userInfo["page"] as? FTNoteshelfPage, let annotations = userInfo["annotations"] as? [FTAnnotation] {
             let page = documentPages.filter { eachPage in
-                return eachPage.pageId == currentPage.uuid
+                return eachPage.pageId == noteshelfPage.uuid
             }
-            if !page.isEmpty, let documentPage = page.first {
-                let currentAnnotations = Set(currentPage.annotationsWithMediaResources())
-                let existingAnnotations = Set(documentPage.mediaObjects.map { eachObject in
-                    return eachObject.annotation!
-                })
-                if existingAnnotations.count > currentAnnotations.count {
-                    removeMediaItems(existingAnnotations: existingAnnotations, currentAnnotations: currentAnnotations, documentPage: documentPage)
-                } else if existingAnnotations.count < currentAnnotations.count {
-                    addMediaItems(existingAnnotations: existingAnnotations, currentAnnotations: currentAnnotations, documentPage: documentPage, noteshelfPage: currentPage)
+            annotations.forEach { eachAnnotation in
+                if eachAnnotation.isMediaType, !page.isEmpty, let documentPage = page.first {
+                    let mediaObject = FTMediaObject(page: noteshelfPage, annotation: eachAnnotation)
+                    self.mediaObjects.append(mediaObject)
+                    documentPage.mediaObjects.append(mediaObject)
+                    let filteredObjects = objectsToLoad(items: documentPage.mediaObjects)
+                    var snapShot = self.dataSource.snapshot()
+                    snapShot.appendItems(filteredObjects)
+                    self.dataSource.apply(snapShot)
+                } else {
+                    self.createAndUpdatePages(doc: noteshelfPage, annotations: [eachAnnotation])
                 }
-            } else {
-                self.createAndUpdatePages(doc: currentPage, annotations: currentPage.annotationsWithMediaResources())
             }
+        }
+    }
+
+    @objc private func didRemoveMedia(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let currentPage = userInfo["page"] as? FTNoteshelfPage, let annotations = userInfo["annotations"] as? [FTAnnotation] else {
+            return
+        }
+        let matchingPages = documentPages.filter { $0.pageId == currentPage.uuid }
+        annotations.forEach { eachAnnotation in
+            guard  let documentPage = matchingPages.first, eachAnnotation.isMediaType, let item = documentPage.mediaObjects.first(where: { $0.annotation == eachAnnotation }) else {
+                return
+            }
+            if let index = documentPage.mediaObjects.firstIndex(of: item) {
+                documentPage.mediaObjects.remove(at: index)
+            }
+            if let index = mediaObjects.firstIndex(of: item) {
+                mediaObjects.remove(at: index)
+            }
+            var snapShot = dataSource.snapshot()
+            snapShot.deleteItems([item])
+            dataSource.apply(snapShot)
+            showPlaceHolderView(mediaObjects.isEmpty)
         }
     }
     
     @objc private func didUpdateMedia(_ notification: Notification) {
-        if let userInfo = notification.userInfo, let annotation = userInfo["annotation"] as? FTAnnotation {
+        if let userInfo = notification.userInfo, let annotation = userInfo["annotation"] as? FTAnnotation, annotation.isMediaType {
             var snapShot = self.dataSource.snapshot()
             let item = snapShot.itemIdentifiers.first(where: { eachItem in
                 if let newItem = eachItem as? FTMediaObject, newItem.annotation == annotation {
@@ -194,36 +217,6 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
                 snapShot.reloadItems([item])
                 self.dataSource.apply(snapShot)
             }
-        }
-    }
-    
-    func removeMediaItems(existingAnnotations: Set<FTAnnotation>, currentAnnotations: Set<FTAnnotation>, documentPage: FTDocumentPage) {
-        var annotationsToRemove = Set<FTAnnotation>()
-        var mediaObjectsToRemove = [FTMediaObject]()
-        if existingAnnotations.count > currentAnnotations.count {
-            annotationsToRemove = existingAnnotations.subtracting(currentAnnotations)
-            annotationsToRemove.forEach { eachAnnotaion in
-                let objectToRemove = documentPage.mediaObjects.filter { eachObject in
-                    eachObject.annotation?.uuid == eachAnnotaion.uuid
-                }
-                objectToRemove.forEach { eachObj in
-                    mediaObjectsToRemove.append(eachObj)
-                }
-            }
-            //documentPage.mediaObjects.removeAll()
-            mediaObjectsToRemove.forEach { eachObj in
-                if let index = documentPage.mediaObjects.firstIndex(of: eachObj) {
-                    documentPage.mediaObjects.remove(at: index)
-                }
-                if let index = self.mediaObjects.firstIndex(of: eachObj) {
-                    self.mediaObjects.remove(at: index)
-                }
-            }
-            var snapShot = self.dataSource.snapshot()
-            let items = mediaObjectsToRemove.map{$0}
-            snapShot.deleteItems(items)
-            self.dataSource.apply(snapShot)
-            showPlaceHolderView(self.mediaObjects.isEmpty)
         }
     }
     
