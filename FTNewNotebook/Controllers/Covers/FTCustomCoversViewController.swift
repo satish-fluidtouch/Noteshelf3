@@ -48,7 +48,7 @@ class FTCustomCoversViewController: FTCoversHeaderController {
     private func findInitialSelectedIndexpathIfExist() -> IndexPath? {
         var scrollIndexPath: IndexPath?
         if let selTheme = FTCurrentCoverSelection.shared.selectedCover {
-            if let coverIndex = self.viewModel.recentCovers.firstIndex(where: { $0.themeable.themeFileURL.resolvedFileURL() == selTheme.themeFileURL.resolvedFileURL() }) {
+            if let coverIndex = self.viewModel.recentCovers.firstIndex(where: { $0.themeable.themeFileURL.standardizedFileURL == selTheme.themeFileURL.standardizedFileURL }) {
                 scrollIndexPath = IndexPath(row: coverIndex, section: 1) // custom cover section is 1
             }
         }
@@ -135,7 +135,7 @@ extension FTCustomCoversViewController: UICollectionViewDataSource, UICollection
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: coverCellReuseId, for: indexPath) as? FTCoverCollectionViewCell else {
                 fatalError("Programmer error")
             }
-            let isSelected = coverTheme.themeable.themeFileURL.resolvedFileURL() == FTCurrentCoverSelection.shared.selectedCover?.themeFileURL.resolvedFileURL()
+            let isSelected = coverTheme.themeable.themeFileURL.standardizedFileURL == FTCurrentCoverSelection.shared.selectedCover?.themeFileURL.standardizedFileURL
             if isSelected {
                 self.selectedIndexPath = indexPath
             }

@@ -4,153 +4,9 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/CPCryptController.h</key>
+		<key>Resources/Info.plist</key>
 		<data>
-		FKDKJcGY+2yze3ne1K2GNmDRa7s=
-		</data>
-		<key>Headers/FMDB.h</key>
-		<data>
-		pMX1XJI7wMyxuYqA9+d9cI8p+3w=
-		</data>
-		<key>Headers/FMDatabase.h</key>
-		<data>
-		f18HRfCoBW8EKD48wv8xfqgXTU8=
-		</data>
-		<key>Headers/FMDatabaseAdditions.h</key>
-		<data>
-		63dNfOcecpi6mX9O5yC1UqEXcaQ=
-		</data>
-		<key>Headers/FMDatabasePool.h</key>
-		<data>
-		3LOMDDNm7y8Ywo9WIXTn/F/+4qU=
-		</data>
-		<key>Headers/FMDatabaseQueue.h</key>
-		<data>
-		GfiGBLuNiRAVFMtpPdNvrp8tMVU=
-		</data>
-		<key>Headers/FMResultSet.h</key>
-		<data>
-		pE9En7RFFcCjJnvWkul0fmnEGMg=
-		</data>
-		<key>Headers/FTConfiguration.h</key>
-		<data>
-		ukGNYDelNKdJu2zvkqokiH63A1M=
-		</data>
-		<key>Headers/FTDocument+FTDocumentSecurity.h</key>
-		<data>
-		ZUkYjChLuJD0pvM/VyWhwTaVvZw=
-		</data>
-		<key>Headers/FTDocument.h</key>
-		<data>
-		NqEQntDSPozpF7jB0p4rOfgZq8o=
-		</data>
-		<key>Headers/FTDocumentConstants.h</key>
-		<data>
-		vv/ZamhIv5fYT8ReySRHxjFGWW8=
-		</data>
-		<key>Headers/FTDocumentFramework.h</key>
-		<data>
-		mCLkayjTl6aNp24XxDMZshcj4Dw=
-		</data>
-		<key>Headers/FTDocumentGroup.h</key>
-		<data>
-		ZUqlpmKwGC2TeQxmBBVrwNJCtUs=
-		</data>
-		<key>Headers/FTDocumentModel.h</key>
-		<data>
-		YTx1FmxeTGnB5zdWmXudyyMIHfY=
-		</data>
-		<key>Headers/FTDocumentProvider.h</key>
-		<data>
-		HQ/GZDhMPDh0UJA0zFfKFPUtmNg=
-		</data>
-		<key>Headers/FTDocumentProviderFactory.h</key>
-		<data>
-		38m6I1bC9OPpsnlVZu3kIvRWZXM=
-		</data>
-		<key>Headers/FTDocumentProviderPrivate.h</key>
-		<data>
-		W4QD9wk8m8sjI/hOyQIwk6gZiEo=
-		</data>
-		<key>Headers/FTDocumentRequestManager.h</key>
-		<data>
-		x5BGTq63lLFj5IFHKKzipQAuLko=
-		</data>
-		<key>Headers/FTDocumentRequestModel.h</key>
-		<data>
-		R9fkO1TsUoyTLwAZ0t/8aIBD0/A=
-		</data>
-		<key>Headers/FTDocumentUtils.h</key>
-		<data>
-		rqSTqABJgmDsXxPVdTWNfDXJHhc=
-		</data>
-		<key>Headers/FTFileItem.h</key>
-		<data>
-		GaQepIKMUoxvhcujqu9GF8Il2cI=
-		</data>
-		<key>Headers/FTFileItemAudio.h</key>
-		<data>
-		iVj3xqRRMpYOI3NHrd0P3VX1yoQ=
-		</data>
-		<key>Headers/FTFileItemFactory.h</key>
-		<data>
-		YC4gdGk11vWo1RNOYYXFl5kET8Y=
-		</data>
-		<key>Headers/FTFileItemImage.h</key>
-		<data>
-		njbhIe+gMWVCRua0jObhLNNz0pY=
-		</data>
-		<key>Headers/FTFileItemPDF.h</key>
-		<data>
-		7aXnrP/AnoeunRQuDiX3xtl4w34=
-		</data>
-		<key>Headers/FTFileItemPlist.h</key>
-		<data>
-		JFn47/1V1m18on8dOL0MExLW39U=
-		</data>
-		<key>Headers/FTFileItemSqlite.h</key>
-		<data>
-		NiyOuylwrQ+GfeSc3LAFMUiAuOA=
-		</data>
-		<key>Headers/FTFileSystemDocumentProvider.h</key>
-		<data>
-		u3ze9LJl6VI1l4bEMxJtBPnu4ew=
-		</data>
-		<key>Headers/FTPDFKitFileItemPDF.h</key>
-		<data>
-		Rq3pV12FoP5WPuv+qKgex3xXSlY=
-		</data>
-		<key>Headers/FTPasswordStorage.h</key>
-		<data>
-		OYhpGBo7H2RqBIwkFtsr/n7IRBE=
-		</data>
-		<key>Headers/FTSecurityModal.h</key>
-		<data>
-		cUiaN+XNaoYe4Cq605ik7ui0y2g=
-		</data>
-		<key>Headers/FTiCloudDocumentProvider.h</key>
-		<data>
-		kCsmbL7C+JxEr5qWjGMW57ycGao=
-		</data>
-		<key>Headers/FTiCloudManager.h</key>
-		<data>
-		eFZQHpcImtbtA7Hy85+8KMI+1Cs=
-		</data>
-		<key>Headers/KeychainItemWrapper.h</key>
-		<data>
-		pDxsSwYqMFVNR5+9kS+fkNKbW7w=
-		</data>
-		<key>Headers/RNCryptManager.h</key>
-		<data>
-		wH2VbSc6LkcxfhGe3jz8oEnJ2vE=
-		</data>
-		<key>Info.plist</key>
-		<data>
-		bMObRf1z/JSuplrjSzfifMeWfe0=
-		</data>
-		<key>Modules/module.modulemap</key>
-		<data>
-		DfQm5fc2GNda4gZLvZN4sYoj6ns=
+		vPWZuLK8mLn193fJb468PL5ezTE=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -407,26 +263,33 @@
 			WUqF4jkeumdGmnEczgWN00aSexgKigh1Etrk3v2RZnU=
 			</data>
 		</dict>
+		<key>Resources/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			faq54hDmMPSj3JfNAFAcD0j4WcCw5GXh6s8cGVHcqhc=
+			</data>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>
-		<key>^.*</key>
+		<key>^Resources/</key>
 		<true/>
-		<key>^.*\.lproj/</key>
+		<key>^Resources/.*\.lproj/</key>
 		<dict>
 			<key>optional</key>
 			<true/>
 			<key>weight</key>
 			<real>1000</real>
 		</dict>
-		<key>^.*\.lproj/locversion.plist$</key>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
 		<dict>
 			<key>omit</key>
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
 		</dict>
-		<key>^Base\.lproj/</key>
+		<key>^Resources/Base\.lproj/</key>
 		<dict>
 			<key>weight</key>
 			<real>1010</real>
@@ -448,27 +311,15 @@
 			<key>weight</key>
 			<real>2000</real>
 		</dict>
+		<key>^(Frameworks|SharedFrameworks|PlugIns|Plug-ins|XPCServices|Helpers|MacOS|Library/(Automator|Spotlight|LoginItems))/</key>
+		<dict>
+			<key>nested</key>
+			<true/>
+			<key>weight</key>
+			<real>10</real>
+		</dict>
 		<key>^.*</key>
 		<true/>
-		<key>^.*\.lproj/</key>
-		<dict>
-			<key>optional</key>
-			<true/>
-			<key>weight</key>
-			<real>1000</real>
-		</dict>
-		<key>^.*\.lproj/locversion.plist$</key>
-		<dict>
-			<key>omit</key>
-			<true/>
-			<key>weight</key>
-			<real>1100</real>
-		</dict>
-		<key>^Base\.lproj/</key>
-		<dict>
-			<key>weight</key>
-			<real>1010</real>
-		</dict>
 		<key>^Info\.plist$</key>
 		<dict>
 			<key>omit</key>
@@ -482,6 +333,37 @@
 			<true/>
 			<key>weight</key>
 			<real>20</real>
+		</dict>
+		<key>^Resources/</key>
+		<dict>
+			<key>weight</key>
+			<real>20</real>
+		</dict>
+		<key>^Resources/.*\.lproj/</key>
+		<dict>
+			<key>optional</key>
+			<true/>
+			<key>weight</key>
+			<real>1000</real>
+		</dict>
+		<key>^Resources/.*\.lproj/locversion.plist$</key>
+		<dict>
+			<key>omit</key>
+			<true/>
+			<key>weight</key>
+			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
+		</dict>
+		<key>^[^/]+$</key>
+		<dict>
+			<key>nested</key>
+			<true/>
+			<key>weight</key>
+			<real>10</real>
 		</dict>
 		<key>^embedded\.provisionprofile$</key>
 		<dict>
