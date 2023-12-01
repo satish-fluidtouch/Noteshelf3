@@ -7,13 +7,6 @@
 
 import UIKit
 import FTCommon
-import FTDocumentFramework
-
-extension URL {
-    func resolvedFileURL() -> URL {
-        return FTDocumentUtils.resolvedURL(self);
-    }
-}
 
 class FTCoversViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -85,7 +78,7 @@ class FTCoversViewController: UIViewController {
         var scrollIndexPath: IndexPath?
         if let selTheme = FTCurrentCoverSelection.shared.selectedCover {
             for (sectionIndex, coverSection) in self.viewModel.coversSections.enumerated() {
-                if let coverIndex = coverSection.covers.firstIndex(where: { $0.themeable.themeFileURL.resolvedFileURL() == selTheme.themeFileURL.resolvedFileURL() }) {
+                if let coverIndex = coverSection.covers.firstIndex(where: { $0.themeable.themeFileURL.standardizedFileURL == selTheme.themeFileURL.standardizedFileURL }) {
                     scrollIndexPath = IndexPath(row: coverIndex, section: sectionIndex)
                 }
             }
@@ -157,7 +150,7 @@ extension FTCoversViewController: UICollectionViewDataSource, UICollectionViewDe
                 title = section.name
             }
             let theme = section.covers[indexPath.row]
-            let isSelected = theme.themeable.themeFileURL.resolvedFileURL() == FTCurrentCoverSelection.shared.selectedCover?.themeFileURL.resolvedFileURL()
+            let isSelected = theme.themeable.themeFileURL.standardizedFileURL == FTCurrentCoverSelection.shared.selectedCover?.themeFileURL.standardizedFileURL
             if isSelected {
                 self.selectedIndexPath = indexPath
             }

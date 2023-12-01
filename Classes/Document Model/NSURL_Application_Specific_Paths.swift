@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FTDocumentFramework
 
 extension URL {
     static func thumbnailFolderURL() -> URL
@@ -20,11 +19,6 @@ extension URL {
             _ = try? FileManager.default.createDirectory(at: thumbnailFolderPath, withIntermediateDirectories: true, attributes: nil);
         }
         return thumbnailFolderPath;
-    }
-    
-    func urlByDeleteingPrivate() -> URL
-    {
-        return FTDocumentUtils.resolvedURL(self);
     }
     
     func isPinEnabledForDocument() -> Bool {
