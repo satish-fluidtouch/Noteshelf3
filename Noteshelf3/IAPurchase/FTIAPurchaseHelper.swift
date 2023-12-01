@@ -23,6 +23,15 @@ final class FTIAPurchaseHelper {
         inAppPurchase.isModalInPresentation = true
         controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
     }
+    
+    func presentIAPOffScreenIfNeeded(on controller: UIViewController) {
+        let storyboard = UIStoryboard(name: "IAPEssentials", bundle: nil)
+        guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPOfferViewController") as? FTIAPOfferViewController else {
+            fatalError("FTIAPOfferViewController doesnt exist")
+        }
+        inAppPurchase.isModalInPresentation = true
+        controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
+    }
 
     func showIAPAlert(on controller: UIViewController) {
         let alertController = UIAlertController(title: "iap.booklimitReachedTitle".localized, message: "iap.booklimitReachedMessage".localized, preferredStyle: .alert)

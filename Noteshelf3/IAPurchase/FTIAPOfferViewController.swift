@@ -126,7 +126,7 @@ class FTIAPOfferViewController: UIViewController {
 // MARK: - ViewModelDelegate
 extension FTIAPOfferViewController: FTIAPViewModelDelegate {
     func didfinishLoadingProducts() {
-        guard let ns3product = viewModel.ns3PremiumProduct()
+        guard let ns3product = viewModel.ns3PremiumForNS2UserProduct()
         ,let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product) else {
             return;
         }
