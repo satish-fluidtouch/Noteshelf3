@@ -11,7 +11,9 @@ import UIKit
 import FTCommon
 
 extension Notification.Name {
+    static let didAddRemoveMedia = Notification.Name(rawValue: "FTDidAddRemoveMedia")
     static let didUpdateMedia = Notification.Name(rawValue: "FTDidUpdateMedia")
+
 }
 
 protocol FTMediaDelegate: AnyObject {
@@ -98,6 +100,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         createAndApplySnapshot()
         showPlaceHolderView(true)
         self.setUpData()
+        NotificationCenter.default.addObserver(self, selector: #selector(didAddRemoveMedia(_:)), name: .didAddRemoveMedia, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
@@ -113,6 +116,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
             guard let self = self else {
                 return nil
             }
+            showPlaceHolderView(true)
             if let mediaObject =  item as? FTMediaObject {
                 var cell = self.collectionView(collectionView, normalCellForItemAt: indexPath, mediaObject: mediaObject)
                 if mediaObject.mediaType == .audio {
@@ -155,7 +159,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         return itemsToReturn
     }
     
-    @objc private func didUpdateMedia(_ notification: Notification) {
+    @objc private func didAddRemoveMedia(_ notification: Notification) {
         if let userInfo = notification.userInfo, let currentPage = userInfo["page"] as? FTNoteshelfPage {
             let page = documentPages.filter { eachPage in
                 return eachPage.pageId == currentPage.uuid
@@ -169,11 +173,26 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
                     removeMediaItems(existingAnnotations: existingAnnotations, currentAnnotations: currentAnnotations, documentPage: documentPage)
                 } else if existingAnnotations.count < currentAnnotations.count {
                     addMediaItems(existingAnnotations: existingAnnotations, currentAnnotations: currentAnnotations, documentPage: documentPage, noteshelfPage: currentPage)
-                } else if existingAnnotations.count == currentAnnotations.count {
-                    //Update
                 }
             } else {
                 self.createAndUpdatePages(doc: currentPage, annotations: currentPage.annotationsWithMediaResources())
+            }
+        }
+    }
+    
+    @objc private func didUpdateMedia(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let annotation = userInfo["annotation"] as? FTAnnotation {
+            var snapShot = self.dataSource.snapshot()
+            let item = snapShot.itemIdentifiers.first(where: { eachItem in
+                if let newItem = eachItem as? FTMediaObject, newItem.annotation == annotation {
+                    return true
+                } else {
+                    return false
+                }
+            })
+            if let item {
+                snapShot.reloadItems([item])
+                self.dataSource.apply(snapShot)
             }
         }
     }
@@ -201,9 +220,10 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
                 }
             }
             var snapShot = self.dataSource.snapshot()
-            let some = mediaObjectsToRemove.map{$0}
-            snapShot.deleteItems(some)
+            let items = mediaObjectsToRemove.map{$0}
+            snapShot.deleteItems(items)
             self.dataSource.apply(snapShot)
+            showPlaceHolderView(self.mediaObjects.isEmpty)
         }
     }
     
