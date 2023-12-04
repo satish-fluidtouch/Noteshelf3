@@ -34,12 +34,12 @@ class FTCommonThemeStorage: NSObject {
     }
     
     func fileURL(from relativePath: String) -> URL! {
-        let localPathFolder = self.pathToLocalThemesFolder.urlByDeleteingPrivate().appendingPathComponent(relativePath)
+        let localPathFolder = self.pathToLocalThemesFolder.standardizedFileURL.appendingPathComponent(relativePath)
         if(FileManager().fileExists(atPath: localPathFolder.path)) {
             return localPathFolder
         }
         else {
-            let stockThemeURL = self.stockThemesURL.urlByDeleteingPrivate().appendingPathComponent(relativePath)
+            let stockThemeURL = self.stockThemesURL.standardizedFileURL.appendingPathComponent(relativePath)
             if(FileManager().fileExists(atPath: stockThemeURL.path)) {
                 return stockThemeURL
             } else if FileManager().fileExists(atPath: relativePath) {
@@ -50,14 +50,14 @@ class FTCommonThemeStorage: NSObject {
     }
     
     func relativeFilePath(of themeFileURL: URL) -> String {
-        let path = themeFileURL.urlByDeleteingPrivate().path
-        let stockThemeURLPath = self.stockThemesURL.urlByDeleteingPrivate().path
+        let path = themeFileURL.standardizedFileURL.path
+        let stockThemeURLPath = self.stockThemesURL.standardizedFileURL.path
         var relativeFilePath = ""
         if path.hasPrefix(stockThemeURLPath) {
             relativeFilePath = path.replacingOccurrences(of: stockThemeURLPath, with: "")
         }
         else {
-            let localThemesPath = self.pathToLocalThemesFolder.urlByDeleteingPrivate().path
+            let localThemesPath = self.pathToLocalThemesFolder.standardizedFileURL.path
             relativeFilePath = path.replacingOccurrences(of: localThemesPath, with: "")
         }
         return relativeFilePath
