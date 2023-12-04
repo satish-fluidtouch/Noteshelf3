@@ -40,6 +40,8 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func createNewNotebookInside(collection: FTShelfItemCollection, group: FTGroupItemProtocol?,notebookDetails: FTNewNotebookDetails?,isQuickCreate: Bool, mode:ThemeDefaultMode, onCompletion: @escaping (NSError?, _ shelfItem:FTShelfItemProtocol?) -> ())
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
+    func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
+
 }
 protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)
@@ -729,5 +731,32 @@ extension FTShelfViewModel {
 
     func hasAGroupShelfItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {
         return (shelfItems.first(where: {$0 is FTGroupItemViewModel}) != nil)
+    }
+}
+//MARK: Tap actions of notebook and group
+extension FTShelfViewModel {
+    func didTapOnShelfItem(_ shelfItem: FTShelfItemViewModel){
+        if(mode == .selection) {
+            shelfItem.isSelected.toggle()
+            // Track Event
+            track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+            track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+    }
+    func didTapGroupItem(_ groupItem: FTGroupItemViewModel){
+        if(self.mode == .selection) {
+            groupItem.isSelected.toggle();
+            // Track Event
+            track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            self.delegate?.setLastOpenedGroup(groupItem.model.URL)
+            self.groupViewOpenDelegate?.didTapOnShelfItem(groupItem.model);
+            // Track Event
+            track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
     }
 }

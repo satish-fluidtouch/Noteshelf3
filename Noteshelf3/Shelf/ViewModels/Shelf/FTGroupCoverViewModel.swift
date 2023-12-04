@@ -22,7 +22,6 @@ class FTGroupCoverViewModel: ObservableObject {
     @Published var groupNotebooks: [FTShelfItemViewModel] = []
     var groupCoverProperties:   FTShelfItemCoverViewProperties = .large
     private var cancellables = [AnyCancellable]()
-    @Published var loadGroupItems: Bool = false
     var isVisible: Bool = false
     private var groupNotebookItemsCache = [String: FTShelfItemViewModel]();
 
@@ -39,16 +38,14 @@ class FTGroupCoverViewModel: ObservableObject {
         //        if let userActivity = self.window?.windowScene?.userActivity {
         //            currentOrder = userActivity.sortOrder
         //        }
-        loadGroupItems = false
         if (group as? FTGroupItem)?.shelfCollection != nil {
             (group as? FTGroupItem)?.fetchTopNotebooks(sortOrder: currentOrder,noOfBooksTofetch: 4, onCompletion: { [weak self ] top4Children in
                 if !top4Children.isEmpty {
                     self?.createGroupItemsFromData(top4Children, completion: { groupChildItems in
                         self?.groupNotebooks = groupChildItems
-                        self?.loadGroupItems = true
                     })
                 } else {
-                    self?.loadGroupItems = true
+                    self?.groupNotebooks = []
                 }
             })
         }

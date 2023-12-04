@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FTAudioUtils.h"
 
-@class FTAudioRecordingModel,FTAudioTrackModel;
+@class FTAudioRecordingModel, FTAudioTrackModel, FTAudioAnnotation;
 
 @interface FTAudioRecordingModel : NSObject
 
@@ -37,8 +37,8 @@
 - (BOOL)isCurrentAudioPlaying;
 - (BOOL)isAudioConfiguredInSession;
 - (AudioSessionState)currentAudioSessionState;
-
--(void)combineTracksOnUpdate:(void(^)(float progress))updateBlock
-                onCompletion:(void(^)(NSURL *fileURL,NSError *error))completionBlock;
+-(void)combineTracksFor: (FTAudioAnnotation *) audioItem
+            updateBlock: (void(^)(float progress))updateBlock
+           onCompletion: (void(^)(NSURL *fileURL,NSError *error))completionBlock;
 
 @end

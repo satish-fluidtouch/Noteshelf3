@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Apple Pencil 設置";
 "AppleWatch" = "蘋果手錶";
 "AppleWatchRecording" = "蘋果手錶錄音";
+"AppleWatchRecordings" = "來自 Apple Watch 的錄音";
 "Apply" = "應用";
 "Arts" = "藝術";
 "Athletics" = "體育";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 3。 您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfoSubTitle" = "您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfoTitle" = "在你的Apple Watch上安裝Noteshelf 3。";
 "WatchNewRecords" = "您的Apple Watch有新錄音。";
 "WatchRecording" = "觀看錄影";
 "WatchRecordings" = "手錶錄音";
@@ -1546,4 +1548,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 21 November 2023 at 10:28 AM
+// Last Synced by Siva on 23 November 2023 at 5:40 PM

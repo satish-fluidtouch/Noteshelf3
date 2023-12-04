@@ -185,9 +185,12 @@ final class FTAppIntentHandler {
 
     @discardableResult
     func continueUserActivity(_ userActivity: NSUserActivity, restorationHandler: (([UIUserActivityRestoring]?) -> Void)? = nil) -> Bool {
-        let intentTypes = ["com.fluidtouch.noteshelf.createNotebook",
-                     "com.fluidtouch.noteshelf.openNotebook",
-                     "com.fluidtouch.noteshelf.createAudioNote"]
+        guard let bundleId = Bundle.main.bundleIdentifier else {
+            return false
+        }
+        let intentTypes = ["\(bundleId).createNotebook",
+                           "\(bundleId).openNotebook",
+                           "\(bundleId).createAudioNote"]
         var status = false
         if intentTypes.contains(userActivity.activityType) {
             track("siri_shortcut", params: ["type": userActivity.activityType])
