@@ -15,6 +15,7 @@ class FTIAPOfferViewController: UIViewController {
     @IBOutlet weak var restorePurchaseButton: UIButton?;
     @IBOutlet weak var privacyButton: UIButton?;
 
+    @IBOutlet weak var topTitle: UILabel?
     @IBOutlet weak var titleLabel: UILabel?;
     @IBOutlet weak var messageLabel: UILabel?;
 
@@ -92,8 +93,7 @@ class FTIAPOfferViewController: UIViewController {
         let range = (localisedText as NSString).range(of: "%@")
 
         let title1 =  String(format: localisedText,"\(discountpercentage)%")
-        let title2 = NSLocalizedString("iap.bannerTitle2", comment: "")
-        let fullText = "\(title1) \n \(title2)"
+        let fullText = "\(title1)"
         let redAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.red
         ]
@@ -105,6 +105,15 @@ class FTIAPOfferViewController: UIViewController {
 
         attributedString.addAttributes(redAttributes, range: range)
         self.titleLabel?.attributedText = attributedString
+
+        let boldAttr: [NSAttributedString.Key: Any] = [
+            .font: UIFont.clearFaceFont(for: .medium, with: 20.0)
+        ]
+        let localisedString = NSLocalizedString("iap.toptitle", comment: "Noteshelf 2 users exclusive")
+        let selectedRange = (localisedString as NSString).range(of: "Noteshelf 2")
+        let attrString = NSMutableAttributedString(string: localisedString)
+        attrString.addAttributes(boldAttr, range: selectedRange)
+        self.topTitle?.attributedText = attrString
     }
 
     private func showAlert(withMessage message: String,closeOnOk: Bool = false) {
@@ -118,19 +127,19 @@ class FTIAPOfferViewController: UIViewController {
     }
 
     @IBAction func purchaseAction(_ sender: Any) {
-        track(EventName.premium_purchase_tap, screenName: ScreenName.iap)
+        track(EventName.ns2premium_upgradenow_tap, screenName: ScreenName.iap)
         if let product = self.discountedProduct {
             self.delegate?.purchase(product: product)
         }
     }
 
     @IBAction func restoreAction(_ sender: Any) {
-        track(EventName.premium_restorepurchase_tap, screenName: ScreenName.iap)
+        track(EventName.ns2premium_restorepurchases_tap, screenName: ScreenName.iap)
         delegate?.restorePurchases()
     }
 
     @IBAction func privacyAction(_ sender: Any) {
-        track(EventName.premium_privacy_tap, screenName: ScreenName.iap)
+        track(EventName.ns2premium_privacypolicy_tap, screenName: ScreenName.iap)
         if let privacyURL = URL(string: "https://www.noteshelf.net/privacy.html") {
             let safariController = SFSafariViewController(url: privacyURL);
             safariController.modalPresentationStyle = .fullScreen
@@ -140,7 +149,7 @@ class FTIAPOfferViewController: UIViewController {
     }
 
     @IBAction func closeAction(_ sender: Any) {
-        track(EventName.premium_close_tap, screenName: ScreenName.iap)
+        track(EventName.ns2premium_close_tap, screenName: ScreenName.iap)
         self.dismiss(animated: true)
     }
     private func setTitleToPurchaseButton(title:String) {
@@ -162,7 +171,7 @@ extension FTIAPOfferViewController {
 
         let iapPurchaseTitle = "iap.onetimepurchasenew".localized;
 
-        let atts: [NSAttributedString.Key:Any] = self.upgradeTitleAttributes;
+        let atts: [NSAttributedString.Key:Any] = self.subHeadlineTitleAttributes;
         let attributedTitle = NSMutableAttributedString(string: iapPurchaseTitle,attributes:atts);
 
         var strikeThroughAttr : [NSAttributedString.Key:Any] = atts;
@@ -181,14 +190,18 @@ extension FTIAPOfferViewController {
             self.subheadingLabel?.attributedText = attributedTitle
         }
 
-        let title = String(format: iapPurchaseTitle, ns2Price);
+        let iapPriceTitle = "iap.purchase".localized;
+        let title = String(format: iapPriceTitle, ns2Price);
         self.setTitleToPurchaseButton(title:title)
     }
 }
 
 private extension FTIAPOfferViewController {
-    var upgradeTitleAttributes: [NSAttributedString.Key : Any] {
+    var subHeadlineTitleAttributes: [NSAttributedString.Key : Any] {
         return [.font: UIFont.appFont(for: .medium, with: 13)];
+    }
+    var upgradeTitleAttributes: [NSAttributedString.Key : Any] {
+        return [.font: UIFont.clearFaceFont(for: .medium, with: 20)];
     }
 
     func discountedPercentage(_ ns3Product: SKProduct, ns2Product: SKProduct) {
