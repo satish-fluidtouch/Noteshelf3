@@ -1110,6 +1110,7 @@
 "iap.restoreSuccessWithNoPurchase" = "復元する購入済みアイテムはありません";
 "iap.termsnconditions" = "利用規約";
 "iap.title" = "Noteshelf Premium で完全なエクスペリエンスを手に入れましょう";
+"iap.toptitle" = "Noteshelf 2 ユーザー専用";
 "iap.upgradeNow" = "今すぐアップグレード";
 "iap.upgradeToPremiumNow" = "今すぐプレミアムにアップグレード";
 "icloud.sync.issue.message" = "iCloud に接続できません。 設定でiCloudがオンになっていることをご確認ください。";
@@ -1548,4 +1549,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 23 November 2023 at 5:40 PM
+// Last Synced by admin on 4 December 2023 at 9:56 PM

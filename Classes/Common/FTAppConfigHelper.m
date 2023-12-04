@@ -184,6 +184,14 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
     #endif
 }
 
+-(NSInteger)offerPriceLocationForIAPOffer {
+#if !TARGET_OS_MACCATALYST
+    NSInteger priceLocation = [self.appRemoteConfig configValueForKey:@"price_location"].numberValue.integerValue;
+    return priceLocation;
+#else
+    return 1;
+#endif
+}
 #pragma mark- Beta Program -
 -(NSURL * _Nullable )betaTestingAppURL
 {

@@ -1110,6 +1110,7 @@
 "iap.restoreSuccessWithNoPurchase" = "沒有要恢復的已購買項目";
 "iap.termsnconditions" = "條款與條件";
 "iap.title" = "透過Noteshelf Premium獲得完整體驗";
+"iap.toptitle" = "專屬於Noteshelf 2用戶";
 "iap.upgradeNow" = "立即升級";
 "iap.upgradeToPremiumNow" = "立即升級至高級版";
 "icloud.sync.issue.message" = "無法連接到 iCloud。 請確保 iCloud 在設定中已開啟。";
@@ -1548,4 +1549,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 23 November 2023 at 5:40 PM
+// Last Synced by admin on 4 December 2023 at 9:56 PM

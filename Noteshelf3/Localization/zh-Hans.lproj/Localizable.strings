@@ -1110,6 +1110,7 @@
 "iap.restoreSuccessWithNoPurchase" = "没有要恢复的已购买项目";
 "iap.termsnconditions" = "条款和条件";
 "iap.title" = "通过Noteshelf Premium获得完整体验";
+"iap.toptitle" = "专属于Noteshelf 2用户";
 "iap.upgradeNow" = "立即升级";
 "iap.upgradeToPremiumNow" = "立即升级至高级版";
 "icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
@@ -1548,4 +1549,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 23 November 2023 at 5:40 PM
+// Last Synced by admin on 4 December 2023 at 9:56 PM
