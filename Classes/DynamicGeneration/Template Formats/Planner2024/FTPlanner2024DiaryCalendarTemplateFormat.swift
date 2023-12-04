@@ -43,11 +43,9 @@ class FTPlanner2024DiaryCalendarTemplateFormat : FTPlanner2024DiaryTemplateForma
                 let bezierRect = CGRect(x: calenderYearBoxesXAXis, y: calenderYearBoxesYAxis, width: widthPerBox, height: heightPerBox)
                 self.addBezierBoxWithBorder(rect: bezierRect, toContext: context, rectBGColor: UIColor(hexString: "#FEFEFE", alpha: 1.0), borderColor: UIColor(hexString: "#363636", alpha: 0.4), cornerRadius: 0.0,withLineWidth: 0.5)
                 self.drawLinesWithInitial(xAxis: calenderYearBoxesXAXis, yAxis: calenderYearBoxesYAxis, context: context, outerBoxWidth: CGFloat(widthPerBox), outerBoxHeight: CGFloat(heightPerBox))
-                let indexString = NSMutableAttributedString(string: "\(index)")
-                indexString.draw(at: CGPoint(x: calenderYearBoxesXAXis, y: calenderYearBoxesYAxis + heightPerBox))
                 if index % 2 == 0 {
                     counter += 1
-                    calenderYearBoxesXAXis = index < 6 ? xAxis : (xAxis + 2*widthPerBox + templateInfo.screenSize.height*verticalGapBWBoxes/100 + templateInfo.screenSize.width*horizontalGapBetweenSplitColumns/100)
+                    calenderYearBoxesXAXis = index < 6 ? xAxis : (xAxis + 2*widthPerBox + templateInfo.screenSize.height*horizontalGapBWBoxes/100 + templateInfo.screenSize.width*horizontalGapBetweenSplitColumns/100)
 
                     calenderYearBoxesYAxis = index == 6 ? yAxis : (calenderYearBoxesYAxis + (heightPerBox + templateInfo.screenSize.height*verticalGapBWBoxes/100))
                     print("x values", calenderYearBoxesXAXis)

@@ -174,10 +174,11 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     }
     override func getYearCellWidth(columnCount: CGFloat) -> CGFloat {
         let templateInfo = screenInfo.spacesInfo.calendarSpacesInfo
-        let stripWidthPercnt = formatInfo.customVariants.isLandscape ? 3.59 : 4.67
-        let stripWidth = (currentPageRect.size.width/2)*stripWidthPercnt/100
-        let currentpageWidth = (currentPageRect.width/2) - stripWidth - (7*0.5)
-        return ((currentpageWidth - (2 * (currentpageWidth*templateInfo.baseBoxX/100)) - ((columnCount - 1) * (currentpageWidth*templateInfo.cellOffsetX/100)))/columnCount)
+        let horizontalGapBetweenSplitColumns: CGFloat = 7.19
+        let stripWidthPercnt = formatInfo.customVariants.isLandscape ? 3.8 : 4.67
+        let stripWidth = ((currentPageRect.size.width)*stripWidthPercnt/100)*2
+        let currentpageWidth = currentPageRect.width - stripWidth - (7*0.5)
+        return ((currentpageWidth - (currentpageWidth*templateInfo.baseBoxX/100) - (2 * (currentpageWidth*templateInfo.cellOffsetX/100)) - (currentpageWidth*horizontalGapBetweenSplitColumns/100))/columnCount)
     }
     override func calendarOffsetCount() -> Int {
         return self.offsetCount

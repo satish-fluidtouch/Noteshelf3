@@ -52,7 +52,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         var dayRects : [CGRect] = []
         let paragraphStyle = NSMutableParagraphStyle.init()
         paragraphStyle.alignment = .center
-        months.prefix(upTo: 6).forEach { (month) in
+        months.forEach { (month) in
             dayRects.removeAll()
 
             // rendering month

@@ -281,9 +281,9 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     
     func getColumnCount() -> CGFloat {
         if formatInfo.screenType == FTScreenType.Ipad {
-            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 2
+            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 4
         } else {
-            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 2
+            return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? 3 : 4
         }
     }
     

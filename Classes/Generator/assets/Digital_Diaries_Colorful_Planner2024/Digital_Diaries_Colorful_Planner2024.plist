@@ -175,21 +175,21 @@
 			<key>calendar</key>
 			<dict>
 				<key>baseBoxX</key>
-				<real>4.94</real>
+				<real>7.46</real>
 				<key>baseBoxY</key>
-				<real>17.04</real>
+				<real>21.94</real>
 				<key>cellOffsetX</key>
 				<real>2.24</real>
 				<key>cellOffsetY</key>
-				<real>8.050000000000001</real>
+				<real>7.43</real>
 				<key>boxBottomOffset</key>
-				<real>5.32</real>
+				<real>5.99</real>
 				<key>boxRightOffset</key>
-				<real>8.449999999999999</real>
+				<real>7.46</real>
 				<key>yearY</key>
-				<real>5.45</real>
+				<real>11.75</real>
 				<key>yearX</key>
-				<real>4.04</real>
+				<real>7.46</real>
 			</dict>
 			<key>year</key>
 			<dict>

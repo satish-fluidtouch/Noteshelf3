@@ -52,7 +52,11 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         var dayRects : [CGRect] = []
         let paragraphStyle = NSMutableParagraphStyle.init()
         paragraphStyle.alignment = .center
-        months.prefix(upTo: 6).forEach { (month) in
+
+        var monthX = (currentPageRect.size.width*templateInfo.baseBoxX/100)
+        var dayX = (currentPageRect.size.width*templateInfo.baseBoxX/100)
+        let horizontalGapBetweenSplitColumns: CGFloat = 7.19
+        months.forEach { (month) in
             dayRects.removeAll()
 
             // rendering month
@@ -63,11 +67,14 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                                                               .foregroundColor : textTintColor,
                                                               .paragraphStyle :paragraphStyle]
             let monthString = NSMutableAttributedString(string: month.fullMonth.uppercased(), attributes: monthAttrs)
-            var widthFactor = currMonthIndex.truncatingRemainder(dividingBy: columnCount) * (cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100))
+            var widthFactor = currMonthIndex.truncatingRemainder(dividingBy: 2) * (cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100))
+            if  currMonthIndex > 5 {
+                widthFactor = ((currMonthIndex.truncatingRemainder(dividingBy: 2) + 2) * (cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100))) + currentPageRect.size.width*horizontalGapBetweenSplitColumns/100
+            }
             if formatInfo.customVariants.selectedDevice.identifier == "standard4"{
                 widthFactor += 0.5
             }
-            let monthX = (currentPageRect.size.width*templateInfo.baseBoxX/100) + widthFactor
+            monthX = (currentPageRect.size.width*templateInfo.baseBoxX/100) + widthFactor
             let monthRectHeighPercnt = formatInfo.customVariants.isLandscape ? 2.59 : 1.90
             let monthRectHeight = currentPageRect.size.height*monthRectHeighPercnt/100
             let monthRect =  CGRect(x: monthX, y: monthY + (monthRectHeight/2) - (monthString.size().height/2), width: cellWidth, height: monthRectHeight)
@@ -110,7 +117,6 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                 symbolX += dayCellWidth
             }
             )
-
             var dayX = (currentPageRect.size.width*templateInfo.baseBoxX/100) + widthFactor //+ monthStringX
             var dayY = monthY + monthStringOffsetY + 0.5
 
@@ -144,8 +150,11 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             calendarRectsInfo.dayRects.append(dayRects)
             currMonthIndex+=1
             let numberOfColunms = columnCount
-            if currMonthIndex.truncatingRemainder(dividingBy: numberOfColunms) == 0{
-                monthY += cellHeight + (currentPageRect.height*templateInfo.cellOffsetY/100)
+            if currMonthIndex.truncatingRemainder(dividingBy: 2) == 0 {
+                monthX = currMonthIndex < 6 ? (currentPageRect.size.width*templateInfo.baseBoxX/100) : ((currentPageRect.size.width*templateInfo.baseBoxX/100)  + 2*cellWidth + currentPageRect.size.height*templateInfo.cellOffsetX/100 + currentPageRect.size.width*horizontalGapBetweenSplitColumns/100)
+                monthY = (currMonthIndex == 6) ? (currentPageRect.height*baseBoxY/100.0) - monthStringOffsetY : monthY + cellHeight + (currentPageRect.height*templateInfo.cellOffsetY/100.0)
+            } else {
+                monthX += cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100)
             }
         }
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.calendar, activeMonth: nil)
