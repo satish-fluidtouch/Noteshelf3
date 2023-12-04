@@ -82,7 +82,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             UIAlertController.showAlert(withTitle: "MakeSureYouAreConnected".localized, message: "", from: self, withCompletionHandler: nil)
             return
         } else {
-            FTIAPurchaseHelper.shared.presentIAPOffScreenIfNeeded(on: self);
+            FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
         }
     }
 

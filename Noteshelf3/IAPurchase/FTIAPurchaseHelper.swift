@@ -17,19 +17,9 @@ final class FTIAPurchaseHelper {
     
     func presentIAPIfNeeded(on controller: UIViewController) {
         let storyboard = UIStoryboard(name: "IAPEssentials", bundle: nil)
-        guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPViewController") as? FTIAPViewController else {
-            fatalError("FTIAPViewController doesnt exist")
+        guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPContainerViewController") as? FTIAPContainerViewController else {
+            fatalError("FTIAPContainerViewController doesnt exist")
         }
-        inAppPurchase.isModalInPresentation = true
-        controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
-    }
-    
-    func presentIAPOffScreenIfNeeded(on controller: UIViewController) {
-        let storyboard = UIStoryboard(name: "IAPEssentials", bundle: nil)
-        guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPOfferViewController") as? FTIAPOfferViewController else {
-            fatalError("FTIAPOfferViewController doesnt exist")
-        }
-        inAppPurchase.isModalInPresentation = true
         controller.ftPresentFormsheet(vcToPresent: inAppPurchase,contentSize: CGSize(width: 700, height: 740),animated: true);
     }
 
