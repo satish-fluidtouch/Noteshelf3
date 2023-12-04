@@ -20,7 +20,7 @@ protocol FTMediaDelegate: AnyObject {
     func  didTapMoreOption(cell: UICollectionViewCell, item: FTMediaItem?)
 }
 
-class FTDocumentPage {
+class FTMediaDocumentPage {
     var pageId: String = ""
     var mediaObjects: [FTMediaObject] = []
     
@@ -56,7 +56,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     private lazy var layout = FTCollectionViewWaterfallLayout()
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var expandButton: UIButton!
-    var documentPages = [FTDocumentPage]()
+    var documentPages = [FTMediaDocumentPage]()
     weak var delegate: FTFinderTabBarController?
     var screenMode: FTFinderScreenMode {
         return self.delegate?.currentScreenMode() ?? .normal
@@ -107,7 +107,19 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
     }
     
-    func snapshotItem(for indexPath: IndexPath) -> AnyHashable {
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        #if !targetEnvironment(macCatalyst)
+        configureNavigation(title: "shelf.sidebar.content".localized)
+        #endif
+        self.navigationController?.navigationBar.isHidden = (screenMode == .normal)
+    }
+    
+    internal func snapshotItem(for indexPath: IndexPath) -> AnyHashable {
         let sectionType = dataSource.snapshot().sectionIdentifiers[indexPath.section]
         return dataSource.snapshot().itemIdentifiers(inSection: sectionType)[indexPath.row]
     }
@@ -130,14 +142,14 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         })
     }
     
-    func createAndApplySnapshot() {
+    private func createAndApplySnapshot() {
         guard self.dataSource != nil else { return }
         self.snapShot.appendSections([0])
         self.snapShot.appendItems(self.mediaObjects, toSection: 0)
         self.dataSource.apply(self.snapShot, animatingDifferences: true)
     }
     
-    func updateSourceFor(page: FTDocumentPage) {
+    private func updateSourceFor(page: FTMediaDocumentPage) {
         let filteredObjects = objectsToLoad(items: page.mediaObjects)
         let mappedObjects = filteredObjects.map { eachObject in
             return eachObject
@@ -147,7 +159,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         self.dataSource.apply(snapShot)
     }
     
-    func objectsToLoad(items: [FTMediaObject]) -> [FTMediaObject] {
+    private func objectsToLoad(items: [FTMediaObject]) -> [FTMediaObject] {
         var itemsToReturn = [FTMediaObject]()
         let selectedMedia = currentSelectedMedia()
         for eachObj in items {
@@ -219,36 +231,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
             }
         }
     }
-    
-    func addMediaItems(existingAnnotations: Set<FTAnnotation>, currentAnnotations: Set<FTAnnotation>, documentPage: FTDocumentPage, noteshelfPage: FTNoteshelfPage) {
-        var arrayToAppend = [FTMediaObject]()
-        let annotationsToLoad = currentAnnotations.subtracting(existingAnnotations)
-        annotationsToLoad.forEach { eachAnnotation in
-            let mediaObject = FTMediaObject(page: noteshelfPage, annotation: eachAnnotation)
-            arrayToAppend.append(mediaObject)
-        }
-        
-        if !arrayToAppend.isEmpty {
-            self.mediaObjects.append(contentsOf: arrayToAppend)
-            documentPage.mediaObjects.append(contentsOf: arrayToAppend)
-            let filteredObjects = objectsToLoad(items: arrayToAppend)
-            var snapShot = self.dataSource.snapshot()
-            snapShot.appendItems(filteredObjects)
-            self.dataSource.apply(snapShot)
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        #if !targetEnvironment(macCatalyst)
-        configureNavigation(title: "shelf.sidebar.content".localized)
-        #endif
-        self.navigationController?.navigationBar.isHidden = (screenMode == .normal)
-    }
+   
     
     private func configureNavigation(hideBackButton: Bool = false, title: String, preferLargeTitle: Bool = true) {
         self.navigationItem.hidesBackButton = true
@@ -465,22 +448,14 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         }
         if !arrayToAppend.isEmpty {
             self.mediaObjects.append(contentsOf: arrayToAppend)
-            let page = FTDocumentPage(pageId: doc.uuid, mediaObjects: arrayToAppend)
+            let page = FTMediaDocumentPage(pageId: doc.uuid, mediaObjects: arrayToAppend)
             self.documentPages.append(page)
             self.updateSourceFor(page: page)
         }
     }
 
     private func updateAndReloadCollectionView() {
-        var filteredMediaObjects = [FTMediaObject]()
-        let selectedMedia = currentSelectedMedia()
-        for eachObj in mediaObjects {
-            if selectedMedia == FTMediaType.allMedia {
-                filteredMediaObjects.append(eachObj)
-            } else if eachObj.mediaType == selectedMedia {
-                filteredMediaObjects.append(eachObj)
-            }
-        }
+        let filteredMediaObjects = objectsToLoad(items: self.mediaObjects)
         var newSnapshot = MediaSnapShot()
         newSnapshot.appendSections([0])
         newSnapshot.appendItems(filteredMediaObjects)
