@@ -47,7 +47,7 @@ extension NSMetadataItem
     func URL() -> Foundation.URL
     {
         var fileURL = self.value(forAttribute: NSMetadataItemURLKey) as! Foundation.URL;
-        fileURL = FTDocumentUtils.resolvedURL(fileURL);
+        fileURL = FTDocumentUtils.url(byDeletingLeadingSlash: fileURL);
         return fileURL;
     }
     
