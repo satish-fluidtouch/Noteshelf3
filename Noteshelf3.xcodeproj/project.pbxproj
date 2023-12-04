@@ -119,6 +119,7 @@
 		0E4FDEE42AC1B3AC0097FE16 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4FDEE32AC1B3AC0097FE16 /* ExtensionDelegate.swift */; };
 		0E4FDEE82AC1B3AC0097FE16 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4FDEE72AC1B3AC0097FE16 /* ComplicationController.swift */; };
 		0E4FDEEA2AC1B3AD0097FE16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E4FDEE92AC1B3AD0097FE16 /* Assets.xcassets */; };
+		0E4FDEEF2AC1B3AD0097FE16 /* Noteshelf3 WatchApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0E4FDED02AC1B3AA0097FE16 /* Noteshelf3 WatchApp.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1408AB7B2A14F9A500EF4B6D /* FTSettingsAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1408AB7A2A14F9A500EF4B6D /* FTSettingsAboutView.swift */; };
 		14126F092A8CDBE500C3F903 /* FTStepperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14126F082A8CDBE500C3F903 /* FTStepperView.swift */; };
 		142DB8892A72855C00469B5E /* FTStickerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142DB8882A72855C00469B5E /* FTStickerModels.swift */; };
@@ -2333,6 +2334,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
+				0E4FDEEF2AC1B3AD0097FE16 /* Noteshelf3 WatchApp.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
