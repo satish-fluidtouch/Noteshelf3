@@ -80,9 +80,7 @@ class FTSearchResultBookCell: FTTraitCollectionViewCell, FTShelfItemCellProgress
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let reqSize = self.isRegular ? GlobalSearchConstants.BookThumbnailSize.regular : GlobalSearchConstants.BookThumbnailSize.compact
-        self.cover1WidthConstraint?.constant = reqSize.width
-        self.cover1HeightConstraint?.constant = reqSize.height
+        self.updateCoverConstraints()
     }
 
     fileprivate func configureView(item : FTShelfItemProtocol) {
@@ -90,9 +88,7 @@ class FTSearchResultBookCell: FTTraitCollectionViewCell, FTShelfItemCellProgress
         token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item, onCompletion: {(image, imageToken) in
             if let img = image, token == imageToken {
                 self.coverImageView?.image = img
-                let reqSize = self.isRegular ? GlobalSearchConstants.BookThumbnailSize.regular : GlobalSearchConstants.BookThumbnailSize.compact
-                self.cover1WidthConstraint?.constant = reqSize.width
-                self.cover1HeightConstraint?.constant = reqSize.height
+                self.updateCoverConstraints()
                 self.layoutIfNeeded()
                 if img.isDefaultCover || img.hasNoCover {
                     self.toShowEqualCorners = true
@@ -108,6 +104,15 @@ class FTSearchResultBookCell: FTTraitCollectionViewCell, FTShelfItemCellProgress
         NotificationCenter.default.addObserver(self, selector: #selector(self.makeFavorite(_:)), name: Notification.Name.shelfItemMakeFavorite, object: nil)
     }
 
+    private func updateCoverConstraints() {
+        var reqSize = self.isRegular ? GlobalSearchConstants.BookThumbnailSize.regular : GlobalSearchConstants.BookThumbnailSize.compact
+        if let img = self.coverImageView?.image, img.size.width > img.size.height {
+            reqSize.height = FTShelfItemProperties.Constants.Notebook.landscapeCoverHeightPercnt * reqSize.width
+        }
+        self.cover1WidthConstraint?.constant = reqSize.width
+        self.cover1HeightConstraint?.constant = reqSize.height
+    }
+    
     @objc func makeFavorite(_ notification : Notification){
         if let item = notification.object as? FTShelfItemProtocol {
             if item.uuid == self.shelfItem?.uuid {
