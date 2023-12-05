@@ -69,7 +69,10 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             let monthString = NSMutableAttributedString(string: month.fullMonth.uppercased(), attributes: monthAttrs)
             var widthFactor = currMonthIndex.truncatingRemainder(dividingBy: 2) * (cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100))
             if  currMonthIndex > 5 {
-                widthFactor = ((currMonthIndex.truncatingRemainder(dividingBy: 2) + 2) * (cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100))) + currentPageRect.size.width*horizontalGapBetweenSplitColumns/100
+                let noOfCellsToConsider = (currMonthIndex.truncatingRemainder(dividingBy: 2) + 2)
+                let cellsWidth = (noOfCellsToConsider * cellWidth)
+                let cellsXOffset = (noOfCellsToConsider - 1) * (currentPageRect.size.width*templateInfo.cellOffsetX/100)
+                widthFactor =  cellsWidth + cellsXOffset + currentPageRect.size.width*horizontalGapBetweenSplitColumns/100
             }
             if formatInfo.customVariants.selectedDevice.identifier == "standard4"{
                 widthFactor += 0.5

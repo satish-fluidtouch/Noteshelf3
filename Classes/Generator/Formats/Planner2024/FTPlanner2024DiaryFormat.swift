@@ -177,8 +177,10 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         let horizontalGapBetweenSplitColumns: CGFloat = 7.19
         let stripWidthPercnt = formatInfo.customVariants.isLandscape ? 3.8 : 4.67
         let stripWidth = ((currentPageRect.size.width)*stripWidthPercnt/100)*2
-        let currentpageWidth = currentPageRect.width - stripWidth - (7*0.5)
-        return ((currentpageWidth - (currentpageWidth*templateInfo.baseBoxX/100) - (2 * (currentpageWidth*templateInfo.cellOffsetX/100)) - (currentpageWidth*horizontalGapBetweenSplitColumns/100))/columnCount)
+        let cellsRightOffset = currentPageRect.width*templateInfo.boxRightOffset/100
+        let cellsLeftOffset = (currentPageRect.width*templateInfo.baseBoxX/100)
+        let currentpageWidth = currentPageRect.width - cellsLeftOffset - cellsRightOffset
+        return ((currentpageWidth - (2 * (currentPageRect.width*templateInfo.cellOffsetX/100)) - (currentPageRect.width*horizontalGapBetweenSplitColumns/100))/columnCount)
     }
     override func calendarOffsetCount() -> Int {
         return self.offsetCount

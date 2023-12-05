@@ -45,7 +45,7 @@ class FTPlanner2024DiaryCalendarTemplateFormat : FTPlanner2024DiaryTemplateForma
                 self.drawLinesWithInitial(xAxis: calenderYearBoxesXAXis, yAxis: calenderYearBoxesYAxis, context: context, outerBoxWidth: CGFloat(widthPerBox), outerBoxHeight: CGFloat(heightPerBox))
                 if index % 2 == 0 {
                     counter += 1
-                    calenderYearBoxesXAXis = index < 6 ? xAxis : (xAxis + 2*widthPerBox + templateInfo.screenSize.height*horizontalGapBWBoxes/100 + templateInfo.screenSize.width*horizontalGapBetweenSplitColumns/100)
+                    calenderYearBoxesXAXis = index < 6 ? xAxis : (xAxis + 2*widthPerBox + templateInfo.screenSize.width*horizontalGapBWBoxes/100 + templateInfo.screenSize.width*horizontalGapBetweenSplitColumns/100)
 
                     calenderYearBoxesYAxis = index == 6 ? yAxis : (calenderYearBoxesYAxis + (heightPerBox + templateInfo.screenSize.height*verticalGapBWBoxes/100))
                     print("x values", calenderYearBoxesXAXis)
