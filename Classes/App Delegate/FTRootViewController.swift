@@ -556,7 +556,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     func showPremiumUpgradeScreen() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
-                self.rootContentViewController?.didTapOnUpgradeNow()
+                self.rootContentViewController?.presentIAPScreen()
             }
         }
     }
