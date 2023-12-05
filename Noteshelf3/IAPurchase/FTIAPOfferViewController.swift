@@ -47,6 +47,7 @@ class FTIAPOfferViewController: UIViewController {
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
         self.messageLabel?.text = "iap.messageNew".localized
         self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
+        self.messageLabel?.attributedText = spaceBetweenSentense(label: self.messageLabel!)
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
         self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20)
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
@@ -74,6 +75,18 @@ class FTIAPOfferViewController: UIViewController {
         miniTitleLabel?.isHidden = true
         subheadingLabel?.isHidden = false
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
+    }
+    
+    func spaceBetweenSentense(label: UILabel) -> NSAttributedString {
+        if let stringValue = label.text{
+            let attrString = NSMutableAttributedString(string: stringValue)
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = 5
+            style.alignment = .center
+            attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: stringValue.count))
+            return attrString
+        }
+        return NSAttributedString()
     }
 
     func configurePriceOnButton() {
@@ -182,7 +195,7 @@ extension FTIAPOfferViewController {
                 strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
                 strikeThroughAttr[.strikethroughColor] =  UIColor.appColor(.black50);
                 strikeThroughAttr[.foregroundColor] = UIColor.appColor(.black50)
-                strikeThroughAttr[.font] = UIFont.clearFaceFont(for: .medium, with: 13)
+                strikeThroughAttr[.font] = UIFont.appFont(for: .medium, with: 13)
                 let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
                 priceString.append(NSAttributedString(string: " ", attributes: atts));
                 priceString.append(NSAttributedString(string: "(50% Off)", attributes: atts));
