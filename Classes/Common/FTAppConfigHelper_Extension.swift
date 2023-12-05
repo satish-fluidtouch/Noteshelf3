@@ -7,13 +7,12 @@
 //
 
 import Foundation
+enum OfferPriceLocation: Int {
+    case priceOnButton = 1
+    case priceAboveButton = 2
+}
 
 extension FTAppConfigHelper {
-    enum OfferPriceLocation: Int {
-        case priceOnButton = 1
-        case priceAboveButton = 2
-    }
-
     func variantForOfferPremium() -> OfferPriceLocation {
         let location = self.offerPriceLocationForIAPOffer()
 
