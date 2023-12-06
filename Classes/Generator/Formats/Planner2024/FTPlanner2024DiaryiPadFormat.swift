@@ -28,7 +28,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         if self.layoutRequiresExplicitFont(){
             yearNewFontSize = 15
         }
-        let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.InterMedium(yearNewFontSize),
+        let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.clearFaceFont(for: .regular, with: 21),
                                                         .kern: 1.6,
                                                         .foregroundColor: textTintColor]
         if let startYear = months.first?.year {
@@ -62,7 +62,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             // rendering month
             let monthFont = UIFont.InterMedium(screenInfo.fontsInfo.yearPageDetails.titleMonthFontSize)
             let monthNewFontSize = UIFont.getScaledFontSizeFor(font: monthFont, screenSize: currentPageRect.size, minPointSize: 8)
-            let monthAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.InterMedium(monthNewFontSize),
+            let monthAttrs : [NSAttributedString.Key: Any] = [.font : UIFont.clearFaceFont(for: .regular, with: 11),
                                                               NSAttributedString.Key.kern : 1.6,
                                                               .foregroundColor : textTintColor,
                                                               .paragraphStyle :paragraphStyle]
@@ -102,7 +102,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                 dayCellWidth = cellWidth/7
             }
 
-            let symbolAttrs: [NSAttributedString.Key : Any] =  [.font :UIFont.InterLight(weekSymbolNewFontSize),
+            let symbolAttrs: [NSAttributedString.Key : Any] =  [.font :UIFont.clearFaceFont(for: .regular, with:10),
                                                                 NSAttributedString.Key.kern : 1.6,
                                                                 .foregroundColor : textTintColor,
                                                                 .paragraphStyle: paragraphStyle];
@@ -907,19 +907,19 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         let stripShadowColor = UIColor(hexString: "#000000", alpha: 0.08)
         let shadowOffset = CGSize(width: 0, height: 2)
         let shadowBlurRadius : CGFloat = 4
-        let stripWidthPercnt = formatInfo.customVariants.isLandscape ? 3.59 : 4.67
+        let stripWidthPercnt = 3.86
         let stripWidth = currentPageRect.size.width*stripWidthPercnt/100
         let currentpageWidth = currentPageRect.width
-        var sideStripTextFont = isLandscaped ? UIFont.InterSemiBold(8) : UIFont.InterSemiBold(10)
+        var sideStripTextFont = UIFont.clearFaceFont(for: .regular, with: 10)
         if (formatInfo.customVariants.selectedDevice.identifier == "standard4" ||
             formatInfo.customVariants.selectedDevice.identifier == "standard2") && !formatInfo.customVariants.isLandscape {
-            sideStripTextFont = UIFont.InterSemiBold(7)
+            sideStripTextFont = UIFont.clearFaceFont(for: .regular, with: 7)
         }
         else if formatInfo.customVariants.selectedDevice.identifier == "standard4" && formatInfo.customVariants.isLandscape {
-            sideStripTextFont = UIFont.InterSemiBold(4.75)
+            sideStripTextFont = UIFont.clearFaceFont(for: .regular, with: 4.75)
         }
         else if formatInfo.customVariants.selectedDevice.identifier == "standard2" && formatInfo.customVariants.isLandscape {
-            sideStripTextFont = UIFont.InterSemiBold(7)
+            sideStripTextFont = UIFont.clearFaceFont(for: .regular, with: 7)
         }
 
 
@@ -928,82 +928,91 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                                                           .foregroundColor : textTintColor]
 
 
-        context.saveGState()
-        context.translateBy(x: currentpageWidth, y: 0); // oring is moved
-        context.rotate(by: 90.0 * CGFloat.pi / 180.0) // axis is rotated by 90 degrees
-
         var sideStripBandHeight : CGFloat = 0.0
+        // For Left side strip
+        context.saveGState()
+        context.translateBy(x: 0, y: currentPageRect.height); // orgin is moved to left bottom
+        context.rotate(by: -90.0 * CGFloat.pi / 180.0) // axis is rotated by -90 degrees
 
-        //calendar side strip
-        let calendarStripHeightPercnt : CGFloat = isLandscaped ? 9.09 : 9.25
-        let stripHeight = self.currentPageRect.size.height*calendarStripHeightPercnt/100
-        let calendarTitleString = NSAttributedString.init(string: "Calendar".uppercased(), attributes: attrs)
-        let stripYAxis =  (stripWidth/2) - (calendarTitleString.size().height/2)
-        let stripXAxis = (stripHeight/2) - (calendarTitleString.size().width/2)
-        let calendarStripColor = highlightCalenderStrip ? getTemplateBackgroundColor() : calendarStripColor
-        self.drawColorBandsWith(xAxis: 0, yAxis: 0, context: context, width: stripHeight , height: stripWidth, bandColor: calendarStripColor)
-        calendarTitleString.draw(at: CGPoint(x: stripXAxis, y: stripYAxis + 1 ))
-        plannerDiarySideNavigationRectsInfo.calendarRect = self.getLinkRectForModifiedAxis(location: CGPoint(x: currentPageRect.width - stripWidth, y:  currentPageRect.height - stripHeight), frameSize: CGSize(width:stripWidth, height:  stripHeight))
-        sideStripBandHeight += stripHeight
+        // months rendering
+        let monthStripHeightPercnt : CGFloat = 13.03
+        let monthStripHeight = self.currentPageRect.size.height*monthStripHeightPercnt/100
+        var monthRects : [String : CGRect] = [:]
+
+        renderBandStripsAndTextsForMonths(monthCalendarInfo.prefix(5).reversed(), forPageLeftSide: true)
 
         //yearly planner side strip
-        let yearStripHeightPercnt : CGFloat = isLandscaped ? 9.09 : 9.25
+        let yearStripHeightPercnt : CGFloat = 13.03
         let yearStripHeight = self.currentPageRect.size.height*yearStripHeightPercnt/100
         let yearTitleString = NSAttributedString.init(string: " yearly\nplanner".uppercased(), attributes: attrs)
         let yearTitleYAxis =  (stripWidth/2) - (yearTitleString.size().height/2)
-        let yearTitleXAxis = sideStripBandHeight + (yearStripHeight/2) - (yearTitleString.size().width/2)
-        let yearStripColor = highlightYearStrip ? getTemplateBackgroundColor() : calendarStripColor
+        let yearTitleXAxis =  sideStripBandHeight + (yearStripHeight/2) - (yearTitleString.size().width/2)
+        let yearStripColor = highlightYearStrip ? getTemplateBackgroundColor() : self.calendarStripColor
         self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width:yearStripHeight , height: stripWidth, bandColor: yearStripColor)
         self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight, y:0, width: stripWidth,height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
         yearTitleString.draw(at: CGPoint(x: yearTitleXAxis, y: yearTitleYAxis))
 
-        plannerDiarySideNavigationRectsInfo.yearRect = self.getLinkRect(location: CGPoint(x: currentPageRect.width - stripWidth, y:  sideStripBandHeight), frameSize: CGSize(width: stripWidth, height:yearStripHeight))
+        plannerDiarySideNavigationRectsInfo.yearRect = CGRect(x: 0, y:sideStripBandHeight, width:stripWidth, height: yearStripHeight)
         sideStripBandHeight += yearStripHeight
 
+        //calendar side strip
+        let calendarStripHeightPercnt : CGFloat = 13.03
+        let stripHeight = self.currentPageRect.size.height*calendarStripHeightPercnt/100
+        let calendarTitleString = NSAttributedString.init(string: "Calendar".uppercased(), attributes: attrs)
+        let stripYAxis =  (stripWidth/2) - (calendarTitleString.size().height/2)
+        let stripXAxis = sideStripBandHeight + (stripHeight/2) - (calendarTitleString.size().width/2)
+        let calendarStripColor = highlightCalenderStrip ? getTemplateBackgroundColor() : calendarStripColor
+        self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width: stripHeight , height: stripWidth, bandColor: calendarStripColor)
+        self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight, y:0, width: stripWidth,height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
+        calendarTitleString.draw(at: CGPoint(x: stripXAxis, y: stripYAxis + 1 ))
+        plannerDiarySideNavigationRectsInfo.calendarRect = CGRect(x: 0, y: sideStripBandHeight, width: stripWidth, height: stripHeight)
+        sideStripBandHeight += stripHeight
 
-
-        // month rendering
-        let monthStripHeightPercnt : CGFloat = isLandscaped ? 6.10 : 6.01
-        let monthStripHeight = self.currentPageRect.size.height*monthStripHeightPercnt/100
-        var monthRects : [String : CGRect] = [:]
-        for month in monthCalendarInfo {
-            let monthTitleString = NSAttributedString.init(string: month.shortMonth.uppercased(), attributes: attrs)
-            let monthTitleYAxis =  (stripWidth/2) - (monthTitleString.size().height/2)
-            let monthTitleXAxis = sideStripBandHeight + (monthStripHeight/2) - (monthTitleString.size().width/2)
-            let monthRect = CGRect(x: sideStripBandHeight, y: 0, width: stripWidth, height: 0.5)
-            if highlightMonthStrip ,month.shortMonth.lowercased() == activeMonth?.shortMonth.lowercased(){
-                self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis:0, context: context, width:monthStripHeight , height: stripWidth , bandColor: getTemplateBackgroundColor())
-                highlightMonthStrip = false
-            }
-            else{
-                if let stripColor = monthStripColors[month.shortMonth.lowercased()] {
-                    self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis:0, context: context, width:monthStripHeight , height: stripWidth , bandColor: UIColor(hexString: stripColor))
-                }
-            }
-
-
-            self.addBezierLineWith(rect: monthRect, toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
-            monthTitleString.draw(at: CGPoint(x: monthTitleXAxis, y: monthTitleYAxis))
-            monthRects[month.shortMonth.uppercased()] = self.getLinkRect(location: CGPoint(x: currentPageRect.width - stripWidth, y:  sideStripBandHeight), frameSize: CGSize(width:stripWidth , height: monthStripHeight))
-            sideStripBandHeight += monthStripHeight
-        }
-        plannerDiarySideNavigationRectsInfo.monthRects = monthRects
-
-        // Extras rendering
-        let extrasStripHeightPercnt : CGFloat = isLandscaped ? 9.09 : 9.35
-        let extrasStripHeight = self.currentPageRect.size.height*extrasStripHeightPercnt/100
-        let extrasTitleString = NSAttributedString.init(string: "Extras".uppercased(), attributes: attrs)
-        let extrasTitleYAxis =  (stripWidth/2) - (extrasTitleString.size().height/2)
-        let extrasTitleXAxis = sideStripBandHeight + (extrasStripHeight/2) - (extrasTitleString.size().width/2)
-        let extrasStripColor = highlightExtrasStrip ? getTemplateBackgroundColor() : calendarStripColor
-        self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width:extrasStripHeight , height: stripWidth, bandColor: extrasStripColor)
-        self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight , y:0, width: stripWidth, height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
-        extrasTitleString.draw(at: CGPoint(x: extrasTitleXAxis, y: extrasTitleYAxis))
-        plannerDiarySideNavigationRectsInfo.extrasRect = self.getLinkRect(location: CGPoint(x: currentPageRect.width - stripWidth, y:  sideStripBandHeight), frameSize: CGSize(width:stripWidth , height:extrasStripHeight))
-        sideStripBandHeight += extrasStripHeight
+        renderDummyStripsWithColor(dummyStrip1Color)
         context.restoreGState()
 
+        // For Right side strip
+        context.saveGState()
+        context.translateBy(x: currentpageWidth, y: 0); // orgin is moved to right top
+        context.rotate(by: 90.0 * CGFloat.pi / 180.0) // axis is rotated by 90 degrees
+        sideStripBandHeight = 0
+        renderDummyStripsWithColor(dummyStrip2Color)
+        renderBandStripsAndTextsForMonths(monthCalendarInfo.suffix(7), forPageLeftSide: false)
+        context.restoreGState()
+        plannerDiarySideNavigationRectsInfo.monthRects = monthRects
         self.plannerDiarySideNavigationRectsInfo = plannerDiarySideNavigationRectsInfo
+        func renderBandStripsAndTextsForMonths(_ months: [FTMonthlyCalendarInfo], forPageLeftSide: Bool) {
+            for month in months {
+                let monthTitleString = NSAttributedString.init(string: month.shortMonth.uppercased(), attributes: attrs)
+                let monthTitleYAxis =  (stripWidth/2) - (monthTitleString.size().height/2)
+                let monthTitleXAxis =  sideStripBandHeight + (monthStripHeight/2) - (monthTitleString.size().width/2)
+                let monthRect = CGRect(x: sideStripBandHeight, y: 0, width: stripWidth, height: 0.5)
+                if highlightMonthStrip ,month.shortMonth.lowercased() == activeMonth?.shortMonth.lowercased(){
+                    self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis:0, context: context, width:monthStripHeight , height: stripWidth , bandColor: getTemplateBackgroundColor())
+                    highlightMonthStrip = false
+                }
+                else{
+                    if let stripColor = monthStripColors[month.shortMonth.lowercased()] {
+                        self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis:0, context: context, width:monthStripHeight , height: stripWidth , bandColor: UIColor(hexString: stripColor))
+                    }
+                }
+                self.addBezierLineWith(rect: monthRect, toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
+                monthTitleString.draw(at: CGPoint(x: monthTitleXAxis, y: monthTitleYAxis))
+                let linkXAxis = forPageLeftSide ? 0 : (currentPageRect.width - stripWidth)
+                let linkYAxis = forPageLeftSide ? sideStripBandHeight : (currentPageRect.height - sideStripBandHeight - monthStripHeight)
+                monthRects[month.shortMonth.uppercased()] =  CGRect(x: linkXAxis, y: linkYAxis, width:stripWidth, height: monthStripHeight)
+                sideStripBandHeight += monthStripHeight
+            }
+        }
+        func renderDummyStripsWithColor(_ color: UIColor) {
+            //Dummy strip below notebook toolbar
+            let dummyStrip1HeightPercnt : CGFloat =  8.75
+            let dummyStrip1Height = self.currentPageRect.size.height*dummyStrip1HeightPercnt/100
+            let dummyStrip1Color = dummyStrip1Color
+            self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width: dummyStrip1Height , height: stripWidth, bandColor: color)
+            self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight, y:0, width: stripWidth,height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
+            sideStripBandHeight += dummyStrip1Height
+        }
     }
     func getLinkRectForModifiedAxis(location at: CGPoint, frameSize: CGSize) -> CGRect {
         return CGRect(x: at.x, y:at.y, width: frameSize.width, height: frameSize.height)

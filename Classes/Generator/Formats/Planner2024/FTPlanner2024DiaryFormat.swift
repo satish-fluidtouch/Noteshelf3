@@ -12,13 +12,15 @@ import PDFKit
 class FTPlanner2024DiaryFormat : FTDairyFormat {
     //*********** Normal Planner colors ***********//
     let textTintColor: UIColor = UIColor(hexString: "#363636")
-    let monthStripColors : [String: String] = ["JANUARY" :"#AAEBF1","FEBRUARY":"#C4F2E7","MARCH":"#F3E3B5","APRIL":"#F0CBC2","MAY":"#F1C7EA","JUNE":"#DDC3F2","JULY":"#AAEBF1","AUGUST":"#C4F2E7","SEPTEMBER":"#F3E3B5","OCTOBER":"#F0CBC2","NOVEMBER":"#F1C7EA","DECEMBER":"#DDC3F2"]
-    let sideStripMonthColorsDict : [String: String] = ["jan" :"#AAEBF1","feb":"#C4F2E7","mar":"#F3E3B5","apr":"#F0CBC2","may":"#F1C7EA","jun":"#DDC3F2","jul":"#AAEBF1","aug":"#C4F2E7","sep":"#F3E3B5","oct":"#F0CBC2","nov":"#F1C7EA","dec":"#DDC3F2"]
-    let calendarStripColor = UIColor(hexString: "#E7E7E7")
-    let stripHighlightColor = UIColor(hexString: "#FFFFFF")
+    let monthStripColors : [String: String] = ["JANUARY" :"#80CCCB","FEBRUARY":"#EBA899","MARCH":"#F0D295","APRIL":"#80CCCB","MAY":"#EBA899","JUNE":"#F0D295","JULY":"#80CCCB","AUGUST":"#EBA899","SEPTEMBER":"#F0D295","OCTOBER":"#80CCCB","NOVEMBER":"#EBA899","DECEMBER":"#F0D295"]
+    let sideStripMonthColorsDict : [String: String] = ["jan" :"#80CCCB","feb":"#EBA899","mar":"#F0D295","apr":"#80CCCB","may":"#EBA899","jun":"#F0D295","jul":"#80CCCB","aug":"#EBA899","sep":"#F0D295","oct":"#80CCCB","nov":"#EBA899","dec":"#F0D295"]
+    let calendarStripColor = UIColor(hexString: "#EADFCF")
+    let dummyStrip1Color = UIColor(hexString: "#F0D295")
+    let dummyStrip2Color = UIColor(hexString: "#80CCCB")
+    let stripHighlightColor = UIColor(hexString: "#FEFEFE")
     let pageNumberHighlightBGColor = UIColor(hexString: "#AAEBF1")
-    let weekNumberStripColors : [Int: String] = [1 :"#AAEBF1",2:"#C4F2E7",3:"#F3E3B5",4:"#F0CBC2",5:"#F1C7EA",6:"#DDC3F2"]
-    let weekDaysPastalColors = ["#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2","#AAEBF1","#C4F2E7"]
+    let weekNumberStripColors : [Int: String] = [1 :"#80CCCB",2:"#EBA899",3:"#F0D295",4:"#80CCCB",5:"#EBA899",6:"#F0D295"]
+    let weekDaysPastalColors = ["#80CCCB","#EBA899","#F0D295","#80CCCB","#EBA899","#F0D295","#80CCCB","#EADFCF"]
     let notesBandBGColor = UIColor(hexString: "#E7E7E7")
     //**************************************************//
 
