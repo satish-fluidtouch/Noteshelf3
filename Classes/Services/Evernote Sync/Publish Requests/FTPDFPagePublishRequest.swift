@@ -249,7 +249,8 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
 
                         if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: pageRecord.parent.nsGUID) {
                             FTENPublishManager.recordSyncLog(String(format: "Evernote Publish Skip - Document is in open state"));
-                            self.delegate?.didCompletePublishRequestWithError!(nil);
+                            let notebookOpenError = NSError(domain: "Noteshelf.EN.UpdatePage", code: 800, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("evernote.openNotebook.SyncSkip", comment: "Sync failed with reason - A notebook is in open state.")])
+                            self.delegate?.didCompletePublishRequestWithError!(notebookOpenError);
                             return;
                         }
 
