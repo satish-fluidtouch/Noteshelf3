@@ -26,6 +26,17 @@ protocol FTShelfTagsAndBooksDelegate: AnyObject {
     func openItemInNewWindow()
 }
 
+struct FTShelfTagPageCellItem {
+    let document: FTNoteshelfDocument
+    let page: FTPageProtocol
+    let token: FTDocumentOpenToken
+    init(document: FTNoteshelfDocument, page: FTPageProtocol, token: FTDocumentOpenToken) {
+        self.document = document
+        self.page = page
+        self.token = token
+    }
+}
+
 class FTShelfTagsViewController: UIViewController {
     var viewModel: FTShelfTagsPageModel?
     var tagItems = [FTShelfTagsItem]() {
@@ -51,6 +62,9 @@ class FTShelfTagsViewController: UIViewController {
     var contextMenuSelectedIndexPath: IndexPath?
     var selectedPaths = [IndexPath]()
     var selectedItems = [FTShelfTagsItem]()
+    var documents = [FTDocumentItemProtocol]()
+    var pageCellItems = [FTShelfTagPageCellItem]()
+
     private var currentSize: CGSize = .zero
 
     weak var delegate: FTShelfTagsPageDelegate?
@@ -138,6 +152,10 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     func reloadContent() {
+        self.tagItems = []
+        self.books = []
+        self.pages = []
+        self.collectionView.reloadData()
         self.loadShelfTagItems()
     }
 
@@ -465,21 +483,109 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 return UICollectionViewCell()
             }
             return cell
-        } else if indexPath.section == 1 {
-            let item = pages[indexPath.row]
-            cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
         }
+        // TODO: - TO validate and remove below
+//        else if indexPath.section == 1 {
+//            let item = pages[indexPath.row]
+//            cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+//        }
         cell.isSelected = true
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.section == 0, let pageCell = cell as? FTShelfTagsBooksCell {
-            pageCell.delegate = self
-            pageCell.prepareCellWith(books: books, viewState: viewState, parentVC: self)
+        if indexPath.section == 0, let booksCell = cell as? FTShelfTagsBooksCell {
+            booksCell.delegate = self
+            booksCell.prepareCellWith(books: books, viewState: viewState, parentVC: self)
+        } else if indexPath.section == 1, let pagesCell = cell as? FTShelfTagsPageCell {
+            let item = pages[indexPath.row]
+            pagesCell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+            var tagPage: FTPageProtocol?
+
+            let blockToExecute: (UIImage?,String) -> Void = { [weak self] (image, uuidString) in
+                pagesCell.thumbnail?.image = image
+                if image == nil, let tagPage {
+                    pagesCell.addObserverFor(page: tagPage)
+                }
+            }
+
+            if let docUUID = item.documentUUID, let pageUUID = item.pageUUID {
+                FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: pageUUID) { [weak self] image, pageUUID in
+                    guard let self = self else { return }
+                    if let image {
+                        pagesCell.thumbnail?.image = image
+                    } else {
+                        // get Actual Document from All original  Documents
+                        documentItemFor(documentUUID: docUUID, completion: { docItem in
+                            // if document is already open Just get the reference of document and and load thumbnail for related Page
+                            // else Open document and generate thumbnail
+                            if let pageCellItem = self.pageCellItems.first(where: {$0.document.documentUUID == item.documentUUID}) {// && $0.page.uuid == item.pageUUID
+                                let pageCellItem = self.pageCellItems.first(where: {$0.document.documentUUID == docUUID})
+                                let docPages = pageCellItem?.document.pages()
+                                if let page = docPages?.first(where: {$0.uuid == item.pageUUID}) {
+                                    tagPage = page
+                                    print("<<<<< Not Opened for ", docUUID)
+                                    page.thumbnail()?.thumbnailImage(onUpdate: blockToExecute)
+                                }
+                            } else if let docItem {
+                                self.openDocumentFor(documentItem: docItem) { document, token in
+                                    print("<<<<< Opened for ", document?.documentUUID)
+                                    let docPages =  document?.pages()
+                                    if let document, let token, let page = docPages?.first(where: {$0.uuid == item.pageUUID}) {
+                                        let pageCellItem = FTShelfTagPageCellItem(document: document, page: page, token: token)
+                                        self.pageCellItems.append(pageCellItem)
+                                        tagPage = page
+                                        page.thumbnail()?.thumbnailImage(onUpdate: blockToExecute)
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            }
         }
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.section == 1, pages.count > 0 {
+            let item = pages[indexPath.row]
+ 
+            let filteredItems = self.pageCellItems.filter {$0.document.documentUUID == item.documentUUID}
+            if filteredItems.count == 1, let pageCellItem = filteredItems.first {
+                FTNoteshelfDocumentManager.shared.closeDocument(document: pageCellItem.document, token: pageCellItem.token) { _ in
+                   print("<<<<< Closed for ", item.documentUUID)
+                    self.pageCellItems.removeAll(where: {$0.document.documentUUID == item.documentUUID && $0.page.uuid == item.pageUUID})
+                }
+            }
+        }
+    }
+
+    func documentItemFor(documentUUID: String, completion: @escaping (FTDocumentItemProtocol?) -> Void) {
+        if let doc = documents.first(where: {$0.documentUUID == documentUUID}) {
+            completion(doc)
+        }
+        FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
+            if let doc = items.first(where: {$0.documentUUID == documentUUID}) {
+                self.documents.append(doc)
+                completion(doc)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
+    func openDocumentFor(documentItem: FTDocumentItemProtocol, oncompletion: @escaping (FTNoteshelfDocument?, FTDocumentOpenToken?) -> Void) { 
+        let request = FTDocumentOpenRequest(url: documentItem.URL, purpose: .read)
+        FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+            if let document = document as? FTNoteshelfDocument {
+                oncompletion(document, token)
+            } else {
+                oncompletion(nil, nil)
+            }
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if viewState == .none {
             return true

@@ -82,6 +82,7 @@ class FTTagItemModel {
     
     private var isLoading = false;
     func getTaggedItems(completion: @escaping ([FTShelfTagsItem]) -> Void) {
+        self.loadingCallbacks.removeAll()
         loadingCallbacks.append(completion);
         if isLoading {
             debugLog("loading is in progress: \(self.tag.text)");
@@ -111,8 +112,13 @@ class FTTagItemModel {
                         callCallbacks();
                     }
                     return;
+                } else {
+                    if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: self.tag.text) {
+                        self.documentIds = tagItem.documentIds
+                        self.shelfTagItems = tagItem.shelfTagItems
+                    }
                 }
-                
+
                 let _shelfTagItems = self.getShelfTagItems();
                 let shelfTagDocIds = Set(_shelfTagItems.map({$0.documentUUID!}));
                 let currentIDS = Set(self.getDocumentIDS());
@@ -550,15 +556,17 @@ class FTTagsProvider {
     func thumbnail(documentUUID: String, pageUUID: String, onCompletion: @escaping ((UIImage?,String) -> Void)) {
         let thumbnailPath = self.thumbnailPath(documentUUID: documentUUID, pageUUID: pageUUID)
         var img: UIImage? = nil
-        if nil == img && FileManager().fileExists(atPath: thumbnailPath) {
-            DispatchQueue.global().async {
+        DispatchQueue.global().async {
+            if nil == img && FileManager().fileExists(atPath: thumbnailPath) {
                 img = UIImage.init(contentsOfFile: thumbnailPath)
                 DispatchQueue.main.async {
                     onCompletion(img, pageUUID)
                 }
+            } else {
+                DispatchQueue.main.async {
+                    onCompletion(nil, pageUUID)
+                }
             }
-        } else {
-            onCompletion(img, pageUUID)
         }
     }
 

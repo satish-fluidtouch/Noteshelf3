@@ -52,9 +52,11 @@ extension FTShelfTagsBooksCell {
                 if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfTagsPageCell {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let previewVC = storyboard.instantiateViewController(identifier: "FTShelfPagePreviewController") as? FTShelfPagePreviewController
-                     previewVC?.preferredContentSize = FTPreviewDefaultSize.previewSize(for: (cell.thumbnail?.image)!);
-                    previewVC?.previewImage = cell.thumbnail?.image;
-                    previewVC?.imageView?.contentMode = .scaleAspectFit
+                    if let img = cell.thumbnail?.image {
+                       previewVC?.preferredContentSize = FTPreviewDefaultSize.previewSize(for: img)
+                       previewVC?.previewImage = img
+                       previewVC?.imageView?.contentMode = .scaleAspectFit
+                    }
                     return previewVC
                 }
             }

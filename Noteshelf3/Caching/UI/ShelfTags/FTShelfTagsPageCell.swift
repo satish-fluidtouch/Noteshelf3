@@ -28,6 +28,47 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         }
     }
 
+    func addObserverFor(page: FTPageProtocol) {
+        NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(self.didReceiveNotifcationForGenerateThumbnail(_:)),
+                                                   name: NSNotification.Name(rawValue: "FTShouldGenerateThumbnail"),
+                                                   object: page);
+    }
+
+    @objc func didReceiveNotifcationForGenerateThumbnail(_ notification : Notification)
+    {
+        if(!Thread.current.isMainThread) {
+            runInMainThread { [weak self] in
+                self?.didReceiveNotifcationForGenerateThumbnail(notification);
+            }
+            return;
+        }
+        guard let pageUUID = self.shelfTagItem?.pageUUID else {return}
+
+        if let pageObject = notification.object as? FTPageProtocol
+            ,pageObject.uuid == pageUUID {
+            self.updateThumbnailImageFor(page: pageObject)
+        }
+    }
+
+    private func updateThumbnailImageFor(page: FTPageProtocol) {
+        self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page")
+
+        let blockToExecute: (UIImage?,String) -> Void = { [weak self] (image, uuidString) in
+            if page.uuid == uuidString {
+                self?.thumbnail?.image = image;
+                if nil == image {
+                    self?.thumbnail?.image = UIImage(named: "finder-empty-pdf-page")
+                }
+                self?.layoutIfNeeded()
+                if(page.thumbnail()?.shouldGenerateThumbnail ?? false) {
+                    self?.addObserverFor(page: page)
+                }
+            }
+        }
+        page.thumbnail()?.thumbnailImage(onUpdate: blockToExecute);
+    }
+
     private var shelfTagItem: FTShelfTagsItem?;
     func updateTagsPills(for shelfItem: FTShelfTagsItem) {
         self.shelfTagItem = shelfItem
@@ -39,14 +80,14 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     }
 
     func updateTagsItemCellContent(tagsItem: FTShelfTagsItem, isRegular: Bool) {
-
+        self.shelfTagItem = tagsItem
         self.bookTitleLbl?.text = tagsItem.documentItem?.displayTitle
         let tags = Set.init(tagsItem.tags)
         let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
         self.updateTagsViewWith(tags: sortedArray)
         self.thumbnail?.backgroundColor = .clear
 
-        if tagsItem.type == .page, let docUUID = tagsItem.documentUUID, let pageUUID = tagsItem.pageUUID {
+        if tagsItem.type == .page {
             self.thumbnail?.layer.cornerRadius = 10
 
             let image = UIImage(named: "pages_shadow")
@@ -54,42 +95,53 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             shadowImageView.image = scalled
             self.shadowImageView.layer.cornerRadius = 10
 
-            self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
-            FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: pageUUID) { [weak self] image, pageUUID in
-                guard let self = self else { return }
-                if let image {
-                    self.thumbnail?.image = image
-                }
-            }
         } else if tagsItem.type == .book, let shelfItem = tagsItem.documentItem {
-            var token : String?
-            self.thumbnail?.contentMode = .scaleAspectFit
+            guard let docUUID = shelfItem.documentUUID else { return }
 
-            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem, onCompletion: { [weak self](image, imageToken) in
-                if token == imageToken {
-                    if let img = image {
-                        if img.size.width > img.size.height {// Landscape
+            FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist in
+                let page = docPlist?.pages.first
+                FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: page!.uuid) { [weak self] image, pageUUID in
+                    guard let self = self else { return }
+                    if let image, page!.uuid == pageUUID {
+                        if image.size.width > image.size.height {// Landscape
                             let height = FTShelfTagsConstants.Book.landscapeSize.height
-                            self?.thumbnailHeightConstraint.constant = height
+                            self.thumbnailHeightConstraint.constant = height
+                        } 
+                        else {
+                            let height = FTShelfTagsConstants.Book.potraitSize.height
+                            self.thumbnailHeightConstraint.constant = height
                         }
-                        self?.shadowImageView.layer.cornerRadius = 8
-                        self?.thumbnail?.layer.cornerRadius = 8
-
-                        let shadowImage = UIImage(named: "book_shadow")
-                        let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-                        self?.shadowImageView.image = scalled
-                        self?.thumbnail?.image = img
+                        self.thumbnail?.image = image
                     } else {
-                        self?.shadowImageView.layer.cornerRadius = 8
-                        self?.thumbnail?.layer.cornerRadius = 8
-                        let shadowImage = UIImage(named: "noCover_shadow")
-                        let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-                        self?.shadowImageView.image = scalled
+                        var token : String?
+                        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem, onCompletion: { [weak self](image, imageToken) in
+                            if token == imageToken {
+                                if let img = image {
+                                    if img.size.width > img.size.height {// Landscape
+                                        let height = FTShelfTagsConstants.Book.landscapeSize.height
+                                        self?.thumbnailHeightConstraint.constant = height
+                                    }
+                                    self?.shadowImageView.layer.cornerRadius = 8
+                                    self?.thumbnail?.layer.cornerRadius = 8
 
-                        self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
+                                    let shadowImage = UIImage(named: "book_shadow")
+                                    let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
+                                    self?.shadowImageView.image = scalled
+                                    self?.thumbnail?.image = img
+                                } else {
+                                    self?.shadowImageView.layer.cornerRadius = 8
+                                    self?.thumbnail?.layer.cornerRadius = 8
+                                    let shadowImage = UIImage(named: "noCover_shadow")
+                                    let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
+                                    self?.shadowImageView.image = scalled
+
+                                    self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
+                                }
+                            }
+                        })
                     }
                 }
-            })
+            }
         }
     }
 
