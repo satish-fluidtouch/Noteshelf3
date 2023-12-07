@@ -31,6 +31,18 @@ public class FTFavoritePensetDataManager: NSObject {
         return FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("FTPenRack_v1.plist")
     }
 
+    private func isFavoritebarEnabledInNS2() -> Bool {
+        var isEnabled = false
+        if fileManager.fileExists(atPath: ns2FavoritesUrl.path) {
+            if let data = try? Data(contentsOf: ns2FavoritesUrl) {
+                if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any], let enabled = plist["isFavoritebarEnabled"] as? Bool {
+                    isEnabled = enabled
+                }
+            }
+        }
+        return isEnabled
+    }
+    
     func migrateNS2Favorites() {
         let migrationInfo = self.checkMigrationPossibilityForNS2Favorites()
         if migrationInfo.canMigrate {
@@ -62,6 +74,8 @@ public class FTFavoritePensetDataManager: NSObject {
             catch let error {
                 debugLog("Error in migrating ns2 favorites - \(error.localizedDescription)")
             }
+            // End of migration, handle favorite bar tool status
+            self.handleNS2FavoritebarStatusIfNeeded()
         }
     }
 
@@ -90,6 +104,21 @@ public class FTFavoritePensetDataManager: NSObject {
 }
 
 private extension FTFavoritePensetDataManager {
+    func handleNS2FavoritebarStatusIfNeeded() {
+        let isHandled = UserDefaults.standard.bool(forKey: "IsFavoriteStatusHandled")
+        if !isHandled {
+            let isFavEnabled = self.isFavoritebarEnabledInNS2()
+            if isFavEnabled {
+                var tools = FTCurrentToolbarSection().displayTools
+                if !tools.contains(FTDeskCenterPanelTool.favorites) {
+                    tools.append(.favorites)
+                    FTCurrentToolbarSection.saveCurrentToolTypes(tools)
+                }
+                UserDefaults.standard.set(true, forKey: "IsFavoriteStatusHandled")
+            }
+        }
+    }
+    
     func getDefaultFavoriteInfo() -> FTFavoritePensetDataModel {
         do {
             let plistData = try Data(contentsOf: resourcePlistUrl)

@@ -142,6 +142,10 @@ class FTDeveloperOptionsViewController: UIViewController {
 #endif
     }
 
+    @IBAction func resetCacheFolder(sender: UIButton?) {
+        try? FileManager.default.removeItem(at: FTDocumentCache.shared.cacheFolderURL)
+    }
+
     @IBAction func animationValueChanged(_ sender: UIStepper) {
         let value = sender.value
         speedLabel.text = "Animation Duration \(value)"

@@ -75,6 +75,18 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
     
+    func presentIAPScreen() {
+        let reachability: Reachability = Reachability.forInternetConnection()
+        let status: NetworkStatus = reachability.currentReachabilityStatus();
+        if status == NetworkStatus.NotReachable {
+            UIAlertController.showAlert(withTitle: "MakeSureYouAreConnected".localized, message: "", from: self, withCompletionHandler: nil)
+            return
+        } else {
+            FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
+        }
+    }
+
+    
     func openTags(for tag: String, isAllTags: Bool) {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
             controller.selectedTag = isAllTags ? nil : FTTagModel(text: tag)

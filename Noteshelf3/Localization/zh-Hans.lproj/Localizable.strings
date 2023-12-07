@@ -1026,6 +1026,7 @@
 "downloadedStickers" = "已下载贴纸";
 "duplicate" = "复制";
 "eraser.auto" = "自动";
+"evernote.openNotebook.SyncSkip" = "笔记本处于打开状态。";
 "evernote.userInfo.fetchFailureMessage" = "此时无法获取账户信息";
 "export_data" = "导出数据";
 "export_description1" = "强烈建议您在本地设备上保存数据的副本。";
@@ -1110,6 +1111,7 @@
 "iap.restoreSuccessWithNoPurchase" = "没有要恢复的已购买项目";
 "iap.termsnconditions" = "条款和条件";
 "iap.title" = "通过Noteshelf Premium获得完整体验";
+"iap.toptitle" = "专属于Noteshelf 2用户";
 "iap.upgradeNow" = "立即升级";
 "iap.upgradeToPremiumNow" = "立即升级至高级版";
 "icloud.sync.issue.message" = "无法连接到 iCloud。请确保 iCloud 在设置中已打开。";
@@ -1548,4 +1550,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 23 November 2023 at 5:40 PM
+// Last Synced by Ramakrishna on 7 December 2023 at 4:26 PM
