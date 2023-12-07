@@ -1023,6 +1023,7 @@
 "days" = "Giorni";
 "delete" = "Elimina";
 "done" = "Fatto";
+"dontMigrate" = "Non migrare";
 "downloadedStickers" = "Adesivi scaricati";
 "duplicate" = "Duplica";
 "eraser.auto" = "Auto";
@@ -1550,4 +1551,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 7 December 2023 at 4:26 PM
+// Last Synced by Rakesh on 7 December 2023 at 6:07 PM

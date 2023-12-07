@@ -1023,6 +1023,7 @@
 "days" = "일";
 "delete" = "삭제";
 "done" = "끝";
+"dontMigrate" = "마이그레이션하지 마세요";
 "downloadedStickers" = "다운로드된 스티커";
 "duplicate" = "중복";
 "eraser.auto" = "자동차";
@@ -1550,4 +1551,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 7 December 2023 at 4:26 PM
+// Last Synced by Rakesh on 7 December 2023 at 6:07 PM

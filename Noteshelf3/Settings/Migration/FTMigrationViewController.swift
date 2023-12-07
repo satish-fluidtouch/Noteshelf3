@@ -122,7 +122,7 @@ class FTMigrationViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Continue", comment: ""), style: .default, handler: { _ in
             self.progressView?.observedProgress?.resume()
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Stop Migration", comment: ""), style: .destructive, handler: { [weak self] _ in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("dontMigrate", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.progressView?.observedProgress?.cancel()
             self?.dismiss()
         }))
