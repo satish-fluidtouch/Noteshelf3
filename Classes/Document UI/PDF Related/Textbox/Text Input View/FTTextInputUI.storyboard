@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="biS-A9-cBe">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="biS-A9-cBe">
     <device id="mac" appearance="light" renderMode="macOS"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -152,7 +151,7 @@
                                                                 <rect key="frame" x="0.0" y="45" width="375" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zT0-8H-WNE">
-                                                                        <rect key="frame" x="16" y="14" width="28.5" height="17"/>
+                                                                        <rect key="frame" x="16" y="13" width="28.5" height="17.5"/>
                                                                         <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
@@ -375,7 +374,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto Line Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahM-5f-eaU" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                        <rect key="frame" x="16" y="13" width="112" height="17"/>
+                                                                        <rect key="frame" x="16" y="13" width="112" height="17.5"/>
                                                                         <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
@@ -414,7 +413,7 @@
                                                                 <rect key="frame" x="0.0" y="45" width="375" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64l-Fq-XO7">
-                                                                        <rect key="frame" x="16" y="13" width="76.5" height="17"/>
+                                                                        <rect key="frame" x="16" y="13" width="76.5" height="17.5"/>
                                                                         <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
@@ -652,7 +651,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="48"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="mNu-Xx-GjJ" userLabel="Leading Stack View">
-                                        <rect key="frame" x="8" y="4" width="149.5" height="40"/>
+                                        <rect key="frame" x="8" y="4" width="149" height="40"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zui-KA-2os">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -707,13 +706,13 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Ovj-mc-re0">
-                                                <rect key="frame" x="74" y="0.0" width="75.5" height="40"/>
+                                                <rect key="frame" x="74" y="0.0" width="75" height="40"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6P9-e9-rY9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="38.5" height="40"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="38" height="40"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="ITu-4d-l1V" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="38.5" height="40"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="38" height="40"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="44" id="fzE-hs-kZ7"/>
                                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="o1q-69-92U"/>
@@ -726,7 +725,7 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" preferredBehavioralStyle="pad" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-SX-Ota" customClass="FTTextToolbarButton" customModule="NS3_Beta" customModuleProvider="target">
-                                                        <rect key="frame" x="55" y="0.0" width="21" height="40"/>
+                                                        <rect key="frame" x="54" y="0.0" width="21" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="CyQ-OG-Ime"/>
                                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="40" id="tCA-XG-qIe"/>
@@ -1012,7 +1011,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTPresetsStyleCell" rowHeight="56" id="lRe-IF-rxu" customClass="FTPresetsStyleCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="33" width="500" height="56"/>
+                                        <rect key="frame" x="0.0" y="26" width="500" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lRe-IF-rxu" id="joL-A8-fS9">
                                             <rect key="frame" x="0.0" y="0.0" width="500" height="56"/>
@@ -1060,7 +1059,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTAddNewTextStyleCell" rowHeight="56" id="wBd-AH-sHa" customClass="FTAddNewTextStyleCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="89" width="500" height="56"/>
+                                        <rect key="frame" x="0.0" y="82" width="500" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wBd-AH-sHa" id="1jv-Gu-5z1">
                                             <rect key="frame" x="0.0" y="0.0" width="500" height="56"/>
@@ -1070,7 +1069,7 @@
                                                     <rect key="frame" x="16" y="2" width="468" height="52"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Preset" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dU0-NM-3DH" customClass="FTCustomLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                                            <rect key="frame" x="55" y="18" width="401" height="17"/>
+                                                            <rect key="frame" x="55" y="17" width="401" height="17.5"/>
                                                             <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                             <color key="textColor" name="black1"/>
                                                             <nil key="highlightedColor"/>
@@ -1175,7 +1174,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTTextAnnotationBackgroundCell" rowHeight="44" id="IDr-dM-EH4" customClass="FTTextAnnotationBackgroundCell" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="33" width="500" height="44"/>
+                                        <rect key="frame" x="0.0" y="26" width="500" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IDr-dM-EH4" id="fho-NM-hG8">
                                             <rect key="frame" x="0.0" y="0.0" width="460" height="44"/>
@@ -1280,13 +1279,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preset Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWT-ea-pGr" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                <rect key="frame" x="16" y="12" width="101.5" height="20"/>
+                                                                <rect key="frame" x="16" y="12" width="98.5" height="20.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <color key="textColor" name="black1"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Style" textAlignment="right" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UPU-9i-TPI">
-                                                                <rect key="frame" x="130" y="0.0" width="143.5" height="44"/>
+                                                                <rect key="frame" x="127" y="0.0" width="146.5" height="44"/>
                                                                 <color key="textColor" name="accent"/>
                                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="alphabet"/>
@@ -1367,7 +1366,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxJ-kk-MLF" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                        <rect key="frame" x="16" y="12" width="86.5" height="20"/>
+                                                                        <rect key="frame" x="16" y="12" width="86.5" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
@@ -1376,7 +1375,7 @@
                                                                         <rect key="frame" x="113" y="8" width="64" height="28"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="16" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v9L-xq-wD4">
-                                                                                <rect key="frame" x="0.0" y="6" width="33" height="17"/>
+                                                                                <rect key="frame" x="0.0" y="5" width="33" height="18"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <color key="textColor" name="black1"/>
                                                                                 <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
@@ -1386,7 +1385,7 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWW-2u-2tF">
-                                                                                <rect key="frame" x="35" y="6" width="29" height="17"/>
+                                                                                <rect key="frame" x="35" y="5" width="29" height="17.5"/>
                                                                                 <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                                 <color key="textColor" name="black1"/>
                                                                                 <nil key="highlightedColor"/>
@@ -1589,7 +1588,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="289" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto Line Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdR-9G-Tt7" customClass="FTCustomLabel" customModule="FTCommon">
-                                                                        <rect key="frame" x="16" y="13" width="112" height="17"/>
+                                                                        <rect key="frame" x="16" y="13" width="112" height="17.5"/>
                                                                         <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
@@ -1628,7 +1627,7 @@
                                                                 <rect key="frame" x="0.0" y="45" width="289" height="44"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbO-9t-k5k">
-                                                                        <rect key="frame" x="16" y="13" width="88" height="17"/>
+                                                                        <rect key="frame" x="16" y="13" width="88" height="17.5"/>
                                                                         <fontDescription key="fontDescription" name="Aeonik-Regular" family="Aeonik" pointSize="15"/>
                                                                         <color key="textColor" name="black1"/>
                                                                         <nil key="highlightedColor"/>
@@ -1731,9 +1730,6 @@
                                                                 <integer key="value" value="10"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="setAsDefaultTapped:" destination="Iue-Dq-dRY" eventType="touchUpInside" id="Y9p-aw-tH0"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
