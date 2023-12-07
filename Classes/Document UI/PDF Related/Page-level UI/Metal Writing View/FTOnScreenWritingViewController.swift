@@ -383,7 +383,7 @@ extension FTOnScreenWritingViewController
             if  ((currentDrawingMode == .deskModePen &&
                 FTUserDefaults.isHoldToConvertToShapeOnForPen()) ||
                 (currentDrawingMode == .deskModeMarker &&
-                FTUserDefaults.isHoldToConvertToShapeOnForHighlighter())),
+                 FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) || self.toDetectShapeInFavoritesMode()),
                 let curStroke = self.currentStroke?.stroke as? FTStroke
             {
                 let canDetect = FTShapeDetector.canDetectShape(stroke: curStroke, scale: self.scale)
@@ -514,6 +514,19 @@ extension FTOnScreenWritingViewController
         self.stylusPenTouchEnded(touch, isShapeEnabled: true);
     }
     
+    private func toDetectShapeInFavoritesMode() -> Bool {
+        guard self.currentDrawingMode == .deskModeFavorites else {
+            return false
+        }
+        let isHighlighter = self.currentSelectedPenSet().type.isHighlighterPenType()
+        
+        if (isHighlighter && FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) ||
+           (!isHighlighter && FTUserDefaults.isHoldToConvertToShapeOnForPen()) {
+            return true
+        }
+        return false
+    }
+
     private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool) {
         var hasShape = false;
         guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape) }
