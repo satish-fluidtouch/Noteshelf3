@@ -1026,6 +1026,7 @@
 "downloadedStickers" = "Downloaded Stickers";
 "duplicate" = "Duplicate";
 "eraser.auto" = "Auto";
+"evernote.openNotebook.SyncSkip" = "A notebook is in open state.";
 "evernote.userInfo.fetchFailureMessage" = "Unable to fetch account info at this time";
 "export_data" = "Export Data";
 "export_description1" = "It is highly recommended that you save a copy of your data on your local device.";
@@ -1549,4 +1550,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 4 December 2023 at 9:56 PM
+// Last Synced by Ramakrishna on 7 December 2023 at 4:26 PM
