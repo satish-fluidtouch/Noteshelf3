@@ -14,31 +14,42 @@ class FTPlanner2024DiaryMonthTemplateFormat : FTPlanner2024DiaryTemplateFormat{
         self.renderiPadTemplate(context: context)
     }
     private func renderiPadTemplate(context : CGContext){
-        let isLandscaped = templateInfo.customVariants.isLandscape
-        let boxWidth : CGFloat = isLandscaped ? 11.59 : 10.78
-        let boxHeight : CGFloat = isLandscaped ? 12.78 : 13.34
-        let startingXAxis : CGFloat = isLandscaped ? 8.27 : 11.15
-        let startingYAxis : CGFloat = isLandscaped ? 14.28 : 12.30
-        let horizontalGapBWBoxes : CGFloat = isLandscaped ? 0.44 : 0.59
-        let verticalGapBWBoxes : CGFloat = isLandscaped ? 0.71 :0.49
-        
-        let xAxis : CGFloat = templateInfo.screenSize.width*startingXAxis/100
-        var monthBoxesYAxis : CGFloat = templateInfo.screenSize.height*startingYAxis/100
+
+        let boxWidth : CGFloat = 8.90
+        let boxHeight : CGFloat = 12.94
+        let startingXAxis : CGFloat = 17.53
+        let startingYAxis : CGFloat = 19.66
+        let horizontalGapBWBoxes : CGFloat = 1.07
+        let verticalGapBWBoxes : CGFloat = 2.39
+        let pageWidth = templateInfo.screenSize.width
+        let pageHeight = templateInfo.screenSize.height
+        let twoSpreadHorizontalGap: CGFloat = 7.19
+
+
+        let twoSpreadGap = pageWidth*twoSpreadHorizontalGap/100
+        let horizontalGap = pageWidth*horizontalGapBWBoxes/100
+        let xAxis : CGFloat = pageWidth*startingXAxis/100
+        var monthBoxesYAxis : CGFloat = pageHeight*startingYAxis/100
         var monthBoxesXAXis : CGFloat = xAxis
-        
-        let widthPerBox = templateInfo.screenSize.width*boxWidth/100
-        let heightPerBox = templateInfo.screenSize.height*boxHeight/100
-        
+
+        let widthPerBox = pageWidth*boxWidth/100
+        let heightPerBox = pageHeight*boxHeight/100
+
         let numberOfColumns : Int = 7
         // day boxes rendering
+        var counter: Int = 1
         for index in 1...42 {
             let bezierRect = CGRect(x: monthBoxesXAXis, y: monthBoxesYAxis, width: widthPerBox, height: heightPerBox)
-            self.addBezierBoxWithBorder(rect: bezierRect, toContext: context, rectBGColor: self.getBezierBoxesBGColor(), borderColor: self.getBezierlinesTintColor(), cornerRadius: 2.0,withLineWidth: 0.5)
-            monthBoxesXAXis += widthPerBox + templateInfo.screenSize.width*horizontalGapBWBoxes/100
+            self.addBezierBoxWithBorder(rect: bezierRect, toContext: context, rectBGColor: getBezierBoxesBGColor(), borderColor: getBezierlinesTintColor(), cornerRadius: 2.0,withLineWidth: 0.5)
             if index % numberOfColumns == 0 {
+                counter = 1
                 monthBoxesXAXis = xAxis
-                monthBoxesYAxis += heightPerBox + templateInfo.screenSize.height*verticalGapBWBoxes/100
+                monthBoxesYAxis += heightPerBox + pageHeight*verticalGapBWBoxes/100
+            } else {
+                monthBoxesXAXis +=  counter == 3 ? widthPerBox + twoSpreadGap : widthPerBox + horizontalGap
+                counter += 1
             }
         }
+        addSpreadLineSeperator(toContext: context)
     }
 }
