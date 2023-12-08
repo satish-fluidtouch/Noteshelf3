@@ -68,7 +68,7 @@ class FTPlanner2024DiaryTemplateFormat : FTDigitalDiaryTemplateFormat {
     var bezierBoxesBGColor : UIColor = UIColor(hexString: "#FEFEFE", alpha: 1.0)
     var bezierLinesTintColor: UIColor = UIColor(hexString: "#363636", alpha: 0.4)
     let toDoColors : [String] = ["#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2","#AAEBF1"]
-    let monthStripColors : [String] = ["#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2","#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2"]
+    let monthStripColors : [String] = ["#80CCCB","#EBA899","#F0D295","#80CCCB","#EBA899","#F0D295"]
     //***********************************//
 
     
@@ -159,67 +159,6 @@ class FTPlanner2024DiaryTemplateFormat : FTDigitalDiaryTemplateFormat {
         context.addPath(bezierLinePath.cgPath)
         bezierLinePath.stroke()
         context.setShadow(offset: shadowOffset, blur: shadowBlurRadius,  color: (shadow as UIColor).cgColor)
-    }
-    func setNavigationSideStripIn(context : CGContext){
-        let isLandscaped = templateInfo.customVariants.isLandscape
-
-        let stripWidthPercnt = isLandscaped ? 3.59 : 4.67
-        let stripXAxisPrecnt = isLandscaped ? 96.40 : 95.32
-        
-        let stripXAxis = templateInfo.screenSize.width*stripXAxisPrecnt/100
-        let stripWidth = templateInfo.screenSize.width*stripWidthPercnt/100
-        let stripColor =  UIColor(hexString: "#000000", alpha: 0.2)
-        let stripShadowColor = UIColor(hexString: "#000000", alpha: 0.08)
-        let shadowOffset = CGSize(width: 0, height: 2)
-        let shadowBlurRadius : CGFloat = 4
-        
-        var sideStripBandHeight : CGFloat = 0.0
-        //calendar strip
-        let calendarStripHeightPercnt = isLandscaped ? 9.09 : 9.25
-        let calendarStripHeight = templateInfo.screenSize.height*calendarStripHeightPercnt/100
-        sideStripBandHeight += calendarStripHeight
-        let calendarStripYAxis = calendarStripHeight
-        let calendarStripRect = CGRect(x: stripXAxis, y:calendarStripYAxis, width: stripWidth, height: 1)
-        self.addBezierLineWith(rect: calendarStripRect, toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
-
-        let calendarRect = CGRect(x: stripXAxis, y: 0, width: stripWidth, height: calendarStripHeight)
-        context.setFillColor(UIColor(hexString: "#FEFEFE").cgColor)
-        context.fill(calendarRect)
-        
-        //year strip
-        let yearStripHeightPercnt = isLandscaped ? 9.09 : 9.25
-        let yearStripHeight = templateInfo.screenSize.height*yearStripHeightPercnt/100
-        sideStripBandHeight += yearStripHeight
-        let yearStripYAxis =   yearStripHeight + calendarStripYAxis
-        let yearStripRect = CGRect(x: stripXAxis, y:yearStripYAxis, width: stripWidth, height: 1)
-        self.addBezierLineWith(rect: yearStripRect, toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
-        
-        let yearRect = CGRect(x: stripXAxis, y: calendarStripYAxis, width: stripWidth, height: yearStripHeight)
-        context.setFillColor(UIColor(hexString: "#E7E7E7").cgColor)
-        context.fill(yearRect)
-        
-        //month strip
-        let monthStripHeightPercnt = isLandscaped ? 6.23 : 6.01
-        let monthStripHeight = templateInfo.screenSize.height*monthStripHeightPercnt/100
-        var monthStripYAxis = monthStripHeight + yearStripYAxis
-        var monthBGColorStripYAxis = yearStripYAxis
-        for index in 0...11 {
-            let monthStripRect = CGRect(x: stripXAxis, y:monthStripYAxis, width: stripWidth, height: 1)
-            let monthRect = CGRect(x: stripXAxis, y: monthBGColorStripYAxis, width: stripWidth, height: monthStripHeight)
-            context.setFillColor(UIColor(hexString: monthStripColors[index]).cgColor)
-            context.fill(monthRect)
-            self.addBezierLineWith(rect: monthStripRect, toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
-            monthStripYAxis += monthStripHeight
-            sideStripBandHeight += monthStripHeight
-            monthBGColorStripYAxis += monthStripHeight
-        }
-        
-        // Extras strip
-        let extraStripHeight = templateInfo.screenSize.height - sideStripBandHeight
-        let extraBGColorStripYAxis = sideStripBandHeight
-        let extrasRect = CGRect(x: stripXAxis, y: extraBGColorStripYAxis, width: stripWidth, height: extraStripHeight)
-        context.setFillColor(UIColor(hexString: "#E7E7E7").cgColor)
-        context.fill(extrasRect)
     }
     class func getTemplateBackgroundColor() -> UIColor {
         return UIColor(hexString: "#FEFEFE")

@@ -16,11 +16,11 @@ class FTPlanner2024DiaryMonthTemplateFormat : FTPlanner2024DiaryTemplateFormat{
     private func renderiPadTemplate(context : CGContext){
 
         let boxWidth : CGFloat = 8.90
-        let boxHeight : CGFloat = 12.94
+        let boxHeight : CGFloat = 10.67
         let startingXAxis : CGFloat = 17.53
         let startingYAxis : CGFloat = 19.66
         let horizontalGapBWBoxes : CGFloat = 1.07
-        let verticalGapBWBoxes : CGFloat = 2.39
+        let verticalGapBWBoxes : CGFloat = 2.03
         let pageWidth = templateInfo.screenSize.width
         let pageHeight = templateInfo.screenSize.height
         let twoSpreadHorizontalGap: CGFloat = 7.19
