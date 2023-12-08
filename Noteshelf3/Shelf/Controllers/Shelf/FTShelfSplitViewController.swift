@@ -625,8 +625,9 @@ extension FTShelfSplitViewController {
                 self.sideMenuController?.upateSideMenuCurrentCollection(unfiledShelfItemCollection);
                 self.sideMenuController?.showSidebarItemWithCollection(unfiledShelfItemCollection)
                 onCompletion?(unfiledShelfItemCollection)
+            } else {
+                onCompletion?(nil)
             }
-            onCompletion?(nil)
         }
     }
 }
