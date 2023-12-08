@@ -1094,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "휴지통을 비우세요. 삭제된 노트북이 할당량에 포함되지 않도록 하거나, 무제한 노트북을 위해 전체 앱을 잠금 해제하세요.";
 "iap.booklimitReachedTitle" = "무료 노트북 제한에 도달했습니다.";
 "iap.booksleft" = "%@ 남은 노트'";
+"iap.discount.highlight" = "%@ 할인으로";
 "iap.featureLimitMessage" = "이 기능은 잠겨 있습니다. 지금 업그레이드하여 잠금 해제하세요.";
 "iap.featureLimitTitle" = "지금 업그레이드하세요.";
 "iap.message" = "노트셀프 프리미엄으로 무제한 노트, 필기 인식과 검색, 그리고 디지털 다이어리에 접근하세요.";
@@ -1551,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 7 December 2023 at 6:07 PM
+// Last Synced by Akshay on 8 December 2023 at 17:01

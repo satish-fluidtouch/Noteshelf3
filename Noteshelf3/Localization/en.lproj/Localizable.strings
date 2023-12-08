@@ -1094,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
 "iap.booklimitReachedTitle" = "You have reached the free notebook limit";
 "iap.booksleft" = "%@ notes left";
+"iap.discount.highlight" = "%@ OFF";
 "iap.featureLimitMessage" = "This feature is locked. Unlock by upgrading now";
 "iap.featureLimitTitle" = "Upgrade now";
 "iap.message" = "Get access to unlimited notes, handwriting recognition and search, and digital diaries with Noteshelf Premium.";
@@ -1551,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 7 December 2023 at 6:06 PM
+// Last Synced by Akshay on 8 December 2023 at 17:01

@@ -105,20 +105,28 @@ class FTIAPOfferViewController: UIViewController {
     private func attributedTitleText(){
         let discountpercentage = 50
         let localisedText = NSLocalizedString("iap.bannerTitle1", comment: "Get Premium at %@ OFF")
-        let range = (localisedText as NSString).range(of: "%@")
 
-        let title1 =  String(format: localisedText,"\(discountpercentage)%")
-        let fullText = "\(title1)"
+        let offText =  String(format: NSLocalizedString("iap.discount.highlight", comment:""), "\(discountpercentage)%")
+
+
+        let fullText =  String(format: localisedText,"\(discountpercentage)%")
+        let range = (fullText as NSString).range(of: offText)
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        style.alignment = .center
+
         let redAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.init(hexString: "#D6411c")
+            .foregroundColor: UIColor.init(hexString: "#D6411c"),
+            .paragraphStyle: style,
+            .font: UIFont(name: "SFProRounded-Bold", size: 36)!
         ]
-        let blackAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black
-        ]
-        let length = title1.count - range.location
-        let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
-        attributedString.addAttributes(redAttributes, range: NSRange(location: range.location, length: length))
 
+        let blackAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black,
+            .paragraphStyle: style
+        ]
+        let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
         attributedString.addAttributes(redAttributes, range: range)
         self.titleLabel?.attributedText = attributedString
 

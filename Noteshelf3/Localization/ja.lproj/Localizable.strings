@@ -1094,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "ごみ箱を空にして、削除したノートブックがクオータにカウントされないようにしてください。または、無制限のノートブックのためにフルアプリをロック解除してください。";
 "iap.booklimitReachedTitle" = "無料のノートブックの制限に達しました。";
 "iap.booksleft" = "残り%@件のノート";
+"iap.discount.highlight" = "%@ OFF";
 "iap.featureLimitMessage" = "この機能はロックされています。今すぐアップグレードして解除します。";
 "iap.featureLimitTitle" = "今すぐアップグレード";
 "iap.message" = "「Noteshelfプレミアムで無制限のノートへのアクセス、手書き認識と検索、そしてデジタルダイアリーを手に入れましょう。」";
@@ -1551,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 7 December 2023 at 6:07 PM
+// Last Synced by Akshay on 8 December 2023 at 17:01

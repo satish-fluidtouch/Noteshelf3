@@ -1089,11 +1089,12 @@
 "iCloudUserTurnedOff" = "iCloud desactivado'";
 "iCloudUserTurnedOffMessage" = "Una copia de tus documentos permanecerá almacenada en iCloud. ¿Qué te gustaría hacer con los documentos actualmente en este dispositivo?";
 "iap.bannerTitle" = "Actualizar a Premium";
-"iap.bannerTitle1" = "Obtén Premium al %@ de descuento";
+"iap.bannerTitle1" = "Obtén Premium al %@ DE DESCUENTO";
 "iap.bannerTitle2" = "solo para usuarios de Noteshelf 2";
 "iap.booklimitReachedMessage" = "Vacía tu papelera para asegurarte de que las libretas eliminadas no se estén contabilizando en tu cuota, o desbloquea la aplicación completa para tener libretas ilimitadas.";
 "iap.booklimitReachedTitle" = "Has alcanzado el límite de cuadernos gratuitos.";
 "iap.booksleft" = "%@ notas restantes'";
+"iap.discount.highlight" = "%@ DE DESCUENTO";
 "iap.featureLimitMessage" = "Esta función está bloqueada. Desbloquea actualizando ahora.";
 "iap.featureLimitTitle" = "Actualiza ahora";
 "iap.message" = "Obtén acceso a notas ilimitadas, reconocimiento de escritura y búsqueda, y diarios digitales con Noteshelf Premium.";
@@ -1551,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 7 December 2023 at 6:07 PM
+// Last Synced by Akshay on 8 December 2023 at 17:01

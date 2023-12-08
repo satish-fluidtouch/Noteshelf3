@@ -817,6 +817,7 @@
 		97F60C0E291E13A80050C3F3 /* FTShelfViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97907E8B2862F47A0052ED98 /* FTShelfViewControllerNew.swift */; };
 		97F60C18291E26CE0050C3F3 /* FTShelfItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60C17291E26CE0050C3F3 /* FTShelfItemInfoView.swift */; };
 		BA05C6D92A6EB65A00300455 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA05C6DB2A6EB65A00300455 /* MainInterface.storyboard */; };
+		BA102DAF2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BA102DAE2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf */; };
 		BA111C262988D7A7001E854F /* NSFileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C082988D7A7001E854F /* NSFileManager+Additions.swift */; };
 		BA111C292988D7A7001E854F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C0B2988D7A7001E854F /* Helper.swift */; };
 		BA111C2E2988D7A7001E854F /* FontMetricsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C102988D7A7001E854F /* FontMetricsProvider.swift */; };
@@ -3878,6 +3879,7 @@
 		BA0A7BEC215D123300FCBB89 /* FTAddDocumentEntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAddDocumentEntitiesViewController.swift; sourceTree = "<group>"; };
 		BA0B45E822DC7B2B00A83C30 /* FTPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPermissionManager.swift; sourceTree = "<group>"; };
 		BA0C9CA921E5CD260003FAF6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		BA102DAE2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Bold.otf"; sourceTree = "<group>"; };
 		BA111BE529880094001E854F /* libiink.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libiink.xcframework; sourceTree = "<group>"; };
 		BA111BF6298800C7001E854F /* IINKIImagePainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IINKIImagePainter.h; sourceTree = "<group>"; };
 		BA111BF7298800C7001E854F /* IINKContentSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IINKContentSelection.h; sourceTree = "<group>"; };
@@ -9359,6 +9361,14 @@
 			name = "Swiftlint Rules";
 			sourceTree = "<group>";
 		};
+		BA102DAB2B23370F0066BE22 /* SF Pro */ = {
+			isa = PBXGroup;
+			children = (
+				BA102DAE2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf */,
+			);
+			path = "SF Pro";
+			sourceTree = "<group>";
+		};
 		BA111BFD2988D7A7001E854F /* IInkUIReferenceImplementation */ = {
 			isa = PBXGroup;
 			children = (
@@ -9978,6 +9988,7 @@
 		BAA84E2828730FA900DE801B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				BA102DAB2B23370F0066BE22 /* SF Pro */,
 				E7D87C9929CEF47700E1FD1E /* ClearFace */,
 			);
 			path = Fonts;
@@ -12076,6 +12087,7 @@
 				E7BA02F129CC2780008B1B5C /* Clearface-Serial-Regular.otf in Resources */,
 				E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.otf in Resources */,
 				145739A02B0CB1E20052103F /* Clearface-Serial-Bold.otf in Resources */,
+				BA102DAF2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf in Resources */,
 				143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.otf in Resources */,
 				BAA84E3428730FAA00DE801B /* Colors.xcassets in Resources */,
 			);
