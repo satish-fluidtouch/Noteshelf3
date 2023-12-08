@@ -18,7 +18,8 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     let dummyStrip1Color = UIColor(hexString: "#F0D295")
     let dummyStrip2Color = UIColor(hexString: "#80CCCB")
     let stripHighlightColor = UIColor(hexString: "#FEFEFE")
-    let pageNumberHighlightBGColor = UIColor(hexString: "#AAEBF1")
+    let pageNumberHighlightBGColor = UIColor(hexString: "#EBA899")
+    let widgetHightlightBGColor = UIColor(hexString: "#80CCCB")
     let weekNumberStripColors : [Int: String] = [1 :"#80CCCB",2:"#EBA899",3:"#F0D295",4:"#80CCCB",5:"#EBA899",6:"#F0D295"]
     let weekDaysPastalColors = ["#80CCCB","#EBA899","#F0D295","#80CCCB","#EBA899","#F0D295","#80CCCB","#EADFCF"]
     let notesBandBGColor = UIColor(hexString: "#E7E7E7")
