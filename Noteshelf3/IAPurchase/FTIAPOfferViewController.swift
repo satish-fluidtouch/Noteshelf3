@@ -47,7 +47,6 @@ class FTIAPOfferViewController: UIViewController {
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
         self.messageLabel?.text = "iap.messageNew".localized
         self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
-        self.messageLabel?.attributedText = spaceBetweenSentense(label: self.messageLabel!)
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
         self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20)
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
@@ -77,18 +76,6 @@ class FTIAPOfferViewController: UIViewController {
         subheadingLabel?.isHidden = false
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
     }
-    
-    func spaceBetweenSentense(label: UILabel) -> NSAttributedString {
-        if let stringValue = label.text{
-            let attrString = NSMutableAttributedString(string: stringValue)
-            let style = NSMutableParagraphStyle()
-            style.lineSpacing = 5
-            style.alignment = .center
-            attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: stringValue.count))
-            return attrString
-        }
-        return NSAttributedString()
-    }
 
     func configurePriceOnButton() {
         miniTitleLabel?.isHidden = false
@@ -111,20 +98,14 @@ class FTIAPOfferViewController: UIViewController {
 
         let fullText =  String(format: localisedText,"\(discountpercentage)%")
         let range = (fullText as NSString).range(of: offText)
-        
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 5
-        style.alignment = .center
 
         let redAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.init(hexString: "#D6411c"),
-            .paragraphStyle: style,
             .font: UIFont(name: "SFProRounded-Bold", size: 36)!
         ]
 
         let blackAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.black,
-            .paragraphStyle: style
         ]
         let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
         attributedString.addAttributes(redAttributes, range: range)
