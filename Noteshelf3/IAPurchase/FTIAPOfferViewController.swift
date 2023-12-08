@@ -60,6 +60,7 @@ class FTIAPOfferViewController: UIViewController {
         if let upgradeButton = upgradeButton{
             upgradeButton.apply(to: upgradeButton, withScaleValue: 0.93)
         }
+        miniTitleLabel?.text =  "iap.onetimepurchase".localized
 
         let variant = FTAppConfigHelper.sharedAppConfig().variantForOfferPremium()
         switch variant {
