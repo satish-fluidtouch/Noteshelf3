@@ -366,11 +366,11 @@ extension FTDocumentMigration {
                      let pathExtention = subUrl.pathExtension
                      if subUrl.deletingPathExtension().lastPathComponent == "template" {
                          let ns3TemplateFile = subUrl.deletingLastPathComponent().appendingPathComponent(fileName).appendingPathExtension(pathExtention)
-                         try FileManager().moveItem(at: subUrl, to: ns3TemplateFile)
+                         try FileManager().copyItem(at: subUrl, to: ns3TemplateFile)
                      }
                  })
                  let ns3CustomFile = url.deletingPathExtension()
-                 try FileManager().moveItem(at: url, to: ns3CustomFile)
+                 try FileManager().copyItem(at: url, to: ns3CustomFile)
 
                  let fileName = ns3CustomFile.lastPathComponent
                  let ns3CustomTemplatesFolder = FTStoreCustomTemplatesHandler.shared.customTemplatesFolder
