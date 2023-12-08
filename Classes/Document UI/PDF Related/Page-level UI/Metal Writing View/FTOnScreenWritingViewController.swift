@@ -415,8 +415,7 @@ extension FTOnScreenWritingViewController
             
             //For drawing straight lines in highlighter mode when draw straight lines option is turned on
             //isShapeEnabled - This will be true only when user holds and convert to shape
-            if self.currentDrawingMode == .deskModeMarker ,
-               FTUserDefaults.isDrawStraightLinesOn(),
+            if self.toDrawStraightLineInFavoriteMode(),
                let curStroke = self.currentStroke?.stroke as? FTStroke, !isShapeEnabled {
                 let shapeDetector = FTShapeDetector.init(delegate: self)
                 let lineDetected = shapeDetector.detectedLineFor(stroke: curStroke, scale: self.scale).1
@@ -527,6 +526,16 @@ extension FTOnScreenWritingViewController
         return false
     }
 
+    private func toDrawStraightLineInFavoriteMode() -> Bool {
+        guard self.currentDrawingMode == .deskModeFavorites || self.currentDrawingMode == .deskModeMarker else {
+            return false
+        }
+        if FTUserDefaults.isDrawStraightLinesOn() && self.currentSelectedPenSet().type.isHighlighterPenType() {
+            return true
+        }
+        return false
+    }
+    
     private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool) {
         var hasShape = false;
         guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape) }
