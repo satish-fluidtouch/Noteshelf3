@@ -1023,6 +1023,7 @@
 "days" = "天";
 "delete" = "删除";
 "done" = "完成";
+"dontMigrate" = "不迁移";
 "downloadedStickers" = "已下载贴纸";
 "duplicate" = "复制";
 "eraser.auto" = "自动";
@@ -1550,4 +1551,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Ramakrishna on 7 December 2023 at 4:26 PM
+// Last Synced by Rakesh on 7 December 2023 at 6:06 PM

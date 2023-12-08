@@ -121,14 +121,17 @@ class FTIAPOfferViewController: UIViewController {
         attributedString.addAttributes(redAttributes, range: range)
         self.titleLabel?.attributedText = attributedString
 
-        let boldAttr: [NSAttributedString.Key: Any] = [
+        let mediumAttr: [NSAttributedString.Key: Any] = [
             .font: UIFont.clearFaceFont(for: .medium, with: 20.0)
+        ]
+
+        let boldAttr: [NSAttributedString.Key: Any] = [
+            .font: UIFont.clearFaceFont(for: .bold, with: 20.0)
         ]
         let localisedString = NSLocalizedString("iap.toptitle", comment: "Noteshelf 2 users exclusive")
         let selectedRange = (localisedString as NSString).range(of: "Noteshelf 2")
-        let attrString = NSMutableAttributedString(string: localisedString)
-        let rangeToApply = NSRange(location: selectedRange.length, length: localisedString.count - selectedRange.length)
-        attrString.addAttributes(boldAttr, range: rangeToApply)
+        let attrString = NSMutableAttributedString(string: localisedString, attributes: mediumAttr)
+        attrString.addAttributes(boldAttr, range: selectedRange)
         self.topTitle?.attributedText = attrString
     }
 
