@@ -26,8 +26,6 @@
 		091482BA2A7257EF009E49C2 /* FTCharWrapStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482B92A7257EF009E49C2 /* FTCharWrapStrokeRender.swift */; };
 		091482BC2A725800009E49C2 /* FTWordWrapStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482BB2A725800009E49C2 /* FTWordWrapStrokeRender.swift */; };
 		091482BE2A72581A009E49C2 /* FTCharToStrokeRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091482BD2A72581A009E49C2 /* FTCharToStrokeRender.swift */; };
-		0920F0512AFA684D00CC8528 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
-		0920F0542AFA685800CC8528 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
 		0935E0DC2AE9058800BC1017 /* FTPDFPageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935E0DB2AE9058800BC1017 /* FTPDFPageContent.swift */; };
 		0935E0DF2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0935E0DE2AEA41F000BC1017 /* FTCommandDebuggerViewController.swift */; };
 		0938F4172361B06400DFC7F3 /* FTShelfProviderConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B665E81E852B7A0003DA80 /* FTShelfProviderConstants.swift */; };
@@ -1976,6 +1974,8 @@
 		BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA35A28926022057002581BF /* FTRenderKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 976AA9C425E7E1D00003B793 /* Webdav.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BAF6A8F72A1CC5EF00A755DB /* FTTextToolbarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF6A8F62A1CC5EF00A755DB /* FTTextToolbarButton.swift */; };
+		BAF7268B2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF7268A2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift */; };
+		BAF7268D2B1E0C2D009E8265 /* FTIAPContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF7268C2B1E0C2D009E8265 /* FTIAPContainerViewController.swift */; };
 		BAFC3FA62A8F619600D8FD71 /* FTTagCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 476450172924E24200B6113B /* FTTagCollectionCell.xib */; };
 		C8054ADD23350C4B0083BB04 /* FTSharedAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860737123276B48009658F1 /* FTSharedAction.swift */; };
 		C8054ADE23350C530083BB04 /* FTImportStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C860736D23275E5D009658F1 /* FTImportStorageManager.swift */; };
@@ -4152,6 +4152,8 @@
 		BAF395B12859ADF10067CA9F /* NS3 Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NS3 Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAF672CB254970A000D4F5FC /* FTDBBackupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDBBackupManager.swift; sourceTree = "<group>"; };
 		BAF6A8F62A1CC5EF00A755DB /* FTTextToolbarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextToolbarButton.swift; sourceTree = "<group>"; };
+		BAF7268A2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAppConfigHelper_Extension.swift; sourceTree = "<group>"; };
+		BAF7268C2B1E0C2D009E8265 /* FTIAPContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTIAPContainerViewController.swift; sourceTree = "<group>"; };
 		C8048DA8227C61D500096D86 /* FTPDFConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPDFConverter.swift; sourceTree = "<group>"; };
 		C8048DAA227C61DF00096D86 /* FTPrintPageRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPrintPageRenderer.swift; sourceTree = "<group>"; };
 		C804F3C322A8EB8100FB9D2F /* FTLassoContentSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTLassoContentSelectionViewController.swift; sourceTree = "<group>"; };
@@ -4674,7 +4676,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				47C561BD29FA7B8000E35D06 /* FTStyles.framework in Frameworks */,
-				0920F0542AFA685800CC8528 /* FTDocumentFramework.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4739,7 +4740,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAF0DD622A6FE48E006D293B /* FTNewNotebook.framework in Frameworks */,
-				0920F0512AFA684D00CC8528 /* FTDocumentFramework.xcframework in Frameworks */,
 				5283D3A42A5E7AA000C6C125 /* FTStyles.framework in Frameworks */,
 				BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */,
 				5288FB452A553F5100EBC37C /* ZipArchive in Frameworks */,
@@ -6632,6 +6632,7 @@
 				97C8529E24F65AB800EF893A /* CommonExtensions.swift */,
 				211E2C981E027D72007B5CAD /* FTAppConfigHelper.h */,
 				211E2C991E027D72007B5CAD /* FTAppConfigHelper.m */,
+				BAF7268A2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift */,
 				094B94541E4C86C50047B9D6 /* FTRemoteMessagePopupController.swift */,
 				094B945C1E4C939B0047B9D6 /* FTRemoteAlertAction.swift */,
 				211E2C9A1E027D72007B5CAD /* FTDefaults.h */,
@@ -7986,6 +7987,7 @@
 				09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */,
 				47BC0AF42A77CBEE00163A0A /* FTIAPViewController.swift */,
 				1445AA342B0F3DC700A52545 /* FTIAPOfferViewController.swift */,
+				BAF7268C2B1E0C2D009E8265 /* FTIAPContainerViewController.swift */,
 				47BC0AF52A77CBEE00163A0A /* FTIAPurchaseHelper.swift */,
 				47BC0AF62A77CBEE00163A0A /* FTIAPViewModel.swift */,
 				0971841E2A82230D00656B36 /* FTPremiumBanner.swift */,
@@ -13837,6 +13839,7 @@
 				BAF393B62859ADF00067CA9F /* FTFileItemPDFTemp.m in Sources */,
 				BAF393B72859ADF00067CA9F /* FTQuickNoteSaveViewController.swift in Sources */,
 				BAF393BA2859ADF00067CA9F /* UIVIewController_Extension.swift in Sources */,
+				BAF7268B2B1E01D1009E8265 /* FTAppConfigHelper_Extension.swift in Sources */,
 				BAF393BB2859ADF00067CA9F /* FTTextAnnotation.swift in Sources */,
 				4708DEDC2A0279960009F071 /* FTFileImporter.swift in Sources */,
 				BAF393BC2859ADF00067CA9F /* FTWatchRecordingCollection_Cloud.swift in Sources */,
@@ -14170,6 +14173,7 @@
 				E7C71A62288E795A00AF2598 /* RangeTrackConfiguration.swift in Sources */,
 				BAF394C92859ADF10067CA9F /* FTAccountInfoRequest.swift in Sources */,
 				BAF394CA2859ADF10067CA9F /* FTThumbnailableCollection.swift in Sources */,
+				BAF7268D2B1E0C2D009E8265 /* FTIAPContainerViewController.swift in Sources */,
 				BAF394CD2859ADF10067CA9F /* FTImageAnnotationViewController.swift in Sources */,
 				47BC0AFD2A77D14700163A0A /* FTIAPurchaseHelper.swift in Sources */,
 				520DA2CA2A306C05003A6F22 /* FTBookmarkColorFooter.swift in Sources */,
@@ -15959,7 +15963,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.3.3;
+				APP_VERSION = 1.3.5;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -16886,7 +16890,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.3.3;
+				APP_VERSION = 1.3.5;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16952,7 +16956,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.3.3;
+				APP_VERSION = 1.3.5;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

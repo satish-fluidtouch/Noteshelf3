@@ -25,7 +25,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
     var appState : AppState
 
     private var popOverHeight: CGFloat {
-        var height = horizontalSizeClass == .regular ? 488.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
+        var height = horizontalSizeClass == .regular ? 435.0 : 500 // increase the height of 52.0 if apple watch added in the popover view
         if(NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled() ) {
             height += 52
         }
@@ -83,7 +83,7 @@ struct FTShelfNavBarItemsViewModifier: ViewModifier {
                             }
                             .popover(isPresented: $showingPopover) {
                                 NavigationStack{
-                                    FTShelfNewNotePopoverView(viewModel: newNoteViewModel(), popoverHeight: popOverHeight, appState: AppState(sizeClass: horizontalSizeClass ?? .regular),delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)
+                                    FTShelfNewNotePopoverView(viewModel: newNoteViewModel(), appState: AppState(sizeClass: horizontalSizeClass ?? .regular),delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)
                                         .background(.regularMaterial)
                                 }
                                 .frame(minWidth: 340.0,maxWidth: .infinity)

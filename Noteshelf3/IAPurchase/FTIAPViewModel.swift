@@ -96,16 +96,3 @@ class FTIAPViewModel {
         return self.products.first(where: {$0.productIdentifier == FTIAPManager.ns3PremiumIdentifier});
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

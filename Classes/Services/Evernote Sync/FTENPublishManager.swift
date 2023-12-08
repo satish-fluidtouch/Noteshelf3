@@ -431,14 +431,14 @@ class FTENNotebook: NSObject {
         let predicate = NSPredicate(format: "parentRecord==nil AND isDirty==YES AND syncEnabled==YES AND deleted==NO AND (NOT (nsGUID IN %@))", ignoreIDs)
         
         let syncRecord = FTENSyncUtilities.fetchTopManagedObject(withEntity: "ENSyncRecord", predicate: predicate) as? ENSyncRecord
-        if let syncRecord = syncRecord {
+        if let syncRecord = syncRecord, !FTNoteshelfDocumentManager.shared.isDocumentOpen(for: syncRecord.nsGUID) {
             currentlyPublingNotebookId = syncRecord.nsGUID
         } else {
             //Choose any ENSyncRecord that corresponds a page and is dirty and its parentrecord is enabled for sync
             let predicate = NSPredicate(format: "parentRecord!=nil AND parentRecord.syncEnabled==YES AND isDirty==YES AND (NOT (parentRecord.nsGUID IN %@))", ignoreIDs)
             
             let record = FTENSyncUtilities.fetchTopManagedObject(withEntity: "ENSyncRecord", predicate: predicate) as? ENSyncRecord
-            if let record = record {
+            if let record = record,!FTNoteshelfDocumentManager.shared.isDocumentOpen(for: record.parent.nsGUID) {
                 currentlyPublingNotebookId = record.parent.nsGUID
             }
         }

@@ -190,7 +190,6 @@ extension FTShelfBaseHostingController: FTToolbarActionDelegate, FTSearchToolbar
         let shelfNewNoteViewModel =  FTNewNotePopoverViewModel()
         shelfNewNoteViewModel.delegate = shelfViewModel
         let controller = FTShelfNewNoteController(viewModel: shelfNewNoteViewModel
-                                                  , popOverHeight: 384
                                                   , appState:AppState(sizeClass: .regular)
                                                   , shelfViewModel: shelfViewModel
                                                   ,delegate: shelfViewModel.delegate as? FTShelfNewNoteDelegate)

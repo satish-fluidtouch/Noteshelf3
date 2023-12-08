@@ -1023,9 +1023,11 @@
 "days" = "Giorni";
 "delete" = "Elimina";
 "done" = "Fatto";
+"dontMigrate" = "Non migrare";
 "downloadedStickers" = "Adesivi scaricati";
 "duplicate" = "Duplica";
 "eraser.auto" = "Auto";
+"evernote.openNotebook.SyncSkip" = "Uno notebook è in stato aperto.";
 "evernote.userInfo.fetchFailureMessage" = "Impossibile recuperare le informazioni dell'account in questo momento.";
 "export_data" = "Esporta i dati";
 "export_description1" = "È altamente consigliato salvare una copia dei tuoi dati sul tuo dispositivo locale.";
@@ -1110,6 +1112,7 @@
 "iap.restoreSuccessWithNoPurchase" = "Non ci sono elementi acquistati da ripristinare.";
 "iap.termsnconditions" = "Termini e condizioni";
 "iap.title" = "Ottieni l'esperienza completa con Noteshelf Premium";
+"iap.toptitle" = "Esclusivo per gli utenti di Noteshelf 2";
 "iap.upgradeNow" = "Aggiorna ora";
 "iap.upgradeToPremiumNow" = "Passa a Premium ora";
 "icloud.sync.issue.message" = "Impossibile connettersi a iCloud. Assicurati che iCloud sia attivato nelle impostazioni.";
@@ -1548,4 +1551,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 23 November 2023 at 5:40 PM
+// Last Synced by Rakesh on 7 December 2023 at 6:07 PM

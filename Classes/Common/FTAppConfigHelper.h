@@ -38,4 +38,6 @@ CG_EXTERN NSString * _Nonnull const FTRemoteConfigNewValueKey;
 
 -(NSTimeInterval)myScriptRecognitionResetDuration;
 
+-(NSInteger)offerPriceLocationForIAPOffer;
+
 @end
