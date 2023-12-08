@@ -477,7 +477,7 @@ extension FTShelfViewModel {
                     self.shelfDidLoad = true
                 }
                 if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
                 }
             }
         }
