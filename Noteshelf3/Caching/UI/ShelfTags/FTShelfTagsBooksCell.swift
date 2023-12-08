@@ -88,31 +88,28 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
             FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: page!.uuid) { [weak self] image, pageUUID in
                 guard let self = self else { return }
                 if let image, page!.uuid == pageUUID {
-                    if  image.size.width > image.size.height  { // landscape
-                        let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
-                        size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-                    } else {
-                        let potraitSize = FTShelfTagsConstants.Book.potraitSize
-                        size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-                    }
+                    updateSize(using: image)
+                } else {
+                    token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.documentItem!, onCompletion: { [weak self](image, imageToken) in
+                        if token == imageToken {
+                            if let img = image {
+                                updateSize(using: img)
+                            }
+                        }
+                    })
                 }
             }
         }
-
-// TODO: - TO validate and remove below
-//        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.documentItem!, onCompletion: { [weak self](image, imageToken) in
-//            if token == imageToken {
-//                if let img = image {
-//                    if  img.size.width > img.size.height  { // landscape
-//                        let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
-//                        size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-//                    } else {
-//                        let potraitSize = FTShelfTagsConstants.Book.potraitSize
-//                        size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-//                    }
-//                }
-//            }
-//        })
+        // inner function
+        func updateSize(using img: UIImage) {
+            if  img.size.width > img.size.height  { // landscape
+                let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
+                size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
+            } else {
+                let potraitSize = FTShelfTagsConstants.Book.potraitSize
+                size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
+            }
+        }
         return size
     }
 

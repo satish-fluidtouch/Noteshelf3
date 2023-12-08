@@ -516,7 +516,7 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                         pagesCell.thumbnail?.image = image
                     } else {
                         // get Actual Document from All original  Documents
-                        documentItemFor(documentUUID: docUUID, completion: { docItem in
+                        self.documentItemFor(documentUUID: docUUID, completion: { docItem in
                             // if document is already open Just get the reference of document and and load thumbnail for related Page
                             // else Open document and generate thumbnail
                             if let pageCellItem = self.pageCellItems.first(where: {$0.document.documentUUID == item.documentUUID}) {// && $0.page.uuid == item.pageUUID
@@ -524,12 +524,10 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                                 let docPages = pageCellItem?.document.pages()
                                 if let page = docPages?.first(where: {$0.uuid == item.pageUUID}) {
                                     tagPage = page
-                                    print("<<<<< Not Opened for ", docUUID)
                                     page.thumbnail()?.thumbnailImage(onUpdate: blockToExecute)
                                 }
                             } else if let docItem {
                                 self.openDocumentFor(documentItem: docItem) { document, token in
-                                    print("<<<<< Opened for ", document?.documentUUID)
                                     let docPages =  document?.pages()
                                     if let document, let token, let page = docPages?.first(where: {$0.uuid == item.pageUUID}) {
                                         let pageCellItem = FTShelfTagPageCellItem(document: document, page: page, token: token)
@@ -553,7 +551,6 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             let filteredItems = self.pageCellItems.filter {$0.document.documentUUID == item.documentUUID}
             if filteredItems.count == 1, let pageCellItem = filteredItems.first {
                 FTNoteshelfDocumentManager.shared.closeDocument(document: pageCellItem.document, token: pageCellItem.token) { _ in
-                   print("<<<<< Closed for ", item.documentUUID)
                     self.pageCellItems.removeAll(where: {$0.document.documentUUID == item.documentUUID && $0.page.uuid == item.pageUUID})
                 }
             }

@@ -21,12 +21,11 @@ struct FTShelfTagsConstants {
     }
 
     struct Book {
-        static let potraitSize = CGSize(width: 136, height: 189)
-        static let landscapeSize = CGSize(width: 136, height: 97)
-        static let interItemSpacing: CGFloat = 16.0
+        static let potraitSize = CGSize(width: 150, height: 189)
+        static let landscapeSize = CGSize(width: 150, height: 97)
         static let minInterItemSpacing: CGFloat = 16.0
         static let gridHorizontalPadding: CGFloat = 32.0
-        static let extraHeightPadding: CGFloat = 56.0
+        static let extraHeightPadding: CGFloat = 62.0
         static let potraitAspectRation: CGFloat = (136/189)
         static let landscapeAspectRatio: CGFloat = (136/97)
     }

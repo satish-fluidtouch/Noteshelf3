@@ -103,39 +103,25 @@ class FTShelfTagsPageCell: UICollectionViewCell {
                 FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: page!.uuid) { [weak self] image, pageUUID in
                     guard let self = self else { return }
                     if let image, page!.uuid == pageUUID {
-                        if image.size.width > image.size.height {// Landscape
-                            let height = FTShelfTagsConstants.Book.landscapeSize.height
-                            self.thumbnailHeightConstraint.constant = height
-                        } 
-                        else {
-                            let height = FTShelfTagsConstants.Book.potraitSize.height
-                            self.thumbnailHeightConstraint.constant = height
-                        }
-                        self.thumbnail?.image = image
+                        self.updateThumbnailImage(image, for: tagsItem)
+                        self.updateShadow(for: tagsItem)
                     } else {
                         var token : String?
                         token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem, onCompletion: { [weak self](image, imageToken) in
+                            guard let self = self else { return }
                             if token == imageToken {
                                 if let img = image {
-                                    if img.size.width > img.size.height {// Landscape
-                                        let height = FTShelfTagsConstants.Book.landscapeSize.height
-                                        self?.thumbnailHeightConstraint.constant = height
-                                    }
-                                    self?.shadowImageView.layer.cornerRadius = 8
-                                    self?.thumbnail?.layer.cornerRadius = 8
-
-                                    let shadowImage = UIImage(named: "book_shadow")
-                                    let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-                                    self?.shadowImageView.image = scalled
-                                    self?.thumbnail?.image = img
+                                    self.updateThumbnailImage(img, for: tagsItem)
+                                    self.updateShadow(for: tagsItem)
                                 } else {
-                                    self?.shadowImageView.layer.cornerRadius = 8
-                                    self?.thumbnail?.layer.cornerRadius = 8
+                                    self.shadowImageView.layer.cornerRadius = 8
+                                    self.thumbnail?.layer.cornerRadius = 8
                                     let shadowImage = UIImage(named: "noCover_shadow")
                                     let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-                                    self?.shadowImageView.image = scalled
-
-                                    self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
+                                    self.shadowImageView.image = scalled
+                                    if let img = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil) {
+                                        self.updateThumbnailImage(img, for: tagsItem)
+                                    }
                                 }
                             }
                         })
@@ -145,6 +131,31 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         }
     }
 
+  private  func updateThumbnailImage(_ image: UIImage, for tagItem: FTShelfTagsItem) {
+        if tagItem.type == .book {
+            self.thumbnail?.image = image
+            if image.size.width > image.size.height {// Landscape
+                self.thumbnail?.layer.cornerRadius = 8
+                let height = FTShelfTagsConstants.Book.landscapeSize.height
+                self.thumbnailHeightConstraint.constant = height
+            }
+            else {
+                self.thumbnail?.roundCorners(topLeft: 4.0, topRight: 10.0, bottomLeft: 4.0, bottomRight: 10.0)
+                let height = FTShelfTagsConstants.Book.potraitSize.height
+                self.thumbnailHeightConstraint.constant = height
+            }
+        }
+    }
+    
+   private func updateShadow(for tagItem: FTShelfTagsItem) {
+        if tagItem.type == .book {
+            self.shadowImageView.layer.cornerRadius = 8
+            let shadowImage = UIImage(named: "book_shadow")
+            let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
+            self.shadowImageView.image = scalled
+        }
+    }
+    
     func updateTagsViewWith(tags: [FTTagModel]) {
         let padding = 10.0
         let interitemSpace = 5.0
