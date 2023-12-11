@@ -145,7 +145,7 @@
 		1439372029D6E02700D93033 /* FTStickerCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439370929D6E02700D93033 /* FTStickerCategoriesView.swift */; };
 		1439372129D6E02700D93033 /* FTReusableComponentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439370B29D6E02700D93033 /* FTReusableComponentViews.swift */; };
 		1439372629D6E06400D93033 /* Stickers.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1439372529D6E06400D93033 /* Stickers.plist */; };
-		143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */; };
+		143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.otf */; };
 		1445AA352B0F3DC700A52545 /* FTIAPOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1445AA342B0F3DC700A52545 /* FTIAPOfferViewController.swift */; };
 		1449D16429F8256C00C7EC49 /* FTShelfHomeTopSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D15F29F8256700C7EC49 /* FTShelfHomeTopSectionModel.swift */; };
 		1449D16829F8256C00C7EC49 /* FTShelfTopSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1449D16329F8256B00C7EC49 /* FTShelfTopSectionView.swift */; };
@@ -817,6 +817,7 @@
 		97F60C0E291E13A80050C3F3 /* FTShelfViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97907E8B2862F47A0052ED98 /* FTShelfViewControllerNew.swift */; };
 		97F60C18291E26CE0050C3F3 /* FTShelfItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60C17291E26CE0050C3F3 /* FTShelfItemInfoView.swift */; };
 		BA05C6D92A6EB65A00300455 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA05C6DB2A6EB65A00300455 /* MainInterface.storyboard */; };
+		BA102DAF2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BA102DAE2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf */; };
 		BA111C262988D7A7001E854F /* NSFileManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C082988D7A7001E854F /* NSFileManager+Additions.swift */; };
 		BA111C292988D7A7001E854F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C0B2988D7A7001E854F /* Helper.swift */; };
 		BA111C2E2988D7A7001E854F /* FontMetricsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA111C102988D7A7001E854F /* FontMetricsProvider.swift */; };
@@ -2125,8 +2126,8 @@
 		E7B9474F2912499A00BE4430 /* FTShareViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9474E2912499A00BE4430 /* FTShareViewModel.swift */; };
 		E7B9475129124E3500BE4430 /* FTShareFormatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9475029124E3500BE4430 /* FTShareFormatViewModel.swift */; };
 		E7B9C38929DEE8C300866FFE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B9C38829DEE8C300866FFE /* Extensions.swift */; };
-		E7BA02F129CC2780008B1B5C /* Clearface-Serial-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.ttf */; };
-		E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */; };
+		E7BA02F129CC2780008B1B5C /* Clearface-Serial-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.otf */; };
+		E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.otf */; };
 		E7BBBE232A382EFA0021872D /* FTSearchResultGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBBE222A382EFA0021872D /* FTSearchResultGroupCell.swift */; };
 		E7BBBE252A383C7F0021872D /* FTTraitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */; };
 		E7BD929F2AB42C1000176039 /* FTNotebookInfoToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */; };
@@ -2840,7 +2841,7 @@
 		1439370929D6E02700D93033 /* FTStickerCategoriesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStickerCategoriesView.swift; sourceTree = "<group>"; };
 		1439370B29D6E02700D93033 /* FTReusableComponentViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTReusableComponentViews.swift; sourceTree = "<group>"; };
 		1439372529D6E06400D93033 /* Stickers.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Stickers.plist; sourceTree = "<group>"; };
-		143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-RegularItalic.ttf"; sourceTree = "<group>"; };
+		143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-RegularItalic.otf"; sourceTree = "<group>"; };
 		1445AA342B0F3DC700A52545 /* FTIAPOfferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTIAPOfferViewController.swift; sourceTree = "<group>"; };
 		1449D15F29F8256700C7EC49 /* FTShelfHomeTopSectionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfHomeTopSectionModel.swift; sourceTree = "<group>"; };
 		1449D16329F8256B00C7EC49 /* FTShelfTopSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfTopSectionView.swift; sourceTree = "<group>"; };
@@ -3878,6 +3879,7 @@
 		BA0A7BEC215D123300FCBB89 /* FTAddDocumentEntitiesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAddDocumentEntitiesViewController.swift; sourceTree = "<group>"; };
 		BA0B45E822DC7B2B00A83C30 /* FTPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPermissionManager.swift; sourceTree = "<group>"; };
 		BA0C9CA921E5CD260003FAF6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		BA102DAE2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Bold.otf"; sourceTree = "<group>"; };
 		BA111BE529880094001E854F /* libiink.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libiink.xcframework; sourceTree = "<group>"; };
 		BA111BF6298800C7001E854F /* IINKIImagePainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IINKIImagePainter.h; sourceTree = "<group>"; };
 		BA111BF7298800C7001E854F /* IINKContentSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IINKContentSelection.h; sourceTree = "<group>"; };
@@ -4453,8 +4455,8 @@
 		E7B9474E2912499A00BE4430 /* FTShareViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShareViewModel.swift; sourceTree = "<group>"; };
 		E7B9475029124E3500BE4430 /* FTShareFormatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShareFormatViewModel.swift; sourceTree = "<group>"; };
 		E7B9C38829DEE8C300866FFE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-Regular.ttf"; sourceTree = "<group>"; };
-		E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-Medium.ttf"; sourceTree = "<group>"; };
+		E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-Regular.otf"; sourceTree = "<group>"; };
+		E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clearface-Serial-Medium.otf"; sourceTree = "<group>"; };
 		E7BBBE222A382EFA0021872D /* FTSearchResultGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchResultGroupCell.swift; sourceTree = "<group>"; };
 		E7BBBE242A383C7F0021872D /* FTTraitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTraitCollectionViewCell.swift; sourceTree = "<group>"; };
 		E7BD929E2AB42C1000176039 /* FTNotebookInfoToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookInfoToastView.swift; sourceTree = "<group>"; };
@@ -9359,6 +9361,14 @@
 			name = "Swiftlint Rules";
 			sourceTree = "<group>";
 		};
+		BA102DAB2B23370F0066BE22 /* SF Pro */ = {
+			isa = PBXGroup;
+			children = (
+				BA102DAE2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf */,
+			);
+			path = "SF Pro";
+			sourceTree = "<group>";
+		};
 		BA111BFD2988D7A7001E854F /* IInkUIReferenceImplementation */ = {
 			isa = PBXGroup;
 			children = (
@@ -9978,6 +9988,7 @@
 		BAA84E2828730FA900DE801B /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				BA102DAB2B23370F0066BE22 /* SF Pro */,
 				E7D87C9929CEF47700E1FD1E /* ClearFace */,
 			);
 			path = Fonts;
@@ -11260,9 +11271,9 @@
 		E7D87C9929CEF47700E1FD1E /* ClearFace */ = {
 			isa = PBXGroup;
 			children = (
-				143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.ttf */,
-				E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.ttf */,
-				E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.ttf */,
+				143CDF6F2AB1DC7900E346D6 /* Clearface-Serial-RegularItalic.otf */,
+				E7BA02F029CC277F008B1B5C /* Clearface-Serial-Regular.otf */,
+				E7BA02F529CC39CE008B1B5C /* Clearface-Serial-Medium.otf */,
 				1457399F2B0CB1E10052103F /* Clearface-Serial-Bold.otf */,
 			);
 			path = ClearFace;
@@ -12073,10 +12084,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7BA02F129CC2780008B1B5C /* Clearface-Serial-Regular.ttf in Resources */,
-				E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.ttf in Resources */,
+				E7BA02F129CC2780008B1B5C /* Clearface-Serial-Regular.otf in Resources */,
+				E7BA02F629CC39CF008B1B5C /* Clearface-Serial-Medium.otf in Resources */,
 				145739A02B0CB1E20052103F /* Clearface-Serial-Bold.otf in Resources */,
-				143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.ttf in Resources */,
+				BA102DAF2B23408B0066BE22 /* SF-Pro-Rounded-Bold.otf in Resources */,
+				143CDF712AB1E0B100E346D6 /* Clearface-Serial-RegularItalic.otf in Resources */,
 				BAA84E3428730FAA00DE801B /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -15963,7 +15975,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.3.4;
+				APP_VERSION = 1.3.5;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -16890,7 +16902,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.3.4;
+				APP_VERSION = 1.3.5;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -16956,7 +16968,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.3.4;
+				APP_VERSION = 1.3.5;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -1023,9 +1023,11 @@
 "days" = "天";
 "delete" = "删除";
 "done" = "完成";
+"dontMigrate" = "不迁移";
 "downloadedStickers" = "已下载贴纸";
 "duplicate" = "复制";
 "eraser.auto" = "自动";
+"evernote.openNotebook.SyncSkip" = "笔记本处于打开状态。";
 "evernote.userInfo.fetchFailureMessage" = "此时无法获取账户信息";
 "export_data" = "导出数据";
 "export_description1" = "强烈建议您在本地设备上保存数据的副本。";
@@ -1092,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以确保已删除的笔记本不会计入您的配额，或解锁完整应用程序以获取无限笔记本";
 "iap.booklimitReachedTitle" = "您已达到免费笔记本限制";
 "iap.booksleft" = "%@ 留下的注释";
+"iap.discount.highlight" = "%@折扣";
 "iap.featureLimitMessage" = "此功能已锁定。立即升级解锁。";
 "iap.featureLimitTitle" = "立即升级";
 "iap.message" = "获取无限笔记、手写识别和搜索以及Noteshelf高级版的数字日记。";
@@ -1549,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 4 December 2023 at 9:56 PM
+// Last Synced by Akshay on 8 December 2023 at 18:28

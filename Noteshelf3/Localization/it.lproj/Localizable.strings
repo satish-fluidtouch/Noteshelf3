@@ -1023,9 +1023,11 @@
 "days" = "Giorni";
 "delete" = "Elimina";
 "done" = "Fatto";
+"dontMigrate" = "Non migrare";
 "downloadedStickers" = "Adesivi scaricati";
 "duplicate" = "Duplica";
 "eraser.auto" = "Auto";
+"evernote.openNotebook.SyncSkip" = "Uno notebook è in stato aperto.";
 "evernote.userInfo.fetchFailureMessage" = "Impossibile recuperare le informazioni dell'account in questo momento.";
 "export_data" = "Esporta i dati";
 "export_description1" = "È altamente consigliato salvare una copia dei tuoi dati sul tuo dispositivo locale.";
@@ -1091,7 +1093,8 @@
 "iap.bannerTitle2" = "solo per gli utenti di Noteshelf 2";
 "iap.booklimitReachedMessage" = "Svuota il cestino per assicurarti che i notebook eliminati non siano conteggiati nel tuo limite, o sblocca l'app completa per avere quaderni illimitati.";
 "iap.booklimitReachedTitle" = "Hai raggiunto il limite di notebook gratuiti.";
-"iap.booksleft" = "%@ note rimaste'";
+"iap.booksleft" = "%@ note rimaste";
+"iap.discount.highlight" = "%@ DI SCONTO";
 "iap.featureLimitMessage" = "Questa funzione è bloccata. Sblocca effettuando l'aggiornamento ora.";
 "iap.featureLimitTitle" = "Aggiorna ora";
 "iap.message" = "Ottieni accesso a note illimitate, riconoscimento della grafia e ricerca, e diari digitali con Noteshelf Premium.";
@@ -1549,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 4 December 2023 at 9:56 PM
+// Last Synced by Akshay on 8 December 2023 at 18:28

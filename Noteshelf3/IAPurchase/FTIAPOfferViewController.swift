@@ -47,8 +47,8 @@ class FTIAPOfferViewController: UIViewController {
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
         self.messageLabel?.text = "iap.messageNew".localized
         self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
-        self.messageLabel?.attributedText = spaceBetweenSentense(label: self.messageLabel!)
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
+        self.miniTitleLabel?.textColor = UIColor.black.withAlphaComponent(0.5)
         self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20)
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
         self.upgradeButton?.layer.shadowOpacity = 0.2
@@ -60,6 +60,7 @@ class FTIAPOfferViewController: UIViewController {
         if let upgradeButton = upgradeButton{
             upgradeButton.apply(to: upgradeButton, withScaleValue: 0.93)
         }
+        miniTitleLabel?.text =  "iap.onetimepurchase".localized
 
         let variant = FTAppConfigHelper.sharedAppConfig().variantForOfferPremium()
         switch variant {
@@ -75,18 +76,6 @@ class FTIAPOfferViewController: UIViewController {
         miniTitleLabel?.isHidden = true
         subheadingLabel?.isHidden = false
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
-    }
-    
-    func spaceBetweenSentense(label: UILabel) -> NSAttributedString {
-        if let stringValue = label.text{
-            let attrString = NSMutableAttributedString(string: stringValue)
-            let style = NSMutableParagraphStyle()
-            style.lineSpacing = 5
-            style.alignment = .center
-            attrString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: stringValue.count))
-            return attrString
-        }
-        return NSAttributedString()
     }
 
     func configurePriceOnButton() {
@@ -104,31 +93,36 @@ class FTIAPOfferViewController: UIViewController {
     private func attributedTitleText(){
         let discountpercentage = 50
         let localisedText = NSLocalizedString("iap.bannerTitle1", comment: "Get Premium at %@ OFF")
-        let range = (localisedText as NSString).range(of: "%@")
 
-        let title1 =  String(format: localisedText,"\(discountpercentage)%")
-        let fullText = "\(title1)"
+        let offText =  String(format: NSLocalizedString("iap.discount.highlight", comment:""), "\(discountpercentage)%")
+
+
+        let fullText =  String(format: localisedText,"\(discountpercentage)%")
+        let range = (fullText as NSString).range(of: offText)
+
         let redAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.init(hexString: "#D6411c")
+            .foregroundColor: UIColor.init(hexString: "#D6411c"),
+            .font: UIFont(name: "SFProRounded-Bold", size: 36)!
         ]
-        let blackAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.black
-        ]
-        let length = title1.count - range.location
-        let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
-        attributedString.addAttributes(redAttributes, range: NSRange(location: range.location, length: length))
 
+        let blackAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black,
+        ]
+        let attributedString = NSMutableAttributedString(string: fullText, attributes: blackAttributes)
         attributedString.addAttributes(redAttributes, range: range)
         self.titleLabel?.attributedText = attributedString
 
-        let boldAttr: [NSAttributedString.Key: Any] = [
+        let mediumAttr: [NSAttributedString.Key: Any] = [
             .font: UIFont.clearFaceFont(for: .medium, with: 20.0)
+        ]
+
+        let boldAttr: [NSAttributedString.Key: Any] = [
+            .font: UIFont.clearFaceFont(for: .bold, with: 20.0)
         ]
         let localisedString = NSLocalizedString("iap.toptitle", comment: "Noteshelf 2 users exclusive")
         let selectedRange = (localisedString as NSString).range(of: "Noteshelf 2")
-        let attrString = NSMutableAttributedString(string: localisedString)
-        let rangeToApply = NSRange(location: selectedRange.length, length: localisedString.count - selectedRange.length)
-        attrString.addAttributes(boldAttr, range: rangeToApply)
+        let attrString = NSMutableAttributedString(string: localisedString, attributes: mediumAttr)
+        attrString.addAttributes(boldAttr, range: selectedRange)
         self.topTitle?.attributedText = attrString
     }
 
@@ -213,8 +207,8 @@ extension FTIAPOfferViewController {
             if let range = iapPurchaseButtonTitle.range(of: "%@") {
                 var strikeThroughAttr : [NSAttributedString.Key:Any] = upgradeAttrs;
                 strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-                strikeThroughAttr[.strikethroughColor] =  UIColor.appColor(.white60);
-                strikeThroughAttr[.foregroundColor] = UIColor.appColor(.white60)
+                strikeThroughAttr[.strikethroughColor] =  UIColor.white.withAlphaComponent(0.6);
+                strikeThroughAttr[.foregroundColor] = UIColor.white.withAlphaComponent(0.6)
                 strikeThroughAttr[.font] = UIFont.clearFaceFont(for: .medium, with: 20)
                 let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
                 priceString.append(NSAttributedString(string: " ", attributes: upgradeAttrs));
