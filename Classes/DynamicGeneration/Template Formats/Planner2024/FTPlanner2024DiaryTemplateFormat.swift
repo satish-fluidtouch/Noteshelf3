@@ -67,7 +67,7 @@ class FTPlanner2024DiaryTemplateFormat : FTDigitalDiaryTemplateFormat {
     // ******* For normal Template ******//
     var bezierBoxesBGColor : UIColor = UIColor(hexString: "#FEFEFE", alpha: 1.0)
     var bezierLinesTintColor: UIColor = UIColor(hexString: "#363636", alpha: 0.4)
-    let toDoColors : [String] = ["#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2","#AAEBF1"]
+    let toDoColors : [String] = ["#FDDD9B","#F0CBC2","#A7E8DB","#80CCCB","#F0D295","#EBA899","#F0CBC2"]
     let monthStripColors : [String] = ["#80CCCB","#EBA899","#F0D295","#80CCCB","#EBA899","#F0D295"]
     //***********************************//
 

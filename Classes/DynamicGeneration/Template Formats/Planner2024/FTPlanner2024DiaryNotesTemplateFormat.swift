@@ -18,7 +18,7 @@ class FTPlanner2024DiaryNotesTemplateFormat : FTPlanner2024DiaryTemplateFormat {
 
         let verticalGapBWLinesPercnt : CGFloat = 4.91
         let notesXAxisPercnt : CGFloat = 7.46
-        let writingAreaYAxisPercnt : CGFloat = 17.98
+        let writingAreaYAxisPercnt : CGFloat = 22.90
         let writingAreaLineWidthPercnt : CGFloat = 38.93
         let writingAreaLineBottomPercnt : CGFloat = 6.11
         let twoSpredGapWidthPercent: CGFloat = 7.19

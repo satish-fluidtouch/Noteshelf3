@@ -145,34 +145,34 @@
 			<key>day</key>
 			<dict>
 				<key>notesBoxWidth</key>
-				<real>43.9</real>
+				<real>38.93</real>
 				<key>notesBoxHeight</key>
-				<real>23.03</real>
+				<real>19.06</real>
 				<key>notesBoxX</key>
-				<real>3.59</real>
+				<real>7.46</real>
 				<key>notesBoxY</key>
-				<real>71.77</real>
+				<real>74.94</real>
 				<key>baseX</key>
-				<real>3.59</real>
+				<real>7.46</real>
 				<key>baseY</key>
-				<real>16.62</real>
+				<real>19.66</real>
 			</dict>
 			<key>week</key>
 			<dict>
 				<key>baseBoxX</key>
-				<real>3.86</real>
+				<real>7.46</real>
 				<key>baseBoxY</key>
-				<real>14.28</real>
+				<real>19.9</real>
 				<key>titleLineY</key>
-				<real>5.58</real>
+				<real>11.75</real>
 				<key>cellOffsetX</key>
-				<real>0.87</real>
+				<real>7.19</real>
 				<key>cellOffsetY</key>
-				<real>1.29</real>
+				<real>1.19</real>
 				<key>cellWidth</key>
-				<real>43.91</real>
+				<real>38.93</real>
 				<key>cellHeight</key>
-				<real>19.12</real>
+				<real>17.62</real>
 			</dict>
 			<key>month</key>
 			<dict>
@@ -460,24 +460,24 @@
 			<key>week</key>
 			<dict>
 				<key>monthFontSize</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>yearFontSize</key>
-				<integer>20</integer>
+				<integer>15</integer>
 				<key>weekFontSize</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>dayFontSize</key>
 				<integer>10</integer>
 			</dict>
 			<key>day</key>
 			<dict>
 				<key>dayFontSize</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>monthFontSize</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>weekFontSize</key>
-				<integer>20</integer>
+				<integer>21</integer>
 				<key>yearFontSize</key>
-				<integer>14</integer>
+				<integer>15</integer>
 			</dict>
 		</dict>
 	</dict>
