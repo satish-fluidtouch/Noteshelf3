@@ -48,6 +48,7 @@ class FTIAPOfferViewController: UIViewController {
         self.messageLabel?.text = "iap.messageNew".localized
         self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
         self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
+        self.miniTitleLabel?.textColor = UIColor.black.withAlphaComponent(0.5)
         self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20)
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
         self.upgradeButton?.layer.shadowOpacity = 0.2
@@ -206,8 +207,8 @@ extension FTIAPOfferViewController {
             if let range = iapPurchaseButtonTitle.range(of: "%@") {
                 var strikeThroughAttr : [NSAttributedString.Key:Any] = upgradeAttrs;
                 strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-                strikeThroughAttr[.strikethroughColor] =  UIColor.appColor(.white60);
-                strikeThroughAttr[.foregroundColor] = UIColor.appColor(.white60)
+                strikeThroughAttr[.strikethroughColor] =  UIColor.white.withAlphaComponent(0.6);
+                strikeThroughAttr[.foregroundColor] = UIColor.white.withAlphaComponent(0.6)
                 strikeThroughAttr[.font] = UIFont.clearFaceFont(for: .medium, with: 20)
                 let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
                 priceString.append(NSAttributedString(string: " ", attributes: upgradeAttrs));

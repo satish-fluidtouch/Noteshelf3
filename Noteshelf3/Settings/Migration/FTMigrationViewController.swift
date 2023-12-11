@@ -46,6 +46,7 @@ class FTMigrationViewController: UIViewController {
         warningTitle?.text = "⚠︎ " + "migration.exitScreen".localized
         migratedSuccessTextLabel.text = "migration.succes".localized
         cancelButton?.titleLabel?.text = "migration.cancel".localized
+        doneButton?.setTitle(NSLocalizedString("Done", comment: "Done"), for: .normal)
         doneButton?.layer.shadowColor = UIColor.init(hexString: "186F81").cgColor
         doneButton?.layer.shadowOffset = CGSize(width: 0.0, height: 12.0)
         doneButton?.layer.shadowOpacity = 0.24
