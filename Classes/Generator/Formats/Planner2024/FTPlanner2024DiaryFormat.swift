@@ -23,8 +23,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     let weekNumberStripColors : [Int: String] = [1 :"#80CCCB",2:"#EBA899",3:"#F0D295",4:"#80CCCB",5:"#EBA899",6:"#F0D295"]
     let weekDaysPastalColors = ["#80CCCB","#EBA899","#F0D295","#80CCCB","#EBA899","#F0D295","#80CCCB","#EADFCF"]
     let notesBandBGColor = UIColor(hexString: "#E7E7E7")
-    let goalsBandBGColor = UIColor(hexString: "#80CCCB")
-    let dayNotesBandBGColor = UIColor(hexString: "#F0D295")
     //**************************************************//
 
     var customVariants : FTPaperVariants
@@ -368,7 +366,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         var monthRectsCount = 0
         self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: 0)
         var addWeekOffset : Bool = true
-        calendarMonths.prefix(6).forEach { (eachMonth) in
+        calendarMonths.forEach { (eachMonth) in
             let monthRects = format.calendarRectsInfo.monthRects
             let numberOfWeeksOfMonth = eachMonth.getWeeksCount()
             let numberOfDaysInMonth = eachMonth.dayInfo.filter({$0.belongsToSameMonth}).count
@@ -453,14 +451,17 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         var validateMonthForFirstDay : Bool = false
         var addWeekOffset : Bool = true
         var addWeekOffsetForTopNavigationLinks : Bool = true
-        calendarMonths.forEach { (eachMonth) in
+        var eachDayBeforeDays = 1 + numberYearPages
+        for (index,month) in calendarMonths.enumerated() {
+            let eachMonth :FTMonthlyCalendarInfo = month
             let monthRectsInfo = format.monthRectsInfo[monthRectsCount]
+            let dayRectsInfo = format.dayRectsInfo
             let weekRectsInfo = monthRectsInfo.weekRects
             let monthIndex = monthBeforeDays
             let monthPage = doc.page(at: monthIndex);
             var topNavigationIndex = monthIndex
             let topNavigationRects = self.plannerDiaryTopNavigationRectsInfo.plannerTopNavigationRects
-            
+
             let weekIndex = topNavigationIndex + 1
             if let weekPage = doc.page(at: weekIndex), let weekRect = topNavigationRects[.week]  {
                 monthPage?.addLinkAnnotation(bounds: weekRect, goToPage: weekPage, at: atPoint)
@@ -487,11 +488,11 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                 weekBeforeDaysCount = monthBeforeDays + 1 // adding first week
                 for  (weekIndex,weekRect) in weekRectsInfo.enumerated() {
                     let weekFirstDay = eachMonth.weeklyInfo[weekIndex].dayInfo.first
-                    
+
                     if !validateMonthForFirstDay { // ignoring as we need to process the week even its first day doesnt belong to calendar
                         validateMonthForFirstDay = true
                         if self.shouldAddWeekOffsetToCalendarWith(firstDay: eachMonth.dayInfo.first)  {
-                        
+
                         let weekPageIndex = weekBeforeDaysCount
                         if let page = doc.page(at: weekPageIndex){
                             monthPage?.addLinkAnnotation(bounds: weekRect, goToPage: page, at: atPoint)
@@ -500,7 +501,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                         continue
                         }
                     }
-                    
+
                     if weekFirstDay?.fullMonthString.uppercased() == eachMonth.fullMonth.uppercased(){
                             let weekPageIndex = weekBeforeDaysCount
                             if let page = doc.page(at: weekPageIndex){
@@ -525,6 +526,24 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                 }
             }
             self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: monthIndex)
+
+            var dayRectsCount = 0
+            eachDayBeforeDays += index + eachMonth.getWeeksCount()
+            eachMonth.dayInfo.forEach({(eachDay) in
+                if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
+                    if eachDay.belongsToSameMonth {
+                        if monthRectsInfo.dayRects.count > dayRectsCount {
+                            print("zzzz-dayRectsCount",dayRectsCount)
+                            let dayIndex = eachDayBeforeDays + dayRectsCount + 1
+                            print("zzzz-dayIndex",dayIndex)
+                            if let page = doc.page(at: dayIndex) {
+                                monthPage?.addLinkAnnotation(bounds: monthRectsInfo.dayRects[dayRectsCount], goToPage: page, at: atPoint)
+                            }
+                        }
+                        dayRectsCount += 1
+                    }
+                }
+            })
             pageIndex += 1
             monthRectsCount += 1
         }

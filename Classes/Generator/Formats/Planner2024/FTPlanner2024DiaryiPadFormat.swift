@@ -349,7 +349,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             weekNumberStripColorIndex += 1
             weekString.draw(in: weekRect)
             if (week.isActive){ // if weeks is active adding link to it
-                weekRects.append(getLinkRect(location: CGPoint(x: weekX, y: weekY), frameSize: CGSize(width: weekNumWidth + 6, height: weekRectHeight)))
+                weekRects.append(getLinkRect(location: CGPoint(x: weekX, y: weekY), frameSize: CGSize(width: weekNumberWidth, height: weekRectHeight)))
             }
             weekY += cellHeight + (currentPageRect.height*cellOffsetY/100)
         }
@@ -388,12 +388,12 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         var weekDayBgColor = weekNumberStripColors[weekDayBGColorIndex];
 
 
-        let dayFont = UIFont.InterRegular(screenInfo.fontsInfo.monthPageDetails.dayFontSize)
+        let dayFont = UIFont.clearFaceFont(for: .regular, with: screenInfo.fontsInfo.monthPageDetails.dayFontSize)
         var dayNewFontSize = UIFont.getScaledFontSizeFor(font: dayFont, screenSize: currentPageRect.size, minPointSize: 8)
         if self.formatInfo.customVariants.selectedDevice.identifier == "standard4"{
             dayNewFontSize = 6
         }
-        var dayAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.InterRegular(dayNewFontSize),
+        var dayAttrs: [NSAttributedString.Key: Any] = [.font :UIFont.clearFaceFont(for: .regular, with:dayNewFontSize),
                                                        NSAttributedString.Key.kern : 1.15,
                                                        .paragraphStyle: paragraphStyle];
 
@@ -415,12 +415,12 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             let dayTextRect = CGRect(x: dayX - 10 - weekDayWidth + 3.5, y: dayY - 5 - (dayrectHeight/2) - (dayString.size().height/2), width: weekDayWidth , height: dayrectHeight)
             if let stripColor = weekDayBgColor,isBelongToCalendarYear(currentDate: day.date){
                 self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
+                if day.belongsToSameMonth {
+                    currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: dayColorRect.origin.x, y: dayColorRect.origin.y), frameSize: CGSize(width: dayColorRect.width, height: dayColorRect.height)))
+                }
             }
             dayString.draw(in:dayTextRect)
-            if day.belongsToSameMonth {
-                let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
-                currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: (linkX + cellWidth - cellWidth/3), y: dayY), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
-            }
+
             if(index % 7 == 0) {
                 counter = 1
                 weekDayBGColorIndex += 1
@@ -615,7 +615,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         let goalRect = CGRect(x: goalsX + 5 + 3.5, y: goalsY  + 6 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: goalsString.size().width + 6, height: goalsRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: goalsX + 5, yAxis: goalsY + 6, context: context, width: goalsString.size().width + 6, height: goalsRectHeigth, bandColor: goalsBandBGColor, cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: goalsX + 5, yAxis: goalsY + 6, context: context, width: goalsString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         goalsString.draw(in: goalRect)
 
         //to do rendering
@@ -641,7 +641,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         let notesRect = CGRect(x: notesX + 5 + 3.5, y: notesY  + 6 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: notesString.size().width + 6, height: goalsRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: notesX + 5, yAxis: notesY + 6, context: context, width: notesString.size().width + 6, height: goalsRectHeigth, bandColor: dayNotesBandBGColor, cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: notesX + 5, yAxis: notesY + 6, context: context, width: notesString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         notesString.draw(in: notesRect)
 
         //Schedule Rendering
@@ -690,7 +690,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         titleString.draw(in: titleRect)
 
        // color BG rendering
-        let verticalGapBWLinesPercnt : CGFloat = 4.91
+        let verticalGapBWLinesPercnt : CGFloat = 4.43
         let notesXAxisPercnt : CGFloat = 7.46
         let writingAreaYAxisPercnt : CGFloat = 17.98
         let writingAreaLineWidthPercnt : CGFloat = 38.93
@@ -704,7 +704,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
         let numberOfDashedLines = CGFloat(Int((self.currentPageRect.height - bezierlinesBottom - writingAreaLineYAxis)/verticalGapBWbezierlines))
 
-        let heightToBeColored = (numberOfDashedLines*verticalGapBWbezierlines) + (numberOfDashedLines*0.5)
+        let heightToBeColored = currentPageRect.height - writingAreaLineYAxis - bezierlinesBottom //(numberOfDashedLines*verticalGapBWbezierlines) + (numberOfDashedLines*0.5)
         // first spread bg
         renderNotesBGColor()
         //second spread bg
@@ -937,6 +937,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         sideStripBandHeight += stripHeight
 
         renderDummyStripsWithColor(dummyStrip1Color)
+        self.addBezierLineWith(rect: CGRect(x: sideStripBandHeight, y:0, width: stripWidth,height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
         context.restoreGState()
 
         // For Right side strip

@@ -16,7 +16,7 @@ class FTPlanner2024DiaryNotesTemplateFormat : FTPlanner2024DiaryTemplateFormat {
     private func renderiPadTemplate(context : CGContext){
         // Notes lines rendering
 
-        let verticalGapBWLinesPercnt : CGFloat = 4.91
+        let verticalGapBWLinesPercnt : CGFloat = 4.43
         let notesXAxisPercnt : CGFloat = 7.46
         let writingAreaYAxisPercnt : CGFloat = 22.90
         let writingAreaLineWidthPercnt : CGFloat = 38.93
