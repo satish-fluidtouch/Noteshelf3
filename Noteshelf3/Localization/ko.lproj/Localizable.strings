@@ -1115,7 +1115,7 @@
 "iap.title" = "Noteshelf Premium으로 완전한 경험을 얻으십시오";
 "iap.toptitle" = "Noteshelf 2 사용자 전용";
 "iap.upgradeNow" = "지금 업그레이드";
-"iap.upgradeToPremiumNow" = "지금 프리미엄으로 업그레이드하세요.";
+"iap.upgradeToPremiumNow" = "지금 프리미엄으로 업그레이드하세요";
 "icloud.sync.issue.message" = "iCloud에 연결할 수 없습니다. 설정에서 iCloud가 켜져 있는지 확인하세요.";
 "iconlabels" = "아이콘 라벨";
 "import" = "가져오기";
@@ -1552,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 8 December 2023 at 18:28
+// Last Synced by admin on 11 December 2023 at 6:46 PM
