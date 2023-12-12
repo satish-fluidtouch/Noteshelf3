@@ -20,7 +20,7 @@ class FTOnScreenWritingViewController: UIViewController {
     fileprivate var currentExecutingRequest : FTOnScreenRenderRequest?;
     fileprivate var currentExecutingID : String?;
     fileprivate var previousRefreshRect = CGRect.null;
-    
+    var foundShape = false;
     fileprivate var previousTouch: FTTouch?;
     
     var lastWritingMode : RKDeskMode = RKDeskMode.deskModePen;
@@ -368,6 +368,13 @@ extension FTOnScreenWritingViewController
                 NotificationCenter.default.post(name: NSNotification.Name(FTZoomRenderViewDidBeginTouches), object: self.view.window);
             }
         case .InterimVertex:
+            if foundShape {
+                if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
+                    self.strokeInProgress = true
+                        controller.processTouchesMoved(touch.activeUItouch, with: nil)
+                }
+                return
+            }
             if self.currentDrawingMode == .deskModeLaser {
                 (self.delegate as? FTLaserTouchEventsHandling)?.processLaserVertex(touch: touch,
                                                                                   vertexType: vertexType)
@@ -398,6 +405,9 @@ extension FTOnScreenWritingViewController
                 cancelScheduledShapeDetection(touch);
             }
         case .LastVertex:
+            if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
+                controller.processTouchesEnded(touch.activeUItouch, with: nil)
+            }
             if self.currentDrawingMode == .deskModeLaser {
                 (self.delegate as? FTLaserTouchEventsHandling)?.processLaserVertex(touch: touch,
                                                                                   vertexType: vertexType)
@@ -411,7 +421,6 @@ extension FTOnScreenWritingViewController
                                              touchView: self.view);
             var rectToRefresh = CGRect.null;
             let shapeDetectionEnabled = self.isShapeDetectionEnabled();
-            var foundShape = false;
             
             //For drawing straight lines in highlighter mode when draw straight lines option is turned on
             //isShapeEnabled - This will be true only when user holds and convert to shape
@@ -433,6 +442,10 @@ extension FTOnScreenWritingViewController
                 if detectedShape.hasShape {
                     rectToRefresh = detectedShape.areaToRefresh;
                     foundShape = true;
+                    if let ann = detectedShape.strokes?.first as? FTAnnotation {
+                        ann.inLineEditing = true
+                        self.delegate?.editShapeAnnotation(with: ann, point: touch.activeUItouch.location(in: self.view))
+                    }
                 }
             }
             if(!foundShape && !isShapeEnabled) {
@@ -536,9 +549,9 @@ extension FTOnScreenWritingViewController
         return false
     }
     
-    private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool) {
+    private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool, strokes: [FTStroke]?) {
         var hasShape = false;
-        guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape) }
+        guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape,nil) }
 
         let shapeDetector = FTShapeDetector.init(delegate: self);
         let strokes = shapeDetector.detectShape(for: curStroke, scale: self.scale)
@@ -548,7 +561,7 @@ extension FTOnScreenWritingViewController
             hasShape = true;
             rectToRefresh = self.renderDetectedShapeStrokes(strokes, rectToRefresh: rectToRefresh)
         }
-        return (rectToRefresh,hasShape)
+        return (rectToRefresh,hasShape, strokes)
     }
     private func renderDetectedShapeStrokes(_ strokes : [FTStroke],rectToRefresh : CGRect) -> CGRect{
         var rectToRefresh = rectToRefresh;

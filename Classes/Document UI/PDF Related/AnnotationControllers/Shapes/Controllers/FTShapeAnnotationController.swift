@@ -131,6 +131,11 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         self.displayLink = CADisplayLink(target: self, selector: #selector(publishChanges))
         self.displayLink?.isPaused = true;
         self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
+        configureResizableView()
+        if shapeAnnotation.inLineEditing {
+            shapeEditType = .resize;
+            self.displayLink?.isPaused = false;
+        }
     }
     
     deinit {
@@ -145,7 +150,6 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (annotationMode == .edit) {
-            configureResizableView()
             shapeEditVC?.configureShapeEditView()
             addAngleSnappingView()
             addPenAttributes(to: shapeAnnotation)
@@ -302,7 +306,30 @@ class FTShapeAnnotationController: FTAnnotationEditController {
             processShapeRotate(curPoint: point, prevPoint: prevPoint)
         } else if shapeEditType == .move {
             processShapeMoving(curPoint: point, prevPoint: prevPoint)
+        } else {
+            if shapeAnnotation.shape?.type() == .ellipse {
+                //processEllipseResizing(touch: firstTouch)
+            } else if shapeAnnotation.isPerfectShape(), let controlPoint = resizableView?.activeControlPoint(for: point) {
+                activeControlPoint = controlPoint
+                setAnchorPoint()
+                processShapeResizing(touch: firstTouch, point: point)
+            } else {
+                index = shapeAnnotation.getshapeControlPoints().count - 1
+                if shapeAnnotation.shape?.isClosedShape ?? false {
+                    index = 0
+                }
+                currentKnob = activeKnob(for: shapeAnnotation.getshapeControlPoints()[index])
+                currentKnob?.center = point
+                updateSegments(index: index, point: point)
+            }
         }
+    }
+    
+    func activeKnob(for point: CGPoint) -> FTKnobView? {
+        let view = view.subviews.first { eachView in
+            return eachView.center == point
+        }
+       return view as? FTKnobView
     }
     
     public func processTouchesEnded(_ firstTouch: UITouch, with event: UIEvent?) {

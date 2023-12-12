@@ -68,6 +68,19 @@ class FTResizableView: UIView {
         return activeControlPoint
     }
     
+    func activeControlPoint(for refPoint: CGPoint) -> FTControlPoint? {
+        let views: [FTKnobView] = [topLeft, topRight, bottomLeft, bottomRight]
+        let returnView = views.first { eachView in
+           eachView.frame.insetBy(dx: -30, dy: -30).contains(refPoint)
+        }
+        if let returnView {
+            return self.getActiveControlPoint(for: returnView)
+        }
+        return nil
+    }
+    
+    
+    
     override func draw(_ rect: CGRect) {
         //createShape()
         //        UIColor.white.setFill()

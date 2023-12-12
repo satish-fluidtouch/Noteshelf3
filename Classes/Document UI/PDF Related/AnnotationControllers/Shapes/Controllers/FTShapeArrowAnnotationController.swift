@@ -86,6 +86,15 @@ class FTShapeArrowAnnotationController: FTShapeAnnotationController {
             super.processTouchesMoved(firstTouch, with: event)
         } else if self.annotationMode == .create {
             updateSegments(index: index, point: point)
+        } else {
+            if shapeAnnotation.shape?.type() == .line {
+                hideKnobViews(true)
+                let points = shapeAnnotation.getshapeControlPoints()
+                index = points.count - 1
+                currentKnob = activeKnob(for: points[index])
+                currentKnob?.center = point
+                updateSegments(index: index, point: point)
+            }
         }
     }
     
