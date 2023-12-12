@@ -62,13 +62,6 @@ class FTToolbarCenterPanelController: UIViewController {
         track(EventName.toolbar_longpress)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.collectionView.reloadData()
-        }
-    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
