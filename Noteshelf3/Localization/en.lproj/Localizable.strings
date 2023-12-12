@@ -1023,9 +1023,11 @@
 "days" = "Days";
 "delete" = "Delete";
 "done" = "Done";
+"dontMigrate" = "Don't migrate";
 "downloadedStickers" = "Downloaded Stickers";
 "duplicate" = "Duplicate";
 "eraser.auto" = "Auto";
+"evernote.openNotebook.SyncSkip" = "A notebook is in open state.";
 "evernote.userInfo.fetchFailureMessage" = "Unable to fetch account info at this time";
 "export_data" = "Export Data";
 "export_description1" = "It is highly recommended that you save a copy of your data on your local device.";
@@ -1092,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
 "iap.booklimitReachedTitle" = "You have reached the free notebook limit";
 "iap.booksleft" = "%@ notes left";
+"iap.discount.highlight" = "%@ OFF";
 "iap.featureLimitMessage" = "This feature is locked. Unlock by upgrading now";
 "iap.featureLimitTitle" = "Upgrade now";
 "iap.message" = "Get access to unlimited notes, handwriting recognition and search, and digital diaries with Noteshelf Premium.";
@@ -1549,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 4 December 2023 at 9:56 PM
+// Last Synced by admin on 11 December 2023 at 6:46 PM

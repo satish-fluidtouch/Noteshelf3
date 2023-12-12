@@ -1023,9 +1023,11 @@
 "days" = "日々";
 "delete" = "削除";
 "done" = "完了";
+"dontMigrate" = "移行しないでください";
 "downloadedStickers" = "ダウンロード済みステッカー";
 "duplicate" = "複製";
 "eraser.auto" = "自動";
+"evernote.openNotebook.SyncSkip" = "ノートブックは開いています。";
 "evernote.userInfo.fetchFailureMessage" = "この時点ではアカウント情報を取得できません。";
 "export_data" = "データのエクスポート";
 "export_description1" = "「ローカルデバイスにデータのコピーを保存することを強くお勧めします。」";
@@ -1092,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "ごみ箱を空にして、削除したノートブックがクオータにカウントされないようにしてください。または、無制限のノートブックのためにフルアプリをロック解除してください。";
 "iap.booklimitReachedTitle" = "無料のノートブックの制限に達しました。";
 "iap.booksleft" = "残り%@件のノート";
+"iap.discount.highlight" = "%@ OFF";
 "iap.featureLimitMessage" = "この機能はロックされています。今すぐアップグレードして解除します。";
 "iap.featureLimitTitle" = "今すぐアップグレード";
 "iap.message" = "「Noteshelfプレミアムで無制限のノートへのアクセス、手書き認識と検索、そしてデジタルダイアリーを手に入れましょう。」";
@@ -1549,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 4 December 2023 at 9:56 PM
+// Last Synced by admin on 11 December 2023 at 6:46 PM

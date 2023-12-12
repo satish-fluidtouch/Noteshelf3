@@ -145,14 +145,15 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
 
     private func configureSetAsDefault() {
         self.setAsDefaultBtn?.setTitle("SetAsDefault".localized, for: .normal)
-        let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
         let menu = UIMenu(title: "text.font.setAsDefault.menuTitle".localized, children: [
             UIAction(title: "text.font.setAsDefault.thisBook".localized, handler: { [weak self] _ in
                 guard let self else { return }
+                let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
                 self.delegate?.didSetDefaultStyle(defaultStyleItem)
             }),
             UIAction(title: "text.font.setAsDefault.thisAndFutureBooks".localized, handler: { [weak self] _ in
                 guard let self else { return }
+                let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
                 self.delegate?.didSetDefaultStyle(defaultStyleItem)
                 
                 var fontInfoDict: [String: String] = [:]
