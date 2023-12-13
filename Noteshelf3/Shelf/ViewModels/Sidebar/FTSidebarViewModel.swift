@@ -171,8 +171,6 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         }
     }
     func selectSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
-        selectedSideBarItem = menuItems.flatMap({$0.items})
-            .first(where: {$0.shelfCollection?.uuid == selectedShelfItemCollection?.uuid})
         setSideBarItemSelection()
     }
     func showSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
@@ -203,7 +201,7 @@ private extension FTSidebarViewModel {
         if collectionTypes.contains(where: {$0 == selectedSideBarItem?.type}) {
             if selectedSideBarItem != nil,
                selectedSideBarItem?.shelfCollection != nil,
-               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle {
+               selectedSideBarItem?.shelfCollection?.displayTitle == selectedShelfItemCollection?.displayTitle,selectedSideBarItem?.shelfCollection?.uuid != selectedShelfItemCollection?.uuid {
                 selectedSideBarItem?.shelfCollection = selectedShelfItemCollection
             }
         }

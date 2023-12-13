@@ -556,7 +556,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
     func showPremiumUpgradeScreen() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {
-                self.rootContentViewController?.didTapOnUpgradeNow()
+                self.rootContentViewController?.presentIAPScreen()
             }
         }
     }
@@ -1458,7 +1458,7 @@ extension FTRootViewController {
         let document = documentInfo.document;
         self.setLastOpenedDocument(shelfItem.URL);
         self.rootContentViewController?.shelfWillMovetoBack()
-        
+        FTENPublishManager.shared.currentOpenedDocumentUUID = documentInfo.document.documentUUID;
         let blockToCall : () -> Void = { [weak self] in
             self?.docuemntViewController?.didCompleteDocumentPresentation();
             onCompletion?();

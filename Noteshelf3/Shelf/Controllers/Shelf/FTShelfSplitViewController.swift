@@ -38,6 +38,7 @@ protocol FTShelfPresentable {
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
     func didTapOnUpgradeNow()
+    func presentIAPScreen()
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
@@ -54,7 +55,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
     private var lastSelectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
-    private var isInNonCollectionMode: Bool = false
+    var isInNonCollectionMode: Bool = false
 
     var isInSearchMode: Bool = false
     var isInGroupMode: Bool = false
@@ -341,7 +342,11 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
             // Based on orientation and display mode, we are showing the bottom bar with only icons or icons with text.
-            updateBottomToolBarCompactStatus()
+        let currentSize = self.view.frame.size
+        if !self.size.equalTo(currentSize) {
+            self.size = currentSize
+            self.updateBottomToolBarCompactStatus()
+        }
     }
     private func updateBottomToolBarCompactStatus(){
 #if !targetEnvironment(macCatalyst)
@@ -618,6 +623,17 @@ extension FTShelfSplitViewController {
                         }
                     }
                 });
+            }
+        }
+    }
+    func selectUnfiledCollection(onCompletion:((FTShelfItemCollection?) -> Void)?){
+        FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { unfiledShelfItemCollection in
+            if let unfiledShelfItemCollection {
+                self.sideMenuController?.upateSideMenuCurrentCollection(unfiledShelfItemCollection);
+                self.sideMenuController?.showSidebarItemWithCollection(unfiledShelfItemCollection)
+                onCompletion?(unfiledShelfItemCollection)
+            } else {
+                onCompletion?(nil)
             }
         }
     }
