@@ -528,14 +528,13 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
             self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: monthIndex)
 
             var dayRectsCount = 0
-            eachDayBeforeDays += index + eachMonth.getWeeksCount()
+            eachDayBeforeDays += 1 + eachMonth.getWeeksCount() // adding month and weeks belonging to a month.
             eachMonth.dayInfo.forEach({(eachDay) in
                 if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
                     if eachDay.belongsToSameMonth {
                         if monthRectsInfo.dayRects.count > dayRectsCount {
-                            print("zzzz-dayRectsCount",dayRectsCount)
-                            let dayIndex = eachDayBeforeDays + dayRectsCount + 1
-                            print("zzzz-dayIndex",dayIndex)
+                            eachDayBeforeDays += 1 // adding one day
+                            let dayIndex = eachDayBeforeDays
                             if let page = doc.page(at: dayIndex) {
                                 monthPage?.addLinkAnnotation(bounds: monthRectsInfo.dayRects[dayRectsCount], goToPage: page, at: atPoint)
                             }
@@ -544,6 +543,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                     }
                 }
             })
+            eachDayBeforeDays += 2 // adding notes and tracker pages
             pageIndex += 1
             monthRectsCount += 1
         }
