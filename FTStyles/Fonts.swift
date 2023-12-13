@@ -9,9 +9,27 @@ import SwiftUI
 import UIKit
 
 public enum ClearFace: String, CaseIterable {
-    case regular = "Clearface-Serial-Regular"
-    case medium = "Clearface-Serial-Medium"
-    case regularItalic = "Clearface-Serial-RegularItalic"
+    case regular = "ClearfaceSerial"
+    case medium = "ClearfaceSerial-Medium"
+    case regularItalic = "ClearfaceSerial-Italic"
+    case bold = "ClearfaceSerial-Bold"
+
+    var fileExtension: String {
+            return "otf"
+    }
+
+    var filename: String {
+        switch self {
+        case .regular:
+            return "Clearface-Serial-Regular"
+        case .medium:
+            return "Clearface-Serial-Medium"
+        case .regularItalic:
+            return "Clearface-Serial-RegularItalic"
+        case .bold:
+            return "Clearface-Serial-Bold"
+        }
+    }
 }
 
 extension View {

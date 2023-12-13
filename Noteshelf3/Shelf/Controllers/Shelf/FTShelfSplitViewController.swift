@@ -38,6 +38,7 @@ protocol FTShelfPresentable {
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
     func didTapOnUpgradeNow()
+    func presentIAPScreen()
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
@@ -188,7 +189,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
         else {
             if let currentViewM = self.currentShelfViewModel {
-                currentViewM.reloadItems(animate: true) {
+                currentViewM.reloadItems(animate: animate) {
                     onCompletion()
                 }
             } else {
@@ -341,7 +342,11 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
             // Based on orientation and display mode, we are showing the bottom bar with only icons or icons with text.
-            updateBottomToolBarCompactStatus()
+        let currentSize = self.view.frame.size
+        if !self.size.equalTo(currentSize) {
+            self.size = currentSize
+            self.updateBottomToolBarCompactStatus()
+        }
     }
     private func updateBottomToolBarCompactStatus(){
 #if !targetEnvironment(macCatalyst)
@@ -442,6 +447,7 @@ extension FTShelfSplitViewController {
                                              createWithAudio: Bool,
                                              pageIndex: Int?,
                                              onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+
         let downloadStatus = shelfItem.URL.downloadStatus();
         if downloadStatus != .downloaded {
             if downloadStatus == .notDownloaded {
@@ -489,6 +495,7 @@ extension FTShelfSplitViewController {
                                             createWithAudio: Bool,
                                             pageIndex: Int?,
                                             onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+
         let notebookName = shelfItem.displayTitle
         FTCLSLog("Book: \(notebookName): Show")
         self.view.isUserInteractionEnabled = false

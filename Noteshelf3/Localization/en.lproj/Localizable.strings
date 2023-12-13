@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Apple Pencil Settings";
 "AppleWatch" = "Apple Watch";
 "AppleWatchRecording" = "Apple Watch Recording";
+"AppleWatchRecordings" = "Apple Watch Recordings";
 "Apply" = "Apply";
 "Arts" = "Arts";
 "Athletics" = "Athletics";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "WHITEBOARD MODE";
 "Wallpapers" = "Wallpapers";
 "Warning" = "Warning";
-"WatchAdInfo" = "Install Noteshelf 3 on your Apple Watch. You can record audio on-the-go and take notes later.";
+"WatchAdInfoSubTitle" = "You can record audio on-the-go and take notes later.";
+"WatchAdInfoTitle" = "Install Noteshelf 3 on your Apple Watch.";
 "WatchNewRecords" = "New recordings arrived from your Apple Watch.";
 "WatchRecording" = "Watch Recording";
 "WatchRecordings" = "Watch Recordings";
@@ -1021,9 +1023,11 @@
 "days" = "Days";
 "delete" = "Delete";
 "done" = "Done";
+"dontMigrate" = "Don't migrate";
 "downloadedStickers" = "Downloaded Stickers";
 "duplicate" = "Duplicate";
 "eraser.auto" = "Auto";
+"evernote.openNotebook.SyncSkip" = "A notebook is in open state.";
 "evernote.userInfo.fetchFailureMessage" = "Unable to fetch account info at this time";
 "export_data" = "Export Data";
 "export_description1" = "It is highly recommended that you save a copy of your data on your local device.";
@@ -1085,11 +1089,12 @@
 "iCloudUserTurnedOff" = "iCloud turned off";
 "iCloudUserTurnedOffMessage" = "A copy of your documents will remain stored in iCloud. What would you like to do with the documents currently on this device?";
 "iap.bannerTitle" = "Upgrade for Premium";
-"iap.bannerTitle1" = "Get Premium at @% OFF";
+"iap.bannerTitle1" = "Get Premium at %@ OFF";
 "iap.bannerTitle2" = "only for Noteshelf 2 users";
 "iap.booklimitReachedMessage" = "Empty your trash bin to make sure deleted notebooks aren't counting towards your quota, or unlock the full app for unlimited notebooks";
 "iap.booklimitReachedTitle" = "You have reached the free notebook limit";
 "iap.booksleft" = "%@ notes left";
+"iap.discount.highlight" = "%@ OFF";
 "iap.featureLimitMessage" = "This feature is locked. Unlock by upgrading now";
 "iap.featureLimitTitle" = "Upgrade now";
 "iap.message" = "Get access to unlimited notes, handwriting recognition and search, and digital diaries with Noteshelf Premium.";
@@ -1108,6 +1113,7 @@
 "iap.restoreSuccessWithNoPurchase" = "There are no purchased items to restore";
 "iap.termsnconditions" = "Terms and Conditions";
 "iap.title" = "Get the full experience with Noteshelf Premium";
+"iap.toptitle" = "Noteshelf 2 users exclusive";
 "iap.upgradeNow" = "Upgrade now";
 "iap.upgradeToPremiumNow" = "Upgrade to Premium Now";
 "icloud.sync.issue.message" = "Unable to reach iCloud. Please make sure iCloud is turned on in settings.";
@@ -1546,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by admin on 11 December 2023 at 6:46 PM

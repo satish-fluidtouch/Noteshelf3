@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Configuración del lápiz de Apple";
 "AppleWatch" = "Reloj de Apple";
 "AppleWatchRecording" = "Grabación del reloj de Apple.";
+"AppleWatchRecordings" = "Grabaciones de Apple Watch";
 "Apply" = "Aplicar";
 "Arts" = "Artes";
 "Athletics" = "Atletismo";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "MODO PIZARRA";
 "Wallpapers" = "Fondos de pantalla";
 "Warning" = "Advertencia";
-"WatchAdInfo" = "Instala Noteshelf 3 en tu Apple Watch. Puedes grabar audio sobre la marcha y tomar notas más tarde.";
+"WatchAdInfoSubTitle" = "Puedes grabar audio sobre la marcha y tomar notas más tarde.";
+"WatchAdInfoTitle" = "Instala Noteshelf 3 en tu Apple Watch. ";
 "WatchNewRecords" = "Nuevas grabaciones llegaron desde tu Apple Watch.";
 "WatchRecording" = "Ver grabación";
 "WatchRecordings" = "Grabaciones del Watch";
@@ -1021,9 +1023,11 @@
 "days" = "Días";
 "delete" = "Borrar";
 "done" = "Hecho";
+"dontMigrate" = "No migrar";
 "downloadedStickers" = "Pegatinas descargadas";
 "duplicate" = "Duplicar";
 "eraser.auto" = "Automóvil";
+"evernote.openNotebook.SyncSkip" = "Una libreta está en estado abierto.";
 "evernote.userInfo.fetchFailureMessage" = "No se puede obtener la información de la cuenta en este momento.";
 "export_data" = "Exportar datos";
 "export_description1" = "Se recomienda encarecidamente que guarde una copia de sus datos en su dispositivo local.";
@@ -1085,11 +1089,12 @@
 "iCloudUserTurnedOff" = "iCloud desactivado'";
 "iCloudUserTurnedOffMessage" = "Una copia de tus documentos permanecerá almacenada en iCloud. ¿Qué te gustaría hacer con los documentos actualmente en este dispositivo?";
 "iap.bannerTitle" = "Actualizar a Premium";
-"iap.bannerTitle1" = "Obtén Premium al @% de descuento";
+"iap.bannerTitle1" = "Obtén Premium al %@ DESCUENTO";
 "iap.bannerTitle2" = "solo para usuarios de Noteshelf 2";
 "iap.booklimitReachedMessage" = "Vacía tu papelera para asegurarte de que las libretas eliminadas no se estén contabilizando en tu cuota, o desbloquea la aplicación completa para tener libretas ilimitadas.";
 "iap.booklimitReachedTitle" = "Has alcanzado el límite de cuadernos gratuitos.";
-"iap.booksleft" = "%@ notas restantes'";
+"iap.booksleft" = "%@ notas restantes";
+"iap.discount.highlight" = "%@ DESCUENTO";
 "iap.featureLimitMessage" = "Esta función está bloqueada. Desbloquea actualizando ahora.";
 "iap.featureLimitTitle" = "Actualiza ahora";
 "iap.message" = "Obtén acceso a notas ilimitadas, reconocimiento de escritura y búsqueda, y diarios digitales con Noteshelf Premium.";
@@ -1108,8 +1113,9 @@
 "iap.restoreSuccessWithNoPurchase" = "No hay elementos comprados para restaurar";
 "iap.termsnconditions" = "Términos y condiciones.";
 "iap.title" = "Obtén la experiencia completa con Noteshelf Premium";
+"iap.toptitle" = "Exclusivo para usuarios de Noteshelf 2";
 "iap.upgradeNow" = "Actualiza ahora.";
-"iap.upgradeToPremiumNow" = "Actualiza a Premium ahora.";
+"iap.upgradeToPremiumNow" = "Actualiza a Premium ahora";
 "icloud.sync.issue.message" = "No se puede conectar con iCloud. Asegúrate de que iCloud esté activado en la configuración.";
 "iconlabels" = "Etiquetas de iconos";
 "import" = "Importar";
@@ -1347,7 +1353,7 @@
 "shelf.settings.handWritingDescrption" = "Selecciona cómo colocas tu mano y bolígrafo en el dispositivo al escribir.";
 "shelf.settings.handWritingRecognition" = "RECONOCIMIENTO DE ESCRITURA A MANO";
 "shelf.sidebar.allTags" = "Todas las etiquetas";
-"shelf.sidebar.content" = "Contenido.";
+"shelf.sidebar.content" = "Contenido";
 "shelf.sidebar.templates.subtitle" = "Papeles y Diarios";
 "shelf.sort.custom" = "Personalizado";
 "shelf.sort.dateModified" = "Fecha de modificación";
@@ -1546,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by admin on 11 December 2023 at 6:46 PM

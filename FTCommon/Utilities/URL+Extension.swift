@@ -83,7 +83,7 @@ public extension URL {
     var isSuportedBookExtension: Bool {
         return [FTFileExtension.ns2, FTFileExtension.ns3].contains(self.pathExtension)
     }
-
+    
     var isNS2Book: Bool {
         if self.pathExtension == FTFileExtension.ns2 {
             return true

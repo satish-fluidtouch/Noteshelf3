@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "アップルペンシルの設定";
 "AppleWatch" = "アップルウォッチ";
 "AppleWatchRecording" = "アップルウォッチの録音";
+"AppleWatchRecordings" = "Apple Watchからの録音";
 "Apply" = "申し込む";
 "Arts" = "芸術";
 "Athletics" = "陸上";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "ホワイトボードモード";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "あなたのApple WatchにNoteshelf 3をインストールしてください。移動中にオーディオを録音し、後でメモを取ることができます。";
+"WatchAdInfoSubTitle" = "移動中にオーディオを録音し、後でメモを取ることができます。";
+"WatchAdInfoTitle" = "あなたのApple WatchにNoteshelf 3をインストールしてください。";
 "WatchNewRecords" = "新しい録音があなたのApple Watchから届きました。";
 "WatchRecording" = "録画を見る";
 "WatchRecordings" = "ウォッチの録音";
@@ -1021,9 +1023,11 @@
 "days" = "日々";
 "delete" = "削除";
 "done" = "完了";
+"dontMigrate" = "移行しないでください";
 "downloadedStickers" = "ダウンロード済みステッカー";
 "duplicate" = "複製";
 "eraser.auto" = "自動";
+"evernote.openNotebook.SyncSkip" = "ノートブックは開いています。";
 "evernote.userInfo.fetchFailureMessage" = "この時点ではアカウント情報を取得できません。";
 "export_data" = "データのエクスポート";
 "export_description1" = "「ローカルデバイスにデータのコピーを保存することを強くお勧めします。」";
@@ -1085,11 +1089,12 @@
 "iCloudUserTurnedOff" = "iCloudオフ";
 "iCloudUserTurnedOffMessage" = "あなたの文書のコピーはiCloudに保存されたままです。現在このデバイスにある文書に対して何をしますか？";
 "iap.bannerTitle" = "プレミアムへのアップグレード";
-"iap.bannerTitle1" = "@% OFFでプレミアムを入手";
+"iap.bannerTitle1" = "%@ OFFでプレミアムを入手";
 "iap.bannerTitle2" = "Noteshelf 2 ユーザー専用";
 "iap.booklimitReachedMessage" = "ごみ箱を空にして、削除したノートブックがクオータにカウントされないようにしてください。または、無制限のノートブックのためにフルアプリをロック解除してください。";
 "iap.booklimitReachedTitle" = "無料のノートブックの制限に達しました。";
 "iap.booksleft" = "残り%@件のノート";
+"iap.discount.highlight" = "%@ OFF";
 "iap.featureLimitMessage" = "この機能はロックされています。今すぐアップグレードして解除します。";
 "iap.featureLimitTitle" = "今すぐアップグレード";
 "iap.message" = "「Noteshelfプレミアムで無制限のノートへのアクセス、手書き認識と検索、そしてデジタルダイアリーを手に入れましょう。」";
@@ -1108,6 +1113,7 @@
 "iap.restoreSuccessWithNoPurchase" = "復元する購入済みアイテムはありません";
 "iap.termsnconditions" = "利用規約";
 "iap.title" = "Noteshelf Premium で完全なエクスペリエンスを手に入れましょう";
+"iap.toptitle" = "Noteshelf 2 ユーザー専用";
 "iap.upgradeNow" = "今すぐアップグレード";
 "iap.upgradeToPremiumNow" = "今すぐプレミアムにアップグレード";
 "icloud.sync.issue.message" = "iCloud に接続できません。 設定でiCloudがオンになっていることをご確認ください。";
@@ -1546,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by admin on 11 December 2023 at 6:46 PM

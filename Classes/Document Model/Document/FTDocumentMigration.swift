@@ -8,6 +8,7 @@
 
 import Foundation
 import FTCommon
+import FTTemplatesStore
 
 #if targetEnvironment(macCatalyst)
 private let ns2URLScheme = "maccatalyst.com.fluidtouch.noteshelf://"
@@ -45,8 +46,14 @@ struct FTMigrationContainerData {
 final class FTDocumentMigration {
     static let migrationQueue = DispatchQueue(label: "com.fluidtouch.noteshelf3.migration")
     static var migratedPlistUrl : URL? {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("migratedBooks.plist")
+        FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("migratedBooks.plist")
     }
+
+    static var libraryURL : URL {
+        let sharedGroupLocation = FTUtils.ns2ApplicationDocumentsDirectory()
+        return sharedGroupLocation.appendingPathComponent("Library");
+    }
+
     static func supportsMigration() -> Bool {
         return false;
     }
@@ -158,7 +165,8 @@ final class FTDocumentMigration {
         let progress = Progress()
         progress.isCancellable = true
         progress.isPausable = true
-        if let ns3MigrationContainerURL =  FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:  FTUtils.getNS2GroupId())?.appendingPathComponent("Noteshelf3_migration"), let migrationContainerData = self.contentsOfURL(ns3MigrationContainerURL) {
+        let ns3MigrationContainerURL =  FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("Noteshelf3_migration")
+        if let migrationContainerData = self.contentsOfURL(ns3MigrationContainerURL) {
             var noteBookUrls = migrationContainerData.bookUrls ?? [URL]()
             var sortIndexUrls = migrationContainerData.indexUrls ?? [URL]()
             let pinnedItems = FTDocumentMigration.getPinnedItemsRelativePaths()
@@ -344,6 +352,37 @@ extension FTDocumentMigration {
         }
         return relativePaths
     }
+
+     func migrateNS2CustomTemplates() {
+         let customFolderURL = FTDocumentMigration.libraryURL.appendingPathComponent("papers_v2/custom/")
+         guard let subcontents = try? FileManager().contentsOfDirectory(at: customFolderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else {
+             return
+         }
+         subcontents.forEach { url in
+             do {
+                 let subcontents1 = try FileManager().contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+                 try subcontents1.forEach({ subUrl in
+                     let fileName = url.deletingPathExtension().lastPathComponent
+                     let pathExtention = subUrl.pathExtension
+                     if subUrl.deletingPathExtension().lastPathComponent == "template" {
+                         let ns3TemplateFile = subUrl.deletingLastPathComponent().appendingPathComponent(fileName).appendingPathExtension(pathExtention)
+                         try FileManager().copyItem(at: subUrl, to: ns3TemplateFile)
+                     }
+                 })
+                 let ns3CustomFile = url.deletingPathExtension()
+                 try FileManager().copyItem(at: url, to: ns3CustomFile)
+
+                 let fileName = ns3CustomFile.lastPathComponent
+                 let ns3CustomTemplatesFolder = FTStoreCustomTemplatesHandler.shared.customTemplatesFolder
+                 let destUrl = ns3CustomTemplatesFolder.appendingPathComponent(fileName)
+                 if !FileManager().fileExists(atPath: destUrl.path) {
+                     try FileManager().copyItem(at: ns3CustomFile, to: destUrl)
+                 }
+             } catch {
+                 FTCLSLog("--- Custom Templates Migration Failed with error \(error.localizedDescription)")
+             }
+         }
+    }
 }
 
 // MARK: Text Styles Migration
@@ -354,16 +393,18 @@ extension FTTextStyleManager {
         // 3. insert them into NS3.
 
         let ns2TextStylesURL = FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("text_styles_migration.plist")
-        let ns2Defaults = UserDefaults.init(suiteName: FTSharedGroupID.getNS2AppGroupID())!
-        let isAlreadyMigrated = ns2Defaults.bool(forKey: "isTextStylesMigrated")
-        if !isAlreadyMigrated, FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
+        if FileManager.default.fileExists(atPath: ns2TextStylesURL.path) {
             if let ns2Styles = NSMutableArray(contentsOf: ns2TextStylesURL) as? [[String : String]] {
+                let ns3StyleItems = self.fetchTextStylesFromPlist().styles // available styles in NS3
                 for item in ns2Styles {
-                    if let styleItem = FTTextStyleItem.styleFromNS2Style(ns2Info: item) {
-                        self.insertNewTextStyle(styleItem)
+                    if let ns2StyleItem = FTTextStyleItem.styleFromNS2Style(ns2Info: item) {
+                        if !ns3StyleItems.contains(where: { ns3StyleItem in
+                            ns3StyleItem.isFullyEqual(ns2StyleItem)
+                        }) { // If ns3 style items doesnot have ns2 style item configuration, then ll be inserting
+                            self.insertNewTextStyle(ns2StyleItem)
+                        }
                     }
                 }
-                ns2Defaults.set(true, forKey: "isTextStylesMigrated")
             }
         }
     }

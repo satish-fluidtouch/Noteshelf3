@@ -15,7 +15,7 @@ struct FTGroupItemView: View {
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Binding var isPressed: Bool
+    @State var isPressed: Bool = false
 
     var groupItemWidth: CGFloat = 212
     var groupItemHeight: CGFloat = 334
@@ -52,6 +52,18 @@ struct FTGroupItemView: View {
                     .padding(.bottom, 4)
             }
         }
+        .onTapGesture(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                shelfViewModel.didTapGroupItem(groupItem)
+            }
+        })
+        .onLongPressGesture(perform: {
+
+        }, onPressingChanged: { _ in
+            withAnimation {
+                isPressed.toggle()
+            }
+        })
         .scaleEffect(isPressed ? 0.8 : 1.0)
         .animation(Animation.easeInOut(duration: 0.3), value: isPressed)
     }
@@ -75,6 +87,9 @@ struct FTGroupItemView: View {
         }
         .padding(.horizontal,12)
         .frame(width: groupTitleViewSize.width, height: groupTitleViewSize.height,alignment: .top)
+        .onTapGesture {
+            shelfViewModel.renameShelfItem(groupItem)
+        }
     }
     
     private var coverProperties : FTShelfItemCoverViewProperties {

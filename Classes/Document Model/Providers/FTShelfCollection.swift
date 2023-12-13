@@ -26,9 +26,6 @@ protocol FTShelfCollection: NSObjectProtocol {
     func renameShelf(_ shelf: FTShelfItemCollection,
                      title: String,
                      onCompletion : @escaping ((NSError?, FTShelfItemCollection?) -> Void));
-
-    // TODO: (AK) Think about a refactor
-    func belongsToNS2() -> Bool
 }
 
 extension FTShelfCollection {
@@ -62,7 +59,4 @@ extension FTShelfCollection {
         assert(false, "renameShelf:title:onCompletion: is not supported by default")
     }
 
-    func belongsToNS2() -> Bool {
-        false
-    }
 }

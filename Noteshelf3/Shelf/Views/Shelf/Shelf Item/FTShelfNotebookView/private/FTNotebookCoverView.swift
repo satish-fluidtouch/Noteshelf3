@@ -13,6 +13,7 @@ struct FTNotebookCoverView: View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.colorScheme) var colorScheme
+    @Binding var isPressed: Bool
 
     var isHighlighted = false;
 
@@ -84,13 +85,23 @@ struct FTNotebookCoverView: View {
                         FTLockIconView()
                     }
                 }
-                .overlay(alignment: .topLeading, content: {
-                    NS2BadgeView()
-                })
                 .onFirstAppear(perform: {
                     shelfItem.configureShelfItem(shelfItem.model)
                 })
         }
+        .onTapGesture(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                shelfViewModel.didTapOnShelfItem(shelfItem)
+            }
+        })
+
+        .onLongPressGesture(perform: {
+
+        }, onPressingChanged: { _ in
+            withAnimation {
+                isPressed.toggle()
+            }
+        })
         .onAppear(perform: {
             shelfItem.isVisible = true;
             self.shelfItem.fetchCoverImage();
@@ -132,25 +143,6 @@ struct FTShelfItemDropOverlayView: View {
     }
 }
 
-struct NS2BadgeView: View {
-    @EnvironmentObject var shelfItem: FTShelfItemViewModel
-    @EnvironmentObject var shelfViewModel: FTShelfViewModel
-
-    var body: some View {
-        if shelfItem.isNS2Book == true {
-            let size: CGFloat = shelfViewModel.displayStlye == .List ? 10 : 20
-            let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
-            Image("ns2_migration_logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: size, height: size)
-                .padding(.top, padding)
-                .padding(.leading, padding)
-        }
-    }
-}
-
-
 struct FTLockIconView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.colorScheme) private var colorScheme
@@ -177,7 +169,7 @@ struct FTLockIconView: View {
 struct PulseAnimationModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            //.symbolEffect(.pulse.byLayer)
+            .symbolEffect(.pulse.byLayer)
     }
 }
 

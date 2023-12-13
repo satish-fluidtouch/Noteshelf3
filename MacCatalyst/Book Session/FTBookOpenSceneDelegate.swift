@@ -42,6 +42,11 @@ class FTBookOpenSceneDelegate: FTSceneDelegate {
         _window.makeKeyAndVisible()
     }
     
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let context = URLContexts.first else { return }
+        self.openUrl(with: context)
+    }
+    
     func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
         if shouldRestoreScene {
             return scene.userActivity;

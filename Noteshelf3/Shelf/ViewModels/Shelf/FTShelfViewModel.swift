@@ -40,6 +40,8 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func createNewNotebookInside(collection: FTShelfItemCollection, group: FTGroupItemProtocol?,notebookDetails: FTNewNotebookDetails?,isQuickCreate: Bool, mode:ThemeDefaultMode, onCompletion: @escaping (NSError?, _ shelfItem:FTShelfItemProtocol?) -> ())
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
+    func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
+
 }
 protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)
@@ -84,7 +86,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNoShelfItemsView: Bool = false
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
-    @Published var reloadShelfItems: Bool = false
     @Published var tagsForThisBook: [FTTagItemModel] = []
     @Published var allowHitTesting: Bool = true
     @Published var showCompactBottombar: Bool = false
@@ -127,7 +128,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
-        canShowCreateNBButtons = !isNS2Collection
     }
     
     init(sidebarItemType: FTSideBarItemType){
@@ -169,16 +169,16 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return (collection.isAllNotesShelfItemCollection || collection.isMigratedCollection || collection.isDefaultCollection)
     }
     var canShowNewNoteNavOption: Bool {
-        return !(collection.isStarred || collection.isTrash || hideNS3NotesCreationOptions)
+        return !(collection.isStarred || collection.isTrash)
     }
     var canShowStarredIconOnNB: Bool {
         return !(collection.isTrash)
     }
     var supportsDragAndDrop: Bool {
-        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash || isNS2Collection)
+        !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash)
     }
     var supportsDrop: Bool {
-       (isInHomeMode || !(collection.isStarred || collection.isTrash || isNS2Collection))
+       (isInHomeMode || !(collection.isStarred || collection.isTrash))
     }
     var disableBottomBarItems: Bool {
         !shelfItems.contains(where: { $0.isSelected })
@@ -192,30 +192,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         return selectedItems
     }
 
-    var isNS2Collection: Bool {
-        if collection.isNS2Collection() {
-            return true
-        }
-        return false
-    }
-
-    var hideNS3NotesCreationOptions: Bool {
-        return isNS2Collection
-    }
-
-    var canShowSearchOption: Bool {
-        return !isNS2Collection
-    }
-
-    var canShowNotebookUpdateOptions: Bool {
-        return !isNS2Collection
-    }
-
-    var shouldShowNS3MigrationHeader: Bool {
-        return isNS2Collection
-    }
-    
-    
     // MARK: Mutating functions
     func selectAllItems() {
         updateShelfItemsSelectionStatusTo(true)
@@ -365,11 +341,12 @@ private extension FTShelfViewModel {
         }
     }
     func updateGetStartedInfoWithDelay(){
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateShowingGetStartedInfoStatus), object: nil)
         self.perform(#selector(updateShowingGetStartedInfoStatus), with: nil, afterDelay: 0.7)
     }
     @objc func updateShowingGetStartedInfoStatus() {
-        withAnimation {
-            if isInHomeMode {
+        if isInHomeMode {
+            withAnimation {
                 if shelfItems.count > 0 {
                     FTUserDefaults.setFirstLaunch(false)
                     self.shouldShowGetStartedInfo = false
@@ -379,11 +356,11 @@ private extension FTShelfViewModel {
                         self.shouldShowGetStartedInfo = true
                     }
                 }
-            }else {
-                if shelfItems.count > 0 {
-                    FTUserDefaults.setFirstLaunch(false)
-                    self.shouldShowGetStartedInfo = false
-                }
+            }
+        } else {
+            if shelfItems.count > 0 {
+                FTUserDefaults.setFirstLaunch(false)
+                self.shouldShowGetStartedInfo = false
             }
         }
     }
@@ -462,7 +439,6 @@ extension FTShelfViewModel {
 //MARK: Code for shelf items fetching from backend
 extension FTShelfViewModel {
     
-    @MainActor
     func fetchShelfItems(animate: Bool = true)  {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
@@ -470,51 +446,52 @@ extension FTShelfViewModel {
             guard let self = self else {
                 return
             }
-            if(animate) {
-                withAnimation {
-                    setShelfItems()
-                }
-            }
-            else {
-              setShelfItems()
-            }
-            
-            func setShelfItems() {
-                self.setShelfItems(items);
-                if let item = self.closedDocumentItem {
-                    self.scrollToItemID = item.uuid
-                    self.closedDocumentItem = nil
-                }
+            self.setShelfItems(items,animate:animate);
+            if let item = self.closedDocumentItem {
+                self.scrollToItemID = item.uuid
+                self.closedDocumentItem = nil
             }
         }
         self.addObservers()
     }
     
-    private func setShelfItems(_ items: [FTShelfItemProtocol]) {
+    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
         self.resetShelfModeTo(.normal)
-        let _shelfItems = self.createShelfItemsFromData(items);
-        self.shelfItems = _shelfItems
-        
-        self.showNoShelfItemsView = self.shelfItems.isEmpty
-        
-        if !shelfDidLoad {
-            shelfDidLoad = true
-        }
-        if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-            NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+        DispatchQueue.global().async {
+            let _shelfItems = self.createShelfItemsFromData(items);
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if(animate) {
+                    withAnimation {
+                        self.shelfItems = _shelfItems
+                    }
+                }
+                else {
+                    self.shelfItems = _shelfItems
+                }
+
+                
+                self.showNoShelfItemsView = self.shelfItems.isEmpty
+
+                if !self.shelfDidLoad {
+                    self.shelfDidLoad = true
+                }
+                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
+                }
+            }
         }
     }
-    
     func reloadItems(animate: Bool = true, _ onCompletion: (() -> Void)? = nil) {
         let block : (Bool, [FTShelfItemProtocol]) ->() = { [weak self] (animate,items) in
             if(animate) {
                 withAnimation {
-                    self?.setShelfItems(items)
+                    self?.setShelfItems(items,animate: animate)
                     onCompletion?();
                 }
             }
             else {
-                self?.setShelfItems(items)
+                self?.setShelfItems(items, animate: animate)
                 onCompletion?();
             }
         };
@@ -752,11 +729,34 @@ extension FTShelfViewModel {
         return itemProvider
     }
 
-    func hasNS2BookItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {
-        return (shelfItems.first(where: {$0.model.URL.isNS2Book}) != nil)
-    }
-
     func hasAGroupShelfItemAmongSelectedShelfItems(_ shelfItems: [FTShelfItemViewModel]) -> Bool {
         return (shelfItems.first(where: {$0 is FTGroupItemViewModel}) != nil)
+    }
+}
+//MARK: Tap actions of notebook and group
+extension FTShelfViewModel {
+    func didTapOnShelfItem(_ shelfItem: FTShelfItemViewModel){
+        if(mode == .selection) {
+            shelfItem.isSelected.toggle()
+            // Track Event
+            track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            openShelfItem(shelfItem, animate: true, isQuickCreatedBook: false)
+            track(EventName.shelf_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+    }
+    func didTapGroupItem(_ groupItem: FTGroupItemViewModel){
+        if(self.mode == .selection) {
+            groupItem.isSelected.toggle();
+            // Track Event
+            track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
+        else {
+            self.delegate?.setLastOpenedGroup(groupItem.model.URL)
+            self.groupViewOpenDelegate?.didTapOnShelfItem(groupItem.model);
+            // Track Event
+            track(EventName.shelf_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
+        }
     }
 }

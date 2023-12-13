@@ -11,45 +11,62 @@ import StoreKit
 import SafariServices
 
 class FTIAPViewController: UIViewController {
-    private var products: [SKProduct] = []
-    var viewModel = FTIAPViewModel()
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView?;
     @IBOutlet weak var upgradeButton: UIButton?;
     
     @IBOutlet weak var restorePurchaseButton: UIButton?;
     @IBOutlet weak var privacyButton: UIButton?;
 
-    @IBOutlet weak var activityProgressView: UIView?;
-    @IBOutlet weak var activityProgressHolderView: UIView?;
-
     @IBOutlet weak var titleLabel: UILabel?;
     @IBOutlet weak var subheadingLabel: UILabel?;
     @IBOutlet weak var messageLabel: UILabel?;
 
-    private var productToBuy: SKProduct?;
-    
+    private var productToBuy: SKProduct?
+    private weak var delegate: FTIAPContainerDelegate?
+
+    static func instatiate(with product: SKProduct, delegate: FTIAPContainerDelegate) -> FTIAPViewController {
+        let storyboard = UIStoryboard(name: "IAPEssentials", bundle: nil)
+        guard let inAppPurchase = storyboard.instantiateViewController(withIdentifier: "FTIAPViewController") as? FTIAPViewController else {
+            fatalError("FTIAPViewController doesnt exist")
+        }
+        inAppPurchase.productToBuy = product
+        inAppPurchase.delegate = delegate
+        return inAppPurchase
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredContentSize = CGSize(width: 700, height: 740);
-        initializeActivityIndicator()
 
         self.setTitleToPurchaseButton(title:"")
-        
+
         self.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 44);
         self.subheadingLabel?.font = UIFont.appFont(for: .bold, with: 13);
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
-        
+
         self.titleLabel?.text = "iap.title".localized
         self.subheadingLabel?.text = "iap.onetimepurchase".localized
         self.messageLabel?.text = "iap.message".localized
+        
 
         self.privacyButton?.setTitle("iap.privacy".localized, for: .normal);
         self.restorePurchaseButton?.setTitle("iap.restorePurchase".localized, for: .normal);
         if let upgradeButton = upgradeButton{
             upgradeButton.apply(to: upgradeButton, withScaleValue: 0.93)
         }
-        viewModel.delegate = self
+
+        configureUI()
+    }
+
+    func configureUI() {
+        guard let ns3product = productToBuy,
+              let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product) else {
+            return;
+        }
+
+        let iapPurchaseTitle = "iap.purchase".localized;
+        let title = String(format: iapPurchaseTitle, ns3Price);
+        self.setTitleToPurchaseButton(title:title)
     }
 
     override func viewDidLayoutSubviews() {
@@ -58,36 +75,17 @@ class FTIAPViewController: UIViewController {
             self.upgradeButton?.layer.cornerRadius = frame.height * 0.5;
         }
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel.viewDidSetup()
-    }
-
-    private func initializeActivityIndicator() {
-
-    }
-
-    private func showAlert(withMessage message: String,closeOnOk: Bool = false) {
-        let alertController = UIAlertController(title: "Noteshelf", message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { [weak self] _ in
-            if(closeOnOk) {
-                self?.dismiss(animated: true);
-            }
-        }))
-        self.present(alertController, animated: true, completion: nil)
-    }
 
     @IBAction func purchaseAction(_ sender: Any) {
         track(EventName.premium_purchase_tap, screenName: ScreenName.iap)
-        if let product = self.productToBuy, !self.viewModel.purchase(product: product) {
-            self.showAlert(withMessage: "iap.purchaseNotAllowed".localized)
+        if let product = self.productToBuy {
+            delegate?.purchase(product: product)
         }
     }
 
     @IBAction func restoreAction(_ sender: Any) {
         track(EventName.premium_restorepurchase_tap, screenName: ScreenName.iap)
-        viewModel.restorePurchases()
+        delegate?.restorePurchases()
     }
 
     @IBAction func privacyAction(_ sender: Any) {
@@ -108,76 +106,6 @@ class FTIAPViewController: UIViewController {
         let attributedTitle = NSAttributedString(string: title,
                                                  attributes: self.upgradeTitleAttributes)
         self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
-    }
-}
-
-// MARK: - ViewModelDelegate
-extension FTIAPViewController: FTIAPViewModelDelegate {
-    func didfinishLoadingProducts() {
-        guard let ns3product = viewModel.ns3PremiumProduct()
-        ,let ns3Price = FTIAPManager.shared.getPriceFormatted(for: ns3product) else {
-            return;
-        }
-        
-        let iapPurchaseTitle = "iap.purchase".localized;
-        
-        if let ns2Product = viewModel.ns3PremiumForNS2UserProduct()
-            ,let ns2Price = FTIAPManager.shared.getPriceFormatted(for: ns2Product) {
-            productToBuy = ns2Product;
-
-            let atts: [NSAttributedString.Key:Any] = self.upgradeTitleAttributes;
-            let attributedTitle = NSMutableAttributedString(string: iapPurchaseTitle,attributes:atts);
-            
-            var strikeThroughAttr : [NSAttributedString.Key:Any] = atts;
-            strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-            strikeThroughAttr[.strikethroughColor] =  UIColor.label;
-            
-            let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
-            priceString.append(NSAttributedString(string: " ", attributes: atts));
-            priceString.append(NSAttributedString(string: ns2Price,attributes: atts));
-            
-            if let range = iapPurchaseTitle.range(of: "%@") {
-                let nsRange = NSRange(range,in: iapPurchaseTitle);
-                attributedTitle.replaceCharacters(in: nsRange, with: priceString)
-                self.upgradeButton?.setAttributedTitle(attributedTitle, for: .normal)
-                productToBuy = ns2Product;
-            }
-            else {
-                let title = String(format: iapPurchaseTitle, ns2Price);
-                self.setTitleToPurchaseButton(title:title)
-            }
-//            self.discountedPercentage(ns3product, ns2Product: ns2Product);
-        }
-        else {
-            productToBuy = ns3product;
-            let title = String(format: iapPurchaseTitle, ns3Price);
-            self.setTitleToPurchaseButton(title:title)
-        }
-    }
-
-    func willStartLongProcess(_ action: FTIAPActionType) {
-        self.activityProgressHolderView?.isHidden = false;
-    }
-
-    func didFinishLongProcess(_ action: FTIAPActionType) {
-        self.activityProgressHolderView?.isHidden = true;
-        if action == .purchase, FTIAPurchaseHelper.shared.isPremiumUser {
-            self.dismiss(animated: true);
-        }
-    }
-
-    func showIAPRelatedError(_ error: Error) {
-        let message = error.localizedDescription
-        showAlert(withMessage: message)
-    }
-
-    func didFinishRestoringPurchasesWithZeroProducts() {
-        showAlert(withMessage: "iap.restoreSuccessWithNoPurchase".localized)
-    }
-
-
-    func didFinishRestoringPurchasedProducts() {
-        showAlert(withMessage: "iap.restoreSuccess".localized,closeOnOk: true)
     }
 }
 

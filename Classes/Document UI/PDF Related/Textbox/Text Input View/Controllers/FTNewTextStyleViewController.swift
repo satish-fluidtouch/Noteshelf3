@@ -99,6 +99,7 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
         self.initInfoLabels()
         self.updateUI()
         self.addObservers()
+        self.configureSetAsDefault()
     }
 
     private func loadStepperView(){
@@ -140,9 +141,41 @@ class FTNewTextStyleViewController: UIViewController, FTPopoverPresentable {
             self.selectedRange = textAnnot.textInputView.selectedRange
             self.selectedTextRange = textAnnot.textInputView.selectedTextRange
         }
-        self.setAsDefaultBtn?.setTitle("SetAsDefault".localized, for: .normal)
     }
 
+    private func configureSetAsDefault() {
+        self.setAsDefaultBtn?.setTitle("SetAsDefault".localized, for: .normal)
+        let menu = UIMenu(title: "text.font.setAsDefault.menuTitle".localized, children: [
+            UIAction(title: "text.font.setAsDefault.thisBook".localized, handler: { [weak self] _ in
+                guard let self else { return }
+                let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
+                self.delegate?.didSetDefaultStyle(defaultStyleItem)
+            }),
+            UIAction(title: "text.font.setAsDefault.thisAndFutureBooks".localized, handler: { [weak self] _ in
+                guard let self else { return }
+                let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
+                self.delegate?.didSetDefaultStyle(defaultStyleItem)
+                
+                var fontInfoDict: [String: String] = [:]
+                defaultStyleItem.alignment = self.currentAlignment.rawValue
+                defaultStyleItem.isAutoLineSpace = self.isAutoLineSpaceEnabled
+                defaultStyleItem.lineSpace = self.currentLineSpace
+                
+                fontInfoDict[FTFontStorage.fontNameKey] = defaultStyleItem.fontName
+                fontInfoDict[FTFontStorage.fontStyleKey] = defaultStyleItem.fontFamily
+                fontInfoDict[FTFontStorage.fontSizeKey] = String(defaultStyleItem.fontSize)
+                fontInfoDict[FTFontStorage.textColorKey] = defaultStyleItem.textColor
+                fontInfoDict[FTFontStorage.isUnderlinedKey] = defaultStyleItem.isUnderLined ? "1" : "0"
+                fontInfoDict[FTFontStorage.isLineSpaceEnabledKey] = defaultStyleItem.isAutoLineSpace ? "1" : "0"
+                fontInfoDict[FTFontStorage.lineSpaceKey] = String(defaultStyleItem.lineSpace)
+                fontInfoDict[FTFontStorage.isStrikeThroughKey] = defaultStyleItem.strikeThrough ? "1" : "0"
+                fontInfoDict[FTFontStorage.textAlignmentKey] = String(defaultStyleItem.alignment)
+                FTUserDefaults.saveDefaultFontForAll(fontInfoDict)
+            }),
+        ])
+        self.setAsDefaultBtn?.menu = menu
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -432,37 +465,6 @@ extension FTNewTextStyleViewController {
             self.currentLineSpace = 0
         }
         self.delegate?.didAutoLineSpaceStatusChanged(isOn)
-    }
-
-    @IBAction func setAsDefaultTapped(_ sender: Any) {
-        let defaultStyleItem = FTDefaultTextStyleItem(from: self.textFontStyle, isAutoLineSpace: self.isAutoLineSpaceEnabled, lineSpace: self.currentLineSpace, alignment: self.currentAlignment)
-        let menu = UIMenu(title: "text.font.setAsDefault.menuTitle".localized, children: [
-            UIAction(title: "text.font.setAsDefault.thisBook".localized, handler: { [weak self] _ in
-                guard let self else { return }
-                self.delegate?.didSetDefaultStyle(defaultStyleItem)
-            }),
-            UIAction(title: "text.font.setAsDefault.thisAndFutureBooks".localized, handler: { [weak self] _ in
-                guard let self else { return }
-                self.delegate?.didSetDefaultStyle(defaultStyleItem)
-
-                var fontInfoDict: [String: String] = [:]
-                defaultStyleItem.alignment = self.currentAlignment.rawValue
-                defaultStyleItem.isAutoLineSpace = self.isAutoLineSpaceEnabled
-                defaultStyleItem.lineSpace = self.currentLineSpace
-
-                fontInfoDict[FTFontStorage.fontNameKey] = defaultStyleItem.fontName
-                fontInfoDict[FTFontStorage.fontStyleKey] = defaultStyleItem.fontFamily
-                fontInfoDict[FTFontStorage.fontSizeKey] = String(defaultStyleItem.fontSize)
-                fontInfoDict[FTFontStorage.textColorKey] = defaultStyleItem.textColor
-                fontInfoDict[FTFontStorage.isUnderlinedKey] = defaultStyleItem.isUnderLined ? "1" : "0"
-                fontInfoDict[FTFontStorage.isLineSpaceEnabledKey] = defaultStyleItem.isAutoLineSpace ? "1" : "0"
-                fontInfoDict[FTFontStorage.lineSpaceKey] = String(defaultStyleItem.lineSpace)
-                fontInfoDict[FTFontStorage.isStrikeThroughKey] = defaultStyleItem.strikeThrough ? "1" : "0"
-                fontInfoDict[FTFontStorage.textAlignmentKey] = String(defaultStyleItem.alignment)
-                FTUserDefaults.saveDefaultFontForAll(fontInfoDict)
-            }),
-        ])
-        (sender as? UIButton)?.menu = menu
     }
 }
 

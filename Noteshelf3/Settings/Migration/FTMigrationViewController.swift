@@ -43,11 +43,18 @@ class FTMigrationViewController: UIViewController {
         self.successIndicator?.lineWidth = 6.0
         self.successIndicator?.onAnimationType = BEMAnimationType.bounce
         migrationTitle?.text = "migration.progress.text".localized
-        warningTitle?.text = "migration.exitScreen".localized
+        warningTitle?.text = "⚠︎ " + "migration.exitScreen".localized
         migratedSuccessTextLabel.text = "migration.succes".localized
         cancelButton?.titleLabel?.text = "migration.cancel".localized
+        doneButton?.setTitle(NSLocalizedString("Done", comment: "Done"), for: .normal)
+        doneButton?.layer.shadowColor = UIColor.init(hexString: "186F81").cgColor
+        doneButton?.layer.shadowOffset = CGSize(width: 0.0, height: 12.0)
+        doneButton?.layer.shadowOpacity = 0.24
+        doneButton?.layer.shadowRadius = 8.0
+
         self.view.backgroundColor = UIColor.init(hexString: "F0EEEB")
         self.overrideUserInterfaceStyle = .light
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -69,6 +76,8 @@ class FTMigrationViewController: UIViewController {
 
                 // TODO: (AK) Move to a proper location
                 FTTextStyleManager.shared.migrateNS2TextStyles()
+                FTFavoritePensetDataManager.shared.migrateNS2Favorites()
+                FTDocumentMigration().migrateNS2CustomTemplates()
 
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
                 self?.updateSuccessUI()
@@ -114,7 +123,7 @@ class FTMigrationViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: NSLocalizedString("Continue", comment: ""), style: .default, handler: { _ in
             self.progressView?.observedProgress?.resume()
         }))
-        alertController.addAction(UIAlertAction(title: NSLocalizedString("Stop Migration", comment: ""), style: .destructive, handler: { [weak self] _ in
+        alertController.addAction(UIAlertAction(title: NSLocalizedString("dontMigrate", comment: ""), style: .destructive, handler: { [weak self] _ in
             self?.progressView?.observedProgress?.cancel()
             self?.dismiss()
         }))

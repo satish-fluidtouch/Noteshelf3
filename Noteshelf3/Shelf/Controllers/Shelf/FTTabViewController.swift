@@ -300,14 +300,12 @@ extension FTTabViewController: UITabBarControllerDelegate {
         if viewController.tabBarItem.tag == 3 { // in case of add new notebook tab item, we are just presenting add new notebook view controller without selecting the tab item
             let shelfNewNoteViewModel = FTNewNotePopoverViewModel()
             shelfNewNoteViewModel.delegate = currentShelfViewModel
-            let popOverHeight: CGFloat = 460
             let controller = FTShelfNewNoteController(viewModel: shelfNewNoteViewModel
-                                                      , popOverHeight: popOverHeight
                                                       , appState:getSizeClass()
                                                       , shelfViewModel: currentShelfViewModel!
                                                       ,delegate: shelfNewNoteDelegate)
             controller.view.backgroundColor = .clear
-            controller.ftPresentPopover(vcToPresent: controller, contentSize: CGSize(width: 330, height: popOverHeight))
+            controller.ftPresentPopover(vcToPresent: controller, contentSize: CGSize(width: 330, height: 436.0))
             return false
         }
         return true

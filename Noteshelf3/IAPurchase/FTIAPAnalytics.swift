@@ -21,4 +21,8 @@ extension EventName {
     static let premium_success = "premium_success"
     static let premium_failed = "premium_failed"
 
+    static let ns2premium_upgradenow_tap = "ns2premium_upgradenow_tap"
+    static let ns2premium_restorepurchases_tap = "ns2premium_restorepurchases_tap"
+    static let ns2premium_privacypolicy_tap = "ns2premium_privacypolicy_tap"
+    static let ns2premium_close_tap = "ns2premium_close_tap"
 }

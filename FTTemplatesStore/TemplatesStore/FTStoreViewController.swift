@@ -111,7 +111,7 @@ private extension FTStoreViewController {
                     } else if item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.sticker.rawValue || item.type == FTDiscoveryItemType.diary.rawValue {
                         self.presentTemplatePreviewFor(templates: items, selectedIndex: index)
                     }
-                trackEventForTappingDiscoveryItem(item: item)
+                self.trackEventForTappingDiscoveryItem(item: item)
             }
         }.store(in: &FTStoreActionManager.shared.cancellables)
 

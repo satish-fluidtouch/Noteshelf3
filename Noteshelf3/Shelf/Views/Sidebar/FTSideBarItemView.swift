@@ -18,7 +18,11 @@ struct SideBarItemView : View {
     // alerts
     @State private var showTrashAlert: Bool = false
     @State private var alertInfo: TrashAlertInfo?
-
+    @State var itemBgColor: Color = .clear
+    @State var itemTitleTint: Color = .clear
+    @State var numberOfChildren: Int = 0
+    @State var showChildrenNumber: Bool
+    
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     var viewWidth: CGFloat
     var body: some View {
@@ -52,11 +56,10 @@ struct SideBarItemView : View {
                     .font(Font.appFont(for: .regular, with: 20))
             }
             Spacer()
-            if viewModel.shouldShowNumberOfNotebooksCountFor(item: item) && item.numberOfChildren > 0 {
-                Text("\(item.numberOfChildren)")
+            if showChildrenNumber {
+                Text("\(numberOfChildren)")
                     .fontWeight(.medium)
                     .appFont(for: .regular, with: 15)
-                    .foregroundColor(viewModel.getRowForegroundColorFor(item: item))
                     .padding(.trailing,12)
                     .padding(.leading,8)
             }
@@ -76,7 +79,11 @@ struct SideBarItemView : View {
             }
         preview: {
                 HStack {
-                    SideBarItemView(viewWidth: 0.0)
+                    SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
+                                    itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
+                                    numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
+                                    showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem == item),
+                                    viewWidth: 0.0)
                         .environmentObject(viewModel)
                         .environmentObject(item)
                         .environmentObject(section)
@@ -97,11 +104,23 @@ struct SideBarItemView : View {
                     view.opacity(1.0)
                 }
             })
+            .onChange(of: viewModel.selectedSideBarItem, perform: { newValue in
+                updateItemBGAndTintColor()
+                updateShowChildrenNumberStatus()
+            })
+            .onChange(of: viewModel.highlightItem, perform: { newValue in
+                updateItemBGAndTintColor()
+            })
+            .onChange(of:viewModel.fadeDraggedSidebarItem, perform: { newValue in
+                if newValue == item || newValue == nil {
+                    updateItemBGAndTintColor()
+                }
+            })
             .background(RoundedRectangle(
                 cornerRadius: 10,
                 style: .continuous
-            ).fill(viewModel.getRowSelectionColorFor(item: item)))
-            .foregroundColor(viewModel.getRowForegroundColorFor(item: item))
+            ).fill(itemBgColor))
+            .foregroundColor(itemTitleTint)
             .if(item.isEditable, transform: { view in
                 view.contextMenu(menuItems: {
                     FTSideBarItemContexualMenuButtons(showTrashAlert: $showTrashAlert,
@@ -133,5 +152,21 @@ struct SideBarItemView : View {
         } message: { info in
             Text(info.message)
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue:shelfCollectionItemsCountNotification)), perform: { notification in
+            if let userInfo = notification.userInfo {
+                if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int , count > 0 {
+                        numberOfChildren = count
+                        showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem == item)
+                }
+            }
+        })
+    }
+    private func updateItemBGAndTintColor() {
+        itemBgColor = viewModel.getRowSelectionColorFor(item: item);
+        itemTitleTint = viewModel.getRowForegroundColorFor(item: item)
+    }
+    private func updateShowChildrenNumberStatus(){
+        numberOfChildren  = item.shelfCollection?.childrens.count ?? 0
+        showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem == item)
     }
 }

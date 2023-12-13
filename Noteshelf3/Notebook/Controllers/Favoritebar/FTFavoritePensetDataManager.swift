@@ -9,10 +9,12 @@
 import Foundation
 
 private let favoritesPlistName = "FavoritePensets"
-private let toMigrateNS2Favorites = "ToMigrateNS2Favorites"
 
-public class FTFavoritePensetDataManager {
+public class FTFavoritePensetDataManager: NSObject {
     private let fileManager = FileManager.default
+    static let shared = FTFavoritePensetDataManager()
+    private override init() { }
+
     private lazy var resourcePlistUrl: URL = {
         guard let sourcePlistURL = Bundle.main.url(forResource: favoritesPlistName, withExtension: "plist") else {
             fatalError("Programmer error, plist is not available")
@@ -20,30 +22,69 @@ public class FTFavoritePensetDataManager {
         return sourcePlistURL
     }()
 
-    private lazy var plistUrl: URL = {
+    private lazy var ns3FavoritesUrl: URL = {
         let documentURL = fileManager.urls(for: .libraryDirectory, in: .userDomainMask)[0]
         return documentURL.appendingPathComponent(favoritesPlistName+".plist")
     }()
 
-    init() {
-        UserDefaults.standard.register(defaults: [toMigrateNS2Favorites: true])
+    private var ns2FavoritesUrl: URL {
+        return FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("FTPenRack_v1.plist")
+    }
+
+    private func isFavoritebarEnabledInNS2() -> Bool {
+        var isEnabled = false
+        if fileManager.fileExists(atPath: ns2FavoritesUrl.path) {
+            if let data = try? Data(contentsOf: ns2FavoritesUrl) {
+                if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any], let enabled = plist["isFavoritebarEnabled"] as? Bool {
+                    isEnabled = enabled
+                }
+            }
+        }
+        return isEnabled
+    }
+    
+    func migrateNS2Favorites() {
+        let migrationInfo = self.checkMigrationPossibilityForNS2Favorites()
+        if migrationInfo.canMigrate {
+            let favorites = migrationInfo.favorites
+            let ns2Favorites = self.prepareNS3ModelFavorites(using: favorites)
+            do {
+                var favoriteInfo: FTFavoritePensetDataModel
+                if fileManager.fileExists(atPath: ns3FavoritesUrl.path) == false {
+                    try fileManager.copyItem(at: resourcePlistUrl, to: ns3FavoritesUrl)
+                    let currentData = try Data(contentsOf: ns3FavoritesUrl)
+                    favoriteInfo = try PropertyListDecoder().decode(FTFavoritePensetDataModel.self, from: currentData)
+                    if !ns2Favorites.isEmpty {
+                        favoriteInfo.favorites = [] // To remove default favorites when copied from bundle
+                        favoriteInfo.favorites = ns2Favorites
+                    }
+                } else {
+                    let currentData = try Data(contentsOf: ns3FavoritesUrl)
+                    favoriteInfo = try PropertyListDecoder().decode(FTFavoritePensetDataModel.self, from: currentData)
+                    for ns2Favorite in ns2Favorites {
+                        if !favoriteInfo.favorites.contains(where: {
+                            $0.color == ns2Favorite.color && $0.type == ns2Favorite.type && $0.size == ns2Favorite.size && $0.preciseSize == ns2Favorite.preciseSize
+                        }) {
+                            favoriteInfo.favorites.append(ns2Favorite)
+                        }
+                    }
+                 }
+                self.saveFavorites(favoriteInfo)
+            }
+            catch let error {
+                debugLog("Error in migrating ns2 favorites - \(error.localizedDescription)")
+            }
+            // End of migration, handle favorite bar tool status
+            self.handleNS2FavoritebarStatusIfNeeded()
+        }
     }
 
     func fetchFavorites() -> FTFavoritePensetDataModel {
         var favoriteInfo: FTFavoritePensetDataModel
         do {
             try copyDefaultDataIfNecessary()
-            let migratedData = try Data(contentsOf: plistUrl)
+            let migratedData = try Data(contentsOf: ns3FavoritesUrl)
             favoriteInfo = try PropertyListDecoder().decode(FTFavoritePensetDataModel.self, from: migratedData)
-            if UserDefaults.standard.bool(forKey: toMigrateNS2Favorites) {
-                let migrationInfo = self.checkMigrationPossibilityForNS2Favorites()
-                if migrationInfo.canMigrate {
-                    let ns2Favorites = migrationInfo.favorites
-                    favoriteInfo.favorites = self.prepareNS3Favorites(using: ns2Favorites)
-                    self.saveFavorites(favoriteInfo)
-                }
-                UserDefaults.standard.setValue(false, forKey: toMigrateNS2Favorites)
-            }
         } catch {
             favoriteInfo = getDefaultFavoriteInfo()
         }
@@ -54,7 +95,7 @@ public class FTFavoritePensetDataManager {
     func saveFavorites(_ favoriteData: FTFavoritePensetDataModel) {
         do {
             let data = try PropertyListEncoder().encode(favoriteData)
-            try data.write(to: plistUrl)
+            try data.write(to: ns3FavoritesUrl)
         }
         catch {
             debugLog("Error saving rack data: \(error)")
@@ -63,6 +104,21 @@ public class FTFavoritePensetDataManager {
 }
 
 private extension FTFavoritePensetDataManager {
+    func handleNS2FavoritebarStatusIfNeeded() {
+        let isHandled = UserDefaults.standard.bool(forKey: "IsFavoriteStatusHandled")
+        if !isHandled {
+            let isFavEnabled = self.isFavoritebarEnabledInNS2()
+            if isFavEnabled {
+                var tools = FTCurrentToolbarSection().displayTools
+                if !tools.contains(FTDeskCenterPanelTool.favorites) {
+                    tools.append(.favorites)
+                    FTCurrentToolbarSection.saveCurrentToolTypes(tools)
+                }
+                UserDefaults.standard.set(true, forKey: "IsFavoriteStatusHandled")
+            }
+        }
+    }
+    
     func getDefaultFavoriteInfo() -> FTFavoritePensetDataModel {
         do {
             let plistData = try Data(contentsOf: resourcePlistUrl)
@@ -73,26 +129,25 @@ private extension FTFavoritePensetDataManager {
     }
 
     func copyDefaultDataIfNecessary() throws {
-        if fileManager.fileExists(atPath: plistUrl.path) == false {
-            try fileManager.copyItem(at: resourcePlistUrl, to: plistUrl)
+        if fileManager.fileExists(atPath: ns3FavoritesUrl.path) == false {
+            try fileManager.copyItem(at: resourcePlistUrl, to: ns3FavoritesUrl)
         } else {
             let sourceData = try Data(contentsOf: resourcePlistUrl)
-            let currentData = try Data(contentsOf: plistUrl)
+            let currentData = try Data(contentsOf: ns3FavoritesUrl)
             let sourceInfo = try PropertyListDecoder().decode(FTFavoritePensetDataModel.self, from: sourceData)
             let currentInfo = try PropertyListDecoder().decode(FTFavoritePensetDataModel.self, from: currentData)
             if let sourceVersion = Float(sourceInfo.version),
                let currentVersion = Float(currentInfo.version) {
                 if sourceVersion > currentVersion {
-                    try fileManager.replaceItem(at: plistUrl, withItemAt: resourcePlistUrl, backupItemName: nil, resultingItemURL: nil)
+                    try fileManager.replaceItem(at: ns3FavoritesUrl, withItemAt: resourcePlistUrl, backupItemName: nil, resultingItemURL: nil)
                 }
             }
         }
     }
 
     func checkMigrationPossibilityForNS2Favorites() -> (canMigrate: Bool, favorites:  [[String: Any]]) {
-        let ns2RackPlistUrl = FTUtils.ns2ApplicationDocumentsDirectory().appendingPathComponent("FTPenRack_v1.plist")
-        if fileManager.fileExists(atPath: ns2RackPlistUrl.path) {
-            if let data = try? Data(contentsOf: ns2RackPlistUrl) {
+        if fileManager.fileExists(atPath: ns2FavoritesUrl.path) {
+            if let data = try? Data(contentsOf: ns2FavoritesUrl) {
                 do {
                     if let plist = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
                        let favorites = plist["favorites"] as? [[String: Any]], !favorites.isEmpty {
@@ -107,7 +162,7 @@ private extension FTFavoritePensetDataManager {
         return (false, [])
     }
 
-    func prepareNS3Favorites(using ns2Favorites: [[String: Any]]) -> [FTFavoritePenInfo]  {
+    func prepareNS3ModelFavorites(using ns2Favorites: [[String: Any]]) -> [FTFavoritePenInfo]  {
         let reqFavorites: [FTFavoritePenInfo] = ns2Favorites.map { oldFavorite in
             if let type = oldFavorite["Type"] as? Int,
                let color = oldFavorite["Color"] as? String,
@@ -116,7 +171,7 @@ private extension FTFavoritePensetDataManager {
                 if let size = oldFavorite["PreciseSize"] as? CGFloat {
                     preciseSize = size
                 }
-                return FTFavoritePenInfo(type: type, color: color, size: CGFloat(size), preciseSize: String(Float(preciseSize)))
+                return FTFavoritePenInfo(type: type, color: color, size: CGFloat(size), preciseSize: String(Float(preciseSize.roundToDecimal(1))))
             }
             return FTFavoritePenInfo(type: 0, color: "000000", size: 3, preciseSize: "3.0")
         }

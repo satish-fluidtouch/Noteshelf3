@@ -6,13 +6,14 @@
 //  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
+import FTCommon
 
 struct FTNotebookTitleView: View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
-    
+    let formatter = FTShortStyleDateFormatter.shared
+
     var body: some View {
         VStack(alignment: shelfViewModel.displayStlye == .List ? .leading : .center, spacing: 2) {
             HStack(alignment: .top,spacing:4) {
@@ -31,7 +32,7 @@ struct FTNotebookTitleView: View {
             }
             VStack(alignment: shelfViewModel.displayStlye == .List ? .leading : .center,spacing: 2) {
                 if shelfViewModel.showNotebookModifiedDate {
-                    Text(shelfItem.model.fileModificationDate.shelfShortStyleFormat())
+                    Text(formatter.shortStyleFormat(for: shelfItem.model.fileModificationDate))
                         .appFont(for: .regular, with: 13)
                         .frame(height: 18,alignment:.center)
                         .foregroundColor(Color.appColor(.black70))

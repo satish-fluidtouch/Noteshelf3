@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Apple Pencil 設置";
 "AppleWatch" = "蘋果手錶";
 "AppleWatchRecording" = "蘋果手錶錄音";
+"AppleWatchRecordings" = "來自 Apple Watch 的錄音";
 "Apply" = "應用";
 "Arts" = "藝術";
 "Athletics" = "體育";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "白板模式";
 "Wallpapers" = "壁紙";
 "Warning" = "警告";
-"WatchAdInfo" = "在你的Apple Watch上安裝Noteshelf 3。 您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfoSubTitle" = "您可以在行進中錄製音頻，並稍後進行記錄。";
+"WatchAdInfoTitle" = "在你的Apple Watch上安裝Noteshelf 3。";
 "WatchNewRecords" = "您的Apple Watch有新錄音。";
 "WatchRecording" = "觀看錄影";
 "WatchRecordings" = "手錶錄音";
@@ -1021,9 +1023,11 @@
 "days" = "天";
 "delete" = "刪除";
 "done" = "完成";
+"dontMigrate" = "不遷移";
 "downloadedStickers" = "已下載貼紙";
 "duplicate" = "複製";
 "eraser.auto" = "自動";
+"evernote.openNotebook.SyncSkip" = "筆記本處於開啟狀態。";
 "evernote.userInfo.fetchFailureMessage" = "此時無法獲取帳戶資訊";
 "export_data" = "匯出數據";
 "export_description1" = "強烈建議您在本機裝置上儲存資料的副本。";
@@ -1085,11 +1089,12 @@
 "iCloudUserTurnedOff" = "iCloud 關閉";
 "iCloudUserTurnedOffMessage" = "您的文件的副本將保留在iCloud中。 您想對此設備上目前的文件做什麼？";
 "iap.bannerTitle" = "升級到高級";
-"iap.bannerTitle1" = "以@%折扣獲得高級版";
+"iap.bannerTitle1" = "以%@折扣獲得高級版";
 "iap.bannerTitle2" = "僅供Noteshelf 2使用者";
 "iap.booklimitReachedMessage" = "清空您的垃圾桶以確保已刪除的筆記本不會計入您的配額，或解鎖完整應用程式以獲取無限筆記本";
 "iap.booklimitReachedTitle" = "您已達到免費筆記本限制";
 "iap.booksleft" = "%@ 留下的註釋";
+"iap.discount.highlight" = "%@折扣";
 "iap.featureLimitMessage" = "此功能已鎖定。 立即升級解鎖。";
 "iap.featureLimitTitle" = "立即升級";
 "iap.message" = "取得無限筆記、手寫辨識和搜尋以及Noteshelf高級版的數位日記。";
@@ -1108,6 +1113,7 @@
 "iap.restoreSuccessWithNoPurchase" = "沒有要恢復的已購買項目";
 "iap.termsnconditions" = "條款與條件";
 "iap.title" = "透過Noteshelf Premium獲得完整體驗";
+"iap.toptitle" = "專屬於Noteshelf 2用戶";
 "iap.upgradeNow" = "立即升級";
 "iap.upgradeToPremiumNow" = "立即升級至高級版";
 "icloud.sync.issue.message" = "無法連接到 iCloud。 請確保 iCloud 在設定中已開啟。";
@@ -1546,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by admin on 11 December 2023 at 6:46 PM

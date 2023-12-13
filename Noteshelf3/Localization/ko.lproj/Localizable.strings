@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "애플 펜슬 설정";
 "AppleWatch" = "애플 워치";
 "AppleWatchRecording" = "애플 워치 녹음";
+"AppleWatchRecordings" = "Apple Watch 녹음";
 "Apply" = "적용";
 "Arts" = "예술";
 "Athletics" = "운동";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "화이트보드 모드";
 "Wallpapers" = "배경화면";
 "Warning" = "주의";
-"WatchAdInfo" = "애플 워치에 Noteshelf 3를 설치하세요. 이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfoSubTitle" = "이동 중에 오디오를 녹음하고 나중에 메모를 작성할 수 있습니다.";
+"WatchAdInfoTitle" = "애플 워치에 Noteshelf 3를 설치하세요. ";
 "WatchNewRecords" = "귀하의 애플 워치에서 새로운 녹음 파일이 도착했습니다.";
 "WatchRecording" = "녹화 보기";
 "WatchRecordings" = "워치 녹화";
@@ -1021,9 +1023,11 @@
 "days" = "일";
 "delete" = "삭제";
 "done" = "끝";
+"dontMigrate" = "마이그레이션하지 마세요";
 "downloadedStickers" = "다운로드된 스티커";
 "duplicate" = "중복";
 "eraser.auto" = "자동차";
+"evernote.openNotebook.SyncSkip" = "노트 열린 상태입니다.";
 "evernote.userInfo.fetchFailureMessage" = "이 시간에 계정 정보를 가져올 수 없습니다.";
 "export_data" = "수출 데이터";
 "export_description1" = "당신의 데이터 사본을 로컬 디바이스에 저장하는 것이 강력히 권장됩니다.";
@@ -1085,18 +1089,19 @@
 "iCloudUserTurnedOff" = "아이클라우드가 꺼졌습니다.";
 "iCloudUserTurnedOffMessage" = "이 문서의 사본은 iCloud에 저장됩니다. 현재 이 장치에 있는 문서를 어떻게 하시겠습니까?";
 "iap.bannerTitle" = "프리미엄으로 업그레이드";
-"iap.bannerTitle1" = "@% 할인으로 프리미엄 받기";
+"iap.bannerTitle1" = "%@ 할인으로 프리미엄 받기";
 "iap.bannerTitle2" = "Noteshelf 2 사용자 전용";
 "iap.booklimitReachedMessage" = "휴지통을 비우세요. 삭제된 노트북이 할당량에 포함되지 않도록 하거나, 무제한 노트북을 위해 전체 앱을 잠금 해제하세요.";
 "iap.booklimitReachedTitle" = "무료 노트북 제한에 도달했습니다.";
-"iap.booksleft" = "%@ 남은 노트'";
+"iap.booksleft" = "%@ 남은 노트";
+"iap.discount.highlight" = "%@ 할인으로";
 "iap.featureLimitMessage" = "이 기능은 잠겨 있습니다. 지금 업그레이드하여 잠금 해제하세요.";
 "iap.featureLimitTitle" = "지금 업그레이드하세요.";
 "iap.message" = "노트셀프 프리미엄으로 무제한 노트, 필기 인식과 검색, 그리고 디지털 다이어리에 접근하세요.";
 "iap.messageNew" = "제한된 기간 동안, Noteshelf 2 사용자는 이 특별 혜택을 받아 Noteshelf 3의 모든 기능과 혜택을 이용할 수 있습니다.";
 "iap.noProductIDsFound" = "인앱 구매 상품 식별자를 찾을 수 없습니다.";
 "iap.noProductsFound" = "앱 내 구매가 없습니다.";
-"iap.onetimepurchase" = "원회성 구매. 영원히 소유하십시오.'";
+"iap.onetimepurchase" = "원회성 구매. 영원히 소유하십시오.";
 "iap.onetimepurchasenew" = "%@ 일회성 구매";
 "iap.paymentWasCancelled" = "앱 내 구매 프로세스가 취소되었습니다.";
 "iap.privacy" = "개인정보 처리방침";
@@ -1108,8 +1113,9 @@
 "iap.restoreSuccessWithNoPurchase" = "복원할 구매한 항목이 없습니다.";
 "iap.termsnconditions" = "약관";
 "iap.title" = "Noteshelf Premium으로 완전한 경험을 얻으십시오";
+"iap.toptitle" = "Noteshelf 2 사용자 전용";
 "iap.upgradeNow" = "지금 업그레이드";
-"iap.upgradeToPremiumNow" = "지금 프리미엄으로 업그레이드하세요.";
+"iap.upgradeToPremiumNow" = "지금 프리미엄으로 업그레이드하세요";
 "icloud.sync.issue.message" = "iCloud에 연결할 수 없습니다. 설정에서 iCloud가 켜져 있는지 확인하세요.";
 "iconlabels" = "아이콘 라벨";
 "import" = "가져오기";
@@ -1546,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 20 November 2023 at 15:41
+// Last Synced by admin on 11 December 2023 at 6:46 PM
