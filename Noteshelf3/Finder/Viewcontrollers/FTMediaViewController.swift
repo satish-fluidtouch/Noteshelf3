@@ -11,11 +11,30 @@ import UIKit
 import FTCommon
 
 extension Notification.Name {
+    static let didRemoveMedia = Notification.Name(rawValue: "FTDidRemoveMedia")
     static let didUpdateMedia = Notification.Name(rawValue: "FTDidUpdateMedia")
+    static let didAddMedia = Notification.Name(rawValue: "FTDidAddMedia")
 }
 
 protocol FTMediaDelegate: AnyObject {
     func  didTapMoreOption(cell: UICollectionViewCell, item: FTMediaItem?)
+}
+
+class FTMediaDocumentPage {
+    var pageId: String = ""
+    var mediaObjects: [FTMediaObject] = []
+    
+    init(pageId: String, mediaObjects: [FTMediaObject]) {
+        self.pageId = pageId
+        self.mediaObjects = mediaObjects
+    }
+}
+
+fileprivate typealias MediaDataSource = UICollectionViewDiffableDataSource<Int, AnyHashable>
+fileprivate typealias MediaSnapShot = NSDiffableDataSourceSnapshot<Int, AnyHashable>
+
+struct FTMediaSection: Hashable {
+    var name:String
 }
 
 class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
@@ -27,6 +46,8 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     @IBOutlet weak var compactEditButton: UIButton?
     @IBOutlet weak var titleLabel: FTCustomLabel!
     @IBOutlet weak var headerView: UIView!
+    fileprivate var dataSource : MediaDataSource! //Used for UI Diffable datasource
+    fileprivate var snapShot = MediaSnapShot()
     @IBOutlet weak var noMediaDescription: FTCustomLabel!
     @IBOutlet weak var noMediaTitle: FTCustomLabel!
     @IBOutlet weak var primaryButton: UIButton!
@@ -35,13 +56,13 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     private lazy var layout = FTCollectionViewWaterfallLayout()
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var expandButton: UIButton!
+    var documentPages = [FTMediaDocumentPage]()
     weak var delegate: FTFinderTabBarController?
     var screenMode: FTFinderScreenMode {
         return self.delegate?.currentScreenMode() ?? .normal
     }
     var document:FTThumbnailableCollection!;
-    var mediaObjects = [FTMediaItem]()
-    var filteredMediaObjects = [FTMediaItem]()
+    var mediaObjects = [FTMediaObject]()
     var selectedTab: FTFinderSelectedTab = .content
     
     var selectedMediaType: FTMediaType {
@@ -74,17 +95,16 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.initialSetup()
+        configureDiffableDataSource()
+        createAndApplySnapshot()
+        showPlaceHolderView(true)
         self.setUpData()
-        self.initializeCollectionView()
-        self.updateAndReloadCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(didRemoveMedia(_:)), name: .didRemoveMedia, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didAddMedia(_:)), name: .didAddMedia, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
-    }
-    
-    @objc private func didUpdateMedia(_ notification: Notification) {
-        setUpData()
-        updateAndReloadCollectionView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -98,6 +118,122 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         #endif
         self.navigationController?.navigationBar.isHidden = (screenMode == .normal)
     }
+    
+    internal func snapshotItem(for indexPath: IndexPath) -> AnyHashable {
+        let sectionType = dataSource.snapshot().sectionIdentifiers[indexPath.section]
+        return dataSource.snapshot().itemIdentifiers(inSection: sectionType)[indexPath.row]
+    }
+    
+    private func configureDiffableDataSource() {
+        dataSource = MediaDataSource(collectionView: self.collectionView, cellProvider: { [weak self] (collectionView, indexPath, item) -> UICollectionViewCell? in
+            guard let self = self else {
+                return nil
+            }
+            showPlaceHolderView(true)
+            if let mediaObject =  item as? FTMediaObject {
+                var cell = self.collectionView(collectionView, normalCellForItemAt: indexPath, mediaObject: mediaObject)
+                if mediaObject.mediaType == .audio {
+                    cell = self.collectionView(collectionView, audioCellForItemAt: indexPath, mediaObject: mediaObject)
+                }
+                showPlaceHolderView(false)
+                return cell
+            }
+            return nil
+        })
+    }
+    
+    private func createAndApplySnapshot() {
+        guard self.dataSource != nil else { return }
+        self.snapShot.appendSections([0])
+        self.snapShot.appendItems(self.mediaObjects, toSection: 0)
+        self.dataSource.apply(self.snapShot, animatingDifferences: true)
+    }
+    
+    private func updateSourceFor(page: FTMediaDocumentPage) {
+        let filteredObjects = objectsToLoad(items: page.mediaObjects)
+        let mappedObjects = filteredObjects.map { eachObject in
+            return eachObject
+        }
+        var snapShot = self.dataSource.snapshot()
+        snapShot.appendItems(mappedObjects)
+        self.dataSource.apply(snapShot)
+    }
+    
+    private func objectsToLoad(items: [FTMediaObject]) -> [FTMediaObject] {
+        var itemsToReturn = [FTMediaObject]()
+        let selectedMedia = currentSelectedMedia()
+        for eachObj in items {
+            if selectedMedia == FTMediaType.allMedia {
+                itemsToReturn.append(eachObj)
+            } else if eachObj.mediaType == selectedMedia {
+                itemsToReturn.append(eachObj)
+            }
+        }
+        return itemsToReturn
+    }
+    
+    @objc private func didAddMedia(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let noteshelfPage = userInfo["page"] as? FTNoteshelfPage, let annotations = userInfo["annotations"] as? [FTAnnotation] {
+            let page = documentPages.filter { eachPage in
+                return eachPage.pageId == noteshelfPage.uuid
+            }
+            annotations.forEach { eachAnnotation in
+                if eachAnnotation.isMediaType {
+                    if  !page.isEmpty, let documentPage = page.first {
+                        let mediaObject = FTMediaObject(page: noteshelfPage, annotation: eachAnnotation)
+                        self.mediaObjects.append(mediaObject)
+                        documentPage.mediaObjects.append(mediaObject)
+                        let filteredObjects = objectsToLoad(items: documentPage.mediaObjects)
+                        var snapShot = self.dataSource.snapshot()
+                        snapShot.appendItems(filteredObjects)
+                        self.dataSource.apply(snapShot)
+                    } else {
+                        self.createAndUpdatePages(doc: noteshelfPage, annotations: [eachAnnotation])
+                    }
+                }
+            }
+        }
+    }
+
+    @objc private func didRemoveMedia(_ notification: Notification) {
+        guard let userInfo = notification.userInfo, let currentPage = userInfo["page"] as? FTNoteshelfPage, let annotations = userInfo["annotations"] as? [FTAnnotation] else {
+            return
+        }
+        let matchingPages = documentPages.filter { $0.pageId == currentPage.uuid }
+        annotations.forEach { eachAnnotation in
+            guard  let documentPage = matchingPages.first, eachAnnotation.isMediaType, let item = documentPage.mediaObjects.first(where: { $0.annotation == eachAnnotation }) else {
+                return
+            }
+            if let index = documentPage.mediaObjects.firstIndex(of: item) {
+                documentPage.mediaObjects.remove(at: index)
+            }
+            if let index = mediaObjects.firstIndex(of: item) {
+                mediaObjects.remove(at: index)
+            }
+            var snapShot = dataSource.snapshot()
+            snapShot.deleteItems([item])
+            dataSource.apply(snapShot)
+            showPlaceHolderView(mediaObjects.isEmpty)
+        }
+    }
+    
+    @objc private func didUpdateMedia(_ notification: Notification) {
+        if let userInfo = notification.userInfo, let annotation = userInfo["annotation"] as? FTAnnotation, annotation.isMediaType {
+            var snapShot = self.dataSource.snapshot()
+            let item = snapShot.itemIdentifiers.first(where: { eachItem in
+                if let newItem = eachItem as? FTMediaObject, newItem.annotation == annotation {
+                    return true
+                } else {
+                    return false
+                }
+            })
+            if let item {
+                snapShot.reloadItems([item])
+                self.dataSource.apply(snapShot)
+            }
+        }
+    }
+   
     
     private func configureNavigation(hideBackButton: Bool = false, title: String, preferLargeTitle: Bool = true) {
         self.navigationItem.hidesBackButton = true
@@ -149,13 +285,9 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         self.delegate?.didTapOnCloseButton()
     }
 
-    func updateNoMediaView() {
-        noMediaView.isHidden = true
-        self.collectionView.isHidden = filteredMediaObjects.isEmpty
-        self.noMediaView.isHidden = !filteredMediaObjects.isEmpty
-        noMediaTitle.text = "finder.media".localized
-        noMediaTitle.font = UIFont.clearFaceFont(for: .medium, with: 22)
-        noMediaDescription.text = "finder.media.nocontent".localized
+    func showPlaceHolderView(_ show: Bool) {
+        self.collectionView.isHidden = show
+        self.noMediaView.isHidden = !show
     }
     
     private func configureEditButton() {
@@ -256,9 +388,8 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         }
     }
     
-    private func initializeCollectionView() {
+    private func initialSetup() {
         collectionView.delegate = self
-        collectionView.dataSource = self
         layout.minimumColumnSpacing = 2.0
         layout.minimumInteritemSpacing = 2.0
         layout.columnCount = (screenMode == .fullScreen) ? 4 : 2
@@ -266,6 +397,9 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         collectionView.alwaysBounceVertical = true
         self.collectionView.collectionViewLayout  = layout
         updateContentInsets()
+        noMediaTitle.text = "finder.media".localized
+        noMediaTitle.font = UIFont.clearFaceFont(for: .medium, with: 22)
+        noMediaDescription.text = "finder.media.nocontent".localized
     }
     
     override var prefersHomeIndicatorAutoHidden: Bool {
@@ -291,34 +425,44 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     }
     
     private func setUpData() {
-        let pages = document.documentPages()
-        self.mediaObjects.removeAll()
-        pages.forEach { eachPage in
-            if let page = eachPage as? FTPageProtocol {
-                let eachPageAnnotations = page.annotations()
-                eachPageAnnotations.forEach { eachAnnotation in
-                    if eachAnnotation.annotationType == .image || eachAnnotation.annotationType == .audio || eachAnnotation.annotationType == .sticker || eachAnnotation.annotationType == .webclip {
-                        let mediaObject = FTMediaObject(page: eachPage, annotation: eachAnnotation)
-                        self.mediaObjects.append(mediaObject)
+        DispatchQueue.global().async {[weak self] in
+            guard let self = self else {
+                return
+            }
+            let pages = document.documentPages()
+            self.mediaObjects.removeAll()
+            pages.forEach { eachPage in
+                if let page = eachPage as? FTNoteshelfPage {
+                    let eachPageAnnotations = page.annotationsWithMediaResources()
+                    runInMainThread {
+                        self.createAndUpdatePages(doc: page, annotations: eachPageAnnotations)
                     }
                 }
             }
         }
     }
     
-    private func updateAndReloadCollectionView() {
-        self.filteredMediaObjects.removeAll()
-        let selectedMedia = currentSelectedMedia()
-        for eachObj in mediaObjects {
-            if selectedMedia == FTMediaType.allMedia {
-                self.filteredMediaObjects.append(eachObj)
-            } else if eachObj.mediaType == selectedMedia {
-                filteredMediaObjects.append(eachObj)
-            }
+    func createAndUpdatePages(doc: FTNoteshelfPage, annotations: [FTAnnotation]) {
+        var arrayToAppend = [FTMediaObject]()
+        annotations.forEach { eachAnnotation in
+            let mediaObject = FTMediaObject(page: doc, annotation: eachAnnotation)
+            arrayToAppend.append(mediaObject)
         }
-        self.collectionView.reloadData()
-        updateNoMediaView()
-//        filteredMediaObjects = self.sortBasedOnDate(filteredMediaObjects)
+        if !arrayToAppend.isEmpty {
+            self.mediaObjects.append(contentsOf: arrayToAppend)
+            let page = FTMediaDocumentPage(pageId: doc.uuid, mediaObjects: arrayToAppend)
+            self.documentPages.append(page)
+            self.updateSourceFor(page: page)
+        }
+    }
+
+    private func updateAndReloadCollectionView() {
+        let filteredMediaObjects = objectsToLoad(items: self.mediaObjects)
+        var newSnapshot = MediaSnapShot()
+        newSnapshot.appendSections([0])
+        newSnapshot.appendItems(filteredMediaObjects)
+        self.dataSource.apply(newSnapshot)
+        showPlaceHolderView(filteredMediaObjects.isEmpty)
     }
     
     private func currentSelectedMedia() -> FTMediaType {
@@ -339,41 +483,16 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     }
 }
 
-extension FTMediaViewController: UICollectionViewDataSource, UICollectionViewDelegate, FTCollectionViewDelegateWaterfallLayout {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredMediaObjects.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return  self.collectionView(collectionView, mediaCellForItemAt: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, mediaCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell = self.collectionView(collectionView, normalCellForItemAt: indexPath)
-        let mediaObject = filteredMediaObjects[indexPath.row]
-        if mediaObject.mediaType == .audio {
-            cell = self.collectionView(collectionView, audioCellForItemAt: indexPath)
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, normalCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let mediaObject = filteredMediaObjects[indexPath.row]
+extension FTMediaViewController:  UICollectionViewDelegate, FTCollectionViewDelegateWaterfallLayout {
+    func collectionView(_ collectionView: UICollectionView, normalCellForItemAt indexPath: IndexPath, mediaObject: FTMediaObject) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTMediaCollectionViewCell", for: indexPath)
         if let cell = cell as? FTMediaCollectionViewCell {
-            if filteredMediaObjects.count > 0 {
-                cell.configureCell(mediaObject, index: indexPath.row + 1, delegate: self)
-            }
+            cell.configureCell(mediaObject, index: indexPath.row + 1, delegate: self)
         }
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, audioCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let mediaObject = filteredMediaObjects[indexPath.row]
+    func collectionView(_ collectionView: UICollectionView, audioCellForItemAt indexPath: IndexPath, mediaObject: FTMediaObject) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTAudioCollectionCell", for: indexPath)
         if let cell = cell as? FTAudioCollectionCell {
             if screenMode == .fullScreen {
@@ -385,24 +504,23 @@ extension FTMediaViewController: UICollectionViewDataSource, UICollectionViewDel
                 cell.volumeImage.image = image
                 cell.audioDuration?.font = UIFont.appFont(for: .medium, with: 10)
             }
-            if filteredMediaObjects.count > 0 {
-                cell.configureCell(mediaObject, index: indexPath.row + 1, delegate: self)
-            }
+            cell.configureCell(mediaObject, index: indexPath.row + 1, delegate: self)
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let mediaObject = filteredMediaObjects[indexPath.row]
-        let indexSelected: Int;
-        if let index = self.document.documentPages().firstIndex(where: {$0.uuid == mediaObject.page?.uuid}) {
-            indexSelected = index;
+        if let mediaObject = snapshotItem(for: indexPath) as? FTMediaObject {
+            let indexSelected: Int;
+            if let index = self.document.documentPages().firstIndex(where: {$0.uuid == mediaObject.page?.uuid}) {
+                indexSelected = index;
+            }
+            else {
+                indexSelected = 0;
+            }
+            track("Finder_TapPage", params: [:],screenName: FTScreenNames.finder)
+            self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
         }
-        else {
-            indexSelected = 0;
-        }
-        track("Finder_TapPage", params: [:],screenName: FTScreenNames.finder)
-        self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
     }
         
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
