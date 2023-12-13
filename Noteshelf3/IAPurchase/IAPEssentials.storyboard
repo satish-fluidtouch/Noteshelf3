@@ -410,7 +410,7 @@
                                         <color key="tintColor" name="alwaysWhite"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Upgrade to Premium Now">
-                                            <fontDescription key="titleFontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                            <fontDescription key="titleFontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                         </buttonConfiguration>
                                         <variation key="default">
                                             <mask key="constraints">

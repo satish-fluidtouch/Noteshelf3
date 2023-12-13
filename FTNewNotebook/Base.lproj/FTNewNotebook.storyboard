@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tlK-LX-I56">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tlK-LX-I56">
     <device id="ipad11_0rounded" orientation="landscape" layout="splitview1_3" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,7 +11,7 @@
     </dependencies>
     <customFonts key="customFonts">
         <array key="Clearface-Serial-Medium.otf">
-            <string>Clearface-Serial-Medium-Regular</string>
+            <string>ClearfaceSerial-Medium</string>
         </array>
         <array key="SF-Pro-Text-Medium.otf">
             <string>SFProText-Medium</string>
@@ -96,14 +96,14 @@
                                                                 </constraints>
                                                                 <variation key="heightClass=compact-widthClass=compact">
                                                                     <mask key="constraints">
-                                                                        <exclude reference="FBw-XD-7J8"/>
                                                                         <exclude reference="io8-x7-BRP"/>
+                                                                        <exclude reference="FBw-XD-7J8"/>
                                                                     </mask>
                                                                 </variation>
                                                                 <variation key="heightClass=regular-widthClass=compact">
                                                                     <mask key="constraints">
-                                                                        <include reference="FBw-XD-7J8"/>
                                                                         <include reference="io8-x7-BRP"/>
+                                                                        <include reference="FBw-XD-7J8"/>
                                                                     </mask>
                                                                 </variation>
                                                             </view>
@@ -211,14 +211,14 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="48" id="tFK-cD-AGg"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                                                 <color key="tintColor" name="createNotebookButtonTint"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="Create Notebook">
                                                                     <color key="titleColor" name="createNotebookButtonTint"/>
                                                                 </state>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Create Notebook">
-                                                                    <fontDescription key="titleFontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                                                    <fontDescription key="titleFontDescription" name="ClearfaceSerial-Medium" family="Clearface Serial" pointSize="20"/>
                                                                     <color key="baseForegroundColor" name="createNotebookButtonTint"/>
                                                                 </buttonConfiguration>
                                                                 <userDefinedRuntimeAttributes>
@@ -293,14 +293,14 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="ajP-kG-hh0"/>
                                                 <exclude reference="x4k-h1-JUe"/>
+                                                <exclude reference="ajP-kG-hh0"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact">
                                             <mask key="constraints">
-                                                <include reference="ajP-kG-hh0"/>
                                                 <include reference="x4k-h1-JUe"/>
+                                                <include reference="ajP-kG-hh0"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -308,6 +308,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="W4m-gQ-kHF" firstAttribute="leading" secondItem="ko0-67-07M" secondAttribute="leading" id="8N4-ft-aTN"/>
+                                    <constraint firstItem="W4m-gQ-kHF" firstAttribute="width" secondItem="ko0-67-07M" secondAttribute="width" id="Nop-c5-K9R"/>
                                     <constraint firstAttribute="trailing" secondItem="W4m-gQ-kHF" secondAttribute="trailing" id="RBe-Mh-WD3"/>
                                     <constraint firstItem="W4m-gQ-kHF" firstAttribute="bottom" secondItem="ko0-67-07M" secondAttribute="bottom" id="Zni-dV-Wwt"/>
                                     <constraint firstItem="W4m-gQ-kHF" firstAttribute="top" secondItem="ko0-67-07M" secondAttribute="top" id="h1p-qV-BIN"/>
@@ -343,7 +344,6 @@
                             <constraint firstItem="PNm-03-9xJ" firstAttribute="trailing" secondItem="lCN-4S-Ubu" secondAttribute="trailing" constant="32" id="0Lg-NB-4n8"/>
                             <constraint firstAttribute="bottom" secondItem="ko0-67-07M" secondAttribute="bottom" id="3K7-A8-Em3"/>
                             <constraint firstItem="lCN-4S-Ubu" firstAttribute="top" secondItem="PNm-03-9xJ" secondAttribute="top" constant="32" id="3pC-NY-yez"/>
-                            <constraint firstItem="W4m-gQ-kHF" firstAttribute="width" secondItem="ko0-67-07M" secondAttribute="width" id="Nop-c5-K9R"/>
                             <constraint firstItem="ko0-67-07M" firstAttribute="trailing" secondItem="ZEJ-5p-jIC" secondAttribute="trailing" id="TfU-5d-TR1"/>
                             <constraint firstItem="ko0-67-07M" firstAttribute="top" secondItem="ZEJ-5p-jIC" secondAttribute="top" id="fEf-6q-SNu"/>
                             <constraint firstItem="ko0-67-07M" firstAttribute="leading" secondItem="ZEJ-5p-jIC" secondAttribute="leading" id="nWa-ZH-sZi"/>

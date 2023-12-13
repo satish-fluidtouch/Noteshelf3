@@ -189,7 +189,6 @@ struct SidebarSectionHeader: View {
             }
             Text(section.title)
                 .font(.clearFaceFont(for: .medium, with: 22))
-                .fontWeight(.heavy)
                 .foregroundColor(.appColor(.black1))
                 .tracking(-0.41)
         }

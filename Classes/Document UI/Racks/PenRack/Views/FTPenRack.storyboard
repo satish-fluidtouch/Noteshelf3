@@ -15,7 +15,7 @@
             <string>Aeonik-Regular</string>
         </array>
         <array key="Clearface-Serial-Medium.otf">
-            <string>Clearface-Serial-Medium-Regular</string>
+            <string>ClearfaceSerial-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -32,7 +32,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Ovg-4W-Dt6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -441,7 +441,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calligraphic Pen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vya-3X-2qC">
                                 <rect key="frame" x="329" y="16" width="143" height="24"/>
-                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -608,7 +608,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="a8T-pI-xNg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -718,7 +718,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lasso" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5e-0F-PdH">
                                 <rect key="frame" x="375" y="18" width="50.5" height="24"/>
-                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
