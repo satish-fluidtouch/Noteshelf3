@@ -56,7 +56,6 @@ struct FTShelfView: View,FTShelfBaseView {
                         }
                     }
                 })
-                .detectOrientation($viewModel.orientation)
                 .navigationTitle(viewModel.navigationTitle)
                 .allowsHitTesting(viewModel.allowHitTesting)
                 #if targetEnvironment(macCatalyst)
@@ -75,12 +74,6 @@ struct FTShelfView: View,FTShelfBaseView {
                 .shelfBottomToolbar()
                     .environmentObject(viewModel.toolbarViewModel)
                     .environmentObject(viewModel)
-                .onChange(of: viewModel.reloadShelfItems) { reload in
-                    if reload {
-                        viewModel.reloadShelf()
-                        viewModel.reloadShelfItems = false
-                    }
-                }
                 .onTapGesture {
                     self.hideKeyboard() // if any textfield is in editing state we exit from that mode and perform action. eg.rename category.
                 }
