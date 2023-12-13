@@ -55,7 +55,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
     }
     private var lastSelectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
-    private var isInNonCollectionMode: Bool = false
+    var isInNonCollectionMode: Bool = false
 
     var isInSearchMode: Bool = false
     var isInGroupMode: Bool = false
@@ -623,6 +623,17 @@ extension FTShelfSplitViewController {
                         }
                     }
                 });
+            }
+        }
+    }
+    func selectUnfiledCollection(onCompletion:((FTShelfItemCollection?) -> Void)?){
+        FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { unfiledShelfItemCollection in
+            if let unfiledShelfItemCollection {
+                self.sideMenuController?.upateSideMenuCurrentCollection(unfiledShelfItemCollection);
+                self.sideMenuController?.showSidebarItemWithCollection(unfiledShelfItemCollection)
+                onCompletion?(unfiledShelfItemCollection)
+            } else {
+                onCompletion?(nil)
             }
         }
     }
