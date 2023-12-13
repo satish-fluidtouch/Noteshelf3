@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="s0z-dx-Wbd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="s0z-dx-Wbd">
     <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -319,7 +319,7 @@
                                 <rect key="frame" x="0.0" y="20" width="834" height="1092"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gti-ue-ebG" userLabel="ContentView">
-                                <rect key="frame" x="40" y="40" width="754" height="1032"/>
+                                <rect key="frame" x="40" y="40" width="754" height="1052"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ou4-nq-UfL" userLabel="Top Nav bar">
                                         <rect key="frame" x="0.0" y="0.0" width="754" height="44"/>
@@ -395,13 +395,13 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MvH-Pg-FSF">
-                                        <rect key="frame" x="186.5" y="922" width="381" height="0.0"/>
+                                        <rect key="frame" x="186.5" y="942" width="381" height="0.0"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                         <color key="textColor" name="darkRed"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUE-W5-oBF" userLabel="Purchase Button">
-                                        <rect key="frame" x="227" y="930" width="300" height="48"/>
+                                        <rect key="frame" x="227" y="950" width="300" height="48"/>
                                         <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="0Hl-Y5-FFB"/>
@@ -427,7 +427,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wOb-oN-hmW" userLabel="Footer stack View">
-                                        <rect key="frame" x="75.5" y="1002" width="603" height="30"/>
+                                        <rect key="frame" x="75.5" y="1022" width="603" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODb-WB-Knp" userLabel="privacy policy">
                                                 <rect key="frame" x="0.0" y="0.0" width="110.5" height="30"/>
@@ -501,7 +501,6 @@
                         <constraints>
                             <constraint firstItem="BiN-oR-9Dc" firstAttribute="centerY" secondItem="h1r-ro-Sev" secondAttribute="centerY" id="Jg2-Eq-CXJ"/>
                             <constraint firstAttribute="bottom" secondItem="Gti-ue-ebG" secondAttribute="bottom" constant="20" id="MaD-xp-kgb">
-                                <variation key="heightClass=regular-widthClass=regular" constant="40"/>
                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=regular" constant="20"/>
                             </constraint>
                             <constraint firstItem="BiN-oR-9Dc" firstAttribute="centerX" secondItem="h1r-ro-Sev" secondAttribute="centerX" id="QhI-ZK-SYa"/>

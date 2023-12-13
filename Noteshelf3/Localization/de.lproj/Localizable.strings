@@ -1115,7 +1115,7 @@
 "iap.title" = "Holen Sie sich das volle Erlebnis mit Noteshelf Premium";
 "iap.toptitle" = "Exklusiv für Noteshelf 2 Benutzer";
 "iap.upgradeNow" = "Jetzt aktualisieren";
-"iap.upgradeToPremiumNow" = "Jetzt auf Premium upgraden.";
+"iap.upgradeToPremiumNow" = "Jetzt auf Premium upgraden";
 "icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
@@ -1552,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 8 December 2023 at 18:28
+// Last Synced by admin on 11 December 2023 at 6:46 PM

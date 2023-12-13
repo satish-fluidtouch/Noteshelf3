@@ -47,9 +47,7 @@ class FTIAPOfferViewController: UIViewController {
         self.messageLabel?.font = UIFont.appFont(for: .regular, with: 17);
         self.messageLabel?.text = "iap.messageNew".localized
         self.messageLabel?.addCharacterSpacing(kernValue: -0.41)
-        self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
         self.miniTitleLabel?.textColor = UIColor.black.withAlphaComponent(0.5)
-        self.upgradeButton?.titleLabel?.font = UIFont.clearFaceFont(for: .medium, with: 20)
         self.upgradeButton?.layer.shadowColor = UIColor.black.cgColor
         self.upgradeButton?.layer.shadowOpacity = 0.2
         self.upgradeButton?.layer.shadowRadius = 8.0
@@ -75,7 +73,7 @@ class FTIAPOfferViewController: UIViewController {
     func configurePriceAboveButton() {
         miniTitleLabel?.isHidden = true
         subheadingLabel?.isHidden = false
-        self.upgradeButton?.titleLabel?.text = NSLocalizedString("iap.upgradeToPremiumNow", comment: "")
+        setTitleToPurchaseButton(title: NSLocalizedString("iap.upgradeToPremiumNow", comment: ""))
     }
 
     func configurePriceOnButton() {
