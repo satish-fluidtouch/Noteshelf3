@@ -355,20 +355,22 @@ extension FTDocumentMigration {
 
      func migrateNS2CustomTemplates() {
          let customFolderURL = FTDocumentMigration.libraryURL.appendingPathComponent("papers_v2/custom/")
-         do {
-             let subcontents = try FileManager().contentsOfDirectory(at: customFolderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-             try subcontents.forEach { url in
+         guard let subcontents = try? FileManager().contentsOfDirectory(at: customFolderURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) else {
+             return
+         }
+         subcontents.forEach { url in
+             do {
                  let subcontents1 = try FileManager().contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
                  try subcontents1.forEach({ subUrl in
                      let fileName = url.deletingPathExtension().lastPathComponent
                      let pathExtention = subUrl.pathExtension
                      if subUrl.deletingPathExtension().lastPathComponent == "template" {
                          let ns3TemplateFile = subUrl.deletingLastPathComponent().appendingPathComponent(fileName).appendingPathExtension(pathExtention)
-                         try FileManager().moveItem(at: subUrl, to: ns3TemplateFile)
+                         try FileManager().copyItem(at: subUrl, to: ns3TemplateFile)
                      }
                  })
                  let ns3CustomFile = url.deletingPathExtension()
-                 try FileManager().moveItem(at: url, to: ns3CustomFile)
+                 try FileManager().copyItem(at: url, to: ns3CustomFile)
 
                  let fileName = ns3CustomFile.lastPathComponent
                  let ns3CustomTemplatesFolder = FTStoreCustomTemplatesHandler.shared.customTemplatesFolder
@@ -376,9 +378,9 @@ extension FTDocumentMigration {
                  if !FileManager().fileExists(atPath: destUrl.path) {
                      try FileManager().copyItem(at: ns3CustomFile, to: destUrl)
                  }
+             } catch {
+                 FTCLSLog("--- Custom Templates Migration Failed with error \(error.localizedDescription)")
              }
-         } catch {
-             FTCLSLog("--- Custom Templates Migration Failed with error \(error.localizedDescription)")
          }
     }
 }
