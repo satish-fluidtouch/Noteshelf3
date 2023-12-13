@@ -107,7 +107,6 @@ using namespace cv;
                 NSValue *last = [NSValue valueWithCGPoint:CGPointMake(approx[approx.size()-1].x, approx[approx.size()-1].y)];
                 vector<cv::Point> contours = [self pointsToInputArray:@[first, last]];
                 double distance = cv::arcLength(cv::Mat(contours),false);
-                NSLog(@"Distance %f", distance);
 
                 if(distance > 20) {
                     FTShapeLineStrip *lineStrip = [[FTShapeLineStrip alloc] init];
