@@ -477,7 +477,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             titleString.draw(in: titleRect)
 
             let yearString = NSMutableAttributedString.init(string: "\(yearString)", attributes: yearAttrs)
-            let yearY = titleY + titleString.size().height
+            let yearYOffsetPercent: CGFloat = 0.83
+            let yearYOffset = currentPageRect.height*yearYOffsetPercent/100
+            let yearY = titleY + titleString.size().height + yearYOffset
 
             let yearRect = CGRect(x: titleX, y: yearY, width: yearString.size().width, height: yearString.size().height)
             yearString.draw(in: yearRect)
@@ -510,15 +512,15 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
             let weekAndDayStringWidth = weekAndDayString.size().width
 
-            let weekDayRect = CGRect(x: weekDayInfoX + 5 + 3.5 , y:weekDayInfoY + 6 + (weekDayRectHeigth/2) - (weekAndDayString.size().height/2), width: weekAndDayStringWidth, height: weekDayRectHeigth)
+            let weekDayRect = CGRect(x: weekDayInfoX + 5 + 3.5 , y:weekDayInfoY + 5 + (weekDayRectHeigth/2) - (weekAndDayString.size().height/2), width: weekAndDayStringWidth, height: weekDayRectHeigth)
             if isBelongToCalendarYear(currentDate: weekDay.date){
                 let weekDayPastalColorsDict = weekDaysPastalColors
-                self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 6, context: context, width: weekAndDayStringWidth + 6, height: weekDayRectHeigth, bandColor: UIColor(hexString: weekDayPastalColorsDict[index]), cornerRadius: 2)
+                self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 5, context: context, width: weekAndDayStringWidth + 6, height: weekDayRectHeigth, bandColor: UIColor(hexString: weekDayPastalColorsDict[index]), cornerRadius: 2)
             }
             weekAndDayString.draw(in: weekDayRect)
 
             if isBelongToCalendarYear(currentDate: weekDay.date) {
-                weekDayRects.append(getLinkRect(location: CGPoint(x: weekDayInfoX + 5, y: weekDayInfoY + 6),
+                weekDayRects.append(getLinkRect(location: CGPoint(x: weekDayInfoX + 5, y: weekDayInfoY + 5),
                                                 frameSize: CGSize(width: weekAndDayStringWidth + 6, height: weekDayRectHeigth)))
             }
             index += 1
@@ -591,7 +593,11 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                                                        .foregroundColor : textTintColor];
 
         let yearString = NSMutableAttributedString.init(string: "\(monthInfo.year)", attributes: yearAttrs)
-        let yearRect = CGRect(x: titleX, y: titleY + titleString.size().height, width: yearString.size().width, height: yearString.size().height)
+        let yearYOffsetPercent: CGFloat = 0.83
+        let yearYOffset = currentPageRect.height*yearYOffsetPercent/100
+        let yearY = titleY + titleString.size().height + yearYOffset
+
+        let yearRect = CGRect(x: titleX, y: yearY, width: yearString.size().width, height: yearString.size().height)
         yearString.draw(in: yearRect)
 
         //goals title rendering
@@ -612,10 +618,10 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                                                                         .kern: 1.6,
                                                                         .foregroundColor: textTintColor]
         let goalsString = NSMutableAttributedString.init(string: "Goals".uppercased(), attributes: goalsAttr)
-        let goalRect = CGRect(x: goalsX + 5 + 3.5, y: goalsY  + 6 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: goalsString.size().width + 6, height: goalsRectHeigth)
+        let goalRect = CGRect(x: goalsX + 5 + 3.5, y: goalsY  + 5 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: goalsString.size().width + 6, height: goalsRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: goalsX + 5, yAxis: goalsY + 6, context: context, width: goalsString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: goalsX + 5, yAxis: goalsY + 5, context: context, width: goalsString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         goalsString.draw(in: goalRect)
 
         //to do rendering
@@ -638,10 +644,10 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
         let notesY = currentPageRect.height*notesYPercnt/100
         let notesString = NSMutableAttributedString.init(string: "Notes".uppercased(), attributes: goalsAttr)
-        let notesRect = CGRect(x: notesX + 5 + 3.5, y: notesY  + 6 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: notesString.size().width + 6, height: goalsRectHeigth)
+        let notesRect = CGRect(x: notesX + 5 + 3.5, y: notesY  + 5 +  (goalsRectHeigth/2) - (goalsString.size().height/2) , width: notesString.size().width + 6, height: goalsRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: notesX + 5, yAxis: notesY + 6, context: context, width: notesString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: notesX + 5, yAxis: notesY + 5, context: context, width: notesString.size().width + 6, height: goalsRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
         notesString.draw(in: notesRect)
 
         //Schedule Rendering

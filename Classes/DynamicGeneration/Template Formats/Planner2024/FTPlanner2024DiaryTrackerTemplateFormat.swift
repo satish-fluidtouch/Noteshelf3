@@ -56,9 +56,9 @@ class FTPlanner2024DiaryTrackerTemplateFormat  :FTPlanner2024DiaryTemplateFormat
             let numberOfColumns : Int = 2
             if index % numberOfColumns == 0 {
                 monthBoxesXAXis = xAxis
-                monthBoxesYAxis += 6*heightPerBox + 5*verticalGapBWBoxes + yOffsetBWHabitTrackers
+                monthBoxesYAxis += 6*heightPerBox + 5*verticalGapBWBoxes + yOffsetBWHabitTrackers + 5.5 //
             }else{
-                monthBoxesXAXis += 7*widthPerBox + 6*horizontalGapBWBoxes + xOffsetBWHabitTrackers
+                monthBoxesXAXis += 7*widthPerBox + 6*horizontalGapBWBoxes + xOffsetBWHabitTrackers + 6.5 // 6.5 is count of each box line width.
             }
         }
 
