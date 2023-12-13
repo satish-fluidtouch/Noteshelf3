@@ -185,8 +185,8 @@ extension FTIAPOfferViewController {
             if let range = iapPurchaseTitle.range(of: "%@") {
                 var strikeThroughAttr : [NSAttributedString.Key:Any] = atts;
                 strikeThroughAttr[.strikethroughStyle] =  NSUnderlineStyle.single.rawValue;
-                strikeThroughAttr[.strikethroughColor] =  UIColor.appColor(.black50);
-                strikeThroughAttr[.foregroundColor] = UIColor.appColor(.black50)
+                strikeThroughAttr[.strikethroughColor] =  UIColor.black.withAlphaComponent(0.5)
+                strikeThroughAttr[.foregroundColor] = UIColor.black.withAlphaComponent(0.5)
                 strikeThroughAttr[.font] = UIFont.appFont(for: .medium, with: 13)
                 let priceString = NSMutableAttributedString(string: ns3Price,attributes: strikeThroughAttr);
                 priceString.append(NSAttributedString(string: " ", attributes: atts));
