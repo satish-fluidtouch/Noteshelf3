@@ -21,6 +21,15 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         let undoRedoGestureDetector = FTPageUndoRedoGestureDetector(delegate: self, contentHolderView: self.contentHolderView)
         self.undoRedoGestureDetector = undoRedoGestureDetector
     }
+    
+    @objc func audioAnnotations() -> [FTAnnotation] {
+        var annotationsToReturn = [FTAnnotation]()
+        if  let page = self.firstPageController()?.pdfPage as? FTNoteshelfPage {
+            annotationsToReturn.append(contentsOf: page.audioAnnotations())
+        }
+        return annotationsToReturn
+    }
+
 
     /// Photo Library,  Take Photo
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource) {
