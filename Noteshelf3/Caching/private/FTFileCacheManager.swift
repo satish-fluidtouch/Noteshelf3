@@ -52,13 +52,25 @@ class FTFileCacheManager: NSObject {
                                 }
                             }
                         }
-                        else  {
+                        else {
                             debugLog(">>>> creating item: \(relativePath)");
                             try defaultManager.copyItem(at: fileURl, to: destinationFilePath);
                         }
                     }
                     let sourceDate = readingURL.fileModificationDate;
                     try defaultManager.setAttributes([.modificationDate:sourceDate], ofItemAtPath: writingURL.path(percentEncoded: false));
+
+                    //Remove unused Annotation files if any exists, we identified this issue, as the photos conent is showing the photos although the page is deleted.
+                    let cacheDocAnnotations = writingURL.appendingPathComponent("Annotations")
+                    let mainDocAnnotations = readingURL.appendingPathComponent("Annotations")
+                    let mainDocContents = try defaultManager.subpathsOfDirectory(atPath: mainDocAnnotations.path(percentEncoded: false));
+                    let cacheContents = try defaultManager.subpathsOfDirectory(atPath: cacheDocAnnotations.path(percentEncoded: false));
+
+                    let diff = Set(cacheContents).subtracting(mainDocContents)
+                    diff.forEach { relativePath in
+                        let fileURl = cacheDocAnnotations.appending(path: relativePath);
+                        try? defaultManager.removeItem(at: fileURl)
+                    }
                 }
             } catch {
                 catchError = error
