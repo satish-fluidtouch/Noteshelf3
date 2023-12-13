@@ -209,9 +209,9 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
     }
     
     func updateShapeType() {
-        let isClosed = shape?.isClosedShape ?? false
-        shape = shapeData.shapeSubType.getDefaultShape()
-        shape?.isClosedShape = isClosed
+        if shape == nil {
+            shape = shapeData.shapeSubType.getDefaultShape()
+        }
     }
     
     func isPerfectShape() -> Bool {

@@ -308,24 +308,49 @@ class FTShapeAnnotationController: FTAnnotationEditController {
             processShapeMoving(curPoint: point, prevPoint: prevPoint)
         } else {
             if shapeAnnotation.shape?.type() == .ellipse {
-                //processEllipseResizing(touch: firstTouch)
+                processEllipseShapeResizing(touch: firstTouch)
             } else if shapeAnnotation.isPerfectShape(), let controlPoint = resizableView?.activeControlPoint(for: point) {
                 activeControlPoint = controlPoint
                 setAnchorPoint()
                 processShapeResizing(touch: firstTouch, point: point)
             } else {
-                index = shapeAnnotation.getshapeControlPoints().count - 1
+                let points = shapeAnnotation.getshapeControlPoints()
+                index = points.count - 1
                 if shapeAnnotation.shape?.isClosedShape ?? false {
                     index = 0
                 }
-                currentKnob = activeKnob(for: shapeAnnotation.getshapeControlPoints()[index])
+                currentKnob = activeKnob(for: points[index])
                 currentKnob?.center = point
                 updateSegments(index: index, point: point)
             }
         }
     }
     
-    func activeKnob(for point: CGPoint) -> FTKnobView? {
+    private func processEllipseShapeResizing(touch: UITouch) {
+        guard let resizableView, let shapeResizeObj = shapeResizeObj else {
+            return
+        }
+        let minSize: CGFloat = 20
+        let center = resizableView.center
+        let newFrame = shapeResizeObj.resizeProportionally(for: touch, in: resizableView)
+        let shouldResize = (newFrame.width > minSize && newFrame.height > minSize)
+        if shouldResize {
+            self.updateContentFrame(with: newFrame, updateCenter: true)
+//            resizableView.center = resizableView.centerWithinBoundary(center)
+            updateEllipseRect()
+            if shapeAnnotation.shouldSnapShape() {
+                if validatePerfectShape() {
+                    addSnappingView()
+                }  else {
+                    removeSnappingView()
+                }
+            }
+            shapeAnnotation.setShapeControlPoints(drawingPoints())
+            resizableView.updateDragHandles()
+        }
+    }
+    
+    private func activeKnob(for point: CGPoint) -> FTKnobView? {
         let view = view.subviews.first { eachView in
             return eachView.center == point
         }

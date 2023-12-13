@@ -168,6 +168,26 @@ class FTResizableView: UIView {
         return atanA - atanB
     }
     
+    func centerWithinBoundary(_ center: CGPoint) -> CGPoint {
+        guard let superView = self.superview else { return center }
+
+        let superViewBounds = superView.bounds
+        let currentFrame = self.frame
+
+        var frame = CGRect(
+            x: center.x - currentFrame.width * 0.5,
+            y: center.y - currentFrame.height * 0.5,
+            width: currentFrame.width,
+            height: currentFrame.height
+        )
+
+        // Ensure the frame stays completely within the superview bounds
+        frame.origin.x = min(max(frame.origin.x, 0), superViewBounds.width - frame.width)
+        frame.origin.y = min(max(frame.origin.y, 0), superViewBounds.height - frame.height)
+
+        return CGPoint(x: frame.midX, y: frame.midY)
+    }
+    
     func updateDegreeLabel(angleInRadians : CGFloat) {
         let angleInDegree = angleWRT360Degree(angleInRadians: angleInRadians)
         rotateDegree.text = "\(Int(angleInDegree))"
