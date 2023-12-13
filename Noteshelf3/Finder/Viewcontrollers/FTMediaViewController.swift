@@ -178,16 +178,18 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
                 return eachPage.pageId == noteshelfPage.uuid
             }
             annotations.forEach { eachAnnotation in
-                if eachAnnotation.isMediaType, !page.isEmpty, let documentPage = page.first {
-                    let mediaObject = FTMediaObject(page: noteshelfPage, annotation: eachAnnotation)
-                    self.mediaObjects.append(mediaObject)
-                    documentPage.mediaObjects.append(mediaObject)
-                    let filteredObjects = objectsToLoad(items: documentPage.mediaObjects)
-                    var snapShot = self.dataSource.snapshot()
-                    snapShot.appendItems(filteredObjects)
-                    self.dataSource.apply(snapShot)
-                } else {
-                    self.createAndUpdatePages(doc: noteshelfPage, annotations: [eachAnnotation])
+                if eachAnnotation.isMediaType {
+                    if  !page.isEmpty, let documentPage = page.first {
+                        let mediaObject = FTMediaObject(page: noteshelfPage, annotation: eachAnnotation)
+                        self.mediaObjects.append(mediaObject)
+                        documentPage.mediaObjects.append(mediaObject)
+                        let filteredObjects = objectsToLoad(items: documentPage.mediaObjects)
+                        var snapShot = self.dataSource.snapshot()
+                        snapShot.appendItems(filteredObjects)
+                        self.dataSource.apply(snapShot)
+                    } else {
+                        self.createAndUpdatePages(doc: noteshelfPage, annotations: [eachAnnotation])
+                    }
                 }
             }
         }
