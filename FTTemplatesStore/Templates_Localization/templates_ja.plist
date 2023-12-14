@@ -41476,6 +41476,28 @@
 			<array>
 				<dict>
 					<key>displayTitle</key>
+					<string>クリスマスステッカー</string>
+					<key>displaySubTitle</key>
+					<string>DGPDesignsCo が作成した楽しいクリスマスをテーマにしたステッカーで、喜びを広め、一年で最も素晴らしい時期を祝いましょう。 これらのステッカーは、ギフトのアイデアや休日のやることリスト、または単にメモにお祭り気分を加えるのに最適です。</string>
+					<key>author</key>
+					<string>DGPDesignsCo</string>
+					<key>fileName</key>
+					<string>Christmas_Stickers</string>
+					<key>type</key>
+					<string>sticker</string>
+					<key>autoGenerate</key>
+					<false/>
+					<key>multiPage</key>
+					<false/>
+					<key>previewToken</key>
+					<string>8db03c11-c2e1-4e89-a96b-b1e6bb079ae5</string>
+					<key>fileToken</key>
+					<string>5502caa0-74bd-4d69-b0f1-09380afc660e</string>
+					<key>link</key>
+					<string>https://www.etsy.com/in-en/shop/DGPDesignsCo?ref=shop-header-name&amp;listing_id=1349303487&amp;from_page=listing</string>
+				</dict>
+				<dict>
+					<key>displayTitle</key>
 					<string>破れた紙</string>
 					<key>displaySubTitle</key>
 					<string>この美しいステッカーパックは、Tabbykittycoによって作成され、美しい中立色で付箋、フレーム、ポラロイドを組み合わせています。デジタルプランナーやビジョンボード、ムードボード、ノート、スクラップブックに最適です。これらの破れた紙のエフェクトをノートに追加することで、有機的な紙のテクスチャの感触をお楽しみください！</string>
@@ -41583,28 +41605,6 @@
 					<string>dfdb7290-f71f-4a5a-a92f-dcb5e908579d</string>
 					<key>link</key>
 					<string>https://www.instagram.com/tabbykittyco/</string>
-				</dict>
-				<dict>
-					<key>displayTitle</key>
-					<string>クリスマスステッカー</string>
-					<key>displaySubTitle</key>
-					<string>DGPDesignsCo が作成した楽しいクリスマスをテーマにしたステッカーで、喜びを広め、一年で最も素晴らしい時期を祝いましょう。 これらのステッカーは、ギフトのアイデアや休日のやることリスト、または単にメモにお祭り気分を加えるのに最適です。</string>
-					<key>author</key>
-					<string>DGPDesignsCo - Etsy India</string>
-					<key>fileName</key>
-					<string>Christmas_Stickers</string>
-					<key>type</key>
-					<string>sticker</string>
-					<key>autoGenerate</key>
-					<false/>
-					<key>multiPage</key>
-					<false/>
-					<key>previewToken</key>
-					<string>8db03c11-c2e1-4e89-a96b-b1e6bb079ae5</string>
-					<key>fileToken</key>
-					<string>5502caa0-74bd-4d69-b0f1-09380afc660e</string>
-					<key>link</key>
-					<string>https://www.etsy.com/in-en/shop/DGPDesignsCo?ref=shop-header-name&amp;listing_id=1349303487&amp;from_page=listing</string>
 				</dict>
 			</array>
 		</dict>
