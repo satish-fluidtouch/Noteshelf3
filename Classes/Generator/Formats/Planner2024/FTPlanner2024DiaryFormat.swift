@@ -149,14 +149,14 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         let key = displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
             + "\(screenSize.height)"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
-//        if FileManager().fileExists(atPath: pdfURL.path) , let data = try? Data(contentsOf: pdfURL), !data.isEmpty {
-//            return pdfURL.path
-//        } else {
+        if FileManager().fileExists(atPath: pdfURL.path) , let data = try? Data(contentsOf: pdfURL), !data.isEmpty {
+            return pdfURL.path
+        } else {
             let templateDiaryInfo = FTPlanner2024DiaryTemplateInfo(templateType: type,customVariants: customVariants)
             let generator = FTPlanner2024DiaryTemplateAssetGenerator(templateInfo: templateDiaryInfo)
             let generatedPDFURL = generator.generate()
             return generatedPDFURL.path
-        //}
+        }
     }
 
     class func getFormatBasedOn(variants: FTPaperVariants, isDarkTemplate: Bool = false) -> FTPlanner2024DiaryFormat {
@@ -748,7 +748,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
             for (index,rect) in extrasPageNumRects.enumerated() {
                 let navigatingPageIndex = daysBeforeCount + index
                 if let navigatingPage = doc.page(at: navigatingPageIndex){
-                    print("linking from page index : \(extrasPageIndex) to page index : \(navigatingPageIndex)")
                     extrasPage?.addLinkAnnotation(bounds: rect, goToPage: navigatingPage, at: atPoint)
                 }
             }
