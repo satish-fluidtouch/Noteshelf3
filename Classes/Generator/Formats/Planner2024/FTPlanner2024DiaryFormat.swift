@@ -449,7 +449,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
             }
             return partialResult  + weeksCount
         }
-        self.offsetCount = 1 + numberYearPages + numberOfMonthsBeforeCurrentDate + (numberOfMonthsBeforeCurrentDate - 1)*2 + numberOfWeeks
+        self.offsetCount = 1 + numberYearPages + numberOfMonthsBeforeCurrentDate + (numberOfMonthsBeforeCurrentDate - 1)*2 + numberOfWeeks // calender + years + months + notes + trackers + weeks count before current day.
 
 
         var weekBeforeDaysCount : Int = 0

@@ -414,8 +414,8 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             let dayColorRect = CGRect(x: dayX - 10 - weekDayWidth, y: dayY - dayrectHeight - 5, width: weekDayWidth + 6, height: dayrectHeight)
             let dayTextRect = CGRect(x: dayX - 10 - weekDayWidth + 3.5, y: dayY - 5 - (dayrectHeight/2) - (dayString.size().height/2), width: weekDayWidth , height: dayrectHeight)
             if let stripColor = weekDayBgColor,isBelongToCalendarYear(currentDate: day.date){
-                self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
                 if day.belongsToSameMonth {
+                    self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
                     currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: dayColorRect.origin.x, y: dayColorRect.origin.y), frameSize: CGSize(width: dayColorRect.width, height: dayColorRect.height)))
                 }
             }
@@ -472,7 +472,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
             let weekNum = "Week " + "\(weekNumber)"
 
-            let titleString = NSMutableAttributedString.init(string: "\(monthInfo.fullMonth)".uppercased() + " " + weekNum.uppercased() , attributes: titleAttrs)
+            let titleString = NSMutableAttributedString.init(string: "\(monthInfo.fullMonth)".uppercased() + ", " + weekNum.uppercased() , attributes: titleAttrs)
             let titleRect = CGRect(x: titleX, y: titleY, width: titleString.size().width, height: titleString.size().height)
             titleString.draw(in: titleRect)
 
@@ -515,8 +515,8 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             let weekDayRect = CGRect(x: weekDayInfoX + 5 + 3.5 , y:weekDayInfoY + 5 + (weekDayRectHeigth/2) - (weekAndDayString.size().height/2), width: weekAndDayStringWidth, height: weekDayRectHeigth)
             if isBelongToCalendarYear(currentDate: weekDay.date){
                 let weekDayPastalColorsDict = weekDaysPastalColors
-                self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 5, context: context, width: weekAndDayStringWidth + 6, height: weekDayRectHeigth, bandColor: UIColor(hexString: weekDayPastalColorsDict[index]), cornerRadius: 2)
-            }
+                self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 5, context: context, width: weekAndDayStringWidth + 6, height: weekDayRectHeigth, bandColor: UIColor(hexString: weekDayPastalColorsDict[index]), cornerRadius: 5)
+            } 
             weekAndDayString.draw(in: weekDayRect)
 
             if isBelongToCalendarYear(currentDate: weekDay.date) {
@@ -540,8 +540,8 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         // for rendering notes strip and text
         let notesString = NSMutableAttributedString.init(string: "NOTES", attributes: notesAttrs)
 
-        let notesRect = CGRect(x: weekDayInfoX + 5 + 3.5 , y:weekDayInfoY + 6 + (weekDayRectHeigth/2) - (notesString.size().height/2), width: notesString.size().width + 6, height: weekDayRectHeigth)
-        self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 6, context: context, width: notesString.size().width + 6, height: weekDayRectHeigth, bandColor: notesBandBGColor, cornerRadius: 2)
+        let notesRect = CGRect(x: weekDayInfoX + 5 + 3.5 , y:weekDayInfoY + 5 + (weekDayRectHeigth/2) - (notesString.size().height/2), width: notesString.size().width + 6, height: weekDayRectHeigth)
+        self.drawColorBandsWith(xAxis: weekDayInfoX + 5 , yAxis: weekDayInfoY + 5, context: context, width: notesString.size().width + 6, height: weekDayRectHeigth, bandColor: notesBandBGColor, cornerRadius: 5)
         notesString.draw(in: notesRect)
 
         currentWeekRectInfo.weekDayRects.append(contentsOf: weekDayRects)
