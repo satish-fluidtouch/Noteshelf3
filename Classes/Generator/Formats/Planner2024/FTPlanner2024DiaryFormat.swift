@@ -443,8 +443,15 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
             daysBeforeCount -= 1
         }
         let numberOfMonthsBeforeCurrentDate = startDate.numberOfMonths(Date())
-        self.offsetCount = 1 + numberYearPages + numberOfMonthsBeforeCurrentDate + (numberOfMonthsBeforeCurrentDate - 1)*2 + startDate.numberOfWeeks(Date().endOfMonth())
-        
+        let numberOfWeeks = calendarMonths.prefix(numberOfMonthsBeforeCurrentDate).reduce(0) { partialResult, monthInfo in
+            let weeksCount = monthInfo.weeklyInfo.reduce(0) { partialResult, weekInfo in
+                return partialResult + (weekInfo.dayInfo.first(where: {$0.fullMonthString.uppercased() == monthInfo.fullMonth.uppercased()}) != nil ? 1 : 0)
+            }
+            return partialResult  + weeksCount
+        }
+        self.offsetCount = 1 + numberYearPages + numberOfMonthsBeforeCurrentDate + (numberOfMonthsBeforeCurrentDate - 1)*2 + numberOfWeeks
+
+
         var weekBeforeDaysCount : Int = 0
         var monthBeforeDays : Int = 1 + numberYearPages
         var previousMonthDays : Int = 0
