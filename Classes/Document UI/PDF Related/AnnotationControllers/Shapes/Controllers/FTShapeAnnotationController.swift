@@ -71,13 +71,13 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         guard let _shapeAnnotation = annotation as? FTShapeAnnotation else {
             fatalError("Requires shape annotation")
         }
+        annotationMode = mode
         shapeAnnotation = _shapeAnnotation
         initialUndoableInfo = annotation.undoInfo();
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         let frame = delegate?.visibleRect() ?? .zero
         self.view.frame = frame
-        annotationMode = mode
         self.allowsLocking = shapeAnnotation.allowsLocking
         shapeAnnotation.updateShapeType()
         intialBoundingRect = shapeAnnotation.boundingRect
@@ -131,7 +131,9 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         self.displayLink = CADisplayLink(target: self, selector: #selector(publishChanges))
         self.displayLink?.isPaused = true;
         self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
-        configureResizableView()
+        if annotationMode == .edit {
+            configureResizableView()
+        }
         if shapeAnnotation.inLineEditing {
             shapeEditType = .resize;
             self.displayLink?.isPaused = false;
@@ -351,8 +353,9 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     }
     
     private func activeKnob(for point: CGPoint) -> FTKnobView? {
+        let convertedPoint = convertControlPoint(point)
         let view = view.subviews.first { eachView in
-            return eachView.center == point
+            return eachView.center == convertedPoint
         }
        return view as? FTKnobView
     }

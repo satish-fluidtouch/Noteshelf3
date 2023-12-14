@@ -407,6 +407,9 @@ extension FTOnScreenWritingViewController
         case .LastVertex:
             if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
                 controller.processTouchesEnded(touch.activeUItouch, with: nil)
+                if let del = self.delegate, del.mode == FTRenderModeZoom {
+                    self.delegate?.endActiveShapeAnnotation(with: controller.shapeAnnotation)
+                }
             }
             if self.currentDrawingMode == .deskModeLaser {
                 (self.delegate as? FTLaserTouchEventsHandling)?.processLaserVertex(touch: touch,
@@ -464,7 +467,7 @@ extension FTOnScreenWritingViewController
             NSObject.cancelPreviousPerformRequests(withTarget: self,
                                                    selector: #selector(performShapeRenderingFor(_:)),
                                                    object: touch);
-            if let del = self.delegate, del.mode == FTRenderModeZoom {
+            if let del = self.delegate, del.mode == FTRenderModeZoom, !foundShape {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
                     let notification = Notification.init(name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
                                                          object: self.view.window,
