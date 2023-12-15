@@ -120,7 +120,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var updateItem: FTShelfItemViewModel?
     var shelfDidLoad: Bool = false
     var isInHomeMode: Bool = false
-    
+    var displayStlye: FTShelfDisplayStyle = .Gallery
+    private var observer: NSKeyValueObservation?
+
     init(collection: FTShelfItemCollection, groupItem: FTGroupItemProtocol? = nil) {
         self.collection = collection
         self.groupItem = groupItem
@@ -128,6 +130,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
+        self.configAndObserveDisplayStyle()
     }
     
     init(sidebarItemType: FTSideBarItemType){
@@ -137,6 +140,20 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
+        self.configAndObserveDisplayStyle()
+    }
+    
+    private func configAndObserveDisplayStyle() {
+        let style = UserDefaults.standard.integer(forKey: "displayStyle")
+        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? .Gallery
+        observer = UserDefaults.standard.observe(\.shelfDisplayStyle, options: [.new]) { [weak self] (userDefaults, change) in
+            guard let self else { return }
+            let value = userDefaults.shelfDisplayStyle
+            if value != self.displayStlye.rawValue {
+                self.displayStlye = FTShelfDisplayStyle(rawValue: value) ?? .Gallery
+                self.reloadShelf()
+            }
+        }
     }
     
     // MARK: Computed variables
@@ -611,18 +628,6 @@ extension FTShelfViewModel {
         set {
             if(FTUserDefaults.sortOrder() != newValue) {
                 FTUserDefaults.setSortOrder(newValue);
-                self.reloadItems();
-            }
-        }
-    }
-    
-    var displayStlye: FTShelfDisplayStyle {
-        get {
-            return FTShelfDisplayStyle.displayStyle
-        }
-        set {
-            if(newValue != FTShelfDisplayStyle.displayStyle) {
-                FTShelfDisplayStyle.displayStyle = newValue;
                 self.reloadItems();
             }
         }
