@@ -20,3 +20,19 @@ public extension Date {
         return components.year ?? 2019
     }
 }
+
+public class FTShortStyleDateFormatter {
+    public static let shared = FTShortStyleDateFormatter()
+    private let formatter: DateFormatter
+    
+    private init() {
+        formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        formatter.locale = .current
+    }
+    
+   public func shortStyleFormat(for date: Date) -> String {
+        return formatter.string(from: date)
+    }
+}

@@ -78,6 +78,10 @@ protocol FTAnnotationStrokeErase
     var supportsZoomMode: Bool {
         return false
     }
+    
+    var isMediaType: Bool {
+        return (self.annotationType == .image || self.annotationType == .sticker || self.annotationType == .webclip || self.annotationType == .audio)
+    }
 
     override init()
     {

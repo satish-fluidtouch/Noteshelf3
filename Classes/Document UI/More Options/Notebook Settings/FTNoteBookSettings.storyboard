@@ -10,7 +10,7 @@
     </dependencies>
     <customFonts key="customFonts">
         <array key="Clearface-Serial-Medium.otf">
-            <string>Clearface-Serial-Medium-Regular</string>
+            <string>ClearfaceSerial-Medium</string>
         </array>
         <array key="SF-Pro-Text-Semibold.otf">
             <string>SFProText-Semibold</string>
@@ -117,7 +117,7 @@
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="We5-zR-5Wh" customClass="FTCustomLabel" customModule="FTCommon">
                                         <rect key="frame" x="163.66666666666666" y="9.9999999999999982" width="34" height="24.333333333333329"/>
-                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                         <color key="textColor" name="headerColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
