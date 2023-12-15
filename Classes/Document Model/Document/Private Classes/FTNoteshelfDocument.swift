@@ -1508,6 +1508,7 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
     
     func searchDocumentsForKey(_ searchKey: String,
                                tags: [String],
+                               isGlobalSearch: Bool,
                                onFinding: @escaping (_ page: FTPageProtocol, _ cancelled: Bool) -> Void,
                                onCompletion: @escaping (_ cancelled: Bool) -> Void) -> Progress
     {
@@ -1526,7 +1527,7 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
             operation.addExecutionBlock { [weak eachPage,weak searchProgress,weak operation] in
                 let isCancelled = operation?.isCancelled ?? false;
                 if let searchingPage = eachPage as? FTPageSearchProtocol,
-                   !isCancelled, searchingPage.searchFor(searchKey, tags: tags) {
+                   !isCancelled, searchingPage.searchFor(searchKey, tags: tags,isGlobalSearch: isGlobalSearch) {
                     onFinding(eachPage!,isCancelled);
                 }
 

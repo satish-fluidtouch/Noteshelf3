@@ -617,7 +617,7 @@ private extension FTPageViewController
                 let options = self?.delegate?.finderSearchOptions,
                 let searchKey = options.searchedKeyword {
                 if(!searchKey.isEmpty) {
-                    curPage.searchFor(searchKey, tags: [String]());
+                    curPage.searchFor(searchKey, tags: [String](),isGlobalSearch: false);
                 }
             }
         }

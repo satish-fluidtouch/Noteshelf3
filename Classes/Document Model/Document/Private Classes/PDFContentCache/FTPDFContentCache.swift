@@ -150,16 +150,19 @@ private extension FTPDFContentCache {
     }
 }
 
+private var _cacheFolder: URL?;
+
 extension URL {
     static var appPDFCacheURL: URL {
-        guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                                    .userDomainMask,
-                                                                    true).last else {
-            fatalError("library folder not found")
+        if nil == _cacheFolder {
+            guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                                        .userDomainMask,
+                                                                        true).last else {
+                fatalError("library folder not found")
+            }
+            _cacheFolder = URL(fileURLWithPath: cacheFolder).appendingPathComponent("ContentCache");
         }
-        let cacheFolderURL = URL(fileURLWithPath: cacheFolder);
-        let localMetadataFolder = cacheFolderURL.appendingPathComponent("ContentCache");
-        return localMetadataFolder;
+        return _cacheFolder!;
     }
     
     func delete() {
