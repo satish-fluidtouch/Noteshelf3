@@ -24,6 +24,8 @@ class FTPlanner2024DiaryTrackerTemplateFormat  :FTPlanner2024DiaryTemplateFormat
         let xOffsetBWHabitTrackersPercnt : CGFloat = 1.79
         let yOffsetBWHabitTrackersPercnt : CGFloat = 6.59
         let habitsStripWidthsPercnt : CGFloat = 18.52
+        let habitsEntireBoxWidthPercnt: CGFloat = 18.52
+        let habitsEntireBoxHeightPercnt: CGFloat = 19.18
         let pageWidth = templateInfo.screenSize.width
         let pageHeight = templateInfo.screenSize.height
 
@@ -36,6 +38,8 @@ class FTPlanner2024DiaryTrackerTemplateFormat  :FTPlanner2024DiaryTemplateFormat
         let xOffsetBWHabitTrackers = pageWidth*xOffsetBWHabitTrackersPercnt/100
         let yOffsetBWHabitTrackers = pageHeight*yOffsetBWHabitTrackersPercnt/100
         let habitsStripWidth = pageWidth*habitsStripWidthsPercnt/100
+        let habitsEntireBoxWidth = pageWidth*habitsEntireBoxWidthPercnt/100
+        let habitsEntireBoxHeight = pageHeight*habitsEntireBoxHeightPercnt/100
 
         // tracker boxes rendering
         let habitColorbandsDict = monthStripColors
@@ -56,9 +60,9 @@ class FTPlanner2024DiaryTrackerTemplateFormat  :FTPlanner2024DiaryTemplateFormat
             let numberOfColumns : Int = 2
             if index % numberOfColumns == 0 {
                 monthBoxesXAXis = xAxis
-                monthBoxesYAxis += 6*heightPerBox + 5*verticalGapBWBoxes + yOffsetBWHabitTrackers + 5.5 //
+                monthBoxesYAxis += habitsEntireBoxHeight + yOffsetBWHabitTrackers
             }else{
-                monthBoxesXAXis += 7*widthPerBox + 6*horizontalGapBWBoxes + xOffsetBWHabitTrackers + 6.5 // 6.5 is count of each box line width.
+                monthBoxesXAXis += habitsEntireBoxWidth + xOffsetBWHabitTrackers
             }
         }
 
