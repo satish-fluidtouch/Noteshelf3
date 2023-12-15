@@ -129,13 +129,13 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
             guard let self = self else {
                 return nil
             }
-            showPlaceHolderView(true)
+            self.showPlaceHolderView(true)
             if let mediaObject =  item as? FTMediaObject {
                 var cell = self.collectionView(collectionView, normalCellForItemAt: indexPath, mediaObject: mediaObject)
                 if mediaObject.mediaType == .audio {
                     cell = self.collectionView(collectionView, audioCellForItemAt: indexPath, mediaObject: mediaObject)
                 }
-                showPlaceHolderView(false)
+                self.showPlaceHolderView(false)
                 return cell
             }
             return nil
@@ -429,7 +429,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
             guard let self = self else {
                 return
             }
-            let pages = document.documentPages()
+            let pages = self.document.documentPages()
             self.mediaObjects.removeAll()
             pages.forEach { eachPage in
                 if let page = eachPage as? FTNoteshelfPage {
