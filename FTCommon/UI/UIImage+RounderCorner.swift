@@ -47,10 +47,10 @@ extension UIImage {
         return newImage ?? self
     }
     
-    public func addSpineToImage() -> UIImage {
+    public func addSpineToImageIfneeded(shouldAddSpine: Bool) -> UIImage {
         let size = self.size
         UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
-        guard let context = UIGraphicsGetCurrentContext() else {
+        guard let context = UIGraphicsGetCurrentContext(), shouldAddSpine else {
             return self
         }
         let frame = CGRect(origin: .zero, size: size)
