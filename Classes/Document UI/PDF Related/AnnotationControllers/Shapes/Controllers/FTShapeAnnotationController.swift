@@ -340,13 +340,6 @@ class FTShapeAnnotationController: FTAnnotationEditController {
             self.updateContentFrame(with: newFrame, updateCenter: true)
 //            resizableView.center = resizableView.centerWithinBoundary(center)
             updateEllipseRect()
-            if shapeAnnotation.shouldSnapShape() {
-                if validatePerfectShape() {
-                    addSnappingView()
-                }  else {
-                    removeSnappingView()
-                }
-            }
             shapeAnnotation.setShapeControlPoints(drawingPoints())
             resizableView.updateDragHandles()
         }
