@@ -41476,6 +41476,28 @@
 			<array>
 				<dict>
 					<key>displayTitle</key>
+					<string>크리스마스 스티커</string>
+					<key>displaySubTitle</key>
+					<string>이 기쁨을 전파하고 가장 멋진 시기인 연말을 DGPDesignsCo. 가 만든 매력적인 크리스마스 테마 스티커로 축하하세요. 이 스티커는 선물 아이디어, 휴일 할 일 목록 또는 메모에 몇 가지 축제 분위기를 더할 때 완벽합니다.</string>
+					<key>author</key>
+					<string>DGPDesignsCo</string>
+					<key>fileName</key>
+					<string>Christmas_Stickers</string>
+					<key>type</key>
+					<string>sticker</string>
+					<key>autoGenerate</key>
+					<false/>
+					<key>multiPage</key>
+					<false/>
+					<key>previewToken</key>
+					<string>8db03c11-c2e1-4e89-a96b-b1e6bb079ae5</string>
+					<key>fileToken</key>
+					<string>5502caa0-74bd-4d69-b0f1-09380afc660e</string>
+					<key>link</key>
+					<string>https://www.etsy.com/in-en/shop/DGPDesignsCo?ref=shop-header-name&amp;listing_id=1349303487&amp;from_page=listing</string>
+				</dict>
+				<dict>
+					<key>displayTitle</key>
 					<string>찢어진 종이</string>
 					<key>displaySubTitle</key>
 					<string>이 아름다운 스티커 팩은 Tabbykittyco가 만들었으며, 아름다운 중립적인 색상으로 스티키 노트, 프레임 및 폴라로이드를 결합합니다. 디지털 플래너, 비전 및 기분 보드, 노트북 및 스크랩북에 완벽합니다. 이런 찢어진 종이 효과를 노트에 추가함으로써 유기적인 종이 질감을 즐기세요!</string>
@@ -41583,28 +41605,6 @@
 					<string>dfdb7290-f71f-4a5a-a92f-dcb5e908579d</string>
 					<key>link</key>
 					<string>https://www.instagram.com/tabbykittyco/</string>
-				</dict>
-				<dict>
-					<key>displayTitle</key>
-					<string>크리스마스 스티커</string>
-					<key>displaySubTitle</key>
-					<string>이 기쁨을 전파하고 가장 멋진 시기인 연말을 DGPDesignsCo. 가 만든 매력적인 크리스마스 테마 스티커로 축하하세요. 이 스티커는 선물 아이디어, 휴일 할 일 목록 또는 메모에 몇 가지 축제 분위기를 더할 때 완벽합니다.</string>
-					<key>author</key>
-					<string>DGPDesignsCo - Etsy India</string>
-					<key>fileName</key>
-					<string>Christmas_Stickers</string>
-					<key>type</key>
-					<string>sticker</string>
-					<key>autoGenerate</key>
-					<false/>
-					<key>multiPage</key>
-					<false/>
-					<key>previewToken</key>
-					<string>8db03c11-c2e1-4e89-a96b-b1e6bb079ae5</string>
-					<key>fileToken</key>
-					<string>5502caa0-74bd-4d69-b0f1-09380afc660e</string>
-					<key>link</key>
-					<string>https://www.etsy.com/in-en/shop/DGPDesignsCo?ref=shop-header-name&amp;listing_id=1349303487&amp;from_page=listing</string>
 				</dict>
 			</array>
 		</dict>
