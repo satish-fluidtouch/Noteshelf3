@@ -82,6 +82,17 @@ class FTTemplatePreviewViewController: UIViewController {
                 updatedStyle.orientation = thumbnailOrientation // Update the value here
                 return updatedStyle
             }
+            if previewImageViews.count > 0, let supportOrientation = styles.first?.supportOrientation {
+                if supportOrientation == 2 {
+                    if thumbnailOrientation != .landscape {
+                        self.pageOrientationChange(orientation: .landscape)
+                    }
+                }
+                self.delegate?.showAndhideSegment(show: supportOrientation)
+            } else {
+                self.delegate?.showAndhideSegment(show: 0)
+            }
+
             return styles
         }
         return []
@@ -91,6 +102,12 @@ class FTTemplatePreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         networkCheck.addObserver(observer: self)
+        if let supportOrientation = styles?.first?.supportOrientation {
+            self.delegate?.showAndhideSegment(show: supportOrientation)
+            if supportOrientation == 2 {
+//                self.pageOrientationChange(orientation: .landscape)
+            }
+        }
         setupUI()
     }
 
@@ -508,12 +525,8 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
         }
     }
 
-    func pageOrientationChange(segment: UISegmentedControl) {
-        if segment.selectedSegmentIndex == 0 {
-            thumbnailOrientation = .potrait
-        } else {
-            thumbnailOrientation = .landscape
-        }
+    func pageOrientationChange(orientation: ThumbnailOrientation) {
+        thumbnailOrientation = orientation
         let imageView = previewImageViews[self.currentPage]
         imageView.image = nil
         updateScrollViewContentSizes()

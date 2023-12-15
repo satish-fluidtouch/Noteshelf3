@@ -195,8 +195,8 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     override func getYearCellWidth(columnCount: CGFloat) -> CGFloat {
         let templateInfo = screenInfo.spacesInfo.calendarSpacesInfo
         let stripWidthPercnt = formatInfo.customVariants.isLandscape ? 3.59 : 4.67
-        let stripWidth = (currentPageRect.size.width/2)*stripWidthPercnt/100
-        let currentpageWidth = (currentPageRect.width/2) - stripWidth - (7*0.5)
+        let stripWidth = currentPageRect.size.width*stripWidthPercnt/100
+        let currentpageWidth = currentPageRect.width - stripWidth - (7*0.5)
         return ((currentpageWidth - (2 * (currentpageWidth*templateInfo.baseBoxX/100)) - ((columnCount - 1) * (currentpageWidth*templateInfo.cellOffsetX/100)))/columnCount)
     }
     override func calendarOffsetCount() -> Int {
@@ -380,7 +380,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         var monthRectsCount = 0
         self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: 0)
         var addWeekOffset : Bool = true
-        calendarMonths.prefix(6).forEach { (eachMonth) in
+        calendarMonths.forEach { (eachMonth) in
             let monthRects = format.calendarRectsInfo.monthRects
             let numberOfWeeksOfMonth = eachMonth.getWeeksCount()
             let numberOfDaysInMonth = eachMonth.dayInfo.filter({$0.belongsToSameMonth}).count

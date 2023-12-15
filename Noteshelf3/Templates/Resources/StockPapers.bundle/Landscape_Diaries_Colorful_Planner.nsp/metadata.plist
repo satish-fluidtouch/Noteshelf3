@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>display_name</key>
-	<string>Colorful Planner</string>
+	<string>Landscape Planner</string>
 	<key>display_name_es</key>
-	<string>Planificador colorido</string>
+	<string>Planificador de paisaje</string>
 	<key>display_name_ja</key>
-	<string>カラフルなプランナー</string>
+	<string>ランドスケーププランナー</string>
 	<key>display_name_it</key>
-	<string>Agenda colorata</string>
+	<string>Pianificatore del paesaggio</string>
 	<key>display_name_fr</key>
-	<string>Agenda coloré</string>
+	<string>Planificateur paysagiste</string>
 	<key>display_name_zh-Hans</key>
-	<string>多彩规划师</string>
+	<string>景观规划师</string>
 	<key>display_name_zh-Hant</key>
-	<string>多彩規劃師</string>
+	<string>景觀規劃師</string>
 	<key>display_name_de</key>
-	<string>Bunte Planer</string>
+	<string>Landschaftsplaner</string>
 	<key>display_name_ko</key>
-	<string>다채로운 플래너</string>
+	<string>조경 계획자</string>
 	<key>line_height</key>
 	<integer>34</integer>
 	<key>width</key>
@@ -29,7 +29,7 @@
 	<key>dynamic_id</key>
 	<integer>1</integer>
 	<key>template_id</key>
-	<string>Digital_Diaries_Colorful_Planner2024</string>
+	<string>Landscape_Diaries_Colorful_Planner</string>
 	<key>template_type</key>
 	<integer>8</integer>
 	<key>restrictsChangeTemplate</key>
