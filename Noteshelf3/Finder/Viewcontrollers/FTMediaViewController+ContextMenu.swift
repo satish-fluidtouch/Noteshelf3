@@ -33,7 +33,9 @@ extension FTMediaViewController {
     }
     
     internal func prepareContextMenu(for indexPath: IndexPath) -> UIMenu? {
-        let mediaItem = filteredMediaObjects[indexPath.row]
+        guard let mediaItem = snapshotItem(for: indexPath) as? FTMediaObject else {
+            return nil
+        }
         var editActionTitle = NSLocalizedString("Edit Photo", comment: "Edit Photo")
         if mediaItem.mediaType == .audio {
             editActionTitle = NSLocalizedString("Rename", comment: "Rename")

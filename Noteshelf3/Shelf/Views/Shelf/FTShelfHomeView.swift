@@ -69,7 +69,6 @@ struct FTShelfHomeView: FTShelfBaseView {
 #else
                 .navigationBarBackButtonHidden(viewModel.mode == .selection)
 #endif
-                .environmentObject(viewModel)
                 .shelfBottomToolbar()
                 .environmentObject(viewModel.toolbarViewModel)
                 .environmentObject(viewModel)

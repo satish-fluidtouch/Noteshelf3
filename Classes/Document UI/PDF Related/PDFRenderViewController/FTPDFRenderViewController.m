@@ -1839,12 +1839,7 @@
 
 -(NSArray*)audioAnnotationsForController:(FTAudioListViewController*)controller
 {
-    NSMutableArray *audioAnnotations = [NSMutableArray array];
-    NSArray *pages = [self.pdfDocument pages];
-    for (id<FTPageProtocol> eachPage in pages) {
-        [audioAnnotations addObjectsFromArray:[eachPage audioAnnotations]];
-    }
-    return audioAnnotations;
+    return [self audioAnnotations];
 }
 
 -(FTAudioAnnotation*)audioAnnotationForModel:(FTAudioRecordingModel*)model

@@ -48,13 +48,25 @@ public enum FTShelfDisplayStyle: Int {
         return [.Gallery,.Icon,.List];
     }
     
+    private static var cachedDefaults: UserDefaults?
+
+    private static var ftDefaults: UserDefaults {
+        if let defaults = cachedDefaults {
+            return defaults
+        } else {
+            let newDefaults = FTUserDefaults.defaults()
+            cachedDefaults = newDefaults
+            return newDefaults
+        }
+    }
+
     static var displayStyle : FTShelfDisplayStyle {
         get {
-            let style = FTUserDefaults.defaults().integer(forKey: "displayStyle")
+            let style = ftDefaults.integer(forKey: "displayStyle")
             return FTShelfDisplayStyle(rawValue: style) ?? .Gallery;
         }
         set {
-            FTUserDefaults.defaults().setValue(newValue.rawValue, forKey: "displayStyle");
+            ftDefaults.setValue(newValue.rawValue, forKey: "displayStyle");
         }
     }
 }

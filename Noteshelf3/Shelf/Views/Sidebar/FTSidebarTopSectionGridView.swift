@@ -51,7 +51,8 @@ struct FTSidebarTopSectionGridView: View {
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
         } label: {
-            FTSidebarTopSectionGridItemView(viewModel: viewModel)
+            FTSidebarTopSectionGridItemView(viewModel: viewModel,
+                                            numberOfChildren: sideBarItem.shelfCollection?.childrens.count ?? 0)
                 .environmentObject(sideBarItem)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))

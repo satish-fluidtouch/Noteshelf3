@@ -1094,6 +1094,7 @@
 "iap.booklimitReachedMessage" = "Entleeren Sie Ihren Papierkorb, um sicherzustellen, dass gelöschte Notizbücher nicht zu Ihrem Kontingent gezählt werden, oder entsperren Sie die vollständige App für unbegrenzte Notizbücher.";
 "iap.booklimitReachedTitle" = "Sie haben das kostenlose Notizbuch-Limit erreicht.";
 "iap.booksleft" = "%@ Notizen übrig";
+"iap.discount.highlight" = "%@ RABATT";
 "iap.featureLimitMessage" = "Diese Funktion ist gesperrt. Freischalten durch ein Upgrade jetzt.";
 "iap.featureLimitTitle" = "Jetzt aktualisieren.";
 "iap.message" = "Erhalten Sie Zugang zu unbegrenzten Notizen, Handschrifterkennung und Suche sowie digitalen Tagebüchern mit Noteshelf Premium.";
@@ -1114,7 +1115,7 @@
 "iap.title" = "Holen Sie sich das volle Erlebnis mit Noteshelf Premium";
 "iap.toptitle" = "Exklusiv für Noteshelf 2 Benutzer";
 "iap.upgradeNow" = "Jetzt aktualisieren";
-"iap.upgradeToPremiumNow" = "Jetzt auf Premium upgraden.";
+"iap.upgradeToPremiumNow" = "Jetzt auf Premium upgraden";
 "icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
@@ -1551,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Rakesh on 7 December 2023 at 6:07 PM
+// Last Synced by admin on 11 December 2023 at 6:46 PM
