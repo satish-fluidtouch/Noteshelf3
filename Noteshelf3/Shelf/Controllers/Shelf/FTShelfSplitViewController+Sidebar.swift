@@ -347,7 +347,7 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                 varients.selectedDevice = FTDeviceDataManager().getCurrentDevice()
                 (theme as FTPaperTheme).setPaperVariants(varients)
 
-                let coverinfo = FTCoverDataSource.shared.generateCoverTheme(image: coverImage, coverType: .custom, shouldSave: false)
+                let coverinfo = FTCoverDataSource.shared.generateCoverTheme(image: coverImage, coverType: .custom, shouldSave: false, isDiary: true)
                 let notebookDetails = FTNewNotebookDetails(coverTheme: coverinfo, paperTheme: theme, title: title)
                 FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection({ [weak self] collection in
                     guard let self = self else { return }

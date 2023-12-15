@@ -503,6 +503,16 @@ extension FTUserDefaults {
 }
 
 extension UserDefaults {
+    @objc var shelfDisplayStyle: Int {
+        get {
+            let style = self.integer(forKey: "displayStyle")
+            return style
+        } set {
+            self.set(newValue, forKey: "displayStyle")
+            self.synchronize()
+        }
+    }
+
     @objc var shapeTypeRawValue: Int {
         get {
             let selectedShapeType = self.integer(forKey: "ShapeType")

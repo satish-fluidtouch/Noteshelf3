@@ -43,11 +43,13 @@ class FTCustomCoverThemeInfo {
     var title : String
     let isCustom: Bool
     let shouldSave: Bool
+    let isDiary: Bool
 
-    init(title: String, isCustom: Bool, shouldSave: Bool) {
+    init(title: String, isCustom: Bool, shouldSave: Bool, isDiary: Bool) {
         self.title = title.isEmpty ? "Untitled".localized : title
         self.isCustom = isCustom
         self.shouldSave = shouldSave
+        self.isDiary = isDiary
     }
 }
 

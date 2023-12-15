@@ -41663,6 +41663,28 @@
 			<array>
 				<dict>
 					<key>displayTitle</key>
+					<string>Adesivi di Natale</string>
+					<key>displaySubTitle</key>
+					<string>Diffondi la gioia e celebra il periodo più meraviglioso dell&apos;anno con questi adorabili adesivi a tema natalizio creati da DGPDesignsCo. Questi adesivi sono perfetti per le tue idee regalo, la lista delle cose da fare durante le vacanze o semplicemente per aggiungere un po&apos; di spirito festivo ai tuoi appunti.</string>
+					<key>author</key>
+					<string>DGPDesignsCo</string>
+					<key>fileName</key>
+					<string>Christmas_Stickers</string>
+					<key>type</key>
+					<string>sticker</string>
+					<key>autoGenerate</key>
+					<false/>
+					<key>multiPage</key>
+					<false/>
+					<key>previewToken</key>
+					<string>8db03c11-c2e1-4e89-a96b-b1e6bb079ae5</string>
+					<key>fileToken</key>
+					<string>5502caa0-74bd-4d69-b0f1-09380afc660e</string>
+					<key>link</key>
+					<string>https://www.etsy.com/in-en/shop/DGPDesignsCo?ref=shop-header-name&amp;listing_id=1349303487&amp;from_page=listing</string>
+				</dict>
+				<dict>
+					<key>displayTitle</key>
 					<string>Carta strappata</string>
 					<key>displaySubTitle</key>
 					<string>Questo bellissimo pacchetto adesivi, creato da Tabbykittyco, combina memo, cornici e polaroid, in bellissimi colori neutri. Perfetto per pianificatori digitali, bacheche di visione e mood, quaderni e scrapbooking. Goditi la sensazione di una texture di carta organica aggiungendo questi effetti di carta strappata alle tue note!</string>
@@ -41770,28 +41792,6 @@
 					<string>dfdb7290-f71f-4a5a-a92f-dcb5e908579d</string>
 					<key>link</key>
 					<string>https://www.instagram.com/tabbykittyco/</string>
-				</dict>
-				<dict>
-					<key>displayTitle</key>
-					<string>Adesivi di Natale</string>
-					<key>displaySubTitle</key>
-					<string>Diffondi la gioia e celebra il periodo più meraviglioso dell&apos;anno con questi adorabili adesivi a tema natalizio creati da DGPDesignsCo. Questi adesivi sono perfetti per le tue idee regalo, la lista delle cose da fare durante le vacanze o semplicemente per aggiungere un po&apos; di spirito festivo ai tuoi appunti.</string>
-					<key>author</key>
-					<string>DGPDesignsCo - Etsy India</string>
-					<key>fileName</key>
-					<string>Christmas_Stickers</string>
-					<key>type</key>
-					<string>sticker</string>
-					<key>autoGenerate</key>
-					<false/>
-					<key>multiPage</key>
-					<false/>
-					<key>previewToken</key>
-					<string>8db03c11-c2e1-4e89-a96b-b1e6bb079ae5</string>
-					<key>fileToken</key>
-					<string>5502caa0-74bd-4d69-b0f1-09380afc660e</string>
-					<key>link</key>
-					<string>https://www.etsy.com/in-en/shop/DGPDesignsCo?ref=shop-header-name&amp;listing_id=1349303487&amp;from_page=listing</string>
 				</dict>
 			</array>
 		</dict>
