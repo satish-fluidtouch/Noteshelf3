@@ -41808,14 +41808,14 @@
 			<array>
 				<dict>
 					<key>displayTitle</key>
-					<string>Landscape Planner</string>
+					<string>Landschaftsplaner</string>
 					<key>fileName</key>
 					<string>Landscape_Diaries_Colorful_Planner</string>
 					<key>styles</key>
 					<array>
 						<dict>
 							<key>displayTitle</key>
-							<string>Calender</string>
+							<string>Kalender</string>
 							<key>supportOrientation</key>
 							<integer>2</integer>
 							<key>type</key>
@@ -41839,7 +41839,7 @@
 						</dict>
 						<dict>
 							<key>displayTitle</key>
-							<string>Yearly</string>
+							<string>Jährlicher Planer</string>
 							<key>supportOrientation</key>
 							<integer>2</integer>
 							<key>type</key>
@@ -41863,7 +41863,7 @@
 						</dict>
 						<dict>
 							<key>displayTitle</key>
-							<string>Monthly</string>
+							<string>Monatlich</string>
 							<key>supportOrientation</key>
 							<integer>2</integer>
 							<key>type</key>
@@ -41887,7 +41887,7 @@
 						</dict>
 						<dict>
 							<key>displayTitle</key>
-							<string>Weekly</string>
+							<string>Wöchentlich</string>
 							<key>supportOrientation</key>
 							<integer>2</integer>
 							<key>type</key>
@@ -41911,7 +41911,7 @@
 						</dict>
 						<dict>
 							<key>displayTitle</key>
-							<string>Daily</string>
+							<string>Täglich</string>
 							<key>supportOrientation</key>
 							<integer>2</integer>
 							<key>type</key>
@@ -41934,10 +41934,10 @@
 							<string>b44e6351-0016-4580-91a1-1b8218c01de7</string>
 						</dict>
 						<dict>
+							<key>displayTitle</key>
+							<string>Notizen</string>
 							<key>supportOrientation</key>
 							<integer>2</integer>
-							<key>displayTitle</key>
-							<string>Notes</string>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
