@@ -1,1 +1,0 @@
-../../../../../MyScriptInteractiveInk-Runtime/include/iink/graphics/IINKIStrokerFactory.h
