@@ -58,6 +58,8 @@
 		098F61332B306DC300BB0E16 /* FTPDFPageCacheFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098F61322B306DC300BB0E16 /* FTPDFPageCacheFactory.swift */; };
 		098F61352B306FDC00BB0E16 /* FTPDFPageContentV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098F61342B306FDC00BB0E16 /* FTPDFPageContentV2.swift */; };
 		098F61382B3071B600BB0E16 /* FTPDFPageContentMigrationv1tov2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098F61372B3071B600BB0E16 /* FTPDFPageContentMigrationv1tov2.swift */; };
+		098F613C2B3084C400BB0E16 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
+		098F613D2B3084C400BB0E16 /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		099C91F62A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F52A8A1B3900C1FD07 /* FTdairyDatePickerViewController_Mac.swift */; };
 		099C91F82A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C91F72A8A386700C1FD07 /* FTDairyDateSelectionPickerController.swift */; };
 		099D23592ABAD10A00636C42 /* URL+Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7A5F5D2AB0766E006D5284 /* URL+Thumbnail.swift */; };
@@ -2378,6 +2380,7 @@
 			files = (
 				BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */,
 				BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */,
+				098F613D2B3084C400BB0E16 /* FTDocumentFramework.xcframework in CopyFiles */,
 				BAF0DD742A6FE676006D293B /* FTTemplatesStore.framework in CopyFiles */,
 				BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */,
 				BAA84E4D2873105500DE801B /* FTCommon.framework in CopyFiles */,
@@ -4734,6 +4737,7 @@
 				BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */,
 				BA3F7FB8299E2F51003964C6 /* libMyScriptMath.xcframework in Frameworks */,
 				BA3F7FB7299E2F51003964C6 /* libMyScriptAnalyzer.xcframework in Frameworks */,
+				098F613C2B3084C400BB0E16 /* FTDocumentFramework.xcframework in Frameworks */,
 				BA3F7FB6299E2F51003964C6 /* libMyScript2D.xcframework in Frameworks */,
 				BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */,
 				BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */,
@@ -11937,7 +11941,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				090029072B302AEF00DF6EA1 /* PBXTargetDependency */,
 				09BC39172ACC3F880011D8B0 /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
