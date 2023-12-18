@@ -2220,6 +2220,7 @@
                                                contentScale:pageContentScale];
             if (imageSource == FTInsertImageSourceSticker) {
                 CGFloat minWidth = MIN(obj.size.width * 0.3,bounds.size.width * 0.3);
+                CGFloat maxHeight = MAX(obj.size.height * 0.2,bounds.size.width * 0.2);
                 if (finalFrame.size.width > minWidth) {
                     CGPoint center = CGPointMake(CGRectGetMidX(finalFrame), CGRectGetMidY(finalFrame));
                     CGFloat ratio = finalFrame.size.width/finalFrame.size.height;
@@ -2228,9 +2229,6 @@
                     finalFrame.origin.x = center.x - finalFrame.size.width * 0.5;
                     finalFrame.origin.y = center.y - finalFrame.size.height * 0.5;
                 }
-            }
-            if (imageSource == FTInsertImageSourceSticker) {
-                CGFloat maxHeight = MAX(obj.size.height * 0.2,bounds.size.width * 0.2);
                 if (finalFrame.size.height > maxHeight) {
                     CGPoint center = CGPointMake(CGRectGetMidX(finalFrame), CGRectGetMidY(finalFrame));
                     CGFloat ratio = finalFrame.size.width/finalFrame.size.height;
