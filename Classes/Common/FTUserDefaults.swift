@@ -503,6 +503,7 @@ extension FTUserDefaults {
 }
 
 extension UserDefaults {
+    // TODO: Try changing this to FTShelfDisplayStyle
     @objc var shelfDisplayStyle: Int {
         get {
             let style = self.integer(forKey: "displayStyle")

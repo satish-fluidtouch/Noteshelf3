@@ -86,6 +86,10 @@ class FTShapeArrowAnnotationController: FTShapeAnnotationController {
             super.processTouchesMoved(firstTouch, with: event)
         } else if self.annotationMode == .create {
             updateSegments(index: index, point: point)
+        } else {
+            if shapeAnnotation.shape?.type() == .line {
+                super.processTouchesMoved(firstTouch, with: event)
+            }
         }
     }
     

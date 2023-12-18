@@ -59,6 +59,9 @@ import Foundation
             }
             newPoints.append(pointA)
         }
+        if let firstVertex = vertices.first, let lastVertex = vertices.last {
+            isClosedShape = (firstVertex == lastVertex)
+        }
         newPoints.append(self.vertices[self.vertices.count - 1])
         objc_sync_exit(self);
         return newPoints

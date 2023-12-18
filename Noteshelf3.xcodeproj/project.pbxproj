@@ -812,6 +812,18 @@
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
 		97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTPreviewShape.swift */; };
+		97F5D06D2B15C8EC003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */; };
+		97F5D0712B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */; };
+		97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */; };
+		97F5D0742B15CA9F003ED67D /* FTPlanner2024DiaryTemplateAssetGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0732B15CA9F003ED67D /* FTPlanner2024DiaryTemplateAssetGenerator.swift */; };
+		97F5D0762B15CC56003ED67D /* FTPlanner2024DiaryTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0752B15CC55003ED67D /* FTPlanner2024DiaryTemplateFormat.swift */; };
+		97F5D07E2B15EB6D003ED67D /* FTPlanner2024DiaryYearTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0772B15EB6C003ED67D /* FTPlanner2024DiaryYearTemplateFormat.swift */; };
+		97F5D07F2B15EB6D003ED67D /* FTPlanner2024DiaryTrackerTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0782B15EB6C003ED67D /* FTPlanner2024DiaryTrackerTemplateFormat.swift */; };
+		97F5D0802B15EB6D003ED67D /* FTPlanner2024DiaryExtrasTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0792B15EB6C003ED67D /* FTPlanner2024DiaryExtrasTemplateFormat.swift */; };
+		97F5D0812B15EB6D003ED67D /* FTPlanner2024DiaryMonthTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D07A2B15EB6C003ED67D /* FTPlanner2024DiaryMonthTemplateFormat.swift */; };
+		97F5D0822B15EB6D003ED67D /* FTPlanner2024DiaryDayTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D07B2B15EB6C003ED67D /* FTPlanner2024DiaryDayTemplateFormat.swift */; };
+		97F5D0832B15EB6D003ED67D /* FTPlanner2024DiaryNotesTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D07C2B15EB6C003ED67D /* FTPlanner2024DiaryNotesTemplateFormat.swift */; };
+		97F5D0842B15EB6D003ED67D /* FTPlanner2024DiaryWeekTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D07D2B15EB6C003ED67D /* FTPlanner2024DiaryWeekTemplateFormat.swift */; };
 		97F60BFC291D32A30050C3F3 /* FTGrouping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60BFB291D32A30050C3F3 /* FTGrouping.swift */; };
 		97F60BFE291D33080050C3F3 /* FTNotebookCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F60BFD291D33080050C3F3 /* FTNotebookCreation.swift */; };
 		97F60C0E291E13A80050C3F3 /* FTShelfViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97907E8B2862F47A0052ED98 /* FTShelfViewControllerNew.swift */; };
@@ -3837,6 +3849,18 @@
 		97F3C3BC26B92E1900E3B75E /* FTClassicDiaryiPadFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryiPadFormat.swift; sourceTree = "<group>"; };
 		97F3C3BE26B92E3000E3B75E /* FTClassicDiaryiPhoneFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryiPhoneFormat.swift; sourceTree = "<group>"; };
 		97F3C3C426BAFC3F00E3B75E /* FTClassicDiaryMonthTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryMonthTemplate.swift; sourceTree = "<group>"; };
+		97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryCalendarTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryiPadFormat.swift; sourceTree = "<group>"; };
+		97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryFormat.swift; sourceTree = "<group>"; };
+		97F5D0732B15CA9F003ED67D /* FTPlanner2024DiaryTemplateAssetGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryTemplateAssetGenerator.swift; sourceTree = "<group>"; };
+		97F5D0752B15CC55003ED67D /* FTPlanner2024DiaryTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D0772B15EB6C003ED67D /* FTPlanner2024DiaryYearTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryYearTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D0782B15EB6C003ED67D /* FTPlanner2024DiaryTrackerTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryTrackerTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D0792B15EB6C003ED67D /* FTPlanner2024DiaryExtrasTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryExtrasTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D07A2B15EB6C003ED67D /* FTPlanner2024DiaryMonthTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryMonthTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D07B2B15EB6C003ED67D /* FTPlanner2024DiaryDayTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryDayTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D07C2B15EB6C003ED67D /* FTPlanner2024DiaryNotesTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryNotesTemplateFormat.swift; sourceTree = "<group>"; };
+		97F5D07D2B15EB6C003ED67D /* FTPlanner2024DiaryWeekTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryWeekTemplateFormat.swift; sourceTree = "<group>"; };
 		97F60BFB291D32A30050C3F3 /* FTGrouping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGrouping.swift; sourceTree = "<group>"; };
 		97F60BFD291D33080050C3F3 /* FTNotebookCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookCreation.swift; sourceTree = "<group>"; };
 		97F60C17291E26CE0050C3F3 /* FTShelfItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfItemInfoView.swift; sourceTree = "<group>"; };
@@ -9038,6 +9062,31 @@
 			path = "Classic Diary";
 			sourceTree = "<group>";
 		};
+		97F5D06B2B15C830003ED67D /* Planner2024 */ = {
+			isa = PBXGroup;
+			children = (
+				97F5D07B2B15EB6C003ED67D /* FTPlanner2024DiaryDayTemplateFormat.swift */,
+				97F5D0792B15EB6C003ED67D /* FTPlanner2024DiaryExtrasTemplateFormat.swift */,
+				97F5D07A2B15EB6C003ED67D /* FTPlanner2024DiaryMonthTemplateFormat.swift */,
+				97F5D07C2B15EB6C003ED67D /* FTPlanner2024DiaryNotesTemplateFormat.swift */,
+				97F5D0782B15EB6C003ED67D /* FTPlanner2024DiaryTrackerTemplateFormat.swift */,
+				97F5D07D2B15EB6C003ED67D /* FTPlanner2024DiaryWeekTemplateFormat.swift */,
+				97F5D0772B15EB6C003ED67D /* FTPlanner2024DiaryYearTemplateFormat.swift */,
+				97F5D0752B15CC55003ED67D /* FTPlanner2024DiaryTemplateFormat.swift */,
+				97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */,
+			);
+			path = Planner2024;
+			sourceTree = "<group>";
+		};
+		97F5D06E2B15C90A003ED67D /* Planner2024 */ = {
+			isa = PBXGroup;
+			children = (
+				97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */,
+				97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */,
+			);
+			path = Planner2024;
+			sourceTree = "<group>";
+		};
 		97F60C05291E0A940050C3F3 /* Move Formsheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -10494,6 +10543,7 @@
 		DA10332E2410C41600EBD0E3 /* Template Formats */ = {
 			isa = PBXGroup;
 			children = (
+				97F5D06B2B15C830003ED67D /* Planner2024 */,
 				97570BB427396D98001F1FE8 /* Planner */,
 				E7777B482702F58F00908120 /* Modern */,
 				97F3C3B226B9244700E3B75E /* Classic Diary */,
@@ -10572,6 +10622,7 @@
 		DA376EFB23BE136400B27012 /* Formats */ = {
 			isa = PBXGroup;
 			children = (
+				97F5D06E2B15C90A003ED67D /* Planner2024 */,
 				97570BB5273A3856001F1FE8 /* Planner */,
 				E7777B452702F47C00908120 /* Modern */,
 				97F3C3B926B92DA500E3B75E /* Classic Diary */,
@@ -10616,6 +10667,7 @@
 				E7777B4B2702FA8200908120 /* FTModernDiaryTemplateAssetGenerator.swift */,
 				97F3C3B726B928C900E3B75E /* FTClassicDiaryTemplateAssetGenerator.swift */,
 				97570BBE273A39AB001F1FE8 /* FTPlannerDiaryTemplateAssetGenerator.swift */,
+				97F5D0732B15CA9F003ED67D /* FTPlanner2024DiaryTemplateAssetGenerator.swift */,
 				DA10332E2410C41600EBD0E3 /* Template Formats */,
 			);
 			path = DynamicGeneration;
@@ -12962,6 +13014,7 @@
 				BAF390C52859ADF00067CA9F /* LoggingPrint.swift in Sources */,
 				BAF390C62859ADF00067CA9F /* FTDairyFormat.swift in Sources */,
 				BAF390C72859ADF00067CA9F /* SwiftConstants.swift in Sources */,
+				97F5D07F2B15EB6D003ED67D /* FTPlanner2024DiaryTrackerTemplateFormat.swift in Sources */,
 				142DB8892A72855C00469B5E /* FTStickerModels.swift in Sources */,
 				4708DEC82A026D100009F071 /* FTAppIntentHandler.swift in Sources */,
 				BAF390C82859ADF00067CA9F /* FTExportDataContent.swift in Sources */,
@@ -13026,6 +13079,7 @@
 				BAF390FE2859ADF00067CA9F /* FTPhotosViewController.swift in Sources */,
 				BAF390FF2859ADF00067CA9F /* FTPageViewController_LassoSelection.swift in Sources */,
 				BAF391002859ADF00067CA9F /* FTCloudBackupPublisher.swift in Sources */,
+				97F5D0822B15EB6D003ED67D /* FTPlanner2024DiaryDayTemplateFormat.swift in Sources */,
 				BAF391012859ADF00067CA9F /* FTAnnotationEditControllerInterface.swift in Sources */,
 				BAF391022859ADF00067CA9F /* FTShelfItemsIndexInfo.swift in Sources */,
 				BA2D9135285CB24F001BB495 /* FTRecentItemEditMenuCell.swift in Sources */,
@@ -13125,6 +13179,7 @@
 				BAF3914F2859ADF00067CA9F /* FTExportActivityManager.swift in Sources */,
 				BAF391502859ADF00067CA9F /* FTSendAudioFileRequest.swift in Sources */,
 				BAF391522859ADF00067CA9F /* FTDiagnosticInstanceCounter.swift in Sources */,
+				97F5D0802B15EB6D003ED67D /* FTPlanner2024DiaryExtrasTemplateFormat.swift in Sources */,
 				BAF391532859ADF00067CA9F /* FTSearchProcessorProtocols.swift in Sources */,
 				BAF391542859ADF00067CA9F /* ScanViewController.swift in Sources */,
 				BAF391552859ADF00067CA9F /* FTWhatsNewFollowUsViewController.swift in Sources */,
@@ -13160,6 +13215,7 @@
 				BAF391672859ADF00067CA9F /* UIColor+Extensions.swift in Sources */,
 				BAF391682859ADF00067CA9F /* FTClassicDiaryWeekTemplate.swift in Sources */,
 				BAF3916A2859ADF00067CA9F /* FTTooltipsManager.swift in Sources */,
+				97F5D07E2B15EB6D003ED67D /* FTPlanner2024DiaryYearTemplateFormat.swift in Sources */,
 				09CDCB122A52B491000340FB /* FTNoteBookSplitViewController_Mac_Extension.swift in Sources */,
 				BAF3916B2859ADF00067CA9F /* FTAccountsViewController+Segue.swift in Sources */,
 				BAF3916D2859ADF00067CA9F /* FTModernDiaryMonthTemplate.swift in Sources */,
@@ -13384,6 +13440,7 @@
 				E7B5769C292368F70066BA45 /* FTToastView.swift in Sources */,
 				520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */,
 				9715E0142AEA9D2C00EC48D4 /* ENSearchRequest.m in Sources */,
+				97F5D0742B15CA9F003ED67D /* FTPlanner2024DiaryTemplateAssetGenerator.swift in Sources */,
 				144AA3332A44279E00C969AC /* FTSettingsAboutViewModel.swift in Sources */,
 				E7AE4DA728995093004CF608 /* FTFavoriteShapeView.swift in Sources */,
 				14C76ADC2A092DBA004251B5 /* FTWrittingAndStylusModel.swift in Sources */,
@@ -13417,6 +13474,7 @@
 				BAF392402859ADF00067CA9F /* FTProgressTableViewCell.swift in Sources */,
 				BAF392452859ADF00067CA9F /* URLComponentsExtension.swift in Sources */,
 				BAF392482859ADF00067CA9F /* FormSheetPresentationManager.swift in Sources */,
+				97F5D0842B15EB6D003ED67D /* FTPlanner2024DiaryWeekTemplateFormat.swift in Sources */,
 				E7C71A64288E795A00AF2598 /* EnvironmentValues+RangeTrackConfiguration.swift in Sources */,
 				BAF392492859ADF00067CA9F /* FTPDFRenderViewController+DocumentEntity.swift in Sources */,
 				BAF3924B2859ADF00067CA9F /* FTSegmentCache.m in Sources */,
@@ -13487,6 +13545,7 @@
 				BAF3927E2859ADF00067CA9F /* FTImageResizeViewController.swift in Sources */,
 				BA996116291BCCCC0020B7B0 /* FTShelfContentAudioView.swift in Sources */,
 				BAF3927F2859ADF00067CA9F /* FTShapeArrow.swift in Sources */,
+				97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */,
 				E7AE4D9F2899480A004CF608 /* FTShapeShortcutView.swift in Sources */,
 				BAF392802859ADF00067CA9F /* FTGeneratorViewController.swift in Sources */,
 				979BC27F288EAD8600208B21 /* FTShelfItemView.swift in Sources */,
@@ -13657,6 +13716,7 @@
 				BAF393082859ADF00067CA9F /* FTTile.m in Sources */,
 				9715E0272AEA9D2C00EC48D4 /* KSWriter.m in Sources */,
 				BAF393092859ADF00067CA9F /* FTENSyncUtilities.swift in Sources */,
+				97F5D06D2B15C8EC003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift in Sources */,
 				BAF3930A2859ADF00067CA9F /* FTArrowUtility.swift in Sources */,
 				97A8D9AC28DADEA1008853BF /* FTShelfItemsView.swift in Sources */,
 				9715E0292AEA9D2C00EC48D4 /* KSForwardingWriter.m in Sources */,
@@ -13899,6 +13959,7 @@
 				BAF393D92859ADF00067CA9F /* FTDocumentErrorCodes.swift in Sources */,
 				4747C4092A95EC2A00B1AB59 /* FTAnalytics.swift in Sources */,
 				E7B7F55B28FFCC8200F571C6 /* FTPDFRenderViewController+DeskToolbar.swift in Sources */,
+				97F5D0832B15EB6D003ED67D /* FTPlanner2024DiaryNotesTemplateFormat.swift in Sources */,
 				09C3696C2A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift in Sources */,
 				BAF393DC2859ADF00067CA9F /* FTShelfCollectionRecent.swift in Sources */,
 				BAF393DD2859ADF00067CA9F /* Owner.swift in Sources */,
@@ -14177,6 +14238,7 @@
 				42ADB81E28C1C7BE002E489A /* FTMediaFilterProtocol.swift in Sources */,
 				BAF394C52859ADF10067CA9F /* FTRuledTemplateFormat.swift in Sources */,
 				BAF394C62859ADF10067CA9F /* FTSearchProcessorFactory.swift in Sources */,
+				97F5D0812B15EB6D003ED67D /* FTPlanner2024DiaryMonthTemplateFormat.swift in Sources */,
 				BA6C51D128DC728F006504EB /* FTShelfContentPhotoViewController.swift in Sources */,
 				BAF394C72859ADF10067CA9F /* FTFilesDriveActivity.swift in Sources */,
 				1439371129D6E02700D93033 /* FTStickerRecentItemViewModel.swift in Sources */,
@@ -14259,6 +14321,7 @@
 				BAF3950C2859ADF10067CA9F /* FTNoteshelfDocument_Creation_Template.swift in Sources */,
 				BAF3950E2859ADF10067CA9F /* Quota.swift in Sources */,
 				BAF3950F2859ADF10067CA9F /* FTHorizontalModalPresentationController.swift in Sources */,
+				97F5D0712B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift in Sources */,
 				BAF395102859ADF10067CA9F /* FTRightSwitchTableViewCell.swift in Sources */,
 				BAF395132859ADF10067CA9F /* FTDefaultMarkerBrushBuilder_V4.swift in Sources */,
 				BAF395152859ADF10067CA9F /* FTOneDriveUser.swift in Sources */,
@@ -14285,6 +14348,7 @@
 				BAF395322859ADF10067CA9F /* FTShelfItemPreviewViewController.swift in Sources */,
 				BA2D912E285CAFCC001BB495 /* FTShelfNewNotePopoverView.swift in Sources */,
 				BAF395332859ADF10067CA9F /* FTShelfItemCellProgressUpdate.swift in Sources */,
+				97F5D0762B15CC56003ED67D /* FTPlanner2024DiaryTemplateFormat.swift in Sources */,
 				143570522A42D37D0088B4EB /* FTWelcomeView.swift in Sources */,
 				E7ADB52D2881917D005E03B7 /* FTToolbarShortcutModels.swift in Sources */,
 				8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */,

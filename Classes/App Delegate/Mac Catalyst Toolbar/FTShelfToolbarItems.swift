@@ -280,7 +280,7 @@ class FTShelfMoreToolbarItem: NSMenuToolbarItem {
 
             menuitems.append(UIMenu.displayOptionsMenu(onAction: { [weak self] (displayStyle,identifier) in
                 shelfToolbar.toolbarActionDelegate?.toolbar(shelfToolbar, didTapOnMenuitem: identifier);
-                FTShelfDisplayStyle.displayStyle = displayStyle
+                UserDefaults.standard.shelfDisplayStyle = displayStyle.rawValue
                 self?.rebuildMenu()
             }))
 
