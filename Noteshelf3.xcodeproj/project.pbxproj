@@ -4147,6 +4147,7 @@
 		BAB4D5062AFFF34D009124EF /* Migration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Migration.storyboard; sourceTree = "<group>"; };
 		BABCB8D522FD3FA200551DAC /* FTThumbnailGenerationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailGenerationRequest.swift; sourceTree = "<group>"; };
 		BABCB8D822FD4E0100551DAC /* FTThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTThumbnailGenerator.swift; sourceTree = "<group>"; };
+		BABD16622B3078FC009A6EBC /* myscript_download.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = myscript_download.sh; sourceTree = "<group>"; };
 		BAC095E4265FC189001DF931 /* FTShape_SQLiteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShape_SQLiteHelper.swift; sourceTree = "<group>"; };
 		BAC0B06521B4F3080085A50F /* SwiftSimplify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftSimplify.swift; sourceTree = "<group>"; };
 		BAC3697C2A83AA270005F635 /* Entitlements-AppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Entitlements-AppStore.entitlements"; sourceTree = "<group>"; };
@@ -10302,6 +10303,7 @@
 		C811857B213D3DA600347A50 /* My Script */ = {
 			isa = PBXGroup;
 			children = (
+				BABD16622B3078FC009A6EBC /* myscript_download.sh */,
 				BA111BFD2988D7A7001E854F /* IInkUIReferenceImplementation */,
 				C82771AA213E621F00112FA7 /* MyScriptInteractiveInk-Runtime */,
 				C8277179213E612000112FA7 /* MyScriptCertificate */,
