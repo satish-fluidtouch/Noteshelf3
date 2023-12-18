@@ -20,10 +20,14 @@ public enum ClearFace: String, CaseIterable {
 
     var filename: String {
         switch self {
-        case .regular: "Clearface-Serial-Regular"
-        case .medium: "Clearface-Serial-Medium"
-        case .regularItalic: "Clearface-Serial-RegularItalic"
-        case .bold: "Clearface-Serial-Bold"
+        case .regular:
+            return "Clearface-Serial-Regular"
+        case .medium:
+            return "Clearface-Serial-Medium"
+        case .regularItalic:
+            return "Clearface-Serial-RegularItalic"
+        case .bold:
+            return "Clearface-Serial-Bold"
         }
     }
 }
