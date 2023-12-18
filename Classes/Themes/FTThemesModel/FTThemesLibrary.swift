@@ -26,6 +26,7 @@ enum FTDocumentType : Int {
     case Digital_Diaries_Midnight
     case Digital_Diaries_Day_and_Night_Journal
     case Digital_Diaries_Colorful_Planner
+    case Landscape_Diaries_Colorful_Planner
 }
 
 enum FTNThemeLibraryType: Int {

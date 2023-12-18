@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>display_name</key>
+	<string>Landscape Planner</string>
+	<key>display_name_es</key>
+	<string>Planificador de paisaje</string>
+	<key>display_name_ja</key>
+	<string>ランドスケーププランナー</string>
+	<key>display_name_it</key>
+	<string>Pianificatore del paesaggio</string>
+	<key>display_name_fr</key>
+	<string>Planificateur paysagiste</string>
+	<key>display_name_zh-Hans</key>
+	<string>景观规划师</string>
+	<key>display_name_zh-Hant</key>
+	<string>景觀規劃師</string>
+	<key>display_name_de</key>
+	<string>Landschaftsplaner</string>
+	<key>display_name_ko</key>
+	<string>조경 계획자</string>
+	<key>line_height</key>
+	<integer>34</integer>
+	<key>width</key>
+	<integer>768</integer>
+	<key>height</key>
+	<integer>960</integer>
+	<key>dynamic_id</key>
+	<integer>1</integer>
+	<key>template_id</key>
+	<string>Landscape_Diaries_Colorful_Planner</string>
+	<key>template_type</key>
+	<integer>8</integer>
+	<key>restrictsChangeTemplate</key>
+	<true/>
+	<key>footer_option</key>
+	<integer>1</integer>
+</dict>
+</plist>
