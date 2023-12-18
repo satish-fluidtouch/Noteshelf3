@@ -15,92 +15,42 @@ struct FTNotebookCoverView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var isPressed: Bool
 
-    var isHighlighted = false;
+    var isHighlighted = false
 
     var body: some View {
         ZStack(alignment: .top) {
-            if(isHighlighted) {
-                FTShelfItemDropOverlayView()
-                    .zIndex(2)
-            }
             Image(uiImage: shelfItem.coverImage)
                 .resizable()
-                .zIndex(1)
-                .if(shelfItem.isLoadingNotebook, transform: { view in
-                    view.overlay(alignment: Alignment.center, content: {
-                        ProgressView()
-                    })
-                })
-                .if(shelfItem.isDownloadingNotebook, transform: { view in
-                    view.overlay(alignment: Alignment.center, content: {
-                        FTCircularProgressView(progress: $shelfItem.progress)
-                            .frame(width: 32, height: 32, alignment: .center)
-                    })
-                })
-                .overlay(alignment: Alignment.bottom) {
-                    if shelfItem.uploadDownloadInProgress {
-                        let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
-                        
-                        let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
-                        Image(systemName: "icloud.and.arrow.up")
-                            .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
-                            .frame(width: 24, height: 24, alignment: Alignment.center)
-                            .font(font)
-                            .padding(.bottom, padding)
-                            .pulseAnimation()
-                        
-                    } else if shelfItem.isNotDownloaded {
-                        let imagSize: CGSize = shelfViewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 24, height: 24)
-                        let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
-                        let font: Font = shelfViewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
-                        Image(systemName: "icloud.and.arrow.down")
-                            .foregroundColor(Color.black.opacity(0.3))// For handlilng dark/light mode used black color
-                            .frame(width: imagSize.width, height: imagSize.height, alignment: Alignment.center)
-                            .font(font)
-                            .padding(.bottom, padding)
-                    }
+            
+                .overlay(alignment: .center) {
+                    ProgressView()
+                        .isHidden(!shelfItem.isLoadingNotebook)
+                    FTCircularProgressView(progress: $shelfItem.progress)
+                        .frame(width: 32, height: 32, alignment: .center)
+                    FTLockIconView()
                 }
-                .overlay(alignment: .bottom) {
-                    if shelfViewModel.mode == .selection, shelfViewModel.displayStlye != .List {
-                        FTShelfItemSelectionIndicator(isSelected: $shelfItem.isSelected)
-                            .padding(.bottom, 4)
-                    }
-                }
+            
                 .overlay(alignment: .topTrailing) {
-                    if  shelfViewModel.canShowStarredIconOnNB && shelfItem.isFavorited {
-                        let starredImgSize: CGSize = shelfViewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 28, height: 28)
-                        let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
-                        let font: Font = shelfViewModel.displayStlye == .Gallery ? Font.appFont(for: .regular, with: 21) : (shelfViewModel.displayStlye == .Icon ? Font.appFont(for: .regular, with: 16) : Font.appFont(for: .regular, with: 12))
-                        Image(systemName: "star.fill")
-                            .imageScale(.medium)
-                            .foregroundColor(Color.init(hex: "#FFBD00", alpha: 0.9))
-                            .frame(width: starredImgSize.width, height: starredImgSize.height, alignment: Alignment.center)
-                            .font(font)
-                            .padding(.trailing,padding)
-                            .padding(.top,padding)
-                    }
+                    FTFavoriteIconView()
                 }
-                .overlay {
-                    if shelfItem.model.isPinEnabledForDocument() {
-                        FTLockIconView()
-                    }
+
+                .overlay(alignment: .bottom) {
+                    FTShelfItemUploadDownloadIndicator()
+                    FTShelfItemSelectionIndicator(isSelected: $shelfItem.isSelected)
+                        .padding(.bottom, 4)
                 }
-                .onFirstAppear(perform: {
-                    shelfItem.configureShelfItem(shelfItem.model)
-                })
+
+            // As this is rare case, handled using IF
+            if(isHighlighted) {
+                FTShelfItemDropOverlayView()
+            }
         }
-        .onTapGesture(perform: {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                shelfViewModel.didTapOnShelfItem(shelfItem)
-            }
-        })
-
-        .onLongPressGesture(perform: {
-
-        }, onPressingChanged: { _ in
-            withAnimation {
-                isPressed.toggle()
-            }
+        .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
+        .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+        .border(shelfItem.coverImage.hasNoCover && colorScheme == .dark ? Color.white.opacity(0.1) : .clear, width: 2.0,cornerRadius: 10)
+        
+        .onFirstAppear(perform: {
+            shelfItem.configureShelfItem(shelfItem.model)
         })
         .onAppear(perform: {
             shelfItem.isVisible = true;
@@ -109,9 +59,19 @@ struct FTNotebookCoverView: View {
         .onDisappear(perform: {
             shelfItem.isVisible = false;
         })
-        .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
-        .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
-        .border(shelfItem.coverImage.hasNoCover && colorScheme == .dark ? Color.white.opacity(0.1) : .clear, width: 2.0,cornerRadius: 10)
+        
+        .onTapGesture(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                shelfViewModel.didTapOnShelfItem(shelfItem)
+            }
+        })
+        .onLongPressGesture(perform: {
+            
+        }, onPressingChanged: { _ in
+            withAnimation {
+                isPressed.toggle()
+            }
+        })
     }
     
     private var leftCornerRadius: CGFloat {
@@ -120,6 +80,79 @@ struct FTNotebookCoverView: View {
 
     private var rightCornerRadius: CGFloat {
         FTShelfItemProperties.rightCornerRadiusForShelfItemImage(shelfItem.coverImage,displayStyle: shelfViewModel.displayStlye)
+    }
+}
+
+struct FTShelfItemUploadDownloadIndicator: View {
+    @EnvironmentObject var shelfitem: FTShelfItemViewModel
+    @EnvironmentObject var viewModel: FTShelfViewModel
+    
+    private var imageSize: CGSize {
+        let imagSize = viewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 24, height: 24)
+        return imagSize
+    }
+    
+    private var padding: CGFloat {
+        let padding: CGFloat = viewModel.displayStlye == .List ? 2 : 8
+        return padding
+    }
+    
+    private var font: Font {
+        let font = viewModel.displayStlye == .List ? Font.appFont(for: .regular, with: 12) : Font.appFont(for: .regular, with: 18)
+        return font
+    }
+
+    private var indicatorImage: String {
+        var name = "icloud.and.arrow.up"
+        if !shelfitem.uploadDownloadInProgress && shelfitem.isNotDownloaded {
+            name = "icloud.and.arrow.down"
+        }
+        return name
+    }
+    
+    private var toShowIndicator: Bool {
+        let status = shelfitem.uploadDownloadInProgress || (!shelfitem.uploadDownloadInProgress && shelfitem.isNotDownloaded)
+        return status
+    }
+    
+    var body: some View {
+        Image(systemName: indicatorImage)
+            .foregroundColor(Color.black.opacity(0.3))
+            .frame(width: imageSize.width, height: imageSize.height, alignment: Alignment.center)
+            .font(font)
+            .padding(.bottom, padding)
+            .isHidden(toShowIndicator)
+    }
+}
+
+struct FTFavoriteIconView: View {
+    @EnvironmentObject var shelfitem: FTShelfItemViewModel
+    @EnvironmentObject var viewModel: FTShelfViewModel
+    
+    private var imageSize: CGSize {
+        let imagSize = viewModel.displayStlye == .List ? CGSize(width: 16, height: 16) :  CGSize(width: 28, height: 28)
+        return imagSize
+    }
+    
+    private var padding: CGFloat {
+        let padding: CGFloat = viewModel.displayStlye == .List ? 2 : 8
+        return padding
+    }
+    
+    private var font: Font {
+        let font = viewModel.displayStlye == .Gallery ? Font.appFont(for: .regular, with: 21) : (viewModel.displayStlye == .Icon ? Font.appFont(for: .regular, with: 16) : Font.appFont(for: .regular, with: 12))
+        return font
+    }
+
+    var body: some View {
+        Image(systemName: "star.fill")
+            .imageScale(.medium)
+            .foregroundColor(Color.init(hex: "#FFBD00", alpha: 0.9))
+            .frame(width: imageSize.width, height: imageSize.height)
+            .font(font)
+            .padding(.trailing, padding)
+            .padding(.top, padding)
+            .isHidden(!(viewModel.canShowStarredIconOnNB && shelfitem.isFavorited))
     }
 }
 
@@ -133,6 +166,7 @@ struct FTShelfItemSelectionIndicator: View {
             .symbolRenderingMode(SymbolRenderingMode.palette)
             .foregroundColor(Color.appColor(.black20))
             .frame(width:viewModel.displayStlye == .List ? 22 : 32, height: 32, alignment: Alignment.center)
+            .isHidden(!(viewModel.mode == .selection && viewModel.displayStlye != .List))
     }
 }
 
@@ -145,6 +179,7 @@ struct FTShelfItemDropOverlayView: View {
 
 struct FTLockIconView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @EnvironmentObject var shelfitem: FTShelfItemViewModel
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
@@ -162,6 +197,7 @@ struct FTLockIconView: View {
                     .frame(width:imageSize, height: imageSize)
             }
         }
+        .isHidden(!shelfitem.model.isPinEnabledForDocument())
     }
 }
 
@@ -169,7 +205,7 @@ struct FTLockIconView: View {
 struct PulseAnimationModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .symbolEffect(.pulse.byLayer)
+//            .symbolEffect(.pulse.byLayer)
     }
 }
 

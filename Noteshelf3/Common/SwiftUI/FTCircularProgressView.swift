@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct FTCircularProgressView: View {
+    @EnvironmentObject var shelfitem: FTShelfItemViewModel
+
     @Binding var progress: CGFloat
     var progressBGColor: Color = Color.appColor(.accent)
     var progressColor: Color = Color.appColor(.accent)
@@ -30,6 +32,7 @@ struct FTCircularProgressView: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.easeOut, value: progress)
         }
+        .isHidden(!shelfitem.isDownloadingNotebook)
     }
 }
 struct FTCircularProgressView_Previews: PreviewProvider {
