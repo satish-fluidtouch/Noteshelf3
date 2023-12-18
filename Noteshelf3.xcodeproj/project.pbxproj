@@ -782,9 +782,7 @@
 		97B411A729E804E900ADFE1F /* FTSidebarTopSectionGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411A329E804E900ADFE1F /* FTSidebarTopSectionGridView.swift */; };
 		97B411A829E804E900ADFE1F /* FTSidebarTopSectionGridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411A429E804E900ADFE1F /* FTSidebarTopSectionGridItemView.swift */; };
 		97B411A929E804E900ADFE1F /* FTTemplatesSidebarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411A529E804E900ADFE1F /* FTTemplatesSidebarItemView.swift */; };
-		97B411AB29E804F700ADFE1F /* SidebarTopSectionElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411AA29E804F700ADFE1F /* SidebarTopSectionElement.swift */; };
 		97B411AE29E8058000ADFE1F /* FTSidebarGridItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411AC29E8058000ADFE1F /* FTSidebarGridItemViewModel.swift */; };
-		97B411AF29E8058000ADFE1F /* FTSidebarTopSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411AD29E8058000ADFE1F /* FTSidebarTopSectionViewModel.swift */; };
 		97B411D929ED1CA800ADFE1F /* FTSidebarItemContextualOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B411D829ED1CA800ADFE1F /* FTSidebarItemContextualOption.swift */; };
 		97B86859297AA0450047E798 /* FTShelfItemProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B86858297AA0450047E798 /* FTShelfItemProperties.swift */; };
 		97BBE852287D4C91009EEAE3 /* FTGroupItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97BBE851287D4C91009EEAE3 /* FTGroupItemView.swift */; };
@@ -3773,9 +3771,7 @@
 		97B411A329E804E900ADFE1F /* FTSidebarTopSectionGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSidebarTopSectionGridView.swift; sourceTree = "<group>"; };
 		97B411A429E804E900ADFE1F /* FTSidebarTopSectionGridItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSidebarTopSectionGridItemView.swift; sourceTree = "<group>"; };
 		97B411A529E804E900ADFE1F /* FTTemplatesSidebarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTTemplatesSidebarItemView.swift; sourceTree = "<group>"; };
-		97B411AA29E804F700ADFE1F /* SidebarTopSectionElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarTopSectionElement.swift; sourceTree = "<group>"; };
 		97B411AC29E8058000ADFE1F /* FTSidebarGridItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSidebarGridItemViewModel.swift; sourceTree = "<group>"; };
-		97B411AD29E8058000ADFE1F /* FTSidebarTopSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTSidebarTopSectionViewModel.swift; sourceTree = "<group>"; };
 		97B411D829ED1CA800ADFE1F /* FTSidebarItemContextualOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSidebarItemContextualOption.swift; sourceTree = "<group>"; };
 		97B4709D26CBD35C0083C526 /* FTClassicDiaryWeekTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryWeekTemplate.swift; sourceTree = "<group>"; };
 		97B4709F26CBD4B80083C526 /* FTClassicDiaryDayTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryDayTemplate.swift; sourceTree = "<group>"; };
@@ -9231,7 +9227,6 @@
 		97F60C11291E15DD0050C3F3 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
-				97B411AA29E804F700ADFE1F /* SidebarTopSectionElement.swift */,
 				BA2D90F4285CAFCB001BB495 /* FTSideMenuDisplayable.swift */,
 				BA2D90EE285CAFCB001BB495 /* FTShelfItemDatasource.swift */,
 				BA2D90EF285CAFCB001BB495 /* FTSidebarSection.swift */,
@@ -9255,7 +9250,6 @@
 			isa = PBXGroup;
 			children = (
 				97B411AC29E8058000ADFE1F /* FTSidebarGridItemViewModel.swift */,
-				97B411AD29E8058000ADFE1F /* FTSidebarTopSectionViewModel.swift */,
 				BA2D90E0285CAFCB001BB495 /* SideBarItemDropDelegate.swift */,
 				978BC92D2860476900BECAEC /* FTSidebarViewModel.swift */,
 				47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */,
@@ -13203,7 +13197,6 @@
 				BAF3915D2859ADF00067CA9F /* FTCustomActivity.swift in Sources */,
 				E7B423FF28DDD1FF008415D2 /* FTCustomizeToolbarSectionType.swift in Sources */,
 				BAF3915E2859ADF00067CA9F /* FTBasePublishRequest.swift in Sources */,
-				97B411AB29E804F700ADFE1F /* SidebarTopSectionElement.swift in Sources */,
 				BAF3915F2859ADF00067CA9F /* FTShapeDetector.swift in Sources */,
 				BAF391602859ADF00067CA9F /* FTDocumentUUIDReader.swift in Sources */,
 				BAF391622859ADF00067CA9F /* FTSeparatorLineDrawHelper.swift in Sources */,
@@ -14206,7 +14199,6 @@
 				472522BE2A1F3353008FFC46 /* FTLoadingIndicatorViewController.swift in Sources */,
 				BAF394A62859ADF10067CA9F /* UIImage+Extension.swift in Sources */,
 				BAF394A72859ADF10067CA9F /* FTHorizontalLayout.swift in Sources */,
-				97B411AF29E8058000ADFE1F /* FTSidebarTopSectionViewModel.swift in Sources */,
 				BA2D9128285CAFCC001BB495 /* FTEditableView.swift in Sources */,
 				BAF394A82859ADF10067CA9F /* FTSmartProgressView.swift in Sources */,
 				BAF394AC2859ADF10067CA9F /* FTInspCollectionViewCell.swift in Sources */,
