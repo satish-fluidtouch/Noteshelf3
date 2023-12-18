@@ -2260,12 +2260,7 @@
             imageInfo.enterEditMode = canEnterIntoEditMode;
             imageInfo.boundingRect = CGRectScale(finalFrame, 1/imageInfo.scale);
             [info addObject:imageInfo];
-            if (imageSource == FTInsertImageSourceSticker){
-                CGSize maxSize = CGSizeMake(bounds.size.width / 2, bounds.size.height / 2);
-                CGSize aspectSize = [self aspectFittedSize:finalFrame.size max:maxSize];
-                finalFrame.size = aspectSize;
 
-            }
             [frameInfo addObject:[NSValue valueWithCGRect:finalFrame]];
             
             //This is being released in mode switcher
