@@ -14,6 +14,7 @@ protocol FTTemplatesPreviewDelegate: AnyObject {
     func didUpdateUIFor(favorate isFavorate: Bool)
     func showAndhideOptions(show: Bool)
     func didUpdateUIFor(sticker isDownloaded: Bool)
+    func showAndhideSegment(show: Int)
 }
 
 
@@ -441,7 +442,7 @@ extension FTTemplatesPageViewController {
         }
         previewControllers.forEach { controller in
             if let vc = controller as? FTTemplatePreviewViewController {
-                vc.pageOrientationChange(segment: sender)
+                vc.pageOrientationChange(orientation: orientation)
             }
         }
     }
@@ -491,6 +492,13 @@ extension FTTemplatesPageViewController {
 
 // MARK: - FTTemplatesPreviewDelegate
 extension FTTemplatesPageViewController: FTTemplatesPreviewDelegate {
+    func showAndhideSegment(show: Int) {
+        if show == 0 {
+            self.orientationSegment.isHidden = false
+        } else {
+            self.orientationSegment.isHidden = true
+        }
+    }
 
     func showAndhideOptions(show: Bool) {
         if show {
