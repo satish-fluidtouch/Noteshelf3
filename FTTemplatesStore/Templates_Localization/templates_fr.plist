@@ -19,7 +19,7 @@
 					<key>displayTitle</key>
 					<string>Journaux numériques</string>
 					<key>fileName</key>
-					<string>Digital_Diaries</string>
+					<string>2024_Digital_Diaries</string>
 					<key>items</key>
 					<array>
 						<dict>
@@ -1057,7 +1057,7 @@
 					<key>multiPage</key>
 					<false/>
 					<key>previewToken</key>
-					<string>fe7f96d3-3fca-4a73-bba3-b6eddd3e66c1</string>
+					<string>310deb3b-df50-4a2b-9982-7983c4ed6218</string>
 					<key>fileToken</key>
 					<string></string>
 				</dict>
