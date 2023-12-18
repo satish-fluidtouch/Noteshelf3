@@ -24,14 +24,14 @@
 					<array>
 						<dict>
 							<key>displayTitle</key>
-							<string>Landscape Planner</string>
+							<string>Planificateur paysagiste</string>
 							<key>fileName</key>
 							<string>Landscape_Diaries_Colorful_Planner</string>
 							<key>styles</key>
 							<array>
 								<dict>
 									<key>displayTitle</key>
-									<string>Calender</string>
+									<string>Calendrier</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -55,7 +55,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Yearly</string>
+									<string>Planificateur annuel</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -79,7 +79,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Monthly</string>
+									<string>Mensuel</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -103,7 +103,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Weekly</string>
+									<string>Hebdomadaire</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -127,7 +127,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Daily</string>
+									<string>Quotidien</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -177,7 +177,7 @@
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>displayTitle</key>
-									<string>Tracker</string>
+									<string>Suivi</string>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>

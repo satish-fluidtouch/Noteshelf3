@@ -24,14 +24,14 @@
 					<array>
 						<dict>
 							<key>displayTitle</key>
-							<string>Landscape Planner</string>
+							<string>景观规划师</string>
 							<key>fileName</key>
 							<string>Landscape_Diaries_Colorful_Planner</string>
 							<key>styles</key>
 							<array>
 								<dict>
 									<key>displayTitle</key>
-									<string>Calender</string>
+									<string>日历</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -55,7 +55,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Yearly</string>
+									<string>年度计划</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -79,7 +79,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Monthly</string>
+									<string>每月</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -103,7 +103,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Weekly</string>
+									<string>每周</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -127,7 +127,7 @@
 								</dict>
 								<dict>
 									<key>displayTitle</key>
-									<string>Daily</string>
+									<string>每日</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>type</key>
@@ -150,10 +150,10 @@
 									<string>b44e6351-0016-4580-91a1-1b8218c01de7</string>
 								</dict>
 								<dict>
+									<key>displayTitle</key>
+									<string>笔记</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
-									<key>displayTitle</key>
-									<string>Notes</string>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -174,10 +174,10 @@
 									<string>f71d5a5e-b708-4516-ac3c-18246f29bdd3</string>
 								</dict>
 								<dict>
+									<key>displayTitle</key>
+									<string>追踪器</string>
 									<key>supportOrientation</key>
 									<integer>2</integer>
-									<key>displayTitle</key>
-									<string>Tracker</string>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
