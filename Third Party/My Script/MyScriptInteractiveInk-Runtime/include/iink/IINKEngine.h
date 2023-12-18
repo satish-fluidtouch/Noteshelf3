@@ -9,7 +9,10 @@
 @class IINKContentPackage;
 @class IINKParameterSet;
 @class IINKRecognitionAssetsBuilder;
+@class IINKRecognizer;
 @class IINKToolController;
+@class IINKOffscreenEditor;
+@class IINKItemIdHelper;
 
 
 /**
@@ -77,6 +80,21 @@ typedef NS_ENUM(NSUInteger, IINKPackageOpenOption)
  */
 @property (nonatomic, readonly, nonnull) NSArray<NSString *> *supportedPartTypes;
 
+/**
+ * Lists the recognizer types supported by this engine.
+ *
+ * @return the list of supported recognizer types.
+ *
+ * @since 2.1
+ */
+@property (nonatomic, readonly, nonnull) NSArray<NSString *> *supportedRecognizerTypes;
+
+/**
+ * The version of iink SDK.
+ *
+ * @since 2.3
+ */
+@property (atomic, readonly, nonnull) NSString *version;
 
 //==============================================================================
 #pragma mark - Constructors
@@ -102,8 +120,8 @@ typedef NS_ENUM(NSUInteger, IINKPackageOpenOption)
  *   inch.
  * @param target the render target.
  * @param error the recipient for the error description object
- *   * IINKErrorInvalidArgument if `dpiX` is not a number or is negative.
- *   * IINKErrorInvalidArgument if `dpiY` is not a number or is negative.
+ *   * IINKErrorInvalidArgument if `dpiX` is not a number, is zero or is negative.
+ *   * IINKErrorInvalidArgument if `dpiY` is not a number, is zero or is negative.
  * @return the newly created renderer, otherwise `nil`.
  */
 - (nullable IINKRenderer *)createRendererWithDpiX:(float)dpiX dpiY:(float)dpiY
@@ -158,6 +176,58 @@ typedef NS_ENUM(NSUInteger, IINKPackageOpenOption)
  * @return the newly created recognition assets builder on success, otherwise `nil`.
  */
 - (nullable IINKRecognitionAssetsBuilder *)createRecognitionAssetsBuilder;
+
+/**
+ * Creates a new recognizer.
+ *
+ * @param scaleX the scale to convert input horizontal coordinates unit into mm,
+ *   such that (X coordinate unit * scaleX = mm).
+ * @param scaleY the scale to convert input vertical coordinates unit into mm,
+ *   such that (Y coordinate unit * scaleY = mm).
+ * @param type the type of the new recognizer.
+ * @param error the recipient for the error description object
+ *   * IINKErrorInvalidArgument if `scaleX` is not a number, is zero or is negative.
+ *   * IINKErrorInvalidArgument if `scaleY` is not a number, is zero or is negative.
+ *   * IINKErrorRuntime when `type` is "Text" and the search path of the configuration manager is empty.
+ *   * IINKErrorRuntime when `type` is "Text", guides are enabled and the language does not allow guides.
+ *   * IINKErrorRuntime when `type` is "Text", guides are enabled and the line gap is zero or is negative
+ * @return the newly created recognizer, otherwise `nil`.
+ *
+ * @since 2.1
+ */
+- (nullable IINKRecognizer *)createRecognizerWithScaleX:(float)scaleX scaleY:(float)scaleY
+                                                   type:(nonnull NSString *)type
+                                                  error:(NSError * _Nullable * _Nullable)error
+                           NS_SWIFT_NAME(createRecognizer(scaleX:scaleY:type:));
+
+/**
+ * Creates a new offscreen editor.
+ *
+ * @param scaleX the scale to convert input horizontal coordinates unit into mm,
+ *   such that (X coordinate unit * scaleX = mm).
+ * @param scaleY the scale to convert input vertical coordinates unit into mm,
+ *   such that (Y coordinate unit * scaleY = mm).
+ * @param error the recipient for the error description object
+ *   * IINKErrorInvalidArgument if `scaleX` is not a number, is zero or is negative.
+ *   * IINKErrorInvalidArgument if `scaleY` is not a number, is zero or is negative.
+ * @return the newly created offscreen editor, otherwise `nil`.
+ *
+ * @since 2.1
+ */
+-(nullable IINKOffscreenEditor *)createOffscreenEditorWithScaleX:(float)scaleX scaleY:(float)scaleY
+                                                           error:(NSError * _Nullable * _Nullable)error
+                          NS_SWIFT_NAME(createOffscreenEditor(scaleX:scaleY:));
+
+/**
+ * Creates a new item id helper associated with an offscreen editor.
+ *
+ * @param offscreenEditor the associated offscreen editor.
+ * @return the newly created item id helper, otherwise `nil`.
+ *
+ * @since 2.1
+ */
+-(nullable IINKItemIdHelper *)createItemIdHelperWithOffscreenEditor:(nonnull IINKOffscreenEditor *)offscreenEditor
+                          NS_SWIFT_NAME(createItemIdHelper(offscreenEditor:));
 
 
 //==============================================================================

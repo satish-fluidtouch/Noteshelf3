@@ -23,7 +23,6 @@ typedef NS_OPTIONS(NSUInteger, IINKLayerType) {
  */
 @protocol IINKIRenderTarget <NSObject>
 
-
 @required
 
 /**
