@@ -124,7 +124,9 @@ class FTShapeDetector: NSObject {
     }
     
     private func removeDuplicates(points: [CGPoint]) -> [CGPoint] {
-        return points.removeDuplicates().uniqueElements
+//        return points.removeDuplicates().uniqueElements
+        return points
+
     }
     
     func addSegments(_ drawingPoints:  [CGPoint],
@@ -197,24 +199,4 @@ extension CGPoint {
     func quadrance(to point: CGPoint) -> Double {
         return pow(Double(x) - Double(point.x), 2) + pow(Double(y) - Double(point.y), 2)
     }
-}
-
-extension Array where Element:Equatable {
-    func removeDuplicates() -> (uniqueElements: [Element], duplicateExists: Bool) {
-        var result = [Element]()
-        var duplicateExists = false
-        for value in self {
-            if result.contains(value) == false {
-                result.append(value)
-            } else {
-                duplicateExists = true
-            }
-        }
-        return (result, duplicateExists)
-    }
-    
-    func indexes(of element: Element) -> [Int] {
-        return self.enumerated().filter({ element == $0.element }).map({ $0.offset })
-    }
-
 }

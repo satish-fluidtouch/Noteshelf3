@@ -48,14 +48,6 @@ extension FTPageViewController : FTPageAnnotationHandler
         self.addShapeControllerIfNeeded()
     }
     
-    func editShapeAnnotation(with annotation: FTAnnotation, point: CGPoint) {
-        self.editAnnotation(annotation, eventType: .singleTap, at: point)
-    }
-    
-    func endActiveShapeAnnotation(with annotation: FTAnnotation) {
-        self.endEditingActiveAnnotation(annotation, refreshView: true)
-    }
-    
     func activeController() -> UIViewController? {
         return self.activeAnnotationController
     }
