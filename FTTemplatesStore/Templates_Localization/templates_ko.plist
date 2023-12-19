@@ -177,7 +177,7 @@
 									<key>supportOrientation</key>
 									<integer>2</integer>
 									<key>displayTitle</key>
-									<string>Tracker</string>
+									<string>트래커</string>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
