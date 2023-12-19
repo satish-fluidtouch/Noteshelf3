@@ -180,41 +180,47 @@ extension FTNoteshelfDocument : FTDocumentFileItems
     func validateFileItemsForDocumentConsistancy() -> Bool
     {
         if(nil == self.rootFileItem) {
-            FTLogError("Root folder  not found");
+            let params = ["Reason" : "Root folder Missing"]
+            logDocumentCorrupt(params);
             return false;
         }
         let templateFolderItem = self.rootFileItem.childFileItem(withName: TEMPLATES_FOLDER_NAME);
         if(nil == templateFolderItem) {
-            FTLogError("Template folder not found");
+            let params = ["Reason" : "Template folder Missing"]
+            logDocumentCorrupt(params);
             return false;
         }
         
         if(self.templateFolderItem()?.children.count == 0) {
-            FTLogError("Template folder not found");
+            let params = ["Reason" : "Template folder has no files"]
+            logDocumentCorrupt(params);
             return false;
         }
         
         let metaDataFolderItem = self.rootFileItem.childFileItem(withName: METADATA_FOLDER_NAME);
         if(nil == metaDataFolderItem) {
-            FTLogError("metadata folder not found");
+            let params = ["Reason" : "Metadata folder Missing"]
+            logDocumentCorrupt(params);
             return false;
         }
 
         let propertyInfoPlist = self.metadataFolderItem()?.childFileItem(withName: PROPERTIES_PLIST) as? FTFileItemPlist;
         if(nil == propertyInfoPlist) {
-            FTLogError("property plist not found");
+            let params = ["Reason" : "Property plist Missing"]
+            logDocumentCorrupt(params);
             return false;
         }
         
         let documentVersion = self.propertyInfoPlist()?.object(forKey: DOCUMENT_VERSION_KEY) as? String;
         if(nil == documentVersion) {
-            FTLogError("document version is nil");
+            let params = ["Reason" : "document version is nil"]
+            logDocumentCorrupt(params);
             return false;
         }
         
         let value = (documentVersion! as NSString).floatValue;
         if(value > APP_SUPPORTED_MAX_DOC_VERSION) {
-            FTLogError("Max supported version");
+            self.logDocumentVersionNotSupported(documentVersion)
             return false;
         }
 
@@ -233,5 +239,5 @@ extension FTNoteshelfDocument : FTDocumentFileItems
         }
 
         return true;
-    }
+    }    
 }
