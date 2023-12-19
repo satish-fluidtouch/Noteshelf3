@@ -20,6 +20,7 @@ class FTOnScreenWritingViewController: UIViewController {
     fileprivate var currentExecutingRequest : FTOnScreenRenderRequest?;
     fileprivate var currentExecutingID : String?;
     fileprivate var previousRefreshRect = CGRect.null;
+    
     fileprivate var previousTouch: FTTouch?;
     
     var lastWritingMode : RKDeskMode = RKDeskMode.deskModePen;
@@ -411,6 +412,7 @@ extension FTOnScreenWritingViewController
             var rectToRefresh = CGRect.null;
             let shapeDetectionEnabled = self.isShapeDetectionEnabled();
             var foundShape = false;
+            
             //For drawing straight lines in highlighter mode when draw straight lines option is turned on
             //isShapeEnabled - This will be true only when user holds and convert to shape
             if self.toDrawStraightLineInFavoriteMode(),
@@ -431,10 +433,6 @@ extension FTOnScreenWritingViewController
                 if detectedShape.hasShape {
                     rectToRefresh = detectedShape.areaToRefresh;
                     foundShape = true;
-                    if let ann = detectedShape.strokes?.first as? FTAnnotation {
-                        ann.inLineEditing = true
-                        self.delegate?.editShapeAnnotation(with: ann, point: touch.activeUItouch.location(in: self.view))
-                    }
                 }
             }
             if(!foundShape && !isShapeEnabled) {
@@ -453,7 +451,7 @@ extension FTOnScreenWritingViewController
             NSObject.cancelPreviousPerformRequests(withTarget: self,
                                                    selector: #selector(performShapeRenderingFor(_:)),
                                                    object: touch);
-            if let del = self.delegate, del.mode == FTRenderModeZoom, !foundShape {
+            if let del = self.delegate, del.mode == FTRenderModeZoom {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
                     let notification = Notification.init(name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
                                                          object: self.view.window,
@@ -538,9 +536,9 @@ extension FTOnScreenWritingViewController
         return false
     }
     
-    private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool, strokes: [FTStroke]?) {
+    private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool) {
         var hasShape = false;
-        guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape,nil) }
+        guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape) }
 
         let shapeDetector = FTShapeDetector.init(delegate: self);
         let strokes = shapeDetector.detectShape(for: curStroke, scale: self.scale)
@@ -550,7 +548,7 @@ extension FTOnScreenWritingViewController
             hasShape = true;
             rectToRefresh = self.renderDetectedShapeStrokes(strokes, rectToRefresh: rectToRefresh)
         }
-        return (rectToRefresh,hasShape, strokes)
+        return (rectToRefresh,hasShape)
     }
     private func renderDetectedShapeStrokes(_ strokes : [FTStroke],rectToRefresh : CGRect) -> CGRect{
         var rectToRefresh = rectToRefresh;
