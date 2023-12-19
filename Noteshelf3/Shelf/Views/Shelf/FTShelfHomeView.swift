@@ -56,6 +56,10 @@ struct FTShelfHomeView: FTShelfBaseView {
                         }
                     }
                 })
+                .overlay(alignment: .bottom, content: {
+                        FTAdBannerView()
+                            .padding(.bottom,8)
+                })
                 .detectOrientation($viewModel.orientation)
                 .shelfNavBarItems()
                 .allowsHitTesting(viewModel.allowHitTesting)
@@ -65,7 +69,6 @@ struct FTShelfHomeView: FTShelfBaseView {
 #else
                 .navigationBarBackButtonHidden(viewModel.mode == .selection)
 #endif
-                .environmentObject(viewModel)
                 .shelfBottomToolbar()
                 .environmentObject(viewModel.toolbarViewModel)
                 .environmentObject(viewModel)

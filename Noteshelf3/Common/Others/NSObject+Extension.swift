@@ -13,7 +13,9 @@ extension NSObject {
         case openNotebook, openGroup, openShelf, openContent, openTag;
         
         var activityIdentifier: String {
-            let bundleID = Bundle.main.bundleIdentifier ?? "com.fluidtouch.noteshelf3";
+            guard let bundleID = Bundle.main.bundleIdentifier else {
+                fatalError("Where's the bundle id?")
+            }
             var identifier = bundleID;
             switch self {
             case .openNotebook:

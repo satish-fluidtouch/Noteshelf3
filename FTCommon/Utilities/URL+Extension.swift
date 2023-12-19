@@ -65,13 +65,25 @@ public extension URL {
             return nil
         }
     }
+    func urlByDeleteingPrivate() -> URL
+    {
+        var fileItemURL = self.standardizedFileURL;
+        let filePath = fileItemURL.path;
+        let searchString = "/private";
+        if(filePath.hasPrefix(searchString)) {
+            let range = filePath.startIndex..<filePath.endIndex;
+
+            fileItemURL = URL.init(fileURLWithPath: filePath.replacingOccurrences(of: searchString, with: "", options: String.CompareOptions.anchored, range: range));
+        }
+        return fileItemURL;
+    }
 }
 
 public extension URL {
     var isSuportedBookExtension: Bool {
         return [FTFileExtension.ns2, FTFileExtension.ns3].contains(self.pathExtension)
     }
-
+    
     var isNS2Book: Bool {
         if self.pathExtension == FTFileExtension.ns2 {
             return true
@@ -104,9 +116,7 @@ public extension FileAttributeKey {
         }
 
         public init(key: FileAttributeKey, date: Date) {
-             let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .secondsSince1970
-            guard let data = try? encoder.encode(date) else {
+            guard let data = date.data else {
                 fatalError("unable to convert to data")
             }
             self.init(key: key, data: data)
@@ -117,10 +127,7 @@ public extension FileAttributeKey {
         }
 
         public var dateValue: Date? {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            let date = try? decoder.decode(Date.self, from: self.data)
-            return date
+            return self.data.date
         }
     }
 }
@@ -153,4 +160,22 @@ extension Sequence where Self == [FileAttributeKey: Any] {
 
 func dataToKilobytes(_ data: Data) -> Double {
     return Double(data.count) / 1024.0
+}
+
+public extension Date {
+    var data: Data? {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        let data = try? encoder.encode(self)
+        return data
+    }
+}
+
+public extension Data {
+    var date: Date? {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        let date = try? decoder.decode(Date.self, from: self)
+        return date
+    }
 }

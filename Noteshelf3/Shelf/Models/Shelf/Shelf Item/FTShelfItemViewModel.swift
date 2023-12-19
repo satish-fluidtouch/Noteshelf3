@@ -90,14 +90,12 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     @Published var progress: CGFloat = 0.0
     @Published var uploadDownloadInProgress: Bool = false
     @Published var popoverType: FTNotebookPopoverType?
-    @Published var isNS2Book: Bool = false
 
     init(model: FTShelfItemProtocol) {
         self.model = model
         super.init()
         self.updateDownloadStatusFor(item: model);
         self.isFavorited = FTRecentEntries.isFavorited(model.URL)
-        self.isNS2Book = model.URL.isNS2Book
     }
         
     func configureShelfItem(_ item: FTShelfItemProtocol){
@@ -126,9 +124,10 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
             return;
         }
         var token : String?
-        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(self.model, onCompletion: { [weak self](image, imageToken) in
-            if token == imageToken, let image {
-                self?.coverImage = image
+        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(self.model, onCompletion: { [weak self] (image, imageToken) in
+            guard let self else { return }
+            if token == imageToken, let image, self.isVisible {
+                self.coverImage = image
             }
         })
     }
@@ -147,7 +146,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
         if coverImage.needEqualCorners {
             return AnyShape(RoundedRectangle(cornerRadius:FTShelfItemProperties.Constants.Notebook.landCoverCornerRadius));
         }
-        return AnyShape(FTNotebookShape())
+        return AnyShape(FTPreviewShape(leftRaidus: FTShelfItemProperties.Constants.Notebook.portNBCoverleftCornerRadius, rightRadius: FTShelfItemProperties.Constants.Notebook.portNBCoverRightCornerRadius))
     }
 }
 
@@ -177,7 +176,9 @@ extension FTShelfItemViewModel {
         if let item = notification.object as? FTShelfItemProtocol {
             if item.uuid == self.shelfItem?.uuid {
                 runInMainThread {
-                    self.fetchCoverImage()
+                    if self.isVisible {
+                        self.fetchCoverImage()
+                    }
                 }
             }
         }
@@ -203,7 +204,7 @@ extension FTShelfItemViewModel {
     }
     
     @objc func shelfitemDidgetUpdated(_ notification: Notification) {
-        if let userInfo = notification.userInfo,let items = userInfo[FTShelfItemsKey] as? [FTDocumentItem], let item = items.first, item.uuid == self.model.uuid {
+        if let userInfo = notification.userInfo,let items = userInfo[FTShelfItemsKey] as? [FTDocumentItem], let item = items.first, item.uuid == self.model.uuid,self.isVisible {
             self.fetchCoverImage()
         }
     }
@@ -227,7 +228,9 @@ extension FTShelfItemViewModel {
             self.progress = 1.0;
             self.isNotDownloaded = false
             self.stopDownloadingProgressView()
-            self.fetchCoverImage()
+            if self.isVisible {
+                self.fetchCoverImage()
+            }
         }
         else if documentItem.isDownloading {
             let progress = min(CGFloat(documentItem.downloadProgress)/100,1.0);

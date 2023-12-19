@@ -9,7 +9,7 @@ import UIKit
 import FTCommon
 
 class FTCoverCollectionViewCell: FTTraitCollectionViewCell {
-    @IBOutlet fileprivate weak var imgView: UIImageView!
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet fileprivate weak var selectionImgView: UIImageView?
     @IBOutlet fileprivate weak var sectionTitleLabel: UILabel?
     @IBOutlet fileprivate weak var shadowImageView: UIImageView?

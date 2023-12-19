@@ -146,8 +146,8 @@ class FTFavoriteSizeViewModel: ObservableObject {
     @Published private var currentSelectedSize: CGFloat = 3.0
 
     private var rackData: FTRackData!
-    private var currentPenset: FTPenSetProtocol!
-    private var sizeEditPostion: FavoriteSizePosition?
+    private(set) var currentPenset: FTPenSetProtocol!
+    var sizeEditPostion: FavoriteSizePosition?
 
     private weak var delegate: FTFavoriteSizeEditDelegate?
     private weak var scene: UIWindowScene?
@@ -223,26 +223,22 @@ extension FTFavoriteSizeViewModel {
 
     var sizeRange: ClosedRange<CGFloat> {
         let rackType = self.getRackType()
-        var range = CGFloat(0.0)...CGFloat(8.0)
-        if rackType == .highlighter {
-            range = CGFloat(1.0)...CGFloat(6.0)
-        } else if rackType == .shape {
-            range = CGFloat(1.0)...CGFloat(8.0)
-        }
-        return range
+        return rackType.sizeRange
     }
+}
 
-    func getViewSize(using sizeValue: CGFloat) -> CGSize {
+extension FTPenType {
+    func getIndicatorSize(using sizeValue: CGFloat) -> CGSize {
         let floatSize = Float(sizeValue)
         var reqSize: CGSize = .zero
         if let penSize = FTPenSize(rawValue: Int(sizeValue)) {
-            if currentPenset.type.isHighlighterPenType() {
-                var width = penSize.maxDisplaySize(penType: currentPenset.type)
-                var scale = penSize.scaleToApply(penType: currentPenset.type, preciseSize: sizeValue)
+            if self.isHighlighterPenType() {
+                var width = penSize.maxDisplaySize(penType: self)
+                var scale = penSize.scaleToApply(penType: self, preciseSize: sizeValue)
                 scale = scale*0.8
                 reqSize = CGSize(width: width*scale, height: width*scale)
             } else {
-                var width = penSize.displayPixel(currentPenset.type)
+                var width = penSize.displayPixel(self)
                 let fractionalPart = sizeValue.truncatingRemainder(dividingBy: 1)
                 width += fractionalPart * 2.0
                 reqSize = CGSize(width: width, height: width)

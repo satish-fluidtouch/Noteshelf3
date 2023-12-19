@@ -11,13 +11,14 @@ import SwiftUI
 struct FTShelfContentPhotosView: View  {
     @ObservedObject var viewModel: FTShelfContentPhotosViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var menuOverlayInfo : FTShelfMenuOverlayInfo
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    private var gridItems: [GridItem] {
-        var numberOfColoums = 4
-        if horizontalSizeClass == .compact {
-            numberOfColoums = 3
-        }
-        return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColoums)
+
+    private func gridItems(size viewSize: CGSize) -> [GridItem] {
+        var numberOfColumns: Int
+        numberOfColumns =  (viewSize.width > 1125) ? 6 : (viewSize.width > 1023 ? 5 : (viewSize.width > 700 ? 4 : 3))
+        numberOfColumns = horizontalSizeClass == .compact ? 2 : numberOfColumns
+        return Array(repeating: GridItem(.flexible(minimum:50), spacing: 2), count: numberOfColumns)
     }
     var body: some View {
         Group {
@@ -28,6 +29,12 @@ struct FTShelfContentPhotosView: View  {
                 contentView
             case .empty:
                 emptyStateView
+            case .partiallyLoaded:
+                if !viewModel.media.isEmpty {
+                    contentView
+                } else {
+                    ProgressView()
+                }
             }
         }
         .padding(.horizontal, 0)
@@ -41,7 +48,7 @@ struct FTShelfContentPhotosView: View  {
     var contentView: some View {
          GeometryReader { proxy in
             ScrollView {
-                LazyVGrid(columns: gridItems, spacing: 2) {
+                LazyVGrid(columns: gridItems(size: proxy.size), spacing: 2) {
                     ForEach(viewModel.media, id: \.id) { media in
                         let size = itemSize(for: proxy.size)
                         MediaItemView(media: media)
@@ -56,10 +63,11 @@ struct FTShelfContentPhotosView: View  {
                             }
                             .overlay(alignment: .bottomLeading) {
                                 Text(media.title)
-                                    .appFont(for: .medium, with: 14)
+                                    .appFont(for: .medium, with: 15)
                                     .multilineTextAlignment(.leading)
+                                    .lineLimit(1)
                                     .foregroundColor(Color.white)
-                                    .padding()
+                                    .padding(.all,8)
                             }
                             .onAppear {
                                 media.fetchImage()
@@ -81,7 +89,11 @@ struct FTShelfContentPhotosView: View  {
                             } preview: {
                                 FTMediaPreviewPageView(media: media)
                                     .onAppear {
+                                        menuOverlayInfo.isMenuShown = true
                                         track(EventName.shelf_photo_page_longpress, screenName: ScreenName.shelf_photos)
+                                    }
+                                    .onDisappear {
+                                        menuOverlayInfo.isMenuShown = false
                                     }
                             }
                     }
@@ -97,12 +109,10 @@ struct FTShelfContentPhotosView: View  {
 
     private func itemSize(for viewSize: CGSize) -> CGSize {
         let cellSpacing: CGFloat = 2
-        var itemsPerRow: CGFloat = 4
-        if horizontalSizeClass == .compact {
-            itemsPerRow = 3
-        }
+        var itemsPerRow: CGFloat
+        itemsPerRow =  (viewSize.width > 1125) ? 6 : (viewSize.width > 1023 ? 5 : (viewSize.width > 700 ? 4 : 3))
+        itemsPerRow = horizontalSizeClass == .compact ? 2 : itemsPerRow
         let iterimSpacing: CGFloat = (itemsPerRow - 1)*cellSpacing
-
         let width: CGFloat = (viewSize.width-iterimSpacing)/itemsPerRow
         let size = CGSize(width: width, height: width)
         return size
@@ -113,17 +123,14 @@ struct MediaItemView: View {
     @ObservedObject var media: FTShelfMedia
 
     var body: some View {
-        if media.isProtected {
+        if let image = media.mediaImage {
+            Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipped()
+        } else {
             Color.gray
                 .opacity(0.3)
-                .overlay {
-                    Image(systemName: "lock")
-                }
-        } else {
-            Image(uiImage: media.mediaImage ?? UIImage.shelfDefaultNoCoverImage)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .clipped()
         }
     }
 }

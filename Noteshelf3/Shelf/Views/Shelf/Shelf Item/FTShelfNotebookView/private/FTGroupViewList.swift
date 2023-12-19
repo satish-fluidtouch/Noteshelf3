@@ -34,7 +34,7 @@ struct FTGroupListView: View {
                 })
                 .ignoresSafeArea()
         }, notebookShape: {
-            return FTNotebookShape(raidus: 10);
+            return FTPreviewShape(raidus: 10);
         }, onAppearActon: {
             shelfMenuOverlayInfo.isMenuShown = true;
             // Track event
@@ -75,6 +75,9 @@ struct FTGroupListView: View {
                     .frame(width: 24,alignment: .center)
             }
             .contentShape(RoundedRectangle(cornerRadius: 10))
+            .onTapGesture(perform: {
+                shelfViewModel.didTapGroupItem(groupItem)
+            })
     }
     @ViewBuilder private var titleView: some View {
         VStack(alignment: .leading, spacing: 2) {

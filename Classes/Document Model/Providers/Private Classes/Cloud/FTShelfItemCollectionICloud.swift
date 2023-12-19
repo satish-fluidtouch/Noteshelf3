@@ -57,11 +57,6 @@ class FTShelfItemCollectionICloud: NSObject, FTShelfItemSorting, FTShelfItemSear
 
 // MARK: - FTShelfItemCollection -
 extension FTShelfItemCollectionICloud: FTShelfItemCollection {
-    func isNS2Collection() -> Bool {
-        //TODO: (AK) Think about a refactor
-        let belongs = self.parent?.belongsToNS2()
-        return belongs ?? false
-    }
 
     func shelfItemCollection(for metadata: NSMetadataItem) -> FTShelfItemProtocol? {
         return self.hashTable.itemFromHashTable(metadata) as? FTShelfItemProtocol

@@ -13,7 +13,7 @@ import SwiftUI
 struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentable {
     
     @ViewBuilder let preview : () -> Content;
-    let notebookShape: ()-> FTNotebookShape?;
+    let notebookShape: ()-> FTPreviewShape?;
     
     let onAppearActon: (() -> Void)?;
     let onDisappearActon: (() -> Void)?;
@@ -64,10 +64,6 @@ struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentab
                     return nil;
                 }
                 let _shelfModel = strongSelf.representView.shelfItemModel;
-
-                if _shelfModel.isNS2Collection {
-                    return nil;
-                }
 
                 let menuItems = _shelfModel.getContexualOptionsForShelfItem(_shelfItem);
                 var mainGroups = [UIMenuElement]();
@@ -137,9 +133,6 @@ struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentab
         
         func dragInteraction(_ interaction: UIDragInteraction, itemsForBeginning session: UIDragSession) -> [UIDragItem] {
             let _shelfViewmodel = self.representView.shelfItemModel;
-            if _shelfViewmodel.isNS2Collection { // Not supporting drag for ns2 books under ns2 category
-                return []
-            }
             if self.representView.shelfItemModel.mode == .normal, let shelfItem = self.representView.shelfItem {
                 let dragItem = UIDragItem(itemProvider: self.representView.shelfItemModel.itemProvider(shelfItem));
                 dragItem.localObject = shelfItem;

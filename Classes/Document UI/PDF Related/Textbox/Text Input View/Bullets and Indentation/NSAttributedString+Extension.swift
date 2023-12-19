@@ -91,7 +91,7 @@ extension NSAttributedString {
                 
                 let attachment = attrs[NSAttributedString.Key.attachment] as? NSTextAttachment
                 if let attachment = attachment {
-                    attachment.updateFileWrapperIfNeeded()
+                    attachment.updateFileWrapperIfNeeded(migrate: true)
                     var attachmentBounds = attachment.bounds
                     let some = CGSize(width: CHECKBOX_WIDTH, height: CHECKBOX_HEIGHT)
                     attachmentBounds.size = some

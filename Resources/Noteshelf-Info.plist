@@ -228,6 +228,8 @@
 				<string>com.googleusercontent.apps.207000050327-oijso39v4kn8l3jfgm0vuugnf109t9ds</string>
 				<string>com.googleusercontent.apps.207000050327-vf0tctah1bf3i78h5nthf8llrurprj6b</string>
 				<string>com.googleusercontent.apps.409080850323-197pfl6uk2u9ba37ihir2f7qp4osh5f1</string>
+				<string>com.googleusercontent.apps.207000050327-2hut5jjhnqm7pq2aicf0mdlg5ftpq6tt</string>
+				<string>com.googleusercontent.apps.409080850323-rjr73ja1j78siv2tdqqvtcg8n846llvi</string>
 			</array>
 		</dict>
 		<dict>
@@ -272,7 +274,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>52</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>INAlternativeAppNames</key>
@@ -305,7 +307,7 @@
 		<string>msauth</string>
 		<string>msauthv2</string>
 		<string>msauthv3</string>
-		<string>com.fluidtouch.noteshelf</string>
+		<string>$(NS2_APP_URL_SCHEME)</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>

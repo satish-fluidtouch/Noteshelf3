@@ -55,8 +55,9 @@ extension FTShelfBaseView {
 
     func shelfGridView(items: [FTShelfItemViewModel], size: CGSize, scrollViewProxy: ScrollViewProxy?) -> some View {
         LazyVGrid(columns: gridItemLayout(size), alignment: .center, spacing:viewModel.displayStlye.gridSpacing) {
+            let columnWidth = columnWidth(size)
             ForEach(items, id: \.id) { item in
-                let gridItemSize = gridItemSize(size, shelfItem: item)
+                let gridItemSize = gridItemSize(size, shelfItem: item, columnWidth: columnWidth)
                 if gridItemSize != .zero {
                     FTShelfItemView(shelfItem: item,
                                     shelfItemWidth:gridItemSize.width,
@@ -84,8 +85,7 @@ private extension FTShelfBaseView {
       return Array(repeating: gridItem, count: noOfGridColumns(size))
     }
 
-    func gridItemSize(_ size: CGSize, shelfItem: FTShelfItemViewModel) -> CGSize {
-        let columnWidth = columnWidth(size)
+    func gridItemSize(_ size: CGSize, shelfItem: FTShelfItemViewModel, columnWidth: CGFloat) -> CGSize {
         let titleRectHeight = FTShelfItemProperties.Constants.Notebook.titleRectHeight
         var shelfItemSize : CGSize = CGSize(width: columnWidth, height: ((columnWidth - totalHorizontalPadding) * portraitCoverHeightPercnt) + titleRectHeight)
         if(self.viewModel.displayStlye == .List) {
@@ -144,7 +144,7 @@ private extension FTShelfBaseView {
 extension FTShelfBaseView{
      func showMinHeight(geometrySize: CGFloat) -> CGFloat {
         if viewModel.shouldShowGetStartedInfo && viewModel.isInHomeMode {
-            return geometrySize > 1023 ? FTShelfTopSectionviewConstants.horizontalGridSize : (geometrySize < 500 ? FTShelfTopSectionviewConstants.compactverticalGridSize : FTShelfTopSectionviewConstants.regularverticalGridSize)
+            return geometrySize > 1023 ? FTShelfTopSectionviewConstants.horizontalGridSize : (geometrySize < 505 ? FTShelfTopSectionviewConstants.compactverticalGridSize : FTShelfTopSectionviewConstants.regularverticalGridSize)
         } else {
             return geometrySize > 680 ? FTShelfTopSectionviewConstants.horizontalItemSize : FTShelfTopSectionviewConstants.verticalItemSize
         }

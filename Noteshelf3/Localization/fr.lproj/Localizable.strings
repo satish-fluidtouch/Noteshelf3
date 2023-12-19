@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Paramètres du crayon Apple";
 "AppleWatch" = "Apple Watch";
 "AppleWatchRecording" = "Enregistrement de l'Apple Watch";
+"AppleWatchRecordings" = "Enregistrements de l'Apple Watch";
 "Apply" = "Appliquer";
 "Arts" = "Arts";
 "Athletics" = "Athlétisme";
@@ -306,7 +307,7 @@
 "EnterBetweenNandN" = "Entrer entre %d et %d";
 "EnterPassword" = "Entrez le mot de passe";
 "EnterPasswordHint" = "Entrez un indice de mot de passe";
-"EnterPasswordToOpenThisNotebook" = "Entrez le mot de passe pour ouvrir ce cahier";
+"EnterPasswordToOpenThisNotebook" = "Entrez le mot de passe pour ouvrir %@";
 "EnterThePasswordFor" = "Entrez le mot de passe pour %@.";
 "EraseEntireStroke" = "Effacer le trait entier";
 "EraseHighlighterOnly" = "Effacer surligneur uniquement.";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "MODE TABLEAU BLANC";
 "Wallpapers" = "Fonds d'écran";
 "Warning" = "Avertissement";
-"WatchAdInfo" = "Installez Noteshelf 2 sur votre Apple Watch. Vous pouvez enregistrer de l'audio en déplacement et prendre des notes plus tard.";
+"WatchAdInfoSubTitle" = "Vous pouvez enregistrer de l'audio en déplacement et prendre des notes plus tard.";
+"WatchAdInfoTitle" = "Installez Noteshelf 3 sur votre Apple Watch.";
 "WatchNewRecords" = "De nouvelles enregistrements sont arrivés de votre Apple Watch.";
 "WatchRecording" = "Regarder l'enregistrement.";
 "WatchRecordings" = "Enregistrements de la Watch";
@@ -1021,14 +1023,19 @@
 "days" = "Jours";
 "delete" = "Supprimer";
 "done" = "Terminé ";
+"dontMigrate" = "Ne pas migrer";
 "downloadedStickers" = "Autocollants téléchargés";
 "duplicate" = "Dupliquer";
 "eraser.auto" = "Automatique ";
+"evernote.openNotebook.SyncSkip" = "Un carnet est en état ouvert.";
+"evernote.userInfo.fetchFailureMessage" = "Impossible de récupérer les informations du compte pour le moment.";
 "export_data" = "Exporter les données";
 "export_description1" = "Il est fortement recommandé de sauvegarder une copie de vos données sur votre appareil local.";
 "export_description2" = "Les données exportées contenant vos cahiers, groupes et catégories seront sauvegardées sous forme de fichier .zip. Vos cahiers seront sauvegardés dans le format .noteshelf.";
 "export_description_1" = "Il est fortement recommandé de sauvegarder une copie de vos données sur votre appareil local. Les données exportées seront sauvegardées sous forme de fichier .zip et contiendront tous vos cahiers, groupes et catégories.";
 "failed_following" = "Échec de sauvegarde des cahiers suivants:";
+"favoritebar.singleFavoriteDelete.message" = "Au moins un élément doit être conservé dans la barre d'outils Favoris.";
+"favoritebar.singleFavoriteDelete.title" = "Impossible de supprimer le favori";
 "finalizing" = "Finalisation";
 "finder.addPageAfter" = "Ajouter une page après";
 "finder.addPageBefore" = "Ajouter une page avant";
@@ -1082,15 +1089,20 @@
 "iCloudUserTurnedOff" = "iCloud désactivé'";
 "iCloudUserTurnedOffMessage" = "Une copie de vos documents restera stockée dans iCloud. Que souhaitez-vous faire avec les documents actuellement sur cet appareil ?";
 "iap.bannerTitle" = "Mise à niveau pour Premium";
+"iap.bannerTitle1" = "Obtenez Premium à %@ DE RABAIS";
+"iap.bannerTitle2" = "uniquement pour les utilisateurs de Noteshelf 2";
 "iap.booklimitReachedMessage" = "Videz votre corbeille pour vous assurer que les carnets supprimés ne comptent pas dans votre quota, ou déverrouillez l'application complète pour des carnets illimités.";
 "iap.booklimitReachedTitle" = "Vous avez atteint la limite de cahiers gratuits.";
 "iap.booksleft" = "%@ notes restantes";
+"iap.discount.highlight" = "%@ DE RABAIS";
 "iap.featureLimitMessage" = "Cette fonctionnalité est verrouillée. Débloquez-la en effectuant une mise à niveau maintenant.";
 "iap.featureLimitTitle" = "Mettez à niveau maintenant.";
 "iap.message" = "Accédez à des notes illimitées, à la reconnaissance de l'écriture manuscrite et à la recherche, ainsi qu'à des journaux numériques avec Noteshelf Premium.";
+"iap.messageNew" = "Pour une durée limitée seulement, les utilisateurs de Noteshelf 2 peuvent bénéficier de cette offre spéciale et débloquer toutes les fonctionnalités et avantages de Noteshelf 3.";
 "iap.noProductIDsFound" = "Aucun identifiant de produit d'achat intégré n'a été trouvé.";
 "iap.noProductsFound" = "Aucun achat intégré n'a été trouvé.";
 "iap.onetimepurchase" = "ACHAT UNIQUE.  À TOI POUR TOUJOURS.";
+"iap.onetimepurchasenew" = "%@ Achat unique ";
 "iap.paymentWasCancelled" = "Le processus d'achat intégré a été annulé.";
 "iap.privacy" = "Politique de confidentialité";
 "iap.productRequestFailed" = "Impossible de récupérer les produits d'achat intégré disponibles pour le moment.";
@@ -1101,7 +1113,9 @@
 "iap.restoreSuccessWithNoPurchase" = "Il n'y a aucun élément acheté à restaurer.";
 "iap.termsnconditions" = "Termes et conditions";
 "iap.title" = "Obtenez l'expérience complète avec Noteshelf Premium";
+"iap.toptitle" = "Exclusif pour les utilisateurs de Noteshelf 2";
 "iap.upgradeNow" = "Mettez à jour maintenant.";
+"iap.upgradeToPremiumNow" = "Passer à la version Premium maintenant";
 "icloud.sync.issue.message" = "Impossible d'accéder à iCloud. Veuillez vous assurer qu'iCloud est activé dans les paramètres.";
 "iconlabels" = "Étiquettes d'icônes";
 "import" = "Importer";
@@ -1122,7 +1136,11 @@
 "migration.alert.migrate" = "Migrer";
 "migration.alert.open" = "Aller à l'emplacement.";
 "migration.alert.title" = "Souhaitez-vous migrer une copie de ce cahier vers Noteshelf 3 ?";
-"migration.progress.text" = "Migration";
+"migration.cancel" = "Annuler la migration";
+"migration.cancel.alert" = "Êtes-vous sûr de vouloir annuler la migration ?";
+"migration.exitScreen" = "Veuillez ne pas quitter cet écran avant la fin du processus de migration";
+"migration.progress.text" = "En cours de migration...";
+"migration.succes" = "Succès de la migration !";
 "migration.success.alert.message" = "Succès ! Votre cahier migré a été placé dans : %@";
 "months" = "Mois";
 "more" = "Plus";
@@ -1292,6 +1310,7 @@
 "shelf.home.seeAll" = "Voir tout";
 "shelf.home.seeAllNotes" = "Voir toutes les notes.";
 "shelf.importfile.description" = "Ajouter des PDF et des images depuis votre application Fichiers";
+"shelf.migration.CompactDescription" = "Il suffit de toucher n'importe quel cahier ici pour en faire une copie dans Noteshelf 3. Les cahiers migrés seront disponibles dans les catégories et groupes de Noteshelf 3.";
 "shelf.migration.Description" = "Il suffit de toucher n'importe quel cahier ici pour en faire une copie dans Noteshelf 3. Les cahiers migrés seront disponibles dans les catégories et groupes de Noteshelf 3. La possibilité de migrer des catégories entières arrive bientôt !";
 "shelf.migration.headerMessage" = "Migrez vos carnets vers Noteshelf 3.";
 "shelf.navBar.deselectAll" = "Désélectionner tout.";
@@ -1425,7 +1444,7 @@
 "sidebar.photos" = "Photos";
 "sidebar.recording" = "Enregistrement";
 "sidebar.recordings" = "Enregistrements";
-"sidebar.topSection.home" = "Acceuil";
+"sidebar.topSection.home" = "Accueil";
 "sidebar.topSection.starred" = "Favoris";
 "sidebar.topSection.unfiled" = "Non classé";
 "speechbubbles" = "Bulles de dialogue";
@@ -1490,6 +1509,7 @@
 "trash.alert.title" = "Êtes-vous sûr de vouloir vider votre corbeille ?";
 "unsplash.search.alertMessage" = "Entrez le texte à rechercher";
 "untitled" = "Sans titre";
+"updatemigration.title" = "Mise à jour sur la migration";
 "useSticker" = "Utiliser l'autocollant";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "NOTES AUDIO";
@@ -1532,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by admin on 11 December 2023 at 6:46 PM

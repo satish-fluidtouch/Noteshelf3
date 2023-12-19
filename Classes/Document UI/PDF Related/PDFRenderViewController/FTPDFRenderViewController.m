@@ -97,6 +97,7 @@
 //@property (assign) NSInteger currentPageIndex;
 @property (assign) NSUInteger currentPageIndexToBeShown;
 @property (assign) CGFloat contentScaleInNormalMode;
+@property (strong) FTPageNumberView *pageNumberLabel;
 
 @end
 
@@ -1132,6 +1133,13 @@
         }
     }
     [self triggerPageChangeNotification];
+    if (self.pageLayoutType == FTPageLayoutHorizontal) {
+        if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+            [self addPageNumberLabelToView];
+        }else {
+            [self setCurrentPageNoToPageNumberLabel];
+        }
+    }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -1168,6 +1176,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(![self.view.subviews containsObject:self.pageNumberLabel] && self.currentlyVisiblePage != nil) {
+        [self addPageNumberLabelToView];
+    }else {
+        [self setCurrentPageNoToPageNumberLabel];
+    }
     if(!self.mainScrollView.isZoomingInProgress && self.pageLayoutHelper.layoutType == FTPageLayoutVertical) {
         [self loadVisiblePages];
         NSArray *eachPageController = [self visiblePageViewControllers];
@@ -1505,6 +1518,9 @@
     [self switchMode:kDeskModeClipboard];
 }
 
+-(void)favoritesButtonAction {
+    [self switchMode:kDeskModeFavorites];
+}
 
 -(void)iconsButtonAction
 {
@@ -1779,6 +1795,11 @@
             }
         }
             break;
+        case kDeskModeFavorites:
+            [self.pdfDocument.localMetadataCache setLastPenMode:mode];
+            [[self.pdfDocument localMetadataCache] setCurrentDeskMode:mode];
+            break;
+            
         default:
             break;
     }
@@ -1818,12 +1839,7 @@
 
 -(NSArray*)audioAnnotationsForController:(FTAudioListViewController*)controller
 {
-    NSMutableArray *audioAnnotations = [NSMutableArray array];
-    NSArray *pages = [self.pdfDocument pages];
-    for (id<FTPageProtocol> eachPage in pages) {
-        [audioAnnotations addObjectsFromArray:[eachPage audioAnnotations]];
-    }
-    return audioAnnotations;
+    return [self audioAnnotations];
 }
 
 -(FTAudioAnnotation*)audioAnnotationForModel:(FTAudioRecordingModel*)model
@@ -1989,7 +2005,8 @@
         if (!(self.currentDeskMode == kDeskModePen
               || self.currentDeskMode == kDeskModeMarker
               || self.currentDeskMode == kDeskModeEraser
-              || self.currentDeskMode == kDeskModeShape)) {
+              || self.currentDeskMode == kDeskModeShape
+              || self.currentDeskMode == kDeskModeFavorites)) {
             [self switchMode:kDeskModePen];
         }
 
@@ -2188,14 +2205,39 @@
                 UIImageWriteToSavedPhotosAlbum(obj, nil, nil, nil);
             }
             
-            UIImage *finalizedImage = [obj scaleAndRotateImageFor1x];
-            if(nil == finalizedImage) {
+            UIImage *finalizedImage = nil;
+            if (imageSource == FTInsertImageSourceSticker) {
                 finalizedImage = obj;
             }
-            
+            else {
+                finalizedImage = [obj scaleAndRotateImageFor1x];
+                if(nil == finalizedImage) {
+                    finalizedImage = obj;
+                }
+            }
             CGRect finalFrame = [finalizedImage frameInRect:bounds
                                            capToMinIfNeeded:TRUE
                                                contentScale:pageContentScale];
+            if (imageSource == FTInsertImageSourceSticker) {
+                CGFloat minWidth = MIN(obj.size.width * 0.3,bounds.size.width * 0.3);
+                CGFloat maxHeight = MAX(obj.size.height * 0.2,bounds.size.width * 0.2);
+                if (finalFrame.size.width > minWidth) {
+                    CGPoint center = CGPointMake(CGRectGetMidX(finalFrame), CGRectGetMidY(finalFrame));
+                    CGFloat ratio = finalFrame.size.width/finalFrame.size.height;
+                    finalFrame.size.width = minWidth;
+                    finalFrame.size.height = minWidth/ratio;
+                    finalFrame.origin.x = center.x - finalFrame.size.width * 0.5;
+                    finalFrame.origin.y = center.y - finalFrame.size.height * 0.5;
+                }
+                if (finalFrame.size.height > maxHeight) {
+                    CGPoint center = CGPointMake(CGRectGetMidX(finalFrame), CGRectGetMidY(finalFrame));
+                    CGFloat ratio = finalFrame.size.width/finalFrame.size.height;
+                    finalFrame.size.width = maxHeight;
+                    finalFrame.size.height = maxHeight/ratio;
+                    finalFrame.origin.x = center.x - finalFrame.size.width * 0.5;
+                    finalFrame.origin.y = center.y - finalFrame.size.height * 0.5;
+                }
+            }
             if(!CGPointEqualToPoint(center, CGPointZero)) {
                 finalFrame = CGRectSetCenter(finalFrame, center, bounds);
             }
@@ -2216,6 +2258,7 @@
             imageInfo.enterEditMode = canEnterIntoEditMode;
             imageInfo.boundingRect = CGRectScale(finalFrame, 1/imageInfo.scale);
             [info addObject:imageInfo];
+
             [frameInfo addObject:[NSValue valueWithCGRect:finalFrame]];
             
             //This is being released in mode switcher
@@ -3195,7 +3238,49 @@
         }
     }];
 }
+#pragma mark - For current page number
+-(void)addPageNumberLabelToView
+{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
+    CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
+    self.pageNumberLabel = [[FTPageNumberView alloc] initWithEffect:blurEffect frame:CGRectMake(8, topOffset, 51, 24) page:self.currentlyVisiblePage];
+    [self.view addSubview:self.pageNumberLabel];
+    [self.view bringSubviewToFront:self.pageNumberLabel];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
+    [self performSelector:@selector(showPageNumberLabel)];
+}
 
+-(void) showPageNumberLabel {
+    [self.pageNumberLabel setHidden:NO];
+    self.pageNumberLabel.alpha = 1.0;
+    [UIView animateWithDuration:2.0 animations:^{
+        self.pageNumberLabel.alpha = 0.0;
+    }];
+}
+-(CGFloat) audioPlayerHeight {
+    CGFloat audioPlayerHeight = 0.0;
+    if([self currentToolBarState] != FTScreenModeFocus && self.playerController && [self.playerController isExpanded]){
+        audioPlayerHeight += 47.0;// Audio player height
+        audioPlayerHeight += 8.0;// top padding to audio player view
+    }
+    return audioPlayerHeight;
+}
+-(void) setCurrentPageNoToPageNumberLabel {
+    if(self.currentlyVisiblePage != nil) {
+        [self.view bringSubviewToFront:self.pageNumberLabel];
+        [self.pageNumberLabel setCurrentPage:self.currentlyVisiblePage];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showPageNumberLabel) object:nil];
+        [self performSelector:@selector(showPageNumberLabel)];
+    }
+}
+-(void) updatePageNumberLabelFrame {
+    if(![self.view.subviews containsObject:self.pageNumberLabel]) {
+        [self addPageNumberLabelToView];
+    } else {
+        CGFloat topOffset = [self getTopOffset] + [self audioPlayerHeight];
+        [self.pageNumberLabel udpateLabelFramesYPosition:topOffset];
+    }
+}
 #pragma mark - FTActiveStickerIndicatorView -
 - (void)activeStickyIndicatorViewDidTapCloseWithIndicatorView:(FTActiveStickyIndicatorViewController * _Nonnull)indicatorView
 {
@@ -3247,6 +3332,9 @@
                 break;
             case kDeskModeShape:
                 [self shapesButtonAction];
+                break;
+            case kDeskModeFavorites:
+                [self favoritesButtonAction];
                 break;
             default:
                 break;
@@ -3590,6 +3678,7 @@
     [self collapseContentHolderViewForAudioController];
     [self updateActiveEmojiViewFrame];
     [self endActiveEditingAnnotations];
+    [self updatePageNumberLabelFrame];
 }
 - (void)audioPlayer:(FTAudioPlayerController *)controller navigateToAnnotation:(FTAudioAnnotation *)audioAnnotation
 {
@@ -3615,11 +3704,13 @@
 - (void)audioPlayerDidExpand:(FTAudioPlayerController *)controller
 {
     [self expandContentHolderViewForAudioController:true];
+    [self updatePageNumberLabelFrame];
 }
 
 - (void)audioPlayerDidCollapse:(FTAudioPlayerController *)controller
 {
     [self collapseContentHolderViewForAudioController];
+    [self updatePageNumberLabelFrame];
 }
 
 -(NSUndoManager*)undoManager
@@ -3695,6 +3786,13 @@
                 shouldValidate = false;
             }
             break;
+        case kDeskModeFavorites:
+            if(self.currentDeskMode != kDeskModeFavorites) {
+                [self favoritesButtonAction];
+                shouldValidate = false;
+            }
+            break;
+
         default:
             break;
     }

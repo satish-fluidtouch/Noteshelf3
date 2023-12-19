@@ -24,7 +24,7 @@ enum FTIAPActionType: Int {
 
 class FTIAPViewModel {
     // MARK: - Properties
-    private var products: [SKProduct] = []
+    private(set) var products: [SKProduct] = []
 
     weak var delegate: FTIAPViewModelDelegate?
 
@@ -87,25 +87,12 @@ class FTIAPViewModel {
             }
         }
     }
-
-    func getProduct(at index: Int) -> SKProduct? {
-        guard index < products.count else {
-            return nil
-        }
-        return products[index]
+    
+    func ns3PremiumForNS2UserProduct() -> SKProduct? {
+        return self.products.first(where: {$0.productIdentifier == FTIAPManager.ns2_ns3PremiumIdentifier});
     }
-
+    
+    func ns3PremiumProduct() -> SKProduct? {
+        return self.products.first(where: {$0.productIdentifier == FTIAPManager.ns3PremiumIdentifier});
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

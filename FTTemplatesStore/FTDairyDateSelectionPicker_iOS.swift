@@ -19,16 +19,15 @@ enum FTDiaryFileType: String {
     case Digital_Diaries_Colorful_Planner_Dark
     case Digital_Diaries_Modern
     case Digital_Diaries_Day_and_Night_Journal
+    case Landscape_Diaries_Colorful_Planner
     var type: Int {
         switch self {
-        case .Digital_Diaries_Colorful_Planner:
+        case .Digital_Diaries_Colorful_Planner,.Landscape_Diaries_Colorful_Planner,.Digital_Diaries_Colorful_Planner_Dark:
             return 8
         case .Digital_Diaries_Midnight:
             return 6
         case .Digital_Diaries_Classic:
             return 4
-        case .Digital_Diaries_Colorful_Planner_Dark:
-            return 8
         case .Digital_Diaries_Modern:
             return 4
         case .Digital_Diaries_Day_and_Night_Journal:

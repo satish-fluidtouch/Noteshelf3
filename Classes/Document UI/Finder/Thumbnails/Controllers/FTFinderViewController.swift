@@ -103,7 +103,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     private var editNavButton: UIButton?
     var selectedSegment = FTFinderSegment.pages
     //UI
-    var cellSize: CGSize = CGSize(width: 210, height: 208)
+    var cellSize: CGSize = CGSize(width: 200, height: 208)
     private let extraCellPadding : CGFloat = 30
     private let preferredWidth: CGFloat = 335;
 
@@ -194,7 +194,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             if mode == .selectPages {
                 self.cellSize = CGSize(width: 152, height: 204);
             } else {
-                self.cellSize = CGSize(width: 210, height: 208);
+                self.cellSize = CGSize(width: 200, height: 208)
             }
         }
         else {

@@ -165,6 +165,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
 -(void)textButtonAction;
 -(void)presenterButtonAction;
 -(void)lassoButtonAction;
+-(void)favoritesButtonAction;
 -(void)delayedZoomButtonAction;
 -(void)settingsButtonAction;
 -(void)finderButtonAction:(BOOL)animated;
@@ -214,7 +215,7 @@ FTEraserRackControllerDelegate, FTLassoRackDelegate, FTUndoRedoDelegate> {}
                animate:(BOOL)animate;
 -(void)setContentScaleInNormalMode:(CGFloat)inContentScaleInNormalMode pageController:(FTPageViewController*)controller;
 -(void)validateMenuItems;
-
+-(void) updatePageNumberLabelFrame;
 @end
 
 @interface FTPDFRenderViewController (Internal)

@@ -9,7 +9,7 @@
 import UIKit
 
 enum FTZoomPanelActionType: Int {
-    case pen,highlighter,eraser,shape,panLeft,panRight,panNewLine,settings,undo,redo,palmResize
+    case pen,highlighter,eraser,shape,favorite, panLeft,panRight,panNewLine,settings,undo,redo,palmResize
 }
 
 protocol FTZoomPanelViewControllerDelegate: AnyObject {
@@ -39,6 +39,8 @@ class FTZoomPanelViewController: UIViewController {
     @IBOutlet private weak var highlighterToolView: FTDeskToolView!
     @IBOutlet private weak var eraserToolView: FTDeskToolView!
     @IBOutlet private weak var shapeToolView: FTDeskToolView!
+    @IBOutlet private weak var favoriteToolView: FTDeskToolView!
+
     @IBOutlet private weak var panLeftButton: UIButton?
     @IBOutlet private weak var panRightButton: UIButton?
     @IBOutlet private weak var panDownButton: UIButton?
@@ -89,6 +91,9 @@ class FTZoomPanelViewController: UIViewController {
 
         self.shapeToolView.toolType = .shapes
         self.shapeToolView.isSelected = false
+
+        self.favoriteToolView.toolType = .favorites
+        self.favoriteToolView.isSelected = false
     }
 
     private func configureActions() {
@@ -118,6 +123,13 @@ class FTZoomPanelViewController: UIViewController {
             self.delegate?.zoomPanelViewController(self,
                                                    didTapOnView: self.shapeToolView,
                                                    actionType: .shape)
+        }
+
+        self.favoriteToolView.deskToolBtnTapHandler = {[weak self] in
+            guard let self = self else { return }
+            self.delegate?.zoomPanelViewController(self,
+                                                   didTapOnView: self.favoriteToolView,
+                                                   actionType: .favorite)
         }
     }
 
@@ -162,6 +174,9 @@ class FTZoomPanelViewController: UIViewController {
             let shape = FTRackData(type: .shape, userActivity: activity).getCurrentPenSet()
             self.configure(for: .shapes, with: UIColor(hexString: shape.color))
 
+        case .deskModeFavorites:
+            self.configure(for: .favorites)
+
         default:
             break
         }
@@ -184,6 +199,9 @@ class FTZoomPanelViewController: UIViewController {
             self.shapeToolView.isSelected = true
             self.shapeToolView.applyTint(color: tintColor)
 
+        case .favorites:
+            self.favoriteToolView.isSelected = true
+
         default:
             break
         }
@@ -194,6 +212,7 @@ class FTZoomPanelViewController: UIViewController {
         self.highlighterToolView.isSelected = false
         self.eraserToolView.isSelected = false
         self.shapeToolView.isSelected = false
+        self.favoriteToolView.isSelected = false
 
         self.penToolView.resetTint()
         self.highlighterToolView.resetTint()

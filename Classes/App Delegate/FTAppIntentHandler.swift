@@ -12,7 +12,6 @@ import FTCommon
 import CoreSpotlight
 import SwiftyDropbox
 #if !targetEnvironment(macCatalyst)
-import EvernoteSDK
 import GoogleSignIn
 #endif
 
@@ -82,10 +81,17 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithAudio()
     func createNotebookWithCameraPhoto()
     func createNotebookWithScannedPhoto()
+    func startNS2ToNS3Migration()
+    func showPremiumUpgradeScreen()
 }
 
 
 final class FTAppIntentHandler {
+    // This should be in sync with NS2
+    enum NS3LaunchIntent: String {
+       case migration = "NS2Migration"
+       case premiumUpgrade = "purchasePremium"
+    }
 
     private let supportedPathExts = [nsBookExtension
                                      ,nsThemePackExtension
@@ -121,10 +127,6 @@ final class FTAppIntentHandler {
                 intentHandler?.importItem(item)
             }
             return true
-        } else if (url.scheme == "en-noteshelf3-3461") {
-            #if !targetEnvironment(macCatalyst)
-            return ENSession.shared.handleOpenURL(url)
-            #endif
         } else if let googleURLScheme = FTAppIntentHandler.googleURLScheme, url.scheme == googleURLScheme {
             #if !targetEnvironment(macCatalyst)
             GIDSignIn.sharedInstance.handle(url);
@@ -162,15 +164,33 @@ final class FTAppIntentHandler {
             track("today_widget", params: ["type": "Open Notebook"])
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
+        } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
+            startMigration(url: url)
         }
         return false
+    }
+    
+    func startMigration(url: URL) {
+        if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
+            , let queryitem = urlcomponents.queryItems?.first
+            , queryitem.name == "intent"
+        {
+            if queryitem.value == NS3LaunchIntent.migration.rawValue {
+                intentHandler?.startNS2ToNS3Migration()
+            } else {
+                intentHandler?.showPremiumUpgradeScreen()
+            }
+        }
     }
 
     @discardableResult
     func continueUserActivity(_ userActivity: NSUserActivity, restorationHandler: (([UIUserActivityRestoring]?) -> Void)? = nil) -> Bool {
-        let intentTypes = ["com.fluidtouch.noteshelf.createNotebook",
-                     "com.fluidtouch.noteshelf.openNotebook",
-                     "com.fluidtouch.noteshelf.createAudioNote"]
+        guard let bundleId = Bundle.main.bundleIdentifier else {
+            return false
+        }
+        let intentTypes = ["\(bundleId).createNotebook",
+                           "\(bundleId).openNotebook",
+                           "\(bundleId).createAudioNote"]
         var status = false
         if intentTypes.contains(userActivity.activityType) {
             track("siri_shortcut", params: ["type": userActivity.activityType])

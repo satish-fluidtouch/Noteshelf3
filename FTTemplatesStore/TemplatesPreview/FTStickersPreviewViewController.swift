@@ -31,6 +31,11 @@ class FTStickersPreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         descriptionLabel.text = template.subTitle
+        if template.author == "DGPDesignsCo"{
+            if let image = UIImage(named: "etsy") {
+                authorButton.setImage(image, for: .normal)
+            }
+        }
         authorButton.setTitle(template.author, for: .normal)
         imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         let thumbnailUrl = (template as? DiscoveryItem)?.stickersThumbnailUrl

@@ -20,9 +20,9 @@ struct FTCoverDataSource {
         return list
     }
     
-    func generateCoverTheme(image: UIImage, coverType: FTCoverSelectedType, shouldSave: Bool) -> FTThemeable? {
+    func generateCoverTheme(image: UIImage, coverType: FTCoverSelectedType, shouldSave: Bool, isDiary: Bool = false) -> FTThemeable? {
         let themeLibrary = FTThemesLibrary(libraryType: .covers)
-        let info = FTCustomCoverThemeInfo(title: "Untitled".localized, isCustom: coverType == .custom, shouldSave: shouldSave)
+        let info = FTCustomCoverThemeInfo(title: "Untitled".localized, isCustom: coverType == .custom, shouldSave: shouldSave, isDiary: isDiary)
         let coverInfo = themeLibrary.generateCoverTheme(fromImage: image, coverThemeInfo: info)
         if let url = coverInfo.url {
             let cover = FTCoverTheme(url: url)

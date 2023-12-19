@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "b2fa556e4e48cbf06cf8c63def138c98f4b811fa",
-        "version" : "5.8.0"
+        "revision" : "3dc6a42c7727c49bf26508e29b0a0b35f9c7e1ad",
+        "version" : "5.8.1"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/gtm-session-fetcher.git",
       "state" : {
-        "revision" : "d415594121c9e8a4f9d79cecee0965cf35e74dbd",
-        "version" : "3.1.1"
+        "revision" : "115f75e43851774934d695449a4836123c3246e1",
+        "version" : "3.2.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MacPaw/OpenAI.git",
       "state" : {
-        "revision" : "c45f3320ffa760f043c0239f724850c0e4f8bde5",
-        "version" : "0.2.4"
+        "revision" : "ac5892fd0de8d283362ddc30f8e9f1a0eaba8cc0",
+        "version" : "0.2.5"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
-        "revision" : "936f1c7067728d16c362ba4fb93c17df78b5fd79",
-        "version" : "5.18.2"
+        "revision" : "e278c13e46e8d20c895c221e922c6ac6b72aaca9",
+        "version" : "5.18.7"
       }
     },
     {
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ZipArchive/ZipArchive.git",
       "state" : {
-        "revision" : "b56f8c605a233fb25fe8d49f1b9ed50912c2d1b7",
-        "version" : "2.5.4"
+        "revision" : "79d4dc9729096c6ad83dd3cee2b9f354d1b4ab7b",
+        "version" : "2.5.5"
       }
     }
   ],

@@ -156,11 +156,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     // Bypassing the old thumnail setting approach
     override var thumbnailImage: UIImage? {
         if FTDeveloperOption.useQuickLookThumbnailing {
-            if self.URL.isNS2Book {
-                return self.shelfImage;
-            } else {
-                return nil
-            }
+            return nil
         } else {
             return self.shelfImage;
         }
@@ -910,6 +906,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func savePresentedItemChanges(completionHandler: @escaping (Error?) -> Void) {
+        guard self.hasUnsavedChanges else {
+            FTCLSLog("savePresentedItemChanges: Internal changes haschanges:\(self.hasUnsavedChanges)");
+            super.savePresentedItemChanges(completionHandler: completionHandler);
+            return;
+        }
+        
         FTCLSLog("savePresentedItemChanges: haschanges:\(self.hasUnsavedChanges)");
         if(!Thread.current.isMainThread) {
             DispatchQueue.main.async {
@@ -1154,12 +1156,12 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             
             let uuidAttribute = FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: docUUID)
             try? self.URL.setExtendedAttributes(attributes: [uuidAttribute])
-
+            
             let annotationFolderPath = self.fileURL.appendingPathComponent(ANNOTATIONS_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: annotationFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: annotationFolderPath, withIntermediateDirectories: true, attributes: nil);
             }
-
+            
             let resourcesFolderPath = self.fileURL.appendingPathComponent(RESOURCES_FOLDER_NAME);
             if(!FileManager().fileExists(atPath: resourcesFolderPath.path)){
                 _ = try? FileManager().createDirectory(at: resourcesFolderPath, withIntermediateDirectories: true, attributes: nil);
@@ -1173,17 +1175,17 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             self.openDocument(purpose: .write) { (success, error) in
                 if(success) {
                     self.documentUUID = FTUtils.getUUID();
-
+                    
                     #if !NOTESHELF_ACTION
-                        if self.URL.isNS2Book {
-                            self.updateCoverForMigratedBooks { success, error in
-                                saveAndClose()
-                            }
-                        } else {
+                    if self.URL.isNS2Book {
+                        self.updateCoverForMigratedBooks { success, error in
                             saveAndClose()
                         }
-                    #else
+                    } else {
                         saveAndClose()
+                    }
+                    #else
+                    saveAndClose()
                     #endif
                     func saveAndClose() {
                         self.saveAndCloseWithCompletionHandler({ (success) in
@@ -1221,7 +1223,6 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             }
         }
     }
-    
     func insertCoverForPasswordProtectedBooks(onCompletion : @escaping ((Bool,NSError?) -> Void)) {
         self.updateCoverForMigratedBooks(onCompletion: onCompletion)
     }
@@ -1354,6 +1355,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 }
                 self.recoveryInfoPlist()?.addPageIndex(page.pageIndex(), pageUUID: copiedPage.uuid);
                 self.documentInfoPlist()?.insertPage(copiedPage as! FTNoteshelfPage, atIndex: indexToInsert);
+                self.moveThumbnailFrom(page: page, to: copiedPage)
                 var modifiedCopiedPages: [FTPageProtocol] = copiedPages;
                 modifiedCopiedPages.append(copiedPage);
                 let newIndex = currentPageIndex + 1;
@@ -1390,6 +1392,21 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         return shouldIgnore;
     }
     
+    private func moveThumbnailFrom(page: FTPageProtocol, to moviedPage: FTPageProtocol) {
+        let thumbnailFolderPath = Foundation.URL.thumbnailFolderURL()
+        guard let pageDocId = page.parentDocument?.documentUUID else { return }
+        guard let movedPageDocId = moviedPage.parentDocument?.documentUUID else { return }
+        let documentPath = thumbnailFolderPath.appendingPathComponent(pageDocId)
+        let thumbnailPath  = documentPath.appendingPathComponent(page.uuid)
+
+        let moveToDocumentPath = thumbnailFolderPath.appendingPathComponent(movedPageDocId)
+        let moveToThumbnailPath  = moveToDocumentPath.appendingPathComponent(moviedPage.uuid)
+
+        if !FileManager.default.fileExists(atPath: moveToThumbnailPath.path) {
+            try? FileManager.default.moveItem(at: thumbnailPath, to: moveToThumbnailPath)
+        }
+    }
+
     func updateDocumentVersionToLatest()
     {
         if let propertyPlist = self.propertyInfoPlist() {

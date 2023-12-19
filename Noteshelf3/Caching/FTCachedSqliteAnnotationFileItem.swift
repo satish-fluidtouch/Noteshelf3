@@ -69,7 +69,7 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
             let index = getPageIndex()
 
             db.open();
-            let keywordSelQuery = "SELECT id, annotationType, modifiedTime from annotation WHERE annotationType IN (?)";
+            let keywordSelQuery = "SELECT id, annotationType, modifiedTime, boundingRect_x, boundingRect_y, boundingRect_w, boundingRect_h, screenScale, createdTime, isReadonly, version, isLocked from annotation WHERE annotationType IN (?)";
             let set = db.executeQuery(keywordSelQuery, withArgumentsIn: typesOfAnnotation);
             if let _set = set , _set.columnCount > 0 {
                 while(_set.next()) {
@@ -145,6 +145,7 @@ private extension FTCachedSqliteAnnotationFileItem {
             let model = FTAudioRecordingModel.init(dict: dict["recordingModel"] as? Dictionary<String,Any>)
             let name = dict["audioName"] as? String
             return (name, model)
+                
         } catch {
             return  (nil, nil)
         }

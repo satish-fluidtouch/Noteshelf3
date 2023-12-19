@@ -17,8 +17,6 @@ class FTEvernoteFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.signOutBtn.layer.cornerRadius = 8.0
-        self.signOutBtn.layer.borderColor = UIColor.separator.cgColor
-        self.signOutBtn.layer.borderWidth = 1.0
         self.signOutBtn.setTitleColor(UIColor.appColor(.signoutBtnColor), for: .normal)
         self.signOutBtn.titleLabel?.font = UIFont.appFont(for: .regular, with: 15)
         self.signOutBtn.setTitle(NSLocalizedString("shelf.evernote.signout", comment: "Sign Out from Evernote"), for: .normal)
@@ -29,6 +27,9 @@ class FTEvernoteFooterView: UITableViewHeaderFooterView {
         let accountInfoRequest = FTAccountInfoRequest.accountInfoRequestForType(account)
         accountInfoRequest.logOut({ success in
             if success {
+                UserDefaults.standard.set("",forKey:EN_LOGGED_USERNAME)
+                UserDefaults.standard.set("",forKey: EN_USEDSPACE)
+                UserDefaults.standard.set(0.0, forKey: EN_USEDSPACEPERCENT)
                 runInMainThread({
                     if let navVc = self.evernoteVc?.navigationController {
                         if nil == navVc.popViewController(animated: true) {

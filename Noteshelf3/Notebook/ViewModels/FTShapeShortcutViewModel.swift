@@ -6,7 +6,7 @@
 //  Copyright © 2022 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 protocol FTShapeShortcutEditDelegate: AnyObject {
     func showShapeEditScreen(position: FavoriteShapePosition)
@@ -16,6 +16,7 @@ protocol FTShapeShortcutEditDelegate: AnyObject {
 class FTFavoriteShapeViewModel: ObservableObject {
     @Published private(set) var currentFavoriteShape = FTShapeType.freeForm
     @Published var favoriteShapes: [FTPenShapeModel] = []
+    @Published private(set) var contentTransformation = Angle.zero
 
     private var rackData: FTRackData!
     private var currentPenset: FTPenSetProtocol!
@@ -31,6 +32,8 @@ class FTFavoriteShapeViewModel: ObservableObject {
         observer = UserDefaults.standard.observe(\.shapeTypeRawValue, options: [.new]) { [weak self] (_, _) in
             self?.fetchShapesData()
         }
+        self.updateContentTransfromIfNeeded()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleViewMovementEnded), name: NSNotification.Name("ViewMovementEnded"), object: nil)
     }
 
     func getRackType() -> FTRackType {
@@ -43,6 +46,18 @@ class FTFavoriteShapeViewModel: ObservableObject {
 
     func handleFavoriteShapeSelection(_ shape: FTShapeType) {
         self.delegate?.didSelectFavoriteShape(shape)
+    }
+
+    private func updateContentTransfromIfNeeded() {
+        let placement = FTShortcutPlacement.getSavedPlacement()
+        self.contentTransformation = .zero
+        if placement.isLeftPlacement() || placement.isRightPlacement() {
+            self.contentTransformation = .degrees(-90)
+        } 
+    }
+
+    @objc private func handleViewMovementEnded() {
+        self.updateContentTransfromIfNeeded()
     }
 
     func editFavoriteShape(with shape: FTShapeType) {

@@ -14,6 +14,9 @@ struct FTSidebarTopSectionGridView: View {
 
     @ObservedObject var viewModel: FTSidebarViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
+    // Templates New Option
+    @AppStorage("isTemplatesNewOptionShown") private var isTemplatesNewOptionShown = false
 
     var body: some View {
         Grid(horizontalSpacing: 8,verticalSpacing: 8 ) {
@@ -39,6 +42,7 @@ struct FTSidebarTopSectionGridView: View {
             viewModel.endEditingActions()
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
+            isTemplatesNewOptionShown = true
         } label: {
             FTTemplatesSidebarItemView(viewModel: viewModel,delegate:delegate)
         }
@@ -51,7 +55,8 @@ struct FTSidebarTopSectionGridView: View {
             viewModel.selectedSideBarItem = sideBarItem
             delegate?.didTapOnSidebarItem(sideBarItem)
         } label: {
-            FTSidebarTopSectionGridItemView(viewModel: viewModel)
+            FTSidebarTopSectionGridItemView(viewModel: viewModel,
+                                            numberOfChildren: sideBarItem.shelfCollection?.childrens.count ?? 0)
                 .environmentObject(sideBarItem)
         }
         .buttonStyle(FTMicroInteractionButtonStyle(scaleValue: .littleslow))

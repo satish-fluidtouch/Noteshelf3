@@ -27,16 +27,6 @@ extension FTShelfViewModel {
     func shouldSupportBottomBarOption(_ option: FTShelfBottomBarOption) -> Bool{
         var status: Bool = true
         let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
-        let containsNS2Book = self.hasNS2BookItemAmongSelectedShelfItems(selectedShelfItems)
-
-        guard !containsNS2Book else {
-            if option == .move || option == .trash {
-                status = true
-            } else {
-                status = false
-            }
-            return status
-        }
 
         if disableBottomBarItems {
             status = false
@@ -161,6 +151,13 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
             self?.reloadItems()
             #endif
         })
+    }
+    func renameShelfItem(_ shelfItem: FTShelfItemViewModel){
+        if collection.isTrash { // Renaming notebook in trash is not supported.
+            return
+        }
+        let item = shelfItem.model
+        self.renameShelfItems([item])
     }
     func duplicateShelfItems(){
         let selectedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})

@@ -13,4 +13,5 @@ import CoreGraphics
 let customFontViewWidth = CGFloat(492)
 
 let maximumSupportedColors = 250
+let maximumSupportedFavorites = 100
 

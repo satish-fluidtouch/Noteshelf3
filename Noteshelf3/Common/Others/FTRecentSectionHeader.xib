@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Clearface-Serial-Medium.ttf">
-            <string>Clearface-Serial-Medium-Regular</string>
+        <array key="Clearface-Serial-Medium.otf">
+            <string>ClearfaceSerial-Medium</string>
         </array>
     </customFonts>
     <objects>
@@ -22,7 +22,7 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7KB-A3-eTu" customClass="FTCustomLabel" customModule="FTCommon" customModuleProvider="target">
                     <rect key="frame" x="16" y="1" width="49" height="24.333333333333332"/>
-                    <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="Clearface-Serial-Medium" pointSize="20"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="65L-Fh-ZHo" customClass="FTCustomButton" customModule="FTCommon" customModuleProvider="target">

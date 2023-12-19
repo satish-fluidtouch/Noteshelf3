@@ -20,7 +20,6 @@ class FTOnScreenWritingViewController: UIViewController {
     fileprivate var currentExecutingRequest : FTOnScreenRenderRequest?;
     fileprivate var currentExecutingID : String?;
     fileprivate var previousRefreshRect = CGRect.null;
-    
     fileprivate var previousTouch: FTTouch?;
     
     var lastWritingMode : RKDeskMode = RKDeskMode.deskModePen;
@@ -281,6 +280,11 @@ extension FTOnScreenWritingViewController
             var writingMode: FTWritingMode = .pen;
             if self.currentDrawingMode == .deskModeMarker {
                 writingMode = .highlighter;
+            } else if self.currentDrawingMode == .deskModeFavorites {
+                let mode = FTFavoritePensetManager(activity: self.view.userActivity).fetchCurrentFavoriteMode()
+                if mode == .highlighter {
+                    writingMode = .highlighter
+                }
             }
             self.currentRenderer?.publishChanges(mode: writingMode, onCompletion: nil)
         }
@@ -378,7 +382,7 @@ extension FTOnScreenWritingViewController
             if  ((currentDrawingMode == .deskModePen &&
                 FTUserDefaults.isHoldToConvertToShapeOnForPen()) ||
                 (currentDrawingMode == .deskModeMarker &&
-                FTUserDefaults.isHoldToConvertToShapeOnForHighlighter())),
+                 FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) || self.toDetectShapeInFavoritesMode()),
                 let curStroke = self.currentStroke?.stroke as? FTStroke
             {
                 let canDetect = FTShapeDetector.canDetectShape(stroke: curStroke, scale: self.scale)
@@ -407,11 +411,9 @@ extension FTOnScreenWritingViewController
             var rectToRefresh = CGRect.null;
             let shapeDetectionEnabled = self.isShapeDetectionEnabled();
             var foundShape = false;
-            
             //For drawing straight lines in highlighter mode when draw straight lines option is turned on
             //isShapeEnabled - This will be true only when user holds and convert to shape
-            if self.currentDrawingMode == .deskModeMarker ,
-               FTUserDefaults.isDrawStraightLinesOn(),
+            if self.toDrawStraightLineInFavoriteMode(),
                let curStroke = self.currentStroke?.stroke as? FTStroke, !isShapeEnabled {
                 let shapeDetector = FTShapeDetector.init(delegate: self)
                 let lineDetected = shapeDetector.detectedLineFor(stroke: curStroke, scale: self.scale).1
@@ -429,6 +431,10 @@ extension FTOnScreenWritingViewController
                 if detectedShape.hasShape {
                     rectToRefresh = detectedShape.areaToRefresh;
                     foundShape = true;
+                    if let ann = detectedShape.strokes?.first as? FTAnnotation {
+                        ann.inLineEditing = true
+                        self.delegate?.editShapeAnnotation(with: ann, point: touch.activeUItouch.location(in: self.view))
+                    }
                 }
             }
             if(!foundShape && !isShapeEnabled) {
@@ -447,7 +453,7 @@ extension FTOnScreenWritingViewController
             NSObject.cancelPreviousPerformRequests(withTarget: self,
                                                    selector: #selector(performShapeRenderingFor(_:)),
                                                    object: touch);
-            if let del = self.delegate, del.mode == FTRenderModeZoom {
+            if let del = self.delegate, del.mode == FTRenderModeZoom, !foundShape {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
                     let notification = Notification.init(name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
                                                          object: self.view.window,
@@ -509,9 +515,32 @@ extension FTOnScreenWritingViewController
         self.stylusPenTouchEnded(touch, isShapeEnabled: true);
     }
     
-    private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool) {
+    private func toDetectShapeInFavoritesMode() -> Bool {
+        guard self.currentDrawingMode == .deskModeFavorites else {
+            return false
+        }
+        let isHighlighter = self.currentSelectedPenSet().type.isHighlighterPenType()
+        
+        if (isHighlighter && FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) ||
+           (!isHighlighter && FTUserDefaults.isHoldToConvertToShapeOnForPen()) {
+            return true
+        }
+        return false
+    }
+
+    private func toDrawStraightLineInFavoriteMode() -> Bool {
+        guard self.currentDrawingMode == .deskModeFavorites || self.currentDrawingMode == .deskModeMarker else {
+            return false
+        }
+        if FTUserDefaults.isDrawStraightLinesOn() && self.currentSelectedPenSet().type.isHighlighterPenType() {
+            return true
+        }
+        return false
+    }
+    
+    private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool, strokes: [FTStroke]?) {
         var hasShape = false;
-        guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape) }
+        guard let curStroke = self.currentStroke?.stroke as? FTStroke else { return (CGRect.null,hasShape,nil) }
 
         let shapeDetector = FTShapeDetector.init(delegate: self);
         let strokes = shapeDetector.detectShape(for: curStroke, scale: self.scale)
@@ -521,7 +550,7 @@ extension FTOnScreenWritingViewController
             hasShape = true;
             rectToRefresh = self.renderDetectedShapeStrokes(strokes, rectToRefresh: rectToRefresh)
         }
-        return (rectToRefresh,hasShape)
+        return (rectToRefresh,hasShape, strokes)
     }
     private func renderDetectedShapeStrokes(_ strokes : [FTStroke],rectToRefresh : CGRect) -> CGRect{
         var rectToRefresh = rectToRefresh;
@@ -557,18 +586,16 @@ extension FTOnScreenWritingViewController
         if let penAttributesProvider = self.delegate?.penAttributesProvider {
             return penAttributesProvider.penAttributes();
         }
-        var userActivity : NSUserActivity?;
-        if #available(iOS 13.0, *) {
-            userActivity = self.view.window?.windowScene?.userActivity
-        }
-        if(self.currentDrawingMode == .deskModePen) {
-            return FTRackData(type: FTRackType.pen,userActivity: userActivity).getCurrentPenSet();
-        }
-        else if(self.currentDrawingMode == .deskModeShape) {
-            return FTRackData(type: FTRackType.shape, userActivity: userActivity).getCurrentPenSet()
-        }
-        else {
+        let userActivity = self.view.window?.windowScene?.userActivity
+
+        if(self.currentDrawingMode == .deskModeFavorites) {
+            return FTFavoritePensetManager(activity: userActivity).fetchCurrentPenset()
+        } else if self.currentDrawingMode == .deskModeMarker {
             return FTRackData(type: FTRackType.highlighter,userActivity: userActivity).getCurrentPenSet();
+        } else if(self.currentDrawingMode == .deskModeShape) {
+            return FTRackData(type: FTRackType.shape, userActivity: userActivity).getCurrentPenSet()
+        } else {
+            return FTRackData(type: FTRackType.pen,userActivity: userActivity).getCurrentPenSet();
         }
     }
 }
@@ -613,7 +640,7 @@ extension FTOnScreenWritingViewController
                 self?.isEraseRenderInProgress = false
                 self?.refreshViewForEraser()
                 self?.eraseInProgress = false;
-                
+
                 guard let strongSelf = self else { return }
                 var shouldPostNotification = false;
                 let eraseFullStroke = FTUserDefaults.shouldEraseEntireStroke();
@@ -651,7 +678,7 @@ extension FTOnScreenWritingViewController
                     }
                 }
                 
-                NotificationCenter.default.post(name: NSNotification.Name.init("FTDidEndEraserOperationNotification"), object: nil);
+                NotificationCenter.default.post(name: NSNotification.Name.init("FTDidEndEraserOperationNotification"), object: self);
             })
         case .cancelled:
             FTCLSLog("Erase Cancel")
@@ -842,7 +869,7 @@ extension FTOnScreenWritingViewController : FTDocumentClosing
         var operations = ["eraser"];
         
         let completionCallBack : (String)->() = { (refID) in
-            if let index = operations.index(of: refID) {
+            if let index = operations.firstIndex(of: refID) {
                 operations.remove(at: index);
             }
             if operations.isEmpty {
@@ -867,11 +894,11 @@ extension FTOnScreenWritingViewController : FTDocumentClosing
                                                                                      queue: OperationQueue.main,
                                                                                      using:
                                                                                         { [weak self] (_) in
-                                                                                            if let strongSelf = self?.eraserStopObserver {
-                                                                                                NotificationCenter.default.removeObserver(strongSelf);
-                                                                                            }
-                                                                                            completionBlock(true,"eraser");
-                                                                                        });
+                        if let strongSelf = self?.eraserStopObserver {
+                            NotificationCenter.default.removeObserver(strongSelf);
+                        }
+                        completionBlock(true,"eraser");
+                    });
                 }
                 else {
                     DispatchQueue.main.async {

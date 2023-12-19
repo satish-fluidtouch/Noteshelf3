@@ -17,15 +17,13 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
     fileprivate var shelfCollections = [FTShelfItemCollection]();
 
     fileprivate var localDocumentsURL: URL
-    fileprivate let isNS2Collection: Bool
 
     fileprivate var query : FTLocalQueryGather?;
 
     fileprivate var tempCompletionBlock = [(([FTShelfItemCollection])->Void)]();
 
-    required init(rootURL: URL, isNS2Collection: Bool) {
+    required init(rootURL: URL) {
         self.localDocumentsURL = rootURL
-        self.isNS2Collection = isNS2Collection
     }
 
     func refreshShelfCollection(onCompletion : @escaping (() -> Void))
@@ -61,10 +59,6 @@ class FTShelfCollectionLocal : NSObject,FTShelfCollection,FTLocalQueryGatherDele
             self.query?.startQuery();
         }
         objc_sync_exit(self);
-    }
-
-    func belongsToNS2() -> Bool {
-        isNS2Collection
     }
 
     func collection(withTitle title : String) -> FTShelfItemCollection?

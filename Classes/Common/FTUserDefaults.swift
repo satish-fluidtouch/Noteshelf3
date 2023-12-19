@@ -503,6 +503,17 @@ extension FTUserDefaults {
 }
 
 extension UserDefaults {
+    // TODO: Try changing this to FTShelfDisplayStyle
+    @objc var shelfDisplayStyle: Int {
+        get {
+            let style = self.integer(forKey: "displayStyle")
+            return style
+        } set {
+            self.set(newValue, forKey: "displayStyle")
+            self.synchronize()
+        }
+    }
+
     @objc var shapeTypeRawValue: Int {
         get {
             let selectedShapeType = self.integer(forKey: "ShapeType")
@@ -631,3 +642,4 @@ extension FTUserDefaults { // Saving this for Show or hide Home Get started sect
         return self.defaults().setValue(value, forKey: isFirstLaunchKey)
     }
 }
+

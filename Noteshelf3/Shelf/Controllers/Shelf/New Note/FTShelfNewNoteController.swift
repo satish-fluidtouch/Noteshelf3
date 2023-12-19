@@ -24,19 +24,16 @@ class FTShelfNewNoteController: UIHostingController<AnyView>, FTPopoverPresentab
     var ftPresentationDelegate = FTPopoverPresentation()
 
     private var viewModel: FTNewNotePopoverViewModel
-    private var popOverHeight: CGFloat
     private var appState: AppState
     var customTransitioningDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: false);
 
     init(viewModel: FTNewNotePopoverViewModel,
-         popOverHeight: CGFloat,
          appState: AppState,
          shelfViewModel: FTShelfViewModel,
          delegate: FTShelfNewNoteDelegate?) {
         self.viewModel = viewModel
-        self.popOverHeight = popOverHeight
         self.appState = appState
-        let view = FTShelfNewNotePopoverView(viewModel: viewModel, popoverHeight: popOverHeight,appState: appState,delegate: delegate)
+        let view = FTShelfNewNotePopoverView(viewModel: viewModel,appState: appState,delegate: delegate)
         super.init(rootView: AnyView(view.environmentObject(shelfViewModel)))
     }
     
@@ -47,10 +44,9 @@ class FTShelfNewNoteController: UIHostingController<AnyView>, FTPopoverPresentab
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
+        self.viewModel.viewDelegate = self
+
         var popOverHeight: CGFloat = appState.sizeClass == .regular ? 384.0 : 420
-#if targetEnvironment(macCatalyst)
-        popOverHeight = 340.0
-#endif
         self.preferredContentSize = CGSize(width: 330, height: popOverHeight)
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -62,13 +58,13 @@ extension FTShelfNewNoteController: FTShelfNewNotePopoverViewDelegate {
         self.dismiss(animated: true)
     }
     func didTapOnWatchRecordings(){
-        /*let storyboard = UIStoryboard(name: "FTWatchRecordings", bundle: nil);
+        let storyboard = UIStoryboard(name: "FTWatchRecordings", bundle: nil);
 
         let watchRecordingController = storyboard.instantiateViewController(withIdentifier: FTWatchRecordedListViewController.className) as! FTWatchRecordedListViewController;
         let popOverHeight: CGFloat = self.appState.sizeClass == .regular ? 320 : 420
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationController?.preferredContentSize = CGSize(width: 330, height: popOverHeight)
-        self.navigationController?.pushViewController(watchRecordingController, animated: true)*/
+        self.navigationController?.pushViewController(watchRecordingController, animated: true)
     }
 }

@@ -924,7 +924,9 @@ CG_EXTERN CGPoint CGPointIntegral(CGPoint p1)
 //MARK- APP Envi Key
 NSString* _Nonnull appEnviromentPrefix(void)
 {
-#if DEBUG
+#if ENTERPRISE_EDITION
+    return @"enterprise";
+#elif DEBUG
     return @"dev";
 #elif RELEASE
     return @"prod";

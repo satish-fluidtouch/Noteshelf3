@@ -12,6 +12,8 @@ import SwiftUI
 struct FTNotebookCoverView: View {
     @EnvironmentObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
+    @Environment(\.colorScheme) var colorScheme
+    @Binding var isPressed: Bool
 
     var isHighlighted = false;
 
@@ -83,13 +85,23 @@ struct FTNotebookCoverView: View {
                         FTLockIconView()
                     }
                 }
-                .overlay(alignment: .topLeading, content: {
-                    NS2BadgeView()
-                })
                 .onFirstAppear(perform: {
                     shelfItem.configureShelfItem(shelfItem.model)
                 })
         }
+        .onTapGesture(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                shelfViewModel.didTapOnShelfItem(shelfItem)
+            }
+        })
+
+        .onLongPressGesture(perform: {
+
+        }, onPressingChanged: { _ in
+            withAnimation {
+                isPressed.toggle()
+            }
+        })
         .onAppear(perform: {
             shelfItem.isVisible = true;
             self.shelfItem.fetchCoverImage();
@@ -99,6 +111,7 @@ struct FTNotebookCoverView: View {
         })
         .cornerRadius(leftCornerRadius, corners: [.topLeft, .bottomLeft])
         .cornerRadius(rightCornerRadius, corners: [.topRight, .bottomRight])
+        .border(shelfItem.coverImage.hasNoCover && colorScheme == .dark ? Color.white.opacity(0.1) : .clear, width: 2.0,cornerRadius: 10)
     }
     
     private var leftCornerRadius: CGFloat {
@@ -129,25 +142,6 @@ struct FTShelfItemDropOverlayView: View {
             .frame(maxWidth: .infinity,maxHeight:.infinity)
     }
 }
-
-struct NS2BadgeView: View {
-    @EnvironmentObject var shelfItem: FTShelfItemViewModel
-    @EnvironmentObject var shelfViewModel: FTShelfViewModel
-
-    var body: some View {
-        if shelfItem.isNS2Book == true {
-            let size: CGFloat = shelfViewModel.displayStlye == .List ? 10 : 20
-            let padding: CGFloat = shelfViewModel.displayStlye == .List ? 2 : 8
-            Image("ns2_migration_logo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: size, height: size)
-                .padding(.top, padding)
-                .padding(.leading, padding)
-        }
-    }
-}
-
 
 struct FTLockIconView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel

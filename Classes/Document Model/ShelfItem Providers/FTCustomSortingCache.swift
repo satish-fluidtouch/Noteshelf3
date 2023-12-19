@@ -27,7 +27,7 @@ class FTCustomSortingCache: NSObject {
     var lastUpdatedTimestamp: TimeInterval = 0 //0 - For local
     
     private var plistPath: String {
-#if DEBUG || ADHOC
+#if DEBUG || BETA
         if !isCloudItem {
             fatalError("should not be called for local data");
         }
@@ -62,7 +62,7 @@ class FTCustomSortingCache: NSObject {
                 self.buildExistingCacheForLocal(path)
             }
             else {
-                #if DEBUG || ADHOC
+                #if DEBUG || BETA
                 fatalError("Indexplist missing for local data");
                 #endif
             }

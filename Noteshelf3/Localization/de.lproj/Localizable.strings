@@ -47,6 +47,7 @@
 "ApplePencilSettingsTitle" = "Apple Pencil Einstellungen";
 "AppleWatch" = "Apple Watch";
 "AppleWatchRecording" = "Apple Watch Aufnahme";
+"AppleWatchRecordings" = "Apple Watch-Aufnahmen";
 "Apply" = "Anwenden";
 "Arts" = "Kunst";
 "Athletics" = "Leichtathletik";
@@ -306,7 +307,7 @@
 "EnterBetweenNandN" = "Geben Sie eine Zahl zwischen %d und %d ein.";
 "EnterPassword" = "Geben Sie das Passwort ein.";
 "EnterPasswordHint" = "Geben Sie einen Passworthinweis ein.";
-"EnterPasswordToOpenThisNotebook" = "Geben Sie das Passwort ein, um dieses Notizbuch zu öffnen.";
+"EnterPasswordToOpenThisNotebook" = "Geben Sie das Passwort ein, um %@ zu öffnen";
 "EnterThePasswordFor" = "Geben Sie das Passwort für %@ ein.";
 "EraseEntireStroke" = "Gesamten Strich löschen";
 "EraseHighlighterOnly" = "Lösche nur Textmarker";
@@ -918,7 +919,8 @@
 "WHITEBOARDMODE" = "WEIßTAFELMODUS";
 "Wallpapers" = "Hintergrundbilder";
 "Warning" = "Achtung";
-"WatchAdInfo" = "Installiere Noteshelf 2 auf deiner Apple Watch. Du kannst Audio unterwegs aufnehmen und später Notizen machen.";
+"WatchAdInfoSubTitle" = "Du kannst Audio unterwegs aufnehmen und später Notizen machen.";
+"WatchAdInfoTitle" = "Installiere Noteshelf 3 auf deiner Apple Watch.";
 "WatchNewRecords" = "Neue Aufnahmen sind von deiner Apple Watch eingegangen.";
 "WatchRecording" = "Aufzeichnung ansehen.";
 "WatchRecordings" = "Aufzeichnungen anzeigen";
@@ -1021,14 +1023,19 @@
 "days" = "Tage";
 "delete" = "Löschen";
 "done" = "Erledigt";
+"dontMigrate" = "Nicht migrieren";
 "downloadedStickers" = "Heruntergeladene Aufkleber";
 "duplicate" = "Duplikat";
 "eraser.auto" = "Auto";
+"evernote.openNotebook.SyncSkip" = "Ein Notizbuch ist im geöffneten Zustand.";
+"evernote.userInfo.fetchFailureMessage" = "Zurzeit können keine Kontoinformationen abgerufen werden.";
 "export_data" = "Daten exportieren";
 "export_description1" = "Es wird dringend empfohlen, eine Kopie Ihrer Daten auf Ihrem lokalen Gerät zu speichern.";
 "export_description2" = "Die exportierten Daten, die Ihre Notizbücher, Gruppen und Kategorien enthalten, werden als .zip-Datei gespeichert. Ihre Notizbücher werden im .noteshelf Format gespeichert.";
 "export_description_1" = "Es wird dringend empfohlen, eine Kopie Ihrer Daten auf Ihrem lokalen Gerät zu speichern. Die exportierten Daten werden als .zip-Datei gespeichert und enthalten alle Ihre Notizbücher, Gruppen und Kategorien.";
 "failed_following" = "Fehler beim Sichern der folgenden Notizbücher:";
+"favoritebar.singleFavoriteDelete.message" = "Mindestens ein Element muss in der Favoriten-Symbolleiste verbleiben.";
+"favoritebar.singleFavoriteDelete.title" = "Der Favorit konnte nicht gelöscht werden";
 "finalizing" = "Abschließen";
 "finder.addPageAfter" = "Seite hinzufügen";
 "finder.addPageBefore" = "Seite hinzufügen";
@@ -1082,15 +1089,20 @@
 "iCloudUserTurnedOff" = "iCloud ausgeschaltet";
 "iCloudUserTurnedOffMessage" = "Eine Kopie Ihrer Dokumente bleibt in iCloud gespeichert. Was möchten Sie mit den Dokumenten tun, die sich derzeit auf diesem Gerät befinden?";
 "iap.bannerTitle" = "Premium-Upgrade";
+"iap.bannerTitle1" = "Erhalten Sie Premium mit %@ RABATT";
+"iap.bannerTitle2" = "Nur für Noteshelf 2 Benutzer.";
 "iap.booklimitReachedMessage" = "Entleeren Sie Ihren Papierkorb, um sicherzustellen, dass gelöschte Notizbücher nicht zu Ihrem Kontingent gezählt werden, oder entsperren Sie die vollständige App für unbegrenzte Notizbücher.";
 "iap.booklimitReachedTitle" = "Sie haben das kostenlose Notizbuch-Limit erreicht.";
 "iap.booksleft" = "%@ Notizen übrig";
+"iap.discount.highlight" = "%@ RABATT";
 "iap.featureLimitMessage" = "Diese Funktion ist gesperrt. Freischalten durch ein Upgrade jetzt.";
 "iap.featureLimitTitle" = "Jetzt aktualisieren.";
 "iap.message" = "Erhalten Sie Zugang zu unbegrenzten Notizen, Handschrifterkennung und Suche sowie digitalen Tagebüchern mit Noteshelf Premium.";
+"iap.messageNew" = "Für eine begrenzte Zeit können Noteshelf 2-Benutzer von diesem speziellen Angebot profitieren und alle Funktionen und Vorteile von Noteshelf 3 freischalten.";
 "iap.noProductIDsFound" = "Es wurden keine In-App-Kauf-Produktkennungen gefunden.";
 "iap.noProductsFound" = "Es wurden keine In-App-Käufe gefunden.";
 "iap.onetimepurchase" = "EINMALIGER KAUF. FÜR IMMER DEIN.";
+"iap.onetimepurchasenew" = "%@ Einmaliger Kauf ";
 "iap.paymentWasCancelled" = "Der In-App-Kaufvorgang wurde abgebrochen.";
 "iap.privacy" = "Datenschutzbestimmungen";
 "iap.productRequestFailed" = "Derzeit keine verfügbaren In-App-Kaufprodukte abrufbar.";
@@ -1101,7 +1113,9 @@
 "iap.restoreSuccessWithNoPurchase" = "Es gibt keine gekauften Artikel zum Wiederherstellen.";
 "iap.termsnconditions" = "Allgemeine Geschäftsbedingungen";
 "iap.title" = "Holen Sie sich das volle Erlebnis mit Noteshelf Premium";
+"iap.toptitle" = "Exklusiv für Noteshelf 2 Benutzer";
 "iap.upgradeNow" = "Jetzt aktualisieren";
+"iap.upgradeToPremiumNow" = "Jetzt auf Premium upgraden";
 "icloud.sync.issue.message" = "Verbindung zu iCloud nicht möglich. Stellen Sie sicher, dass iCloud in den Einstellungen eingeschaltet ist.";
 "iconlabels" = "Symbolbeschriftungen";
 "import" = "Import";
@@ -1122,7 +1136,11 @@
 "migration.alert.migrate" = "Migrieren";
 "migration.alert.open" = "Gehe zu Standort";
 "migration.alert.title" = "Möchten Sie eine Kopie dieses Notizbuches nach Noteshelf 3 migrieren?";
-"migration.progress.text" = "Umzug";
+"migration.cancel" = "Migration abbrechen";
+"migration.cancel.alert" = "Sind Sie sicher, dass Sie die Migration abbrechen möchten?";
+"migration.exitScreen" = "Bitte verlassen Sie diesen Bildschirm nicht, bevor der Migrationsprozess abgeschlossen ist.";
+"migration.progress.text" = "Migrieren...";
+"migration.succes" = "Migration erfolgreich!";
 "migration.success.alert.message" = "Erfolg! Ihr migriertes Notizbuch wurde platziert in: %@";
 "months" = "Monate";
 "more" = "Mehr";
@@ -1292,6 +1310,7 @@
 "shelf.home.seeAll" = "Alle anzeigen";
 "shelf.home.seeAllNotes" = "Alle Notizen anzeigen";
 "shelf.importfile.description" = "Fügen Sie PDFs und Bilder von Ihrer Dateien-App hinzu.";
+"shelf.migration.CompactDescription" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung.";
 "shelf.migration.Description" = "Tippen Sie einfach auf ein beliebiges Notizbuch hier, um eine Kopie davon in Noteshelf 3 zu migrieren. Migrierte Notizbücher stehen in den Kategorien und Gruppen von Noteshelf 3 zur Verfügung. Die Möglichkeit, ganze Kategorien zu migrieren, kommt bald!";
 "shelf.migration.headerMessage" = "Migrieren Sie Ihre Notizbücher zu Noteshelf 3";
 "shelf.navBar.deselectAll" = "Abwählen";
@@ -1424,7 +1443,7 @@
 "sidebar.photo" = "Foto";
 "sidebar.photos" = "Fotos";
 "sidebar.recording" = "Aufnahme";
-"sidebar.recordings" = "Andaufnahmen";
+"sidebar.recordings" = "Audioaufnahmen";
 "sidebar.topSection.home" = "Zuhause";
 "sidebar.topSection.starred" = "Hervorgehoben";
 "sidebar.topSection.unfiled" = "Ungeordnet";
@@ -1490,6 +1509,7 @@
 "trash.alert.title" = "Sind Sie sicher, dass Sie Ihren Papierkorb leeren möchten?";
 "unsplash.search.alertMessage" = "Geben Sie den Text zum Suchen ein.";
 "untitled" = "Unbenannt";
+"updatemigration.title" = "Aktualisierung zur Migration";
 "useSticker" = "Benutze Aufkleber";
 "welcome.appleWatch" = "APPLE WATCH";
 "welcome.audioNotes" = "AUDIO NOTIZEN";
@@ -1532,4 +1552,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 25 October 2023 at 12:13
+// Last Synced by admin on 11 December 2023 at 6:46 PM

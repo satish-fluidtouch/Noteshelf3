@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,8 +17,8 @@
         <array key="Aeonik-Regular.otf">
             <string>Aeonik-Regular</string>
         </array>
-        <array key="Clearface-Serial-Medium.ttf">
-            <string>Clearface-Serial-Medium-Regular</string>
+        <array key="Clearface-Serial-Medium.otf">
+            <string>ClearfaceSerial-Medium</string>
         </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
@@ -347,7 +347,7 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k2m-UQ-Ouo" customClass="FTCustomLabel" customModule="FTCommon">
                                         <rect key="frame" x="16" y="68" width="99" height="33.666666666666657"/>
-                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="28"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1045,7 +1045,7 @@
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgh-bm-934" customClass="FTCustomLabel" customModule="FTCommon">
                                                 <rect key="frame" x="0.0" y="52" width="70.333333333333329" height="33.666666666666657"/>
-                                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="28"/>
+                                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="28"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -1087,7 +1087,7 @@
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AiS-uY-qG4" customClass="FTCustomLabel" customModule="FTCommon">
                                                 <rect key="frame" x="109.66666666666669" y="9.9999999999999982" width="49" height="24.333333333333329"/>
-                                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1214,7 +1214,7 @@
                                         <accessibility key="accessibilityConfiguration">
                                             <bool key="isElement" value="NO"/>
                                         </accessibility>
-                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -1439,7 +1439,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oza-N3-EvM" customClass="FTCustomLabel" customModule="FTCommon">
                                 <rect key="frame" x="190.66666666666666" y="77" width="49" height="24.333333333333329"/>
-                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -2029,11 +2029,11 @@
         <image name="play.circle.fill" catalog="system" width="128" height="123"/>
         <image name="plus.square.on.square" catalog="system" width="128" height="116"/>
         <image name="primaryButton" width="44" height="44"/>
-        <image name="rotate.right" catalog="system" width="115" height="128"/>
+        <image name="rotate.right" catalog="system" width="117" height="128"/>
         <image name="shelfItemSelectionMode" width="33" height="33"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
         <image name="square.grid.2x2" catalog="system" width="128" height="114"/>
-        <image name="volume.2.fill" catalog="system" width="32" height="32"/>
+        <image name="volume.2.fill" catalog="system" width="128" height="88"/>
         <namedColor name="7f7f7f">
             <color red="0.49799999594688416" green="0.49799999594688416" blue="0.49799999594688416" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

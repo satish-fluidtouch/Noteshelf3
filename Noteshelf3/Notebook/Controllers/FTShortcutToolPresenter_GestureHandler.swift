@@ -169,15 +169,19 @@ private extension FTShortcutToolPresenter {
             placement = FTShortcutPlacement.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset, in: parent)
             placement.save()
         }
+        NotificationCenter.default.post(name: NSNotification.Name("ViewMovementEnded"), object: nil)
         UIView.animate(withDuration: animDuration) { [weak self] in
             guard let self else {
                 return
             }
             self.shortcutView.transform = .identity
-            if placement == .top || placement == .bottom {
-                self.shortcutView.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2)
+            if !placement.isHorizantalPlacement() {
+                self.shortcutView.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
             }
-            let reqCenter = placement.slotCenter(forSlotView: shortcutView, topOffset: toolbarOffset, zoomModeInfo: self.zoomModeInfo)
+            if let favBarVc = self.toolbarVc as? FTFavoriteShortcutViewController {
+                favBarVc.handleEndMovement()
+            }
+            let reqCenter = placement.slotCenter(forSlotView: self.shortcutView, topOffset: self.toolbarOffset, zoomModeInfo: self.zoomModeInfo)
             self.updateShortcutViewCenter(reqCenter)
             self.removeAllSlots()
         } completion: { [weak self] _ in
@@ -186,7 +190,7 @@ private extension FTShortcutToolPresenter {
             }
             if self.zoomModeInfo.isEnabled {
                 self.shortcutZoomMode = .manual
-            } 
+            }
         }
     }
 }

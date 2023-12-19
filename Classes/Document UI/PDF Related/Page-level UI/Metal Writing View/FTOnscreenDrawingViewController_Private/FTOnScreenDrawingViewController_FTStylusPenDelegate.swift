@@ -66,7 +66,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         self.perform(#selector(self.hideQuickPageNavigator), with: nil, afterDelay: 0.1)
         FTRefreshViewController.addObserversForHideNewPageOptions()
         
-        let supportedModes: [RKDeskMode] = [.deskModePen,.deskModeMarker,.deskModeLaser,.deskModeEraser,.deskModeShape];
+        let supportedModes: [RKDeskMode] = [.deskModePen,.deskModeMarker,.deskModeLaser,.deskModeEraser,.deskModeShape, .deskModeFavorites];
         guard supportedModes.contains(self.currentDrawingMode) else {
             return;
         }
@@ -92,7 +92,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(self.currentDrawingMode == RKDeskMode.deskModePen
             || self.currentDrawingMode == RKDeskMode.deskModeMarker
             || self.currentDrawingMode == RKDeskMode.deskModeShape
-            || self.currentDrawingMode == RKDeskMode.deskModeLaser) {
+           || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.strokeInProgress = true
             self.processVertex(touch: touch, vertexType: .FirstVertex);
             self.displayLink?.isPaused = false;
@@ -106,6 +106,9 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
     
     func stylusPenTouchMoved(_ touch: FTTouch!) {
         if(!self.strokeInProgress) {
+            if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
+                controller.processTouchesMoved(touch.activeUItouch, with: nil)
+            }
             return;
         }
         
@@ -125,7 +128,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(self.currentDrawingMode == RKDeskMode.deskModePen
             || self.currentDrawingMode == RKDeskMode.deskModeMarker
             || self.currentDrawingMode == RKDeskMode.deskModeShape
-            || self.currentDrawingMode == RKDeskMode.deskModeLaser) {
+           || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.strokeInProgress = true
             self.processVertex(touch: touch, vertexType: .InterimVertex);
             self.displayLink?.isPaused = false;
@@ -143,9 +146,16 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         self.cancelDelayedDisableGesture();
         
         if(!self.strokeInProgress) {
+            if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
+                controller.processTouchesEnded(touch.activeUItouch, with: nil)
+                if let del = self.delegate, del.mode == FTRenderModeZoom {
+                    self.delegate?.endActiveShapeAnnotation(with: controller.shapeAnnotation)
+                }
+            }
             return;
         }
         self.strokeInProgress = false;
+
         let selectedShape = FTShapeType.savedShapeType()
         if self.currentDrawingMode == RKDeskMode.deskModeShape && selectedShape != .freeForm {
             if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
@@ -157,9 +167,10 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         if(self.currentDrawingMode == RKDeskMode.deskModePen
         || self.currentDrawingMode == RKDeskMode.deskModeMarker
         || self.currentDrawingMode == RKDeskMode.deskModeShape
-        || self.currentDrawingMode == RKDeskMode.deskModeLaser) {
+           || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.processVertex(touch: touch, vertexType: .LastVertex,isShapeEnabled: isShapeEnabled)
         }
+       
         if(self.currentDrawingMode == RKDeskMode.deskModeEraser) {
             (self.delegate as? FTEraseTouchHandling)?.eraserTouchesEnded(touch);
         }

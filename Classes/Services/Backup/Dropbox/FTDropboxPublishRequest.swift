@@ -109,7 +109,7 @@ private class FTDropboxFilePublishRequest: FTCloudFilePublishRequest {
         let uploadInfo = [
             sourceFileURL: info
         ]
-        let progressBlock: ProgressBlock = { progress in
+        let progressBlock: (Progress) -> Void = { progress in
             self.delegate?.publishRequest(self,
                                           uploadProgress: progress.fractionCompleted,
                                           backUpProgressType: .uploadingContent)

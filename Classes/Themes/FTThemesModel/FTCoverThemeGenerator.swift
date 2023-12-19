@@ -20,9 +20,10 @@ extension FTCoverThemeGenerator {
         let coverThemeTitle = FTUtils.getUUID()+".nsc"
         var tempURL = URL.init(fileURLWithPath: NSTemporaryDirectory())
         tempURL = tempURL.appendingPathComponent(coverThemeTitle)
-        let resizedImage = image.resizedImage(portraitCoverSize).makeCover(shouldAddSpine: true)
+        let shouldAddSpine = !themeInfo.isDiary
+        let resizedImage = image.resizedImage(portraitCoverSize).makeCover(shouldAddSpine: shouldAddSpine)
         let scale = Int(UIScreen.main.scale)
-        let pdfImage = image.addSpineToImage()
+        let pdfImage = image.addSpineToImageIfneeded(shouldAddSpine: shouldAddSpine)
         let path = FTPDFFileGenerator().generateCoverPDFFile(withImages: [pdfImage, resizedImage])
         let pdfDocument = PDFDocument(url: Foundation.URL(fileURLWithPath: path))
         do {

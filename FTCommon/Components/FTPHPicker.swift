@@ -104,27 +104,85 @@ public class FTPHPicker: NSObject, PHPickerViewControllerDelegate {
 }
 
 extension NSItemProvider {
-    func loadImage(_ onCompeltion : @escaping (FTPHItem?) -> Void) {
-        guard let readType = UIImage.classForCoder() as? NSItemProviderReading.Type else {
-            onCompeltion(nil)
+    func loadImage(_ onCompletion : @escaping @Sendable (FTPHItem?) -> Void) {
+        guard self.hasItemConformingToTypeIdentifier(UTType.image.identifier) else {
+            onCompletion(nil)
             return
         }
         let title = self.suggestedName ?? "IMG"
-        self.loadObject(ofClass: readType) { (image, _) in
-            if let image = image as? UIImage {
-                let phItem = FTPHItem(image: image, title: title)
-                onCompeltion(phItem)
-            } else if let type = self.registeredContentTypes.first { // This condition we have added it for Raw , png and JPEG types registering. this will not convert HEIC type image.
-                _ = self.loadDataRepresentation(for: type) { data, error in
-                    if let imageData = data, let image = UIImage(data: imageData) {
-                        let phItem = FTPHItem(image: image, title: title)
-                        onCompeltion(phItem)
-                    } else {
-                        onCompeltion(nil)
+        self.loadImageFromUIImageClass(title) { (item) in
+            if let inItem = item {
+                onCompletion(inItem);
+            }
+            else {
+                self.loadImageFromFileRepresentation1(title) { item in
+                    if let inItem = item {
+                        onCompletion(inItem);
+                    }
+                    else {
+                        self.loadImageFromDataRepresentation1(title) { item in
+                            onCompletion(item);
+                        }
                     }
                 }
-            } else {
-                onCompeltion(nil)
+            }
+        }
+    }
+        
+    private func loadImageFromUIImageClass(_ title: String,onCompletion: @escaping (FTPHItem?)->()) {
+        guard self.canLoadObject(ofClass: UIImage.self) else {
+            onCompletion(nil);
+            return;
+        }
+        self.loadObject(ofClass: UIImage.self) { (image, _) in
+            var phItem: FTPHItem?
+            if let image = image as? UIImage {
+                phItem = FTPHItem(image: image, title: title)
+            }
+            onCompletion(phItem)
+        }
+    }
+
+    private func loadImageFromFileRepresentation1(_ title: String,onCompletion: @escaping (FTPHItem?)->()) {
+        _ = self.loadFileRepresentation(for: UTType.image) {  url, _, _ in
+            var phItem: FTPHItem?
+            if let imgURL = url, let image = UIImage.init(contentsOfFile: imgURL.path(percentEncoded: false)) {
+                phItem = FTPHItem(image: image, title: title)
+            }
+            onCompletion(phItem)
+        }
+    }
+
+    private func loadImageFromDataRepresentation1(_ title: String,onCompletion: @escaping (FTPHItem?)->()) {
+        _ = self.loadDataRepresentation(for: UTType.image) { data, _ in
+            var phItem: FTPHItem?
+            if let imageData = data, let image = UIImage(data: imageData) {
+                phItem = FTPHItem(image: image, title: title)
+            }
+            onCompletion(phItem)
+        }
+    }
+    
+    private func loadImageFromFileRepresentation(_ title: String) async -> FTPHItem? {
+        return await withCheckedContinuation { continuation in
+            _ = self.loadFileRepresentation(for: UTType.image) {  url, _, _ in
+                var phItem: FTPHItem?
+                if let imgURL = url, let image = UIImage.init(contentsOfFile: imgURL.path(percentEncoded: false)) {
+                    phItem = FTPHItem(image: image, title: title)
+                }
+                continuation.resume(returning: phItem);
+            }
+        }
+    }
+    
+    private func loadImageFromDataRepresentation(_ title: String) async -> FTPHItem? {
+        return await withCheckedContinuation { continuation in
+            _ = self.loadDataRepresentation(for: UTType.image) { data, _ in
+                var phItem: FTPHItem?
+                if let imageData = data, let image = UIImage(data: imageData) {
+                    phItem = FTPHItem(image: image, title: title)
+                }
+                continuation.resume(returning: phItem);
             }
         }
     }
