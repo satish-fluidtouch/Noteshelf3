@@ -8,7 +8,8 @@
 #import <iink/IINKEditorDelegate.h>
 #import <iink/IINKError.h>
 #import <iink/IINKMimeType.h>
-#import "iink/IINKParameterSet.h"
+#import <iink/IINKParameterSet.h>
+#import <iink/IINKPointerEvent.h>
 #import <iink/text/IINKIFontMetricsProvider.h>
 
 
@@ -17,111 +18,7 @@
 @class IINKRenderer;
 @class IINKConfiguration;
 @class IINKToolController;
-
-/**
- * Describes the types of pointer that can be used for input.
- */
-typedef NS_ENUM(NSUInteger, IINKPointerType)
-{
-  /** The pointer is a pen. */
-  IINKPointerTypePen     = 0,
-  /** The pointer is a touch point. */
-  IINKPointerTypeTouch   = 1,
-  /** The pointer is an eraser. */
-  IINKPointerTypeEraser  = 2,
-  /** The pointer is a mouse. */
-  IINKPointerTypeMouse   = 3,
-  /** The pointer is Custom. */
-  IINKPointerTypeCustom1 = 4,
-  /** The pointer is Custom. */
-  IINKPointerTypeCustom2 = 5,
-  /** The pointer is Custom. */
-  IINKPointerTypeCustom3 = 6,
-  /** The pointer is Custom. */
-  IINKPointerTypeCustom4 = 7,
-  /** The pointer is Custom. */
-  IINKPointerTypeCustom5 = 8
-};
-
-/**
- * Describes the types of pointer event that can be provided to the editor.
- */
-typedef NS_ENUM(NSUInteger, IINKPointerEventType)
-{
-  /** A pointer down event. */
-  IINKPointerEventTypeDown,
-  /** A pointer move event. */
-  IINKPointerEventTypeMove,
-  /** A pointer up event. */
-  IINKPointerEventTypeUp,
-  /** A pointer cancel event. */
-  IINKPointerEventTypeCancel
-};
-
-/**
- * Represents a pointer event.
- */
-typedef struct _IINKPointerEvent
-{
-  /** The event type. */
-  IINKPointerEventType eventType;
-  /** The event x coordinate. */
-  float x;
-  /** The event y coordinate. */
-  float y;
-  /** The event timestamp. */
-  int64_t t;
-  /** The event normalised pressure. */
-  float f;
-  /** The type of input pointer. */
-  IINKPointerType pointerType;
-  /** The id of the pointer. */
-  int pointerId;
-} IINKPointerEvent;
-
-CG_INLINE IINKPointerEvent
-IINKPointerEventMake(IINKPointerEventType eventType,
-                     CGPoint point, int64_t t, float f,
-                     IINKPointerType pointerType, int pointerId)
-{
-  IINKPointerEvent e;
-  e.eventType = eventType;
-  e.x = (float)point.x;
-  e.y = (float)point.y;
-  e.t = t;
-  e.f = f;
-  e.pointerType = pointerType;
-  e.pointerId = pointerId;
-  return e;
-}
-
-CG_INLINE IINKPointerEvent
-IINKPointerEventMakeDown(CGPoint point, int64_t t, float f,
-                         IINKPointerType pointerType, int pointerId)
-{
-  return IINKPointerEventMake(IINKPointerEventTypeDown, point, t, f, pointerType, pointerId);
-}
-
-CG_INLINE IINKPointerEvent
-IINKPointerEventMakeMove(CGPoint point, int64_t t, float f,
-                         IINKPointerType pointerType, int pointerId)
-{
-  return IINKPointerEventMake(IINKPointerEventTypeMove, point, t, f, pointerType, pointerId);
-}
-
-CG_INLINE IINKPointerEvent
-IINKPointerEventMakeUp(CGPoint point, int64_t t, float f,
-                       IINKPointerType pointerType, int pointerId)
-{
-  return IINKPointerEventMake(IINKPointerEventTypeUp, point, t, f, pointerType, pointerId);
-}
-
-CG_INLINE IINKPointerEvent
-IINKPointerEventMakeCancel(int pointerId)
-{
-  return IINKPointerEventMake(IINKPointerEventTypeCancel, CGPointMake(0, 0), -1, 0, (IINKPointerType)0, pointerId);
-}
-
+@protocol IINKGestureDelegate;
 
 /**
  * Error code returned checking if a transformation is allowed on a content selection.
@@ -242,7 +139,7 @@ typedef NS_ENUM(NSUInteger, IINKContentSelectionMode)
 @end
 
 /**
- * Predefined Text Box Formats
+ * Predefined Text Box Formats.
  *
  * @since 2.0
  */
@@ -254,7 +151,38 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
   IINKTextFormatH2                  = 1,
   /** Paragraph format. */
   IINKTextFormatParagraph           = 2,
+  /** Bullet list format. */
+  IINKTextFormatListBullet          = 3,
+  /** Checkbox list format. */
+  IINKTextFormatListCheckbox        = 4,
+  /** Numbered list format. */
+  IINKTextFormatListNumbered        = 5
 };
+
+/**
+ * Represents a selection indentation levels.
+ *
+ * @since 2.1
+ */
+typedef struct _IINKIndentationLevels
+{
+  /** The lowest indentation level. */
+  size_t low;
+  /** The highest indentation level. */
+  size_t high;
+  /** The maximum indentation level. */
+  size_t max;
+} IINKIndentationLevels;
+
+CG_INLINE IINKIndentationLevels
+IINKIndentationLevelsMake(size_t low, size_t high, size_t max)
+{
+  IINKIndentationLevels t;
+  t.low  = low;
+  t.high = high;
+  t.max  = max;
+  return t;
+}
 
 /**
  * Wrapper object for an `IINKTextFormat` value.
@@ -314,6 +242,14 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  */
 - (void)removeDelegate:(nonnull id<IINKEditorDelegate>)delegate;
 
+//==============================================================================
+#pragma mark - Gesture Delegate
+//==============================================================================
+
+/**
+ * The delegate that will receive gesture handler events.
+ */
+@property (weak, nonatomic, nullable) id<IINKGestureDelegate> gestureDelegate;
 
 //==============================================================================
 #pragma mark - Properties
@@ -368,8 +304,9 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
 
 /**
  * Removes all content from the part.
+ * @param error the error thrown if any
  */
-- (void)clear;
+- (BOOL)clearWithError:(NSError * _Nullable * _Nullable)error;
 
 /**
  * Whether undo can be performed on the part or not.
@@ -421,8 +358,8 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  * @return the id of the undo/redo operation at the specific index in the undo/redo stack.
  */
 - (nullable NSString *)getUndoRedoIdAt:(int)stackIndex
-                                error:(NSError * _Nullable * _Nullable)error
-                      NS_SWIFT_NAME(undoRedoId(at:));
+                                 error:(NSError * _Nullable * _Nullable)error
+                       NS_SWIFT_NAME(undoRedoId(at:));
 
 //==============================================================================
 #pragma mark - Pointer Events
@@ -447,12 +384,12 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  *   an empty string.
  */
 - (nullable NSString *)pointerDown:(CGPoint)point
-                               at:(int64_t)t
-                            force:(float)f
-                             type:(IINKPointerType)type
-                        pointerId:(NSInteger)pointerId
-                            error:(NSError * _Nullable * _Nullable)error
-                      NS_SWIFT_NAME(pointerDown(point:timestamp:force:type:pointerId:));
+                                at:(int64_t)t
+                             force:(float)f
+                              type:(IINKPointerType)type
+                         pointerId:(NSInteger)pointerId
+                             error:(NSError * _Nullable * _Nullable)error
+                       NS_SWIFT_NAME(pointerDown(point:timestamp:force:type:pointerId:));
 
 /**
  * Registers a pointer move event.
@@ -467,6 +404,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  *   * IINKErrorInvalidArgument when x or y is not a number.
  *   * IINKErrorInvalidArgument when t exceeds year 9999.
  *   * IINKErrorInvalidArgument when f is not a number or is negative.
+ *   * IINKErrorInvalidArgument when stroke has too many points.
  *   * IINKErrorPointerSequence when `pointerDown()` has not been called before.
  * @return `YES` on success, otherwise `NO`.
  */
@@ -523,8 +461,9 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  * @param count the event count.
  * @param processGestures tells whether to process gestures or not.
  * @param error the recipient for the error description object
- *   * IINKErrorInvalidArgument when pointerType is invalid.
  *   * IINKErrorInvalidArgument when a pointer event contains incorrect data.
+ *   * IINKErrorInvalidArgument when a stroke has too many points.
+ *   * IINKErrorInvalidArgument when events contain more than `20` strokes and processGestures is `true`.
  *   * IINKErrorPointerSequence when event sequence is not allowed.
  * @return `YES` on success, otherwise `NO`.
  */
@@ -545,6 +484,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  * @param viewSize the view size (view coordinates in pixel).
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when `viewSize`'s width or height is negative.
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  */
 - (BOOL)setViewSize:(CGSize)viewSize
               error:(NSError * _Nullable * _Nullable)error
@@ -597,6 +537,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  * @param theme the style sheet, in CSS format.
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when `theme` is invalid.
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  */
 - (BOOL)setTheme:(nullable NSString *)theme
            error:(NSError * _Nullable * _Nullable)error
@@ -655,6 +596,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  * @param position the approximative position of the new block (view coordinates in pixel).
  * @param type the type of the new block.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when type is not supported by current part
  *   type.
  *   * IINKErrorRuntime when editor is not associated with a part.
@@ -680,6 +622,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when type is not supported by current part
  *   type.
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when a block already exists at this position,
  *   and is not a "Container" block.
@@ -709,6 +652,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  *   * IINKErrorInvalidArgument when `inputFile` does not exist.
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when `mimeType` is not an image type.
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when a block already exists at this position,
  *   and is not a "Container" block.
@@ -730,6 +674,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  *
  * @param selection the content selection to erase.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when selection is <c>null</c>.
  *   * IINKErrorRuntime when editor is not associated with a part.
  * @since>2.0</since>
@@ -769,6 +714,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  *   part.
  * @param targetState the target conversion state for the selection.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorInvalidArgument when the target conversion state is not
  *   reachable from the current state of the specified selection.
@@ -831,7 +777,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  */
 - (BOOL)export_:(nullable NSObject<IINKIContentSelection> *)selection
          toFile:(nonnull NSString *)file
-    imagePainter:(nullable id<IINKIImagePainter>)imagePainter
+   imagePainter:(nullable id<IINKIImagePainter>)imagePainter
           error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(export(selection:destinationFile:imagePainter:));
 
@@ -860,7 +806,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
 - (BOOL)export_:(nullable NSObject<IINKIContentSelection> *)selection
          toFile:(nonnull NSString *)file
        mimeType:(IINKMimeType)mimeType
-    imagePainter:(nullable id<IINKIImagePainter>)imagePainter
+   imagePainter:(nullable id<IINKIImagePainter>)imagePainter
           error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(export(selection:destinationFile:mimeType:imagePainter:));
 
@@ -918,7 +864,7 @@ typedef NS_ENUM(NSUInteger, IINKTextFormat)
  */
 - (BOOL)export_:(nullable NSObject<IINKIContentSelection> *)selection
          toFile:(nonnull NSString *)file
-    imagePainter:(nullable id<IINKIImagePainter>)imagePainter
+   imagePainter:(nullable id<IINKIImagePainter>)imagePainter
 overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
           error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(export(selection:destinationFile:imagePainter:overrideConfiguration:));
@@ -953,7 +899,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
 - (BOOL)export_:(nullable NSObject<IINKIContentSelection> *)selection
          toFile:(nonnull NSString *)file
        mimeType:(IINKMimeType)mimeType
-    imagePainter:(nullable id<IINKIImagePainter>)imagePainter
+   imagePainter:(nullable id<IINKIImagePainter>)imagePainter
 overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
           error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(export(selection:destinationFile:mimeType:imagePainter:overrideConfiguration:));
@@ -974,6 +920,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param data the data to import.
  * @param selection the target selection, or `nil` to let editor detect the target.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when the specified mime type is not supported.
  *   * IINKErrorRuntime when `data` could not be imported.
@@ -993,6 +940,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param selection the target selection, or `nil` to let editor detect the target.
  * @param overrideConfiguration the extra configuration used when importing.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when the specified mime type is not supported.
  *   * IINKErrorRuntime when `data` could not be imported.
@@ -1016,6 +964,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  *
  * @param selection the selection to copy, `nil` means full part.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when selection cannot be copied.
  * @return `YES` on success, otherwise `NO`.
@@ -1034,6 +983,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  *
  * @param position the target pasted block coordinates (view coordinates in pixel).
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when content of the clipboard cannot be pasted on
  *   the part.
@@ -1083,9 +1033,9 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param canvas the canvas on which editor should send the drawing commands.
  * @param error the recipient for the error description object
  *   * IINKErrorRuntime when editor is not associated with a part.
- *   * IINKErrorInvalidArgument when pointerType is invalid.
  *   * IINKErrorInvalidArgument when a pointer event contains incorrect data.
- *   * IINKErrorPointerSequence when events sequence is invalid.
+ *   * IINKErrorInvalidArgument when a stroke has too many points.
+ *   * IINKErrorPointerSequence when events sequence is not allowed.
  * @return `YES` on success, otherwise `NO`.
  *
  * @since 1.5.1
@@ -1138,7 +1088,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  */
 - (nullable NSArray<NSString *> *)getIntersectingBlocks:(nonnull NSObject<IINKIContentSelection> *)selection
                                                   error:(NSError * _Nullable * _Nullable)error
-                                          NS_SWIFT_NAME(intersectingBlocks(forSelection:));
+                                  NS_SWIFT_NAME(intersectingBlocks(forSelection:));
 
 /**
  * Returns the content block ids included in the specified content selection.
@@ -1152,7 +1102,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  */
 - (nullable NSArray<NSString *> *)getIncludedBlocks:(nonnull NSObject<IINKIContentSelection> *)selection
                                               error:(NSError * _Nullable * _Nullable)error
-                                          NS_SWIFT_NAME(includedBlocks(forSelection:));
+                                  NS_SWIFT_NAME(includedBlocks(forSelection:));
 
 /**
  * Checks if a transformation is allowed on a content selection.
@@ -1165,7 +1115,6 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  *
  * @since 2.0
  */
-
 - (nullable IINKTransformErrorValue*)getTransformStatus:(CGAffineTransform)transform
                                               selection:(nonnull NSObject<IINKIContentSelection> *)selection
                                                   error:(NSError * _Nullable * _Nullable)error
@@ -1177,6 +1126,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param transform the transformation to apply.
  * @param selection the content selection on which to apply the transformation.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when the transform is not allowed on the content selection.
  *   * IINKErrorInvalidArgument when transform is not valid for this operation.
@@ -1193,6 +1143,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param style the CSS style properties to apply.
  * @param selection the content selection on which to apply the style.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *
  * @since 2.0
@@ -1218,6 +1169,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param format the text format value.
  * @param selection the content selection on which to apply the format.
  * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *
  * @since 2.0
@@ -1244,13 +1196,14 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param mode the selection mode to set on the active content selection.
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when the mode is not supported.
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when editor has no active selection.
  *
  * @since 2.0
  */
 - (BOOL)setSelectionMode:(IINKContentSelectionMode)mode
-                error:(NSError * _Nullable * _Nullable)error
+                   error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(set(mode:));
 
 /**
@@ -1270,6 +1223,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @param forceSingleBlock `YES` to force converting the selection to a single block, `NO` otherwise.
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when the type is not supported.
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
  *   * IINKErrorRuntime when editor is not associated with a part.
  *   * IINKErrorRuntime when selection is not valid.
  *   * IINKErrorRuntime when selection is not compatible with the type.
@@ -1278,7 +1232,7 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  */
 - (BOOL)setType:(nonnull NSString *)type
    forSelection:(nonnull NSObject<IINKIContentSelection> *)selection
-   forceSingleBlock:(BOOL)forceSingleBlock
+forceSingleBlock:(BOOL)forceSingleBlock
           error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(set(type:selection:forceSingleBlock:));
 
@@ -1292,5 +1246,48 @@ overrideConfiguration:(nonnull IINKParameterSet *)overrideConfiguration
  * @since 2.0.1
  */
 - (nonnull NSArray<NSString*> *)getAvailableSelectionTypes:(nullable NSObject<IINKIContentSelection> *)selection;
+
+/**
+ * @warning This is a Beta API.
+ *
+ * Returns the indentation levels of a selection.
+ *
+ * @param selection the content selection on which to get indentation levels, `nil` means full part.
+ * @param error the recipient for the error description object
+ *   * IINKErrorRuntime when editor is not associated with a part.
+ *   * IINKErrorRuntime when selection is not valid.
+ *   * IINKErrorRuntime when selection is empty.
+ *
+ * @return the indentation levels of the selection.
+ *
+ * @since 2.1
+ */
+- (IINKIndentationLevels)getIndentationLevels:(nullable NSObject<IINKIContentSelection> *)selection
+                                        error:(NSError * _Nullable * _Nullable)error
+                         NS_SWIFT_NAME(indent(forSelection:));
+
+/**
+ * @warning This is a Beta API.
+ *
+ * Indents/de-indents a selection by the specified offset.
+ *
+ * @note resulting indentation levels will be clamped to `[0, max_indentation[`.
+ *  See {@link #getIndentationLevels()}.
+ *
+ * @param selection the content selection to indent/de-indent.
+ * @param offset the number of levels to indent/de-indent the selection.
+ * @param error the recipient for the error description object
+ *   * IINKErrorPointerSequence when a sequence of pointer events is ongoing.
+ *   * IINKErrorRuntime when editor is not associated with a part.
+ *   * IINKErrorRuntime when selection is not valid.
+ *   * IINKErrorRuntime when selection is empty.
+ *   * IINKErrorRuntime when selection is not indentable.
+ *
+ * @since 2.1
+ */
+- (BOOL)indent:(nullable NSObject<IINKIContentSelection> *)selection
+        offset:(int)offset
+         error:(NSError * _Nullable * _Nullable)error
+        NS_SWIFT_NAME(set(indent:selection:offset:));
 
 @end

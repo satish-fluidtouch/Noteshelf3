@@ -32,6 +32,16 @@ typedef NS_ENUM(NSUInteger, IINKEditorError)
   IINKEditorErrorGestureNotificationCannotMoveAboveFirstLine,
   /** Gesture notification, unable to apply. */
   IINKEditorErrorGestureNotificationUnableToApply,
+  /** The configuration bundle (*.conf file) cannot be found. */
+  IINKEditorErrorConfigurationBundleNotFound,
+  /** The configuration name cannot be found in the bundle (*.conf file). */
+  IINKEditorErrorConfigurationNameNotFound,
+  /** The configuration refers to a resource file that cannot be found. */
+  IINKEditorErrorResourceNotFound,
+  /** There was an error when parsing the *.conf files. */
+  IINKEditorErrorInvalidConfiguration,
+  /** Ink was rejected, the stroke is spread over several blocks. */
+  IINKEditorErrorInkRejectedSeveralBlocks,
 };
 
 /**
