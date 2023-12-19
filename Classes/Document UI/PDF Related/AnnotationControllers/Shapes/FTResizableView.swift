@@ -68,19 +68,6 @@ class FTResizableView: UIView {
         return activeControlPoint
     }
     
-    func activeControlPoint(for refPoint: CGPoint) -> FTControlPoint? {
-        let views: [FTKnobView] = [topLeft, topRight, bottomLeft, bottomRight]
-        let returnView = views.first { eachView in
-           eachView.frame.insetBy(dx: -30, dy: -30).contains(refPoint)
-        }
-        if let returnView {
-            return self.getActiveControlPoint(for: returnView)
-        }
-        return nil
-    }
-    
-    
-    
     override func draw(_ rect: CGRect) {
         //createShape()
         //        UIColor.white.setFill()
@@ -166,26 +153,6 @@ class FTResizableView: UIView {
         let atanA = atan2(a, b)
         let atanB = atan2(c, d)
         return atanA - atanB
-    }
-    
-    func centerWithinBoundary(_ center: CGPoint) -> CGPoint {
-        guard let superView = self.superview else { return center }
-
-        let superViewBounds = superView.bounds
-        let currentFrame = self.frame
-
-        var frame = CGRect(
-            x: center.x - currentFrame.width * 0.5,
-            y: center.y - currentFrame.height * 0.5,
-            width: currentFrame.width,
-            height: currentFrame.height
-        )
-
-        // Ensure the frame stays completely within the superview bounds
-        frame.origin.x = min(max(frame.origin.x, 0), superViewBounds.width - frame.width)
-        frame.origin.y = min(max(frame.origin.y, 0), superViewBounds.height - frame.height)
-
-        return CGPoint(x: frame.midX, y: frame.midY)
     }
     
     func updateDegreeLabel(angleInRadians : CGFloat) {

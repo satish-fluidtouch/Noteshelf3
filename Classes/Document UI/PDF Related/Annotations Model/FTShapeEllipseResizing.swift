@@ -53,22 +53,5 @@ class FTShapeEllipseResizing : FTShapeRectangleResizing {
         }
         boundingRect.size = _size;
     }
-    
-    override func resizeProportionally(for touch: UITouch, in view: UIView) -> CGRect {
-        let currentTouch = touch.location(in: view.superview)
-        let prevPoint = touch.previousLocation(in: view.superview)
-        let xOffset = currentTouch.x - prevPoint.x
-        let yOffset = currentTouch.y - prevPoint.y
-        let originalFrame = view.contentFrame()
-        let newWidth = originalFrame.width - xOffset
-        let newHeight = originalFrame.height - yOffset
-        let aspectRatio = originalFrame.width / originalFrame.height
-        var newFrame = view.contentFrame()
-        newFrame.size.width = newWidth
-        newFrame.size.height = newWidth / aspectRatio
-        newFrame.size.height = newHeight
-        newFrame.size.width = newHeight * aspectRatio
-        return newFrame
-    }
  
 }

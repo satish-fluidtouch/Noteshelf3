@@ -38,7 +38,7 @@ protocol FTAnnotationStrokeErase
     var isReadonly : Bool = false;
     var version : Int = 1;
     var isLocked : Bool = false;
-    var inLineEditing = false
+        
     var currentScale : CGFloat = 0;
     var copyMode : Bool = false;
     var isEditingInProgress : Bool {
