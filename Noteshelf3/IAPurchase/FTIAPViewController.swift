@@ -114,10 +114,11 @@ private extension FTIAPViewController {
         return [.font: UIFont.clearFaceFont(for: .medium, with: 20)];
     }
     
-    func discountedPercentage(_ ns3Product: SKProduct, ns2Product: SKProduct) {
+    func discountedPercentage(_ ns3Product: SKProduct, ns2Product: SKProduct) -> Int {
         let ns2Value = ns2Product.price.floatValue;
         let ns3Value = ns3Product.price.floatValue;
-        let percentage = ((Int)((ns2Value/ns3Value) * 10))*10
-        debugPrint("roundupvalue: \(percentage)");
+        let roundedValue = round((ns2Value/ns3Value) * 10);
+        let percentage = (Int)(roundedValue) * 10
+        return percentage;
     }
 }

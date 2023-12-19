@@ -622,9 +622,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                   "appversion": appversion!]
                     } else {
                         params = ["UUID": self.documentUUID,
-                                  "Plist": "Not Found"]
+                                  "Reason": "info plist Not Found"]
                     }
-                    FTLogError("Doc Corrupt", attributes: params)
+                    self.logDocumentCorrupt(params);
                 }
                 
                 self.closeDocument(completionHandler: { _ in
@@ -1269,7 +1269,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             else{
             }
             #endif
-            FTLogError("Doc Corrupt", attributes: params)
+            self.logDocumentCorrupt(params);
             return false;
         }
         
@@ -1281,16 +1281,13 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         let documentVersion = self.propertyInfoPlist()?.object(forKey: DOCUMENT_VERSION_KEY) as? String;
         if(nil == documentVersion) {
             let params = ["Reason" : "Metadata file Missing"]
-            FTLogError("Doc Corrupt", attributes: params)
+            self.logDocumentCorrupt(params);
             return false;
         }
         
         let value = (documentVersion! as NSString).floatValue;
         if(value > APP_SUPPORTED_MAX_DOC_VERSION) {
-            let params : [String: Any] = ["Reason" : "Old app ver",
-                                          "Doc ver" : documentVersion ?? "unknown",
-                                          "App Support ver" : APP_SUPPORTED_MAX_DOC_VERSION]
-            FTLogError("Doc Corrupt", attributes: params)
+            self.logDocumentVersionNotSupported(documentVersion);
             return false;
         }
         return true;
@@ -1863,3 +1860,62 @@ extension FTNoteshelfDocument: FTPDFContentCacheProtocol {
     
 }
 #endif
+
+extension FTNoteshelfDocument {
+    func logDocumentCorrupt(_ params: [String:Any]) {
+        FTLogError("Doc Corrupt", attributes: params)
+        let obj = FTLogDocumentCorruptErrorFirstTime();
+        obj.logError(self.fileURL, params: params);
+    }
+        
+    func logDocumentVersionNotSupported(_ documentVersion: String?) {
+        let params : [String: Any] = ["Reason" : "Old app ver",
+                                      "Doc ver" : documentVersion ?? "unknown",
+                                      "App Support ver" : APP_SUPPORTED_MAX_DOC_VERSION]
+        FTLogError("Doc version Not Supported", attributes: params)
+    }
+}
+
+
+extension URL {
+    static var documentErrorFileURL: URL? {
+        if let cacheFolder = NSSearchPathForDirectoriesInDomains(.libraryDirectory,
+                                                                 .userDomainMask,
+                                                                 true).last {
+            return URL(filePath: cacheFolder).appending(path: "docErrorList.plist");
+        }
+        return nil;
+    }
+}
+
+private class FTLogDocumentCorruptErrorFirstTime: NSObject {
+    func logError(_ path: URL,params: [String:Any]) {
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        if let filePath = URL.documentErrorFileURL {
+            do {
+                var docInfo = [String]();
+                if FileManager().fileExists(atPath: filePath.path) {
+                    do {
+                        let data = try Data(contentsOf: filePath)
+                        if let info = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String] {
+                            docInfo = info;
+                        }
+                    }
+                }
+                let relativePath = path.relativePathWithOutExtension().lowercased()
+                if !docInfo.contains(relativePath) {
+                    
+                    FTLogError("Doc Corrupt First Time",attributes: params);
+                    track("Doc Corrupt First Time", params: params,screenName: "Doc open");
+                    docInfo.append(relativePath);
+                    let data = try PropertyListSerialization.data(fromPropertyList: docInfo, format: .xml, options: 0);
+                    try data.write(to: filePath, options: .atomic);
+                }
+            }
+            catch {
+                
+            }
+        }
+#endif
+    }
+}
