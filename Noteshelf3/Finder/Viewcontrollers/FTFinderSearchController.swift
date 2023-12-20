@@ -119,6 +119,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
         self.searchOptions.onCompletion = { [weak self] in
             self?.finderController?.updateBackgroundViewForSearch()
             self?.updateFilterAndCreateSnapShot();
+            self?.finderController?.showSearchIndicator(false)
         }
         recentsTableView.register(FTRecentSearchCell.self, forCellReuseIdentifier: kRecentSearchCell)
         if let doc = document as? FTNoteshelfDocument {
@@ -215,21 +216,10 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private func updateFilterAndCreateSnapShot() {
         if let searchPages = searchOptions.searchPages {
             finderController?.searchResultPages = searchPages
-            hideLoadingIndicator()
             finderController?.updateFilterAndCreateSnapShot()
         }
     }
-    
-    private func hideLoadingIndicator() {
-        self.activityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
-    }
-    
-    private func showLoadingIndicator() {
-        self.activityIndicator.isHidden = false
-        self.activityIndicator.startAnimating()
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let finderController = segue.destination as? FTFinderViewController {
             self.finderController = finderController
@@ -417,7 +407,8 @@ extension FTFinderSearchController {
         }
         if searchInputInfo.textKey != self.searchText || searchInputInfo.tags != tags {
             isSearching = true
-            showLoadingIndicator()
+//            showLoadingIndicator()
+            self.finderController?.showSearchIndicator(true)
             finderController?.configureForSearchTab()
             finderController?.isSearching = true
             searchInputInfo.tags = tags
@@ -563,7 +554,6 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     
     internal func perfromSearchCancel() {
         self.isSearching = false
-        hideLoadingIndicator()
         updateSubViews(isSearching: self.isSearching)
         recentsTableView.reloadData()
         recentsTableView.isHidden = false

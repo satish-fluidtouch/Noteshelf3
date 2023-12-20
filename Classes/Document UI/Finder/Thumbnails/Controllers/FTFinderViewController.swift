@@ -104,6 +104,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     var selectedSegment = FTFinderSegment.pages
     //UI
     var cellSize: CGSize = CGSize(width: 200, height: 208)
+    let bookMarkThumbSize: CGSize = CGSize(width: 52, height: 72)
     private let extraCellPadding : CGFloat = 30
     private let preferredWidth: CGFloat = 335;
 
@@ -1232,6 +1233,10 @@ extension FTFinderViewController{
     func updateBackgroundViewForSearch() {
         collectionView.backgroundView = _placeHolderVc().view
         self.placeHolderVc?.updateView(for: .search)
+    }
+    
+    func showSearchIndicator(_ value : Bool) {
+        self.sectionHeader?.showSearchIndicator(value)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

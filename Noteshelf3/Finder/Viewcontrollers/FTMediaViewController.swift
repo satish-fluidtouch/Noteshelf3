@@ -105,6 +105,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
+        updateFilterOptionImage()
     }
     
     override func viewDidLayoutSubviews() {
@@ -326,6 +327,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     private func didTapEditOption(identifier: String) {
         if let option = FTMediaType(rawValue: identifier) {
             self.selectedMediaType = option
+            updateFilterOptionImage()
             updateAndReloadCollectionView()
             if let optionsMenu = editButton.menu?.children.first as? UIMenu {
                 let elements = optionsMenu.children
@@ -340,6 +342,11 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
                 }
             }
          }
+    }
+    
+    private func updateFilterOptionImage() {
+        let image = (self.selectedMediaType == .allMedia) ? UIImage(systemName: "ellipsis.circle") : UIImage(systemName: "ellipsis.circle.fill")
+        editButton.setImage(image, for: .normal)
     }
     
     func resetSelection() {

@@ -98,6 +98,8 @@ extension FTFinderViewController {
             collectionViewCell.setIsSelected(false);
         }
         collectionViewCell.isEditMode = (self.mode == .edit || self.mode == .selectPages)
+        let size = AVMakeRect(aspectRatio: page.pdfPageRect.size, insideRect: CGRect(origin: CGPoint.zero, size: self.bookMarkThumbSize)).size
+        collectionViewCell.thumbImageSize = size
         collectionViewCell.confiureCell(with: page)
         return collectionViewCell
     }
