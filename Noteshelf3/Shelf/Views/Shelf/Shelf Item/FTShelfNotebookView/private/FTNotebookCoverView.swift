@@ -121,7 +121,7 @@ struct FTShelfItemUploadDownloadIndicator: View {
             .frame(width: imageSize.width, height: imageSize.height, alignment: Alignment.center)
             .font(font)
             .padding(.bottom, padding)
-            .isHidden(toShowIndicator)
+            .isHidden(!toShowIndicator)
     }
 }
 
