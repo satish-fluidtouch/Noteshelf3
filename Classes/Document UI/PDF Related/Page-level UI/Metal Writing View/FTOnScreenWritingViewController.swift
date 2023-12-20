@@ -383,7 +383,7 @@ extension FTOnScreenWritingViewController
             if  ((currentDrawingMode == .deskModePen &&
                 FTUserDefaults.isHoldToConvertToShapeOnForPen()) ||
                 (currentDrawingMode == .deskModeMarker &&
-                FTUserDefaults.isHoldToConvertToShapeOnForHighlighter())),
+                 FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) || self.toDetectShapeInFavoritesMode()),
                 let curStroke = self.currentStroke?.stroke as? FTStroke
             {
                 let canDetect = FTShapeDetector.canDetectShape(stroke: curStroke, scale: self.scale)
@@ -415,8 +415,7 @@ extension FTOnScreenWritingViewController
             
             //For drawing straight lines in highlighter mode when draw straight lines option is turned on
             //isShapeEnabled - This will be true only when user holds and convert to shape
-            if self.currentDrawingMode == .deskModeMarker ,
-               FTUserDefaults.isDrawStraightLinesOn(),
+            if self.toDrawStraightLineInFavoriteMode(),
                let curStroke = self.currentStroke?.stroke as? FTStroke, !isShapeEnabled {
                 let shapeDetector = FTShapeDetector.init(delegate: self)
                 let lineDetected = shapeDetector.detectedLineFor(stroke: curStroke, scale: self.scale).1
@@ -512,6 +511,29 @@ extension FTOnScreenWritingViewController
     
     @objc private func performShapeRenderingFor(_ touch : FTTouch){
         self.stylusPenTouchEnded(touch, isShapeEnabled: true);
+    }
+    
+    private func toDetectShapeInFavoritesMode() -> Bool {
+        guard self.currentDrawingMode == .deskModeFavorites else {
+            return false
+        }
+        let isHighlighter = self.currentSelectedPenSet().type.isHighlighterPenType()
+        
+        if (isHighlighter && FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) ||
+           (!isHighlighter && FTUserDefaults.isHoldToConvertToShapeOnForPen()) {
+            return true
+        }
+        return false
+    }
+
+    private func toDrawStraightLineInFavoriteMode() -> Bool {
+        guard self.currentDrawingMode == .deskModeFavorites || self.currentDrawingMode == .deskModeMarker else {
+            return false
+        }
+        if FTUserDefaults.isDrawStraightLinesOn() && self.currentSelectedPenSet().type.isHighlighterPenType() {
+            return true
+        }
+        return false
     }
     
     private func drawDetectedShape() -> (areaToRefresh:CGRect, hasShape:Bool) {

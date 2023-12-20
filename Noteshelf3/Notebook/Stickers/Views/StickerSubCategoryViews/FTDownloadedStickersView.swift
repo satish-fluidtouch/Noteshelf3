@@ -44,7 +44,7 @@ struct FTDownloadedStickersView: View {
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 120,height: 120)
                                             .cornerRadius(8.0)
-                                            .background()
+                                            .background(.clear)
                                             .overlay(isShowDeleteButton ? deleteview(model: downloadModel) : nil ,alignment:.topTrailing)
 
                                             Text(downloadModel.title)

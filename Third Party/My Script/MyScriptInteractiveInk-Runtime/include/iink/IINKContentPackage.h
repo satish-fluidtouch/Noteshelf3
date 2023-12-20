@@ -145,12 +145,30 @@
  * @param part the part to remove.
  * @param error the recipient for the error description object
  *   * IINKErrorInvalidArgument when part does not belong to this package.
+ * @return `YES` on success, otherwise `NO`.
  *
  * @since 1.2
  */
 - (BOOL)removePart:(nonnull IINKContentPart *)part
              error:(NSError * _Nullable * _Nullable)error
         NS_SWIFT_NAME(removePart(_:));
+
+/**
+ * Moves the given part to another index.
+ *
+ * @param fromIndex the current index of the requested part.
+ * @param toIndex the new index of the part.
+ * @param error the recipient for the error description object
+ *   * IINKErrorOutOfRange when `fromIndex` is out of range.
+ *   * IINKErrorOutOfRange when `toIndex` is out of range.
+ * @return `YES` on success, otherwise `NO`.
+ *
+ * @since 2.1.1
+ */
+- (BOOL)movePart:(NSInteger)fromIndex
+         toIndex:(NSInteger)toIndex
+           error:(NSError * _Nullable * _Nullable)error
+          NS_SWIFT_NAME(movePart(fromIndex:toIndex:));
 
 /**
  * Adds an existing part to this package.

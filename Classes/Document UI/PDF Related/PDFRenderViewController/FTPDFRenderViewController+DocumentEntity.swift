@@ -26,6 +26,14 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: message))
     }
 
+    @objc func audioAnnotations() -> [FTAnnotation] {
+        var annotationsToReturn = [FTAnnotation]()
+        if  let page = self.firstPageController()?.pdfPage as? FTNoteshelfPage {
+            annotationsToReturn.append(contentsOf: page.audioAnnotations())
+        }
+        return annotationsToReturn
+    }
+
     /// Photo Library,  Take Photo
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource) {
         self.insert(images, center: .zero, droppedPoint: .zero, source: source)

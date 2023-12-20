@@ -86,7 +86,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNoShelfItemsView: Bool = false
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
-    @Published var reloadShelfItems: Bool = false
     @Published var tagsForThisBook: [FTTagItemModel] = []
     @Published var allowHitTesting: Bool = true
     @Published var showCompactBottombar: Bool = false
@@ -121,7 +120,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var updateItem: FTShelfItemViewModel?
     var shelfDidLoad: Bool = false
     var isInHomeMode: Bool = false
-    
+    var displayStlye: FTShelfDisplayStyle = .Gallery
+    private var observer: NSKeyValueObservation?
+
     init(collection: FTShelfItemCollection, groupItem: FTGroupItemProtocol? = nil) {
         self.collection = collection
         self.groupItem = groupItem
@@ -129,6 +130,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
+        self.configAndObserveDisplayStyle()
     }
     
     init(sidebarItemType: FTSideBarItemType){
@@ -138,6 +140,20 @@ class FTShelfViewModel: NSObject, ObservableObject {
         subscribeToShelfItemChanges()
         toolbarViewModel.delegate = self
         self.addContextualMenuOerationsObserver()
+        self.configAndObserveDisplayStyle()
+    }
+    
+    private func configAndObserveDisplayStyle() {
+        let style = UserDefaults.standard.integer(forKey: "displayStyle")
+        self.displayStlye = FTShelfDisplayStyle(rawValue: style) ?? .Gallery
+        observer = UserDefaults.standard.observe(\.shelfDisplayStyle, options: [.new]) { [weak self] (userDefaults, change) in
+            guard let self else { return }
+            let value = userDefaults.shelfDisplayStyle
+            if value != self.displayStlye.rawValue {
+                self.displayStlye = FTShelfDisplayStyle(rawValue: value) ?? .Gallery
+                self.reloadShelf()
+            }
+        }
     }
     
     // MARK: Computed variables
@@ -342,11 +358,12 @@ private extension FTShelfViewModel {
         }
     }
     func updateGetStartedInfoWithDelay(){
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateShowingGetStartedInfoStatus), object: nil)
         self.perform(#selector(updateShowingGetStartedInfoStatus), with: nil, afterDelay: 0.7)
     }
     @objc func updateShowingGetStartedInfoStatus() {
-        withAnimation {
-            if isInHomeMode {
+        if isInHomeMode {
+            withAnimation {
                 if shelfItems.count > 0 {
                     FTUserDefaults.setFirstLaunch(false)
                     self.shouldShowGetStartedInfo = false
@@ -356,11 +373,11 @@ private extension FTShelfViewModel {
                         self.shouldShowGetStartedInfo = true
                     }
                 }
-            }else {
-                if shelfItems.count > 0 {
-                    FTUserDefaults.setFirstLaunch(false)
-                    self.shouldShowGetStartedInfo = false
-                }
+            }
+        } else {
+            if shelfItems.count > 0 {
+                FTUserDefaults.setFirstLaunch(false)
+                self.shouldShowGetStartedInfo = false
             }
         }
     }
@@ -439,7 +456,6 @@ extension FTShelfViewModel {
 //MARK: Code for shelf items fetching from backend
 extension FTShelfViewModel {
     
-    @MainActor
     func fetchShelfItems(animate: Bool = true)  {
         collection.shelfItems(FTUserDefaults.sortOrder()
                               , parent: groupItem
@@ -447,51 +463,52 @@ extension FTShelfViewModel {
             guard let self = self else {
                 return
             }
-            if(animate) {
-                withAnimation {
-                    setShelfItems()
-                }
-            }
-            else {
-              setShelfItems()
-            }
-            
-            func setShelfItems() {
-                self.setShelfItems(items);
-                if let item = self.closedDocumentItem {
-                    self.scrollToItemID = item.uuid
-                    self.closedDocumentItem = nil
-                }
+            self.setShelfItems(items,animate:animate);
+            if let item = self.closedDocumentItem {
+                self.scrollToItemID = item.uuid
+                self.closedDocumentItem = nil
             }
         }
         self.addObservers()
     }
     
-    private func setShelfItems(_ items: [FTShelfItemProtocol]) {
+    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
         self.resetShelfModeTo(.normal)
-        let _shelfItems = self.createShelfItemsFromData(items);
-        self.shelfItems = _shelfItems
-        
-        self.showNoShelfItemsView = self.shelfItems.isEmpty
-        
-        if !shelfDidLoad {
-            shelfDidLoad = true
-        }
-        if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-            NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+        DispatchQueue.global().async {
+            let _shelfItems = self.createShelfItemsFromData(items);
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if(animate) {
+                    withAnimation {
+                        self.shelfItems = _shelfItems
+                    }
+                }
+                else {
+                    self.shelfItems = _shelfItems
+                }
+
+                
+                self.showNoShelfItemsView = self.shelfItems.isEmpty
+
+                if !self.shelfDidLoad {
+                    self.shelfDidLoad = true
+                }
+                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
+                }
+            }
         }
     }
-    
     func reloadItems(animate: Bool = true, _ onCompletion: (() -> Void)? = nil) {
         let block : (Bool, [FTShelfItemProtocol]) ->() = { [weak self] (animate,items) in
             if(animate) {
                 withAnimation {
-                    self?.setShelfItems(items)
+                    self?.setShelfItems(items,animate: animate)
                     onCompletion?();
                 }
             }
             else {
-                self?.setShelfItems(items)
+                self?.setShelfItems(items, animate: animate)
                 onCompletion?();
             }
         };
@@ -611,18 +628,6 @@ extension FTShelfViewModel {
         set {
             if(FTUserDefaults.sortOrder() != newValue) {
                 FTUserDefaults.setSortOrder(newValue);
-                self.reloadItems();
-            }
-        }
-    }
-    
-    var displayStlye: FTShelfDisplayStyle {
-        get {
-            return FTShelfDisplayStyle.displayStyle
-        }
-        set {
-            if(newValue != FTShelfDisplayStyle.displayStyle) {
-                FTShelfDisplayStyle.displayStyle = newValue;
                 self.reloadItems();
             }
         }

@@ -65,6 +65,12 @@ class FTYearFormatInfo : NSObject
             self.screenSize = FTDeviceDataManager().standardiPadDevice.dimension
             self.customVariants.selectedDevice = FTDeviceDataManager().standardiPadDevice
         }
+        if templateId == "Landscape_Diaries_Colorful_Planner" , self.screenType == .Iphone {
+            self.screenType = .Ipad
+            self.orientation = FTScreenOrientation.Land.rawValue;
+            self.screenSize = FTDeviceDataManager().standardiPadDevice.dimension
+            self.customVariants.selectedDevice = FTDeviceDataManager().standardiPadDevice
+        }
         if templateId != "Digital_Diaries_Midnight" , templateId != "Digital_Diaries_Day_and_Night_Journal", self.screenType == .Iphone{
             self.orientation = FTScreenOrientation.Port.rawValue;
         }

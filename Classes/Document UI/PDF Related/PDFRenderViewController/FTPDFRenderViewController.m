@@ -1843,12 +1843,7 @@
 
 -(NSArray*)audioAnnotationsForController:(FTAudioListViewController*)controller
 {
-    NSMutableArray *audioAnnotations = [NSMutableArray array];
-    NSArray *pages = [self.pdfDocument pages];
-    for (id<FTPageProtocol> eachPage in pages) {
-        [audioAnnotations addObjectsFromArray:[eachPage audioAnnotations]];
-    }
-    return audioAnnotations;
+    return [self audioAnnotations];
 }
 
 -(FTAudioAnnotation*)audioAnnotationForModel:(FTAudioRecordingModel*)model
@@ -2214,14 +2209,39 @@
                 UIImageWriteToSavedPhotosAlbum(obj, nil, nil, nil);
             }
             
-            UIImage *finalizedImage = [obj scaleAndRotateImageFor1x];
-            if(nil == finalizedImage) {
+            UIImage *finalizedImage = nil;
+            if (imageSource == FTInsertImageSourceSticker) {
                 finalizedImage = obj;
             }
-            
+            else {
+                finalizedImage = [obj scaleAndRotateImageFor1x];
+                if(nil == finalizedImage) {
+                    finalizedImage = obj;
+                }
+            }
             CGRect finalFrame = [finalizedImage frameInRect:bounds
                                            capToMinIfNeeded:TRUE
                                                contentScale:pageContentScale];
+            if (imageSource == FTInsertImageSourceSticker) {
+                CGFloat minWidth = MIN(obj.size.width * 0.3,bounds.size.width * 0.3);
+                CGFloat maxHeight = MAX(obj.size.height * 0.2,bounds.size.width * 0.2);
+                if (finalFrame.size.width > minWidth) {
+                    CGPoint center = CGPointMake(CGRectGetMidX(finalFrame), CGRectGetMidY(finalFrame));
+                    CGFloat ratio = finalFrame.size.width/finalFrame.size.height;
+                    finalFrame.size.width = minWidth;
+                    finalFrame.size.height = minWidth/ratio;
+                    finalFrame.origin.x = center.x - finalFrame.size.width * 0.5;
+                    finalFrame.origin.y = center.y - finalFrame.size.height * 0.5;
+                }
+                if (finalFrame.size.height > maxHeight) {
+                    CGPoint center = CGPointMake(CGRectGetMidX(finalFrame), CGRectGetMidY(finalFrame));
+                    CGFloat ratio = finalFrame.size.width/finalFrame.size.height;
+                    finalFrame.size.width = maxHeight;
+                    finalFrame.size.height = maxHeight/ratio;
+                    finalFrame.origin.x = center.x - finalFrame.size.width * 0.5;
+                    finalFrame.origin.y = center.y - finalFrame.size.height * 0.5;
+                }
+            }
             if(!CGPointEqualToPoint(center, CGPointZero)) {
                 finalFrame = CGRectSetCenter(finalFrame, center, bounds);
             }
@@ -2242,6 +2262,7 @@
             imageInfo.enterEditMode = canEnterIntoEditMode;
             imageInfo.boundingRect = CGRectScale(finalFrame, 1/imageInfo.scale);
             [info addObject:imageInfo];
+
             [frameInfo addObject:[NSValue valueWithCGRect:finalFrame]];
             
             //This is being released in mode switcher
@@ -3064,6 +3085,12 @@
 
 - (void)documentWillGetReloaded:(FTDocument*)document onCompletion:(void(^)(void))completionBLock
 {
+    if(![[NSThread currentThread] isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self documentWillGetReloaded:document onCompletion:completionBLock];
+        });
+        return;;
+    }
     FTCLSLog(@"Document Will Reloaded");
     self.mainScrollView.contentOffset = self.mainScrollView.contentOffset;
     self.currentPageIndexToBeShown = self.currentlyVisiblePage.pageIndex;

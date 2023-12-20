@@ -62,13 +62,6 @@ class FTToolbarCenterPanelController: UIViewController {
         track(EventName.toolbar_longpress)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            self.collectionView.reloadData()
-        }
-    }
-
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -113,8 +106,6 @@ class FTToolbarCenterPanelController: UIViewController {
             self.updateNavButtons(show: true)
             self.collectionView.isScrollEnabled = true
         }
-        self.collectionView.collectionViewLayout.invalidateLayout()
-        self.collectionView.reloadData()
         runInMainThread(0.1) {
             self.updateCurrentStatusOfNavButtons()
         }

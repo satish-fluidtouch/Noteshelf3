@@ -8,6 +8,7 @@
 #import <iink/IINKContentSelection.h>
 #import <iink/IINKEditor.h>
 #import <iink/IINKEditorDelegate.h>
+#import <iink/IINKGestureDelegate.h>
 #import <iink/IINKEngine.h>
 #import <iink/IINKError.h>
 #import <iink/IINKIContentSelection.h>
@@ -15,6 +16,7 @@
 #import <iink/IINKIRenderTarget.h>
 #import <iink/IINKMimeType.h>
 #import <iink/IINKParameterSet.h>
+#import <iink/IINKPointerEvent.h>
 #import <iink/IINKRecognitionAssetsBuilder.h>
 #import <iink/IINKRenderer.h>
 #import <iink/IINKRendererDelegate.h>
@@ -23,6 +25,13 @@
 #import <iink/graphics/IINKICanvas.h>
 #import <iink/graphics/IINKIPath.h>
 #import <iink/graphics/IINKStyle.h>
+
+#import <iink/services/IINKItemIdHelper.h>
+#import <iink/services/IINKOffscreenEditor.h>
+#import <iink/services/IINKOffscreenEditorDelegate.h>
+#import <iink/services/IINKOffscreenGestureDelegate.h>
+#import <iink/services/IINKRecognizer.h>
+#import <iink/services/IINKRecognizerDelegate.h>
 
 #import <iink/text/IINKIFontMetricsProvider.h>
 #import <iink/text/IINKText.h>

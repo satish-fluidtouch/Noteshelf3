@@ -43,7 +43,8 @@ class FTFavoritebarViewController: UIViewController {
         self.manager = FTFavoritePensetManager(activity: activity)
         self.configureDragAndDrop()
         self.favorites = manager.fetchFavorites()
-        self.updateDisplay()
+        let curPenset = self.updateDisplay()
+        self.scrollToCurrentPenset(curPenset)
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -66,7 +67,8 @@ class FTFavoritebarViewController: UIViewController {
         self.collectionView.reloadData()
     }
 
-    private func updateDisplay() {
+    @discardableResult
+    private func updateDisplay() -> FTPenSetProtocol {
         let currentPenset = self.getCurrentPenset()
         let penType = currentPenset.type
         let reqWidth = penType.getIndicatorSize(using: currentPenset.preciseSize).width
@@ -77,11 +79,12 @@ class FTFavoritebarViewController: UIViewController {
         self.sizeDisplayView?.layer.shouldRasterize = true
         self.sizeDisplayView?.layer.rasterizationScale = UIScreen.main.scale
         self.sizeDisplayView.layoutIfNeeded()
+        return currentPenset
     }
 }
 
 private extension FTFavoritebarViewController {
-    private func displayMaximumFavoritesAlert() {
+     func displayMaximumFavoritesAlert() {
         let titleString = "MaximumFavoritesWarningTitle".localized
         let messageString = "MaximumFavoritesWarning".localized
         let okString = "OK".localized
@@ -91,6 +94,14 @@ private extension FTFavoritebarViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    func scrollToCurrentPenset(_ curPenset: FTPenSetProtocol) {
+        if let curIndex = self.favorites.firstIndex(where: { fav in
+            fav.isEqualTo(curPenset)
+        }) {
+            self.collectionView.scrollToItem(at: IndexPath(item: curIndex, section: 0), at: .centeredVertically, animated: false)
+        }
+    }
+    
     func handleEditScreenDismissal() {
         let favTuple = self.manager.removeDuplicates(fromFavPenSets: self.favorites)
         self.favorites = favTuple.uniqueElements

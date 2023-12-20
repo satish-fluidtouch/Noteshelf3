@@ -118,13 +118,24 @@ extension FTShelfSplitViewController {
             let subProgress = self.performBookImport(item.importItem, with: item.imporItemInfo,onCompletion: onCompletion);
             progress.addChild(subProgress, withPendingUnitCount: 1);
         }
-        else if let zipItem = item.importItem as? FTImportItemZip, let collection = self.shelfItemCollection {
-            let zipImporter = FTNBKZipFileImporter(shelfItemCollection: collection,
-                                                   group: self.currentShelfViewModel?.groupItem);
-            let subProgress = zipImporter.performImport(zipItem) { (error) in
-                onCompletion?(nil,error);
+        else if let zipItem = item.importItem as? FTImportItemZip {
+            func performNBZipImportInsideCollection(_ collection: FTShelfItemCollection) {
+                let zipImporter = FTNBKZipFileImporter(shelfItemCollection: collection,
+                                                       group: self.currentShelfViewModel?.groupItem);
+                let subProgress = zipImporter.performImport(zipItem) { (error) in
+                    onCompletion?(nil,error);
+                }
+                progress.addChild(subProgress, withPendingUnitCount: 1);
             }
-            progress.addChild(subProgress, withPendingUnitCount: 1);
+            if isInNonCollectionMode {
+                self.selectUnfiledCollection { unfiledShelfItemCollection in
+                    if let  unfiledShelfItemCollection {
+                        performNBZipImportInsideCollection(unfiledShelfItemCollection)
+                    }
+                }
+            } else if let collection = self.shelfItemCollection {
+                performNBZipImportInsideCollection(collection)
+            }
         }else if let fileURL = item.importItem as? URL, isAudioFile(fileURL.path) {
             if isSupportedAudioFile(fileURL.path) {
                 let audioItem = FTAudioFileToImport.init(withURL: fileURL)
@@ -140,12 +151,21 @@ extension FTShelfSplitViewController {
                         progress.addChild(subProgress, withPendingUnitCount: 1);
                     }
                 } else {
-                    let subProgress = self.createNotebookWithAudioItem(audioItem,
-                                                     isiWatchDocument: false,
-                                                    collection: self.shelfItemCollection,
-                                                    groupItem: self.currentShelfViewModel?.groupItem,
-                                                    onCompletion: onCompletion)
-                    progress.addChild(subProgress, withPendingUnitCount: 1);
+                    func createAudioItemInsideCollection(_ collection: FTShelfItemCollection?, group: FTGroupItemProtocol?) {
+                        let subProgress = self.createNotebookWithAudioItem(audioItem,
+                                                         isiWatchDocument: false,
+                                                        collection: collection,
+                                                        groupItem: group,
+                                                        onCompletion: onCompletion)
+                        progress.addChild(subProgress, withPendingUnitCount: 1);
+                    }
+                    if isInNonCollectionMode {
+                        self.selectUnfiledCollection { unfiledShelfItemCollection in
+                            createAudioItemInsideCollection(unfiledShelfItemCollection,group:nil)
+                        }
+                    } else {
+                        createAudioItemInsideCollection(self.shelfItemCollection,group: self.currentShelfViewModel?.groupItem)
+                    }
                 }
             } else {
                 progress.completedUnitCount += 1;
@@ -170,8 +190,23 @@ extension FTShelfSplitViewController {
                             progress.addChild(subProgress1, withPendingUnitCount: 1);
                         }
                     } else {
-                        subProgress1 = self.startImporting(filePath!, title: fileName,isImageSource: isImageSource,collection: self.shelfItemCollection, groupItem: self.currentShelfViewModel?.groupItem,onCompletion: onCompletion)
-                        progress.addChild(subProgress1, withPendingUnitCount: 1);
+                        func importFileInsideCollection(_ collection: FTShelfItemCollection?, group: FTGroupItemProtocol?) {
+                            subProgress1 = self.startImporting(filePath!,
+                                                               title: fileName,
+                                                               isImageSource: isImageSource,
+                                                               collection: collection,
+                                                               groupItem: group,
+                                                               onCompletion: onCompletion)
+                            progress.addChild(subProgress1, withPendingUnitCount: 1);
+                        }
+                        if self.isInNonCollectionMode {
+                            self.selectUnfiledCollection { unfiledShelfItemCollection in
+                                importFileInsideCollection(unfiledShelfItemCollection,group:nil)
+                            }
+                        } else {
+                            importFileInsideCollection(self.shelfItemCollection,group: self.currentShelfViewModel?.groupItem)
+                        }
+
                     }
                 }
                 else {
@@ -249,8 +284,16 @@ extension FTShelfSplitViewController {
                 self.fetchCollectionDetails(with: importInfo) { collection, group in
                     processImport(with: collection!, group: group)
                 }
-            } else if let collection = self.shelfItemCollection {
+            } else if !self.isInNonCollectionMode,let collection = self.shelfItemCollection {
                 processImport(with: collection, group: self.currentShelfViewModel?.groupItem)
+                self.shelfItemCollection = collection
+            } else if self.isInNonCollectionMode {
+                self.selectUnfiledCollection { unfiledShelfItemCollection in
+                    if let unfiledShelfItemCollection {
+                        processImport(with: unfiledShelfItemCollection, group: nil)
+                        self.shelfItemCollection = unfiledShelfItemCollection
+                    }
+                }
             }
             func processImport(with collection: FTShelfItemCollection, group: FTGroupItemProtocol?) {
                 let importer = FTNBKFormatImporter.init(url: URL.init(fileURLWithPath: downloadPath), collection: collection, group: group);

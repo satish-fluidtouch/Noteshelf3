@@ -45,7 +45,7 @@ class FTDocumentPlannerpostOperation :NSObject, FTPostProcess {
             && (currentDate.compare(endDate) == ComparisonResult.orderedSame ||
                 currentDate.compare(endDate) == ComparisonResult.orderedAscending) {
             let numberOfDays = startDate.daysBetween(date: currentDate)
-            return postProcessInfo.offsetCount + numberOfDays
+            return postProcessInfo.offsetCount + numberOfDays + 1  // as we are inserting cover in the starting of notebook so explicitly adding 1
         }
         
         return 0

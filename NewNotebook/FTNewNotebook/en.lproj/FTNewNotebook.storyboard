@@ -201,7 +201,7 @@
                                                                 <color key="tintColor" name="createNotebookButtonTint"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Create Notebook" cornerStyle="fixed">
-                                                                    <fontDescription key="titleFontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                                                    <fontDescription key="titleFontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                                                     <color key="baseForegroundColor" name="createNotebookButtonTint"/>
                                                                 </buttonConfiguration>
                                                                 <userDefinedRuntimeAttributes>

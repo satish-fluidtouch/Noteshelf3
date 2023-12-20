@@ -20,7 +20,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
 
     func showHomeView() {
-
+        self.isInNonCollectionMode = true
         if !self.isRegularClass() { // In Compact modes, we are navigating to home on every tap on home option
             showHomeDetailedVC()
         } else if let detailController = self.detailController(), !detailController.isKind(of: FTShelfHomeViewController.self) { // In regular modes, avoiding refreshing shelf again if we are already in home.
@@ -45,6 +45,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
     
     func saveLastSelectedNonCollectionType(_ type: FTSideBarItemType) {
+        self.isInNonCollectionMode = true
         if let rootController = self.parent as? FTRootViewController {
             rootController.setLastSelectedNonCollectionType(type)
         }
@@ -74,6 +75,18 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
         }
     }
+    
+    func presentIAPScreen() {
+        let reachability: Reachability = Reachability.forInternetConnection()
+        let status: NetworkStatus = reachability.currentReachabilityStatus();
+        if status == NetworkStatus.NotReachable {
+            UIAlertController.showAlert(withTitle: "MakeSureYouAreConnected".localized, message: "", from: self, withCompletionHandler: nil)
+            return
+        } else {
+            FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
+        }
+    }
+
     
     func openTags(for tag: String, isAllTags: Bool) {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
@@ -112,6 +125,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
      func saveLastSelectedCollection(_ collection: FTShelfItemCollection?) {
+         self.isInNonCollectionMode = false
          if let rootController = self.parent as? FTRootViewController, let selectedCollection = collection {
              rootController.setLastSelectedCollection(selectedCollection.URL)
          }
@@ -205,6 +219,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
     
     func getViewControllerBasedOn(sideBarItemType: FTSideBarItemType, selectedTag: String = "") -> UIViewController {
+        self.isInNonCollectionMode = true
         if sideBarItemType == .home {
             return getSecondaryViewControllerForHomeOption()
         } else if sideBarItemType == .media {
@@ -332,7 +347,11 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
                 varients.selectedDevice = FTDeviceDataManager().getCurrentDevice()
                 (theme as FTPaperTheme).setPaperVariants(varients)
 
-                let coverinfo = FTCoverDataSource.shared.generateCoverTheme(image: coverImage, coverType: .custom, shouldSave: false)
+                var coverinfo = coverThemeForDiary(for: fileName)
+                if coverinfo == nil {
+                    //Fall back to cover generation in case any covers are missed in bundle.
+                    coverinfo = FTCoverDataSource.shared.generateCoverTheme(image: coverImage, coverType: .custom, shouldSave: false, isDiary: true)
+                }
                 let notebookDetails = FTNewNotebookDetails(coverTheme: coverinfo, paperTheme: theme, title: title)
                 FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection({ [weak self] collection in
                     guard let self = self else { return }
@@ -347,6 +366,17 @@ extension FTShelfSplitViewController: FTStoreContainerDelegate {
             }
 
         }
+    }
+    
+    private func coverThemeForDiary(for fileName: String) -> FTThemeable? {
+        let stockFolder = "StockCovers";
+        let url1 = Bundle.main.url(forResource: stockFolder, withExtension: "bundle")!;
+        let subFiles = try? FileManager.default.contentsOfDirectory(at: url1, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+        let coverFolder = subFiles?.filter { $0.lastPathComponent == "\(fileName).nsc" }
+        if let coverNscUrl = coverFolder?.first {
+            return FTTheme.theme(url: coverNscUrl, themeType: .covers)
+        }
+        return nil
     }
 
     func generatePDFFile(withImages images: [UIImage]) async -> URL? {

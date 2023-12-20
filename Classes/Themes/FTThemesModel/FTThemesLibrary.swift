@@ -26,6 +26,7 @@ enum FTDocumentType : Int {
     case Digital_Diaries_Midnight
     case Digital_Diaries_Day_and_Night_Journal
     case Digital_Diaries_Colorful_Planner
+    case Landscape_Diaries_Colorful_Planner
 }
 
 enum FTNThemeLibraryType: Int {
@@ -42,11 +43,13 @@ class FTCustomCoverThemeInfo {
     var title : String
     let isCustom: Bool
     let shouldSave: Bool
+    let isDiary: Bool
 
-    init(title: String, isCustom: Bool, shouldSave: Bool) {
+    init(title: String, isCustom: Bool, shouldSave: Bool, isDiary: Bool) {
         self.title = title.isEmpty ? "Untitled".localized : title
         self.isCustom = isCustom
         self.shouldSave = shouldSave
+        self.isDiary = isDiary
     }
 }
 
@@ -180,7 +183,7 @@ extension FTThemesLibrary {
         let randomCategoryIndex = Int(arc4random_uniform(UInt32(categories.count)))
         let randomCategory = categories[randomCategoryIndex]
 
-        let themes = randomCategory.themes.filter({!recentThemes.contains($0.themeTemplateURL().urlByDeleteingPrivate().relativeThemePath(withDownloadedURL: self.metadataStorage.downloadedThemesFolderURL))})
+        let themes = randomCategory.themes.filter({!recentThemes.contains($0.themeTemplateURL().standardizedFileURL.relativeThemePath(withDownloadedURL: self.metadataStorage.downloadedThemesFolderURL))})
 
         guard !themes.isEmpty else {
             return getRandomCoverTheme()
@@ -189,7 +192,7 @@ extension FTThemesLibrary {
         let randomThemeIndex = Int(arc4random_uniform(UInt32(themes.count)))
         let randomTheme = themes[randomThemeIndex]
 
-        recentThemes.append(randomTheme.themeTemplateURL().urlByDeleteingPrivate().relativeThemePath(withDownloadedURL: self.metadataStorage.downloadedThemesFolderURL))
+        recentThemes.append(randomTheme.themeTemplateURL().standardizedFileURL.relativeThemePath(withDownloadedURL: self.metadataStorage.downloadedThemesFolderURL))
         userDefaults.setValue(Array(recentThemes.suffix(7)), forKey: RecentThemesKey)
         userDefaults.synchronize()
 
@@ -454,7 +457,7 @@ extension FTThemesLibrary {
             return false
         }
         if favorites.contains(where: { favTheme in
-            theme.themeFileURL.urlByDeleteingPrivate() == favTheme.themeFileURL.urlByDeleteingPrivate()
+            theme.themeFileURL.standardizedFileURL == favTheme.themeFileURL.standardizedFileURL
         }) {
             return true
         }

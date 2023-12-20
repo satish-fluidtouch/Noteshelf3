@@ -16,7 +16,6 @@ protocol FTShelfNewNotePopoverViewDelegate: AnyObject {
 struct FTShelfNewNotePopoverView: View {
     @ObservedObject var viewModel: FTNewNotePopoverViewModel
 
-    var popoverHeight: CGFloat
     var appState : AppState
     weak var delegate: FTShelfNewNoteDelegate?
     weak var viewDelegate: FTShelfNewNotePopoverViewDelegate?
@@ -33,7 +32,6 @@ struct FTShelfNewNotePopoverView: View {
                     view .padding(.horizontal, 16)
                         .padding(.top,16)
                 })
-                .frame(height: popoverHeight)
         }
         .macOnlyColorSchemeFixer()
     }
@@ -190,7 +188,7 @@ struct FTShelfNewNotePopoverView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Image("orangeBand")
-            FTShelfNewNotePopoverView(viewModel: FTNewNotePopoverViewModel(), popoverHeight: 360, appState: AppState(sizeClass: UserInterfaceSizeClass.regular))
+            FTShelfNewNotePopoverView(viewModel: FTNewNotePopoverViewModel(), appState: AppState(sizeClass: UserInterfaceSizeClass.regular))
                 .environmentObject(FTNewNotePopoverViewModel())
         }
     }

@@ -47,16 +47,6 @@ public enum FTShelfDisplayStyle: Int {
     static var supportedStyles: [FTShelfDisplayStyle] {
         return [.Gallery,.Icon,.List];
     }
-    
-    static var displayStyle : FTShelfDisplayStyle {
-        get {
-            let style = FTUserDefaults.defaults().integer(forKey: "displayStyle")
-            return FTShelfDisplayStyle(rawValue: style) ?? .Gallery;
-        }
-        set {
-            FTUserDefaults.defaults().setValue(newValue.rawValue, forKey: "displayStyle");
-        }
-    }
 }
 
 #if targetEnvironment(macCatalyst)

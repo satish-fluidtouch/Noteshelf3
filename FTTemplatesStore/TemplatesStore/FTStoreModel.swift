@@ -143,7 +143,7 @@ struct FTTemplateStyle: Codable, Hashable {
     var templatePortToken: String?
     var templateLandToken: String?
     var previewToken: String?
-
+    var supportOrientation: Int? = 0
     enum CodingKeys: String, CodingKey {
         case title = "displayTitle"
         case type
@@ -156,6 +156,7 @@ struct FTTemplateStyle: Codable, Hashable {
         case templatePortToken
         case templateLandToken
         case previewToken
+        case supportOrientation
     }
 
     func styleThumbnailFor(template: TemplateInfo) -> URL {

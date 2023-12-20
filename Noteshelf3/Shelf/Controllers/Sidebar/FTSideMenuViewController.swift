@@ -55,7 +55,7 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
 
     init(viewModel: FTSidebarViewModel, shelfDisplayMenu: FTShelfMenuOverlayInfo) {
         self.viewModel = viewModel
-        super.init(rootView: AnyView(FTSidebarView(viewModel: viewModel).environmentObject(shelfDisplayMenu).environmentObject(FTIAPManager.shared.premiumUser)))
+        super.init(rootView: AnyView(FTSidebarView().environmentObject(shelfDisplayMenu).environmentObject(FTIAPManager.shared.premiumUser).environmentObject(viewModel)))
         self.viewModel.delegate = self
         self.title = "Noteshelf";
         self.navigationItem.backButtonDisplayMode = .minimal;
@@ -205,6 +205,15 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
         self.delegate?.emptyTrash(collection, showConfirmationAlert: showConfirmationAlert, onCompletion: onCompletion)
     }
     func didTapOnSidebarItem(_ item: FTSideBarItem) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector:#selector(self.handleSidebarSelection), object: nil);
+        self.perform(#selector(self.handleSidebarSelection), with: nil, afterDelay: 0.2);
+        track(eventNameFor(item: item), screenName: ScreenName.sidebar)
+    }
+    
+    @objc func handleSidebarSelection() {
+        guard let item: FTSideBarItem = viewModel.selectedSideBarItem else {
+            return;
+        }
         let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio,.tag,.home]
         if nonCollectionTypes.contains(where: { $0 == item.type}) {
             self.delegate?.saveLastSelectedNonCollectionType(item.type)
@@ -215,9 +224,8 @@ extension FTSideMenuViewController: FTSidebarViewDelegate {
             self.delegate?.saveLastSelectedCollection(item.shelfCollection)
         }
         self.didSelectBarItem(item)
-        track(eventNameFor(item: item), screenName: ScreenName.sidebar)
-
     }
+    
     func didSidebarItemRenamed(_ item: FTSideBarItem) {
         if item.type == .category,let collection = item.shelfCollection {
             self.delegate?.didCurrentCollectionRenamed(collection)

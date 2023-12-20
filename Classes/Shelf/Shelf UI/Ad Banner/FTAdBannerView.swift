@@ -120,6 +120,6 @@ struct FTAdBannerView: View{
     }
 }
 
-#Preview {
-    FTAdBannerView()
-}
+//#Preview {
+//    FTAdBannerView()
+//}

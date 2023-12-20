@@ -1004,7 +1004,8 @@ extension FTTextAnnotationViewController {
     }
 
     func textInputAccessoryDidChangeLineSpacing(_ lineSpace: CGFloat) {
-        textInputView.setLineSpacing(lineSpace: lineSpace, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
+        let contentScale = self.zoomScale;
+        textInputView.setLineSpacing(lineSpace: lineSpace * contentScale, forEditing: NSRange(location: 0, length: textInputView.attributedText.length))
         saveTextEntryAttributes()
         validateKeyboard()
     }
