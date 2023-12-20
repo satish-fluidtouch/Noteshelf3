@@ -498,7 +498,7 @@ extension FTNewTextStyleViewController: FTTextSelectionChangeDelegate {
         }
 
         if let paragrapghStyle = attributes[NSAttributedString.Key.paragraphStyle] as? NSParagraphStyle {
-            let lineSpace = Int(paragrapghStyle.lineSpacing)
+            let lineSpace = (Int)(round(paragrapghStyle.lineSpacing/scale))
             lineSpaceStepper?.updateInitialValue(lineSpace)
             self.currentLineSpace = lineSpace
             lblLineSpace?.text = "\(lineSpace) pt"
