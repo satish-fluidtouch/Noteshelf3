@@ -71,6 +71,10 @@ class FTZoomContentViewController: UIViewController {
         }
     }
     
+    func didEndActiveAnnotation() {
+        self.pageViewController?.endEditingActiveAnnotation(nil, refreshView: true)
+    }
+    
     func setPageToDisplay(_ page: FTPageProtocol) {
         if(nil == self.pageViewController) {
             self.setupPageController(page);

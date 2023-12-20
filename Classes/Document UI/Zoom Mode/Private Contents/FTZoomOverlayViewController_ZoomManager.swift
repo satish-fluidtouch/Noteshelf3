@@ -217,6 +217,7 @@ extension FTZoomOverlayViewController: FTZoomManagerViewDelegate {
     }
 
     func zoomManagerRectMoved(_ managerView:FTZoomManagerView,point:CGPoint) {
+        self.zoomContentController?.didEndActiveAnnotation()
         self._zoomManagerRectMoved(managerView, point: point);
         if(managerView.isMoving) {
             self.zoomContentController?.setIsScrolling(managerView.isMoving);
