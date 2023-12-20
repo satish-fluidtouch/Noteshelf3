@@ -55,6 +55,7 @@ import MessageUI
         self.generateUserFlowLog(tempSyncFolderPath);
         self.generateRecentEntries(tempSyncFolderPath);
         self.generateThemeMigrationLog(tempSyncFolderPath);
+        self.generateDocErrorListLog(tempSyncFolderPath);
         //Do Zipping
         let zipPath = tempSyncFolderPath + ".log";
         let success = SSZipArchive.createZipFile(atPath: zipPath, withContentsOfDirectory: tempSyncFolderPath);
@@ -170,6 +171,18 @@ import MessageUI
         }
     }
 
+    fileprivate func generateDocErrorListLog(_ toPath : String)
+    {
+        guard let path = URL.documentErrorFileURL else {
+            return;
+        }
+        let errorfilePth = path.path(percentEncoded: false);
+        let fileManager = FileManager.init();
+        if fileManager.fileExists(atPath: errorfilePth) {
+            let filePath = toPath.appending("/").appending(path.lastPathComponent);
+            _ = try? fileManager.copyItem(atPath: errorfilePth, toPath: filePath);
+        }
+    }
 
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?)
     {

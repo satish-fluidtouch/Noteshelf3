@@ -13,11 +13,12 @@ extension UIMenu {
     static func displayOptionsMenu(onAction:((FTShelfDisplayStyle,UIAction.Identifier?) -> ())?) -> UIMenuElement {
         var items = [UIMenuElement]();
         let styles = FTShelfDisplayStyle.supportedStyles;
+        let currentDisplayStyle = FTShelfDisplayStyle(rawValue: UserDefaults.standard.shelfDisplayStyle) ?? .Gallery
         styles.forEach { eachStyle in
             let menuItem = UIAction(title: eachStyle.displayTitle
                                     , identifier: eachStyle.menuIdentifier
                                     , attributes: .standard
-                                    , state: (eachStyle == FTShelfDisplayStyle.displayStyle) ? .on : .off) { action in
+                                    , state: (eachStyle == currentDisplayStyle) ? .on : .off) { action in
                 onAction?(eachStyle,eachStyle.menuIdentifier);
             };
             items.append(menuItem)

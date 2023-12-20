@@ -26,6 +26,7 @@ enum FTDocumentType : Int {
     case Digital_Diaries_Midnight
     case Digital_Diaries_Day_and_Night_Journal
     case Digital_Diaries_Colorful_Planner
+    case Landscape_Diaries_Colorful_Planner
 }
 
 enum FTNThemeLibraryType: Int {
@@ -42,11 +43,13 @@ class FTCustomCoverThemeInfo {
     var title : String
     let isCustom: Bool
     let shouldSave: Bool
+    let isDiary: Bool
 
-    init(title: String, isCustom: Bool, shouldSave: Bool) {
+    init(title: String, isCustom: Bool, shouldSave: Bool, isDiary: Bool) {
         self.title = title.isEmpty ? "Untitled".localized : title
         self.isCustom = isCustom
         self.shouldSave = shouldSave
+        self.isDiary = isDiary
     }
 }
 

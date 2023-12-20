@@ -172,7 +172,7 @@ private struct FTShelfDisplayStyleView : View {
 
                 shelfMenuOverlayInfo.isMenuShown = false
                 withAnimation {
-                    viewModel.displayStlye = newValue;
+                    UserDefaults.standard.shelfDisplayStyle = newValue.rawValue
                 }
             }, label: {
                 Toggle(isOn: .constant(viewModel.displayStlye == newValue)) {

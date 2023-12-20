@@ -13,10 +13,10 @@
     </dependencies>
     <customFonts key="customFonts">
         <array key="Clearface-Serial-Medium.otf">
-            <string>Clearface-Serial-Medium-Regular</string>
+            <string>ClearfaceSerial-Medium</string>
         </array>
         <array key="Clearface-Serial-Regular.otf">
-            <string>Clearface-Serial-Regular</string>
+            <string>ClearfaceSerial</string>
         </array>
         <array key="SF-Pro-Text-Semibold.otf">
             <string>SFProText-Semibold</string>
@@ -183,7 +183,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAB-7H-sne">
-                                                    <rect key="frame" x="13" y="150.5" width="301" height="166"/>
+                                                    <rect key="frame" x="13" y="153.5" width="301" height="160.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="library_empty" translatesAutoresizingMaskIntoConstraints="NO" id="9Yc-O8-xpH">
                                                             <rect key="frame" x="115.5" y="0.0" width="70" height="64"/>
@@ -194,8 +194,8 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library is empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN9-Jb-KBn" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="96" width="301" height="26"/>
-                                                            <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                                            <rect key="frame" x="0.0" y="96" width="301" height="20.5"/>
+                                                            <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                                             <color key="textColor" name="black1"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
@@ -203,7 +203,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your preferred templates to the Library from the preview screen for easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-1b-aKw" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="130" width="301" height="36"/>
+                                                            <rect key="frame" x="0.0" y="124.5" width="301" height="36"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" name="black70"/>
                                                             <nil key="highlightedColor"/>
@@ -261,7 +261,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vq6-jR-ged">
-                            <rect key="frame" x="191" y="192" width="301" height="166"/>
+                            <rect key="frame" x="191" y="195" width="301" height="160.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="library_empty" translatesAutoresizingMaskIntoConstraints="NO" id="KoS-57-alr">
                                     <rect key="frame" x="115.5" y="0.0" width="70" height="64"/>
@@ -272,8 +272,8 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library is empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFG-oE-a0i" customClass="FTCustomLabel" customModule="FTCommon">
-                                    <rect key="frame" x="0.0" y="96" width="301" height="26"/>
-                                    <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                    <rect key="frame" x="0.0" y="96" width="301" height="20.5"/>
+                                    <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                     <color key="textColor" name="black1"/>
                                     <nil key="highlightedColor"/>
                                     <userDefinedRuntimeAttributes>
@@ -281,7 +281,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your preferred templates to the Library from the preview screen for easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nN6-DK-pjf" customClass="FTCustomLabel" customModule="FTCommon">
-                                    <rect key="frame" x="0.0" y="130" width="301" height="36"/>
+                                    <rect key="frame" x="0.0" y="124.5" width="301" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" name="black70"/>
                                     <nil key="highlightedColor"/>
@@ -385,7 +385,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EZS-o5-t5S">
-                                                    <rect key="frame" x="-9" y="98.5" width="311" height="166"/>
+                                                    <rect key="frame" x="-9" y="101.5" width="311" height="160.5"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="custom_empty" translatesAutoresizingMaskIntoConstraints="NO" id="Ix0-KI-6Zl">
                                                             <rect key="frame" x="120.5" y="0.0" width="70" height="64"/>
@@ -395,17 +395,17 @@
                                                                 <constraint firstAttribute="height" constant="64" id="frW-8E-5Hh"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juI-9V-Fpg" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="96" width="311" height="26"/>
-                                                            <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juI-9V-Fpg" customClass="FTCustomLabel" customModule="FTCommon">
+                                                            <rect key="frame" x="0.0" y="96" width="311" height="20.5"/>
+                                                            <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                                             <color key="textColor" name="black1"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.custom.empty.title"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-6R-Twd" customClass="FTCustomLabel" customModule="FTCommon">
-                                                            <rect key="frame" x="0.0" y="130" width="311" height="36"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-6R-Twd" customClass="FTCustomLabel" customModule="FTCommon">
+                                                            <rect key="frame" x="0.0" y="124.5" width="311" height="36"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" name="black70"/>
                                                             <nil key="highlightedColor"/>
@@ -463,7 +463,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2CC-4X-cbF">
-                            <rect key="frame" x="225.5" y="127.5" width="311" height="166"/>
+                            <rect key="frame" x="225.5" y="130.5" width="311" height="160.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="custom_empty" translatesAutoresizingMaskIntoConstraints="NO" id="fsE-Cn-cUn">
                                     <rect key="frame" x="120.5" y="0.0" width="70" height="64"/>
@@ -474,8 +474,8 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2PV-Kc-qa5" customClass="FTCustomLabel" customModule="FTCommon">
-                                    <rect key="frame" x="0.0" y="96" width="311" height="26"/>
-                                    <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="22"/>
+                                    <rect key="frame" x="0.0" y="96" width="311" height="20.5"/>
+                                    <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                     <color key="textColor" name="black1"/>
                                     <nil key="highlightedColor"/>
                                     <userDefinedRuntimeAttributes>
@@ -483,7 +483,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="66b-0G-J5W" customClass="FTCustomLabel" customModule="FTCommon">
-                                    <rect key="frame" x="0.0" y="130" width="311" height="36"/>
+                                    <rect key="frame" x="0.0" y="124.5" width="311" height="36"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" name="black70"/>
                                     <nil key="highlightedColor"/>
@@ -541,7 +541,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="JED-bP-AAA"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Import and Create Notebook">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -761,8 +761,8 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CDd-FN-Y4T">
-                                        <rect key="frame" x="108" y="10" width="49" height="24.5"/>
-                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                        <rect key="frame" x="108" y="13" width="49" height="18.5"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -862,7 +862,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Add to Library">
-                                            <fontDescription key="titleFontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                            <fontDescription key="titleFontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                             <color key="baseForegroundColor" name="accent"/>
                                         </buttonConfiguration>
                                         <userDefinedRuntimeAttributes>
@@ -875,7 +875,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OMh-rU-5LG" customClass="FTCustomButton" customModule="FTCommon">
                                         <rect key="frame" x="348" y="0.0" width="332" height="48"/>
                                         <color key="backgroundColor" name="accent"/>
-                                        <fontDescription key="fontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Create Notebook"/>
@@ -900,7 +900,7 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Download Pack">
-                                            <fontDescription key="titleFontDescription" name="Clearface-Serial-Medium-Regular" family="Clearface-Serial-Medium" pointSize="20"/>
+                                            <fontDescription key="titleFontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                             <color key="baseForegroundColor" name="white100"/>
                                         </buttonConfiguration>
                                         <userDefinedRuntimeAttributes>
@@ -1144,21 +1144,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="pcy-cr-Mbv">
-                                <rect key="frame" x="44" y="256" width="680" height="532.5"/>
+                                <rect key="frame" x="44" y="266" width="680" height="512"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sticker_b" translatesAutoresizingMaskIntoConstraints="NO" id="pJA-9l-DcN">
                                         <rect key="frame" x="0.0" y="0.0" width="680" height="342"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lFX-Zf-pYX">
-                                        <rect key="frame" x="0.0" y="374" width="680" height="94.5"/>
+                                        <rect key="frame" x="0.0" y="374" width="680" height="74"/>
                                         <string key="text">The BuJo Essentials sticker pack includes a variety of useful and stylish stickers to help you personalize and streamline your bullet journaling. From task lists to habit trackers, this pack has everything you need to stay organized and motivated.</string>
-                                        <fontDescription key="fontDescription" name="Clearface-Serial-Regular" family="Clearface-Serial" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial" family="Clearface Serial" pointSize="20"/>
                                         <color key="textColor" name="black70"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ftz-lI-6nY">
-                                        <rect key="frame" x="0.0" y="500.5" width="680" height="32"/>
+                                        <rect key="frame" x="0.0" y="480" width="680" height="32"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="instagram" title="Insta" imagePadding="6">
                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium"/>
@@ -1222,7 +1222,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ppe-HR-epz" userLabel="From Stack View">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="196"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="512"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mkq-b1-Ufk">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="36"/>
@@ -1233,7 +1233,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-ro-H0A">
-                                        <rect key="frame" x="0.0" y="36" width="768" height="160"/>
+                                        <rect key="frame" x="0.0" y="36" width="768" height="476"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="160" id="bTx-Th-r4z"/>
@@ -1251,7 +1251,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qbj-y0-Q1g" userLabel="Horizontal Seperator">
-                                <rect key="frame" x="0.0" y="195.5" width="768" height="0.5"/>
+                                <rect key="frame" x="0.0" y="511.5" width="768" height="0.5"/>
                                 <color key="backgroundColor" name="cellSeparatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="1ot-9n-x7l"/>
@@ -1265,7 +1265,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="a3o-66-4jz" userLabel="To Stack View">
-                                <rect key="frame" x="0.0" y="196" width="768" height="196"/>
+                                <rect key="frame" x="0.0" y="512" width="768" height="512"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVk-fB-K7y">
                                         <rect key="frame" x="0.0" y="0.0" width="768" height="36"/>
@@ -1276,7 +1276,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3JF-cQ-dwS">
-                                        <rect key="frame" x="0.0" y="36" width="768" height="160"/>
+                                        <rect key="frame" x="0.0" y="36" width="768" height="476"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="Dcs-VD-xrX"/>
