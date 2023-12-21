@@ -107,7 +107,8 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     override func loadView() {
         let view = FTShapeView(frame: UIScreen.main.bounds)
         view.parentVc = self
-        view.backgroundColor = .clear
+        view.layer.isOpaque = false;
+        view.layer.backgroundColor = UIColor.clear.cgColor;
         self.view = view;
     }
 
