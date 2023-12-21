@@ -25,6 +25,7 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     var currentPageRect: CGRect = CGRect.init(x: 0, y: 0, width: 768, height: 960);
     var quoteProvider: FTQuotesProvider = FTQuotesProvider()
     var offsetCount: Int = 76
+    var docPostProcessInfo = FTDocumentPostProcessInfo()
 
     
     private var orientationTail : String {
@@ -97,6 +98,9 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     }
     func getTemplateBackgroundColor() -> UIColor{
         return UIColor(hexString: "#FFFFFF")
+    }
+    func getDocPostProcessInfo() -> FTDocumentPostProcessInfo {
+        return docPostProcessInfo
     }
     func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly){
 

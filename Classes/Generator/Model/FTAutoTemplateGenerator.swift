@@ -148,7 +148,14 @@ private class FTAutoTemplateDiaryGenerator: NSObject,FTAutoTemplateGeneratorProt
         }
         docInfo.backgroundColor = FTDairyFormat.getFormat(formatInfo: formatInfo).getTemplateBackgroundColor()
         docInfo.postProcessInfo = postProcessInfo
-
+        if formatInfo.templateId == "Landscape_Diaries_Colorful_Planner"{
+            let plannerPostprocessInfo = FTDocumentPostProcessInfo()
+            plannerPostprocessInfo.documentType = self.theme.documentType
+            plannerPostprocessInfo.startDate = startDate!
+            plannerPostprocessInfo.endDate = endDate!
+            plannerPostprocessInfo.pagesInfo = generator.docPostProcessInfo.pagesInfo
+            docInfo.postProcessInfo = plannerPostprocessInfo
+        }
         if let lineHeight = self.theme.lineHeight {
             docInfo.pageProperties.lineHeight = lineHeight
         }

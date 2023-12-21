@@ -307,4 +307,15 @@ extension UIFont {
         return font
     }
 }
+extension Date {
+    func utcDate() -> Date?
+    {
+        let gmtDf = DateFormatter()
+        gmtDf.dateFormat = "yyyy-MM-dd"
+        let gmtDate = gmtDf.string(from: self);
+
+        let estDate = DateFormatter.utcDate(format: "yyyy-MM-dd", dateString: gmtDate);
+        return estDate;
+    }
+}
 #endif

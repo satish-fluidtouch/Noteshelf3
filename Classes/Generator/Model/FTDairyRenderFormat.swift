@@ -22,6 +22,7 @@ protocol FTDairyRenderTemplate : NSObjectProtocol {
     func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly)
     func addCalendarLinks(url : URL,format : FTDairyFormat,pageRect: CGRect, calenderYear: FTYearFormatInfo, isToDisplayOutOfMonthDate: Bool,monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly)
     func calendarOffsetCount() -> Int;
+    func getDocPostProcessInfo() -> FTDocumentPostProcessInfo;
 }
 @objc protocol FTDiaryPageRenderer : NSObjectProtocol {
     func renderYearPage(context : CGContext,months : [FTMonthInfo],calendarYear : FTYearFormatInfo);

@@ -22,7 +22,7 @@ class FTDairyGenerator: NSObject {
     var offsetCount: Int = 76 // used to open the current day page on diary creation
     private var variants: FTPaperVariants
     private var displayName : String
-
+    var docPostProcessInfo = FTDocumentPostProcessInfo()
     
     required init(_ theme: FTAutoTemlpateDiaryTheme ,format inFormat: FTDairyRenderFormat, formatInfo : FTYearFormatInfo) {
         format = inFormat;
@@ -54,6 +54,7 @@ class FTDairyGenerator: NSObject {
         //start adding links
         format.addCalendarLinks(url: path, format: format as! FTDairyFormat, pageRect: pageRect, calenderYear: self.formatInfo, isToDisplayOutOfMonthDate: isToDisplayOutOfMonthDate, monthlyFormatter: monthlyFormatter, weeklyFormatter: weeklyFormatter)
         self.offsetCount = format.calendarOffsetCount()
+        self.docPostProcessInfo = format.getDocPostProcessInfo()
         return path
     }
     

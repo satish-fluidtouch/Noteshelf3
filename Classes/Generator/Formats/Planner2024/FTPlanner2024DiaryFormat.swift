@@ -36,6 +36,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     var plannerDiaryExtrasTabRectsInfo : FTPlannerDiaryExtrasTabRectInfo =  FTPlannerDiaryExtrasTabRectInfo();
     var renderFirstWeek : Bool = true
     var monthCalendarInfo = [FTMonthlyCalendarInfo]()
+    var pdfDocumentURL : URL?
     required init(customVariants : FTPaperVariants){
         self.customVariants = customVariants
         super.init()
@@ -127,7 +128,17 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     var extrasTemplate : String {
         return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.extras,customVariants: formatInfo.customVariants)
     }
-    
+    private var pdfDocPagesInfo : [Int :FTDocumentPageInfo] = [:]
+
+    override func getDocPostProcessInfo() -> FTDocumentPostProcessInfo {
+        let docPostProcessInfo = FTDocumentPostProcessInfo()
+        docPostProcessInfo.postProcessType = .diary
+        docPostProcessInfo.templateURL = self.pdfDocumentURL
+        docPostProcessInfo.pagesInfo = self.pdfDocPagesInfo
+        self.docPostProcessInfo = docPostProcessInfo
+        return self.docPostProcessInfo
+    }
+
     override func getTemplateBackgroundColor() -> UIColor {
         return UIColor(red: 254/255, green: 254/255, blue: 254/255, alpha: 1.0)
     }
@@ -197,9 +208,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     func renderTrackerPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo){
         
     }
-    func renderExtrasPage(atIndex index : Int,context: CGContext){
-        
-    }
     func renderYearPage(atIndex index : Int,context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo){
         
     }
@@ -231,28 +239,33 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
 
     //MARK:- PDF Generation and linking between pages
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly) {
-    
+        var pageIndex : Int = 1 // is used for today link operation
+        let currentDate = Date().utcDate();
         self.monthCalendarInfo = monthlyFormatter.monthCalendarInfo
         // Render Calendar page
         
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
-        
+        pageIndex += 1
+
         // Render year page
         let numberOfYearPages : Int = self.formatInfo.customVariants.isLandscape ? 3 : 2
         for index in 1...numberOfYearPages {
             self.renderYearPage(atIndex: index, context: context, months: monthlyFormatter.monthInfo, calendarYear: self.formatInfo)
+            pageIndex += 1
         }
         
         // Render Month Pages
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            pageIndex += 1
             let weeklyInfo = calendarMonth.weeklyInfo
             // for every calendar duration add extra week if required
             if renderFirstWeek {
                 renderFirstWeek = false
                 if shouldAddWeekOffsetToCalendarWith(firstDay: weeklyInfo.first?.dayInfo.first), let firstWeek = weeklyInfo.first{
                     self.renderWeekPage(context: context, weeklyInfo: firstWeek,monthInfo: calendarMonth)
+                    pageIndex += 1
                 }
             }
             weeklyInfo.forEach { (weekInfo) in
@@ -260,19 +273,25 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                 if firstDayOfMonth?.fullMonthString.uppercased() == calendarMonth.fullMonth.uppercased(){
                 //if self.shouldAddWeekToMonth(firstDay: firstDayOfMonth, currentMonth: calendarMonth) {
                     self.renderWeekPage(context: context, weeklyInfo: weekInfo,monthInfo: calendarMonth)
+                    pageIndex += 1
                 }
             }
             let dayInfo = calendarMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo,monthInfo: calendarMonth);
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo,monthInfo: calendarMonth);
+                    //For Today link and annoatations injection
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        let dayPageInfo = FTDocumentPageInfo(currentDate: utcDate.timeIntervalSinceReferenceDate);
+                        self.addPageInfoWith(index: pageIndex, pageInfo: dayPageInfo);
+                    }
+                    pageIndex += 1
+                }
             }
             self.renderNotesPage(context: context,monthInfo: calendarMonth)
+            pageIndex += 1
             self.renderTrackerPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
-        }
-        
-        // Render extras page
-        for index in 1...3 {
-            self.renderExtrasPage(atIndex : index,context: context)
+            pageIndex += 1
         }
     }
     func shouldAddWeekOffsetToCalendarWith(firstDay : FTDayInfo?) -> Bool {
@@ -281,8 +300,13 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     func shouldAddWeekToMonth(firstDay : FTDayInfo?,currentMonth:FTMonthlyCalendarInfo) -> Bool{
         return firstDay?.fullMonthString.uppercased() == currentMonth.fullMonth.uppercased()
     }
+    private func addPageInfoWith(index: Int,pageInfo : FTDocumentPageInfo){
+        //inserting page info for post processing
+        pdfDocPagesInfo.updateValue(pageInfo, forKey: index)
+    }
     override func addCalendarLinks(url : URL,format : FTDairyFormat,pageRect: CGRect, calenderYear: FTYearFormatInfo, isToDisplayOutOfMonthDate: Bool,monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly) {
         let doc = PDFDocument.init(url: url);
+        pdfDocumentURL = url
         var pageIndex: Int = 0;
         var nextIndex:Int = 0;
         let offset = 0;

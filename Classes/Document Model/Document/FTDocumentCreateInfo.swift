@@ -53,7 +53,7 @@ class FTDocumentInputInfo: NSObject {
     }
 }
 
-class FTPostProcessInfo {
+class FTPostProcessInfo: NSObject {
     var diaryStartYear : Int? //For supporting the existing structure
     var startDate: Date?;
     var endDate: Date?;

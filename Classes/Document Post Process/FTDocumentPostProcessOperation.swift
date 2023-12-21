@@ -30,7 +30,7 @@ class FTDocumentPostProcessOperation: NSObject {
             operation = FTDocumentPlannerpostOperation(url: url, info: info)
         }
         else if (info.postProcessInfo.documentType == .Landscape_Diaries_Colorful_Planner){
-            operation = FTDocumentPlannerpostOperation(url: url, info: info)
+            operation = FTDocumentLandscapePlannerpostOperation(url: url, info: info)
         }
         return operation
     }
