@@ -39,7 +39,8 @@ extension FTPageViewController
         if isInZoomMode(), UIPasteboard.canPasteShapeContent() {
             showPasteOptions = true
         }
-        guard let contentView = self.contentHolderView else {
+
+        guard let contentView = self.contentHolderView, showPasteOptions else {
             return
         }
         if self.currentDeskMode() == .deskModeClipboard {
