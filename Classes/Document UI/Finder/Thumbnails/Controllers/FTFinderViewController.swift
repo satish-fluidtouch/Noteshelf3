@@ -37,10 +37,12 @@ protocol FTFinderTabBarProtocol: AnyObject {
     var selectedTab: FTFinderSelectedTab {get set}
     func didGoToAudioRecordings(with annotation: FTAnnotation)
     func screenModeDidChange()
+    func scrollToTop()
 }
 
 extension FTFinderTabBarProtocol {
     func didGoToAudioRecordings(with annotation: FTAnnotation) {}
+    func scrollToTop() {}
 }
 
 class FTDragDropCollectionView : UICollectionView {
@@ -799,6 +801,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             return
         }
         self.reloadData()
+        self.shouldMoveToCurrentPage = true
+        moveToCurrentPageIfNeeded()
     }
 
     func didTapOnSegmentControl(_segmentControl: FTFinderSegmentControl) {
@@ -2036,6 +2040,10 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
             self.collectionView.backgroundView?.isHidden = false
         }
         createSnapShot()
+    }
+    
+    func scrollToTop() {
+        self.collectionView.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: .top, animated: false);
     }
 }
 

@@ -28,6 +28,7 @@ import Foundation
     private func addGestures(for contentHolderView: UIView) {
         undoGesture = UITapGestureRecognizer(target: self, action: #selector(undoGestureTriggered))
         undoGesture?.numberOfTouchesRequired = 2
+        undoGesture?.numberOfTapsRequired = 2
         undoGesture?.delegate = self
         contentHolderView.addGestureRecognizer(undoGesture!)
         
