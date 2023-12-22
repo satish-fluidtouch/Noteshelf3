@@ -135,6 +135,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         docPostProcessInfo.postProcessType = .diary
         docPostProcessInfo.templateURL = self.pdfDocumentURL
         docPostProcessInfo.pagesInfo = self.pdfDocPagesInfo
+        docPostProcessInfo.offsetCount = self.offsetCount
         self.docPostProcessInfo = docPostProcessInfo
         return self.docPostProcessInfo
     }
@@ -474,7 +475,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
             return partialResult  + weeksCount
         }
         self.offsetCount = 1 + numberYearPages + numberOfMonthsBeforeCurrentDate + (numberOfMonthsBeforeCurrentDate - 1)*2 + numberOfWeeks // calender + years + months + notes + trackers + weeks count before current day.
-
 
         var weekBeforeDaysCount : Int = 0
         var monthBeforeDays : Int = 1 + numberYearPages
