@@ -77,6 +77,8 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createAndOpenNewNotebook(_ url: URL)
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool)
     func openShelfItem(spotLightHash: String)
+    func openNotebook(using schemeUrl: URL)
+    
     //From Quick Action
     func createNotebookWithAudio()
     func createNotebookWithCameraPhoto()
@@ -165,7 +167,12 @@ final class FTAppIntentHandler {
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
         } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            startMigration(url: url)
+            let reqHyperlinkStr = FTSharedGroupID.getAppBundleID() + ":" +  FTAppIntentHandler.hyperlinkPath
+            if url.absoluteString.hasPrefix(reqHyperlinkStr) {
+                intentHandler?.openNotebook(using: url)
+            } else {
+                startMigration(url: url)
+            }
         }
         return false
     }
@@ -257,6 +264,12 @@ private extension FTAppIntentHandler {
             }
         }
         return nil;
+    }
+}
+
+extension FTAppIntentHandler {
+    static var hyperlinkPath: String {
+        return "/hyperlink/"
     }
 }
 

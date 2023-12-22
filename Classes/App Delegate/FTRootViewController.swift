@@ -530,7 +530,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     if(nil == shelfItem) {
                         _ = (shelfitemcollection as? FTShelfCacheProtocol)?.addItemToCache(path)
                     }
-                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true);
+                    self.openDocumentAtRelativePath(relativePath, inShelfItem: shelfItem, animate: false, addToRecent: true, bipassPassword: true, onCompletion: nil);
                 }
             }
         }
@@ -538,7 +538,33 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
                                             animate: false,
                                             addToRecent: true,
-                                            bipassPassword: true);
+                                            bipassPassword: true, onCompletion: nil);
+        }
+}
+    
+    func openNotebook(using schemeUrl: URL) {
+        if let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
+           let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
+           let pageId = queryItems.first(where: { $0.name == "pageId" })?.value {
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == documentId}) as? FTDocumentItemProtocol {
+                    if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: documentId) {
+                        // page index to be calculated here
+                        self.docuemntViewController?.navigateToPage(index: 0)
+                    } else {
+                        let relativePath = shelfItem.URL.relativePathWRTCollection()
+                        self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
+                                                        animate: false,
+                                                        addToRecent: true,
+                                                        bipassPassword: true) { doc, success in
+                            if let document = doc,
+                               let index = document.pages().firstIndex(where: { $0.uuid == pageId }) {
+                                self.docuemntViewController?.navigateToPage(index: index)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -948,7 +974,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                         animate: false,
                                         addToRecent: true,
                                         igrnoreIfNotDownloaded: true,
-                                        bipassPassword: true);
+                                        bipassPassword: true, onCompletion: nil);
     }
 
 #if targetEnvironment(macCatalyst)
@@ -998,7 +1024,7 @@ extension FTRootViewController
                                       inShelfItem: FTShelfItemProtocol?,
                                       addToRecent: Bool = false,
                                       igrnoreIfNotDownloaded: Bool,
-                                      bipassPassword: Bool = false) {
+                                      bipassPassword: Bool = false, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
         let finalizeBlock: (FTLoadingIndicatorViewController) -> Void = { [weak self] indicatorView in
             indicatorView.hide();
 
@@ -1023,7 +1049,6 @@ extension FTRootViewController
                         if(success) {
                             self?.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { [weak self] success in
                                 if(success) {
-                                    weak var docController = self?.docuemntViewController
                                     weak var splitController = self?.noteBookSplitController
 
                                     self?.showCollection(collection: collection!,
@@ -1033,7 +1058,7 @@ extension FTRootViewController
                                                          passcode: pin,
                                                          shouldAskforPasscode: false,
                                                          onCompletion:
-                                                            { (_, success) in
+                                                            { (doc, success) in
                                         finalizeBlock(indicatorView);
                                         if let oldRenderView = splitController, let newController = self?.noteBookSplitController {
                                             UIView.transition(from: oldRenderView.view,
@@ -1046,13 +1071,16 @@ extension FTRootViewController
                                                 oldRenderView.removeFromParent();
                                             });
                                         }
+                                        onCompletion?(doc, success)
                                     });
                                 } else {
                                     finalizeBlock(indicatorView);
+                                    onCompletion?(nil, false)
                                 }
                             }
                         } else {
-                            finalizeBlock(indicatorView);
+                            finalizeBlock(indicatorView)
+                            onCompletion?(nil, false)
                         }
                     })
                 } else {
@@ -1063,11 +1091,12 @@ extension FTRootViewController
                                          addToRecent: addToRecent,
                                          passcode: nil,
                                          shouldAskforPasscode: true,
-                                         onCompletion: nil);
+                                         onCompletion: onCompletion);
                 }
             } else {
                 finalizeBlock(indicatorView);
                 UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("NotebookNotAvailable", comment: "NotebookNotAvailable"), from: self!, withCompletionHandler: nil)
+                onCompletion?(nil, false)
             }
         }
     }
@@ -1305,7 +1334,7 @@ extension FTRootViewController: FTOpenCloseDocumentProtocol {
                                         inShelfItem: shelfItemManagedObject.documentItemProtocol,
                                         animate: false,
                                         addToRecent: addToRecent,
-                                        bipassPassword: true);
+                                        bipassPassword: true, onCompletion: nil);
     }
 
     func closeDocument(shelfItemManagedObject:FTDocumentItemWrapperObject, animate: Bool, onCompletion : (() -> Void)?) {
@@ -1398,23 +1427,26 @@ extension FTRootViewController {
                                     animate : Bool = false,
                                     addToRecent : Bool = false,
                                     igrnoreIfNotDownloaded : Bool = false,
-                                    bipassPassword : Bool = true)
+                                    bipassPassword : Bool = true, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
     {
 
         if(false == FTNoteshelfDocumentProvider.shared.isProviderReady) {
             isOpeningDocument = true
             self.setLastOpenedGroup(nil);
             self.setLastOpenedDocument(NSURL(fileURLWithPath: relativePath) as URL);
+            onCompletion?(nil, false)
             return;
         }
 
         self.dismissPresentedViewController { [weak self] in
             guard let self = self else {
+                onCompletion?(nil, false)
                 return
             }
             if(nil != self.docuemntViewController) {
                 let currentDocumentRelativePath = self.docuemntViewController?.relativePath;
                 if(currentDocumentRelativePath == relativePath) {
+                    onCompletion?(nil, false)
                     return;
                 }
             }
@@ -1422,7 +1454,7 @@ extension FTRootViewController {
                                               inShelfItem: inShelfItem,
                                               addToRecent: addToRecent,
                                               igrnoreIfNotDownloaded: igrnoreIfNotDownloaded,
-                                              bipassPassword: bipassPassword);
+                                              bipassPassword: bipassPassword, onCompletion: onCompletion);
         }
     }
 

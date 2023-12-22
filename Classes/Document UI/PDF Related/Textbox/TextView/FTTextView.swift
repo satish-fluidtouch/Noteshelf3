@@ -614,6 +614,20 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
 
 extension FTTextView {
 
+    @objc func linkMenuItemAction(_ sender: Any?) {
+        if let annotation = self.annotationViewController?.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage, let doc = curPage.parentDocument {
+            if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: doc.documentUUID, pageId: curPage.uuid) {
+                let reqRange = self.selectedRange
+                let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.attributedText)
+                attributedString.addAttribute(.link, value: url.absoluteString, range: reqRange)
+                attributedString.addAttribute(.foregroundColor, value: UIColor.green, range: reqRange)
+                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: reqRange)
+                self.attributedText = attributedString
+                self.isSelectable = true
+            }
+        }
+    }
+    
     @objc func lookUpMenuItemAction(_ sender: Any?) {
         if let controller = self.annotationViewController {
             controller.performLookUpMenu(sender)
@@ -661,7 +675,7 @@ extension FTTextView {
             
             if self.isTextHighLighted() {
                 if [#selector(self.lookUpMenuItemAction(_:)), #selector(self.shareMenuItemAction(_:)),
-                    #selector(self.delete(_:))].contains(action) {
+                    #selector(self.delete(_:)), #selector(self.linkMenuItemAction(_:))].contains(action) {
                     return true
                 }
             }
@@ -681,7 +695,9 @@ private extension FTTextView {
         let colorMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Color", comment: "Color"), action: #selector(FTTextView.colorMenuItemAction(_:)))
         let lookUpMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("LookUp", comment: "Look Up"), action: #selector(FTTextView.lookUpMenuItemAction(_:)))
         let shareMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Share", comment: "Share"), action: #selector(FTTextView.shareMenuItemAction(_:)))
-        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem]
+        
+        let linkMenuItem = UIMenuItem(title: "Link", action: #selector(FTTextView.linkMenuItemAction(_:)))
+        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem, linkMenuItem]
        
         let menuController = UIMenuController.shared
         menuController.menuItems = menuItems

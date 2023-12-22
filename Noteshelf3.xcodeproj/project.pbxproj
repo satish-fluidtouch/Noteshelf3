@@ -2207,6 +2207,7 @@
 		F3C7D50C28C19A29000D3BE1 /* AddMenuDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C7D50A28C19A29000D3BE1 /* AddMenuDataManager.swift */; };
 		F3CB8B6D28F95C5F001E34ED /* FTAddMenuPixabayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CB8B6C28F941F7001E34ED /* FTAddMenuPixabayViewController.swift */; };
 		F3EACF3328C731B900DC4E6D /* FTAddMenuSelectItemDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EACF3128C731B900DC4E6D /* FTAddMenuSelectItemDelegate.swift */; };
+		FEF375D32B356554005F14BB /* FTTextLinkRouteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF375D22B356554005F14BB /* FTTextLinkRouteHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4677,6 +4678,7 @@
 		F5A022AD1F134A200044B02A /* FTPasswordTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPasswordTableCell.swift; sourceTree = "<group>"; };
 		F5F20E321F0C9D12002AAF96 /* FTPinRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPinRequestViewController.swift; sourceTree = "<group>"; };
 		F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Noteshelf3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEF375D22B356554005F14BB /* FTTextLinkRouteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLinkRouteHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -7054,6 +7056,7 @@
 			children = (
 				4249A6202518CB1000602FE3 /* FTTextView.swift */,
 				BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */,
+				FEF375D22B356554005F14BB /* FTTextLinkRouteHelper.swift */,
 			);
 			path = TextView;
 			sourceTree = "<group>";
@@ -13208,6 +13211,7 @@
 				BAF391662859ADF00067CA9F /* FTUniqueNameProtocol.swift in Sources */,
 				4786A7ED297A5896007FE156 /* FTShelfBookmarksViewController.swift in Sources */,
 				BAF391672859ADF00067CA9F /* UIColor+Extensions.swift in Sources */,
+				FEF375D32B356554005F14BB /* FTTextLinkRouteHelper.swift in Sources */,
 				BAF391682859ADF00067CA9F /* FTClassicDiaryWeekTemplate.swift in Sources */,
 				BAF3916A2859ADF00067CA9F /* FTTooltipsManager.swift in Sources */,
 				97F5D07E2B15EB6D003ED67D /* FTPlanner2024DiaryYearTemplateFormat.swift in Sources */,

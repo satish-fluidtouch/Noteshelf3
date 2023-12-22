@@ -161,6 +161,10 @@ extension FTPDFRenderViewController
     @objc func didCompleteDocumentPresentation() {
         self.showZoomPanelIfNeeded();
     }
+    
+    @objc func navigateToPage(index: Int) {
+        self.showPage(at: index, forceReLayout: false, animate: false)
+    }
 }
 
 //MARK:- FTSceneBackgroundHandling
