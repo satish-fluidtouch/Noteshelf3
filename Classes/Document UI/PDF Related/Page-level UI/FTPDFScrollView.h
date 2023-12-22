@@ -70,4 +70,8 @@ parentViewController:(FTPageViewController*)controller
 +(CGFloat)minZoomScale:(FTRenderMode)mode;
 
 -(void)setZoomBoxIsScrolling:(BOOL)isScrolling;
+
++(void)setMinZoomScale:(CGFloat)minZoomScale;
++(CGFloat)getMinZoomScale;
+
 @end

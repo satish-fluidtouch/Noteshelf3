@@ -554,6 +554,15 @@
     self.mainScrollView.contentInset = UIEdgeInsetsZero;
     self.mainScrollView.scrollViewDelegate = nil;
     [self.pageLayoutHelper updateContentSizeWithPageCount:self.numberOfPages];
+
+    CGFloat currentZoomScale = [FTPDFScrollView getMinZoomScale];
+    CGFloat newZoomScale = [self.pageLayoutHelper minZoomFactor];
+
+    if(newZoomScale != currentZoomScale) {
+        [FTPDFScrollView setMinZoomScale:newZoomScale];
+        [self.mainScrollView setMinimumZoomScale:newZoomScale];
+    }
+
     self.mainScrollView.scrollViewDelegate = currentScrollViewDel;
 }
 

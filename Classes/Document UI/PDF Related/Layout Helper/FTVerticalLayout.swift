@@ -16,6 +16,8 @@ class FTVerticalLayout: NSObject,FTLayouterInternal {
 
     static let firstPageOffsetY: CGFloat = 75.0
 
+    var minZoomFactor: CGFloat = 1;
+    
     var layoutType : FTPageLayout {
         return .vertical;
     }
@@ -42,8 +44,25 @@ class FTVerticalLayout: NSObject,FTLayouterInternal {
         return pageFrame;
     }
     
+    private func findZoomFactor(_ pageCount: Int) {
+        guard let _scrollView = self.scrollView,
+              let pages = self.document?.pages() else {
+            return;
+        }
+
+        for eachIndex in 0..<pageCount {
+            let currentPage = pages[eachIndex];
+            var pageRect = currentPage.pdfPageRect;
+            let maxFrame = _scrollView.frame;
+            let aspectSize = aspectFittedRect(pageRect, maxFrame).size;
+            let scale = aspectSize.width/pageRect.size.width;
+            minZoomFactor = min(minZoomFactor, scale);
+        }
+    }
+    
     func updateContentSize(pageCount : Int) {
         self.pageInfo.removeAll();
+        self.findZoomFactor(pageCount);
         var maxWidth: CGFloat = 0;
         for eachIndex in 0..<pageCount {
             let frame = self.frame(for: eachIndex);
@@ -197,13 +216,13 @@ private extension FTVerticalLayout
                 rectToReturn = prevPageFrame;
             }
             var pageRect = currentPage.pdfPageRect;
-            let maxFrame = _scrollView.frame;
-            pageRect.size = aspectFittedRect(pageRect, maxFrame).size;
+//            pageRect.size = CGSizeScale(pageRect.size, basicZoomFactor);
+//            let maxFrame = _scrollView.frame;
+//            pageRect.size = aspectFittedRect(pageRect, maxFrame).size;
             
             rectToReturn.origin.y = rectToReturn.maxY + ((index > 0) ? UIScrollView.between_Page_offset : 0);
             rectToReturn.size.height = pageRect.height;
             rectToReturn.size.width = pageRect.width;
-
             self.pageInfo[currentPage.uuid] = rectToReturn;
         }
         return rectToReturn;

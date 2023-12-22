@@ -25,6 +25,8 @@ NSString *const FTZoomRenderViewDidFinishMoving = @"FTZoomRenderViewDidFinishMov
 
 extern float distanceBetweenPoints2(CGPoint a, CGPoint b);
 
+CGFloat verticalModeMinZoomScale = 1.0f;
+
 //While changing to 12x consider old GPUs which do not support argument buffers.
 const CGFloat _maxZoomScale = 6.0f;
 const CGFloat _minZoomScale = 1.0f;
@@ -1242,7 +1244,7 @@ CGPoint lastPoint1,lastPoint2;
     if(mode == FTRenderModeZoom) {
         return  _zoomModeMinZoomScale;
     }
-    return  _minZoomScale;
+    return verticalModeMinZoomScale;
 }
 
 - (BOOL)isScrolling {
@@ -1260,4 +1262,13 @@ CGPoint lastPoint1,lastPoint2;
         _zoomBoxIsScrolling = isScrolling;
     }
 }
+
++(void)setMinZoomScale:(CGFloat)minZoomScale {
+    verticalModeMinZoomScale = minZoomScale;
+}
+
++(CGFloat)getMinZoomScale {
+    return verticalModeMinZoomScale;
+}
+
 @end
