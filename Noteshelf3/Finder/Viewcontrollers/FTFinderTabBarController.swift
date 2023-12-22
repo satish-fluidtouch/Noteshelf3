@@ -29,6 +29,7 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
             self.childVcDelegate?.screenModeDidChange()
         }
     }
+    private var previousSelectedIndex : Int?
     weak var childVcDelegate: FTFinderTabBarProtocol?
     var isResizing: Bool = false
     var currentDisplayMode: UISplitViewController.DisplayMode?
@@ -128,6 +129,7 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
     override func viewDidLoad() {
         super.viewDidLoad()
         setTabBarImages()
+        self.delegate = self
         applyTabBarAppearance()
 #if targetEnvironment(macCatalyst)
         self.configureForMac();
@@ -532,3 +534,15 @@ extension FTFinderTabBarController {
     }
 }
 #endif
+
+
+extension FTFinderTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if previousSelectedIndex == self.selectedIndex,
+            let navController = viewController as? UINavigationController,
+            let vc = navController.viewControllers[0] as? FTFinderTabBarProtocol {
+            vc.scrollToTop()
+        }
+        previousSelectedIndex = selectedIndex
+    }
+}

@@ -278,6 +278,7 @@ extension UIView {
             self.view.removeFromSuperview();
             window?.isUserInteractionEnabled = true;
         }
+        self.zoomContentController?.didEndActiveAnnotation()
     }
     
     func setCurrentPage(_ page: FTPageProtocol,

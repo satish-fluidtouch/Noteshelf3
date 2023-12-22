@@ -37,10 +37,12 @@ protocol FTFinderTabBarProtocol: AnyObject {
     var selectedTab: FTFinderSelectedTab {get set}
     func didGoToAudioRecordings(with annotation: FTAnnotation)
     func screenModeDidChange()
+    func scrollToTop()
 }
 
 extension FTFinderTabBarProtocol {
     func didGoToAudioRecordings(with annotation: FTAnnotation) {}
+    func scrollToTop() {}
 }
 
 class FTDragDropCollectionView : UICollectionView {
@@ -799,6 +801,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             return
         }
         self.reloadData()
+        self.shouldMoveToCurrentPage = true
+        moveToCurrentPageIfNeeded()
     }
 
     func didTapOnSegmentControl(_segmentControl: FTFinderSegmentControl) {
@@ -1457,11 +1461,11 @@ extension FTFinderViewController {
             return;
         }
 
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: self.selectedPages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
-            guard let self = self else {
+            guard let self = self, success else {
                 return
             }
             self.duplicateClicked(withSelectedPages: self.selectedPages);
@@ -1522,8 +1526,8 @@ extension FTFinderViewController {
         guard let doc = self.document as? FTDocumentProtocol else {
             return;
         }
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: pages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
             if success {
@@ -1659,8 +1663,8 @@ extension FTFinderViewController {
             self.present(alert, animated: true, completion: nil)
         }
 
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: pages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
             if success, let weakSelf = self {
@@ -1782,8 +1786,8 @@ extension FTFinderViewController {
         guard let doc = self.document as? FTDocumentProtocol else {
             return;
         }
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: pages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
             if success {
@@ -1869,8 +1873,8 @@ extension FTFinderViewController {
             guard let doc = self.document as? FTDocumentProtocol else {
                 return;
             }
-            FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                                  alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+            FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: itemSet, 
+                                                  alertMessage: "AudioRecoring_Progress_Message".localized,
                                                   onViewController: self)
             { [weak self] (success) in
                 if success {
@@ -2036,6 +2040,10 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
             self.collectionView.backgroundView?.isHidden = false
         }
         createSnapShot()
+    }
+    
+    func scrollToTop() {
+        self.collectionView.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: .top, animated: false);
     }
 }
 
