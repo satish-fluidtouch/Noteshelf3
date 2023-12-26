@@ -91,6 +91,17 @@ NSString *const FTAudioAnnotationDidGetDeletedNotification = @"FTAudioAnnotation
 - (IBAction)didTapCollapseButton:(id)sender {
     [self animateAudioControllerView:self.isExpanded isAnimated:YES];
     [self handleSuperViewFrameUpdates:self.isExpanded];
+    BOOL toHide = [self.recordingModel isCurrentAudioRecording];
+    [self hideMaxDurationAndRateButton: toHide];
+}
+
+-(void)hideMaxDurationAndRateButton: (bool)toHide {
+    [self.maxDurationLabel setHidden: toHide];
+    [self.rateButton setHidden: toHide];
+    if(!toHide) {
+        NSString *durationString = [FTAnnotationUtilities timeFormatted: [self.recordingModel audioDuration]];
+        [self.maxDurationLabel setText: durationString];
+    }
 }
 
 -(void)handleSuperViewFrameUpdates:(bool)isExpanded {
@@ -342,18 +353,24 @@ NSString *const FTAudioAnnotationDidGetDeletedNotification = @"FTAudioAnnotation
     switch (audioState) {
         case AudioStateRecording:
             [self.secondButton setImage :[UIImage systemImageNamed:@"stop.fill"] forState:UIControlStateNormal];
-            [self.firstButton setEnabled:false];
+            [self enableFirstButton:false];
             break;
         case AudioStatePlaying:
             [self.secondButton setImage :[UIImage systemImageNamed:@"pause.fill"] forState:UIControlStateNormal];
-            [self.firstButton setEnabled:false];
+            [self enableFirstButton:false];
             break;
         case AudioStateNone:
             [self.secondButton setImage :[UIImage systemImageNamed:@"play.fill"] forState:UIControlStateNormal];
-            [self.firstButton setEnabled:true];
+            [self enableFirstButton: true];
             break;
     }
 }
+
+-(void)enableFirstButton: (bool)toEnable {
+    [self.firstButton setEnabled: toEnable];
+    [self.firstButton setAlpha: toEnable ? 1.0 : 0.3];
+}
+
 
 //Need to be reviewed regarding naming of the funcitons.
 -(IBAction)firstButtonAction {
@@ -379,6 +396,7 @@ NSString *const FTAudioAnnotationDidGetDeletedNotification = @"FTAudioAnnotation
     else if(AudioStateRecording == self.currentState) {
         [self.audioSession stopRecording];
     }
+    [self hideMaxDurationAndRateButton:YES];
 }
 
 -(IBAction)secondButtonAction {
@@ -400,6 +418,7 @@ NSString *const FTAudioAnnotationDidGetDeletedNotification = @"FTAudioAnnotation
         [self.audioSession stopRecording];
     }
     [self scrub:self.progressSlider];
+    [self hideMaxDurationAndRateButton:NO];
 }
 
 -(void)recordAudioMenuItemAction {
