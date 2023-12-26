@@ -17,7 +17,8 @@ enum FTBundleResourceStatus {
 }
 let FTRecognitionLanguageDidChange = "FTRecognitionLanguageDidChange"
 
-let myScriptPath = "My_Script/v2/New_Assets/";
+private let MY_SCRIPT_APP_SUPPORT_VERSION = "2.3";
+private let myScriptPath = "myscript/v\(MY_SCRIPT_APP_SUPPORT_VERSION)/";
 private let offlineLangauges = ["en_US", "zh_CN"]
 
 class FTRecognitionLangResource: NSObject{

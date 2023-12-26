@@ -17,7 +17,7 @@ class FTServerConfig: NSObject {
     #if DEBUG || BETA
     static let awsResourceURLDev = URL(string: "https://s3.amazonaws.com/noteshelf2-store-dev-env")!
     #endif
-    static let awsResourceURL = URL(string: "https://noteshelfv2-public.s3.amazonaws.com")!
+    static let awsResourceURL = URL(string: "https://noteshelf3-public.s3.amazonaws.com")!
     static let chinaRegionURL = URL(string: "http://noteshelf.net/NS2_Store_China")!
 
     static let fileNamePacks = "assets"
