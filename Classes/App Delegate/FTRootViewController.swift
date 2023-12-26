@@ -408,6 +408,9 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             self.refreshStatusBarAppearnce();
             controller.didMove(toParent: self)
             self.rootContentViewController = controller
+            #if !RELEASE
+            self.setupTagsDebugView()
+            #endif
         }
         else {
             let collectionTypes: [FTSideBarItemType] = [.home,.starred,.unCategorized,.trash,.category,.ns2Category]
@@ -541,7 +544,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                             bipassPassword: true);
         }
     }
-    
+
     func startNS2ToNS3Migration() {
         self.prepareProviderIfNeeded {
             self.closeAnyActiveOpenedBook {

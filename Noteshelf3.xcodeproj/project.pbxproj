@@ -920,6 +920,7 @@
 		BA8BA66029782EA200946CFE /* FTAdvanced.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8080E6921F194F900F73164 /* FTAdvanced.storyboard */; };
 		BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA66C29794C6400946CFE /* GoogleSignIn */; };
 		BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA67229795F4A00946CFE /* GoogleAPIClientForREST_Drive */; };
+		BA8CD9CE2B3AD7530031E231 /* FTTagsDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CD9CD2B3AD7530031E231 /* FTTagsDebugViewController.swift */; };
 		BA8E56772A9F456100DB6E05 /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
 		BA8E56782A9F456100DB6E05 /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BA8E567A2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8E56792A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift */; };
@@ -4067,6 +4068,7 @@
 		BA7D891121F07DD300883D82 /* FTWatchRecordingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider.swift; sourceTree = "<group>"; };
 		BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLayouter.swift; sourceTree = "<group>"; };
 		BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomPresentationDelegate.swift; sourceTree = "<group>"; };
+		BA8CD9CD2B3AD7530031E231 /* FTTagsDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTagsDebugViewController.swift; sourceTree = "<group>"; };
 		BA8E441C2A8CB8B80035856F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		BA8E441D2A8CB8BA0035856F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		BA8E441E2A8CB8BC0035856F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -5785,6 +5787,7 @@
 			children = (
 				BA237D2D25949DCD00B313B3 /* FTDeveloperOptionsViewController.swift */,
 				BA550F0125C7FEAA004D3B2D /* FTDeveloperOptions.storyboard */,
+				BA8CD9CD2B3AD7530031E231 /* FTTagsDebugViewController.swift */,
 			);
 			path = "Beta Program";
 			sourceTree = "<group>";
@@ -13795,6 +13798,7 @@
 				09ABDCA92A790F94008F144D /* FTNoteshelfAIFooterViewController.swift in Sources */,
 				BAF393432859ADF00067CA9F /* FTCloudPublishRequest.swift in Sources */,
 				BAF393442859ADF00067CA9F /* FTOneDriveMoveTask.swift in Sources */,
+				BA8CD9CE2B3AD7530031E231 /* FTTagsDebugViewController.swift in Sources */,
 				BAF393452859ADF00067CA9F /* FTShelfItemCollection.swift in Sources */,
 				E7E3EC3E29A4897E004372B6 /* FTStickersListTableViewCell.swift in Sources */,
 				BA111C3A2988E75C001E854F /* UIFont+Helper.swift in Sources */,

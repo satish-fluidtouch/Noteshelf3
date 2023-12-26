@@ -565,7 +565,7 @@ class FTTagsProvider {
 
 }
 
-private extension FTTagsProvider {
+extension FTTagsProvider {
     func setAllTags(_ tags: [FTTagItemModel]) {
         self.allTagsLock.lock();
         self.allTags = tags;

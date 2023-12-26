@@ -20,9 +20,17 @@ struct FTDeveloperOption {
     static var textToStrokeSnapToLineHeight: Bool = true
     static var useQuickLookThumbnailing: Bool = true
 
+    #if !RELEASE
+    static var debugTags: Bool = true
     static var showOnScreenBorder: Bool = false
     static var showTileBorder: Bool = false
     static var showTileInfo: Bool = false
+    #else
+    static var debugTags: Bool = false
+    static var showOnScreenBorder: Bool = false
+    static var showTileBorder: Bool = false
+    static var showTileInfo: Bool = false
+    #endif
     // --------------------------------- //
 
    fileprivate struct SliderOptions {
@@ -43,6 +51,7 @@ class FTDeveloperOptionsViewController: UIViewController {
     @IBOutlet private weak var bookOpenAnimScale: UISwitch?
     @IBOutlet private weak var enablePremiumMode: UISwitch?
     @IBOutlet private weak var useQLThumbnail: UISwitch?
+    @IBOutlet private weak var debugTags: UISwitch?
 
     @IBOutlet private weak var textToStrokeWrapChar: UISwitch?
     @IBOutlet private weak var textToStrokeSnapToLineHeight: UISwitch?
@@ -87,6 +96,7 @@ class FTDeveloperOptionsViewController: UIViewController {
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
         useQLThumbnail?.isOn = FTDeveloperOption.useQuickLookThumbnailing
+        debugTags?.isOn = FTDeveloperOption.debugTags
     }
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
@@ -144,6 +154,10 @@ class FTDeveloperOptionsViewController: UIViewController {
 
     @IBAction func resetCacheFolder(sender: UIButton?) {
         try? FileManager.default.removeItem(at: FTDocumentCache.shared.cacheFolderURL)
+    }
+
+    @IBAction func toggleTagsDebugView(swicth: UISwitch) {
+        FTDeveloperOption.debugTags = swicth.isOn
     }
 
     @IBAction func animationValueChanged(_ sender: UIStepper) {
