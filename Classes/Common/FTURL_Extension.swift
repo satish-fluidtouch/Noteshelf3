@@ -42,11 +42,14 @@ extension URL
         
         var eachComponent = urlComponents.last;
         while let lastComp = eachComponent, !lastComp.hasSuffix(FTFileExtension.shelf)  {
-            relativePaths.insert(eachComponent!.deletingPathExtension, at: 0);
+            relativePaths.insert(lastComp.deletingPathExtension, at: 0);
             urlComponents.removeLast();
             eachComponent = urlComponents.last;
         }
-        relativePaths.insert(eachComponent!.deletingPathExtension, at: 0);
+        guard let eachComponent else {
+            return self.path(percentEncoded: false)
+        }
+        relativePaths.insert(eachComponent.deletingPathExtension, at: 0);
         let returnPath = relativePaths.joined(separator: "/");
         return returnPath;
     }
