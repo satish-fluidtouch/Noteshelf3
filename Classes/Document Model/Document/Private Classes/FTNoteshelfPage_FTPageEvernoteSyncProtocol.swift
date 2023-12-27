@@ -23,6 +23,7 @@ extension FTNoteshelfPage : FTPageEvernoteSyncProtocol
     #if !targetEnvironment(macCatalyst)
     var edamResource: EDAMResource? {
         if(FTENPublishManager.shared.shouldCancelPublishing) {
+            FTLogError("Evernote Publish Error", attributes: ["Reason": "Publish Cancelled"])
             return nil;
         }
         let pageRect = self.pageRectForEnSync();
@@ -62,6 +63,7 @@ extension FTNoteshelfPage : FTPageEvernoteSyncProtocol
             
             return resource;
         }
+        FTLogError("Evernote Publish Error", attributes: ["Reason": "Did not find image"])
         return nil;
     }
     #endif
