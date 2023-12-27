@@ -19,4 +19,11 @@ class FTTextLinkRouteHelper: NSObject {
         ]
         return components.url
     }
+    
+    static func getQueryItems(of url: URL) -> (docId: String?, pageId: String?) {
+        let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems
+        let documentId = queryItems?.first(where: { $0.name == "documentId" })?.value
+        let pageId = queryItems?.first(where: { $0.name == "pageId" })?.value
+        return (docId: documentId, pageId: pageId)
+    }
 }

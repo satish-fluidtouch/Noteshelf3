@@ -12,6 +12,7 @@ enum FTFinderPageState {
     case edit
     case none
     case selectPages
+    case chooseSinglePage // This is introduced to link the page 
 }
 
 enum FTFinderSegment: Int {

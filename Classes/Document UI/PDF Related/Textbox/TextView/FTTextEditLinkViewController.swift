@@ -12,11 +12,16 @@ protocol FTDocumentSelectionDelegate: AnyObject {
     func didSelect(document: FTShelfItemProtocol)
 }
 
+protocol FTPageSelectionDelegate: AnyObject {
+    func didSelect(page: FTNoteshelfPage)
+}
+
 class FTTextEditLinkViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?
-    weak var document: FTDocumentProtocol?
     weak var delegate: FTDocumentSelectionDelegate?
-    
+    weak var pageDelegate: FTPageSelectionDelegate?
+    var docUUID: String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView?.register(FTTextEditLinkTableViewCell.self, forCellReuseIdentifier: FTTextEditLinkTableViewCell.cellIdentifier)
@@ -73,18 +78,37 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
         if option == .document {
             let viewModel = FTShelfItemsViewModel(selectedShelfItems: [])
             let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
-//            controller.delegate = self
             self.ftPresentFormsheet(vcToPresent: controller, hideNavBar: false)
         } else if option == .page {
-            
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == self.docUUID}) as? FTDocumentItemProtocol {
+                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                        if let doc = document as? FTThumbnailableCollection {
+                            let finderVc = FTFinderViewController.instantiate(fromStoryboard: .finder)
+                            finderVc.configureData(forDocument: doc, exportInfo: nil, delegate: nil, searchOptions: FTFinderSearchOptions())
+                            finderVc.mode = .chooseSinglePage
+                            finderVc.singlePageSelectDelegate = self
+                            self.present(finderVc, animated: true)
+                        }
+                    }
+                }
+            }
         } else if option == .linkTo {
             
         }
     }
 }
 
-extension FTTextEditLinkViewController: FTDocumentSelectionDelegate {
+extension FTTextEditLinkViewController: FTDocumentSelectionDelegate, FTPageSelectionDelegate {
     func didSelect(document: FTShelfItemProtocol) {
-        self.delegate?.didSelect(document: document)
+        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
+            self.docUUID = docId
+            self.delegate?.didSelect(document: document)
+        }
+    }
+    
+    func didSelect(page: FTNoteshelfPage) {
+        self.pageDelegate?.didSelect(page: page)
     }
 }

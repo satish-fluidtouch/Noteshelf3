@@ -13,9 +13,11 @@ class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     @IBOutlet private weak var tableView: UITableView?
     private let viewModel = FTTextLinkViewModel()
-    private weak var document: FTDocumentProtocol?
     weak var delegate: FTDocumentSelectionDelegate?
+    weak var pageDelegate: FTPageSelectionDelegate?
     
+    private var docUUID: String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Linking"
@@ -23,9 +25,9 @@ class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
     }
     
     @discardableResult
-    static func showTextLinkScreen(from controller: UIViewController, source: UIView, with document: FTDocumentProtocol) -> FTTextLinkViewController? {
+    static func showTextLinkScreen(from controller: UIViewController, source: UIView, with docUUID: String) -> FTTextLinkViewController? {
         if let textLinkVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTTextLinkViewController") as? FTTextLinkViewController {
-            textLinkVc.document = document
+            textLinkVc.docUUID = docUUID
             textLinkVc.ftPresentationDelegate.source = source
             textLinkVc.ftPresentationDelegate.sourceRect = source.frame
             let contentSize = CGSize(width: 320.0, height: 300.0)
@@ -87,16 +89,21 @@ extension FTTextLinkViewController: UITableViewDataSource, UITableViewDelegate {
         let option = viewModel.linkSection.options[indexPath.row]
         if option == .linkSettings {
             if let editLinkVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTTextEditLinkViewController") as? FTTextEditLinkViewController {
-                editLinkVc.document = self.document
+                editLinkVc.docUUID = self.docUUID
                 editLinkVc.delegate = self
+                editLinkVc.pageDelegate = self
                 self.navigationController?.pushViewController(editLinkVc, animated: true)
             }
         }
     }
 }
 
-extension FTTextLinkViewController: FTDocumentSelectionDelegate {
+extension FTTextLinkViewController: FTDocumentSelectionDelegate, FTPageSelectionDelegate {
     func didSelect(document: FTShelfItemProtocol) {
         self.delegate?.didSelect(document: document)
+    }
+    
+    func didSelect(page: FTNoteshelfPage) {
+        self.pageDelegate?.didSelect(page: page)
     }
 }

@@ -408,7 +408,7 @@ class FTTextAnnotationViewController: UIViewController {
         return textInputView.isFirstResponder
     }
         
-    @objc fileprivate func saveTextEntryAttributes() {
+    @objc func saveTextEntryAttributes() {
         //Check if the text is empty in which case we can remove the annotation object.
         var shouldRemove = false;
         #if targetEnvironment(macCatalyst)

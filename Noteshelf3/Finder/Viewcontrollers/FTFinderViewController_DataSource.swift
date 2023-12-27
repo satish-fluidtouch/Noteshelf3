@@ -27,7 +27,7 @@ extension FTFinderViewController {
             collectionViewCell.editing = false;
             collectionViewCell.setIsSelected(false);
         }
-        collectionViewCell.selectionBadge?.isHidden = (self.mode == .none)
+        collectionViewCell.selectionBadge?.isHidden = (self.mode == .none || self.mode == .chooseSinglePage)
         if let currentPage = self.delegate?.currentPage(in: self), currentPage.uuid == page.uuid, self.mode == .none {
             collectionViewCell.setAsCurrentVisiblePage()
         }

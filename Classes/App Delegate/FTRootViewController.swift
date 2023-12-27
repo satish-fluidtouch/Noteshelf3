@@ -556,8 +556,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                                         animate: false,
                                                         addToRecent: true,
                                                         bipassPassword: true) { doc, success in
-                            if let document = doc,
-                               let _ = document.pages().firstIndex(where: { $0.uuid == pageId }) {
+                            if let document = doc {
                                 self.docuemntViewController?.navigateToPage(with: pageId)
                             }
                         }

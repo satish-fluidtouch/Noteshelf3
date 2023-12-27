@@ -88,6 +88,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     @IBOutlet weak var optionsStackView: UIStackView!
     weak var delegate: FTFinderTabBarController?
     weak var pdfDelegate: FTPDFRenderViewController?
+    weak var singlePageSelectDelegate: FTPageSelectionDelegate?
+    
     private var currentSize = CGSize.zero
     var previousScrollOffSet: CGPoint?
     var screenMode: FTFinderScreenMode  {
@@ -117,7 +119,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     @IBOutlet weak var titleLabel: UILabel?
     @IBOutlet fileprivate weak var collapseButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet fileprivate weak var selectAllButton: UIButton!
+    @IBOutlet fileprivate weak var leftNavButton: UIButton!
+    @IBOutlet private weak var doneButton: FTCustomButton?
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var viewLoading: UIView!
     @IBOutlet weak var pagesShareButton: UIButton!
@@ -193,7 +196,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             isRegular = splitVc.isRegularClass()
         }
         if isRegular {
-            if mode == .selectPages {
+            if mode == .selectPages || mode == .chooseSinglePage {
                 self.cellSize = CGSize(width: 152, height: 204);
             } else {
                 self.cellSize = CGSize(width: 200, height: 208)
@@ -215,8 +218,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         self.addObservers()
         self.setUpCollectionview()
         self.filteredPages.append(contentsOf: self.document.documentPages());
-        updateSelectionTitle()
-        if mode == .selectPages {
+        self.updateSelectionTitle()
+        if mode == .selectPages || mode == .chooseSinglePage {
             self.view.backgroundColor = .appColor(.formSheetBgColor)
         } else {
             self.view.backgroundColor = .appColor(.finderBgColor)
@@ -234,19 +237,34 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         pagesShareButton.isHidden = true
         pagesShareButton.layer.cornerRadius = 10
         (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
-        if self.mode == .selectPages {
-            selectAllButton.setImage(UIImage(), for: .normal)
-            selectAllButton.setImage(UIImage(), for: .selected)
-            updateSelectAll()
-        }
+        self.configureHeaderInSelectModeIfNeeded()
         self.updateContentInsets()
         segmentControl?.type = .image
         if self.mode == .selectPages {
             segmentControl?.segmentsCount = 2
             pagesShareButton.dropShadowWith(color: UIColor.appColor(.buttonShadow), offset:  CGSize(width: 0, height: 4), radius: 8)
         }
-        segmentControl?.populateSegments()
-        segmentControl?.selectedSegmentIndex = 0
+        if self.mode != .chooseSinglePage {
+            segmentControl?.populateSegments()
+            segmentControl?.selectedSegmentIndex = 0
+        } else {
+            self.segmentControl?.isHidden = true
+            self.doneButton?.isHidden = true
+        }
+    }
+    
+    private func configureHeaderInSelectModeIfNeeded() {
+        if self.mode == .selectPages || self.mode == .chooseSinglePage {
+            self.leftNavButton.setImage(UIImage(), for: .normal)
+            self.leftNavButton.setImage(UIImage(), for: .selected)
+            if self.mode == .selectPages {
+                self.updateSelectAll()
+            } else {
+                let title = "cancel".localized
+                self.navigationItem.leftBarButtonItem?.title = title
+                self.leftNavButton.setTitle(title, for: .normal)
+            }
+        }
     }
     
     private func updateContentInsets() {
@@ -271,7 +289,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             segmentControl?.isHidden = true
             selectModeHeaderView.isHidden = false
             headerView?.isHidden = true
-        } else if self.mode == .selectPages {
+        } else if self.mode == .selectPages || self.mode == .chooseSinglePage {
             headerView?.isHidden = true
             segmentControl?.isHidden = false
             selectModeHeaderView.isHidden = false
@@ -636,8 +654,13 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         self.delegate?.didTapOnPrimaryButton()
     }
 
-    @IBAction func didTapOnSelectAll(_ sender: Any) {
-        self.selectAllClicked()
+    @IBAction func didTapOnLeftNavButton(_ sender: Any) {
+        if self.mode == .selectPages {
+            self.selectAllClicked()
+        } else if self.mode == .chooseSinglePage {
+            self.dismiss(animated: true) {
+            }
+        }
     }
 
     private func hideTabBar(_ value: Bool) {
@@ -745,9 +768,9 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     private func setUpCollectionview() {
         self.collectionView.dragDelegate = self
         self.collectionView.dropDelegate = self
-        self.collectionView.allowsMultipleSelection = true;
         self.collectionView.alwaysBounceVertical = true;
         self.collectionView.dragInteractionEnabled = (self.mode == .selectPages) ? false : true
+        self.collectionView.allowsMultipleSelection = (self.mode != .chooseSinglePage)
     }
     
     func configureForSearchTab() {
@@ -923,7 +946,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
     
     fileprivate func updateSelectAllUI() {
-        self.selectAllButton.isSelected = !self.selectAll
+        self.leftNavButton.isSelected = !self.selectAll
         self.updateSelectAll()
         if selectedPages.count == 0 {
             self.disableEditOptions()
@@ -932,17 +955,18 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         }
         if mode == .selectPages {
             pagesShareButton.isHidden = (selectedPages.count == 0)
+        } else if mode == .chooseSinglePage {
+            pagesShareButton.isHidden = true
         }
         updateSelectionTitle()
     }
     
     private func updateSelectAll() {
-        let title = !self.selectAllButton.isSelected ? NSLocalizedString("SelectAll", comment: "Select All") : NSLocalizedString("shelf.navBar.deselectAll", comment: "Select None")
+        let title = !self.leftNavButton.isSelected ? "SelectAll".localized : "shelf.navBar.deselectAll".localized
         self.navigationItem.leftBarButtonItem?.title = title
         if mode == .selectPages {
-            self.selectAllButton.setTitle(title, for: .normal)
+            self.leftNavButton.setTitle(title, for: .normal)
         }
-        //self.selectAllButton.titleLabel?.addCharacterSpacing(kernValue: -0.41)
     }
     
     
@@ -1133,6 +1157,12 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                 }
                 self.updateSelectAllUI();
                 self.updateSelectionTitle()
+            } else if self.mode == .chooseSinglePage {
+                self.dismiss(animated: true) {
+                    if let nspage = page as? FTNoteshelfPage {
+                        self.singlePageSelectDelegate?.didSelect(page: nspage)
+                    }
+                }
             }
         }
     }
@@ -1340,7 +1370,7 @@ extension FTFinderViewController{
             self.selectedPages.removeAllObjects();
             self.selectAll = true;
             self.updateSelectAllUI();
-        case .none, .selectPages:
+        case .none, .selectPages, .chooseSinglePage:
             break;
         }
 
