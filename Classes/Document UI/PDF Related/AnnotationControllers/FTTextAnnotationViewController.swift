@@ -61,6 +61,7 @@ class FTTextAnnotationViewController: UIViewController {
 #endif
 
     private weak var referenceLibraryController: FTReferenceLibraryViewController?;
+    var linkSelectedRange: NSRange?
     
     var annotation: FTAnnotation {
         return _annotation!;
@@ -150,9 +151,9 @@ class FTTextAnnotationViewController: UIViewController {
         get {
             let attributes: NSMutableAttributedString? = textInputView.attributedText.mutableDeepCopy()
             attributes?.applyScale(1 / textInputView.scale, originalScaleToApply: 1 * textInputView.transformScale)
-            if let length = attributes?.length,length > 0 {
-                attributes?.removeAttribute(.link, range: NSRange(location: 0, length: length));
-            }
+//            if let length = attributes?.length,length > 0 {
+//                attributes?.removeAttribute(.link, range: NSRange(location: 0, length: length));
+//            }
             return attributes!
         }
         set {

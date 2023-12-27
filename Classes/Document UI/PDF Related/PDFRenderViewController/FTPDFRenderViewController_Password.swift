@@ -162,8 +162,10 @@ extension FTPDFRenderViewController
         self.showZoomPanelIfNeeded();
     }
     
-    @objc func navigateToPage(index: Int) {
-        self.showPage(at: index, forceReLayout: false, animate: false)
+    @objc func navigateToPage(with pageId: String) {
+        if let index = self.pdfDocument.pages().firstIndex(where: { $0.uuid == pageId }) {
+            self.showPage(at: index, forceReLayout: false, animate: false)
+        }
     }
 }
 

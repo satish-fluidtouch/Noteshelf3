@@ -60,6 +60,23 @@ extension FTTextAnnotationViewController {
         return menuItems
     }
     
+    @objc internal func performLinkAction(_ sender: Any?) {
+        if let annotation = self.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage, let doc = curPage.parentDocument {
+            if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: doc.documentUUID, pageId: curPage.uuid), let attrText = self.textInputView.attributedText {
+                // Add with current info
+                let reqRange = self.textInputView.selectedRange
+                let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
+                attributedString.addAttribute(.link, value: url, range: reqRange)
+                attributedString.addAttributes(NSAttributedString.linkAttributes, range: reqRange)
+                self.textInputView.attributedText = attributedString
+                self.linkSelectedRange = reqRange
+                // Allow edit here
+                let textLinkVc = FTTextLinkViewController.showTextLinkScreen(from: self, source: self.textInputView, with: doc)
+                textLinkVc?.delegate = self
+            }
+        }
+    }
+
     @objc internal func performLookUpMenu(_ sender: Any?) {
         if let selectedText: String = self.textInputView.getSelectedText(), !selectedText.isEmpty {
             self.presentLookUpScreen(selectedText)
@@ -254,3 +271,19 @@ extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
 }
 
 #endif
+
+extension FTTextAnnotationViewController: FTDocumentSelectionDelegate {
+    func didSelect(document: FTShelfItemProtocol) {
+        var range = self.linkSelectedRange
+        if nil == range {
+            range = self.textInputView.selectedRange
+        }
+        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID, let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: docId, pageId: "curPage.uuid"), let attrText = self.textInputView.attributedText,  let reqRange = range {
+            let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
+            attributedString.removeAttribute(.link, range: reqRange)
+            attributedString.addAttribute(.link, value: url, range: reqRange)
+            attributedString.addAttributes(NSAttributedString.linkAttributes, range: reqRange)
+            self.textInputView.attributedText = attributedString
+        }
+    }
+}

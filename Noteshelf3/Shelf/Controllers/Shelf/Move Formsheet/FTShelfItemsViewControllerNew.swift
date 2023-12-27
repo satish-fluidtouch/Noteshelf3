@@ -17,9 +17,12 @@ class FTShelfItemsViewControllerNew: UIHostingController<FTShelfItemsView>, FTPo
     private var purpose: FTShelfItemsPurpose = .shelf
     var customTransitioningDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: false);
 
-    init(shelfItemsViewModel: FTShelfItemsViewModel, purpose: FTShelfItemsPurpose) {
+    weak var delegate: FTDocumentSelectionDelegate?
+    
+    init(shelfItemsViewModel: FTShelfItemsViewModel, purpose: FTShelfItemsPurpose, delegate: FTDocumentSelectionDelegate? = nil) {
         self.shelfItemsViewModel = shelfItemsViewModel
         self.purpose = purpose
+        self.delegate = delegate
         let view = FTShelfItemsView(viewModel: shelfItemsViewModel,purpose: purpose)
         super.init(rootView: view)
         self.rootView.viewDelegate = self
@@ -43,12 +46,18 @@ class FTShelfItemsViewControllerNew: UIHostingController<FTShelfItemsView>, FTPo
     }
 }
 extension FTShelfItemsViewControllerNew: FTShelfItemsViewDelegate {
+    func didSelectShelfItem(_ item: FTShelfItemProtocol) {
+        self.dismiss(animated: false) {
+            self.delegate?.didSelect(document: item)
+        }
+    }
+
     func dismisspopover() {
         self.dismiss(animated: true)
     }
     func openShelfItemsOf(collection: FTShelfItemCollection?, group: FTGroupItemProtocol?) {
         let shelfItemsViewModel = self.getShelfItemsViewModelFor(collection: collection, group: group)
-        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, purpose: purpose)
+        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, purpose: purpose, delegate: self.delegate)
         if group != nil {
             controller.title =  group?.displayTitle ?? ""
         } else if collection != nil {

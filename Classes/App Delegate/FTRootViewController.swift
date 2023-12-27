@@ -549,8 +549,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
                 if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == documentId}) as? FTDocumentItemProtocol {
                     if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: documentId) {
-                        // page index to be calculated here
-                        self.docuemntViewController?.navigateToPage(index: 0)
+                        self.docuemntViewController?.navigateToPage(with: pageId)
                     } else {
                         let relativePath = shelfItem.URL.relativePathWRTCollection()
                         self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
@@ -558,8 +557,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                                                         addToRecent: true,
                                                         bipassPassword: true) { doc, success in
                             if let document = doc,
-                               let index = document.pages().firstIndex(where: { $0.uuid == pageId }) {
-                                self.docuemntViewController?.navigateToPage(index: index)
+                               let _ = document.pages().firstIndex(where: { $0.uuid == pageId }) {
+                                self.docuemntViewController?.navigateToPage(with: pageId)
                             }
                         }
                     }

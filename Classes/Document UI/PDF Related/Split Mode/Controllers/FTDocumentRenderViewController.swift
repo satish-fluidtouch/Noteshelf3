@@ -31,7 +31,7 @@ let textContainerTag: Int = 9001
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?);
-    func navigateToPage(index: Int)
+    func navigateToPage(with pageId: String)
 }
 
 protocol FTToolbarElements : NSObjectProtocol {
@@ -314,8 +314,8 @@ extension FTDocumentRenderViewController: FTToolbarElements {
 
 //MARK:- fileprivate member Variable Access methods
 extension FTDocumentRenderViewController: FTDocumentViewPresenter {
-    func navigateToPage(index: Int) {
-        self.documentViewController.navigateToPage(index: index)
+    func navigateToPage(with pageId: String) {
+        self.documentViewController.navigateToPage(with: pageId)
     }
     
     func didCompleteDocumentPresentation() {

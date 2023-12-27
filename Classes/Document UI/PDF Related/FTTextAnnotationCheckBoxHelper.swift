@@ -106,11 +106,11 @@ class FTTextAnnotationLinkHelper: NSObject
                                                            attrString: attrString);
 
             let attributesInfo = FTTextAnnotationLayoutHelper.shared.attributes(atPoint: point);
-            if let actionURL = attributesInfo.attributes?[.customLink] as? URL {
-                action = FTAnnotationAction();
-                action?.URL = actionURL;
-                action?.rect = attributesInfo.boundingRect;
-                action?.annotation = annotation;
+            if let actionURL = attributesInfo.attributes?[.customLink] as? URL ?? attributesInfo.attributes?[.link] as? URL {
+                action = FTAnnotationAction()
+                action?.URL = actionURL
+                action?.rect = attributesInfo.boundingRect
+                action?.annotation = annotation
             }
         }
         return action;

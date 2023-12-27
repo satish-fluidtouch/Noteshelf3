@@ -11,10 +11,19 @@ import SwiftUI
 enum FTShelfItemsPurpose {
     case shelf
     case finder
+    case linking
 }
+
 protocol FTShelfItemsViewDelegate: AnyObject{
     func openShelfItemsOf(collection: FTShelfItemCollection?,group:FTGroupItemProtocol?)
     func dismisspopover()
+    func didSelectShelfItem(_ item: FTShelfItemProtocol)
+}
+
+extension FTShelfItemsViewDelegate {
+    func didSelectShelfItem(_ item: FTShelfItemProtocol) {
+        print("Implement if needed")
+    }
 }
 
 struct FTShelfItemsView: View {
@@ -52,6 +61,8 @@ struct FTShelfItemsView: View {
                                     .onTapGesture {
                                         if purpose == .finder {
                                             viewModel.selectedShelfItemToMove = notebookItem.notebook
+                                        } else if purpose == .linking, let item = notebookItem.notebook {
+                                            self.viewDelegate?.didSelectShelfItem(item)
                                         }
                                     }
                             }else {
@@ -78,27 +89,29 @@ struct FTShelfItemsView: View {
                         .foregroundColor(.primary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if viewModel.collection == nil && purpose == .shelf {
-                        Button {
-                            viewModel.showNewCategoryCreationAlert()
-                        } label: {
-                            Image(systemName: "folder.badge.plus")
-                                .frame(width:44,height: 44,alignment: .center)
-                                .font(Font.appFont(for: .regular, with: 16))
-                                .foregroundColor(Color.appColor(.accent))
-                        }
-                    } else if viewModel.collection != nil {
-                        Button {
-                            if self.purpose == .finder {
-                                viewModel.showNewNoteBookCreationAlert()
-                            } else {
-                                viewModel.showNewGroupCreationAlert()
+                    if purpose != .linking {
+                        if viewModel.collection == nil && purpose == .shelf {
+                            Button {
+                                viewModel.showNewCategoryCreationAlert()
+                            } label: {
+                                Image(systemName: "folder.badge.plus")
+                                    .frame(width:44,height: 44,alignment: .center)
+                                    .font(Font.appFont(for: .regular, with: 16))
+                                    .foregroundColor(Color.appColor(.accent))
                             }
-                        } label: {
-                            Image(systemName: "plus")
-                                .frame(width:44,height: 44,alignment: .center)
-                                .font(Font.appFont(for: .regular, with: 16))
-                                .foregroundColor(Color.appColor(.accent))
+                        } else if viewModel.collection != nil {
+                            Button {
+                                if self.purpose == .finder {
+                                    viewModel.showNewNoteBookCreationAlert()
+                                } else {
+                                    viewModel.showNewGroupCreationAlert()
+                                }
+                            } label: {
+                                Image(systemName: "plus")
+                                    .frame(width:44,height: 44,alignment: .center)
+                                    .font(Font.appFont(for: .regular, with: 16))
+                                    .foregroundColor(Color.appColor(.accent))
+                            }
                         }
                     }
                 }

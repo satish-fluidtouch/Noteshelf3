@@ -615,16 +615,8 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
 extension FTTextView {
 
     @objc func linkMenuItemAction(_ sender: Any?) {
-        if let annotation = self.annotationViewController?.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage, let doc = curPage.parentDocument {
-            if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: doc.documentUUID, pageId: curPage.uuid) {
-                let reqRange = self.selectedRange
-                let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.attributedText)
-                attributedString.addAttribute(.link, value: url.absoluteString, range: reqRange)
-                attributedString.addAttribute(.foregroundColor, value: UIColor.green, range: reqRange)
-                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: reqRange)
-                self.attributedText = attributedString
-                self.isSelectable = true
-            }
+        if let controller = self.annotationViewController {
+            controller.performLinkAction(sender)
         }
     }
     

@@ -65,7 +65,7 @@ class FTShelfItemsViewModel: ObservableObject {
     }
 
     var showMoveButton: Bool {
-        return collection != nil
+        return collection != nil && purpose != .linking
     }
 
     var disableMoveButton: Bool {
