@@ -633,8 +633,8 @@ extension FTPDFRenderViewController : FTScanDocumentServiceDelegate
 
 extension FTPDFRenderViewController {
     @objc func canMoveToShelf(_ completion:@escaping (_ completed:Bool) ->Void) {
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: self.pdfDocument,
-                                          alertMessage: NSLocalizedString("AudioRecoring_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: self.pdfDocument, InAnyOf: [],
+                                              alertMessage: "AudioRecoring_Message".localized,
                                           onViewController: self, onCompletion: completion)
 
     }

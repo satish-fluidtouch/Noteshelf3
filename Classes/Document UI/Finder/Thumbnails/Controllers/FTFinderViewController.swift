@@ -1461,11 +1461,11 @@ extension FTFinderViewController {
             return;
         }
 
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: self.selectedPages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
-            guard let self = self else {
+            guard let self = self, success else {
                 return
             }
             self.duplicateClicked(withSelectedPages: self.selectedPages);
@@ -1526,8 +1526,8 @@ extension FTFinderViewController {
         guard let doc = self.document as? FTDocumentProtocol else {
             return;
         }
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: pages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
             if success {
@@ -1663,8 +1663,8 @@ extension FTFinderViewController {
             self.present(alert, animated: true, completion: nil)
         }
 
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: pages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
             if success, let weakSelf = self {
@@ -1786,8 +1786,8 @@ extension FTFinderViewController {
         guard let doc = self.document as? FTDocumentProtocol else {
             return;
         }
-        FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                              alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+        FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: pages,
+                                              alertMessage: "AudioRecoring_Progress_Message".localized,
                                               onViewController: self)
         { [weak self] (success) in
             if success {
@@ -1873,8 +1873,8 @@ extension FTFinderViewController {
             guard let doc = self.document as? FTDocumentProtocol else {
                 return;
             }
-            FTNotebookUtils.checkIfAudioIsPlaying(forDocument: doc,
-                                                  alertMessage: NSLocalizedString("AudioRecoring_Progress_Message", comment: ""),
+            FTNotebookUtils.checkIfAudioIsNotPlaying(forDocument: doc, InAnyOf: itemSet, 
+                                                  alertMessage: "AudioRecoring_Progress_Message".localized,
                                                   onViewController: self)
             { [weak self] (success) in
                 if success {
