@@ -9,15 +9,19 @@
 import UIKit
 import FTCommon
 
+struct FTTextLinkInfo {
+    var docUUID: String
+    var pageUUID: String
+}
+
 class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     @IBOutlet private weak var tableView: UITableView?
     private let viewModel = FTTextLinkViewModel()
-    weak var delegate: FTDocumentSelectionDelegate?
-    weak var pageDelegate: FTPageSelectionDelegate?
+    weak var delegate: FTTextLinkEditDelegate?
     
-    private var docUUID: String = ""
-
+    private var linkInfo: FTTextLinkInfo?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Linking"
@@ -25,9 +29,9 @@ class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
     }
     
     @discardableResult
-    static func showTextLinkScreen(from controller: UIViewController, source: UIView, with docUUID: String) -> FTTextLinkViewController? {
+    static func showTextLinkScreen(from controller: UIViewController, source: UIView, with linkInfo: FTTextLinkInfo) -> FTTextLinkViewController? {
         if let textLinkVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTTextLinkViewController") as? FTTextLinkViewController {
-            textLinkVc.docUUID = docUUID
+            textLinkVc.linkInfo = linkInfo
             textLinkVc.ftPresentationDelegate.source = source
             textLinkVc.ftPresentationDelegate.sourceRect = source.frame
             let contentSize = CGSize(width: 320.0, height: 300.0)
@@ -89,21 +93,35 @@ extension FTTextLinkViewController: UITableViewDataSource, UITableViewDelegate {
         let option = viewModel.linkSection.options[indexPath.row]
         if option == .linkSettings {
             if let editLinkVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTTextEditLinkViewController") as? FTTextEditLinkViewController {
-                editLinkVc.docUUID = self.docUUID
                 editLinkVc.delegate = self
-                editLinkVc.pageDelegate = self
+                editLinkVc.infoDelegate = self
                 self.navigationController?.pushViewController(editLinkVc, animated: true)
             }
         }
     }
 }
 
-extension FTTextLinkViewController: FTDocumentSelectionDelegate, FTPageSelectionDelegate {
+extension FTTextLinkViewController: FTTextLinkEditDelegate {
     func didSelect(document: FTShelfItemProtocol) {
-        self.delegate?.didSelect(document: document)
+        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
+            self.linkInfo?.docUUID = docId
+            self.linkInfo?.pageUUID = defaultFirstPageUUID
+            self.delegate?.didSelect(document: document)
+        }
     }
     
     func didSelect(page: FTNoteshelfPage) {
-        self.pageDelegate?.didSelect(page: page)
+        self.linkInfo?.pageUUID = page.uuid
+        self.delegate?.didSelect(page: page)
+    }
+}
+
+extension FTTextLinkViewController: FTTextLinkInfoDelegate {
+    func getTextLinkInfo() -> FTTextLinkInfo? {
+        return self.linkInfo
+    }
+    
+    func updateTextLinkInfo(_ info: FTTextLinkInfo) {
+        self.linkInfo = info
     }
 }

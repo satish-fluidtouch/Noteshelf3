@@ -555,10 +555,8 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                         self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
                                                         animate: false,
                                                         addToRecent: true,
-                                                        bipassPassword: true) { doc, success in
-                            if let document = doc {
+                                                        bipassPassword: true) { _, _ in
                                 self.docuemntViewController?.navigateToPage(with: pageId)
-                            }
                         }
                     }
                 }

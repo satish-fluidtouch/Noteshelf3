@@ -8,20 +8,24 @@
 
 import UIKit
 
-protocol FTDocumentSelectionDelegate: AnyObject {
-    func didSelect(document: FTShelfItemProtocol)
-}
-
 protocol FTPageSelectionDelegate: AnyObject {
     func didSelect(page: FTNoteshelfPage)
 }
 
+protocol FTTextLinkEditDelegate: FTPageSelectionDelegate {
+    func didSelect(document: FTShelfItemProtocol)
+}
+
+protocol FTTextLinkInfoDelegate: AnyObject {
+    func getTextLinkInfo() -> FTTextLinkInfo?
+    func updateTextLinkInfo(_ info: FTTextLinkInfo) 
+}
+
 class FTTextEditLinkViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?
-    weak var delegate: FTDocumentSelectionDelegate?
-    weak var pageDelegate: FTPageSelectionDelegate?
-    var docUUID: String = ""
-
+    weak var delegate: FTTextLinkEditDelegate?
+    weak var infoDelegate: FTTextLinkInfoDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView?.register(FTTextEditLinkTableViewCell.self, forCellReuseIdentifier: FTTextEditLinkTableViewCell.cellIdentifier)
@@ -79,9 +83,9 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
             let viewModel = FTShelfItemsViewModel(selectedShelfItems: [])
             let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
             self.ftPresentFormsheet(vcToPresent: controller, hideNavBar: false)
-        } else if option == .page {
+        } else if option == .page, let docId = self.infoDelegate?.getTextLinkInfo()?.docUUID {
             FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == self.docUUID}) as? FTDocumentItemProtocol {
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
                     let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let doc = document as? FTThumbnailableCollection {
@@ -89,7 +93,11 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
                             finderVc.configureData(forDocument: doc, exportInfo: nil, delegate: nil, searchOptions: FTFinderSearchOptions())
                             finderVc.mode = .chooseSinglePage
                             finderVc.singlePageSelectDelegate = self
-                            self.present(finderVc, animated: true)
+                            self.present(finderVc, animated: true) {
+                                if let document = doc as? FTDocumentProtocol {
+                                    FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token, onCompletion: nil)
+                                }
+                            }
                         }
                     }
                 }
@@ -100,15 +108,12 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
     }
 }
 
-extension FTTextEditLinkViewController: FTDocumentSelectionDelegate, FTPageSelectionDelegate {
+extension FTTextEditLinkViewController: FTTextLinkEditDelegate {
     func didSelect(document: FTShelfItemProtocol) {
-        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
-            self.docUUID = docId
-            self.delegate?.didSelect(document: document)
-        }
+        self.delegate?.didSelect(document: document)
     }
     
     func didSelect(page: FTNoteshelfPage) {
-        self.pageDelegate?.didSelect(page: page)
+        self.delegate?.didSelect(page: page)
     }
 }

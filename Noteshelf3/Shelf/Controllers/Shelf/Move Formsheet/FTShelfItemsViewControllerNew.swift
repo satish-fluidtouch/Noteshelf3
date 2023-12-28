@@ -17,9 +17,9 @@ class FTShelfItemsViewControllerNew: UIHostingController<FTShelfItemsView>, FTPo
     private var purpose: FTShelfItemsPurpose = .shelf
     var customTransitioningDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: false);
 
-    weak var delegate: FTDocumentSelectionDelegate?
+    weak var delegate: FTTextLinkEditDelegate?
     
-    init(shelfItemsViewModel: FTShelfItemsViewModel, purpose: FTShelfItemsPurpose, delegate: FTDocumentSelectionDelegate? = nil) {
+    init(shelfItemsViewModel: FTShelfItemsViewModel, purpose: FTShelfItemsPurpose, delegate: FTTextLinkEditDelegate? = nil) {
         self.shelfItemsViewModel = shelfItemsViewModel
         self.purpose = purpose
         self.delegate = delegate

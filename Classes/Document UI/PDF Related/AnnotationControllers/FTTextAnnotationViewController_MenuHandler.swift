@@ -66,19 +66,19 @@ extension FTTextAnnotationViewController {
             return
         }
         let attrs = attrText.attributes(at: reqRange.location, effectiveRange: nil)
-        if let schemeUrl = attrs[.link] as? URL, let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId {
-            let textLinkVc = FTTextLinkViewController.showTextLinkScreen(from: self, source: self.textInputView, with: documentId)
+        if let schemeUrl = attrs[.link] as? URL, let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId, let pageId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).pageId  {
+            let info = FTTextLinkInfo(docUUID: documentId, pageUUID: pageId)
+            let textLinkVc = FTTextLinkViewController.showTextLinkScreen(from: self, source: self.textInputView, with: info)
             textLinkVc?.delegate = self
-            textLinkVc?.pageDelegate = self
         } else {
             if let annotation = self.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage, let doc = curPage.parentDocument {
                 if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: doc.documentUUID, pageId: curPage.uuid) {
                     // Add with current info
                     self.updateLinkAttribute(with: url, for: reqRange)
                     // Edit screen
-                    let textLinkVc = FTTextLinkViewController.showTextLinkScreen(from: self, source: self.textInputView, with: doc.documentUUID)
+                    let info = FTTextLinkInfo(docUUID: doc.documentUUID, pageUUID: curPage.uuid)
+                    let textLinkVc = FTTextLinkViewController.showTextLinkScreen(from: self, source: self.textInputView, with: info)
                     textLinkVc?.delegate = self
-                    textLinkVc?.pageDelegate = self
                 }
             }
         }
@@ -291,17 +291,16 @@ extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
 
 #endif
 
-extension FTTextAnnotationViewController: FTDocumentSelectionDelegate, FTPageSelectionDelegate {
+extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
     func didSelect(document: FTShelfItemProtocol) {
         let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID, let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: docId, pageId: "FirstPage") {
+        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID, let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: docId, pageId: defaultFirstPageUUID) {
             self.updateLinkAttribute(with: url, for: range)
         }
     }
     
     func didSelect(page: FTNoteshelfPage) {
         let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        print("zzzz - range: \(range)")
         if let attrText = self.textInputView.attributedText {
             let attrs = attrText.attributes(at: range.location, effectiveRange: nil)
             if let schemeUrl = attrs[.link] as? URL, let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId,
