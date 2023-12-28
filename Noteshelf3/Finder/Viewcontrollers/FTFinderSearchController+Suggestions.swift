@@ -79,9 +79,8 @@ extension FTFinderSearchController: UITableViewDelegate, UITableViewDataSource, 
             if !searchableText.isEmpty {
                 self.searchBar?.searchTextField.text = ""
                 self.searchBar?.searchTextField.text = searchableText
-                self.searchOptions.searchedKeyword = searchableText
             }
-            self.searchText = self.searchBar?.searchTextField.text ?? ""
+            searchInputInfo.textKey = self.searchBar?.searchTextField.text ?? ""
             self.initiateSearch()
             runInMainThread { [weak self] in
                 guard let self = self else {
