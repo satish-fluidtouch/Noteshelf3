@@ -106,6 +106,9 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
     
     func stylusPenTouchMoved(_ touch: FTTouch!) {
         if(!self.strokeInProgress) {
+            if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
+                controller.processTouchesMoved(touch.activeUItouch, with: nil)
+            }
             return;
         }
         
@@ -143,9 +146,16 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
         self.cancelDelayedDisableGesture();
         
         if(!self.strokeInProgress) {
+            if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
+                controller.processTouchesEnded(touch.activeUItouch, with: nil)
+                if let del = self.delegate, del.mode == FTRenderModeZoom {
+                    self.delegate?.endActiveShapeAnnotation(with: controller.shapeAnnotation)
+                }
+            }
             return;
         }
         self.strokeInProgress = false;
+
         let selectedShape = FTShapeType.savedShapeType()
         if self.currentDrawingMode == RKDeskMode.deskModeShape && selectedShape != .freeForm {
             if let controller = self.delegate?.activeController() as? FTShapeAnnotationController {
@@ -160,6 +170,7 @@ extension FTOnScreenWritingViewController : FTStylusPenDelegate
            || self.currentDrawingMode == RKDeskMode.deskModeLaser || self.currentDrawingMode == RKDeskMode.deskModeFavorites) {
             self.processVertex(touch: touch, vertexType: .LastVertex,isShapeEnabled: isShapeEnabled)
         }
+       
         if(self.currentDrawingMode == RKDeskMode.deskModeEraser) {
             (self.delegate as? FTEraseTouchHandling)?.eraserTouchesEnded(touch);
         }
