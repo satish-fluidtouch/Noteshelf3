@@ -33,21 +33,34 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private var recentsList = [String]();
     var isSearching = false
     var searchText = ""
-    var searchBar: UISearchBar?
+    var searchBar: UISearchBar? {
+        return self.searchController?.searchBar
+    }
+    
+    func didCloseNotebook() {
+        if self.searchController?.isActive ?? false {
+            self.searchController?.isActive = false;
+        }
+    }
+    
     @IBOutlet weak var finderContainerView: UIView!
     @IBOutlet weak var recentsTableView: UITableView!
     private var resultsList : [String] = [String]()
-    private var seperatorView: UIView?
+    private weak var seperatorView: UIView?
     var suggestionItems = [FTSuggestedItem]()
-    let searchController = UISearchController(searchResultsController: nil)
+    
+    private weak var searchController: UISearchController?
     private weak var finderController : FTFinderViewController?
     private weak var delegate: FTFinderTabBarController?
-    private var document:FTThumbnailableCollection!;
+    private weak var document:FTThumbnailableCollection?;
+    
     var searchOptions: FTFinderSearchOptions!
-    private var expandButton: UIButton?
-    private var editButton: UIButton?
-    private var primaryButton: UIButton?
+    private weak var expandButton: UIButton?
+    private weak var editButton: UIButton?
+    private weak var primaryButton: UIButton?
+
     @IBOutlet weak var seperatorViewTopConstraint: NSLayoutConstraint!
+
     let activityIndicator = UIActivityIndicatorView(style: .medium)
     var hideSuggestions: Bool = false
     override func viewWillLayoutSubviews() {
@@ -108,19 +121,13 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     }
     
     override func viewDidLoad() {
-        searchBar = searchController.searchBar
-        navigationItem.searchController = searchController
+        let searchVC = UISearchController(searchResultsController: nil)
+        self.searchController = searchVC;
+        navigationItem.searchController = searchVC
         initializeSearchBar()
-        self.searchOptions.onFinding = { [weak self] in
-            self?.finderController?.updateBackgroundViewForSearch()
-            self?.updateFilterAndCreateSnapShot();
-        }
-        self.searchOptions.onCompletion = { [weak self] in
-            self?.finderController?.updateBackgroundViewForSearch()
-            self?.updateFilterAndCreateSnapShot();
-        }
+
         recentsTableView.register(FTRecentSearchCell.self, forCellReuseIdentifier: kRecentSearchCell)
-        if let doc = document as? FTNoteshelfDocument {
+        if let doc = self.document as? FTNoteshelfDocument {
             FTFilterRecentsStorage.shared.documentUUID = doc.documentUUID
         }
         recentsTableView.sectionHeaderTopPadding = 0
@@ -132,10 +139,13 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
         }
         updateSubViews(isSearching: isSearching)
         finderController?.searchDelegate = self
-        (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
         initializeActivityIndicator()
     }
     
+    private func reloadData() {
+        self.finderController?.updateBackgroundViewForSearch()
+        self.updateFilterAndCreateSnapShot();
+    }
     override var prefersHomeIndicatorAutoHidden: Bool {
         return self.tabBarController?.prefersHomeIndicatorAutoHidden ?? super.prefersHomeIndicatorAutoHidden
     }
@@ -156,7 +166,8 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     
     func addSeperatorView() {
         if seperatorView == nil {
-            seperatorView = UIView()
+            let sepView = UIView()
+            seperatorView = sepView;
             seperatorView?.backgroundColor = UIColor.appColor(.black20)
             seperatorView?.translatesAutoresizingMaskIntoConstraints = false
             self.view.insertSubview(seperatorView!, at: 0)
@@ -170,8 +181,8 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     
     private func initializeSearchBar() {
         searchBar?.searchTextField.delegate = self
-        searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = self
+        searchController?.searchBar.delegate = self
+        searchController?.searchResultsUpdater = self
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.preferredSearchBarPlacement = .stacked
     }
@@ -179,7 +190,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     internal func loadTags() {
         self.allTags.removeAll();
         filteredTags.removeAll()
-        self.document.documentPages().forEach { (page) in
+        self.document?.documentPages().forEach { (page) in
             page.tags().forEach({ [weak self] (tag) in
                 if self?.allTags.contains(where: {$0.text == tag}) == false  {
                     self?.allTags.append(FTTagModel(text: tag, isSelected: false));
@@ -230,10 +241,10 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let finderController = segue.destination as? FTFinderViewController {
+        if let finderController = segue.destination as? FTFinderViewController, let doc = self.document {
             self.finderController = finderController
             finderController.selectedTab = .search
-            finderController.configureData(forDocument: self.document, exportInfo: nil, delegate: self.delegate, searchOptions: searchOptions)
+            finderController.configureData(forDocument: doc, exportInfo: nil, delegate: self.delegate, searchOptions: searchOptions)
         }
     }
     
@@ -413,11 +424,16 @@ extension FTFinderSearchController {
     @objc func initiateSearch() {
         isSearching = true
         showLoadingIndicator()
+        self.document?.startRecognitionIfNeeded();
         finderController?.configureForSearchTab()
         finderController?.isSearching = true
-        finderController?.filterOptionsController(didChangeSearchText: self.searchText, onFinding: searchOptions.onFinding,  onCompletion: searchOptions.onCompletion)
+        finderController?.filterOptionsController(didChangeSearchText: self.searchText, onFinding: { [weak self] in
+            self?.reloadData();
+        }, onCompletion: { [weak self] in
+            self?.reloadData()
+        })
         constructRecentItems()
-       updateSubViews(isSearching: true)
+        updateSubViews(isSearching: true)
     }
     
     private func constructRecentItems() {
@@ -435,7 +451,10 @@ extension FTFinderSearchController {
     }
     
     func constructSelectedTags() {
-        let tokens = searchController.searchBar.searchTextField.tokens
+        guard let searchVC = searchController else {
+            return;
+        }
+        let tokens = searchVC.searchBar.searchTextField.tokens
         var currentTags = [FTTagModel]()
         tokens.forEach { eachToken in
              if let item = eachToken.representedObject as? FTSuggestedItem, let tag = item.tag {
@@ -466,8 +485,11 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let searchVC = searchController else {
+            return;
+        }
         let key = textField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
-        let tokens = searchController.searchBar.searchTextField.tokens
+        let tokens = searchVC.searchBar.searchTextField.tokens
         let tags = self.searchOptions.selectedTags
         if tokens.count != tags.count {
             var currentTags = [FTTagModel]()
@@ -485,7 +507,7 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
                 populateSearchSuggestion(for: key)
             }
         } else {
-            searchController.searchSuggestions = []
+            searchController?.searchSuggestions = []
         }
     #endif
     }
@@ -514,16 +536,16 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     
     private func didTapOnSuggestion(_ suggestionItem: FTSuggestedItem) {
         if suggestionItem.type == .tag {
-            let textField = searchController.searchBar.searchTextField
+            let textField = searchController?.searchBar.searchTextField
             let token = searchToken(for: suggestionItem)
-            textField.text = ""
-            textField.insertToken(token, at:  textField.tokens.count)
+            textField?.text = ""
+            textField?.insertToken(token, at:  (textField?.tokens.count ?? 0))
         }
         if suggestionItem.type == .tag {
             constructSelectedTags()
             self.searchText = ""
         } else {
-            self.searchText = searchController.searchBar.searchTextField.text ?? ""
+            self.searchText = searchController?.searchBar.searchTextField.text ?? ""
         }
         initiateSearch()
     }
@@ -569,7 +591,7 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
             let item = suggestionItem(with: eachSuggestion)
             items.append(item)
         }
-        searchController.searchSuggestions = items
+        searchController?.searchSuggestions = items
     }
     
     private func buildSuggestions(for query: String) {

@@ -98,9 +98,9 @@ extension FTFinderSearchController: UITableViewDelegate, UITableViewDataSource, 
 
 extension FTFinderSearchController: FTRecentSectionDelegate {
     func didTapClearAllButton() {
-        UIAlertController.showConfirmationDialog(with: "finder.clear.recents".localized, message: "", from: self) {
+        UIAlertController.showConfirmationDialog(with: "finder.clear.recents".localized, message: "", from: self) { [weak self] in
             FTFilterRecentsStorage.shared.clear()
-            self.recentsTableView.reloadData()
+            self?.recentsTableView.reloadData()
         }
     }
 }
