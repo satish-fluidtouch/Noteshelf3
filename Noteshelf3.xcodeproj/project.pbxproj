@@ -81,6 +81,7 @@
 		09AC0D5C2A83B3AC00375B1F /* FTPremiumUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
 		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
+		09C17BC12B3C66C000229E6D /* FTENPublishError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C17BC02B3C66C000229E6D /* FTENPublishError.swift */; };
 		09C3696A2A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369662A5EA6EB009BCC3F /* FTColorEyeDropperPickerController.swift */; };
 		09C3696B2A5EA6EB009BCC3F /* FTColorEyeDropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369682A5EA6EB009BCC3F /* FTColorEyeDropperView.swift */; };
 		09C3696C2A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C369692A5EA6EB009BCC3F /* FTMagnifyingGlassView.swift */; };
@@ -2711,6 +2712,7 @@
 		09C0B6D7240D2187009F5E91 /* FTHorizontalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTHorizontalLayout.swift; sourceTree = "<group>"; };
 		09C0B6D9240D2193009F5E91 /* FTPageLayouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageLayouter.swift; sourceTree = "<group>"; };
 		09C0B701240FBDAD009F5E91 /* FTDocumentScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentScrollView.swift; sourceTree = "<group>"; };
+		09C17BC02B3C66C000229E6D /* FTENPublishError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTENPublishError.swift; sourceTree = "<group>"; };
 		09C27C7A23719BB00085909E /* FTOneDriveDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTOneDriveDownloadTask.swift; sourceTree = "<group>"; };
 		09C27C7B23719BB00085909E /* FTOneDriveFileInfoTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTOneDriveFileInfoTask.swift; sourceTree = "<group>"; };
 		09C27C7C23719BB00085909E /* FTOneDriveFileListTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTOneDriveFileListTask.swift; sourceTree = "<group>"; };
@@ -7323,6 +7325,7 @@
 		211E302B1E027D73007B5CAD /* Evernote Sync */ = {
 			isa = PBXGroup;
 			children = (
+				09C17BC02B3C66C000229E6D /* FTENPublishError.swift */,
 				9742535E2549943D00EBA40E /* FTENIgnoreListManager.swift */,
 				9742535F2549943E00EBA40E /* FTENPublishManager.swift */,
 				4745F6E81EC740C4002C0C14 /* FTENPublishManager_Extension.swift */,
@@ -13002,6 +13005,7 @@
 				9715E0152AEA9D2C00EC48D4 /* ENNoteImportRequest.m in Sources */,
 				BAF3909C2859ADF00067CA9F /* PressurePenEngine.m in Sources */,
 				E7F479D9288589D700577D1E /* FTRackDataManager.swift in Sources */,
+				09C17BC12B3C66C000229E6D /* FTENPublishError.swift in Sources */,
 				BAF3909D2859ADF00067CA9F /* NSData256+Extension.swift in Sources */,
 				BAF3909E2859ADF00067CA9F /* FTNoteshelfDocumentProvider_AllShelfItems.swift in Sources */,
 				BAF3909F2859ADF00067CA9F /* Folder.swift in Sources */,

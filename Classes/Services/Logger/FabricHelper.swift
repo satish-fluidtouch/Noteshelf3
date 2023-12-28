@@ -11,7 +11,7 @@ import Foundation
 import FTDocumentFramework
 import FTCommon
 
-private struct FabircKeys {
+struct FabircKeys {
     //Boolean Values
     static let iCloud = "iCloud"
     static let Pencil = "ApplePencil"
@@ -32,7 +32,7 @@ private struct FabircKeys {
     static let Premium = "Premium"
     static let Noteshelf2 = "NS2"
     static let SafeMode = "SafeMode"
-
+    static let DeviceIDs = "DeviceIDs"
 }
 
 class FabricHelper: NSObject {
@@ -40,6 +40,7 @@ class FabricHelper: NSObject {
     class func configure() {
         if let userId = UserDefaults.standard.object(forKey: "USER_ID_FOR_CRASH") as? String {
             Crashlytics.crashlytics().setUserID(userId)
+            FTUbiquitousKeyValueStoreListner.shared().addUserID(userId);
         }
         let isPaired = NSUbiquitousKeyValueStore.default.isWatchPaired()
         let isWatchAppInstalled = NSUbiquitousKeyValueStore.default.isWatchAppInstalled()
@@ -65,6 +66,11 @@ class FabricHelper: NSObject {
         keys[FabircKeys.Premium] = FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO"
         keys[FabircKeys.Noteshelf2] = FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO"
         keys[FabircKeys.SafeMode] = FTUserDefaults.isInSafeMode() ? "YES" : "NO"
+        
+        let deviceInfo = FTUbiquitousKeyValueStoreListner.shared().deviceIdsForFabric();
+        if !deviceInfo.isEmpty {
+            keys[FabircKeys.DeviceIDs] = deviceInfo;
+        }
         Crashlytics.crashlytics().setCustomValue(keys, forKey: "Startup Keys")
     }
 
