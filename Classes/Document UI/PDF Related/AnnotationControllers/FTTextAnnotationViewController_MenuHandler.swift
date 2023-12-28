@@ -291,22 +291,11 @@ extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
 
 #endif
 
-extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
-    func didSelect(document: FTShelfItemProtocol) {
+extension FTTextAnnotationViewController: FTDocumentInfoDelegate {
+    func didSelectDocument(with docUUID: String, pageUUID: String) {
         let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID, let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: docId, pageId: defaultFirstPageUUID) {
+        if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: docUUID, pageId: pageUUID) {
             self.updateLinkAttribute(with: url, for: range)
-        }
-    }
-    
-    func didSelect(page: FTNoteshelfPage) {
-        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        if let attrText = self.textInputView.attributedText {
-            let attrs = attrText.attributes(at: range.location, effectiveRange: nil)
-            if let schemeUrl = attrs[.link] as? URL, let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId,
-               let reqUrl = FTTextLinkRouteHelper.getLinkUrlForTextView(using: documentId, pageId: page.uuid) {
-                self.updateLinkAttribute(with: reqUrl, for: range)
-            }
         }
     }
 }

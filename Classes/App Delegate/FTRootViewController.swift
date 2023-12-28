@@ -546,17 +546,17 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         if let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
            let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
            let pageId = queryItems.first(where: { $0.name == "pageId" })?.value {
-            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == documentId}) as? FTDocumentItemProtocol {
-                    if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: documentId) {
-                        self.docuemntViewController?.navigateToPage(with: pageId)
-                    } else {
+            if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: documentId) {
+                self.docuemntViewController?.navigateToPage(with: pageId)
+            } else {
+                FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
+                    if let shelfItem = docItem {
                         let relativePath = shelfItem.URL.relativePathWRTCollection()
                         self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
                                                         animate: false,
                                                         addToRecent: true,
                                                         bipassPassword: true) { _, _ in
-                                self.docuemntViewController?.navigateToPage(with: pageId)
+                            self.docuemntViewController?.navigateToPage(with: pageId)
                         }
                     }
                 }

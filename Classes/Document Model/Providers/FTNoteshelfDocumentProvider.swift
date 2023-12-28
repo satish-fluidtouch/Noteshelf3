@@ -961,4 +961,14 @@ extension FTNoteshelfDocumentProvider {
     func isContentMovingInProgress() -> Bool {
         self.isContentMoving
     }
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+    func findDocumentItem(byDocumentId documentId: String, completion: @escaping (FTDocumentItemProtocol?) -> Void) {
+        allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+            let foundItem = allItems.first { item in
+                (item as? FTDocumentItemProtocol)?.documentUUID == documentId
+            } as? FTDocumentItemProtocol
+            completion(foundItem)
+        }
+    }
+#endif
 }

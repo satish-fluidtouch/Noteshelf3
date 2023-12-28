@@ -12,7 +12,7 @@ protocol FTPageSelectionDelegate: AnyObject {
     func didSelect(page: FTNoteshelfPage)
 }
 
-protocol FTTextLinkEditDelegate: FTPageSelectionDelegate {
+protocol FTDocumentSelectionDelegate: AnyObject {
     func didSelect(document: FTShelfItemProtocol)
 }
 
@@ -21,14 +21,60 @@ protocol FTTextLinkInfoDelegate: AnyObject {
     func updateTextLinkInfo(_ info: FTTextLinkInfo) 
 }
 
+protocol FTDocumentInfoDelegate: AnyObject {
+    func didSelectDocument(with docUUID: String, pageUUID: String)
+}
+
 class FTTextEditLinkViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?
-    weak var delegate: FTTextLinkEditDelegate?
+    weak var delegate: FTDocumentInfoDelegate?
+    
+    // To get the required info from parent controller
     weak var infoDelegate: FTTextLinkInfoDelegate?
+    
+    private var docTitle: String?
+    private var pageNumber: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView?.register(FTTextEditLinkTableViewCell.self, forCellReuseIdentifier: FTTextEditLinkTableViewCell.cellIdentifier)
+        if let info = self.infoDelegate?.getTextLinkInfo() {
+            self.updateDocumentInfoIfNeeded(for: info)
+        }
+    }
+    
+    private func updateDocumentInfoIfNeeded(for info: FTTextLinkInfo) {
+        FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
+            if let shelfItem = docItem {
+                self.docTitle = shelfItem.title
+                let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                    if let doc = document {
+                        if let pageIndex = doc.pages().firstIndex(where: { $0.uuid == info.pageUUID }) {
+                            self.pageNumber = pageIndex + 1
+                        }
+                        self.tableView?.reloadData()
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token, onCompletion: nil)
+                    }
+                }
+            }
+        }
+    }
+
+    private func getFirstPageUUID(for doc: FTDocumentItemProtocol, onCompletion: ((String) -> Void)?) {
+        guard let docId = doc.documentUUID else {
+            onCompletion?("")
+            return
+        }
+        FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
+            let request = FTDocumentOpenRequest(url: doc.URL, purpose: .read)
+            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                if let doc = document, let firstPage = doc.pages().first {
+                    FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token, onCompletion: nil)
+                    onCompletion?(firstPage.uuid)
+                }
+            }
+        }
     }
     
     @objc func removeLinkButtonTapped() {
@@ -51,6 +97,13 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
         let attributes = [NSAttributedString.Key.font: UIFont.appFont(for: .regular, with: 17.0)]
         let option = FTLinkSettingsOptions.allCases[indexPath.row]
         config.attributedText = NSAttributedString(string: option.rawValue, attributes: attributes)
+        if option == .document, let title = self.docTitle {
+            config.secondaryAttributedText = NSAttributedString(string: title, attributes: attributes)
+        } else if option == .page, let pageNum = self.pageNumber {
+            config.secondaryAttributedText = NSAttributedString(string:  String(pageNum), attributes: attributes)
+        }
+        config.prefersSideBySideTextAndSecondaryText = true
+        config.textToSecondaryTextHorizontalPadding = 8.0
         cell.contentConfiguration = config
         cell.backgroundColor = UIColor.appColor(.white60)
         return cell
@@ -84,8 +137,8 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
             let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
             self.ftPresentFormsheet(vcToPresent: controller, hideNavBar: false)
         } else if option == .page, let docId = self.infoDelegate?.getTextLinkInfo()?.docUUID {
-            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
+                if let shelfItem = docItem {
                     let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                         if let doc = document as? FTThumbnailableCollection {
@@ -108,12 +161,23 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
     }
 }
 
-extension FTTextEditLinkViewController: FTTextLinkEditDelegate {
+extension FTTextEditLinkViewController: FTDocumentSelectionDelegate, FTPageSelectionDelegate {
     func didSelect(document: FTShelfItemProtocol) {
-        self.delegate?.didSelect(document: document)
+        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
+            self.getFirstPageUUID(for: doc) { pageUUID in
+                self.delegate?.didSelectDocument(with: docId, pageUUID: pageUUID)
+                self.docTitle = document.displayTitle
+                self.pageNumber = 1
+                self.tableView?.reloadData()
+            }
+        }
     }
     
     func didSelect(page: FTNoteshelfPage) {
-        self.delegate?.didSelect(page: page)
+        if var info = self.infoDelegate?.getTextLinkInfo() {
+            info.pageUUID = page.uuid
+            self.delegate?.didSelectDocument(with: info.docUUID, pageUUID: page.uuid)
+            self.updateDocumentInfoIfNeeded(for: info)
+        }
     }
 }

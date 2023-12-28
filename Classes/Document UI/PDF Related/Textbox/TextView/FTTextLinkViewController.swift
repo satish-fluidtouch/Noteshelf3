@@ -18,7 +18,7 @@ class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     @IBOutlet private weak var tableView: UITableView?
     private let viewModel = FTTextLinkViewModel()
-    weak var delegate: FTTextLinkEditDelegate?
+    weak var delegate: FTDocumentInfoDelegate?
     
     private var linkInfo: FTTextLinkInfo?
     
@@ -101,18 +101,16 @@ extension FTTextLinkViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension FTTextLinkViewController: FTTextLinkEditDelegate {
-    func didSelect(document: FTShelfItemProtocol) {
-        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
-            self.linkInfo?.docUUID = docId
-            self.linkInfo?.pageUUID = defaultFirstPageUUID
-            self.delegate?.didSelect(document: document)
+extension FTTextLinkViewController: FTDocumentInfoDelegate {
+    func didSelectDocument(with docUUID: String, pageUUID: String) {
+        self.linkInfo?.docUUID = docUUID
+        self.linkInfo?.pageUUID = pageUUID
+        if let del = self.delegate {
+            print("zzzz - textAnnotVC delegate: \(del)")
+        } else {
+            print("zzzz - textAnnotVC delegate: nil")
         }
-    }
-    
-    func didSelect(page: FTNoteshelfPage) {
-        self.linkInfo?.pageUUID = page.uuid
-        self.delegate?.didSelect(page: page)
+        self.delegate?.didSelectDocument(with: docUUID, pageUUID: pageUUID)
     }
 }
 
