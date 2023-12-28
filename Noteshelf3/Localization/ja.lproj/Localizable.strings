@@ -719,6 +719,7 @@
 "Rotate" = "回転す";
 "Rotate Page" = "ページを回転する";
 "Rotating" = "最近から削除";
+"SafeModeKey" = "セーフモード";
 "SampleNotebook" = "改名";
 "SaveAsTemplate" = "テンプレートとして保存する";
 "SaveForFutureUse" = "タグの名前を変更";
@@ -1552,4 +1553,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 11 December 2023 at 6:46 PM
+// Last Synced by Akshay on 28 December 2023 at 17:23
