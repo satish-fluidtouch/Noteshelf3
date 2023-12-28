@@ -32,7 +32,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private var filteredTags = [FTTagModel]();
     private var recentsList = [String]();
     var isSearching = false
-    var searchText = ""
+    private(set) var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
     var searchBar: UISearchBar? {
         return self.searchController?.searchBar
     }
@@ -422,18 +422,24 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
 
 extension FTFinderSearchController {
     @objc func initiateSearch() {
-        isSearching = true
-        showLoadingIndicator()
-        self.document?.startRecognitionIfNeeded();
-        finderController?.configureForSearchTab()
-        finderController?.isSearching = true
-        finderController?.filterOptionsController(didChangeSearchText: self.searchText, onFinding: { [weak self] in
-            self?.reloadData();
-        }, onCompletion: { [weak self] in
-            self?.reloadData()
-        })
-        constructRecentItems()
-        updateSubViews(isSearching: true)
+        let tags = searchOptions.selectedTags.map { eachModel in
+            return eachModel.text
+        }
+        if searchInputInfo.textKey != searchOptions.searchedKeyword || searchInputInfo.tags != tags {
+            isSearching = true
+            showLoadingIndicator()
+            self.document?.startRecognitionIfNeeded();
+            finderController?.configureForSearchTab()
+            finderController?.isSearching = true
+            searchInputInfo.tags = tags
+            finderController?.filterOptionsController(didChangeSearchText: searchInputInfo.textKey, onFinding: { [weak self] in
+                self?.reloadData();
+            }, onCompletion: { [weak self] in
+                self?.reloadData()
+            })
+            constructRecentItems()
+            updateSubViews(isSearching: true)
+        }
     }
     
     private func constructRecentItems() {
@@ -443,8 +449,8 @@ extension FTFinderSearchController {
             let item =  FTRecentSearchedItem(type: .tag, name: eachTag.text)
             items.append(item)
         }
-        if !self.searchText.isEmpty {
-            let recentTextItem = FTRecentSearchedItem(type: .text, name: self.searchText)
+        if !self.searchInputInfo.textKey.isEmpty {
+            let recentTextItem = FTRecentSearchedItem(type: .text, name: searchInputInfo.textKey)
             items.append(recentTextItem)
         }
         FTFilterRecentsStorage.shared.addNewSearchItem(items)
@@ -543,9 +549,9 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
         }
         if suggestionItem.type == .tag {
             constructSelectedTags()
-            self.searchText = ""
+            searchInputInfo.textKey = ""
         } else {
-            self.searchText = searchController?.searchBar.searchTextField.text ?? ""
+            searchInputInfo.textKey = searchController?.searchBar.searchTextField.text ?? ""
         }
         initiateSearch()
     }
@@ -562,10 +568,10 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let text = textField.text ?? ""
         if !text.isEmpty {
-            self.searchText = text
+            searchInputInfo.textKey = text
             initiateSearch()
         }  else if searchOptions.selectedTags.count > 0 {
-            self.searchText = ""
+            searchInputInfo.textKey = ""
             initiateSearch()
         }
         return true
@@ -582,6 +588,7 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
         recentsTableView.reloadData()
         recentsTableView.isHidden = false
         self.delegate?.cancelFinderSearchOperation()
+        self.searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
     }
 
     private func populateSearchSuggestion(for query: String) {
