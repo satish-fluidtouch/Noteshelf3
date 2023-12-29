@@ -176,7 +176,8 @@ private extension FTPageViewController
                 self.performGotoAction(action as! PDFActionGoTo)
             }
             else if(action.type.lowercased() == "uri") {
-                if let url = action as? PDFActionURL, url.url?.absoluteString == "Noteshelf://todayLink" {
+                let todayLinkURLString = FTSharedGroupID.getAppGroupID() + "://todayLink"
+                if let url = action as? PDFActionURL, url.url?.absoluteString ==  todayLinkURLString {
                     self.performTodayLinkAction()
                 }
                 else {
@@ -259,7 +260,7 @@ private extension FTPageViewController {
         if let pdfPage = self.pdfPage , let pages = pdfPage.parentDocument?.pages() {
             guard let currentDate = Date().utcDate() else { return };
             let destinationPage = pages.first { eachpage in
-                if let nsPage = eachpage as? FTNoteshelfPage, let date = nsPage.pageDate {
+                if let nsPage = eachpage as? FTNoteshelfPage, nsPage.diaryPageInfo?.type == .day, let date = nsPage.diaryPageInfo?.date {
                     let pageDate = Date(timeIntervalSinceReferenceDate: date).utcDate() ?? Date(timeIntervalSinceReferenceDate: date);
                     if pageDate.compareDate(currentDate) == ComparisonResult.orderedSame {
                         return true;

@@ -363,7 +363,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 }
                 self.insertFileFromInfo(info) { success, error in
                     //Since we have created a notebook with two pages(cover and template),setting the index to 1 will land on to template.
-                    self.localMetadataCache?.lastViewedPageIndex = 1
+                    if self.localMetadataCache?.lastViewedPageIndex == 0 {
+                        self.localMetadataCache?.lastViewedPageIndex = 1
+                    }
                     if success,let pinModel = info.pinModel, let pin = pinModel.pin {
                         self.pin = pin
                         self.setHint(pinModel.hint)
@@ -1876,6 +1878,13 @@ extension FTNoteshelfDocument {
     }
 }
 
+#if !NOTESHELF_ACTION
+extension FTNoteshelfDocument {
+    func setLastViewedPageIndexTo(_ index : Int){
+        self.localCacheWrapper?.lastViewedPageIndex = index
+    }
+}
+#endif
 
 extension URL {
     static var documentErrorFileURL: URL? {

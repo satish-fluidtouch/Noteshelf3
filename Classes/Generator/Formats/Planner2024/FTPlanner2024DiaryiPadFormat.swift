@@ -32,12 +32,12 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         let cellHeight = getYearCellHeight(rowCount: rowCount)
 
         // Rendering year
-        let yearFont = UIFont.InterMedium(screenInfo.fontsInfo.yearPageDetails.yearFontSize)
+        let yearFont = UIFont.clearFaceFont(for: .regular, with:screenInfo.fontsInfo.yearPageDetails.yearFontSize)
         var yearNewFontSize = UIFont.getScaledFontSizeFor(font: yearFont, screenSize: currentPageRect.size, minPointSize: 18)
         if self.layoutRequiresExplicitFont(){
             yearNewFontSize = 15
         }
-        let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.clearFaceFont(for: .regular, with: 21),
+        let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.clearFaceFont(for: .regular, with: yearNewFontSize),
                                                         .kern: 1.6,
                                                         .foregroundColor: textTintColor]
         if let startYear = months.first?.year {
@@ -1129,8 +1129,8 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     }
     private func addTodayLink(toContext context: CGContext){
 
-        let todayLinkRectYPercnt : CGFloat = 8.87
-        let todayLinkRectXPercnt : CGFloat = 7.46
+        let todayLinkRectYPercnt : CGFloat = 12.35
+        let todayLinkRectXPercnt : CGFloat = 41.54
         let todayLinkRectHeightPercnt  :CGFloat = 1.79
 
         let todayLinkRectX = self.currentPageRect.width*todayLinkRectXPercnt/100
@@ -1143,32 +1143,35 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             todayFont = UIFont.clearFaceFont(for: .regular, with:5)
             todayRectCornerRadius = 2
         }
+        let paragraphStyle = NSMutableParagraphStyle.init()
+        paragraphStyle.alignment = .center
         let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
                                                         .kern: 1.6,
-                                                        .foregroundColor: UIColor.init(hexString: "#363636")]
+                                                        .foregroundColor: UIColor.init(hexString: "#363636"),
+                                                        .paragraphStyle: paragraphStyle]
+        let todayAttributedString = NSMutableAttributedString()
 
-        let todayString = NSMutableAttributedString.init(string: "TODAY ", attributes: todayAttrs)
+        let todayString = NSAttributedString.init(string: " TODAY ")
 
-        var imageSize = CGSize(width: 9, height: 9)
+        var imageSize = CGSize(width: 11, height: 11)
         if layoutRequiresExplicitFont() {
-            imageSize = CGSize(width: 6, height: 6)
+            imageSize = CGSize(width: 9, height: 9)
         }
-        let todayRect = CGRect(x: todayLinkRectX, y: todayLinkRectY + (todayLinkRectHeight/2) - (todayString.size().height/2), width: todayString.size().width + imageSize.width, height: todayLinkRectHeight)
+        self.drawColorBandsWith(xAxis: todayLinkRectX, yAxis: todayLinkRectY, context: context, width: todayString.size().width + 4  + imageSize.width, height: todayLinkRectHeight, bandColor: UIColor(hexString: "#80CCCB",alpha: 0.5), cornerRadius: todayRectCornerRadius)
 
-
-        self.drawColorBandsWith(xAxis: todayLinkRectX - 3, yAxis: todayLinkRectY, context: context, width: todayString.size().width + 6  + imageSize.width, height: todayLinkRectHeight, bandColor: UIColor(hexString: "#E7E7E7"), cornerRadius: todayRectCornerRadius)
-
-        if let downArrow = UIImage(named: "linkArrow"){
+        if let clockSymbol = UIImage(systemName: "clock"){
             let arrowAttachment = NSTextAttachment()
-            arrowAttachment.image = downArrow
-            let font = todayFont
+            arrowAttachment.image = clockSymbol
             arrowAttachment.bounds = CGRect(x: 0, y: (todayFont.capHeight - imageSize.height).rounded() / 2 , width: imageSize.width, height: imageSize.height)
-            let arraowImageRect = CGRect(x: todayLinkRectX + todayString.size().width , y: todayLinkRectY + (todayLinkRectHeight/2) - (todayString.size().height/2), width: imageSize.width, height: imageSize.height)
-            downArrow.draw(in: arraowImageRect)
+            todayAttributedString.append(NSAttributedString(attachment: arrowAttachment))
         }
-        todayString.draw(in:todayRect)
-        let todayLinkRect = getLinkRect(location: CGPoint(x:todayLinkRectX - 3, y: todayLinkRectY - 3), frameSize:CGSize(width: todayString.size().width + 6 + imageSize.width, height: todayLinkRectHeight  + 6))
-        if let todayURL = URL(string: "Noteshelf://todayLink"){
+        todayAttributedString.append(todayString)
+        todayAttributedString.addAttributes(todayAttrs, range: NSRange(location: 0, length: todayAttributedString.length))
+        let todayRect = CGRect(x: todayLinkRectX + 2, y: todayLinkRectY + (todayLinkRectHeight/2) - (todayAttributedString.size().height/2), width: todayString.size().width + imageSize.width, height: todayLinkRectHeight)
+        todayAttributedString.draw(in:todayRect)
+        let todayLinkRect = getLinkRect(location: CGPoint(x:todayLinkRectX - 3, y: todayLinkRectY - 3), frameSize:CGSize(width: todayString.size().width + 10 + imageSize.width, height: todayLinkRectHeight  + 6))
+        let urlString = FTSharedGroupID.getAppGroupID() + "://todayLink"
+        if let todayURL = URL(string: urlString){
             UIGraphicsSetPDFContextURLForRect(todayURL, todayLinkRect)
         }
     }

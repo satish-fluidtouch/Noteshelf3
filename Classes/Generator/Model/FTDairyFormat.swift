@@ -26,7 +26,7 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     var quoteProvider: FTQuotesProvider = FTQuotesProvider()
     var offsetCount: Int = 76
     var docPostProcessInfo = FTDocumentPostProcessInfo()
-
+    var diaryPagesInfo: [FTDiaryPageInfo] = []
     
     private var orientationTail : String {
         return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? "" : "-land"

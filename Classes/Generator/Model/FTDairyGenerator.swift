@@ -23,6 +23,7 @@ class FTDairyGenerator: NSObject {
     private var variants: FTPaperVariants
     private var displayName : String
     var docPostProcessInfo = FTDocumentPostProcessInfo()
+    var diaryPagesInfo: [FTDiaryPageInfo] = []
     
     required init(_ theme: FTAutoTemlpateDiaryTheme ,format inFormat: FTDairyRenderFormat, formatInfo : FTYearFormatInfo) {
         format = inFormat;
@@ -55,6 +56,7 @@ class FTDairyGenerator: NSObject {
         format.addCalendarLinks(url: path, format: format as! FTDairyFormat, pageRect: pageRect, calenderYear: self.formatInfo, isToDisplayOutOfMonthDate: isToDisplayOutOfMonthDate, monthlyFormatter: monthlyFormatter, weeklyFormatter: weeklyFormatter)
         self.offsetCount = format.calendarOffsetCount()
         self.docPostProcessInfo = format.getDocPostProcessInfo()
+        self.diaryPagesInfo = format.diaryPagesInfo
         return path
     }
     

@@ -44,7 +44,7 @@ class FTDocumentInputInfo: NSObject {
     
     weak var rootViewController : UIViewController?;
     var postProcessInfo: FTPostProcessInfo = FTPostProcessInfo()
-
+    var diaryPagesInfo: [FTDiaryPageInfo]?;
     var isEnCrypted: Bool {
         if let pin = self.pinModel?.pin, !pin.isEmpty {
             return true

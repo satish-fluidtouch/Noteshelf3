@@ -53,6 +53,7 @@ import PDFKit
     ///Angle in Degrees, with multiples of `90`
     var rotationAngle : UInt { get };
     var templateInfo: FTTemplateInfo {get};
+    var diaryPageInfo : FTDiaryPageInfo? {get set}
 
     func pageReferenceViewSize() -> CGSize;
 

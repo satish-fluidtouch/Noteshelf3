@@ -49,7 +49,15 @@ extension Date
 //        let totalDays = abs(comp.day ?? 1);
 //        return totalDays;
 //    }
-    
+    func utcDate() -> Date?
+    {
+        let gmtDf = DateFormatter()
+        gmtDf.dateFormat = "yyyy-MM-dd"
+        let gmtDate = gmtDf.string(from: self);
+
+        let estDate = DateFormatter.utcDate(format: "yyyy-MM-dd", dateString: gmtDate);
+        return estDate;
+    }
     func numberOfDays(calendarYear:FTYearFormatInfo) -> Int {
         let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!;
         let startDate: Date = calendar.date(month: calendarYear.startMonth.month, year: calendarYear.startMonth.year)!
@@ -305,17 +313,6 @@ extension UIFont {
             return UIFont.systemFont(ofSize: fontSize);
         }
         return font
-    }
-}
-extension Date {
-    func utcDate() -> Date?
-    {
-        let gmtDf = DateFormatter()
-        gmtDf.dateFormat = "yyyy-MM-dd"
-        let gmtDate = gmtDf.string(from: self);
-
-        let estDate = DateFormatter.utcDate(format: "yyyy-MM-dd", dateString: gmtDate);
-        return estDate;
     }
 }
 #endif

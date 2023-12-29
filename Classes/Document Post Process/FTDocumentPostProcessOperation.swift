@@ -29,9 +29,6 @@ class FTDocumentPostProcessOperation: NSObject {
         }else if (info.postProcessInfo.documentType == .Digital_Diaries_Colorful_Planner){
             operation = FTDocumentPlannerpostOperation(url: url, info: info)
         }
-        else if (info.postProcessInfo.documentType == .Landscape_Diaries_Colorful_Planner){
-            operation = FTDocumentLandscapePlannerpostOperation(url: url, info: info)
-        }
         return operation
     }
 }
