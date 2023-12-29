@@ -350,7 +350,6 @@ private extension FTTemplatePreviewViewController {
         if let parent = self.parent as? FTTemplatesPageViewController {
             parent.view.addSubview(indicatorView)
             parent.view.bringSubviewToFront(indicatorView)
-            parent.view.bringSubviewToFront(userJournalStackView)
         }
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: indicatorView.centerXAnchor),

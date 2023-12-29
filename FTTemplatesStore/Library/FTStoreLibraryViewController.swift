@@ -153,12 +153,11 @@ class FTStoreLibraryViewController: UIViewController {
             }
             
             cell.prepareCellWith(style: item as! FTTemplateStyle, sourceType: self?.sourceType ?? .none)
-            if self?.sourceType == .settings || self?.sourceType == .shelf || self?.sourceType == .changeTemplate, let style = item as? FTTemplateStyle, style.type == FTDiscoveryItemType.diary.rawValue {
+            if self?.sourceType == .settings || self?.sourceType == .shelf || self?.sourceType == .changeTemplate, let style = item as? FTTemplateStyle, (style.type == FTDiscoveryItemType.diary.rawValue || style.type == FTDiscoveryItemType.userJournals.rawValue) {
                 cell.thumbnail?.alpha = 0.2
             } else {
                 cell.thumbnail?.alpha = 1
             }
-
             return cell
         })
 
@@ -261,7 +260,7 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         let item = viewModel.itemAt(index: indexPath.row)
-        if let style = item, sourceType == .settings || sourceType == .changeTemplate || sourceType == .shelf, style.type == FTDiscoveryItemType.diary.rawValue {
+        if let style = item, sourceType == .settings || sourceType == .changeTemplate || sourceType == .shelf, (style.type == FTDiscoveryItemType.diary.rawValue || style.type == FTDiscoveryItemType.userJournals.rawValue) {
             return false
         }
         return true

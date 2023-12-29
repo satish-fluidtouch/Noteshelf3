@@ -166,6 +166,7 @@ struct FTTemplateStyle: Codable, Hashable {
     var previewToken: String?
     var fileName: String? = ""
     var fileToken: String? = ""
+    var authorToken: String?
 
     enum CodingKeys: String, CodingKey {
         case title = "displayTitle"
@@ -181,6 +182,7 @@ struct FTTemplateStyle: Codable, Hashable {
         case previewToken
         case fileName
         case fileToken
+        case authorToken
     }
 
     func styleThumbnailFor(template: TemplateInfo) -> URL {
@@ -285,7 +287,7 @@ struct FTTemplateStyle: Codable, Hashable {
         let thumbPath = baseUrl + templatesPath + templateName + authorImageExtention
         if let filePath = thumbPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), var fileUrl = URL(string: filePath) {
             if isInChinaRegion() {
-                fileUrl.append(queryItems: [URLQueryItem(name: "token", value: self.previewToken)])
+                fileUrl.append(queryItems: [URLQueryItem(name: "token", value: self.authorToken)])
             }
             return fileUrl
         }

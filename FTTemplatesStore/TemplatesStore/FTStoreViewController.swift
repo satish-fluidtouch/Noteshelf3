@@ -20,7 +20,7 @@ class FTStoreViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sectionContainer = StoreSectionContainer(handlers: [BannerSectionHandler(), CategorySectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), StickersSectionHandler(), JournalSectionHandler(), StickersSectionHandler()])
+        self.sectionContainer = StoreSectionContainer(handlers: [BannerSectionHandler(), CategorySectionHandler(), JournalSectionHandler(), StickersSectionHandler(), TemplatesSectionHandler(), StickersSectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler()])
 
         // TODO:check for alternative via storyboard
         self.tableView.sectionHeaderTopPadding = 0
