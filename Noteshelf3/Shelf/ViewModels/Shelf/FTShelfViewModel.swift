@@ -122,7 +122,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var isInHomeMode: Bool = false
     var displayStlye: FTShelfDisplayStyle = .Gallery
     private var observer: NSKeyValueObservation?
-    private var uiUpdatesQueue = DispatchQueue(label: "com.ft.shelf.ui", qos: DispatchQoS.userInteractive)
+
 
     init(collection: FTShelfItemCollection, groupItem: FTGroupItemProtocol? = nil) {
         self.collection = collection
@@ -474,26 +474,24 @@ extension FTShelfViewModel {
     }
     
     private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
-        uiUpdatesQueue.sync {
-            self.resetShelfModeTo(.normal)
-            let _shelfItems = self.createShelfItemsFromData(items);
-            if(animate) {
-                withAnimation {
-                    self.shelfItems = _shelfItems
-                }
-            }
-            else {
+        self.resetShelfModeTo(.normal)
+        let _shelfItems = self.createShelfItemsFromData(items);
+        if(animate) {
+            withAnimation {
                 self.shelfItems = _shelfItems
             }
+        }
+        else {
+            self.shelfItems = _shelfItems
+        }
 
-            self.showNoShelfItemsView = self.shelfItems.isEmpty
+        self.showNoShelfItemsView = self.shelfItems.isEmpty
 
-            if !self.shelfDidLoad {
-                self.shelfDidLoad = true
-            }
-            if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-                NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
-            }
+        if !self.shelfDidLoad {
+            self.shelfDidLoad = true
+        }
+        if self.groupItem == nil { // only posting count for collection children, not when inside a group.
+            NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
         }
     }
 
