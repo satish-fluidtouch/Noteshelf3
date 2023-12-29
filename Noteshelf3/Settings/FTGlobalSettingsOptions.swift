@@ -21,7 +21,7 @@ enum FTNewSettingsOptions: String {
     case rateOnTheAppstore = "SettingsRateOnTheAppstore"
     case noteShelfHelp = "SettingsNoteShelfHelp"
     case developerOptions = "🛠 Developer Options"
-
+    case safeMode = "SafeModeKey"
 
     //General Settings View
     case Privacy = "GeneralSettingsPrivacy"
@@ -46,6 +46,7 @@ enum FTGlobalSettingsOptions: String {
 
     //Section - 2
     case developerOptions
+    case safeMode
 
     var displayTitle:String{
         let title: FTNewSettingsOptions
@@ -70,6 +71,8 @@ enum FTGlobalSettingsOptions: String {
             title = .noteShelfHelp
         case .developerOptions:
             title = .developerOptions
+        case .safeMode:
+            title = .safeMode
         }
         return title.rawValue.localized
     }
@@ -97,6 +100,8 @@ enum FTGlobalSettingsOptions: String {
             name = "beta_program"
         case .appearance:
             name = "appearance"
+        case .safeMode:
+            return "hand.raised.circle.fill"
         }
         return "Settings/\(name)"
     }

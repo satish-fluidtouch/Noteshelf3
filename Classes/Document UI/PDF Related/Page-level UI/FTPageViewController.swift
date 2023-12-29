@@ -581,7 +581,10 @@ private extension FTPageViewController
     func annotationDidRemove(_ notification : Notification) {
         guard let undomanager = self.pdfPage?.parentDocument?.undoManager else { return }
         guard let annotation = notification.userInfo?["annotation"] as? FTAnnotation else { return }
-        guard let activeController = self.activeAnnotationController,
+        if self.activeAnnotationController == nil {
+            activeAnnotationController = self.delegate?.activeAnnotationController()
+        }
+        guard let activeController = activeAnnotationController,
               activeController.annotation == annotation else { return };
         undomanager.disableUndoRegistration();
         self.endEditingActiveAnnotation(annotation, refreshView: false);
@@ -617,7 +620,7 @@ private extension FTPageViewController
                 let options = self?.delegate?.finderSearchOptions,
                 let searchKey = options.searchedKeyword {
                 if(!searchKey.isEmpty) {
-                    curPage.searchFor(searchKey, tags: [String]());
+                    curPage.searchFor(searchKey, tags: [String](),isGlobalSearch: false);
                 }
             }
         }

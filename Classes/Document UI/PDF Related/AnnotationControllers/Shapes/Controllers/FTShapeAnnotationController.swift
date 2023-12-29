@@ -71,13 +71,13 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         guard let _shapeAnnotation = annotation as? FTShapeAnnotation else {
             fatalError("Requires shape annotation")
         }
+        annotationMode = mode
         shapeAnnotation = _shapeAnnotation
         initialUndoableInfo = annotation.undoInfo();
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         let frame = delegate?.visibleRect() ?? .zero
         self.view.frame = frame
-        annotationMode = mode
         self.allowsLocking = shapeAnnotation.allowsLocking
         shapeAnnotation.updateShapeType()
         intialBoundingRect = shapeAnnotation.boundingRect
@@ -107,7 +107,8 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     override func loadView() {
         let view = FTShapeView(frame: UIScreen.main.bounds)
         view.parentVc = self
-        view.backgroundColor = .clear
+        view.layer.isOpaque = false;
+        view.layer.backgroundColor = UIColor.clear.cgColor;
         self.view = view;
     }
 
@@ -131,6 +132,10 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         self.displayLink = CADisplayLink(target: self, selector: #selector(publishChanges))
         self.displayLink?.isPaused = true;
         self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
+        if shapeAnnotation.inLineEditing {
+            shapeEditType = .resize;
+            self.displayLink?.isPaused = false;
+        }
     }
     
     deinit {
@@ -302,7 +307,49 @@ class FTShapeAnnotationController: FTAnnotationEditController {
             processShapeRotate(curPoint: point, prevPoint: prevPoint)
         } else if shapeEditType == .move {
             processShapeMoving(curPoint: point, prevPoint: prevPoint)
+        } else {
+            if shapeAnnotation.shape?.type() == .ellipse {
+                processEllipseShapeResizing(touch: firstTouch)
+            } else if shapeAnnotation.isPerfectShape(), let controlPoint = resizableView?.activeControlPoint(for: point) {
+                activeControlPoint = controlPoint
+                setAnchorPoint()
+                processShapeResizing(touch: firstTouch, point: point)
+            } else {
+                let points = shapeAnnotation.getshapeControlPoints()
+                index = points.count - 1
+                if shapeAnnotation.shape?.isClosedShape ?? false {
+                    index = 0
+                }
+                currentKnob = activeKnob(for: points[index])
+                currentKnob?.center = point
+                updateSegments(index: index, point: point)
+            }
         }
+    }
+    
+    private func processEllipseShapeResizing(touch: UITouch) {
+        guard let resizableView, let shapeResizeObj = shapeResizeObj else {
+            return
+        }
+        let minSize: CGFloat = 20
+        let center = resizableView.center
+        let newFrame = shapeResizeObj.resizeProportionally(for: touch, in: resizableView)
+        let shouldResize = (newFrame.width > minSize && newFrame.height > minSize)
+        if shouldResize {
+            self.updateContentFrame(with: newFrame, updateCenter: true)
+//            resizableView.center = resizableView.centerWithinBoundary(center)
+            updateEllipseRect()
+            shapeAnnotation.setShapeControlPoints(drawingPoints())
+            resizableView.updateDragHandles()
+        }
+    }
+    
+    private func activeKnob(for point: CGPoint) -> FTKnobView? {
+        let convertedPoint = convertControlPoint(point)
+        let view = view.subviews.first { eachView in
+            return eachView.center == convertedPoint
+        }
+       return view as? FTKnobView
     }
     
     public func processTouchesEnded(_ firstTouch: UITouch, with event: UIEvent?) {

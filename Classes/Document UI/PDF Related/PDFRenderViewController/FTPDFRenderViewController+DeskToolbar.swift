@@ -16,6 +16,7 @@ import Foundation
     func didDuplicatePage()
     func willEnterIntoEditmode()
     func didGoToAudioRecordings(with annotation: FTAnnotation)
+    func didCloseNotebook();
 }
 
 #if targetEnvironment(macCatalyst)

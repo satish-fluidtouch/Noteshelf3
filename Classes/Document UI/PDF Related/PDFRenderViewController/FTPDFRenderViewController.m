@@ -237,10 +237,14 @@
 }
 
 - (void)performUndoOperation {
+    [self.firstPageController.writingView cancelCurrentStroke];
+    [self showToastWith: NSLocalizedString(@"ButtonActionUndo", @"Undo")];
     [self undo];
 }
 
 - (void)performRedoOperation {
+    [self.firstPageController.writingView cancelCurrentStroke];
+    [self showToastWith: NSLocalizedString(@"ButtonActionRedo", @"Saving")];
     [self redo];
 }
 
@@ -3081,6 +3085,12 @@
 
 - (void)documentWillGetReloaded:(FTDocument*)document onCompletion:(void(^)(void))completionBLock
 {
+    if(![[NSThread currentThread] isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self documentWillGetReloaded:document onCompletion:completionBLock];
+        });
+        return;;
+    }
     FTCLSLog(@"Document Will Reloaded");
     self.mainScrollView.contentOffset = self.mainScrollView.contentOffset;
     self.currentPageIndexToBeShown = self.currentlyVisiblePage.pageIndex;

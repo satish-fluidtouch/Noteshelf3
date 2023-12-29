@@ -91,7 +91,7 @@ extension FTFinderViewController:  UICollectionViewDragDelegate {
     }
 
     private func canSupportDragging() -> Bool {
-        return (self.filteredPages.count == self.document.documentPages().count)
+        return (self.filteredPages.count == self.documentPages.count)
     }
 }
 
@@ -123,9 +123,9 @@ extension FTFinderViewController:  UICollectionViewDropDelegate {
                 }
             }
             self.filteredPages.move(fromOffsets: IndexSet(indexesToRemove), toOffset: destinationIndexPath.row)
-            self.document.movePages(pages, toIndex: destinationIndexPath.item)
+            self.document?.movePages(pages, toIndex: destinationIndexPath.item)
             runInMainThread {
-                self.document.saveDocument { (success) in
+                self.document?.saveDocument { (success) in
                     FTCLSLog("Finder - Pages Moved");
                     self.createSnapShot()
                 }
@@ -239,7 +239,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
         info.isTemplate = true;
         info.isNewBook = true;
         
-        let pageCount = self.document.documentPages().count;
+        let pageCount = self.documentPages.count;
         if(selectedPages.count == pageCount) {
             _ = (self.document as? FTDocumentProtocol)?.insertPageAtIndex(pageCount);
         }
@@ -266,7 +266,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
                     { [weak self] (error, documentItem) in
                         sessionWindow?.isUserInteractionEnabled = true
                         if let shelfItem = documentItem, let weakSelf = self {
-                            weakSelf.document.deletePages(selectedPages);
+                            weakSelf.document?.deletePages(selectedPages);
                             weakSelf.delegate?.finderViewController(weakSelf,
                                                                     didSelectPages:moveItems,
                                                                     toMoveTo: shelfItem);
@@ -286,7 +286,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
     }
 
     func shelfItemsViewController(_ viewController: FTShelfItemsViewControllerNew, didFinishPickingShelfItem shelfItem: FTShelfItemProtocol, isNewlyCreated: Bool) {
-        guard self.document.fileURL.resolvingSymlinksInPath() != shelfItem.URL.resolvingSymlinksInPath() else {
+        guard self.document?.fileURL.resolvingSymlinksInPath() != shelfItem.URL.resolvingSymlinksInPath() else {
             UIAlertController.showAlert(withTitle: "", message: NSLocalizedString("CannotMoveToSameNotebook", comment: "Cannot move to same notebook"), from: viewController, withCompletionHandler: nil)
             return;
         }
@@ -404,7 +404,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
         }
         
         
-        let pageCount = self.document.documentPages().count;
+        let pageCount = self.documentPages.count;
         if(moveItems.count == pageCount) {
             _ = (self.document as! FTDocumentProtocol).insertPageAtIndex(pageCount);
         }
@@ -417,7 +417,7 @@ extension FTFinderViewController: FTShelfItemsMovePageDelegate {
             return false;
         });
         
-        _ = self.document.movePages(selectedPages,
+        _ = self.document?.movePages(selectedPages,
                                     toDocument: shelfItem.URL,
                                     pin: pin) { [weak self] (error) in
             UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: "Moved  pages to \(shelfItem.displayTitle ?? " ")");

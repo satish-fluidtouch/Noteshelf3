@@ -51,13 +51,13 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         FTENPublishManager.recordSyncLog("Deleting Page-began");
         #if !targetEnvironment(macCatalyst)
         guard let session = EvernoteSession.shared(), session.isAuthenticated  else {
-            let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+            let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
             self.delegate?.didCompletePublishRequestWithError!(error);
             return;
         }
         guard let parentGUID = pageRecord.parent.enGUID else {
-            self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+            self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
             return;
         }
         EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: false, withResourcesAlternateData: false) { note in
@@ -96,7 +96,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
 
                             note.updated = EDAMTimestamp(lastUpdated)
                             guard EvernoteSession.shared().isAuthenticated else {
-                                let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+                                let error = FTENPublishError.authError;
                                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                                 self.delegate?.didCompletePublishRequestWithError!(error);
                                 return;
@@ -117,7 +117,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                         }
                                     }
                                     catch {
-                                        self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+                                        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
                                         return;
                                     }
 
@@ -142,12 +142,12 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                         }
                     }
                     else {
-                        self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+                        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
                         return;
                     }
                 }
                 catch {
-                    self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+                    self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
                     return;
                 }
             }
@@ -200,13 +200,13 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         FTENPublishManager.recordSyncLog("Updating Page-began");
         
         guard let session = EvernoteSession.shared(), session.isAuthenticated else {
-            let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+            let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
             self.delegate?.didCompletePublishRequestWithError!(error);
             return;
         }
         guard let parentGUID = pageRecord.parent.enGUID else {
-            self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+            self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
             return;
         }
         if FTENPublishManager.shared.ftENNotebook?.edamNote == nil {
@@ -357,7 +357,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 self.closeDocumentIfNeeded();
 
                                 guard EvernoteSession.shared().isAuthenticated else {
-                                    let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+                                    let error = FTENPublishError.authError;
                                     FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                                     self.delegate?.didCompletePublishRequestWithError!(error);
                                     return;
@@ -395,7 +395,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                             }
                                         }
                                         catch {
-                                            self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+                                            self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
                                             return;
                                         }
                                     }
@@ -448,14 +448,14 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                     }
                     else {
                         FTENPublishManager.recordSyncLog("ENSyncRecord is unavailable");
-                        self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+                        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
                         return;
                     }
                 }
                 catch let error as NSError {
                     FTENPublishManager.recordSyncLog(String(format: "Failed to update page with error:%@", error as CVarArg));
 
-                    self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("UnexpectedError",comment: "Unexpected Error.")]));
+                    self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
                     return;
                 }
 
@@ -602,7 +602,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         #if !targetEnvironment(macCatalyst)
         FTENSyncUtilities.recordSyncLog("Page Snapshot failed.");
         
-        self.delegate?.didCompletePublishRequestWithError!(NSError(domain: "ENPagePublish", code: 10005, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("PageSnapshotFailed.",comment: "Page Snapshot failed.")]));
+        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.pageSnapshotError);
         #endif
     }
 }
