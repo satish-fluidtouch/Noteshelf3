@@ -25,19 +25,25 @@ struct FTNotebookCoverView: View {
                 .overlay(alignment: .center) {
                     ProgressView()
                         .isHidden(!shelfItem.isLoadingNotebook)
+                    
                     FTCircularProgressView(progress: $shelfItem.progress)
                         .frame(width: 32, height: 32, alignment: .center)
+                        .isHidden(!shelfItem.isDownloadingNotebook)
+
                     FTLockIconView()
+                        .isHidden(!shelfItem.model.isPinEnabledForDocument())
                 }
             
                 .overlay(alignment: .topTrailing) {
                     FTFavoriteIconView()
+                        .isHidden(!(shelfViewModel.canShowStarredIconOnNB && shelfItem.isFavorited))
                 }
 
                 .overlay(alignment: .bottom) {
                     FTShelfItemUploadDownloadIndicator()
                     FTShelfItemSelectionIndicator(isSelected: $shelfItem.isSelected)
                         .padding(.bottom, 4)
+                        .isHidden(!(shelfViewModel.mode == .selection && shelfViewModel.displayStlye != .List))
                 }
 
             // As this is rare case, handled using IF
@@ -152,7 +158,6 @@ struct FTFavoriteIconView: View {
             .font(font)
             .padding(.trailing, padding)
             .padding(.top, padding)
-            .isHidden(!(viewModel.canShowStarredIconOnNB && shelfitem.isFavorited))
     }
 }
 
@@ -166,7 +171,6 @@ struct FTShelfItemSelectionIndicator: View {
             .symbolRenderingMode(SymbolRenderingMode.palette)
             .foregroundColor(Color.appColor(.black20))
             .frame(width:viewModel.displayStlye == .List ? 22 : 32, height: 32, alignment: Alignment.center)
-            .isHidden(!(viewModel.mode == .selection && viewModel.displayStlye != .List))
     }
 }
 
@@ -197,7 +201,6 @@ struct FTLockIconView: View {
                     .frame(width:imageSize, height: imageSize)
             }
         }
-        .isHidden(!shelfitem.model.isPinEnabledForDocument())
     }
 }
 

@@ -32,7 +32,6 @@ struct FTCircularProgressView: View {
                 .rotationEffect(.degrees(-90))
                 .animation(.easeOut, value: progress)
         }
-        .isHidden(!shelfitem.isDownloadingNotebook)
     }
 }
 struct FTCircularProgressView_Previews: PreviewProvider {
