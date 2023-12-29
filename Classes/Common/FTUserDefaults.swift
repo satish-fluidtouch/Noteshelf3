@@ -590,6 +590,11 @@ extension FTUserDefaults {
     static func isInSafeMode() -> Bool {
         return UserDefaults.standard.bool(forKey: "safe_mode_Identifier")
     }
+
+    // This is to be updated only on mac from inside app settings
+    static func setSafeMode(isOn: Bool) {
+        UserDefaults.standard.setValue(isOn, forKey: "safe_mode_Identifier")
+    }
 }
 //MARK: - Hold to convert to shape
 extension FTUserDefaults {

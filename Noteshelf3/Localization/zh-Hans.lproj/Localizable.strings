@@ -719,6 +719,7 @@
 "Rotate" = "旋转";
 "Rotate Page" = "旋转页面";
 "Rotating" = "旋转中";
+"SafeModeKey" = "安全模式";
 "SampleNotebook" = "示例笔记本";
 "SaveAsTemplate" = "另存为模板";
 "SaveForFutureUse" = "保存以备将来使用";
@@ -1552,4 +1553,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 11 December 2023 at 6:46 PM
+// Last Synced by Akshay on 28 December 2023 at 17:23
