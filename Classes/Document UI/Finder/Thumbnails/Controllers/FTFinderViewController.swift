@@ -38,11 +38,13 @@ protocol FTFinderTabBarProtocol: AnyObject {
     func didGoToAudioRecordings(with annotation: FTAnnotation)
     func screenModeDidChange()
     func scrollToTop()
+    func didCloseNotebook();
 }
 
 extension FTFinderTabBarProtocol {
     func didGoToAudioRecordings(with annotation: FTAnnotation) {}
     func scrollToTop() {}
+    func didCloseNotebook() {}
 }
 
 class FTDragDropCollectionView : UICollectionView {
@@ -74,11 +76,11 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     override var shouldAvoidDismissOnSizeChange: Bool {
         return true;
     }
+    
     @IBOutlet weak var stackviewTopConstraint: NSLayoutConstraint?
     fileprivate var dataSource : FinderDataSource! //Used for UI Diffable datasource
     fileprivate var snapShot = FinderSnapShot()
     var selectedTab: FTFinderSelectedTab = .thumnails
-    var onDismissCompletion: (() -> Void)?
     private var comingFromMovePageScreen : Bool = false;
     @IBOutlet weak var collectionView: FTDragDropCollectionView!
     var mode = FTFinderPageState.none
@@ -99,7 +101,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     //Document
     var exportTarget: FTExportTarget?
     var sectionHeader: FTFinderCollectionViewHeader?
-    var document:FTThumbnailableCollection!;
+    weak var document:FTThumbnailableCollection?;
     fileprivate var selectAll = true;
     internal var selectedPages = NSMutableSet()
     var filteredPages = [FTThumbnailable]()
@@ -141,7 +143,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     @IBOutlet weak private var collectionViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var collectionViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var segmentControlHeightConstraint: NSLayoutConstraint!
-    var placeHolderVc: FTFinderNoResultsViewHostingController?
+    private weak var placeHolderVc: FTFinderNoResultsViewHostingController?
     @IBOutlet weak private var selectModeHeaderView: UIView!
     @IBOutlet weak private var headerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var headerLabel: UILabel!
@@ -175,7 +177,6 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
 
     deinit {
-        self.onDismissCompletion?();
         self.outlinesViewController = nil
     }
     
@@ -217,7 +218,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         super.viewDidLoad()
         self.addObservers()
         self.setUpCollectionview()
-        self.filteredPages.append(contentsOf: self.document.documentPages());
+        self.filteredPages.append(contentsOf: self.documentPages);
         self.updateSelectionTitle()
         if mode == .selectPages || mode == .chooseSinglePage {
             self.view.backgroundColor = .appColor(.formSheetBgColor)
@@ -236,7 +237,6 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         updateHeaderUI()
         pagesShareButton.isHidden = true
         pagesShareButton.layer.cornerRadius = 10
-        (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
         self.configureHeaderInSelectModeIfNeeded()
         self.updateContentInsets()
         segmentControl?.type = .image
@@ -708,7 +708,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             }
             headerTitle = NSLocalizedString("finder.bookmarks", comment: "Bookmarks")
             self.selectedSegment = .bookmark
-            let documentPages = document.documentPages()
+            let documentPages = self.documentPages
             let filteredPages = documentPages.filter{$0.isBookmarked};
             self.filteredPages = filteredPages
             if filteredPages.isEmpty {
@@ -801,7 +801,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     @objc private func handleFinderReloadNotifier(_ notification: Notification) {
         if var arrSelectedPages = Array(self.selectedPages) as? [FTThumbnailable] {
             if self.mode == .edit, !arrSelectedPages.isEmpty {
-                let pages = self.document.documentPages()
+                let pages = self.documentPages
                 arrSelectedPages = arrSelectedPages.filter { reqPage in
                     return pages.contains { page in
                         return reqPage.uuid == page.uuid
@@ -978,7 +978,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
     
     func updateFilterAndCreateSnapShot() {
-        var filteredPages = self.searchResultPages ?? self.document.documentPages()
+        var filteredPages = self.searchResultPages ?? self.documentPages
         if selectedSegment == .bookmark {
             filteredPages = filteredPages.filter{$0.isBookmarked};
         }
@@ -1039,7 +1039,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
 
     private func reloadFilteredItems(_ animate : Bool) {
-        var filteredPages = self.searchResultPages ?? self.document.documentPages();
+        var filteredPages = self.searchResultPages ?? self.documentPages;
         if selectedSegment == .bookmark {
             filteredPages = filteredPages.filter{$0.isBookmarked};
         }
@@ -1111,7 +1111,7 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
             if  self.mode == .none {
                 let indexSelected: Int;
                 if self.mode == .none {
-                    if let index = self.document.documentPages().firstIndex(where: {$0.uuid == page.uuid}) {
+                    if let index = self.documentPages.firstIndex(where: {$0.uuid == page.uuid}) {
                         indexSelected = index;
                     }
                     else {
@@ -1562,7 +1562,7 @@ extension FTFinderViewController {
         { [weak self] (success) in
             if success {
                 self?.view.window?.isUserInteractionEnabled = false;
-                self?.document.saveDocument(completionHandler: { [weak self] ( success ) in
+                self?.document?.saveDocument(completionHandler: { [weak self] ( success ) in
                     if success {
                         runInMainThread {
                             let t1 = Date.timeIntervalSinceReferenceDate;
@@ -1665,7 +1665,7 @@ extension FTFinderViewController {
             indexSet.add(index!);
         };
 
-        let pageCount = self.document.documentPages().count;
+        let pageCount = self.documentPages.count;
         if(pages.count == pageCount) {
             _ = doc.insertPageAtIndex(pageCount);
         }
@@ -1675,16 +1675,16 @@ extension FTFinderViewController {
 
             alert.addAction(UIAlertAction(title: "MoveToTrash".localized, style: UIAlertAction.Style.default, handler: { [weak self] action in
                 self?.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
-                    if error == nil, let weakSelf = self {
-                        weakSelf.deletePagesPermanantly(from: weakSelf.document,
+                    if error == nil, let weakSelf = self,let doc = weakSelf.document {
+                        weakSelf.deletePagesPermanantly(from: doc,
                                                         pages: pages,
                                                         indexes: indexSet)
                     }
                 }
             }))
             alert.addAction(UIAlertAction(title: "DeletePermanently".localized, style: UIAlertAction.Style.default,  handler: { [weak self] (action) in
-                if let weakSelf = self {
-                    weakSelf.deletePagesPermanantly(from: weakSelf.document,
+                if let weakSelf = self,let doc = weakSelf.document {
+                    weakSelf.deletePagesPermanantly(from: doc,
                                                     pages: pages,
                                                     indexes: indexSet)
                 }
@@ -1710,13 +1710,13 @@ extension FTFinderViewController {
                     }
                     shareAlertController.addAction(UIAlertAction(title: alertTitle, style: .destructive, handler: { (action) in
                         runInMainThread { [weak self] in
-                            if let weakSelf = self {
-                                if weakSelf.document.isPinEnabled() {
+                            if let weakSelf = self, let curDoc = weakSelf.document {
+                                if curDoc.isPinEnabled() {
                                     showAlert(pages)
                                 } else {
                                     weakSelf.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
                                         if error == nil{
-                                            weakSelf.deletePagesPermanantly(from: weakSelf.document, pages: pages, indexes: indexSet)
+                                            self?.deletePagesPermanantly(from: curDoc, pages: pages, indexes: indexSet)
                                         }
                                     }
                                 }
@@ -1732,12 +1732,12 @@ extension FTFinderViewController {
 
                     weakSelf.present(shareAlertController, animated: true, completion: nil);
                 } else {
-                    if weakSelf.document.isPinEnabled() {
+                    if let curDoc = weakSelf.document, curDoc.isPinEnabled() {
                         showAlert(pages)
                     } else {
                         weakSelf.movePagestoTrash(from: doc, pages: pages) { [weak self] (error, _) in
-                            if error == nil{
-                                weakSelf.deletePagesPermanantly(from: weakSelf.document, pages: pages, indexes: indexSet)
+                            if error == nil,let curDoc = self?.document{
+                                self?.deletePagesPermanantly(from: curDoc, pages: pages, indexes: indexSet)
                             }
                         }
                     }
@@ -1788,9 +1788,9 @@ extension FTFinderViewController {
 
     func deletePagesPermanantly(from document: FTThumbnailableCollection, pages: NSSet, indexes: NSMutableIndexSet) {
         DispatchQueue.main.async {
-            self.document.deletePages(Array(pages) as! [FTThumbnailable]);
+            self.document?.deletePages(Array(pages) as! [FTThumbnailable]);
             self.searchResultPages = nil
-            self.document.saveDocument(completionHandler: { [weak self] (_) in
+            self.document?.saveDocument(completionHandler: { [weak self] (_) in
                 if let weakSelf = self {
                     weakSelf.delegate?.finderViewController(weakSelf, didSelectRemovePagesWithIndices: IndexSet(indexes))
                     weakSelf.deselectAll();
@@ -2007,7 +2007,7 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
     }
 
     private func refreshTagPills() {
-        var filteredPages = self.searchResultPages ?? self.document.documentPages();
+        var filteredPages = self.searchResultPages ?? self.documentPages;
         if self.selectedSegment == .bookmark {
             filteredPages = filteredPages.filter{$0.isBookmarked};
         }
@@ -2111,3 +2111,9 @@ extension FTFinderViewController {
     }
 }
 #endif
+
+extension FTFinderViewController {
+    var documentPages: [FTThumbnailable] {
+        return self.document?.documentPages() ?? [FTThumbnailable]()
+    }
+}

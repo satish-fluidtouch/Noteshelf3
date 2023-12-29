@@ -243,6 +243,7 @@ extension FTPDFRenderViewController: FTFinderThumbnailsActionDelegate {
                     }
                     _ = document.searchDocumentsForKey(searchKey,
                                                        tags: tags,
+                                                       isGlobalSearch: false,
                                                        onFinding: {(page, cancelled) in
                                                         if(!cancelled) {
                                                             DispatchQueue.main.async {
