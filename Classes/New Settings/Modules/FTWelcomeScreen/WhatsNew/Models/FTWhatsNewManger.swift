@@ -68,10 +68,13 @@ class FTWhatsNewManger: NSObject {
 
     static let shared = FTWhatsNewManger()
     var sourceType: FTSourceScreen = FTSourceScreen.regular
-    var slideViewMode: FTWhatsNewViewMode = .singleSlide
+    var slideViewMode: FTWhatsNewViewMode = .allSlides
 
     @objc class func start() {
-        let slides = [FTWhatsNewViewSlide]()
+        let slides = [
+            FTWhatsNewViewSlide(item: String(describing: FTWhatsNew2024PlannerController.classForCoder()), isExpired: false, slideShowPlace: .shelf),
+            FTWhatsNewViewSlide(item: String(describing: FTWhatsNewUserPlannerController.classForCoder()), isExpired: false, slideShowPlace: .shelf),
+        ]
 
         var hasNewSlides = false;
         let existingSlides = self.getSlides();
@@ -200,6 +203,6 @@ class FTWhatsNewManger: NSObject {
     }
 
     @objc class func shouldShowWhatsNew() -> Bool {
-        return false;
+        return true;
     }
 }

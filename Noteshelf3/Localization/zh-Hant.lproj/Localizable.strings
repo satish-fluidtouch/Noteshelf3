@@ -1548,9 +1548,15 @@
 "welcome.unsplash" = "UNSPLASH";
 "welcome.webClips" = "網頁剪貼";
 "welcome.zoombox" = "縮放框";
+"whatsnew.planner1.cta" = "前往範本";
+"whatsnew.planner1.description" = "用我們內部設計師精心製作的美麗雙頁筆記本，設定目標、追蹤習慣，計劃和組織您來年的日程安排。";
+"whatsnew.planner1.title" = "我們的2024年計畫書在這裡！";
+"whatsnew.planner2.cta" = "現在就來看看吧！";
+"whatsnew.planner2.description" = "在模板部分發現我們從一些有才華的創作者那裡精心挑選的令人愉悅的數位筆記本。";
+"whatsnew.planner2.title" = "更多2024年的計劃者！";
 "widgets" = "小部件";
 "work" = "工作";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 28 December 2023 at 17:23
+// Last Synced by Akshay on 29 December 2023 at 11:23
