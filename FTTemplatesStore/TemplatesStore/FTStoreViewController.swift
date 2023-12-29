@@ -20,7 +20,7 @@ class FTStoreViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sectionContainer = StoreSectionContainer(handlers: [BannerSectionHandler(), CategorySectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), StickersSectionHandler(), JournalSectionHandler()])
+        self.sectionContainer = StoreSectionContainer(handlers: [BannerSectionHandler(), CategorySectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), StickersSectionHandler(), JournalSectionHandler(), StickersSectionHandler()])
 
         // TODO:check for alternative via storyboard
         self.tableView.sectionHeaderTopPadding = 0
@@ -108,7 +108,7 @@ private extension FTStoreViewController {
                         self.navigateToCategory(template: item)
                     } else if item.type == FTDiscoveryItemType.templates.rawValue || item.type == FTDiscoveryItemType.diaries.rawValue {
                         self.navigateToTempaltesVC(discoveryItem: item)
-                    } else if item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.sticker.rawValue || item.type == FTDiscoveryItemType.diary.rawValue {
+                    } else if item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.sticker.rawValue || item.type == FTDiscoveryItemType.diary.rawValue || item.type == FTDiscoveryItemType.userJournals.rawValue {
                         self.presentTemplatePreviewFor(templates: items, selectedIndex: index)
                     }
                 self.trackEventForTappingDiscoveryItem(item: item)
@@ -170,7 +170,7 @@ extension FTStoreViewController: UITableViewDelegate {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
                                                                     FTStoreHeader.reuseIdentifier) as! FTStoreHeader
             view.seeAllButton.isHidden = false
-            if sectionItem.sectionType == FTStoreSectionType.stickers.rawValue {
+            if sectionItem.sectionType == FTStoreSectionType.stickers.rawValue || sectionItem.sectionType == FTStoreSectionType.userJournals.rawValue {
                 view.seeAllButton.isHidden = true
             }
             view.seeAllButton.tag = section
@@ -223,7 +223,7 @@ extension FTStoreViewController: UITableViewDelegate {
             case .journals:
                 return FTStoreConstants.DigitalDiary.size.height + FTStoreConstants.DigitalDiary.extraHeightPadding + FTStoreConstants.DigitalDiary.topBottomInset
 
-            case .stickers:
+            case .stickers, .userJournals:
                 let size = FTStoreConstants.Sticker.calculateSizeFor(view: self.view)
                 return size.height + FTStoreConstants.Sticker.extraHeightPadding + FTStoreConstants.StoreTemplate.topBottomInset
             }

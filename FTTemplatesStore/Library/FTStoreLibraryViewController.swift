@@ -218,33 +218,47 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
                 self.delegate?.libraryController(self, showIAPAlert: nil);
                 return;
             }
-            let pdfUrl = style.pdfPath()
-            let name = "\(style.title)"
-            let tempUrl = FTTemplatesCache().temporaryFolder.appendingPathComponent(name).appendingPathExtension(pdfUrl.pathExtension)
-            
-            do {
-                if FileManager.default.fileExists(atPath: tempUrl.path) {
-                    try FileManager.default.removeItem(at: tempUrl)
+
+            func createNotebookFor(fileUrl: URL, fileName: String) {
+                let name = "\(fileName)"
+                let tempUrl = FTTemplatesCache().temporaryFolder.appendingPathComponent(name).appendingPathExtension(fileUrl.pathExtension)
+                do {
+                    if FileManager.default.fileExists(atPath: tempUrl.path) {
+                        try FileManager.default.removeItem(at: tempUrl)
+                    }
+                    try FileManager.default.copyItem(at: fileUrl, to: tempUrl)
+                    let isDark = style.templateName.lowercased().contains("dark") ? true : false
+                    let isLandscape = style.orientation == .landscape ? true : false
+
+
+                    let info = sourceType == .shelf ? FTTemplateInfo(url: fileUrl) : FTTemplateInfo(url: tempUrl)
+                    info.isLandscape = isLandscape;
+                    info.isDark = isDark;
+                    self.delegate?.setCurrentSelectedURL(url: fileUrl)
+                    self.delegate?.libraryController(self, didSelectTemplate: info);
+                } catch let error {
+                    UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
                 }
-                try FileManager.default.copyItem(at: pdfUrl, to: tempUrl)
-                let isDark = style.templateName.lowercased().contains("dark") ? true : false
-                let isLandscape = style.orientation == .landscape ? true : false
-
-
-                let info = sourceType == .shelf ? FTTemplateInfo(url: pdfUrl) : FTTemplateInfo(url: tempUrl)
-                info.isLandscape = isLandscape;
-                info.isDark = isDark;
-                self.delegate?.setCurrentSelectedURL(url: pdfUrl)
-                self.delegate?.libraryController(self, didSelectTemplate: info);
-            } catch let error {
-                UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
             }
-
+            if style.type == FTDiscoveryItemType.userJournals.rawValue {
+                let storeServiceApi = FTStoreService()
+                Task {
+                    if let downloadUrl = style.inspirationsUrl, let fileName = style.fileName {
+                        self.showingLoadingindicator()
+                        let fileUrl = try await storeServiceApi.downloadinspirationJournalFor(url: downloadUrl, fileName: fileName)
+                        self.hideLoadingindicator()
+                        createNotebookFor(fileUrl: fileUrl.appendingPathComponent(fileName).appendingPathExtension("pdf"), fileName: style.title)
+                    }
+                }
+            } else {
+                let fileUrl = style.pdfPath()
+                createNotebookFor(fileUrl: fileUrl, fileName: style.title)
+            }
             // Track Event
             FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_library_template_tap, params: nil, screenName: ScreenName.templatesStore))
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         let item = viewModel.itemAt(index: indexPath.row)
         if let style = item, sourceType == .settings || sourceType == .changeTemplate || sourceType == .shelf, style.type == FTDiscoveryItemType.diary.rawValue {

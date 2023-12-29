@@ -27,13 +27,13 @@
 							<string>景观规划师</string>
 							<key>fileName</key>
 							<string>Landscape_Diaries_Colorful_Planner</string>
+							<key>supportOrientation</key>
+							<integer>2</integer>
 							<key>styles</key>
 							<array>
 								<dict>
 									<key>displayTitle</key>
 									<string>日历</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -56,8 +56,6 @@
 								<dict>
 									<key>displayTitle</key>
 									<string>年度计划</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -80,8 +78,6 @@
 								<dict>
 									<key>displayTitle</key>
 									<string>每月</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -104,8 +100,6 @@
 								<dict>
 									<key>displayTitle</key>
 									<string>每周</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -128,8 +122,6 @@
 								<dict>
 									<key>displayTitle</key>
 									<string>每日</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -152,8 +144,6 @@
 								<dict>
 									<key>displayTitle</key>
 									<string>笔记</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -176,8 +166,6 @@
 								<dict>
 									<key>displayTitle</key>
 									<string>追踪器</string>
-									<key>supportOrientation</key>
-									<integer>2</integer>
 									<key>type</key>
 									<string>diary</string>
 									<key>templateName</key>
@@ -41811,13 +41799,13 @@
 					<string>景观规划师</string>
 					<key>fileName</key>
 					<string>Landscape_Diaries_Colorful_Planner</string>
+					<key>supportOrientation</key>
+					<integer>2</integer>
 					<key>styles</key>
 					<array>
 						<dict>
 							<key>displayTitle</key>
 							<string>日历</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -41840,8 +41828,6 @@
 						<dict>
 							<key>displayTitle</key>
 							<string>年度计划</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -41864,8 +41850,6 @@
 						<dict>
 							<key>displayTitle</key>
 							<string>每月</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -41888,8 +41872,6 @@
 						<dict>
 							<key>displayTitle</key>
 							<string>每周</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -41912,8 +41894,6 @@
 						<dict>
 							<key>displayTitle</key>
 							<string>每日</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -41936,8 +41916,6 @@
 						<dict>
 							<key>displayTitle</key>
 							<string>笔记</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -41960,8 +41938,6 @@
 						<dict>
 							<key>displayTitle</key>
 							<string>追踪器</string>
-							<key>supportOrientation</key>
-							<integer>2</integer>
 							<key>type</key>
 							<string>diary</string>
 							<key>templateName</key>
@@ -42832,6 +42808,498 @@
 					<string>03e74fd4-5e42-4c12-a1e6-3b26812c238d</string>
 					<key>fileToken</key>
 					<string></string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>displayTitle</key>
+			<string>Yume Techo 规划师</string>
+			<key>sectionType</key>
+			<integer>5</integer>
+			<key>rowsCount</key>
+			<integer>1</integer>
+			<key>type</key>
+			<string>userJournals</string>
+			<key>fileToken</key>
+			<string></string>
+			<key>items</key>
+			<array>
+				<dict>
+					<key>displayTitle</key>
+					<string>愉快的每周计划</string>
+					<key>displaySubTitle</key>
+					<string>探索WriteItDownBooks，获取各种充满活力的数字计划、日记和模板。它们还包括一系列迷人的贴纸和可打印物品。</string>
+					<key>supportOrientation</key>
+					<integer>1</integer>
+					<key>styles</key>
+					<array>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Joyful_Weekly_Planner_Calender</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string>97326091-0d69-4b57-816b-838ee8258c6c</string>
+							<key>styleLandToken</key>
+							<string></string>
+							<key>templatePortToken</key>
+							<string>3814f38b-b2cd-4078-8207-e47f743a7ca6</string>
+							<key>templateLandToken</key>
+							<string></string>
+							<key>fileName</key>
+							<string>Joyful_Weekly_Planner</string>
+							<key>fileToken</key>
+							<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Joyful_Weekly_Planner_Yearly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string>5d5a11f7-3f40-43f8-833e-effe289eb6b7</string>
+							<key>styleLandToken</key>
+							<string></string>
+							<key>templatePortToken</key>
+							<string>b15c6fa9-3011-404d-8668-f07eed6b5131</string>
+							<key>templateLandToken</key>
+							<string></string>
+							<key>fileName</key>
+							<string>Joyful_Weekly_Planner</string>
+							<key>fileToken</key>
+							<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Joyful_Weekly_Planner_Monthly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string>a5f1a140-10b1-4296-9623-ac8edc4f8b36</string>
+							<key>styleLandToken</key>
+							<string></string>
+							<key>templatePortToken</key>
+							<string>d3f04c2a-981b-48b4-9c80-305168b4d3d4</string>
+							<key>templateLandToken</key>
+							<string></string>
+							<key>fileName</key>
+							<string>Joyful_Weekly_Planner</string>
+							<key>fileToken</key>
+							<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Joyful_Weekly_Planner_Goals</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string>44d9221f-aaa2-4588-a4ba-0c0e85c4fcb6</string>
+							<key>styleLandToken</key>
+							<string></string>
+							<key>templatePortToken</key>
+							<string>7ef811f2-4db8-468b-b708-fa0261216287</string>
+							<key>templateLandToken</key>
+							<string></string>
+							<key>fileName</key>
+							<string>Joyful_Weekly_Planner</string>
+							<key>fileToken</key>
+							<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Joyful_Weekly_Planner_Weekly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string>a6d1bdb2-481c-417b-967b-89d54d32822a</string>
+							<key>styleLandToken</key>
+							<string></string>
+							<key>templatePortToken</key>
+							<string>d784a523-4d47-455d-a846-ac87fd2b4bdc</string>
+							<key>templateLandToken</key>
+							<string></string>
+							<key>fileName</key>
+							<string>Joyful_Weekly_Planner</string>
+							<key>fileToken</key>
+							<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Joyful_Weekly_Planner_Lists</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string>97f34822-8e9c-4c24-8673-0f3fef821587</string>
+							<key>styleLandToken</key>
+							<string></string>
+							<key>templatePortToken</key>
+							<string>362c6635-ae30-4786-b9b9-a3a42644b483</string>
+							<key>templateLandToken</key>
+							<string></string>
+							<key>fileName</key>
+							<string>Joyful_Weekly_Planner</string>
+							<key>fileToken</key>
+							<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+						</dict>
+					</array>
+					<key>author</key>
+					<string>WriteItDownBooks</string>
+					<key>fileName</key>
+					<string>Joyful_Weekly_Planner</string>
+					<key>type</key>
+					<string>userJournals</string>
+					<key>autoGenerate</key>
+					<false/>
+					<key>multiPage</key>
+					<false/>
+					<key>previewToken</key>
+					<string>e3974794-3ffc-49c8-9de6-c592b9351f4b</string>
+					<key>authorToken</key>
+					<string>71218b04-3a2a-4887-b7f5-4e45ee64d5b6</string>
+					<key>fileToken</key>
+					<string>ce4f40f9-5eab-42e4-9897-5b6d425e15d0</string>
+					<key>link</key>
+					<string>https://www.etsy.com/shop/WriteItDownBooks</string>
+				</dict>
+				<dict>
+					<key>displayTitle</key>
+					<string>Yume Techo 规划师</string>
+					<key>displaySubTitle</key>
+					<string>NozumuNoto 是一个灵感来自日本美学的各种数字计划和笔记本的完美选择。他们还提供了一系列专门为日本风格数字计划和笔记本设计的贴纸。</string>
+					<key>supportOrientation</key>
+					<integer>2</integer>
+					<key>styles</key>
+					<array>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Yume_Techo_Planner_Year_Overview</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>b342b7db-ac58-478f-aedb-e974e184b272</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>2b31b78b-1cbb-4221-8ac3-b5254a0c51dd</string>
+							<key>fileName</key>
+							<string>Yume_Techo_Planner</string>
+							<key>fileToken</key>
+							<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Yume_Techo_Planner_Level_10_Life</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>d4fa12bd-3b24-416f-a398-4375d42a1603</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>ce106c58-8b93-440e-bcf9-32ed4c329702</string>
+							<key>fileName</key>
+							<string>Yume_Techo_Planner</string>
+							<key>fileToken</key>
+							<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Yume_Techo_Planner_This_Years_Resolutions</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>3ac42b71-3b43-4f0c-b43e-83fc0fb8f9ab</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>6386593e-778b-4421-a63a-b6a3c508258d</string>
+							<key>fileName</key>
+							<string>Yume_Techo_Planner</string>
+							<key>fileToken</key>
+							<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Yume_Techo_Planner_Monthly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>d23fac86-50d6-4264-bd0e-c85fa36eab48</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>2dec48a0-cc03-4d6f-b32d-d9a515ed2f5e</string>
+							<key>fileName</key>
+							<string>Yume_Techo_Planner</string>
+							<key>fileToken</key>
+							<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Yume_Techo_Planner_Weekly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>99843a35-849c-471b-9355-b565bc5131a4</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>aca743cc-1904-4144-aedf-3627866534c3</string>
+							<key>fileName</key>
+							<string>Yume_Techo_Planner</string>
+							<key>fileToken</key>
+							<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>Yume_Techo_Planner_Daily_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>6d3397fd-6a49-4030-94bb-37bf9f723ab4</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>b9007d53-aa7d-4443-b91c-5f723290982b</string>
+							<key>fileName</key>
+							<string>Yume_Techo_Planner</string>
+							<key>fileToken</key>
+							<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+						</dict>
+					</array>
+					<key>author</key>
+					<string>NozomuNoto</string>
+					<key>fileName</key>
+					<string>Yume_Techo_Planner</string>
+					<key>type</key>
+					<string>userJournals</string>
+					<key>autoGenerate</key>
+					<false/>
+					<key>multiPage</key>
+					<false/>
+					<key>previewToken</key>
+					<string>e3974794-3ffc-49c8-9de6-c592b9351f4b</string>
+					<key>authorToken</key>
+					<string>71218b04-3a2a-4887-b7f5-4e45ee64d5b6</string>
+					<key>fileToken</key>
+					<string>538e4a63-a567-4623-b80b-805b834972cb</string>
+					<key>link</key>
+					<string>https://www.etsy.com/in-en/shop/NozomuNoto?ref=shop-header-name&amp;listing_id=1476142836&amp;from_page=listing</string>
+				</dict>
+				<dict>
+					<key>displayTitle</key>
+					<string>365天计划</string>
+					<key>displaySubTitle</key>
+					<string>Typemaven是一个地方，您可以找到高度组织的数字计划、日记和笔记本，具有现代、简约和清洁的设计。此外还有高质量的剪贴画插图等！</string>
+					<key>supportOrientation</key>
+					<integer>2</integer>
+					<key>styles</key>
+					<array>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>365_Days_Planner_Yearly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>8e91bcf3-4c73-4cd4-bb4a-989bc654be00</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>6881ceb0-3ee5-4619-8df5-d81b0e3a20d4</string>
+							<key>fileName</key>
+							<string>365_Days_Planner</string>
+							<key>fileToken</key>
+							<string>1a1bc519-39a9-49a2-bbb5-989d10cdb5f0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>365_Days_Planner_Monthly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>fcb75ef0-c45f-4ab9-96f0-d089aa4e6b18</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>d2255f27-1dbb-46c0-a20c-e1c023b70750</string>
+							<key>fileName</key>
+							<string>365_Days_Planner</string>
+							<key>fileToken</key>
+							<string>1a1bc519-39a9-49a2-bbb5-989d10cdb5f0</string>
+						</dict>
+						<dict>
+							<key>displayTitle</key>
+							<string></string>
+							<key>type</key>
+							<string>userJournals</string>
+							<key>templateName</key>
+							<string>365_Days_Planner_Weekly_Planner</string>
+							<key>styleName</key>
+							<string></string>
+							<key>version</key>
+							<integer>1</integer>
+							<key>previewItems</key>
+							<array/>
+							<key>stylePortToken</key>
+							<string></string>
+							<key>styleLandToken</key>
+							<string>114585b7-0ffd-4ae7-b219-e73682db429f</string>
+							<key>templatePortToken</key>
+							<string></string>
+							<key>templateLandToken</key>
+							<string>d0d53afe-0027-45c2-a66b-c2b4878eef54</string>
+							<key>fileName</key>
+							<string>365_Days_Planner</string>
+							<key>fileToken</key>
+							<string>1a1bc519-39a9-49a2-bbb5-989d10cdb5f0</string>
+						</dict>
+					</array>
+					<key>author</key>
+					<string>typemaven</string>
+					<key>fileName</key>
+					<string>365_Days_Planner</string>
+					<key>type</key>
+					<string>userJournals</string>
+					<key>autoGenerate</key>
+					<false/>
+					<key>multiPage</key>
+					<false/>
+					<key>previewToken</key>
+					<string>b188f416-3860-4c12-9ab2-514e25194462</string>
+					<key>authorToken</key>
+					<string>9f4b39ac-e51e-4ae8-8ca3-d4d10ec94d68</string>
+					<key>fileToken</key>
+					<string>1a1bc519-39a9-49a2-bbb5-989d10cdb5f0</string>
+					<key>link</key>
+					<string>https://www.etsy.com/in-en/shop/typemaven?ref=profile_header</string>
 				</dict>
 			</array>
 		</dict>

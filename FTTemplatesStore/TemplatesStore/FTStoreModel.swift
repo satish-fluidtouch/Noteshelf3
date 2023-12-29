@@ -13,6 +13,9 @@ let baseUrl = isInChinaRegion() ? "https://ops-dra.agcstorage.link/v0/noteshelf-
 //"https://noteshelf2-store-dev-env.s3.amazonaws.com/ns3/store/v5/"
 
 let previewImageExtention = "/preview.jpg"
+let authorImageExtention = "/author.jpg"
+let templatesExtention = "Templates/"
+let inspirationsExtention = "Inspirations/Templates/"
 
 enum FTDiscoveryItemType: String {
     case category
@@ -21,6 +24,7 @@ enum FTDiscoveryItemType: String {
     case sticker
     case diary
     case diaries
+    case userJournals
 }
 // MARK: - FTStoreModel
 struct FTStoreModel: Decodable, Hashable {
@@ -72,6 +76,7 @@ struct DiscoveryItem: Codable, Hashable {
     var previewToken: String?
     var fileToken: String?
     var sectionType: Int?
+    var supportOrientation: Int? = 0
 
     enum CodingKeys: String, CodingKey {
         case displayTitle
@@ -85,11 +90,15 @@ struct DiscoveryItem: Codable, Hashable {
         case previewToken
         case fileToken
         case sectionType
+        case supportOrientation
     }
 
     var templateUrl: URL {
         let templateName = fileName.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
-        return URL(string: baseUrl + "Templates/" + templateName!)!
+        if self.type == FTDiscoveryItemType.userJournals.rawValue {
+            return URL(string: baseUrl + inspirationsExtention + templateName!)!
+        }
+        return URL(string: baseUrl + templatesExtention + templateName!)!
     }
 
     var bannerAndCategoryThumbnailUrl: URL? {
@@ -119,6 +128,18 @@ struct DiscoveryItem: Codable, Hashable {
         return outputURL
     }
 
+    var inspirationsUrl: URL? {
+        let baseURL = self.templateUrl
+        var outputURL = baseURL.appendingPathComponent("/ios/templates/en/")
+        var token: String? = self.fileToken
+        var fileName = self.fileName
+        outputURL = outputURL.appendingPathComponent(fileName).appendingPathExtension("zip")
+        if isInChinaRegion() {
+            outputURL.append(queryItems: [URLQueryItem(name: "token", value: token)])
+        }
+        return outputURL
+    }
+
 }
 
 
@@ -143,7 +164,9 @@ struct FTTemplateStyle: Codable, Hashable {
     var templatePortToken: String?
     var templateLandToken: String?
     var previewToken: String?
-    var supportOrientation: Int? = 0
+    var fileName: String? = ""
+    var fileToken: String? = ""
+
     enum CodingKeys: String, CodingKey {
         case title = "displayTitle"
         case type
@@ -156,7 +179,8 @@ struct FTTemplateStyle: Codable, Hashable {
         case templatePortToken
         case templateLandToken
         case previewToken
-        case supportOrientation
+        case fileName
+        case fileToken
     }
 
     func styleThumbnailFor(template: TemplateInfo) -> URL {
@@ -168,7 +192,7 @@ struct FTTemplateStyle: Codable, Hashable {
         var outputURL = baseURL.appendingPathComponent("styles")
         var token: String? = self.stylePortToken
         var fileName = self.templateName
-        if self.type == FTDiscoveryItemType.diary.rawValue {
+        if self.type == FTDiscoveryItemType.diary.rawValue || self.type == FTDiscoveryItemType.userJournals.rawValue {
             if self.orientation == .potrait {
                 fileName += "_port"
                 token = self.stylePortToken
@@ -238,7 +262,12 @@ struct FTTemplateStyle: Codable, Hashable {
     }
 
     var thumbnailUrl: URL? {
-        let thumbPath = baseUrl + "Templates/" + templateName + previewImageExtention
+        var templatesPath = templatesExtention
+        if self.type == FTDiscoveryItemType.userJournals.rawValue {
+            templatesPath = inspirationsExtention
+        }
+
+        let thumbPath = baseUrl + templatesPath + templateName + previewImageExtention
         if let filePath = thumbPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), var fileUrl = URL(string: filePath) {
             if isInChinaRegion() {
                 fileUrl.append(queryItems: [URLQueryItem(name: "token", value: self.previewToken)])
@@ -248,6 +277,41 @@ struct FTTemplateStyle: Codable, Hashable {
         return nil
     }
 
+    var authorImageUrl: URL? {
+        var templatesPath = templatesExtention
+        if self.type == FTDiscoveryItemType.userJournals.rawValue {
+            templatesPath = inspirationsExtention
+        }
+        let thumbPath = baseUrl + templatesPath + templateName + authorImageExtention
+        if let filePath = thumbPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), var fileUrl = URL(string: filePath) {
+            if isInChinaRegion() {
+                fileUrl.append(queryItems: [URLQueryItem(name: "token", value: self.previewToken)])
+            }
+            return fileUrl
+        }
+        return nil
+    }
+
+    var templateUrl: URL {
+        let templateName = self.fileName?.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed)
+        if self.type == FTDiscoveryItemType.userJournals.rawValue {
+            return URL(string: baseUrl + inspirationsExtention + templateName!)!
+        }
+        return URL(string: baseUrl + templatesExtention + templateName!)!
+    }
+
+    var inspirationsUrl: URL? {
+        let baseURL = self.templateUrl
+        var outputURL = baseURL.appendingPathComponent("/ios/templates/en/")
+        var token: String? = self.fileToken
+        if let fileName = self.fileName {
+            outputURL = outputURL.appendingPathComponent(fileName).appendingPathExtension("zip")
+            if isInChinaRegion() {
+                outputURL.append(queryItems: [URLQueryItem(name: "token", value: token)])
+            }
+        }
+        return outputURL
+    }
 
 }
 
@@ -269,12 +333,14 @@ protocol TemplateInfo {
     var author: String? { get }
     var items: [DiscoveryItem]? { get }
     var thumbnailUrl: URL? { get }
+    var authorImageUrl: URL? { get }
     var styles: [FTTemplateStyle]? { get }
     var type: String { get }
     var link: String? { get }
     var previewToken: String? { get }
     var fileToken: String? { get }
     var sectionType: Int? { get }
+    var supportOrientation: Int? { get }
 }
 
 // MARK: - Extentions
@@ -307,6 +373,14 @@ extension DiscoveryItem: TemplateInfo {
         }
         return thumbUrl
     }
+    var authorImageUrl: URL? {
+        var thumbUrl = self.templateUrl.appendingPathComponent(authorImageExtention)
+        if isInChinaRegion() {
+            thumbUrl.append(queryItems: [URLQueryItem(name: "token", value: self.previewToken)])
+        }
+        return thumbUrl
+    }
+
 
 }
 
