@@ -132,9 +132,6 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         self.displayLink = CADisplayLink(target: self, selector: #selector(publishChanges))
         self.displayLink?.isPaused = true;
         self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
-        if annotationMode == .edit {
-            configureResizableView()
-        }
         if shapeAnnotation.inLineEditing {
             shapeEditType = .resize;
             self.displayLink?.isPaused = false;
@@ -153,6 +150,7 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (annotationMode == .edit) {
+            configureResizableView()
             shapeEditVC?.configureShapeEditView()
             addAngleSnappingView()
             addPenAttributes(to: shapeAnnotation)
