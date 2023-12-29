@@ -105,10 +105,12 @@ struct FTShelfItemContextMenuPreview<Content: View>: UIViewControllerRepresentab
                     parameters.visiblePath = path;
                 }
                 
-                if interaction is UIContextMenuInteraction || interaction is UIDragInteraction {
-                    if nil != _parentPreview.window {
-                        // Window must be needed to use this initializer
+                if nil != _parentPreview.window {
+                    if interaction is UIContextMenuInteraction {
                         return UITargetedPreview(view: _parentPreview, parameters: parameters)
+                    }
+                    else if interaction is UIDragInteraction {
+                        return UITargetedDragPreview(view: _parentPreview, parameters: parameters)
                     }
                 }
             }
