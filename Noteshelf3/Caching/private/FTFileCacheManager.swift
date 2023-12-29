@@ -12,12 +12,6 @@ import FTDocumentFramework
 
 class FTFileCacheManager: NSObject {
     static func cacheDocumentAt(_ source: URL,destination: URL) throws {
-//        let t1 = Date().timeIntervalSinceReferenceDate;
-//        defer {
-//            let t2 = Date().timeIntervalSinceReferenceDate;
-//            debugLog(">>>> timeTaken: \(t2-t1)");
-//        }
-        
         let defaultManager = FileManager();
         let fileCoorinator = NSFileCoordinator.init(filePresenter: nil)
         var copyError: NSError?
@@ -39,9 +33,10 @@ class FTFileCacheManager: NSObject {
                         let fileURl = readingURL.appending(path: relativePath);
                         let destinationFilePath = writingURL.appending(path: relativePath);
                         
-                        let resourceValues = try fileURl.resourceValues(forKeys: [.isDirectoryKey,.contentModificationDateKey]);
+                        var shouldCacheAnnotation = false
                         
                         if defaultManager.fileExists(atPath: destinationFilePath.path(percentEncoded: false)) {
+                            let resourceValues = try fileURl.resourceValues(forKeys: [.isDirectoryKey,.contentModificationDateKey]);
                             if !(resourceValues.isDirectory ?? true),
                                let sourceDate = resourceValues.contentModificationDate {
                                 let destDate = destinationFilePath.fileModificationDate;
@@ -49,12 +44,19 @@ class FTFileCacheManager: NSObject {
                                     debugLog(">>>> replacing item: \(relativePath) \(sourceDate) \(destDate)");
                                     try defaultManager.removeItem(at: destinationFilePath)
                                     try defaultManager.copyItem(at: fileURl, to: destinationFilePath);
+
+                                    shouldCacheAnnotation = relativePath.hasPrefix(ANNOTATIONS_FOLDER_NAME);
                                 }
                             }
                         }
                         else {
+                            shouldCacheAnnotation = relativePath.hasPrefix(ANNOTATIONS_FOLDER_NAME);
                             debugLog(">>>> creating item: \(relativePath)");
                             try defaultManager.copyItem(at: fileURl, to: destinationFilePath);
+                        }
+                        if shouldCacheAnnotation {
+                            let cache = FTNonStrokeAnnotationCache();
+                            cache.cacheAnnotations(writingURL, pageID: destinationFilePath.lastPathComponent);
                         }
                     }
                     let sourceDate = readingURL.fileModificationDate;

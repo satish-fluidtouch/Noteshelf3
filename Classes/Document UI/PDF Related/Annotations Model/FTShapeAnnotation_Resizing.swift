@@ -55,4 +55,8 @@ class FTShapeResizing : NSObject {
     func drawingPointsForArrow(for controlPoints: [CGPoint],  points: [CGPoint]) -> [CGPoint]{
         return [CGPoint]()
     }
+    
+    func resizeProportionally(for touch: UITouch,in view: UIView) -> CGRect {
+        .zero
+    }
 }

@@ -12,6 +12,8 @@ import FTCommon
 let MIN_SAVE_DURATION: TimeInterval = 3.0
 class FTRecognitionCache: NSObject {
 
+    private var recursiveLock = NSRecursiveLock();
+    
     private weak var currentDocument: FTNoteshelfDocument?
     
     private weak var cachePlistItem : FTRecognitionCachePlistItem?;
@@ -82,11 +84,15 @@ class FTRecognitionCache: NSObject {
 
     func recognitionCachePlist() -> FTRecognitionCachePlistItem?
     {
+        var itemToReturn: FTRecognitionCachePlistItem?;
+        self.recursiveLock.lock();
         let fileItem = self.getPlistFileItem(forFileName: RECOGNITION_INFO_FILE_NAME)
         if let cachedPlistItem = fileItem as? FTRecognitionCachePlistItem {
             self.cachePlistItem = cachedPlistItem
         }
-        return self.cachePlistItem;
+        itemToReturn = self.cachePlistItem;
+        self.recursiveLock.unlock();
+        return itemToReturn;
     }
     
     private func getPlistFileItem(forFileName fileName: String) -> FTFileItemPlist? {
@@ -222,10 +228,14 @@ class FTRecognitionCache: NSObject {
 extension FTRecognitionCache {
     func visionRecognitionCachePlist() -> FTVisionRecogCachePlistItem?
     {
+        var itemToReturn: FTVisionRecogCachePlistItem?;
+        self.recursiveLock.lock();
         let fileItem = self.getPlistFileItem(forFileName: VISION_RECOGNITION_INFO_FILE_NAME)
         if let cachedPlistItem = fileItem as? FTVisionRecogCachePlistItem {
             self.visionCachePlistItem = cachedPlistItem
         }
-        return self.visionCachePlistItem;
+        itemToReturn = self.visionCachePlistItem;
+        self.recursiveLock.unlock();
+        return itemToReturn;
     }
 }

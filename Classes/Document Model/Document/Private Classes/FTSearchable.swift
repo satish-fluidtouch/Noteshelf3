@@ -12,7 +12,7 @@ import UIKit
 {
     var searchingInfo : FTPageSearchingInfo? {get set};
     
-    @objc @discardableResult func searchFor(_ searchKey : String,tags : [String]) -> Bool;
+    @objc @discardableResult func searchFor(_ searchKey : String,tags : [String],isGlobalSearch: Bool) -> Bool;
 }
 
 
@@ -21,6 +21,7 @@ import UIKit
     //search key/tag
     func searchDocumentsForKey(_ searchKey : String,
                                tags : [String],
+                               isGlobalSearch: Bool,
                                onFinding : @escaping (_ page : FTPageProtocol,_ cancelled : Bool) -> Void,
                                onCompletion : @escaping (_ cancelled : Bool) -> Void) -> Progress;
     
