@@ -70,13 +70,16 @@ extension FTStoreStickersTableCell: UICollectionViewDelegate, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var items = self.templatesStoreInfo.discoveryItems
         // Update sectionType to track events
-        items[indexPath.row].sectionType = templatesStoreInfo.sectionType
+        for (index, _) in items.enumerated() {
+            items[index].sectionType = templatesStoreInfo.sectionType
+        }
         FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
 
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = FTStoreConstants.Sticker.calculateSizeFor(view: self)
+        let sectionType = self.templatesStoreInfo.sectionType
         return CGSize(width: size.width, height: size.height + FTStoreConstants.Sticker.extraHeightPadding)
     }
 
