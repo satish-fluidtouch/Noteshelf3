@@ -103,12 +103,14 @@ using namespace cv;
                 shape = line;
             }
             else{
+                FTShapeCurve *curve = [[FTShapeCurve alloc] initWithPoints:inPoints];
                 NSValue *first = [NSValue valueWithCGPoint:CGPointMake(approx[0].x, approx[0].y)];
                 NSValue *last = [NSValue valueWithCGPoint:CGPointMake(approx[approx.size()-1].x, approx[approx.size()-1].y)];
                 vector<cv::Point> contours = [self pointsToInputArray:@[first, last]];
                 double distance = cv::arcLength(cv::Mat(contours),false);
-
-                if(distance > 5) {
+                if (curve != nil) {
+                    shape = curve;
+                } else if(distance > 5) {
                     FTShapeLineStrip *lineStrip = [[FTShapeLineStrip alloc] init];
                     NSMutableArray *vertices = [NSMutableArray array];
                     for (int i = 0 ; i < approx.size() ; i++) {
@@ -135,6 +137,10 @@ using namespace cv;
                         }
                     }
                     else{
+                        shape = [[FTShapeCurve alloc] initWithPoints:inPoints];
+                        if (shape != nil) {
+                            return shape;
+                        }
                         polygonShape = [[FTShapePolygon alloc] init];
                     }
                     objc_sync_enter(polygonShape);

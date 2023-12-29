@@ -80,6 +80,13 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
         return pointsToReturn
     }
     
+    func knobControlPoints() -> [CGPoint] {
+        if let shape, shape.type() == .curve {
+            return shape.knobControlPoints?() ?? []
+        }
+        return getshapeControlPoints()
+    }
+    
     private var _shapeTransformMatrix = CGAffineTransform.identity;
     @objc var shapeTransformMatrix : CGAffineTransform {
         get {

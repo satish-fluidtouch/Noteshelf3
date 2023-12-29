@@ -273,7 +273,7 @@ class FTShapeAnnotationController: FTAnnotationEditController {
                 setAnchorPoint()
             } else {
                 currentKnob = knob
-                knob.center = point
+//                knob.center = point
                 index = knob.segmentIndex
             }
             if shapeAnnotation.shape?.type() == .pentagon {
@@ -297,9 +297,15 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     
     public func processTouchesMoved(_ firstTouch: UITouch, with event: UIEvent?) {
         hideKnobViews(true)
-        let point = firstTouch.location(in: self.view)
+        var point = firstTouch.location(in: self.view)
         let prevPoint = firstTouch.previousLocation(in: self.view)
+        let deltax = prevPoint.x - point.x
+        let deltay = prevPoint.y - point.y
         if let knob = currentKnob {
+            if shapeAnnotation.shape?.type() == .curve && knob.segmentIndex == 1 {
+                point.x += deltax * 2
+                point.y += deltay * 2
+            }
             knob.center = point
             index = knob.segmentIndex
             updateSegments(index: index, point: point)
@@ -1167,7 +1173,7 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
     
     @objc func addKnobsForControlPoints() {
         if !shapeAnnotation.isPerfectShape() {
-            let points = shapeAnnotation.getshapeControlPoints()
+            let points = shapeAnnotation.knobControlPoints()
             for (i, ftPoint) in points.enumerated() {
                 let point = convertControlPoint(ftPoint)
                 let knobView = FTKnobView()

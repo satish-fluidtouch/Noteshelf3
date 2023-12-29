@@ -28,6 +28,7 @@ import SwiftUI
     case star
     case union
     case lineStrip
+    case curve
     case none
     
     func getDefaultShape() -> FTShape? {
@@ -175,4 +176,5 @@ import SwiftUI
     @objc optional func shapeControlPoints(in view: UIView, for scale: CGFloat) -> [CGPoint]
     func isPerfectShape() -> Bool
     @objc optional func isLineType() -> Bool
+    @objc optional func knobControlPoints() -> [CGPoint]
 }
