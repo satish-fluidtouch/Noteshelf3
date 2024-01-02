@@ -154,6 +154,12 @@ using namespace cv;
     return shape;
 }
 
+-(double)getArcLength:(nonnull NSArray*)inPoints
+{
+    vector<cv::Point> contours = [self pointsToInputArray:inPoints];
+    return cv::arcLength(cv::Mat(contours),false);
+}
+
 /*
 -(BOOL)isCurve:(NSArray*)inPoints
 {

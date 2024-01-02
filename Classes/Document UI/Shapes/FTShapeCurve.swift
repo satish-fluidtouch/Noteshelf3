@@ -46,12 +46,13 @@ import Foundation
         }
         return false
     }
-
     
     func drawingPoints(scale: CGFloat) -> [CGPoint] {
-        return stride(from: 0, through: 1, by: 1.0 / 20).map { point(at: $0) }
+        let factory = FTShapeFactory()
+        let inputPoints = stride(from: 0, through: 1, by: 1.0 / 10).map { point(at: $0) }
+        let distance = factory.getArcLength(inputPoints)
+        return stride(from: 0, through: 1, by: 1.0 / distance).map { point(at: $0) }
     }
-    
 
     func controlPoints() -> [CGPoint] {
         return vertices

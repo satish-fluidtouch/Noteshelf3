@@ -56,6 +56,8 @@ import SwiftUI
             shapeType = FTShapeParallelogram()
         case .polygon:
             shapeType = FTShapePolygon()
+        case .curve:
+            shapeType = FTShapeCurve()
         default:
             shapeType = FTShapeLineStrip()
         }
