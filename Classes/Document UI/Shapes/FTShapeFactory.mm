@@ -108,7 +108,7 @@ using namespace cv;
                 vector<cv::Point> contours = [self pointsToInputArray:@[first, last]];
                 double distance = cv::arcLength(cv::Mat(contours),false);
 
-                if(distance > 20) {
+                if(distance > 5) {
                     FTShapeLineStrip *lineStrip = [[FTShapeLineStrip alloc] init];
                     NSMutableArray *vertices = [NSMutableArray array];
                     for (int i = 0 ; i < approx.size() ; i++) {

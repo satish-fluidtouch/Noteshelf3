@@ -24,3 +24,30 @@ class FTGlobalSettingsTableViewCell: UITableViewCell {
     }
 
 }
+
+class FTGlobalSettingsSafeModeTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var settingsImageView: UIImageView!
+    @IBOutlet weak var safeModeSwitch: UISwitch!
+    @IBOutlet weak var titleLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        safeModeSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    func updateSwitchState() {
+        let isSafeModeEnabled = FTUserDefaults.isInSafeMode()
+        safeModeSwitch.isOn = isSafeModeEnabled
+    }
+
+    @objc func switchValueChanged() {
+        FTUserDefaults.setSafeMode(isOn: safeModeSwitch.isOn)
+    }
+}

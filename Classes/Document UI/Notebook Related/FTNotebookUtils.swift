@@ -10,7 +10,8 @@ import Foundation
 
 class FTNotebookUtils : NSObject
 {
-    static func checkIfAudioIsPlaying(forDocument document : FTDocumentProtocol,
+    static func checkIfAudioIsNotPlaying(forDocument document : FTDocumentProtocol,
+                                      InAnyOf selectedPages: NSSet = NSSet(),
                                       alertMessage message : String,
                                       onViewController : UIViewController,
                                       onCompletion block : ((Bool) -> Void)?)
@@ -36,6 +37,11 @@ class FTNotebookUtils : NSObject
         if (onViewController.view.window?.hash != session?.windowHash()) {
             block?(true);
             return;
+        }
+        
+        if selectedPages.count != 0, let pageInRecording = model.representedObject?.associatedNotebookPage(), !selectedPages.contains(pageInRecording) {
+            block?(true)
+            return
         }
         
         if(.stateRecording == state) {

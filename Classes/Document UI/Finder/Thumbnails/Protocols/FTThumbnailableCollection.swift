@@ -26,4 +26,6 @@ protocol FTThumbnailableCollection: AnyObject {
                    toDocument : URL,
                    pin: String?,
                    onCompletion : @escaping (Error?) -> Void) -> Progress;
+    
+    func startRecognitionIfNeeded();
 }

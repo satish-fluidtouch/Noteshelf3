@@ -84,6 +84,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                         //==============================
                         let childProgress = notebook.searchDocumentsForKey(self.searchKey,
                                                                            tags: [],
+                                                                           isGlobalSearch: true,
                                                                            onFinding: { (page, isCancelled) in
                                 if(!isCancelled) {
                                     if let searchingInfo = (page as? FTPageSearchProtocol)?.searchingInfo {
