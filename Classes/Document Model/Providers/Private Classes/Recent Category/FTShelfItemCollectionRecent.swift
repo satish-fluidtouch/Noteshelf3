@@ -96,14 +96,10 @@ class  FTShelfItemCollectionRecent: NSObject,FTShelfItemCollection,FTShelfItemSo
                 shelfItems.append(contentsOf: items);
                 shelfItems.sort(by: { (item1, item2) -> Bool in
                     if let index1 = recentItems.firstIndex(where: { (eachInfo) -> Bool in
-                        let eachPath = eachInfo.filePath
-                        let pathURL = NSURL.init(fileURLWithPath: eachPath!) as URL;
-                        return (pathURL == item1.URL);
+                        return (eachInfo.fileURL == item1.URL);
                     }),
                        let index2 = recentItems.firstIndex(where: { (eachInfo) -> Bool in
-                           let eachPath = eachInfo.filePath
-                           let pathURL = NSURL.init(fileURLWithPath: eachPath!) as URL;
-                           return (pathURL == item2.URL);
+                           return (eachInfo.fileURL == item2.URL);
                        }) {
                         return (index1 < index2);
                     } else {
@@ -225,7 +221,7 @@ extension NSURL
     {
         var localPaths = [String]();
         for eachInfo in paths {
-            if let eachPath = eachInfo.filePath {
+            if let eachPath = eachInfo.fileURL?.path(percentEncoded: false) {
                 localPaths.append(eachPath);
             }
         }

@@ -33,33 +33,32 @@ class FTDiskRecentItem: NSObject {
     var fileURL: URL? {
         get {
             guard let returnURL = _fileURL else {
+                debugLog("\(self.mode.rawValue): fileUrl not yet set")
                 FTLogError("ALIAS_NIL", attributes: ["mode": self.mode.rawValue])
                 return nil
             }
-            return _fileURL;
+            return returnURL;
         }
         set {
             _fileURL = newValue;
         }
     }
     
-    var filePath : String? {
-        if let fileuRL = fileURL {
-            return fileuRL.path().removingPercentEncoding;
-        }
-        return nil;
-    }
+//    var filePath : String? {
+//        return fileURL?.path(percentEncoded: false);
+//    }
     
-    var mode: FTRecentItemType = .recent;
-    
+    private(set) var mode: FTRecentItemType = .recent;
     var aliasData: Data = Data();
-    var uuid = UUID().uuidString;
+    private var uuid = UUID().uuidString;
     
-    init( _ inData: Data) {
+    init( _ inData: Data,url: URL,mode inmode: FTRecentItemType) {
         aliasData = inData
+        _fileURL = url;
+        mode = inmode;
     }
 
-    init?( _ info: [String:String]) {
+    init?( _ info: [String:String],mode inmode: FTRecentItemType) {
         if let aliasString = info[FTRecentItemAlias],let data = Data.init(base64Encoded: aliasString) {
             aliasData =  data;
         }
@@ -168,6 +167,8 @@ class FTRecentEntries: NSObject {
 }
 
 private class FTRecentDataProvider {
+    private var lock = NSRecursiveLock();
+    
     private func defaults() -> UserDefaults {
         return UserDefaults.init(suiteName: FTSharedGroupID.getAppGroupID())!
     }
@@ -178,22 +179,31 @@ private class FTRecentDataProvider {
     }
     
     func movedEntry(from: URL, to: URL) -> Bool {
+        lock.lock()
+        debugLog("\(self.mode.rawValue): movedEntry - START");
+        var success = false;
         if let item = self.itemFor(from)
             , let aliasData = URL.aliasData(to) {
             item.aliasData = aliasData;
             item.fileURL = to;
             saveContents();
-            return true;
+            success = true;
         }
-        return false;
+        debugLog("\(self.mode.rawValue): movedEntry - END");
+        lock.unlock()
+        return success;
     }
     
     private var items = [FTDiskRecentItem]();
     func recentItems() -> [FTDiskRecentItem] {
+        lock.lock()
+        debugLog("\(self.mode.rawValue): loading - START");
         if(items.isEmpty) {
             self.items.append(contentsOf: self.loadContents());
         }
         removeStaledItems();
+        debugLog("\(self.mode.rawValue): loading - END");
+        lock.unlock()
         return items;
     }
     
@@ -204,8 +214,7 @@ private class FTRecentDataProvider {
             let dictInfo = try PropertyListDecoder().decode([FTRecentItem].self, from: data)
 
             dictInfo.forEach { eachItem in
-                if let diskItem = FTDiskRecentItem(eachItem) {
-                    diskItem.mode = mode;
+                if let diskItem = FTDiskRecentItem(eachItem,mode: mode) {
                     itemsToReturn.append(diskItem);
                 }
             }
@@ -238,18 +247,16 @@ private class FTRecentDataProvider {
     }
     
     func addEntry(_ url: URL) -> Bool {
+        lock.lock()
+        debugLog("\(self.mode.rawValue): addEntry - START");
         var success = false;
-        let uuid = UUID().uuidString;
         if let item = self.itemFor(url), let index = self.items.firstIndex(of: item) {
             self.items.remove(at: index);
             self.items.insert(item, at: 0);
             success = true;
         }
         else if let aliasData = URL.aliasData(url) {
-            let item = FTDiskRecentItem(aliasData);
-            item.mode = mode;
-            item.uuid = uuid;
-            item.fileURL = url;
+            let item = FTDiskRecentItem(aliasData,url: url,mode: mode);
             removeOldEntriesIfNeeded();
             items.insert(item, at: 0);
             success = true;
@@ -257,21 +264,30 @@ private class FTRecentDataProvider {
         if(success) {
             saveContents();
         }
+        debugLog("\(self.mode.rawValue): addEntry - END");
+        lock.unlock()
         return success;
     }
     
     func removeEntry(_ url: URL,shouldSave: Bool = true) -> Bool {
+        lock.lock()
+        debugLog("\(self.mode.rawValue): removeEntry - START");
+        var success = false;
         if let item = self.itemFor(url),let index = self.items.firstIndex(of: item) {
             self.items.remove(at: index);
             if(shouldSave) {
                 saveContents();
             }
-            return true;
+            success = true;
         }
-        return false;
+        debugLog("\(self.mode.rawValue): removeEntry - END");
+        lock.unlock()
+        return success;
     }
     
     func itemFor(_ url: URL) -> FTDiskRecentItem? {
+        lock.lock()
+        debugLog("\(self.mode.rawValue): itemFor - START");
         let item = self.items.first(where: { (info) -> Bool in
             guard let resolvedURL = info.fileURL else {
                 return false;
@@ -281,6 +297,8 @@ private class FTRecentDataProvider {
             }
             return false;
         });
+        debugLog("\(self.mode.rawValue): itemFor - END");
+        lock.unlock()
         return item;
     }
     
@@ -294,8 +312,12 @@ private class FTRecentDataProvider {
     }
     
     func reset() {
+        lock.lock()
+        debugLog("\(self.mode.rawValue): reset - START");
         self.items.removeAll();
         saveContents();
+        debugLog("\(self.mode.rawValue): reset - END");
+        lock.unlock()
     }
     
     private func removeOldEntriesIfNeeded() {
