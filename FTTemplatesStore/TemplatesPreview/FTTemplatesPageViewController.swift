@@ -216,7 +216,7 @@ private extension FTTemplatesPageViewController {
 
         for i in 0..<templates.count {
             let item = templates[currentIndex]
-                if (item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.diary.rawValue), let vc = templatesPreviewControllerForIndex(index: i) as? FTTemplatePreviewViewController {
+                if (item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.diary.rawValue || item.type == FTDiscoveryItemType.userJournals.rawValue), let vc = templatesPreviewControllerForIndex(index: i) as? FTTemplatePreviewViewController {
                     previewControllers.append(vc)
                     downloadActionView.isHidden = true
                 } else if item.type == FTDiscoveryItemType.sticker.rawValue, let vc = stickersPreviewControllerForIndex(index: i) as? FTStickersPreviewViewController {

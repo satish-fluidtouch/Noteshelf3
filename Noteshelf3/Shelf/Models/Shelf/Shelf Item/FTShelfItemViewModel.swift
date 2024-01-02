@@ -95,7 +95,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
         self.model = model
         super.init()
         self.updateDownloadStatusFor(item: model);
-        self.isFavorited = FTRecentEntries.isFavorited(model.URL)
+        self.isFavorited = (model.type == .group) ? false : FTRecentEntries.isFavorited(model.URL)
     }
         
     func configureShelfItem(_ item: FTShelfItemProtocol){
