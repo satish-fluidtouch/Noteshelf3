@@ -8,8 +8,6 @@
 
 import Foundation
 
-let defaultFirstPageUUID = "FirstPageInLinking"
-
 class FTTextLinkRouteHelper: NSObject {
     static func getLinkUrlForTextView(using docId: String, pageId: String) -> URL? {
         var components = URLComponents()

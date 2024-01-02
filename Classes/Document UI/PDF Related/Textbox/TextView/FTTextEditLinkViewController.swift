@@ -16,18 +16,16 @@ protocol FTDocumentSelectionDelegate: AnyObject {
     func didSelect(document: FTShelfItemProtocol)
 }
 
-protocol FTTextLinkInfoDelegate: AnyObject {
+protocol FTTextLinkInfoDelegate: FTDocumentInfoDelegate {
     func getTextLinkInfo() -> FTTextLinkInfo?
-    func updateTextLinkInfo(_ info: FTTextLinkInfo) 
 }
 
 protocol FTDocumentInfoDelegate: AnyObject {
-    func didSelectDocument(with docUUID: String, pageUUID: String)
+    func updateTextLinkInfo(_ info: FTTextLinkInfo)
 }
 
 class FTTextEditLinkViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?
-    weak var delegate: FTDocumentInfoDelegate?
     
     // To get the required info from parent controller
     weak var infoDelegate: FTTextLinkInfoDelegate?
@@ -39,28 +37,51 @@ class FTTextEditLinkViewController: UIViewController {
         super.viewDidLoad()
         self.tableView?.register(FTTextEditLinkTableViewCell.self, forCellReuseIdentifier: FTTextEditLinkTableViewCell.cellIdentifier)
         if let info = self.infoDelegate?.getTextLinkInfo() {
-            self.updateDocumentInfoIfNeeded(for: info)
+            self.updateDocumentInfoIfNeeded(for: info, onCompletion: nil)
         }
     }
     
-    private func updateDocumentInfoIfNeeded(for info: FTTextLinkInfo) {
-        FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
-            if let shelfItem = docItem {
-                self.docTitle = shelfItem.title
-                let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
-                FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                    if let doc = document {
-                        if let pageIndex = doc.pages().firstIndex(where: { $0.uuid == info.pageUUID }) {
-                            self.pageNumber = pageIndex + 1
+    private func updateDocumentInfoIfNeeded(for info: FTTextLinkInfo, onCompletion: ((Bool) -> Void)?) {
+        if let doc = info.currentDocument,  info.docUUID == doc.documentUUID {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
+                if let shelfItem = docItem {
+                    self.updateUI(using: doc, shelfItem: shelfItem, info: info, onCompletion: { success in
+                        onCompletion?(success)
+                    })
+                }
+            }
+        } else {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
+                if let shelfItem = docItem {
+                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                        if let doc = document {
+                                self.updateUI(using: doc, shelfItem: shelfItem, info: info, onCompletion: { success in
+                                    FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token) { success in
+                                        if success {
+                                            print("zzzz - \(success)")
+                                        }
+                                    onCompletion?(success)
+                                }
+                            })
                         }
-                        self.tableView?.reloadData()
-                        FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token, onCompletion: nil)
                     }
                 }
             }
         }
     }
 
+    private func updateUI(using doc: FTDocumentProtocol, shelfItem: FTShelfItemProtocol, info: FTTextLinkInfo, onCompletion: ((Bool) -> Void)?) {
+        self.docTitle = shelfItem.displayTitle
+        if let pageIndex = doc.pages().firstIndex(where: { $0.uuid == info.pageUUID }) {
+            self.pageNumber = pageIndex + 1
+        } else {
+            self.pageNumber = 1
+        }
+        self.tableView?.reloadData()
+        onCompletion?(true)
+    }
+    
     private func getFirstPageUUID(for doc: FTDocumentItemProtocol, onCompletion: ((String) -> Void)?) {
         guard let docId = doc.documentUUID else {
             onCompletion?("")
@@ -165,10 +186,14 @@ extension FTTextEditLinkViewController: FTDocumentSelectionDelegate, FTPageSelec
     func didSelect(document: FTShelfItemProtocol) {
         if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
             self.getFirstPageUUID(for: doc) { pageUUID in
-                self.delegate?.didSelectDocument(with: docId, pageUUID: pageUUID)
-                self.docTitle = document.displayTitle
-                self.pageNumber = 1
-                self.tableView?.reloadData()
+                if var exstInfo = self.infoDelegate?.getTextLinkInfo() {
+                    exstInfo.docUUID = docId
+                    exstInfo.pageUUID = pageUUID
+                    self.docTitle = document.displayTitle
+                    self.pageNumber = 1
+                    self.tableView?.reloadData()
+                    self.infoDelegate?.updateTextLinkInfo(exstInfo)
+                }
             }
         }
     }
@@ -176,8 +201,8 @@ extension FTTextEditLinkViewController: FTDocumentSelectionDelegate, FTPageSelec
     func didSelect(page: FTNoteshelfPage) {
         if var info = self.infoDelegate?.getTextLinkInfo() {
             info.pageUUID = page.uuid
-            self.delegate?.didSelectDocument(with: info.docUUID, pageUUID: page.uuid)
-            self.updateDocumentInfoIfNeeded(for: info)
+            self.infoDelegate?.updateTextLinkInfo(info)
+            self.updateDocumentInfoIfNeeded(for: info, onCompletion: nil)
         }
     }
 }

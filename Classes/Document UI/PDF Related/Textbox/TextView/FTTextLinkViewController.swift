@@ -12,6 +12,7 @@ import FTCommon
 struct FTTextLinkInfo {
     var docUUID: String
     var pageUUID: String
+    weak var currentDocument: FTDocumentProtocol?
 }
 
 class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
@@ -93,24 +94,10 @@ extension FTTextLinkViewController: UITableViewDataSource, UITableViewDelegate {
         let option = viewModel.linkSection.options[indexPath.row]
         if option == .linkSettings {
             if let editLinkVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTTextEditLinkViewController") as? FTTextEditLinkViewController {
-                editLinkVc.delegate = self
                 editLinkVc.infoDelegate = self
                 self.navigationController?.pushViewController(editLinkVc, animated: true)
             }
         }
-    }
-}
-
-extension FTTextLinkViewController: FTDocumentInfoDelegate {
-    func didSelectDocument(with docUUID: String, pageUUID: String) {
-        self.linkInfo?.docUUID = docUUID
-        self.linkInfo?.pageUUID = pageUUID
-        if let del = self.delegate {
-            print("zzzz - textAnnotVC delegate: \(del)")
-        } else {
-            print("zzzz - textAnnotVC delegate: nil")
-        }
-        self.delegate?.didSelectDocument(with: docUUID, pageUUID: pageUUID)
     }
 }
 
@@ -121,5 +108,6 @@ extension FTTextLinkViewController: FTTextLinkInfoDelegate {
     
     func updateTextLinkInfo(_ info: FTTextLinkInfo) {
         self.linkInfo = info
+        self.delegate?.updateTextLinkInfo(info)
     }
 }
