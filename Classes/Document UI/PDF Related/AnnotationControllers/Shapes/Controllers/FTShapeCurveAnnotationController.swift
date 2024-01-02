@@ -23,7 +23,7 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
     }
     
     override func processTouchesMoved(_ firstTouch: UITouch, with event: UIEvent?) {
-        if shapeEditType == .resize {
+        if shapeEditType == .resize && !annotation.inLineEditing {
             hideKnobViews(true)
             var point = firstTouch.location(in: self.view)
             let prevPoint = firstTouch.previousLocation(in: self.view)
@@ -46,6 +46,7 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
             }
         } else {
             super.processTouchesMoved(firstTouch, with: event)
+            self.annotation.inLineEditing = false
         }
     }
     

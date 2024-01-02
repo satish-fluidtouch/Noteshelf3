@@ -302,10 +302,6 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         let deltax = prevPoint.x - point.x
         let deltay = prevPoint.y - point.y
         if let knob = currentKnob {
-            if shapeAnnotation.shape?.type() == .curve && knob.segmentIndex == 1 {
-                point.x += deltax * 2
-                point.y += deltay * 2
-            }
             knob.center = point
             index = knob.segmentIndex
             updateSegments(index: index, point: point)

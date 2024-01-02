@@ -18,11 +18,12 @@ import Foundation
     convenience init?(points: [CGPoint]) {
         self.init()
         let simplifiedPoints = SwiftSimplify.simplify(points, tolerance: .good, highQuality: true)
-        if (hasElbow(points: simplifiedPoints)) {
+        let filteredPoints = self.filterPoints(points: simplifiedPoints)
+        if (hasElbow(points: filteredPoints)) {
             return nil
         } else {
             //Curve detected
-            if let startPoint = simplifiedPoints.first, let endPoint = simplifiedPoints.last, let pointOnCurve = deCasteljau(points: simplifiedPoints) {
+            if let startPoint = filteredPoints.first, let endPoint = filteredPoints.last, let pointOnCurve = deCasteljau(points: filteredPoints) {
                 let controlPoint = calculateCurveControlPoint(pointOnCurve: pointOnCurve, startTouchPoint: startPoint, endTouchPoint: endPoint)
                 vertices = [startPoint, controlPoint, endPoint]
             }
@@ -46,6 +47,19 @@ import Foundation
         }
         return false
     }
+    
+    func filterPoints(points: [CGPoint]) -> [CGPoint] {
+        guard let lastPoint = points.last else {
+            return []
+        }
+
+        let filteredPoints = points.filter { point in
+            let distance = sqrt(pow(point.x - lastPoint.x, 2) + pow(point.y - lastPoint.y, 2))
+            return distance > 3.0
+        }
+        return filteredPoints
+    }
+
     
     func drawingPoints(scale: CGFloat) -> [CGPoint] {
         let factory = FTShapeFactory()
