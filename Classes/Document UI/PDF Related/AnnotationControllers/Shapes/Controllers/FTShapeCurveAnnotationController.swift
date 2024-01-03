@@ -30,7 +30,7 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
             let deltax = prevPoint.x - point.x
             let deltay = prevPoint.y - point.y
             if knob.segmentIndex == 1 {
-                var controlPoint = shapeAnnotation.getshapeControlPoints()[1]
+                var controlPoint = convertControlPoint(shapeAnnotation.getshapeControlPoints()[1])
                 controlPoint.x -= deltax * 2
                 controlPoint.y -= deltay * 2
                 point = controlPoint
@@ -67,7 +67,10 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
             let controlPoint = point(at: 0.5)
             let knobPoints = [firstPoint, controlPoint, lastPoint]
             for (i, ftPoint) in knobPoints.enumerated() {
-                let point = convertControlPoint(ftPoint)
+                var point = convertControlPoint(ftPoint)
+                if i == 1 {
+                    point = ftPoint
+                }
                 let knobView = FTKnobView()
                 knobView.segmentIndex = i
                 knobView.center = point
@@ -81,9 +84,9 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
         guard points.count >= 3 else {
             return .zero
         }
-        let p0 = points[0]
-        let p1 = points[1]
-        let p2 = points[2]
+        let p0 = convertControlPoint(points[0])
+        let p1 = convertControlPoint(points[1])
+        let p2 = convertControlPoint(points[2])
         if t == 0 {
             return p0
         } else if t == 1 {
