@@ -1157,7 +1157,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         if layoutRequiresExplicitFont() {
             imageSize = CGSize(width: 9, height: 9)
         }
-        self.drawColorBandsWith(xAxis: todayLinkRectX, yAxis: todayLinkRectY, context: context, width: todayString.size().width + 4  + imageSize.width, height: todayLinkRectHeight, bandColor: UIColor(hexString: "#80CCCB",alpha: 0.5), cornerRadius: todayRectCornerRadius)
+        self.drawColorBandsWith(xAxis: todayLinkRectX, yAxis: todayLinkRectY, context: context, width: todayString.size().width + 4  + imageSize.width, height: todayLinkRectHeight, bandColor: UIColor(hexString: "#80CCCB"), cornerRadius: todayRectCornerRadius)
 
         if let clockSymbol = UIImage(systemName: "clock"){
             let arrowAttachment = NSTextAttachment()
