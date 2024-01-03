@@ -1479,7 +1479,6 @@
 		BAF3927D2859ADF00067CA9F /* FTShelfCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09953ED51F1F2C3E00753F70 /* FTShelfCollectionViewLayoutAttributes.swift */; };
 		BAF3927E2859ADF00067CA9F /* FTImageResizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AF55922A93F0500B7250A /* FTImageResizeViewController.swift */; };
 		BAF3927F2859ADF00067CA9F /* FTShapeArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4221A9D627EAF80200B91890 /* FTShapeArrow.swift */; };
-		BAF392802859ADF00067CA9F /* FTGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8525624F62B1800EF893A /* FTGeneratorViewController.swift */; };
 		BAF392822859ADF00067CA9F /* FTZenDeskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423EE1D925344893007967F9 /* FTZenDeskManager.swift */; };
 		BAF392832859ADF00067CA9F /* FTAlphabetTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421279F4250F8F9100B98ACF /* FTAlphabetTextList.swift */; };
 		BAF392842859ADF00067CA9F /* FTWebdavBackupPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978755C325DAB4F500CB766F /* FTWebdavBackupPublisher.swift */; };
@@ -3832,7 +3831,6 @@
 		97C8524F24F62AC600EF893A /* FTDairyFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDairyFormat.swift; sourceTree = "<group>"; };
 		97C8525024F62AC700EF893A /* FTDairyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDairyGenerator.swift; sourceTree = "<group>"; };
 		97C8525424F62AEB00EF893A /* FTQuotesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTQuotesProvider.swift; sourceTree = "<group>"; };
-		97C8525624F62B1800EF893A /* FTGeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGeneratorViewController.swift; sourceTree = "<group>"; };
 		97C8525824F62CE900EF893A /* FTDynamicTemplateGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDynamicTemplateGenerator.swift; sourceTree = "<group>"; };
 		97C8525924F62CE900EF893A /* FTDynamicTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDynamicTemplateFormat.swift; sourceTree = "<group>"; };
 		97C8525A24F62CEA00EF893A /* FTDynamicTemplateInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDynamicTemplateInfo.swift; sourceTree = "<group>"; };
@@ -10599,7 +10597,6 @@
 				97C8523D24F55C9C00EF893A /* FTAutoTemplateGenerator.swift */,
 				97C8525424F62AEB00EF893A /* FTQuotesProvider.swift */,
 				DA376E2223BE134D00B27012 /* NSDate_Extension.swift */,
-				97C8525624F62B1800EF893A /* FTGeneratorViewController.swift */,
 				DA376E2323BE134D00B27012 /* screenInfo */,
 				DA376E2723BE134D00B27012 /* Private */,
 				DA376E2E23BE134D00B27012 /* PDFLinkAnnotation_Extension.swift */,
@@ -13570,7 +13567,6 @@
 				BAF3927F2859ADF00067CA9F /* FTShapeArrow.swift in Sources */,
 				97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */,
 				E7AE4D9F2899480A004CF608 /* FTShapeShortcutView.swift in Sources */,
-				BAF392802859ADF00067CA9F /* FTGeneratorViewController.swift in Sources */,
 				979BC27F288EAD8600208B21 /* FTShelfItemView.swift in Sources */,
 				E762186F2A4D809D004A8428 /* FTShelfBaseHostingController.swift in Sources */,
 				BAF392822859ADF00067CA9F /* FTZenDeskManager.swift in Sources */,
