@@ -202,9 +202,7 @@ class FTMidnightDairyFormat : FTDairyFormat {
     }
     
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
-        if !dayInfo.belongsToSameMonth {
-            return
-        }
+
         super.renderDayPage(context: context, dayInfo: dayInfo);
         let templateInfo = screenInfo.spacesInfo.dayPageSpacesInfo
         
@@ -310,13 +308,15 @@ class FTMidnightDairyFormat : FTDairyFormat {
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly){
         
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
-        //self.renderCalendarPage?(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: formatInfo);
-        
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
+
         self.renderYearPage(context: context, months: monthlyFormatter.monthInfo, calendarYear: formatInfo);
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
         
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .month))
         }
         
         let weeklyInfo = weeklyFormatter.weeklyInfo;
@@ -324,17 +324,30 @@ class FTMidnightDairyFormat : FTDairyFormat {
             self.renderWeekPage(context: context, weeklyInfo: weekInfo)
             self.renderPrioritiesPage(context: context, weeklyInfo: weekInfo, dayInfo: nil)
             self.renderNotesPage(context: context, weeklyInfo: weekInfo, dayInfo: nil)
+
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .week))
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyPriorities))
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyNotes))
         }
         
         let monthInfo = monthlyFormatter.monthCalendarInfo;
         monthInfo.forEach { (eachMonth) in
             let dayInfo = eachMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo);
-                self.renderPrioritiesPage(context: context, weeklyInfo: nil, dayInfo: eachDayInfo)
-                self.renderDailyPlanPage(context : context, dayInfo : eachDayInfo)
-                self.renderNotesPage(context: context, weeklyInfo: nil, dayInfo: eachDayInfo)
-                self.renderDailyNotesPage(context : context, dayInfo : eachDayInfo)
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                    self.renderPrioritiesPage(context: context, weeklyInfo: nil, dayInfo: eachDayInfo)
+                    self.renderDailyPlanPage(context : context, dayInfo : eachDayInfo)
+                    self.renderNotesPage(context: context, weeklyInfo: nil, dayInfo: eachDayInfo)
+                    self.renderDailyNotesPage(context : context, dayInfo : eachDayInfo)
+
+                    //pages info
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate))
+                    }
+                    self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyPriorities))
+                    self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyNotes))
+                }
             }
         }
     }

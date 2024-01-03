@@ -43,7 +43,6 @@ class FTDocumentInputInfo: NSObject {
     var annotationInfo : [String : Any]?;
     
     weak var rootViewController : UIViewController?;
-    var postProcessInfo: FTPostProcessInfo = FTPostProcessInfo()
     var diaryPagesInfo: [FTDiaryPageInfo]?;
     var isEnCrypted: Bool {
         if let pin = self.pinModel?.pin, !pin.isEmpty {
@@ -51,12 +50,4 @@ class FTDocumentInputInfo: NSObject {
         }
         return false
     }
-}
-
-class FTPostProcessInfo: NSObject {
-    var diaryStartYear : Int? //For supporting the existing structure
-    var startDate: Date?;
-    var endDate: Date?;
-    var offsetCount: Int = 76
-    var documentType : FTDocumentType = .defaultType
 }

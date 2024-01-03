@@ -15,7 +15,12 @@ enum DiaryPageType: Codable {
     case week
     case day
     case tracker
-    case notes
+    case monthlyNotes
+    case extras
+    case weeklyPriorities
+    case dailyPriorities
+    case weeklyNotes
+    case dailyNotes
 }
 @objcMembers class FTDiaryPageInfo: NSObject,Codable {
     var type: DiaryPageType
