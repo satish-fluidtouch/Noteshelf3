@@ -547,13 +547,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
            let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
            let pageId = queryItems.first(where: { $0.name == "pageId" })?.value {
             if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: documentId) {
-                print("zzzz - scheme url: \(schemeUrl)")
                 self.docuemntViewController?.navigateToPage(with: pageId)
-                FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
-                    if let shelfItem = docItem {
-                        print("zzzz - diaplay title: \(shelfItem.displayTitle)")
-                    }
-                }
             } else {
                 FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
                     if let shelfItem = docItem {

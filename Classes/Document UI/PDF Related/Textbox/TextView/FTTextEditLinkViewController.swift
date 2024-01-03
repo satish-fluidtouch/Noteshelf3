@@ -101,6 +101,16 @@ class FTTextEditLinkViewController: UIViewController {
     @objc func removeLinkButtonTapped() {
         
     }
+    
+    private func showFinderPagesScreen(doc: FTThumbnailableCollection, onCompletion: ((Bool) -> Void)?) {
+        let finderVc = FTFinderViewController.instantiate(fromStoryboard: .finder)
+        finderVc.configureData(forDocument: doc, exportInfo: nil, delegate: nil, searchOptions: FTFinderSearchOptions())
+        finderVc.mode = .chooseSinglePage
+        finderVc.singlePageSelectDelegate = self
+        self.present(finderVc, animated: true) {
+            onCompletion?(true)
+        }
+    }
 }
 
 private class FTTextEditLinkTableViewCell: UITableViewCell {
@@ -158,19 +168,22 @@ extension FTTextEditLinkViewController: UITableViewDataSource, UITableViewDelega
             let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
             self.ftPresentFormsheet(vcToPresent: controller, hideNavBar: false)
         } else if option == .page, let docId = self.infoDelegate?.getTextLinkInfo()?.docUUID {
-            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
-                if let shelfItem = docItem {
-                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                        if let doc = document as? FTThumbnailableCollection {
-                            let finderVc = FTFinderViewController.instantiate(fromStoryboard: .finder)
-                            finderVc.configureData(forDocument: doc, exportInfo: nil, delegate: nil, searchOptions: FTFinderSearchOptions())
-                            finderVc.mode = .chooseSinglePage
-                            finderVc.singlePageSelectDelegate = self
-                            self.present(finderVc, animated: true) {
-                                if let document = doc as? FTDocumentProtocol {
-                                    FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token, onCompletion: nil)
-                                }
+            if let info = self.infoDelegate?.getTextLinkInfo(), let document = info.currentDocument,  info.docUUID == document.documentUUID {
+                // same document
+                if let doc = document as? FTThumbnailableCollection {
+                    self.showFinderPagesScreen(doc: doc, onCompletion: nil)
+                }
+            } else {
+                FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
+                    if let shelfItem = docItem {
+                        let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                        FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                            if let doc = document as? FTThumbnailableCollection {
+                                self.showFinderPagesScreen(doc: doc, onCompletion: {_ in
+                                    if let document = doc as? FTDocumentProtocol {
+                                        FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token, onCompletion: nil)
+                                    }
+                                })
                             }
                         }
                     }
