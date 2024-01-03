@@ -617,9 +617,12 @@ extension FTPDFRenderViewController: FTOpenCloseDocumentProtocol {
                              animate: Bool,
                              onCompletion: (() -> Void)?)
     {
-        (self.openCloseDocumentDelegate as? FTOpenCloseDocumentProtocol)?.closeDocument(shelfItemManagedObject:shelfItemManagedObject,
-                                                      animate:animate,
-                                                      onCompletion:onCompletion)
+        if let openCloseDel = self.openCloseDocumentDelegate as? FTOpenCloseDocumentProtocol {
+            openCloseDel.closeDocument(shelfItemManagedObject: shelfItemManagedObject, animate: animate) { [weak self] in
+                self?.finderNotifier.didCloseNotebook();
+                onCompletion?();
+            }
+        }
     }
 }
 

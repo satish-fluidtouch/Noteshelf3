@@ -174,9 +174,6 @@ extension FTDocumentCache {
     }
 
     func cachedLocation(for docUUID: String) -> URL {
-        guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {
-            fatalError("Unable to find cache directory")
-        }
         let destinationURL = cacheFolderURL.appendingPathComponent(docUUID).appendingPathExtension(FTFileExtension.ns3)
         return destinationURL
     }

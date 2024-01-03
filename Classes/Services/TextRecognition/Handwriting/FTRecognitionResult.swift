@@ -9,7 +9,30 @@
 import UIKit
 
 @objcMembers class FTRecognitionResult: NSObject {
-    var characterRects : [CGRect] = []
+    
+    private lazy var _characterRects : [CGRect] = {
+        var characterRects :[CGRect] = []
+        if let data = charRectsData {
+            let characterRectValues:[NSValue]? = NSDataValueConverter.rectValuesArray(from: data)
+            characterRectValues?.forEach { (rectValue) in
+                let charRect = rectValue.cgRectValue
+                characterRects.append(charRect)
+            }
+        }
+        return characterRects
+    }();
+    
+    var characterRects : [CGRect]  {
+        set {
+            self._characterRects = newValue;
+        }
+        get {
+            return self._characterRects;
+        }
+    }
+    
+    private var charRectsData: Data?;
+    
     var recognisedString : String = ""
     var languageCode : String = ""
     var lastUpdated : NSNumber! = NSNumber.init(value: 0.0)
@@ -29,13 +52,7 @@ import UIKit
         }
         
         if let characterRectsData = dict["characterRects"] as? Data{
-            let characterRectValues:[NSValue]? = NSDataValueConverter.rectValuesArray(from: characterRectsData)
-            var characterRects :[CGRect] = []
-            characterRectValues?.forEach { (rectValue) in
-                let charRect = rectValue.cgRectValue
-                characterRects.append(charRect)
-            }
-            self.characterRects = characterRects
+            self.charRectsData = characterRectsData;
         }
         if let lastUpdated = dict["lastUpdated"] as? NSNumber{
             self.lastUpdated = lastUpdated

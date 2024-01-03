@@ -22,6 +22,7 @@ enum FTTemplatesServiceError: String, Error {
     case templateNotFound = "Template Not Found"
     case savingError = "Error while saving Template"
     case unableToDownloadStickers = "Error while downloading stickers"
+    case unableToDownloadInspirations = "Error while downloading Inspirations"
 
 }
 
@@ -29,6 +30,7 @@ protocol FTStoreServiceApi {
     func fetchTemplates() -> AnyPublisher<FTStoreModel, FTTemplatesServiceError>
     func downloadTemplateFor(url: URL) async throws -> URL
     func downloadStickersFor(url: URL, fileName: String) async throws -> URL
+    func downloadinspirationJournalFor(url: URL, fileName: String) async throws -> URL
 }
 
 protocol FTLocalServiceApi {
@@ -122,6 +124,30 @@ class FTStoreService: FTStoreServiceApi {
                     let success = SSZipArchive.unzipFile(atPath: tempUrl.path, toDestination: dest.path)
                     if success == false {
                         continuation.resume(throwing: FTTemplatesServiceError.unableToDownloadStickers)
+                    }
+                    continuation.resume(returning: dest)
+                }
+            }
+            task.resume()
+        }
+    }
+
+    func downloadinspirationJournalFor(url: URL, fileName: String) async throws -> URL {
+        let dest = FTTemplatesCache().templatesFolder.appendingPathComponent(fileName)
+        if FileManager.default.fileExists(atPath: dest.path) {
+            return dest
+        }
+        let session = URLSession(configuration: .default)
+        let request = URLRequest(url: url)
+        return try await withCheckedThrowingContinuation { continuation in
+            let task = session.downloadTask(with: request) { responseUrl, response, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                }
+                if let tempUrl = responseUrl {
+                    let success = SSZipArchive.unzipFile(atPath: tempUrl.path, toDestination: dest.path)
+                    if success == false {
+                        continuation.resume(throwing: FTTemplatesServiceError.unableToDownloadInspirations)
                     }
                     continuation.resume(returning: dest)
                 }

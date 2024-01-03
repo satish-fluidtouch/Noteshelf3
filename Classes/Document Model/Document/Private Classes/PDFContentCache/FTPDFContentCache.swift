@@ -28,17 +28,12 @@ class FTPDFContentCache: NSObject {
         return self.canContinuePDFContentSearch(page.uuid);
     }
     
-    func pdfContentFor(_ pageProtocol: FTPageProtocol) -> FTPDFPageContent? {
-        let key = pageProtocol.associatedPDFFileName.appending("_\(pageProtocol.associatedPDFKitPageIndex)");
-        let pdfContent = self.readCache(key);
-        return pdfContent;
+    func pdfContentFor(_ pageProtocol: FTPageProtocol) -> FTPDFPageCacheContent? {
+        return FTPDFPageCacheFactory.cachedPageContent(self.documentUUID, pageProtocol: pageProtocol);
     }
     
-    func cachePDFContent(_ pdfPage: PDFPage, pageProtocol: FTPageProtocol) -> FTPDFPageContent {
-        let key = pageProtocol.associatedPDFFileName.appending("_\(pageProtocol.associatedPDFKitPageIndex)");
-        
+    func cachePDFContent(_ pdfPage: PDFPage, pageProtocol: FTPageProtocol) -> FTPDFPageCacheContent {
         self.pdfContentSearchDidStart(pageProtocol.uuid);
-
         let string: String;
         if let sel = pdfPage.selection(for: pdfPage.bounds(for: .cropBox))  {
             string = sel.string ?? "";
@@ -58,61 +53,14 @@ class FTPDFContentCache: NSObject {
                 charRects.append(charRect);
             }
         }
-        let pdfContent = FTPDFPageContent(pdfContent: string, charRects: charRects);
+        
+        let pdfContent = FTPDFPageCacheFactory.pdfPageContent(self.documentUUID, pageProtocol: pageProtocol);
+        pdfContent.update(pdfContent: string, charRects: charRects)
         self.pdfContentSearchDidComplete(pageProtocol.uuid);
         self.operationQuque.addOperation {
-            self.saveCache(pdfContent, key: key);
+            pdfContent.save();
         }
         return pdfContent
-    }
-}
-
-
-private extension FTPDFContentCache {
-    var cachePath: URL {
-        let cacheURL = URL.appPDFCacheURL;
-        let localMetadataFolder = cacheURL.appendingPathComponent(self.documentUUID);
-        if(!FileManager.default.fileExists(atPath: localMetadataFolder.path(percentEncoded: false))) {
-            _ = try? FileManager.default.createDirectory(at: localMetadataFolder, withIntermediateDirectories: true, attributes: nil);
-        }
-        return localMetadataFolder;
-    }
-
-    func cachePath(for key: String) -> URL
-    {
-        let localMetadataFolder = self.cachePath;
-        let fileName = key.appending("-index.plist");
-        return localMetadataFolder.appendingPathComponent(fileName);
-    }
-
-    func readCache(_ key: String) -> FTPDFPageContent? {
-        let path = self.cachePath(for: key);
-        do {
-            if FileManager().fileExists(atPath: path.path(percentEncoded: false)) {
-                let data = try Data(contentsOf: path)
-                if let value = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [FTPDFPageContent.self
-                                                                                  ,NSString.self
-                                                                                  ,NSArray.self
-                                                                                  ,NSValue.self
-                                                                                 ], from: data) as? FTPDFPageContent {
-                    return value;
-                }
-            }
-        }
-        catch {
-            debugLog("Loading failed: \(error.localizedDescription)")
-        }
-        return nil;
-    }
-
-    func saveCache(_ object: FTPDFPageContent, key: String) {
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false);
-            try data.write(to: self.cachePath(for: key), options: .atomic);
-        }
-        catch {
-            debugLog("Writing failed: \(error.localizedDescription)")
-        }
     }
 }
 
@@ -150,16 +98,19 @@ private extension FTPDFContentCache {
     }
 }
 
+private var _cacheFolder: URL?;
+
 extension URL {
     static var appPDFCacheURL: URL {
-        guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
-                                                                    .userDomainMask,
-                                                                    true).last else {
-            fatalError("library folder not found")
+        if nil == _cacheFolder {
+            guard let cacheFolder = NSSearchPathForDirectoriesInDomains(.cachesDirectory,
+                                                                        .userDomainMask,
+                                                                        true).last else {
+                fatalError("library folder not found")
+            }
+            _cacheFolder = URL(fileURLWithPath: cacheFolder).appendingPathComponent("ContentCache");
         }
-        let cacheFolderURL = URL(fileURLWithPath: cacheFolder);
-        let localMetadataFolder = cacheFolderURL.appendingPathComponent("ContentCache");
-        return localMetadataFolder;
+        return _cacheFolder!;
     }
     
     func delete() {
