@@ -39,6 +39,9 @@ import Foundation
     }
 
     private func hasElbow(points: [CGPoint]) -> Bool {
+        guard points.count >= 3 else {
+            return false  // There can't be an elbow with less than 3 points
+        }
         for i in 1..<points.count - 1 {
             let angle = calculateAngle(point1: points[i - 1], point2: points[i], point3: points[i + 1])
             if angle > thresholdAngle {
@@ -137,6 +140,9 @@ extension FTShapeCurve {
     }
     
     public func point(at t: CGFloat) -> CGPoint {
+        guard vertices.count >= 3 else {
+            return .zero
+        }
         let p0 = vertices[0]
         let p1 = vertices[1]
         let p2 = vertices[2]

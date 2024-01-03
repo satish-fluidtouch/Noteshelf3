@@ -271,7 +271,6 @@ class FTShapeAnnotationController: FTAnnotationEditController {
                 setAnchorPoint()
             } else {
                 currentKnob = knob
-//                knob.center = point
                 index = knob.segmentIndex
             }
             if shapeAnnotation.shape?.type() == .pentagon {
@@ -295,10 +294,8 @@ class FTShapeAnnotationController: FTAnnotationEditController {
     
     public func processTouchesMoved(_ firstTouch: UITouch, with event: UIEvent?) {
         hideKnobViews(true)
-        var point = firstTouch.location(in: self.view)
+        let point = firstTouch.location(in: self.view)
         let prevPoint = firstTouch.previousLocation(in: self.view)
-        let deltax = prevPoint.x - point.x
-        let deltay = prevPoint.y - point.y
         if let knob = currentKnob {
             knob.center = point
             index = knob.segmentIndex
@@ -1067,7 +1064,7 @@ extension FTShapeAnnotationController {
                 newFrame = newRectForResizing()
             }
             let convertedPoint = CGPoint(x: newFrame.midX , y: newFrame.midY)
-            let points = shapeAnnotation.getshapeControlPoints()
+            let points = shapeAnnotation.knobControlPoints()
             points.forEach { eachPoint in
                 var point = convertControlPoint(eachPoint)
                 point.rotate(by: -resizableView.transform.angle, refPoint: convertedPoint)
@@ -1081,7 +1078,7 @@ extension FTShapeAnnotationController {
     
     func newRectForResizing() -> CGRect {
         var invertedPoints = [CGPoint]()
-        let points = shapeAnnotation.getshapeControlPoints()
+        let points = shapeAnnotation.knobControlPoints()
         points.forEach { eachPoint in
             let point = convertControlPoint(eachPoint)
             invertedPoints.append(point)
@@ -1167,7 +1164,7 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
     
     @objc func addKnobsForControlPoints() {
         if !shapeAnnotation.isPerfectShape() {
-            let points = shapeAnnotation.knobControlPoints()
+            let points = shapeAnnotation.getshapeControlPoints()
             for (i, ftPoint) in points.enumerated() {
                 let point = convertControlPoint(ftPoint)
                 let knobView = FTKnobView()

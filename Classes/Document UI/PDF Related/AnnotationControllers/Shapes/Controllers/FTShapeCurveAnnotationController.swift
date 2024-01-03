@@ -23,26 +23,24 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
     }
     
     override func processTouchesMoved(_ firstTouch: UITouch, with event: UIEvent?) {
-        if shapeEditType == .resize && !annotation.inLineEditing {
-            hideKnobViews(true)
+        hideKnobViews(true)
+        if shapeEditType == .resize , !annotation.inLineEditing , let knob = currentKnob {
             var point = firstTouch.location(in: self.view)
             let prevPoint = firstTouch.previousLocation(in: self.view)
             let deltax = prevPoint.x - point.x
             let deltay = prevPoint.y - point.y
-            if let knob = currentKnob {
-                if knob.segmentIndex == 1 {
-                    var controlPoint = shapeAnnotation.getshapeControlPoints()[1]
-                    controlPoint.x -= deltax * 2
-                    controlPoint.y -= deltay * 2
-                    point = controlPoint
-                }
-                index = knob.segmentIndex
-                updateSegments(index: index, point: point)
-                if knob.segmentIndex == 1 {
-                    knob.center = self.point(at: 0.5)
-                } else {
-                    knob.center = point
-                }
+            if knob.segmentIndex == 1 {
+                var controlPoint = shapeAnnotation.getshapeControlPoints()[1]
+                controlPoint.x -= deltax * 2
+                controlPoint.y -= deltay * 2
+                point = controlPoint
+            }
+            index = knob.segmentIndex
+            updateSegments(index: index, point: point)
+            if knob.segmentIndex == 1 {
+                knob.center = self.point(at: 0.5)
+            } else {
+                knob.center = point
             }
         } else {
             super.processTouchesMoved(firstTouch, with: event)
@@ -63,8 +61,26 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
         updateContrlPointKnob()
     }
     
+    override func addKnobsForControlPoints() {
+        let points = self.shapeAnnotation.getshapeControlPoints()
+        if let firstPoint = points.first, let lastPoint = points.last {
+            let controlPoint = point(at: 0.5)
+            let knobPoints = [firstPoint, controlPoint, lastPoint]
+            for (i, ftPoint) in knobPoints.enumerated() {
+                let point = convertControlPoint(ftPoint)
+                let knobView = FTKnobView()
+                knobView.segmentIndex = i
+                knobView.center = point
+                view.addSubview(knobView)
+            }
+        }
+    }
+    
     public func point(at t: CGFloat) -> CGPoint {
         let points = shapeAnnotation.getshapeControlPoints()
+        guard points.count >= 3 else {
+            return .zero
+        }
         let p0 = points[0]
         let p1 = points[1]
         let p2 = points[2]

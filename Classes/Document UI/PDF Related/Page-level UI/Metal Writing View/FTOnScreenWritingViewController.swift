@@ -428,7 +428,7 @@ extension FTOnScreenWritingViewController
                     rectToRefresh = detectedShape.areaToRefresh;
                     foundShape = true;
                     if let ann = detectedShape.strokes?.first as? FTAnnotation {
-                        ann.inLineEditing = true
+                        ann.inLineEditing = isShapeEnabled
                         self.delegate?.editShapeAnnotation(with: ann, point: touch.activeUItouch.location(in: self.view))
                     }
                 }
