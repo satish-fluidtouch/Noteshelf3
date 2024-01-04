@@ -13,13 +13,10 @@ class FTWhatsNew2024PlannerController: FTWhatsNewSlideViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.learnMoreBtn?.addTarget(self, action: #selector(learnMoreBtnAction(_ :)), for: .touchUpInside)
     }
     
-    override func playAnimation() {
-    }
-
-    override func stopAnimation() {
+    @objc override func learnMoreBtnAction(_ button: UIButton) {
     }
     /*
     // MARK: - Navigation

@@ -13,10 +13,11 @@ class FTWhatsNewUserPlannerController: FTWhatsNewSlideViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.learnMoreBtn?.addTarget(self, action: #selector(learnMoreBtnAction(_ :)), for: .touchUpInside)
     }
-    
 
+    @objc override func learnMoreBtnAction(_ button: UIButton) {
+    }
     /*
     // MARK: - Navigation
 
