@@ -154,6 +154,15 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
     }
     
+    func selectAndOpenTemplates(with url: URL) {
+        if url.path().contains(FTAppIntentHandler.templatesPlannersPath) {
+            self.sideMenuController?.selectAndOpenTemplatesScreen()
+            // TODO: // To scroll to particular section
+        } else {
+            self.sideMenuController?.selectAndOpenTemplatesScreen()
+        }
+    }
+    
     private func setupView(){
         self.preferredDisplayMode = .oneBesideSecondary
         self.preferredSplitBehavior = .tile
