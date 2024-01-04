@@ -5,7 +5,7 @@
 "AboutOptionWhatsNew" = "新着";
 "AboutVisitNoteshelfWebsite" = "ノートシェルフのウェブサイトを訪れる";
 "Accept" = "受け入れる";
-"AccountInfoFormat" = "あなたの使用済みの%@の%@を日本語に翻訳してください。これはノートアプリのUIラベルに使用されます。";
+"AccountInfoFormat" = "%@/%@ が で使用されています";
 "ActualSize" = "実際のサイズ";
 "Add" = "追加";
 "AddBtnNameInAlert" = "追加 (Tsuijou)";
@@ -1565,4 +1565,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 4 January 2024 at 19:11
+// Last Synced by Akshay on 4 January 2024 at 20:30
