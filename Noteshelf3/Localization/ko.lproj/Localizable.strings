@@ -5,7 +5,7 @@
 "AboutOptionWhatsNew" = "무슨 소식이야";
 "AboutVisitNoteshelfWebsite" = "방문 Noteshelf 웹사이트";
 "Accept" = "수락";
-"AccountInfoFormat" = "%@의 %@ 사용됨'";
+"AccountInfoFormat" = "%@의 %@ 사용됨";
 "ActualSize" = "실제 크기";
 "Add" = "추가";
 "AddBtnNameInAlert" = "추가";
@@ -1124,6 +1124,12 @@
 "importedTo" = "들여옴";
 "insidenotebook.share.pageno" = "페이지 %@";
 "insidenotebook.share.pagescount" = "%@ 페이지'";
+"irate.variation.message.a" = "리뷰를 남겨주세요. 당신이 상상하는 것보다 더 큰 도움이 될 것입니다.";
+"irate.variation.message.b" = "앱스토어에서 저희를 리뷰해 주시고, 어떻게 하는지 알려주세요.";
+"irate.variation.message.c" = "앱스토어에서 리뷰를 작성하고 우리의 소식을 퍼뜨려주세요.";
+"irate.variation.title.a" = "Noteshelf 3를 즐기고 계시나요?";
+"irate.variation.title.b" = "귀하의 피드백은 우리에게 큰 의미가 있습니다.";
+"irate.variation.title.c" = "Noteshelf 3 경험을 공유해 주세요.";
 "journalpreview.createjournal" = "일지 만들기";
 "labels" = "라벨";
 "lasso.select.textbox" = "텍스트 상자";
@@ -1548,9 +1554,15 @@
 "welcome.unsplash" = "언스플래시";
 "welcome.webClips" = "웹 클립";
 "welcome.zoombox" = "줌 박스";
+"whatsnew.planner1.cta" = "템플릿으로 이동";
+"whatsnew.planner1.description" = "내부 디자이너들이 만든 아름다운 2페이지 스프레드 플래너로 내년을 위한 목표를 설정하고 습관을 추적하며 일정을 계획하고 조직하세요.";
+"whatsnew.planner1.title" = "우리의 2024 플래너가 여기 있습니다!";
+"whatsnew.planner2.cta" = "지금 확인해 보세요!";
+"whatsnew.planner2.description" = "일부 유능한 창작자들로부터 선별한 템플릿 섹션에서 매력적인 디지털 플래너를 발견하세요.";
+"whatsnew.planner2.title" = "더 많은 2024 계획자!";
 "widgets" = "위젯";
 "work" = "일";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 28 December 2023 at 17:23
+// Last Synced by Akshay on 4 January 2024 at 19:11
