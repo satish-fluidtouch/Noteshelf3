@@ -1145,6 +1145,9 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
         if (!refPoints.isEmpty) {
             controlPoints = refPoints
         }
+        guard knobViews.count == controlPoints.count else {
+            return
+        }
         for (index,view) in knobViews.enumerated() {
             if let _knobView = view as? FTKnobView, !controlPoints.isEmpty {
                 let controlPoint = controlPoints[index]
