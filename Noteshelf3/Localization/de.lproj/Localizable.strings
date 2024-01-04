@@ -1548,9 +1548,15 @@
 "welcome.unsplash" = "UNSPLASH";
 "welcome.webClips" = "WEB CLIPS";
 "welcome.zoombox" = "ZOOM BOX";
+"whatsnew.planner1.cta" = "Zu Vorlagen gehen";
+"whatsnew.planner1.description" = "Setze Ziele, verfolge Gewohnheiten, plane und organisiere deine Tage für das kommende Jahr mit einem wunderschönen 2-Seiten-Planer, entworfen von unseren hauseigenen Designern.";
+"whatsnew.planner1.title" = "Unser 2024 Planer ist da!";
+"whatsnew.planner2.cta" = "Schauen Sie sie sich jetzt an!";
+"whatsnew.planner2.description" = "Entdecken Sie bezaubernde digitale Planer in der Vorlagen-Sektion, die wir von talentierten Erstellern zusammengestellt haben.";
+"whatsnew.planner2.title" = "Mehr 2024 Planer!";
 "widgets" = "Widgets";
 "work" = "Arbeit";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 28 December 2023 at 17:23
+// Last Synced by Akshay on 29 December 2023 at 11:23

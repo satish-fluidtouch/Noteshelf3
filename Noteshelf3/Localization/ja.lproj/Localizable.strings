@@ -1548,9 +1548,15 @@
 "welcome.unsplash" = "アンスプラッシュ";
 "welcome.webClips" = "ウェブクリップ";
 "welcome.zoombox" = "ズームボックス";
+"whatsnew.planner1.cta" = "テンプレートに移動";
+"whatsnew.planner1.description" = "私たちの社内デザイナーが作成した美しい2ページのプランナーで、来年の目標を設定し、習慣を追跡し、日々を計画し整理しましょう。";
+"whatsnew.planner1.title" = "私たちの2024年のプランナーがここにあります！";
+"whatsnew.planner2.cta" = "今すぐ見に来てください！";
+"whatsnew.planner2.description" = "テンプレートセクションで厳選した才能あるクリエイターたちからの魅力的なデジタルプランナーを見つけてください。";
+"whatsnew.planner2.title" = "もっと2024年のプランナー！";
 "widgets" = "ウィジェット";
 "work" = "仕事";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 28 December 2023 at 17:23
+// Last Synced by Akshay on 29 December 2023 at 11:23
