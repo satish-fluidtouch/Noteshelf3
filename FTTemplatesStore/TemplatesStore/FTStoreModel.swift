@@ -142,9 +142,29 @@ struct DiscoveryItem: Codable, Hashable {
 
 }
 
+private enum ThumbnailOrientationv1: Codable {
+    case potrait, landscape
+}
 
 // MARK: - FTTemplateStyle
 struct FTTemplateStyle: Codable, Hashable {
+    internal init(title: String, type: String, templateName: String, version: Int, orientation: ThumbnailOrientation? = .potrait, stylePath: String? = nil, stylePortToken: String? = nil, styleLandToken: String? = nil, templatePortToken: String? = nil, templateLandToken: String? = nil, previewToken: String? = nil, fileName: String? = "", fileToken: String? = "", authorToken: String? = nil) {
+        self.title = title
+        self.type = type
+        self.templateName = templateName
+        self.version = version
+        self.orientation = orientation
+        self.stylePath = stylePath
+        self.stylePortToken = stylePortToken
+        self.styleLandToken = styleLandToken
+        self.templatePortToken = templatePortToken
+        self.templateLandToken = templateLandToken
+        self.previewToken = previewToken
+        self.fileName = fileName
+        self.fileToken = fileToken
+        self.authorToken = authorToken
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -183,6 +203,33 @@ struct FTTemplateStyle: Codable, Hashable {
         case fileName
         case fileToken
         case authorToken
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        title = try values.decode(String.self, forKey: .title)
+        type = try values.decode(String.self, forKey: .type)
+        templateName = try values.decode(String.self, forKey: .templateName)
+        version = try values.decode(Int.self, forKey: .version)
+
+        if let orientationValue = try? values.decodeIfPresent(ThumbnailOrientation.self, forKey: .orientation) {
+            orientation = orientationValue;
+        }
+        else if let orientationValue = try? values.decodeIfPresent(ThumbnailOrientationv1.self, forKey: .orientation) {
+            if orientationValue == .landscape {
+                orientation = .landscape;
+            }
+        }
+
+        stylePath  = try values.decodeIfPresent(String.self, forKey: .stylePath)
+        stylePortToken  = try values.decodeIfPresent(String.self, forKey: .stylePortToken)
+        styleLandToken  = try values.decodeIfPresent(String.self, forKey: .styleLandToken)
+        templatePortToken  = try values.decodeIfPresent(String.self, forKey: .templatePortToken)
+        templateLandToken  = try values.decodeIfPresent(String.self, forKey: .templateLandToken)
+        previewToken  = try values.decodeIfPresent(String.self, forKey: .previewToken)
+        fileName = try values.decodeIfPresent(String.self, forKey: .fileName)
+        fileToken = try values.decodeIfPresent(String.self, forKey: .fileToken)
+        authorToken  = try values.decodeIfPresent(String.self, forKey: .authorToken)
     }
 
     func styleThumbnailFor(template: TemplateInfo) -> URL {
