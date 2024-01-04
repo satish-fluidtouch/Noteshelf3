@@ -223,13 +223,15 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if documentItem.isDownloaded && shouldFetchCoverImage{
-            self.shouldFetchCoverImage = false
-            self.progress = 1.0;
+        if documentItem.isDownloaded {
             self.isNotDownloaded = false
-            self.stopDownloadingProgressView()
-            if self.isVisible {
-                self.fetchCoverImage()
+            if shouldFetchCoverImage {
+                self.shouldFetchCoverImage = false
+                self.progress = 1.0;
+                self.stopDownloadingProgressView()
+                if self.isVisible {
+                    self.fetchCoverImage()
+                }
             }
         }
         else if documentItem.isDownloading {

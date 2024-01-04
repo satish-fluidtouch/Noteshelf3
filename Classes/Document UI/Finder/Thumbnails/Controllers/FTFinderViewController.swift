@@ -2073,7 +2073,13 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
     }
     
     func scrollToTop() {
-        self.collectionView.scrollToItem(at: IndexPath.init(item: 0, section: 0), at: .top, animated: false);
+        if selectedSegment == .pages {
+            let itemIndex = 0
+            let items = collectionView.numberOfItems(inSection: 0)
+            if itemIndex < items {
+                self.collectionView.scrollToItem(at: IndexPath.init(item: itemIndex, section: 0), at: .top, animated: false);
+            }
+        }
     }
 }
 
