@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 class FTWhatsNewUserPlannerController: FTWhatsNewSlideViewController {
 
@@ -17,7 +18,16 @@ class FTWhatsNewUserPlannerController: FTWhatsNewSlideViewController {
     }
 
     @objc override func learnMoreBtnAction(_ button: UIButton) {
+        var components = URLComponents()
+        components.scheme = FTSharedGroupID.getAppBundleID()
+        components.path = FTAppIntentHandler.templatesPlannersPath
+        if let url = components.url {
+            self.dismiss(animated: true) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
+    
     /*
     // MARK: - Navigation
 
