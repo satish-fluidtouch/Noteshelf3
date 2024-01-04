@@ -5,7 +5,7 @@
 "AboutOptionWhatsNew" = "¿Qué hay de nuevo?";
 "AboutVisitNoteshelfWebsite" = "Visita el sitio web de Noteshelf.";
 "Accept" = "Aceptar";
-"AccountInfoFormat" = "%@ de %@ utilizado en tu'";
+"AccountInfoFormat" = "%@ de %@ utilizado en tu";
 "ActualSize" = "Tamaño real";
 "Add" = "Agregar";
 "AddBtnNameInAlert" = "Añadir";
@@ -1124,6 +1124,12 @@
 "importedTo" = "Importado a";
 "insidenotebook.share.pageno" = "página %@";
 "insidenotebook.share.pagescount" = "%@ páginas'";
+"irate.variation.message.a" = "Déjanos una reseña. Nos ayudará más de lo que puedes imaginar.";
+"irate.variation.message.b" = "Tómese un momento para revisarnos en la AppStore y déjenos saber cómo lo estamos haciendo.";
+"irate.variation.message.c" = "Califícanos en la AppStore y ayúdanos a correr la voz.";
+"irate.variation.title.a" = "¿Estás disfrutando de Noteshelf 3?";
+"irate.variation.title.b" = "Sus comentarios significan mucho para nosotros.";
+"irate.variation.title.c" = "Comparte tu experiencia con Noteshelf 3.";
 "journalpreview.createjournal" = "Crear Diario";
 "labels" = "Etiquetas";
 "lasso.select.textbox" = "Cajas de texto";
@@ -1559,4 +1565,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 29 December 2023 at 11:23
+// Last Synced by Akshay on 4 January 2024 at 20:30

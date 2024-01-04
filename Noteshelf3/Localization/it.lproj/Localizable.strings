@@ -1124,6 +1124,12 @@
 "importedTo" = "Importato a";
 "insidenotebook.share.pageno" = "pagina %@";
 "insidenotebook.share.pagescount" = "%@ pagine";
+"irate.variation.message.a" = "Lasciaci una recensione. Ci aiuterà più di quanto tu possa immaginare.";
+"irate.variation.message.b" = "Prenditi un momento per recensirci sull'AppStore e farci sapere come stiamo andando.";
+"irate.variation.message.c" = "Recensisci su AppStore e aiutaci a diffondere la parola.";
+"irate.variation.title.a" = "Ti piace Noteshelf 3?";
+"irate.variation.title.b" = "Il tuo feedback significa molto per noi.";
+"irate.variation.title.c" = "Condividi la tua esperienza con Noteshelf 3.";
 "journalpreview.createjournal" = "Crea giornale";
 "labels" = "Etichette";
 "lasso.select.textbox" = "Caselle di testo";
@@ -1559,4 +1565,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 29 December 2023 at 11:23
+// Last Synced by Akshay on 4 January 2024 at 20:30
