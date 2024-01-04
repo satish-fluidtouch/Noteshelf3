@@ -19,7 +19,7 @@ class FTTextLinkViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     @IBOutlet private weak var tableView: UITableView?
     private let viewModel = FTTextLinkViewModel()
-    weak var delegate: FTDocumentInfoDelegate?
+    weak var delegate: FTTextLinkEditDelegate?
     
     private var linkInfo: FTTextLinkInfo?
     
@@ -109,5 +109,11 @@ extension FTTextLinkViewController: FTTextLinkInfoDelegate {
     func updateTextLinkInfo(_ info: FTTextLinkInfo) {
         self.linkInfo = info
         self.delegate?.updateTextLinkInfo(info)
+    }
+    
+    func removeLink() {
+        self.dismiss(animated: true) {
+            self.delegate?.removeLink()
+        }
     }
 }

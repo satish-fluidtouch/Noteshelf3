@@ -163,10 +163,17 @@ extension FTPDFRenderViewController
     }
     
     @objc func navigateToPage(with pageId: String) {
-        if let index = self.pdfDocument.pages().firstIndex(where: { $0.uuid == pageId }) {
-            print("zzzz - navigateToPage page id: \(pageId) and index: \(index) - \n")
+        var reqIndex: Int?
+        if pageId.isEmpty {
+            reqIndex = 0
+        } else if let index = self.pdfDocument.pages().firstIndex(where: { $0.uuid == pageId }) {
+            reqIndex = index
+        }
+        if let index = reqIndex {
             self.showPage(at: index, forceReLayout: false, animate: false)
-        } 
+        } else {
+            // Page not avialable
+        }
     }
 }
 

@@ -93,7 +93,6 @@ extension FTTextAnnotationViewController {
         attributedString.addAttribute(.link, value: url, range: range)
         attributedString.addAttributes(NSAttributedString.linkAttributes, range: range)
         self.textInputView.attributedText = attributedString
-        print("zzzz - updated link: \(url) and attributedString: \(attributedString)")
     }
     
     @objc internal func performLookUpMenu(_ sender: Any?) {
@@ -291,12 +290,25 @@ extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
 
 #endif
 
-extension FTTextAnnotationViewController: FTDocumentInfoDelegate {
+extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
     func updateTextLinkInfo(_ info: FTTextLinkInfo) {
         let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        print("zzzz - Range: \(range)")
         if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: info.docUUID, pageId: info.pageUUID) {
             self.updateLinkAttribute(with: url, for: range)
         }
+    }
+    
+    func removeLink() {
+        guard let attrText = self.textInputView.attributedText else {
+            return
+        }
+        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
+        let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
+        attributedString.removeAttribute(.link, range: NSRange(location: 0, length: attrText.length))
+        let keys = NSAttributedString.linkAttributes.keys
+        keys.forEach { attr in
+            attributedString.removeAttribute(attr, range: range)
+        }
+        self.textInputView.attributedText = attributedString
     }
 }
