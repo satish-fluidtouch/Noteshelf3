@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y9n-Al-kat">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y9n-Al-kat">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,9 +16,6 @@
         </array>
         <array key="SF-Pro-Display-Regular.otf">
             <string>SFProDisplay-Regular</string>
-        </array>
-        <array key="SF-Pro-Text-Regular.otf">
-            <string>SFProText-Regular</string>
         </array>
         <array key="SF-Pro-Text-Semibold.otf">
             <string>SFProText-Semibold</string>
@@ -274,20 +270,21 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8WB-q6-cR8" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="28" y="74" width="524" height="57.5"/>
+                                        <rect key="frame" x="28" y="72" width="524" height="57.5"/>
                                         <string key="text">Set goals, track habits, plan and organize your days for the coming year with a beautiful 2-page spread planner crafted by our in-house designers</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner1.description"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWs-fG-vIX" customClass="FTCustomButton" customModule="FTCommon">
-                                        <rect key="frame" x="28" y="145.5" width="120" height="30"/>
+                                        <rect key="frame" x="28" y="137.5" width="120" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="BYC-1V-Cy2"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <state key="normal" title="Go to Templates">
                                             <color key="titleColor" name="groupNotesCountTint"/>
                                         </state>
@@ -301,11 +298,11 @@
                                     <constraint firstItem="8WB-q6-cR8" firstAttribute="trailing" secondItem="jVz-c6-8Gy" secondAttribute="trailing" id="8oT-E3-1K1"/>
                                     <constraint firstItem="jVz-c6-8Gy" firstAttribute="top" secondItem="UNu-Rj-nyX" secondAttribute="top" constant="30" id="Cir-aa-Y1o"/>
                                     <constraint firstItem="oWs-fG-vIX" firstAttribute="leading" secondItem="UNu-Rj-nyX" secondAttribute="leading" constant="28" id="NQu-MB-YpE"/>
-                                    <constraint firstItem="oWs-fG-vIX" firstAttribute="top" secondItem="8WB-q6-cR8" secondAttribute="bottom" constant="14" id="U7k-Xg-FJJ"/>
+                                    <constraint firstItem="oWs-fG-vIX" firstAttribute="top" secondItem="8WB-q6-cR8" secondAttribute="bottom" constant="8" id="U7k-Xg-FJJ"/>
                                     <constraint firstItem="jVz-c6-8Gy" firstAttribute="leading" secondItem="UNu-Rj-nyX" secondAttribute="leading" constant="28" id="ZZs-ft-RjB"/>
                                     <constraint firstAttribute="trailing" secondItem="jVz-c6-8Gy" secondAttribute="trailing" constant="28" id="gCH-0X-qo3"/>
                                     <constraint firstItem="8WB-q6-cR8" firstAttribute="leading" secondItem="jVz-c6-8Gy" secondAttribute="leading" id="qmH-Yb-qSO"/>
-                                    <constraint firstItem="8WB-q6-cR8" firstAttribute="top" secondItem="jVz-c6-8Gy" secondAttribute="bottom" constant="10" id="rLx-K6-1S0"/>
+                                    <constraint firstItem="8WB-q6-cR8" firstAttribute="top" secondItem="jVz-c6-8Gy" secondAttribute="bottom" constant="8" id="rLx-K6-1S0"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -376,7 +373,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover delightful digital planners in the Templates section that we’ve curated from amazing creators." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvd-y2-qdE" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="28" y="74" width="524" height="38.5"/>
+                                        <rect key="frame" x="28" y="72" width="524" height="38.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
@@ -384,11 +381,11 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nwb-SB-sYE" customClass="FTCustomButton" customModule="FTCommon">
-                                        <rect key="frame" x="28" y="126.5" width="144" height="30"/>
+                                        <rect key="frame" x="28" y="118.5" width="149" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="gOy-kA-mj7"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <state key="normal" title="Check them out now!">
                                             <color key="titleColor" name="groupNotesCountTint"/>
                                         </state>
@@ -402,10 +399,10 @@
                                     <constraint firstItem="mvd-y2-qdE" firstAttribute="leading" secondItem="0VJ-Pj-58W" secondAttribute="leading" id="64t-WO-XvK"/>
                                     <constraint firstItem="Nwb-SB-sYE" firstAttribute="leading" secondItem="KK3-oi-AVG" secondAttribute="leading" constant="28" id="8Ha-XA-feg"/>
                                     <constraint firstItem="0VJ-Pj-58W" firstAttribute="top" secondItem="KK3-oi-AVG" secondAttribute="top" constant="30" id="8jZ-Wv-hfk"/>
-                                    <constraint firstItem="mvd-y2-qdE" firstAttribute="top" secondItem="0VJ-Pj-58W" secondAttribute="bottom" constant="10" id="AFC-hl-f7H"/>
+                                    <constraint firstItem="mvd-y2-qdE" firstAttribute="top" secondItem="0VJ-Pj-58W" secondAttribute="bottom" constant="8" id="AFC-hl-f7H"/>
                                     <constraint firstItem="mvd-y2-qdE" firstAttribute="trailing" secondItem="0VJ-Pj-58W" secondAttribute="trailing" id="SMC-Km-KdX"/>
                                     <constraint firstAttribute="trailing" secondItem="0VJ-Pj-58W" secondAttribute="trailing" constant="28" id="ZE7-2x-9S9"/>
-                                    <constraint firstItem="Nwb-SB-sYE" firstAttribute="top" secondItem="mvd-y2-qdE" secondAttribute="bottom" constant="14" id="e7S-0y-Uih"/>
+                                    <constraint firstItem="Nwb-SB-sYE" firstAttribute="top" secondItem="mvd-y2-qdE" secondAttribute="bottom" constant="8" id="e7S-0y-Uih"/>
                                     <constraint firstItem="0VJ-Pj-58W" firstAttribute="leading" secondItem="KK3-oi-AVG" secondAttribute="leading" constant="28" id="zTF-Q6-IxX"/>
                                 </constraints>
                             </view>
@@ -437,7 +434,7 @@
     </scenes>
     <resources>
         <image name="whatsNewClose" width="30" height="30"/>
-        <image name="whats_new_2024" width="557.5" height="321"/>
+        <image name="whats_new_2024" width="700" height="453"/>
         <image name="whats_new_user_2024" width="526" height="387"/>
         <namedColor name="bgColor">
             <color red="0.9882352941176471" green="0.9882352941176471" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
