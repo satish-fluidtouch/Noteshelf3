@@ -150,7 +150,7 @@ class FTTemplatePreviewViewController: UIViewController {
 
     func loadAuthorDetails() {
         if let authorImageUrl = self.template.authorImageUrl {
-            authorImageView.sd_setImage(with: authorImageUrl)
+            authorImageView.sd_setImage(with: authorImageUrl, placeholderImage: nil, options: .refreshCached)
         }
         authorButton.setTitle(template.author, for: .normal)
     }
@@ -726,7 +726,9 @@ extension FTTemplatePreviewViewController: FTDairyDateSelectionPickerDelegate {
                 isLandscape = true
             }
             if let thumbnailUrl = template.thumbnailUrl {
-                UIImageView().sd_setImage(with: thumbnailUrl) { [weak self] image, _, _, _ in
+                UIImageView().sd_setImage(with: thumbnailUrl
+                                          , placeholderImage: nil
+                                          , options: .refreshCached) { [weak self] image, _, _, _ in
                     guard let self = self else { return }
                     if let image {
                         FTStoreContainerHandler.shared.actionStream.send(.createNotebookForDairy(fileName: self.template.fileName, title: self.template.title, startDate: startDate, endDate: endDate, coverImage: image, isLandScape: isLandscape))
