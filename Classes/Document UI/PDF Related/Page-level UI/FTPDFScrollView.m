@@ -25,15 +25,6 @@ NSString *const FTZoomRenderViewDidFinishMoving = @"FTZoomRenderViewDidFinishMov
 
 extern float distanceBetweenPoints2(CGPoint a, CGPoint b);
 
-CGFloat verticalModeMinZoomScale = 1.0f;
-
-//While changing to 12x consider old GPUs which do not support argument buffers.
-const CGFloat _maxZoomScale = 6.0f;
-const CGFloat _minZoomScale = 1.0f;
-
-const CGFloat _oomModeMaxZoomScale = 6.0f;
-const CGFloat _zoomModeMinZoomScale = 1.0f;
-
 @interface FTPDFScrollView()
 {
     CGFloat previousScrollviewScale;
@@ -51,7 +42,6 @@ const CGFloat _zoomModeMinZoomScale = 1.0f;
     CGFloat _zoomFactor;
     
     BOOL _zoomBoxIsScrolling;
-
 }
 
 @property (weak)FTSelectionHighlightView *searchHighlightView;
@@ -182,11 +172,11 @@ parentViewController:(FTPageViewController*)controller
 }
 
 -(CGFloat)maxZoomScale {
-    return [FTPDFScrollView maxZoomScale:self.mode];
+    return [[FTDocumentScrollViewZoomScale shared] maximumZoomScale:self.mode];
 }
 
 -(CGFloat)minZoomScale {
-    return [FTPDFScrollView minZoomScale:self.mode];
+    return [[FTDocumentScrollViewZoomScale shared] minimumZoomScale:self.mode];
 }
 
 -(void)setZoomFactor:(CGFloat)inzoomFactor
@@ -1233,19 +1223,13 @@ CGPoint lastPoint1,lastPoint2;
     }
 }
 
-+(CGFloat)maxZoomScale:(FTRenderMode)mode {
-    if(mode == FTRenderModeZoom) {
-        return  _oomModeMaxZoomScale;
-    }
-    return  _maxZoomScale;
-}
-
-+(CGFloat)minZoomScale:(FTRenderMode)mode {
-    if(mode == FTRenderModeZoom) {
-        return  _zoomModeMinZoomScale;
-    }
-    return verticalModeMinZoomScale;
-}
+//+(CGFloat)maxZoomScale:(FTRenderMode)mode {
+//    return  [[FTDocumentScrollViewZoomScale shared] maximumZoomScale:mode];
+//}
+//
+//+(CGFloat)minZoomScale:(FTRenderMode)mode {
+//    return [[FTDocumentScrollViewZoomScale shared] minimumZoomScale:mode];
+//}
 
 - (BOOL)isScrolling {
     if(self.mode == FTRenderModeZoom) {
@@ -1261,14 +1245,6 @@ CGPoint lastPoint1,lastPoint2;
     if (self.mode == FTRenderModeZoom) {
         _zoomBoxIsScrolling = isScrolling;
     }
-}
-
-+(void)setMinZoomScale:(CGFloat)minZoomScale {
-    verticalModeMinZoomScale = minZoomScale;
-}
-
-+(CGFloat)getMinZoomScale {
-    return verticalModeMinZoomScale;
 }
 
 @end

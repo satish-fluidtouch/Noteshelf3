@@ -198,17 +198,17 @@ enum FTScrollViewMode: Int {
     }
     
     private var minZoomScale: CGFloat {
-        return FTPDFScrollView.minZoomScale(FTRenderModeDefault);
+        return FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeDefault);
     }
     
     private var maxZoomScale: CGFloat {
-        return FTPDFScrollView.maxZoomScale(FTRenderModeDefault);
+        return FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
     }
     
     func zoom(_ inScale : CGFloat,animate : Bool,completionBlock : (() -> ())?)
     {
-        let minZoomScale = FTPDFScrollView.minZoomScale(FTRenderModeDefault);
-        let maxZoomScale = FTPDFScrollView.maxZoomScale(FTRenderModeDefault);
+        let minZoomScale = self.minZoomScale;
+        let maxZoomScale = self.maxZoomScale;
 
         let scale = max(min(inScale,maxZoomScale),minZoomScale);
         
@@ -253,8 +253,8 @@ private extension FTDocumentScrollView
     func initialize()
     {
         self.addPageView();
-        self.maximumZoomScale = FTPDFScrollView.maxZoomScale(FTRenderModeDefault);
-        self.minimumZoomScale = FTPDFScrollView.minZoomScale(FTRenderModeDefault);
+        self.maximumZoomScale = self.maxZoomScale
+        self.minimumZoomScale = self.minZoomScale
         
         self.scrollsToTop = false;
         self.delaysContentTouches = false;

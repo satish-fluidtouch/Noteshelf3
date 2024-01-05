@@ -331,7 +331,7 @@
 #if !TARGET_OS_MACCATALYST
     if(self.isViewLoadingFirstime && [self bookScaleAnim]) {
         self.isViewLoadingFirstime = false;
-        [self prepareViewToShow:false];
+        [self prepareViewToShow:false isFirstTime:true];
         [self showNotebookInfoToast];
     }
 #endif
@@ -532,7 +532,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:FTPageDidUpdatedPropertiesNotification object:page];
 }
 
--(void)prepareViewToShow:(BOOL)animate
+-(void)prepareViewToShow:(BOOL)animate isFirstTime:(BOOL)isFristTime
 {
     self.showPageImmediately = true;
     [self.eachPageViewArray removeAllObjects];
@@ -542,10 +542,21 @@
         [self.eachPageViewArray addObject:[NSNull null]];
     }
     [self updateContentSize];
+    CGRect frame = [self.pageLayoutHelper frameFor:self.currentPageIndexToBeShown];
+    if(isFristTime && frame.size.width > self.mainScrollView.frame.size.width) {
+        CGSize aspectSize = aspectFittedRect(frame, self.mainScrollView.frame).size;
+        CGFloat scale = aspectSize.width/frame.size.width;
+        [self.mainScrollView zoom:scale animate:false completionBlock:nil];
+    }
     [self showPageAtIndex:self.currentPageIndexToBeShown
             forceReLayout:YES
                   animate:animate];
     [self updateContentOffsetPercentage];
+}
+
+-(void)prepareViewToShow:(BOOL)animate
+{
+    [self prepareViewToShow:animate isFirstTime:NO];
 }
 
 -(void)updateContentSize
@@ -553,16 +564,18 @@
     id currentScrollViewDel = self.mainScrollView.scrollViewDelegate;
     self.mainScrollView.contentInset = UIEdgeInsetsZero;
     self.mainScrollView.scrollViewDelegate = nil;
-    [self.pageLayoutHelper updateContentSizeWithPageCount:self.numberOfPages];
-
-    CGFloat currentZoomScale = [FTPDFScrollView getMinZoomScale];
-    CGFloat newZoomScale = [self.pageLayoutHelper minZoomFactor];
+    
+    CGFloat currentZoomScale = [[FTDocumentScrollViewZoomScale shared] minimumZoomScale:FTRenderModeDefault];
+    CGFloat newZoomScale = [self.pageLayoutHelper findZoomFactor:self.numberOfPages];
 
     if(newZoomScale != currentZoomScale) {
-        [FTPDFScrollView setMinZoomScale:newZoomScale];
-        [self.mainScrollView setMinimumZoomScale:newZoomScale];
+        [[FTDocumentScrollViewZoomScale shared]  setMinimumZoomScale:newZoomScale mode:FTRenderModeDefault];
+        [self.mainScrollView setMinimumZoomScale:self.mainScrollView.minimumZoomScale/(currentZoomScale/newZoomScale)];
+        if(self.mainScrollView.zoomFactor < newZoomScale) {
+            [self.mainScrollView zoom:newZoomScale animate:false completionBlock:nil];
+        }
     }
-
+    [self.pageLayoutHelper updateContentSizeWithPageCount:self.numberOfPages];
     self.mainScrollView.scrollViewDelegate = currentScrollViewDel;
 }
 
@@ -743,8 +756,11 @@
             self.mainScrollView.scrollViewDelegate = currentScrollViewDel;
         }
         CGRect pageFrame = [self frameFor:pdfPageIndex];
-        pageFrame.origin.x = MIN(pageFrame.origin.x,self.mainScrollView.contentSize.width - self.mainScrollView.frame.size.width);
-        pageFrame.origin.y = MIN(pageFrame.origin.y,self.mainScrollView.contentSize.height - self.mainScrollView.frame.size.height);
+        if(pageFrame.size.width < self.mainScrollView.frame.size.width) {
+            pageFrame.origin.x = pageFrame.origin.x - MAX(0, (CGRectGetWidth(self.mainScrollView.frame) - CGRectGetWidth(pageFrame)) * 0.5);
+        }
+        pageFrame.origin.x = MAX(MIN(pageFrame.origin.x,self.mainScrollView.contentSize.width - self.mainScrollView.frame.size.width),0);
+        pageFrame.origin.y = MAX(MIN(pageFrame.origin.y,self.mainScrollView.contentSize.height - self.mainScrollView.frame.size.height),0);
         NSInteger pageDifference = (self.currentlyVisiblePage.pageIndex - pdfPageIndex);
         if (labs(pageDifference) > 1){
             shouldAnimate = NO;
@@ -3365,17 +3381,17 @@
 -(void)pasteFromClipBoard {
     [self paste:nil];
 }
-
--(CGFloat)zoomModeMaxZoomScale
-{
-    return 6.0f;
-}
-
--(CGFloat)zoomModeMinZoomScale
-{
-    return 1.5f;
-}
-
+//
+//-(CGFloat)zoomModeMaxZoomScale
+//{
+//    return 6.0f;
+//}
+//
+//-(CGFloat)zoomModeMinZoomScale
+//{
+//    return 1.5f;
+//}
+//
 -(void)updateMigrationInfoView
 {
     RKDeskMode mode = self.currentDeskMode;

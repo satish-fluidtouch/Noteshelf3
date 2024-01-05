@@ -301,7 +301,7 @@ private extension FTZoomOverlayViewController {
             zoomFactorToApply = width/targetRect.size.width;
         }
         
-        self.zoomFactor = clamp(zoomFactorToApply, FTPDFScrollView.minZoomScale(FTRenderModeZoom), FTPDFScrollView.maxZoomScale(FTRenderModeZoom));
+        self.zoomFactor = clamp(zoomFactorToApply, FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeZoom), FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeZoom));
         
         self.nsDocument?.localMetadataCache?.zoomFactor = self.zoomFactor;
     }

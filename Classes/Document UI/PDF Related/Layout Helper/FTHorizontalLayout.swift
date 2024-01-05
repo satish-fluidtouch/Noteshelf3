@@ -12,8 +12,9 @@ class FTHorizontalLayout: NSObject,FTLayouterInternal {
     private weak var scrollView : FTDocumentScrollView?;
     weak var document: FTDocumentProtocol?;
     weak var delegate: FTPageLayouterDelegate?;
-    var minZoomFactor: CGFloat = 1;
-    
+    func findZoomFactor(_ pageCount: Int) -> CGFloat {
+        return 1;
+    }
     var layoutType : FTPageLayout {
         return .horizontal;
     }

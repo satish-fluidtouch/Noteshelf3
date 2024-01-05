@@ -119,7 +119,10 @@ class FTZoomContentViewController: UIViewController {
             let scrollView = pageController.scrollView else {
             return;
         }
-        let percentageOfZoom = self.zoomFactor / (scrollView.maxZoomScale - scrollView.minZoomScale);
+        let minZoomScale = FTDocumentScrollViewZoomScale.shared.minimumZoomScale(scrollView.mode);
+        let maxZoomScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(scrollView.mode);
+        
+        let percentageOfZoom = self.zoomFactor / (maxZoomScale - minZoomScale);
         let maxZoom = scrollView.maximumZoomScale;
         let minZoom = scrollView.minimumZoomScale;
 

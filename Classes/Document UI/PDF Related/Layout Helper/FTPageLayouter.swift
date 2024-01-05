@@ -42,7 +42,7 @@ protocol FTLayouterInternal: FTPageLayouter {
     func updateContentSize(pageCount : Int);
     func pages(in rect: CGRect) -> [Int];
     func page(for point:CGPoint) -> Int;
-    var minZoomFactor: CGFloat {get};
+    func findZoomFactor(_ pageCount: Int) -> CGFloat;
 }
 
 class FTLayouterFactory: NSObject {

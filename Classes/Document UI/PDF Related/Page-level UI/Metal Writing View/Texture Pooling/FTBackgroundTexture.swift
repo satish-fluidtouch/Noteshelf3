@@ -121,7 +121,7 @@ func bgTextureScale(_ scale :  CGFloat) -> CGFloat
 {
     let maxScale: CGFloat
     if FTRenderConstants.USE_BG_TILING {
-        maxScale = FTPDFScrollView.maxZoomScale(FTRenderModeDefault);
+        maxScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
     } else {
         maxScale = 3
     }

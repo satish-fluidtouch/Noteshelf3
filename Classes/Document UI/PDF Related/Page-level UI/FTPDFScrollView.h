@@ -35,9 +35,6 @@ extern NSString *const FTZoomRenderViewDidFinishMoving;
 @property (assign) BOOL isIntroScreen;
 @property (assign) BOOL isProgramaticallyZooming;
 
-@property (assign,readonly) CGFloat maxZoomScale;
-@property (assign,readonly) CGFloat minZoomScale;
-
 - (instancetype)initWithFrame:(CGRect)frame mode:(FTRenderMode)inMode;
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -58,20 +55,11 @@ parentViewController:(FTPageViewController*)controller
 -(void)didSuggestEnablingGestures;
 -(void)didSuggestDisablingGestures;
 
--(void)disableNewPageOptionsForReadOnlyMode;
--(void)enableNewPageOptionsForReadOnlyMode;
-
 -(CGFloat)zoomScaleOfPDF;
 -(void)updateGestureConditions;
 
 -(id<FTWritingProtocol>)writingView;
 
-+(CGFloat)maxZoomScale:(FTRenderMode)mode;
-+(CGFloat)minZoomScale:(FTRenderMode)mode;
-
 -(void)setZoomBoxIsScrolling:(BOOL)isScrolling;
-
-+(void)setMinZoomScale:(CGFloat)minZoomScale;
-+(CGFloat)getMinZoomScale;
 
 @end

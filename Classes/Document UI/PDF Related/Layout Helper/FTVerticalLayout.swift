@@ -16,8 +16,6 @@ class FTVerticalLayout: NSObject,FTLayouterInternal {
 
     static let firstPageOffsetY: CGFloat = 75.0
 
-    var minZoomFactor: CGFloat = 1;
-    
     var layoutType : FTPageLayout {
         return .vertical;
     }
@@ -44,25 +42,25 @@ class FTVerticalLayout: NSObject,FTLayouterInternal {
         return pageFrame;
     }
     
-    private func findZoomFactor(_ pageCount: Int) {
+    func findZoomFactor(_ pageCount: Int) -> CGFloat {
         guard let _scrollView = self.scrollView,
               let pages = self.document?.pages() else {
-            return;
+            return 1;
         }
-
+        var minZoomFactor: CGFloat = 1;
         for eachIndex in 0..<pageCount {
             let currentPage = pages[eachIndex];
-            var pageRect = currentPage.pdfPageRect;
+            let pageRect = currentPage.pdfPageRect;
             let maxFrame = _scrollView.frame;
             let aspectSize = aspectFittedRect(pageRect, maxFrame).size;
             let scale = aspectSize.width/pageRect.size.width;
             minZoomFactor = min(minZoomFactor, scale);
         }
+        return minZoomFactor;
     }
     
     func updateContentSize(pageCount : Int) {
         self.pageInfo.removeAll();
-        self.findZoomFactor(pageCount);
         var maxWidth: CGFloat = 0;
         for eachIndex in 0..<pageCount {
             let frame = self.frame(for: eachIndex);
