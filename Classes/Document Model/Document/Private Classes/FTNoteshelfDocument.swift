@@ -5,8 +5,8 @@
 //  Created by Amar on 25/3/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
-let APP_SUPPORTED_MAX_DOC_VERSION = Float(8);
-let DOC_VERSION : String = "8.0";
+let APP_SUPPORTED_MAX_DOC_VERSION = Float(9);
+let DOC_VERSION : String = "9.0";
 let DOCUMENTS_KEY : String = "documents";
 let DOCUMENT_TYPE = "document_type"
 let DOCUMENT_ID_KEY =  "document_ID";
