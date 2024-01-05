@@ -37,6 +37,7 @@ class FTStorePlannerCollectionCell: UICollectionViewCell {
         if let thumbnailUrl = templateInfo.thumbnailUrl {
             self.thumbnail?.sd_setImage(with: thumbnailUrl
                                         , placeholderImage: nil
+                                        , options: .refreshCached
                                         , context: [.imageTransformer: transformer]
                                         , progress: nil
                                         , completed: {[weak self] _, error, _, _ in

@@ -5,7 +5,7 @@
 "AboutOptionWhatsNew" = "Was gibt's Neues";
 "AboutVisitNoteshelfWebsite" = "Besuchen Sie die Noteshelf-Website.";
 "Accept" = "Akzeptieren";
-"AccountInfoFormat" = "%@ von %@ in Benutzung auf deinem'";
+"AccountInfoFormat" = "%@ von %@ in Benutzung auf deinem";
 "ActualSize" = "Tatsächliche Größe";
 "Add" = "Hinzufügen";
 "AddBtnNameInAlert" = "Hinzufügen";
@@ -1124,6 +1124,12 @@
 "importedTo" = "Importiert zu";
 "insidenotebook.share.pageno" = "Seite %@";
 "insidenotebook.share.pagescount" = "%@ Seiten'";
+"irate.variation.message.a" = "Geben Sie uns eine Bewertung. Es wird uns mehr helfen, als Sie sich vorstellen können.";
+"irate.variation.message.b" = "Nehmen Sie sich einen Moment Zeit, um uns im AppStore zu bewerten und lassen Sie uns wissen, wie wir uns schlagen.";
+"irate.variation.message.c" = "Bewerten Sie uns im AppStore und helfen Sie uns, die Nachricht zu verbreiten.";
+"irate.variation.title.a" = "Genießen Sie Noteshelf 3?";
+"irate.variation.title.b" = "Ihr Feedback bedeutet uns sehr viel.";
+"irate.variation.title.c" = "Teilen Sie Ihre Erfahrungen mit Noteshelf 3.";
 "journalpreview.createjournal" = "Erstellen Sie ein Journal.";
 "labels" = "Etiketten";
 "lasso.select.textbox" = "Textfelder";
@@ -1548,9 +1554,15 @@
 "welcome.unsplash" = "UNSPLASH";
 "welcome.webClips" = "WEB CLIPS";
 "welcome.zoombox" = "ZOOM BOX";
+"whatsnew.planner1.cta" = "Zu Vorlagen gehen";
+"whatsnew.planner1.description" = "Setze Ziele, verfolge Gewohnheiten, plane und organisiere deine Tage für das kommende Jahr mit einem wunderschönen 2-Seiten-Planer, entworfen von unseren hauseigenen Designern.";
+"whatsnew.planner1.title" = "Unser 2024 Planer ist da!";
+"whatsnew.planner2.cta" = "Schauen Sie sie sich jetzt an!";
+"whatsnew.planner2.description" = "Entdecken Sie bezaubernde digitale Planer in der Vorlagen-Sektion, die wir von talentierten Erstellern zusammengestellt haben.";
+"whatsnew.planner2.title" = "Mehr 2024 Planer!";
 "widgets" = "Widgets";
 "work" = "Arbeit";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 28 December 2023 at 17:23
+// Last Synced by Akshay on 4 January 2024 at 20:30

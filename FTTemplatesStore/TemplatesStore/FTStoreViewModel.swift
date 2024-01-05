@@ -61,6 +61,14 @@ class FTStoreViewModel {
         let sectionItem = self.snapshot.itemIdentifiers(inSection: sectionType).first
         return sectionItem
     }
+    
+    func sectionForInspirations() -> Int {
+        return self.snapshot.itemIdentifiers.firstIndex { $0.sectionType == FTStoreSectionType.userJournals.rawValue } ?? 0
+    }
+
+    func sectionForBanners() -> Int {
+        return self.snapshot.itemIdentifiers.firstIndex { $0.sectionType == FTStoreSectionType.banner.rawValue } ?? 0
+    }
 
     private func handleTemplatesStore() {
         storeServiceApi.fetchTemplates().sink {[weak self] completion in
