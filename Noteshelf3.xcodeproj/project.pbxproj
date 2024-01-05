@@ -2219,6 +2219,7 @@
 		F3C7D50C28C19A29000D3BE1 /* AddMenuDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C7D50A28C19A29000D3BE1 /* AddMenuDataManager.swift */; };
 		F3CB8B6D28F95C5F001E34ED /* FTAddMenuPixabayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CB8B6C28F941F7001E34ED /* FTAddMenuPixabayViewController.swift */; };
 		F3EACF3328C731B900DC4E6D /* FTAddMenuSelectItemDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EACF3128C731B900DC4E6D /* FTAddMenuSelectItemDelegate.swift */; };
+		FE3DFDD62B48142000D2A18F /* FTTextEditLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3DFDD52B48142000D2A18F /* FTTextEditLinkViewModel.swift */; };
 		FEBCD58A2B3AA7BF00DEE471 /* FTTextLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBCD5892B3AA7BF00DEE471 /* FTTextLinkViewController.swift */; };
 		FEBCD58C2B3AAB0200DEE471 /* FTTextLinkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBCD58B2B3AAB0200DEE471 /* FTTextLinkModels.swift */; };
 		FEBCD58E2B3AD17200DEE471 /* FTTextEditLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEBCD58D2B3AD17200DEE471 /* FTTextEditLinkViewController.swift */; };
@@ -4705,6 +4706,7 @@
 		F5A022AD1F134A200044B02A /* FTPasswordTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPasswordTableCell.swift; sourceTree = "<group>"; };
 		F5F20E321F0C9D12002AAF96 /* FTPinRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPinRequestViewController.swift; sourceTree = "<group>"; };
 		F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Noteshelf3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE3DFDD52B48142000D2A18F /* FTTextEditLinkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextEditLinkViewModel.swift; sourceTree = "<group>"; };
 		FEBCD5892B3AA7BF00DEE471 /* FTTextLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLinkViewController.swift; sourceTree = "<group>"; };
 		FEBCD58B2B3AAB0200DEE471 /* FTTextLinkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLinkModels.swift; sourceTree = "<group>"; };
 		FEBCD58D2B3AD17200DEE471 /* FTTextEditLinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextEditLinkViewController.swift; sourceTree = "<group>"; };
@@ -7113,6 +7115,7 @@
 				BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */,
 				FEBCD58B2B3AAB0200DEE471 /* FTTextLinkModels.swift */,
 				FEF375D22B356554005F14BB /* FTTextLinkRouteHelper.swift */,
+				FE3DFDD52B48142000D2A18F /* FTTextEditLinkViewModel.swift */,
 				FEBCD5892B3AA7BF00DEE471 /* FTTextLinkViewController.swift */,
 				FEBCD58D2B3AD17200DEE471 /* FTTextEditLinkViewController.swift */,
 			);
@@ -13295,6 +13298,7 @@
 				BA2D90CF285C45E0001BB495 /* FTIcon.swift in Sources */,
 				E7AA516B28E30E6B0008E473 /* FTCustomizeToolbarSection.swift in Sources */,
 				BAF391712859ADF00067CA9F /* FTTemplateInfo.swift in Sources */,
+				FE3DFDD62B48142000D2A18F /* FTTextEditLinkViewModel.swift in Sources */,
 				09A67BF32AE8F25100C5500D /* FTCache.swift in Sources */,
 				BAF391722859ADF00067CA9F /* FTShelfItemCollectionLocal.swift in Sources */,
 				F3B6B88F28BE15BA00ABFF1C /* FTAddMenuMediaViewController.swift in Sources */,

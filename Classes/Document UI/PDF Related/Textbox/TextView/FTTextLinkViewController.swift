@@ -94,7 +94,7 @@ extension FTTextLinkViewController: UITableViewDataSource, UITableViewDelegate {
         let option = viewModel.linkSection.options[indexPath.row]
         if option == .linkSettings {
             if let editLinkVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTTextEditLinkViewController") as? FTTextEditLinkViewController {
-                editLinkVc.infoDelegate = self
+                editLinkVc.viewModel = FTTextEditLinkViewModel(delegate: self)
                 self.navigationController?.pushViewController(editLinkVc, animated: true)
             }
         }
