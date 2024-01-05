@@ -60,7 +60,27 @@ class FTStoreViewController: UIViewController {
             self.tableView.tableHeaderView = seg
         }
     }
-
+    
+    func scrollToinspirations() {
+        guard nil != tableView else {
+            return
+        }
+        let section = viewModel.sectionForInspirations()
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
+    }
+    
+    func navigateToDiaries() {
+        guard nil != tableView else {
+            return
+        }
+        let section = viewModel.sectionForBanners()
+        if let sectionItem = viewModel.storeSectionInfo(at: section) {
+            let items = sectionItem.discoveryItems
+            if let index = items.firstIndex(where: {$0.type == FTDiscoveryItemType.diaries.rawValue }) {
+                FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
+            }
+        }
+    }
 }
 
 // MARK: - UI Methods
