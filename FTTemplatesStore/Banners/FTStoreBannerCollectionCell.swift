@@ -28,7 +28,10 @@ class FTStoreBannerCollectionCell: UICollectionViewCell {
 
         thumbnail?.sd_imageIndicator = SDWebImageActivityIndicator.gray
         if let thumbnailUrl = (templateInfo as! DiscoveryItem).bannerAndCategoryThumbnailUrl {
-            self.thumbnail?.sd_setImage(with: thumbnailUrl, completed: { [weak self] _, error, _, _ in
+            self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                        , placeholderImage: nil
+                                        , options: .refreshCached
+                                        , completed: { [weak self] _, error, _, _ in
                 if error == nil {
                     self?.shadowImageView.isHidden = false
                 }
