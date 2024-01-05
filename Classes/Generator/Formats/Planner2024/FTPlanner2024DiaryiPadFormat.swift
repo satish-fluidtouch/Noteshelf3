@@ -1130,12 +1130,19 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     private func addTodayLink(toContext context: CGContext){
 
         let todayLinkRectYPercnt : CGFloat = 12.35
-        let todayLinkRectXPercnt : CGFloat = 41.54
-        let todayLinkRectHeightPercnt  :CGFloat = 1.79
+        let todayLinkRectXPercnt : CGFloat = 41.79
+        let todayLinkRectHeightPercnt  : CGFloat = 1.79
+        let twospredLinesXPercent: CGFloat = 50.0
+        let twoSpreadLineXOffset: CGFloat = 3.59
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
 
         let todayLinkRectX = self.currentPageRect.width*todayLinkRectXPercnt/100
         let todayLinkRectY = self.currentPageRect.height*todayLinkRectYPercnt/100
         let todayLinkRectHeight = self.currentPageRect.height*todayLinkRectHeightPercnt/100
+
+        let towSpreadLineXOffset = self.currentPageRect.width*twoSpreadLineXOffset/100
+        let towSpreadLineX = self.currentPageRect.width*twospredLinesXPercent/100
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
 
         var todayFont = UIFont.clearFaceFont(for: .regular, with:9)
         var todayRectCornerRadius : CGFloat = 3
@@ -1143,58 +1150,24 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             todayFont = UIFont.clearFaceFont(for: .regular, with:5)
             todayRectCornerRadius = 2
         }
-        let paragraphStyle = NSMutableParagraphStyle.init()
-        paragraphStyle.alignment = .center
+
         let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
                                                         .kern: 1.6,
-                                                        .foregroundColor: UIColor.init(hexString: "#363636"),
-                                                        .paragraphStyle: paragraphStyle]
-        let todayAttributedString = NSMutableAttributedString()
+                                                        .foregroundColor: UIColor.init(hexString: "#363636")]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+        let tpdayPillX = towSpreadLineX - towSpreadLineXOffset - (todayString.size().width + todayPillHorizontalPadding*2)
+        let todayPillRect = CGRect(x: tpdayPillX, y: todayLinkRectY, width: todayString.size().width + todayPillHorizontalPadding*2, height: todayLinkRectHeight)
 
-        let todayString = NSAttributedString.init(string: " TODAY")
+        self.drawColorBandsWith(xAxis: todayPillRect.origin.x, yAxis: todayPillRect.origin.y, context: context, width: todayPillRect.width, height: todayPillRect.height, bandColor: UIColor(hexString: "#80CCCB"), cornerRadius: todayRectCornerRadius)
 
-        var imageSize = CGSize(width: 9.08, height: 9.08)
-        if layoutRequiresExplicitFont() {
-            imageSize = CGSize(width: 7, height: 7)
-        }
-        self.drawColorBandsWith(xAxis: todayLinkRectX, yAxis: todayLinkRectY, context: context, width: todayString.size().width + 2  + imageSize.width + 2, height: todayLinkRectHeight, bandColor: UIColor(hexString: "#80CCCB"), cornerRadius: todayRectCornerRadius)
+        let todayRect = CGRect(x: todayPillRect.origin.x + (todayPillRect.width - todayString.size().width)/2 , y: todayLinkRectY + (todayPillRect.height - todayString.size().height)/2, width: todayString.size().width, height: todayString.size().height)
+        todayString.draw(at:CGPoint(x: todayRect.origin.x + 1, y: todayRect.origin.y + 1))
 
-        let clockIconX = todayLinkRectX + 2.5
-        let clockIconY = todayLinkRectY + (todayLinkRectHeight/2) - (imageSize.height/2)
-        let clockBorderColor = UIColor(hexString: "#363636")
-        let clockBezierRect = CGRect(x: clockIconX, y: clockIconY, width: imageSize.width, height: imageSize.height)
-        drawClockBezierRoundedRectAt(rect:clockBezierRect)
 
-        let horizontalLineX = clockIconX + 1 // circle x + circle stroke width
-        let horizontalLineY = clockIconY + 1 // circle x + circle stroke width
-
-        addBezierLineFrom(point1: CGPoint(x: horizontalLineX + 1 , y: horizontalLineY  + (clockBezierRect.size.height/2) - 0.5 ),point2:CGPoint(x: horizontalLineX + (imageSize.width/2) - 1 , y: horizontalLineY + (imageSize.height/2) - 0.5)) // + 1 px clock  horizontal line offset
-        addBezierLineFrom(point1: CGPoint(x: horizontalLineX + (imageSize.width/2) - 1, y: horizontalLineY + 1), point2: CGPoint(x: horizontalLineX + (imageSize.width/2) - 1  , y: horizontalLineY + ((imageSize.height/2) - 0.5))) // + 1 px clock  vertical line offset
-
-        todayAttributedString.append(todayString)
-        todayAttributedString.addAttributes(todayAttrs, range: NSRange(location: 0, length: todayAttributedString.length))
-        let todayRect = CGRect(x: clockIconX +  clockBezierRect.size.width + 1, y: clockBezierRect.midY - todayAttributedString.size().height/2, width: todayString.size().width, height: todayAttributedString.size().height)
-        todayAttributedString.draw(in:todayRect)
-        let todayLinkRect = getLinkRect(location: CGPoint(x:todayLinkRectX - 3, y: todayLinkRectY - 3), frameSize:CGSize(width: todayString.size().width + 10 + imageSize.width, height: todayLinkRectHeight  + 6))
+        let todayLinkRect = getLinkRect(location: CGPoint(x:todayPillRect.origin.x - 3, y: todayPillRect.origin.y - 3), frameSize:CGSize(width: todayPillRect.width + 6 , height: todayPillRect.height + 6))
         let urlString = FTSharedGroupID.getAppGroupID() + "://todayLink"
         if let todayURL = URL(string: urlString){
             UIGraphicsSetPDFContextURLForRect(todayURL, todayLinkRect)
-        }
-        func addBezierLineFrom(point1: CGPoint,point2:CGPoint) {
-            let  bezierLinePath1 = UIBezierPath()
-            bezierLinePath1.move(to: point1)
-            bezierLinePath1.addLine(to: point2)
-            bezierLinePath1.lineCapStyle = .round
-            clockBorderColor.setStroke()
-            context.addPath(bezierLinePath1.cgPath)
-            bezierLinePath1.stroke()
-        }
-        func drawClockBezierRoundedRectAt(rect: CGRect){
-            let circleBezierPath = UIBezierPath(roundedRect: rect, cornerRadius: imageSize.width/2)
-            context.addPath(circleBezierPath.cgPath)
-            clockBorderColor.setStroke()
-            context.addPath(circleBezierPath.cgPath)
-            circleBezierPath.stroke()
         }
     }
 }
