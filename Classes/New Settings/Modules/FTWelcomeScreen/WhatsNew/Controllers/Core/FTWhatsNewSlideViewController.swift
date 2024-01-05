@@ -43,7 +43,7 @@ protocol FTWhatsNewSlideViewControllerDelegate: AnyObject {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.helpTitle?.textColor = UIColor.label
-        self.helpMessage?.textColor = UIColor.secondaryLabel
+        self.helpMessage?.textColor = UIColor.label
     }
 
     deinit {
