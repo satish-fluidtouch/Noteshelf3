@@ -404,6 +404,9 @@ class FTENNotebook: NSObject {
                     if let urlError = errorInfoDict["error"] as? NSError, urlError.responds(to: #selector(getter: error.localizedDescription)){
                         failureReason = urlError.localizedDescription
                     }
+                    else if FTENPublishError.isAuthError(error) {
+                        failureReason = error.localizedDescription;
+                    }
                 }
             }
             #endif
@@ -412,14 +415,11 @@ class FTENNotebook: NSObject {
             UserDefaults.standard.synchronize()
         }
         FTENSyncUtilities.recordSyncLog("Publish failed with reason: \(failureReason). Error: \(error)")
-        if (logFlurry)
-        {
-            #if !targetEnvironment(macCatalyst)
-            FTLogError("Evernote Publish Error", attributes: ["Reason": failureReason])
-            #endif
+        if (logFlurry) {
             FTLogError("Evernote Publish Error", attributes: ["Reason": failureReason])
         }
     }
+    
     func chooseNotebookToPublish() {
         var ignoreIDs = FTENIgnoreListManager.shared.ignoredNotebooksID()
         if let currentDocumentID = currentOpenedDocumentUUID {
@@ -600,7 +600,10 @@ class FTENNotebook: NSObject {
     }
     func showAlertForRelogin(onError error: Error?) {
         #if !targetEnvironment(macCatalyst)
-        if let errorCode = (error as NSError?)?.code, errorCode == EDAMErrorCode_AUTH_EXPIRED.rawValue {
+        guard let nserror = error as? NSError else {
+            return;
+        }
+        if (nserror.code == EDAMErrorCode_AUTH_EXPIRED.rawValue || FTENPublishError.isAuthError(nserror)) {
             let alertViewController = UIAlertController(title: NSLocalizedString("EvernoteAuthTokenExpiredTitle", comment: "Evernote Token Expired"), message: nil, preferredStyle: .alert)
             
             let action = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { _ in

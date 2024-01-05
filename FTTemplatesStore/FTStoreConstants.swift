@@ -65,6 +65,26 @@ struct FTStoreConstants {
         }
     }
 
+//    struct UserJournals {
+//        static let maxSize = CGSize(width: 298, height: 165)
+//        static let aspectRatio: CGFloat = (298/165)
+//        static let leftIntent: CGFloat = 20
+//        static let interItemSpacing: CGFloat = 16.0
+//        static let nextItemVisibleSpacing: CGFloat = 15.0
+//        static let extraHeightPadding: CGFloat = 30.0
+//        static func calculateSizeFor(view: UIView) -> CGSize {
+//            let screenSize = view.frame.size
+//            let maxBannerSize = maxSize
+//            let padding: CGFloat = leftIntent + interItemSpacing + nextItemVisibleSpacing
+//            if maxBannerSize.width + padding > screenSize.width {
+//                let bannerWidth = screenSize.width - padding
+//                let bannerHeight = bannerWidth/aspectRatio
+//                return CGSize(width: bannerWidth, height: bannerHeight)
+//            }
+//            return maxBannerSize
+//        }
+//    }
+
     struct Template {
         static let potraitSize = CGSize(width: 214, height: 288)
         static let landscapeSize = CGSize(width: 240, height: 181)

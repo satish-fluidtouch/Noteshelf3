@@ -49,7 +49,7 @@ class FTNoteshelfAIPremiumUserCreditsViewController: UIViewController {
             self.view.backgroundColor = isPremiumUser ? UIColor(named: "credits_normal_bg") : UIColor.clear;
             self.progressBar?.progressTintColor = UIColor(named: "credits_progress_normal");
         }
-        self.progressBar?.progress = Float(consumed)/Float(maxTokens);
+        self.progressBar?.progress = Float(tokensLeft)/Float(maxTokens);
         self.creditsInfo?.text = String(format: "noteshelf.ai.credit.details".aiLocalizedString, tokensLeft,maxTokens);
         self.creditsMessage?.isHidden = !FTIAPManager.shared.premiumUser.isPremiumUser
         self.creditsMessage?.text = String(format: "noteshelf.ai.credit.moreinfo".aiLocalizedString,FTNoteshelfAITokenManager.shared.daysLeftForTokenReset());

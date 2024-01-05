@@ -14,7 +14,7 @@ enum FTStoreSectionType: Int {
     case templates = 2
     case stickers = 3
     case journals = 4
-
+    case userJournals = 5
 }
 
 internal typealias TemplatesStoreDatasource = UITableViewDiffableDataSource<Int, Discover>

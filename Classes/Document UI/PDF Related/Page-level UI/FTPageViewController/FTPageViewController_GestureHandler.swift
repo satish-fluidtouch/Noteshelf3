@@ -108,6 +108,7 @@ extension FTPageViewController {
     {
         if(mode == .deskModeMarker
             || mode == .deskModePen
+            || mode == .deskModeFavorites
             || mode == .deskModeEraser
             || mode == .deskModeShape
             ) {
@@ -346,7 +347,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                 }
             } else if (gestureRecognizer == self.singleTapSelectionGestureRecognizer) {
 
-                if (currentDeskMode() == .deskModePen || currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser ||
+                if (currentDeskMode() == .deskModePen || currentDeskMode() == .deskModeFavorites || currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser ||
                     currentDeskMode() == .deskModeShape) {
                     if touch.type == .pencil || !UserDefaults.isApplePencilEnabled() {
                         if let activeController = self.delegate?.activeAnnotationController() {
@@ -416,6 +417,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                 }
                 else if UserDefaults.isApplePencilEnabled(),
                    (currenttDeskMode == .deskModePen
+                    || currenttDeskMode == .deskModeFavorites
                     || currenttDeskMode == .deskModeMarker
                         || currenttDeskMode == .deskModeEraser
                         || currenttDeskMode == .deskModeClipboard
@@ -455,7 +457,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
     }
     
     private func allowsEditinginZoomMode() -> Bool {
-        return (currentDeskMode() == .deskModePen ||  currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser || currentDeskMode() == .deskModeShape)
+        return (currentDeskMode() == .deskModePen || currentDeskMode() == .deskModeFavorites || currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser || currentDeskMode() == .deskModeShape)
     }
 
 }

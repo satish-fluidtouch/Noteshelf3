@@ -58,6 +58,7 @@ class FTGlobalSettingsController: UITableViewController {
         tableView.separatorColor = UIColor.appColor(.black10)
         
 #if targetEnvironment(macCatalyst)
+        settingsSections.append([FTGlobalSettingsOptions.safeMode])
         if !FTIAPManager.shared.premiumUser.isPremiumUser {
             premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
                 self?.tableView.reloadData();
@@ -125,8 +126,19 @@ class FTGlobalSettingsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTGlobalSettingsTableViewCell") as? FTGlobalSettingsTableViewCell else { return UITableViewCell() }
         let setting = self.settingsSections[indexPath.section][indexPath.row]
+#if targetEnvironment(macCatalyst)
+        if setting == .safeMode{
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTGlobalSettingsSafeModeTableViewCell") as? FTGlobalSettingsSafeModeTableViewCell else { return UITableViewCell()
+            }
+            cell.titleLabel.text  = setting.displayTitle
+            cell.settingsImageView.image = UIImage(systemName: setting.imageName)
+            cell.updateSwitchState()
+            return cell
+        }
+#endif
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FTGlobalSettingsTableViewCell") as? FTGlobalSettingsTableViewCell else { return UITableViewCell() }
+
         cell.globalSettingsimageView.image = UIImage(named: setting.imageName)
 #if targetEnvironment(macCatalyst)
         if setting == .handwriting, let logo = UIImage(named: "premium_icon"), !FTIAPManager.shared.premiumUser.isPremiumUser {
@@ -213,6 +225,8 @@ class FTGlobalSettingsController: UITableViewController {
             if let developerOptionsVC = storyboard.instantiateViewController(withIdentifier: "FTDeveloperOptionsViewController") as? FTDeveloperOptionsViewController {
                 self.navigationController?.pushViewController(developerOptionsVC, animated: true);
             }
+        case .safeMode:
+                return
         }
     }
 }

@@ -82,6 +82,7 @@ private extension FTPageViewController {
             (mode == RKDeskMode.deskModeEraser ||
                 mode == RKDeskMode.deskModePen ||
                 mode == RKDeskMode.deskModeMarker ||
+             mode == RKDeskMode.deskModeFavorites || 
              mode == RKDeskMode.deskModeShape || mode == RKDeskMode.deskModeClipboard)
         {
             return false

@@ -95,7 +95,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
         self.model = model
         super.init()
         self.updateDownloadStatusFor(item: model);
-        self.isFavorited = FTRecentEntries.isFavorited(model.URL)
+        self.isFavorited = (model.type == .group) ? false : FTRecentEntries.isFavorited(model.URL)
     }
         
     func configureShelfItem(_ item: FTShelfItemProtocol){
@@ -223,13 +223,15 @@ extension FTShelfItemViewModel {
 
         self.uploadDownloadInProgress = false;
 
-        if documentItem.isDownloaded && shouldFetchCoverImage{
-            self.shouldFetchCoverImage = false
-            self.progress = 1.0;
+        if documentItem.isDownloaded {
             self.isNotDownloaded = false
-            self.stopDownloadingProgressView()
-            if self.isVisible {
-                self.fetchCoverImage()
+            if shouldFetchCoverImage {
+                self.shouldFetchCoverImage = false
+                self.progress = 1.0;
+                self.stopDownloadingProgressView()
+                if self.isVisible {
+                    self.fetchCoverImage()
+                }
             }
         }
         else if documentItem.isDownloading {

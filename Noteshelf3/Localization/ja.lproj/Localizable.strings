@@ -5,7 +5,7 @@
 "AboutOptionWhatsNew" = "新着";
 "AboutVisitNoteshelfWebsite" = "ノートシェルフのウェブサイトを訪れる";
 "Accept" = "受け入れる";
-"AccountInfoFormat" = "あなたの使用済みの%@の%@を日本語に翻訳してください。これはノートアプリのUIラベルに使用されます。";
+"AccountInfoFormat" = "%@/%@ が で使用されています";
 "ActualSize" = "実際のサイズ";
 "Add" = "追加";
 "AddBtnNameInAlert" = "追加 (Tsuijou)";
@@ -719,6 +719,7 @@
 "Rotate" = "回転す";
 "Rotate Page" = "ページを回転する";
 "Rotating" = "最近から削除";
+"SafeModeKey" = "セーフモード";
 "SampleNotebook" = "改名";
 "SaveAsTemplate" = "テンプレートとして保存する";
 "SaveForFutureUse" = "タグの名前を変更";
@@ -1123,6 +1124,12 @@
 "importedTo" = "インポートされました";
 "insidenotebook.share.pageno" = "ページ %@";
 "insidenotebook.share.pagescount" = "%@ ページ";
+"irate.variation.message.a" = "私たちにレビューをお願いします。それはあなたが想像する以上に私たちの助けになります。";
+"irate.variation.message.b" = "App Store で当社をレビューし、当社の状況をお知らせください。";
+"irate.variation.message.c" = "AppStoreでレビューして、私たちのアプリを広めるお手伝いをしてください。";
+"irate.variation.title.a" = "Noteshelf 3 をお楽しみですか?";
+"irate.variation.title.b" = "お客様のフィードバックは私たちにとって非常に重要です。";
+"irate.variation.title.c" = "Noteshelf 3のご使用体験を共有してください。";
 "journalpreview.createjournal" = "日誌作成";
 "labels" = "ラベル";
 "lasso.select.textbox" = "テキストボックス";
@@ -1547,9 +1554,15 @@
 "welcome.unsplash" = "アンスプラッシュ";
 "welcome.webClips" = "ウェブクリップ";
 "welcome.zoombox" = "ズームボックス";
+"whatsnew.planner1.cta" = "テンプレートに移動";
+"whatsnew.planner1.description" = "私たちの社内デザイナーが作成した美しい2ページのプランナーで、来年の目標を設定し、習慣を追跡し、日々を計画し整理しましょう。";
+"whatsnew.planner1.title" = "私たちの2024年のプランナーがここにあります！";
+"whatsnew.planner2.cta" = "今すぐ見に来てください！";
+"whatsnew.planner2.description" = "テンプレートセクションで厳選した才能あるクリエイターたちからの魅力的なデジタルプランナーを見つけてください。";
+"whatsnew.planner2.title" = "もっと2024年のプランナー！";
 "widgets" = "ウィジェット";
 "work" = "仕事";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by admin on 11 December 2023 at 6:46 PM
+// Last Synced by Akshay on 4 January 2024 at 20:30

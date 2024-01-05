@@ -68,10 +68,13 @@ class FTWhatsNewManger: NSObject {
 
     static let shared = FTWhatsNewManger()
     var sourceType: FTSourceScreen = FTSourceScreen.regular
-    var slideViewMode: FTWhatsNewViewMode = .singleSlide
+    var slideViewMode: FTWhatsNewViewMode = .allSlides
 
     @objc class func start() {
-        let slides = [FTWhatsNewViewSlide]()
+        let slides = [
+            FTWhatsNewViewSlide(item: String(describing: FTWhatsNew2024PlannerController.classForCoder()), isExpired: false, slideShowPlace: .shelf),
+            FTWhatsNewViewSlide(item: String(describing: FTWhatsNewUserPlannerController.classForCoder()), isExpired: false, slideShowPlace: .shelf),
+        ]
 
         var hasNewSlides = false;
         let existingSlides = self.getSlides();
@@ -96,23 +99,17 @@ class FTWhatsNewManger: NSObject {
         let standardUserDefaults = UserDefaults.standard
         if let slidesData = standardUserDefaults.value(forKey: persistenceKey) as? Data, let slides = try? JSONDecoder().decode([FTWhatsNewViewSlide].self, from: slidesData) {
             FTWhatsNewManger.shared.sourceType = source
-            if source == .settings {
-                FTWhatsNewManger.shared.slideViewMode = .allSlides
-            }
             let storyboard = UIStoryboard(name: "FTWhatsNew", bundle: nil)
             switch source {
             case .regular:
                 var slidesRegular = [FTWhatsNewViewSlide]()
-                if let slide = slides.first(where: { !$0.isExpired && ($0.slideShowPlace == slideShowPlace.rawValue || $0.slideShowPlace == FTWhatsNewSlideShowPlace.any.rawValue) } ) {
-                    slidesRegular.append(slide)
-                }
+                let unexpiredSlides = slides.filter {  !$0.isExpired && ($0.slideShowPlace == slideShowPlace.rawValue || $0.slideShowPlace == FTWhatsNewSlideShowPlace.any.rawValue) }
+                slidesRegular.append(contentsOf: unexpiredSlides)
                 return slidesRegular.compactMap({ storyboard.instantiateViewController(withIdentifier: $0.slideIdentifier) as? FTWhatsNewSlideViewController })
                 
             case .settings:
                 var slidesWithStartEndSlides = [FTWhatsNewViewSlide]()
-                slidesWithStartEndSlides.append(FTWhatsNewViewSlide(item: String(describing: FTWhatsNewStartViewController.classForCoder()), isExpired: false, slideShowPlace: .onlySettings))
                 slidesWithStartEndSlides.append(contentsOf: slides)
-                slidesWithStartEndSlides.append(FTWhatsNewViewSlide(item: String(describing: FTWhatsNewFollowUsViewController.classForCoder()), isExpired: false, slideShowPlace: .onlySettings))
                 return slidesWithStartEndSlides.compactMap({ storyboard.instantiateViewController(withIdentifier: $0.slideIdentifier) as? FTWhatsNewSlideViewController })
             }
         } else {
@@ -200,6 +197,6 @@ class FTWhatsNewManger: NSObject {
     }
 
     @objc class func shouldShowWhatsNew() -> Bool {
-        return false;
+        return true;
     }
 }
