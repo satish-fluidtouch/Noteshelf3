@@ -68,7 +68,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
         didSet {
             addOrRemoveObserversBasedOnMode()
             updateTopSectionNBCreationButtonsVisiblity()
-            self.subscribeToShelfItemChanges()
         }
     }
         
@@ -225,12 +224,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
     }
     func subscribeToShelfItemChanges(){
         self.cancellables.removeAll()
-        if mode == .selection {
-            self.shelfItems.forEach({ [weak self] in
-                let item = $0.objectWillChange.sink(receiveValue: { self?.objectWillChange.send() })
-                self?.cancellables.append(item)
-            })
-        }
+        self.shelfItems.forEach({ [weak self] in
+            let item = $0.objectWillChange.sink(receiveValue: { self?.objectWillChange.send() })
+            self?.cancellables.append(item)
+        })
     }
     func getShelfItemWithUUID(_ uuid: String) -> FTShelfItemViewModel? {
         self.shelfItems.first(where: {$0.model.uuid == uuid})

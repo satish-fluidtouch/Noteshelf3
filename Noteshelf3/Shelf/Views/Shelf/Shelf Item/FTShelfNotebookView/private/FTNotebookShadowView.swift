@@ -12,31 +12,31 @@ struct FTNotebookShadowView: View {
     @ObservedObject var shelfItem: FTShelfItemViewModel
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
 
+    let screenScale = UIScreen.main.scale
     var thumbnailSize: CGSize = CGSize(width: 214, height: 298)
-    private let factor = 1/UIScreen.main.scale
 
     var body: some View {
         coverImage
     }
     private var shadowImageEdgeInsets: UIEdgeInsets {
         if shelfItem.coverImage.needEqualCorners || shelfItem.coverImage.isDefaultCover {
-            var insets = UIEdgeInsets(top: 40 * factor, left: 60 * factor, bottom: 85 * factor, right: 60 * factor)
+            var insets = UIEdgeInsets(top: 40/screenScale, left: 60/screenScale, bottom: 85/screenScale, right: 60/screenScale)
             if shelfViewModel.displayStlye == .List {
-                insets = UIEdgeInsets(top: 20 * factor, left: 28 * factor, bottom: 36 * factor, right: 28 * factor)
+                insets = UIEdgeInsets(top: 20/screenScale, left: 28/screenScale, bottom: 36/screenScale, right: 28/screenScale)
             }
             return insets
         } else {
-            var insets = UIEdgeInsets(top: 50 * factor, left: 60 * factor, bottom: 95 * factor, right: 70 * factor)
+            var insets = UIEdgeInsets(top: 50/screenScale, left: 60/screenScale, bottom: 95/screenScale, right: 70/screenScale)
             if shelfViewModel.displayStlye == .List {
-                insets = UIEdgeInsets(top: 20 * factor, left: 26 * factor, bottom: 34 * factor, right: 26 * factor)
+                insets = UIEdgeInsets(top: 20/screenScale, left: 26/screenScale, bottom: 34/screenScale, right: 26/screenScale)
             }
             return insets
         }
     }
     private var coverPadding: EdgeInsets {
-        var insets = EdgeInsets(top: 16 * factor, leading: 40 * factor, bottom: 64 * factor, trailing: 40 * factor)
+        var insets = EdgeInsets(top: 16/screenScale, leading: 40/screenScale, bottom: 64/screenScale, trailing: 40/screenScale)
         if shelfViewModel.displayStlye == .List {
-            insets = EdgeInsets(top: 8 * factor, leading: 16 * factor, bottom: 25 * factor, trailing: 16 * factor)
+            insets = EdgeInsets(top: 8/screenScale, leading: 16/screenScale, bottom: 25/screenScale, trailing: 16/screenScale)
         }
         return insets
     }
