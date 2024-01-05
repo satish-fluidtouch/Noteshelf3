@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y9n-Al-kat">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y9n-Al-kat">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Clearface-Serial-Medium.otf">
+            <string>ClearfaceSerial-Medium</string>
+        </array>
         <array key="SF-Pro-Display-Bold.otf">
             <string>SFProDisplay-Bold</string>
         </array>
         <array key="SF-Pro-Display-Regular.otf">
             <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
         </array>
         <array key="SF-Pro-Text-Semibold.otf">
             <string>SFProText-Semibold</string>
@@ -113,7 +119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQ0-ow-3Yo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-685.15625" y="259.5703125"/>
+            <point key="canvasLocation" x="-26" y="260"/>
         </scene>
         <!--FTWhatsNewFollowUsViewController-->
         <scene sceneID="HVS-Bf-ojh">
@@ -123,7 +129,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="580" height="660"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="social-media-joinus-2" translatesAutoresizingMaskIntoConstraints="NO" id="M6d-iq-IjW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M6d-iq-IjW">
                                 <rect key="frame" x="0.0" y="72" width="580" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="seP-Pw-trJ"/>
@@ -223,107 +229,230 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBb-q9-WAv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3673" y="195"/>
+            <point key="canvasLocation" x="1767" y="166"/>
         </scene>
-        <!--FTWhatsNewStartViewController-->
-        <scene sceneID="oop-cr-Mt1">
+        <!--Whats New2024 Planner Controller-->
+        <scene sceneID="LFQ-iL-roq">
             <objects>
-                <viewController storyboardIdentifier="FTWhatsNewStartViewController" id="rv9-Sd-awb" userLabel="FTWhatsNewStartViewController" customClass="FTWhatsNewStartViewController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="hqn-Ks-V3H">
-                        <rect key="frame" x="0.0" y="0.0" width="580" height="680"/>
+                <viewController storyboardIdentifier="FTWhatsNew2024PlannerController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hai-LB-1zp" customClass="FTWhatsNew2024PlannerController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="KMt-Dl-Ub7">
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="707"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTu-UK-4pB">
-                                <rect key="frame" x="0.0" y="0.0" width="580" height="680"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep3-aw-lY9">
+                                <rect key="frame" x="0.0" y="20" width="580" height="448"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHAT’S NEW" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHW-i6-KS3" userLabel="helpTitle" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="233" width="580" height="87"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whats_new_2024" translatesAutoresizingMaskIntoConstraints="NO" id="LKq-2h-o8R">
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="448"/>
+                                        <color key="backgroundColor" red="0.96470588235294119" green="0.6705882352941176" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="448" id="I3w-ZQ-fPI"/>
+                                    <constraint firstItem="LKq-2h-o8R" firstAttribute="width" secondItem="ep3-aw-lY9" secondAttribute="width" id="JZe-OT-SKr"/>
+                                    <constraint firstAttribute="trailing" secondItem="LKq-2h-o8R" secondAttribute="trailing" id="T4f-oo-cmL"/>
+                                    <constraint firstItem="LKq-2h-o8R" firstAttribute="top" secondItem="ep3-aw-lY9" secondAttribute="top" id="Ui8-3D-618"/>
+                                    <constraint firstAttribute="bottom" secondItem="LKq-2h-o8R" secondAttribute="bottom" id="g9c-BT-oSe"/>
+                                    <constraint firstItem="LKq-2h-o8R" firstAttribute="leading" secondItem="ep3-aw-lY9" secondAttribute="leading" id="gMR-kL-dpY"/>
+                                    <constraint firstItem="LKq-2h-o8R" firstAttribute="height" secondItem="ep3-aw-lY9" secondAttribute="height" id="yaO-fr-ReG"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UNu-Rj-nyX">
+                                <rect key="frame" x="0.0" y="468" width="580" height="239"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our 2024 Planner is here!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVz-c6-8Gy" userLabel="helpTitle" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="28" y="30" width="524" height="34"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="87" id="h55-mM-QWy"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="YWw-55-dPj"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" name="wnBlue"/>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="Clearface Serial" pointSize="34"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner1.title"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Searching through your notes just got better! 😎" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ag7-fk-lcu" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="74" y="328" width="432" height="67"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="WD2-y4-QKz"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="28"/>
-                                        <color key="textColor" name="titleColor"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8WB-q6-cR8" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="28" y="74" width="524" height="57.5"/>
+                                        <string key="text">Set goals, track habits, plan and organize your days for the coming year with a beautiful 2-page spread planner crafted by our in-house designers</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner1.description"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXV-ce-IWL" userLabel="actionButton1" customClass="FTWhatsNewButton" customModule="NS3_Beta" customModuleProvider="target">
-                                        <rect key="frame" x="142" y="572" width="296" height="46"/>
-                                        <color key="backgroundColor" red="0.90196078431372551" green="0.027450980392156862" blue="0.38823529411764707" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWs-fG-vIX" customClass="FTCustomButton" customModule="FTCommon">
+                                        <rect key="frame" x="28" y="145.5" width="120" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="eb2-zX-M16"/>
-                                            <constraint firstAttribute="width" constant="296" id="oPz-rl-htf"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="BYC-1V-Cy2"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="16"/>
-                                        <state key="normal" title="See What’s New">
-                                            <color key="titleColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                        <state key="normal" title="Go to Templates">
+                                            <color key="titleColor" name="groupNotesCountTint"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="23"/>
-                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner1.cta"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="seeWhatsNewClicked" destination="rv9-Sd-awb" eventType="touchUpInside" id="I4R-Os-a1g"/>
-                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="pageBGColor"/>
                                 <constraints>
-                                    <constraint firstItem="CHW-i6-KS3" firstAttribute="centerX" secondItem="ag7-fk-lcu" secondAttribute="centerX" id="1ZC-NJ-Eo5"/>
-                                    <constraint firstAttribute="height" constant="680" id="3Lw-CF-bLa"/>
-                                    <constraint firstItem="ag7-fk-lcu" firstAttribute="leading" secondItem="BTu-UK-4pB" secondAttribute="leading" constant="74" id="8KG-sj-Kh2"/>
-                                    <constraint firstItem="CHW-i6-KS3" firstAttribute="top" secondItem="BTu-UK-4pB" secondAttribute="top" constant="233" id="92R-Oz-bvU"/>
-                                    <constraint firstItem="CHW-i6-KS3" firstAttribute="width" secondItem="BTu-UK-4pB" secondAttribute="width" id="D8W-Fw-5im"/>
-                                    <constraint firstItem="ag7-fk-lcu" firstAttribute="top" secondItem="CHW-i6-KS3" secondAttribute="bottom" constant="8" id="O6Q-hG-r6Y"/>
-                                    <constraint firstItem="hXV-ce-IWL" firstAttribute="centerX" secondItem="BTu-UK-4pB" secondAttribute="centerX" id="Qps-d0-24a"/>
-                                    <constraint firstAttribute="trailing" secondItem="ag7-fk-lcu" secondAttribute="trailing" constant="74" id="n2e-PW-Tcm"/>
-                                    <constraint firstAttribute="bottom" secondItem="hXV-ce-IWL" secondAttribute="bottom" constant="62" id="sKa-vI-VFJ"/>
+                                    <constraint firstItem="8WB-q6-cR8" firstAttribute="trailing" secondItem="jVz-c6-8Gy" secondAttribute="trailing" id="8oT-E3-1K1"/>
+                                    <constraint firstItem="jVz-c6-8Gy" firstAttribute="top" secondItem="UNu-Rj-nyX" secondAttribute="top" constant="30" id="Cir-aa-Y1o"/>
+                                    <constraint firstItem="oWs-fG-vIX" firstAttribute="leading" secondItem="UNu-Rj-nyX" secondAttribute="leading" constant="28" id="NQu-MB-YpE"/>
+                                    <constraint firstItem="oWs-fG-vIX" firstAttribute="top" secondItem="8WB-q6-cR8" secondAttribute="bottom" constant="14" id="U7k-Xg-FJJ"/>
+                                    <constraint firstItem="jVz-c6-8Gy" firstAttribute="leading" secondItem="UNu-Rj-nyX" secondAttribute="leading" constant="28" id="ZZs-ft-RjB"/>
+                                    <constraint firstAttribute="trailing" secondItem="jVz-c6-8Gy" secondAttribute="trailing" constant="28" id="gCH-0X-qo3"/>
+                                    <constraint firstItem="8WB-q6-cR8" firstAttribute="leading" secondItem="jVz-c6-8Gy" secondAttribute="leading" id="qmH-Yb-qSO"/>
+                                    <constraint firstItem="8WB-q6-cR8" firstAttribute="top" secondItem="jVz-c6-8Gy" secondAttribute="bottom" constant="10" id="rLx-K6-1S0"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Dqa-sS-eye"/>
-                        <color key="backgroundColor" name="bgColor"/>
+                        <viewLayoutGuide key="safeArea" id="PxO-83-EQ9"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BTu-UK-4pB" firstAttribute="centerX" secondItem="Dqa-sS-eye" secondAttribute="centerX" id="7mu-Iv-9jI"/>
-                            <constraint firstItem="BTu-UK-4pB" firstAttribute="centerY" secondItem="Dqa-sS-eye" secondAttribute="centerY" id="ByM-Fg-OcB"/>
-                            <constraint firstItem="BTu-UK-4pB" firstAttribute="width" secondItem="hqn-Ks-V3H" secondAttribute="width" id="PKe-b1-KWc"/>
+                            <constraint firstItem="PxO-83-EQ9" firstAttribute="trailing" secondItem="ep3-aw-lY9" secondAttribute="trailing" id="1dV-kc-umd"/>
+                            <constraint firstItem="UNu-Rj-nyX" firstAttribute="leading" secondItem="PxO-83-EQ9" secondAttribute="leading" id="P3Y-BA-P92"/>
+                            <constraint firstItem="ep3-aw-lY9" firstAttribute="leading" secondItem="PxO-83-EQ9" secondAttribute="leading" id="Z54-HL-RQ0"/>
+                            <constraint firstAttribute="trailing" secondItem="UNu-Rj-nyX" secondAttribute="trailing" id="aeg-VO-Mbi"/>
+                            <constraint firstItem="ep3-aw-lY9" firstAttribute="top" secondItem="PxO-83-EQ9" secondAttribute="top" id="ega-dk-HbL"/>
+                            <constraint firstItem="PxO-83-EQ9" firstAttribute="bottom" secondItem="UNu-Rj-nyX" secondAttribute="bottom" id="nmp-TL-TZ9"/>
+                            <constraint firstItem="UNu-Rj-nyX" firstAttribute="top" secondItem="ep3-aw-lY9" secondAttribute="bottom" id="uv0-7Q-u2f"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="580" height="680"/>
-                    <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="580" height="707"/>
                     <connections>
-                        <outlet property="actionButton1" destination="hXV-ce-IWL" id="PIm-9w-y78"/>
-                        <outlet property="helpMessage" destination="ag7-fk-lcu" id="AHY-eW-08n"/>
-                        <outlet property="helpTitle" destination="CHW-i6-KS3" id="eXI-wl-9BI"/>
+                        <outlet property="helpMessage" destination="8WB-q6-cR8" id="trA-la-1aq"/>
+                        <outlet property="helpTitle" destination="jVz-c6-8Gy" id="xAY-to-uI6"/>
+                        <outlet property="learnMoreBtn" destination="oWs-fG-vIX" id="1V2-CS-gPE"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1vf-bV-5zb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6ac-FH-Qj4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-53" y="260"/>
+            <point key="canvasLocation" x="691" y="167"/>
+        </scene>
+        <!--Whats New User Planner Controller-->
+        <scene sceneID="Bgh-Yf-d1D">
+            <objects>
+                <viewController storyboardIdentifier="FTWhatsNewUserPlannerController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WZ0-dk-aWH" customClass="FTWhatsNewUserPlannerController" customModule="NS3_Beta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="NBb-7Q-A7p">
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="707"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7D-BK-iAa">
+                                <rect key="frame" x="0.0" y="20" width="580" height="448"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whats_new_user_2024" translatesAutoresizingMaskIntoConstraints="NO" id="SRy-sj-7KX">
+                                        <rect key="frame" x="0.0" y="0.0" width="580" height="448"/>
+                                        <color key="backgroundColor" red="1" green="0.8901960784313725" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="SRy-sj-7KX" firstAttribute="top" secondItem="V7D-BK-iAa" secondAttribute="top" id="7iY-4j-Sys"/>
+                                    <constraint firstAttribute="bottom" secondItem="SRy-sj-7KX" secondAttribute="bottom" id="FCE-Hz-rGY"/>
+                                    <constraint firstItem="SRy-sj-7KX" firstAttribute="leading" secondItem="V7D-BK-iAa" secondAttribute="leading" id="MOg-ae-od3"/>
+                                    <constraint firstAttribute="height" constant="448" id="XlE-X4-6KT"/>
+                                    <constraint firstAttribute="trailing" secondItem="SRy-sj-7KX" secondAttribute="trailing" id="c0n-vv-Lnq"/>
+                                    <constraint firstItem="SRy-sj-7KX" firstAttribute="width" secondItem="V7D-BK-iAa" secondAttribute="width" id="iMB-jO-Kq9"/>
+                                    <constraint firstItem="SRy-sj-7KX" firstAttribute="height" secondItem="V7D-BK-iAa" secondAttribute="height" id="v22-VB-vhQ"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KK3-oi-AVG">
+                                <rect key="frame" x="0.0" y="468" width="580" height="239"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More 2024 planners!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0VJ-Pj-58W" userLabel="helpTitle" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="28" y="30" width="524" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="q91-bM-zJ5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="Clearface Serial" pointSize="34"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner2.title"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover delightful digital planners in the Templates section that we’ve curated from amazing creators." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvd-y2-qdE" userLabel="helpMessage" customClass="FTStyledLabel" customModule="NS3_Beta" customModuleProvider="target">
+                                        <rect key="frame" x="28" y="74" width="524" height="38.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner2.description"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nwb-SB-sYE" customClass="FTCustomButton" customModule="FTCommon">
+                                        <rect key="frame" x="28" y="126.5" width="144" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="gOy-kA-mj7"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                        <state key="normal" title="Check them out now!">
+                                            <color key="titleColor" name="groupNotesCountTint"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="whatsnew.planner2.cta"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="pageBGColor"/>
+                                <constraints>
+                                    <constraint firstItem="mvd-y2-qdE" firstAttribute="leading" secondItem="0VJ-Pj-58W" secondAttribute="leading" id="64t-WO-XvK"/>
+                                    <constraint firstItem="Nwb-SB-sYE" firstAttribute="leading" secondItem="KK3-oi-AVG" secondAttribute="leading" constant="28" id="8Ha-XA-feg"/>
+                                    <constraint firstItem="0VJ-Pj-58W" firstAttribute="top" secondItem="KK3-oi-AVG" secondAttribute="top" constant="30" id="8jZ-Wv-hfk"/>
+                                    <constraint firstItem="mvd-y2-qdE" firstAttribute="top" secondItem="0VJ-Pj-58W" secondAttribute="bottom" constant="10" id="AFC-hl-f7H"/>
+                                    <constraint firstItem="mvd-y2-qdE" firstAttribute="trailing" secondItem="0VJ-Pj-58W" secondAttribute="trailing" id="SMC-Km-KdX"/>
+                                    <constraint firstAttribute="trailing" secondItem="0VJ-Pj-58W" secondAttribute="trailing" constant="28" id="ZE7-2x-9S9"/>
+                                    <constraint firstItem="Nwb-SB-sYE" firstAttribute="top" secondItem="mvd-y2-qdE" secondAttribute="bottom" constant="14" id="e7S-0y-Uih"/>
+                                    <constraint firstItem="0VJ-Pj-58W" firstAttribute="leading" secondItem="KK3-oi-AVG" secondAttribute="leading" constant="28" id="zTF-Q6-IxX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Mco-Cq-4ix"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="KK3-oi-AVG" firstAttribute="top" secondItem="V7D-BK-iAa" secondAttribute="bottom" id="Ltk-wx-Usl"/>
+                            <constraint firstItem="Mco-Cq-4ix" firstAttribute="bottom" secondItem="KK3-oi-AVG" secondAttribute="bottom" id="SB6-AF-d3B"/>
+                            <constraint firstItem="V7D-BK-iAa" firstAttribute="leading" secondItem="Mco-Cq-4ix" secondAttribute="leading" id="VYf-R5-UBo"/>
+                            <constraint firstAttribute="trailing" secondItem="KK3-oi-AVG" secondAttribute="trailing" id="Wpu-Sl-1a7"/>
+                            <constraint firstItem="KK3-oi-AVG" firstAttribute="leading" secondItem="Mco-Cq-4ix" secondAttribute="leading" id="iCN-e7-Yp5"/>
+                            <constraint firstItem="Mco-Cq-4ix" firstAttribute="trailing" secondItem="V7D-BK-iAa" secondAttribute="trailing" id="jCb-PO-ine"/>
+                            <constraint firstItem="V7D-BK-iAa" firstAttribute="top" secondItem="Mco-Cq-4ix" secondAttribute="top" id="udL-5p-QWM"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="580" height="707"/>
+                    <connections>
+                        <outlet property="helpMessage" destination="mvd-y2-qdE" id="toB-CP-Pd5"/>
+                        <outlet property="helpTitle" destination="0VJ-Pj-58W" id="oIj-Z4-oef"/>
+                        <outlet property="learnMoreBtn" destination="Nwb-SB-sYE" id="jWY-EO-rbm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xPI-A2-XuO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1206.25" y="166.69921875"/>
         </scene>
     </scenes>
     <resources>
-        <image name="social-media-joinus-2" width="768" height="240"/>
         <image name="whatsNewClose" width="30" height="30"/>
+        <image name="whats_new_2024" width="557.5" height="321"/>
+        <image name="whats_new_user_2024" width="526" height="387"/>
         <namedColor name="bgColor">
             <color red="0.9882352941176471" green="0.9882352941176471" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="blueDodger">
             <color red="0.32549019607843138" green="0.46666666666666667" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="groupNotesCountTint">
+            <color red="0.015686274509803921" green="0.33333333333333331" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="pageBGColor">
+            <color red="0.94117647058823528" green="0.93333333333333335" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="titleColor">
             <color red="0.2199999988079071" green="0.2199999988079071" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="wnBlue">
-            <color red="0.36078431372549019" green="0.65490196078431373" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

@@ -707,6 +707,12 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
     }
 
+    func openTemplatesScreen(url: URL) {
+        if let controller = rootContentViewController as? FTShelfSplitViewController {
+            controller.selectAndOpenTemplates(with: url)
+        }
+    }
+    
     // MARK: - open PDF
 
     func importItem(_ item: FTImportItem) {
