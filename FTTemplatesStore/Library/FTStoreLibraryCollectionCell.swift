@@ -43,6 +43,6 @@ class FTStoreLibraryCollectionCell: UICollectionViewCell {
 
         thumbnail?.sd_imageIndicator = SDWebImageActivityIndicator.gray
         let fileUrl = style.thumbnailPath()
-        self.thumbnail?.sd_setImage(with: fileUrl)
+        self.thumbnail?.sd_setImage(with: fileUrl, placeholderImage: nil, options: .refreshCached)
     }
 }

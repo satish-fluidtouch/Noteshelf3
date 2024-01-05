@@ -197,6 +197,6 @@ class FTWhatsNewManger: NSObject {
     }
 
     @objc class func shouldShowWhatsNew() -> Bool {
-        return true;
+        return false;
     }
 }
