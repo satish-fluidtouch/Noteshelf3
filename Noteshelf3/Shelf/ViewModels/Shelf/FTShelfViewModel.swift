@@ -67,15 +67,18 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var mode: FTShelfMode = .normal {
         didSet {
             addOrRemoveObserversBasedOnMode()
-            updateTopSectionNBCreationButtonsVisiblity()
             self.subscribeToShelfItemChanges()
         }
     }
-        
+
     @Published var shelfItems: [FTShelfItemViewModel] = []
     {
         didSet {
-            self.notesCount = shelfItems.count;
+            if(isInHomeMode && shelfItems.count != oldValue.count) {
+                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+                }
+            }
             subscribeToShelfItemChanges()
             self.updateGetStartedInfoWithDelay()
         }
@@ -84,7 +87,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var currentDraggedItem: FTShelfItemViewModel?
     @Published var highlightItem: FTShelfItemViewModel?
     @Published var isLoadingShelf: Bool = false
-    @Published var showNoShelfItemsView: Bool = false
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
     @Published var tagsForThisBook: [FTTagItemModel] = []
@@ -93,19 +95,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
     @Published var orientation = UIDevice.current.orientation
     @Published var isSidebarOpen: Bool = true
-    @Published var notesCount: Int = 0 {
-        didSet {
-            if(isInHomeMode && notesCount != oldValue) {
-                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : notesCount, "shelfCollectionTitle": "\(collection.displayTitle)"])
-                }
-            }
-        }
-    }
     @Published var shouldShowGetStartedInfo: Bool = FTUserDefaults.isFirstLaunch()
-    
-    @Published var canShowCreateNBButtons: Bool = true
-    
+    @Published var selectedShelfItems: [FTShelfItemViewModel] = []
+
     // MARK: Normal Variables
     var collection: FTShelfItemCollection {
         didSet {
@@ -202,8 +194,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     var disableBottomBarItems: Bool {
         self.selectedShelfItems.isEmpty
     }
-
-    @Published var selectedShelfItems: [FTShelfItemViewModel] = []
 
     // MARK: Mutating functions
     func selectAllItems() {
@@ -340,7 +330,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     
     func reset() {
         self.shelfDidLoad = false
-        self.showNoShelfItemsView = false
         self.showDropOverlayView = false
         self.tagsForThisBook = []
         self.allowHitTesting = true
@@ -349,15 +338,11 @@ class FTShelfViewModel: NSObject, ObservableObject {
 
 // MARK: Private
 private extension FTShelfViewModel {
-    func updateTopSectionNBCreationButtonsVisiblity() {
-        withAnimation {
-            canShowCreateNBButtons = mode == .normal
-        }
-    }
     func updateGetStartedInfoWithDelay(){
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateShowingGetStartedInfoStatus), object: nil)
         self.perform(#selector(updateShowingGetStartedInfoStatus), with: nil, afterDelay: 0.7)
     }
+
     @objc func updateShowingGetStartedInfoStatus() {
         if isInHomeMode {
             withAnimation {
@@ -378,6 +363,7 @@ private extension FTShelfViewModel {
             }
         }
     }
+
     func addContextualMenuOerationsObserver(){
         self.shelfItemContextualMenuViewModel.$performAction
             .dropFirst()
@@ -474,8 +460,6 @@ extension FTShelfViewModel {
         else {
             self.shelfItems = _shelfItems
         }
-
-        self.showNoShelfItemsView = self.shelfItems.isEmpty
 
         if !self.shelfDidLoad {
             self.shelfDidLoad = true

@@ -20,7 +20,6 @@ struct FTNotebookItemView: View {
 
     @State var hideShadow: Bool = false
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.colorScheme) var colorScheme
     @State private var isPressed: Bool = false
 
@@ -104,14 +103,6 @@ struct FTNotebookItemView: View {
     
     private var thumbnailSize: CGSize {
        return CGSize(width:viewWidth, height: viewHeight - titleRectHeight)
-    }
-    
-    private var coverProperties: FTShelfItemCoverViewProperties {
-        if horizontalSizeClass == .regular {
-            return .large
-        }else {
-            return .medium
-        }
     }
     
     private var titleViewSize: CGSize {

@@ -14,7 +14,6 @@ struct FTGroupItemView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @EnvironmentObject var shelfMenuOverlayInfo: FTShelfMenuOverlayInfo
 
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var isPressed: Bool = false
 
     var groupItemWidth: CGFloat = 212
@@ -91,14 +90,7 @@ struct FTGroupItemView: View {
             shelfViewModel.renameShelfItem(groupItem)
         }
     }
-    
-    private var coverProperties : FTShelfItemCoverViewProperties {
-        if horizontalSizeClass == .regular {
-            return .large
-        }else {
-            return .medium
-        }
-    }
+
     private var groupTitleViewSize: CGSize {
         CGSize(width: groupItemWidth, height: 60)
     }
