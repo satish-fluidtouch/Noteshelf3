@@ -130,8 +130,10 @@ private extension FTStoreContainerViewController {
      func updateView() {
          removeChilderns()
         if segmentControl.selectedIndex == 0 {
-            self.add(self.storeViewController)
-            self.storeViewController.view.frame = view.bounds
+            let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreViewController") as! FTStoreViewController
+            self.add(viewController)
+            viewController.view.frame = view.bounds
          } else if segmentControl.selectedIndex == 1 {
              self.add(storeFavouriteViewController)
              storeFavouriteViewController.view.frame = view.bounds
