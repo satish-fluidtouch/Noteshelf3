@@ -55,7 +55,7 @@ struct FTGroupListView: View {
     private var contentView: some View {
             HStack(alignment: .center,spacing: 0) {
                 if shelfViewModel.mode == .selection {
-                    FTShelfItemSelectionIndicator(isSelected: $groupItem.isSelected)
+                    FTShelfItemSelectionIndicator()
                         .padding(.trailing,16)
                 }
                 HStack(alignment: .center,spacing: 16) {

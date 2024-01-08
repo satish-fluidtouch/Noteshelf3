@@ -48,7 +48,7 @@ struct FTGroupItemView: View {
         .environmentObject(groupItem)
         .overlay(alignment: .bottom) {
             if shelfViewModel.mode == .selection, shelfViewModel.displayStlye != .List {
-                FTShelfItemSelectionIndicator(isSelected: $groupItem.isSelected)
+                FTShelfItemSelectionIndicator()
                     .padding(.bottom, 4)
             }
         }

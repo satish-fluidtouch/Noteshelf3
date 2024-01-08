@@ -86,7 +86,6 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     @Published var coverImage = UIImage.shelfDefaultNoCoverImage
     @Published var isLoadingNotebook: Bool = false
     @Published var isDownloadingNotebook: Bool = false
-    @Published var isSelected: Bool = false
     @Published var progress: CGFloat = 0.0
     @Published var uploadDownloadInProgress: Bool = false
     @Published var popoverType: FTNotebookPopoverType?
@@ -112,8 +111,7 @@ class FTShelfItemViewModel: NSObject, Identifiable, ObservableObject, FTShelfIte
     }
     
     static func == (lhs: FTShelfItemViewModel, rhs: FTShelfItemViewModel) -> Bool {
-        return lhs.isSelected == rhs.isSelected &&
-        lhs.isBackupOn == rhs.isBackupOn &&
+        return lhs.isBackupOn == rhs.isBackupOn &&
         lhs.path == rhs.path &&
         lhs.id == rhs.id
     }

@@ -41,7 +41,7 @@ struct FTNotebookCoverView: View {
 
                 .overlay(alignment: .bottom) {
                     FTShelfItemUploadDownloadIndicator()
-                    FTShelfItemSelectionIndicator(isSelected: $shelfItem.isSelected)
+                    FTShelfItemSelectionIndicator()
                         .padding(.bottom, 4)
                         .isHidden(!(shelfViewModel.mode == .selection && shelfViewModel.displayStlye != .List))
                 }
@@ -162,15 +162,21 @@ struct FTFavoriteIconView: View {
 }
 
 struct FTShelfItemSelectionIndicator: View {
-    var isSelected: Binding<Bool>
+    @State private var isSelected: Bool = false
     @EnvironmentObject var shelfitem: FTShelfItemViewModel
     @EnvironmentObject var viewModel: FTShelfViewModel
     
     var body: some View {
-        Image(isSelected.wrappedValue ? "selection_checkMark" : "shelfItemSelectionMode")
+        Image(isSelected ? "selection_checkMark" : "shelfItemSelectionMode")
             .symbolRenderingMode(SymbolRenderingMode.palette)
             .foregroundColor(Color.appColor(.black20))
             .frame(width:viewModel.displayStlye == .List ? 22 : 32, height: 32, alignment: Alignment.center)
+            .onChange(of: viewModel.selectedShelfItems) { _ in
+                self.isSelected = viewModel.selectedShelfItems.contains(shelfitem)
+            }
+            .onAppear {
+                self.isSelected = viewModel.selectedShelfItems.contains(shelfitem)
+            }
     }
 }
 
