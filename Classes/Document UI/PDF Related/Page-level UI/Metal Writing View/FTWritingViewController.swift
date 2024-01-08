@@ -689,7 +689,7 @@ extension FTWritingViewController : FTContentDelegate
     }
     
     func addShapeAnnotation() {
-        self.pageContentDelegate!.addShapeAnnotation()
+        self.pageContentDelegate?.addShapeAnnotation()
     }
     
     func editShapeAnnotation(with annotation: FTAnnotation, point: CGPoint) {
@@ -701,7 +701,7 @@ extension FTWritingViewController : FTContentDelegate
     }
     
     func activeController()-> UIViewController? {
-        return self.pageContentDelegate!.activeController()
+        return self.pageContentDelegate?.activeController()
     }
 
     var backgroundTexture: MTLTexture? {

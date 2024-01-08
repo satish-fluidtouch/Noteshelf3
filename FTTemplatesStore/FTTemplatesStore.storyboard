@@ -193,7 +193,7 @@
                                                                 <constraint firstAttribute="width" constant="70" id="qCw-GD-qOV"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Library is empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN9-Jb-KBn" customClass="FTCustomLabel" customModule="FTCommon">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Library is empty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN9-Jb-KBn" customClass="FTCustomLabel" customModule="FTCommon">
                                                             <rect key="frame" x="0.0" y="96" width="301" height="20.5"/>
                                                             <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                                             <color key="textColor" name="black1"/>
@@ -202,7 +202,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.library.empty.title"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add your preferred templates to the Library from the preview screen for easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-1b-aKw" customClass="FTCustomLabel" customModule="FTCommon">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Add your preferred templates to the Library from the preview screen for easy access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kT-1b-aKw" customClass="FTCustomLabel" customModule="FTCommon">
                                                             <rect key="frame" x="0.0" y="124.5" width="301" height="36"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" name="black70"/>
@@ -395,7 +395,7 @@
                                                                 <constraint firstAttribute="height" constant="64" id="frW-8E-5Hh"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juI-9V-Fpg" customClass="FTCustomLabel" customModule="FTCommon">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Import custom templates" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juI-9V-Fpg" customClass="FTCustomLabel" customModule="FTCommon">
                                                             <rect key="frame" x="0.0" y="96" width="311" height="20.5"/>
                                                             <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                                             <color key="textColor" name="black1"/>
@@ -404,7 +404,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="templatesStore.custom.empty.title"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-6R-Twd" customClass="FTCustomLabel" customModule="FTCommon">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Import PDFs or images and use them as your own custom paper" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AM-6R-Twd" customClass="FTCustomLabel" customModule="FTCommon">
                                                             <rect key="frame" x="0.0" y="124.5" width="311" height="36"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" name="black70"/>
@@ -1095,27 +1095,27 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zKU-Ia-RhD">
-                                        <rect key="frame" x="41" y="861.5" width="72" height="72"/>
+                                        <rect key="frame" x="41" y="695" width="72" height="72"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="72" id="Nlf-5q-B4Q"/>
                                             <constraint firstAttribute="width" secondItem="zKU-Ia-RhD" secondAttribute="height" multiplier="1:1" id="Whz-nz-lT9"/>
                                         </constraints>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="yvw-4N-kyb">
-                                        <rect key="frame" x="133" y="861.5" width="615" height="62.5"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yvw-4N-kyb">
+                                        <rect key="frame" x="133" y="695" width="603" height="43.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wtM-4o-IQV">
-                                                <rect key="frame" x="0.0" y="0.0" width="615" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="603" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" name="black70"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n1f-Ta-AaJ">
-                                                <rect key="frame" x="0.0" y="30.5" width="615" height="32"/>
+                                                <rect key="frame" x="0.0" y="25.5" width="603" height="18"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="userJournal" title="Insta" imagePadding="6">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Insta">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
+                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="authorAction:" destination="wAB-wv-axk" eventType="touchUpInside" id="nEd-CX-D4s"/>
@@ -1123,6 +1123,36 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7aw-ug-fZd" userLabel="AuthorView">
+                                        <rect key="frame" x="295" y="695" width="178.5" height="36"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created by" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8s-tW-h4T">
+                                                <rect key="frame" x="10" y="10" width="66.5" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cG-CZ-BzT">
+                                                <rect key="frame" x="81.5" y="5" width="72.5" height="26"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="Instagram">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="10"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="authorAction:" destination="wAB-wv-axk" eventType="touchUpInside" id="gI0-W1-E2l"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="K8s-tW-h4T" firstAttribute="centerY" secondItem="1cG-CZ-BzT" secondAttribute="centerY" id="NwU-fZ-s38"/>
+                                            <constraint firstItem="K8s-tW-h4T" firstAttribute="top" secondItem="7aw-ug-fZd" secondAttribute="top" constant="5" id="hdW-om-x5z"/>
+                                            <constraint firstItem="1cG-CZ-BzT" firstAttribute="leading" secondItem="K8s-tW-h4T" secondAttribute="trailing" constant="5" id="q6f-U4-jtR"/>
+                                            <constraint firstItem="K8s-tW-h4T" firstAttribute="leading" secondItem="7aw-ug-fZd" secondAttribute="leading" constant="10" id="qr5-Jz-xla"/>
+                                            <constraint firstAttribute="bottom" secondItem="K8s-tW-h4T" secondAttribute="bottom" constant="5" id="tct-oY-ldT"/>
+                                            <constraint firstAttribute="trailing" secondItem="1cG-CZ-BzT" secondAttribute="trailing" constant="10" id="xsm-SV-CY9"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -1131,15 +1161,35 @@
                                     <constraint firstItem="6He-Uk-U5L" firstAttribute="height" secondItem="wcp-AX-4yG" secondAttribute="height" id="J5Y-Cu-ypX"/>
                                     <constraint firstItem="6He-Uk-U5L" firstAttribute="centerX" secondItem="wcp-AX-4yG" secondAttribute="centerX" id="PTI-eb-c1x"/>
                                     <constraint firstItem="Dhy-YJ-pxS" firstAttribute="centerX" secondItem="wcp-AX-4yG" secondAttribute="centerX" id="ROH-Gi-XP8"/>
+                                    <constraint firstItem="yvw-4N-kyb" firstAttribute="top" secondItem="Yhi-Ut-tkd" secondAttribute="bottom" id="Tie-vX-lZk"/>
+                                    <constraint firstItem="7aw-ug-fZd" firstAttribute="centerX" secondItem="TPi-kN-0G2" secondAttribute="centerX" id="Ubl-c0-jrV"/>
                                     <constraint firstItem="Dhy-YJ-pxS" firstAttribute="centerY" secondItem="wcp-AX-4yG" secondAttribute="centerY" constant="-64" id="X5M-bT-7Bo"/>
-                                    <constraint firstAttribute="trailing" secondItem="yvw-4N-kyb" secondAttribute="trailing" constant="20" id="XfZ-2C-VpO"/>
+                                    <constraint firstAttribute="trailing" secondItem="yvw-4N-kyb" secondAttribute="trailing" constant="32" id="XfZ-2C-VpO"/>
                                     <constraint firstItem="6He-Uk-U5L" firstAttribute="centerY" secondItem="wcp-AX-4yG" secondAttribute="centerY" id="gdC-zl-ZT6"/>
-                                    <constraint firstAttribute="bottom" secondItem="yvw-4N-kyb" secondAttribute="bottom" constant="100" id="jKm-UG-D3F"/>
                                     <constraint firstItem="TPi-kN-0G2" firstAttribute="top" secondItem="Dhy-YJ-pxS" secondAttribute="bottom" id="lHf-eq-lFm"/>
                                     <constraint firstItem="TPi-kN-0G2" firstAttribute="centerX" secondItem="wcp-AX-4yG" secondAttribute="centerX" id="os6-nG-7Lf"/>
                                     <constraint firstItem="6He-Uk-U5L" firstAttribute="width" secondItem="wcp-AX-4yG" secondAttribute="width" id="sk7-G8-o2t"/>
                                     <constraint firstItem="yvw-4N-kyb" firstAttribute="leading" secondItem="zKU-Ia-RhD" secondAttribute="trailing" constant="20" id="tcq-NP-dtB"/>
+                                    <constraint firstItem="Yhi-Ut-tkd" firstAttribute="bottom" secondItem="7aw-ug-fZd" secondAttribute="top" id="ux1-jg-oVg"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="zKU-Ia-RhD"/>
+                                        <exclude reference="yvw-4N-kyb"/>
+                                        <exclude reference="7aw-ug-fZd"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="7aw-ug-fZd"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <mask key="subviews">
+                                        <include reference="zKU-Ia-RhD"/>
+                                        <include reference="yvw-4N-kyb"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wS6-VC-ORu"/>
@@ -1152,8 +1202,10 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="authorButton" destination="n1f-Ta-AaJ" id="EoD-2W-Qw6"/>
+                        <outlet property="authorButton" destination="n1f-Ta-AaJ" id="ZgZ-iG-DDK"/>
                         <outlet property="authorImageView" destination="zKU-Ia-RhD" id="ckW-fP-yFb"/>
+                        <outlet property="authorName" destination="1cG-CZ-BzT" id="PPo-NJ-svH"/>
+                        <outlet property="authorStackView" destination="7aw-ug-fZd" id="A64-Ny-thR"/>
                         <outlet property="collectionContainerView" destination="TPi-kN-0G2" id="Qar-zv-1Ut"/>
                         <outlet property="collectionContainerViewHeightConstraint" destination="4ih-Qx-tQ4" id="kjW-su-k0U"/>
                         <outlet property="collectionContainerViewWidthConstraint" destination="RLT-Lw-hjs" id="dCF-j0-pxL"/>
@@ -1164,6 +1216,7 @@
                         <outlet property="scrollViewContainer" destination="Dhy-YJ-pxS" id="Xi5-jx-Dti"/>
                         <outlet property="scrollViewContainerViewHeightConstraint" destination="sQM-u7-cFB" id="qLm-wI-Kag"/>
                         <outlet property="scrollViewContainerWidthConstraint" destination="IDP-J0-YoE" id="LhC-yh-MuJ"/>
+                        <outlet property="scrollViewYConstraint" destination="X5M-bT-7Bo" id="B9h-ze-45i"/>
                         <outlet property="styleName" destination="r6A-ZD-Z2m" id="lBd-lG-QTg"/>
                         <outlet property="styleStackView" destination="Yhi-Ut-tkd" id="bQX-cp-Aha"/>
                         <outlet property="topScrollView" destination="6He-Uk-U5L" id="geN-Hj-HQk"/>
@@ -1619,7 +1672,6 @@
         <image name="rectangle" catalog="system" width="128" height="93"/>
         <image name="rectangle.portrait" catalog="system" width="115" height="128"/>
         <image name="sticker_b" width="680" height="342"/>
-        <image name="userJournal" width="16" height="16"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -1654,7 +1706,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

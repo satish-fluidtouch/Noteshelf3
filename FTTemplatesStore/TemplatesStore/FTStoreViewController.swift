@@ -143,7 +143,8 @@ private extension FTStoreViewController {
             .category: EventName.templates_category_tap,
             .templates: EventName.templates_template_tap,
             .stickers: EventName.templates_sticker_tap,
-            .journals: EventName.templates_diaries_tap
+            .journals: EventName.templates_diaries_tap,
+            .userJournals: EventName.templates_inspirations_tap
         ]
 
         if let type = FTStoreSectionType(rawValue: item.sectionType ?? 99), let event = eventMapping[type] {
