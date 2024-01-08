@@ -152,7 +152,7 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                     dayY += dayCellHeight + 0.5
                 }
                 else {
-                    dayX += dayCellWidth
+                    dayX += dayCellWidth + 0.5
                 }
             })
             calendarRectsInfo.dayRects.append(dayRects)
