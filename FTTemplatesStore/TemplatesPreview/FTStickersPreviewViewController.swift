@@ -39,7 +39,7 @@ class FTStickersPreviewViewController: UIViewController {
         authorButton.setTitle(template.author, for: .normal)
         imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         let thumbnailUrl = (template as? DiscoveryItem)?.stickersThumbnailUrl
-        self.imageView.sd_setImage(with: thumbnailUrl)
+        self.imageView.sd_setImage(with: thumbnailUrl, placeholderImage: nil, options: .refreshCached)
         self.imageView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         self.imageView.layer.cornerRadius = 10
         self.imageView.shadowForPage()

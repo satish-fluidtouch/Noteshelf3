@@ -37,7 +37,6 @@ CG_EXTERN NSString * _Nonnull const FTRemoteConfigNewValueKey;
 -(NSString * _Nonnull)betaTestingAppVersionKey;
 
 -(NSTimeInterval)myScriptRecognitionResetDuration;
-
--(NSInteger)offerPriceLocationForIAPOffer;
+-(NSString * _Nonnull)variationForiRateMessage;
 
 @end
