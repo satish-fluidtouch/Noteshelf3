@@ -315,6 +315,9 @@ class FTShapeAnnotationController: FTAnnotationEditController {
                 processShapeResizing(touch: firstTouch, point: point)
             } else {
                 let points = shapeAnnotation.getshapeControlPoints()
+                guard !points.isEmpty else {
+                    return
+                }
                 index = points.count - 1
                 if shapeAnnotation.shape?.isClosedShape ?? false {
                     index = 0

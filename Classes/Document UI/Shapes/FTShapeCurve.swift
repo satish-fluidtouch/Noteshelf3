@@ -19,14 +19,13 @@ import Foundation
         self.init()
         let simplifiedPoints = SwiftSimplify.simplify(points, tolerance: .good, highQuality: true)
         let filteredPoints = self.filterPoints(points: simplifiedPoints)
-        if (hasElbow(points: filteredPoints)) {
-            return nil
-        } else {
-            //Curve detected
+        if filteredPoints.count >= 3 && !hasElbow(points: filteredPoints) {
             if let startPoint = filteredPoints.first, let endPoint = filteredPoints.last, let pointOnCurve = deCasteljau(points: filteredPoints) {
                 let controlPoint = calculateCurveControlPoint(pointOnCurve: pointOnCurve, startTouchPoint: startPoint, endTouchPoint: endPoint)
                 vertices = [startPoint, controlPoint, endPoint]
             }
+        } else {
+            return nil
         }
     }
     
@@ -39,9 +38,6 @@ import Foundation
     }
 
     private func hasElbow(points: [CGPoint]) -> Bool {
-        guard points.count >= 3 else {
-            return false  // There can't be an elbow with less than 3 points
-        }
         for i in 1..<points.count - 1 {
             let angle = calculateAngle(point1: points[i - 1], point2: points[i], point3: points[i + 1])
             if angle > thresholdAngle {
