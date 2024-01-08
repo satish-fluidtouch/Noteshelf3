@@ -935,6 +935,8 @@
 		BA8BA66029782EA200946CFE /* FTAdvanced.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8080E6921F194F900F73164 /* FTAdvanced.storyboard */; };
 		BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA66C29794C6400946CFE /* GoogleSignIn */; };
 		BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */ = {isa = PBXBuildFile; productRef = BA8BA67229795F4A00946CFE /* GoogleAPIClientForREST_Drive */; };
+		BA8CDA0C2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CDA0B2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift */; };
+		BA8CDA0E2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8CDA0D2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift */; };
 		BA8E567A2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8E56792A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift */; };
 		BA8E567B2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8E56792A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift */; };
 		BA909A34298BE75B00260538 /* libiink.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA111BE529880094001E854F /* libiink.xcframework */; };
@@ -4080,6 +4082,8 @@
 		BA7D891121F07DD300883D82 /* FTWatchRecordingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingProvider.swift; sourceTree = "<group>"; };
 		BA7E190624CEFF5D00F73B6B /* FTTextLayouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTTextLayouter.swift; sourceTree = "<group>"; };
 		BA88C9272A5E8F7900EE6666 /* FTCustomPresentationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCustomPresentationDelegate.swift; sourceTree = "<group>"; };
+		BA8CDA0B2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNew2024PlannerController.swift; sourceTree = "<group>"; };
+		BA8CDA0D2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWhatsNewUserPlannerController.swift; sourceTree = "<group>"; };
 		BA8E441C2A8CB8B80035856F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		BA8E441D2A8CB8BA0035856F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		BA8E441E2A8CB8BC0035856F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -9642,6 +9646,7 @@
 		BA51F629218B2241009618F9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BA8CDA0A2B3DAB110031E231 /* v1.4.3 */,
 				BA51F62A218B2241009618F9 /* Core */,
 			);
 			path = Controllers;
@@ -9993,6 +9998,15 @@
 				BA7050CE24F644C1009CA613 /* StoreTemplateGenerator.swift */,
 			);
 			path = StretchTemplateGeneration;
+			sourceTree = "<group>";
+		};
+		BA8CDA0A2B3DAB110031E231 /* v1.4.3 */ = {
+			isa = PBXGroup;
+			children = (
+				BA8CDA0B2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift */,
+				BA8CDA0D2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift */,
+			);
+			path = v1.4.3;
 			sourceTree = "<group>";
 		};
 		BA909A3C2991067F00260538 /* GoogleService-Info */ = {
@@ -13088,6 +13102,7 @@
 				BAF390F12859ADF00067CA9F /* FTAudioSlider.m in Sources */,
 				BAF390F22859ADF00067CA9F /* FTDocumentValidator.swift in Sources */,
 				BAF390F32859ADF00067CA9F /* FTPDFOutline.swift in Sources */,
+				BA8CDA0E2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift in Sources */,
 				BAF390F52859ADF00067CA9F /* FTItemToExport.swift in Sources */,
 				BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */,
 				BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */,
@@ -14379,6 +14394,7 @@
 				4213C351288958C900A7A6F3 /* FTMediaViewController.swift in Sources */,
 				BAF395382859ADF10067CA9F /* FTBaseExporter.m in Sources */,
 				09C714592A407C9800E69E4A /* FTNotebookTitleView.swift in Sources */,
+				BA8CDA0C2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift in Sources */,
 				4747C41F2A95EC6100B1AB59 /* FTMetricsService.swift in Sources */,
 				BAF3953B2859ADF10067CA9F /* FTAccessible.swift in Sources */,
 				BAF3953D2859ADF10067CA9F /* NSError_Display.swift in Sources */,
