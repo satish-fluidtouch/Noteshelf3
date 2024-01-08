@@ -166,7 +166,8 @@ final class FTAppIntentHandler {
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
         } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            if url.path().contains(FTAppIntentHandler.templatesPath) {
+            // TODO: Narayana - change this to URL Query params
+            if url.path.contains(FTAppIntentHandler.templatesPath) {
                 intentHandler?.openTemplatesScreen(url: url)
             } else {
                 startMigration(url: url)
