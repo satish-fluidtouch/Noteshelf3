@@ -375,9 +375,10 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         let pageIndex = index
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         let numberYearPages = self.formatInfo.customVariants.isLandscape ? 3 : 2
-        let daysBeforeCount = 1 + numberYearPages
+        let monthBeforeCount = 1 + numberYearPages
         var dayAndWeekPagesCount = 0
         var monthRectsCount = 0
+        var daysBeforeCount: Int = 1 + numberYearPages
         self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: 0)
         var addWeekOffset : Bool = true
         calendarMonths.forEach { (eachMonth) in
@@ -385,7 +386,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
             let numberOfWeeksOfMonth = eachMonth.getWeeksCount()
             let numberOfDaysInMonth = eachMonth.dayInfo.filter({$0.belongsToSameMonth}).count
             let calendarPage = doc.page(at: index)
-            if let page = doc.page(at: dayAndWeekPagesCount + daysBeforeCount) {
+            if let page = doc.page(at: dayAndWeekPagesCount + monthBeforeCount) {
                 calendarPage?.addLinkAnnotation(bounds: monthRects[monthRectsCount], goToPage: page, at: atPoint)
             }
             if addWeekOffset {
@@ -395,6 +396,26 @@ class FTPlannerDiaryFormat : FTDairyFormat {
                 }
             }
             dayAndWeekPagesCount += numberOfWeeksOfMonth + numberOfDaysInMonth + 2  + 1 // every month, notes and tracker pages are added
+
+            daysBeforeCount +=  1 + numberOfWeeksOfMonth // every month and weeksCount
+            let dayRects = format.calendarRectsInfo.dayRects[monthRectsCount]
+            var dayRectsCount = 0
+            eachMonth.dayInfo.forEach({(eachDay) in
+                let calendarPage = doc.page(at: index)
+                if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
+                    if eachDay.belongsToSameMonth {
+                        if dayRects.count > dayRectsCount {
+                            if let page = doc.page(at: dayRectsCount + daysBeforeCount + 1) // adding each day
+                            {
+                                calendarPage?.addLinkAnnotation(bounds: dayRects[dayRectsCount], goToPage: page, at: atPoint)
+                            }
+                            dayRectsCount += 1
+                        }
+
+                    }
+                }
+            })
+            daysBeforeCount += numberOfDaysInMonth + 2 // every month days, notes and tracker pages are added
             monthRectsCount += 1
         }
         return pageIndex + 1

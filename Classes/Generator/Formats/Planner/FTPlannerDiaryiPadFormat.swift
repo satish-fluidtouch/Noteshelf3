@@ -128,7 +128,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
                     if formatInfo.customVariants.selectedDevice.identifier == "standard2" && !formatInfo.customVariants.isLandscape {
                         dayX += 0.5
                     }
-                    let drawRect = CGRect(x: dayX , y: dayY + dayCellHeight/2 - (dayString.size().height/2) , width: dayCellWidth, height: dayCellHeight)
+                    let drawRect = CGRect(x: dayX , y: dayY + (dayCellHeight - dayString.size().height)/2.0 , width: dayCellWidth, height: dayCellHeight)
                     dayString.draw(in: drawRect)
                     dayRects.append(getLinkRect(location: CGPoint(x: dayX, y: dayY), frameSize: CGSize(width: dayCellWidth, height: dayCellHeight)))
                 }
