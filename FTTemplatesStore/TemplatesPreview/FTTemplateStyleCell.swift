@@ -29,7 +29,7 @@ class FTTemplateStyleCell: UICollectionViewCell {
         let fileUrl = style.styleThumbnailFor(template: template)
         self.thumbnail.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
 
-        self.thumbnail.sd_setImage(with: fileUrl)
+        self.thumbnail.sd_setImage(with: fileUrl, placeholderImage: nil, options: .refreshCached)
         self.thumbnail.contentMode = .scaleAspectFit
         self.thumbnail.layer.cornerRadius = 4
         self.thumbnail.clipsToBounds = true

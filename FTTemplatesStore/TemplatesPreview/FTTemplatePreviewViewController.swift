@@ -41,6 +41,7 @@ class FTTemplatePreviewViewController: UIViewController {
     @IBOutlet private weak var collectionContainerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var scrollViewContainerWidthConstraint: NSLayoutConstraint!
     @IBOutlet private weak var scrollViewContainerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewYConstraint: NSLayoutConstraint!
     @IBOutlet private weak var styleName: UILabel!
     @IBOutlet weak var collectionContainerView: UIView!
 
@@ -49,6 +50,8 @@ class FTTemplatePreviewViewController: UIViewController {
     @IBOutlet weak var userJournalDescription: UILabel!
     @IBOutlet weak var authorImageView: UIImageView!
     @IBOutlet weak var authorButton: UIButton!
+    @IBOutlet weak var authorName: UIButton!
+    @IBOutlet weak var authorStackView: UIView!
 
     // MARK: - Private variables
     private var thumbnailOrientation: ThumbnailOrientation = .potrait
@@ -107,9 +110,11 @@ class FTTemplatePreviewViewController: UIViewController {
         super.viewDidLoad()
 
         // This code is to show Author information and Planner description for User journals
-        if self.template.sectionType == FTStoreSectionType.userJournals.rawValue {        userJournalDescription.text = self.template.subTitle
+        if self.template.sectionType == FTStoreSectionType.userJournals.rawValue {       
+            userJournalDescription.text = self.template.subTitle
             styleStackView.isHidden = true
             userJournalStackView.isHidden = false
+            authorStackView.isHidden = false
             authorImageView.isHidden = false
             authorImageView.layer.cornerRadius = 36
             loadAuthorDetails()
@@ -117,6 +122,7 @@ class FTTemplatePreviewViewController: UIViewController {
             styleStackView.isHidden = false
             userJournalStackView.isHidden = true
             authorImageView.isHidden = true
+            authorStackView.isHidden = true
         }
         networkCheck.addObserver(observer: self)
         setupUI()
@@ -150,14 +156,19 @@ class FTTemplatePreviewViewController: UIViewController {
 
     func loadAuthorDetails() {
         if let authorImageUrl = self.template.authorImageUrl {
-            authorImageView.sd_setImage(with: authorImageUrl)
+            authorImageView.sd_setImage(with: authorImageUrl, placeholderImage: nil, options: .refreshCached)
         }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(authorAction))
+        authorImageView.isUserInteractionEnabled = true
+        authorImageView.addGestureRecognizer(tapGesture)
         authorButton.setTitle(template.author, for: .normal)
+        authorName.setTitle(template.author, for: .normal)
     }
 
-    @IBAction func authorAction(_ sender: Any) {
+    @IBAction func authorAction(_ sender: Any?) {
         if let openUrl = template.link, let url = URL(string: openUrl) {
             if UIApplication.shared.canOpenURL(url) {
+                FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_author_tap, params: [EventParameterKey.title: template.title], screenName: ScreenName.templatesStore))
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
@@ -168,11 +179,17 @@ class FTTemplatePreviewViewController: UIViewController {
 extension FTTemplatePreviewViewController {
 
     func updateScrollViewContentSizes() {
-        let userJournalHeight = userJournalStackView.frame.height + 40
+        var userJournalHeight = userJournalStackView.frame.height + 40
+        if template.type == FTDiscoveryItemType.userJournals.rawValue {
+            scrollViewYConstraint.constant = 0
+            scrollViewYConstraint.constant -= userJournalHeight
+        } else {
+            userJournalHeight = 0
+        }
         let availableWidth = self.view.frame.width - 88
         var availableHeight =  min(self.view.frame.height - 354 - userJournalHeight, 750)
         if !self.isRegularClass() {
-            availableHeight -= 150
+            availableHeight -= 70
         }
         var aspectSize = FTStoreConstants.TemplatePreview.potraitAspectSize
         if self.thumbnailOrientation == .landscape {
@@ -205,7 +222,7 @@ extension FTTemplatePreviewViewController {
         viewModel.thumbnailSize = aspectSize
         if let styles {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                let collectionVidth = CGFloat(self.collectionView.contentSize.width) + CGFloat((styles.count - 1) * 6)
+                let collectionVidth = CGFloat(self.collectionView.contentSize.width) + CGFloat((styles.count - 1))
                 self.collectionContainerViewWidthConstraint.constant = min(collectionVidth, self.view.frame.size.width - 88)
                 self.collectionContainerViewHeightConstraint.constant = 46
                 if self.template.type == FTDiscoveryItemType.diary.rawValue || self.template.sectionType == FTStoreSectionType.userJournals.rawValue {
@@ -593,7 +610,8 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
                     }
                     createNotebookFor(fileUrl: fileUrl, fileName: template.title)
                     // Track Event
-                    FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: style.templateName], screenName: ScreenName.templatesStore))
+                    let orientation = self.thumbnailOrientation == .landscape ? EventParameterValue.landscape : EventParameterValue.potrait
+                    FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: style.templateName, EventParameterKey.orientation: orientation], screenName: ScreenName.templatesStore))
                 }
             }
         }
@@ -611,6 +629,8 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
          let fileUrl = try await storeServiceApi.downloadinspirationJournalFor(url: downloadUrl, fileName: templa.fileName)
          self.hideLoadingindicator()
          createNotebookFor(fileUrl: fileUrl.appendingPathComponent(templa.fileName).appendingPathExtension("pdf"), fileName: templa.title)
+         FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: templa.title], screenName: ScreenName.templatesStore))
+
      }
 
      func createNotebookFor(fileUrl: URL, fileName: String) {
@@ -726,10 +746,17 @@ extension FTTemplatePreviewViewController: FTDairyDateSelectionPickerDelegate {
                 isLandscape = true
             }
             if let thumbnailUrl = template.thumbnailUrl {
-                UIImageView().sd_setImage(with: thumbnailUrl) { [weak self] image, _, _, _ in
+                UIImageView().sd_setImage(with: thumbnailUrl
+                                          , placeholderImage: nil
+                                          , options: .refreshCached) { [weak self] image, _, _, _ in
                     guard let self = self else { return }
                     if let image {
                         FTStoreContainerHandler.shared.actionStream.send(.createNotebookForDairy(fileName: self.template.fileName, title: self.template.title, startDate: startDate, endDate: endDate, coverImage: image, isLandScape: isLandscape))
+
+                        // Track Event
+                        let orientation = isLandscape ? EventParameterValue.landscape : EventParameterValue.potrait
+                        FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: self.template.title, EventParameterKey.orientation: orientation], screenName: ScreenName.templatesStore))
+
                     }
                 }
             }

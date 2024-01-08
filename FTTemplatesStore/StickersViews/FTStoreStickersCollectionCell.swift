@@ -32,14 +32,20 @@ class FTStoreStickersCollectionCell: UICollectionViewCell {
         thumbnail?.sd_imageIndicator = SDWebImageActivityIndicator.gray
         if templateInfo.type == FTDiscoveryItemType.userJournals.rawValue {
             if let thumbnailUrl = templateInfo.thumbnailUrl {
-                self.thumbnail?.sd_setImage(with: thumbnailUrl, completed: {[weak self] _, error, _, _ in
+                self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                            , placeholderImage: nil
+                                            , options: .refreshCached
+                                            , completed: {[weak self] _, error, _, _ in
                     if error == nil {
                         self?.shadowImageView.isHidden = false
                     }
                 })
             }
         } else if let thumbnailUrl = (templateInfo as! DiscoveryItem).stickersThumbnailUrl {
-            self.thumbnail?.sd_setImage(with: thumbnailUrl, completed: {[weak self] _, error, _, _ in
+            self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                        , placeholderImage: nil
+                                        , options: .refreshCached
+                                        , completed: {[weak self] _, error, _, _ in
                 if error == nil {
                     self?.shadowImageView.isHidden = false
                 }
