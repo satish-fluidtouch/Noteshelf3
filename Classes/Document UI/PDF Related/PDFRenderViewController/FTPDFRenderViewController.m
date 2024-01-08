@@ -532,7 +532,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:FTPageDidUpdatedPropertiesNotification object:page];
 }
 
--(void)prepareViewToShow:(BOOL)animate isFirstTime:(BOOL)isFristTime
+-(void)prepareViewToShow:(BOOL)animate isFirstTime:(BOOL)isFirstTime
 {
     self.showPageImmediately = true;
     [self.eachPageViewArray removeAllObjects];
@@ -542,10 +542,16 @@
         [self.eachPageViewArray addObject:[NSNull null]];
     }
     [self updateContentSize];
-    CGRect frame = [self.pageLayoutHelper frameFor:self.currentPageIndexToBeShown];
-    if(isFristTime && frame.size.width > self.mainScrollView.frame.size.width) {
+    if(isFirstTime) {
+        CGFloat minZoomScale = [FTDocumentScrollViewZoomScale.shared minimumZoomScale:FTRenderModeDefault];
+        CGFloat maxZoomScale = [FTDocumentScrollViewZoomScale.shared maximumZoomScale:FTRenderModeDefault];
+
+        CGRect frame = [self.pageLayoutHelper frameFor:self.currentPageIndexToBeShown];
         CGSize aspectSize = aspectFittedRect(frame, self.mainScrollView.frame).size;
         CGFloat scale = aspectSize.width/frame.size.width;
+
+        scale = CLAMP(scale, minZoomScale, maxZoomScale);
+
         [self.mainScrollView zoom:scale animate:false completionBlock:nil];
     }
     [self showPageAtIndex:self.currentPageIndexToBeShown
@@ -1605,7 +1611,16 @@
 {
     [self normalizeAndEndEditingAnnotation:YES];
     if (self.pageLayoutType == FTPageLayoutVertical) {
-        [self.mainScrollView zoom:1 animate:true completionBlock:^{
+        CGRect frame = [self.pageLayoutHelper frameFor:self.currentlyVisiblePage.pageIndex];
+        CGRect onexframe = CGRectScale(frame, 1/self.mainScrollView.zoomFactor);
+
+        CGSize aspectSize = aspectFittedRect(onexframe, self.mainScrollView.frame).size;
+        CGFloat scale = aspectSize.width/onexframe.size.width;
+        CGFloat minZoomScale = [FTDocumentScrollViewZoomScale.shared minimumZoomScale:FTRenderModeDefault];
+        CGFloat maxZoomScale = [FTDocumentScrollViewZoomScale.shared maximumZoomScale:FTRenderModeDefault];
+        scale = CLAMP(scale, minZoomScale, maxZoomScale);
+
+        [self.mainScrollView zoom:scale animate:true completionBlock:^{
             [self delayedZoomButtonAction];
         }];
     }

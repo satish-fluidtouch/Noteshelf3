@@ -105,10 +105,18 @@ extension FTPDFRenderViewController {
         let pageFrame = self.pageLayoutHelper.frame(for: curPageIndex);
         let currentDel = self.mainScrollView.scrollViewDelegate;
         self.mainScrollView.scrollViewDelegate = nil;
-        if let contorller = self.firstPageController() {
+        if let contorller = self.firstPageController()
+            ,let contentHolderView = contorller.contentHolderView {
+            let curPageFrame = contentHolderView.frame;
+            var factor = curPageFrame.width/pageFrame.width;
+
+            let minZoomScale = FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeDefault);
+            let maxZoomScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
+
+            factor = clamp(factor, minZoomScale, maxZoomScale)
+
             if(previousLayoutType == .vertical) {
                 self.mainScrollView.contentInset = UIEdgeInsets.zero;
-                let factor = self.mainScrollView.zoomFactor;
                 self.mainScrollView.zoom(1, animate: false, completionBlock: nil);
 
                 self.mainScrollView.setContentOffset(pageFrame.origin, animated: false);
@@ -116,27 +124,25 @@ extension FTPDFRenderViewController {
 
                 self.setNeedsLayoutForcibly();
 
-                contorller.zoom(scale: factor, animate: false, completionBlock: nil);
-                contorller.view.layoutIfNeeded();
                 if let scrollView = contorller.scrollView {
+                    if let aspectFittedRect = contorller.contentHolderView?.frame {
+                        factor = curPageFrame.width/aspectFittedRect.width;
+                        factor = clamp(factor, minZoomScale, maxZoomScale)
+                    }
+                    else {
+                        factor = minZoomScale;
+                    }
+
+                    contorller.zoom(scale: factor, animate: false, completionBlock: nil);
+                    contorller.view.layoutIfNeeded();
                     var newContentOffset = CGPoint.zero;
 
                     newContentOffset.x = (contentOffset.x * scrollView.contentSize.width);
-                    if(newContentOffset.x + scrollView.frame.width > scrollView.contentSize.width) {
-                        newContentOffset.x = scrollView.contentSize.width - scrollView.frame.width;
-                    }
-                    if(newContentOffset.x < 0) {
-                        newContentOffset.x = 0;
-                    }
+                    newContentOffset.x = clamp(newContentOffset.x, 0, max(scrollView.contentSize.width - scrollView.frame.width,0));
                     
                     newContentOffset.y = (contentOffset.y * scrollView.contentSize.height);
-                    if(newContentOffset.y + scrollView.frame.height > scrollView.contentSize.height) {
-                        newContentOffset.y = scrollView.contentSize.height - scrollView.frame.height;
-                    }
-                    if(newContentOffset.y < 0) {
-                        newContentOffset.y = 0;
-                    }
-                    
+                    newContentOffset.y = clamp(newContentOffset.y, 0, scrollView.contentSize.height - scrollView.frame.height);
+
                     scrollView.setContentOffset(newContentOffset, animated: false);
                     self.updateContentOffsetPercentage();
                 }
@@ -147,35 +153,26 @@ extension FTPDFRenderViewController {
                     controller.setAccessoryViewHeight(0);
                 }
                 
-                let curPageFrame = contorller.contentHolderView?.frame ?? CGRect.zero;
                 var offset: CGFloat = 0;
                 if let scroll = contorller.scrollView, scroll.frame.height > curPageFrame.height {
                     offset = (scroll.frame.height - curPageFrame.height)*0.5;
                 }
 
-                let factor = self.contentScaleInNormalMode;
                 contorller.zoom(scale: 1, animate: false, completionBlock: nil);
                 self.mainScrollView.zoom(factor, animate: false, completionBlock: nil);
                 
                 let frame = CGRectScale(pageFrame, factor);
+                let centerOffset = max(0,(self.mainScrollView.frame.width - frame.size.width) * 0.5);
+
                 var newContentOffset = frame.origin;
+                newContentOffset.x = frame.origin.x - centerOffset;
                 newContentOffset.x += (contentOffset.x * frame.size.width);
-                
-                if(newContentOffset.x + self.mainScrollView.frame.width > self.mainScrollView.contentSize.width) {
-                    newContentOffset.x = self.mainScrollView.contentSize.width - self.mainScrollView.frame.width;
-                }
-                if(newContentOffset.x < 0) {
-                    newContentOffset.x = 0;
-                }
+                newContentOffset.x = clamp(newContentOffset.x, 0, max(self.mainScrollView.contentSize.width - self.mainScrollView.frame.width,0));
 
                 newContentOffset.y += (contentOffset.y * frame.size.height);
                 newContentOffset.y -= offset;
-                if(newContentOffset.y + self.mainScrollView.frame.height > self.mainScrollView.contentSize.height) {
-                    newContentOffset.y = self.mainScrollView.contentSize.height - self.mainScrollView.frame.height;
-                }
-                if(newContentOffset.y < 0) {
-                    newContentOffset.y = 0;
-                }
+                
+                newContentOffset.y = clamp(newContentOffset.y, 0, self.mainScrollView.contentSize.height - self.mainScrollView.frame.height);
 
                 self.mainScrollView.setContentOffset(newContentOffset, animated: false);
                 self.updateContentOffsetPercentage();
