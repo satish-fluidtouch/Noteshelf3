@@ -308,9 +308,11 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 }
 
                                 if resourcesMappedForAllPages.contains(where: {nil == $0.data.bodyHash}) {
-                                    self.closeDocumentIfNeeded();
-                                    self.snapshotFailedAction();
-                                    return;
+                                    FTLogError("Evernote Publish Error", attributes: ["Reason": "bodyHash nil"])
+// commented below Code for diagnostics
+//                                    self.closeDocumentIfNeeded();
+//                                    self.snapshotFailedAction();
+//                                    return;
                                 }
 
                                 let predicateForResourcedPages = NSPredicate(format: "parentRecord.nsGUID==%@ AND (enGUID != nil OR nsGUID==%@)",pageRecord.parent.nsGUID, pageRecord.nsGUID);

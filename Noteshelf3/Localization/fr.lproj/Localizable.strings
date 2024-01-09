@@ -1124,6 +1124,12 @@
 "importedTo" = "Importé à";
 "insidenotebook.share.pageno" = "page %@";
 "insidenotebook.share.pagescount" = "%@ pages";
+"irate.variation.message.a" = "Laissez-nous un commentaire. Cela nous aidera plus que vous ne pouvez l'imaginer.";
+"irate.variation.message.b" = "Prenez un moment pour nous évaluer sur l'AppStore et laissez-nous savoir comment nous nous en sortons.";
+"irate.variation.message.c" = "Évaluez-nous sur l'AppStore et aidez-nous à faire connaître notre application.";
+"irate.variation.title.a" = "Appréciez-vous Noteshelf 3 ?";
+"irate.variation.title.b" = "Votre retour d'information a beaucoup de valeur pour nous.";
+"irate.variation.title.c" = "Partagez votre expérience avec Noteshelf 3.";
 "journalpreview.createjournal" = "Créer un journal.";
 "labels" = "Étiquettes";
 "lasso.select.textbox" = "Boîtes de texte";
@@ -1548,9 +1554,15 @@
 "welcome.unsplash" = "UNSPLASH";
 "welcome.webClips" = "CLIPS WEB";
 "welcome.zoombox" = "BOÎTE DE ZOOM";
+"whatsnew.planner1.cta" = "Aller aux Modèles";
+"whatsnew.planner1.description" = "Définissez des objectifs, suivez vos habitudes, planifiez et organisez vos journées pour l'année à venir avec un magnifique planificateur à deux pages conçu par nos designers internes.";
+"whatsnew.planner1.title" = "Notre planificateur 2024 est là !";
+"whatsnew.planner2.cta" = "Découvrez-les maintenant !";
+"whatsnew.planner2.description" = "Découvrez des planificateurs numériques charmants dans la section Modèles que nous avons sélectionnés parmi des créateurs talentueux.";
+"whatsnew.planner2.title" = "Plus de planificateurs 2024 !";
 "widgets" = "Widgets";
 "work" = "Travail";
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 28 December 2023 at 17:23
+// Last Synced by Akshay on 8 January 2024 at 15:32

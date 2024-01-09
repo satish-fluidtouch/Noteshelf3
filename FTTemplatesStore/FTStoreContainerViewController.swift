@@ -83,6 +83,16 @@ public class FTStoreContainerViewController: UIViewController {
         viewController.sourceType = source
         return viewController
     }
+    
+    public func scrollToInspirations() {
+        self.storeViewController.loadViewIfNeeded()
+        self.storeViewController.scrollToinspirations()
+    }
+    
+    public func navigateToDairies() {
+        self.storeViewController.loadViewIfNeeded()
+        self.storeViewController.navigateToDiaries()
+    }
 
     func initializeImportButton() {
         let menu = UIMenu(title: "", options: .displayInline, children: [

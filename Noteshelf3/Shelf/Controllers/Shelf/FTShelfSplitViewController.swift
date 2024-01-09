@@ -154,6 +154,21 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
         }
     }
     
+    func selectAndOpenTemplates(with url: URL) {
+        let path = url.path()
+        if path.contains(FTAppIntentHandler.templatesPlannersPath) || path.contains(FTAppIntentHandler.templatesPath) {
+            self.sideMenuController?.selectAndOpenTemplatesScreen()
+            if let detailController = self.detailNavigationController?.children.first as? FTStoreContainerViewController {
+                detailController.loadViewIfNeeded()
+                if path.contains(FTAppIntentHandler.templatesPlannersPath) {
+                    detailController.scrollToInspirations()
+                } else if path.contains(FTAppIntentHandler.templatesPath) {
+                    detailController.navigateToDairies()
+                }
+            }
+        }
+    }
+
     private func setupView(){
         self.preferredDisplayMode = .oneBesideSecondary
         self.preferredSplitBehavior = .tile

@@ -241,16 +241,25 @@ static NSString *const iRateMacAppStoreURLFormat = @"macappstore://itunes.apple.
 
 - (NSString *)messageTitle
 {
-    return [_messageTitle ?: [self localizedStringForKey:iRateMessageTitleKey withDefault:@"Rate %@"] stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
+    // Disabled in favor of A/B Testing
+    //return [_messageTitle ?: [self localizedStringForKey:iRateMessageTitleKey withDefault:@"Rate %@"] stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
+    NSString *title = [[FTAppConfigHelper sharedAppConfig] titleforiRate];
+    return [title stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
 }
 
 - (NSString *)message
 {
+    // Disabled in favor of A/B Testing
+    /*
     NSString *message = _message;
     if (!message)
     {
         message = (self.appStoreGenreID == iRateAppStoreGameGenreID)? [self localizedStringForKey:iRateGameMessageKey withDefault:@"If you enjoy playing %@, would you mind taking a moment to rate it? It won’t take more than a minute. Thanks for your support!"]: [self localizedStringForKey:iRateAppMessageKey withDefault:@"If you enjoy using %@, would you mind taking a moment to rate it? It won’t take more than a minute. Thanks for your support!"];
     }
+    return [message stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
+     */
+
+    NSString *message = [[FTAppConfigHelper sharedAppConfig] messageforiRate];
     return [message stringByReplacingOccurrencesOfString:@"%@" withString:self.applicationName];
 }
 

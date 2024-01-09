@@ -184,14 +184,15 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
     #endif
 }
 
--(NSInteger)offerPriceLocationForIAPOffer {
+-(NSString * _Nonnull)variationForiRateMessage {
 #if !TARGET_OS_MACCATALYST
-    NSInteger priceLocation = [self.appRemoteConfig configValueForKey:@"price_location"].numberValue.integerValue;
-    return priceLocation;
+    NSString *iRateMessage = [self.appRemoteConfig configValueForKey:@"irate_message_type"].stringValue;
+    return iRateMessage;
 #else
-    return 1;
+    return @"a";
 #endif
 }
+
 #pragma mark- Beta Program -
 -(NSURL * _Nullable )betaTestingAppURL
 {
