@@ -166,24 +166,23 @@ final class FTAppIntentHandler {
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
         } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            if url.path().contains(FTAppIntentHandler.templatesPath) {
-                intentHandler?.openTemplatesScreen(url: url)
-            } else {
-                startMigration(url: url)
-            }
+            openAppScehemeURL(url: url)
         }
         return false
     }
-    
-    func startMigration(url: URL) {
-        if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
-            , let queryitem = urlcomponents.queryItems?.first
-            , queryitem.name == "intent"
-        {
-            if queryitem.value == NS3LaunchIntent.migration.rawValue {
-                intentHandler?.startNS2ToNS3Migration()
-            } else {
-                intentHandler?.showPremiumUpgradeScreen()
+
+    private func openAppScehemeURL(url: URL) {
+        if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true) {
+            if urlcomponents.path.contains(FTAppIntentHandler.templatesPath) {
+                intentHandler?.openTemplatesScreen(url: url)
+            }
+            else if let queryitem = urlcomponents.queryItems?.first
+                        , queryitem.name == "intent" {
+                if queryitem.value == NS3LaunchIntent.migration.rawValue {
+                    intentHandler?.startNS2ToNS3Migration()
+                } else {
+                    intentHandler?.showPremiumUpgradeScreen()
+                }
             }
         }
     }
