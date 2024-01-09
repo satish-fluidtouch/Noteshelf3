@@ -180,6 +180,7 @@ extension Date
     }
     
     func monthTitle(localeID : String,monthFormat : String) -> String {
+        let dateformatter : DateFormatter = DateFormatter();
         dateformatter.dateStyle = DateFormatter.Style.full;
         dateformatter.timeStyle = DateFormatter.Style.none;
         let locale = Locale.init(identifier: NSCalendar.calLocale(localeID));
