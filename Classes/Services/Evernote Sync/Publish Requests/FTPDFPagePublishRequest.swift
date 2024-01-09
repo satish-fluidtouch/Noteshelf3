@@ -309,7 +309,6 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
 
                                 if resourcesMappedForAllPages.contains(where: {nil == $0.data.bodyHash}) {
                                     FTLogError("Evernote Publish Error", attributes: ["Reason": "bodyHash nil"])
-print("🥲 bodyHash nil")
 // commented below Code for diagnostics
 //                                    self.closeDocumentIfNeeded();
 //                                    self.snapshotFailedAction();
