@@ -37,10 +37,10 @@ extension FTNoteshelfPage : FTPageEvernoteSyncProtocol
                                              with: FTSnapshotPurposeEvernoteSync)
         if let image = pageImage, let myFileData = image.jpegData(compressionQuality: 0.6) {
             let mime = "image/jpeg";
-            let imageDataHash = (myFileData as NSData).enmd5;
-            
+            let imageDataHash = (myFileData as NSData).enmd5();
+
             let edamData = EDAMData();
-            edamData?.bodyHash = imageDataHash();
+            edamData?.bodyHash = imageDataHash;
             edamData?.size = Int32(myFileData.count);
             edamData?.body = myFileData;
             
