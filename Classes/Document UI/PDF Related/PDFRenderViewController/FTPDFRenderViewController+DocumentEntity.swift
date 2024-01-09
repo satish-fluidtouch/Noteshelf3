@@ -22,6 +22,10 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         self.undoRedoGestureDetector = undoRedoGestureDetector
     }
     
+    @objc func showToastWith(_ message: String) {
+        FTToastHostController.showToast(from: self, toastConfig: FTToastConfiguration(title: message))
+    }
+
     @objc func audioAnnotations() -> [FTAnnotation] {
         var annotationsToReturn = [FTAnnotation]()
         if  let page = self.firstPageController()?.pdfPage as? FTNoteshelfPage {
@@ -29,7 +33,6 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         }
         return annotationsToReturn
     }
-
 
     /// Photo Library,  Take Photo
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource) {

@@ -43,12 +43,7 @@ protocol FTWhatsNewSlideViewControllerDelegate: AnyObject {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.helpTitle?.textColor = UIColor.label
-        self.helpMessage?.textColor = UIColor.secondaryLabel
-        self.helpTitle?.style = FTLabelStyle.style18.rawValue
-        self.helpMessage?.style = FTLabelStyle.style24.rawValue
-        let learnMoreTitle = FTWhatsNewLocalizedString("WhatsNewLearnMore", comment: "Learn more").appending(" →")
-        self.learnMoreBtn?.setTitle(learnMoreTitle, for: .normal)
-        self.learnMoreBtn?.addTarget(self, action: #selector(learnMoreBtnAction(_ :)), for: .touchUpInside)
+        self.helpMessage?.textColor = UIColor.label
     }
 
     deinit {

@@ -61,7 +61,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     var screenMode: FTFinderScreenMode {
         return self.delegate?.currentScreenMode() ?? .normal
     }
-    var document:FTThumbnailableCollection!;
+    weak var document:FTThumbnailableCollection?;
     var mediaObjects = [FTMediaObject]()
     var selectedTab: FTFinderSelectedTab = .content
     
@@ -104,8 +104,6 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(didAddMedia(_:)), name: .didAddMedia, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
-        (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
-        updateFilterOptionImage()
     }
     
     override func viewDidLayoutSubviews() {
@@ -431,12 +429,16 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         self.document = document
     }
     
+    private func allDocumentPages() -> [FTThumbnailable] {
+        return self.document?.documentPages() ?? [FTThumbnailable]();
+    }
+    
     private func setUpData() {
         DispatchQueue.global().async {[weak self] in
             guard let self = self else {
                 return
             }
-            let pages = self.document.documentPages()
+            let pages = self.allDocumentPages()
             self.mediaObjects.removeAll()
             pages.forEach { eachPage in
                 if let page = eachPage as? FTNoteshelfPage {
@@ -519,7 +521,7 @@ extension FTMediaViewController:  UICollectionViewDelegate, FTCollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let mediaObject = snapshotItem(for: indexPath) as? FTMediaObject {
             let indexSelected: Int;
-            if let index = self.document.documentPages().firstIndex(where: {$0.uuid == mediaObject.page?.uuid}) {
+            if let index = self.allDocumentPages().firstIndex(where: {$0.uuid == mediaObject.page?.uuid}) {
                 indexSelected = index;
             }
             else {
@@ -566,7 +568,7 @@ extension FTMediaViewController {
             self.shareMedia(with: mediaItem, at : indexPath)
         } else if menuOperation == .openInNewWindow {
             let page = mediaItem.page
-            let index = document.documentPages().firstIndex(where: { $0.uuid == page?.uuid })
+            let index = allDocumentPages().firstIndex(where: { $0.uuid == page?.uuid })
             if let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() {
                 self.openItemInNewWindow(shelfItem, pageIndex: index)
             }

@@ -35,10 +35,10 @@ extension FTPageViewController {
         { [weak self] (notification) in
             guard notification.isSameSceneWindow(for: self?.view.window) else { return }
             if self?.renderMode == FTRenderModeDefault {
-                self?.longPressGestureRecognizer?.isEnabled = true;
                 self?.singleTapGestureRecognizer?.isEnabled = true;
                 self?.doubleTapGestureRecognizer?.isEnabled = true;
             }
+            self?.longPressGestureRecognizer?.isEnabled = true;
             self?.singleTapSelectionGestureRecognizer?.isEnabled = true;
         };
         
@@ -108,6 +108,7 @@ extension FTPageViewController {
     {
         if(mode == .deskModeMarker
             || mode == .deskModePen
+            || mode == .deskModeFavorites
             || mode == .deskModeEraser
             || mode == .deskModeShape
             ) {
@@ -316,10 +317,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
             || gestureRecognizer == self.singleTapGestureRecognizer
             || gestureRecognizer == self.singleTapSelectionGestureRecognizer
             || gestureRecognizer == self.doubleTapGestureRecognizer) {
-            guard let contentView = self.contentHolderView else { return false;};
-            if(self.renderMode != FTRenderModeDefault && currentDeskMode() != .deskModeShape) {
-                return false;
-            }
+            guard let contentView = self.contentHolderView else { return false;}
 
             if !shouldAcceptTouch(touch: touch) {
                 return false
@@ -349,7 +347,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                 }
             } else if (gestureRecognizer == self.singleTapSelectionGestureRecognizer) {
 
-                if (currentDeskMode() == .deskModePen || currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser ||
+                if (currentDeskMode() == .deskModePen || currentDeskMode() == .deskModeFavorites || currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser ||
                     currentDeskMode() == .deskModeShape) {
                     if touch.type == .pencil || !UserDefaults.isApplePencilEnabled() {
                         if let activeController = self.delegate?.activeAnnotationController() {
@@ -393,7 +391,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                         valueToReturn = false
                     }
                 }
-                if currentDeskMode() == .deskModeStickers || ( isInZoomMode() && currentDeskMode() != .deskModeShape) {
+                if currentDeskMode() == .deskModeStickers || (isInZoomMode() && !allowsEditinginZoomMode()) {
                     valueToReturn = false
                 }
 
@@ -419,6 +417,7 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                 }
                 else if UserDefaults.isApplePencilEnabled(),
                    (currenttDeskMode == .deskModePen
+                    || currenttDeskMode == .deskModeFavorites
                     || currenttDeskMode == .deskModeMarker
                         || currenttDeskMode == .deskModeEraser
                         || currenttDeskMode == .deskModeClipboard
@@ -456,6 +455,11 @@ extension FTPageViewController : UIGestureRecognizerDelegate
         }
         return true;
     }
+    
+    private func allowsEditinginZoomMode() -> Bool {
+        return (currentDeskMode() == .deskModePen || currentDeskMode() == .deskModeFavorites || currentDeskMode() == .deskModeMarker || currentDeskMode() == .deskModeEraser || currentDeskMode() == .deskModeShape)
+    }
+
 }
 
 extension FTPageViewController {

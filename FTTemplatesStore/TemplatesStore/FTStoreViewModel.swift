@@ -14,7 +14,7 @@ enum FTStoreSectionType: Int {
     case templates = 2
     case stickers = 3
     case journals = 4
-
+    case userJournals = 5
 }
 
 internal typealias TemplatesStoreDatasource = UITableViewDiffableDataSource<Int, Discover>
@@ -60,6 +60,14 @@ class FTStoreViewModel {
         let sectionType = self.snapshot.sectionIdentifiers[section]
         let sectionItem = self.snapshot.itemIdentifiers(inSection: sectionType).first
         return sectionItem
+    }
+    
+    func sectionForInspirations() -> Int {
+        return self.snapshot.itemIdentifiers.firstIndex { $0.sectionType == FTStoreSectionType.userJournals.rawValue } ?? 0
+    }
+
+    func sectionForBanners() -> Int {
+        return self.snapshot.itemIdentifiers.firstIndex { $0.sectionType == FTStoreSectionType.banner.rawValue } ?? 0
     }
 
     private func handleTemplatesStore() {

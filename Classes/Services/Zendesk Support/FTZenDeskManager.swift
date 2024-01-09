@@ -317,33 +317,39 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "NS2": FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO",
             "SafeMode": FTUserDefaults.isInSafeMode() ? "YES" : "NO"
         ]
+        let deviceIds = FTUbiquitousKeyValueStoreListner.shared().deviceIds();
+        if !deviceIds.isEmpty {
+            customFields["DeviceIDs"] = deviceIds.joined(separator: ", ");
+        }
         return customFields
     }
 
     class func customFieldsString() -> String {
         let customFields = self.customFields()
         var string: String?
-        if let userId = customFields["User ID"],
-           let version = customFields["App Version"],
-           let operatingSystem = customFields["OS"],
-           let Device = customFields["Device"],
-           let sizes = customFields["Sizes"],
-           let cloudUsed = customFields["Clouds Used"],
-           let pencil = customFields["Apple Pencil"],
-           let iCloud = customFields["iCloud"],
-           let autobackup = customFields["Autobackup"],
-           let ENPublish = customFields["ENPublish"],
-           let lang = customFields["Lang"],
-           let locale = customFields["Locale"],
-           let appleWatch = customFields["AppleWatch"],
-           let recognition = customFields["Recognition"],
-           let recog_Act = customFields["Recog_Act"],
-           let layoutType = customFields["LayoutType"],
-           let battery = customFields["Battery"],
-           let premium = customFields["Premium"],
-           let ns2 = customFields["NS2"],
-           let safemode = customFields["SafeMode"]{
-            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode)"
+        if let userId = customFields["User ID"]
+            ,let version = customFields["App Version"]
+            ,let operatingSystem = customFields["OS"]
+            ,let Device = customFields["Device"]
+            ,let sizes = customFields["Sizes"]
+            ,let cloudUsed = customFields["Clouds Used"]
+            ,let pencil = customFields["Apple Pencil"]
+            ,let iCloud = customFields["iCloud"]
+            ,let autobackup = customFields["Autobackup"]
+            ,let ENPublish = customFields["ENPublish"]
+            ,let lang = customFields["Lang"]
+            ,let locale = customFields["Locale"]
+            ,let appleWatch = customFields["AppleWatch"]
+            ,let recognition = customFields["Recognition"]
+            ,let recog_Act = customFields["Recog_Act"]
+            ,let layoutType = customFields["LayoutType"]
+            ,let battery = customFields["Battery"]
+            ,let premium = customFields["Premium"]
+            ,let ns2 = customFields["NS2"]
+            ,let safemode = customFields["SafeMode"]
+            ,let deviceIDs = customFields["DeviceIDs"]
+        {
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode) DeviceID: \(deviceIDs)"
         }
         return string ?? ""
     }

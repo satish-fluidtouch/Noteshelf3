@@ -165,7 +165,7 @@ extension FTFinderViewController: FTBookmarkPageViewControllerDelegate, FTAddMen
         reloadFilteredItems()
         if selectedSegment == .bookmark {
             deselectAll()
-            let bookmarkedPages = self.document.documentPages().filter{$0.isBookmarked};
+            let bookmarkedPages = self.documentPages.filter{$0.isBookmarked};
             if bookmarkedPages.isEmpty {
                 mode = .none
                 validateHeaderView()

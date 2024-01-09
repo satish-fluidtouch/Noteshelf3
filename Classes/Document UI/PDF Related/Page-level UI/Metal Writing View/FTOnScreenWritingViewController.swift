@@ -379,11 +379,7 @@ extension FTOnScreenWritingViewController
             self.cancelDisableLongPressGesture();
             self.scheduleDisableLongPressGesture();
             
-            if  ((currentDrawingMode == .deskModePen &&
-                FTUserDefaults.isHoldToConvertToShapeOnForPen()) ||
-                (currentDrawingMode == .deskModeMarker &&
-                 FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) || self.toDetectShapeInFavoritesMode()),
-                let curStroke = self.currentStroke?.stroke as? FTStroke
+            if shouldScheduleShapeDetection(), let curStroke = self.currentStroke?.stroke as? FTStroke
             {
                 let canDetect = FTShapeDetector.canDetectShape(stroke: curStroke, scale: self.scale)
                 if(!FTShapeDetector.canConsiderAsLongPress(touch:touch)) {
@@ -468,6 +464,17 @@ extension FTOnScreenWritingViewController
             self.cancelDisableLongPressGesture();
             
         }
+    }
+    
+    private func shouldScheduleShapeDetection() -> Bool {
+        var valurToReturn = false
+        if ((currentDrawingMode == .deskModePen && FTUserDefaults.isHoldToConvertToShapeOnForPen()) ||
+            (currentDrawingMode == .deskModeMarker && FTUserDefaults.isHoldToConvertToShapeOnForHighlighter()) ||
+            (currentDrawingMode == .deskModeShape) ||
+            self.toDetectShapeInFavoritesMode()) {
+            valurToReturn = true
+        }
+        return valurToReturn
     }
     
     func endCurrentStroke() {
