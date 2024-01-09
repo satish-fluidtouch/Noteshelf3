@@ -189,7 +189,7 @@ NSString *const FTRemoteConfigNewValueKey = @"newValue";
     NSString *iRateMessage = [self.appRemoteConfig configValueForKey:@"irate_message_type"].stringValue;
     return iRateMessage;
 #else
-    return "a";
+    return @"a";
 #endif
 }
 
