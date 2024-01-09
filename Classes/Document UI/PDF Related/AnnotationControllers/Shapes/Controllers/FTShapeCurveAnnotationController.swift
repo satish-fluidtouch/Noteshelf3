@@ -125,4 +125,9 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
         }
         return returnValue
     }
+    
+    override func updateKnobViews(with refPoints: [CGPoint] = []) {
+        super.updateKnobViews(with: refPoints)
+        updateContrlPointKnob()
+    }
 }

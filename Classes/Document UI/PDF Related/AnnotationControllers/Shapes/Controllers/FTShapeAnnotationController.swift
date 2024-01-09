@@ -507,13 +507,6 @@ extension FTShapeAnnotationController {
         }
         if shapeAnnotation.isPerfectShape() && !returnValue {
             returnValue = _isPointInsideFrame(newPoint)
-        } else {
-           if let resizableView = resizableView {
-               let frame = convertedViewFrame(resizableView)
-               if frame.contains(newPoint) {
-                   returnValue = true
-               }
-           }
         }
 
         if let shapeEditvc = shapeEditVC {
@@ -1134,7 +1127,7 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
         }
     }
     
-    func updateKnobViews(with refPoints: [CGPoint] = []) {
+   @objc func updateKnobViews(with refPoints: [CGPoint] = []) {
         let _contentOffSet = self.delegate?.visibleRect().origin ?? .zero
         var knobViews = [UIView]()
         guard let view = self.view else {

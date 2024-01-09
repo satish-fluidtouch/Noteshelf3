@@ -13,12 +13,12 @@ import Foundation
     var numberOfSides: CGFloat = 0
     var center = CGPoint.zero
     var isClosedShape: Bool = false
-    let thresholdAngle:CGFloat = 30
+    let thresholdAngle:CGFloat = 50
     
     convenience init?(points: [CGPoint]) {
         self.init()
         let simplifiedPoints = SwiftSimplify.simplify(points, tolerance: .good, highQuality: true)
-        let filteredPoints = self.filterPoints(points: simplifiedPoints)
+        let filteredPoints = filterStartAndEndPoints(points: simplifiedPoints)
         if filteredPoints.count >= 3 && !hasElbow(points: filteredPoints) {
             if let startPoint = filteredPoints.first, let endPoint = filteredPoints.last, let pointOnCurve = deCasteljau(points: filteredPoints) {
                 let controlPoint = calculateCurveControlPoint(pointOnCurve: pointOnCurve, startTouchPoint: startPoint, endTouchPoint: endPoint)
@@ -39,26 +39,26 @@ import Foundation
 
     private func hasElbow(points: [CGPoint]) -> Bool {
         for i in 1..<points.count - 1 {
-            let angle = calculateAngle(point1: points[i - 1], point2: points[i], point3: points[i + 1])
-            if angle > thresholdAngle {
+            let angle = abs(calculateAngle(point1: points[i - 1], point2: points[i], point3: points[i + 1]))
+            if angle < thresholdAngle {
                 return true
             }
         }
         return false
     }
     
-    func filterPoints(points: [CGPoint]) -> [CGPoint] {
-        guard let lastPoint = points.last else {
+    private func filterStartAndEndPoints(points: [CGPoint]) -> [CGPoint] {
+        guard let firstPoint = points.first, let lastPoint = points.last else {
             return []
         }
-
         let filteredPoints = points.filter { point in
-            let distance = sqrt(pow(point.x - lastPoint.x, 2) + pow(point.y - lastPoint.y, 2))
-            return distance > 3.0
+            let distanceFromFirst = sqrt(pow(point.x - firstPoint.x, 2) + pow(point.y - firstPoint.y, 2))
+            let distanceFromLast = sqrt(pow(point.x - lastPoint.x, 2) + pow(point.y - lastPoint.y, 2))
+
+            return distanceFromFirst > 3.0 && distanceFromLast > 3.0
         }
         return filteredPoints
     }
-
     
     func drawingPoints(scale: CGFloat) -> [CGPoint] {
         let factory = FTShapeFactory()
