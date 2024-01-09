@@ -1140,6 +1140,9 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
         if (!refPoints.isEmpty) {
             controlPoints = refPoints
         }
+        guard knobViews.count == controlPoints.count else {
+            return
+        }
         for (index,view) in knobViews.enumerated() {
             if let _knobView = view as? FTKnobView, !controlPoints.isEmpty {
                 let controlPoint = controlPoints[index]
@@ -1160,6 +1163,7 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
     
     @objc func addKnobsForControlPoints() {
         if !shapeAnnotation.isPerfectShape() {
+            removeControlPoints()
             let points = shapeAnnotation.getshapeControlPoints()
             for (i, ftPoint) in points.enumerated() {
                 let point = convertControlPoint(ftPoint)
@@ -1170,6 +1174,15 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
             }
         }
     }
+     
+     private func removeControlPoints() {
+         let knobViews = self.view.subviews
+         knobViews.forEach { eachView in
+             if eachView is FTKnobView {
+                 eachView.removeFromSuperview()
+             }
+         }
+     }
      
      func convertControlPoint(_ point: CGPoint) -> CGPoint {
          let cgPoint = point.scaled(scale: self.scale)
