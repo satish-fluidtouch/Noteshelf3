@@ -236,7 +236,22 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
                                                                        .foregroundColor : UIColor(hexString: "4FA4FF")]
         let weekX = (currentPageRect.width*templateInfo.baseBoxX/100)
         var weekY = (currentPageRect.height*templateInfo.baseBoxY/100)
-        for week in weekNumberStrings {
+
+        var weekNumbers : [String] = []
+        var weekNumber : Int = 0
+        for (index, day) in monthInfo.dayInfo.enumerated() {
+            let weekNumberOBJ = FTPlannerWeekNumber()
+            if index == 0 {
+                weekNumber += 1
+                weekNumbers.append("WEEK \(weekNumber)")
+            }
+            else if index % 7 == 0, day.fullMonthString == monthInfo.fullMonth {
+                weekNumber += 1
+                weekNumbers.append("WEEK \(weekNumber)")
+            }
+        }
+
+        for week in weekNumbers {
             let weekString = NSMutableAttributedString.init(string: week,attributes: weekNumberTextAttribute)
             let location = CGPoint(x: weekX + 5, y: weekY - weekString.size().height - 2)
             weekString.draw(at: location)
@@ -282,10 +297,10 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let dayString = NSMutableAttributedString.init(string: day.dayString, attributes: dayAttrs)
             let drawRect = CGRect(x: dayX - 6 - dayString.size().width, y: dayY + 6, width: dayString.size().width, height: dayString.size().height)
             let drawLocation = CGPoint(x: drawRect.origin.x, y: drawRect.origin.y)
-            dayString.draw(at:drawLocation)
             if day.belongsToSameMonth {
                 let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
                 currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: (linkX + cellWidth - cellWidth/3), y: dayY), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
+                dayString.draw(at:drawLocation)
             }
             if(index % 7 == 0) {
                 dayX = (currentPageRect.width*templateInfo.baseBoxX/100) + cellWidth;

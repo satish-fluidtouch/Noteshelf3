@@ -350,15 +350,11 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             let weekNumberStripColorsDict = getWeekNumberStripBGColorsDict()
             if week.isActive, let stripColor = weekNumberStripColorsDict[weekNumberStripColorIndex]{
                 self.drawColorBandsWith(xAxis: weekX - weekNumWidth - 6, yAxis: weekY, context: context, width: weekNumWidth + 6, height: weekRectHeight, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
-            }
-            else{
-                self.drawColorBandsWith(xAxis: weekX - weekNumWidth - 6, yAxis: weekY, context: context, width: weekNumWidth + 6, height: weekRectHeight, bandColor: getNotesBandBGColor(),cornerRadius: colorBGCornerRaidus)
-            }
-            weekNumberStripColorIndex += 1
-            weekString.draw(in: weekRect)
-            if (week.isActive){ // if weeks is active adding link to it
+                weekString.draw(in: weekRect)
+                // if weeks is active adding link to it
                 weekRects.append(getLinkRect(location: CGPoint(x: weekX - weekNumWidth - 6, y: weekY), frameSize: CGSize(width: weekNumWidth + 6, height: weekRectHeight)))
             }
+            weekNumberStripColorIndex += 1
             weekY += cellHeight + (currentPageRect.height*cellOffsetY/100)
         }
         currentMonthRectsInfo.weekRects.append(contentsOf: weekRects)
@@ -419,12 +415,12 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             let dayColorRect = CGRect(x: dayX - 10 - weekDayWidth, y: dayY - dayrectHeight - 5, width: weekDayWidth + 6, height: dayrectHeight)
             let dayTextRect = CGRect(x: dayX - 10 - weekDayWidth + 3.5, y: dayY - 5 - (dayrectHeight/2) - (dayString.size().height/2), width: weekDayWidth , height: dayrectHeight)
             if let stripColor = weekDayBgColor,isBelongToCalendarYear(currentDate: day.date){
-                self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
-            }
-            dayString.draw(in:dayTextRect)
-            if day.belongsToSameMonth {
-                let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
-                currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: (linkX + cellWidth - cellWidth/3), y: dayY), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
+                if day.belongsToSameMonth {
+                    let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
+                    currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: (linkX + cellWidth - cellWidth/3), y: dayY), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
+                    self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
+                    dayString.draw(in:dayTextRect)
+                }
             }
             if(index % 7 == 0) {
                 weekDayBGColorIndex += 1

@@ -342,15 +342,10 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             let weekRect = CGRect(x: weekX + (weekNumberWidth/2) - (weekNumWidth/2), y: weekY + (weekRectHeight/2) - (weekString.size().height/2) + 0.5, width: weekNumWidth, height: weekRectHeight)
             if week.isActive, let stripColor = weekNumberStripColors[weekNumberStripColorIndex]{
                 self.drawColorBandsWith(xAxis: weekX, yAxis: weekY, context: context, width: weekNumberWidth, height: weekRectHeight, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
-            }
-            else{
-                self.drawColorBandsWith(xAxis: weekX, yAxis: weekY, context: context, width: weekNumberWidth, height: weekRectHeight, bandColor: notesBandBGColor,cornerRadius: colorBGCornerRaidus)
+                weekString.draw(in: weekRect)
+                weekRects.append(getLinkRect(location: CGPoint(x: weekX, y: weekY), frameSize: CGSize(width: weekNumberWidth, height: weekRectHeight))) // if weeks is active adding link to it
             }
             weekNumberStripColorIndex += 1
-            weekString.draw(in: weekRect)
-            if (week.isActive){ // if weeks is active adding link to it
-                weekRects.append(getLinkRect(location: CGPoint(x: weekX, y: weekY), frameSize: CGSize(width: weekNumberWidth, height: weekRectHeight)))
-            }
             weekY += cellHeight + (currentPageRect.height*cellOffsetY/100)
         }
         currentMonthRectsInfo.weekRects.append(contentsOf: weekRects)
@@ -417,10 +412,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
                 if day.belongsToSameMonth {
                     self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
                     currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: dayColorRect.origin.x, y: dayColorRect.origin.y), frameSize: CGSize(width: dayColorRect.width, height: dayColorRect.height)))
+                    dayString.draw(in:dayTextRect)
                 }
             }
-            dayString.draw(in:dayTextRect)
-
             if(index % 7 == 0) {
                 counter = 1
                 weekDayBGColorIndex += 1

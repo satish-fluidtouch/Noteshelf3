@@ -12,9 +12,6 @@ import FTStyles
 class FTMidnightDairyFormat : FTDairyFormat {
     
     var customVariants : FTPaperVariants
-    
-    let weekNumberStrings : [String] = ["WEEK 1", "WEEK 2","WEEK 3","WEEK 4","WEEK 5","WEEK 6"]
-    
     var currentWeekRectInfo: FTDiaryWeekRectsInfo = FTDiaryWeekRectsInfo()
     var currentDayRectsInfo: FTDiaryDayRectsInfo = FTDiaryDayRectsInfo()
     

@@ -14,8 +14,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
     override var isiPad: Bool {
         return false
     }
-    let weekNumbers : [String] = ["wk1", "wk2","wk3","wk4","wk5","wk6"]
-    
+
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         super.renderMonthPage(context: context, monthInfo: monthInfo, calendarYear: calendarYear)
         let currentMonthRectsInfo = FTDiaryMonthRectsInfo()
@@ -84,6 +83,21 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         var weekY = (currentPageRect.height*templateInfo.baseBoxY/100)
         let weekWidthPercentage : CGFloat = formatInfo.customVariants.isLandscape ? 2.69 : 5.33
         let weekSymbolWidth = (currentPageRect.width*weekWidthPercentage/100)
+
+        var weekNumbers : [String] = []
+        var weekNumber : Int = 0
+        for (index, day) in monthInfo.dayInfo.enumerated() {
+            let weekNumberOBJ = FTPlannerWeekNumber()
+            if index == 0 {
+                weekNumber += 1
+                weekNumbers.append("wk\(weekNumber)")
+            }
+            else if index % 7 == 0, day.fullMonthString == monthInfo.fullMonth {
+                weekNumber += 1
+                weekNumbers.append("wk\(weekNumber)")
+            }
+        }
+
         for week in weekNumbers {
             let weekString = NSMutableAttributedString.init(string: week,attributes: weekNumberAttrs)
             let weekNumberRect = CGRect(x: weekX + weekSymbolWidth/2 - weekString.size().width/2, y: weekY + cellHeight/2 - weekString.size().height/2 , width: weekSymbolWidth , height: cellHeight)

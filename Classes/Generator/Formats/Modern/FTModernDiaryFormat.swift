@@ -339,8 +339,7 @@ class FTModernDiaryFormat : FTDairyFormat {
             let dayString = NSMutableAttributedString.init(string: day.dayString, attributes: dayAttrs)
             let drawRect = CGRect(x: dayX+6.0, y: dayY+3.0, width: dayString.size().width, height: dayString.size().height)
             let drawLocation = CGPoint(x: drawRect.origin.x, y: drawRect.origin.y)
-            dayString.draw(at:drawLocation)
-            
+
             let cellHeight = (currentPageRect.height - (currentPageRect.height*templateInfo.baseBoxY/100) - (currentPageRect.height*templateInfo.boxBottomOffset/100))/6
 
             if day.belongsToSameMonth {
@@ -354,6 +353,7 @@ class FTModernDiaryFormat : FTDairyFormat {
                 let linkRect = CGRect(x: linkX, y: pageRect().height - dayY - (rectHeight >= minLength ? rectHeight : minLength),
                                                              width: rectWidth >= minLength ? rectWidth : minLength,
                                                              height: rectHeight >= minLength ? rectHeight : minLength)
+                dayString.draw(at:drawLocation)
                 currentMonthRectsInfo.dayRects.append(linkRect)
             }
 
