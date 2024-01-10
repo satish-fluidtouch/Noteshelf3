@@ -179,13 +179,7 @@ extension Date
         return calendar.date(byAdding: components, to: self, options: []) ?? Date();
     }
     
-    func monthTitle(localeID : String,monthFormat : String) -> String {
-        let dateformatter : DateFormatter = DateFormatter();
-        dateformatter.dateStyle = DateFormatter.Style.full;
-        dateformatter.timeStyle = DateFormatter.Style.none;
-        let locale = Locale.init(identifier: NSCalendar.calLocale(localeID));
-        dateformatter.locale = locale;
-
+    func monthTitle(localeID : String,monthFormat : String, dateformatter: DateFormatter) -> String {
         dateformatter.dateFormat = monthFormat
         if(["ja","zh_hans","zh_hant"].contains(localeID.lowercased())) {
             let currentLocale = dateformatter.locale;

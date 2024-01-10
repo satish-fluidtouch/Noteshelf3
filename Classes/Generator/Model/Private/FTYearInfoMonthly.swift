@@ -111,8 +111,9 @@ class FTYearInfoMonthly: NSObject {
         
         var curMonth = format.startMonth.month;
         var curYear = format.startMonth.year;
+        let formatter = self.dateformatter
         for _ in 0..<totalMonths {
-            let month = FTMonthInfo.init(localeIdentifier: localeID, formatInfo: format,weekFormat: self._weekFormat);
+            let month = FTMonthInfo.init(localeIdentifier: localeID, formatInfo: format,weekFormat: self._weekFormat,dateformatter: formatter);
             if(curMonth > 12) {
                 curMonth = 1;
                 curYear += 1;
@@ -121,7 +122,7 @@ class FTYearInfoMonthly: NSObject {
             monthInfo.append(month);
             
             let monthCalendar = FTMonthlyCalendarInfo.init(localeIdentifier: localeID, formatInfo: format.dayFormat,weekFormat:self._weekFormat);
-            monthCalendar.generate(month: curMonth, year: curYear);
+            monthCalendar.generate(month: curMonth, year: curYear,dateFormatter: formatter);
             monthCalendarInfo.append(monthCalendar);
             
             curMonth += 1;
@@ -129,5 +130,13 @@ class FTYearInfoMonthly: NSObject {
         #if DEBUG
         debugPrint("monthInfo: \(monthInfo) monthCalendarInfo:\(monthCalendarInfo)");
         #endif
+    }
+    private var dateformatter : DateFormatter {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.full;
+        dateformatter.timeStyle = DateFormatter.Style.none;
+        let locale = Locale.init(identifier: NSCalendar.calLocale(localeID));
+        dateformatter.locale = locale;
+        return dateformatter
     }
 }

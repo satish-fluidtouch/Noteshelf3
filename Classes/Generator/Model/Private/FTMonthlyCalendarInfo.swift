@@ -28,14 +28,14 @@ class FTMonthlyCalendarInfo: NSObject {
         super.init();
     }
 
-    func generate(month : Int, year : Int)
+    func generate(month : Int, year : Int, dateFormatter : DateFormatter)
     {
         let calendar = NSCalendar.gregorian();
         if var startDate = calendar.date(month: month, year: year) {
              numberOfdaysInMonth = startDate.numberOfDaysInMonth() - 1;
 
             let dateInfo = FTDayInfo.init(localeIdentifier: localeID, formatInfo: format);
-            dateInfo.populateDateInfo(date: startDate);
+            dateInfo.populateDateInfo(date: startDate, dateFormatter: dateFormatter);
             self.shortMonth = dateInfo.monthString;
             self.fullMonth = dateInfo.fullMonthString;
             self.year = dateInfo.yearString;
@@ -76,7 +76,7 @@ class FTMonthlyCalendarInfo: NSObject {
             
             for _ in 0..<numberOfdays {
                 let dateInfo = FTDayInfo.init(localeIdentifier: localeID, formatInfo: format);
-                dateInfo.populateDateInfo(date: nextDate);
+                dateInfo.populateDateInfo(date: nextDate, dateFormatter: dateFormatter);
                 endDate = nextDate;
 
                 if(nextDate.month() != month) {
@@ -88,7 +88,7 @@ class FTMonthlyCalendarInfo: NSObject {
             let numberOFWeeks = (startDate.numberOfWeeks(endDate!) );
             var weekDay = startDate;
             for _ in 0..<numberOFWeeks {
-                let weekInfo = FTWeekInfo.init(localeIdentifier: localeID, formatInfo: format);
+                let weekInfo = FTWeekInfo.init(localeIdentifier: localeID, formatInfo: format, dateFormatter: dateFormatter);
                 weekInfo.generate(forWeekDate: weekDay);
                 weekDay = weekDay.nextWeek();
                 self.weeklyInfo.append(weekInfo);
