@@ -143,7 +143,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     @IBOutlet weak private var collectionViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var collectionViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak private var segmentControlHeightConstraint: NSLayoutConstraint!
-    private weak var placeHolderVc: FTFinderNoResultsViewHostingController?
+    private  var placeHolderVc: FTFinderNoResultsViewHostingController?
     @IBOutlet weak private var selectModeHeaderView: UIView!
     @IBOutlet weak private var headerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak private var headerLabel: UILabel!
