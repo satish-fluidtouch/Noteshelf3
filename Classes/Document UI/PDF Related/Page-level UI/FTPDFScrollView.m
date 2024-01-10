@@ -621,13 +621,11 @@ parentViewController:(FTPageViewController*)controller
     [self.writingView updateLowResolutionImageBackgroundView];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self completedScrolling];
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
-{
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     self.isProgramaticallyZooming = FALSE;
     BOOL shouldEnable = NO;
     [self enableUndoGestures];
@@ -696,8 +694,7 @@ parentViewController:(FTPageViewController*)controller
 
 #pragma mark orientation
 
--(void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated forceLoad:(BOOL)force
-{
+-(void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated forceLoad:(BOOL)force {
     if(animated) {
         CGRect visibleRectbeforeScroll = [self visibleRect];
         _isScrolling = YES;
@@ -725,13 +722,11 @@ parentViewController:(FTPageViewController*)controller
     }
 }
 
--(void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated
-{
+-(void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated {
     [self scrollRectToVisible:rect animated:animated forceLoad:NO];
 }
 
--(void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
-{
+-(void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated {
     if(animated) {
         [UIView animateWithDuration:0.3 animations:^{
             [super setContentOffset:contentOffset animated:NO];
@@ -743,8 +738,7 @@ parentViewController:(FTPageViewController*)controller
     }
 }
 
--(void)willBeginInterfaceOrientation
-{
+-(void)willBeginInterfaceOrientation {
     self.drawingContentController.orientationChanging = YES;
     [[self controller] normalizeLassoView];
     if(self.writingView.isCurrentPage) {
@@ -771,8 +765,7 @@ parentViewController:(FTPageViewController*)controller
     return  image;
 }
 
--(void)didEndInterfaceOrientation
-{
+-(void)didEndInterfaceOrientation {
     if(nil != self.snapshotView) {
         [self.snapshotView removeFromSuperview];
     }
@@ -784,8 +777,7 @@ parentViewController:(FTPageViewController*)controller
     [self layoutIfNeeded];
 }
 
--(void)layoutWritingView
-{
+-(void)layoutWritingView {
     if(nil == self.pdfPage) {
         return;
     }
@@ -844,8 +836,7 @@ parentViewController:(FTPageViewController*)controller
     [self didChangeSearchResults:nil];
 }
 
--(CGSize)adjustContentSize
-{
+-(CGSize)adjustContentSize {
     CGSize contentSize = self.contentHolderView.frame.size;
     CGSize scrollSzie = self.frame.size;
 
@@ -855,8 +846,7 @@ parentViewController:(FTPageViewController*)controller
     return finalSize;
 }
 
--(void)mapVisibleRect:(CGRect)inOldVisibleRect withOldContentSize:(CGSize)oldSize newSize:(CGSize)newSize
-{
+-(void)mapVisibleRect:(CGRect)inOldVisibleRect withOldContentSize:(CGSize)oldSize newSize:(CGSize)newSize {
     CGRect newFrame = self.frame;
     CGRect newVisibleRect = CGRectZero;
     newVisibleRect.size = newFrame.size;
@@ -868,8 +858,7 @@ parentViewController:(FTPageViewController*)controller
     }
 }
 
--(CGFloat)zoomScaleOfPDF
-{
+-(CGFloat)zoomScaleOfPDF {
     CGSize normalModeSize = [self.pdfPage pageReferenceViewSize];
     
     CGRect pageRect = self.pdfPage.pdfPageRect;
@@ -881,21 +870,20 @@ parentViewController:(FTPageViewController*)controller
     return zoomScale;
 }
 
--(void)didSuggestDisablingGestures
-{
+-(void)didSuggestDisablingGestures {
     [self disableGestures:nil];
 }
 
--(void)didSuggestEnablingGestures
-{
+-(void)didSuggestEnablingGestures {
     [self updateGestureConditions];
 }
 
 
--(void)handlePanGesture:(FTPanGestureRecognizer*)gesture
-{
+-(void)handlePanGesture:(FTPanGestureRecognizer*)gesture {
     if (gesture.state == UIGestureRecognizerStateFailed) {
-        if(!_isZoomingInProgress && !_isScrolling)
+        if(!_isZoomingInProgress
+           && !_isScrolling
+           && ![NSUserDefaults isApplePencilEnabled])
         {
             if(!CGSizeEqualToSize(self.contentSize, self.frame.size) || (gesture.recognitionType == FTPanRecognitionTypeSingleFinger) || self.contentInset.bottom > 0)
             {
@@ -906,8 +894,7 @@ parentViewController:(FTPageViewController*)controller
     }
 }
 
--(void)enablePinchDetection
-{
+-(void)enablePinchDetection {
 //    if(self.mode == FTRenderModeZoom) {
 //        return;
 //    }
@@ -915,8 +902,7 @@ parentViewController:(FTPageViewController*)controller
     [self unlockZoom];
 }
 
--(void)enablePanDetection
-{
+-(void)enablePanDetection {
     if([self allowsFreeGestureConditions]) {
         self.panGestureRecognizer.minimumNumberOfTouches = 1;
         self.panGesture.maxNumberOfTouches = 0;
@@ -933,41 +919,36 @@ parentViewController:(FTPageViewController*)controller
     [pageViewController.delegate enablePanDetection];
 }
 
--(void)disablePinchDetection
-{
+-(void)disablePinchDetection {
     [self lockZoom];
 }
 
--(void)disablePanDetection{
-    
+-(void)disablePanDetection {
     self.panGesture.enabled = NO;
     self.panGestureRecognizer.enabled = NO;
     FTPageViewController *pageViewController = self.parentViewController;
     [pageViewController.delegate disablePanDetection];
 }
 
--(void)disableUndoGestures{
+-(void)disableUndoGestures {
     FTPageViewController *pageViewController = self.parentViewController;
     [pageViewController.delegate disableUndoGestures];
 }
 
--(void)enableUndoGestures{
+-(void)enableUndoGestures {
     FTPageViewController *pageViewController = self.parentViewController;
     [pageViewController.delegate enableUndoGestures];
 }
 
--(void)updateGestureConditions
-{
+-(void)updateGestureConditions {
     [self enableGestures:nil];
     [self resetProperties];
 }
 
 CGPoint lastPoint1,lastPoint2;
--(void)pinchGestureNotified:(UIPinchGestureRecognizer*)recognizer
-{
+-(void)pinchGestureNotified:(UIPinchGestureRecognizer*)recognizer {
     switch (recognizer.state) {
-        case UIGestureRecognizerStateBegan:
-        {
+        case UIGestureRecognizerStateBegan: {
             scaleJumpWhilePinch = 0;
             lastPoint2 = lastPoint1 = CGPointZero;
             if(recognizer.numberOfTouches == 0) {
@@ -981,8 +962,7 @@ CGPoint lastPoint1,lastPoint2;
         }
             break;
         case UIGestureRecognizerStateChanged:
-        case UIGestureRecognizerStateRecognized:
-        {
+        case UIGestureRecognizerStateRecognized: {
             if(recognizer.numberOfTouches == 0) {
                 return;
             }
@@ -1002,10 +982,9 @@ CGPoint lastPoint1,lastPoint2;
                 shouldZoom = YES;
             }
             scaleJumpWhilePinch++;
-            if((fabs(recognizer.scale-1) > 0.3) && shouldZoom && (scaleJumpWhilePinch > 3))
-            {
-                if(!_isScrolling && !_isZoomingInProgress)
-                {
+            if((fabs(recognizer.scale-1) > 0.3) && shouldZoom && (scaleJumpWhilePinch > 3)) {
+                if((!_isScrolling && !_isZoomingInProgress)
+                    || [NSUserDefaults isApplePencilEnabled]) {
                     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disablePinchDetection) object:nil];
                     self.isZoomingInProgress = YES;
                     self.pinchGestureReuiredToFail.enabled = NO;
@@ -1020,31 +999,26 @@ CGPoint lastPoint1,lastPoint2;
             break;
     }
 }
--(void)multifingerGesture:(UIGestureRecognizer*)gesture
-{
-    if(gesture.state == UIGestureRecognizerStateFailed)
-    {
+
+-(void)multifingerGesture:(UIGestureRecognizer*)gesture {
+    if(gesture.state == UIGestureRecognizerStateFailed) {
 
     }
-    else
-    {
+    else {
         [self disablePinchDetection];
     }
 }
 
--(void)delayedDisableAllGestures
-{
+-(void)delayedDisableAllGestures {
     [self disableGestures:nil];
 }
 
--(void)disableGestures:(NSNotification*)notification
-{
+-(void)disableGestures:(NSNotification*)notification {
     [self disablePinchDetection];
     [self disablePanDetection];
 }
 
--(void)enableGestures:(NSNotification*)notification
-{
+-(void)enableGestures:(NSNotification*)notification {
     [self enablePinchDetection];
     [self enablePanDetection];
 }
@@ -1055,8 +1029,8 @@ CGPoint lastPoint1,lastPoint2;
     }
     return NO;
 }
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
     if([NSUserDefaults isApplePencilEnabled] && (self.isDragging || self.isDecelerating)) {
         for (UITouch *eachTouch in touches) {
@@ -1069,24 +1043,21 @@ CGPoint lastPoint1,lastPoint2;
     }
 }
 
--(void)addSearchObserver
-{
+-(void)addSearchObserver {
     if(self.mode == FTRenderModeDefault) {
         NSString *newNotificationName = [@"DidChangeSearchResults_" stringByAppendingString:self.pdfPage.uuid];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeSearchResults:) name:newNotificationName object:nil];
     }
 }
 
--(void)removeSearchObserver
-{
+-(void)removeSearchObserver {
     if(nil != self.pdfPage) {
         NSString *oldNotificationName = [@"DidChangeSearchResults_" stringByAppendingString:self.pdfPage.uuid];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:oldNotificationName object:nil];
     }
 }
 
--(void)didChangeSearchResults:(NSNotification*)notification
-{
+-(void)didChangeSearchResults:(NSNotification*)notification {
     id<FTWritingProtocol> view = self.writingView;
     CGFloat writingScale = [self.writingView scale];
     if(
@@ -1116,8 +1087,7 @@ CGPoint lastPoint1,lastPoint2;
     }
 }
 
--(void)setCurrentZoomScale:(CGFloat)inScale
-{
+-(void)setCurrentZoomScale:(CGFloat)inScale {
     if(self.mode == FTRenderModeDefault) {
         [self.parentViewController.delegate setContentScaleInNormalMode:inScale pageController:self.parentViewController];
     }
@@ -1126,8 +1096,7 @@ CGPoint lastPoint1,lastPoint2;
     }
 }
 
--(CGFloat)currentZoomScale
-{
+-(CGFloat)currentZoomScale {
     CGFloat scale = previousScrollviewScale;
     if(self.mode == FTRenderModeDefault) {
         scale = self.parentViewController.delegate.contentScaleInNormalMode;
@@ -1135,34 +1104,29 @@ CGPoint lastPoint1,lastPoint2;
     return MAX(scale,1);
 }
     
--(FTPageViewController*)controller
-{
+-(FTPageViewController*)controller {
     return (FTPageViewController*)[self.writingView pageContentDelegate];
 }
 
--(id<FTWritingProtocol>)writingView
-{
+-(id<FTWritingProtocol>)writingView {
     return self.drawingContentController;
 }
     
--(void)setIsIntroScreen:(BOOL)isIntroScreen
-{
+-(void)setIsIntroScreen:(BOOL)isIntroScreen {
     _isIntroScreen = isIntroScreen;
     self.drawingContentController.isIntroScreen = self.isIntroScreen;
 }
--(BOOL)isIntroScreen
-{
+
+-(BOOL)isIntroScreen {
     return _isIntroScreen;
 }
     
-- (void)setIsZoomingInProgress:(BOOL)isZooming
-{
+- (void)setIsZoomingInProgress:(BOOL)isZooming {
     _isZoomingInProgress = isZooming;
     self.writingView.zooming = isZooming;
 }
     
--(BOOL)isZoomingInProgress
-{
+-(BOOL)isZoomingInProgress {
     return _isZoomingInProgress;
 }
 
@@ -1172,8 +1136,7 @@ CGPoint lastPoint1,lastPoint2;
     [super zoomTo:zoomPoint scale:inScale animate:animate];
 }
 
--(void)aspectPageRect:(CGRect*)aspectRect scale:(CGFloat*)scale
-{
+-(void)aspectPageRect:(CGRect*)aspectRect scale:(CGFloat*)scale {
     CGRect pageRect = self.pdfPage.pdfPageRect;
     CGRect aspectFitPageRect = pageRect;
     CGFloat aspectFitScale = 1;
@@ -1193,8 +1156,7 @@ CGPoint lastPoint1,lastPoint2;
     }
 }
 
--(void)didEndScrollViewPanning:(UIPanGestureRecognizer*)gesture
-{
+-(void)didEndScrollViewPanning:(UIPanGestureRecognizer*)gesture {
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
             [self.parentViewController startAcceptingTouches:NO];
@@ -1208,8 +1170,7 @@ CGPoint lastPoint1,lastPoint2;
     }
 }
 
--(void)didEndScrollViewZooming:(UIPinchGestureRecognizer*)gesture
-{
+-(void)didEndScrollViewZooming:(UIPinchGestureRecognizer*)gesture {
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
             [self.parentViewController startAcceptingTouches:NO];

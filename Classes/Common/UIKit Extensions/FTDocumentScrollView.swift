@@ -374,7 +374,9 @@ private extension FTDocumentScrollView
 
     @objc func handleFTPanGesture(_ gesture:UIGestureRecognizer)
     {
-        if gesture.state == .failed, self.scrollViewMode == .none{
+        if gesture.state == .failed
+            , self.scrollViewMode == .none
+            , !UserDefaults.isApplePencilEnabled() {
             self.lockZoom();
             debugLog(">> ScrollPan: handleFTPanGesture: failed");
         }
