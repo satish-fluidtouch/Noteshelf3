@@ -543,15 +543,7 @@
     }
     [self updateContentSize];
     if(isFirstTime) {
-        CGFloat minZoomScale = [FTDocumentScrollViewZoomScale.shared minimumZoomScale:FTRenderModeDefault];
-        CGFloat maxZoomScale = [FTDocumentScrollViewZoomScale.shared maximumZoomScale:FTRenderModeDefault];
-
-        CGRect frame = [self.pageLayoutHelper frameFor:self.currentPageIndexToBeShown];
-        CGSize aspectSize = aspectFittedRect(frame, self.mainScrollView.frame).size;
-        CGFloat scale = aspectSize.width/frame.size.width;
-
-        scale = CLAMP(scale, minZoomScale, maxZoomScale);
-
+        CGFloat scale = [self scaleToFitScreenForPage:self.currentPageIndexToBeShown];
         [self.mainScrollView zoom:scale animate:false completionBlock:nil];
     }
     [self showPageAtIndex:self.currentPageIndexToBeShown
@@ -1492,7 +1484,8 @@
                 [obj unZoomIfNeededWithAnimate:YES completionBlock:nil];
             }];
             self.mainScrollView.scrollViewDelegate = nil;
-            [self.mainScrollView setZoomScale:self.mainScrollView.minimumZoomScale animated:false];
+            CGFloat scale = [self scaleToFitScreenForPage:self.currentlyVisiblePage.pageIndex];
+            [self.mainScrollView setZoomScale:scale animated:false];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 [self delayedSave:backAction with: title];
@@ -1611,16 +1604,13 @@
 {
     [self normalizeAndEndEditingAnnotation:YES];
     if (self.pageLayoutType == FTPageLayoutVertical) {
-        CGRect frame = [self.pageLayoutHelper frameFor:self.currentlyVisiblePage.pageIndex];
+        CGRect frame = [self frameFor:self.currentlyVisiblePage.pageIndex];
         CGRect onexframe = CGRectScale(frame, 1/self.mainScrollView.zoomFactor);
-
         CGSize aspectSize = aspectFittedRect(onexframe, self.mainScrollView.frame).size;
-        CGFloat scale = aspectSize.width/onexframe.size.width;
-        CGFloat minZoomScale = [FTDocumentScrollViewZoomScale.shared minimumZoomScale:FTRenderModeDefault];
-        CGFloat maxZoomScale = [FTDocumentScrollViewZoomScale.shared maximumZoomScale:FTRenderModeDefault];
-        scale = CLAMP(scale, minZoomScale, maxZoomScale);
+        CGFloat scale = aspectSize.width/frame.size.width;
 
-        [self.mainScrollView zoom:scale animate:true completionBlock:^{
+        CGPoint point = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame));
+        [self.mainScrollView zoomTo:point scale:scale animate:true onCompletion:^{
             [self delayedZoomButtonAction];
         }];
     }

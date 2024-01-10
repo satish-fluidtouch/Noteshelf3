@@ -314,3 +314,20 @@ extension FTPDFRenderViewController: FTPageLayouterDelegate {
     #endif
     }
 }
+
+@objc extension FTPDFRenderViewController {
+    func scaleToFitScreenForPage(_ pageInde: Int) -> CGFloat {
+        let frame = self.frame(for: pageInde);
+        let onexframe = CGRectScale(frame, self.mainScrollView.zoomFactor);
+        
+        let aspectSize = aspectFittedRect(onexframe, self.mainScrollView.frame).size;
+        var scale = aspectSize.width/onexframe.width;
+        
+        let minZoomScale = FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeDefault);
+        let maxZoomScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
+        
+        scale = clamp(scale, minZoomScale, maxZoomScale);
+        return scale;
+
+    }
+}

@@ -231,6 +231,24 @@ enum FTScrollViewMode: Int {
         }
     }
     
+    func zoomTo(_ zoomPoint: CGPoint, scale inScale: CGFloat, animate: Bool,onCompletion: (() -> ())?) {
+        guard abs(1-inScale) > 0.01 else {
+            onCompletion?();
+            return;
+        }
+        let minZoomScale = self.minZoomScale;
+        let maxZoomScale = self.maxZoomScale;
+
+        let scale = max(min(inScale,maxZoomScale),minZoomScale);
+        
+        if(fabsf(Float(self.zoomFactor - scale)) < 0.01) {
+            onCompletion?();
+            return;
+        }
+        self.zoomAnimationCompletionBlock = onCompletion;
+        self.zoomTo(zoomPoint, scale: inScale, animate: animate);
+    }
+    
     override func zoomTo(_ zoomPoint: CGPoint, scale inScale: CGFloat, animate: Bool) {
         self.isProgramaticallyZooming = true;
         super.zoomTo(zoomPoint, scale: inScale, animate: animate);
