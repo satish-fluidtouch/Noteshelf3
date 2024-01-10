@@ -87,6 +87,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var currentDraggedItem: FTShelfItemViewModel?
     @Published var highlightItem: FTShelfItemViewModel?
     @Published var isLoadingShelf: Bool = false
+    @Published var showNoShelfItemsView: Bool = false
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
     @Published var tagsForThisBook: [FTTagItemModel] = []
@@ -330,6 +331,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     
     func reset() {
         self.shelfDidLoad = false
+        self.showNoShelfItemsView = false
         self.showDropOverlayView = false
         self.tagsForThisBook = []
         self.allowHitTesting = true
@@ -460,6 +462,8 @@ extension FTShelfViewModel {
         else {
             self.shelfItems = _shelfItems
         }
+
+        self.showNoShelfItemsView = self.shelfItems.isEmpty
 
         if !self.shelfDidLoad {
             self.shelfDidLoad = true

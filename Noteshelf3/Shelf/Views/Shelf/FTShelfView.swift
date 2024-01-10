@@ -27,7 +27,7 @@ struct FTShelfView: View,FTShelfBaseView {
          let _ = Self._printChanges()
         GeometryReader { geometry in
             ZStack {
-                if viewModel.shelfItems.isEmpty {
+                if viewModel.showNoShelfItemsView {
                         emptyShelfItemsView()
                 }
                 ScrollViewReader { proxy in
