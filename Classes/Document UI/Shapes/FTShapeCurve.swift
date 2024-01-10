@@ -13,14 +13,16 @@ import Foundation
     var numberOfSides: CGFloat = 0
     var center = CGPoint.zero
     var isClosedShape: Bool = false
-    let thresholdAngle:CGFloat = 50
+    private let thresholdAngle : CGFloat = 48
+    private let distanceFromFirst : CGFloat = 20
+    private var distanceFromLast : CGFloat = 10
     
     convenience init?(points: [CGPoint]) {
         self.init()
         let simplifiedPoints = SwiftSimplify.simplify(points, tolerance: .good, highQuality: true)
         let filteredPoints = filterStartAndEndPoints(points: simplifiedPoints)
         if filteredPoints.count >= 3 && !hasElbow(points: filteredPoints) {
-            if let startPoint = filteredPoints.first, let endPoint = filteredPoints.last, let pointOnCurve = deCasteljau(points: filteredPoints) {
+            if let startPoint = simplifiedPoints.first, let endPoint = simplifiedPoints.last, let pointOnCurve = deCasteljau(points: simplifiedPoints) {
                 let controlPoint = calculateCurveControlPoint(pointOnCurve: pointOnCurve, startTouchPoint: startPoint, endTouchPoint: endPoint)
                 vertices = [startPoint, controlPoint, endPoint]
             }
@@ -55,7 +57,7 @@ import Foundation
             let distanceFromFirst = sqrt(pow(point.x - firstPoint.x, 2) + pow(point.y - firstPoint.y, 2))
             let distanceFromLast = sqrt(pow(point.x - lastPoint.x, 2) + pow(point.y - lastPoint.y, 2))
 
-            return distanceFromFirst > 3.0 && distanceFromLast > 3.0
+            return distanceFromFirst > self.distanceFromFirst && distanceFromLast > self.distanceFromLast
         }
         return filteredPoints
     }
@@ -63,7 +65,7 @@ import Foundation
     func drawingPoints(scale: CGFloat) -> [CGPoint] {
         let factory = FTShapeFactory()
         let inputPoints = stride(from: 0, through: 1, by: 1.0 / 10).map { point(at: $0) }
-        let distance = factory.getArcLength(inputPoints)
+        let distance = ceil(factory.getArcLength(inputPoints))
         return stride(from: 0, through: 1, by: 1.0 / distance).map { point(at: $0) }
     }
 

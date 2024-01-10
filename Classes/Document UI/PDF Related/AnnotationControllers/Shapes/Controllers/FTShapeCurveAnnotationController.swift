@@ -29,8 +29,9 @@ class FTShapeCurveAnnotationController: FTShapeAnnotationController {
             let prevPoint = firstTouch.previousLocation(in: self.view)
             let deltax = prevPoint.x - point.x
             let deltay = prevPoint.y - point.y
-            if knob.segmentIndex == 1 {
-                var controlPoint = convertControlPoint(shapeAnnotation.getshapeControlPoints()[1])
+            let points = shapeAnnotation.getshapeControlPoints()
+            if knob.segmentIndex == 1, points.count >= 3 {
+                var controlPoint = convertControlPoint(points[1])
                 controlPoint.x -= deltax * 2
                 controlPoint.y -= deltay * 2
                 point = controlPoint

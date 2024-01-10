@@ -37,6 +37,11 @@ final class FTShapeAnnotation: FTStroke, FTShapeAnnotationProtocol {
             let halfThickness = properties.strokeThickness*0.5;
             var rect = boundingRect;
             rect = rect.insetBy(dx: halfThickness, dy: halfThickness);
+            let isFiniteRect = !rect.origin.x.isInfinite && !rect.origin.y.isInfinite &&
+                               !rect.size.width.isInfinite && !rect.size.height.isInfinite
+            if !isFiniteRect {
+                return boundingRect
+            }
             return rect;
         }
         set {
