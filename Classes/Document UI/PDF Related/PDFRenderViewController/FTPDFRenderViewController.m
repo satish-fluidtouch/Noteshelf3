@@ -322,7 +322,7 @@
     [self enableOrDisableNewPageCreationOptionsInsideDocument];
 #if TARGET_OS_MACCATALYST
     // Fix for book opening glitch
-    [self prepareViewToShow:false];
+    [self prepareViewToShow:false isFirstTime:true];
 #endif
 }
 
