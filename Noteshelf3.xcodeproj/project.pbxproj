@@ -2025,6 +2025,8 @@
 		E75BD63E2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75BD63D2A56905A0006DFA2 /* FTShelfBaseHostingController_MacExtension.swift */; };
 		E75E1EB32AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */; };
 		E75E67BD2A9F7442009F5B2E /* FTTextStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */; };
+		E760040D2B4EAAB100B268AC /* FTDocumentPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760040C2B4EAAB100B268AC /* FTDocumentPagesController.swift */; };
+		E76004112B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76004102B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib */; };
 		E76023392A4EC45000B16084 /* FTSearchSuggestionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */; };
 		E760233B2A4EFBA100B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
 		E760233C2A4F003E00B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
@@ -4367,6 +4369,8 @@
 		E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenTypeEditController.swift; sourceTree = "<group>"; };
 		E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		E75FCB2826C0EB5700E5FF75 /* FTGlobalSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTGlobalSearch.storyboard; sourceTree = "<group>"; };
+		E760040C2B4EAAB100B268AC /* FTDocumentPagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPagesController.swift; sourceTree = "<group>"; };
+		E76004102B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTFinderThumbnailViewCell.xib; sourceTree = "<group>"; };
 		E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchSuggestionHelper.swift; sourceTree = "<group>"; };
 		E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsViewController_MacExtension.swift; sourceTree = "<group>"; };
@@ -7753,6 +7757,7 @@
 				520DA2BD2A2F55C4003A6F22 /* FTBookmarkColorCell.swift */,
 				520DA2C72A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift */,
 				520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */,
+				E76004102B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -11548,6 +11553,7 @@
 				E76383F6269710C5000EECDA /* FTTextAnnotationViewController_MenuHandler.swift */,
 				EDC941A021E70E2E00BB8D8E /* FTAnnotation_UI_Factory.swift */,
 				0964CB672201704A0001E506 /* FTAnnotationBaseView.swift */,
+				E760040C2B4EAAB100B268AC /* FTDocumentPagesController.swift */,
 			);
 			path = AnnotationControllers;
 			sourceTree = "<group>";
@@ -12291,6 +12297,7 @@
 				52B34DFE29E5684400360F10 /* Montserrat-Regular.ttf in Resources */,
 				52BBD51029E95BDA003088AE /* Roboto-Bold.ttf in Resources */,
 				52BBD51129E95BDA003088AE /* Roboto-BoldItalic.ttf in Resources */,
+				E76004112B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib in Resources */,
 				52BBD51229E95BDA003088AE /* Roboto-ThinItalic.ttf in Resources */,
 				52BBD51329E95BDA003088AE /* Roboto-Medium.ttf in Resources */,
 				52BBD51429E95BDA003088AE /* Roboto-Black.ttf in Resources */,
@@ -13144,6 +13151,7 @@
 				BAF390F32859ADF00067CA9F /* FTPDFOutline.swift in Sources */,
 				BA8CDA0E2B3E987C0031E231 /* FTWhatsNewUserPlannerController.swift in Sources */,
 				BAF390F52859ADF00067CA9F /* FTItemToExport.swift in Sources */,
+				E760040D2B4EAAB100B268AC /* FTDocumentPagesController.swift in Sources */,
 				BAF390F72859ADF00067CA9F /* FTDiaryYearRectsInfo.swift in Sources */,
 				BAF390F82859ADF00067CA9F /* ENSyncRecord_Extension.swift in Sources */,
 				BAF390F92859ADF00067CA9F /* UIScrollView_Extension.swift in Sources */,

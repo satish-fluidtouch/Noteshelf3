@@ -55,12 +55,15 @@ private extension FTTextEditLinkViewController {
     }
     
     func showFinderPagesScreen(doc: FTThumbnailableCollection, onCompletion: ((Bool) -> Void)?) {
-        let finderVc = FTFinderViewController.instantiate(fromStoryboard: .finder)
-        finderVc.configureData(forDocument: doc, exportInfo: nil, delegate: nil, searchOptions: FTFinderSearchOptions())
-        finderVc.mode = .chooseSinglePage
-        finderVc.singlePageSelectDelegate = self
-        self.present(finderVc, animated: true) {
-            onCompletion?(true)
+//        let finderVc = FTFinderViewController.instantiate(fromStoryboard: .finder)
+//        finderVc.configureData(forDocument: doc, exportInfo: nil, delegate: nil, searchOptions: FTFinderSearchOptions())
+//        finderVc.mode = .chooseSinglePage
+//        finderVc.singlePageSelectDelegate = self
+        if let finderVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTDocumentPagesController") as? FTDocumentPagesController {
+            finderVc.document = doc
+            self.present(finderVc, animated: true) {
+                onCompletion?(true)
+            }
         }
     }
 }

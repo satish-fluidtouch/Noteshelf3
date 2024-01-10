@@ -771,6 +771,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         self.collectionView.alwaysBounceVertical = true;
         self.collectionView.dragInteractionEnabled = (self.mode == .selectPages) ? false : true
         self.collectionView.allowsMultipleSelection = (self.mode != .chooseSinglePage)
+        self.collectionView.register(UINib(nibName: "FTFinderThumbnailViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionViewCellPDFFinderPage")
     }
     
     func configureForSearchTab() {
