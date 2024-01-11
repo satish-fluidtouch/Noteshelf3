@@ -21,7 +21,7 @@ public struct EventParameterKey {
     public static let title = "title"
     public static let tool = "tool"
     public static let slot = "slot"
-    static let count = "count"
+    public static let count = "count"
     static let origin = "origin"
     static let toggle = "toggle"
     static let source = "source"
