@@ -325,6 +325,21 @@ extension FTNoteshelfDocument
                 page.topMargin = info.pageProperties.topMargin;
                 page.leftMargin = info.pageProperties.leftMargin;
 
+#if !NOTESHELF_ACTION
+                if !info.isCover {
+                    // To associate diary infomration to the Noteshelf page and set it as last viewed page index, to show the current date page when created and opened
+                    if let diaryPagesInfo = info.diaryPagesInfo,
+                       diaryPagesInfo.count == count {
+                        let currentPageInfo = diaryPagesInfo[i]
+                        page.diaryPageInfo = currentPageInfo
+                        if currentPageInfo.type == .day,
+                           currentPageInfo.shouldShowThisPageOnDiaryLaunch {
+                            self.setLastViewedPageIndexTo(i+1) // as we have cover as first page in the notebook, adding + 1
+                        }
+                    }
+                }
+#endif
+
                 if let bgColor = info.backgroundColor {
                     page.updateBackgroundColor(color: bgColor);
                 }

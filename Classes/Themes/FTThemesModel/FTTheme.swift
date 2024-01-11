@@ -28,7 +28,6 @@ class FTTheme: NSObject, FTThemeable {
 
     var isCustom: Bool = false
     var dynamicId: Int = 0
-    var templateType : Int = 0
     var canDelete: Bool = false
     var restrictsChangeTemplate : Bool = false
     var hasCover: Bool = false
@@ -83,9 +82,6 @@ class FTTheme: NSObject, FTThemeable {
                         themeObj.categoryName = category_name;
                     } else if let category_name = metaData.value(forKey: defaultCatName) as? String {
                         themeObj.categoryName = category_name;
-                    }
-                    if let templateType = (metaData.value(forKey: "template_type") as? Int) {
-                        themeObj.templateType = templateType
                     }
                     if let dynamicId = (metaData.value(forKey: "dynamic_id") as? Int) {
                         themeObj.dynamicId = dynamicId

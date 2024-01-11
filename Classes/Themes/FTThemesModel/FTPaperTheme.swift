@@ -30,7 +30,6 @@ enum ImageGenerationError: Error {
 
 class FTPaperTheme: FTTheme, FTPaperThemeable {
     var recentVariants: FTPaperVariants!
-    var documentType : FTDocumentType = .defaultType;
     var lineHeight : Int?;
     var standardDiaryStartYear : Int?
     var customvariants: FTPaperVariants!
