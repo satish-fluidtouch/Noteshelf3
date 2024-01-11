@@ -31,16 +31,32 @@ class FTStoreCustomViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var emptyView: UIView!
 
-    weak var delegate: FTStoreCustomDelegate?;
-    var selectedFile: URL?
-    var sourceType: Source = .none
+    private weak var delegate: FTStoreCustomDelegate?;
+    private var selectedFile: URL?
+    private var sourceType: Source = .none
     private var selectedIndexPath: IndexPath?
+    private var customTemplateImportManager: FTCustomTemplateImportManager?
+    private var storeActionManager: FTStoreActionManager?
 
-    private var customTemplateImportManager = FTCustomTemplateImportManager.shared
     private var headerView: FTLibraryHeaderView? = nil
     private var importFileHandler : FTImportFileHandler?
     private var currentSize: CGSize = .zero
-    let viewModel = FTStoreCustomTemplateViewModel()
+    private let viewModel = FTStoreCustomTemplateViewModel()
+
+    static func controller(source: Source,
+                           delegate: FTStoreCustomDelegate,
+                           selectedFile: URL?,
+                           customTemplateImportManager: FTCustomTemplateImportManager?,
+                           storeActionManager: FTStoreActionManager?) -> UIViewController {
+        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreCustomViewController") as! FTStoreCustomViewController
+        viewController.delegate = delegate
+        viewController.selectedFile = selectedFile
+        viewController.sourceType = source
+        viewController.customTemplateImportManager = customTemplateImportManager
+        viewController.storeActionManager = storeActionManager
+        return viewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,7 +167,7 @@ extension FTStoreCustomViewController: UICollectionViewDelegate, UICollectionVie
         let item = viewModel.itemAt(index: indexPath.row)
         if let style = item {
             if sourceType == .none
-                , FTStoreContainerHandler.shared.premiumUser?.nonPremiumQuotaReached ?? false {
+                , FTStorePremiumPublisher.shared.premiumUser?.nonPremiumQuotaReached ?? false {
                 self.delegate?.customController(self, showIAPAlert: nil);
                 return;
             }
@@ -173,13 +189,12 @@ extension FTStoreCustomViewController: UICollectionViewDelegate, UICollectionVie
             }
         }
             // Track Event
-            FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_custom_template_tap, params: nil, screenName: ScreenName.templatesStore))
+            FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.templates_custom_template_tap, params: nil, screenName: ScreenName.templatesStore))
         }
 
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
         let columnWidth = columnWidthForSize(self.view.frame.size)
         let size = CGSize(width: columnWidth, height: ((columnWidth)/FTStoreConstants.Template.potraitAspectRation) + FTStoreConstants.Template.extraHeightPadding)
         if let item = viewModel.itemAt(index: indexPath.row) {
@@ -221,6 +236,8 @@ private extension FTStoreCustomViewController {
     }
 
     func importActionObserver() {
+        guard let customTemplateImportManager else { return }
+
         customTemplateImportManager.actionStream.sink {[weak self] action in
             guard let self = self else { return }
             switch action {
@@ -247,7 +264,7 @@ private extension FTStoreCustomViewController {
                 } else if let err = error {
                     UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: err.localizedDescription, from: self, withCompletionHandler: nil)
                 }
-            case .createNootbookOutput(let url, let error):
+            case .createNootbookOutput( _, let error):
                 if let err = error  {
                     UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: err.localizedDescription, from: self, withCompletionHandler: nil)
                 }
@@ -259,13 +276,11 @@ private extension FTStoreCustomViewController {
 
     @MainActor
     private func presentPreviewVC(imageUrl: URL) {
-        if let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTStoreCustomPreviewViewController") as? FTStoreCustomPreviewViewController {
-            let navi = UINavigationController(rootViewController: vc)
-            vc.fileUrl = imageUrl
-            navi.modalPresentationStyle = .formSheet
-            navi.modalPresentationCapturesStatusBarAppearance = true
-            self.present(navi, animated: true)
-        }
+        let vc = FTStoreCustomPreviewViewController.controller(fileUrl: imageUrl, actionManager: storeActionManager)
+        let navi = UINavigationController(rootViewController: vc)
+        navi.modalPresentationStyle = .formSheet
+        navi.modalPresentationCapturesStatusBarAppearance = true
+        self.present(navi, animated: true)
     }
 
 }
@@ -273,15 +288,15 @@ private extension FTStoreCustomViewController {
 // MARK: - PhotoLibraryDelegates
 extension FTStoreCustomViewController: FTPHPickerDelegate, FTImagePickerDelegate {
     public func didFinishPicking(image: UIImage, picker: UIImagePickerController) {
-        picker.dismiss(animated: true) {
-            FTCustomTemplateImportManager.shared.importConverterInput.send(.generatePDF(images: [image]))
+        picker.dismiss(animated: true) { [weak self] in
+            self?.customTemplateImportManager?.importConverterInput.send(.generatePDF(images: [image]))
         }
     }
 
     public func didFinishPicking(results: [PHPickerResult], photoType: PhotoType) {
-        FTPHPicker.shared.processResultForUIImages(results: results) { phItems in
+        FTPHPicker.shared.processResultForUIImages(results: results) { [weak self] phItems in
             if let phItem = phItems.first {
-                FTCustomTemplateImportManager.shared.importConverterInput.send(.generatePDF(images: [phItem.image]))
+                self?.customTemplateImportManager?.importConverterInput.send(.generatePDF(images: [phItem.image]))
             }
         }
     }
@@ -290,8 +305,59 @@ extension FTStoreCustomViewController: FTPHPickerDelegate, FTImagePickerDelegate
 extension FTStoreCustomViewController : FTImportFileHandlerDelegate {
     func importFileHandler(_ handler: FTImportFileHandler, didFinishingPickingURL urls: [URL]) {
             if let url = urls.first {
-            FTCustomTemplateImportManager.shared.importConverterInput.send(.convertToPDF(filePath: url.path))
+                customTemplateImportManager?.importConverterInput.send(.convertToPDF(filePath: url.path))
         }
     }
 
+}
+
+
+// MARK: - contextMenuConfiguration
+extension FTStoreCustomViewController {
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+        if sectionType == .noRecords {
+            return nil
+        }
+        self.delegate?.customController(self, menuShown: true)
+        let identifier = indexPath as NSIndexPath
+        return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
+            let delete = UIAction(title: "templatesStore.custom.alert.remove".localized, image: UIImage(systemName: "trash")) { [weak self] _ in
+                Task {
+                    if let item = self?.viewModel.itemAt(index: indexPath.row) {
+                        do {
+                            try await FTStoreCustomTemplatesHandler.shared.removeFile(item: item)
+                            self?.viewModel.loadTemplates()
+                        } catch {
+                            UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
+                        }
+                    }
+                }
+            }
+            delete.attributes = .destructive
+            return UIMenu(title: "", children: [delete])
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let identifier = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: identifier) as? FTStoreCustomCollectionCell else {
+            return nil
+        }
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        return UITargetedPreview(view: cell.thumbnail!, parameters: parameters)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        self.delegate?.customController(self, menuShown: false)
+        guard let identifier = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: identifier) as? FTStoreCustomCollectionCell else {
+            return nil
+        }
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        return UITargetedPreview(view: cell, parameters: parameters)
+    }
 }

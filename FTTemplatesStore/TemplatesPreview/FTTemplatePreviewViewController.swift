@@ -57,28 +57,28 @@ class FTTemplatePreviewViewController: UIViewController {
     private var thumbnailOrientation: ThumbnailOrientation = .potrait
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private var viewModel = FTTemplatePreviewViewModel()
-    private var pageActionManager = FTTemplatesPageActionManager.shared
     private var previewImageViews = [UIImageView]()
     private var viewWidth = 100.0
     private var viewHeight = 140.0
     private var _currentPageIndex: Int = 0
     private var scrollDirection: Int = 0
     private var prevSize: CGSize = .zero
+    private var actionManager: FTStoreActionManager?
 
     private var indicatorView: UIView!
 
-    var networkCheck = FTNetwork.sharedInstance()
+    private var networkCheck = FTNetwork.sharedInstance()
 
-    var template: TemplateInfo!
-    var currentIndex: Int = 0
+    private var template: TemplateInfo!
+    private var currentIndex: Int = 0
 
-    weak var delegate: FTTemplatesPreviewDelegate? {
+    private weak var delegate: FTTemplatesPreviewDelegate? {
         didSet {
             updateFavorateStatus()
         }
     }
 
-    var currentPage = 0 {
+    private var currentPage = 0 {
         didSet {
             updateFavorateStatus()
         }
@@ -103,6 +103,31 @@ class FTTemplatePreviewViewController: UIViewController {
             return styles
         }
         return []
+    }
+
+    class func controller(template: TemplateInfo,
+                          actionManager: FTStoreActionManager?,
+                          delegate: FTTemplatesPreviewDelegate?,
+                          index: Int) -> UIViewController {
+        guard let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTTemplatePreviewViewController") as? FTTemplatePreviewViewController else {
+            fatalError("FTTemplatePreviewViewController not found")
+        }
+        vc.template = template
+        vc.actionManager = actionManager
+        vc.currentIndex = index
+        if index == 0 {
+            vc.delegate = delegate
+        }
+        vc.modalPresentationStyle = .overCurrentContext
+        return vc
+    }
+
+    func removeDelegate() {
+        self.delegate = nil
+    }
+
+    func addDelegate(_ delegate: FTTemplatesPreviewDelegate?) {
+        self.delegate = delegate
     }
 
     // MARK: - View hierarchy Begans
@@ -130,7 +155,6 @@ class FTTemplatePreviewViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        pageActionManager.cancellables.removeAll()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -168,7 +192,7 @@ class FTTemplatePreviewViewController: UIViewController {
     @IBAction func authorAction(_ sender: Any?) {
         if let openUrl = template.link, let url = URL(string: openUrl) {
             if UIApplication.shared.canOpenURL(url) {
-                FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_author_tap, params: [EventParameterKey.title: template.title], screenName: ScreenName.templatesStore))
+                FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.template_author_tap, params: [EventParameterKey.title: template.title], screenName: ScreenName.templatesStore))
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
@@ -570,7 +594,7 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
                     updateFavorateStatus()
                 }
                 // Track Event
-                FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_addtolibrary_tap, params: [EventParameterKey.title: style.templateName], screenName: ScreenName.templatesStore))
+                FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.template_preview_addtolibrary_tap, params: [EventParameterKey.title: style.templateName], screenName: ScreenName.templatesStore))
 
             }
         }
@@ -587,14 +611,14 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
 
      func createNoteBook() {
         if template.type == FTDiscoveryItemType.diary.rawValue {
-            if let premiumUser = FTStoreContainerHandler.shared.premiumUser, premiumUser.isPremiumUser {
+            if let premiumUser = FTStorePremiumPublisher.shared.premiumUser, premiumUser.isPremiumUser {
                 presentDatePicker()
             }
             else {
-                FTStoreContainerHandler.shared.actionStream.send(.showUpgradeAlert(controller: self, feature: "Digital Diary"));
+                FTStorePremiumPublisher.shared.actionStream.send(.showUpgradeAlert(controller: self, feature: "Digital Diary"));
             }
         } else {
-            if FTStoreContainerHandler.shared.premiumUser?.nonPremiumQuotaReached ?? false {      FTStoreContainerHandler.shared.actionStream.send(.showUpgradeAlert(controller: self, feature: nil));
+            if FTStorePremiumPublisher.shared.premiumUser?.nonPremiumQuotaReached ?? false {      FTStorePremiumPublisher.shared.actionStream.send(.showUpgradeAlert(controller: self, feature: nil));
                 return;
             }
             if template.sectionType == FTStoreSectionType.userJournals.rawValue {
@@ -611,7 +635,7 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
                     createNotebookFor(fileUrl: fileUrl, fileName: template.title)
                     // Track Event
                     let orientation = self.thumbnailOrientation == .landscape ? EventParameterValue.landscape : EventParameterValue.potrait
-                    FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: style.templateName, EventParameterKey.orientation: orientation], screenName: ScreenName.templatesStore))
+                    FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: style.templateName, EventParameterKey.orientation: orientation], screenName: ScreenName.templatesStore))
                 }
             }
         }
@@ -629,7 +653,7 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
          let fileUrl = try await storeServiceApi.downloadinspirationJournalFor(url: downloadUrl, fileName: templa.fileName)
          self.hideLoadingindicator()
          createNotebookFor(fileUrl: fileUrl.appendingPathComponent(templa.fileName).appendingPathExtension("pdf"), fileName: templa.title)
-         FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: templa.title], screenName: ScreenName.templatesStore))
+         FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: templa.title], screenName: ScreenName.templatesStore))
 
      }
 
@@ -644,7 +668,7 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
                  try FileManager.default.copyItem(at: fileUrl, to: tempUrl)
                  let isDark = false
                  let isLandscape = self.template.supportOrientation == 2 ? true : false
-                 FTStoreContainerHandler.shared.actionStream.send(.createNotebookForTemplate(url: tempUrl, isLandscape: isLandscape, isDark: isDark))
+                 actionManager?.containerActions.send(.createNotebookForTemplate(url: tempUrl, isLandscape: isLandscape, isDark: isDark))
              } catch let error {
                  UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
              }
@@ -751,11 +775,11 @@ extension FTTemplatePreviewViewController: FTDairyDateSelectionPickerDelegate {
                                           , options: .refreshCached) { [weak self] image, _, _, _ in
                     guard let self = self else { return }
                     if let image {
-                        FTStoreContainerHandler.shared.actionStream.send(.createNotebookForDairy(fileName: self.template.fileName, title: self.template.title, startDate: startDate, endDate: endDate, coverImage: image, isLandScape: isLandscape))
+                        self.actionManager?.containerActions.send(.createNotebookForDairy(fileName: self.template.fileName, title: self.template.title, startDate: startDate, endDate: endDate, coverImage: image, isLandScape: isLandscape))
 
                         // Track Event
                         let orientation = isLandscape ? EventParameterValue.landscape : EventParameterValue.potrait
-                        FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: self.template.title, EventParameterKey.orientation: orientation], screenName: ScreenName.templatesStore))
+                        FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: self.template.title, EventParameterKey.orientation: orientation], screenName: ScreenName.templatesStore))
 
                     }
                 }
