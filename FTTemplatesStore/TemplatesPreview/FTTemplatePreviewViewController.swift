@@ -78,7 +78,7 @@ class FTTemplatePreviewViewController: UIViewController {
         }
     }
 
-    private var currentPage = 0 {
+    private(set) var currentPage = 0 {
         didSet {
             updateFavorateStatus()
         }
