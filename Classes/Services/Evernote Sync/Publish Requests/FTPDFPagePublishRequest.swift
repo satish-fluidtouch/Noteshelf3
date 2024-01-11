@@ -154,7 +154,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         } failure: { error in
             self.executeBlock {
                 if let error {
-                    if((error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue)) {
+                    if((error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue)) {
                         self.noteDidGetDeletedFromEvernote();
                     }
                     else {
@@ -221,7 +221,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             } failure: { error in
                 if let error = error {
                     self.executeBlock(onPublishQueue: {
-                        if((error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue))
+                        if((error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue))
                         {
                             self.noteDidGetDeletedFromEvernote();
                         }
