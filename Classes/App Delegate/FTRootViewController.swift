@@ -1438,17 +1438,8 @@ extension FTRootViewController {
 
     private func getTopOffset() -> CGFloat {
         var topOffset: CGFloat = 0.0
-        if UIDevice().isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
-            var extraHeight: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraHeight = topSafeAreaInset
-                    }
-                }
-            }
-            topOffset = FTToolbarConfig.Height.compact + extraHeight
+        if UIDevice.current.isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
+            topOffset = FTToolbarConfig.Height.compact
         }
         return topOffset
     }

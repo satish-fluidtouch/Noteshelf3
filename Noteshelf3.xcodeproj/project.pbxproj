@@ -4131,7 +4131,6 @@
 		BAA84E472873105500DE801B /* FTCommon.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FTCommon.docc; sourceTree = "<group>"; };
 		BAA84E522873108400DE801B /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		BAA84E532873108400DE801B /* Color+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
-		BAA84E552873108400DE801B /* FTServerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTServerConfig.swift; sourceTree = "<group>"; };
 		BAA84E562873108500DE801B /* FTLocalizedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLocalizedString.swift; sourceTree = "<group>"; };
 		BAA84E572873108500DE801B /* FTCommonUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTCommonUtils.swift; sourceTree = "<group>"; };
 		BAA84E582873108500DE801B /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -11155,7 +11154,6 @@
 		E7B77D0729B071DD0013E794 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				BAA84E552873108400DE801B /* FTServerConfig.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";

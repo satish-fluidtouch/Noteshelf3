@@ -31,6 +31,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
 @objcMembers class FTiOSDeskToolbarController: UIViewController {
     @IBOutlet private weak var contentView: UIView?
     @IBOutlet private weak var contentTopConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var contentTopConstraintiPhone: NSLayoutConstraint?
 
     //Left Panel
     @IBOutlet private weak var leftPanelBlurView: FTToolbarVisualEffectView?
@@ -70,8 +71,10 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         super.viewDidLoad()
 #if targetEnvironment(macCatalyst)
         self.view.isHidden = true
-#endif
+        self.contentTopConstraint?.constant = 0.0
+#else
         self.handleObservers()
+#endif
     }
 
     override func viewDidLayoutSubviews() {
@@ -79,20 +82,6 @@ protocol FTDeskPanelActionDelegate: AnyObject {
         let currentFrameSize = self.view.frame.size
         if(currentFrameSize.width != self.currentSize.width) {
             self.currentSize = currentFrameSize
-#if targetEnvironment(macCatalyst)
-            self.contentTopConstraint?.constant = 0.0
-#else
-            var space: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        space = topSafeAreaInset
-                    }
-                }
-            }
-            self.contentTopConstraint?.constant = 14.0 + space
-#endif
             self.updateScreenModeIfNeeded(self.screenMode)
         }
     }
@@ -186,7 +175,7 @@ protocol FTDeskPanelActionDelegate: AnyObject {
                 self.configureNormalModeView(toAnimate: false)
             }
         } else {
-            if UIDevice().isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
+            if UIDevice.current.isIphone() || self.view.frame.width < FTToolbarConfig.compactModeThreshold {
                 self.screenMode = .shortCompact
             } else if self.screenMode != .normal {
                 self.screenMode = .normal

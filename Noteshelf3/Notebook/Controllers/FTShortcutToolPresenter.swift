@@ -270,17 +270,8 @@ private extension FTShortcutToolPresenter {
 #if targetEnvironment(macCatalyst)
         self.toolbarOffset = offset
 #else
-        if UIDevice().isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
-            var extraOffset: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = self.parentVC?.fetchCurrentWindow() {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraOffset = topSafeAreaInset
-                    }
-                }
-            }
-            self.toolbarOffset = FTToolbarConfig.Height.compact + offset + extraOffset
+        if UIDevice.current.isIphone() || frame.width < FTToolbarConfig.compactModeThreshold {
+            self.toolbarOffset = FTToolbarConfig.Height.compact + offset
         } else {
             self.toolbarOffset = FTToolbarConfig.Height.regular + offset
         }

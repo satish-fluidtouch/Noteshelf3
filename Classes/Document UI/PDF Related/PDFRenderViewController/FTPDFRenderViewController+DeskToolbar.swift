@@ -267,16 +267,7 @@ extension FTPDFRenderViewController {
         let yPadding: CGFloat = 8.0
         var offset: CGFloat = 0.0
         if self.currentToolBarState() == .shortCompact {
-            var extraHeight: CGFloat = 0.0
-            if UIDevice.current.isPhone() {
-                if let window = UIApplication.shared.keyWindow {
-                    let topSafeAreaInset = window.safeAreaInsets.top
-                    if topSafeAreaInset > 0 {
-                        extraHeight = topSafeAreaInset
-                    }
-                }
-            }
-            offset = FTToolbarConfig.Height.compact + extraHeight + yPadding
+            offset = FTToolbarConfig.Height.compact + yPadding
         } else if self.currentToolBarState() == .normal {
 #if targetEnvironment(macCatalyst)
             offset = 0.0 + yPadding

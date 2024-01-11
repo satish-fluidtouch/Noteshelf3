@@ -292,7 +292,7 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         if isWatchAppInstalled {
             watchStatus = "Installed"
         }
-        let deviceName = UIDevice().isMac() ? "Mac" : FTUtils.deviceModelFriendlyName()
+        let deviceName = UIDevice.current.isMac() ? "Mac" : FTUtils.deviceModelFriendlyName()
         var customFields = [String : Any]()
         customFields = [
             "User ID": UserDefaults.standard.string(forKey: "USER_ID_FOR_CRASH") ?? "",

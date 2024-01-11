@@ -129,15 +129,7 @@ class FTFocusModeView: FTToolbarVisualEffectView {
     }
 
     var topOffset: CGFloat {
-        var offset: CGFloat = 10.0
-        if UIDevice.current.isPhone() {
-            if let window = UIApplication.shared.keyWindow {
-                let topSafeAreaInset = window.safeAreaInsets.top
-                if topSafeAreaInset > 0 {
-                    offset += topSafeAreaInset
-                }
-            }
-        }
+        let offset: CGFloat = 10.0
         return offset
     }
 
