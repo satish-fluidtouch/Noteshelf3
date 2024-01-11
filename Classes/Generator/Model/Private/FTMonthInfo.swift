@@ -18,12 +18,14 @@ class FTMonthInfo: NSObject {
     private var localeID : String = "en";
     private var format : FTYearFormatInfo;
     private var _weekFormat : String;
+    private var dateformatter : DateFormatter;
     
-    required init(localeIdentifier : String,formatInfo : FTYearFormatInfo,weekFormat:String)
+    required init(localeIdentifier : String,formatInfo : FTYearFormatInfo,weekFormat:String, dateformatter : DateFormatter)
     {
         localeID = localeIdentifier;
         format = formatInfo;
         self._weekFormat=weekFormat;
+        self.dateformatter = dateformatter
         super.init();
     }
 
@@ -40,8 +42,8 @@ class FTMonthInfo: NSObject {
 //                || (month == format.endMonth.month && year == format.endMonth.year)) {
 //                yearFormat = "MMM";
 //            }
-            self.monthTitle = startDate.monthTitle(localeID: localeID, monthFormat: "MMMM");
-            self.monthShortTitle = startDate.monthTitle(localeID: localeID, monthFormat: "MMM");
+            self.monthTitle = startDate.monthTitle(localeID: localeID, monthFormat: "MMMM",dateformatter: dateformatter);
+            self.monthShortTitle = startDate.monthTitle(localeID: localeID, monthFormat: "MMM",dateformatter: dateformatter);
             let numberOfdaysInMonth = startDate.numberOfDaysInMonth();
             
             let weekday = startDate.weekDay();
@@ -75,7 +77,7 @@ class FTMonthInfo: NSObject {
             }
             for _ in 0..<numberOfdays {
                 let dateInfo = FTDayInfo.init(localeIdentifier: localeID, formatInfo: format.dayFormat);
-                dateInfo.populateDateInfo(date: nextDate);
+                dateInfo.populateDateInfo(date: nextDate, dateFormatter: dateformatter);
                 self.dayInfo.append(dateInfo);
                 nextDate = nextDate.nextDay();
             }
@@ -91,7 +93,7 @@ class FTMonthInfo: NSObject {
             var nextDate = startDate
             for _ in 0..<numberOfdays {
                 let dateInfo = FTDayInfo.init(localeIdentifier: localeID, formatInfo: format.dayFormat);
-                dateInfo.populateDateInfo(date: nextDate);
+                dateInfo.populateDateInfo(date: nextDate, dateFormatter: dateformatter);
                 self.dayInfo.append(dateInfo);
                 nextDate = nextDate.nextDay();
             }
