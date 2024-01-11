@@ -96,4 +96,21 @@ enum FTMoreOption: String {
         }
         return UIAction(title: self.title(), image: self.image(),identifier: UIAction.Identifier(self.rawValue), attributes: attributes, handler: action)
     }
+    
+    func eventDescription() -> String {
+        var eventName = ""
+        switch self {
+        case .copy :
+            eventName = "finder_select_copy_tap"
+        case .bookMark :
+            eventName = "finder_select_bookmark_tap"
+        case .move :
+            eventName = "finder_select_move_tap"
+        case .tag :
+            eventName = "finder_select_tag_tap"
+        case .delete :
+            eventName = "finder_select_delete_tap"
+        }
+        return eventName
+    }
 }
