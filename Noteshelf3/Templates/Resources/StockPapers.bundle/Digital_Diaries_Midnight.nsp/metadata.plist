@@ -30,8 +30,6 @@
 	<integer>1</integer>
 	<key>template_id</key>
 	<string>Digital_Diaries_Midnight</string>
-	<key>template_type</key>
-	<integer>6</integer>
 	<key>restrictsChangeTemplate</key>
 	<true/>
 </dict>
