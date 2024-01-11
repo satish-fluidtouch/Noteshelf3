@@ -406,7 +406,7 @@ extension FTOnScreenWritingViewController
                                              touchView: self.view);
             var rectToRefresh = CGRect.null;
             let shapeDetectionEnabled = self.isShapeDetectionEnabled();
-            var foundShape = false;
+            var isShapeRendered = false
             //For drawing straight lines in highlighter mode when draw straight lines option is turned on
             //isShapeEnabled - This will be true only when user holds and convert to shape
             if self.toDrawStraightLineInFavoriteMode(),
@@ -418,22 +418,22 @@ extension FTOnScreenWritingViewController
                     rectToRefresh = curStroke.boundingRect
                     if !strokes.isEmpty {
                         rectToRefresh = self.renderDetectedShapeStrokes(strokes, rectToRefresh: rectToRefresh);
-                        foundShape = true
+                        isShapeRendered = true
                     }
                 }
             }
             if(shapeDetectionEnabled || isShapeEnabled) {
                 let detectedShape = self.drawDetectedShape()
+                isShapeRendered = detectedShape.hasShape
                 if detectedShape.hasShape {
                     rectToRefresh = detectedShape.areaToRefresh;
-                    foundShape = true;
                     if let ann = detectedShape.strokes?.first as? FTAnnotation {
                         ann.inLineEditing = isShapeEnabled
                         self.delegate?.editShapeAnnotation(with: ann, point: touch.activeUItouch.location(in: self.view))
                     }
                 }
             }
-            if(!foundShape && !isShapeEnabled) {
+            if(!isShapeRendered) {
                 guard let curStroke = self.currentStroke?.stroke as? FTAnnotation else { return }
                 rectToRefresh = curStroke.renderingRect;
                 self.delegate?.addAnnotations([curStroke],
@@ -449,7 +449,7 @@ extension FTOnScreenWritingViewController
             NSObject.cancelPreviousPerformRequests(withTarget: self,
                                                    selector: #selector(performShapeRenderingFor(_:)),
                                                    object: touch);
-            if let del = self.delegate, del.mode == FTRenderModeZoom, !foundShape {
+            if let del = self.delegate, del.mode == FTRenderModeZoom, !isShapeRendered {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
                     let notification = Notification.init(name: Notification.Name.FTZoomRenderViewDidEndCurrentStroke,
                                                          object: self.view.window,
