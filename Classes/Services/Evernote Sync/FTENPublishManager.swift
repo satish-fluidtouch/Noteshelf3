@@ -385,7 +385,6 @@ class FTENNotebook: NSObject {
             case EDAMErrorCode_LIMIT_REACHED.rawValue:
                 continuePublish = true;
                 failureReason = "Limit Reached"
-                logFlurry = false
 
             case EDAMErrorCode_QUOTA_REACHED.rawValue:
                 failureReason = "Quota Reached"
