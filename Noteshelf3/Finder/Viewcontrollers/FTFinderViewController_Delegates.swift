@@ -116,6 +116,8 @@ extension FTFinderViewController:  UICollectionViewDropDelegate {
         var pages = [FTThumbnailable]()
         var indexesToRemove = [Int]()
         if coordinator.session.localDragSession != nil &&  canSupportDragging() {
+            let eventName = (coordinator.items.count == 0) ? "finder_page_reordered" :  "finder_pages_reordered"
+            FTFinderEventTracker.trackFinderEvent(with: eventName)
             for pageItem in coordinator.items {
                 if let localObject = pageItem.dragItem.localObject as AnyObject as? FTThumbnailable,  let sourceIndexPath = pageItem.sourceIndexPath {
                     indexesToRemove.append(sourceIndexPath.row)
