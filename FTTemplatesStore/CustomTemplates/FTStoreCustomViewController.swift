@@ -38,7 +38,6 @@ class FTStoreCustomViewController: UIViewController {
     private var customTemplateImportManager: FTCustomTemplateImportManager?
     private var storeActionManager: FTStoreActionManager?
 
-    private var headerView: FTLibraryHeaderView? = nil
     private var importFileHandler : FTImportFileHandler?
     private var currentSize: CGSize = .zero
     private let viewModel = FTStoreCustomTemplateViewModel()
@@ -129,7 +128,8 @@ class FTStoreCustomViewController: UIViewController {
     }
 
     private func configureDatasource() {
-        viewModel.dataSource = StoreCustomDatasource(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, item in
+        viewModel.dataSource = StoreCustomDatasource(collectionView: self.collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
+            guard let self = self else { return nil }
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FTStoreCustomCollectionCell.reuseIdentifier, for: indexPath) as? FTStoreCustomCollectionCell else {
                 fatalError("can't dequeue FTStoreCustomCollectionCell")
             }
@@ -139,14 +139,14 @@ class FTStoreCustomViewController: UIViewController {
 
         viewModel.dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
             guard let self = self else { return nil }
-            self.headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTLibraryHeaderView", for: indexPath) as? FTLibraryHeaderView
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTLibraryHeaderView", for: indexPath) as? FTLibraryHeaderView
             // Configure the header view with data from the data source
             if let pare = self.parent as? FTStoreContainerViewController {
                 if let seg = pare.topSegmentView, pare.segmentControl.selectedIndex == 2 {
-                    self.headerView?.addSubview(seg)
+                    headerView?.addSubview(seg)
                 }
             }
-            return self.headerView
+            return headerView
         }
 
     }
