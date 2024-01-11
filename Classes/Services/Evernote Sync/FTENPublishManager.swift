@@ -385,8 +385,12 @@ class FTENNotebook: NSObject {
             case EDAMErrorCode_LIMIT_REACHED.rawValue:
                 continuePublish = true;
                 failureReason = "Limit Reached"
+                logFlurry = false
+
             case EDAMErrorCode_QUOTA_REACHED.rawValue:
                 failureReason = "Quota Reached"
+                logFlurry = false
+
             case EDAMErrorCode_DATA_CONFLICT.rawValue:
                 logFlurry = true;
                 showSupportAction = true;
@@ -397,6 +401,8 @@ class FTENNotebook: NSObject {
                 failureReason = "Permission Denied"
             case EDAMErrorCode_RATE_LIMIT_REACHED.rawValue:
                 failureReason = "Rate limit reached"
+                logFlurry = false
+                
             default:
                     // EN error codes are only (1-19) hence We would like to show a neat error so going into the userinfo dict of the Evernote error and getting the details of NSURL error.
                 if failureReason == "Unknown" {
