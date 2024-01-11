@@ -25,7 +25,7 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     var currentPageRect: CGRect = CGRect.init(x: 0, y: 0, width: 768, height: 960);
     var quoteProvider: FTQuotesProvider = FTQuotesProvider()
     var offsetCount: Int = 76
-
+    var diaryPagesInfo: [FTDiaryPageInfo] = []
     
     private var orientationTail : String {
         return formatInfo.orientation == FTScreenOrientation.Port.rawValue ? "" : "-land"
@@ -33,9 +33,9 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     
     private var assetsFolder : String {
         if(useTestTemplates) {
-            return "assets/" + formatInfo.templateId + "/" + formatInfo.screenSize + "/" + formatInfo.orientation + "/test"
+            return "assets/" + formatInfo.templateId.rawValue + "/" + formatInfo.screenSize + "/" + formatInfo.orientation + "/test"
         }
-        return "assets/" + formatInfo.templateId + "/" + formatInfo.screenSize + "/" + formatInfo.orientation;
+        return "assets/" + formatInfo.templateId.rawValue + "/" + formatInfo.screenSize + "/" + formatInfo.orientation;
     }
     
     var dayTemplate: String {
@@ -67,7 +67,7 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     }
     
     var metaDataPath: URL {
-        if let fileURL = Bundle.main.url(forResource: formatInfo.templateId, withExtension: "plist", subdirectory: "assets/" + formatInfo.templateId) {
+        if let fileURL = Bundle.main.url(forResource: formatInfo.templateId.rawValue, withExtension: "plist", subdirectory: "assets/" + formatInfo.templateId.rawValue) {
             return fileURL
         }
         fatalError("file missing");
@@ -469,46 +469,46 @@ extension FTDairyFormat {
     static func getFormat(formatInfo: FTYearFormatInfo) -> FTDairyFormat{
         var format: FTDairyFormat = FTDairyFormat()
         switch formatInfo.templateId {
-        case "Digital_Diaries_Classic":
+        case .digitalDiariesClassic :
             format = FTClassicDiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let classicDiaryFormat = format as? FTClassicDiaryFormat {
                 formatInfo.screenType = classicDiaryFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
             }
-        case "Digital_Diaries_Modern":
+        case .digitalDiariesModern :
             format = FTModernDiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let modernDiaryFormat = format as? FTModernDiaryFormat {
                 formatInfo.screenType = modernDiaryFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
             }
-        case "Digital_Diaries_Midnight":
+        case .digitalDiariesMidnight :
             format = FTMidnightDairyFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let MidnightFormat = format as? FTMidnightDairyFormat {
                 formatInfo.screenType = MidnightFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
             }
-        case "Digital_Diaries_Day_and_Night_Journal":
+        case .digitalDiariesDayandNightJournal :
             format = FTFiveMinJournalFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let fiveMinJournalFormat = format as? FTFiveMinJournalFormat {
                 formatInfo.screenType = fiveMinJournalFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
                 formatInfo.supportsForAllLocales = false
             }
-        case "Digital_Diaries_Colorful_Planner":
+        case .digitalDiariesColorfulPlanner :
             format = FTPlannerDiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let plannerDiayFormat = format as? FTPlannerDiaryFormat {
                 formatInfo.screenType = plannerDiayFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
                 formatInfo.supportsForAllLocales = false
             }
-        case "Landscape_Diaries_Colorful_Planner":
+        case .landscapeDiariesColorfulPlanner :
             format = FTPlanner2024DiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants)
             if let plannerDiayFormat = format as? FTPlanner2024DiaryFormat {
                 formatInfo.screenType = plannerDiayFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
                 formatInfo.screenSize = formatInfo.screenType.rawValue
                 formatInfo.supportsForAllLocales = false
             }
-        case "Digital_Diaries_Colorful_Planner_Dark":
+        case .digitalDiariesColorfulPlannerDark :
             format = FTPlannerDiaryFormat.getFormatBasedOn(variants: formatInfo.customVariants,isDarkTemplate: true)
             if let plannerDiayFormat = format as? FTPlannerDiaryFormat {
                 formatInfo.screenType = plannerDiayFormat.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone
