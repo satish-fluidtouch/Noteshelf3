@@ -67,7 +67,6 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var mode: FTShelfMode = .normal {
         didSet {
             addOrRemoveObserversBasedOnMode()
-            self.subscribeToShelfItemChanges()
         }
     }
 
