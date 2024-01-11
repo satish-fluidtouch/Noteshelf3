@@ -20,6 +20,10 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.calendarTemplate,pdfTemplate: nil)
 
+        // today link
+        self.addTodayLink(toContext : context)
+
+
         let templateInfo = screenInfo.spacesInfo.calendarSpacesInfo
         var currMonthIndex = CGFloat(0)
         let columnCount = getColumnCount()
@@ -28,12 +32,12 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         let cellHeight = getYearCellHeight(rowCount: rowCount)
 
         // Rendering year
-        let yearFont = UIFont.InterMedium(screenInfo.fontsInfo.yearPageDetails.yearFontSize)
+        let yearFont = UIFont.clearFaceFont(for: .regular, with:screenInfo.fontsInfo.yearPageDetails.yearFontSize)
         var yearNewFontSize = UIFont.getScaledFontSizeFor(font: yearFont, screenSize: currentPageRect.size, minPointSize: 18)
         if self.layoutRequiresExplicitFont(){
             yearNewFontSize = 15
         }
-        let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.clearFaceFont(for: .regular, with: 21),
+        let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.clearFaceFont(for: .regular, with: yearNewFontSize),
                                                         .kern: 1.6,
                                                         .foregroundColor: textTintColor]
         if let startYear = months.first?.year {
@@ -169,6 +173,8 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     }
     override func renderYearPage(atIndex index: Int, context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo) {
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.yearTemplate,pdfTemplate: nil)
+        // today link
+        self.addTodayLink(toContext : context)
 
         let templateInfoSpacesInfo = screenInfo.spacesInfo.yearPageSpacesInfo
 
@@ -254,6 +260,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.monthTemplate,pdfTemplate: self.monthPagePDFDocument)
+        // today link
+        self.addTodayLink(toContext : context)
+
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.month, activeMonth: monthInfo)
         let currentMonthRectsInfo = FTDiaryMonthRectsInfo()
         let templateInfo = screenInfo.spacesInfo.monthPageSpacesInfo
@@ -442,6 +451,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo,monthInfo: FTMonthlyCalendarInfo) {
         currentWeekRectInfo = FTDiaryWeekRectsInfo()
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.weekTemplate,pdfTemplate: self.weekPagePDFDocument)
+        // today link
+        self.addTodayLink(toContext : context)
+
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.week, activeMonth: monthInfo)
         self.drawTopNavigationWidgetFor(type : FTPlannerDiaryTemplateType.week, context : context)
 
@@ -557,6 +569,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
 
         let templateInfo = screenInfo.spacesInfo.dayPageSpacesInfo
 
+        // today link
+        self.addTodayLink(toContext : context)
+
         //title rendering
         let isLandscaped = formatInfo.customVariants.isLandscape
         let titleYPercnt : CGFloat = 11.75
@@ -666,6 +681,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     }
     override func renderNotesPage(context: CGContext,monthInfo: FTMonthlyCalendarInfo) {
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.notesTemplate,pdfTemplate: self.notesPagePDFDocument);
+        // today link
+        self.addTodayLink(toContext : context)
+
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.notes, activeMonth: monthInfo)
         self.drawTopNavigationWidgetFor(type : FTPlannerDiaryTemplateType.notes, context : context)
 
@@ -724,6 +742,9 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
     }
     override func renderTrackerPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         super.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.trackerTemplate,pdfTemplate: self.trackerPagePDFDocument)
+        // today link
+        self.addTodayLink(toContext : context)
+        
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.tracker, activeMonth: monthInfo)
         self.drawTopNavigationWidgetFor(type : FTPlannerDiaryTemplateType.tracker, context : context)
 
@@ -847,12 +868,6 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
             }
             index += 1
         })
-    }
-    override func renderExtrasPage(atIndex index : Int,context: CGContext) {
-        super.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.extrasTemplate,pdfTemplate: nil)
-        self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.extras, activeMonth: nil)
-        plannerDiaryExtrasTabRectsInfo =  FTPlannerDiaryExtrasTabRectInfo();
-        plannerDiaryExtrasTabRectsInfo.plannerExtrasRects = self.drawPageNumbersFor(type: FTPlannerDiaryTemplateType.extras, currentPageIndex: index, context: context)
     }
     func renderTxtAndColorsOnSideNavigationStrip(context: CGContext,type : FTPlannerDiaryTemplateType,activeMonth: FTMonthlyCalendarInfo?){
 
@@ -1111,5 +1126,48 @@ class FTPlanner2024DiaryiPadFormat : FTPlanner2024DiaryFormat {
         context.addPath(bezierRect.cgPath)
         context.setFillColor(bandColor.cgColor)
         context.fillPath()
+    }
+    private func addTodayLink(toContext context: CGContext){
+
+        let todayLinkRectYPercnt : CGFloat = 12.35
+        let todayLinkRectXPercnt : CGFloat = 41.79
+        let todayLinkRectHeightPercnt  : CGFloat = 1.79
+        let twospredLinesXPercent: CGFloat = 50.0
+        let twoSpreadLineXOffset: CGFloat = 3.59
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
+
+        let todayLinkRectX = self.currentPageRect.width*todayLinkRectXPercnt/100
+        let todayLinkRectY = self.currentPageRect.height*todayLinkRectYPercnt/100
+        let todayLinkRectHeight = self.currentPageRect.height*todayLinkRectHeightPercnt/100
+
+        let towSpreadLineXOffset = self.currentPageRect.width*twoSpreadLineXOffset/100
+        let towSpreadLineX = self.currentPageRect.width*twospredLinesXPercent/100
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
+
+        var todayFont = UIFont.clearFaceFont(for: .regular, with:9)
+        var todayRectCornerRadius : CGFloat = 3
+        if self.layoutRequiresExplicitFont(){
+            todayFont = UIFont.clearFaceFont(for: .regular, with:5)
+            todayRectCornerRadius = 2
+        }
+
+        let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
+                                                        .kern: 1.6,
+                                                        .foregroundColor: UIColor.init(hexString: "#363636")]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+        let tpdayPillX = towSpreadLineX - towSpreadLineXOffset - (todayString.size().width + todayPillHorizontalPadding*2)
+        let todayPillRect = CGRect(x: tpdayPillX, y: todayLinkRectY, width: todayString.size().width + todayPillHorizontalPadding*2, height: todayLinkRectHeight)
+
+        self.drawColorBandsWith(xAxis: todayPillRect.origin.x, yAxis: todayPillRect.origin.y, context: context, width: todayPillRect.width, height: todayPillRect.height, bandColor: UIColor(hexString: "#80CCCB"), cornerRadius: todayRectCornerRadius)
+
+        let todayRect = CGRect(x: todayPillRect.origin.x + (todayPillRect.width - todayString.size().width)/2 , y: todayLinkRectY + (todayPillRect.height - todayString.size().height)/2, width: todayString.size().width, height: todayString.size().height)
+        todayString.draw(at:CGPoint(x: todayRect.origin.x + 1, y: todayRect.origin.y + 1))
+
+
+        let todayLinkRect = getLinkRect(location: CGPoint(x:todayPillRect.origin.x - 3, y: todayPillRect.origin.y - 3), frameSize:CGSize(width: todayPillRect.width + 6 , height: todayPillRect.height + 6))
+        let urlString = FTSharedGroupID.getAppGroupID() + "://todayLink"
+        if let todayURL = URL(string: urlString){
+            UIGraphicsSetPDFContextURLForRect(todayURL, todayLinkRect)
+        }
     }
 }

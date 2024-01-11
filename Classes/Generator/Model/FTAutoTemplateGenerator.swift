@@ -63,10 +63,6 @@ private class FStandardTemplateDiaryGenerator : NSObject,FTAutoTemplateGenerator
         docInfo.inputFileURL = theme.themeTemplateURL()
         docInfo.isTemplate = true
         docInfo.footerOption = theme.footerOption
-        docInfo.postProcessInfo.documentType = theme.documentType
-        if let startYear = theme.standardDiaryStartYear {
-            docInfo.postProcessInfo.diaryStartYear = startYear
-        }
         if let lineHeight = theme.lineHeight {
             docInfo.pageProperties.lineHeight = lineHeight;
         }
@@ -137,18 +133,8 @@ private class FTAutoTemplateDiaryGenerator: NSObject,FTAutoTemplateGeneratorProt
         docInfo.inputFileURL = generator.generate()
         docInfo.isTemplate = true
         docInfo.footerOption = self.theme.footerOption
-
-        let postProcessInfo = FTPostProcessInfo()
-        postProcessInfo.documentType = self.theme.documentType
-        postProcessInfo.startDate = startDate!
-        postProcessInfo.endDate = endDate!
-        postProcessInfo.offsetCount = generator.offsetCount
-        if let startYear = self.theme.diaryStartYear {
-            postProcessInfo.diaryStartYear = startYear
-        }
         docInfo.backgroundColor = FTDairyFormat.getFormat(formatInfo: formatInfo).getTemplateBackgroundColor()
-        docInfo.postProcessInfo = postProcessInfo
-
+        docInfo.diaryPagesInfo = generator.diaryPagesInfo
         if let lineHeight = self.theme.lineHeight {
             docInfo.pageProperties.lineHeight = lineHeight
         }
@@ -172,12 +158,7 @@ private class FTAutoDynamicTemplateGenerator: NSObject, FTAutoTemplateGeneratorP
             docInfo.inputFileURL = generator.generate()
             docInfo.isTemplate = true
             docInfo.footerOption = self.theme.footerOption
-            
             docInfo.pageProperties = generator.pageProperties;
-            
-            let postProcessInfo = FTPostProcessInfo()
-            postProcessInfo.documentType = self.theme.documentType
-            docInfo.postProcessInfo = postProcessInfo
             return docInfo
         }
         catch {
@@ -201,9 +182,6 @@ private class FTAutoStoreTemplateGenerator: NSObject, FTAutoTemplateGeneratorPro
             docInfo.inputFileURL = theme.themeTemplateURL()
             docInfo.isTemplate = true
             docInfo.footerOption = self.theme.footerOption
-            let postProcessInfo = FTPostProcessInfo()
-            postProcessInfo.documentType = self.theme.documentType
-            docInfo.postProcessInfo = postProcessInfo
             if let lineHeight = self.theme.lineHeight {
                 docInfo.pageProperties.lineHeight = lineHeight
             }

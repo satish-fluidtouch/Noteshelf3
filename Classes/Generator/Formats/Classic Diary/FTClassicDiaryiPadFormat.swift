@@ -49,6 +49,7 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
     override func renderCalendarPage(context: CGContext, months: [FTMonthlyCalendarInfo], calendarYear: FTYearFormatInfo) {
         
         self.renderFiveMinJournalPDF(context: context, pdfTemplatePath: self.calendarTemplate)
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
         
         let templateInfo = screenInfo.spacesInfo.yearPageSpacesInfo
         var currMonthIndex = CGFloat(0)
@@ -401,9 +402,7 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         weekRectsInfo.append(currentWeekRectInfo)
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
-        if !dayInfo.belongsToSameMonth {
-            return
-        }
+        
         super.renderDayPage(context: context, dayInfo: dayInfo);
         currentDayRectsInfo = FTDiaryDayRectsInfo()
         let isLandscaped = formatInfo.customVariants.isLandscape
