@@ -21,7 +21,7 @@
 				<key>boxRightOffset</key>
 				<real>4.91</real>
 				<key>yearY</key>
-				<real>3.91</real>
+				<real>7.25</real>
 			</dict>
 			<key>journalDay</key>
 			<dict>
@@ -48,7 +48,7 @@
 				<key>baseX</key>
 				<real>5.39</real>
 				<key>baseY</key>
-				<real>4</real>
+				<real>7.82</real>
 			</dict>
 		</dict>
 		<key>Land</key>
@@ -68,7 +68,7 @@
 				<key>boxRightOffset</key>
 				<real>3.68</real>
 				<key>yearY</key>
-				<real>5.32</real>
+				<real>9.48</real>
 			</dict>
 			<key>journalDay</key>
 			<dict>
@@ -91,11 +91,11 @@
 				<key>quoteX</key>
 				<real>50.08</real>
 				<key>quoteY</key>
-				<real>5.45</real>
+				<real>8.960000000000001</real>
 				<key>baseX</key>
 				<real>4.04</real>
 				<key>baseY</key>
-				<real>5.45</real>
+				<real>8.960000000000001</real>
 			</dict>
 		</dict>
 	</dict>
@@ -246,7 +246,7 @@
 				<key>outMonthFontSize</key>
 				<integer>0</integer>
 				<key>yearFontSize</key>
-				<integer>40</integer>
+				<integer>24</integer>
 				<key>titleMonthFontSize</key>
 				<integer>13</integer>
 			</dict>

@@ -286,3 +286,19 @@ extension FTFiveMinJournalFormat {
         return daySuffix
     }
 }
+extension FTFiveMinJournalFormat {
+    func addTodayPillRelativeToRect(_ rect : CGRect, YAxisPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        let todayPillXOffsetPercnt : CGFloat = isLandscape ? 1.79 : 2.39
+        let todayPillYPercnt : CGFloat = YAxisPercnt
+        let todayPillHeightPercnt : CGFloat = isLandscape ? 2.08 : 1.53
+
+        let todayPillXOffset = currentPageRect.width*todayPillXOffsetPercnt/100
+        let todayPillY = currentPageRect.height*todayPillYPercnt/100
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let todayPillX = rect.origin.x + rect.width + todayPillXOffset
+        let todayPillRect = CGRect(x: todayPillX, y: todayPillY, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: UIFont.LoraRegular(9), withTextColor: UIColor.init(hexString: "#78787B"), WithBackgroundColor: UIColor.init(hexString: "#E1E9E8"))
+    }
+}

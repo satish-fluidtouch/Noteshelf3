@@ -1090,15 +1090,6 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         }
         self.plannerDiaryTopNavigationRectsInfo.plannerTopNavigationRects = pageNavigationRects
     }
-    private func layoutRequiresExplicitFont() -> Bool {
-
-        if self.formatInfo.customVariants.selectedDevice.identifier == "standard4" ||
-            self.formatInfo.customVariants.selectedDevice.identifier == "standard2" ||
-            self.formatInfo.customVariants.selectedDevice.identifier == "standard1"{
-           return true
-        }
-        return false
-    }
     private  func layoutRequiresExplicitCrnerRadiusFrColrdBG() -> Bool {
         if self.formatInfo.customVariants.selectedDevice.identifier == "standard1" ||
             self.formatInfo.customVariants.selectedDevice.identifier == "standard2" || self.formatInfo.customVariants.selectedDevice.identifier == "standard4" {
@@ -1110,12 +1101,5 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let monthBandRect = CGRect(x: xAxis , y: yAxis , width: width , height: height )
         context.setFillColor(bandColor.cgColor)
         context.fill(monthBandRect)
-    }
-    func drawColorBandsWith(xAxis : CGFloat, yAxis : CGFloat, context : CGContext, width : CGFloat,height: CGFloat, bandColor : UIColor, cornerRadius: CGFloat){
-        let monthBandRect = CGRect(x: xAxis , y: yAxis , width: width , height: height)
-        let bezierRect = UIBezierPath(roundedRect: monthBandRect, cornerRadius: cornerRadius)
-        context.addPath(bezierRect.cgPath)
-        context.setFillColor(bandColor.cgColor)
-        context.fillPath()
     }
 }

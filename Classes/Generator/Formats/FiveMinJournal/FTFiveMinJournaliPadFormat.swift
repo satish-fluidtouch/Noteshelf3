@@ -31,6 +31,7 @@ class FTFiveMinJournaliPadFormat : FTFiveMinJournalFormat {
         let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.LoraRegular(yearNewFontSize),
                                                         .kern: 0.0,
                                                         .foregroundColor: UIColor.init(hexString: "#78787B")]
+        var yearRect : CGRect = .zero
         if let startYear = months.first?.year {
             var year: String = "\(startYear)"
             if let endYear = months.last?.year, endYear != startYear {
@@ -38,7 +39,7 @@ class FTFiveMinJournaliPadFormat : FTFiveMinJournalFormat {
                 year = "\(startYear)" +  "-" + "\(endYearXX)"
             }
             let yearString = NSMutableAttributedString.init(string: year, attributes: yearAttrs)
-            let yearRect = CGRect(x: (currentPageRect.width*templateInfo.baseBoxX/100), y: (currentPageRect.height*templateInfo.yearY/100), width: yearString.size().width, height: yearString.size().height)
+            yearRect = CGRect(x: (currentPageRect.width*templateInfo.baseBoxX/100), y: (currentPageRect.height*templateInfo.yearY/100), width: yearString.size().width, height: yearString.size().height)
             let yearLocation = CGPoint(x: yearRect.origin.x, y: yearRect.origin.y)
             yearString.draw(at: yearLocation)
             calendarRectsInfo.yearRect = getLinkRect(location: CGPoint(x: yearLocation.x, y: yearLocation.y), frameSize: CGSize(width: yearRect.width   ,height: yearRect.height))
@@ -123,6 +124,9 @@ class FTFiveMinJournaliPadFormat : FTFiveMinJournalFormat {
                 monthY += cellHeight + (currentPageRect.height*templateInfo.cellOffsetY/100)
             }
         }
+        // Today Pill
+        let todayPillYPercnt : CGFloat = self.formatInfo.customVariants.isLandscape ? 10.51 : 8.58
+        self.addTodayPillRelativeToRect(yearRect, YAxisPercnt : todayPillYPercnt, toContext : context)
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
         if !dayInfo.belongsToSameMonth {
@@ -157,6 +161,10 @@ class FTFiveMinJournaliPadFormat : FTFiveMinJournalFormat {
         yearString.draw(in: yearRect)
         currentDayRectsInfo.yearRect = getLinkRect(location: yearLocation, frameSize: yearRect.size)
         dayRectsInfo.append(currentDayRectsInfo)
+
+        // Today Pill
+        let todayPillYPercnt : CGFloat = self.formatInfo.customVariants.isLandscape ? 9.48 : 8.20
+        self.addTodayPillRelativeToRect(yearRect, YAxisPercnt : todayPillYPercnt, toContext : context)
     }
     override func renderYearPage(context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo) {
         if isiPad {

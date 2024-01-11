@@ -436,6 +436,21 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
             && (currentDate.compare(endDate) == ComparisonResult.orderedSame ||
                 currentDate.compare(endDate) == ComparisonResult.orderedAscending)
     }
+    func drawColorBandsWith(xAxis : CGFloat, yAxis : CGFloat, context : CGContext, width : CGFloat,height: CGFloat, bandColor : UIColor, cornerRadius: CGFloat){
+        let monthBandRect = CGRect(x: xAxis , y: yAxis , width: width , height: height)
+        let bezierRect = UIBezierPath(roundedRect: monthBandRect, cornerRadius: cornerRadius)
+        context.addPath(bezierRect.cgPath)
+        context.setFillColor(bandColor.cgColor)
+        context.fillPath()
+    }
+    func layoutRequiresExplicitFont() -> Bool {
+        if self.formatInfo.customVariants.selectedDevice.identifier == "standard4" ||
+            self.formatInfo.customVariants.selectedDevice.identifier == "standard2" ||
+            self.formatInfo.customVariants.selectedDevice.identifier == "standard1"{
+           return true
+        }
+        return false
+    }
 }
 
 @objc extension FTDairyFormat
@@ -520,5 +535,48 @@ extension NSAttributedString {
         textStorage.addLayoutManager(layoutManager)
         let bounds = layoutManager.usedRect(for: textContainer)
         return bounds.size
+    }
+}
+// MARK: Today Pill
+extension FTDairyFormat {
+    func addTodayLink(toContext context : CGContext,
+                              withRect rect : CGRect,
+                              withFont font : UIFont,
+                              withTextColor textColor: UIColor,
+                              WithBackgroundColor backgroundColor: UIColor){
+
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
+        let todayLinkRectX = rect.origin.x
+        let todayLinkRectY = rect.origin.y
+        let todayLinkRectHeight = rect.height
+
+
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
+
+        var todayFont = font
+        var todayRectCornerRadius : CGFloat = 3
+        if self.layoutRequiresExplicitFont(){
+            todayFont = font.withSize(7)
+            todayRectCornerRadius = 2
+        }
+
+        let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
+                                                        .kern: 1.6,
+                                                        .foregroundColor: textColor]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+
+        let todayPillRect = CGRect(x: todayLinkRectX, y: todayLinkRectY, width: todayString.size().width + todayPillHorizontalPadding*2, height: todayLinkRectHeight)
+
+        self.drawColorBandsWith(xAxis: todayPillRect.origin.x, yAxis: todayPillRect.origin.y, context: context, width: todayPillRect.width, height: todayPillRect.height, bandColor: backgroundColor, cornerRadius: todayRectCornerRadius)
+
+        let todayRect = CGRect(x: todayPillRect.origin.x + (todayPillRect.width - todayString.size().width)/2 , y: todayLinkRectY + (todayPillRect.height - todayString.size().height)/2, width: todayString.size().width, height: todayString.size().height)
+        todayString.draw(at:CGPoint(x: todayRect.origin.x + 1, y: todayRect.origin.y))
+
+
+        let todayLinkRect = getLinkRect(location: CGPoint(x:todayPillRect.origin.x - 3, y: todayPillRect.origin.y - 3), frameSize:CGSize(width: todayPillRect.width + 6 , height: todayPillRect.height + 6))
+        let urlString = FTSharedGroupID.getAppGroupID() + "://todayLink"
+        if let todayURL = URL(string: urlString){
+            UIGraphicsSetPDFContextURLForRect(todayURL, todayLinkRect)
+        }
     }
 }
