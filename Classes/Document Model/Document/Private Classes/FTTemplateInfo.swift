@@ -15,10 +15,8 @@ private extension FTTemplateInfoKey {
     static let isImageTemplate = "sourcedFromImage";
     static let renderAnnotations = "renderAnnotations";
     static let footerOption = "footerOption";
-    static let documentType = "documentType";
     static let password = "password";
     static let isCover = "isCover";
-
 }
 
 @objcMembers class FTTemplateInfo: NSObject {
@@ -30,7 +28,6 @@ private extension FTTemplateInfoKey {
     var isCover: Bool = false
 
     var footerOption: FTPageFooterOption = FTPageFooterOption.show;
-    var documentType: FTDocumentType = FTDocumentType.defaultType;
 
     private var encryptedPassword: String?
     
@@ -61,7 +58,6 @@ private extension FTTemplateInfoKey {
         self.isImageTemplate = info.isImageSource;
         self.isTemplate = info.isTemplate;
         self.footerOption = info.footerOption;
-        self.documentType = info.postProcessInfo.documentType;
         self.isCover = info.isCover
     }
     
@@ -80,10 +76,6 @@ private extension FTTemplateInfoKey {
         }
         else {
             self.footerOption = self.isTemplate ? .show : .hide;
-        }
-        
-        if let documentType = info[FTTemplateInfoKey.documentType] as? NSNumber {
-            self.documentType = FTDocumentType(rawValue: documentType.intValue) ?? .defaultType;
         }
 
         if let _password = info[FTTemplateInfoKey.password] as? String {
@@ -105,9 +97,6 @@ private extension FTTemplateInfoKey {
         }
 
         dictRep[FTTemplateInfoKey.footerOption] = NSNumber(value: self.footerOption.rawValue);
-        if(documentType != FTDocumentType.defaultType) {
-            dictRep[FTTemplateInfoKey.documentType] = NSNumber(value: self.documentType.rawValue);
-        }
         
         if let _password = self.encryptedPassword {
             dictRep[FTTemplateInfoKey.password] = _password as AnyObject;
@@ -128,8 +117,6 @@ extension FTTemplateInfo: NSCopying {
         copy.renderAnnotations = self.renderAnnotations;
         
         copy.footerOption = self.footerOption;
-        copy.documentType = self.documentType;
-        
         copy.encryptedPassword = self.encryptedPassword;
         
         return copy

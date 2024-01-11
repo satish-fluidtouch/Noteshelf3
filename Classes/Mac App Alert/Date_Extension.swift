@@ -27,6 +27,8 @@ extension DateFormatter
     {
         let dateFormatter = DateFormatter.utcZoneDateFormatter;
         dateFormatter.dateFormat = format;
+        dateFormatter.locale = .current;
+        dateFormatter.calendar = .current;
         return dateFormatter.string(from: date);
     }
     
@@ -34,6 +36,8 @@ extension DateFormatter
     {
         let dateFormatter = DateFormatter.utcZoneDateFormatter;
         dateFormatter.dateFormat = format;
+        dateFormatter.locale = .current;
+        dateFormatter.calendar = .current;
         let date = dateFormatter.date(from: dateString);
         return date
     }
@@ -67,7 +71,7 @@ extension Calendar
     {
         var currentComponents = DateComponents()
         currentComponents.timeZone = TimeZone.utcTimeZone;
-        currentComponents.timeZone = TimeZone.current
+        currentComponents.calendar = .current
         currentComponents.year = dateComponents.year
         currentComponents.day = dateComponents.day
         currentComponents.month = dateComponents.month
