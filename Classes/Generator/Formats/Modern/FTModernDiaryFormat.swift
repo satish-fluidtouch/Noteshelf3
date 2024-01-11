@@ -110,17 +110,20 @@ class FTModernDiaryFormat : FTDairyFormat {
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly) {
         // Render year page
         self.renderYearPage(context: context, months: monthlyFormatter.monthInfo, calendarYear: formatInfo);
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
 
         // Render Month Pages
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .month))
         }
         
          // Render Week pages
         let weeklyInfo = weeklyFormatter.weeklyInfo
         weeklyInfo.forEach { (weekInfo) in
             self.renderWeekPage(context: context, weeklyInfo: weekInfo)
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .week))
         }
 
         // Render Day pages
@@ -128,7 +131,12 @@ class FTModernDiaryFormat : FTDairyFormat {
         monthInfo.forEach { (eachMonth) in
             let dayInfo = eachMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate))
+                    }
+                }
             }
         }
     }
@@ -510,9 +518,7 @@ class FTModernDiaryFormat : FTDairyFormat {
     }
 
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
-        if !dayInfo.belongsToSameMonth {
-            return
-        }
+
         super.renderDayPage(context: context, dayInfo: dayInfo)
         let isLandscape = self.formatInfo.customVariants.isLandscape
         let currentDayRectsInfo: FTDiaryDayRectsInfo = FTDiaryDayRectsInfo()
