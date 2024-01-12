@@ -332,8 +332,7 @@ extension FTNoteshelfDocument
                        diaryPagesInfo.count == count {
                         let currentPageInfo = diaryPagesInfo[i]
                         page.diaryPageInfo = currentPageInfo
-                        if currentPageInfo.type == .day,
-                           currentPageInfo.shouldShowThisPageOnDiaryLaunch {
+                        if currentPageInfo.isCurrentPage {
                             self.setLastViewedPageIndexTo(i+1) // as we have cover as first page in the notebook, adding + 1
                         }
                     }
