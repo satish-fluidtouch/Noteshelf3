@@ -47,7 +47,13 @@ class FTNSDocumentInfoPlistItem : FTFileItemPlist {
                 if(nil != pageObjects) {
                     var isFirstPage:Bool = true
                     for eachObject in pageObjects! {
-                        let page = FTNoteshelfPage.init(parentDocument: self.parentDocument!);
+                        let page: FTNoteshelfPage
+                        if let parentDoc = self.parentDocument {
+                            page = FTNoteshelfPage(parentDocument: parentDoc);
+                        }
+                        else {
+                            page = FTNoteshelfPage();
+                        }
                         page.isFirstPage = isFirstPage
                         page.updatePageAttributesWithDictionary(eachObject as! Dictionary);
                         localPages.append(page);

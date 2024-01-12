@@ -28,7 +28,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     var type: FTSideBarItemType = .home
 
-    var shelfCollection: FTShelfItemCollection?
+    private(set) var shelfCollection: FTShelfItemCollection?
 
     var highlightColor: Color {
         if !self.isEditing && !self.highlighted {
@@ -40,6 +40,10 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         }
     }
 
+    func setShelfCollection(_ collection: FTShelfItemCollection?) {
+        self.shelfCollection = collection;
+    }
+    
     convenience init(id: String = UUID().uuidString,title: String,
                      icon: FTIcon,
                      isEditable: Bool = true,
