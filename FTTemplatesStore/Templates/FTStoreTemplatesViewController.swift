@@ -8,11 +8,21 @@
 import UIKit
 
 class FTStoreTemplatesViewController: UIViewController {
-    var discoveryItem: DiscoveryItem!
+    private var discoveryItem: DiscoveryItem!
     private let cellPadding: CGFloat = 20
     private var currentSize: CGSize = .zero
     private let viewModel = FTStoreTemplatesViewModel()
     @IBOutlet weak var collectionView: UICollectionView!
+    private var actionManager: FTStoreActionManager?
+
+    class func controller(discoveryItem: DiscoveryItem, actionManager: FTStoreActionManager?) -> FTStoreTemplatesViewController {
+        guard let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTStoreTemplatesViewController") as? FTStoreTemplatesViewController else {
+            fatalError("FTStoreTemplatesViewController not found")
+        }
+        vc.discoveryItem = discoveryItem
+        vc.actionManager = actionManager
+        return vc
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +90,7 @@ class FTStoreTemplatesViewController: UIViewController {
     }
 
     private func presentTemplatePreviewFor(templates: [TemplateInfo], selectedIndex: Int) {
-        FTTemplatesPageViewController.presentFromViewController(self, templates: templates, selectedIndex: selectedIndex);
+        FTTemplatesPageViewController.presentFromViewController(self, actionManager: actionManager, templates: templates, selectedIndex: selectedIndex);
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class FTStoreJournalTableCell: UITableViewCell {
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -13,6 +14,7 @@ class FTStoreJournalTableCell: UITableViewCell {
     private var templatesStoreInfo: StoreInfo!
     private var dataSource: TemplatesDatasource!
     private var snapshot = TemplatesSnapshot()
+    private var actionStream: PassthroughSubject<FTStoreActions, Never>?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,8 +25,9 @@ class FTStoreJournalTableCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func prepareCellWith(templatesStoreInfo: StoreInfo) {
+    func prepareCellWith(templatesStoreInfo: StoreInfo, actionStream: PassthroughSubject<FTStoreActions, Never>?) {
         self.templatesStoreInfo = templatesStoreInfo
+        self.actionStream = actionStream
         self.createAndApplySnapshot()
     }
     
@@ -70,7 +73,7 @@ extension FTStoreJournalTableCell: UICollectionViewDelegate, UICollectionViewDel
         var items = self.templatesStoreInfo.discoveryItems
         // Update sectionType to track events
         items[indexPath.row].sectionType = templatesStoreInfo.sectionType
-        FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
+        actionStream?.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
 
     }
 

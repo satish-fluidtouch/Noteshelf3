@@ -26,6 +26,19 @@ enum FTFinderSectionType: Int {
     case thumbnails
     case bookmark
     case outline
+    
+    func segmentName() -> String {
+        var name = "thumbnails"
+        switch self {
+        case .thumbnails:
+            name = "thumbnails"
+        case .bookmark:
+            name = "bookmark"
+        case .outline:
+            name = "outline"
+        }
+        return name
+    }
 }
 
 protocol FTFinderTabBarProtocol: AnyObject {
@@ -372,6 +385,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
     
     @objc func collapseButtonAction(_ sender : UIButton) {
+        FTFinderEventTracker.trackFinderEvent(with: "finder_fullscreen_collapse_tap")
         self.delegate?.shouldStartWithFullScreen(false)
         self.delegate?.didTapOnExpandButton()
     }
@@ -386,6 +400,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
     
     @objc func editButtonAction(_ sender : UIButton) {
+        FTFinderEventTracker.trackFinderEvent(with: "finder_fullscreen_select_tap")
         self.mode = .edit
         updateEditMode()
     }
@@ -405,6 +420,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     }
     
     @objc func closeButtonAction(_ sender : UIButton) {
+        FTFinderEventTracker.trackFinderEvent(with: "finder_fullscreen_close_tap")
         self.delegate?.didTapOnCloseButton()
     }
     
@@ -540,14 +556,20 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     
     @IBAction func didTapDuplicate(_ sender: Any) {
         self.duplicateClicked()
+        FTFinderEventTracker.trackFinderEvent(with: "finder_select_duplicate_tap", params: ["location": currentFinderLocation()])
+
     }
 
     @IBAction func didTapRotate(_ sender: Any) {
         self.rotateClicked(withSelectedPages: selectedPages)
+        FTFinderEventTracker.trackFinderEvent(with: "finder_select_rotate_tap", params: ["location": currentFinderLocation()])
+
     }
 
     @IBAction func didTapShare(_ sender: Any) {
         self.shareClicked(withSelectedPages: selectedPages)
+        FTFinderEventTracker.trackFinderEvent(with: "finder_select_share_tap", params: ["location": currentFinderLocation()])
+
     }
 
     @IBAction func didTapEditButton(_ sender: Any) {
@@ -592,8 +614,10 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             runInMainThread(0.1) {
                 self.validateHeaderView()
             }
+            FTFinderEventTracker.trackFinderEvent(with: "finder_more_select_tap")
         case .expand:
             self.delegate?.didTapOnExpandButton()
+            FTFinderEventTracker.trackFinderEvent(with: "finder_more_fullscreen_tap")
         case .none:
             debugPrint("None")
         }
@@ -619,6 +643,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         self.selectAll = true;
         self.updateSelectAllUI();
         self.updateSelectionTitle()
+        FTFinderEventTracker.trackFinderEvent(with: "finder_select_done_tap", params: ["location": currentFinderLocation()])
     }
     
     private func disableEditOptions() {
@@ -675,6 +700,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
                 self.deselectAll()
             }
             if let segmentType = FTFinderSectionType(rawValue: segmentControl.selectedSegmentIndex) {
+                FTFinderEventTracker.trackFinderEvent(with: "finder_pages_segment_tap", params: ["segment": segmentType.segmentName()])
                 updateSegmentData(for: segmentType);
             }
         }
@@ -1123,6 +1149,7 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                     indexSelected = indexPath.item;
                 }
                 self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
+                FTFinderEventTracker.trackFinderEvent(with: "finder_page_tap", params: ["location": currentFinderLocation()])
 //                createSnapShot()
             }
             else if self.mode == .edit || mode == .selectPages {
@@ -1132,9 +1159,11 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                 });
                 if pageSelected {
                     self.selectedPages.remove(page);
+                    FTFinderEventTracker.trackFinderEvent(with: "finder_select_page_unselect_tap", params: ["location": currentFinderLocation()])
                 }
                 else {
                     self.selectedPages.add(page);
+                    FTFinderEventTracker.trackFinderEvent(with: "finder_select_page_select_tap", params: ["location": currentFinderLocation()])
                 }
                 if let collectionViewCell = collectionView.cellForItem(at: indexPath) as? FTFinderThumbnailViewCell {
                     collectionView.deselectItem(at: indexPath, animated: true);
@@ -1166,6 +1195,16 @@ extension FTFinderViewController:  UICollectionViewDelegate, UICollectionViewDel
                 }
             }
         }
+    }
+    
+    internal func currentFinderLocation() -> String {
+        var currentLocation = "thumbnails"
+        if self.selectedTab == .thumnails {
+            currentLocation = self.selectedSegment.segmentName()
+        } else if self.selectedTab == .search {
+            currentLocation = FTFinderSegment.search.segmentName()
+        }
+        return currentLocation
     }
 }
 
@@ -1463,6 +1502,8 @@ extension FTFinderViewController {
         };
         self.updateSelectionTitle();
         self.updateSelectAllUI();
+        let eventName = !self.selectAll ?  "finder_select_selectall_tap" :  "finder_select_selectnone_tap"
+        FTFinderEventTracker.trackFinderEvent(with:eventName, params: ["location": currentFinderLocation()])
     }
     
     @IBAction func didTapAddNewPage(_ sender: UIButton) {
@@ -1472,6 +1513,7 @@ extension FTFinderViewController {
 
     //MARK:- Bookmark
     @IBAction func togglePageBookmark(_ sender: UIButton) {
+        FTFinderEventTracker.trackFinderEvent(with: "finder_page_bookmarkicon_tap", params: ["location": currentFinderLocation()])
         if self.mode == .selectPages { return }
         let page = self.filteredPages[sender.tag]
         self.delegate?.finderViewController(bookMark: page)
@@ -1863,8 +1905,7 @@ extension FTFinderViewController {
 #endif
         
         self.contextMenuActivePages = itemSet
-
-        track("finder_contextMenu", params: ["action":"\(menuOperation.description)"], screenName: FTScreenNames.finder, shouldLog: true)
+        FTFinderEventTracker.trackFinderEvent(with: menuOperation.eventTrackdescription, params: ["location": currentFinderLocation()])
         var targetView: UIView? = self.collectionView
         
         if self.selectedSegment == .bookmark {
@@ -2023,25 +2064,25 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
 
 extension FTFinderViewController : FTOutlinesViewControllerDelegate {
     func didTapMoreOption(identifier: String) {
-        let option = FTMoreOption(rawValue: identifier)
-        switch option {
-        case .copy:
-            self.copyClicked(withSelectedPages: selectedPages)
-        case .move:
-            self.movePages(withSelectedPages: selectedPages)
-        case .bookMark:
-            if let trView = moreButton {
-                let pages = selectedPages.allObjects as! [FTPageProtocol]
-                FTBookmarkViewController.showBookmarkController(fromSourceView: trView, onController: self, pages: pages)
+        if let option = FTMoreOption(rawValue: identifier) {
+            FTFinderEventTracker.trackFinderEvent(with: option.eventDescription(), params: ["location": currentFinderLocation()])
+            switch option {
+            case .copy:
+                self.copyClicked(withSelectedPages: selectedPages)
+            case .move:
+                self.movePages(withSelectedPages: selectedPages)
+            case .bookMark:
+                if let trView = moreButton {
+                    let pages = selectedPages.allObjects as! [FTPageProtocol]
+                    FTBookmarkViewController.showBookmarkController(fromSourceView: trView, onController: self, pages: pages)
+                }
+            case .tag:
+                if  let targetView = moreButton {
+                    self.tagPages(withSelectedPages: selectedPages, targetView: targetView)
+                }
+            case .delete:
+                self.deleteClicked(withSelectedPages: selectedPages, shouldShowAlert: true)
             }
-        case .tag:
-            if  let targetView = moreButton {
-                self.tagPages(withSelectedPages: selectedPages, targetView: targetView)
-            }
-        case .delete:
-            self.deleteClicked(withSelectedPages: selectedPages, shouldShowAlert: true)
-        case .none:
-            print("None")
         }
     }
     
@@ -2122,5 +2163,11 @@ extension FTFinderViewController {
 extension FTFinderViewController {
     var documentPages: [FTThumbnailable] {
         return self.document?.documentPages() ?? [FTThumbnailable]()
+    }
+}
+
+class FTFinderEventTracker: NSObject {
+    static func trackFinderEvent(with value: String, params: [String: Any]? = nil) {
+        track(value, params: params,screenName: FTScreenNames.finder)
     }
 }

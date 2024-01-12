@@ -130,6 +130,7 @@ extension FTFinderViewController {
                 self.tagPages(withSelectedPages: set, targetView: cell)
                 contextMenuActivePages = [page]
             }
+            FTFinderEventTracker.trackFinderEvent(with: "finder_page_tagpill_tap", params: ["location": currentFinderLocation()])
         }
     }
 }
