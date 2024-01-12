@@ -123,11 +123,10 @@ class FTFiveMinJournaliPadFormat : FTFiveMinJournalFormat {
                 monthY += cellHeight + (currentPageRect.height*templateInfo.cellOffsetY/100)
             }
         }
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
-        if !dayInfo.belongsToSameMonth {
-            return
-        }
+        
         super.renderDayPage(context: context, dayInfo: dayInfo)
         currentDayRectsInfo = FTDiaryDayRectsInfo()
         let templateInfo = screenInfo.spacesInfo.journalDayPageSpacesInfo
