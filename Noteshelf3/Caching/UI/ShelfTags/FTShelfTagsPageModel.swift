@@ -78,13 +78,13 @@ final class FTShelfTagsPageModel: ObservableObject {
     var selectedTag: String = ""
 
     func buildCache(completion: @escaping ([FTShelfTagsItem]) -> Void)  {
-        let tagName = selectedTag.isEmpty ? "AllTags" : selectedTag;
-        let tag = FTTagsProviderV1.shared.getTagsfor([tagName]);
-        if !tag.isEmpty, let tagToFind = tag.first {
-            tagToFind.getTaggedEntities { items in
-                debugPrint("items");
-            }
-        }
+//        let tagName = selectedTag.isEmpty ? "AllTags" : selectedTag;
+//        let tag = FTTagsProviderV1.shared.getTagsfor([tagName]);
+//        if !tag.isEmpty, let tagToFind = tag.first {
+//            tagToFind.getTaggedEntities { items in
+//                debugPrint("items");
+//            }
+//        }
         if let selectedTagItem = FTTagsProvider.shared.getTagItemFor(tagName: selectedTag) {
             selectedTagItem.getTaggedItems(completion: { [weak self] tagsPage in
                 var tagItems = tagsPage

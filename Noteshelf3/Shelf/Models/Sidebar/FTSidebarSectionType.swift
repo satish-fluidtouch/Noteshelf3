@@ -161,4 +161,19 @@ enum FTSideBarItemType: String {
             }
             return color
     }
+    
+    var sidebarSectionType: FTSidebarSectionType {
+        switch self {
+        case .allTags,.tag:
+            return .tags;
+        case .home,.unCategorized,.starred,.trash,.templates:
+            return .all
+        case .category:
+            return .categories;
+        case .ns2Category:
+            return .ns2Categories;
+        case .media,.audio,.bookmark:
+            return .media;
+        }
+    }
 }

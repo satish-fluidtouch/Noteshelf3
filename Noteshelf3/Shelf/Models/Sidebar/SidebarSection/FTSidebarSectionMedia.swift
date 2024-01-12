@@ -35,7 +35,9 @@ class FTSidebarSectionMedia: FTSidebarSection {
     required init(type: FTSidebarSectionType, items: [FTSideBarItem], supportsRearrangeOfItems: Bool) {
         fatalError("init(type:items:supportsRearrangeOfItems:) has not been implemented")
     }
-    
+}
+
+private extension FTSidebarSectionMedia {
     func prepareItems() {
         let photos = FTSideBarItem(title: NSLocalizedString("sidebar.photos", comment: "Photos"), icon: FTIcon.photo, isEditable: true, isEditing: false, type: FTSideBarItemType.media, allowsItemDropping: false)
         let recordings = FTSideBarItem(title: NSLocalizedString("sidebar.recordings", comment: "Recordings"), icon: FTIcon.audioNote, isEditable: true, isEditing: false, type: FTSideBarItemType.audio, allowsItemDropping: false)

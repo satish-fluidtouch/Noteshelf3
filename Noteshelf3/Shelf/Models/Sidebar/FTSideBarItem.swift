@@ -68,6 +68,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         self.type = .category
         self.allowsItemDropping = true
         self.shelfCollection = shelfCollection
+        self.id = shelfCollection.uuid
     }
 
     override init() {
@@ -85,6 +86,10 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         lhs.isEditable == rhs.isEditable &&
         lhs.isEditing == rhs.isEditing &&
         lhs.id == rhs.id
+    }
+    
+    func collection(_ onCompletion: @escaping (FTShelfItemCollection?)->()) {
+        onCompletion(shelfCollection);
     }
 }
 extension FTSideBarItem: NSItemProviderWriting {

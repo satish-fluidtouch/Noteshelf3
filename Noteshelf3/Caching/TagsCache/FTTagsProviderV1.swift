@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension Notification.Name {
+    static let didUpdateTags = Notification.Name(rawValue:"didupdateTagsNotification");
+}
+
 class FTTagsProviderV1: NSObject {
     static let shared = FTTagsProviderV1();
     
@@ -20,18 +24,36 @@ class FTTagsProviderV1: NSObject {
         return items;
     }()
     
+    private func addTags(_ tags: [FTTag]) {
+        tags.forEach { eachTag in
+            self.userTags[eachTag.tagKey] = eachTag;
+        }
+        if !tags.isEmpty {
+            NotificationCenter.default.post(name: .didUpdateTags, object: nil, userInfo: ["operation" : "add", "tags" : tags])
+            //save
+        }
+    }
+    
     func renameTag(_ tag: FTTag,to newName: String) {
-        if var currentTag = userTags.removeValue(forKey: tag.tagName.lowercased()) {
+        if let currentTag = userTags.removeValue(forKey: tag.tagKey) {
             currentTag.setTagName(newName);
-            userTags[newName.lowercased()] = currentTag;
+            userTags[tag.tagKey] = currentTag;
+            NotificationCenter.default.post(name: .didUpdateTags, object: nil, userInfo: ["operation" : "add", "tags" : [currentTag]])
             //save()
         }
     }
     
-    func deleteTag(_ tag: FTTag) {
-        if let tag = userTags.removeValue(forKey: tag.tagName.lowercased()) {
-            tag.markAsDeleted();
-            //save()
+    func deleteTags(_ tag: [FTTag]) {
+        var deletedTags = [FTTag]();
+        tag.forEach { eachTag in
+            if let tag = userTags.removeValue(forKey: eachTag.tagKey) {
+                tag.markAsDeleted();
+                deletedTags.append(tag)
+            }
+        }
+        if !deletedTags.isEmpty {
+            NotificationCenter.default.post(name: .didUpdateTags, object: nil, userInfo: ["operation" : "delete", "tags" : deletedTags])
+            //save
         }
     }
     
@@ -51,8 +73,9 @@ class FTTagsProviderV1: NSObject {
     
     func getTagsfor(_ names:[String]) -> [FTTag] {
         var tagItems = [FTTag]();
+        var tagsToAdd = [FTTag]();
         names.forEach { eachName in
-            if eachName.lowercased() == self.alTag.tagName.lowercased() {
+            if eachName.caseInsensitiveCompare(self.alTag.tagName) == .orderedSame {
                 tagItems.append(self.alTag)
             }
             else if let tag = self.userTags[eachName.lowercased()] {
@@ -60,10 +83,11 @@ class FTTagsProviderV1: NSObject {
             }
             else {
                 let tag =  FTTag(name: eachName);
-                self.userTags[eachName.lowercased()] = tag;
+                tagsToAdd.append(tag);
                 tagItems.append(tag)
             }
         }
+        self.addTags(tagsToAdd);
         return tagItems;
     }
     
@@ -151,7 +175,7 @@ private extension FTTagsProviderV1 {
                 if let tagsInfo = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: [String]] {
                     tagsInfo.forEach { eachItem in
                         let tag = FTTag(name: eachItem.key, documentUUIDs: eachItem.value);
-                        allTags[eachItem.key.lowercased()] = tag;
+                        allTags[tag.tagKey] = tag;
                     }
                 }
             }
@@ -185,5 +209,11 @@ private extension FTTagsProviderV1 {
         let cacheFolderURL = FTDocumentCache.shared.cacheFolderURL
         let cachedTagsPlistURL = cacheFolderURL.appendingPathComponent(FTCacheFiles.cacheTagsPlist)
         return cachedTagsPlistURL
+    }
+}
+
+private extension FTTag {
+    var tagKey: String {
+        return self.tagName.lowercased();
     }
 }

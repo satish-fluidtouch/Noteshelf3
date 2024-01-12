@@ -16,6 +16,9 @@ extension FTSidebarViewModel {
 
             FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: tag.title) { success in
                 if success ?? false {
+                    if let tagItem = (tag as? FTSideBarItemTag)?.fttag {
+                        FTTagsProviderV1.shared.renameTag(tagItem, to: tag.title);
+                    }
                 }
             }
         }
@@ -25,6 +28,9 @@ extension FTSidebarViewModel {
         if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
             FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag) { success in
                 if success ?? false {
+                    if let tagItem = (tag as? FTSideBarItemTag)?.fttag {
+                        FTTagsProviderV1.shared.deleteTags([tagItem]);
+                    }
                     tagItem.deleteTagItem()
                     self.updateShelfTagsAndSideMenu()
                 }

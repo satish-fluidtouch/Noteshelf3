@@ -49,12 +49,9 @@ class FTSidebarViewModel: NSObject, ObservableObject {
 
     //MARK: Private variables
     private(set) var sidebarItemContexualMenuVM: FTSidebarItemContextualMenuVM = FTSidebarItemContextualMenuVM()
-    private var systemItems: [FTSideBarItem] = []
     private var categoriesItems: [FTSideBarItem] = []
-    private var contentItems: [FTSideBarItem] = []
     private var newCollectionAddedOrUpdated: Bool = false
     private var cancellables = [AnyCancellable]()
-    private var tags: [FTSideBarItem] = []
     private var selectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
     private var categoryBookmarksData: FTCategoryBookmarkData = FTCategoryBookmarkData(bookmarksData: [])
@@ -184,15 +181,13 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     
     func addNotificationObservers() {
         removeNotificationObservers() // remove if its already added
-        NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTagItems(_:)), name: .refresSideMenuNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didChangeUnfiledCategoryLocation(_:)), name: .didChangeUnfiledCategoryLocation, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.updateTagItems(_:)), name: .refresSideMenuNotification, object: nil)
     }
     
     func removeNotificationObservers() {
-        NotificationCenter.default.removeObserver(self, name: .categoryItemsDidUpdateNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .refresSideMenuNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .didChangeUnfiledCategoryLocation, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: .categoryItemsDidUpdateNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: .refresSideMenuNotification, object: nil)
     }
 }
 private extension FTSidebarViewModel {
@@ -233,45 +228,41 @@ private extension FTSidebarViewModel {
             .store(in: &cancellables)
     }
     
-    @objc func categoryDidUpdate(_ notification : Notification) {
-        self.updateUserCreatedCategories()
-    }
-    
-    @objc func didChangeUnfiledCategoryLocation(_ notification : Notification) {
-        self.updateUnfiledCategory() //todo: amar tag
-    }
-    
-    @objc func updateTagItems(_ notification : Notification) {
-        if let selectedSideBarItem = self.selectedSideBarItem, selectedSideBarItem.type == .tag {
-            if let info = notification.userInfo, let type = info["type"] as? String {
-                let tagItems = self.menuItems.filter {$0.type == .tags}
-                if type == "rename", let tag = info["tag"] as? String, let renamedTag = info["renamedTag"] as? String {
-                    let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == tag})
-                    tagItem?.title = renamedTag
-                } else if type == "add", let tag = info["tag"] as? String {
-                    let item = FTSideBarItem(title: tag, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
-                    tagItems.first?.items.append(item)
-                } else if type == "delete", let tag = info["tag"] as? String {
-                    tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
-                }
-                if var items = tagItems.first?.items {
-                    let allTags = items.first(where: {$0.type == .allTags})
-                    items.removeAll(where: {$0.type == .allTags})
-                    var sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
-                    if let allTags {
-                        sortedArray.insert(allTags, at: 0)
-                    }
-                    self.menuItems.first(where: {$0.type == .tags})?.items = sortedArray
-                    self.updateTagsSection(items: sortedArray)
-                }
-                self.setSideBarItemSelection()
-            } else {
-                self.updateTags()
-            }
-        } else {
-            self.updateTags()
-        }
-    }
+//    @objc func categoryDidUpdate(_ notification : Notification) {
+//        self.updateUserCreatedCategories()
+//    }
+        
+//    @objc func updateTagItems(_ notification : Notification) {
+//        if let selectedSideBarItem = self.selectedSideBarItem, selectedSideBarItem.type == .tag {
+//            if let info = notification.userInfo, let type = info["type"] as? String {
+//                let tagItems = self.menuItems.filter {$0.type == .tags}
+//                if type == "rename", let tag = info["tag"] as? String, let renamedTag = info["renamedTag"] as? String {
+//                    let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == tag})
+//                    tagItem?.title = renamedTag
+//                } else if type == "add", let tag = info["tag"] as? String {
+//                    let item = FTSideBarItem(title: tag, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
+//                    tagItems.first?.items.append(item)
+//                } else if type == "delete", let tag = info["tag"] as? String {
+//                    tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
+//                }
+//                if var items = tagItems.first?.items {
+//                    let allTags = items.first(where: {$0.type == .allTags})
+//                    items.removeAll(where: {$0.type == .allTags})
+//                    var sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
+//                    if let allTags {
+//                        sortedArray.insert(allTags, at: 0)
+//                    }
+//                    self.menuItems.first(where: {$0.type == .tags})?.items = sortedArray
+//                    self.updateTagsSection(items: sortedArray)
+//                }
+//                self.setSideBarItemSelection()
+//            } else {
+//                self.updateTags()
+//            }
+//        } else {
+//            self.updateTags()
+//        }
+//    }
 
     func addObservers() {
         self.menuItems.forEach({ menuItem in
@@ -465,95 +456,60 @@ extension FTSidebarViewModel {
     func configureUIOnViewLoad() {
         self.fetchSideBarData()
         self.fetchSidebarMenuItems()
-//        self.fetchAllTags()
     }
 
     func updateUserCreatedCategories() {
-        self.fetchUserCreatedCategories()
-    }
-    func updateTags() {
-//        self.fetchAllTags()
+//        self.fetchUserCreatedCategories()
     }
     
-    private func fetchUserCreatedCategories() {
-        userCreatedSidebarItems { [weak self] sidebarItems in
-            guard let self = self else { return }
-            DispatchQueue.global().async {
-                self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true)
-                runInMainThread {
-                    if let item = self.menuItems.first(where: {$0.type == .categories}) {
-                        item.items = self.categoriesItems;
-                    }
-//                    self.buildSideMenuItems()
-                }
-            }
-        }
-    }
-    private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
-        FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
-            let newlyCreatedSidebarItems = collections.filter({!$0.isUnfiledNotesShelfItemCollection}).map { shelfItem -> FTSideBarItem in
-                let item = FTSideBarItem(shelfCollection: shelfItem)
-                item.id = shelfItem.uuid
-                item.isEditable = true
-                item.allowsItemDropping = true
-                item.type = .category
-                return item
-            }
-            onCompeltion(newlyCreatedSidebarItems)
-        }
-    }
-
-    private func allTagsSidebarItem() -> FTSideBarItem {
-        let allTags = FTSideBarItem(title: "sidebar.allTags".localized, icon:  .number, isEditable: false, isEditing: false, type: FTSideBarItemType.allTags, allowsItemDropping: false)
-        return allTags
-    }
-
-    func updateTagsSection(items: [FTSideBarItem]) {
-        self.tags = items
-    }
-
-    func updateUnfiledCategory() {
-        FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { [weak self] collection in
-            if let unfiledCollection = collection {
-                self?.setCollectionToSystemType(.unCategorized, collection: unfiledCollection)
-            }
-        }
-    }
+//    private func fetchUserCreatedCategories() {
+//        userCreatedSidebarItems { [weak self] sidebarItems in
+//            guard let self = self else { return }
+//            DispatchQueue.global().async {
+//                self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true)
+//                runInMainThread {
+//                    if let item = self.menuItems.first(where: {$0.type == .categories}) {
+//                        item.items = self.categoriesItems;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
+//        FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
+//            let newlyCreatedSidebarItems = collections.filter({!$0.isUnfiledNotesShelfItemCollection}).map { shelfItem -> FTSideBarItem in
+//                let item = FTSideBarItem(shelfCollection: shelfItem)
+//                item.id = shelfItem.uuid
+//                item.isEditable = true
+//                item.allowsItemDropping = true
+//                item.type = .category
+//                return item
+//            }
+//            onCompeltion(newlyCreatedSidebarItems)
+//        }
+//    }
 
     private func fetchSidebarMenuItems() {
-
-        //First section items creation
-//        self.buildSystemMenuOptions()
-
         // Fetching default/migrated categories for second section of side menu
-        userCreatedSidebarItems { [weak self] sidebarItems in
-            guard let self = self else { return }
-            self.categoriesItems.removeAll()
-            self.categoriesItems.append(contentsOf: self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems))
-        }
+//        userCreatedSidebarItems { [weak self] sidebarItems in
+//            guard let self = self else { return }
+//            self.categoriesItems.removeAll()
+//            self.categoriesItems.append(contentsOf: self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems))
+//        }
 
         //Assigning respective shelf item collections to top section UI items
-        self.updateUnfiledCategory()
-        self.tags = [allTagsSidebarItem()]
         self.buildSideMenuItems()
-        DispatchQueue.global().async {
-            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(self.categoriesItems,performURLResolving: true)
-            runInMainThread {
-                if let item = self.menuItems.first(where: {$0.type == .categories}) {
-                    item.items = self.categoriesItems;
-                }
-//                self.buildSideMenuItems()
-            }
-        }
+//        DispatchQueue.global().async {
+//            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(self.categoriesItems,performURLResolving: true)
+//            runInMainThread {
+//                if let item = self.menuItems.first(where: {$0.type == .categories}) {
+//                    item.items = self.categoriesItems;
+//                }
+//            }
+//        }
 
     }
 
-    private func setCollectionToSystemType(_ type: FTSideBarItemType, collection: FTShelfItemCollection?) {
-        if let sidebarItem = self.systemItems.first(where: {$0.type == type}), let collection {
-            sidebarItem.setShelfCollection(collection)
-            sidebarItem.id = collection.uuid
-        }
-    }
     private func createSideBarItemWith(title: String, type: FTSideBarItemType, allowsItemDropping: Bool,icon: FTIcon) -> FTSideBarItem {
         return FTSideBarItem(title: title,
                              icon: icon,
@@ -563,19 +519,14 @@ extension FTSidebarViewModel {
     }
 
     private func buildSideMenuItems(){
-//        self.menuItems.forEach { eachSection in
-//            eachSection.items.removeAll()
-//        }
-//        self.menuItems.removeAll()
         self.menuItems.append(FTSidebarSectionSystem());
-//        self.menuItems.append(contentsOf: [FTSidebarSection(type: FTSidebarSectionType.all, items: self.systemItems,supportsRearrangeOfItems: false)])
-        self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))
+        self.menuItems.append(FTSidebarSectionUserShelfs())
+//        self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))
         self.menuItems.append(FTSidebarSectionMedia());
         self.menuItems.append(FTSidebarSectionTags());
-//        self.menuItems.append(FTSidebarSection(type: .media, items: self.contentItems,supportsRearrangeOfItems: false))
-//        self.menuItems.append(FTSidebarSection(type: .tags, items: self.tags,supportsRearrangeOfItems: false))
         self.setSideBarItemSelection()
     }
+    
     func setSideBarItemSelection(){
         let nonCollectionTypes: [FTSideBarItemType] = [.templates,.media,.bookmark,.audio]
         if selectedSideBarItemType == .tag || selectedSideBarItemType == .allTags {

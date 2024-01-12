@@ -149,26 +149,28 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
     }
 
     func didSelectBarItem(_ item: FTSideBarItem) {
-        let currentCollection = item.shelfCollection ??  FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
-        switch item.type {
-        case .home:
-            delegate?.showHomeView()
-        case .unCategorized,.trash,.starred:
-            delegate?.showDetailedViewForCollection(currentCollection)
-        case .templates:
-            delegate?.openTemplates()
-        case .category,.ns2Category:
-            delegate?.showDetailedViewForCollection(currentCollection)
-        case .media:
-            delegate?.openPhotos()
-        case .audio:
-            delegate?.openAudio()
-        case .tag:
-            delegate?.openTags(for: item.title, isAllTags: false)
-        case .bookmark:
-            delegate?.openBookmarks()
-        case .allTags:
-            delegate?.openTags(for: item.title, isAllTags: true)
+        item.collection { [weak self] collection in
+            let currentCollection = collection ??  FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection
+            switch item.type {
+            case .home:
+                self?.delegate?.showHomeView()
+            case .unCategorized,.trash,.starred:
+                self?.delegate?.showDetailedViewForCollection(currentCollection)
+            case .templates:
+                self?.delegate?.openTemplates()
+            case .category,.ns2Category:
+                self?.delegate?.showDetailedViewForCollection(currentCollection)
+            case .media:
+                self?.delegate?.openPhotos()
+            case .audio:
+                self?.delegate?.openAudio()
+            case .tag:
+                self?.delegate?.openTags(for: item.title, isAllTags: false)
+            case .bookmark:
+                self?.delegate?.openBookmarks()
+            case .allTags:
+                self?.delegate?.openTags(for: item.title, isAllTags: true)
+            }
         }
     }
 
