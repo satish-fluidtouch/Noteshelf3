@@ -15,6 +15,7 @@ class FTDocumentPagesController: UIViewController {
     private var cellSize = CGSize(width: 152, height: 204)
     private let extraCellPadding: CGFloat = 30
 
+    weak var delegate: FTPageSelectionDelegate?
     weak var document: FTThumbnailableCollection? {
         didSet {
             self.pages = self.document?.documentPages() ?? []
@@ -40,6 +41,7 @@ class FTDocumentPagesController: UIViewController {
 
 private extension FTDocumentPagesController {
     func configureCollectionView() {
+        self.collectionView.allowsMultipleSelection = false
         self.collectionView.register(UINib(nibName: "FTFinderThumbnailViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionViewCellPDFFinderPage")
         (self.collectionView.collectionViewLayout as? FTFinderCollectionViewFlowLayout)?.sectionHeadersPinToVisibleBounds = true
         self.collectionView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
@@ -103,6 +105,15 @@ extension FTDocumentPagesController: UICollectionViewDataSource, UICollectionVie
         cell.buttonBookmark?.tag = indexPath.item
         cell.updateTagsPill()
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let page = self.pages[indexPath.item] as? FTNoteshelfPage {
+            if let collectionViewCell = collectionView.cellForItem(at: indexPath) as? FTFinderThumbnailViewCell {
+                collectionViewCell.setIsSelected(true)
+            }
+            self.delegate?.didSelect(page: page)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

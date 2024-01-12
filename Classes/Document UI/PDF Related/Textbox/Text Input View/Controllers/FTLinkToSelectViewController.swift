@@ -34,6 +34,7 @@ class FTLinkToSelectViewController: UIViewController {
         super.prepare(for: segue, sender: sender)
         if segue.identifier == "FTDocumentPagesController", let docPagesVc = segue.destination as? FTDocumentPagesController {
             self.docPagesController = docPagesVc
+            self.docPagesController?.delegate = self
         }
     }
 
@@ -99,10 +100,10 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
 
 extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
-        if type == .left {
+        if type == .left { // Cancel
             self.dismiss(animated: true)
-        } else {
-            // Done action
+        } else { // Done
+            self.viewModel.saveLinkInfo()
         }
     }
 }
@@ -127,17 +128,15 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
     }
 }
 
-//func didSelect(page: FTNoteshelfPage) {
-//    if var info = self.viewModel?.getExistingTextLinkInfo(), nil != self.viewModel?.selectedDocument {
-//        info.pageUUID = page.uuid
-//        self.viewModel?.updatePageNumber(page.pageIndex() + 1)
-//        self.viewModel?.closeOpenedDocumentIfNeeded()
-//        self.tableView?.reloadData()
-//        self.viewModel?.updateTextLinkInfo(info)
-//    }
-//}
-
-enum FTLinkToOption: String, CaseIterable {
-    case linkText = "Link Text"
-    case document = "Notebook"
+extension FTLinkToSelectViewController: FTPageSelectionDelegate {
+    func didSelect(page: FTNoteshelfPage) {
+        var info = self.viewModel.info
+        if nil != self.viewModel?.selectedDocument {
+            info.pageUUID = page.uuid
+            self.viewModel.updatePageNumber(page.pageIndex() + 1)
+            self.viewModel.closeOpenedDocumentIfNeeded()
+            self.viewModel.updateTextLinkInfo(info)
+            self.tableView?.reloadData()
+        }
+    }
 }

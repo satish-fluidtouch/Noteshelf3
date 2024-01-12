@@ -24,6 +24,11 @@ enum FTLinkToTab: String {
     }
 }
 
+enum FTLinkToOption: String, CaseIterable {
+    case linkText = "Link Text"
+    case document = "Notebook"
+}
+
 struct FTTextLinkInfo {
     var docUUID: String
     var pageUUID: String
@@ -62,7 +67,6 @@ class FTLinkToTextViewModel: NSObject {
 
     func updateTextLinkInfo(_ info: FTTextLinkInfo) {
         self.info = info
-        self.delegate?.updateTextLinkInfo(info)
     }
 
     func updateDocumentTitle(_ title: String) {
@@ -71,6 +75,10 @@ class FTLinkToTextViewModel: NSObject {
 
     func updatePageNumber(_ number: Int) {
         self.pageNumber = number
+    }
+
+    func saveLinkInfo() {
+        self.delegate?.updateTextLinkInfo(self.info)
     }
 
     func prepareDocumentDetails(onCompletion: ((Bool) -> Void)?) {
