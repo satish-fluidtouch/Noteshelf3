@@ -316,7 +316,9 @@ class FTMidnightDairyFormat : FTDairyFormat {
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .month))
+            if let utcDate = calendarMonth.dayInfo.first?.date.utcDate() {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .month, date : utcDate.timeIntervalSinceReferenceDate))
+            }
         }
         
         let weeklyInfo = weeklyFormatter.weeklyInfo;
@@ -325,9 +327,13 @@ class FTMidnightDairyFormat : FTDairyFormat {
             self.renderPrioritiesPage(context: context, weeklyInfo: weekInfo, dayInfo: nil)
             self.renderNotesPage(context: context, weeklyInfo: weekInfo, dayInfo: nil)
 
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .week))
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyPriorities))
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyNotes))
+            if let utcDate = weekInfo.dayInfo.first?.date.utcDate() {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+                diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyPriorities , date : utcDate.timeIntervalSinceReferenceDate))
+                diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyNotes , date : utcDate.timeIntervalSinceReferenceDate))
+            }
+
+
         }
         
         let monthInfo = monthlyFormatter.monthCalendarInfo;
@@ -343,10 +349,10 @@ class FTMidnightDairyFormat : FTDairyFormat {
 
                     //pages info
                     if let utcDate = eachDayInfo.date.utcDate() {
-                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate))
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate , isCurrentPage: setDiaryPageAsCurrentPage(pageDate: utcDate) ))
+                        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyPriorities , date: utcDate.timeIntervalSinceReferenceDate))
+                        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyNotes , date: utcDate.timeIntervalSinceReferenceDate))
                     }
-                    self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyPriorities))
-                    self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyNotes))
                 }
             }
         }
