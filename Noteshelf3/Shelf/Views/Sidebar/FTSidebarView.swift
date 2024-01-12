@@ -133,7 +133,7 @@ struct FTSidebarView: View {
                         getEditableViewForSideBarItem(item, withPlaceHolder:item.title,editableField: true) { newTitle in
                             item.isEditing = false
                             if !newTitle.isEmpty {
-                                viewModel.renameSideBarItem(item, oldTitle: oldTitle)
+                                viewModel.renameSideBarItem(item, newTitle: newTitle)
                             }
                         }
                     } else {

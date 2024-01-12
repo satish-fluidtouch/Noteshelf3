@@ -9,15 +9,16 @@
 import Foundation
 import FTCommon
 extension FTSidebarViewModel {
-    func renametag(_ tag: FTSideBarItem, oldTitle: String) {
-        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: oldTitle) {
-            tagItem.renameTagItemWith(renamedString: tag.title)
-            self.didUpdateRenameTag(tag: oldTitle, with: tag.title)
+    func renametag(_ tag: FTSideBarItem, newTitle: String) {
+        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
+            let oldTitle = tag.title;
+            tagItem.renameTagItemWith(renamedString: newTitle)
+            self.didUpdateRenameTag(tag: oldTitle, with: newTitle)
 
-            FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: tag.title) { success in
+            FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: newTitle) { success in
                 if success ?? false {
                     if let tagItem = (tag as? FTSideBarItemTag)?.fttag {
-                        FTTagsProviderV1.shared.renameTag(tagItem, to: tag.title);
+                        FTTagsProviderV1.shared.renameTag(tagItem, to: newTitle);
                     }
                 }
             }

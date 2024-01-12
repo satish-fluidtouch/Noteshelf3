@@ -160,13 +160,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
         }
         return matchedItem
     }
-    func endEditingOfActiveSidebarItem(){
-        for item in menuItems.flatMap({$0.items}) where item.isEditing {
-            debugLog("editing item new title \(item.title)")
-            item.isEditing = false
-            self.renameSideBarItem(item, oldTitle: item.title)
-        }
-    }
+
     func selectSidebarItemWithCollection(_ shelfItemCollection: FTShelfItemCollection){
         setSideBarItemSelection()
     }
@@ -293,13 +287,14 @@ extension FTSidebarViewModel {
             self.deleteTag(item)
         }
     }
-    func renameSideBarItem(_ item: FTSideBarItem, oldTitle:String) {
+    func renameSideBarItem(_ item: FTSideBarItem, newTitle:String) {
         if item.type == .tag {
-            self.renametag(item, oldTitle: oldTitle)
+            self.renametag(item, newTitle: newTitle)
         } else if item.type == .category {
-            self.renameCategory(item)
+            self.renameCategory(item,newTitle: newTitle)
         }
     }
+    
     func emptyTrash(_ sideBarItem: FTSideBarItem){
         if let trashShelfItemCollection = sideBarItem.shelfCollection {
             self.delegate?.emptyTrash(trashShelfItemCollection, showConfirmationAlert: false, onCompletion: { status in
@@ -382,16 +377,16 @@ extension FTSidebarViewModel {
             }
         }
     }
-    func renameCategory(_ category:FTSideBarItem){
+    func renameCategory(_ category:FTSideBarItem,newTitle: String){
         guard let shelfCollection = category.shelfCollection else {
             return
         }
         let trashCategoryTitle = NSLocalizedString("Trash", comment: "Trash");
-        guard category.title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != trashCategoryTitle.lowercased() else {
+        guard newTitle.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != trashCategoryTitle.lowercased() else {
             return;
         }
-        if category.title != shelfCollection.displayTitle {
-            FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: category.title) { [weak self](error,shelfCollection) in
+        if newTitle != shelfCollection.displayTitle {
+            FTNoteshelfDocumentProvider.shared.renameShelf(shelfCollection, title: newTitle) { [weak self](error,shelfCollection) in
                 if let _ = error {
                 } else if let shelfCollection = shelfCollection, self?.selectedShelfItemCollection?.uuid == shelfCollection.uuid {
                     self?.selectedShelfItemCollection = shelfCollection

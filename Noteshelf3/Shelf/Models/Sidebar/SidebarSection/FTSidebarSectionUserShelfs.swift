@@ -56,6 +56,9 @@ private extension FTSidebarSectionUserShelfs {
                     }
                     if let item = currentItems.first(where: {$0.id == eachCollection.uuid}) {
                         sidebarItems.append(item);
+                        if item.title != eachCollection.title {
+                            item.title = eachCollection.title
+                        }
                     }
                     else {
                         let item = FTSideBarItem(shelfCollection: eachCollection);
