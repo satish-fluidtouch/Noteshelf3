@@ -103,15 +103,7 @@ class FTNotebookCreation: NSObject {
                                     completion(error,item)
                                 })
                             }
-
-                            if let operation = FTDocumentPostProcessOperation.operation(info: docInfo , url: ftdocument.URL) {
-                                operation.perform(completion: {
-                                    createBlock()
-                                })
-                            }
-                            else {
-                                createBlock()
-                            }
+                            createBlock()
                         }
                         else {
                             completion(error,nil)
@@ -170,15 +162,7 @@ class FTNotebookCreation: NSObject {
                                         }
                                     });
                                 }
-
-                                if let operation = FTDocumentPostProcessOperation.operation(info: documentInfo , url: ftdocument.URL) {
-                                    operation.perform(completion: {
-                                        createBlock()
-                                    })
-                                }
-                                else{
-                                    createBlock()
-                                }
+                                createBlock()
                             }
                             else {
                                 completion(error,nil)

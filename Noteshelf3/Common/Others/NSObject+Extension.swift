@@ -43,6 +43,7 @@ extension NSObject {
         else if let shelfItem = item as? FTDocumentItemProtocol {
             self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex,docPin: docPin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
         }
+        FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_openinnewwindow_tap")
     }
     
     func openContentItemInNewWindow(_ contentType: FTSideBarItemType){

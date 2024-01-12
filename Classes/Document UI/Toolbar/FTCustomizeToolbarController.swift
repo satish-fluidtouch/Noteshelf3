@@ -77,7 +77,8 @@ class FTCustomizeToolbarController: UITableViewController {
 
     @objc func doneTapped(sender: UIButton) {
         // Track Event
-        track(EventName.customizetoolbar_done_tap)
+        let count = FTCurrentToolbarSection().displayTools.count
+        track(EventName.customizetoolbar_done_tap, params: [EventParameterKey.count: count])
         self.dismiss(animated: true)
     }
 
