@@ -7,9 +7,11 @@
 
 import SwiftUI
 import FTCommon
+import Combine
 
 struct FTStoreCategoryView: View {
     var templateInfo: StoreInfo
+    var actionStream: PassthroughSubject<FTStoreActions, Never>?
 
     var body: some View {
         let items = templateInfo.discoveryItems
@@ -47,7 +49,7 @@ struct FTStoreCategoryView: View {
             var _items = items
             // Update sectionType to track events
             _items[index].sectionType = templateInfo.sectionType
-            FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: _items, selectedIndex: index))
+            actionStream?.send(.didTapOnDiscoveryItem(items: _items, selectedIndex: index))
         } label: {
             HStack{
                 let image = UIImage(named: item.fileName, in: storeBundle, with: nil)

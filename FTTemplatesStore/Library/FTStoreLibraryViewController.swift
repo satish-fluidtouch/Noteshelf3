@@ -57,20 +57,31 @@ public protocol FTStoreLibraryDelegate:NSObjectProtocol, FTThemeUpdateURL {
 }
 
 class FTStoreLibraryViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private var emptyView: UIView!
 
-    weak var delegate: FTStoreLibraryDelegate?;
-    let viewModel = FTStoreLibraryViewModel()
+    private weak var delegate: FTStoreLibraryDelegate?;
+    private let viewModel = FTStoreLibraryViewModel()
     private var headerView: FTLibraryHeaderView? = nil
 
     private var currentSize: CGSize = .zero
-    var contextMenuSelectedIndexPath: IndexPath?
-    var sourceType: Source = .none
-    var selectedStyle: FTTemplateStyle?
-    var selectedFile: URL?
+    private var contextMenuSelectedIndexPath: IndexPath?
+    private var sourceType: Source = .none
+    private var selectedStyle: FTTemplateStyle?
+    private var selectedFile: URL?
 
     private var selectedIndexPath: IndexPath?
+    
+    static func controller(source: Source,
+                           delegate: FTStoreLibraryDelegate,
+                           selectedFile: URL?) -> FTStoreLibraryViewController  {
+        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreLibraryViewController") as! FTStoreLibraryViewController
+        viewController.sourceType = source
+        viewController.delegate = delegate;
+        viewController.selectedFile = selectedFile
+        return viewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,7 +216,7 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
         if let style = item {
             selectedStyle = style
             if style.type == FTDiscoveryItemType.diary.rawValue {
-                if let premiumUser = FTStoreContainerHandler.shared.premiumUser,premiumUser.isPremiumUser {
+                if let premiumUser = FTStorePremiumPublisher.shared.premiumUser,premiumUser.isPremiumUser {
                     presentDatePicker()
                 }
                 else {
@@ -213,7 +224,7 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
                 }
                 return;
             }
-            if sourceType == .none, FTStoreContainerHandler.shared.premiumUser?.nonPremiumQuotaReached ?? false {
+            if sourceType == .none, FTStorePremiumPublisher.shared.premiumUser?.nonPremiumQuotaReached ?? false {
                 self.delegate?.libraryController(self, showIAPAlert: nil);
                 return;
             }
@@ -254,7 +265,7 @@ extension FTStoreLibraryViewController: UICollectionViewDelegate, UICollectionVi
                 createNotebookFor(fileUrl: fileUrl, fileName: style.title)
             }
             // Track Event
-            FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_library_template_tap, params: nil, screenName: ScreenName.templatesStore))
+            FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.templates_library_template_tap, params: nil, screenName: ScreenName.templatesStore))
         }
     }
 
@@ -341,5 +352,56 @@ extension FTStoreLibraryViewController: FTDairyDateSelectionPickerDelegate {
                 }.resume()
             }
         }
+    }
+}
+
+// MARK: - contextMenuConfiguration
+extension FTStoreLibraryViewController {
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let sectionType = viewModel.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+        if sectionType == .noRecords {
+            return nil
+        }
+        self.delegate?.libraryController(self, menuShown: true)
+        let identifier = indexPath as NSIndexPath
+        contextMenuSelectedIndexPath = indexPath as IndexPath
+        return UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { _ in
+            let delete = UIAction(title: "librarystore.removefromLibrary".localized, image: UIImage(systemName: "trash")) { [weak self] _ in
+                Task {
+                    if let item = self?.viewModel.itemAt(index: indexPath.row) {
+                        do {
+                            try await FTStoreLibraryHandler.shared.removeFromLibrary(template: item)
+                            self?.viewModel.loadLibraryTemplates()
+                        } catch {
+                            UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
+                        }
+                    }
+                }
+            }
+            delete.attributes = .destructive
+            return UIMenu(title: "", children: [delete])
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let identifier = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: identifier) as? FTStoreLibraryCollectionCell else {
+            return nil
+        }
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        return UITargetedPreview(view: cell.thumbnail!, parameters: parameters)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        self.delegate?.libraryController(self, menuShown: false)
+        guard let identifier = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: identifier) as? FTStoreLibraryCollectionCell else {
+            return nil
+        }
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        return UITargetedPreview(view: cell, parameters: parameters)
     }
 }

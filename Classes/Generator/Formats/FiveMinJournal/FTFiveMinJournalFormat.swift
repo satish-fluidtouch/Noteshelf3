@@ -211,8 +211,10 @@ class FTFiveMinJournalFormat : FTDairyFormat {
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly){
         
         self.renderHelpPage(context: context)
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .help , isCurrentPage: true))
         
         self.renderSamplePage(context : context)
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .sample))
         
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
     
@@ -227,7 +229,13 @@ class FTFiveMinJournalFormat : FTDairyFormat {
         monthInfo.forEach { (eachMonth) in
             let dayInfo = eachMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                    //For Today link
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate))
+                    }
+                }
             }
         }
     }

@@ -7,18 +7,20 @@
 
 import UIKit
 import SDWebImage
+import Combine
 
 class FTStoreStickersCollectionCell: UICollectionViewCell {
     @IBOutlet private weak var thumbnail: UIImageView?
     @IBOutlet private weak var titleLabel: UILabel?
     @IBOutlet private weak var shadowImageView: UIImageView!
-
+    private var actionStream: PassthroughSubject<FTStoreActions, Never>?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func prepareCellWith(templateInfo: TemplateInfo) {
+    func prepareCellWith(templateInfo: TemplateInfo, actionStream: PassthroughSubject<FTStoreActions, Never>?) {
+        self.actionStream = actionStream
         self.shadowImageView.isHidden = true
         self.titleLabel?.text = templateInfo.title
         self.thumbnail?.image = nil
