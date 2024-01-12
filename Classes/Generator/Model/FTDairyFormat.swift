@@ -451,6 +451,14 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
         }
         return false
     }
+    func setDiaryPageAsCurrentPage(pageDate date: Date) -> Bool {
+        if let currentDate = Date().utcDate() {
+            if date.compareDate(currentDate) == ComparisonResult.orderedSame {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 @objc extension FTDairyFormat

@@ -14,4 +14,6 @@
 }
 
 -(nullable id<FTShape>)getShapeForPoints:(nonnull NSArray*)inPoints;
+-(double)getArcLength:(nonnull NSArray*)inPoints;
+
 @end
