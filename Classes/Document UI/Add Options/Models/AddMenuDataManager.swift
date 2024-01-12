@@ -13,7 +13,7 @@ enum FTPageType: String {
 }
 
 enum MediaType: String {
-    case photo, camera, audio, emojis, stickers, importMedia, appleWatch
+    case photo, camera, audio, emojis, stickers, savedClips, importMedia, appleWatch
 }
 
 enum AttachmentType: String {
@@ -83,12 +83,14 @@ class AddMenuDataManager {
 
         let audioItem = MediaItem(image: UIImage(systemName: "mic.fill.badge.plus"), name: "RecordAudio".localized,type: .audio)
         let emojiItem = MediaItem(image: UIImage(systemName: "face.smiling"), name: "customizeToolbar.emojis".localized, showDiscloser: true, type: .emojis)
+        let saveClipsItem = MediaItem(image: UIImage(systemName: "appclip"), name: "Saved Clips".localized, showDiscloser: true, type: .savedClips)
+
         let stickerItem = MediaItem(image: UIImage(named: folderPrefix + "addmenu_stickers"), name: "customizeToolbar.stickers".localized, showDiscloser: true, type: .stickers)
 
         let importMediaItem = MediaItem(image: UIImage(systemName: "square.and.arrow.down"), name: "add.menu.import.media".localized, type: .importMedia)
 
         let appleWatchMediaItem = MediaItem(image: UIImage(systemName: "applewatch"), name: "AppleWatchRecordings".localized,showDiscloser: true, type: .appleWatch)
-        var itemsToReturn = [[photoItem, cameraItem], [audioItem, emojiItem, stickerItem]]
+        var itemsToReturn = [[photoItem, cameraItem], [audioItem, emojiItem, stickerItem, saveClipsItem]]
         if (NSUbiquitousKeyValueStore.default.isWatchPaired() && NSUbiquitousKeyValueStore.default.isWatchAppInstalled()) {
             itemsToReturn.append(contentsOf: [[importMediaItem, appleWatchMediaItem]])
         } else {

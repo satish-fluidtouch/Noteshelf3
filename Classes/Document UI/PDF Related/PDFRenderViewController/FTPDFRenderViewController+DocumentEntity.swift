@@ -157,6 +157,26 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
         }
     }
 }
+extension FTPDFRenderViewController: FTSavedClipdelegate {
+    func didTapSavedClip(annotations: [FTAnnotation]) {
+        self.dismiss()
+        if let pageController = self.firstPageController(), let page = pageController.pdfPage as? FTNoteshelfPage {
+            page.addAnnotations(annotations, indices: nil)
+            let vertices = annotations.map { eachAnn in
+                return eachAnn.boundingRect.origin
+            }
+            var startRect = FTShapeUtility.boundingRect(vertices)
+            let viewCenter = self.view.center
+            var targetRect = CGRect(origin: self.view.center, size: startRect.size)
+            targetRect.origin.x = viewCenter.x - startRect.size.width / 2
+            targetRect.origin.y = viewCenter.y - startRect.size.height / 2
+
+            page.translate(annotations: annotations, startRect: startRect, targetRect: targetRect, shouldRefresh: true, windowHash: self.view.window?.hashValue ?? 0)
+            pageController.resizeSavedClipFor(annotations: annotations)
+        }
+    }
+
+}
 
 extension FTPDFRenderViewController: FTImportingProtocol {
 

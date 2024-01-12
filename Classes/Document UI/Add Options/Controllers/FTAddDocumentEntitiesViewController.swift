@@ -30,7 +30,7 @@ enum AddMenuType: Int {
     }
 }
 
-protocol FTAddDocumentEntitiesViewControllerDelegate: StickerSelectionDelegate, FTAddMenuSelectImageProtocal, FTMediaLibrarySelectionDelegate, FTWatchRecordedListViewControllerDelegate {
+protocol FTAddDocumentEntitiesViewControllerDelegate: StickerSelectionDelegate, FTAddMenuSelectImageProtocal, FTMediaLibrarySelectionDelegate, FTWatchRecordedListViewControllerDelegate, FTSavedClipdelegate {
     func didFinishPickingUIImages(_ images: [UIImage], source: FTInsertImageSource)
     func didFinishPickingImportItems(_ items: [FTImportItem]?)
     func didTapPage(_ item: FTPageType)
@@ -177,6 +177,8 @@ extension FTAddDocumentEntitiesViewController: FTAddMenuMediaViewControllerDeleg
             pushStickersViewController()
         } else if item == .appleWatch {
             pushWatchRecordings()
+        } else if item == .savedClips {
+            pushSavedClipsViewController()
         }
         else {
             self.dismiss(animated: true)
@@ -226,6 +228,15 @@ extension FTAddDocumentEntitiesViewController: FTAddMenuMediaViewControllerDeleg
         }
         emojisViewController.delegate = self.delegate
         navigationController?.pushViewController(emojisViewController, animated: true)
+    }
+
+    private func pushSavedClipsViewController() {
+        let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
+        guard let savedClipsViewController = storyboard.instantiateViewController(withIdentifier: "FTSavedClipsViewController") as? FTSavedClipsViewController else {
+            fatalError("FTEmojisViewController not found")
+        }
+        savedClipsViewController.delegate = self.delegate
+        navigationController?.pushViewController(savedClipsViewController, animated: true)
     }
 }
     

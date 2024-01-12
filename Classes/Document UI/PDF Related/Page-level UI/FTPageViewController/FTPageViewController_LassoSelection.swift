@@ -158,6 +158,38 @@ extension FTPageViewController
         rect = finalRect;
         return snapshot;
     }
+
+    func resizeSavedClipFor(annotations: [FTAnnotation]) {
+        normalizeLassoView()
+        let selectedAnnotations = annotations;
+        guard !selectedAnnotations.isEmpty,
+            let contentView = self.contentHolderView else {
+            return;
+        }
+
+        self.lassoSelectionView?.finalizeMove();
+        let hashKey = self.windowHash;
+        selectedAnnotations.forEach { (eachAnnotation) in
+            eachAnnotation.setSelected(true, for: hashKey);
+        }
+
+        self.lassoInfo.selectedAnnotations = selectedAnnotations;
+        var boundingRect = CGRect.zero;
+        if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
+            let imageResizeViewController = FTLassoContentSelectionViewController(withImage: selectedImage, boundingRect: contentView.bounds);
+            imageResizeViewController.delegate = self;
+            self.addChild(imageResizeViewController);
+            contentView.addSubview(imageResizeViewController.view);
+            var targetRect = imageResizeViewController.view.convert(boundingRect, from: contentView);
+            targetRect = CGRect.scale(targetRect, self.pageContentScale);
+            imageResizeViewController.initialFrame = targetRect;
+            self.lassoContentSelectionViewController = imageResizeViewController;
+
+            if let lassoWriting = self.writingView as? FTLassoProtocol {
+                lassoWriting.finalizeSelection(byAddingAnnotations: nil);
+            }
+        }
+    }
 }
 
 //MARK:- FTLassoSelectionViewDelegate -
@@ -315,6 +347,8 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
             self.lassoSelectionViewMoveToBackCommand(lassoSelectionView);
         case .openAI:
             self.startOpenAiForPage();
+        case .snippets:
+            self.lassoSelectionViewCreateSnippetCommand(lassoSelectionView)
         }
     }
     #if targetEnvironment(macCatalyst)
@@ -503,6 +537,93 @@ private extension FTPageViewController  {
         self.lassoSelectionView?.resignFirstResponder();
         self.lassoInfo.reset();
     }
+
+    func lassoSelectionViewCreateSnippetCommand(_ lassoSelectionView: FTLassoSelectionView) {
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return
+        }
+        var boundingRect = CGRect.zero;
+
+        let storyboard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
+        guard let saveClipPreview = storyboard.instantiateViewController(withIdentifier: "FTSaveClipPreviewViewController") as? FTSaveClipPreviewViewController else {
+            fatalError("FTSaveClipPreviewViewController not found")
+        }
+        if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
+            saveClipPreview.previewImage = selectedImage
+        }
+        saveClipPreview.delegate = self
+        self.parent?.ftPresentFormsheet(vcToPresent: saveClipPreview, hideNavBar: true)
+    }
+
+}
+
+extension FTPageViewController: FTSaveClipDelegate {
+    func didSelectCategory(name: String) {
+        print("Name =", name)
+        let selectedAnnotations = self.lassoInfo.selectedAnnotations;
+        guard !selectedAnnotations.isEmpty else {
+            return;
+        }
+        var boundingRect = CGRect.zero
+
+        let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
+        let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
+
+        let pdfGenerator = PDFGenerator()
+        let pdfPath = pdfGenerator.createPDF(frame: CGRect(x: 0, y: 0, width: 595.2, height: 841.8) )
+
+        let info = FTDocumentInputInfo();
+        info.isTemplate = false
+        info.inputFileURL = pdfPath
+        info.overlayStyle = .clearWhite
+        info.isNewBook = true;
+        ftdocument.createDocument(info) { (error, _) in
+            let doc = (ftdocument as? FTNoteshelfDocument)
+            doc?.openDocument(purpose: .write, completionHandler: { success, error in
+                let page = doc?.pages().first as? FTNoteshelfPage
+                page?.addAnnotations(selectedAnnotations, indices: [])
+                doc?.saveAndCloseWithCompletionHandler({ success in
+                    if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
+                        try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                    }
+                })
+            })
+            print(tempDocURL)
+        }
+    }
+}
+
+class PDFGenerator {
+
+    func createPDF(frame: CGRect) -> URL {
+        let render = UIPrintPageRenderer()
+        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 dpi
+//        let page = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
+        let printable = page.insetBy(dx: 0, dy: 0)
+
+        render.setValue(NSValue(cgRect: page), forKey: "paperRect")
+//        render.setValue(NSValue(cgRect: printable), forKey: "printableRect")
+
+        let pdfData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, .zero, nil)
+
+        UIGraphicsBeginPDFPage()
+        let bounds = UIGraphicsGetPDFContextBounds()
+        render.drawPage(at: 0, in: bounds)
+        UIGraphicsEndPDFContext();
+
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let pdfFilePath = documentsDirectory.appendingPathComponent("Siva.pdf")
+
+        do {
+            try pdfData.write(to: pdfFilePath)
+        } catch {
+            print("Error writing PDF to file: \(error.localizedDescription)")
+        }
+        return pdfFilePath
+    }
+
 }
 
 //MARK:- FTEditColorsViewControllerDelegate -
@@ -749,7 +870,6 @@ private extension FTPageViewController
         lassoSelectionView.isHidden = false;
         return snapshot;
     }
-
     
     func initiateTransformSelection()
     {

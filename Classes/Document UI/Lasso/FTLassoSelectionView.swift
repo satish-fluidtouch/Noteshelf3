@@ -10,7 +10,7 @@ import UIKit
 import FTCommon
 
 @objc enum FTLassoAction: Int {
-    case copy,cut,takeScreenshot,delete,resize,color,convertToText, moveToFront, moveToBack,openAI;
+    case copy,cut,takeScreenshot,delete,resize,color,convertToText, moveToFront, moveToBack,openAI, snippets;
 }
 
 @objc enum FTLassoSelectionType: Int {
@@ -31,7 +31,6 @@ private let layerName = "notebook.rectangular.layer"
                                      didBeganTouch touch: UITouch?);
     @objc optional func lassoSelectionViewDidEndTouch(_ lassoSelectionView: FTLassoSelectionView);
     @objc optional func lassoSelectionViewDidCompleteMove(_ lassoSelectionView: FTLassoSelectionView);
-    
     #if targetEnvironment(macCatalyst)
     @objc optional func lassoSelectionViewPasteCommand(_ lassoSelectionView: FTLassoSelectionView, at touchedPoint: CGPoint);
     #endif
@@ -134,6 +133,7 @@ class FTLassoSelectionView: UIView {
         let moveToFront = UIMenuItem(title: NSLocalizedString("BringToFront", comment: "BringToFront"), action: #selector(self.moveToFrontAction(_:)));
         let moveToBack = UIMenuItem(title: NSLocalizedString("SendToBack", comment: "SendToBack"), action: #selector(self.moveToBackAction(_:)));
         let openAI = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.openAIAction(_:)));
+        let snippet = UIMenuItem(title: "Save Clip", action: #selector(self.createSnippet(_:)));
 
         var options = [cutMenuItem
                        ,copyMenuItem
@@ -142,6 +142,7 @@ class FTLassoSelectionView: UIView {
                        ,screenshotMenuItem
                        ,colorMenuItem
                        ,convertToText
+                       ,snippet
                        ,moveToFront
                        ,moveToBack
         ]
@@ -571,6 +572,11 @@ extension FTLassoSelectionView {
         #if !targetEnvironment(macCatalyst)
         UIMenuController.shared.hideMenu()
         #endif
+    }
+
+    func createSnippet(_ sender:Any?) {
+        self.delegate?.lassoSelectionView(self, perform: .snippets)
+        track("lasso_snippet_tapped", params: [:], screenName: FTScreenNames.lasso)
     }
 }
 
