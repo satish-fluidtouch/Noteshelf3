@@ -111,12 +111,16 @@ class FTClassicDiaryFormat : FTDairyFormat {
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .month))
+            if let utcDate = calendarMonth.dayInfo.first?.date.utcDate() {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .month, date : utcDate.timeIntervalSinceReferenceDate))
+            }
         }
         let weeklyInfo = weeklyFormatter.weeklyInfo;
         weeklyInfo.forEach { (weekInfo) in
             self.renderWeekPage(context: context, weeklyInfo: weekInfo)
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .week))
+            if let utcDate = weekInfo.dayInfo.first?.date.utcDate() {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+            }
         }
 
         let monthInfo = monthlyFormatter.monthCalendarInfo;
@@ -126,7 +130,7 @@ class FTClassicDiaryFormat : FTDairyFormat {
                 if eachDayInfo.belongsToSameMonth {
                     self.renderDayPage(context: context, dayInfo: eachDayInfo);
                     if let utcDate = eachDayInfo.date.utcDate() {
-                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate))
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate , isCurrentPage: self.setDiaryPageAsCurrentPage(pageDate: utcDate)))
                     }
                 }
             }
