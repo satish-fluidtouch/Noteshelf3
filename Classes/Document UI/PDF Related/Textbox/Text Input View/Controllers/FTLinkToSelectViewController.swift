@@ -9,8 +9,9 @@
 import FTCommon
 
 class FTLinkToSelectViewController: UIViewController {
-    @IBOutlet private weak var segmentControl: UISegmentedControl?
+    @IBOutlet private weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var tableView: UITableView?
+    @IBOutlet private weak var containerView: UIView!
     
     var viewModel: FTLinkToTextViewModel!
     weak var docPagesController: FTDocumentPagesController?
@@ -18,6 +19,8 @@ class FTLinkToSelectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationBar()
+        self.configureSegmentControl()
+
         self.viewModel?.prepareDocumentDetails(onCompletion: { _ in
             if let doc = self.viewModel.selectedDocument as? FTThumbnailableCollection {
                 self.docPagesController?.document = doc
@@ -60,33 +63,84 @@ private extension FTLinkToSelectViewController {
         self.navigationItem.rightBarButtonItem = rightNavItem
     }
 
+    func configureSegmentControl() {
+        self.segmentControl.setTitle(FTLinkToSegment.page.localizedString, forSegmentAt: 0)
+        self.segmentControl.setTitle(FTLinkToSegment.url.localizedString, forSegmentAt: 1)
+        self.segmentControl.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
+        self.segmentControl.selectedSegmentIndex = 0
+        if self.segmentControl.selectedSegmentIndex == 1 {
+            self.containerView.isHidden = true
+        } else {
+            self.containerView.isHidden = false
+        }
+    }
+
+    func handleSegmentControlSelection() {
+        let selSegIndex = segmentControl.selectedSegmentIndex
+        if selSegIndex == 1 {
+            self.containerView.isHidden = true
+        } else {
+            self.containerView.isHidden = false
+        }
+        self.tableView?.reloadData()
+    }
+
+    @objc func segmentTapped() {
+        self.handleSegmentControlSelection()
+    }
+
     func navigateToDocumentSelectionScreen() {
         let viewModel = FTShelfItemsViewModel(selectedShelfItems: [])
         let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
         self.navigationController?.pushViewController(controller, animated: true)
     }
+
+    var linkOptions: [FTLinkToOption] {
+        let options: [FTLinkToOption]
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            options = FTLinkToSegment.page.options
+        } else {
+            options = FTLinkToSegment.url.options
+        }
+        return options
+    }
 }
 
 extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return linkOptions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let option = FTLinkToOption.allCases[indexPath.row]
+        let option = linkOptions[indexPath.row]
+        var reqCell = UITableViewCell()
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkTextTableViewCell.linkTextCellId, for: indexPath) as? FTLinkTextTableViewCell else {
                 fatalError("Programmer error, unable to find FTLinkTextTableViewCell")
             }
             cell.configureCell(with: option, linkText: self.viewModel.linkText)
-            return cell
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkBookTableViewCell.linkBookCellId, for: indexPath) as? FTLinkBookTableViewCell else {
-                fatalError("Programmer error, unable to find FTLinkBookTableViewCell")
+            cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
+                print("zzzz - \(text)")
             }
-            cell.configureCell(with: option, title: self.viewModel.docTitle)
-            return cell
+            reqCell = cell
+        } else {
+            if option == .document {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkBookTableViewCell.linkBookCellId, for: indexPath) as? FTLinkBookTableViewCell else {
+                    fatalError("Programmer error, unable to find FTLinkBookTableViewCell")
+                }
+                cell.configureCell(with: option, title: self.viewModel.docTitle)
+                reqCell = cell
+            } else if option == .url {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkTextTableViewCell.linkTextCellId, for: indexPath) as? FTLinkTextTableViewCell else {
+                    fatalError("Programmer error, unable to find FTLinkTextTableViewCell")
+                }
+                cell.configureCell(with: option, linkText: "www.google.com")
+                cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
+                }
+                reqCell = cell
+            }
         }
+        return reqCell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -71,13 +71,8 @@ extension FTTextAnnotationViewController {
                 let info = FTTextLinkInfo(docUUID: documentId, pageUUID: pageId, currentDocument: doc)
                 FTLinkToSelectViewController.showTextLinkScreen(from: self, with: info, and: attrText.string)
             } else {
-                if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: doc.documentUUID, pageId: curPage.uuid) {
-                    // Add with current info
-                    self.updateLinkAttribute(with: url, for: reqRange)
-                    // Edit screen
-                    let info = FTTextLinkInfo(docUUID: doc.documentUUID, pageUUID: curPage.uuid, currentDocument: doc)
-                    FTLinkToSelectViewController.showTextLinkScreen(from: self, with: info, and: attrText.string)
-                }
+                let info = FTTextLinkInfo(docUUID: doc.documentUUID, pageUUID: curPage.uuid, currentDocument: doc)
+                FTLinkToSelectViewController.showTextLinkScreen(from: self, with: info, and: attrText.string)
             }
         }
     }

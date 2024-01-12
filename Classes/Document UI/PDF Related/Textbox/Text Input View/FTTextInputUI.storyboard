@@ -1909,6 +1909,9 @@
                                                             <color key="textColor" name="black50"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits"/>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="Mh9-pJ-L20" id="N5g-zO-B4t"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <color key="backgroundColor" name="white60"/>
@@ -2013,7 +2016,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="PKc-JD-QFW"/>
                     <connections>
-                        <outlet property="segmentControl" destination="W7c-fj-4Rp" id="zsg-ir-kce"/>
+                        <outlet property="containerView" destination="Yif-zw-bR3" id="8qJ-In-vzj"/>
+                        <outlet property="segmentControl" destination="W7c-fj-4Rp" id="Kd6-ur-9Df"/>
                         <outlet property="tableView" destination="CEu-Ve-O86" id="L11-JN-lz3"/>
                     </connections>
                 </viewController>

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum FTLinkToTab: String {
+enum FTLinkToSegment: String {
     case page
     case url
 
@@ -22,11 +22,23 @@ enum FTLinkToTab: String {
         }
         return str
     }
+
+    var options: [FTLinkToOption] {
+        let options: [FTLinkToOption]
+        switch self {
+        case .page:
+            options = [.linkText, .document]
+        case .url:
+            options = [.linkText, .url]
+        }
+        return options
+    }
 }
 
-enum FTLinkToOption: String, CaseIterable {
+enum FTLinkToOption: String {
     case linkText = "Link Text"
     case document = "Notebook"
+    case url = "URL"
 }
 
 struct FTTextLinkInfo {
