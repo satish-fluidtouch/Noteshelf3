@@ -16,7 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewCellPDFFinderPage" id="xFm-jl-qL8" userLabel="FTFinderThumbnailViewCell" customClass="FTFinderThumbnailViewCell" customModule="NS3_Beta" customModuleProvider="target">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FTLinkPageThumbnailCell" id="xFm-jl-qL8" userLabel="FTLinkPageThumbnailCell" customClass="FTLinkPageThumbnailCell" customModule="NS3_Beta" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="2" id="xNv-aS-XCA"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HR1-AR-S9c" userLabel="imageViewPage">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cover_background_green" translatesAutoresizingMaskIntoConstraints="NO" id="HR1-AR-S9c" userLabel="imageViewPage">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="202"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="L4h-kg-gDj"/>
@@ -52,8 +52,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shelfItemSelectionMode" translatesAutoresizingMaskIntoConstraints="NO" id="zdj-BG-5wH">
-                                <rect key="frame" x="86" y="162" width="28" height="28"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selection_checkMark" translatesAutoresizingMaskIntoConstraints="NO" id="zdj-BG-5wH">
+                                <rect key="frame" x="86" y="87" width="28" height="28"/>
                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="HVv-K0-uH8"/>
@@ -183,8 +183,8 @@
                             <constraint firstItem="7X7-eX-5OA" firstAttribute="centerX" secondItem="O1S-qH-z0J" secondAttribute="centerX" id="N1Z-Pk-Phh"/>
                             <constraint firstItem="xI3-9h-dCI" firstAttribute="centerX" secondItem="HR1-AR-S9c" secondAttribute="centerX" id="NW4-h0-Ncq"/>
                             <constraint firstItem="HR1-AR-S9c" firstAttribute="trailing" secondItem="FK4-UV-YUb" secondAttribute="trailing" constant="-1" id="O0O-vv-VVf" userLabel="bookmarkButtonTrailingConstraint"/>
-                            <constraint firstItem="zdj-BG-5wH" firstAttribute="bottom" secondItem="HR1-AR-S9c" secondAttribute="bottom" constant="-12" id="QVk-Pl-v3F"/>
                             <constraint firstItem="xI3-9h-dCI" firstAttribute="centerY" secondItem="HR1-AR-S9c" secondAttribute="centerY" id="SRX-gf-hL3"/>
+                            <constraint firstItem="zdj-BG-5wH" firstAttribute="centerY" secondItem="HR1-AR-S9c" secondAttribute="centerY" id="TY9-3e-wjb"/>
                             <constraint firstItem="HR1-AR-S9c" firstAttribute="top" secondItem="FK4-UV-YUb" secondAttribute="top" constant="4" id="WtW-qG-LMr"/>
                             <constraint firstItem="qoS-0R-85t" firstAttribute="bottom" secondItem="txv-qO-qvY" secondAttribute="bottom" id="XwQ-zc-oml"/>
                             <constraint firstItem="txv-qO-qvY" firstAttribute="width" secondItem="HR1-AR-S9c" secondAttribute="width" id="hsX-a7-sD3"/>
@@ -229,7 +229,8 @@
     </objects>
     <resources>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
-        <image name="shelfItemSelectionMode" width="33" height="33"/>
+        <image name="cover_background_green" width="137" height="170"/>
+        <image name="selection_checkMark" width="32" height="32"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

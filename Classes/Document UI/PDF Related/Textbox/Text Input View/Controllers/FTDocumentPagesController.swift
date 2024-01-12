@@ -14,6 +14,7 @@ class FTDocumentPagesController: UIViewController {
     private var pages: [FTThumbnailable] = []
     private var cellSize = CGSize(width: 152, height: 204)
     private let extraCellPadding: CGFloat = 30
+    private var selectedIndexPath: IndexPath?
 
     weak var delegate: FTPageSelectionDelegate?
     weak var document: FTThumbnailableCollection? {
@@ -26,6 +27,13 @@ class FTDocumentPagesController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureCollectionView()
+    }
+
+    func updateSelectedIndexPath(_ indexPath: IndexPath, toScroll: Bool = false) {
+        self.selectedIndexPath = indexPath
+        if toScroll {
+            self.collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
+        }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -42,9 +50,15 @@ class FTDocumentPagesController: UIViewController {
 private extension FTDocumentPagesController {
     func configureCollectionView() {
         self.collectionView.allowsMultipleSelection = false
-        self.collectionView.register(UINib(nibName: "FTFinderThumbnailViewCell", bundle: nil), forCellWithReuseIdentifier: "CollectionViewCellPDFFinderPage")
+        self.collectionView.register(UINib(nibName: "FTLinkPageThumbnailCell", bundle: nil), forCellWithReuseIdentifier: "FTLinkPageThumbnailCell")
         (self.collectionView.collectionViewLayout as? FTFinderCollectionViewFlowLayout)?.sectionHeadersPinToVisibleBounds = true
         self.collectionView.contentInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+    }
+
+     func resetPreviousSelection() {
+         if let selIndex = self.selectedIndexPath, let cell = self.collectionView.cellForItem(at: selIndex) as? FTLinkPageThumbnailCell {
+            cell.isPageSelected = false
+        }
     }
 
     var contentInset: UIEdgeInsets {
@@ -76,7 +90,7 @@ extension FTDocumentPagesController: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellPDFFinderPage", for: indexPath) as? FTFinderThumbnailViewCell, indexPath.row < pages.count else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTLinkPageThumbnailCell", for: indexPath) as? FTLinkPageThumbnailCell, indexPath.row < pages.count else {
             fatalError("Programmer error - could not find FTFinderThumbnailViewCell")
         }
         let page = self.pages[indexPath.row]
@@ -104,13 +118,23 @@ extension FTDocumentPagesController: UICollectionViewDataSource, UICollectionVie
         cell.shouldShowVerticalDivider = self.view.frame.width <= supplimentaryFinderVcWidth
         cell.buttonBookmark?.tag = indexPath.item
         cell.updateTagsPill()
+        // To fix the border path issue(0.1 is delayed)
+        runInMainThread(0.1) {
+            if let selIndexPath = self.selectedIndexPath, selIndexPath == indexPath {
+                cell.isPageSelected = true
+            } else {
+                cell.isPageSelected = false
+            }
+        }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let page = self.pages[indexPath.item] as? FTNoteshelfPage {
-            if let collectionViewCell = collectionView.cellForItem(at: indexPath) as? FTFinderThumbnailViewCell {
-                collectionViewCell.setIsSelected(true)
+            if let cell = collectionView.cellForItem(at: indexPath) as? FTLinkPageThumbnailCell {
+                self.resetPreviousSelection()
+                cell.isPageSelected = true
+                self.selectedIndexPath = indexPath
             }
             self.delegate?.didSelect(page: page)
         }

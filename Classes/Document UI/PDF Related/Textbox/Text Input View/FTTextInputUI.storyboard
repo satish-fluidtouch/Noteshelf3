@@ -1891,7 +1891,7 @@
                                         <color key="separatorColor" name="black20"/>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTLinkTextTableViewCell" id="Mh9-pJ-L20" customClass="FTLinkTextTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTLinkTextTableViewCell" id="Mh9-pJ-L20" customClass="FTLinkTextTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="55.5" width="992" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Mh9-pJ-L20" id="HxH-A4-gBB">
@@ -1905,9 +1905,9 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="text" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pKP-Zn-QTV">
-                                                            <rect key="frame" x="91.5" y="13" width="884.5" height="18.5"/>
+                                                            <rect key="frame" x="91.5" y="11" width="884.5" height="22"/>
                                                             <color key="textColor" name="black50"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                     </subviews>
@@ -1926,7 +1926,7 @@
                                                     <outlet property="linkTextTf" destination="pKP-Zn-QTV" id="4g6-eO-kbz"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTLinkBookTableViewCell" id="jhr-hQ-dF2" customClass="FTLinkBookTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FTLinkBookTableViewCell" id="jhr-hQ-dF2" customClass="FTLinkBookTableViewCell" customModule="NS3_Beta" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="99.5" width="992" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jhr-hQ-dF2" id="mTw-uv-Khs">

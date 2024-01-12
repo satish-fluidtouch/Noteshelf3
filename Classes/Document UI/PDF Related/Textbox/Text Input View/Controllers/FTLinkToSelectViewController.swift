@@ -21,6 +21,8 @@ class FTLinkToSelectViewController: UIViewController {
         self.viewModel?.prepareDocumentDetails(onCompletion: { _ in
             if let doc = self.viewModel.selectedDocument as? FTThumbnailableCollection {
                 self.docPagesController?.document = doc
+                let indexPath = IndexPath(item: self.viewModel.pageNumber - 1, section: 0)
+                self.docPagesController?.updateSelectedIndexPath(indexPath, toScroll: true)
                 self.tableView?.reloadData()
             }
         })
@@ -100,10 +102,10 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
 
 extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
-        if type == .left { // Cancel
-            self.dismiss(animated: true)
-        } else { // Done
-            self.viewModel.saveLinkInfo()
+        self.dismiss(animated: true) {
+            if type == .right { // DONE
+                self.viewModel.saveLinkInfo()
+            }
         }
     }
 }
@@ -120,6 +122,7 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
                 self.viewModel.updateDocumentTitle(document.displayTitle)
                 self.viewModel.updatePageNumber(1)
                 if let document = doc as? FTThumbnailableCollection {
+                    self.docPagesController?.updateSelectedIndexPath(IndexPath(item: 0, section: 0), toScroll: false)
                     self.docPagesController?.document = document
                     self.tableView?.reloadData()
                 }

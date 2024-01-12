@@ -55,7 +55,7 @@ class FTLinkToTextViewModel: NSObject {
 
     private(set) var linkText = ""
     private(set) var docTitle: String = ""
-    private(set) var pageNumber: Int?
+    private(set) var pageNumber: Int = 0
 
     weak var delegate: FTTextLinkEditDelegate?
 

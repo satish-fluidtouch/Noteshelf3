@@ -2026,7 +2026,7 @@
 		E75E1EB32AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75E1EB22AFA0781008CAD44 /* FTFavoritePenTypeEditController.swift */; };
 		E75E67BD2A9F7442009F5B2E /* FTTextStyle.plist in Resources */ = {isa = PBXBuildFile; fileRef = E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */; };
 		E760040D2B4EAAB100B268AC /* FTDocumentPagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760040C2B4EAAB100B268AC /* FTDocumentPagesController.swift */; };
-		E76004112B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76004102B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib */; };
+		E76004112B4EC3B200B268AC /* FTLinkPageThumbnailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76004102B4EC3B200B268AC /* FTLinkPageThumbnailCell.xib */; };
 		E76023392A4EC45000B16084 /* FTSearchSuggestionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */; };
 		E760233B2A4EFBA100B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
 		E760233C2A4F003E00B16084 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */; };
@@ -2036,6 +2036,7 @@
 		E76CEDC22A93605C00E4E22F /* FTRecentSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = E76CEDC02A93605C00E4E22F /* FTRecentSectionHeader.xib */; };
 		E76CEDC32A93605C00E4E22F /* FTRecentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E76CEDC12A93605C00E4E22F /* FTRecentSectionHeader.swift */; };
 		E776FB582A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E776FB572A54531D00AFA38E /* FTGlobalSearchController_MacExtension.swift */; };
+		E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */; };
 		E788FBBF29768585004A526D /* FTNotebookTagsSearchProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E788FBBE29768585004A526D /* FTNotebookTagsSearchProcessor.swift */; };
 		E78EEF5A28DC46990042DCE7 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78EEF5928DC46990042DCE7 /* UIView+Extension.swift */; };
 		E79E84372A31B1DD00683B23 /* FTCustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79E84352A31B1DC00683B23 /* FTCustomLabel.swift */; };
@@ -4364,7 +4365,7 @@
 		E75E67BC2A9F7442009F5B2E /* FTTextStyle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FTTextStyle.plist; sourceTree = "<group>"; };
 		E75FCB2826C0EB5700E5FF75 /* FTGlobalSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTGlobalSearch.storyboard; sourceTree = "<group>"; };
 		E760040C2B4EAAB100B268AC /* FTDocumentPagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPagesController.swift; sourceTree = "<group>"; };
-		E76004102B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTFinderThumbnailViewCell.xib; sourceTree = "<group>"; };
+		E76004102B4EC3B200B268AC /* FTLinkPageThumbnailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTLinkPageThumbnailCell.xib; sourceTree = "<group>"; };
 		E76023382A4EC45000B16084 /* FTSearchSuggestionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSearchSuggestionHelper.swift; sourceTree = "<group>"; };
 		E760233A2A4EFBA100B16084 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		E760A1F82A7B904200E9CF51 /* FTShelfTagsViewController_MacExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsViewController_MacExtension.swift; sourceTree = "<group>"; };
@@ -4394,6 +4395,7 @@
 		E777CA2F27311F5400F2191A /* FTShelfFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTShelfFooterView.xib; sourceTree = "<group>"; };
 		E77808FB2746701B0049FECA /* FTConvertToTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTConvertToTextCell.swift; sourceTree = "<group>"; };
 		E77808FC2746701B0049FECA /* FTConvertToTextCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTConvertToTextCell.xib; sourceTree = "<group>"; };
+		E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTLinkPageThumbnailCell.swift; sourceTree = "<group>"; };
 		E77CE2882A86648400092774 /* FTNetworkPathMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNetworkPathMonitor.swift; sourceTree = "<group>"; };
 		E77D4E0D27E1B0CC008EF72A /* FTMorePopoverSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMorePopoverSections.swift; sourceTree = "<group>"; };
 		E788FBBE29768585004A526D /* FTNotebookTagsSearchProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookTagsSearchProcessor.swift; sourceTree = "<group>"; };
@@ -7749,7 +7751,8 @@
 				520DA2BD2A2F55C4003A6F22 /* FTBookmarkColorCell.swift */,
 				520DA2C72A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift */,
 				520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */,
-				E76004102B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib */,
+				E76004102B4EC3B200B268AC /* FTLinkPageThumbnailCell.xib */,
+				E779DE3A2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -12273,7 +12276,7 @@
 				52B34DFE29E5684400360F10 /* Montserrat-Regular.ttf in Resources */,
 				52BBD51029E95BDA003088AE /* Roboto-Bold.ttf in Resources */,
 				52BBD51129E95BDA003088AE /* Roboto-BoldItalic.ttf in Resources */,
-				E76004112B4EC3B200B268AC /* FTFinderThumbnailViewCell.xib in Resources */,
+				E76004112B4EC3B200B268AC /* FTLinkPageThumbnailCell.xib in Resources */,
 				52BBD51229E95BDA003088AE /* Roboto-ThinItalic.ttf in Resources */,
 				52BBD51329E95BDA003088AE /* Roboto-Medium.ttf in Resources */,
 				52BBD51429E95BDA003088AE /* Roboto-Black.ttf in Resources */,
@@ -13827,6 +13830,7 @@
 				BAF393292859ADF00067CA9F /* FTImportActionManager.swift in Sources */,
 				BAF3932A2859ADF00067CA9F /* FTFileSizeGenerator.m in Sources */,
 				BAF3932B2859ADF00067CA9F /* FTOutlineSearchViewController.swift in Sources */,
+				E779DE3B2B5143B1007FBFE1 /* FTLinkPageThumbnailCell.swift in Sources */,
 				BAF3932C2859ADF00067CA9F /* FTUserDefaults.swift in Sources */,
 				42B2F3A328A4D385002430C5 /* FTShelfCategoryViewController.swift in Sources */,
 				BAF3932E2859ADF00067CA9F /* FMResultSet_NoteshelfExt.swift in Sources */,
