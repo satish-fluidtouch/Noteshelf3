@@ -31,11 +31,11 @@ class FTStoreJournalsCollectionCell: UICollectionViewCell {
 
         self.thumbnail.image = nil
         self.thumbnail.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-        self.premiumView?.isHidden = FTStoreContainerHandler.shared.premiumUser?.isPremiumUser ?? true;        
+        self.premiumView?.isHidden = FTStorePremiumPublisher.shared.premiumUser?.isPremiumUser ?? true;
         if nil == self.cancellableAction
-            , let premiumUser = FTStoreContainerHandler.shared.premiumUser
+            , let premiumUser = FTStorePremiumPublisher.shared.premiumUser
             , !premiumUser.isPremiumUser {
-            self.cancellableAction = FTStoreContainerHandler.shared.premiumUser?.$isPremiumUser.sink { [weak self] value in
+            self.cancellableAction = FTStorePremiumPublisher.shared.premiumUser?.$isPremiumUser.sink { [weak self] value in
                 self?.premiumView?.isHidden = value;
             }
         }
@@ -47,7 +47,10 @@ class FTStoreJournalsCollectionCell: UICollectionViewCell {
 
         thumbnail.sd_imageIndicator = SDWebImageActivityIndicator.gray
         if let thumbnailUrl = templateInfo.thumbnailUrl {
-            self.thumbnail?.sd_setImage(with: thumbnailUrl, completed: {[weak self] _, error, _, _ in
+            self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                        , placeholderImage: nil
+                                        , options: .refreshCached
+                                        , completed: {[weak self] _, error, _, _ in
                 if error == nil {
                     self?.shadowImageView.isHidden = false
                 }

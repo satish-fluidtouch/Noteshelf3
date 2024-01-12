@@ -23,10 +23,12 @@ extension FTPDFRenderViewController: FTFinderThumbnailsActionDelegate {
                         splitView.preferredSplitBehavior = !UIDevice.isLandscapeOrientation ? .displace : .automatic
                         displayMode = .oneBesideSecondary
                         splitView.curentPrefrredDisplayMode = .oneBesideSecondary
+                        FTFinderEventTracker.trackFinderEvent(with: "toolbar_finder_open")
                     } else {
                         splitView.preferredSplitBehavior = .automatic
                         displayMode = .secondaryOnly
                         splitView.curentPrefrredDisplayMode = .secondaryOnly
+                        FTFinderEventTracker.trackFinderEvent(with: "toolbar_finder_close")
                     }
                     UIView.animate(withDuration: 0.2) {
                         splitView.preferredDisplayMode = displayMode
@@ -243,6 +245,7 @@ extension FTPDFRenderViewController: FTFinderThumbnailsActionDelegate {
                     }
                     _ = document.searchDocumentsForKey(searchKey,
                                                        tags: tags,
+                                                       isGlobalSearch: false,
                                                        onFinding: {(page, cancelled) in
                                                         if(!cancelled) {
                                                             DispatchQueue.main.async {

@@ -74,6 +74,14 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     var bottomMargin: Int = 0;
     var topMargin: Int = 0;
     var leftMargin: Int = 0;
+    var diaryPageInfo: FTDiaryPageInfo?
+    {
+        didSet {
+            if(!self.isInitializationInprogress) {
+                NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument);
+            }
+        }
+    }
 
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     fileprivate var pageSqliteFileItem : FTNSqliteAnnotationFileItem?;
@@ -479,6 +487,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         newPage._pageRect = self._pageRect;
         newPage.isInitializationInprogress = false;
         newPage.hasContents = self.hasContents;
+        newPage.diaryPageInfo = self.diaryPageInfo
         return newPage;
     }
     
@@ -486,6 +495,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     func updatePageAttributesWithDictionary(_ dict : [String : Any])
     {
         self.isInitializationInprogress = true;
+        if let diarypageData = dict["diaryPageInfo"] as? Data, let diaryPageInfo = try? PropertyListDecoder().decode(FTDiaryPageInfo.self,from:diarypageData) {
+            self.diaryPageInfo = diaryPageInfo
+        }
         if let uuid = dict["uuid"] as? String {
             _uuid = uuid
         }
@@ -560,7 +572,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     func dictionaryRepresentation() -> [String : Any]
     {
         var dictRep = [String : Any]();
-        
+        if let _diaryPageInfo = try? PropertyListEncoder().encode(self.diaryPageInfo){
+            dictRep["diaryPageInfo"] = _diaryPageInfo
+        }
         dictRep["associatedPDFFileName"] = self.associatedPDFFileName as AnyObject?;
         dictRep["associatedPageIndex"] = NSNumber.init(value: self.associatedPDFPageIndex as Int);
         dictRep["deviceModel"] = self.deviceModel as AnyObject?;
@@ -849,7 +863,7 @@ extension FTNoteshelfPage : FTPageSearchProtocol
 {
     @objc
     @discardableResult
-    func searchFor(_ searchKey : String,tags : [String]) -> Bool
+    func searchFor(_ searchKey : String,tags : [String],isGlobalSearch: Bool) -> Bool
     {
         self.searchLock.wait();
         if let key = self.searchingInfo?.searchKey, key == searchKey {
@@ -881,29 +895,35 @@ extension FTNoteshelfPage : FTPageSearchProtocol
         var found = false;
         //If any tags are present and found in this page, proceed further search is specific tagged page
         //If no tags, also continue search with searchKey
-        if let textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) {
-            if(!textAnnotations.isEmpty) {
-                found = true;
-            }
-            textAnnotations.forEach({ (textAnnotation) in
-                autoreleasepool(invoking: {
-                    if let textAnn = textAnnotation as? FTTextAnnotation {
-                        let newBoundRect = textAnn.boundingRect;
-                        if let boundsArray = textAnn.attributedString?.boundsForOccurance(of: searchKey,
-                                                                                          containerSize: newBoundRect.size,
-                                                                                          containerInset: FTTextView.textContainerInset(textAnn.version)) as? [NSValue] {
-                            for eachValue in boundsArray {
-                                var rect = eachValue.cgRectValue;
-                                rect.origin.x += newBoundRect.origin.x;
-                                rect.origin.y += newBoundRect.origin.y;
-                                let searchItem = FTSearchItem(withRect: rect,type: FTSearchableItemType.annotation);
-                                searchableItems.append(searchItem);
-                            }
+        let textAnnotations: [FTAnnotation];
+        let USE_SQLITE = !isGlobalSearch;
+        if USE_SQLITE {
+            textAnnotations = self.sqliteFileItem()?.textAnnotationsContainingKeyword(searchKey) ?? [FTAnnotation]();
+        }
+        else {
+            let annotationCache = FTNonStrokeAnnotationCache.init(documentID: self.documentUUID, pageID: self.uuid);
+            textAnnotations = annotationCache.searchForTextAnnotation(contains: searchKey);
+        }
+        found = !textAnnotations.isEmpty;
+        textAnnotations.forEach({ (textAnnotation) in
+            autoreleasepool(invoking: {
+                if let textAnn = textAnnotation as? FTTextAnnotation {
+                    let newBoundRect = textAnn.boundingRect;
+                    if let boundsArray = textAnn.attributedString?.boundsForOccurance(of: searchKey,
+                                                                                      containerSize: newBoundRect.size,
+                                                                                      containerInset: FTTextView.textContainerInset(textAnn.version)) as? [NSValue] {
+                        for eachValue in boundsArray {
+                            var rect = eachValue.cgRectValue;
+                            rect.origin.x += newBoundRect.origin.x;
+                            rect.origin.y += newBoundRect.origin.y;
+                            let searchItem = FTSearchItem(withRect: rect,type: FTSearchableItemType.annotation);
+                            searchableItems.append(searchItem);
                         }
                     }
-                });
+                }
             });
-        }
+        });
+
         if(!searchKey.isEmpty) {
             if let pdfPageRef = self.pdfPageRef
                 , let pdfContent = (self.parentDocument as? FTNoteshelfDocument)?.pdfContentCache {
@@ -962,13 +982,14 @@ extension FTNoteshelfPage : FTPageSearchProtocol
     
     internal func getHandWrittenSearchedItems(forKey searchText:String) -> [FTSearchItem]{
         var searchedItems:[FTSearchItem] = []
-        let recognitionInfo:FTRecognitionResult? = self.recognitionInfo
         
-        if recognitionInfo != nil {
-            let recognisedText = recognitionInfo!.recognisedString
-            let characterRects:[CGRect] = recognitionInfo!.characterRects
-            
-            let indexes: [Int] = recognisedText.indices(of: searchText)
+        guard let recognitionInfo = self.recognitionInfo else {
+            return searchedItems;
+        }
+        let recognisedText = recognitionInfo.recognisedString;
+        let indexes = recognisedText.indices(of: searchText);
+        if !indexes.isEmpty {
+            let characterRects:[CGRect] = recognitionInfo.characterRects
             indexes.forEach { (index) in
                 let newString = recognisedText[...index]
                 //The spaceCount logic seems not useful, please take note of this.
@@ -988,18 +1009,18 @@ extension FTNoteshelfPage : FTPageSearchProtocol
                 searchedItems.append(searchItem)
             }
         }
-        
         return searchedItems
     }
+    
     internal func getVisionTextSearchedItems(forKey searchText:String) -> [FTSearchItem]{
         var searchedItems:[FTSearchItem] = []
-        let recognitionInfo:FTVisionRecognitionResult? = self.visionRecognitionInfo
-        
-        if recognitionInfo != nil {
-            let recognisedText = recognitionInfo!.recognisedString
-            let characterRects:[CGRect] = recognitionInfo!.characterRects
-            
-            let indexes: [Int] = recognisedText.indices(of: searchText)
+        guard let recognitionInfo = self.visionRecognitionInfo else {
+            return searchedItems;
+        }
+        let recognisedText = recognitionInfo.recognisedString;
+        let indexes = recognisedText.indices(of: searchText);
+        if !indexes.isEmpty {
+            let characterRects:[CGRect] = recognitionInfo.characterRects
             indexes.forEach { (index) in
                 let newString = recognisedText[...index]
                 let spaceCount = newString.count - newString.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count;
@@ -1021,7 +1042,6 @@ extension FTNoteshelfPage : FTPageSearchProtocol
                 searchedItems.append(searchItem)
             }
         }
-        
         return searchedItems
     }
 
@@ -1196,6 +1216,7 @@ extension FTNoteshelfPage : FTCopying {
             newPage.addTag(eachTag);
         }
         newPage.isInitializationInprogress = false;
+        newPage.diaryPageInfo = self.diaryPageInfo
         return newPage;
     }
     

@@ -25,7 +25,6 @@ class FTTemplatesPageViewController: UIViewController {
 
     var templates: [TemplateInfo] = []
     var currentIndex: Int = 0
-    private var pageActionManager = FTTemplatesPageActionManager.shared
     private var scrollDirection : Int = 0
     private var _currentPageIndex: Int = 0
     private var previewControllers = [UIViewController]()
@@ -47,7 +46,8 @@ class FTTemplatesPageViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var createNotebookButton: UIButton!
     @IBOutlet private weak var downloadPackButton: UIButton!
-    
+
+    private var actionManager: FTStoreActionManager?
     private var cancellabelAction: AnyCancellable?;
     
     override func viewDidLoad() {
@@ -61,8 +61,8 @@ class FTTemplatesPageViewController: UIViewController {
     private func addObserver(_ template: TemplateInfo) {
         if nil == cancellabelAction
             , template.type == FTDiscoveryItemType.diary.rawValue
-           , let premiumUser = FTStoreContainerHandler.shared.premiumUser, !premiumUser.isPremiumUser {
-            cancellabelAction = FTStoreContainerHandler.shared.premiumUser?.$isPremiumUser.sink(receiveValue: { [weak self] isPremiumUser in
+           , let premiumUser = FTStorePremiumPublisher.shared.premiumUser, !premiumUser.isPremiumUser {
+            cancellabelAction = FTStorePremiumPublisher.shared.premiumUser?.$isPremiumUser.sink(receiveValue: { [weak self] isPremiumUser in
                 self?.premiumIconView?.isHidden = isPremiumUser;
                 if !(self?.isRegularClass() ?? false) {
                     self?.premiumIconView?.isHidden = true;
@@ -124,10 +124,14 @@ class FTTemplatesPageViewController: UIViewController {
         }
     }
     
-    public static func presentFromViewController(_ viewController: UIViewController, templates: [TemplateInfo], selectedIndex: Int) {
+    public static func presentFromViewController(_ viewController: UIViewController,
+                                                 actionManager: FTStoreActionManager?,
+                                                 templates: [TemplateInfo],
+                                                 selectedIndex: Int) {
         if let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTTemplatesPageViewController") as? FTTemplatesPageViewController {
             vc.templates = templates
             vc.currentIndex = selectedIndex
+            vc.actionManager = actionManager
 
 #if targetEnvironment(macCatalyst)
             vc.modalPresentationStyle = .formSheet
@@ -154,7 +158,6 @@ private extension FTTemplatesPageViewController {
         setupBlurEffectView()
         setupPageScrollView()
         bringSubViewsToFront()
-        observers()
     }
 
     func setupBlurEffectView() {
@@ -190,12 +193,7 @@ private extension FTTemplatesPageViewController {
 // MARK: - ScrollView Configaration
 private extension FTTemplatesPageViewController {
     private func templatesPreviewControllerForIndex(index: Int) -> UIViewController? {
-        guard let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTTemplatePreviewViewController") as? FTTemplatePreviewViewController else {return nil}
-        vc.template = templates[index]
-        vc.currentIndex = index
-        if index == 0 {
-            vc.delegate = self
-        }
+        let vc = FTTemplatePreviewViewController.controller(template: templates[index], actionManager: actionManager, delegate: self, index: index)
         vc.modalPresentationStyle = .overCurrentContext
         return vc
     }
@@ -216,7 +214,7 @@ private extension FTTemplatesPageViewController {
 
         for i in 0..<templates.count {
             let item = templates[currentIndex]
-                if (item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.diary.rawValue), let vc = templatesPreviewControllerForIndex(index: i) as? FTTemplatePreviewViewController {
+                if (item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.diary.rawValue || item.type == FTDiscoveryItemType.userJournals.rawValue), let vc = templatesPreviewControllerForIndex(index: i) as? FTTemplatePreviewViewController {
                     previewControllers.append(vc)
                     downloadActionView.isHidden = true
                 } else if item.type == FTDiscoveryItemType.sticker.rawValue, let vc = stickersPreviewControllerForIndex(index: i) as? FTStickersPreviewViewController {
@@ -250,7 +248,7 @@ private extension FTTemplatesPageViewController {
     private func removePreviewAt(index: Int) {
         let controller = previewControllers[index]
         if let vc = controller as? FTTemplatePreviewViewController {
-            vc.delegate = nil
+            vc.removeDelegate()
         }
         if let vc = controller as? FTStickersPreviewViewController {
             vc.delegate = nil
@@ -308,7 +306,7 @@ private extension FTTemplatesPageViewController {
         
         self.premiumIconView?.isHidden = true;
         if template.type == FTDiscoveryItemType.diary.rawValue
-            , let premiumUser = FTStoreContainerHandler.shared.premiumUser
+            , let premiumUser = FTStorePremiumPublisher.shared.premiumUser
             , !premiumUser.isPremiumUser {
             self.premiumIconView?.isHidden = false;
             if !(self.isRegularClass() ) {
@@ -329,9 +327,9 @@ private extension FTTemplatesPageViewController {
         for(index, controller) in previewControllers.enumerated() {
             if let vc = controller as? FTTemplatePreviewViewController {
                 if index == currentIndex {
-                    vc.delegate = self
+                    vc.addDelegate(self)
                 } else {
-                    vc.delegate = nil
+                    vc.removeDelegate()
                 }
             } else if let vc = controller as? FTStickersPreviewViewController {
                 if index == currentIndex {
@@ -413,16 +411,6 @@ private extension FTTemplatesPageViewController {
 extension FTTemplatesPageViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
-    }
-}
-
-// MARK: - Observers
-private extension FTTemplatesPageViewController {
-    func observers() {
-        pageActionManager.isFavourate.sink { [weak self] action in
-            guard self != nil else { return }
-        }.store(in: &pageActionManager.cancellables)
-
     }
 }
 

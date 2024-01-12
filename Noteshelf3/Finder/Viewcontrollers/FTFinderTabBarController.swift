@@ -23,14 +23,25 @@ protocol FTFinderTabBarDelegate {
 }
 
 class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCustomPresentable {
+    private weak var document: FTThumbnailableCollection?
+    
     var customTransitioningDelegate = FTCustomTransitionDelegate(with: .interaction, supportsFullScreen: true)
     var screenMode: FTFinderScreenMode = .normal {
         didSet {
-            self.childVcDelegate?.screenModeDidChange()
+            guard let currentSeletedVc  = self.selectedViewController else {
+                return;
+            }
+            if let childVC = currentSeletedVc as? FTFinderTabBarProtocol {
+                childVC.screenModeDidChange();
+            }
+            else if let navVc = currentSeletedVc as? UINavigationController,
+                    let childVC = navVc.viewControllers.first as? FTFinderTabBarProtocol {
+                childVC.screenModeDidChange();
+            }
         }
     }
+    
     private var previousSelectedIndex : Int?
-    weak var childVcDelegate: FTFinderTabBarProtocol?
     var isResizing: Bool = false
     var currentDisplayMode: UISplitViewController.DisplayMode?
     weak var splitVc: FTNoteBookSplitViewController?
@@ -142,14 +153,19 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
     
     class func viewController(delegate : FTFinderTabBarDelegate?, with doc: FTDocumentProtocol, mode: FTFinderScreenMode = .normal, searchOptions: FTFinderSearchOptions) -> FTFinderTabBarController
     {
+        guard let ThumbnailableCollection = doc as? FTThumbnailableCollection else {
+            fatalError("Document should implement FTThumbnailableCollection protoco");
+        }
         let finderTabBar = FTFinderTabBarController.instantiate(fromStoryboard: .finder)
+        finderTabBar.document = ThumbnailableCollection
         if  let controllers = finderTabBar.viewControllers {
             for (index, eachVc) in controllers.enumerated() {
-                if var vc = eachVc as? FTFinderTabBarProtocol {
-                    vc.configureData(forDocument: doc as! FTThumbnailableCollection, exportInfo: nil, delegate: finderTabBar, searchOptions: searchOptions)
+                if let vc = eachVc as? FTFinderTabBarProtocol {
+                    vc.configureData(forDocument: ThumbnailableCollection, exportInfo: nil, delegate: finderTabBar, searchOptions: searchOptions)
                     vc.selectedTab = finderTabBar.tabFor(index: index)
-                } else if eachVc is UINavigationController, eachVc.children.count >= 0, var vc = eachVc.children[0] as? FTFinderTabBarProtocol {
-                    vc.configureData(forDocument: doc as! FTThumbnailableCollection, exportInfo: nil, delegate: finderTabBar, searchOptions: searchOptions)
+                } else if let navVC = eachVc as? UINavigationController
+                            , let vc = navVC.viewControllers.first as? FTFinderTabBarProtocol {
+                    vc.configureData(forDocument: ThumbnailableCollection, exportInfo: nil, delegate: finderTabBar, searchOptions: searchOptions)
                     vc.selectedTab = finderTabBar.tabFor(index: index)
                 }
             }
@@ -222,8 +238,11 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
             let displayMode = splitVc.displayMode
             if displayMode == .oneBesideSecondary || displayMode == .oneOverSecondary {
                 splitVc.show(.primary)
+                FTFinderEventTracker.trackFinderEvent(with: "finder_quickaccess_open")
             } else {
                 splitVc.hide(.primary)
+                FTFinderEventTracker.trackFinderEvent(with: "finder_quickaccess_close")
+
             }
         }
     }
@@ -236,6 +255,7 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
                     displayMode = .secondaryOnly
                     splitVc.preferredSplitBehavior = .automatic
                     self.noteBookSplitViewController()?.curentPrefrredDisplayMode = .secondaryOnly
+                    FTFinderEventTracker.trackFinderEvent(with: "finder_close_tap")
                 } else if displayMode == .twoBesideSecondary || displayMode == .twoDisplaceSecondary {
                     displayMode = .oneBesideSecondary
                 }
@@ -473,6 +493,18 @@ extension FTFinderTabBarController: FTFinderNotifier {
         }
     }
 
+    func didCloseNotebook() {
+        self.viewControllers?.forEach({ eachController in
+            if let navController = eachController as? UINavigationController,
+               let childVc = navController.viewControllers.first as? FTFinderTabBarProtocol{
+                childVc.didCloseNotebook();
+            }
+            else if let childVc = eachController as? FTFinderTabBarProtocol {
+                childVc.didCloseNotebook();
+            }
+        })
+    }
+    
     func didTagPage() {
         self.reloadDataIfNeeded()
     }
@@ -538,11 +570,29 @@ extension FTFinderTabBarController {
 
 extension FTFinderTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if previousSelectedIndex == self.selectedIndex,
-            let navController = viewController as? UINavigationController,
-            let vc = navController.viewControllers[0] as? FTFinderTabBarProtocol {
+        if previousSelectedIndex != self.selectedIndex {
+            previousSelectedIndex = selectedIndex
+            self.document?.startRecognitionIfNeeded();
+            FTFinderEventTracker.trackFinderEvent(with: eventNameForTab())
+        }
+        else if let navController = viewController as? UINavigationController,
+                let vc = navController.viewControllers.first as? FTFinderTabBarProtocol {
             vc.scrollToTop()
         }
-        previousSelectedIndex = selectedIndex
+    }
+    
+   private func eventNameForTab() -> String {
+        var eventName = ""
+        switch self.selectedIndex {
+        case 0:
+            eventName = "finder_pages_tap"
+        case 1:
+            eventName = "finder_content_tap"
+        case 2:
+            eventName = "finder_search_tap"
+        default:
+            eventName = "finder_pages_tap"
+        }
+        return eventName
     }
 }

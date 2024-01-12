@@ -95,6 +95,14 @@ class FTGlobalSearchController: UIViewController {
         }
 #endif
     }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent);
+        if nil == parent,self.searchController.isActive {
+            self.searchController.isActive = false;
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let shelfItemCollection {

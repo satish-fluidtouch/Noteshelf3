@@ -61,7 +61,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     var screenMode: FTFinderScreenMode {
         return self.delegate?.currentScreenMode() ?? .normal
     }
-    var document:FTThumbnailableCollection!;
+    weak var document:FTThumbnailableCollection?;
     var mediaObjects = [FTMediaObject]()
     var selectedTab: FTFinderSelectedTab = .content
     
@@ -104,7 +104,6 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(didAddMedia(_:)), name: .didAddMedia, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateMedia(_:)), name: .didUpdateMedia, object: nil)
         contentView.addVisualEffectBlur(cornerRadius: 0)
-        (self.tabBarController as? FTFinderTabBarController)?.childVcDelegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -326,6 +325,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
     private func didTapEditOption(identifier: String) {
         if let option = FTMediaType(rawValue: identifier) {
             self.selectedMediaType = option
+            FTFinderEventTracker.trackFinderEvent(with: "finder_more_filter_tap", params: ["filter": option.eventDescription()])
             updateAndReloadCollectionView()
             if let optionsMenu = editButton.menu?.children.first as? UIMenu {
                 let elements = optionsMenu.children
@@ -424,12 +424,16 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         self.document = document
     }
     
+    private func allDocumentPages() -> [FTThumbnailable] {
+        return self.document?.documentPages() ?? [FTThumbnailable]();
+    }
+    
     private func setUpData() {
         DispatchQueue.global().async {[weak self] in
             guard let self = self else {
                 return
             }
-            let pages = self.document.documentPages()
+            let pages = self.allDocumentPages()
             self.mediaObjects.removeAll()
             pages.forEach { eachPage in
                 if let page = eachPage as? FTNoteshelfPage {
@@ -512,13 +516,14 @@ extension FTMediaViewController:  UICollectionViewDelegate, FTCollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let mediaObject = snapshotItem(for: indexPath) as? FTMediaObject {
             let indexSelected: Int;
-            if let index = self.document.documentPages().firstIndex(where: {$0.uuid == mediaObject.page?.uuid}) {
+            if let index = self.allDocumentPages().firstIndex(where: {$0.uuid == mediaObject.page?.uuid}) {
                 indexSelected = index;
             }
             else {
                 indexSelected = 0;
             }
-            track("Finder_TapPage", params: [:],screenName: FTScreenNames.finder)
+            let param =  (self.selectedMediaType == .allMedia) ? "off" : "on"
+            track("finder_content_item_tap", params: ["filter toggle": param],screenName: FTScreenNames.finder)
             self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
         }
     }
@@ -558,8 +563,9 @@ extension FTMediaViewController {
         if menuOperation == .share {
             self.shareMedia(with: mediaItem, at : indexPath)
         } else if menuOperation == .openInNewWindow {
+            FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_openinnewwindow_tap")
             let page = mediaItem.page
-            let index = document.documentPages().firstIndex(where: { $0.uuid == page?.uuid })
+            let index = allDocumentPages().firstIndex(where: { $0.uuid == page?.uuid })
             if let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() {
                 self.openItemInNewWindow(shelfItem, pageIndex: index)
             }
@@ -568,6 +574,7 @@ extension FTMediaViewController {
     
     private func shareMedia(with item: FTMediaItem, at indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
+        FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_share_tap")
         if item.mediaType == .audio {
             self.shareAudio(with: item.annotation, at: cell)
         } else {
@@ -612,6 +619,7 @@ extension FTMediaViewController {
 extension FTMediaViewController: FTMediaDelegate, FTMediaFilterViewDelegate {
     func didTapMoreOption(cell: UICollectionViewCell, item: FTMediaItem?) {
         if let annotation = item?.annotation as? FTAudioAnnotation {
+            FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_more_tap")
             FTAudioTrackController.showAsPopover(fromSourceView: cell, overViewController: self, with: CGSize(width: 330, height: 290),  annotations: [annotation], mode: .finder, selectedAnnotation: annotation)
         }
     }

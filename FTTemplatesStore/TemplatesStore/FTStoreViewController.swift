@@ -17,10 +17,26 @@ class FTStoreViewController: UIViewController {
     private var viewModel = FTStoreViewModel()
     private var sectionContainer: StoreSectionContainer!
     private var currentSize: CGSize = .zero
+    private var actionManager: FTStoreActionManager!
+
+    class func controller(with actionManager: FTStoreActionManager?) -> FTStoreViewController {
+        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreViewController") as! FTStoreViewController
+        viewController.actionManager = actionManager
+        return viewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sectionContainer = StoreSectionContainer(handlers: [BannerSectionHandler(), CategorySectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), TemplatesSectionHandler(), StickersSectionHandler(), JournalSectionHandler()])
+        self.sectionContainer = StoreSectionContainer(handlers:
+                                                        [BannerSectionHandler(actionStream: actionManager.actionStream),
+                                                         CategorySectionHandler(actionStream: actionManager.actionStream),
+                                                         JournalSectionHandler(actionStream: actionManager.actionStream),
+                                                         StickersSectionHandler(actionStream: actionManager.actionStream),
+                                                         TemplatesSectionHandler(actionStream: actionManager.actionStream),
+                                                         StickersSectionHandler(actionStream: actionManager.actionStream),
+                                                         TemplatesSectionHandler(actionStream: actionManager.actionStream),
+                                                         TemplatesSectionHandler(actionStream: actionManager.actionStream)])
 
         // TODO:check for alternative via storyboard
         self.tableView.sectionHeaderTopPadding = 0
@@ -60,7 +76,27 @@ class FTStoreViewController: UIViewController {
             self.tableView.tableHeaderView = seg
         }
     }
-
+    
+    func scrollToinspirations() {
+        guard nil != tableView else {
+            return
+        }
+        let section = viewModel.sectionForInspirations()
+        self.tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
+    }
+    
+    func navigateToDiaries() {
+        guard nil != tableView else {
+            return
+        }
+        let section = viewModel.sectionForBanners()
+        if let sectionItem = viewModel.storeSectionInfo(at: section) {
+            let items = sectionItem.discoveryItems
+            if let index = items.firstIndex(where: {$0.type == FTDiscoveryItemType.diaries.rawValue }) {
+                actionManager.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: index))
+            }
+        }
+    }
 }
 
 // MARK: - UI Methods
@@ -99,7 +135,7 @@ private extension FTStoreViewController {
 // MARK: - Private Methods
 private extension FTStoreViewController {
     func observers() {
-        FTStoreActionManager.shared.actionStream.sink {[weak self] action in
+        actionManager.actionStream.sink {[weak self] action in
             guard let self = self else { return }
             switch action {
             case .didTapOnDiscoveryItem(items: let items, selectedIndex: let index):
@@ -108,12 +144,12 @@ private extension FTStoreViewController {
                         self.navigateToCategory(template: item)
                     } else if item.type == FTDiscoveryItemType.templates.rawValue || item.type == FTDiscoveryItemType.diaries.rawValue {
                         self.navigateToTempaltesVC(discoveryItem: item)
-                    } else if item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.sticker.rawValue || item.type == FTDiscoveryItemType.diary.rawValue {
+                    } else if item.type == FTDiscoveryItemType.template.rawValue || item.type == FTDiscoveryItemType.sticker.rawValue || item.type == FTDiscoveryItemType.diary.rawValue || item.type == FTDiscoveryItemType.userJournals.rawValue {
                         self.presentTemplatePreviewFor(templates: items, selectedIndex: index)
                     }
                 self.trackEventForTappingDiscoveryItem(item: item)
             }
-        }.store(in: &FTStoreActionManager.shared.cancellables)
+        }.store(in: &actionManager.cancellables)
 
     }
 
@@ -123,11 +159,12 @@ private extension FTStoreViewController {
             .category: EventName.templates_category_tap,
             .templates: EventName.templates_template_tap,
             .stickers: EventName.templates_sticker_tap,
-            .journals: EventName.templates_diaries_tap
+            .journals: EventName.templates_diaries_tap,
+            .userJournals: EventName.templates_inspirations_tap
         ]
 
         if let type = FTStoreSectionType(rawValue: item.sectionType ?? 99), let event = eventMapping[type] {
-            FTStoreContainerHandler.shared.actionStream.send(.track(event: event, params: [EventParameterKey.title: item.fileName], screenName: ScreenName.templatesStore))
+            FTStorePremiumPublisher.shared.actionStream.send(.track(event: event, params: [EventParameterKey.title: item.fileName], screenName: ScreenName.templatesStore))
         }
 
     }
@@ -170,7 +207,7 @@ extension FTStoreViewController: UITableViewDelegate {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
                                                                     FTStoreHeader.reuseIdentifier) as! FTStoreHeader
             view.seeAllButton.isHidden = false
-            if sectionItem.sectionType == FTStoreSectionType.stickers.rawValue {
+            if sectionItem.sectionType == FTStoreSectionType.stickers.rawValue || sectionItem.sectionType == FTStoreSectionType.userJournals.rawValue {
                 view.seeAllButton.isHidden = true
             }
             view.seeAllButton.tag = section
@@ -223,7 +260,7 @@ extension FTStoreViewController: UITableViewDelegate {
             case .journals:
                 return FTStoreConstants.DigitalDiary.size.height + FTStoreConstants.DigitalDiary.extraHeightPadding + FTStoreConstants.DigitalDiary.topBottomInset
 
-            case .stickers:
+            case .stickers, .userJournals:
                 let size = FTStoreConstants.Sticker.calculateSizeFor(view: self.view)
                 return size.height + FTStoreConstants.Sticker.extraHeightPadding + FTStoreConstants.StoreTemplate.topBottomInset
             }
@@ -236,21 +273,17 @@ extension FTStoreViewController: UITableViewDelegate {
 // MARK: - Helper Methods
 private extension FTStoreViewController {
     func navigateToCategory(template: DiscoveryItem) {
-        if let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTCategoryTempaltesViewController") as? FTCategoryTempaltesViewController {
-            vc.categoryTemplate = template
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = FTCategoryTempaltesViewController.controller(categoryTemplate: template, actionManager: actionManager)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func navigateToTempaltesVC(discoveryItem: DiscoveryItem) {
-        if let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTStoreTemplatesViewController") as? FTStoreTemplatesViewController {
-            vc.discoveryItem = discoveryItem
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = FTStoreTemplatesViewController.controller(discoveryItem: discoveryItem, actionManager: actionManager)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func presentTemplatePreviewFor(templates: [TemplateInfo], selectedIndex: Int) {
-        FTTemplatesPageViewController.presentFromViewController(self, templates: templates, selectedIndex: selectedIndex)
+        FTTemplatesPageViewController.presentFromViewController(self, actionManager: actionManager, templates: templates, selectedIndex: selectedIndex)
     }
 
 }

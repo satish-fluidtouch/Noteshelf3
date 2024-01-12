@@ -250,23 +250,32 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         // Render Calendar page
         
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
         
         // Render year page
         let numberOfYearPages : Int = self.formatInfo.customVariants.isLandscape ? 3 : 2
         for index in 1...numberOfYearPages {
             self.renderYearPage(atIndex: index, context: context, months: monthlyFormatter.monthInfo, calendarYear: self.formatInfo)
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
         }
         
         // Render Month Pages
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            let utcDate = calendarMonth.dayInfo.first?.date.utcDate()
+            if let utcDate {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .month, date : utcDate.timeIntervalSinceReferenceDate))
+            }
             let weeklyInfo = calendarMonth.weeklyInfo
             // for every calendar duration add extra week if required
             if renderFirstWeek {
                 renderFirstWeek = false
                 if shouldAddWeekOffsetToCalendarWith(firstDay: weeklyInfo.first?.dayInfo.first), let firstWeek = weeklyInfo.first{
                     self.renderWeekPage(context: context, weeklyInfo: firstWeek,monthInfo: calendarMonth)
+                    if let utcDate = firstWeek.dayInfo.first?.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+                    }
                 }
             }
             weeklyInfo.forEach { (weekInfo) in
@@ -274,19 +283,35 @@ class FTPlannerDiaryFormat : FTDairyFormat {
                 if firstDayOfMonth?.fullMonthString.uppercased() == calendarMonth.fullMonth.uppercased(){
                 //if self.shouldAddWeekToMonth(firstDay: firstDayOfMonth, currentMonth: calendarMonth) {
                     self.renderWeekPage(context: context, weeklyInfo: weekInfo,monthInfo: calendarMonth)
+                    if let utcDate = weekInfo.dayInfo.first?.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+                    }
                 }
             }
             let dayInfo = calendarMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo,monthInfo: calendarMonth);
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo,monthInfo: calendarMonth);
+                    //For Today link
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate , isCurrentPage: self.setDiaryPageAsCurrentPage(pageDate: utcDate)))
+                    }
+                }
             }
             self.renderNotesPage(context: context,monthInfo: calendarMonth)
             self.renderTrackerPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            if let utcDate {
+                let timeInterval = utcDate.timeIntervalSinceReferenceDate
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .monthlyNotes, date : timeInterval))
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .tracker, date : timeInterval))
+            }
+
         }
         
         // Render extras page
         for index in 1...3 {
             self.renderExtrasPage(atIndex : index,context: context)
+            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .extras))
         }
     }
     func shouldAddWeekOffsetToCalendarWith(firstDay : FTDayInfo?) -> Bool {

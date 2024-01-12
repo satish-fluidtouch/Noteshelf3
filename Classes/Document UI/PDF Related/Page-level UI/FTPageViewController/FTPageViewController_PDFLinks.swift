@@ -82,6 +82,7 @@ private extension FTPageViewController {
             (mode == RKDeskMode.deskModeEraser ||
                 mode == RKDeskMode.deskModePen ||
                 mode == RKDeskMode.deskModeMarker ||
+             mode == RKDeskMode.deskModeFavorites || 
              mode == RKDeskMode.deskModeShape || mode == RKDeskMode.deskModeClipboard)
         {
             return false
@@ -176,7 +177,13 @@ private extension FTPageViewController
                 self.performGotoAction(action as! PDFActionGoTo)
             }
             else if(action.type.lowercased() == "uri") {
-                self.performURLAction(action as! PDFActionURL);
+                let todayLinkURLString = FTSharedGroupID.getAppGroupID() + "://todayLink"
+                if let url = action as? PDFActionURL, url.url?.absoluteString ==  todayLinkURLString {
+                    self.performTodayLinkAction()
+                }
+                else {
+                    self.performURLAction(action as! PDFActionURL);
+                }
             }
             track("pdf_link_tap", params: ["type":action.type.lowercased()])
         }
@@ -246,6 +253,25 @@ extension URL {
                                                      okHandler: {
                                                         UIApplication.shared.open(self, options: [:], completionHandler: nil);
             });
+        }
+    }
+}
+private extension FTPageViewController {
+    func performTodayLinkAction(){
+        if let pdfPage = self.pdfPage , let pages = pdfPage.parentDocument?.pages() {
+            guard let currentDate = Date().utcDate() else { return };
+            let destinationPage = pages.first { eachpage in
+                if let nsPage = eachpage as? FTNoteshelfPage, nsPage.diaryPageInfo?.type == .day, let date = nsPage.diaryPageInfo?.date {
+                    let pageDate = Date(timeIntervalSinceReferenceDate: date).utcDate() ?? Date(timeIntervalSinceReferenceDate: date);
+                    if pageDate.compareDate(currentDate) == ComparisonResult.orderedSame {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            if let destinationPageIndex = destinationPage?.pageIndex() {
+                self.delegate?.showPage(at: destinationPageIndex, forceReLayout: false, animate: true)
+            }
         }
     }
 }

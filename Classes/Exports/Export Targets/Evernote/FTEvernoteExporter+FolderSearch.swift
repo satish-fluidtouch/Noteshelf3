@@ -21,7 +21,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
         let folderInfo = UserDefaults.standard.value(forKey: PersistenceKey_ExportTarget_FolderID_Evernote) as? NSDictionary
         #if !targetEnvironment(macCatalyst)
         guard let session = EvernoteSession.shared(), session.isAuthenticated else {
-            let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+            let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
             return;
         }
@@ -43,7 +43,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
     func fetchDefaultNotebook() {
         #if !targetEnvironment(macCatalyst)
         guard let session = EvernoteSession.shared(), session.isAuthenticated else {
-            let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+            let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
             return;
         }
@@ -67,7 +67,7 @@ extension FTEvernoteExporter : FTExporterProtocol{
     fileprivate func createDefaultNotebook() {
         #if !targetEnvironment(macCatalyst)
         guard let session = EvernoteSession.shared(), session.isAuthenticated else {
-            let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+            let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
             return;
         }

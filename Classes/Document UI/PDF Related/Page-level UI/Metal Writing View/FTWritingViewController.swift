@@ -25,6 +25,8 @@ import FTCommon
     func moveAnnotationsToFront(_ annotations : [FTAnnotation], shouldRefresh:Bool)
     func moveAnnotationsToBack(_ annotations : [FTAnnotation], shouldRefresh:Bool)
     func addShapeAnnotation()
+    func editShapeAnnotation(with annotation: FTAnnotation, point: CGPoint)
+    func endActiveShapeAnnotation(with annotation: FTAnnotation)
     func activeController() -> UIViewController?
 }
 
@@ -58,6 +60,8 @@ protocol FTContentDelegate : FTPageAnnotationHandler {
     
     func reloadTiles(forIntents intents:[FTRendererIntent],rect : CGRect,properties : FTRenderingProperties);
     func addShapeAnnotation()
+    func editShapeAnnotation(with annotation: FTAnnotation, point: CGPoint)
+    func endActiveShapeAnnotation(with annotation: FTAnnotation)
     func activeController()-> UIViewController?
 }
 
@@ -685,11 +689,19 @@ extension FTWritingViewController : FTContentDelegate
     }
     
     func addShapeAnnotation() {
-        self.pageContentDelegate!.addShapeAnnotation()
+        self.pageContentDelegate?.addShapeAnnotation()
+    }
+    
+    func editShapeAnnotation(with annotation: FTAnnotation, point: CGPoint) {
+        self.pageContentDelegate?.editShapeAnnotation(with: annotation, point: point)
+    }
+    
+    func endActiveShapeAnnotation(with annotation: FTAnnotation) {
+        self.pageContentDelegate?.endActiveShapeAnnotation(with: annotation)
     }
     
     func activeController()-> UIViewController? {
-        return self.pageContentDelegate!.activeController()
+        return self.pageContentDelegate?.activeController()
     }
 
     var backgroundTexture: MTLTexture? {

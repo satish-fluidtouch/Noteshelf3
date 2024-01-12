@@ -35,7 +35,12 @@ class FTStorePlannerCollectionCell: UICollectionViewCell {
         let transformer = SDImageResizingTransformer(size: CGSize(width: 3 * CGFloat(self.frame.size.width), height: 3 * (self.frame.size.height - FTStoreConstants.StoreTemplate.extraHeightPadding)), scaleMode: .aspectFill)
 
         if let thumbnailUrl = templateInfo.thumbnailUrl {
-            self.thumbnail?.sd_setImage(with: thumbnailUrl, placeholderImage: nil, context: [.imageTransformer: transformer], progress: nil, completed: {[weak self] _, error, _, _ in
+            self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                        , placeholderImage: nil
+                                        , options: .refreshCached
+                                        , context: [.imageTransformer: transformer]
+                                        , progress: nil
+                                        , completed: {[weak self] _, error, _, _ in
                 if error == nil {
                     self?.shadowImageView.isHidden = false
                 }

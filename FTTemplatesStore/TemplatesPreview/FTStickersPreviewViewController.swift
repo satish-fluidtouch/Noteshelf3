@@ -39,7 +39,7 @@ class FTStickersPreviewViewController: UIViewController {
         authorButton.setTitle(template.author, for: .normal)
         imageView.sd_imageIndicator = SDWebImageActivityIndicator.gray
         let thumbnailUrl = (template as? DiscoveryItem)?.stickersThumbnailUrl
-        self.imageView.sd_setImage(with: thumbnailUrl)
+        self.imageView.sd_setImage(with: thumbnailUrl, placeholderImage: nil, options: .refreshCached)
         self.imageView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         self.imageView.layer.cornerRadius = 10
         self.imageView.shadowForPage()
@@ -68,7 +68,7 @@ class FTStickersPreviewViewController: UIViewController {
             return
         }
         // Track Event
-        FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.templates_sticker_download_tap, params: [EventParameterKey.title: templa.fileName], screenName: ScreenName.templatesStore))
+        FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.templates_sticker_download_tap, params: [EventParameterKey.title: templa.fileName], screenName: ScreenName.templatesStore))
 
         _ = try await storeServiceApi.downloadStickersFor(url: downloadUrl, fileName: templa.fileName)
         let alertVc = UIAlertController(title: "templatesStore.alert.success".localized, message: String(format: "templatesStore.stickerPreview.alert.successMessage".localized, templa.displayTitle), preferredStyle: .alert)

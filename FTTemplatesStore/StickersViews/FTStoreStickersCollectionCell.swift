@@ -7,18 +7,20 @@
 
 import UIKit
 import SDWebImage
+import Combine
 
 class FTStoreStickersCollectionCell: UICollectionViewCell {
     @IBOutlet private weak var thumbnail: UIImageView?
     @IBOutlet private weak var titleLabel: UILabel?
     @IBOutlet private weak var shadowImageView: UIImageView!
-
+    private var actionStream: PassthroughSubject<FTStoreActions, Never>?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func prepareCellWith(templateInfo: TemplateInfo) {
+    func prepareCellWith(templateInfo: TemplateInfo, actionStream: PassthroughSubject<FTStoreActions, Never>?) {
+        self.actionStream = actionStream
         self.shadowImageView.isHidden = true
         self.titleLabel?.text = templateInfo.title
         self.thumbnail?.image = nil
@@ -30,8 +32,22 @@ class FTStoreStickersCollectionCell: UICollectionViewCell {
         shadowImageView.image = scalled
 
         thumbnail?.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        if let thumbnailUrl = (templateInfo as! DiscoveryItem).stickersThumbnailUrl {
-            self.thumbnail?.sd_setImage(with: thumbnailUrl, completed: {[weak self] _, error, _, _ in
+        if templateInfo.type == FTDiscoveryItemType.userJournals.rawValue {
+            if let thumbnailUrl = templateInfo.thumbnailUrl {
+                self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                            , placeholderImage: nil
+                                            , options: .refreshCached
+                                            , completed: {[weak self] _, error, _, _ in
+                    if error == nil {
+                        self?.shadowImageView.isHidden = false
+                    }
+                })
+            }
+        } else if let thumbnailUrl = (templateInfo as! DiscoveryItem).stickersThumbnailUrl {
+            self.thumbnail?.sd_setImage(with: thumbnailUrl
+                                        , placeholderImage: nil
+                                        , options: .refreshCached
+                                        , completed: {[weak self] _, error, _, _ in
                 if error == nil {
                     self?.shadowImageView.isHidden = false
                 }

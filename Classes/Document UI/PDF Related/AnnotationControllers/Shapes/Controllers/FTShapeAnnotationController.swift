@@ -71,13 +71,13 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         guard let _shapeAnnotation = annotation as? FTShapeAnnotation else {
             fatalError("Requires shape annotation")
         }
+        annotationMode = mode
         shapeAnnotation = _shapeAnnotation
         initialUndoableInfo = annotation.undoInfo();
         super.init(nibName: nil, bundle: nil)
         self.delegate = delegate
         let frame = delegate?.visibleRect() ?? .zero
         self.view.frame = frame
-        annotationMode = mode
         self.allowsLocking = shapeAnnotation.allowsLocking
         shapeAnnotation.updateShapeType()
         intialBoundingRect = shapeAnnotation.boundingRect
@@ -132,6 +132,10 @@ class FTShapeAnnotationController: FTAnnotationEditController {
         self.displayLink = CADisplayLink(target: self, selector: #selector(publishChanges))
         self.displayLink?.isPaused = true;
         self.displayLink?.add(to: RunLoop.current, forMode: RunLoop.Mode.default);
+        if shapeAnnotation.inLineEditing {
+            shapeEditType = .resize;
+            self.displayLink?.isPaused = false;
+        }
     }
     
     deinit {
@@ -267,7 +271,6 @@ class FTShapeAnnotationController: FTAnnotationEditController {
                 setAnchorPoint()
             } else {
                 currentKnob = knob
-                knob.center = point
                 index = knob.segmentIndex
             }
             if shapeAnnotation.shape?.type() == .pentagon {
@@ -303,7 +306,52 @@ class FTShapeAnnotationController: FTAnnotationEditController {
             processShapeRotate(curPoint: point, prevPoint: prevPoint)
         } else if shapeEditType == .move {
             processShapeMoving(curPoint: point, prevPoint: prevPoint)
+        } else {
+            if shapeAnnotation.shape?.type() == .ellipse {
+                processEllipseShapeResizing(touch: firstTouch)
+            } else if shapeAnnotation.isPerfectShape(), let controlPoint = resizableView?.activeControlPoint(for: point) {
+                activeControlPoint = controlPoint
+                setAnchorPoint()
+                processShapeResizing(touch: firstTouch, point: point)
+            } else {
+                let points = shapeAnnotation.getshapeControlPoints()
+                guard !points.isEmpty else {
+                    return
+                }
+                index = points.count - 1
+                if shapeAnnotation.shape?.isClosedShape ?? false {
+                    index = 0
+                }
+                currentKnob = activeKnob(for: points[index])
+                currentKnob?.center = point
+                updateSegments(index: index, point: point)
+            }
         }
+    }
+    
+    private func processEllipseShapeResizing(touch: UITouch) {
+        guard let resizableView, let shapeResizeObj = shapeResizeObj else {
+            return
+        }
+        let minSize: CGFloat = 20
+        let center = resizableView.center
+        let newFrame = shapeResizeObj.resizeProportionally(for: touch, in: resizableView)
+        let shouldResize = (newFrame.width > minSize && newFrame.height > minSize)
+        if shouldResize {
+            self.updateContentFrame(with: newFrame, updateCenter: true)
+//            resizableView.center = resizableView.centerWithinBoundary(center)
+            updateEllipseRect()
+            shapeAnnotation.setShapeControlPoints(drawingPoints())
+            resizableView.updateDragHandles()
+        }
+    }
+    
+    private func activeKnob(for point: CGPoint) -> FTKnobView? {
+        let convertedPoint = convertControlPoint(point)
+        let view = view.subviews.first { eachView in
+            return eachView.center == convertedPoint
+        }
+       return view as? FTKnobView
     }
     
     public func processTouchesEnded(_ firstTouch: UITouch, with event: UIEvent?) {
@@ -459,13 +507,6 @@ extension FTShapeAnnotationController {
         }
         if shapeAnnotation.isPerfectShape() && !returnValue {
             returnValue = _isPointInsideFrame(newPoint)
-        } else {
-           if let resizableView = resizableView {
-               let frame = convertedViewFrame(resizableView)
-               if frame.contains(newPoint) {
-                   returnValue = true
-               }
-           }
         }
 
         if let shapeEditvc = shapeEditVC {
@@ -1019,7 +1060,7 @@ extension FTShapeAnnotationController {
                 newFrame = newRectForResizing()
             }
             let convertedPoint = CGPoint(x: newFrame.midX , y: newFrame.midY)
-            let points = shapeAnnotation.getshapeControlPoints()
+            let points = shapeAnnotation.knobControlPoints()
             points.forEach { eachPoint in
                 var point = convertControlPoint(eachPoint)
                 point.rotate(by: -resizableView.transform.angle, refPoint: convertedPoint)
@@ -1033,7 +1074,7 @@ extension FTShapeAnnotationController {
     
     func newRectForResizing() -> CGRect {
         var invertedPoints = [CGPoint]()
-        let points = shapeAnnotation.getshapeControlPoints()
+        let points = shapeAnnotation.knobControlPoints()
         points.forEach { eachPoint in
             let point = convertControlPoint(eachPoint)
             invertedPoints.append(point)
@@ -1086,7 +1127,7 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
         }
     }
     
-    func updateKnobViews(with refPoints: [CGPoint] = []) {
+   @objc func updateKnobViews(with refPoints: [CGPoint] = []) {
         let _contentOffSet = self.delegate?.visibleRect().origin ?? .zero
         var knobViews = [UIView]()
         guard let view = self.view else {
@@ -1098,6 +1139,9 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
         var controlPoints = shapeAnnotation.getshapeControlPoints()
         if (!refPoints.isEmpty) {
             controlPoints = refPoints
+        }
+        guard knobViews.count == controlPoints.count else {
+            return
         }
         for (index,view) in knobViews.enumerated() {
             if let _knobView = view as? FTKnobView, !controlPoints.isEmpty {
@@ -1119,6 +1163,7 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
     
     @objc func addKnobsForControlPoints() {
         if !shapeAnnotation.isPerfectShape() {
+            removeControlPoints()
             let points = shapeAnnotation.getshapeControlPoints()
             for (i, ftPoint) in points.enumerated() {
                 let point = convertControlPoint(ftPoint)
@@ -1129,6 +1174,15 @@ extension FTShapeAnnotationController: FTResizableViewDelegate {
             }
         }
     }
+     
+     private func removeControlPoints() {
+         let knobViews = self.view.subviews
+         knobViews.forEach { eachView in
+             if eachView is FTKnobView {
+                 eachView.removeFromSuperview()
+             }
+         }
+     }
      
      func convertControlPoint(_ point: CGPoint) -> CGPoint {
          let cgPoint = point.scaled(scale: self.scale)

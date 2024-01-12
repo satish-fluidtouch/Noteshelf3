@@ -5,8 +5,8 @@
 //  Created by Amar on 25/3/17.
 //  Copyright © 2017 Fluid Touch Pte Ltd. All rights reserved.
 //
-let APP_SUPPORTED_MAX_DOC_VERSION = Float(8);
-let DOC_VERSION : String = "8.0";
+let APP_SUPPORTED_MAX_DOC_VERSION = Float(9);
+let DOC_VERSION : String = "9.0";
 let DOCUMENTS_KEY : String = "documents";
 let DOCUMENT_TYPE = "document_type"
 let DOCUMENT_ID_KEY =  "document_ID";
@@ -363,7 +363,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 }
                 self.insertFileFromInfo(info) { success, error in
                     //Since we have created a notebook with two pages(cover and template),setting the index to 1 will land on to template.
-                    self.localMetadataCache?.lastViewedPageIndex = 1
+                    if self.localMetadataCache?.lastViewedPageIndex == 0 {
+                        self.localMetadataCache?.lastViewedPageIndex = 1
+                    }
                     if success,let pinModel = info.pinModel, let pin = pinModel.pin {
                         self.pin = pin
                         self.setHint(pinModel.hint)
@@ -1505,6 +1507,7 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
     
     func searchDocumentsForKey(_ searchKey: String,
                                tags: [String],
+                               isGlobalSearch: Bool,
                                onFinding: @escaping (_ page: FTPageProtocol, _ cancelled: Bool) -> Void,
                                onCompletion: @escaping (_ cancelled: Bool) -> Void) -> Progress
     {
@@ -1523,7 +1526,7 @@ extension FTNoteshelfDocument : FTDocumentSearchProtocol
             operation.addExecutionBlock { [weak eachPage,weak searchProgress,weak operation] in
                 let isCancelled = operation?.isCancelled ?? false;
                 if let searchingPage = eachPage as? FTPageSearchProtocol,
-                   !isCancelled, searchingPage.searchFor(searchKey, tags: tags) {
+                   !isCancelled, searchingPage.searchFor(searchKey, tags: tags,isGlobalSearch: isGlobalSearch) {
                     onFinding(eachPage!,isCancelled);
                 }
 
@@ -1876,6 +1879,13 @@ extension FTNoteshelfDocument {
     }
 }
 
+#if !NOTESHELF_ACTION
+extension FTNoteshelfDocument {
+    func setLastViewedPageIndexTo(_ index : Int){
+        self.localCacheWrapper?.lastViewedPageIndex = index
+    }
+}
+#endif
 
 extension URL {
     static var documentErrorFileURL: URL? {

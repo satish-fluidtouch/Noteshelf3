@@ -77,6 +77,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createAndOpenNewNotebook(_ url: URL)
     func openDocumentForSelectedNotebook(_ path: URL, isSiriCreateIntent: Bool)
     func openShelfItem(spotLightHash: String)
+    func openTemplatesScreen(url: URL)
     //From Quick Action
     func createNotebookWithAudio()
     func createNotebookWithCameraPhoto()
@@ -165,20 +166,23 @@ final class FTAppIntentHandler {
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
         } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            startMigration(url: url)
+            openAppScehemeURL(url: url)
         }
         return false
     }
-    
-    func startMigration(url: URL) {
-        if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
-            , let queryitem = urlcomponents.queryItems?.first
-            , queryitem.name == "intent"
-        {
-            if queryitem.value == NS3LaunchIntent.migration.rawValue {
-                intentHandler?.startNS2ToNS3Migration()
-            } else {
-                intentHandler?.showPremiumUpgradeScreen()
+
+    private func openAppScehemeURL(url: URL) {
+        if let urlcomponents = URLComponents(url: url, resolvingAgainstBaseURL: true) {
+            if urlcomponents.path.contains(FTAppIntentHandler.templatesPath) {
+                intentHandler?.openTemplatesScreen(url: url)
+            }
+            else if let queryitem = urlcomponents.queryItems?.first
+                        , queryitem.name == "intent" {
+                if queryitem.value == NS3LaunchIntent.migration.rawValue {
+                    intentHandler?.startNS2ToNS3Migration()
+                } else {
+                    intentHandler?.showPremiumUpgradeScreen()
+                }
             }
         }
     }
@@ -257,6 +261,15 @@ private extension FTAppIntentHandler {
             }
         }
         return nil;
+    }
+}
+
+extension FTAppIntentHandler {
+    static var templatesPath: String {
+        return "/templates/root"
+    }
+    static var templatesPlannersPath: String {
+        return FTAppIntentHandler.templatesPath + "/Planners"
     }
 }
 

@@ -14,6 +14,8 @@ class FTShapeControllerBuilder: UIViewController {
         if let ann = annotation as? FTShapeAnnotation {
             if ann.shape?.isLineType?() ?? false {
                 controller = FTShapeArrowAnnotationController(withAnnotation: annotation, delegate: delegate, mode: mode)
+            } else if ann.shape?.type() == .curve {
+                controller = FTShapeCurveAnnotationController(withAnnotation: annotation, delegate: delegate, mode: mode)
             } else {
                 controller = FTShapeAnnotationController(withAnnotation: annotation, delegate: delegate, mode: mode)
                 if let parentVc = controller as? FTShapeAnnotationController, parentVc.shapeAnnotation.shape?.type() == .pentagon {

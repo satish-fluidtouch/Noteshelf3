@@ -10,6 +10,11 @@ import Foundation
 import FTCommon
 
 extension FTNoteshelfDocument : FTThumbnailableCollection {
+    func startRecognitionIfNeeded() {
+        self.recognitionHelper?.wakeUpRecognitionHelperIfNeeded();
+        self.visionRecognitionHelper?.wakeUpVisionRecognitionHelperIfNeeded();
+    }
+    
     func documentPages() -> [FTThumbnailable]
     {
         if let documentInfoPlist = self.documentInfoPlist() {

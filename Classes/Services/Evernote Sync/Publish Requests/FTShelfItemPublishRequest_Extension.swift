@@ -47,7 +47,7 @@ extension FTShelfItemPublishRequest {
             newNote?.content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\"><en-note></en-note>";
 
             guard let session = EvernoteSession.shared() ,session.isAuthenticated else {
-                let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+                let error = FTENPublishError.authError;
                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                 self.delegate?.didCompletePublishRequestWithError!(error);
                 return;
@@ -97,7 +97,7 @@ extension FTShelfItemPublishRequest {
             let url = URL(fileURLWithPath: filePath!);
             
             guard let session = EvernoteSession.shared(), session.isAuthenticated else {
-                let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+                let error = FTENPublishError.authError;
                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                 self.delegate?.didCompletePublishRequestWithError!(error);
                 return;
@@ -117,8 +117,8 @@ extension FTShelfItemPublishRequest {
                         note?.title = noteName;
                         note?.updated =  (url.fileModificationDate as NSDate).enedamTimestamp();
 
-                        guard session.isAuthenticated else {
-                            let error = NSError(domain: "ENPagePublish", code: 401, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("EvernoteAuthenticationFailed",comment: "Unable to authenticate with Evernote")]);
+                        guard EvernoteSession.shared().isAuthenticated else {
+                            let error = FTENPublishError.authError;
                             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
                             self.delegate?.didCompletePublishRequestWithError!(error);
                             return;
@@ -154,7 +154,7 @@ extension FTShelfItemPublishRequest {
             } failure: { error in
                 if let error = error {
                     self.executeBlock(onPublishQueue: {
-                        if (error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue) {
+                        if (error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue) {
                             self.noteDidGetDeletedFromEvernote();
                         }
                         else {

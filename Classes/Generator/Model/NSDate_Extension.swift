@@ -49,7 +49,15 @@ extension Date
 //        let totalDays = abs(comp.day ?? 1);
 //        return totalDays;
 //    }
-    
+    func utcDate() -> Date?
+    {
+        let gmtDf = DateFormatter()
+        gmtDf.dateFormat = "yyyy-MM-dd"
+        let gmtDate = gmtDf.string(from: self);
+
+        let estDate = DateFormatter.utcDate(format: "yyyy-MM-dd", dateString: gmtDate);
+        return estDate;
+    }
     func numberOfDays(calendarYear:FTYearFormatInfo) -> Int {
         let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!;
         let startDate: Date = calendar.date(month: calendarYear.startMonth.month, year: calendarYear.startMonth.year)!
@@ -171,12 +179,7 @@ extension Date
         return calendar.date(byAdding: components, to: self, options: []) ?? Date();
     }
     
-    func monthTitle(localeID : String,monthFormat : String) -> String {
-        dateformatter.dateStyle = DateFormatter.Style.full;
-        dateformatter.timeStyle = DateFormatter.Style.none;
-        let locale = Locale.init(identifier: NSCalendar.calLocale(localeID));
-        dateformatter.locale = locale;
-
+    func monthTitle(localeID : String,monthFormat : String, dateformatter: DateFormatter) -> String {
         dateformatter.dateFormat = monthFormat
         if(["ja","zh_hans","zh_hant"].contains(localeID.lowercased())) {
             let currentLocale = dateformatter.locale;
