@@ -63,7 +63,6 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
 
     let activityIndicator = UIActivityIndicatorView(style: .medium)
     var hideSuggestions: Bool = false
-    private(set) var searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
     override func viewWillLayoutSubviews() {
            super.viewWillLayoutSubviews()
     }

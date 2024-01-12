@@ -39,7 +39,6 @@ class FTFinderThumbnailViewCell: UICollectionViewCell {
             self.updateConstraintsIfNeeded()
         }
     }
-    var pageSize: CGSize!
     var selectedTab = FTFinderSelectedTab.thumnails
 
     weak var page: FTThumbnailable? {

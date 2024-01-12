@@ -107,7 +107,8 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     private var editNavButton: UIButton?
     var selectedSegment = FTFinderSegment.pages
     //UI
-    var cellSize: CGSize = CGSize(width: 200, height: 208)
+    var cellSize: CGSize = CGSize(width: 236, height: 208)
+
     let bookMarkThumbSize: CGSize = CGSize(width: 52, height: 72)
     private let extraCellPadding : CGFloat = 30
     private let preferredWidth: CGFloat = 335;
@@ -164,6 +165,9 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
             UserDefaults.standard.synchronize()
         }
     }
+    internal let landscapeHeightRatio: CGFloat = 152 / 210
+    internal let potraitHeightRatio: CGFloat = 208 / 152
+    internal let potraitWidthRatio: CGFloat = 152 / 210
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event);
@@ -197,12 +201,7 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
         if isRegular {
             if mode == .selectPages {
                 self.cellSize = CGSize(width: 152, height: 204);
-            } else {
-                self.cellSize = CGSize(width: 200, height: 208)
             }
-        }
-        else {
-            self.cellSize = CGSize(width: 144, height: 176);
         }
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
@@ -1174,7 +1173,7 @@ extension FTFinderViewController{
         if mode == .selectPages {
             spacing = 10
         } else if self.isRegularFinder {
-            spacing = 40
+            spacing = 24
         } else {
             spacing = 24
         }
@@ -1192,7 +1191,7 @@ extension FTFinderViewController{
     }
 
     var contentInset: UIEdgeInsets {
-        let horizontalMargin: CGFloat = self.isRegularFinder ? 44 : 24;
+        let horizontalMargin: CGFloat = 44 //self.isRegularFinder ? 44 : 24;
         return UIEdgeInsets(top: 5, left: horizontalMargin, bottom: 22, right: horizontalMargin);
     }
     
@@ -1256,7 +1255,7 @@ extension FTFinderViewController{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         let sectionIdentfier = dataSource.sectionIdentifier(for: section)
         if (screenMode == .fullScreen || (screenMode == .normal && !self.isRegularClass())) && sectionIdentfier == .thumbnails {
-            return self.horizontalSpacing()
+            return 24
         }
         if mode == .selectPages {
             return self.horizontalSpacing()
@@ -1278,16 +1277,34 @@ extension FTFinderViewController{
         }
         return self.contentInset
     }
+    
+    private func noOfGridColumns(_ size: CGSize) -> Int {
+        let availableSize = size.width - (2 * contentInset.left);
+        let cellWidth = self.cellSize.width;
+        let cellWidthWithSpacing = cellWidth + minimumInterItemSpacing;
+        var maxColumns = Int(availableSize / cellWidthWithSpacing)
+        let totalWidthNeeded = (CGFloat(maxColumns) * cellWidth) + (CGFloat(maxColumns - 1) * minimumInterItemSpacing);
+        if(availableSize > (totalWidthNeeded + cellWidth * 0.5)) {
+            maxColumns += 1;
+        }
+        return maxColumns;
+    }
+    
+    internal func cellSize(_ size: CGSize) -> CGFloat {
+        let noOfColumns = self.noOfGridColumns(size)
+        let totalSpacing = minimumInterItemSpacing * CGFloat(noOfColumns - 1)
+        let itemWidth = (size.width - totalSpacing - (contentInset.left * 2)) / CGFloat(noOfColumns)
+        return itemWidth
+    }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let item = dataSource.itemIdentifier(for: indexPath)
         if  item is  FTPlaceHolderThumbnail {
-            var bounds = UIScreen.main.bounds
-            if bounds.width > bounds.height {
-                bounds = CGRect(origin: bounds.origin, size: CGSize(width: bounds.height, height: bounds.width))
-            }
-            let size = AVMakeRect(aspectRatio: bounds.size, insideRect: CGRect(origin: CGPoint.zero, size: self.cellSize)).size
-            return CGSize(width: self.cellSize.width, height: size.height + extraCellPadding);
+            let columnWidth = cellSize(collectionView.frame.size)
+            let potraitWidth = ((columnWidth) * potraitWidthRatio)
+            let height : CGFloat = ((potraitWidth) * potraitHeightRatio)
+            let size = CGSize(width: columnWidth, height: height + extraCellPadding)
+            return size
         }
         if item is FTOutline {
             var height = self.outlinesViewController?.treeView.contentSize.height
@@ -1327,9 +1344,16 @@ extension FTFinderViewController{
         else {
             page = self.filteredPages[indexPath.item];
         }
-        let size = AVMakeRect(aspectRatio: page.pdfPageRect.size, insideRect: CGRect.init(origin: CGPoint.zero, size: self.cellSize)).size
-        return CGSize(width: self.cellSize.width, height: size.height + extraCellPadding);
+        let columnWidth = cellSize(collectionView.frame.size)
+        let potraitWidth = ((columnWidth) * potraitWidthRatio)
+        var height : CGFloat = ((potraitWidth) * potraitHeightRatio)
+        if page.pdfPageRect.size.width > page.pdfPageRect.size.height {
+            height = ((columnWidth) * landscapeHeightRatio)
+        }
+        let size = CGSize(width: columnWidth, height: height)
+        return CGSize(width: size.width, height: size.height + extraCellPadding);
     }
+    
 
     //MARK:- StateMachine
     fileprivate func changeState(from fromState:FTFinderPageState, to toState: FTFinderPageState, withAnimation needAnimation: Bool) {
