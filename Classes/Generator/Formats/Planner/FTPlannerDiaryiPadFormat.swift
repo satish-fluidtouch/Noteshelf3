@@ -419,13 +419,14 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             let dayColorRect = CGRect(x: dayX - 10 - weekDayWidth, y: dayY - dayrectHeight - 5, width: weekDayWidth + 6, height: dayrectHeight)
             let dayTextRect = CGRect(x: dayX - 10 - weekDayWidth + 3.5, y: dayY - 5 - (dayrectHeight/2) - (dayString.size().height/2), width: weekDayWidth , height: dayrectHeight)
             if let stripColor = weekDayBgColor,isBelongToCalendarYear(currentDate: day.date){
-                self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
+                if day.belongsToSameMonth {
+                    let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
+                    self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
+                    currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: dayColorRect.origin.x, y: dayColorRect.origin.y), frameSize: CGSize(width: dayColorRect.width, height: dayColorRect.height)))
+                }
             }
             dayString.draw(in:dayTextRect)
-            if day.belongsToSameMonth {
-                let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
-                currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: (linkX + cellWidth - cellWidth/3), y: dayY), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
-            }
+
             if(index % 7 == 0) {
                 weekDayBGColorIndex += 1
                 weekDayBgColor = getWeekNumberStripBGColorsDict()[weekDayBGColorIndex]

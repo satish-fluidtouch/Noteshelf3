@@ -37,19 +37,12 @@ public class FTStoreContainerViewController: UIViewController {
         }
         return viewToReturn;
     }
-    private var customTemplateImportManager = FTCustomTemplateImportManager.shared
-
-    lazy var storeViewController: FTStoreViewController = {
-        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreViewController") as! FTStoreViewController
-        return viewController
-    }()
+    private var customTemplateImportManager = FTCustomTemplateImportManager()
+    private var actionManager = FTStoreActionManager()
 
     lazy var storeFavouriteViewController: FTStoreLibraryViewController = {
-        guard let controlelr = FTStoreContainerViewController.storeLibraryViewController(source: .none, delegate: self, selectedFile: nil) as? FTStoreLibraryViewController else {
-            fatalError("Should not come");
-        }
-        return controlelr;
+        let controller = FTStoreLibraryViewController.controller(source: .none, delegate: self, selectedFile: nil)
+        return controller;
     }()
 
     public override func viewDidLoad() {
@@ -58,40 +51,12 @@ public class FTStoreContainerViewController: UIViewController {
         self.setupView()
     }
 
-    public static func templatesStoreViewController(delegate:FTStoreContainerDelegate?,premiumUser: FTPremiumUser) -> FTStoreContainerViewController {
-        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreContainerViewController") as! FTStoreContainerViewController
-        viewController.delegate = delegate
-        FTStoreContainerHandler.shared.premiumUser = premiumUser;
-        return viewController
-    }
-
-    public static func storeLibraryViewController(source: Source,delegate: FTStoreLibraryDelegate, selectedFile: URL?) -> UIViewController  {
-        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreLibraryViewController") as! FTStoreLibraryViewController
-        viewController.sourceType = source
-        viewController.delegate = delegate;
-        viewController.selectedFile = selectedFile
-        return viewController
-    }
-
-    public static func storeCustomViewController(source: Source, delegate: FTStoreCustomDelegate, selectedFile: URL?) -> UIViewController {
-        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreCustomViewController") as! FTStoreCustomViewController
-        viewController.delegate = delegate
-        viewController.selectedFile = selectedFile
-        viewController.sourceType = source
-        return viewController
-    }
-    
     public func scrollToInspirations() {
-        self.storeViewController.loadViewIfNeeded()
-        self.storeViewController.scrollToinspirations()
+        // TODO: Narayana
     }
     
     public func navigateToDairies() {
-        self.storeViewController.loadViewIfNeeded()
-        self.storeViewController.navigateToDiaries()
+        // TODO: Narayana
     }
 
     func initializeImportButton() {
@@ -130,8 +95,7 @@ private extension FTStoreContainerViewController {
      func updateView() {
          removeChilderns()
         if segmentControl.selectedIndex == 0 {
-            let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
-            let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreViewController") as! FTStoreViewController
+            let viewController = FTStoreViewController.controller(with: actionManager)
             self.add(viewController)
             viewController.view.frame = view.bounds
          } else if segmentControl.selectedIndex == 1 {
@@ -139,9 +103,7 @@ private extension FTStoreContainerViewController {
              storeFavouriteViewController.view.frame = view.bounds
              self.delegate?.trackEvent(event: EventName.templates_library_tap, params: nil, screenName: ScreenName.templatesStore)
          } else if segmentControl.selectedIndex == 2 {
-             let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
-             let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreCustomViewController") as! FTStoreCustomViewController
-             viewController.delegate = self;
+             let viewController = FTStoreCustomViewController.controller(source: .none, delegate: self, selectedFile: nil, customTemplateImportManager: customTemplateImportManager, storeActionManager: actionManager)
              self.add(viewController)
              viewController.view.frame = view.bounds
              self.delegate?.trackEvent(event: EventName.templates_custom_tap, params: nil, screenName: ScreenName.templatesStore)
@@ -203,7 +165,7 @@ extension FTStoreContainerViewController {
             }
         }.store(in: &customTemplateImportManager.cancellables)
 
-        FTStoreContainerHandler.shared.actionStream.sink { [weak self] action in
+        actionManager.containerActions.sink { [weak self] action in
             guard let self = self else { return }
             switch action {
             case .createNotebookForTemplate(url: let url, isLandscape: let isLandscape, isDark: let isDark):
@@ -214,12 +176,18 @@ extension FTStoreContainerViewController {
                     self.delegate?.createNotebookFor(url: url, onCompletion: { [weak self] error in
                         self?.customTemplateImportManager.importConverterOutput.send(.createNootbookOutput(url: url, error: error))
                     })
+            }
+        }.store(in: &actionManager.cancellables)
+
+        FTStorePremiumPublisher.shared.actionStream.sink { [weak self] action in
+            guard let self = self else { return }
+            switch action {
             case .showUpgradeAlert(controller: let controller, feature: let feature):
                 self.delegate?.storeController(controller, showIAPAlert: feature);
             case .track(let event, params: let params, screenName: let screenName):
                 self.delegate?.trackEvent(event: event, params: params, screenName: screenName)
             }
-        }.store(in: &FTStoreContainerHandler.shared.cancellables)
+        }.store(in: &FTStorePremiumPublisher.shared.cancellables)
     }
 
     func convertImagesToPdf(images: [UIImage]) async -> URL? {
@@ -293,4 +261,26 @@ extension FTStoreContainerViewController: FTStoreCustomDelegate {
                 })
         }
     }
+}
+
+public extension FTStoreContainerViewController {
+    static func templatesStoreViewController(delegate:FTStoreContainerDelegate?,premiumUser: FTPremiumUser) -> FTStoreContainerViewController {
+        let storyboard = UIStoryboard(name: "FTTemplatesStore", bundle: storeBundle)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "FTStoreContainerViewController") as! FTStoreContainerViewController
+        viewController.delegate = delegate
+        FTStorePremiumPublisher.shared.premiumUser = premiumUser;
+        return viewController
+    }
+    // Comes from Paper templates
+    static func storeLibraryViewController(source: Source,delegate: FTStoreLibraryDelegate, selectedFile: URL?) -> UIViewController  {
+        let viewController = FTStoreLibraryViewController.controller(source: source, delegate: delegate, selectedFile: selectedFile)
+        return viewController
+    }
+
+    // Comes from Paper templates
+    static func storeCustomViewController(source: Source, delegate: FTStoreCustomDelegate, selectedFile: URL?) -> UIViewController {
+        let viewController = FTStoreCustomViewController.controller(source: source, delegate: delegate, selectedFile: selectedFile, customTemplateImportManager: nil, storeActionManager: nil)
+        return viewController
+    }
+
 }

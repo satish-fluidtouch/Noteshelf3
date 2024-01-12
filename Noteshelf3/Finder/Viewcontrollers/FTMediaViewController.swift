@@ -326,6 +326,7 @@ class FTMediaViewController: UIViewController, FTFinderTabBarProtocol {
         if let option = FTMediaType(rawValue: identifier) {
             self.selectedMediaType = option
             updateFilterOptionImage()
+            FTFinderEventTracker.trackFinderEvent(with: "finder_more_filter_tap", params: ["filter": option.eventDescription()])
             updateAndReloadCollectionView()
             if let optionsMenu = editButton.menu?.children.first as? UIMenu {
                 let elements = optionsMenu.children
@@ -527,7 +528,8 @@ extension FTMediaViewController:  UICollectionViewDelegate, FTCollectionViewDele
             else {
                 indexSelected = 0;
             }
-            track("Finder_TapPage", params: [:],screenName: FTScreenNames.finder)
+            let param =  (self.selectedMediaType == .allMedia) ? "off" : "on"
+            track("finder_content_item_tap", params: ["filter toggle": param],screenName: FTScreenNames.finder)
             self.delegate?.finderViewController(didSelectPageAtIndex: indexSelected)
         }
     }
@@ -567,6 +569,7 @@ extension FTMediaViewController {
         if menuOperation == .share {
             self.shareMedia(with: mediaItem, at : indexPath)
         } else if menuOperation == .openInNewWindow {
+            FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_openinnewwindow_tap")
             let page = mediaItem.page
             let index = allDocumentPages().firstIndex(where: { $0.uuid == page?.uuid })
             if let shelfItem = self.delegate?.currentShelfItemInShelfItemsViewController() {
@@ -577,6 +580,7 @@ extension FTMediaViewController {
     
     private func shareMedia(with item: FTMediaItem, at indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
+        FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_share_tap")
         if item.mediaType == .audio {
             self.shareAudio(with: item.annotation, at: cell)
         } else {
@@ -621,6 +625,7 @@ extension FTMediaViewController {
 extension FTMediaViewController: FTMediaDelegate, FTMediaFilterViewDelegate {
     func didTapMoreOption(cell: UICollectionViewCell, item: FTMediaItem?) {
         if let annotation = item?.annotation as? FTAudioAnnotation {
+            FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_more_tap")
             FTAudioTrackController.showAsPopover(fromSourceView: cell, overViewController: self, with: CGSize(width: 330, height: 290),  annotations: [annotation], mode: .finder, selectedAnnotation: annotation)
         }
     }

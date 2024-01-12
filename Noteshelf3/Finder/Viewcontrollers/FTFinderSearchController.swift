@@ -433,6 +433,7 @@ extension FTFinderSearchController {
             finderController?.filterOptionsController(didChangeSearchText: searchInputInfo.textKey, onFinding: { [weak self] in
                 self?.reloadData();
             }, onCompletion: { [weak self] in
+                FTFinderEventTracker.trackFinderEvent(with: "finder_search_done")
                 self?.reloadData()
                 self?.finderController?.showSearchIndicator(false)
             })
@@ -552,6 +553,8 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
         } else {
             searchInputInfo.textKey = searchController?.searchBar.searchTextField.text ?? ""
         }
+        let eventName = suggestionItem.type == .text ? "finder_search_contains_tap" : "finder_search_tag_tap"
+        FTFinderEventTracker.trackFinderEvent(with: eventName)
         initiateSearch()
     }
     

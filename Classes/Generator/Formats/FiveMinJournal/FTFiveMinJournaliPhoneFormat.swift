@@ -70,6 +70,7 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
                 monthX += cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100)
             }
         }
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         super.renderMonthPage(context: context, monthInfo: monthInfo, calendarYear: calendarYear)
@@ -151,6 +152,9 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
             index += 1;
         })
         monthRectsInfo.append(currentMonthRectsInfo)
+        if let utcDate = monthInfo.dayInfo.first?.date.utcDate() { // setting date to first page of the month
+            diaryPagesInfo.append(FTDiaryPageInfo(type: .month,date: utcDate.timeIntervalSinceReferenceDate))
+        }
     }
     private func addBezierPathWithRect( rect : CGRect, toContext context : CGContext, title:String?, tileColor : UIColor ){
         let bezierpath = UIBezierPath(roundedRect: rect, cornerRadius: 10)
@@ -177,9 +181,6 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
     
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
         
-        if !dayInfo.belongsToSameMonth {
-            return
-        }
         super.renderDayPage(context: context, dayInfo: dayInfo)
         currentDayRectsInfo = FTDiaryDayRectsInfo()
         let templateInfo = screenInfo.spacesInfo.journalDayPageSpacesInfo

@@ -105,23 +105,34 @@ class FTClassicDiaryFormat : FTDairyFormat {
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly){
         
         self.renderYearPage(context: context, months: monthlyFormatter.monthInfo, calendarYear: formatInfo);
-        
+
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
     
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            if let utcDate = calendarMonth.dayInfo.first?.date.utcDate() {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .month, date : utcDate.timeIntervalSinceReferenceDate))
+            }
         }
         let weeklyInfo = weeklyFormatter.weeklyInfo;
         weeklyInfo.forEach { (weekInfo) in
             self.renderWeekPage(context: context, weeklyInfo: weekInfo)
+            if let utcDate = weekInfo.dayInfo.first?.date.utcDate() {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+            }
         }
 
         let monthInfo = monthlyFormatter.monthCalendarInfo;
         monthInfo.forEach { (eachMonth) in
             let dayInfo = eachMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo);
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate , isCurrentPage: self.setDiaryPageAsCurrentPage(pageDate: utcDate)))
+                    }
+                }
             }
         }
     }

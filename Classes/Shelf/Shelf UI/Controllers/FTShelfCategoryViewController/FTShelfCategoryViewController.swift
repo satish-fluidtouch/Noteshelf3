@@ -591,6 +591,13 @@ extension FTShelfCategoryViewController : UITableViewDelegate
 {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let category = self.shelfCollections[indexPath.section]
+        if let collection = category.items[indexPath.row] as? FTShelfItemCollection {
+            if category.type == .systemDefault {
+                FTFinderEventTracker.trackFinderEvent(with: collection.collectionType.eventDescription())
+            } else if category.type == .user {
+                FTFinderEventTracker.trackFinderEvent(with: "quickaccess_category_tap")
+            }
+        }
         if category.type == .user || category.type == .systemDefault {
             if indexPath.row == category.items.count {
                 (self as? FTShelfCategoryViewController_iOS13)?.showCreateCategoryAlert()
