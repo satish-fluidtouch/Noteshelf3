@@ -11,24 +11,24 @@ import FTRenderKit
 import SwiftUI
 
 @objc public enum FTShapeType: Int {
-    case freeForm
-    case line
-    case triangle
-    case rectangle
-    case polygon
-    case pentagon
-    case ellipse
-    case dashLine
-    case arrow
-    case doubleArrow
-    case roundedRect
-    case rombus
-    case paralalleogram
-    case oval
-    case star
-    case union
-    case lineStrip
-    case none
+    case freeForm = 0
+    case line = 1
+    case triangle = 2
+    case rectangle = 3
+    case polygon = 4
+    case pentagon = 5
+    case ellipse = 6
+    case dashLine = 7
+    case arrow = 8
+    case doubleArrow = 9
+    case roundedRect = 10
+    case rombus = 11
+    case paralalleogram = 12
+    case oval = 13
+    case star = 14
+    case union = 15
+    case lineStrip = 16
+    case curve = 17
     
     func getDefaultShape() -> FTShape? {
         var shapeType: FTShape?
@@ -55,8 +55,12 @@ import SwiftUI
             shapeType = FTShapeParallelogram()
         case .polygon:
             shapeType = FTShapePolygon()
-        default:
+        case .curve:
+            shapeType = FTShapeCurve()
+        case .lineStrip:
             shapeType = FTShapeLineStrip()
+        case .roundedRect, .oval, .star, .union, .freeForm:
+            shapeType = nil
         }
         return shapeType;
     }
@@ -109,6 +113,8 @@ import SwiftUI
             shapeImageName = "star"
         case .union:
             shapeImageName = "union"
+        case .curve:
+            shapeImageName = "curve"
         default:
             shapeImageName = "rectangle"
         }
@@ -175,4 +181,5 @@ import SwiftUI
     @objc optional func shapeControlPoints(in view: UIView, for scale: CGFloat) -> [CGPoint]
     func isPerfectShape() -> Bool
     @objc optional func isLineType() -> Bool
+    @objc optional func knobControlPoints() -> [CGPoint]
 }

@@ -9,10 +9,12 @@ import UIKit
 import Combine
 import FTCommon
 import SwiftUI
+import Combine
 
 class FTStoreCategoryTableCell: UITableViewCell {
 
     private var templatesStoreInfo: StoreInfo!
+    private var actionStream: PassthroughSubject<FTStoreActions, Never>?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,10 +24,11 @@ class FTStoreCategoryTableCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func prepareCellWith(templatesStoreInfo: StoreInfo) {
+    func prepareCellWith(templatesStoreInfo: StoreInfo, actionStream: PassthroughSubject<FTStoreActions, Never>?) {
         self.templatesStoreInfo = templatesStoreInfo
+        self.actionStream = actionStream
         self.contentConfiguration = UIHostingConfiguration {
-            FTStoreCategoryView(templateInfo: templatesStoreInfo)
+            FTStoreCategoryView(templateInfo: templatesStoreInfo, actionStream: actionStream)
         }
         .background {
             Color.clear
