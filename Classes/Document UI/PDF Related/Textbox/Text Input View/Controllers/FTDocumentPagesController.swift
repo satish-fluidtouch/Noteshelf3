@@ -15,12 +15,16 @@ class FTDocumentPagesController: UIViewController {
     private var cellSize = CGSize(width: 152, height: 204)
     private let extraCellPadding: CGFloat = 30
 
-    weak var document: FTThumbnailableCollection?
+    weak var document: FTThumbnailableCollection? {
+        didSet {
+            self.pages = self.document?.documentPages() ?? []
+            self.collectionView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureCollectionView()
-        self.pages = self.document?.documentPages() ?? []
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

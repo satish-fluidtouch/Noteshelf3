@@ -47,9 +47,7 @@ class FTShelfItemsViewControllerNew: UIHostingController<FTShelfItemsView>, FTPo
 }
 extension FTShelfItemsViewControllerNew: FTShelfItemsViewDelegate {
     func didSelectShelfItem(_ item: FTShelfItemProtocol) {
-        self.dismiss(animated: false) {
-            self.delegate?.didSelect(document: item)
-        }
+        self.delegate?.didSelect(document: item)
     }
 
     func dismisspopover() {

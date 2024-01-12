@@ -124,7 +124,7 @@ struct FTShelfItemsView: View {
                                 .frame(alignment: .center)
                                 .font(Font.appFont(for: .regular, with: 17))
                                 .foregroundColor(Color.appColor(.accent))
-                        }
+                        }.isHidden(purpose == .linking)
                     }
                 }
             }

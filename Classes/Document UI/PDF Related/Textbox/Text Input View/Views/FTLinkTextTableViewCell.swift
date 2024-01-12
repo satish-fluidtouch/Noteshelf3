@@ -14,7 +14,8 @@ class FTLinkTextTableViewCell: UITableViewCell {
     @IBOutlet private weak var linkTextLabel: UILabel!
     @IBOutlet private weak var linkTextTf: UITextField!
 
-    func configureCell(with option: FTLinkToOption) {
+    func configureCell(with option: FTLinkToOption, linkText: String) {
         self.linkTextLabel.text = option.rawValue
+        self.linkTextTf.text = linkText
     }
 }

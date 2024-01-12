@@ -10,21 +10,38 @@ import FTCommon
 
 class FTLinkToSelectViewController: UIViewController {
     @IBOutlet private weak var segmentControl: UISegmentedControl?
-    @IBOutlet private weak var scrollView: UIScrollView?
     @IBOutlet private weak var tableView: UITableView?
     
-    weak var document: FTThumbnailableCollection?
+    var viewModel: FTLinkToTextViewModel!
+    weak var docPagesController: FTDocumentPagesController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureNavigationBar()
-        self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.viewModel?.prepareDocumentDetails(onCompletion: { _ in
+            if let doc = self.viewModel.selectedDocument as? FTThumbnailableCollection {
+                self.docPagesController?.document = doc
+                self.tableView?.reloadData()
+            }
+        })
+    }
+
+    deinit {
+        self.viewModel.closeOpenedDocumentIfNeeded()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if segue.identifier == "FTDocumentPagesController", let docPagesVc = segue.destination as? FTDocumentPagesController {
-            docPagesVc.document = self.document
+            self.docPagesController = docPagesVc
+        }
+    }
+
+    static func showTextLinkScreen(from controller: FTTextAnnotationViewController, with linkInfo: FTTextLinkInfo, and linkText: String) {
+        if let linkToVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTLinkToSelectViewController") as? FTLinkToSelectViewController {
+            let viewModel = FTLinkToTextViewModel(info: linkInfo, linkText: linkText, delegate: controller)
+            linkToVc.viewModel = viewModel
+            controller.ftPresentFormsheet(vcToPresent: linkToVc, hideNavBar: false)
         }
     }
 }
@@ -40,7 +57,7 @@ private extension FTLinkToSelectViewController {
         self.navigationItem.rightBarButtonItem = rightNavItem
     }
 
-    func showDocumentSelectionScreen() {
+    func navigateToDocumentSelectionScreen() {
         let viewModel = FTShelfItemsViewModel(selectedShelfItems: [])
         let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
         self.navigationController?.pushViewController(controller, animated: true)
@@ -49,42 +66,33 @@ private extension FTLinkToSelectViewController {
 
 extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var reqCell = UITableViewCell()
-        if indexPath.row == 0 || indexPath.row == 1 {
-            let option = FTLinkToOption.allCases[indexPath.row]
-            if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkTextTableViewCell.linkTextCellId, for: indexPath) as? FTLinkTextTableViewCell else {
-                    fatalError("Programmer error, unable to find FTLinkTextTableViewCell")
-                }
-                cell.configureCell(with: option)
-                reqCell = cell
+        let option = FTLinkToOption.allCases[indexPath.row]
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkTextTableViewCell.linkTextCellId, for: indexPath) as? FTLinkTextTableViewCell else {
+                fatalError("Programmer error, unable to find FTLinkTextTableViewCell")
             }
-            else if indexPath.row == 1 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkBookTableViewCell.linkBookCellId, for: indexPath) as? FTLinkBookTableViewCell else {
-                    fatalError("Programmer error, unable to find FTLinkBookTableViewCell")
-                }
-                cell.configureCell(with: option, title: "Notebook Name")
-                reqCell = cell
+            cell.configureCell(with: option, linkText: self.viewModel.linkText)
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkBookTableViewCell.linkBookCellId, for: indexPath) as? FTLinkBookTableViewCell else {
+                fatalError("Programmer error, unable to find FTLinkBookTableViewCell")
             }
+            cell.configureCell(with: option, title: self.viewModel.docTitle)
+            return cell
         }
-        return reqCell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 1 {
-            
+            self.navigateToDocumentSelectionScreen()
         }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.leastNonzeroMagnitude
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNonzeroMagnitude
     }
 }
@@ -102,9 +110,32 @@ extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
 extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
     func didSelect(document: FTShelfItemProtocol) {
         self.navigationController?.popToViewController(self, animated: true)
-
+        if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
+            var exstInfo = self.viewModel.info
+            exstInfo.docUUID = docId
+            exstInfo.pageUUID = ""
+            self.viewModel.updateTextLinkInfo(exstInfo)
+            self.viewModel.getSelectedDocumentDetails { doc in
+                self.viewModel.updateDocumentTitle(document.displayTitle)
+                self.viewModel.updatePageNumber(1)
+                if let document = doc as? FTThumbnailableCollection {
+                    self.docPagesController?.document = document
+                    self.tableView?.reloadData()
+                }
+            }
+        }
     }
 }
+
+//func didSelect(page: FTNoteshelfPage) {
+//    if var info = self.viewModel?.getExistingTextLinkInfo(), nil != self.viewModel?.selectedDocument {
+//        info.pageUUID = page.uuid
+//        self.viewModel?.updatePageNumber(page.pageIndex() + 1)
+//        self.viewModel?.closeOpenedDocumentIfNeeded()
+//        self.tableView?.reloadData()
+//        self.viewModel?.updateTextLinkInfo(info)
+//    }
+//}
 
 enum FTLinkToOption: String, CaseIterable {
     case linkText = "Link Text"
