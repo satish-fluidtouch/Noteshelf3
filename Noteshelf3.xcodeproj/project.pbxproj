@@ -2003,6 +2003,8 @@
 		C85AFDF423324C0E00D25D5F /* NSString_Backup_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E30201E027D73007B5CAD /* NSString_Backup_Additions.m */; };
 		DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAD78EB2A08C550001D8B21 /* SDWebImage */; };
 		E70705FA2AC2B7D500A7B341 /* FTFavoritebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */; };
+		E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */; };
+		E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */; };
 		E713D9AB299CC1CF008FDC77 /* FTConvertPreferencesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */; };
 		E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */; };
 		E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */; };
@@ -4320,6 +4322,8 @@
 		DAC77D3E2448615E002A5A03 /* FTGoogleDriveBackupPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGoogleDriveBackupPublisher.swift; sourceTree = "<group>"; };
 		DC887DE594A853A3DE110AAC /* Pods-Noteshelf3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.release.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.release.xcconfig"; sourceTree = "<group>"; };
 		E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritebarViewController.swift; sourceTree = "<group>"; };
+		E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurve.swift; sourceTree = "<group>"; };
+		E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurveAnnotationController.swift; sourceTree = "<group>"; };
 		E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTConvertPreferencesCell.xib; sourceTree = "<group>"; };
 		E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTCustomDictViewController.xib; sourceTree = "<group>"; };
 		E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpellCheckManager.swift; sourceTree = "<group>"; };
@@ -7136,6 +7140,7 @@
 				E795D5472805924A002DA202 /* FTShapeParallelogram.swift */,
 				E7B86BFE2518ED2A0046AE44 /* FTShapePolygon.swift */,
 				E7B86BFA2518EC840046AE44 /* FTShapeEllipse.swift */,
+				E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */,
 				211E2F341E027D73007B5CAD /* FTShapeFactory.h */,
 				42532B5927F2E0AD00A46252 /* FTShapeDashLine.swift */,
 				211E2F351E027D73007B5CAD /* FTShapeFactory.mm */,
@@ -7780,6 +7785,7 @@
 				4221A9DA27EB116900B91890 /* FTShapeArrowAnnotationController.swift */,
 				427FB45327E34A5A004F3B41 /* FTShapeAnnotationController_EditDelgate.swift */,
 				4291C7FE27E2027F0017AF21 /* FTShapeEditController.swift */,
+				E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -13297,6 +13303,7 @@
 				F3B9CF9628CCD922003FEFBC /* FTEmojisNewCollectionView.swift in Sources */,
 				3DAA68AE29113A6100848434 /* FTColorCell.swift in Sources */,
 				BAF3919A2859ADF00067CA9F /* FTShelfItemCollectionRecent.swift in Sources */,
+				E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */,
 				42A5B1B328D1F4C200C279E8 /* FTFinderSearchController.swift in Sources */,
 				E7B0E4BA2893D9F1007B031F /* FTPDFRenderViewController+ToolbarShortcuts.swift in Sources */,
 				BAF3919B2859ADF00067CA9F /* FTVisionNotebookRecognitionHelper.swift in Sources */,
@@ -13712,6 +13719,7 @@
 				BAF392F42859ADF00067CA9F /* FTSearchResultCategory.swift in Sources */,
 				BAF392F62859ADF00067CA9F /* FTDateInfo.swift in Sources */,
 				09CDCB222A541BC0000340FB /* FTNotebookToolbarItem.swift in Sources */,
+				E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */,
 				BAF392F72859ADF00067CA9F /* URLSessionProvider.swift in Sources */,
 				BAF392F82859ADF00067CA9F /* FTShadowImageView.swift in Sources */,
 				BA6C51C628DC691F006504EB /* FTShelfItemsViewControllerNew.swift in Sources */,
