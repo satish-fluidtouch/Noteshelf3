@@ -335,3 +335,15 @@ class FTClassicDiaryFormat : FTDairyFormat {
             }
         }
 }
+extension FTClassicDiaryFormat {
+    func addTodayPillWith(xPercnt : CGFloat, yPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        let xAxis = currentPageRect.width*xPercnt/100
+        let yAxis = currentPageRect.height*yPercnt/100
+        let todayPillHeightPercnt : CGFloat = isLandscape ? 1.81 : 1.71
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: UIFont.SpectralMedium(withFontSize:9), withTextColor: UIColor.init(hexString: "#64645F"), WithBackgroundColor: UIColor.init(hexString: "#D4D4CB"))
+    }
+}

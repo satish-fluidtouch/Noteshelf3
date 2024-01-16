@@ -40,9 +40,12 @@ class FTClassicDiaryDayTemplate : FTClassicDiaryTemplateFormat {
         let writingAreaHeightValue = templateInfo.screenSize.height*writingAreaHeight/100
         let numberOfWritingAreaLines = (Int)(writingAreaHeightValue/verticalGapBWLinesValue) + 1
         let writingLineWidthValue = templateInfo.screenSize.width*writingLineWidth/100
-        for _ in 1...numberOfWritingAreaLines {
+        let bezierLineTintColor = UIColor(red: 212/255, green: 212/255, blue: 203/255, alpha: 1.0)
+        let headingBezieLineTintColot = UIColor(hexString: "#64645F")
+
+        for index in 1...numberOfWritingAreaLines {
             let bezierlineRect = CGRect(x: writingAreaXValue, y: writingAreaYValue , width:writingLineWidthValue , height: 1)
-            self.addBezierlinePathWith(rect: bezierlineRect, toContext: context, withColor: UIColor(red: 212/255, green: 212/255, blue: 203/255, alpha: 1.0))
+            self.addBezierlinePathWith(rect: bezierlineRect, toContext: context, withColor : index == 1 ? headingBezieLineTintColot : bezierLineTintColor)
             writingAreaYValue += verticalGapBWLinesValue
         }
     }
