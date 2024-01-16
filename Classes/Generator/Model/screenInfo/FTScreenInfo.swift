@@ -17,8 +17,8 @@ class FTScreenInfo: NSObject {
         super.init()
         
         var fullInfo: [String: Any] = [String: Any]()
-        if let fileURL = Bundle.main.url(forResource: formatInfo.templateId, withExtension: "plist",
-                                         subdirectory: "assets/" + formatInfo.templateId) {
+        if let fileURL = Bundle.main.url(forResource: formatInfo.templateId.rawValue, withExtension: "plist",
+                                         subdirectory: "assets/" + formatInfo.templateId.rawValue) {
             fullInfo = NSDictionary.init(contentsOf: fileURL) as! [String: Any]
             if(nil == fullInfo[formatInfo.screenSize]) {
                 if(formatInfo.screenType == .Iphone) {

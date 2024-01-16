@@ -25,7 +25,7 @@ class FTYearFormatInfo : NSObject
     let locale = Locale.current.language.languageCode?.identifier.lowercased() ?? "en"
     var screenSize = UIDevice.deviceSpecificKey()
     var screenType: FTScreenType = UIDevice.deviceScreenType()
-    private(set) var templateId = "Classic"
+    private(set) var templateId : FTTemplateID = .digitalDiariesClassic
     private(set) var orientation = FTScreenOrientation.Port.rawValue
     private(set) var weekFormat = NSCalendar.current.firstWeekday == 2 ? "2" : "1"
     var customVariants : FTPaperVariants = FTBasicTemplatesDataSource.shared.getDefaultVariants()
@@ -60,18 +60,18 @@ class FTYearFormatInfo : NSObject
         self.screenSize = theme.customvariants.selectedDevice.dimension;
         self.screenType = theme.customvariants.selectedDevice.isiPad ? FTScreenType.Ipad : FTScreenType.Iphone;
         self.customVariants = theme.customvariants
-        if (templateId == "Digital_Diaries_Colorful_Planner" || templateId == "Digital_Diaries_Colorful_Planner_Dark"), self.screenType == .Iphone { // As mobile version is not developed, pointing to default iPad 10.5 size
+        if (templateId == .digitalDiariesColorfulPlanner || templateId == .digitalDiariesColorfulPlannerDark), self.screenType == .Iphone { // As mobile version is not developed, pointing to default iPad 10.5 size
             self.screenType = .Ipad
             self.screenSize = FTDeviceDataManager().standardiPadDevice.dimension
             self.customVariants.selectedDevice = FTDeviceDataManager().standardiPadDevice
         }
-        if templateId == "Landscape_Diaries_Colorful_Planner" , self.screenType == .Iphone {
+        if templateId == .landscapeDiariesColorfulPlanner , self.screenType == .Iphone {
             self.screenType = .Ipad
             self.orientation = FTScreenOrientation.Land.rawValue;
             self.screenSize = FTDeviceDataManager().standardiPadDevice.dimension
             self.customVariants.selectedDevice = FTDeviceDataManager().standardiPadDevice
         }
-        if templateId != "Digital_Diaries_Midnight" , templateId != "Digital_Diaries_Day_and_Night_Journal", self.screenType == .Iphone{
+        if templateId != .digitalDiariesMidnight , templateId != .digitalDiariesDayandNightJournal, self.screenType == .Iphone{
             self.orientation = FTScreenOrientation.Port.rawValue;
         }
     }
@@ -111,8 +111,9 @@ class FTYearInfoMonthly: NSObject {
         
         var curMonth = format.startMonth.month;
         var curYear = format.startMonth.year;
+        let formatter = self.dateformatter
         for _ in 0..<totalMonths {
-            let month = FTMonthInfo.init(localeIdentifier: localeID, formatInfo: format,weekFormat: self._weekFormat);
+            let month = FTMonthInfo.init(localeIdentifier: localeID, formatInfo: format,weekFormat: self._weekFormat,dateformatter: formatter);
             if(curMonth > 12) {
                 curMonth = 1;
                 curYear += 1;
@@ -121,7 +122,7 @@ class FTYearInfoMonthly: NSObject {
             monthInfo.append(month);
             
             let monthCalendar = FTMonthlyCalendarInfo.init(localeIdentifier: localeID, formatInfo: format.dayFormat,weekFormat:self._weekFormat);
-            monthCalendar.generate(month: curMonth, year: curYear);
+            monthCalendar.generate(month: curMonth, year: curYear,dateFormatter: formatter);
             monthCalendarInfo.append(monthCalendar);
             
             curMonth += 1;
@@ -129,5 +130,13 @@ class FTYearInfoMonthly: NSObject {
         #if DEBUG
         debugPrint("monthInfo: \(monthInfo) monthCalendarInfo:\(monthCalendarInfo)");
         #endif
+    }
+    private var dateformatter : DateFormatter {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.full;
+        dateformatter.timeStyle = DateFormatter.Style.none;
+        let locale = Locale.init(identifier: NSCalendar.calLocale(localeID));
+        dateformatter.locale = locale;
+        return dateformatter
     }
 }

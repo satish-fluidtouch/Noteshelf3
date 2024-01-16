@@ -13,11 +13,13 @@ class FTWeekInfo: NSObject {
     
     private var localeID : String = "en";
     private var format : FTDayFormatInfo;
+    private var dateformatter : DateFormatter;
 
-    required init(localeIdentifier : String,formatInfo : FTDayFormatInfo)
+    required init(localeIdentifier : String,formatInfo : FTDayFormatInfo, dateFormatter : DateFormatter)
     {
         localeID = localeIdentifier;
         format = formatInfo;
+        dateformatter = dateFormatter
         super.init();
     }
     
@@ -30,7 +32,7 @@ class FTWeekInfo: NSObject {
         var curDate = weekStartDate;
         while curDate.compareDate(nextWeekStartDate) != .orderedSame {
             let _dayInfo = FTDayInfo.init(localeIdentifier: localeID, formatInfo: format);
-            _dayInfo.populateDateInfo(date: curDate);
+            _dayInfo.populateDateInfo(date: curDate, dateFormatter: dateformatter);
             self.dayInfo.append(_dayInfo)
             curDate = curDate.nextDay();
         }

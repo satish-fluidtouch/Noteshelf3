@@ -17,6 +17,7 @@ protocol FTDairyRenderTemplate : NSObjectProtocol {
 }
 
 @objc protocol FTDairyRenderFormat : NSObjectProtocol {
+    var diaryPagesInfo : [FTDiaryPageInfo] {get set}
     func isToDisplayOutOfMonthDate() -> Bool
     func pageRect() -> CGRect;
     func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly)

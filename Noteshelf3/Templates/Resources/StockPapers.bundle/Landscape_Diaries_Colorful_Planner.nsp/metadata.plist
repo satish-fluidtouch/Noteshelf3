@@ -30,8 +30,6 @@
 	<integer>1</integer>
 	<key>template_id</key>
 	<string>Landscape_Diaries_Colorful_Planner</string>
-	<key>template_type</key>
-	<integer>8</integer>
 	<key>restrictsChangeTemplate</key>
 	<true/>
 	<key>footer_option</key>

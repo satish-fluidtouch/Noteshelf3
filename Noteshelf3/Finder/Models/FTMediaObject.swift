@@ -66,6 +66,25 @@ public enum FTMediaType: String {
                         identifier: UIAction.Identifier(self.rawValue),
                         handler: completion)
     }
+    
+    func eventDescription() -> String {
+        var eventName = ""
+        switch self {
+        case .allMedia :
+            eventName = "all content"
+        case .audio :
+            eventName = "recording"
+        case .photo :
+            eventName = "photo"
+        case .sticker :
+            eventName = "sticker"
+        case .webclip :
+            eventName = "webclip"
+        case .attachment:
+            eventName = "attachment"
+        }
+        return eventName
+    }
 }
 
 protocol FTMediaItem {

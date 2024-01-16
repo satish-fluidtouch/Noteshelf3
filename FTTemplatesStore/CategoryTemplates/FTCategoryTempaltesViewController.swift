@@ -13,16 +13,27 @@ class FTCategoryTempaltesViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var tagsView: FTTagsView!
 
-    var categoryTemplate: TemplateInfo!
     private var viewModel = FTCategoryTemplatesViewModel()
+
     private var sectionContainer: StoreSectionContainer!
+    private var actionManager: FTStoreActionManager!
+    private var categoryTemplate: TemplateInfo!
+
+    class func controller(categoryTemplate: TemplateInfo, actionManager: FTStoreActionManager) -> FTCategoryTempaltesViewController {
+        guard let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTCategoryTempaltesViewController") as? FTCategoryTempaltesViewController else {
+            fatalError("FTCategoryTempaltesViewController not found")
+        }
+        vc.categoryTemplate = categoryTemplate
+        vc.actionManager = actionManager
+        return vc
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.sectionHeaderTopPadding = 0
         var sections = [FTStoreSectionHandler]()
         categoryTemplate.items?.forEach({ discoveryItem in
-            sections.append(TemplatesSectionHandler())
+            sections.append(TemplatesSectionHandler(actionStream: actionManager.actionStream))
         })
         self.sectionContainer = StoreSectionContainer(handlers: sections)
 
@@ -97,7 +108,7 @@ private extension FTCategoryTempaltesViewController {
     }
 
     func observers() {
-        FTStoreActionManager.shared.actionStream.sink {[weak self] action in
+        actionManager?.actionStream.sink {[weak self] action in
             guard let self = self else { return }
             switch action {
             case .didTapOnDiscoveryItem(items: let items, selectedIndex: let index):
@@ -110,7 +121,7 @@ private extension FTCategoryTempaltesViewController {
                     self.presentTemplatePreviewFor(templates: items, selectedIndex: index)
                 }
             }
-        }.store(in: &FTStoreActionManager.shared.cancellables)
+        }.store(in: &actionManager.cancellables)
     }
 
 
@@ -179,14 +190,13 @@ private extension FTCategoryTempaltesViewController {
     }
 
     func navigateToTempaltesVC(discoveryItem: DiscoveryItem) {
-        if let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTStoreTemplatesViewController") as? FTStoreTemplatesViewController {
-            vc.discoveryItem = discoveryItem
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        let vc = FTStoreTemplatesViewController.controller(discoveryItem: discoveryItem, actionManager: actionManager)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func presentTemplatePreviewFor(templates: [TemplateInfo], selectedIndex: Int) {
-        FTTemplatesPageViewController.presentFromViewController(self, templates: templates, selectedIndex: selectedIndex)
+        // TODO: AK
+        FTTemplatesPageViewController.presentFromViewController(self, actionManager: actionManager, templates: templates, selectedIndex: selectedIndex)
     }
 
 }

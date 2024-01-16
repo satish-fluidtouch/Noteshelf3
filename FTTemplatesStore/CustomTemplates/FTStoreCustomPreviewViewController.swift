@@ -16,8 +16,19 @@ class FTStoreCustomPreviewViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
 
     @IBOutlet weak var importAndCreateButton: FTCustomButton!
+    private var actionManager: FTStoreActionManager?
 
-    var fileUrl: URL!
+    private var fileUrl: URL!
+
+    class func controller(fileUrl: URL, actionManager: FTStoreActionManager?) -> FTStoreCustomPreviewViewController {
+        guard let vc = UIStoryboard.init(name: "FTTemplatesStore", bundle: storeBundle).instantiateViewController(withIdentifier: "FTStoreCustomPreviewViewController") as? FTStoreCustomPreviewViewController else {
+            fatalError("FTStoreCustomPreviewViewController not found")
+        }
+        vc.fileUrl = fileUrl
+        vc.actionManager = actionManager
+        return vc
+    }
+
     override func viewDidLoad() {
         self.title = "templatesStore.custom.customTemplate".localized
         super.viewDidLoad()
@@ -61,12 +72,12 @@ class FTStoreCustomPreviewViewController: UIViewController {
                 if let importedUrl = try FTStoreCustomTemplatesHandler.shared.saveFileFrom(url: fileUrl, to: filename) {
                     if let tempUrl = try FTStoreCustomTemplatesHandler.shared.tempLocationForFile(url: importedUrl) {
                         let controllerToPresentalert = self.presentingViewController ?? self
-                        self.dismiss(animated: true) {
-                            if FTStoreContainerHandler.shared.premiumUser?.nonPremiumQuotaReached ?? false {
-                                FTStoreContainerHandler.shared.actionStream.send(.showUpgradeAlert(controller: controllerToPresentalert, feature: nil));
+                        self.dismiss(animated: true) { [weak self] in
+                            if FTStorePremiumPublisher.shared.premiumUser?.nonPremiumQuotaReached ?? false {
+                                FTStorePremiumPublisher.shared.actionStream.send(.showUpgradeAlert(controller: controllerToPresentalert, feature: nil));
                             }
                             else {
-                                FTStoreContainerHandler.shared.actionStream.send(.createNotebookFor(url: tempUrl))
+                                self?.actionManager?.containerActions.send(.createNotebookFor(url: tempUrl))
                             }
                         }
                     }
@@ -76,8 +87,7 @@ class FTStoreCustomPreviewViewController: UIViewController {
                 UIAlertController.showAlert(withTitle: "templatesStore.alert.error".localized, message: error.localizedDescription, from: self, withCompletionHandler: nil)
             }
             // Track Event
-            FTStoreContainerHandler.shared.actionStream.send(.track(event: EventName.customtemplate_importandcreate_tap, params: nil, screenName: ScreenName.templatesStore))
-
+            FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.customtemplate_importandcreate_tap, params: nil, screenName: ScreenName.templatesStore))
         }
     }
 
