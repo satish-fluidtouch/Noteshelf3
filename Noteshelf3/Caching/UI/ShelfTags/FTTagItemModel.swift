@@ -561,8 +561,6 @@ class FTTagsProvider {
             onCompletion(img, pageUUID)
         }
     }
-
-
 }
 
 private extension FTTagsProvider {

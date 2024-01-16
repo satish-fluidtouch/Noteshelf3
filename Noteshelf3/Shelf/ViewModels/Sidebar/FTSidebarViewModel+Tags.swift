@@ -10,31 +10,19 @@ import Foundation
 import FTCommon
 extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, newTitle: String) {
-        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
-            let oldTitle = tag.title;
-            tagItem.renameTagItemWith(renamedString: newTitle)
-            self.didUpdateRenameTag(tag: oldTitle, with: newTitle)
-
-            FTShelfTagsUpdateHandler.shared.renameTag(tag: oldTitle, with: newTitle) { success in
-                if success ?? false {
-                    if let tagItem = (tag as? FTSideBarItemTag)?.fttag {
-                        FTTagsProviderV1.shared.renameTag(tagItem, to: newTitle);
-                    }
-                }
+        if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
+            let tagUpdated = FTDocumentTagUpdater();
+            let progress = tagUpdated.rename(tag: ftTag, to: newTitle) { success in
+                debugLog("tagUpdated: \(tagUpdated)");
             }
         }
     }
 
     func deleteTag(_ tag: FTSideBarItem) {
-        if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag.title) {
-            FTShelfTagsUpdateHandler.shared.deleteTag(tag: tagItem.tag) { success in
-                if success ?? false {
-                    if let tagItem = (tag as? FTSideBarItemTag)?.fttag {
-                        FTTagsProviderV1.shared.deleteTags([tagItem]);
-                    }
-                    tagItem.deleteTagItem()
-                    self.updateShelfTagsAndSideMenu()
-                }
+        if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
+            let tagUpdated = FTDocumentTagUpdater();
+            tagUpdated.delete(tag: ftTag) { success in
+                debugLog("tagUpdated: \(tagUpdated)");
             }
         }
     }

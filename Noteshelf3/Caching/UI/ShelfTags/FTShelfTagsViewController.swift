@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import FTCommon
 
+let USE_NEW_MODELS = true;
 enum FTShelfTagsPageState {
     case edit, none
 }
@@ -47,6 +48,8 @@ class FTShelfTagsViewController: UIViewController {
             self.title = (nil == self.selectedTag) ? "sidebar.allTags".localized : "#" + (self.selectedTag?.text ?? "")
         }
     }
+    
+    private var currentTag: FTTag?;
     var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
     var selectedPaths = [IndexPath]()
@@ -64,6 +67,13 @@ class FTShelfTagsViewController: UIViewController {
     @IBOutlet weak private var selectButtom: UIBarButtonItem?
     var selectAllButton: UIBarButtonItem?
 
+    private var tagCategory = FTShelfTagCategory();
+    func setCurrentTag(_ tag: FTTag) {
+        self.currentTag = tag;
+        tagCategory.currentTag = tag;
+        self.title = (tag.tagType == .allTag) ? tag.tagDisplayName : "#".appending(tag.tagDisplayName);
+    }
+    
     override func viewDidLoad()  {
         super.viewDidLoad()
         self.title = (nil == self.selectedTag) ? "sidebar.allTags".localized : "#" + (self.selectedTag?.text ?? "")
@@ -170,6 +180,21 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     private func loadShelfTagItems() {
+        if USE_NEW_MODELS {
+            if tagCategory.allEntities.isEmpty {
+                self.showPlaceholderView();
+            }
+            else {
+                self.hidePlaceholderView();
+                if self.viewState == .edit, !self.selectedPaths.isEmpty {
+                    self.collectionView.reloadItems(at: self.selectedPaths)
+                } else {
+                    self.collectionView.reloadData()
+                }
+            }
+            return;
+        }
+        
         viewModel = FTShelfTagsPageModel()
         viewModel?.selectedTag = self.selectedTag?.text ?? "";
         showActivityIndicator()
@@ -308,7 +333,7 @@ class FTShelfTagsViewController: UIViewController {
     }
 
      func activateViewMode() {
-         self.title = (nil == self.selectedTag) ? "sidebar.allTags".localized : "#" + (self.selectedTag?.text ?? "")
+//         self.title = (nil == self.selectedTag) ? "sidebar.allTags".localized : "#" + (self.selectedTag?.text ?? "")
         viewState = .none
         self.toolbar?.isHidden = true
         self.selectedPaths = []
@@ -451,6 +476,9 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
         if section == 0 {
             return 1
         }
+        if USE_NEW_MODELS {
+            return self.tagCategory.pages.count;
+        }
         return pages.count
     }
 
@@ -466,8 +494,14 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
             }
             return cell
         } else if indexPath.section == 1 {
-            let item = pages[indexPath.row]
-            cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+            if USE_NEW_MODELS {
+                let item = self.tagCategory.pages[indexPath.row]
+                cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);
+            }
+            else {
+                let item = pages[indexPath.row]
+                cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+            }
         }
         cell.isSelected = true
         return cell
@@ -476,7 +510,12 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if indexPath.section == 0, let pageCell = cell as? FTShelfTagsBooksCell {
             pageCell.delegate = self
-            pageCell.prepareCellWith(books: books, viewState: viewState, parentVC: self)
+            if USE_NEW_MODELS {
+                pageCell.prepareCell(books: tagCategory.books, viewState: viewState, parentVC: self)
+            }
+            else {
+                pageCell.prepareCellWith(books: books, viewState: viewState, parentVC: self)
+            }
         }
     }
     
@@ -502,10 +541,21 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
         self.enableToolbarItemsIfNeeded()
         if viewState == .none {
             if indexPath.section == 1 {
-                let item = pages[indexPath.row]
+                let docId: String?
+                let pageIndex: Int
+                if USE_NEW_MODELS {
+                    let item = self.tagCategory.pages[indexPath.row];
+                    docId = item.documentUUID;
+                    pageIndex = (item as? FTPageTaggedEntity)?.pageProperties.pageIndex ?? 0
+                }
+                else {
+                    let item = pages[indexPath.row]
+                    docId = item.documentUUID;
+                    pageIndex = item.pageIndex;
+                }
                 FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                    if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
-                        self.delegate?.openNotebook(shelfItem: shelfItem, page: item.pageIndex)
+                    if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
+                        self.delegate?.openNotebook(shelfItem: shelfItem, page: pageIndex)
                         track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                     }
                 }
@@ -518,13 +568,22 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0, books.count > 0 {
+        let booksCount = USE_NEW_MODELS ? self.tagCategory.books.count : self.books.count;
+        if indexPath.section == 0, booksCount > 0 {
             return CGSize(width: collectionView.frame.width, height: 250);
         }
         if indexPath.section == 1 {
-            let item = pages[indexPath.row]
+            var pageRect: CGRect?
+            if USE_NEW_MODELS {
+                pageRect = (self.tagCategory.pages[indexPath.row] as? FTPageTaggedEntity)?.pageProperties.pageSize;
+            }
+            else {
+                let item = pages[indexPath.row]
+                pageRect = item.pdfKitPageRect;
+            }
+            
             let columnWidth = columnWidthForSize(self.view.frame.size) - 12
-            if let pageRect = item.pdfKitPageRect {
+            if let pageRect = pageRect {
                 if  pageRect.size.width > pageRect.size.height  { // landscape
                     return CGSize(width: columnWidth, height: ((columnWidth)/FTShelfTagsConstants.Page.landscapeAspectRatio) + FTShelfTagsConstants.Page.extraHeightPadding)
                 } else {
@@ -551,10 +610,13 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0, books.count > 0 {
-            return CGSize(width: collectionView.frame.width, height: books.count > 0 ? 45 : 0)
-        } else if section == 1, pages.count > 0 {
-            return CGSize(width: collectionView.frame.width, height: pages.count > 0 ? 45 : 0)
+        let booksEmpty = USE_NEW_MODELS ? self.tagCategory.books.isEmpty : self.books.isEmpty;
+        let pagesEmpty = USE_NEW_MODELS ? self.tagCategory.pages.isEmpty : self.pages.isEmpty;
+        
+        if section == 0, !booksEmpty {
+            return CGSize(width: collectionView.frame.width, height: 45)
+        } else if section == 1, !pagesEmpty {
+            return CGSize(width: collectionView.frame.width, height: 45)
         }
         return .zero
     }
@@ -730,4 +792,33 @@ extension FTShelfTagsViewController: FTShelfTagsAndBooksDelegate {
         self.openInNewWindow()
     }
 
+}
+
+private class FTShelfTagCategory: NSObject {
+    var books = [FTTaggedEntity]();
+    var pages = [FTTaggedEntity]();
+    var allEntities = [FTTaggedEntity]();
+    
+    var currentTag: FTTag? {
+        didSet {
+            if currentTag != oldValue {
+                self.allEntities.removeAll();
+                var booksEntries = [FTTaggedEntity]();
+                var pagessEntries = [FTTaggedEntity]();
+                self.currentTag?.getTaggedEntities({ entities in
+                    self.allEntities = entities;
+                    self.allEntities.forEach { eachType in
+                        if eachType.tagType == .book {
+                            booksEntries.append(eachType)
+                        }
+                        else {
+                            pagessEntries.append(eachType)
+                        }
+                    }
+                    self.books = booksEntries;
+                    self.pages = pagessEntries;
+                })
+            }
+        }
+    }
 }

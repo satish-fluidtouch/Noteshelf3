@@ -16,6 +16,7 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     private var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
     weak var parentVC: UIViewController?
+    private var bookTaggedEntity = [FTTaggedEntity]()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,6 +49,25 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
         }
     }
 
+    func prepareCell(books: [FTTaggedEntity]
+                     , viewState: FTShelfTagsPageState
+                     , parentVC: UIViewController) {
+        self.bookTaggedEntity = books
+        self.viewState = viewState
+        self.parentVC = parentVC
+
+        collectionView.frame = self.bounds
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+
+        let selection = collectionView.indexPathsForSelectedItems
+        self.collectionView.reloadData()
+        if books.count > 0, let items = selection {
+            for selectedItem in items {
+                self.collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: [])
+            }
+        }
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
     }
@@ -61,6 +81,9 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if USE_NEW_MODELS {
+            return self.bookTaggedEntity.count;
+        }
         return books.count
     }
 
@@ -70,21 +93,43 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
         }
         cell.selectionBadge?.isHidden = viewState == .none ? true : false
 
-        let item = self.books[indexPath.row]
-        cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+        if USE_NEW_MODELS {
+            let item = self.bookTaggedEntity[indexPath.row]
+            cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);
+        }
+        else {
+            let item = self.books[indexPath.row]
+            cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+        }
         cell.isSelected = true
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let item = self.books[indexPath.row]
         let potraitSize = FTShelfTagsConstants.Book.potraitSize
 
         var size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
         var token : String?
-        token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.documentItem!, onCompletion: { [weak self](image, imageToken) in
-            if token == imageToken {
-                if let img = image {
+        if !USE_NEW_MODELS {
+            let item = self.books[indexPath.row]
+            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.documentItem!, onCompletion: {(image, imageToken) in
+                if token == imageToken {
+                    if let img = image {
+                        if  img.size.width > img.size.height  { // landscape
+                            let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
+                            size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
+                        } else {
+                            let potraitSize = FTShelfTagsConstants.Book.potraitSize
+                            size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
+                        }
+                    }
+                }
+            })
+        }
+        else {
+            let item = self.bookTaggedEntity[indexPath.row];
+            token = item.thumbnail { (image, inToken) in
+                if token == inToken,let img = image {
                     if  img.size.width > img.size.height  { // landscape
                         let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
                         size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
@@ -94,7 +139,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
                     }
                 }
             }
-        })
+        }
         return size
     }
 
@@ -128,10 +173,21 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.delegate?.shouldEnableToolbarItems()
         if viewState == .none {
-            let item = self.books[indexPath.row]
-            if let shelf = item.documentItem {
-                self.delegate?.openNotebook(shelfItem: shelf, page: 0)
-                track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
+            if USE_NEW_MODELS {
+                let item = self.bookTaggedEntity[indexPath.row]
+                FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                    if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
+                        self.delegate?.openNotebook(shelfItem: shelfItem, page: 0)
+                        track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
+                    }
+                }
+            }
+            else {
+                let item = self.books[indexPath.row]
+                if let shelf = item.documentItem {
+                    self.delegate?.openNotebook(shelfItem: shelf, page: 0)
+                    track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
+                }
             }
         }
 

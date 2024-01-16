@@ -13,6 +13,8 @@ enum FTTagType: Int {
 }
 
 class FTTag: NSObject {
+    private var lock = NSRecursiveLock();
+    
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherObj = object as? FTTag else {
             return false;
@@ -25,7 +27,10 @@ class FTTag: NSObject {
     }
     
     override var hash: Int {
-        return tagName.lowercased().hashKey.hashValue;
+        lock.lock()
+        let hash = tagName.lowercased().hashKey.hashValue;
+        lock.unlock()
+        return hash;
     }
     
     var id = UUID().uuidString;
@@ -39,9 +44,17 @@ class FTTag: NSObject {
     }
     
     func addDocumentID(_ documentID: String) {
+        lock.lock()
         self.documentIDs.insert(documentID);
+        lock.unlock()
     }
     
+    func removeDocumentID(_ documentID: String) {
+        lock.lock()
+        self.documentIDs.remove(documentID)
+        lock.unlock()
+    }
+
     convenience init(name: String, documentUUIDs: [String]) {
         self.init(name: name);
         self.documentIDs = Set(documentUUIDs)
@@ -52,24 +65,32 @@ class FTTag: NSObject {
     }
     
     var tagDisplayName: String {
-        return self.tagName;
+        lock.lock()
+        let name = self.tagName;
+        lock.unlock()
+        return name;
     }
     
     func setTagName(_ newName: String) {
+        lock.lock()
         self.tagName = newName;
+        lock.unlock()
     }
     
     func documentTaggedEntity(_ documentID: String) -> FTTaggedEntity? {
+        lock.lock()
         let item = self.taggedEntitties.first { eachItem in
             if let item = eachItem as? FTDocumentTaggedEntity, item.documentUUID == documentID {
                 return true;
             }
             return false;
         }
+        lock.unlock()
         return item;
     }
 
     func pageTaggedEntity(_ documentID: String,pageUUID: String) -> FTTaggedEntity? {
+        lock.lock()
         let item = self.taggedEntitties.first { eachItem in
             if let item = eachItem as? FTPageTaggedEntity
                 , item.documentUUID == documentID
@@ -78,39 +99,51 @@ class FTTag: NSObject {
             }
             return false;
         }
+        lock.unlock()
         return item;
     }
 
     func addTaggedItemIfNeeded(_ item: FTTaggedEntity) {
+        lock.lock()
         if isLoaded {
             self.addTaggedItem(item)
         }
-        self.documentIDs.insert(item.documentUUID)
+        self.addDocumentID(item.documentUUID);
+        lock.unlock()
     }
     
     private func addTaggedItem(_ item: FTTaggedEntity) {
+        lock.lock()
         self.taggedEntitties.append(item);
         item.addTag(self);
-        self.documentIDs.insert(item.documentUUID)
+        self.addDocumentID(item.documentUUID);
+        lock.unlock()
     }
     
     func removeTaggedItem(_ item: FTTaggedEntity) {
+        lock.lock()
         guard let index = self.taggedEntitties.firstIndex(of: item) else {
+            lock.unlock()
             return;
         }
         item.removeTag(self);
         self.taggedEntitties.remove(at: index);
+        lock.unlock()
     }
 
     func markAsDeleted() {
+        lock.lock()
         self.taggedEntitties.forEach { eachItem in
             eachItem.removeTag(self);
         }
+        lock.unlock()
     }
     
     func getTaggedEntities(_ onCompletion: (([FTTaggedEntity])->())?) {
+        lock.lock()
         guard !isLoaded else {
             onCompletion?(self.taggedEntitties);
+            lock.unlock()
             return;
         }
         self.documentIDs.forEach { eachDocument in
@@ -126,17 +159,23 @@ class FTTag: NSObject {
             }
 
             let pages = doc.pages;
-            for eachPage in pages {
+            pages.enumerated().forEach { eachItem in
+                let eachPage = eachItem.element;
+                let index = eachItem.offset;
                 if eachPage.tags().contains(where: {$0.lowercased() == lowercasedTag}) {
+                    let pageProperties = FTTaggedPageProperties();
+                    pageProperties.pageSize = eachPage.pdfPageRect;
+                    pageProperties.pageIndex = index;
                     let item = FTPageTaggedEntity(documentUUID: eachDocument
                                                   , documentName: documentName
                                                   , pageUUID: eachPage.uuid
-                                                  , pageIndex: 0);
+                                                  , pageProperties: pageProperties);
                     self.addTaggedItem(item)
                 }
             }
         }
         isLoaded = true;
         onCompletion?(self.taggedEntitties);
+        lock.unlock()
     }
 }

@@ -8,13 +8,16 @@
 
 import UIKit
 
-class FTTaggedEntity: NSObject {
+class FTTaggedEntity: NSObject, Identifiable {
+    var id = UUID().uuidString;
+
     var documentUUID: String;
-
     var documentName: String?
-    private var objectID = UUID().uuidString
-    private var notificationObserver: NSObjectProtocol?
 
+    private var notificationObserver: NSObjectProtocol?
+    var tagType: FTTagsType {
+        fatalError("subclass should override")
+    };
     var tags = Set<FTTag>();
 
     init(documentUUID: String,documentName: String?) {
@@ -25,7 +28,7 @@ class FTTaggedEntity: NSObject {
             self.notificationObserver = NotificationCenter.default.addObserver(forName: notificationname, object: nil, queue: .main) { [weak self] notification in
                 guard let stringSelf = self,
                       let inObject = notification.object as? FTPageTaggedEntity
-                        ,stringSelf.objectID != inObject.objectID else {
+                        ,stringSelf.id != inObject.id else {
                     return;
                 }
                 let unionTag = stringSelf.tags.union(inObject.tags);
@@ -33,6 +36,21 @@ class FTTaggedEntity: NSObject {
                 inObject.tags = unionTag;
             }
         }
+    }
+    
+    func thumbnail(onCompletion: ((UIImage?,String)->())?) -> String {
+        fatalError("Subclass should override")
+    }
+    
+    var thumbnailURL: URL {
+        let thumbnailFolderPath = URL.thumbnailFolderURL();
+        let documentPath = thumbnailFolderPath.appendingPathComponent(self.documentUUID);
+        var isDir = ObjCBool.init(false);
+        if(!FileManager.default.fileExists(atPath: documentPath.path(percentEncoded: false)
+                                           , isDirectory: &isDir) || !isDir.boolValue) {
+            _ = try? FileManager.default.createDirectory(at: documentPath, withIntermediateDirectories: true, attributes: nil);
+        }
+        return documentPath;
     }
     
     override var hash: Int {

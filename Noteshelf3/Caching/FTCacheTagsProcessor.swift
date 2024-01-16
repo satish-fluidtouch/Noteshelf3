@@ -226,6 +226,10 @@ final class FTCacheTagsProcessor {
     }
 
     func cacheTagsForDocuments(items: [FTItemToCache]) {
+        items.forEach { eachItem in
+            FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
+        }
+        return;
         if !items.isEmpty {
             readTagsInfo {[weak self] cachePlist in
                 guard let self = self else {
@@ -252,7 +256,6 @@ final class FTCacheTagsProcessor {
                     let dispatchGroup = DispatchGroup()
                     items.forEach { eachItem in
                         dispatchGroup.enter()
-                        FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
                         tagsFor(documentUUID: eachItem.documentID) { tags in
                             let result = self.cacheTagsIntoPlist(tags, for: eachItem.documentID,tagsplist: cachePlist)
                             shouldRefreshSideMenu = shouldRefreshSideMenu || result.refreshSideMenu;

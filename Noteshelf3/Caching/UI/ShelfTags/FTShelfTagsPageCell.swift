@@ -29,21 +29,12 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     }
 
     private var shelfTagItem: FTShelfTagsItem?;
-    func updateTagsPills(for shelfItem: FTShelfTagsItem) {
-        self.shelfTagItem = shelfItem
-        if let tagItems = self.shelfTagItem?.tags {
-            let tags = Set.init(tagItems)
-            let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-            self.updateTagsViewWith(tags: sortedArray)
-        }
-    }
-
+    
     func updateTagsItemCellContent(tagsItem: FTShelfTagsItem, isRegular: Bool) {
-
         self.bookTitleLbl?.text = tagsItem.documentItem?.displayTitle
         let tags = Set.init(tagsItem.tags)
         let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-        self.updateTagsViewWith(tags: sortedArray)
+        self.updateTagsViewWith(tags: sortedArray.compactMap{$0.text})
         self.thumbnail?.backgroundColor = .clear
 
         if tagsItem.type == .page, let docUUID = tagsItem.documentUUID, let pageUUID = tagsItem.pageUUID {
@@ -93,7 +84,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         }
     }
 
-    func updateTagsViewWith(tags: [FTTagModel]) {
+    func updateTagsViewWith(tags: [String]) {
         let padding = 10.0
         let interitemSpace = 5.0
         var xAxis = 0.0
@@ -103,7 +94,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         let countStrWidth = 40.0
         tagsView?.subviews.forEach {$0.removeFromSuperview()}
         for (index, tag) in tags.enumerated() {
-            let pageTag = "  #\(tag.text)  "
+            let pageTag = "  #\(tag)  "
             let tagButton = UIButton(type: .custom)
             tagButton.layer.cornerRadius = 6
             tagButton.titleLabel?.lineBreakMode  = .byTruncatingMiddle
@@ -135,4 +126,59 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             ])
         }
     }
+}
+
+extension FTShelfTagsPageCell {
+    func updateTaggedEntity(taggedEntity: FTTaggedEntity, isRegular: Bool) {
+        self.bookTitleLbl?.text = taggedEntity.documentName
+        let tags = taggedEntity.tags;
+        let sortedArray = tags.sorted(by: { $0.tagName.localizedCaseInsensitiveCompare($1.tagName) == .orderedAscending })
+        self.updateTagsViewWith(tags: sortedArray.compactMap{$0.tagName})
+        self.thumbnail?.backgroundColor = .clear
+
+        if taggedEntity.tagType == .page {
+            self.thumbnail?.layer.cornerRadius = 10
+            let image = UIImage(named: "pages_shadow")
+            let scalled = image?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
+            shadowImageView.image = scalled
+            self.shadowImageView.layer.cornerRadius = 10
+            
+            self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
+            var token: String?;
+            token = taggedEntity.thumbnail { [weak self] (image, intoken) in
+                if let image, token == intoken {
+                    self?.thumbnail?.image = image
+                }
+            }
+        } else if taggedEntity.tagType == .book {
+            var token : String?
+            self.thumbnail?.contentMode = .scaleAspectFit
+            token = taggedEntity.thumbnail { [weak self] (image, intoken) in
+                if intoken == token {
+                    if let img = image {
+                        if img.size.width > img.size.height {// Landscape
+                            let height = FTShelfTagsConstants.Book.landscapeSize.height
+                            self?.thumbnailHeightConstraint.constant = height
+                        }
+                        self?.shadowImageView.layer.cornerRadius = 8
+                        self?.thumbnail?.layer.cornerRadius = 8
+                        
+                        let shadowImage = UIImage(named: "book_shadow")
+                        let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
+                        self?.shadowImageView.image = scalled
+                        self?.thumbnail?.image = img
+                    } else {
+                        self?.shadowImageView.layer.cornerRadius = 8
+                        self?.thumbnail?.layer.cornerRadius = 8
+                        let shadowImage = UIImage(named: "noCover_shadow")
+                        let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
+                        self?.shadowImageView.image = scalled
+                        
+                        self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
+                    }
+                }
+            }
+        }
+    }
+
 }

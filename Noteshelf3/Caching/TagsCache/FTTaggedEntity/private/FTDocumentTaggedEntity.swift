@@ -9,11 +9,27 @@
 import UIKit
 
 class FTDocumentTaggedEntity: FTTaggedEntity {    
+    override var tagType: FTTagsType {
+        .book
+    };
+
     override var tagUpdateNotification: Notification.Name? {
         return Notification.Name(rawValue: "Tag_Updated_\(documentUUID)");
     }
     
     override var description: String {
         return super.description+">>"+self.documentUUID
+    }
+    
+    override func thumbnail(onCompletion: ((UIImage?,String) -> ())?) -> String {
+        let thumbnailPath = FTDocumentCache.shared.cachedLocation(for: self.documentUUID).appending(path: "cover-shelf-image.png");
+        let token = UUID().uuidString;
+        DispatchQueue.global().async {
+            let img = UIImage(contentsOfFile: thumbnailPath.path(percentEncoded: false));
+            DispatchQueue.main.async {
+                onCompletion?(img, token)
+            }
+        }
+        return token;
     }
 }

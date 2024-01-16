@@ -87,7 +87,25 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         }
     }
 
-    
+    func openTag(_ tag: FTTag) {
+        if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
+            controller.setCurrentTag(tag);
+            self.showDetailViewController(detailController, sender: self)
+            controller.reloadContent()
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            guard let viewController = storyboard.instantiateViewController(withIdentifier: "FTShelfTagsViewController") as? FTShelfTagsViewController else {
+                fatalError("FTShelfTagsViewController doesnt exist")
+            }
+            viewController.delegate = self
+            viewController.setCurrentTag(tag);
+            let detailNavVC = UINavigationController(rootViewController: viewController)
+            detailNavVC.navigationBar.prefersLargeTitles = true
+            self.detailNavigationController = detailNavVC;
+
+            self.showDetailViewController(detailNavVC, sender: self)
+        }
+    }
     func openTags(for tag: String, isAllTags: Bool) {
         if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
             controller.selectedTag = isAllTags ? nil : FTTagModel(text: tag)

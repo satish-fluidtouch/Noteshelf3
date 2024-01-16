@@ -220,6 +220,9 @@ extension FTTabViewController: FTSideMenuViewControllerDelegate {
         FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
     }
 
+    func openTag(_ tag: FTTag) {
+        
+    }
     func openTags(for tag: String, isAllTags: Bool) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "FTShelfTagsViewController") as? FTShelfTagsViewController else {
