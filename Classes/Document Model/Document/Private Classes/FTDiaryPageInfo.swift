@@ -21,23 +21,17 @@ enum DiaryPageType: Codable {
     case dailyPriorities
     case weeklyNotes
     case dailyNotes
+    case help
+    case sample
 }
 @objcMembers class FTDiaryPageInfo: NSObject,Codable {
-    var type: DiaryPageType
-    var date: TimeInterval?
-    var shouldShowThisPageOnDiaryLaunch : Bool {
-        var status: Bool = false
-        if let currentDate = Date().utcDate() , let date {
-            let pageDate = Date(timeIntervalSinceReferenceDate: date).utcDate() ?? Date(timeIntervalSinceReferenceDate: date);
-            if pageDate.compareDate(currentDate) == ComparisonResult.orderedSame {
-                status = true;
-            }
-        }
-        return status
-    }
+    let type: DiaryPageType
+    let date: TimeInterval?
+    let isCurrentPage : Bool
 
-    init(type: DiaryPageType,date:TimeInterval? = nil){
+    init(type: DiaryPageType,date:TimeInterval? = nil, isCurrentPage : Bool  = false){
         self.type = type
         self.date = date
+        self.isCurrentPage = isCurrentPage
     }
 }

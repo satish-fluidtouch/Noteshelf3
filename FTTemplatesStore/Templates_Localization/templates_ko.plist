@@ -24,7 +24,7 @@
 					<array>
 						<dict>
 							<key>displayTitle</key>
-							<string>조경 계획자</string>
+							<string>가로 일정표</string>
 							<key>fileName</key>
 							<string>Landscape_Diaries_Colorful_Planner</string>
 							<key>supportOrientation</key>
@@ -41,7 +41,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -63,7 +63,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -85,7 +85,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -107,7 +107,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -129,7 +129,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -151,7 +151,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -173,7 +173,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -37439,7 +37439,7 @@
 			<array>
 				<dict>
 					<key>displayTitle</key>
-					<string>조경 계획자</string>
+					<string>가로 일정표</string>
 					<key>fileName</key>
 					<string>Landscape_Diaries_Colorful_Planner</string>
 					<key>supportOrientation</key>
@@ -37456,7 +37456,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37478,7 +37478,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37500,7 +37500,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37522,7 +37522,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37544,7 +37544,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37566,7 +37566,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37588,7 +37588,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
