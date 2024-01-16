@@ -37,6 +37,10 @@ extension FTShelfViewModel {
     }
     
     @objc func shelfitemDidgetUpdated(_ notification: Notification){
+        guard self.delegate?.canProcessNotification() == true else {
+            return
+        }
+        
         if let userInfo = notification.userInfo, let shelfCollection = notification.object as? FTShelfItemCollection {
             //**************** To handle updates from other categories to All
             if self.collection.isAllNotesShelfItemCollection {

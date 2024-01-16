@@ -41,6 +41,7 @@ protocol FTShelfViewModelProtocol: AnyObject {
     func openGetInspiredPDF(_ url: URL,title: String);
     func openDiscoveryItemsURL(_ url:URL?)
     func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio:FTWatchRecordedAudio, forAction actionType:FTAudioActionType);
+    func canProcessNotification() -> Bool
 
 }
 protocol FTShelfCompactViewModelProtocol: AnyObject {
