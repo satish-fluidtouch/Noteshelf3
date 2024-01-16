@@ -1067,8 +1067,20 @@
 "finder.tabbar.content" = "Contenuto";
 "finder.tag" = "Etichetta";
 "foodanddrink" = "Cibo e Bevande";
+"gesture.activate.focusMode" = "";
+"gesture.activate.focusMode.hint" = "";
 "gesture.activeFocusMode.subTitle" = "4-dito singolo tocco";
 "gesture.activeFocusMode.title" = "Attiva la modalità di concentrazione";
+"gesture.fitPageToScreen" = "";
+"gesture.fitPageToScreen.hint" = "";
+"gesture.redo.hint" = "";
+"gesture.redo.title" = "";
+"gesture.show.quickAccessSideBar" = "";
+"gesture.show.quickAccessSideBar.hint" = "";
+"gesture.show.thumbnails" = "";
+"gesture.show.thumbnails.hint" = "";
+"gesture.undo.hint" = "";
+"gesture.undo.title" = "";
 "gesture.undoredo.subTitle" = "2 dita o 3 dita tocco singolo";
 "gesture.undoredo.title" = "Annulla o Ripeti";
 "getInspired.bulletJournal" = "Diario appuntato";
@@ -1565,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 8 January 2024 at 15:32
+// Last Synced by Fluid Touch on 16 January 2024 at 11:37 AM

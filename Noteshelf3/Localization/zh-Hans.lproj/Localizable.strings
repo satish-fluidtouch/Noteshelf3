@@ -1067,8 +1067,20 @@
 "finder.tabbar.content" = "内容";
 "finder.tag" = "标签";
 "foodanddrink" = "食物与饮料";
+"gesture.activate.focusMode" = "";
+"gesture.activate.focusMode.hint" = "";
 "gesture.activeFocusMode.subTitle" = "4指单次轻拍";
 "gesture.activeFocusMode.title" = "激活专注模式";
+"gesture.fitPageToScreen" = "";
+"gesture.fitPageToScreen.hint" = "";
+"gesture.redo.hint" = "";
+"gesture.redo.title" = "";
+"gesture.show.quickAccessSideBar" = "";
+"gesture.show.quickAccessSideBar.hint" = "";
+"gesture.show.thumbnails" = "";
+"gesture.show.thumbnails.hint" = "";
+"gesture.undo.hint" = "";
+"gesture.undo.title" = "";
 "gesture.undoredo.subTitle" = "2指或3指单击";
 "gesture.undoredo.title" = "撤销或重做";
 "getInspired.bulletJournal" = "子弹笔记";
@@ -1565,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 8 January 2024 at 15:32
+// Last Synced by Fluid Touch on 16 January 2024 at 11:37 AM
