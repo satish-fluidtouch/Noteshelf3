@@ -7,6 +7,14 @@
 #  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 #!/bin/bash
 
+generate_checksums() {
+    local directory_path="$1"
+    local output_file="$2"
+
+    (cd "$directory_path" && find . -type f -not -name '.DS_Store' -exec md5 {} +) > "$output_file"
+}
+
+
 version="2.3.2"
 
 echo "Started running..........."
@@ -20,7 +28,7 @@ compare_checksums="$1/compare_checksums.md5"
 
 
 #download only if something gets changed.
-find "$destination_directory" -type f -not -name '.DS_Store' -exec md5 {} + > "$compare_checksums"
+generate_checksums "$destination_directory" "$compare_checksums"
 
 diff "$checksum_file" "$compare_checksums" > /dev/null
 if [ $? == 0 ] ; then
@@ -60,7 +68,8 @@ if [ $? -eq 0 ]; then
     unzip -q "$zip_file_name" -d "$destination_directory"
 
     echo "Download and unzip completed successfully."
-    find "$destination_directory" -type f -exec md5 {} + > "$checksum_file"
+#    find "$destination_directory" -type f -exec md5 {} + sed "s|^$1/||" > "$checksum_file"
+    generate_checksums "$destination_directory" "$checksum_file"
     echo "Check sum generated."
 
 else
@@ -69,3 +78,5 @@ fi
 
 # Clean up the downloaded zip file, whether successful or failed
 rm -f "$zip_file_name"
+
+# Example usage:
