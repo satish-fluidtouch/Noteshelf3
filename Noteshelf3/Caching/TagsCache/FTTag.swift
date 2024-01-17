@@ -151,7 +151,10 @@ class FTTag: NSObject {
             
             if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
                 let item = FTDocumentTaggedEntity(documentUUID: eachDocument,documentName: documentName);
-                self.addTaggedItemIfNeeded(item,forceAdd: true)
+                let tags = FTTagsProviderV1.shared.getTagsfor(docuemntTags);
+                tags.forEach { eachItem in
+                    eachItem.addTaggedItemIfNeeded(item,forceAdd: true)
+                }
             }
 
             let pages = doc.pages;
@@ -166,7 +169,10 @@ class FTTag: NSObject {
                                                   , documentName: documentName
                                                   , pageUUID: eachPage.uuid
                                                   , pageProperties: pageProperties);
-                    self.addTaggedItemIfNeeded(item,forceAdd: true)
+                    let tags = FTTagsProviderV1.shared.getTagsfor(eachPage.tags());
+                    tags.forEach { eachItem in
+                        eachItem.addTaggedItemIfNeeded(item,forceAdd: true)
+                    }
                 }
             }
         }

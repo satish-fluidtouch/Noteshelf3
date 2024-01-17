@@ -398,24 +398,24 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     func removeTagsOperation() {
-        selectedItems = self.selectedBooksOrPages()
+        let selectedItems = self.tagCategory.selectedEntities
 
         UIAlertController.showRemoveTagsDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
-            for (index,selectedItem) in self.selectedItems.enumerated() {
-                if let shelfItem = selectedItem.documentItem {
-                    if selectedItem.type == .page, let pageUUID = selectedItem.pageUUID {
-                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForPage(documentItem: shelfItem, pageUUID: pageUUID, tags: selectedItem.tags.map({$0.text}))
-                        self.selectedItems[index].tags.removeAll()
-                        shelftagItem.tags = self.selectedItems[index].tags
-                    } else {
-                        let shelftagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: shelfItem)
-                        self.selectedItems[index].tags.removeAll()
-                        shelftagItem.tags = self.selectedItems[index].tags
-                    }
-                }
+            var allTags = Set<FTTagModel>();
+            selectedItems.forEach { eachItem in
+                allTags.formUnion(eachItem.tags.map({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: false)}));
             }
-            self.refreshView()
-            FTShelfTagsUpdateHandler.shared.updateTagsFor(items: self.selectedItems, completion: nil)
+            guard !allTags.isEmpty else {
+                return;
+            }
+            
+            let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
+            let updater = FTDocumentTagUpdater();
+            _ = updater.updateTags([], removedTags: Array(allTags), entities: Array(selectedItems)) {
+                debugLog("removed complete: \(updater)");
+                indicator.hide();
+                self.refreshView()
+            }
         }
     }
 
@@ -676,28 +676,11 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
     }
     
     func refreshView() {
-        self.tagItems.removeAll(where: {$0.tags.isEmpty})
-
-        if selectedTag?.text != nil {
-            self.tagItems = self.tagItems.filter { item in
-                return item.tags.contains { $0.text == selectedTag?.text }
-            }
-        } else {
-            self.tagItems = self.tagItems.filter { !$0.tags.isEmpty }
+        if let tag = self.currentTag {
+            self.setCurrentTag(tag);
         }
-        if let booksCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView.indexPathsForSelectedItems, viewState == .edit  {
-            for selectedItem in selectedBooks {
-                booksCell.collectionView.deselectItem(at: selectedItem, animated: false)
-            }
-        }
-        self.books = self.generateBooks()
-        self.pages = self.generatePages()
-        self.collectionView.reloadData()
+        self.loadShelfTagItems();
         self.activateViewMode()
-        self.hidePlaceholderView()
-        if self.tagItems.isEmpty {
-            self.showPlaceholderView()
-        }
     }
 
     func didDismissTags() {
