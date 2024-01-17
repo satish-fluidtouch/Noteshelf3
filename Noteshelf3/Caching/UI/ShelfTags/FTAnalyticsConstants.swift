@@ -199,6 +199,5 @@ extension EventName {
     static let customizetoolbar_tool_add = "customizetoolbar_tool_add"
     static let customizetoolbar_tool_remove = "customizetoolbar_tool_remove"
     static let customizetoolbar_tool_reorder = "customizetoolbar_tool_reorder"
-
-
+    static let toolbar_tool_tap = "toolbar_tool_tap"
 }

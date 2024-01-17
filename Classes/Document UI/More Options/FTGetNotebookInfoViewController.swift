@@ -42,7 +42,7 @@ class FTGetNotebookInfoViewController: UIViewController, FTNotebookTitleDelegate
         properties.append(FTNotebookInfoTitle(description: notebookShelfItem.title))
 
         let relativePath = notebookDocument.URL.path;
-        var notebookTitle = relativePath.collectionName()?.deletingPathExtension ?? "--";
+        var notebookTitle = notebookShelfItem.shelfCollection.displayTitle ;
         if let groupName = relativePath.relativeGroupPathFromCollection()?.lastPathComponent.deletingPathExtension {
             notebookTitle = "\(notebookTitle) / \(groupName)"
         }

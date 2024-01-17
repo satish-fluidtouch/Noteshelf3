@@ -11,7 +11,7 @@ import FTCommon
 import FTNewNotebook
 
 class FTAutoTemlpateDiaryTheme : FTPaperTheme {
-    var templateId: String = "Cassic"
+    var templateId: FTTemplateID = .digitalDiariesClassic
     var startDate: Date?
     var endDate: Date?
     var diaryStartYear : Int?
@@ -19,31 +19,10 @@ class FTAutoTemlpateDiaryTheme : FTPaperTheme {
     override init(url : URL,metaData : NSDictionary) {
         super.init(url: url, metaData: metaData)
 
-        if let type = metaData.value(forKey: "template_type") as? Int {
-            self.documentType = FTDocumentType(rawValue: type)!;
-        }
-
         if let year = metaData.value(forKey: "startYear") as? String {
             self.diaryStartYear = Int(year)
         }
-
-        if let postProcessInfo = metaData.value(forKey: "postProcessInfo") as? [String: Any] {
-            if let type = postProcessInfo["template_type"] as? Int {
-                self.documentType = FTDocumentType(rawValue: type)!;
-            }
-            if let startDateString = postProcessInfo["startDate"] as? String {
-                let formatter = DateFormatter()
-                formatter.dateFormat = "dd/MM/yyyy";
-                if let startDate = formatter.date(from: startDateString) {
-                    let calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
-                    let components = calendar.dateComponents([.year], from: startDate)
-                    let year = components.year
-                    self.diaryStartYear = year
-                }
-            }
-        }
-
-        if let templateId = metaData.value(forKey: "template_id") as? String {
+        if let templateIdValue = metaData.value(forKey: "template_id") as? String, let templateId = FTTemplateID(rawValue: templateIdValue) {
             self.templateId = templateId
         }
     }
@@ -58,10 +37,6 @@ class FTDynamicTemplateTheme: FTPaperTheme,FTPaperThumbnailGenerator {
 
     override init(url : URL,metaData : NSDictionary) {
         super.init(url: url, metaData: metaData)
-
-        if let type = metaData.value(forKey: "template_type") as? Int {
-            self.documentType = FTDocumentType(rawValue: type)!;
-        }
 
         if let dict = metaData.value(forKey: "dynamic_template_info") as? NSDictionary {
             self.templateInfoDict = dict

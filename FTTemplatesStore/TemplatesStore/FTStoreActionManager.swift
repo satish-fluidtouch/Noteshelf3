@@ -7,15 +7,20 @@
 
 import Foundation
 import Combine
+import UIKit
 
 enum FTStoreActions {
     case didTapOnDiscoveryItem(items: [TemplateInfo], selectedIndex: Int)
 }
 
-class FTStoreActionManager {
-    static let shared = FTStoreActionManager()
-    private init() {}
-    var actionStream = PassthroughSubject<FTStoreActions, Never>()
-    var cancellables = Set<AnyCancellable>()
+enum FTStoreContainerActions {
+    case createNotebookForTemplate(url: URL, isLandscape: Bool, isDark: Bool)
+    case createNotebookForDairy(fileName: String, title: String, startDate: Date, endDate: Date, coverImage: UIImage, isLandScape: Bool)
+    case createNotebookFor(url: URL)
+}
 
+final class FTStoreActionManager {
+    var actionStream = PassthroughSubject<FTStoreActions, Never>()
+    var containerActions = PassthroughSubject<FTStoreContainerActions, Never>()
+    var cancellables = Set<AnyCancellable>()
 }

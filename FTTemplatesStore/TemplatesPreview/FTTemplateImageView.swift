@@ -39,7 +39,7 @@ class FTTemplateImageView: UIImageView {
     
     private func showPremiumIconIfNeeded() {
         if template.type == FTDiscoveryItemType.diary.rawValue
-            , let premiumUser = FTStoreContainerHandler.shared.premiumUser
+            , let premiumUser = FTStorePremiumPublisher.shared.premiumUser
             , !premiumUser.isPremiumUser {
             // Add Premium Icon
             let premiumView = UIImageView(frame: CGRect(x: 0 , y: 8, width: self.frame.size.width , height: 20))
@@ -62,8 +62,8 @@ class FTTemplateImageView: UIImageView {
 
     private func addObserver() {
         if nil == cancellabelAction
-            , let premiumUser = FTStoreContainerHandler.shared.premiumUser, !premiumUser.isPremiumUser {
-            cancellabelAction = FTStoreContainerHandler.shared.premiumUser?.$isPremiumUser.sink(receiveValue: { [weak self] isPremiumUser in
+            , let premiumUser = FTStorePremiumPublisher.shared.premiumUser, !premiumUser.isPremiumUser {
+            cancellabelAction = FTStorePremiumPublisher.shared.premiumUser?.$isPremiumUser.sink(receiveValue: { [weak self] isPremiumUser in
                 self?.premiumView?.isHidden = true
                 if self?.premiumView != nil, isPremiumUser {
                     self?.premiumView?.isHidden = isPremiumUser

@@ -47,13 +47,13 @@ class FTDayInfo: NSObject {
         super.init();
     }
     
-    func populateDateInfo(date : Date)
+    func populateDateInfo(date : Date, dateFormatter: DateFormatter)
     {
         self.date = date;
-        
-        monthString = date.monthTitle(localeID: localeID, monthFormat: format.monthFormat);
-        fullMonthString = date.monthTitle(localeID: localeID, monthFormat: "MMMM");
-        
+
+        monthString = date.monthTitle(localeID: localeID, monthFormat: format.monthFormat,dateformatter: dateFormatter);
+        fullMonthString = date.monthTitle(localeID: localeID, monthFormat: "MMMM",dateformatter: dateFormatter);
+
         let dateformatter = DateFormatter.init();
         dateformatter.dateStyle = DateFormatter.Style.full;
         dateformatter.timeStyle = DateFormatter.Style.none;
@@ -89,11 +89,11 @@ class FTDayInfo: NSObject {
             dateformatter.dateFormat = format.fulldayFormat
             let startDay = dateformatter.string(from: startDateOfWeek)
             let endDay = dateformatter.string(from: endDateOfWeek)
-            var startMonth = startDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMM")
-            var endMonth = endDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMM")
+            var startMonth = startDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMM", dateformatter: dateformatter)
+            var endMonth = endDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMM", dateformatter: dateformatter)
             shortWeekRange = "\(startDay) \(startMonth) - \(endDay) \(endMonth)"
-            startMonth = startDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMMM")
-            endMonth = endDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMMM")
+            startMonth = startDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMMM", dateformatter: dateformatter)
+            endMonth = endDateOfWeek.monthTitle(localeID: localeID, monthFormat: "MMMM", dateformatter: dateformatter)
             fullWeekRange = "\(startDay) \(startMonth) - \(endDay) \(endMonth)"
         }
 
