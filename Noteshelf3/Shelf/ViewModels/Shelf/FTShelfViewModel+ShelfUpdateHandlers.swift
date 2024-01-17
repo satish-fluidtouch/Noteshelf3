@@ -40,24 +40,27 @@ extension FTShelfViewModel {
         guard self.delegate?.canProcessNotification() == true else {
             return
         }
-        
-        if let userInfo = notification.userInfo, let shelfCollection = notification.object as? FTShelfItemCollection {
-            //**************** To handle updates from other categories to All
-            if self.collection.isAllNotesShelfItemCollection {
-                self.reloadItems();
-            } else {
-                //****************
-                if(self.collection.uuid == shelfCollection.uuid) {
-                    if let items = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
-                        items.forEach { (eachItem) in
-                            if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
-                                parent.invalidateTop3Notebooks()
-                                parent.isUpdated = true
-                                parent.resetCachedDates()
-                            }
+
+        guard let userInfo = notification.userInfo,
+              let shelfCollection = notification.object as? FTShelfItemCollection else {
+            return
+        }
+
+        //**************** To handle updates from other categories to All
+        if self.collection.isAllNotesShelfItemCollection {
+            self.performDelayedReloadItems();
+        } else {
+            //****************
+            if(self.collection.uuid == shelfCollection.uuid) {
+                if let items = userInfo[FTShelfItemsKey] as? [FTShelfItemProtocol] {
+                    items.forEach { (eachItem) in
+                        if let parent = eachItem.parent as? FTGroupItem, !parent.isDownloading {
+                            parent.invalidateTop3Notebooks()
+                            parent.isUpdated = true
+                            parent.resetCachedDates()
                         }
-                        reloadItems()
                     }
+                    performDelayedReloadItems()
                 }
             }
         }

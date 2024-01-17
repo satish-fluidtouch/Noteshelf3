@@ -474,7 +474,7 @@ extension FTShelfViewModel {
         self.addObservers()
     }
     
-    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
+    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool, onCompletion: (() -> Void)? = nil) {
         self.resetShelfModeTo(.normal)
         let _shelfItems = self.createShelfItemsFromData(items);
         if(animate) {
@@ -494,33 +494,34 @@ extension FTShelfViewModel {
         if self.groupItem == nil { // only posting count for collection children, not when inside a group.
             NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
         }
+        onCompletion?()
     }
 
-    func reloadItems(animate: Bool = true, _ onCompletion: (() -> Void)? = nil) {
-        let block : (Bool, [FTShelfItemProtocol]) ->() = { [weak self] (animate,items) in
-            if(animate) {
-                withAnimation {
-                    self?.setShelfItems(items,animate: animate)
-                    onCompletion?();
-                }
-            }
-            else {
-                self?.setShelfItems(items, animate: animate)
-                onCompletion?();
-            }
-        };
-        
+    @objc func reloadItems() {
+        reloadShelfItems(animate: true, nil)
+    }
+
+    func performDelayedReloadItems() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadItems), object: nil)
+        // TODO: Remove once testing is done
+//        print(">>>>Reload performDelayedReloadItems")
+        self.perform(#selector(reloadItems), with: nil, afterDelay: 0.5)
+    }
+
+    func reloadShelfItems(animate: Bool, _ onCompletion: (() -> Void)?) {
+        // TODO: Remove once testing is done
+//        print(">>>>Reload queueddddd")
         self.collection.shelfItems(FTUserDefaults.sortOrder(),
                                    parent: groupItem,
                                    searchKey: nil) { [weak self ] _shelfItems in
             
             if (self?.isInHomeMode ?? false) && _shelfItems.count == 0 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)){
-                    block(animate,_shelfItems);
+                    self?.setShelfItems(_shelfItems, animate: animate, onCompletion: onCompletion);
                 }
                 
             } else {
-                block(animate,_shelfItems);
+                self?.setShelfItems(_shelfItems, animate: animate, onCompletion: onCompletion);
             }
         }
     }
