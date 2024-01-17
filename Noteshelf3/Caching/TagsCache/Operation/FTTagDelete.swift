@@ -20,8 +20,7 @@ class FTTagDelete: NSObject {
         self.tag.documents { documentItems in
             progress.totalUnitCount = Int64(documentItems.count);
             progress.completedUnitCount += 1;
-            guard documentItems.isEmpty else {
-                FTTagsProviderV1.shared.deleteTags([self.tag]);
+            guard !documentItems.isEmpty else {
                 onCompletion?(false);
                 return;
             }

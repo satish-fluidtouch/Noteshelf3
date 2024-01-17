@@ -14,12 +14,12 @@ enum FTTagType: Int {
 
 class FTTag: NSObject {
     private var lock = NSRecursiveLock();
-    
+    private var tagHash: Int = 0;
     override func isEqual(_ object: Any?) -> Bool {
         guard let otherObj = object as? FTTag else {
             return false;
         }
-        return (self.tagName.caseInsensitiveCompare(otherObj.tagName) == .orderedSame)
+        return (self.tagName.localizedCaseInsensitiveCompare(otherObj.tagName) == .orderedSame)
     }
     
     override var description: String {
@@ -27,14 +27,11 @@ class FTTag: NSObject {
     }
     
     override var hash: Int {
-        lock.lock()
-        let hash = tagName.lowercased().hashKey.hashValue;
-        lock.unlock()
-        return hash;
+        return tagName.lowercased().hashValue;
     }
     
-    var id = UUID().uuidString;
-    private(set) var tagName: String;
+    private(set) var id = UUID().uuidString;
+    @objc dynamic private(set) var tagName: String
     private(set) var documentIDs = Set<String>();
     private(set) var taggedEntitties = [FTTaggedEntity]();
     private var isLoaded = false;
@@ -103,18 +100,16 @@ class FTTag: NSObject {
         return item;
     }
 
-    func addTaggedItemIfNeeded(_ item: FTTaggedEntity) {
-        lock.lock()
-        if isLoaded {
-            self.addTaggedItem(item)
-        }
-        self.addDocumentID(item.documentUUID);
-        lock.unlock()
+    func addTaggedItem(_ item: FTTaggedEntity) {
+        self.addTaggedItemIfNeeded(item,forceAdd: false)
     }
     
-    private func addTaggedItem(_ item: FTTaggedEntity) {
+    private func addTaggedItemIfNeeded(_ item: FTTaggedEntity,forceAdd: Bool) {
         lock.lock()
-        self.taggedEntitties.append(item);
+        if (isLoaded || forceAdd)
+            , nil == self.taggedEntitties.firstIndex(of: item) {
+            self.taggedEntitties.append(item);
+        }
         item.addTag(self);
         self.addDocumentID(item.documentUUID);
         lock.unlock()
@@ -123,11 +118,12 @@ class FTTag: NSObject {
     func removeTaggedItem(_ item: FTTaggedEntity) {
         lock.lock()
         guard let index = self.taggedEntitties.firstIndex(of: item) else {
+            item.removeTag(self);
             lock.unlock()
             return;
         }
-        item.removeTag(self);
         self.taggedEntitties.remove(at: index);
+        item.removeTag(self);
         lock.unlock()
     }
 
@@ -155,7 +151,7 @@ class FTTag: NSObject {
             
             if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
                 let item = FTDocumentTaggedEntity(documentUUID: eachDocument,documentName: documentName);
-                self.addTaggedItem(item)
+                self.addTaggedItemIfNeeded(item,forceAdd: true)
             }
 
             let pages = doc.pages;
@@ -170,7 +166,7 @@ class FTTag: NSObject {
                                                   , documentName: documentName
                                                   , pageUUID: eachPage.uuid
                                                   , pageProperties: pageProperties);
-                    self.addTaggedItem(item)
+                    self.addTaggedItemIfNeeded(item,forceAdd: true)
                 }
             }
         }

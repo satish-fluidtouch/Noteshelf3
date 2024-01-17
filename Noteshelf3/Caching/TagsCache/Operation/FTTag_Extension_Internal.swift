@@ -26,3 +26,25 @@ internal extension FTTag {
     }
 }
 
+extension FTNoteshelfDocumentProvider {
+    func document(with docID: String
+                  , bypassPasswordProtected : Bool = true
+                  , onCompletion: @escaping ((FTDocumentItemProtocol?)->())) {
+        self.allNotesShelfItemCollection.shelfItems(.none
+                                                    , parent: nil
+                                                    , searchKey: nil) { items in
+            var itemToreturn: FTDocumentItemProtocol?
+            for eachItem in items {
+                if let docItem = eachItem as? FTDocumentItemProtocol
+                    , docItem.isDownloaded, docItem.documentUUID == docID {
+                    itemToreturn = docItem;
+                    if docItem.isPinEnabledForDocument() , !bypassPasswordProtected {
+                        itemToreturn = nil;
+                    }
+                    break;
+                }
+            }
+            onCompletion(itemToreturn);
+        }
+    }
+}

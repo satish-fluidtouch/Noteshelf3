@@ -19,11 +19,11 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     @IBOutlet weak var shadowImageView: UIImageView!
 
     @IBOutlet weak var thumbnailHeightConstraint: NSLayoutConstraint!
-    override var isSelected: Bool {
+    var isItemSelected: Bool = false {
         didSet {
             if let selectionBadge = selectionBadge {
-                selectionBadge.image = isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circlebadge")
-                selectionBadge.tintColor = isSelected ? .appColor(.accent) : .appColor(.black20)
+                selectionBadge.image = isItemSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circlebadge")
+                selectionBadge.tintColor = isItemSelected ? .appColor(.accent) : .appColor(.black20)
             }
         }
     }

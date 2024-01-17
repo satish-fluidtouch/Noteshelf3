@@ -12,8 +12,9 @@ extension FTSidebarViewModel {
     func renametag(_ tag: FTSideBarItem, newTitle: String) {
         if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
             let tagUpdated = FTDocumentTagUpdater();
-            let progress = tagUpdated.rename(tag: ftTag, to: newTitle) { success in
+            _ = tagUpdated.rename(tag: ftTag, to: newTitle) { success in
                 debugLog("tagUpdated: \(tagUpdated)");
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil, userInfo: ["tag": ftTag])
             }
         }
     }
@@ -21,7 +22,7 @@ extension FTSidebarViewModel {
     func deleteTag(_ tag: FTSideBarItem) {
         if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
             let tagUpdated = FTDocumentTagUpdater();
-            tagUpdated.delete(tag: ftTag) { success in
+            _ = tagUpdated.delete(tag: ftTag) { success in
                 debugLog("tagUpdated: \(tagUpdated)");
             }
         }

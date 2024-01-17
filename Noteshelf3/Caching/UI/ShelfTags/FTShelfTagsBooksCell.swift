@@ -16,13 +16,13 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     private var viewState: FTShelfTagsPageState = .none
     var contextMenuSelectedIndexPath: IndexPath?
     weak var parentVC: UIViewController?
-    private var bookTaggedEntity = [FTTaggedEntity]()
+    private var tagCategory = FTShelfTagCategory()
 
     override func awakeFromNib() {
         super.awakeFromNib()
         initializeCollectionView()
     }
-
+    
     private func initializeCollectionView() {
         let layout = FTShelfPagesLayout()
         layout.scrollDirection = .horizontal
@@ -49,10 +49,10 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
         }
     }
 
-    func prepareCell(books: [FTTaggedEntity]
+    func prepareCell(tagCategory: FTShelfTagCategory
                      , viewState: FTShelfTagsPageState
                      , parentVC: UIViewController) {
-        self.bookTaggedEntity = books
+        self.tagCategory = tagCategory
         self.viewState = viewState
         self.parentVC = parentVC
 
@@ -81,10 +81,7 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if USE_NEW_MODELS {
-            return self.bookTaggedEntity.count;
-        }
-        return books.count
+        return self.tagCategory.books.count;
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -93,15 +90,14 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
         }
         cell.selectionBadge?.isHidden = viewState == .none ? true : false
 
-        if USE_NEW_MODELS {
-            let item = self.bookTaggedEntity[indexPath.row]
-            cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);
+        let item = self.tagCategory.books[indexPath.row]
+        cell.updateTaggedEntity(taggedEntity: item, isRegular: self.traitCollection.isRegular);
+        if viewState == .edit, self.tagCategory.selectedEntities.contains(item) {
+            cell.isItemSelected = true;
         }
         else {
-            let item = self.books[indexPath.row]
-            cell.updateTagsItemCellContent(tagsItem: item, isRegular: self.traitCollection.isRegular)
+            cell.isItemSelected = false;
         }
-        cell.isSelected = true
         return cell
     }
 
@@ -110,36 +106,19 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
 
         var size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
         var token : String?
-        if !USE_NEW_MODELS {
-            let item = self.books[indexPath.row]
-            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(item.documentItem!, onCompletion: {(image, imageToken) in
-                if token == imageToken {
-                    if let img = image {
-                        if  img.size.width > img.size.height  { // landscape
-                            let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
-                            size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-                        } else {
-                            let potraitSize = FTShelfTagsConstants.Book.potraitSize
-                            size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-                        }
-                    }
-                }
-            })
-        }
-        else {
-            let item = self.bookTaggedEntity[indexPath.row];
-            token = item.thumbnail { (image, inToken) in
-                if token == inToken,let img = image {
-                    if  img.size.width > img.size.height  { // landscape
-                        let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
-                        size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-                    } else {
-                        let potraitSize = FTShelfTagsConstants.Book.potraitSize
-                        size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
-                    }
+        let item = self.tagCategory.books[indexPath.row];
+        token = item.thumbnail { (image, inToken) in
+            if token == inToken,let img = image {
+                if  img.size.width > img.size.height  { // landscape
+                    let landscapeSize = FTShelfTagsConstants.Book.landscapeSize
+                    size = CGSize(width: landscapeSize.width, height: landscapeSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
+                } else {
+                    let potraitSize = FTShelfTagsConstants.Book.potraitSize
+                    size = CGSize(width: potraitSize.width, height: potraitSize.height + FTShelfTagsConstants.Book.extraHeightPadding)
                 }
             }
         }
+
         return size
     }
 
@@ -152,45 +131,44 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
     }
 
 
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if viewState == .none {
-            return true
-        }
-        if let cell = collectionView.cellForItem(at: indexPath) as? FTShelfTagsPageCell {
-            cell.selectionBadge?.isHidden = viewState == .none ? true : false
-        }
-
-        if let selectedItems = collectionView.indexPathsForSelectedItems {
-            if selectedItems.contains(indexPath) {
-                collectionView.deselectItem(at: indexPath, animated: true)
-                return false
-            }
-        }
-        track(EventName.shelf_tag_select_book_tap, screenName: ScreenName.shelf_tags)
-        return true
-    }
+//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+//        if viewState == .none {
+//            return true
+//        }
+//        if let cell = collectionView.cellForItem(at: indexPath) as? FTShelfTagsPageCell {
+//            cell.selectionBadge?.isHidden = viewState == .none ? true : false
+//        }
+//
+//        if let selectedItems = collectionView.indexPathsForSelectedItems {
+//            if selectedItems.contains(indexPath) {
+//                collectionView.deselectItem(at: indexPath, animated: true)
+//                return false
+//            }
+//        }
+//        track(EventName.shelf_tag_select_book_tap, screenName: ScreenName.shelf_tags)
+//        return true
+//    }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.delegate?.shouldEnableToolbarItems()
+        let item = self.tagCategory.books[indexPath.row]
         if viewState == .none {
-            if USE_NEW_MODELS {
-                let item = self.bookTaggedEntity[indexPath.row]
-                FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                    if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
-                        self.delegate?.openNotebook(shelfItem: shelfItem, page: 0)
-                        track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
-                    }
-                }
-            }
-            else {
-                let item = self.books[indexPath.row]
-                if let shelf = item.documentItem {
-                    self.delegate?.openNotebook(shelfItem: shelf, page: 0)
+            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
+                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
+                    self.delegate?.openNotebook(shelfItem: shelfItem, page: 0)
                     track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
                 }
             }
         }
-
+        else if viewState == .edit {
+            if self.tagCategory.selectedEntities.contains(item) {
+                self.tagCategory.setSelected(item, selected: false);
+            }
+            else {
+                self.tagCategory.setSelected(item, selected: true);
+            }
+            collectionView.reloadItems(at: [indexPath])
+        }
+        self.delegate?.shouldEnableToolbarItems()
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

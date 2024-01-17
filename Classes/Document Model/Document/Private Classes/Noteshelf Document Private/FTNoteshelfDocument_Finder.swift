@@ -134,6 +134,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     }
 
     func addTags(tags: [String]) {
+        var tags = self.documentTags()
         self.updateDocumentTags(tags: tags)
     }
 
@@ -156,7 +157,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     }
 
     // This will remove tags from document
-    func removeTags(_ tags : [String]) async {
+    func removeTags(_ tags : [String]) {
         var docTags = self.documentTags()
         tags.forEach { tag in
             let index = docTags.firstIndex(where: {$0 == tag})

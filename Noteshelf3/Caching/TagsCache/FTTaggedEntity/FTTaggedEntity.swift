@@ -26,8 +26,9 @@ class FTTaggedEntity: NSObject, Identifiable {
         super.init()
         if let notificationname = self.tagUpdateNotification {
             self.notificationObserver = NotificationCenter.default.addObserver(forName: notificationname, object: nil, queue: .main) { [weak self] notification in
+
                 guard let stringSelf = self,
-                      let inObject = notification.object as? FTPageTaggedEntity
+                      let inObject = notification.object as? FTTaggedEntity
                         ,stringSelf.id != inObject.id else {
                     return;
                 }
@@ -66,17 +67,21 @@ class FTTaggedEntity: NSObject, Identifiable {
             NotificationCenter.default.removeObserver(observer)
         }
     }
+    
     func addTag(_ tag: FTTag) {
-        self.tags.insert(tag)
-        if let tagUpdateNotification = self.tagUpdateNotification {
-            NotificationCenter.default.post(name: tagUpdateNotification, object: self);
+        if !self.tags.contains(tag) {
+            self.tags.insert(tag)
+            if let tagUpdateNotification = self.tagUpdateNotification {
+                NotificationCenter.default.post(name: tagUpdateNotification, object: self);
+            }
         }
     }
     
     func removeTag(_ tag: FTTag) {
-        self.tags.remove(tag)
-        if let tagUpdateNotification = self.tagUpdateNotification {
-            NotificationCenter.default.post(name: tagUpdateNotification, object: self);
+        if nil != self.tags.remove(tag) {
+            if let tagUpdateNotification = self.tagUpdateNotification {
+                NotificationCenter.default.post(name: tagUpdateNotification, object: self);
+            }
         }
     }
     

@@ -153,6 +153,10 @@ class FTTagsProviderV1: NSObject {
         }
         lock.unlock();
     }
+    
+    func saveCache() {
+        save();
+    }
 }
 
 private extension FTTagsProviderV1 {
@@ -211,7 +215,7 @@ private extension FTTagsProviderV1 {
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
             let item = FTDocumentTaggedEntity(documentUUID: documentID,documentName:documentName)
-            eachTag.addTaggedItemIfNeeded(item);
+            eachTag.addTaggedItem(item);
         }
     }
     
@@ -234,7 +238,7 @@ private extension FTTagsProviderV1 {
                                           ,documentName:documentName
                                           ,pageUUID: pageID
                                           ,pageProperties: pageProperties)
-            eachTag.addTaggedItemIfNeeded(item);
+            eachTag.addTaggedItem(item);
         }
         let oldOnces = tagNames.subtracting(tagsToAdd)
         oldOnces.forEach { eachTag in

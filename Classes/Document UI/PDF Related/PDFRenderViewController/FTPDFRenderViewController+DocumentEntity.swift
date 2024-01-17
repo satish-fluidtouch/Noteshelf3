@@ -301,10 +301,6 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
         FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
     }
 
-    func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
-
-    }
-
     func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
         controller.dismiss(animated: true, completion: nil)
     }

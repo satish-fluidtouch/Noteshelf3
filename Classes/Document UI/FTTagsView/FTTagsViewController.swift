@@ -15,7 +15,20 @@ protocol FTTagsViewControllerDelegate: NSObjectProtocol {
     func didUnSelectTag(tag: FTTagModel)
     func didDismissTags()
     func tagsViewControllerFor(items: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void))
+    
+    func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]);
 }
+
+extension FTTagsViewControllerDelegate {
+    func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
+        
+    }
+    
+    func tagsViewControllerFor(items: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void)) {
+        
+    }
+}
+
 
 class FTTagsViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
@@ -32,18 +45,26 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         }
     }
 
+    private var commonTagModels = [FTTagModel]();
+    var tagItemsList: [FTTagModel] = [] {
+        didSet {
+            self.tagItemsList = self.tagItemsList.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
+        }
+    }
+
     var isPresenting = false
     var showCloseIcon = false
     var showBackButton = false
-    var sourceViewController: UIViewController?
     var tagsType: FTTagsType = .page
     var lastUsedTag = ""
+    
     deinit {
-           #if DEBUG
-               debugPrint("deinit \(self.classForCoder)");
-           #endif
-        self.delegate?.didDismissTags()
-       }
+        debugLog("deinit \(self.classForCoder)");
+        let newlySelectedTags = Set(self.tagItemsList.filter{$0.isSelected});
+        let newlyAdded = newlySelectedTags.subtracting(Set(commonTagModels));
+        let removed = Set(commonTagModels).subtracting(newlySelectedTags);
+        self.delegate?.tagsViewController(self, addedTags: Array(newlyAdded), removedTags: Array(removed));
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +105,7 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
-        self.delegate?.addTagsViewController(didTapOnBack: self)
+//        self.delegate?.addTagsViewController(didTapOnBack: self)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -94,19 +115,18 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         tagsView?.backgroundColor = UIColor.appColor(.cellBackgroundColor)
         tagsView?.layer.cornerRadius = 10
         tagsView?.delegate = self
-        tagsView?.items = self.tagsList.map {$0.tag}
+        tagsView?.items = self.tagItemsList;
         self.tagsView?.refresh()
-        if self.tagsList.isEmpty {
+        if self.tagItemsList.isEmpty {
             tagsView?.isHidden = true
         }
     }
 
     func updatePreferredContentSize() {
-//        if sourceViewController?.isRegularClass() ?? false {
-        var height: CGFloat = 364
-            if let contentSize = self.tagsView?.collectionView.contentSize {
-                self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: max(height, contentSize.height))
-            }
+        let height: CGFloat = 364
+        if let contentSize = self.tagsView?.collectionView.contentSize {
+            self.navigationController?.preferredContentSize = CGSize(width: defaultPopoverWidth, height: max(height, contentSize.height))
+        }
     }
 
     static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]){
@@ -114,7 +134,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
             tagsController.tagsList = tags
             tagsController.isPresenting = true
-            tagsController.sourceViewController = controller
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
             tagsController.ftPresentationDelegate.source = sourceView as AnyObject
@@ -128,7 +147,20 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
             tagsController.tagsList = tags
             tagsController.isPresenting = true
             tagsController.showCloseIcon = true
-            tagsController.sourceViewController = controller
+            tagsController.delegate = controller as? FTTagsViewControllerDelegate
+            tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
+            tagsController.modalPresentationStyle = .formSheet
+            controller.ftPresentFormsheet(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
+        }
+    }
+
+    static func presentTagsController(onController controller:UIViewController, tags: [FTTagModel]){
+        let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
+        if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
+            tagsController.tagItemsList = tags
+            tagsController.commonTagModels = tags.filter{$0.isSelected};
+            tagsController.isPresenting = true
+            tagsController.showCloseIcon = true
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
             tagsController.modalPresentationStyle = .formSheet
@@ -158,44 +190,30 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     func didAddNewTag(tag: String) {
         if tag.count > 0 {
             tagsView?.isHidden = false
-            let filtered =  self.tagsList.filter {$0.tag.text == tag }
-            if filtered.count == 0 {
-                let tagItem = FTTagsProvider.shared.addTag(tagName: tag)
-                self.tagsList.append(tagItem)
-                // Add new unique page tag
-                tagsView?.items = self.tagsList.map {$0.tag}
+            if nil == self.tagItemsList.firstIndex(where: {$0.text.localizedCaseInsensitiveCompare(tag) == .orderedSame}) {
+                let tagModel = FTTagModel(id: UUID().uuidString, text: tag, image: nil, isSelected: true);
+                self.tagItemsList.append(tagModel);
+                self.tagsView?.items = self.tagItemsList;
                 self.tagsView?.refresh()
                 track("tag_action", params: ["isAdded" : true])
-
-                self.delegate?.didAddTag(tag: tagItem.tag)
-                self.performDidAddTag(tag: tagItem.tag.text)
-
             }
         }
-    }
-
-    func selectedTags() -> [FTTagModel] {
-        return self.tagsList.map({$0.tag}).filter({$0.isSelected})
     }
 }
 
 // MARK: TagsViewDelegate
 extension FTTagsViewController: TagsViewDelegate {
     func didSelectIndexPath(indexPath: IndexPath) {
-        let tagItem = self.tagsList[indexPath.row]
+        let tagItem = self.tagItemsList[indexPath.row]
         // Update page tags based on Select and Unselect
-        if tagItem.tag.isSelected {
-            tagItem.tag.isSelected = false
-            self.delegate?.didUnSelectTag(tag: tagItem.tag)
+        if tagItem.isSelected {
+            tagItem.isSelected = false
             track("tag_action", params: ["isAdded" : false])
         } else {
-            tagItem.tag.isSelected = true
-            self.delegate?.didAddTag(tag: tagItem.tag)
+            tagItem.isSelected = true
             track("tag_action", params: ["isAdded" : true])
         }
-        self.tagsList[indexPath.row] = tagItem
         self.tagsView?.refresh()
-
     }
 
     func performDidAddTag(tag: String) {

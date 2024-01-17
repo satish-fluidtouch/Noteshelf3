@@ -1975,11 +1975,6 @@ extension FTFinderViewController {
 }
 
 extension FTFinderViewController: FTTagsViewControllerDelegate {
-
-    func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
-
-    }
-
     func didDismissTags() {
         let items = self.selectedTagItems.values.reversed();
         self.selectedTagItems.removeAll()

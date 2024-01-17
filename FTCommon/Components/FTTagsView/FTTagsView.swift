@@ -33,8 +33,15 @@ public class FTTagModel: NSObject {
         self.id = id
     }
 
-    public func equals(_ other: FTTagModel) -> Bool {
-        return self.text == other.text
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let rhs = object as? FTTagModel else {
+            return false;
+        }
+        return self.text.localizedCaseInsensitiveCompare(rhs.text) == .orderedSame;
+    }
+
+    public override var hash: Int {
+        return self.text.lowercased().hashValue;
     }
 }
 
