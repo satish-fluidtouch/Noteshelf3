@@ -1067,20 +1067,20 @@
 "finder.tabbar.content" = "Inhalt";
 "finder.tag" = "Markiere";
 "foodanddrink" = "Essen & Trinken";
-"gesture.activate.focusMode" = "";
-"gesture.activate.focusMode.hint" = "";
+"gesture.activate.focusMode" = "Wechsel zum Fokusmodus";
+"gesture.activate.focusMode.hint" = "Einzelfingertipp mit vier Fingern";
 "gesture.activeFocusMode.subTitle" = "4-Finger-Einzeltipp";
 "gesture.activeFocusMode.title" = "Aktiviere den Fokusmodus.";
-"gesture.fitPageToScreen" = "";
-"gesture.fitPageToScreen.hint" = "";
-"gesture.redo.hint" = "";
-"gesture.redo.title" = "";
-"gesture.show.quickAccessSideBar" = "";
-"gesture.show.quickAccessSideBar.hint" = "";
-"gesture.show.thumbnails" = "";
-"gesture.show.thumbnails.hint" = "";
-"gesture.undo.hint" = "";
-"gesture.undo.title" = "";
+"gesture.fitPageToScreen" = "Seite an Bildschirm anpassen";
+"gesture.fitPageToScreen.hint" = "Doppeltippen Sie mit einem Finger";
+"gesture.redo.hint" = "Einzelfingertipp mit drei Fingern";
+"gesture.redo.title" = "Wiederholen";
+"gesture.show.quickAccessSideBar" = "Schnellzugriffsleiste anzeigen";
+"gesture.show.quickAccessSideBar.hint" = "Wischen Sie langsam vom linken Rand";
+"gesture.show.thumbnails" = "Seitenminiaturen anzeigen";
+"gesture.show.thumbnails.hint" = "Wischen Sie vom linken Rand";
+"gesture.undo.hint" = "Doppeltippen mit zwei Fingern";
+"gesture.undo.title" = "Rückgängig";
 "gesture.undoredo.subTitle" = "2-Finger oder 3-Finger-Einzelklick";
 "gesture.undoredo.title" = "Rückgängig oder Wiederholen";
 "getInspired.bulletJournal" = "Bullet Journal";
@@ -1577,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 16 January 2024 at 11:37 AM
+// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM

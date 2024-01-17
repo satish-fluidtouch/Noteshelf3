@@ -1067,20 +1067,20 @@
 "finder.tabbar.content" = "내용";
 "finder.tag" = "태그";
 "foodanddrink" = "음식 및 음료";
-"gesture.activate.focusMode" = "";
-"gesture.activate.focusMode.hint" = "";
+"gesture.activate.focusMode" = "전환하여 집중 모드로 변경";
+"gesture.activate.focusMode.hint" = "4손가락으로 싱글 탭하세요";
 "gesture.activeFocusMode.subTitle" = "4-손가락 단일 탭";
 "gesture.activeFocusMode.title" = "포커스 모드 활성화";
-"gesture.fitPageToScreen" = "";
-"gesture.fitPageToScreen.hint" = "";
-"gesture.redo.hint" = "";
-"gesture.redo.title" = "";
-"gesture.show.quickAccessSideBar" = "";
-"gesture.show.quickAccessSideBar.hint" = "";
-"gesture.show.thumbnails" = "";
-"gesture.show.thumbnails.hint" = "";
-"gesture.undo.hint" = "";
-"gesture.undo.title" = "";
+"gesture.fitPageToScreen" = "화면에 페이지 맞추기";
+"gesture.fitPageToScreen.hint" = "1손가락으로 더블 탭하세요";
+"gesture.redo.hint" = "3손가락으로 싱글 탭하세요";
+"gesture.redo.title" = "다시 하다";
+"gesture.show.quickAccessSideBar" = "빠른 액세스 사이드바 표시";
+"gesture.show.quickAccessSideBar.hint" = "왼쪽 가장자리에서 길게 스와이프하세요.";
+"gesture.show.thumbnails" = "페이지 썸네일 표시";
+"gesture.show.thumbnails.hint" = "왼쪽 가장자리 스 와이프";
+"gesture.undo.hint" = "2손가락으로 더블 탭하세요";
+"gesture.undo.title" = "취소";
 "gesture.undoredo.subTitle" = "2-손가락 또는 3-손가락 단일 탭";
 "gesture.undoredo.title" = "실행 취소 또는 다시 실행";
 "getInspired.bulletJournal" = "불릿 저널";
@@ -1577,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 16 January 2024 at 11:37 AM
+// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM

@@ -1067,20 +1067,20 @@
 "finder.tabbar.content" = "Contenu";
 "finder.tag" = "Étiqueter";
 "foodanddrink" = "Nourriture et boisson";
-"gesture.activate.focusMode" = "";
-"gesture.activate.focusMode.hint" = "";
+"gesture.activate.focusMode" = "Basculer en mode de focus";
+"gesture.activate.focusMode.hint" = "Appui simple à quatre doigts";
 "gesture.activeFocusMode.subTitle" = "Toucher avec quatre doigts";
 "gesture.activeFocusMode.title" = "Activer le mode Focus";
-"gesture.fitPageToScreen" = "";
-"gesture.fitPageToScreen.hint" = "";
-"gesture.redo.hint" = "";
-"gesture.redo.title" = "";
-"gesture.show.quickAccessSideBar" = "";
-"gesture.show.quickAccessSideBar.hint" = "";
-"gesture.show.thumbnails" = "";
-"gesture.show.thumbnails.hint" = "";
-"gesture.undo.hint" = "";
-"gesture.undo.title" = "";
+"gesture.fitPageToScreen" = "Ajuster la page à l'écran";
+"gesture.fitPageToScreen.hint" = "Appui double à un doigt";
+"gesture.redo.hint" = "Appui simple à trois doigts";
+"gesture.redo.title" = "Refaire";
+"gesture.show.quickAccessSideBar" = "Afficher la barre latérale d'accès rapide";
+"gesture.show.quickAccessSideBar.hint" = "Faites glisser longuement depuis le bord gauch";
+"gesture.show.thumbnails" = "Afficher les miniatures de page";
+"gesture.show.thumbnails.hint" = "Faites glisser depuis le bord gauch";
+"gesture.undo.hint" = "Appui double à deux doigts";
+"gesture.undo.title" = "Défaire";
 "gesture.undoredo.subTitle" = "Toucher avec deux ou trois doigts";
 "gesture.undoredo.title" = "Annuler ou Rétablir";
 "getInspired.bulletJournal" = "Bullet journal";
@@ -1577,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 16 January 2024 at 11:37 AM
+// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
