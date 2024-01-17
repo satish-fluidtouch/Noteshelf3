@@ -298,6 +298,11 @@ class FTTextAnnotationViewController: UIViewController {
             track("textmode_page_tapped", params: ["postit_color" : "clear"], screenName: FTScreenNames.textbox)
         }
         
+        if !Thread.isMainThread {
+            FTCLSLog("zzzz - FTTextView is initialized: \(Thread.current)")
+            fatalError("zzzz - FTTextView is initialized in other thread: \(Thread.current)")
+        }
+
         //update default properties
         if let defaultFont = page?.parentDocument?.localMetadataCache?.defaultBodyFont {
             textInputView.setValue(defaultFont,
