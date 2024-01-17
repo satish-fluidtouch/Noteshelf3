@@ -12481,6 +12481,7 @@
 		};
 		BA4DA0D12B57B29F004AFD90 /* Validate MyScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -12496,6 +12497,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PROJECT_DIR}/Third Party/My Script/myscript_download.sh\" \"${PROJECT_DIR}/Third Party/My Script\" \n";
+			showEnvVarsInLog = 0;
 		};
 		BA909A3A2990E69C00260538 /* GoogleService Info */ = {
 			isa = PBXShellScriptBuildPhase;
