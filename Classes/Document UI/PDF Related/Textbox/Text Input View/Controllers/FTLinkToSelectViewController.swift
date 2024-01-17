@@ -12,7 +12,8 @@ class FTLinkToSelectViewController: UIViewController {
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var tableView: UITableView?
     @IBOutlet private weak var containerView: UIView!
-    
+    @IBOutlet private weak var webView: WKWebView!
+
     var viewModel: FTLinkToTextViewModel!
     weak var docPagesController: FTDocumentPagesController?
 
@@ -35,6 +36,10 @@ class FTLinkToSelectViewController: UIViewController {
         self.viewModel.closeOpenedDocumentIfNeeded()
     }
 
+    override var shouldAvoidDismissOnSizeChange: Bool {
+        return true
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         if segue.identifier == "FTDocumentPagesController", let docPagesVc = segue.destination as? FTDocumentPagesController {
@@ -43,9 +48,9 @@ class FTLinkToSelectViewController: UIViewController {
         }
     }
 
-    static func showTextLinkScreen(from controller: FTTextAnnotationViewController, with linkInfo: FTTextLinkInfo, and linkText: String) {
+    static func showTextLinkScreen(from controller: FTTextAnnotationViewController, linkText: String, url: URL?, currentPage: FTPageProtocol) {
         if let linkToVc = UIStoryboard(name: "FTTextInputUI", bundle: nil).instantiateViewController(withIdentifier: "FTLinkToSelectViewController") as? FTLinkToSelectViewController {
-            let viewModel = FTLinkToTextViewModel(info: linkInfo, linkText: linkText, delegate: controller)
+            let viewModel = FTLinkToTextViewModel(linkText: linkText, url: url, currentPage: currentPage, delegate: controller)
             linkToVc.viewModel = viewModel
             controller.ftPresentFormsheet(vcToPresent: linkToVc, hideNavBar: false)
         }
@@ -63,15 +68,27 @@ private extension FTLinkToSelectViewController {
         self.navigationItem.rightBarButtonItem = rightNavItem
     }
 
+    func updateDoneEnableStatus() {
+        self.navigationItem.rightBarButtonItem?.isEnabled = !self.viewModel.webUrlStr.isEmpty
+    }
+
     func configureSegmentControl() {
         self.segmentControl.setTitle(FTLinkToSegment.page.localizedString, forSegmentAt: 0)
         self.segmentControl.setTitle(FTLinkToSegment.url.localizedString, forSegmentAt: 1)
         self.segmentControl.addTarget(self, action: #selector(segmentTapped), for: .valueChanged)
-        self.segmentControl.selectedSegmentIndex = 0
-        if self.segmentControl.selectedSegmentIndex == 1 {
-            self.containerView.isHidden = true
+        if self.viewModel.webUrlStr.isEmpty {
+            self.segmentControl.selectedSegmentIndex = 0
         } else {
-            self.containerView.isHidden = false
+            self.segmentControl.selectedSegmentIndex = 1
+        }
+        self.handleSegmentControlSelection()
+    }
+
+     func configWebView(with urlStr: String?) {
+         self.webView.navigationDelegate = self
+        if let reqUrlStr = urlStr, let url = URL(string: reqUrlStr) {
+            let request = URLRequest(url: url)
+            self.webView.load(request)
         }
     }
 
@@ -79,8 +96,11 @@ private extension FTLinkToSelectViewController {
         let selSegIndex = segmentControl.selectedSegmentIndex
         if selSegIndex == 1 {
             self.containerView.isHidden = true
+            self.webView.isHidden = false
+            self.configWebView(with: self.viewModel.webUrlStr)
         } else {
             self.containerView.isHidden = false
+            self.webView.isHidden = true
         }
         self.tableView?.reloadData()
     }
@@ -119,8 +139,8 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
                 fatalError("Programmer error, unable to find FTLinkTextTableViewCell")
             }
             cell.configureCell(with: option, linkText: self.viewModel.linkText)
-            cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
-                print("zzzz - \(text)")
+            cell.textEntryChangeHandler = {[weak self] (text: String?) -> Void in
+
             }
             reqCell = cell
         } else {
@@ -134,8 +154,20 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: FTLinkTextTableViewCell.linkTextCellId, for: indexPath) as? FTLinkTextTableViewCell else {
                     fatalError("Programmer error, unable to find FTLinkTextTableViewCell")
                 }
-                cell.configureCell(with: option, linkText: "www.google.com")
+                cell.configureCell(with: option, linkText: self.viewModel.webUrlStr)
+                cell.textEntryChangeHandler = {[weak self] (text: String?) -> Void in
+                    guard let self else { return }
+                    self.viewModel.updateWebUrlString(text)
+                    self.updateDoneEnableStatus()
+                }
                 cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
+                    guard let self else { return }
+                    if let request = text?.getUrlRequestFromString() {
+                        self.webView.isHidden = false
+                        self.webView.load(request)
+                    } else {
+                        self.webView.isHidden = true
+                    }
                 }
                 reqCell = cell
             }
@@ -144,7 +176,8 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
+        let option = linkOptions[indexPath.row]
+        if option == .document {
             self.navigateToDocumentSelectionScreen()
         }
     }
@@ -158,7 +191,11 @@ extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
         self.dismiss(animated: true) {
             if type == .right { // DONE
-                self.viewModel.saveLinkInfo()
+                var isWebLink = false
+                if self.segmentControl.selectedSegmentIndex == 1 {
+                    isWebLink = true
+                }
+                self.viewModel.saveLinkInfo(isWebLink: isWebLink)
             }
         }
     }
@@ -170,7 +207,7 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
         if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
             var exstInfo = self.viewModel.info
             exstInfo.docUUID = docId
-            exstInfo.pageUUID = ""
+            exstInfo.pageUUID = "" // first page
             self.viewModel.updateTextLinkInfo(exstInfo)
             self.viewModel.getSelectedDocumentDetails { doc in
                 self.viewModel.updateDocumentTitle(document.displayTitle)
@@ -194,6 +231,14 @@ extension FTLinkToSelectViewController: FTPageSelectionDelegate {
             self.viewModel.closeOpenedDocumentIfNeeded()
             self.viewModel.updateTextLinkInfo(info)
             self.tableView?.reloadData()
+        }
+    }
+}
+
+extension FTLinkToSelectViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        if let urlStr = webView.url?.absoluteString {
+            self.viewModel.updateWebUrlString(urlStr)
         }
     }
 }

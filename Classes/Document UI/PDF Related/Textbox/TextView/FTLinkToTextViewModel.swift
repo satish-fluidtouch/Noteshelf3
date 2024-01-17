@@ -41,10 +41,9 @@ enum FTLinkToOption: String {
     case url = "URL"
 }
 
-struct FTTextLinkInfo {
+struct FTPageLinkInfo {
     var docUUID: String
     var pageUUID: String
-    weak var currentDocument: FTDocumentProtocol?
 }
 
 protocol FTPageSelectionDelegate: AnyObject {
@@ -56,28 +55,52 @@ protocol FTDocumentSelectionDelegate: AnyObject {
 }
 
 protocol FTTextLinkEditDelegate: AnyObject {
-    func updateTextLinkInfo(_ info: FTTextLinkInfo)
+    func updateTextLinkInfo(_ info: FTPageLinkInfo)
+    func updateWebLink(_ url: URL)
     func removeLink()
 }
 
 class FTLinkToTextViewModel: NSObject {
+    private var url: URL?
     private var token: FTDocumentOpenToken?
-    private(set) var info: FTTextLinkInfo
-    private(set) weak var selectedDocument: FTDocumentProtocol?
+    private weak var currentPage: FTPageProtocol?
+    private weak var currentDocument: FTDocumentProtocol? {
+        return self.currentPage?.parentDocument
+    }
 
     private(set) var linkText = ""
-    private(set) var docTitle: String = ""
+    private(set) var docTitle = ""
+    private(set) var webUrlStr = ""
     private(set) var pageNumber: Int = 0
+    private(set) var info = FTPageLinkInfo(docUUID: "", pageUUID: "")
+    private(set) weak var selectedDocument: FTDocumentProtocol?
 
     weak var delegate: FTTextLinkEditDelegate?
 
-    init(info: FTTextLinkInfo, linkText: String, delegate: FTTextLinkEditDelegate?) {
-        self.info = info
+    init(linkText: String, url: URL?, currentPage: FTPageProtocol, delegate: FTTextLinkEditDelegate?) {
+        super.init()
         self.linkText = linkText
+        self.url = url
         self.delegate = delegate
+        self.currentPage = currentPage
+        self.configPageLinkInfo()
     }
 
-    func updateTextLinkInfo(_ info: FTTextLinkInfo) {
+    private func configPageLinkInfo() {
+        if let schemeUrl = self.url { // when url is already available
+            if FTTextLinkRouteHelper.checkIfURLisAppLink(schemeUrl), let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId, let pageId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).pageId {
+                self.info = FTPageLinkInfo(docUUID: documentId, pageUUID: pageId)
+                return
+            } else {
+                self.webUrlStr = schemeUrl.absoluteString
+            }
+        }
+        if let doc = self.currentDocument, let page = self.currentPage {
+            self.info = FTPageLinkInfo(docUUID: doc.documentUUID, pageUUID: page.uuid)
+        }
+    }
+
+    func updateTextLinkInfo(_ info: FTPageLinkInfo) {
         self.info = info
     }
 
@@ -89,12 +112,22 @@ class FTLinkToTextViewModel: NSObject {
         self.pageNumber = number
     }
 
-    func saveLinkInfo() {
-        self.delegate?.updateTextLinkInfo(self.info)
+    func updateWebUrlString(_ urlStr: String?) {
+        self.webUrlStr = urlStr ?? ""
+    }
+
+    func saveLinkInfo(isWebLink: Bool = false) {
+        if isWebLink {
+            if let urlStr = URL(string: self.webUrlStr) {
+                self.delegate?.updateWebLink(urlStr)
+            }
+        } else {
+            self.delegate?.updateTextLinkInfo(self.info)
+        }
     }
 
     func prepareDocumentDetails(onCompletion: ((Bool) -> Void)?) {
-        if let doc = info.currentDocument,  info.docUUID == doc.documentUUID {
+        if let doc = self.currentDocument,  info.docUUID == doc.documentUUID {
             self.selectedDocument = doc
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
                 if let shelfItem = docItem {
@@ -138,7 +171,7 @@ class FTLinkToTextViewModel: NSObject {
     }
 
     func getSelectedDocumentDetails(onCompletion: ((FTDocumentProtocol?) -> Void)?) {
-        if let document = info.currentDocument,  info.docUUID == document.documentUUID { // same document
+        if let document = self.currentDocument,  info.docUUID == document.documentUUID { // same document
             self.selectedDocument = document
             onCompletion?(document)
         } else {
@@ -157,7 +190,7 @@ class FTLinkToTextViewModel: NSObject {
 
     func closeOpenedDocumentIfNeeded() {
         // should not be closing if selected document and current document are same
-        if let currentDoc = self.info.currentDocument, let selDoc = self.selectedDocument, currentDoc.documentUUID != selDoc.documentUUID, let token = self.token {
+        if let currentDoc = self.currentDocument, let selDoc = self.selectedDocument, currentDoc.documentUUID != selDoc.documentUUID, let token = self.token {
             FTNoteshelfDocumentManager.shared.closeDocument(document: selDoc, token: token, onCompletion: nil)
         }
     }

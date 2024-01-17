@@ -6,7 +6,7 @@
 //  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 //
 
-import Foundation
+import FTCommon
 
 class FTTextLinkRouteHelper: NSObject {
     static func getLinkUrlForTextView(using docId: String, pageId: String) -> URL? {
@@ -20,6 +20,14 @@ class FTTextLinkRouteHelper: NSObject {
         return components.url
     }
     
+    static func checkIfURLisAppLink(_ url: URL) -> Bool {
+        var status = false
+        if url.scheme == FTSharedGroupID.getAppBundleID() {
+            status = true
+        }
+        return status
+    }
+
     static func getQueryItems(of url: URL) -> (docId: String?, pageId: String?) {
         let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems
         let documentId = queryItems?.first(where: { $0.name == "documentId" })?.value

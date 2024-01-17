@@ -65,15 +65,14 @@ extension FTTextAnnotationViewController {
         guard let attrText = self.textInputView.attributedText, let reqRange = self.linkSelectedRange else {
             return
         }
-        if let annotation = self.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage, let doc = curPage.parentDocument {
+        if let annotation = self.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage {
             let attrs = attrText.attributes(at: reqRange.location, effectiveRange: nil)
-            if let schemeUrl = attrs[.link] as? URL, let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId, let pageId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).pageId  {
-                let info = FTTextLinkInfo(docUUID: documentId, pageUUID: pageId, currentDocument: doc)
-                FTLinkToSelectViewController.showTextLinkScreen(from: self, with: info, and: attrText.string)
-            } else {
-                let info = FTTextLinkInfo(docUUID: doc.documentUUID, pageUUID: curPage.uuid, currentDocument: doc)
-                FTLinkToSelectViewController.showTextLinkScreen(from: self, with: info, and: attrText.string)
+            var url: URL?
+            if let schemeUrl = attrs[.link] as? URL {
+                url = schemeUrl
             }
+            self.transitionInProgress = true
+            FTLinkToSelectViewController.showTextLinkScreen(from: self, linkText: attrText.string, url: url, currentPage: curPage)
         }
     }
 
@@ -86,6 +85,7 @@ extension FTTextAnnotationViewController {
         attributedString.addAttribute(.link, value: url, range: range)
         attributedString.addAttributes(NSAttributedString.linkAttributes, range: range)
         self.textInputView.attributedText = attributedString
+        self.transitionInProgress = false
     }
     
     @objc internal func performLookUpMenu(_ sender: Any?) {
@@ -284,13 +284,18 @@ extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
 #endif
 
 extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
-    func updateTextLinkInfo(_ info: FTTextLinkInfo) {
+    func updateTextLinkInfo(_ info: FTPageLinkInfo) {
         let range = self.linkSelectedRange ?? self.textInputView.selectedRange
         if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: info.docUUID, pageId: info.pageUUID) {
             self.updateLinkAttribute(with: url, for: range)
         }
     }
     
+    func updateWebLink(_ url: URL) {
+        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
+        self.updateLinkAttribute(with: url, for: range)
+    }
+
     func removeLink() {
         guard let attrText = self.textInputView.attributedText else {
             return

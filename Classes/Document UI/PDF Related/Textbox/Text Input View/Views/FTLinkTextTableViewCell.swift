@@ -14,6 +14,7 @@ class FTLinkTextTableViewCell: UITableViewCell {
     @IBOutlet private weak var linkTextLabel: UILabel!
     @IBOutlet private weak var linkTextTf: UITextField!
 
+    var textEntryChangeHandler: ((_ text: String?) -> Void)?
     var textEntryDoneHandler: ((_ text: String?) -> Void)?
 
     func configureCell(with option: FTLinkToOption, linkText: String) {
@@ -31,6 +32,12 @@ class FTLinkTextTableViewCell: UITableViewCell {
 extension FTLinkTextTableViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.textEntryDoneHandler?(textField.text)
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let updatedText = (textField.text as NSString?)?.replacingCharacters(in: range, with: string) ?? string
+        self.textEntryChangeHandler?(updatedText)
         return true
     }
 
