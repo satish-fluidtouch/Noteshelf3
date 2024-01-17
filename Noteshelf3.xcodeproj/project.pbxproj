@@ -11965,6 +11965,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAF395AD2859ADF10067CA9F /* Build configuration list for PBXNativeTarget "Noteshelf3" */;
 			buildPhases = (
+				BA4DA0D12B57B29F004AFD90 /* Validate MyScript */,
 				BAF38F542859ADF00067CA9F /* [CP] Check Pods Manifest.lock */,
 				BAF38F552859ADF00067CA9F /* Resources */,
 				BAF3904E2859ADF00067CA9F /* Sources */,
@@ -12467,6 +12468,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BA4DA0D12B57B29F004AFD90 /* Validate MyScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Validate MyScript";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Third Party/My Script/myscript_download.sh\" \"${PROJECT_DIR}/Third Party/My Script\" \n";
 		};
 		BA909A3A2990E69C00260538 /* GoogleService Info */ = {
 			isa = PBXShellScriptBuildPhase;
