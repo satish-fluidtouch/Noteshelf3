@@ -16,6 +16,25 @@ enum FTShelfItemCollectionType: Int {
     case migrated
     case starred
     case allNotes
+    
+    func eventDescription() -> String {
+        var eventName = ""
+        switch self {
+        case .recent:
+            eventName = "quickaccess_allnotes_tap"
+        case .system:
+            eventName = "quickaccess_category_tap"
+        case .starred:
+            eventName = "quickaccess_starred_tap"
+        case .allNotes:
+            eventName = "quickaccess_allnotes_tap"
+        case .default:
+            eventName = "quickaccess_unfiled_tap"
+        case .migrated:
+            eventName = "quickaccess_migrated_tap"
+        }
+        return eventName
+    }
 }
 
 protocol FTShelfItemDocumentStatusChangePublisher: NSObjectProtocol {

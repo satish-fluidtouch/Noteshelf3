@@ -17,6 +17,7 @@ class FTStorePlannerTableCell: UITableViewCell {
     private var templatesStoreInfo: StoreInfo!
     private var dataSource: TemplatesDatasource!
     private var snapshot = TemplatesSnapshot()
+    private var actionStream: PassthroughSubject<FTStoreActions, Never>?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,8 +28,9 @@ class FTStorePlannerTableCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func prepareCellWith(templatesStoreInfo: StoreInfo) {
+    func prepareCellWith(templatesStoreInfo: StoreInfo, actionStream: PassthroughSubject<FTStoreActions, Never>?) {
         self.templatesStoreInfo = templatesStoreInfo
+        self.actionStream = actionStream
         self.createAndApplySnapshot()
     }
     
@@ -76,7 +78,7 @@ extension FTStorePlannerTableCell: UICollectionViewDelegate, UICollectionViewDel
         var items = self.templatesStoreInfo.discoveryItems
         // Update sectionType to track events
         items[indexPath.row].sectionType = templatesStoreInfo.sectionType
-        FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
+        actionStream?.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

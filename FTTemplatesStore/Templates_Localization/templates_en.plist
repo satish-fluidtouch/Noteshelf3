@@ -41,7 +41,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -63,7 +63,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -85,7 +85,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -107,7 +107,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -129,7 +129,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -151,7 +151,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -173,7 +173,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -37456,7 +37456,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37478,7 +37478,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37500,7 +37500,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37522,7 +37522,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37544,7 +37544,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37566,7 +37566,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37588,7 +37588,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -38471,7 +38471,7 @@
 					<key>displayTitle</key>
 					<string>Joyful Weekly Planner</string>
 					<key>displaySubTitle</key>
-					<string>Explore WriteItDownBooks for a variety of vibrant digital planners, diaries, and templates. They also feature a collection of charming stickers and printables.</string>
+					<string>Get organized and brighten your day with thoughtfully designed and flexible digital planners, notebooks and templates from WriteItDownBooks</string>
 					<key>supportOrientation</key>
 					<integer>1</integer>
 					<key>styles</key>

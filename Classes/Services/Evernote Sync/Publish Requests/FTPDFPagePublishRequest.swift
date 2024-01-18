@@ -154,7 +154,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         } failure: { error in
             self.executeBlock {
                 if let error {
-                    if((error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue)) {
+                    if((error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue)) {
                         self.noteDidGetDeletedFromEvernote();
                     }
                     else {
@@ -221,7 +221,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             } failure: { error in
                 if let error = error {
                     self.executeBlock(onPublishQueue: {
-                        if((error as NSError).code == Int(EDAMErrorCode_SHARD_UNAVAILABLE.rawValue))
+                        if((error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue))
                         {
                             self.noteDidGetDeletedFromEvernote();
                         }
@@ -308,9 +308,11 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 }
 
                                 if resourcesMappedForAllPages.contains(where: {nil == $0.data.bodyHash}) {
-                                    self.closeDocumentIfNeeded();
-                                    self.snapshotFailedAction();
-                                    return;
+                                    FTLogError("Evernote Publish Error", attributes: ["Reason": "bodyHash nil"])
+// commented below Code for diagnostics
+//                                    self.closeDocumentIfNeeded();
+//                                    self.snapshotFailedAction();
+//                                    return;
                                 }
 
                                 let predicateForResourcedPages = NSPredicate(format: "parentRecord.nsGUID==%@ AND (enGUID != nil OR nsGUID==%@)",pageRecord.parent.nsGUID, pageRecord.nsGUID);

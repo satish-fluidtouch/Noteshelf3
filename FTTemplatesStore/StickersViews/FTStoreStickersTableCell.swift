@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class FTStoreStickersTableCell: UITableViewCell {
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -14,7 +15,7 @@ class FTStoreStickersTableCell: UITableViewCell {
     private let padding = 40.0
     private var dataSource: TemplatesDatasource!
     private var snapshot = TemplatesSnapshot()
-
+    private var actionStream: PassthroughSubject<FTStoreActions, Never>?
     override func awakeFromNib() {
         super.awakeFromNib()
         initializeCollectionView()
@@ -24,8 +25,9 @@ class FTStoreStickersTableCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func prepareCellWith(templatesStoreInfo: StoreInfo) {
+    func prepareCellWith(templatesStoreInfo: StoreInfo, actionStream: PassthroughSubject<FTStoreActions, Never>?) {
         self.templatesStoreInfo = templatesStoreInfo
+        self.actionStream = actionStream
         self.createAndApplySnapshot()
     }
     
@@ -40,11 +42,11 @@ private extension FTStoreStickersTableCell {
     }
 
     func configureDatasource() {
-        self.dataSource = TemplatesDatasource(collectionView: self.collectionView, cellProvider: { collectionView, indexPath, template in
+        self.dataSource = TemplatesDatasource(collectionView: self.collectionView, cellProvider: { [weak self] collectionView, indexPath, template in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FTStoreStickersCollectionCell.reuseIdentifier, for: indexPath) as? FTStoreStickersCollectionCell else {
                 fatalError("can't dequeue CustomCell")
             }
-            cell.prepareCellWith(templateInfo: template)
+            cell.prepareCellWith(templateInfo: template, actionStream: self?.actionStream)
             return cell
         })
     }
@@ -73,13 +75,12 @@ extension FTStoreStickersTableCell: UICollectionViewDelegate, UICollectionViewDe
         for (index, _) in items.enumerated() {
             items[index].sectionType = templatesStoreInfo.sectionType
         }
-        FTStoreActionManager.shared.actionStream.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
+        actionStream?.send(.didTapOnDiscoveryItem(items: items, selectedIndex: indexPath.row))
 
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = FTStoreConstants.Sticker.calculateSizeFor(view: self)
-        let sectionType = self.templatesStoreInfo.sectionType
         return CGSize(width: size.width, height: size.height + FTStoreConstants.Sticker.extraHeightPadding)
     }
 

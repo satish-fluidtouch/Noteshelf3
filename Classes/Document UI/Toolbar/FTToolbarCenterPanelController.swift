@@ -57,9 +57,11 @@ class FTToolbarCenterPanelController: UIViewController {
     }
 
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        FTCustomizeToolbarController.showCustomizeToolbarScreen(controller: self)
-        // Track Event
-        track(EventName.toolbar_longpress)
+        if gestureRecognizer.state == .began {
+            FTCustomizeToolbarController.showCustomizeToolbarScreen(controller: self)
+            // Track Event
+            track(EventName.toolbar_longpress)
+        }
     }
 
     deinit {
@@ -225,6 +227,7 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                 if let _cell = cell as? FTDeskShortcutCell {
                     _cell.isShortcutSelected = true;
                     self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell);
+                    track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
                 }
             }
         } else {
@@ -241,6 +244,7 @@ extension FTToolbarCenterPanelController: UICollectionViewDataSource, UICollecti
                     if let _cell = cell as? FTDeskToolCell {
                         _cell.isToolSelected = true
                         self.delegate?.didTapCenterPanelButton(type: btnType, sender: _cell)
+                        track(EventName.toolbar_tool_tap, params: [EventParameterKey.tool: btnType.localizedEnglish(), EventParameterKey.slot: indexPath.row + 1])
                     }
                 }
             }

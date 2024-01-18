@@ -20,12 +20,14 @@ public struct EventParameterKey {
     public static let location = "location"
     public static let title = "title"
     public static let tool = "tool"
-    static let count = "count"
+    public static let slot = "slot"
+    public static let count = "count"
     static let origin = "origin"
     static let toggle = "toggle"
     static let source = "source"
     static let status = "status"
     static let swipe = "swipe"
+    public static let orientation = "orientation"
 }
 
 public struct EventParameterValue {
@@ -39,4 +41,7 @@ public struct EventParameterValue {
     static let audio = "audio"
     static let scan = "scan"
     static let browse = "browse"
+    public static let potrait = "potrait"
+    public static let landscape = "landscape"
+
 }

@@ -41,7 +41,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -63,7 +63,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -85,7 +85,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -107,7 +107,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -129,7 +129,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -151,7 +151,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -173,7 +173,7 @@
 									<key>styleName</key>
 									<string></string>
 									<key>version</key>
-									<integer>1</integer>
+									<integer>2</integer>
 									<key>previewItems</key>
 									<array/>
 									<key>stylePortToken</key>
@@ -37456,7 +37456,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37478,7 +37478,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37500,7 +37500,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37522,7 +37522,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37544,7 +37544,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37566,7 +37566,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -37588,7 +37588,7 @@
 							<key>styleName</key>
 							<string></string>
 							<key>version</key>
-							<integer>1</integer>
+							<integer>2</integer>
 							<key>previewItems</key>
 							<array/>
 							<key>stylePortToken</key>
@@ -38471,7 +38471,7 @@
 					<key>displayTitle</key>
 					<string>歡樂週計畫者</string>
 					<key>displaySubTitle</key>
-					<string>探索WriteItDownBooks，尋找各種豐富多彩的數位筆記本、日記和模板。它們還擁有一系列迷人的貼紙和可打印物品。</string>
+					<string>以精心設計和靈活的數位計劃、筆記本和模板來讓您井然有序並為您的一天增添光彩。</string>
 					<key>supportOrientation</key>
 					<integer>1</integer>
 					<key>styles</key>
