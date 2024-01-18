@@ -127,19 +127,59 @@ class FTDocumentTagUpdater: NSObject {
     }
     
     //MARK:-  Pop UP
-    func addNotebookTags( tags: [FTTag], documentID: [String]) {
+    func addNotebookTags( tags: [FTTagModel], documentID: [String]) {
         
     }
     
-    func removeNotebookTags( tags: [FTTag], documentID: [String]) {
+    func removeNotebookTags( tags: [FTTagModel], documentID: [String]) {
         
     }
     
-    func addPageTags( tags: [FTTag], documentID: String,pageID: [String]) {
-        
+    func addPageTags( tags: [FTTagModel],
+                      document: FTDocumentProtocol,
+                      pages: [FTPageProtocol]) {
+        tags.forEach { eachTag in
+            if let tag = FTTagsProviderV1.shared.getTagsfor([eachTag.text]).first {
+                pages.forEach { eachPage in
+                    let documentName = document.URL.deletingPathExtension().lastPathComponent
+                    let docProperties = FTTaggedPageProperties();
+                    docProperties.pageIndex = eachPage.pageIndex();
+                    docProperties.pageSize = eachPage.pdfPageRect;
+                    let item: FTTaggedEntity
+                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID, pageID: eachPage.uuid) {
+                        item = pageEntity;
+                        pageEntity.documentName = documentName
+                        (pageEntity as? FTPageTaggedEntity)?.updatePageProties(docProperties);
+                    }
+                    else {
+                        item = FTPageTaggedEntity(documentUUID: document.documentUUID
+                                                  , documentName: documentName
+                                                  , pageUUID: eachPage.uuid
+                                                  , pageProperties: docProperties)
+                        FTTagsProviderV1.shared.addTaggedEntity(item);
+                    }
+                    tag.addTaggedItem(item);
+                }
+            }
+        }
     }
     
-    func removePageTags( tags: [FTTag], documentID: String,pageID: [String]) {
-        
+    func removePageTags( tags: [FTTagModel],
+                         document: FTDocumentProtocol,
+                         pages: [FTPageProtocol]) {
+        tags.forEach { eachTag in
+            if let tag = FTTagsProviderV1.shared.getTagsfor([eachTag.text]).first {
+                pages.forEach { eachPage in
+                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID, pageID: eachPage.uuid) {
+                        tag.removeTaggedItem(pageEntity);
+                        let docProperties = FTTaggedPageProperties();
+                        docProperties.pageIndex = eachPage.pageIndex();
+                        docProperties.pageSize = eachPage.pdfPageRect;
+                        pageEntity.documentName = document.URL.deletingPathExtension().lastPathComponent
+                        (pageEntity as? FTPageTaggedEntity)?.updatePageProties(docProperties);
+                    }
+                }
+            }
+        }
     }
 }

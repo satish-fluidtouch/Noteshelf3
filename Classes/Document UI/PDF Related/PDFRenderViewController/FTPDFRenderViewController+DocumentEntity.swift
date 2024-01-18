@@ -301,6 +301,11 @@ extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
         FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
     }
 
+    func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
+        
+        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+    }
+    
     func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
         controller.dismiss(animated: true, completion: nil)
     }

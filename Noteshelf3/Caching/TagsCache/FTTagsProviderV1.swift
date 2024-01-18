@@ -16,6 +16,8 @@ class FTTagsProviderV1: NSObject {
     static let shared = FTTagsProviderV1();
     private var lock = NSRecursiveLock();
     
+    private var taggedEntitiesInfo = [String:FTTaggedEntity]();
+
     private lazy var alTag: FTAllTag = {
         return FTAllTag(name: "AllTags");
     }();
@@ -203,18 +205,29 @@ private extension FTTagsProviderV1 {
     func syncNotebookTagsWithLocalCache(documentID: String
                                         ,documentName: String?
                                         , tagNames: Set<FTTag>) {
-        var currentTags = Set(self.userTags.values.filter{nil != $0.documentTaggedEntity(documentID)});
+        guard let pageEntity = self.tagggedEntity(documentID, pageID: nil) else {
+            return;
+        }
+        var currentTags = pageEntity.tags;
         
         let tagsToRemove = currentTags.subtracting(tagNames);
         tagsToRemove.forEach { eachTag in
-            if let docEntity = eachTag.documentTaggedEntity(documentID) {
-                eachTag.removeTaggedItem(docEntity)
+            if let tagEntity = FTTagsProviderV1.shared.tagggedEntity(documentID, pageID: nil) {
+                eachTag.removeTaggedItem(tagEntity)
             }
         }
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            let item = FTDocumentTaggedEntity(documentUUID: documentID,documentName:documentName)
+            let item: FTTaggedEntity
+            if let tagEntity = FTTagsProviderV1.shared.tagggedEntity(documentID, pageID: nil) {
+                item = tagEntity
+                tagEntity.documentName = documentName;
+            }
+            else {
+                item = FTDocumentTaggedEntity(documentUUID: documentID,documentName:documentName)
+                FTTagsProviderV1.shared.addTaggedEntity(item);
+            }
             eachTag.addTaggedItem(item);
         }
     }
@@ -224,26 +237,39 @@ private extension FTTagsProviderV1 {
                                     , pageID: String
                                     , tagNames: Set<FTTag>
                                     , pageProperties: FTTaggedPageProperties) {
-        let currentTags = Set(self.userTags.values.filter{nil != $0.pageTaggedEntity(documentID,pageUUID: pageID)});
+        guard let pageEntity = self.tagggedEntity(documentID, pageID: pageID) else {
+            return;
+        }
+        let currentTags = pageEntity.tags;
         let tagsToRemove = currentTags.subtracting(tagNames);
         tagsToRemove.forEach { eachTag in
-            if let docEntity = eachTag.pageTaggedEntity(documentID, pageUUID: pageID) {
-                eachTag.removeTaggedItem(docEntity)
+            if let tagEntity = FTTagsProviderV1.shared.tagggedEntity(documentID, pageID: pageID) {
+                eachTag.removeTaggedItem(tagEntity)
             }
         }
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            let item = FTPageTaggedEntity(documentUUID: documentID
+            let item: FTTaggedEntity
+            if let tagEntity = FTTagsProviderV1.shared.tagggedEntity(documentID, pageID: pageID) {
+                item = tagEntity
+                tagEntity.documentName = documentName;
+                (tagEntity as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
+            }
+            else {
+                item = FTPageTaggedEntity(documentUUID: documentID
                                           ,documentName:documentName
                                           ,pageUUID: pageID
                                           ,pageProperties: pageProperties)
+                FTTagsProviderV1.shared.addTaggedEntity(item);
+            }
             eachTag.addTaggedItem(item);
         }
         let oldOnces = tagNames.subtracting(tagsToAdd)
         oldOnces.forEach { eachTag in
-            if let docEntity = eachTag.pageTaggedEntity(documentID, pageUUID: pageID) as? FTPageTaggedEntity {
-                docEntity.updatePageProties(pageProperties);
+            if let tagEntity = FTTagsProviderV1.shared.tagggedEntity(documentID, pageID: pageID) {
+                tagEntity.documentName = documentName;
+                (tagEntity as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
             }
         }
     }
@@ -263,5 +289,28 @@ private extension FTTagsProviderV1 {
 private extension FTTag {
     var tagKey: String {
         return self.tagName.lowercased();
+    }
+}
+
+extension FTTagsProviderV1 {
+    func tagggedEntity(_ documentID: String, pageID: String?) -> FTTaggedEntity? {
+        lock.lock();
+        var key = documentID;
+        if let _pageID = pageID {
+            key = key.appending("_\(_pageID)");
+        }
+        let enity = self.taggedEntitiesInfo[key];
+        lock.unlock();
+        return enity;
+    }
+    
+    func addTaggedEntity(_ entity: FTTaggedEntity) {
+        lock.lock();
+        var key = entity.documentUUID;
+        if let _pageEntity = entity as? FTPageTaggedEntity {
+            key = key.appending("_\(_pageEntity.pageUUID)");
+        }
+        self.taggedEntitiesInfo[key] = entity;
+        lock.lock();
     }
 }

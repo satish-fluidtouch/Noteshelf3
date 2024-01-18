@@ -129,10 +129,11 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         }
     }
 
-    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagItemModel]){
+    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagModel]){
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
-            tagsController.tagsList = tags
+            tagsController.tagItemsList = tags
+            tagsController.commonTagModels = tags.filter{$0.isSelected};
             tagsController.isPresenting = true
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
             tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate

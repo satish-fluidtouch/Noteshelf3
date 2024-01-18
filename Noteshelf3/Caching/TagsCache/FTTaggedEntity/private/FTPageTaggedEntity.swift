@@ -49,10 +49,6 @@ class FTPageTaggedEntity: FTTaggedEntity {
         }
     }
     
-    override var tagUpdateNotification: Notification.Name? {
-        return Notification.Name(rawValue: "Tag_Updated_\(documentUUID)_\(pageUUID)");
-    }
-    
     override var hash: Int {
         return self.documentUUID.appending(self.pageUUID).hashKey.hash;
     }

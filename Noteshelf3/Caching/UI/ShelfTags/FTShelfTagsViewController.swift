@@ -116,7 +116,7 @@ class FTShelfTagsViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { [weak self](_) in
             self?.updateToolbarTitles()
-            self?.collectionView.reloadData()
+            self?.collectionView?.reloadData()
         }, completion: { (_) in
         })
     }
@@ -125,7 +125,7 @@ class FTShelfTagsViewController: UIViewController {
         let frame = self.view.frame.size;
         if currentSize.width != frame.width {
             currentSize = frame
-            self.collectionView.reloadData()
+            self.collectionView?.reloadData()
         }
     }
 
@@ -196,41 +196,41 @@ class FTShelfTagsViewController: UIViewController {
         else {
             self.hidePlaceholderView();
             if self.viewState == .edit, !self.tagCategory.selectedEntities.isEmpty {
-                self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
+                self.collectionView?.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
             } else {
-                self.collectionView.reloadData()
+                self.collectionView?.reloadData()
             }
         }
     }
 
     private func showPlaceholderView() {
         selectButtom?.isEnabled = false
-        self.collectionView.isHidden = true
-        self.emptyPlaceholderView?.frame = self.collectionView!.frame
+        self.collectionView?.isHidden = true
+        self.emptyPlaceholderView?.frame = self.collectionView?.frame ?? self.view.bounds;
         self.emptyPlaceholderView?.isHidden = false
     }
 
     private func hidePlaceholderView() {
         selectButtom?.isEnabled = true
-        self.collectionView.isHidden = false
+        self.collectionView?.isHidden = false
         self.emptyPlaceholderView?.isHidden = true
     }
 
     func selectedBooksOrPages() -> [FTShelfTagsItem] {
-        if !self.tagCategory.books.isEmpty, let bookCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
+        if !self.tagCategory.books.isEmpty, let bookCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
             
         }
         if let indexPath = contextMenuSelectedIndexPath, pages.count > 0 {
             return [pages[indexPath.row]]
-        } else if books.count > 0, let booksCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let indexPath = booksCell.contextMenuSelectedIndexPath {
+        } else if books.count > 0, let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let indexPath = booksCell.contextMenuSelectedIndexPath {
             return [books[indexPath.row]]
         } else {
             var selectedTagItems = [FTShelfTagsItem]()
 
-            if let booksCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView.indexPathsForSelectedItems {
+            if let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView?.indexPathsForSelectedItems {
                 self.selectedPaths = selectedBooks
             }
-            if let selectedIndexPaths = self.collectionView.indexPathsForSelectedItems, selectedIndexPaths.count > 0 {
+            if let selectedIndexPaths = self.collectionView?.indexPathsForSelectedItems, selectedIndexPaths.count > 0 {
                 self.selectedPaths += selectedIndexPaths
             }
             if self.selectedPaths.count > 0 {
@@ -290,7 +290,7 @@ class FTShelfTagsViewController: UIViewController {
             track(EventName.shelf_tag_select_tap, screenName: ScreenName.shelf_tags)
         }
         clearContextMenuIndex()
-        self.collectionView.reloadData()
+        self.collectionView?.reloadData()
         enableToolbarItemsIfNeeded()
     }
 
@@ -325,13 +325,13 @@ class FTShelfTagsViewController: UIViewController {
 
     func selectOrDeselectAllBooks(shouldSelect: Bool) {
         let books = generateBooks()
-        if let booksCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
+        if let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
             for (index, _) in books.enumerated() {
                 let indexPath = IndexPath(row: index, section: 0)
                 if shouldSelect {
-                    booksCell.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                    booksCell.collectionView?.selectItem(at: indexPath, animated: false, scrollPosition: [])
                 } else {
-                    booksCell.collectionView.deselectItem(at: indexPath, animated: false)
+                    booksCell.collectionView?.deselectItem(at: indexPath, animated: false)
                 }
             }
         }
@@ -341,9 +341,9 @@ class FTShelfTagsViewController: UIViewController {
         for (index, _) in pages.enumerated() {
             let indexPath = IndexPath(row: index, section: 1)
             if shouldSelect {
-                self.collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+                self.collectionView?.selectItem(at: indexPath, animated: false, scrollPosition: [])
             } else {
-                self.collectionView.deselectItem(at: indexPath, animated: false)
+                self.collectionView?.deselectItem(at: indexPath, animated: false)
             }
         }
     }
@@ -362,7 +362,7 @@ class FTShelfTagsViewController: UIViewController {
         selectAll ? self.tagCategory.selectAll() : self.tagCategory.deselectAll();
         updateSelectAllTitle()
         enableToolbarItemsIfNeeded()
-        self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems);
+        self.collectionView?.reloadItems(at: self.collectionView.indexPathsForVisibleItems);
     }
 
     func openInNewWindow() {

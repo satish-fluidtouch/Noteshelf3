@@ -1975,6 +1975,34 @@ extension FTFinderViewController {
 }
 
 extension FTFinderViewController: FTTagsViewControllerDelegate {
+    
+    func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
+        guard let doc = self.document as? FTDocumentProtocol else {
+            return
+        }
+        var pages = [FTPageProtocol]();
+        let _selPages = self.selectedPages.count > 0 ? self.selectedPages : contextMenuActivePages
+        guard _selPages.count > 0 else {
+            return;
+        }
+        _selPages.forEach { eachPage in
+            if let nsPage = eachPage as? FTPageProtocol
+                , let tagPage = eachPage as? FTPageTagsProtocol {
+                pages.append(nsPage);
+                addedTags.forEach { eachTag in
+                    tagPage.addTag(eachTag.text);
+                }
+                removedTags.forEach { eachTag in
+                    tagPage.removeTag(eachTag.text);
+                }
+            }
+        }
+        FTDocumentTagUpdater().addPageTags(tags: addedTags, document: doc, pages: pages)
+        FTDocumentTagUpdater().removePageTags(tags: removedTags, document: doc, pages: pages)
+
+        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
+    }
+
     func didDismissTags() {
         let items = self.selectedTagItems.values.reversed();
         self.selectedTagItems.removeAll()

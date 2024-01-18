@@ -150,10 +150,18 @@ class FTTag: NSObject {
             let docuemntTags = doc.docuemntTags
             
             if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
-                let item = FTDocumentTaggedEntity(documentUUID: eachDocument,documentName: documentName);
+                let item: FTTaggedEntity;
+                if let taggedItem = FTTagsProviderV1.shared.tagggedEntity(eachDocument, pageID: nil) {
+                    item = taggedItem;
+                    item.documentName = documentName;
+                }
+                else {
+                    item = FTDocumentTaggedEntity(documentUUID: eachDocument,documentName: documentName);
+                    FTTagsProviderV1.shared.addTaggedEntity(item);
+                }
                 let tags = FTTagsProviderV1.shared.getTagsfor(docuemntTags);
                 tags.forEach { eachItem in
-                    eachItem.addTaggedItemIfNeeded(item,forceAdd: true)
+                    eachItem.addTaggedItemIfNeeded(item,forceAdd: eachItem == self)
                 }
             }
 
@@ -165,13 +173,22 @@ class FTTag: NSObject {
                     let pageProperties = FTTaggedPageProperties();
                     pageProperties.pageSize = eachPage.pdfPageRect;
                     pageProperties.pageIndex = index;
-                    let item = FTPageTaggedEntity(documentUUID: eachDocument
-                                                  , documentName: documentName
-                                                  , pageUUID: eachPage.uuid
-                                                  , pageProperties: pageProperties);
+                    let item: FTTaggedEntity
+                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(eachDocument, pageID: eachPage.uuid) {
+                        item = pageEntity;
+                        item.documentName = documentName;
+                        (item as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
+                    }
+                    else {
+                        item = FTPageTaggedEntity(documentUUID: eachDocument
+                                                      , documentName: documentName
+                                                      , pageUUID: eachPage.uuid
+                                                      , pageProperties: pageProperties);
+                        FTTagsProviderV1.shared.addTaggedEntity(item);
+                    }
                     let tags = FTTagsProviderV1.shared.getTagsfor(eachPage.tags());
                     tags.forEach { eachItem in
-                        eachItem.addTaggedItemIfNeeded(item,forceAdd: true)
+                        eachItem.addTaggedItemIfNeeded(item,forceAdd: eachItem == self)
                     }
                 }
             }

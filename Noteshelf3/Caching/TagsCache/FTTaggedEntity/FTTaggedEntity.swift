@@ -14,7 +14,6 @@ class FTTaggedEntity: NSObject, Identifiable {
     var documentUUID: String;
     var documentName: String?
 
-    private var notificationObserver: NSObjectProtocol?
     var tagType: FTTagsType {
         fatalError("subclass should override")
     };
@@ -24,19 +23,6 @@ class FTTaggedEntity: NSObject, Identifiable {
         self.documentUUID = documentUUID
         self.documentName = documentName
         super.init()
-        if let notificationname = self.tagUpdateNotification {
-            self.notificationObserver = NotificationCenter.default.addObserver(forName: notificationname, object: nil, queue: .main) { [weak self] notification in
-
-                guard let stringSelf = self,
-                      let inObject = notification.object as? FTTaggedEntity
-                        ,stringSelf.id != inObject.id else {
-                    return;
-                }
-                let unionTag = stringSelf.tags.union(inObject.tags);
-                stringSelf.tags = unionTag;
-                inObject.tags = unionTag;
-            }
-        }
     }
     
     func thumbnail(onCompletion: ((UIImage?,String)->())?) -> String {
@@ -58,31 +44,14 @@ class FTTaggedEntity: NSObject, Identifiable {
         return self.documentUUID.hashKey.hash;
     }
 
-    var tagUpdateNotification: Notification.Name? {
-        return nil;
-    }
-    
-    deinit {
-        if let observer = self.notificationObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
-    }
-    
     func addTag(_ tag: FTTag) {
         if !self.tags.contains(tag) {
             self.tags.insert(tag)
-            if let tagUpdateNotification = self.tagUpdateNotification {
-                NotificationCenter.default.post(name: tagUpdateNotification, object: self);
-            }
         }
     }
     
     func removeTag(_ tag: FTTag) {
-        if nil != self.tags.remove(tag) {
-            if let tagUpdateNotification = self.tagUpdateNotification {
-                NotificationCenter.default.post(name: tagUpdateNotification, object: self);
-            }
-        }
+        self.tags.remove(tag)
     }
     
     override func isEqual(_ object: Any?) -> Bool

@@ -12,10 +12,6 @@ class FTDocumentTaggedEntity: FTTaggedEntity {
     override var tagType: FTTagsType {
         .book
     };
-
-    override var tagUpdateNotification: Notification.Name? {
-        return Notification.Name(rawValue: "Tag_Updated_\(documentUUID)");
-    }
     
     override var description: String {
         return super.description+">>"+self.documentUUID
