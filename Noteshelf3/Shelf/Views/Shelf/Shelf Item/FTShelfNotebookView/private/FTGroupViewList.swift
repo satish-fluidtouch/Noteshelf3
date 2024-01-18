@@ -57,6 +57,7 @@ struct FTGroupListView: View {
                 if shelfViewModel.mode == .selection {
                     FTShelfItemSelectionIndicator()
                         .padding(.trailing,16)
+                        .environmentObject(groupItem as FTShelfItemViewModel)
                 }
                 HStack(alignment: .center,spacing: 16) {
                     FTGroupCoverViewNew(groupModel: groupItemProtocol,
