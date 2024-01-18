@@ -13,6 +13,10 @@ class FTDate
     var month : Int = 1;
     var year : Int = 2019;
 }
+enum FTWeekFormat : String {
+    case Sunday = "1"
+    case Monday = "2"
+}
 
 class FTYearFormatInfo : NSObject
 {
@@ -27,7 +31,7 @@ class FTYearFormatInfo : NSObject
     var screenType: FTScreenType = UIDevice.deviceScreenType()
     private(set) var templateId : FTTemplateID = .digitalDiariesClassic
     private(set) var orientation = FTScreenOrientation.Port.rawValue
-    private(set) var weekFormat = NSCalendar.current.firstWeekday == 2 ? "2" : "1"
+    private(set) var weekFormat = "1"
     var customVariants : FTPaperVariants = FTBasicTemplatesDataSource.shared.getDefaultVariants()
 
     init(year : Int) {
@@ -46,7 +50,7 @@ class FTYearFormatInfo : NSObject
         self.endMonth.year = endDate.year();
     }
     
-    init(startDate: Date, endDate: Date, theme:FTAutoTemlpateDiaryTheme)
+    init(startDate: Date, endDate: Date, theme:FTAutoTemlpateDiaryTheme, weekFormat : FTWeekFormat = .Sunday)
     {
         self.startMonth.month = startDate.month();
         self.startMonth.year = startDate.year();
@@ -74,6 +78,7 @@ class FTYearFormatInfo : NSObject
         if templateId != .digitalDiariesMidnight , templateId != .digitalDiariesDayandNightJournal, self.screenType == .Iphone{
             self.orientation = FTScreenOrientation.Port.rawValue;
         }
+        self.weekFormat = weekFormat.rawValue
     }
 }
 
