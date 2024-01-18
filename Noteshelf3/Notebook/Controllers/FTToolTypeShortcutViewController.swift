@@ -216,7 +216,7 @@ extension FTToolTypeShortcutViewController: FTShapeShortcutEditDelegate {
 extension FTToolTypeShortcutViewController: FTShapeSelectDelegate {
     func didSelectShape(shape: FTShapeType) {
         if let viewModel = self.shapeModel {
-            viewModel.updateCurrentFavoriteShape(FTShapeType.savedShapeType())
+            viewModel.updateCurrentFavoriteShape(shape)
             viewModel.editFavoriteShape(with: viewModel.currentFavoriteShape)
         }
     }
