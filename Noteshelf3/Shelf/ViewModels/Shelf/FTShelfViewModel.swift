@@ -195,6 +195,14 @@ class FTShelfViewModel: NSObject, ObservableObject {
         self.selectedShelfItems.isEmpty
     }
 
+    var selectedDocItems: [FTShelfItemProtocol] {
+        var selectedItems =  self.selectedShelfItems.compactMap({$0.model})
+        if selectedItems.count == 0, let selectedItemUsingContexualMenu = self.updateItem?.model {
+            selectedItems = [selectedItemUsingContexualMenu]
+        }
+        return selectedItems
+    }
+
     // MARK: Mutating functions
     func selectAllItems() {
         self.selectedShelfItems = self.shelfItems

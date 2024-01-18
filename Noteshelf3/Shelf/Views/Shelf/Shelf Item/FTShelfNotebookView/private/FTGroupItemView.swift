@@ -49,6 +49,7 @@ struct FTGroupItemView: View {
             if shelfViewModel.mode == .selection, shelfViewModel.displayStlye != .List {
                 FTShelfItemSelectionIndicator()
                     .padding(.bottom, 4)
+                    .environmentObject(groupItem as FTShelfItemViewModel)
             }
         }
         .onTapGesture(perform: {
