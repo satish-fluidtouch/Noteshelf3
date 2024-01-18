@@ -57,7 +57,6 @@ protocol FTDocumentSelectionDelegate: AnyObject {
 protocol FTTextLinkEditDelegate: AnyObject {
     func updateTextLinkInfo(_ info: FTPageLinkInfo)
     func updateWebLink(_ url: URL)
-    func removeLink()
 }
 
 class FTLinkToTextViewModel: NSObject {

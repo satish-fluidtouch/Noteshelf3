@@ -76,12 +76,26 @@ extension FTTextAnnotationViewController {
         }
     }
 
+    @objc internal func deleteLinkAction(_ sender: Any?) {
+        guard let attrText = self.textInputView.attributedText else {
+            return
+        }
+        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
+        let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
+        attributedString.removeAttribute(.link, range: range)
+        let keys = NSAttributedString.linkAttributes.keys
+        keys.forEach { attr in
+            attributedString.removeAttribute(attr, range: range)
+        }
+        self.textInputView.attributedText = attributedString
+    }
+
     private func updateLinkAttribute(with url: URL, for range: NSRange) {
         guard let attrText = self.textInputView.attributedText else {
             return
         }
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
-        attributedString.removeAttribute(.link, range: NSRange(location: 0, length: attrText.length))
+        attributedString.removeAttribute(.link, range: range)
         attributedString.addAttribute(.link, value: url, range: range)
         attributedString.addAttributes(NSAttributedString.linkAttributes, range: range)
         self.textInputView.attributedText = attributedString
@@ -294,19 +308,5 @@ extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
     func updateWebLink(_ url: URL) {
         let range = self.linkSelectedRange ?? self.textInputView.selectedRange
         self.updateLinkAttribute(with: url, for: range)
-    }
-
-    func removeLink() {
-        guard let attrText = self.textInputView.attributedText else {
-            return
-        }
-        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
-        attributedString.removeAttribute(.link, range: NSRange(location: 0, length: attrText.length))
-        let keys = NSAttributedString.linkAttributes.keys
-        keys.forEach { attr in
-            attributedString.removeAttribute(attr, range: range)
-        }
-        self.textInputView.attributedText = attributedString
     }
 }

@@ -620,6 +620,18 @@ extension FTTextView {
         }
     }
     
+    @objc func editLinkMenuItemAction(_ sender: Any?) {
+        if let controller = self.annotationViewController {
+            controller.performLinkAction(sender)
+        }
+    }
+
+    @objc func deleteLinkMenuItemAction(_ sender: Any?) {
+        if let controller = self.annotationViewController {
+            controller.deleteLinkAction(sender)
+        }
+    }
+
     @objc func lookUpMenuItemAction(_ sender: Any?) {
         if let controller = self.annotationViewController {
             controller.performLookUpMenu(sender)
@@ -649,6 +661,17 @@ extension FTTextView {
         return !(self.selectedTextRange?.isEmpty ?? true);
     }
     
+    func checkIfToShowEditLinkOptions() -> Bool {
+        var status = false
+        if self.isTextHighLighted() {
+            let attrs = self.attributedText.attributes(at: self.selectedRange.location, effectiveRange: nil)
+            if let schemeUrl = attrs[.link] as? URL {
+                status = true
+            }
+        }
+        return status
+    }
+
     override func canPerformAction(_ action: Selector, withSender sender: Any!) -> Bool {
         
         if let controller = self.annotationViewController,  controller.isEditMode {
@@ -667,7 +690,13 @@ extension FTTextView {
             
             if self.isTextHighLighted() {
                 if [#selector(self.lookUpMenuItemAction(_:)), #selector(self.shareMenuItemAction(_:)),
-                    #selector(self.delete(_:)), #selector(self.linkMenuItemAction(_:))].contains(action) {
+                    #selector(self.delete(_:))].contains(action) {
+                    return true
+                } else if self.checkIfToShowEditLinkOptions() {
+                    if [#selector(self.editLinkMenuItemAction(_:)), #selector(self.deleteLinkMenuItemAction(_:))].contains(action) {
+                        return true
+                    }
+                } else if [#selector(self.linkMenuItemAction(_:))].contains(action) {
                     return true
                 }
             }
@@ -689,8 +718,10 @@ private extension FTTextView {
         let shareMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Share", comment: "Share"), action: #selector(FTTextView.shareMenuItemAction(_:)))
         
         let linkMenuItem = UIMenuItem(title: "Link To", action: #selector(FTTextView.linkMenuItemAction(_:)))
-        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem, linkMenuItem]
-       
+        let editLinkITem = UIMenuItem(title: "Edit Link", action: #selector(FTTextView.editLinkMenuItemAction(_:)))
+        let deleteLinkItem = UIMenuItem(title: "Delete Link", action: #selector(FTTextView.deleteLinkMenuItemAction(_:)))
+
+        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem, linkMenuItem, editLinkITem, deleteLinkItem]
         let menuController = UIMenuController.shared
         menuController.menuItems = menuItems
     }

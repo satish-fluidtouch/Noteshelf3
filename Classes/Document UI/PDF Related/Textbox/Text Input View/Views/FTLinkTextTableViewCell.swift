@@ -32,6 +32,7 @@ class FTLinkTextTableViewCell: UITableViewCell {
 extension FTLinkTextTableViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.textEntryDoneHandler?(textField.text)
+        textField.resignFirstResponder()
         return true
     }
     

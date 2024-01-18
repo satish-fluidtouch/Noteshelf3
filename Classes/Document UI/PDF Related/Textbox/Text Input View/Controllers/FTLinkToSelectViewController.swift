@@ -69,7 +69,11 @@ private extension FTLinkToSelectViewController {
     }
 
     func updateDoneEnableStatus() {
-        self.navigationItem.rightBarButtonItem?.isEnabled = !self.viewModel.webUrlStr.isEmpty
+        if segmentControl.selectedSegmentIndex == 1 {
+            self.navigationItem.rightBarButtonItem?.isEnabled = !self.viewModel.webUrlStr.isEmpty
+        } else {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
 
     func configureSegmentControl() {
@@ -87,8 +91,11 @@ private extension FTLinkToSelectViewController {
      func configWebView(with urlStr: String?) {
          self.webView.navigationDelegate = self
         if let reqUrlStr = urlStr, let url = URL(string: reqUrlStr) {
+            self.webView.isHidden = false
             let request = URLRequest(url: url)
             self.webView.load(request)
+        } else {
+            self.webView.isHidden = true
         }
     }
 
@@ -96,12 +103,12 @@ private extension FTLinkToSelectViewController {
         let selSegIndex = segmentControl.selectedSegmentIndex
         if selSegIndex == 1 {
             self.containerView.isHidden = true
-            self.webView.isHidden = false
             self.configWebView(with: self.viewModel.webUrlStr)
         } else {
             self.containerView.isHidden = false
             self.webView.isHidden = true
         }
+        self.updateDoneEnableStatus()
         self.tableView?.reloadData()
     }
 
@@ -189,6 +196,7 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
 
 extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
+        self.viewModel.closeOpenedDocumentIfNeeded()
         self.dismiss(animated: true) {
             if type == .right { // DONE
                 var isWebLink = false
@@ -228,7 +236,6 @@ extension FTLinkToSelectViewController: FTPageSelectionDelegate {
         if nil != self.viewModel?.selectedDocument {
             info.pageUUID = page.uuid
             self.viewModel.updatePageNumber(page.pageIndex() + 1)
-            self.viewModel.closeOpenedDocumentIfNeeded()
             self.viewModel.updateTextLinkInfo(info)
             self.tableView?.reloadData()
         }
