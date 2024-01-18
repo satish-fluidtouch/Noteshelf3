@@ -4107,6 +4107,7 @@
 		BA9E71872346FFDC00960985 /* FTRendererProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRendererProvider.swift; sourceTree = "<group>"; };
 		BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FTDocumentFramework.xcframework; sourceTree = "<group>"; };
 		BAA3C79228DDD527005B10E6 /* FTImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageProcessor.swift; sourceTree = "<group>"; };
+		BAA762022B57E80200DC4D21 /* MyScriptInteractiveInk-Runtime-iOS.version.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "MyScriptInteractiveInk-Runtime-iOS.version.txt"; sourceTree = "<group>"; };
 		BAA84E1528730F5800DE801B /* FTStyles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FTStyles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAA84E1728730F5800DE801B /* FTStyles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTStyles.h; sourceTree = "<group>"; };
 		BAA84E1828730F5800DE801B /* FTStyles.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FTStyles.docc; sourceTree = "<group>"; };
@@ -10053,6 +10054,14 @@
 			path = XCConfigurations;
 			sourceTree = "<group>";
 		};
+		BAA762012B57E80200DC4D21 /* INFO */ = {
+			isa = PBXGroup;
+			children = (
+				BAA762022B57E80200DC4D21 /* MyScriptInteractiveInk-Runtime-iOS.version.txt */,
+			);
+			path = INFO;
+			sourceTree = "<group>";
+		};
 		BAA84E1628730F5800DE801B /* FTStyles */ = {
 			isa = PBXGroup;
 			children = (
@@ -10427,6 +10436,7 @@
 				BA3F7FA8299E2F4F003964C6 /* libMyScriptText.xcframework */,
 				BAD1F54F298BC17100B16B2B /* libMyScriptEngine.xcframework */,
 				BA111BE529880094001E854F /* libiink.xcframework */,
+				BAA762012B57E80200DC4D21 /* INFO */,
 				C82771B3213E621F00112FA7 /* include */,
 				C82771F8213E625300112FA7 /* LICENSE.txt */,
 			);
@@ -11965,6 +11975,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAF395AD2859ADF10067CA9F /* Build configuration list for PBXNativeTarget "Noteshelf3" */;
 			buildPhases = (
+				BA4DA0D12B57B29F004AFD90 /* Validate MyScript */,
 				BAF38F542859ADF00067CA9F /* [CP] Check Pods Manifest.lock */,
 				BAF38F552859ADF00067CA9F /* Resources */,
 				BAF3904E2859ADF00067CA9F /* Sources */,
@@ -12466,6 +12477,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA4DA0D12B57B29F004AFD90 /* Validate MyScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Validate MyScript";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Third Party/My Script/myscript_download.sh\" \"${PROJECT_DIR}/Third Party/My Script\" \n";
 			showEnvVarsInLog = 0;
 		};
 		BA909A3A2990E69C00260538 /* GoogleService Info */ = {
