@@ -37,7 +37,14 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         self.commonTagModels = tags.filter{$0.isSelected};
     }
     private var commonTagModels = [FTTagModel]();
-    private var tagItemsList: [FTTagModel] = [];
+    private var tagItemsList: [FTTagModel] = [] {
+        didSet {
+            self.tagItemsList.sort { tag1, tage2 in
+                let compare = tag1.text.compare(tage2.text, options:[.caseInsensitive,.numeric], range: nil, locale: nil)
+                return compare == .orderedAscending
+            }
+        }
+    }
 
     private var isPresenting = false
 #if targetEnvironment(macCatalyst)
