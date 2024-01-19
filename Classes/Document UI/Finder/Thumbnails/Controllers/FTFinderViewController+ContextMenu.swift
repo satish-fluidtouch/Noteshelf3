@@ -9,12 +9,6 @@
 import UIKit
 import FTStyles
 
-protocol FTFinderContextMenuTagDelegate: AnyObject {
-    func didAddTagFromContextMenu()
-    func didRenameTagFromContextMenu(actualName: String, renamedText: String)
-    func didDeleteTagFromContextMenu()
-}
-
 extension FTFinderViewController {
     
     internal func prepareContextMenu(for indexPath: IndexPath) -> UIMenu? {

@@ -89,7 +89,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNoShelfItemsView: Bool = false
     @Published var fadeDraggedShelfItem: FTShelfItemViewModel?
     @Published var showDropOverlayView: Bool = false
-    @Published var tagsForThisBook: [FTTagItemModel] = []
+    @Published var tagsForThisBook: [FTTagModel] = []
     @Published var allowHitTesting: Bool = true
     @Published var showCompactBottombar: Bool = false
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
@@ -588,13 +588,15 @@ extension FTShelfViewModel {
             return
         }
         if let docUUID = document.documentUUID {
-            let tags = FTCacheTagsProcessor.shared.documentTagsFor(documentUUID: docUUID)
-            let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
-            displayTagsView(tags: tagItems)
+            let document = FTCachedDocument(documentID: docUUID);
+            let tags = document.docuemntTags;
+            let allTags = FTTagsProviderV1.shared.getTags();
+            let tagModels = allTags.map({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: tags.contains($0.tagName))});
+            self.displayTagsView(tags: tagModels)
         }
     }
 
-    func displayTagsView(tags: [FTTagItemModel]) {
+    func displayTagsView(tags: [FTTagModel]) {
         // TODO: Dismiss Loader
         tagsForThisBook = tags
         shelfItemContextualMenuViewModel.shelfItem?.popoverType = .tags

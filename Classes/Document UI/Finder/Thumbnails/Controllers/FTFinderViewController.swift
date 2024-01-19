@@ -1997,28 +1997,11 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
                 }
             }
         }
-        FTDocumentTagUpdater().addPageTags(tags: addedTags, document: doc, pages: pages)
-        FTDocumentTagUpdater().removePageTags(tags: removedTags, document: doc, pages: pages)
-
+        FTDocumentTagUpdater().updatePageTags(addedTags: addedTags
+                                              , removedTags: removedTags
+                                              , document: doc
+                                              , pages: pages);
         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
-    }
-
-    func didDismissTags() {
-        let items = self.selectedTagItems.values.reversed();
-        self.selectedTagItems.removeAll()
-        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
-    }
-
-    func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-
-    func didAddTag(tag: FTTagModel) {
-        updateShelfTagItemsFor(tag: tag)
-    }
-
-    func didUnSelectTag(tag: FTTagModel) {
-        updateShelfTagItemsFor(tag: tag)
     }
 
     func updateShelfTagItemsFor(tag: FTTagModel) {

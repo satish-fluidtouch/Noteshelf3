@@ -18,6 +18,8 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     @IBOutlet weak var selectionBadge: UIImageView?
     @IBOutlet weak var shadowImageView: UIImageView!
 
+    private(set) weak var taggedEntity: FTTaggedEntity?;
+    
     @IBOutlet weak var thumbnailHeightConstraint: NSLayoutConstraint!
     var isItemSelected: Bool = false {
         didSet {
@@ -28,63 +30,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
         }
     }
 
-    private var shelfTagItem: FTShelfTagsItem?;
-    
-    func updateTagsItemCellContent(tagsItem: FTShelfTagsItem, isRegular: Bool) {
-        self.bookTitleLbl?.text = tagsItem.documentItem?.displayTitle
-        let tags = Set.init(tagsItem.tags)
-        let sortedArray = tags.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
-        self.updateTagsViewWith(tags: sortedArray.compactMap{$0.text})
-        self.thumbnail?.backgroundColor = .clear
-
-        if tagsItem.type == .page, let docUUID = tagsItem.documentUUID, let pageUUID = tagsItem.pageUUID {
-            self.thumbnail?.layer.cornerRadius = 10
-
-            let image = UIImage(named: "pages_shadow")
-            let scalled = image?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-            shadowImageView.image = scalled
-            self.shadowImageView.layer.cornerRadius = 10
-
-            self.thumbnail?.image = UIImage(named: "finder-empty-pdf-page");
-            FTTagsProvider.shared.thumbnail(documentUUID: docUUID, pageUUID: pageUUID) { [weak self] image, pageUUID in
-                guard let self = self else { return }
-                if let image {
-                    self.thumbnail?.image = image
-                }
-            }
-        } else if tagsItem.type == .book, let shelfItem = tagsItem.documentItem {
-            var token : String?
-            self.thumbnail?.contentMode = .scaleAspectFit
-
-            token = FTURLReadThumbnailManager.sharedInstance.thumnailForItem(shelfItem, onCompletion: { [weak self](image, imageToken) in
-                if token == imageToken {
-                    if let img = image {
-                        if img.size.width > img.size.height {// Landscape
-                            let height = FTShelfTagsConstants.Book.landscapeSize.height
-                            self?.thumbnailHeightConstraint.constant = height
-                        }
-                        self?.shadowImageView.layer.cornerRadius = 8
-                        self?.thumbnail?.layer.cornerRadius = 8
-
-                        let shadowImage = UIImage(named: "book_shadow")
-                        let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-                        self?.shadowImageView.image = scalled
-                        self?.thumbnail?.image = img
-                    } else {
-                        self?.shadowImageView.layer.cornerRadius = 8
-                        self?.thumbnail?.layer.cornerRadius = 8
-                        let shadowImage = UIImage(named: "noCover_shadow")
-                        let scalled = shadowImage?.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 20, bottom: 32, right: 20), resizingMode: .stretch)
-                        self?.shadowImageView.image = scalled
-
-                        self?.thumbnail?.image = UIImage(named: "no_cover", in: Bundle(for: FTCreateNotebookViewController.self), with: nil);
-                    }
-                }
-            })
-        }
-    }
-
-    func updateTagsViewWith(tags: [String]) {
+    private func updateTagsViewWith(tags: [String]) {
         let padding = 10.0
         let interitemSpace = 5.0
         var xAxis = 0.0
@@ -130,6 +76,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
 
 extension FTShelfTagsPageCell {
     func updateTaggedEntity(taggedEntity: FTTaggedEntity, isRegular: Bool) {
+        self.taggedEntity = taggedEntity;
         self.bookTitleLbl?.text = taggedEntity.documentName
         let tags = taggedEntity.tags;
         let sortedArray = tags.sorted(by: { $0.tagName.localizedCaseInsensitiveCompare($1.tagName) == .orderedAscending })

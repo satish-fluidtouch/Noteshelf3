@@ -10,12 +10,7 @@ import UIKit
 import FTCommon
 
 protocol FTTagsViewControllerDelegate: NSObjectProtocol {
-    func addTagsViewController(didTapOnBack controller: FTTagsViewController);
-    func didAddTag(tag: FTTagModel)
-    func didUnSelectTag(tag: FTTagModel)
-    func didDismissTags()
-    func tagsViewControllerFor(items: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void))
-    
+    func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void));
     func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]);
 }
 
@@ -24,8 +19,7 @@ extension FTTagsViewControllerDelegate {
         
     }
     
-    func tagsViewControllerFor(items: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void)) {
-        
+    func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
     }
 }
 
@@ -33,30 +27,29 @@ extension FTTagsViewControllerDelegate {
 class FTTagsViewController: UIViewController, FTPopoverPresentable {
     var ftPresentationDelegate = FTPopoverPresentation()
     weak var delegate: FTTagsViewControllerDelegate?
-    weak var contextMenuTagDelegate: FTFinderContextMenuTagDelegate?
 
-    @IBOutlet weak var tagsView: FTTagsView?
-    @IBOutlet weak var textField: UITextField?
+    @IBOutlet private weak var tagsView: FTTagsView?
+    @IBOutlet private weak var textField: UITextField?
     @IBOutlet private weak var cancelButton: FTCustomButton?
 
-    var tagsList: [FTTagItemModel] = [] {
-        didSet {
-            self.tagsList = self.tagsList.sorted(by: { $0.tag.text.localizedCaseInsensitiveCompare($1.tag.text) == .orderedAscending })
-        }
+    func setTagsList(_ tags: [FTTagModel]) {
+        self.tagItemsList = tags;
+        self.commonTagModels = tags.filter{$0.isSelected};
     }
-
     private var commonTagModels = [FTTagModel]();
-    var tagItemsList: [FTTagModel] = [] {
+    private var tagItemsList: [FTTagModel] = [] {
         didSet {
             self.tagItemsList = self.tagItemsList.sorted(by: { $0.text.localizedCaseInsensitiveCompare($1.text) == .orderedAscending })
         }
     }
 
-    var isPresenting = false
+    private var isPresenting = false
+#if targetEnvironment(macCatalyst)
     var showCloseIcon = false
-    var showBackButton = false
-    var tagsType: FTTagsType = .page
-    var lastUsedTag = ""
+#endif
+    private var showBackButton = false
+    private var tagsType: FTTagsType = .page
+    private var lastUsedTag = ""
     
     deinit {
         debugLog("deinit \(self.classForCoder)");
@@ -68,13 +61,11 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        if showCloseIcon {
 #if targetEnvironment(macCatalyst)
+        if showCloseIcon {
             self.cancelButton?.isHidden = false
-#endif
         }
+#endif
         self.textField?.delegate = self
         self.textField?.layer.cornerRadius = 10.0
         self.textField?.placeholder = "AddTag".localized
@@ -105,9 +96,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
-//        self.delegate?.addTagsViewController(didTapOnBack: self)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     //MARK:- Custom Functions
@@ -129,43 +117,24 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
         }
     }
 
-    static func showTagsController(fromSourceView sourceView:Any, onController controller:UIViewController, tags: [FTTagModel]){
+    static func showTagsController(fromSourceView sourceView:Any? = nil
+                                   , onController controller:UIViewController
+                                   , tags: [FTTagModel]){
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
-            tagsController.tagItemsList = tags
-            tagsController.commonTagModels = tags.filter{$0.isSelected};
+            tagsController.setTagsList(tags)
             tagsController.isPresenting = true
             tagsController.delegate = controller as? FTTagsViewControllerDelegate
-            tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
-            tagsController.ftPresentationDelegate.source = sourceView as AnyObject
-            controller.ftPresentPopover(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
-        }
-    }
-
-    static func presentTagsController(onController controller:UIViewController, tags: [FTTagItemModel]){
-        let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
-        if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
-            tagsController.tagsList = tags
-            tagsController.isPresenting = true
-            tagsController.showCloseIcon = true
-            tagsController.delegate = controller as? FTTagsViewControllerDelegate
-            tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
-            tagsController.modalPresentationStyle = .formSheet
-            controller.ftPresentFormsheet(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
-        }
-    }
-
-    static func presentTagsController(onController controller:UIViewController, tags: [FTTagModel]){
-        let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
-        if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
-            tagsController.tagItemsList = tags
-            tagsController.commonTagModels = tags.filter{$0.isSelected};
-            tagsController.isPresenting = true
-            tagsController.showCloseIcon = true
-            tagsController.delegate = controller as? FTTagsViewControllerDelegate
-            tagsController.contextMenuTagDelegate = controller as? FTFinderContextMenuTagDelegate
-            tagsController.modalPresentationStyle = .formSheet
-            controller.ftPresentFormsheet(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
+            if let _sourceVuew = sourceView {
+                tagsController.ftPresentationDelegate.source = _sourceVuew as AnyObject
+                controller.ftPresentPopover(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
+            }
+            else {
+#if targetEnvironment(macCatalyst)
+               tagsController.showCloseIcon = true
+#endif
+                controller.ftPresentFormsheet(vcToPresent: tagsController, contentSize: CGSize(width: 320, height:360))
+            }
         }
     }
 
@@ -176,18 +145,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     }
 
     //MARK:- Notifications Handling
-    @objc func keyboardWillShow(_ notification:Notification) {
-        if !self.traitCollection.isRegular {
-            if let newFrame = (notification.userInfo?[ UIResponder.keyboardFrameEndUserInfoKey ] as? NSValue)?.cgRectValue {
-                let insets = UIEdgeInsets( top: 0, left: 0, bottom: newFrame.height, right: 0 )
-            }
-        }
-    }
-    //MARK:- Gesture Handling
-    @objc func keyboardWillHide(_ notification:Notification) {
-
-    }
-
     func didAddNewTag(tag: String) {
         if tag.count > 0 {
             tagsView?.isHidden = false

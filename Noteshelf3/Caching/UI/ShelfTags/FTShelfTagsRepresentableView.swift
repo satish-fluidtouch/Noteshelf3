@@ -12,15 +12,14 @@ import FTCommon
 struct FTShelfTagsRepresentableView: UIViewControllerRepresentable {
 
     typealias UIViewControllerType = FTTagsViewController
-    var tags: [FTTagItemModel] = []
+    var tags: [FTTagModel] = []
     weak var delegate: FTTagsViewControllerDelegate?
 
     func makeUIViewController(context: Context) -> FTTagsViewController {
         let storyBoard = UIStoryboard.init(name: "FTDocumentEntity", bundle: nil)
         if let tagsController: FTTagsViewController = storyBoard.instantiateViewController(withIdentifier: "FTTagsViewController") as? FTTagsViewController {
-            tagsController.tagsList = self.tags
             tagsController.delegate = self.delegate
-            // Do some configurations here if needed.
+            tagsController.setTagsList(self.tags);
             return tagsController
         } else {
             fatalError("FTShelfBookmarksViewController doesnt exist")

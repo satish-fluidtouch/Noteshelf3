@@ -20,13 +20,16 @@ extension FTShelfTagsViewController {
         if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
             splitContorller.shelfMenuDisplayInfo.isMenuShown = true;
         }
+        
+        guard let cell = self.collectionView?.cellForItem(at: indexPath) as? FTShelfTagsPageCell, let item = cell.taggedEntity else {
+            return nil;
+        }
         var actions = [UIMenuElement]()
         let identifier = indexPath as NSIndexPath
         func pageActions() -> UIMenu {
 #if !targetEnvironment(macCatalyst)
             let openNewWindowAction = UIAction(title: "sidebar.allTags.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
-                self.contextMenuSelectedIndexPath = indexPath as IndexPath
                 self.openInNewWindow()
                 track(EventName.shelf_tag_page_openinnewwindow_tap, screenName: ScreenName.shelf_tags)
             }
@@ -34,16 +37,14 @@ extension FTShelfTagsViewController {
 #endif
             let editAction = UIAction(title: "sidebar.allTags.contextualMenu.editTags".localized, image: UIImage(systemName: "tag"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
-                self.contextMenuSelectedIndexPath = indexPath as IndexPath
-                self.edittagsOperation()
+                self.editTags([item])
                 track(EventName.shelf_tag_page_edittags_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(editAction)
 
             let removeTagsAction = UIAction(title: "sidebar.allTags.contextualMenu.removeTags".localized, image: UIImage(systemName: "tag.slash"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
-                self.contextMenuSelectedIndexPath = indexPath as IndexPath
-                self.removeTagsOperation()
+                self.removeTags([item])
                 track(EventName.shelf_tag_page_removetags_tap, screenName: ScreenName.shelf_tags)
             }
             removeTagsAction.attributes = .destructive
@@ -90,7 +91,6 @@ extension FTShelfTagsViewController {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        self.contextMenuSelectedIndexPath = nil
         if let splitContorller = self.splitViewController as? FTShelfSplitViewController {
             splitContorller.shelfMenuDisplayInfo.isMenuShown = false;
         }

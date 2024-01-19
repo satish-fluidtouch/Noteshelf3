@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 class FTDocumentTagUpdater: NSObject {
     //MARK:-  Shelf Side bar Operations
@@ -121,62 +122,125 @@ class FTDocumentTagUpdater: NSObject {
         }
         return progress;
     }
-    
-    func removeAllTags(_ entities:[FTTaggedEntity]) {
         
-    }
-    
     //MARK:-  Pop UP
-    func addNotebookTags( tags: [FTTagModel], documentID: [String]) {
+    func updateNotebookTags( addedTags: [FTTagModel]
+                             , removedTags:[FTTagModel]
+                             , documentID: [String]
+                             ,onCompletion: (()->())?) -> Progress {
+        let progress = Progress();
+        progress.totalUnitCount = Int64(documentID.count);
         
-    }
-    
-    func removeNotebookTags( tags: [FTTagModel], documentID: [String]) {
+        var documentUUIDToProcess = documentID;
+        func performAction(_ onCompletion: @escaping ()->()) {
+            guard !documentUUIDToProcess.isEmpty else {
+                onCompletion();
+                return;
+            }
+            let docID = documentUUIDToProcess.removeFirst();
+            FTNoteshelfDocumentProvider.shared.document(with: docID) { documentItem in
+                if let docItem = documentItem {
+                    progress.localizedDescription = "Updating: " + docItem.displayTitle
+                    let request = FTDocumentOpenRequest(url: docItem.URL, purpose: .write)
+                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                        if let document = document as? FTNoteshelfDocument {
+                            addedTags.forEach { eachTag in
+                                document.addTag(eachTag.text);
+                            }
+                            document.removeTags(removedTags.map{$0.text})
+                            FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
+                                let tagsToAdd = FTTagsProviderV1.shared.getTagsfor(addedTags.map{$0.text});
+                                let tagsToRemove = FTTagsProviderV1.shared.getTagsfor(removedTags.map{$0.text});
+                                
+                                let docName = document.URL.deletingPathExtension().lastPathComponent;
+                                var item: FTTaggedEntity?;
+                                if let taggedEntity = FTTagsProviderV1.shared.tagggedEntity(docID, pageID: nil) {
+                                    item = taggedEntity;
+                                    item?.documentName = docName;
+                                }
+                                else if !tagsToAdd.isEmpty {
+                                    item = FTTagsProviderV1.shared.createTaggedEntity(docID, documentName: docName);
+                                }
+
+                                if let eachEntity = item {
+                                    tagsToAdd.forEach { eachTag in
+                                        eachTag.addTaggedItem(eachEntity);
+                                    }
+                                    tagsToRemove.forEach { eachTag in
+                                        eachTag.removeTaggedItem(eachEntity);
+                                    }
+                                }
+                                FTTagsProviderV1.shared.saveCache();
+                                progress.completedUnitCount += 1;
+                                performAction(onCompletion)
+                            }
+                        }
+                        else {
+                            progress.completedUnitCount += 1;
+                            performAction(onCompletion)
+                        }
+                    }
+                }
+                else {
+                    progress.completedUnitCount += 1;
+                    performAction(onCompletion)
+                }
+            }
+        }
         
+        runInMainThread {
+            FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
+            performAction({
+                FTNoteshelfDocumentProvider.shared.enableCloudUpdates();
+                onCompletion?();
+            })
+        }
+        return progress;
     }
+        
     
-    func addPageTags( tags: [FTTagModel],
-                      document: FTDocumentProtocol,
-                      pages: [FTPageProtocol]) {
-        tags.forEach { eachTag in
+    func updatePageTags( addedTags: [FTTagModel],
+                         removedTags: [FTTagModel],
+                         document: FTDocumentProtocol,
+                         pages: [FTPageProtocol]) {
+        let documentName = document.URL.deletingPathExtension().lastPathComponent
+        addedTags.forEach { eachTag in
             if let tag = FTTagsProviderV1.shared.getTagsfor([eachTag.text]).first {
                 pages.forEach { eachPage in
-                    let documentName = document.URL.deletingPathExtension().lastPathComponent
                     let docProperties = FTTaggedPageProperties();
                     docProperties.pageIndex = eachPage.pageIndex();
                     docProperties.pageSize = eachPage.pdfPageRect;
+                    
                     let item: FTTaggedEntity
-                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID, pageID: eachPage.uuid) {
+                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID, pageID: eachPage.uuid) as? FTPageTaggedEntity {
                         item = pageEntity;
+                        
                         pageEntity.documentName = documentName
-                        (pageEntity as? FTPageTaggedEntity)?.updatePageProties(docProperties);
+                        pageEntity.updatePageProties(docProperties);
                     }
                     else {
-                        item = FTPageTaggedEntity(documentUUID: document.documentUUID
-                                                  , documentName: documentName
-                                                  , pageUUID: eachPage.uuid
-                                                  , pageProperties: docProperties)
-                        FTTagsProviderV1.shared.addTaggedEntity(item);
+                        item = FTTagsProviderV1.shared.createTaggedEntity(document.documentUUID
+                                                                          , documentName: documentName
+                                                                          , pageID: eachPage.uuid
+                                                                          , pageProperties: docProperties);
                     }
                     tag.addTaggedItem(item);
                 }
             }
         }
-    }
-    
-    func removePageTags( tags: [FTTagModel],
-                         document: FTDocumentProtocol,
-                         pages: [FTPageProtocol]) {
-        tags.forEach { eachTag in
+        
+        removedTags.forEach { eachTag in
             if let tag = FTTagsProviderV1.shared.getTagsfor([eachTag.text]).first {
                 pages.forEach { eachPage in
-                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID, pageID: eachPage.uuid) {
+                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID, pageID: eachPage.uuid) as? FTPageTaggedEntity {
                         tag.removeTaggedItem(pageEntity);
+                        pageEntity.documentName = documentName
+
                         let docProperties = FTTaggedPageProperties();
                         docProperties.pageIndex = eachPage.pageIndex();
                         docProperties.pageSize = eachPage.pdfPageRect;
-                        pageEntity.documentName = document.URL.deletingPathExtension().lastPathComponent
-                        (pageEntity as? FTPageTaggedEntity)?.updatePageProties(docProperties);
+                        
+                        pageEntity.updatePageProties(docProperties);
                     }
                 }
             }

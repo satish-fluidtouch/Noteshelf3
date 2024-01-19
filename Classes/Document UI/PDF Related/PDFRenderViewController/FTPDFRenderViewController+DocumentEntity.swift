@@ -295,29 +295,11 @@ extension FTPDFRenderViewController: FTAddMenuSelectImageProtocal {
 var selectedShelfTagItems = Dictionary<String, FTShelfTagsItem>()
 
 extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
-    func didDismissTags() {
-        let items = selectedShelfTagItems.values.reversed();
-        selectedShelfTagItems.removeAll()
-        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
-    }
-
     func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
         
         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
     }
     
-    func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-
-    func didAddTag(tag: FTTagModel) {
-        self.updateShelfTagItemsFor(tag: tag)
-    }
-
-    func didUnSelectTag(tag: FTTagModel) {
-        self.updateShelfTagItemsFor(tag: tag)
-    }
-
     private func updateShelfTagItemsFor(tag: FTTagModel) {
         if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
             if let page = self.currentlyVisiblePage() as? FTThumbnailable

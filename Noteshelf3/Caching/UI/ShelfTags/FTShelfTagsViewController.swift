@@ -22,8 +22,8 @@ protocol FTShelfTagsPageDelegate: AnyObject {
 protocol FTShelfTagsAndBooksDelegate: AnyObject {
     func shouldEnableToolbarItems()
     func openNotebook(shelfItem: FTDocumentItemProtocol, page: Int)
-    func editTags()
-    func removeTags()
+    func editTags(_ taggedEntity: [FTTaggedEntity])
+    func removeTags(_ taggedEntity: [FTTaggedEntity])
     func openItemInNewWindow()
 }
 
@@ -51,7 +51,6 @@ class FTShelfTagsViewController: UIViewController {
     
     private var currentTag: FTTag?;
     var viewState: FTShelfTagsPageState = .none
-    var contextMenuSelectedIndexPath: IndexPath?
     var selectedPaths = [IndexPath]()
     var selectedItems = [FTShelfTagsItem]()
     private var currentSize: CGSize = .zero
@@ -220,29 +219,23 @@ class FTShelfTagsViewController: UIViewController {
         if !self.tagCategory.books.isEmpty, let bookCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
             
         }
-        if let indexPath = contextMenuSelectedIndexPath, pages.count > 0 {
-            return [pages[indexPath.row]]
-        } else if books.count > 0, let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let indexPath = booksCell.contextMenuSelectedIndexPath {
-            return [books[indexPath.row]]
-        } else {
-            var selectedTagItems = [FTShelfTagsItem]()
+        var selectedTagItems = [FTShelfTagsItem]()
 
-            if let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView?.indexPathsForSelectedItems {
-                self.selectedPaths = selectedBooks
-            }
-            if let selectedIndexPaths = self.collectionView?.indexPathsForSelectedItems, selectedIndexPaths.count > 0 {
-                self.selectedPaths += selectedIndexPaths
-            }
-            if self.selectedPaths.count > 0 {
-                self.selectedPaths.forEach({ indexPath in
-                    if indexPath.section == 0, books.count > 0 && indexPath.row <= books.count - 1 {
-                        selectedTagItems.append(books[indexPath.row])
-                    } else if indexPath.section == 1, indexPath.row <= pages.count - 1 {
-                        selectedTagItems.append(pages[indexPath.row])
-                    }
-                })
-                return selectedTagItems
-            }
+        if let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView?.indexPathsForSelectedItems {
+            self.selectedPaths = selectedBooks
+        }
+        if let selectedIndexPaths = self.collectionView?.indexPathsForSelectedItems, selectedIndexPaths.count > 0 {
+            self.selectedPaths += selectedIndexPaths
+        }
+        if self.selectedPaths.count > 0 {
+            self.selectedPaths.forEach({ indexPath in
+                if indexPath.section == 0, books.count > 0 && indexPath.row <= books.count - 1 {
+                    selectedTagItems.append(books[indexPath.row])
+                } else if indexPath.section == 1, indexPath.row <= pages.count - 1 {
+                    selectedTagItems.append(pages[indexPath.row])
+                }
+            })
+            return selectedTagItems
         }
         return []
     }
@@ -289,7 +282,6 @@ class FTShelfTagsViewController: UIViewController {
             activeEditMode()
             track(EventName.shelf_tag_select_tap, screenName: ScreenName.shelf_tags)
         }
-        clearContextMenuIndex()
         self.collectionView?.reloadData()
         enableToolbarItemsIfNeeded()
     }
@@ -379,30 +371,30 @@ class FTShelfTagsViewController: UIViewController {
         self.createDocumentForSelectedPages()
     }
 
-    func edittagsOperation() {
-        var commonTags = Set<FTTag>();
+    private func edittagsOperation() {
         let selectedEntities = self.tagCategory.selectedEntities;
-        selectedEntities.forEach { eachEntity in
-            if commonTags.isEmpty {
-                commonTags.formUnion(eachEntity.tags)
-            }
-            else {
-                commonTags = commonTags.intersection(eachEntity.tags);
-            }
+        guard !selectedEntities.isEmpty else {
+            return;
         }
-
+        var commonTags = Set<FTTag>();
+        selectedEntities.enumerated().forEach { eachEntry in
+            let tags = eachEntry.element.tags;
+            commonTags = eachEntry.offset == 0 ? tags : commonTags.intersection(tags);
+        }
         let allTags = FTTagsProviderV1.shared.getTags();
         let allTagModels = allTags.compactMap({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: commonTags.contains($0))})
 
-        FTTagsViewController.presentTagsController(onController: self, tags: allTagModels)
+        FTTagsViewController.showTagsController(onController: self, tags: allTagModels);
     }
 
-    func removeTagsOperation() {
-        let selectedItems = self.tagCategory.selectedEntities
-
+    private func removeTagsOperation() {
+        let selectedEntities = self.tagCategory.selectedEntities;
+        guard !selectedEntities.isEmpty else {
+            return;
+        }
         UIAlertController.showRemoveTagsDialog(with: "sidebar.allTags.removeTags.alert.message".localized, message: "", from: self) {
             var allTags = Set<FTTagModel>();
-            selectedItems.forEach { eachItem in
+            selectedEntities.forEach { eachItem in
                 allTags.formUnion(eachItem.tags.map({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: false)}));
             }
             guard !allTags.isEmpty else {
@@ -411,7 +403,7 @@ class FTShelfTagsViewController: UIViewController {
             
             let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
             let updater = FTDocumentTagUpdater();
-            _ = updater.updateTags([], removedTags: Array(allTags), entities: Array(selectedItems)) {
+            _ = updater.updateTags([], removedTags: Array(allTags), entities: Array(selectedEntities)) {
                 debugLog("removed complete: \(updater)");
                 indicator.hide();
                 self.refreshView()
@@ -647,13 +639,6 @@ extension FTShelfTagsViewController {
             FTShareFormatHostingController.presentAsFormsheet(over: self, using: coordinator, option: .notebook, shelfItems: items)
         }
     }
-
-    func clearContextMenuIndex() {
-        if let booksCell = self.collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
-            booksCell.contextMenuSelectedIndexPath = nil
-        }
-        self.contextMenuSelectedIndexPath = nil
-    }
 }
 
 // MARK: FTTagsViewControllerDelegate
@@ -662,12 +647,12 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
         let selectedItems = self.tagCategory.selectedEntities;
         self.activateViewMode()
         self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-        let updater = FTDocumentTagUpdater();
         
         if addedTags.isEmpty, removedTags.isEmpty {
             return;
         }
-        
+
+        let updater = FTDocumentTagUpdater();
         let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
         _ = updater.updateTags(addedTags, removedTags: removedTags, entities: Array(selectedItems)) {
             debugLog("updater: \(updater)");
@@ -681,26 +666,6 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
         }
         self.loadShelfTagItems();
         self.activateViewMode()
-    }
-
-    func didDismissTags() {
-        let items = self.selectedTagItems.values.reversed();
-        self.selectedTagItems.removeAll()
-        refreshView()
-        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
-    }
-
-    func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-
-    func didAddTag(tag: FTTagModel) {
-        //Add tag for selected pages
-        updateShelfTagItemsFor(tag: tag)
-    }
-
-    func didUnSelectTag(tag: FTTagModel) {
-        updateShelfTagItemsFor(tag: tag)
     }
 
     func updateShelfTagItemsFor(tag: FTTagModel) {
@@ -731,18 +696,23 @@ extension FTShelfTagsViewController: FTShelfTagsAndBooksDelegate {
         self.enableToolbarItemsIfNeeded()
     }
 
-    func editTags() {
+    func editTags(_ taggedEntity: [FTTaggedEntity]) {
+        taggedEntity.forEach { eachItem in
+            self.tagCategory.setSelected(eachItem, selected: true);
+        }
         self.edittagsOperation()
     }
 
-    func removeTags() {
+    func removeTags(_ taggedEntity: [FTTaggedEntity]) {
+        taggedEntity.forEach { eachItem in
+            self.tagCategory.setSelected(eachItem, selected: true);
+        }
         self.removeTagsOperation()
     }
 
     func openItemInNewWindow() {
         self.openInNewWindow()
     }
-
 }
 
 class FTShelfTagCategory: NSObject {

@@ -1283,13 +1283,7 @@ extension FTShelfSplitViewController: FTImagePickerDelegate {
         }
     }
 }
-extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
-    func didDismissTags() {
-        let items = self.selectedTagItems.values.reversed();
-        self.selectedTagItems.removeAll()
-        FTShelfTagsUpdateHandler.shared.updateTagsFor(items: items, completion: nil)
-    }
-
+extension FTShelfSplitViewController {
     func commonTagsFor(items: [FTShelfTagsItem]) -> [String] {
         var commonTags: Set<String> = []
         for (index, item) in items.enumerated() {
@@ -1301,32 +1295,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
         }
         return Array(commonTags)
     }
-
-    func addTagsViewController(didTapOnBack controller: FTTagsViewController) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-
-    func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
-        var tagsItems = [FTShelfTagsItem]()
-        items.forEach { item in
-            if let documentItem = item as? FTDocumentItemProtocol {
-                let tagItem = FTTagsProvider.shared.shelfTagsItemForBook(documentItem: documentItem)
-                tagsItems.append(tagItem)
-            }
-        }
-        let tags = self.commonTagsFor(items: tagsItems)
-        let tagItems = FTTagsProvider.shared.getAllTagItemsFor(tags)
-        FTTagsViewController.presentTagsController(onController: self, tags: tagItems)
-    }
-
-    func didAddTag(tag: FTTagModel) {
-        updateShelfTagItemsFor(tag: tag)
-    }
-
-    func didUnSelectTag(tag: FTTagModel) {
-        updateShelfTagItemsFor(tag: tag)
-    }
-
+    
     func updateShelfTagItemsFor(tag: FTTagModel) {
         if let selectedItems = self.currentShelfViewModel?.selectedDocItems as? [FTDocumentItemProtocol] {
             if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
@@ -1615,3 +1584,43 @@ class FTPDFViewController: UIViewController {
     }
 }
 #endif
+
+extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
+    func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
+        var docIDs = [String]();
+        self.currentShelfViewModel?.selectedDocItems.forEach({ eachItem in
+            if let docItem = eachItem as? FTDocumentItemProtocol, let docID =  docItem.documentUUID {
+                docIDs.append(docID);
+            }
+        })
+        guard !docIDs.isEmpty else {
+            return
+        }
+        
+        if addedTags.isEmpty, removedTags.isEmpty {
+            return;
+        }
+        let updater = FTDocumentTagUpdater()
+        _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentID: docIDs) {
+            debugLog("updater: \(updater)");
+        };
+    }
+
+    func tagsViewControllerFor(items: [FTShelfItemProtocol], onCompletion: @escaping ((Bool) -> Void)) {
+        var tagsAdded = Set<FTTag>();
+        var commonTags = Set<FTTag>();
+        items.enumerated().forEach { eachItem in
+            let item = eachItem.element;
+            if let documentItem = item as? FTDocumentItemProtocol, let docID = documentItem.documentUUID {
+                let doc = FTCachedDocument(documentID: docID);
+                let tags = Set(FTTagsProviderV1.shared.getTagsfor(doc.docuemntTags));
+                tagsAdded.formUnion(tags);
+                commonTags = eachItem.offset == 0 ? tags : commonTags.intersection(tags);
+            }
+        }
+        let allTags = FTTagsProviderV1.shared.getTags();
+        let tagModels = allTags.map{FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: commonTags.contains($0))};
+        FTTagsViewController.showTagsController(onController: self, tags: tagModels);
+    }
+
+}

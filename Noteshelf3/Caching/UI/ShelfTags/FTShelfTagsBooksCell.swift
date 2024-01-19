@@ -14,7 +14,6 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
     private var books = [FTShelfTagsItem]()
     private var viewState: FTShelfTagsPageState = .none
-    var contextMenuSelectedIndexPath: IndexPath?
     weak var parentVC: UIViewController?
     private var tagCategory = FTShelfTagCategory()
 
