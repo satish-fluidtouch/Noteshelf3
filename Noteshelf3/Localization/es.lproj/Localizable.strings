@@ -1067,8 +1067,20 @@
 "finder.tabbar.content" = "Contenido";
 "finder.tag" = "Etiqueta";
 "foodanddrink" = "Comida y bebida.";
+"gesture.activate.focusMode" = "Cambiar a Modo de Enfoque";
+"gesture.activate.focusMode.hint" = "Toque único con cuatro dedos";
 "gesture.activeFocusMode.subTitle" = "Toque individual con 4 dedos.";
 "gesture.activeFocusMode.title" = "Activar modo de enfoque";
+"gesture.fitPageToScreen" = "Ajustar página a pantalla";
+"gesture.fitPageToScreen.hint" = "Doble toque con un dedo";
+"gesture.redo.hint" = "Toque único con tres dedos";
+"gesture.redo.title" = "Rehacer";
+"gesture.show.quickAccessSideBar" = "Mostrar barra lateral de acceso rápido";
+"gesture.show.quickAccessSideBar.hint" = "Desliza largamente desde el borde izquierdo";
+"gesture.show.thumbnails" = "Mostrar miniaturas de página";
+"gesture.show.thumbnails.hint" = "Deslizar el borde izquierdo";
+"gesture.undo.hint" = "Doble toque con dos dedos";
+"gesture.undo.title" = "Deshacer";
 "gesture.undoredo.subTitle" = "Toque único de 2 dedos o 3 dedos.";
 "gesture.undoredo.title" = "Deshacer o Rehacer";
 "getInspired.bulletJournal" = "Diario de viñetas";
@@ -1565,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 8 January 2024 at 15:32
+// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
