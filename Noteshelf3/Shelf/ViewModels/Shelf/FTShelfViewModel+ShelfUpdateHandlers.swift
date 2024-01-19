@@ -48,7 +48,7 @@ extension FTShelfViewModel {
 
         //**************** To handle updates from other categories to All
         if self.collection.isAllNotesShelfItemCollection {
-            self.performDelayedReloadItems();
+            self.reloadItems()
         } else {
             //****************
             if(self.collection.uuid == shelfCollection.uuid) {
@@ -60,7 +60,7 @@ extension FTShelfViewModel {
                             parent.resetCachedDates()
                         }
                     }
-                    performDelayedReloadItems()
+                    reloadItems()
                 }
             }
         }

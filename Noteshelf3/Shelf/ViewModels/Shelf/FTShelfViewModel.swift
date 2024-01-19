@@ -48,7 +48,11 @@ protocol FTShelfCompactViewModelProtocol: AnyObject {
     func didChangeSelectMode(_ mode: FTShelfMode)
 }
 class FTShelfViewModel: NSObject, ObservableObject {
-    
+    struct ShelfReloadState {
+        var isReloadInProgress: Bool = false
+        var scheduleReload: Bool = false
+    }
+
     // MARK: Private Properties
     private var cancellables = [AnyCancellable]()
     private var cancellables1 = Set<AnyCancellable>()
@@ -61,6 +65,8 @@ class FTShelfViewModel: NSObject, ObservableObject {
     private var groupItemCache = [String: FTGroupItemViewModel]();
     private var notebookItemCache = [String: FTShelfItemViewModel]();
     private var closedDocumentItem: FTDocumentItem?
+    private var shelfReloadState = ShelfReloadState()
+
     weak var groupViewOpenDelegate: FTShelfViewDelegate?
     var didTapOnSeeAllNotes: (() -> Void)?
     @Published var scrollToItemID: String?
@@ -474,7 +480,7 @@ extension FTShelfViewModel {
         self.addObservers()
     }
     
-    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool, onCompletion: (() -> Void)? = nil) {
+    private func setShelfItems(_ items: [FTShelfItemProtocol],animate:Bool) {
         self.resetShelfModeTo(.normal)
         let _shelfItems = self.createShelfItemsFromData(items);
         if(animate) {
@@ -494,34 +500,40 @@ extension FTShelfViewModel {
         if self.groupItem == nil { // only posting count for collection children, not when inside a group.
             NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : self.shelfItems.count, "shelfCollectionTitle": "\(self.collection.displayTitle)"])
         }
-        onCompletion?()
     }
 
     @objc func reloadItems() {
-        reloadShelfItems(animate: true, nil)
+        guard shelfReloadState.isReloadInProgress == false else {
+            shelfReloadState.scheduleReload = true
+            return
+        }
+
+        shelfReloadState.isReloadInProgress = true
+        reloadShelfItems(animate: true, { [weak self] in
+            guard let self = self else { return }
+            self.shelfReloadState.isReloadInProgress = false
+            if shelfReloadState.scheduleReload {
+                shelfReloadState.scheduleReload = false
+                self.reloadItems()
+            }
+        })
     }
 
-    func performDelayedReloadItems() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(reloadItems), object: nil)
-        // TODO: Remove once testing is done
-//        print(">>>>Reload performDelayedReloadItems")
-        self.perform(#selector(reloadItems), with: nil, afterDelay: 0.5)
-    }
 
     func reloadShelfItems(animate: Bool, _ onCompletion: (() -> Void)?) {
-        // TODO: Remove once testing is done
-//        print(">>>>Reload queueddddd")
         self.collection.shelfItems(FTUserDefaults.sortOrder(),
                                    parent: groupItem,
                                    searchKey: nil) { [weak self ] _shelfItems in
-            
-            if (self?.isInHomeMode ?? false) && _shelfItems.count == 0 {
+            guard let self = self else { return }
+            if self.isInHomeMode && _shelfItems.count == 0 {
                 DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)){
-                    self?.setShelfItems(_shelfItems, animate: animate, onCompletion: onCompletion);
+                    self.setShelfItems(_shelfItems, animate: animate);
+                    onCompletion?()
                 }
                 
             } else {
-                self?.setShelfItems(_shelfItems, animate: animate, onCompletion: onCompletion);
+                self.setShelfItems(_shelfItems, animate: animate);
+                onCompletion?()
             }
         }
     }
