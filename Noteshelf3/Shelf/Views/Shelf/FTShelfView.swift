@@ -18,15 +18,13 @@ protocol FTShelfViewDelegate: AnyObject {
 struct FTShelfView: View,FTShelfBaseView {
 
     @EnvironmentObject var viewModel: FTShelfViewModel
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     let supportedDropTypes = FTDragAndDropHelper.supportedTypesForDrop()
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
 
     var body: some View {
 
-        //    debugPrintChanges()
-        // let _ = Self._printChanges()
+         let _ = Self._printChanges()
         GeometryReader { geometry in
             ZStack {
                 if viewModel.showNoShelfItemsView {
@@ -35,7 +33,7 @@ struct FTShelfView: View,FTShelfBaseView {
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
                         VStack(alignment: .center, spacing:0) {
-                            if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.canShowCreateNBButtons {
+                            if viewModel.showNewNoteView , geometry.size.width > 450, viewModel.mode == .normal {
                                 FTShelfTopSectionView()
                                     .frame(maxWidth:.infinity,minHeight: showMinHeight(geometrySize: geometry.size.width), maxHeight: .infinity,alignment: .center)
                                     .padding(.horizontal,gridHorizontalPadding)

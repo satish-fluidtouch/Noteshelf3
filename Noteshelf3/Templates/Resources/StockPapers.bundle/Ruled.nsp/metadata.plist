@@ -40,8 +40,6 @@
 	<string>괘선</string>
 	<key>dynamic_id</key>
 	<integer>2</integer>
-	<key>template_type</key>
-	<integer>5</integer>
 	<key>dynamic_template_info</key>
 	<dict>
 		<key>width</key>
