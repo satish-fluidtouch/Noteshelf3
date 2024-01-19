@@ -33,7 +33,7 @@ class FTTaggedEntity: NSObject, Identifiable {
     var tagType: FTTagsType {
         fatalError("subclass should override")
     };
-    var tags = Set<FTTag>();
+    private(set) var tags = Set<FTTag>();
 
     init(documentUUID: String,documentName: String?) {
         self.documentUUID = documentUUID
