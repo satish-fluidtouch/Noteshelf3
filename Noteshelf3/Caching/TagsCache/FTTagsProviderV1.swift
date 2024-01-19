@@ -28,19 +28,7 @@ class FTTagsProviderV1: NSObject {
         lock.unlock()
         return items;
     }()
-    
-    private func addTags(_ tags: [FTTag]) {
-        lock.lock();
-        tags.forEach { eachTag in
-            self.userTags[eachTag.tagKey] = eachTag;
-        }
-        if !tags.isEmpty {
-            save();
-            self.postTagUpdateNotification(["operation" : "add", "tags" : tags])
-        }
-        lock.unlock();
-    }
-    
+        
     func renameTag(_ tag: FTTag,to newName: String) {
         lock.lock();
         if let currentTag = userTags.removeValue(forKey: tag.tagKey) {
@@ -67,17 +55,7 @@ class FTTagsProviderV1: NSObject {
         }
         lock.unlock();
     }
-    
-    private func postTagUpdateNotification(_ userInfo: [AnyHashable:Any]) {
-        if !Thread.current.isMainThread {
-            runInMainThread {
-                self.postTagUpdateNotification(userInfo)
-            }
-            return;
-        }
-        NotificationCenter.default.post(name: .didUpdateTags, object: nil, userInfo: userInfo)
-    }
-    
+        
     func getTags(_ includeAllTags: Bool = false,sort:Bool = false) -> [FTTag] {
         lock.lock();
         var userCreatedTags = Array(self.userTags.values);
@@ -114,50 +92,6 @@ class FTTagsProviderV1: NSObject {
         self.addTags(tagsToAdd);
         lock.unlock();
         return tagItems;
-    }
-    
-    func syncTagsWithLocalCache(documentID: String) {
-        lock.lock();
-        let cacheDocument = FTCachedDocument(documentID: documentID);
-        let documentName = cacheDocument.documentName;
-        
-        let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
-        var newTagsSet = Set(self.getTagsfor(cacheDocument.docuemntTags))
-        
-        self.syncNotebookTagsWithLocalCache(documentID: documentID
-                                            , documentName: documentName
-                                            , tagNames: newTagsSet);
-        let pages = cacheDocument.pages;
-        pages.enumerated().forEach { eachItem in
-            let eachpage = eachItem.element;
-            let index = eachItem.offset;
-            let pageSet = Set(self.getTagsfor(eachpage.tags()))
-            
-            let pageProperties = FTTaggedPageProperties();
-            pageProperties.pageSize = eachpage.pdfPageRect;
-            pageProperties.pageIndex = index;
-            
-            self.syncPageTagsWithLocalCache(documentID: documentID
-                                            , documentName: documentName
-                                            , pageID: eachpage.uuid
-                                            , tagNames: pageSet
-                                            , pageProperties: pageProperties);
-            newTagsSet.formUnion(pageSet);
-        }
-        
-        let tagsToremove = currentTags.subtracting(newTagsSet);
-        tagsToremove.forEach { eachItem in
-            eachItem.removeDocumentID(documentID);
-        }
-        
-        newTagsSet.forEach { eachItem in
-            eachItem.addDocumentID(documentID);
-        }
-        lock.unlock();
-    }
-    
-    func saveCache() {
-        save();
     }
 }
 
@@ -202,10 +136,44 @@ private extension FTTagsProviderV1 {
 }
 
 private extension FTTagsProviderV1 {
+    func addTags(_ tags: [FTTag]) {
+        lock.lock();
+        tags.forEach { eachTag in
+            self.userTags[eachTag.tagKey] = eachTag;
+        }
+        if !tags.isEmpty {
+            save();
+            self.postTagUpdateNotification(["operation" : "add", "tags" : tags])
+        }
+        lock.unlock();
+    }
+    
+    func addTaggedEntityToCache(_ entity: FTTaggedEntity) {
+        lock.lock();
+        var key = entity.documentUUID;
+        if let _pageEntity = entity as? FTPageTaggedEntity {
+            key = key.appending("_\(_pageEntity.pageUUID)");
+        }
+        self.taggedEntitiesInfo[key] = entity;
+        lock.lock();
+    }
+    
+    private func postTagUpdateNotification(_ userInfo: [AnyHashable:Any]) {
+        if !Thread.current.isMainThread {
+            runInMainThread {
+                self.postTagUpdateNotification(userInfo)
+            }
+            return;
+        }
+        NotificationCenter.default.post(name: .didUpdateTags, object: nil, userInfo: userInfo)
+    }
+}
+
+private extension FTTagsProviderV1 {
     func syncNotebookTagsWithLocalCache(documentID: String
                                         ,documentName: String?
                                         , tagNames: Set<FTTag>) {
-        guard let pageEntity = self.tagggedEntity(documentID, pageID: nil) else {
+        guard let pageEntity = self.tagggedEntity(documentID, documentName: documentName) else {
             return;
         }
         let currentTags = pageEntity.tags;
@@ -227,7 +195,7 @@ private extension FTTagsProviderV1 {
                                     , pageID: String
                                     , tagNames: Set<FTTag>
                                     , pageProperties: FTTaggedPageProperties) {
-        guard let pageEntity = self.tagggedEntity(documentID, pageID: pageID) else {
+        guard let pageEntity = self.tagggedEntity(documentID, documentName: documentName,pageID: pageID) else {
             return;
         }
         let currentTags = pageEntity.tags;
@@ -271,43 +239,68 @@ private extension FTTag {
     }
 }
 
-extension FTTagsProviderV1 {
-    func createTaggedEntity(_ documentID: String
-                            , documentName: String?
-                            , pageID: String? = nil
-                            , pageProperties: FTTaggedPageProperties = FTTaggedPageProperties()) -> FTTaggedEntity {
-        let item: FTTaggedEntity
-        if let _pageID = pageID {
-            item = FTPageTaggedEntity(documentUUID: documentID
-                                      , documentName: documentName
-                                      , pageUUID: _pageID
-                                      , pageProperties: pageProperties);
+internal extension FTTagsProviderV1 {
+    func syncTagsWithLocalCache(documentID: String) {
+        lock.lock();
+        let cacheDocument = FTCachedDocument(documentID: documentID);
+        let documentName = cacheDocument.documentName;
+        
+        let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
+        var newTagsSet = Set(self.getTagsfor(cacheDocument.docuemntTags))
+        
+        self.syncNotebookTagsWithLocalCache(documentID: documentID
+                                            , documentName: documentName
+                                            , tagNames: newTagsSet);
+        let pages = cacheDocument.pages;
+        pages.enumerated().forEach { eachItem in
+            let eachpage = eachItem.element;
+            let index = eachItem.offset;
+            let pageSet = Set(self.getTagsfor(eachpage.tags()))
+            
+            let pageProperties = FTTaggedPageProperties();
+            pageProperties.pageSize = eachpage.pdfPageRect;
+            pageProperties.pageIndex = index;
+            
+            self.syncPageTagsWithLocalCache(documentID: documentID
+                                            , documentName: documentName
+                                            , pageID: eachpage.uuid
+                                            , tagNames: pageSet
+                                            , pageProperties: pageProperties);
+            newTagsSet.formUnion(pageSet);
         }
-        else {
-            item = FTDocumentTaggedEntity(documentUUID: documentID, documentName: documentName);
+        
+        let tagsToremove = currentTags.subtracting(newTagsSet);
+        tagsToremove.forEach { eachItem in
+            eachItem.removeDocumentID(documentID);
         }
-        self.addTaggedEntity(item);
-        return item;
+        
+        newTagsSet.forEach { eachItem in
+            eachItem.addDocumentID(documentID);
+        }
+        lock.unlock();
     }
     
-    func tagggedEntity(_ documentID: String, pageID: String?) -> FTTaggedEntity? {
+    func saveCache() {
+        save();
+    }
+    
+    func tagggedEntity(_ documentID: String
+                       , documentName: String?
+                       , pageID: String? = nil
+                       , createIfNotPresent: Bool = false) -> FTTaggedEntity? {
         lock.lock();
         var key = documentID;
         if let _pageID = pageID {
             key = key.appending("_\(_pageID)");
         }
-        let enity = self.taggedEntitiesInfo[key];
+        var enity = self.taggedEntitiesInfo[key];
+        if nil == enity, createIfNotPresent {
+            let newEntity = FTTaggedEntity.taggedEntity(documentID, documentName: documentName, pageID: pageID);
+            enity = newEntity;
+            self.addTaggedEntityToCache(newEntity);
+        }
+        enity?.documentName = documentName;
         lock.unlock();
         return enity;
-    }
-    
-    private func addTaggedEntity(_ entity: FTTaggedEntity) {
-        lock.lock();
-        var key = entity.documentUUID;
-        if let _pageEntity = entity as? FTPageTaggedEntity {
-            key = key.appending("_\(_pageEntity.pageUUID)");
-        }
-        self.taggedEntitiesInfo[key] = entity;
-        lock.lock();
     }
 }

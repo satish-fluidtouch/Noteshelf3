@@ -31,7 +31,7 @@ class FTPageTaggedEntity: FTTaggedEntity {
     required init(documentUUID: String
                   , documentName: String?
                   , pageUUID: String
-                  , pageProperties: FTTaggedPageProperties) {
+                  , pageProperties: FTTaggedPageProperties = FTTaggedPageProperties()) {
         self.pageUUID = pageUUID
         self.pageProperties = pageProperties
         super.init(documentUUID: documentUUID,documentName: documentName);

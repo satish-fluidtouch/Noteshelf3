@@ -9,6 +9,22 @@
 import UIKit
 
 class FTTaggedEntity: NSObject, Identifiable {
+    
+    static func taggedEntity(_ documentID: String
+                             , documentName: String?
+                             , pageID: String? = nil) -> FTTaggedEntity {
+        let item: FTTaggedEntity
+        if let _pageID = pageID {
+            item = FTPageTaggedEntity(documentUUID: documentID
+                                      , documentName: documentName
+                                      , pageUUID: _pageID);
+        }
+        else {
+            item = FTDocumentTaggedEntity(documentUUID: documentID, documentName: documentName);
+        }
+        return item;
+    }
+
     var id = UUID().uuidString;
 
     var documentUUID: String;

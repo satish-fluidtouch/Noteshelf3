@@ -600,7 +600,7 @@ extension FTShelfTagsViewController {
             group.enter()
             let pagesUUIDs = tagItems.map({$0.pageUUID})
             if let docUrl = tagItems.first?.documentItem?.URL {
-                let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docUrl.deletingPathExtension().lastPathComponent)
+                let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docUrl.title)
                 let request = FTDocumentOpenRequest(url: docUrl, purpose: .read)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                     if let docPages = document?.pages() as? [FTPageProtocol] {
