@@ -140,7 +140,7 @@ struct FTSidebarView: View {
                         SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
                                         itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
                                         numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
-                                        showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem == item),
+                                        showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem?.id == item.id),
                                         viewWidth: availableWidth)
                             .environmentObject(viewModel)
                             .environmentObject(menuSection)

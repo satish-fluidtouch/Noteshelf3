@@ -56,13 +56,12 @@ struct SideBarItemView : View {
                     .font(Font.appFont(for: .regular, with: 20))
             }
             Spacer()
-            if showChildrenNumber {
                 Text("\(numberOfChildren)")
                     .fontWeight(.medium)
                     .appFont(for: .regular, with: 15)
                     .padding(.trailing,12)
                     .padding(.leading,8)
-            }
+                    .isHidden(!showChildrenNumber)
         }
         .frame(height: 44.0, alignment: .leading)
         .contentShape(Rectangle())
@@ -82,7 +81,7 @@ struct SideBarItemView : View {
                     SideBarItemView(itemBgColor:viewModel.getRowSelectionColorFor(item: item),
                                     itemTitleTint:viewModel.getRowForegroundColorFor(item: item),
                                     numberOfChildren: (item.shelfCollection?.childrens.count ?? 0),
-                                    showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem == item),
+                                    showChildrenNumber: ((item.shelfCollection?.childrens.count ?? 0) > 0 && viewModel.selectedSideBarItem?.id == item.id),
                                     viewWidth: 0.0)
                         .environmentObject(viewModel)
                         .environmentObject(item)
@@ -154,9 +153,9 @@ struct SideBarItemView : View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name(rawValue:shelfCollectionItemsCountNotification)), perform: { notification in
             if let userInfo = notification.userInfo {
-                if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int , count > 0 {
+                if let collectionName = userInfo["shelfCollectionTitle"] as? String, collectionName == item.shelfCollection?.displayTitle, let count = userInfo["shelfItemsCount"] as? Int {
                         numberOfChildren = count
-                        showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem == item)
+                    showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem?.id == item.id)
                 }
             }
         })
@@ -167,6 +166,6 @@ struct SideBarItemView : View {
     }
     private func updateShowChildrenNumberStatus(){
         numberOfChildren  = item.shelfCollection?.childrens.count ?? 0
-        showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem == item)
+        showChildrenNumber = (numberOfChildren > 0 && viewModel.selectedSideBarItem?.id == item.id)
     }
 }
