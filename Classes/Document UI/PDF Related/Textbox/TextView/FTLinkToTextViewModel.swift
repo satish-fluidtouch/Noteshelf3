@@ -55,8 +55,8 @@ protocol FTDocumentSelectionDelegate: AnyObject {
 }
 
 protocol FTTextLinkEditDelegate: AnyObject {
-    func updateTextLinkInfo(_ info: FTPageLinkInfo)
-    func updateWebLink(_ url: URL)
+    func updateTextLinkInfo(_ info: FTPageLinkInfo, text: String)
+    func updateWebLink(_ url: URL, text: String)
 }
 
 class FTLinkToTextViewModel: NSObject {
@@ -111,6 +111,10 @@ class FTLinkToTextViewModel: NSObject {
         self.pageNumber = number
     }
 
+    func updateLinkText(_ text: String?) {
+        self.linkText = text ?? ""
+    }
+
     func updateWebUrlString(_ urlStr: String?) {
         self.webUrlStr = urlStr ?? ""
     }
@@ -118,10 +122,10 @@ class FTLinkToTextViewModel: NSObject {
     func saveLinkInfo(isWebLink: Bool = false) {
         if isWebLink {
             if let urlStr = URL(string: self.webUrlStr) {
-                self.delegate?.updateWebLink(urlStr)
+                self.delegate?.updateWebLink(urlStr, text: self.linkText)
             }
         } else {
-            self.delegate?.updateTextLinkInfo(self.info)
+            self.delegate?.updateTextLinkInfo(self.info, text: self.linkText)
         }
     }
 
@@ -138,7 +142,6 @@ class FTLinkToTextViewModel: NSObject {
                         self.updatePageNumber(1)
                         var updatedInfo = self.info
                         updatedInfo.pageUUID = pages.first?.uuid ?? ""
-                        self.delegate?.updateTextLinkInfo(updatedInfo)
                     }
                     onCompletion?(true)
                 }
@@ -159,7 +162,6 @@ class FTLinkToTextViewModel: NSObject {
                                 self.updatePageNumber(1)
                                 var updatedInfo = self.info
                                 updatedInfo.pageUUID = pages.first?.uuid ?? ""
-                                self.delegate?.updateTextLinkInfo(updatedInfo)
                             }
                             onCompletion?(true)
                         }

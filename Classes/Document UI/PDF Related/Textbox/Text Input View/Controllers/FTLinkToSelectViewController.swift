@@ -69,11 +69,13 @@ private extension FTLinkToSelectViewController {
     }
 
     func updateDoneEnableStatus() {
+        let toEnable: Bool
         if segmentControl.selectedSegmentIndex == 1 {
-            self.navigationItem.rightBarButtonItem?.isEnabled = !self.viewModel.webUrlStr.isEmpty
+            toEnable = !self.viewModel.webUrlStr.isEmpty && !self.viewModel.linkText.isEmpty
         } else {
-            self.navigationItem.rightBarButtonItem?.isEnabled = true
+            toEnable = !self.viewModel.linkText.isEmpty
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = toEnable
     }
 
     func configureSegmentControl() {
@@ -147,7 +149,9 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
             }
             cell.configureCell(with: option, linkText: self.viewModel.linkText)
             cell.textEntryChangeHandler = {[weak self] (text: String?) -> Void in
-
+                guard let self else { return }
+                self.viewModel.updateLinkText(text)
+                self.updateDoneEnableStatus()
             }
             reqCell = cell
         } else {

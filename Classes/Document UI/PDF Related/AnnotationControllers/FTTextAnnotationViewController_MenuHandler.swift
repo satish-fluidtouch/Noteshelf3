@@ -90,15 +90,25 @@ extension FTTextAnnotationViewController {
         self.textInputView.attributedText = attributedString
     }
 
-    private func updateLinkAttribute(with url: URL, for range: NSRange) {
-        guard let attrText = self.textInputView.attributedText else {
+    private func updateLinkAttribute(with url: URL, text: String) {
+        guard let attrText = self.textInputView.attributedText?.mutableCopy() as? NSMutableAttributedString, !text.isEmpty, let exstRange = self.linkSelectedRange else {
             return
         }
-        let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
-        attributedString.removeAttribute(.link, range: range)
-        attributedString.addAttribute(.link, value: url, range: range)
-        attributedString.addAttributes(NSAttributedString.linkAttributes, range: range)
-        self.textInputView.attributedText = attributedString
+        let originalAttributes = attrText.attributes(at: exstRange.location, effectiveRange: nil)
+        attrText.replaceCharacters(in: exstRange, with: "")
+        let newAttrStr = NSAttributedString(string: text, attributes: originalAttributes)
+        attrText.insert(newAttrStr, at: exstRange.location)
+
+        let attributedString = NSMutableAttributedString(attributedString: attrText)
+        let newRange = (attrText.string as NSString).range(of: text)
+        if exstRange.location + exstRange.length <= attrText.length {
+            attrText.removeAttribute(.link, range: exstRange)
+        } else {
+            attrText.removeAttribute(.link, range: newRange)
+        }
+        attrText.addAttribute(.link, value: url, range: newRange)
+        attrText.addAttributes(NSAttributedString.linkAttributes, range: newRange)
+        self.textInputView.attributedText = attrText
         self.transitionInProgress = false
     }
     
@@ -298,15 +308,19 @@ extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
 #endif
 
 extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
-    func updateTextLinkInfo(_ info: FTPageLinkInfo) {
-        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
+    func updateTextLinkInfo(_ info: FTPageLinkInfo, text: String) {
+        guard !text.isEmpty else {
+            return
+        }
         if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: info.docUUID, pageId: info.pageUUID) {
-            self.updateLinkAttribute(with: url, for: range)
+            self.updateLinkAttribute(with: url, text: text)
         }
     }
     
-    func updateWebLink(_ url: URL) {
-        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        self.updateLinkAttribute(with: url, for: range)
+    func updateWebLink(_ url: URL, text: String) {
+        guard !text.isEmpty else {
+            return
+        }
+        self.updateLinkAttribute(with: url, text: text)
     }
 }
