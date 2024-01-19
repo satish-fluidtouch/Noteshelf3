@@ -155,7 +155,7 @@ private extension FTTagsProviderV1 {
             key = key.appending("_\(_pageEntity.pageUUID)");
         }
         self.taggedEntitiesInfo[key] = entity;
-        lock.lock();
+        lock.unlock();
     }
     
     private func postTagUpdateNotification(_ userInfo: [AnyHashable:Any]) {
