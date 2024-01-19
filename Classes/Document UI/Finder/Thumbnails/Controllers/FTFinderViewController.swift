@@ -1985,6 +1985,9 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
         guard _selPages.count > 0 else {
             return;
         }
+        if addedTags.isEmpty, removedTags.isEmpty {
+            return;
+        }
         _selPages.forEach { eachPage in
             if let nsPage = eachPage as? FTPageProtocol
                 , let tagPage = eachPage as? FTPageTagsProtocol {

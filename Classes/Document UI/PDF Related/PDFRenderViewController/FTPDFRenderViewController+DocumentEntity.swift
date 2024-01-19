@@ -296,26 +296,22 @@ var selectedShelfTagItems = Dictionary<String, FTShelfTagsItem>()
 
 extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
     func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
-        
-        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
-    }
-    
-    private func updateShelfTagItemsFor(tag: FTTagModel) {
-        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            if let page = self.currentlyVisiblePage() as? FTThumbnailable
-                , let documentItem = self.currentShelfItemInSidePanelController() as? FTDocumentItemProtocol {
-                tagModel.updateTagForPages(documentItem: documentItem, pages: [page]) { [weak self] items in
-                    guard let self = self else { return }
-                    items.forEach { item in
-                        (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
-                        selectedShelfTagItems[page.uuid] = item;
-                        NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
-                    }
-                }
+        if addedTags.isEmpty, removedTags.isEmpty {
+            return;
+        }
+        if let currentPage = self.currentlyVisiblePage(), let tagPage = currentPage as? FTPageTagsProtocol {
+            addedTags.forEach { eachTag in
+                tagPage.addTag(eachTag.text);
             }
+            removedTags.forEach { eachTag in
+                tagPage.removeTag(eachTag.text);
+            }
+            let updater = FTDocumentTagUpdater();
+            updater.updatePageTags(addedTags: addedTags, removedTags: removedTags, document: self.pdfDocument, pages: [currentPage]);
+
+            NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
         }
     }
-
 }
 
 //Mark:- WebclipControllerDelegate
