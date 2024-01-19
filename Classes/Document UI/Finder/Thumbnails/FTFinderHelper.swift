@@ -20,6 +20,23 @@ enum FTFinderSegment: Int {
     case outlines
     case search
     case none
+    
+    func segmentName() -> String {
+        var name = "thumbnails"
+        switch self {
+        case .pages:
+            name = "thumbnails"
+        case .bookmark:
+            name = "bookmark"
+        case .outlines:
+            name = "outline"
+        case .search:
+            name = "search"
+        case .none:
+            name = "thumbnails"
+        }
+        return name
+    }
 }
 
 enum FTFinderScreenMode {
@@ -39,31 +56,31 @@ enum FTFinderContextMenuOperation : String {
     case tagPages
     case deletePages
     case bookmark
-
-    var description: String {
+    
+    var eventTrackdescription: String {
         switch self {
         case .copyPages:
-            return  "copy_page"
+            return  "finder_page_copy_tap"
         case .pastePages:
-            return  "paste_page"
+            return  "finder_page_pastebelow_tap"
         case .sharePages:
-            return  "share_page"
+            return  "finder_page_share_tap"
         case .insertAbove:
-            return  "insert_above"
+            return  "finder_page_addpagebefore_tap"
         case .insertBelow:
-            return  "insert_below"
+            return  "finder_page_addpageafter_tap"
         case .duplicatePages:
-            return  "duplicate_page"
+            return  "finder_page_duplicate_tap"
         case .movePages:
-            return  "move_page"
+            return  "finder_page_move_tap"
         case .rotatePages:
-            return  "rotate_page"
+            return  "finder_page_rotate_tap"
         case .tagPages:
-            return  "tag_page"
+            return  "finder_page_tag_tap"
         case .bookmark:
-            return  "bookmark_page"
+            return  "finder_page_bookmarkicon_longpress"
         case .deletePages:
-            return  "delete_page"
+            return  "finder_page_delete_tap"
         }
     }
 }

@@ -1091,17 +1091,7 @@ class FTShelfItemsViewController: UIViewController, UITableViewDataSource, UITab
                                 }
                             });
                         }
-
-                        if let operation = FTDocumentPostProcessOperation.operation(info: info ,
-                                                                                    url: tempDocURL)
-                        {
-                            operation.perform(completion: {
-                                createBlock()
-                            })
-                        }
-                        else{
-                            createBlock()
-                        }
+                        createBlock()
                     }
                     else {
                         loadingIndicatorViewController.hide {[weak self] in

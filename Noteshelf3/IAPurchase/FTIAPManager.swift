@@ -101,7 +101,7 @@ class FTIAPManager: NSObject {
 #if !ENTERPRISE_EDITION
         SKPaymentQueue.default().add(self);
 #endif
-        FTStoreContainerHandler.shared.premiumUser = premiumUser
+        FTStorePremiumPublisher.shared.premiumUser = premiumUser
     }
     
     func config() {
