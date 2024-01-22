@@ -157,6 +157,9 @@ extension FTShortcutPlacement {
         var btmOffset: CGFloat = 0.0
         if let window = UIApplication.shared.keyWindow {
             btmOffset = window.safeAreaInsets.bottom
+            if zoomModeInfo.isEnabled && !UIDevice.current.isPhone() {
+                btmOffset = 0.0
+            }
         }
         let frame = CGRect(x: superViewFrame.origin.x,
                                                y: superViewFrame.origin.y + topOffset,
