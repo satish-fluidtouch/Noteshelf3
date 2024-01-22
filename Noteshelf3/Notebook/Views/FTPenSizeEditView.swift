@@ -47,7 +47,8 @@ struct FTPenSizeEditView: View {
     let penType: FTPenType
     @State var favoriteSizeValue: CGFloat
     @ObservedObject var sizeEditModel: FTPenSizeEditModel
-
+    let rackType: FTRackType
+    
     @State private var sliderTapped = false
     @State private var selected: Bool = true
     @State private var showIndicator: Bool = true
@@ -66,7 +67,7 @@ struct FTPenSizeEditView: View {
         .containerStyle(displayMode: self.displayMode)
         .overlay(
             ZStack {
-                ValueSlider(value: $favoriteSizeValue, in: penType.rackType.sizeRange, step: 0.1, tapped: $sliderTapped) { edited in
+                ValueSlider(value: $favoriteSizeValue, in: rackType.sizeRange, step: 0.1, tapped: $sliderTapped) { edited in
                 }.valueSliderStyle(
                     HorizontalValueSliderStyle(
                         track:

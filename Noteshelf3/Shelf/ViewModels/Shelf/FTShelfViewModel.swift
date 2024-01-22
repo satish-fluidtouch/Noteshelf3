@@ -74,14 +74,17 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var mode: FTShelfMode = .normal {
         didSet {
             addOrRemoveObserversBasedOnMode()
-            updateTopSectionNBCreationButtonsVisiblity()
         }
     }
-        
+
     @Published var shelfItems: [FTShelfItemViewModel] = []
     {
         didSet {
-            self.notesCount = shelfItems.count;
+            if(isInHomeMode && shelfItems.count != oldValue.count) {
+                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : shelfItems.count, "shelfCollectionTitle": "\(collection.displayTitle)"])
+                }
+            }
             subscribeToShelfItemChanges()
             self.updateGetStartedInfoWithDelay()
         }
@@ -99,19 +102,9 @@ class FTShelfViewModel: NSObject, ObservableObject {
     @Published var showNotebookModifiedDate: Bool = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
     @Published var orientation = UIDevice.current.orientation
     @Published var isSidebarOpen: Bool = true
-    @Published var notesCount: Int = 0 {
-        didSet {
-            if(isInHomeMode && notesCount != oldValue) {
-                if self.groupItem == nil { // only posting count for collection children, not when inside a group.
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: shelfCollectionItemsCountNotification), object: nil, userInfo: ["shelfItemsCount" : notesCount, "shelfCollectionTitle": "\(collection.displayTitle)"])
-                }
-            }
-        }
-    }
     @Published var shouldShowGetStartedInfo: Bool = FTUserDefaults.isFirstLaunch()
-    
-    @Published var canShowCreateNBButtons: Bool = true
-    
+    @Published var selectedShelfItems: [FTShelfItemViewModel] = []
+
     // MARK: Normal Variables
     var collection: FTShelfItemCollection {
         didSet {
@@ -163,10 +156,10 @@ class FTShelfViewModel: NSObject, ObservableObject {
             }
         }
     }
-    
+
     // MARK: Computed variables
     var areAllItemsSelected: Bool {
-        shelfItems.filter({ $0.isSelected }).count == shelfItems.count
+        selectedShelfItems.count == shelfItems.count
     }
     var navigationTitle: String {
         get {
@@ -180,7 +173,7 @@ class FTShelfViewModel: NSObject, ObservableObject {
                     title = collection.displayTitle
                 }
             } else {
-                let selectedCount = shelfItems.filter({ $0.isSelected }).count
+                let selectedCount = self.selectedShelfItems.count
                 if selectedCount > 0 {
                     title = String(format: "sidebar.allTags.navbar.selected".localized, String(describing: selectedCount))
                 } else {
@@ -203,14 +196,14 @@ class FTShelfViewModel: NSObject, ObservableObject {
         !(collection.isAllNotesShelfItemCollection || collection.isStarred || collection.isTrash)
     }
     var supportsDrop: Bool {
-       (isInHomeMode || !(collection.isStarred || collection.isTrash))
+        (isInHomeMode || !(collection.isStarred || collection.isTrash))
     }
     var disableBottomBarItems: Bool {
-        !shelfItems.contains(where: { $0.isSelected })
+        self.selectedShelfItems.isEmpty
     }
-    
-    var selectedShelfItems: [FTShelfItemProtocol] {
-        var selectedItems =  shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+
+    var selectedDocItems: [FTShelfItemProtocol] {
+        var selectedItems =  self.selectedShelfItems.compactMap({$0.model})
         if selectedItems.count == 0, let selectedItemUsingContexualMenu = self.updateItem?.model {
             selectedItems = [selectedItemUsingContexualMenu]
         }
@@ -219,23 +212,24 @@ class FTShelfViewModel: NSObject, ObservableObject {
 
     // MARK: Mutating functions
     func selectAllItems() {
-        updateShelfItemsSelectionStatusTo(true)
+        self.selectedShelfItems = self.shelfItems
     }
     
     func deselectAllItems() {
-        updateShelfItemsSelectionStatusTo(false)
+        self.selectedShelfItems = []
     }
     
     func finalizeShelfItemsEdit() {
-        updateShelfItemsSelectionStatusTo(false)
+        self.selectedShelfItems = []
     }
     func subscribeToShelfItemChanges(){
         self.cancellables.removeAll()
         self.shelfItems.forEach({ [weak self] in
-            let item = $0.objectWillChange.sink(receiveValue: { self?.objectWillChange.send() })
+            let item = $0.$coverImage.sink(receiveValue: { _ in self?.objectWillChange.send() })
             self?.cancellables.append(item)
         })
     }
+
     func getShelfItemWithUUID(_ uuid: String) -> FTShelfItemViewModel? {
         self.shelfItems.first(where: {$0.model.uuid == uuid})
     }
@@ -360,15 +354,11 @@ class FTShelfViewModel: NSObject, ObservableObject {
 
 // MARK: Private
 private extension FTShelfViewModel {
-    func updateTopSectionNBCreationButtonsVisiblity() {
-        withAnimation {
-            canShowCreateNBButtons = mode == .normal
-        }
-    }
     func updateGetStartedInfoWithDelay(){
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateShowingGetStartedInfoStatus), object: nil)
         self.perform(#selector(updateShowingGetStartedInfoStatus), with: nil, afterDelay: 0.7)
     }
+
     @objc func updateShowingGetStartedInfoStatus() {
         if isInHomeMode {
             withAnimation {
@@ -389,6 +379,7 @@ private extension FTShelfViewModel {
             }
         }
     }
+
     func addContextualMenuOerationsObserver(){
         self.shelfItemContextualMenuViewModel.$performAction
             .dropFirst()
@@ -401,17 +392,11 @@ private extension FTShelfViewModel {
             }
             .store(in: &cancellables1)
     }
-    
+
     @objc func handleShowDateStatusChange() {
         self.showNotebookModifiedDate = UserDefaults.standard.bool(forKey: "Shelf_ShowDate")
     }
-    
-    func updateShelfItemsSelectionStatusTo(_ status: Bool) {
-        for index in 0..<shelfItems.count {
-            shelfItems[index].isSelected = status
-        }
-    }
-    
+
     func addObservers() {
         if(isObserversAdded) {
             return;
@@ -583,13 +568,13 @@ extension FTShelfViewModel {
         if mode == .selection {
             if let longpressedShelfItem = self.updateItem {
                 // if long pressed item is selected, we need to perform operation considering all selected items. if long pressed item is not selected, then operation need to be performed on only long presses item ignoring selected items
-                if ((self.shelfItems.first(where: {$0.id == longpressedShelfItem.model.uuid})?.isSelected) != nil) {
-                    selectedItems = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+                if !(self.selectedShelfItems.isEmpty) {
+                    selectedItems = self.selectedShelfItems.compactMap({$0.model})
                 } else {
                     selectedItems = [longpressedShelfItem.model]
                 }
             }else {
-                selectedItems = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+                selectedItems = self.selectedShelfItems.compactMap({$0.model})
             }
         } else {
             if let updateItem = self.updateItem {
@@ -598,7 +583,7 @@ extension FTShelfViewModel {
         }
         var viewModelsToUpdate: [FTShelfItemViewModel?] = [updateItem]
         if mode == .selection {
-            viewModelsToUpdate = self.shelfItems.filter({$0.isSelected})
+            viewModelsToUpdate = self.selectedShelfItems
         }
         self.delegate?.changeCoverForShelfItem(selectedItems, withTheme: cover, onCompletion: { [weak self] in
             self?.resetShelfModeTo(.normal)
@@ -752,7 +737,11 @@ extension FTShelfViewModel {
 extension FTShelfViewModel {
     func didTapOnShelfItem(_ shelfItem: FTShelfItemViewModel){
         if(mode == .selection) {
-            shelfItem.isSelected.toggle()
+            if selectedShelfItems.contains(shelfItem) {
+                selectedShelfItems.removeAll(where: { $0.id == shelfItem.id })
+            } else {
+                self.selectedShelfItems.append(shelfItem)
+            }
             // Track Event
             track(EventName.shelf_select_book_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
         }
@@ -763,7 +752,11 @@ extension FTShelfViewModel {
     }
     func didTapGroupItem(_ groupItem: FTGroupItemViewModel){
         if(self.mode == .selection) {
-            groupItem.isSelected.toggle();
+            if selectedShelfItems.contains(groupItem) {
+                selectedShelfItems.removeAll(where: { $0.id == groupItem.id })
+            } else {
+                self.selectedShelfItems.append(groupItem)
+            }
             // Track Event
             track(EventName.shelf_select_group_tap, params: [EventParameterKey.location: shelfLocation()], screenName: ScreenName.shelf)
         }
