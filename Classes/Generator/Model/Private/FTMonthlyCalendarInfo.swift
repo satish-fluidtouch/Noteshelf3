@@ -102,4 +102,10 @@ class FTMonthlyCalendarInfo: NSObject {
     override var description: String {
         return self.dayInfo.description;
     }
+
+    var weeksCount : Int {
+        return  weeklyInfo.reduce(0) { partialResult, weekInfo in
+            return partialResult + (weekInfo.dayInfo.first?.fullMonthString.uppercased() == fullMonth.uppercased() ? 1 : 0)
+        }
+    }
 }
