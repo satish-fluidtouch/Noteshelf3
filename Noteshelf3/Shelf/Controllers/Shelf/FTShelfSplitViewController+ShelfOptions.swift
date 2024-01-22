@@ -15,6 +15,13 @@ import FTTemplatesStore
 import SafariServices
 
 extension FTShelfSplitViewController: FTShelfViewModelProtocol {
+    func canProcessNotification() -> Bool {
+        guard let state = self.view.window?.windowScene?.activationState else {
+            return false
+        }
+        return state == .foregroundActive || state == .foregroundInactive
+    }
+    
     func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio: FTWatchRecordedAudio, forAction actionType: FTAudioActionType) {
         recordingsViewController.dismiss(animated: true) {
             if(actionType == .exportAudio) {
@@ -1328,19 +1335,19 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
     }
 
     func updateShelfTagItemsFor(tag: FTTagModel) {
-        let selectedItems = (self.currentShelfViewModel?.selectedShelfItems as! [FTDocumentItemProtocol])
-        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            tagModel.updateTagForBooks(documentItems: selectedItems) { [weak self] items in
-                guard let self = self else {return}
-                items.forEach { item in
-                    if let docUUID = item.documentUUID {
-                        self.selectedTagItems[docUUID] = item
+        if let selectedItems = self.currentShelfViewModel?.selectedDocItems as? [FTDocumentItemProtocol] {
+            if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
+                tagModel.updateTagForBooks(documentItems: selectedItems) { [weak self] items in
+                    guard let self = self else {return}
+                    items.forEach { item in
+                        if let docUUID = item.documentUUID {
+                            self.selectedTagItems[docUUID] = item
+                        }
                     }
                 }
             }
         }
     }
-
 }
 
 extension UIBezierPath {

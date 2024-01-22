@@ -15,6 +15,7 @@ extension ScreenName {
     static let shelf_bookmarks = "shelf_bookmarks"
     static let shelf_photos = "shelf_photos"
     static let shelf_recordings = "shelf_recordings"
+    static let notebook = "notebook"
 }
 
 extension EventName {
@@ -200,4 +201,6 @@ extension EventName {
     static let customizetoolbar_tool_remove = "customizetoolbar_tool_remove"
     static let customizetoolbar_tool_reorder = "customizetoolbar_tool_reorder"
     static let toolbar_tool_tap = "toolbar_tool_tap"
+
+    static let diary_today_tap = "diary_today_tap"
 }
