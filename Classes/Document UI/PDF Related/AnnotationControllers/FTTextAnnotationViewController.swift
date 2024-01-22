@@ -298,8 +298,9 @@ class FTTextAnnotationViewController: UIViewController {
             track("textmode_page_tapped", params: ["postit_color" : "clear"], screenName: FTScreenNames.textbox)
         }
         
-        let updatetTextConfigBlock = {
+        let updatetTextConfigBlock = { [weak self] in
             //update default properties
+            guard let self else { return }
             if let defaultFont = page?.parentDocument?.localMetadataCache?.defaultBodyFont {
                 self.textInputView.setValue(defaultFont,
                                        forAttribute: NSAttributedString.Key.font.rawValue,
