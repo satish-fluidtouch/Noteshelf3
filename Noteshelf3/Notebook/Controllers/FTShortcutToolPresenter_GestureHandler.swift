@@ -11,9 +11,6 @@ import FTCommon
 
 extension FTShortcutToolPresenter {
     func configurePanGesture() {
-        if UIDevice.current.isIphone() {
-            return
-        }
         let pan = UIPanGestureRecognizer.init(target: self, action: #selector(handlePan(recognizer:)))
         shortcutView.addGestureRecognizer(pan)
         shortcutView.translatesAutoresizingMaskIntoConstraints = true
@@ -78,7 +75,7 @@ private extension FTShortcutToolPresenter {
 
     func addSlots() {
         if let parentView = self.parentVC?.view {
-            var placements: [FTShortcutPlacement] = FTShortcutPlacement.allCases
+            var placements: [FTShortcutPlacement] = FTShortcutPlacement.supportedPlacements
             if self.zoomModeInfo.isEnabled {
                 placements = FTShortcutPlacement.zoomModePlacements
             }
@@ -164,7 +161,7 @@ private extension FTShortcutToolPresenter {
     
     // MARK: - Gesture movement end handling
     func viewMovementEnded() {
-        var placement: FTShortcutPlacement = .topLeft
+        var placement: FTShortcutPlacement = .centerLeft
         if let parent = self.parentVC?.view {
             placement = FTShortcutPlacement.nearestPlacement(for: shortcutView, topOffset: self.toolbarOffset, in: parent)
             placement.save()
