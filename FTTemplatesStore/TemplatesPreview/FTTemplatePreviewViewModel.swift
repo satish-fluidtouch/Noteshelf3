@@ -64,7 +64,7 @@ class FTTemplatePreviewViewModel: ObservableObject {
     }
 }
 
-private extension URL {
+extension URL {
     var templateVersion: Int {
         set {
             let versionKey = FileAttributeKey(rawValue: "version")
