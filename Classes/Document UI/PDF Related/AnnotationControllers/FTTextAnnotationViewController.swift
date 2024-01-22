@@ -338,7 +338,7 @@ class FTTextAnnotationViewController: UIViewController {
         }
 
         if !Thread.isMainThread {
-            FTLogError("TextInput", attributes: ["Thread": Thread.current])
+            FTLogError("Text input thread error")
             runInMainThread {
                 updateTextConfig()
             }
