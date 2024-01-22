@@ -48,7 +48,7 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private var resultsList : [String] = [String]()
     private weak var seperatorView: UIView?
     var suggestionItems = [FTSuggestedItem]()
-    
+    internal var searchText = ""
     private weak var searchController: UISearchController?
     private weak var finderController : FTFinderViewController?
     private weak var delegate: FTFinderTabBarController?
@@ -425,13 +425,14 @@ extension FTFinderSearchController {
         let tags = searchOptions.selectedTags.map { eachModel in
             return eachModel.text
         }
-        if searchInputInfo.textKey != searchOptions.searchedKeyword || searchInputInfo.tags != tags {
+        if searchInputInfo.textKey != searchText || searchInputInfo.tags != tags {
             isSearching = true
             showLoadingIndicator()
             self.document?.startRecognitionIfNeeded();
             finderController?.configureForSearchTab()
             finderController?.isSearching = true
             searchInputInfo.tags = tags
+            searchText = searchBar?.searchTextField.text ?? ""
             finderController?.filterOptionsController(didChangeSearchText: searchInputInfo.textKey, onFinding: { [weak self] in
                 self?.reloadData();
             }, onCompletion: { [weak self] in
@@ -592,6 +593,7 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
         recentsTableView.isHidden = false
         self.delegate?.cancelFinderSearchOperation()
         self.searchInputInfo = FTSearchInputInfo(textKey: "", tags: [])
+        searchText = ""
     }
 
     private func populateSearchSuggestion(for query: String) {
