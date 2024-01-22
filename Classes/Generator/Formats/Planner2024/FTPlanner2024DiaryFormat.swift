@@ -556,7 +556,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                 weeksCount += 1
             }
             eachDayBeforeDays += 1 + weeksCount // adding month and weeks belonging to a month.
-            let lastDayofMonth = eachMonth.dayInfo.first?.date.lastDateOfMonth()
             eachMonth.dayInfo.forEach({(eachDay) in
                 if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
                     if eachDay.belongsToSameMonth {
