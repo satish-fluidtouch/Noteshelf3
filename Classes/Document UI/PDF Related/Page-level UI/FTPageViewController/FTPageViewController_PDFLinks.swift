@@ -270,6 +270,7 @@ private extension FTPageViewController {
                 return false;
             }
             if let destinationPageIndex = destinationPage?.pageIndex() {
+                track(EventName.diary_today_tap, screenName: ScreenName.notebook)
                 self.delegate?.showPage(at: destinationPageIndex, forceReLayout: false, animate: true)
             }
         }
