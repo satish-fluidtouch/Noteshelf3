@@ -49,6 +49,8 @@ extension NSNotification.Name {
     {
         URL = fileURL;
         super.init();
+        // TODO: (Optimize) This notification needs to be refactored as the launch time is affecting due to URL comparison
+        // This is Mainly used to set the download status for the starred items.
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload"),
                                                object: nil,
                                                queue: nil,
