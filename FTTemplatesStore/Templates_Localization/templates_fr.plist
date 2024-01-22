@@ -38943,6 +38943,8 @@
 					<string>1a1bc519-39a9-49a2-bbb5-989d10cdb5f0</string>
 					<key>link</key>
 					<string>https://www.etsy.com/in-en/shop/typemaven?ref=profile_header</string>
+					<key>version</key>
+					<integer>2</integer>
 				</dict>
 				<dict>
 					<key>displayTitle</key>
