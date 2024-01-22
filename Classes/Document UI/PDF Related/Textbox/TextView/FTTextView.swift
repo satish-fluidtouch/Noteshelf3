@@ -662,14 +662,34 @@ extension FTTextView {
     }
     
     func checkIfToShowEditLinkOptions() -> Bool {
-        var status = false
-        if self.isTextHighLighted() {
-            let attrs = self.attributedText.attributes(at: self.selectedRange.location, effectiveRange: nil)
-            if let schemeUrl = attrs[.link] as? URL {
-                status = true
+        var shouldShowEditLinkOptions = false
+        if isTextHighLighted(),self.selectedRange.length > 0 {
+            let startingLocation = self.selectedRange.location
+            let endingLocation = startingLocation + self.selectedRange.length
+            shouldShowEditLinkOptions = checkLinkConsistencyInRange(startingLocation..<endingLocation)
+        } else if self.attributedText.length > 0 {
+            if let textAnnotVc = self.annotationViewController, !textAnnotVc.isEditMode {
+                shouldShowEditLinkOptions = checkLinkConsistencyInRange(0..<self.attributedText.length)
             }
         }
-        return status
+        return shouldShowEditLinkOptions
+    }
+
+    private func checkLinkConsistencyInRange(_ range: Range<Int>) -> Bool {
+        var firstSchemeUrl: URL?
+        for location in range {
+            let charAttrs = self.attributedText.attributes(at: location, effectiveRange: nil)
+            if let charSchemeUrl = charAttrs[.link] as? URL {
+                if firstSchemeUrl == nil {
+                    firstSchemeUrl = charSchemeUrl
+                } else if charSchemeUrl != firstSchemeUrl {
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+        return firstSchemeUrl != nil
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any!) -> Bool {

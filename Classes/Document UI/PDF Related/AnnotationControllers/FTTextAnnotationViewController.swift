@@ -809,7 +809,9 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL,
                   in characterRange: NSRange,
                   interaction: UITextItemInteraction) -> Bool {
-        URL.openURL(on: self);
+        if !self.editMode {
+            URL.openURL(on: self);
+        }
         return false;
     }
     

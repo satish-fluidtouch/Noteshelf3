@@ -39,10 +39,13 @@ extension FTTextAnnotationViewController {
         let cutMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Cut", comment: "Cut"), action: #selector(FTAnnotationBaseView.cutMenuItemAction(_:)))
         let copyMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Copy", comment: "Copy"), action: #selector(FTAnnotationBaseView.copyMenuItemAction(_:)))
         let lockMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Lock", comment: "Lock"), action: #selector(FTAnnotationBaseView.lockMenuItemAction(_:)))
-//        let removeLinkMenuItem: UIMenuItem = UIMenuItem(title: "Remove Link/s", action: #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:)))
         let bringToFrontMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("BringToFront", comment: "BringToFront"), action: #selector(FTAnnotationBaseView.bringToFrontMenuItemAction(_:)))
         let sendToBackMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("SendToBack", comment: "SendToBack"), action: #selector(FTAnnotationBaseView.sendToBackMenuItemAction(_:)))
         let deleteMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Delete", comment: "Delete"), action: #selector(FTAnnotationBaseView.deleteMenuItemAction(_:)))
+
+        let linkMenuItem = UIMenuItem(title: "Link To", action: #selector(FTAnnotationBaseView.linkToMenuItemAction(_:)))
+        let editLinkITem = UIMenuItem(title: "Edit Link", action: #selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)))
+        let deleteLinkItem = UIMenuItem(title: "Delete Link", action: #selector(FTAnnotationBaseView.deleteLinkMenuItemAction(_:)))
 
         var menuItems: [UIMenuItem] = [
             editMenuItem
@@ -52,6 +55,9 @@ extension FTTextAnnotationViewController {
             , lockMenuItem
             , bringToFrontMenuItem
             , sendToBackMenuItem
+            , linkMenuItem
+            , editLinkITem
+            , deleteLinkItem
         ]
         #if DEBUG
         let convertMenuItem: UIMenuItem = UIMenuItem(title: "Conver to stroke", action: #selector(FTAnnotationBaseView.convertToStroke(_:)))
@@ -62,17 +68,27 @@ extension FTTextAnnotationViewController {
     
     @objc internal func performLinkAction(_ sender: Any?) {
         self.linkSelectedRange = self.textInputView.selectedRange
-        guard let attrText = self.textInputView.attributedText, let reqRange = self.linkSelectedRange else {
+        if self.linkSelectedRange?.length == 0 {
+            self.linkSelectedRange = NSRange(location: 0, length: self.textInputView.attributedText.length)
+        }
+        guard let attrText = self.textInputView.attributedText, var reqRange = self.linkSelectedRange else {
             return
         }
         if let annotation = self.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage {
+            var linkText: String
+            if reqRange.length > 0 {
+                linkText = (attrText.string as NSString).substring(with: reqRange)
+            } else {
+                linkText = attrText.string
+            }
+
             let attrs = attrText.attributes(at: reqRange.location, effectiveRange: nil)
             var url: URL?
             if let schemeUrl = attrs[.link] as? URL {
                 url = schemeUrl
             }
             self.transitionInProgress = true
-            FTLinkToSelectViewController.showTextLinkScreen(from: self, linkText: attrText.string, url: url, currentPage: curPage)
+            FTLinkToSelectViewController.showTextLinkScreen(from: self, linkText: linkText, url: url, currentPage: curPage)
         }
     }
 
@@ -80,7 +96,11 @@ extension FTTextAnnotationViewController {
         guard let attrText = self.textInputView.attributedText else {
             return
         }
-        let range = self.linkSelectedRange ?? self.textInputView.selectedRange
+        var range = self.linkSelectedRange ?? self.textInputView.selectedRange
+        if range.length == 0 {
+            range = NSRange(location: 0, length: self.textInputView.attributedText.length)
+            self.linkSelectedRange = range
+        }
         let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
         attributedString.removeAttribute(.link, range: range)
         let keys = NSAttributedString.linkAttributes.keys
@@ -99,7 +119,6 @@ extension FTTextAnnotationViewController {
         let newAttrStr = NSAttributedString(string: text, attributes: originalAttributes)
         attrText.insert(newAttrStr, at: exstRange.location)
 
-        let attributedString = NSMutableAttributedString(attributedString: attrText)
         let newRange = (attrText.string as NSString).range(of: text)
         if exstRange.location + exstRange.length <= attrText.length {
             attrText.removeAttribute(.link, range: exstRange)
@@ -110,6 +129,7 @@ extension FTTextAnnotationViewController {
         attrText.addAttributes(NSAttributedString.linkAttributes, range: newRange)
         self.textInputView.attributedText = attrText
         self.transitionInProgress = false
+        self.saveTextEntryAttributes()
     }
     
     @objc internal func performLookUpMenu(_ sender: Any?) {
@@ -175,7 +195,13 @@ extension FTTextAnnotationViewController: FTTextMenuActionProtocol {
     func canPerformAction(view: FTAnnotationBaseView, action: Selector, withSender sender: Any!) -> Bool {
         if [#selector(view.editMenuItemAction(_:)), #selector(view.cutMenuItemAction(_:)), #selector(view.copyMenuItemAction(_:)), #selector(view.lockMenuItemAction(_:)),
             #selector(view.copyMenuItemAction(_:)), #selector(view.convertToStroke(_:)),
-            /*#selector(view.removeLinkMenuItemAction(_:)),*/ #selector(view.bringToFrontMenuItemAction(_:)), #selector(view.sendToBackMenuItemAction(_:)), #selector(view.deleteMenuItemAction(_:))].contains(action) {
+            #selector(view.bringToFrontMenuItemAction(_:)), #selector(view.sendToBackMenuItemAction(_:)), #selector(view.deleteMenuItemAction(_:))].contains(action) {
+            return true
+        } else if self.textInputView.checkIfToShowEditLinkOptions() {
+            if [#selector(view.editLinkMenuItemAction(_:)), #selector(view.deleteLinkMenuItemAction(_:))].contains(action) {
+                return true
+            }
+        } else if [#selector(view.linkToMenuItemAction(_:))].contains(action) {
             return true
         }
         return false
@@ -215,6 +241,13 @@ extension FTTextAnnotationViewController: FTTextMenuActionProtocol {
             track("textbox_delete_tapped", params: [:], screenName: FTScreenNames.textbox)
             self.textInputView.delete(sender)
             self.delegate?.annotationControllerDidRemoveAnnotation(self, annotation: self.annotation)
+
+        case .linkTo, .editLink:
+            self.textInputView.linkMenuItemAction(sender)
+
+        case .deleteLink:
+            self.textInputView.deleteLinkMenuItemAction(sender)
+
         case .converToStroke:
             track("textbox_delete_tapped", params: [:], screenName: FTScreenNames.textbox)
             self.endEditingAnnotation()
