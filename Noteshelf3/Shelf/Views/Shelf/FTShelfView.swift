@@ -24,7 +24,7 @@ struct FTShelfView: View,FTShelfBaseView {
 
     var body: some View {
 
-         let _ = Self._printChanges()
+//         let _ = Self._printChanges()
         GeometryReader { geometry in
             ZStack {
                 if viewModel.showNoShelfItemsView {
