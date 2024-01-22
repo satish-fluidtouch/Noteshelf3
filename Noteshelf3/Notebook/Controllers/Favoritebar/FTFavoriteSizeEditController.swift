@@ -28,7 +28,7 @@ class FTFavoriteSizeEditController: UIHostingController<FTPenSizeEditView>, FTPo
 
     init(size: CGFloat, penType: FTPenType, displayMode: FTPenSizeEditViewDisplayMode = .favoriteEdit) {
         self.sizeEditModel = FTPenSizeEditModel(currentSize: size)
-        let hostView = FTPenSizeEditView(displayMode: displayMode, penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel)
+        let hostView = FTPenSizeEditView(displayMode: displayMode, penType: penType, favoriteSizeValue: size, sizeEditModel: sizeEditModel, rackType: penType.rackType)
         super.init(rootView: hostView)
         self.sizeEditModel.$currentSize
             .dropFirst()

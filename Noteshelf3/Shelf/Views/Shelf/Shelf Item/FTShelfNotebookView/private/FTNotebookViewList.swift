@@ -56,7 +56,7 @@ struct FTNotebookViewList : View {
     private var contentView: some View {
         HStack(alignment: .center,spacing: 16) {
             if shelfViewModel.mode == .selection {
-                FTShelfItemSelectionIndicator(isSelected: $shelfItem.isSelected)
+                FTShelfItemSelectionIndicator()
                     .padding(.trailing,16)
             }
             FTNotebookTitleView()

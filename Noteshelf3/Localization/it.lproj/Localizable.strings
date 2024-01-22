@@ -1067,8 +1067,20 @@
 "finder.tabbar.content" = "Contenuto";
 "finder.tag" = "Etichetta";
 "foodanddrink" = "Cibo e Bevande";
+"gesture.activate.focusMode" = "Passa alla modalità di focus";
+"gesture.activate.focusMode.hint" = "Tocco singolo con quattro dita";
 "gesture.activeFocusMode.subTitle" = "4-dito singolo tocco";
 "gesture.activeFocusMode.title" = "Attiva la modalità di concentrazione";
+"gesture.fitPageToScreen" = "Adatta pagina allo schermo";
+"gesture.fitPageToScreen.hint" = "Doppio tocco con un dito";
+"gesture.redo.hint" = "Tocco singolo con tre dita";
+"gesture.redo.title" = "Rifare";
+"gesture.show.quickAccessSideBar" = "Mostra la barra laterale di accesso rapido";
+"gesture.show.quickAccessSideBar.hint" = "Scorri a lungo dal bordo sinistro";
+"gesture.show.thumbnails" = "Mostra le miniature delle pagine";
+"gesture.show.thumbnails.hint" = "Scorri dal bordo sinistro";
+"gesture.undo.hint" = "Doppio tocco con deu dito";
+"gesture.undo.title" = "Annulla";
 "gesture.undoredo.subTitle" = "2 dita o 3 dita tocco singolo";
 "gesture.undoredo.title" = "Annulla o Ripeti";
 "getInspired.bulletJournal" = "Diario appuntato";
@@ -1565,4 +1577,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Akshay on 8 January 2024 at 15:32
+// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM

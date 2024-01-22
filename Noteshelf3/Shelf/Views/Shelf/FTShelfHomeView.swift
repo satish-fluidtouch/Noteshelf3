@@ -28,7 +28,7 @@ struct FTShelfHomeView: FTShelfBaseView {
                         if viewModel.shouldShowGetStartedInfo{
                             FTShelfGetStartedDescription()
                         }
-                        if viewModel.canShowCreateNBButtons, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
+                        if viewModel.mode == .normal, (viewModel.shouldShowGetStartedInfo || geometry.size.width > 450) {
                             FTShelfTopSectionView()
                                 .frame(height: showMinHeight(geometrySize: geometry.size.width))
                                 .padding(.horizontal,gridHorizontalPadding)
@@ -115,7 +115,7 @@ struct FTShelfHomeView: FTShelfBaseView {
     }
 
     private var seeAllNotesButtonTitle: String {
-        let notesCount = viewModel.notesCount
+        let notesCount = viewModel.shelfItems.count
         let seeAllString = NSLocalizedString("shelf.home.seeAllNotes", comment: "See All Notes") + " " + "(" + "\(notesCount)" + ")"
         return seeAllString
     }
@@ -138,6 +138,6 @@ struct FTShelfHomeView: FTShelfBaseView {
     }
 
     private func showSeeAllOption(shelfItemsCount:Int) -> Bool {
-        viewModel.notesCount > shelfItemsCount
+        viewModel.shelfItems.count > shelfItemsCount
     }
 }

@@ -12,7 +12,7 @@ import Foundation
 extension FTShelfViewModel {
     func getContexualOptionsForShelfItem(_ item: FTShelfItemViewModel) -> [[FTShelfItemContexualOption]] {
         if self.mode == .selection {
-            var selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
+            var selectedShelfItems = self.selectedShelfItems
             selectedShelfItems.append(item)
             if selectedShelfItems.count > 1 {
                 if item.model.shelfCollection.isTrash {
@@ -136,9 +136,9 @@ private extension FTShelfViewModel {
             if let longpressedShelfItem = self.updateItem {
                 if self.mode == .selection {
                     // if long pressed item is selected, we need to perform operation considering all selected items. if long pressed item is not selected, then operation need to be performed on only long presses item ignoring selected items
-                    if ((self.shelfItems.first(where: {$0.id == longpressedShelfItem.model.uuid})?.isSelected) != nil) {
-                        shelfItemProtocols = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
-                        shelfItemViewModels = self.shelfItems.filter({$0.isSelected})
+                    if !(self.selectedShelfItems.isEmpty) {
+                        shelfItemProtocols = self.selectedShelfItems.compactMap({$0.model})
+                        shelfItemViewModels = self.selectedShelfItems
                     } else {
                         shelfItemProtocols = [longpressedShelfItem.model]
                         shelfItemViewModels = [longpressedShelfItem]

@@ -13,20 +13,28 @@ enum FTGestureType: String {
 }
 
 enum FTGestureHelpOptions: Int {
-    case paginationNoteBook,addNewPge, activeFocusMode,undo_redo, fitPageToScreen;
+    case showPageThumbnails
+    case showQuickAccessSideBar
+    case activeFocusMode
+    case fitPageToScreen
+    case undo
+    case redo
+    
     var localizedTitle: String {
         var title:String;
         switch self {
-        case .paginationNoteBook:
-            title = NSLocalizedString("PaginateNotebook", comment: "PaginateNotebook")
-        case .addNewPge:
-            title = NSLocalizedString("AddNewPage", comment: "AddNewPage")
-        case .undo_redo:
-            title = NSLocalizedString("gesture.undoredo.title", comment: "RedoUndo")
+        case .showPageThumbnails:
+            title = "gesture.show.thumbnails".localized
+        case .showQuickAccessSideBar:
+            title = "gesture.show.quickAccessSideBar".localized
+        case .undo:
+            title = "gesture.undo.title".localized
         case .fitPageToScreen:
-            title = NSLocalizedString("FitPageToScreen", comment: "FitPageToScreen")
+            title = "gesture.fitPageToScreen".localized
         case .activeFocusMode:
-            title = NSLocalizedString("gesture.activeFocusMode.title", comment: "activeFocusMode")
+            title = "gesture.activate.focusMode".localized
+        case .redo:
+            title = "gesture.redo.title".localized
         }
         return title;
     }
@@ -34,36 +42,36 @@ enum FTGestureHelpOptions: Int {
     var localizedSubTitle: String {
         var title:String;
         switch self {
-        case .paginationNoteBook:
-            if isDeviceSupportsApplePencil(), FTStylusPenApplePencil().isConnected {
-                title = NSLocalizedString("PaginatePencilConnectedNotebookHint", comment: "PaginatePencilConnectedNotebookHint")
-            } else {
-                title = NSLocalizedString("PaginateNotebookHint", comment: "PaginateNotebookHint")
-            }
-        case .addNewPge:
-            title = NSLocalizedString("AddNewPageHint", comment: "AddNewPageHint")
-        case .undo_redo:
-            title = NSLocalizedString("gesture.undoredo.subTitle", comment: "RedoUndoHint")
+        case .showPageThumbnails:
+            title = "gesture.show.thumbnails.hint".localized
+        case .showQuickAccessSideBar:
+            title = "gesture.show.quickAccessSideBar.hint".localized
+        case .undo:
+            title = "gesture.undo.hint".localized
         case .fitPageToScreen:
-            title = NSLocalizedString("FitPageToScreenHint", comment: "FitPageToScreenHint")
+            title = "gesture.fitPageToScreen.hint".localized
         case .activeFocusMode:
-            title = NSLocalizedString("gesture.activeFocusMode.subTitle", comment: "activeFocusMode")
+            title = "gesture.activate.focusMode.hint".localized
+        case .redo:
+            title = "gesture.redo.hint".localized
         }
         return title;
     }
     var thumbnail: UIImage? {
         var image: UIImage?;
         switch self {
-        case .paginationNoteBook:
-           image = UIImage(named: "gesture-swipe-horizontal")
-        case .addNewPge:
-            image = UIImage(named: "gesture-two-fingers-scroll")
-        case .undo_redo:
+        case .showPageThumbnails:
+           image = UIImage(named: "gesture-swipe-left")
+        case .showQuickAccessSideBar:
+            image = UIImage(named: "gesture-long-swipe-left")
+        case .undo:
             image = UIImage(named: "gesture-two-finger-tap")
         case .fitPageToScreen:
-            return UIImage(named: "gesture-tap")
+            return UIImage(named: "gesture-fit-screen")
         case .activeFocusMode:
-            image = UIImage(named: "cursor-hand")
+            image = UIImage(named: "gesture-focus-mode")
+        case .redo:
+            image = UIImage(named: "gesture-three-finger-tap")
         }
         return image;
     }
@@ -71,7 +79,7 @@ enum FTGestureHelpOptions: Int {
     var type: FTGestureType {
         var type:FTGestureType;
         switch self {
-        case .paginationNoteBook, .addNewPge, .undo_redo, .fitPageToScreen, .activeFocusMode:
+        case .showPageThumbnails, .showQuickAccessSideBar, .undo, .redo,.fitPageToScreen, .activeFocusMode:
             type = .basic
             return type;
         }

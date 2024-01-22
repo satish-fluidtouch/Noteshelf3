@@ -20,6 +20,8 @@ struct FTShelfItemView: View {
     @EnvironmentObject var shelfViewModel: FTShelfViewModel
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
+    @State private var opacity: Double = 1.0
+    
     var shelfItemWidth: CGFloat = 212
     var shelfItemHeight: CGFloat = 334
 
@@ -52,14 +54,16 @@ struct FTShelfItemView: View {
     func groupViewFor(groupItem: FTGroupItemViewModel) -> some View {
         groupView()
             .environmentObject(groupItem)
+            .opacity(opacity)
             .onDrop(of: [.content],
                     delegate: FTShelfItemViewDropDelegate(item: groupItem, viewModel: shelfViewModel, shelfItemSize: shelfItemSize, dropRect: groupDropRect))
-            .if(shelfViewModel.fadeDraggedShelfItem == groupItem, transform: { view in
-                withAnimation(.easeInOut(duration: 1)) {
-                    view.opacity(0.2)}})
-                .if(shelfViewModel.fadeDraggedShelfItem == nil || shelfItem.isFavorited, transform: { view in
-                    withAnimation(.default) {
-                        view.opacity(1.0)}})
+            .onChange(of: shelfViewModel.fadeDraggedShelfItem, perform: { newValue in
+                if shelfViewModel.fadeDraggedShelfItem == groupItem {
+                        opacity = 0.2
+                }  else {
+                    opacity = 1.0
+                }
+            })
     }
     
     
@@ -79,20 +83,19 @@ struct FTShelfItemView: View {
         notebookView()
             .frame(width:shelfItemWidth, height: shelfItemHeight , alignment: .center)
             .environmentObject(item)
-            .opacity(1.0)
+            .opacity(opacity)
             .onDrop(of: [.data],
                         delegate: FTShelfItemViewDropDelegate(item: shelfItem,
                                                               viewModel: shelfViewModel,
                                                               shelfItemSize: thumbnailSize,
                                                               dropRect: NotebookDropRect))
-            .if(shelfViewModel.fadeDraggedShelfItem == shelfItem, transform: { view in
-                withAnimation(.easeInOut(duration: 1)) {
-                    view.opacity(0.2)}
-            })
-            .if(shelfViewModel.fadeDraggedShelfItem == nil || shelfItem.isFavorited, transform: { view in
-                    withAnimation(.default) {
-                    view.opacity(1.0)}
-            })
+                .onChange(of: shelfViewModel.fadeDraggedShelfItem, perform: { newValue in
+                    if shelfViewModel.fadeDraggedShelfItem == shelfItem {
+                            opacity = 0.2
+                    }  else {
+                        opacity = 1.0
+                    }
+                })
                 .popover(item: $shelfItem.popoverType) { type in
                     if type == .getInfo {
                         FTShelfItemInfoView(shelfItemInfo: FTShelfItemInfo(title: shelfItem.title, location: shelfItemLocation, modifiedDate: shelfItem.model.fileModificationDate.shelfShortStyleFormat() , createdDate: shelfItem.model.fileCreationDate.shelfItemCreatedDateFormat()))
