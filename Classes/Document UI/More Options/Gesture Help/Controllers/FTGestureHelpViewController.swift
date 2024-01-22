@@ -16,9 +16,9 @@ class FTGestureHelpViewController: UIViewController, UITableViewDataSource, FTCu
     
     private lazy var gestureOptions: [FTGestureHelpOptions] = {
     if isDeviceSupportsApplePencil(), FTStylusPenApplePencil().isConnected {
-        return [.paginationNoteBook, .addNewPge,. activeFocusMode, .undo_redo, .fitPageToScreen]
+        return [.showPageThumbnails, .showQuickAccessSideBar,.activeFocusMode,.fitPageToScreen,.undo,.redo]
     } else {
-        return [.paginationNoteBook, .addNewPge,. activeFocusMode, .undo_redo]
+        return [.showPageThumbnails, .showQuickAccessSideBar,. activeFocusMode, .undo, .redo]
     }
     }()
 
