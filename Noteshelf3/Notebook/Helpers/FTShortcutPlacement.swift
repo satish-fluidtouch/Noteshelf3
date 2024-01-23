@@ -18,7 +18,17 @@ enum FTShortcutPlacement: String, CaseIterable {
     case top
     case bottom
 
+    static var supportedPlacements: [FTShortcutPlacement] {
+        if UIDevice.current.isPhone() {
+            return [.centerLeft, .centerRight]
+        }
+        return FTShortcutPlacement.allCases
+    }
+
     static var zoomModePlacements: [FTShortcutPlacement] {
+        if UIDevice.current.isPhone() {
+            return [.centerLeft, .centerRight]
+        }
         return [.top, .centerLeft, .centerRight, .bottom]
     }
 
@@ -59,9 +69,6 @@ enum FTShortcutPlacement: String, CaseIterable {
     }
 
     static func getSavedPlacement() -> FTShortcutPlacement {
-        if UIDevice.current.isIphone() {
-            return .top
-        }
         var placement: FTShortcutPlacement = .centerLeft
         if let value = UserDefaults.standard.string(forKey: "FTShortcutPlacement") {
             placement = FTShortcutPlacement(rawValue: value) ?? .centerLeft
@@ -147,10 +154,17 @@ extension FTShortcutPlacement {
         guard let superViewFrame = shorcutView.superview?.bounds else {
             return .zero
         }
+        var btmOffset: CGFloat = 0.0
+        if let window = UIApplication.shared.keyWindow {
+            btmOffset = window.safeAreaInsets.bottom
+            if zoomModeInfo.isEnabled && !UIDevice.current.isPhone() {
+                btmOffset = 0.0
+            }
+        }
         let frame = CGRect(x: superViewFrame.origin.x,
                                                y: superViewFrame.origin.y + topOffset,
                                                width: superViewFrame.size.width,
-                                               height: superViewFrame.size.height - topOffset)
+                                               height: superViewFrame.size.height - topOffset - btmOffset)
 
         let size = shorcutView.frame.size
         
@@ -161,13 +175,6 @@ extension FTShortcutPlacement {
         let midX = frame.midX
 
         var center: CGPoint = .zero
-        var bottomOffset: CGFloat = 0.0
-        if self.isBottomPlacement() && !zoomModeInfo.isEnabled {
-            if let window = UIApplication.shared.keyWindow {
-                bottomOffset = window.safeAreaInsets.bottom
-            }
-        }
-
         switch self {
         case .top:
             center = CGPoint(x: midX, y: minY + size.height/2.0)
@@ -176,15 +183,15 @@ extension FTShortcutPlacement {
         case .centerRight:
             center = CGPoint(x: maxX - size.width/2.0 - offset, y: midY)
         case .bottom:
-            center = CGPoint(x: midX, y: maxY - offset - size.height/2.0 - bottomOffset)
+            center = CGPoint(x: midX, y: maxY - offset - size.height/2.0)
         case .topLeft:
             center = CGPoint(x: size.width/2.0 + offset, y: minY + size.height/2.0)
         case .topRight:
             center = CGPoint(x: maxX - offset - size.width/2.0, y: minY + size.height/2.0)
         case .bottomLeft:
-            center = CGPoint(x: size.width/2.0 + offset, y: maxY - offset - size.height/2.0 - bottomOffset)
+            center = CGPoint(x: size.width/2.0 + offset, y: maxY - offset - size.height/2.0)
         case .bottomRight:
-            center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - offset - size.height/2.0 - bottomOffset)
+            center = CGPoint(x: maxX - offset - size.width/2.0, y: maxY - offset - size.height/2.0)
         }
 
         if zoomModeInfo.isEnabled {

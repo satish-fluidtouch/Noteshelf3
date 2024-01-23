@@ -48,7 +48,6 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
     private var resultsList : [String] = [String]()
     private weak var seperatorView: UIView?
     var suggestionItems = [FTSuggestedItem]()
-    
     private weak var searchController: UISearchController?
     private weak var finderController : FTFinderViewController?
     private weak var delegate: FTFinderTabBarController?
@@ -421,17 +420,18 @@ class  FTFinderSearchController: UIViewController, FTFinderTabBarProtocol, FTFin
 }
 
 extension FTFinderSearchController {
-    @objc func initiateSearch() {
+    @objc func initiateSearch(searchText: String) {
         let tags = searchOptions.selectedTags.map { eachModel in
             return eachModel.text
         }
-        if searchInputInfo.textKey != searchOptions.searchedKeyword || searchInputInfo.tags != tags {
+        if searchInputInfo.textKey != searchText || searchInputInfo.tags != tags {
             isSearching = true
             showLoadingIndicator()
             self.document?.startRecognitionIfNeeded();
             finderController?.configureForSearchTab()
             finderController?.isSearching = true
             searchInputInfo.tags = tags
+            searchInputInfo.textKey = searchText
             finderController?.filterOptionsController(didChangeSearchText: searchInputInfo.textKey, onFinding: { [weak self] in
                 self?.reloadData();
             }, onCompletion: { [weak self] in
@@ -551,12 +551,10 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
         if suggestionItem.type == .tag {
             constructSelectedTags()
             searchInputInfo.textKey = ""
-        } else {
-            searchInputInfo.textKey = searchController?.searchBar.searchTextField.text ?? ""
         }
         let eventName = suggestionItem.type == .text ? "finder_search_contains_tap" : "finder_search_tag_tap"
         FTFinderEventTracker.trackFinderEvent(with: eventName)
-        initiateSearch()
+        initiateSearch(searchText: searchController?.searchBar.searchTextField.text ?? "")
     }
     
     internal func searchToken(for suggestionItem: FTSuggestedItem) -> UISearchToken {
@@ -571,11 +569,9 @@ extension FTFinderSearchController : UISearchTextFieldDelegate, UISearchResultsU
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let text = textField.text ?? ""
         if !text.isEmpty {
-            searchInputInfo.textKey = text
-            initiateSearch()
+            initiateSearch(searchText: text)
         }  else if searchOptions.selectedTags.count > 0 {
-            searchInputInfo.textKey = ""
-            initiateSearch()
+            initiateSearch(searchText: "")
         }
         return true
     }

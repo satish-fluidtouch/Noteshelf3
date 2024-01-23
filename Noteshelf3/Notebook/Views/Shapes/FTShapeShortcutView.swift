@@ -91,8 +91,9 @@ struct FTFavoriteShapesView: View {
     private func handleShapeSelection(shapeModel: FTPenShapeModel, index: Int) {
         self.viewModel.resetShapeSelection()
         shapeModel.isSelected = true
+        let pos = FavoriteShapePosition.getPosition(index: index)
+        self.viewModel.handleFavoriteShapeSelection(shapeModel.shape, index: pos)
         shapeModel.shape.saveSelection()
-        self.viewModel.handleFavoriteShapeSelection(shapeModel.shape)
     }
 }
 

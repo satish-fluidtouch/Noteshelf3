@@ -111,12 +111,12 @@ extension FTShelfItemCollectionRecentProtocol
     func shelfItemForURL(_ inurl : Foundation.URL) -> FTShelfItemProtocol?
     {
         var shelfItem : FTShelfItemProtocol?;
-        guard let url = FTDocumentUtils.url(byDeletingLeadingSlash: inurl) else {
+        guard let url = FTDocumentUtils.resolvedURL(inurl) else {
             return shelfItem;
         }
         
         for eachItem in self.childrens {
-            if let eachItemURL = FTDocumentUtils.url(byDeletingLeadingSlash: eachItem.URL) {
+            if let eachItemURL = FTDocumentUtils.resolvedURL(eachItem.URL) {
                 if(eachItemURL == url) {
                     shelfItem = eachItem;
                     break;
