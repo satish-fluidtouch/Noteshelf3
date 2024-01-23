@@ -1070,7 +1070,7 @@
             minPageIndex = MIN(minPageIndex, eachNum.integerValue);
             maxPageIndex = MAX(maxPageIndex, eachNum.integerValue);
         }
-        minPageIndex = MIN(minPageIndex,0);
+        minPageIndex = MAX(minPageIndex,0);
         maxPageIndex = MAX(maxPageIndex,0);
         
         if(maxPageIndex >= self.eachPageViewArray.count) {
