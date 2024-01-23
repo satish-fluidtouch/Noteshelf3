@@ -1265,7 +1265,7 @@ extension FTPageViewController: FTLassoContentSelectionDelegate
         page.rotate(annotations: self.lassoInfo.selectedAnnotations,
                     angle: angle,
                     refPoint: convertedPoint,
-                    shouldRefresh: false)
+                    shouldRefresh: false, startRect: startRect, targetRect: targetRect)
 
         if let lassoWritingView = self.writingView as? FTLassoProtocol {
             lassoWritingView.finalizeSelection(byAddingAnnotations: nil);

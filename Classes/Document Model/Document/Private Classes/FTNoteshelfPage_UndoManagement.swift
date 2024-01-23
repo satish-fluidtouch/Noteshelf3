@@ -49,7 +49,8 @@ protocol FTPageUndoManagement : AnyObject {
                    shouldRefresh: Bool,
                    windowHash: Int);
     func translate(annotations:[FTAnnotation], offset: CGPoint, shouldRefresh: Bool)
-    func rotate(annotations:[FTAnnotation], angle: CGFloat, refPoint: CGPoint, shouldRefresh: Bool)
+    func rotate(annotations:[FTAnnotation], angle: CGFloat, refPoint: CGPoint, shouldRefresh: Bool,                   startRect: CGRect,
+                targetRect: CGRect)
 }
 
 extension FTNoteshelfPage: FTPageUndoManagement {
@@ -361,13 +362,16 @@ extension FTNoteshelfPage: FTPageUndoManagement {
         }
     }
 
-    func rotate(annotations:[FTAnnotation], angle: CGFloat, refPoint: CGPoint, shouldRefresh: Bool) {
+    func rotate(annotations:[FTAnnotation], angle: CGFloat, refPoint: CGPoint, shouldRefresh: Bool,                   startRect: CGRect,
+                targetRect: CGRect) {
         annotations.forEach { annotation in
             annotation.setRotation(angle, refPoint: refPoint)
         }
-        undoManager?.registerUndo(withTarget: self, handler: { selfObject in
-            selfObject.rotate(annotations: annotations, angle: -angle, refPoint: refPoint, shouldRefresh: true)
-        })
+        if startRect != targetRect {
+            undoManager?.registerUndo(withTarget: self, handler: { selfObject in
+                selfObject.rotate(annotations: annotations, angle: -angle, refPoint: refPoint, shouldRefresh: true, startRect: startRect,  targetRect: targetRect)
+            })
+        }
         if shouldRefresh {
             self.postUndoRedoNotification();
         }

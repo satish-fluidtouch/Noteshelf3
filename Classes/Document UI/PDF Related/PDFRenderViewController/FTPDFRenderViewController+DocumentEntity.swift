@@ -169,7 +169,7 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
             if annotations.count == 1 {
                 startRect = boundingRect
             }
-            let screenArea = CGRect.scale(pageController.view.frame, 1 / pageController.contentScale()) //pageController.view.frame
+            let screenArea = CGRect.scale(pageController.view.frame, 1 / pageController.contentScale())
             let targetRect = CGRect(x: (screenArea.size.width - startRect.size.width) * 0.5, y: (screenArea.size.height - startRect.size.height) * 0.5, width: startRect.size.width, height: startRect.size.height)
             let translateX = targetRect.origin.x - startRect.origin.x;
             let translateY = targetRect.origin.y - startRect.origin.y;
@@ -177,6 +177,7 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
                 eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
             }
             page.addAnnotations(annotations, indices: nil)
+            self.postRefreshNotification(for: page, annotations: annotations)
             pageController.resizeSavedClipFor(annotations: annotations)
         }
     }
