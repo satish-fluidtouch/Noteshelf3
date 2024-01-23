@@ -17,7 +17,6 @@ protocol FTSavedClipdelegate : NSObjectProtocol {
     func dismiss()
 }
 
-
 class FTSavedClipsViewController: UIViewController {
     weak var delegate: FTSavedClipdelegate?
 
@@ -28,14 +27,8 @@ class FTSavedClipsViewController: UIViewController {
     @IBOutlet weak var deleteCategory: UIButton!
     @IBOutlet weak var segmentHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var deleteHeightConstraint: NSLayoutConstraint!
-    
-    private var savedClipsCategories = [FTSavedClipsCategoryModel]() {
-        didSet {
-            if self.savedClipsCategories.count == 1 {
-                segmentHeightConstraint.constant = 0
-            }
-        }
-    }
+    @IBOutlet weak var categoryTitleTextField: UITextField!
+
     private let viewModel = FTSavedClipsViewModel()
     lazy private var layout = FTCollectionViewWaterfallLayout()
     private var minimumColumnSpacing : CGFloat = 12.0
@@ -45,23 +38,45 @@ class FTSavedClipsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        savedClipsCategories = viewModel.savedClipsCategories()
+        selectedSegmentIndex = viewModel.selectedIndex()
+        categoryTitleTextField.layer.cornerRadius = 8.0
+        categoryTitleTextField.delegate = self
+        categoryTitleTextField.returnKeyType = .done
+
         self.setupCollectionView()
-        if savedClipsCategories.count > 1 {
-            segmentHeightConstraint.constant = 36
-            self.setupSegmentedControl()
-        } else {
-            segmentHeightConstraint.constant = 0
+        self.setupSegmentedControl()
+//        viewModel.showOrHideSegment = { hide in
+//            if hide {
+//                self.segmentHeightConstraint.constant = 0
+//            } else {
+//                self.segmentHeightConstraint.constant = 36
+//            }
+//        }
+
+        viewModel.updateCellType = { categoriesCount in
+            self.updateCellType()
         }
-        updateCellType()
         // Do any additional setup after loading the view.
+    }
+
+    private func updateCellType() {
+        if viewModel.categoriesCount() == 0 {
+            self.cellType = .emptyCategories
+        } else {
+            let clips = self.viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
+            self.cellType = clips == 0 ? .emptyClips : .normal
+        }
     }
 
     private func setupCollectionView() {
         self.collectionView.register(FTEmptyCollectionViewCell.self, forCellWithReuseIdentifier: "emptyCell")
-        /// Configure No Recents ReusableView
+        /// Configure Empty Categories ReusableView
         let emptyCategoriesView = UINib(nibName: "FTEmptyCategoriesView", bundle: nil)
         self.collectionView.register(emptyCategoriesView, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FTEmptyCategoriesView")
+
+        //FTEmptyClipsView
+        let emptyClipsView = UINib(nibName: "FTEmptyClipsView", bundle: nil)
+        self.collectionView.register(emptyClipsView, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "FTEmptyClipsView")
 
         layout.minimumColumnSpacing = minimumColumnSpacing
         layout.minimumInteritemSpacing = minimumInterItemSpacing
@@ -82,15 +97,12 @@ class FTSavedClipsViewController: UIViewController {
 
     @objc func longPressed(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
-            cellType = .editing
-            deleteCategory.isHidden = false
-            deleteHeightConstraint.constant = 35
+            startEditing()
             for cell in collectionView!.visibleCells as! [FTSavedClipsCollectionViewCell] {
                 cell.closeButton.isHidden = false
                 cell.startWiggle()
             }
-        }
-        else if sender.state == .ended ||  sender.state == .changed {
+        } else if sender.state == .ended ||  sender.state == .changed {
             let seconds = 1.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
                 // Put your code which should be executed with a delay here
@@ -100,39 +112,60 @@ class FTSavedClipsViewController: UIViewController {
         }
     }
 
-    private func updateCellType() {
-        if self.savedClipsCategories.count == 0 {
-            cellType = .emptyCategories
-        } else {
-            let clips = savedClipsCategories[selectedSegmentIndex].savedClips
-            cellType = clips.count == 0 ? .emptyClips : .normal
+    @IBAction func deleteCategoryAction(_ sender: Any) {
+        viewModel.updatedSegmentSelection = { categoriesCount in
+            if categoriesCount > 0 {
+                if self.selectedSegmentIndex == categoriesCount {
+                    self.selectedSegmentIndex -= 1
+                }
+                self.setupSegmentedControl()
+            } else {
+                self.cellType = .emptyCategories
+                self.segmentHeightConstraint.constant = 0
+            }
+            self.endEditing()
+        }
+        let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
+        let title = "Deleting this category will delete all \(rows) clips in this category and cannot be recovered."
+        let message = "Would you like to continue?"
+        UIAlertController.showDeleteDialog(with: title, message: message, from: self) {
+            do {
+                try self.viewModel.removeCategory(index: self.selectedSegmentIndex)
+                self.updateCellType()
+            } catch {
+                // Handle error
+            }
         }
     }
 
-    @IBAction func deleteCategoryAction(_ sender: Any) {
-        if savedClipsCategories.count > 0 {
-            let category = savedClipsCategories[selectedSegmentIndex]
-            let saveClips = category.savedClips
-            if saveClips.count > 0 {
-                let title = "Deleting this category will delete all \(saveClips.count) clips in this category and cannot be recovered."
-                let message = "Would you like to continue?"
-                UIAlertController.showDeleteDialog(with: title, message: message, from: self) {
-                    Task {
-                        try self.viewModel.deleteCategory(category: category.title)
-                    }
-                    self.savedClipsCategories.remove(at: self.selectedSegmentIndex)
-                    if self.savedClipsCategories.count > 0 {
-                        self.selectedSegmentIndex = 0
-                        self.setupSegmentedControl()
-                        self.updateCellType()
-                    } else {
-                        self.cellType = .emptyCategories
-                        self.segmentHeightConstraint.constant = 0
-                    }
-                    self.collectionView.reloadData()
-                    self.deleteCategory.isHidden = true
-                    self.deleteHeightConstraint.constant = 0
+    private func startEditing() {
+        cellType = .editing
+        deleteHeightConstraint.constant = 35
+        deleteCategory.isHidden = false
+        categoryTitleTextField.isHidden = false
+        segmentedControl.isHidden = true
+    }  
+
+    private func endEditing() {
+        self.collectionView.stopWiggle()
+        self.deleteHeightConstraint.constant = 0
+        self.deleteCategory.isHidden = true
+        categoryTitleTextField.isHidden = true
+        self.segmentedControl.isHidden = false
+        self.collectionView.reloadData()
+    }
+
+    @objc private func removeItem(_ sender: UIButton) {
+        let index = sender.tag
+        if index < viewModel.numberOfRowsForSection(section: selectedSegmentIndex) {
+            do {
+                try self.viewModel.removeItemFor(indexPath: IndexPath(item: index, section: self.selectedSegmentIndex))
+                collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+                if self.cellType == .emptyClips || self.cellType == .emptyCategories {
+                    self.endEditing()
                 }
+            } catch {
+                print(error)
             }
         }
     }
@@ -141,8 +174,7 @@ class FTSavedClipsViewController: UIViewController {
 //MARK:- FTSegmentedControlDelegate
 extension FTSavedClipsViewController: FTSegmentedControlDelegate {
     private func setupSegmentedControl() {
-
-        let titles = savedClipsCategories.map{ $0.title.localized }
+        let titles = viewModel.categoryNames()
         segmentedControl?.delegate = self
         segmentedControl?.setTitles(titles, style: .adaptiveSpace(18))
         segmentedControl.textColor = UIColor.appColor(.black70)
@@ -158,6 +190,13 @@ extension FTSavedClipsViewController: FTSegmentedControlDelegate {
     }
 
     public func segmentedControlSelectedIndex(_ index: Int, animated: Bool, segmentedControl: FTSegmentedControl) {
+        selectedSegmentIndex = index
+        if let category = viewModel.categoryFor(index: index) {
+            FTUserDefaults.selectedClipCategory = category.title
+            categoryTitleTextField.text = category.title
+            self.updateCellType()
+            self.endEditing()
+        }
     }
 
     public func didEndScrollOfSegments() {
@@ -165,12 +204,6 @@ extension FTSavedClipsViewController: FTSegmentedControlDelegate {
     }
 
     func didTapSegment(_ index: Int) {
-        selectedSegmentIndex = index
-        updateCellType()
-        deleteCategory.isHidden = true
-        deleteHeightConstraint.constant = 0
-        collectionView.reloadData()
-        collectionView.stopWiggle()
     }
 
 }
@@ -185,21 +218,16 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if savedClipsCategories.count == 0 {
-            return 0
-        }
-        let savedClips = savedClipsCategories[self.selectedSegmentIndex].savedClips
-        return savedClips.count
+        let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
+        return rows
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch cellType {
         case .normal, .editing:
             return self.collectionView(collectionView, normalCellForItemAt: indexPath)
-        case .emptyCategories:
-            return self.collectionView(collectionView, emptyCategoriesCellForItemAt: indexPath)
-        case .emptyClips:
-            return self.collectionView(collectionView, emptyClipsCellForItemAt: indexPath)
+        case .emptyCategories, .emptyClips:
+            return self.collectionView(collectionView, emptyCellForItemAt: indexPath)
         }
     }
 
@@ -207,47 +235,37 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FTSavedClipsCollectionViewCell", for: indexPath) as? FTSavedClipsCollectionViewCell else {
             fatalError("Failed deque cell")
         }
-        let savedClips = savedClipsCategories[self.selectedSegmentIndex].savedClips
-        let clip = savedClips[indexPath.row]
-        cell.configureCellWith(clip: clip, isEditing: self.cellType == .editing ? true : false)
-        cell.deleteSavedClip = {
-            Task {
-                try self.viewModel.deleteSavedClip(clip: clip)
-                self.savedClipsCategories[self.selectedSegmentIndex].savedClips.remove(at: indexPath.row)
-                self.collectionView.deleteItems(at: [indexPath])
-                self.updateCellType()
-                if self.cellType == .emptyClips || self.cellType == .emptyCategories {
-                    self.collectionView.stopWiggle()
-                    self.deleteCategory.isHidden = true
-                    self.deleteHeightConstraint.constant = 0
-                    self.collectionView.reloadData()
-                }
-            }
+        if let clip = viewModel.itemFor(indexPath: IndexPath(item: indexPath.item, section: self.selectedSegmentIndex)) {
+            cell.configureCellWith(clip: clip, isEditing: self.cellType == .editing ? true : false)
+            cell.closeButton.tag = indexPath.item
+            cell.closeButton.addTarget(self, action: #selector(removeItem(_:)), for: .touchUpInside)
         }
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
         cell.addGestureRecognizer(longPressRecognizer)
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, emptyCategoriesCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, emptyCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyCell", for: indexPath)
         cell.backgroundColor = .red
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, emptyClipsCellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "emptyCell", for: indexPath)
-        cell.backgroundColor = .green
-        return cell
-    }
-
-
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
-            if cellType == .emptyCategories || cellType == .emptyClips  {
-                let noRecentsView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTEmptyCategoriesView", for: indexPath)
-                if let noRecentsView = noRecentsView as? FTEmptyCategoriesView  {
-                    return noRecentsView
+                if cellType == .emptyCategories {
+                    let emptyCategoriesView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTEmptyCategoriesView", for: indexPath)
+                    if let emptyCategoriesView = emptyCategoriesView as? FTEmptyCategoriesView  {
+                        emptyCategoriesView.titleLabel.isHidden = false
+                        emptyCategoriesView.titleLabel.text = "No Saved Clips"
+                        emptyCategoriesView.subTitleLabel.text = "Lasso anything and tap ‘Save Clip’ for later use."
+                        return emptyCategoriesView
+                    }
+                } else if cellType == .emptyClips {
+                    let emptyClipsView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTEmptyClipsView", for: indexPath)
+                    if let emptyClipsView = emptyClipsView as? FTEmptyClipsView  {
+                        emptyClipsView.titleLabel.text = "This category is empty"
+                    return emptyClipsView
                 }
             }
         }
@@ -256,27 +274,31 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, heightForHeaderIn section: Int) -> CGFloat {
         if cellType == .emptyCategories || cellType == .emptyClips {
-            return self.collectionView.frame.size.height
+            return self.collectionView.frame.size.height - 64
         }
         return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let savedClips = savedClipsCategories[self.selectedSegmentIndex].savedClips
-        let clip = savedClips[indexPath.row]
-        Task {
-            if let annotations = try await viewModel.clipAnnotationsFor(clip: clip) {
-                print(annotations)
-                delegate?.didTapSavedClip(annotations: annotations)
+        if cellType == .normal, let clip = viewModel.itemFor(indexPath: IndexPath(item: indexPath.item, section: self.selectedSegmentIndex)) {
+            viewModel.clipAnnotationsFor(clip: clip) { [weak self] annotations, error in
+                if let annotations {
+                    self?.delegate?.didTapSavedClip(annotations: annotations)
+                } else {
+                    // Handle Error
+                }
             }
+        } else if cellType == .editing {
+            updateCellType()
+            self.endEditing()
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let savedClips = savedClipsCategories[self.selectedSegmentIndex].savedClips
-        let clip = savedClips[indexPath.row]
-        if let itemWidth = clip.image?.size.width, let itemHeight = clip.image?.size.height {
-            return CGSize(width: itemWidth, height: itemHeight)
+        if let clip = viewModel.itemFor(indexPath: IndexPath(item: indexPath.item, section: self.selectedSegmentIndex)) {
+            if let itemWidth = clip.image?.size.width, let itemHeight = clip.image?.size.height {
+                return CGSize(width: itemWidth, height: itemHeight)
+            }
         }
         return CGSize(width: 90, height: 90)
     }
@@ -287,31 +309,25 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
 
 }
 
-//extension FTSavedClipsViewController: UIScrollViewDelegate {
-//
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//
-//        if  !scrollView.isDragging {
-//            return
-//        }
-//
-//        let indexPath = collectionView.indexPathForItem(at: scrollView.contentOffset)
-//
-//        guard let indexPath = indexPath else {
-//            let visibleSections = collectionView.indexPathsForVisibleItems.map { $0.section}
-//            if let section = visibleSections.min() {
-//                selectedSegmentIndex = section
-//                if segmentedControl?.selectedIndex != section {
-//                    segmentedControl?.selectedIndex = section
-//                }
-//            }
-//            return
-//        }
-//
-//        let section = indexPath.section
-//        selectedSegmentIndex = section
-//        if segmentedControl?.selectedIndex != section {
-//            segmentedControl?.selectedIndex = section
-//        }
-//    }
-//}
+extension FTSavedClipsViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let category = viewModel.categoryFor(index: self.selectedSegmentIndex)
+        if category?.title != textField.text {
+            do {
+                try viewModel.renameCategory(category: category!, with: textField.text ?? "")
+                let titles = viewModel.categoryNames()
+                segmentedControl?.setTitles(titles, style: .adaptiveSpace(18))
+                segmentedControl.selectedIndex = selectedSegmentIndex
+            } catch {
+                // Handle
+                print(error)
+            }
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return false
+    }
+
+}

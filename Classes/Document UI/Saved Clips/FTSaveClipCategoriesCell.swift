@@ -16,10 +16,10 @@ class FTSaveClipCategoriesCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-           super.setSelected(selected, animated: animated)
+        super.setSelected(selected, animated: animated)
 
-           // Toggle the checkmark based on the cell selection
-           accessoryType = selected ? .checkmark : .none
-       }
+        // Toggle the checkmark based on the cell selection
+        accessoryType = selected ? .checkmark : .none
+    }
 
 }

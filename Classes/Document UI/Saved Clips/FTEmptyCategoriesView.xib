@@ -21,24 +21,24 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fcu-dz-np2">
-                    <rect key="frame" x="25" y="125.33333333333333" width="313" height="142.33333333333337"/>
+                    <rect key="frame" x="25" y="125.00000000000001" width="313" height="148.33333333333337"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="savedClips_Empty" translatesAutoresizingMaskIntoConstraints="NO" id="ddx-SF-yeX">
-                            <rect key="frame" x="121.66666666666666" y="0.0" width="70" height="64"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty_clip_categories" translatesAutoresizingMaskIntoConstraints="NO" id="ddx-SF-yeX">
+                            <rect key="frame" x="121.66666666666666" y="0.0" width="70" height="70"/>
                             <color key="tintColor" name="black50"/>
                             <constraints>
+                                <constraint firstAttribute="width" secondItem="ddx-SF-yeX" secondAttribute="height" multiplier="1:1" id="LiR-pt-WXf"/>
                                 <constraint firstAttribute="width" constant="70" id="k0s-kB-m6p"/>
-                                <constraint firstAttribute="height" constant="64" id="yFj-kf-pJr"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Saved Clips" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gO-qD-xsf" customClass="FTCustomLabel" customModule="FTCommon">
-                            <rect key="frame" x="0.0" y="96.000000000000014" width="313" height="20.333333333333329"/>
+                            <rect key="frame" x="0.0" y="102" width="313" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                             <color key="textColor" name="black1"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something about adding snippets will go here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pya-4o-OdW" customClass="FTCustomLabel" customModule="FTCommon">
-                            <rect key="frame" x="0.0" y="124.33333333333331" width="313" height="18"/>
+                            <rect key="frame" x="0.0" y="130.33333333333334" width="313" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" name="black70"/>
                             <nil key="highlightedColor"/>
@@ -65,13 +65,17 @@
             <constraints>
                 <constraint firstItem="Fcu-dz-np2" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" constant="25" id="J4v-JZ-gbb"/>
                 <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="Fcu-dz-np2" secondAttribute="trailing" constant="25" id="Nwm-RX-uRr"/>
-                <constraint firstItem="Fcu-dz-np2" firstAttribute="centerY" secondItem="VXr-Tz-HHm" secondAttribute="centerY" constant="-15" id="eJi-pA-IB4"/>
+                <constraint firstItem="Fcu-dz-np2" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="eJi-pA-IB4"/>
             </constraints>
+            <connections>
+                <outlet property="subTitleLabel" destination="pya-4o-OdW" id="lGx-u1-gDy"/>
+                <outlet property="titleLabel" destination="6gO-qD-xsf" id="pgG-yr-r7z"/>
+            </connections>
             <point key="canvasLocation" x="78.625954198473281" y="142.95774647887325"/>
         </collectionReusableView>
     </objects>
     <resources>
-        <image name="savedClips_Empty" width="64" height="64"/>
+        <image name="empty_clip_categories" width="64" height="64"/>
         <namedColor name="black1">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

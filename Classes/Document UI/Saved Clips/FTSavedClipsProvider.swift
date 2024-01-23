@@ -8,21 +8,21 @@
 
 import Foundation
 
-public class FTSavedClipsProvider {
+ class FTSavedClipsProvider {
     private let folderName: String = "com.ns3.snippets"
 
-    public static let shared = FTSavedClipsProvider()
+    static let shared = FTSavedClipsProvider()
     private let fileManager = FileManager()
 
     private var rootURL: URL
-    public init() {
+    init() {
         guard let folder = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).last else {
             fatalError("Unable to find storeCustomTemplates directory")
         }
         rootURL = Foundation.URL(fileURLWithPath: folder).appendingPathComponent(folderName)
     }
 
-    public func start() {
+    func start() {
         do {
             try createDirectoryIfNeeded()
         } catch {
@@ -36,7 +36,7 @@ public class FTSavedClipsProvider {
         }
     }
 
-    public func locationFor(filePath: String) -> URL {
+    func locationFor(filePath: String) -> URL {
         let fileURL = URL(filePath: filePath)
         let returnUrl = rootURL.appendingPathComponent(fileURL.lastPathComponent.deletingPathExtension).appendingPathComponent(fileURL.lastPathComponent)
         return returnUrl
@@ -44,7 +44,7 @@ public class FTSavedClipsProvider {
 }
 
 
-public extension FTSavedClipsProvider {
+ extension FTSavedClipsProvider {
     var snippetsFolder: URL {
         return rootURL
     }
@@ -71,20 +71,31 @@ public extension FTSavedClipsProvider {
         return templateURL
     }
 
-    func deleteSavedClipFor(category: String, fileName: String) throws {
-        let categoryUrl = rootURL.appendingPathComponent(category)
-        let destUrl = categoryUrl.appendingPathComponent(fileName)
-        if fileManager.fileExists(atPath: destUrl.path) {
-            try fileManager.removeItem(at: destUrl)
+    func removeCategory(category: FTSavedClipsCategoryModel) throws {
+        if let categoryUrl = category.url {
+            if fileManager.fileExists(atPath: categoryUrl.path) {
+                try fileManager.removeItem(at: categoryUrl)
+            }
         }
     }
 
-    func deleteCategory(category: String) throws {
-        let categoryUrl = rootURL.appendingPathComponent(category)
-        if fileManager.fileExists(atPath: categoryUrl.path) {
-            try fileManager.removeItem(at: categoryUrl)
-        }
-    }
+     func removeClip(clip: FTSavedClipModel) throws {
+         let destUrl = clip.url
+         if fileManager.fileExists(atPath: destUrl.path) {
+             try fileManager.removeItem(at: destUrl)
+         }
+     }
+
+     func renameCategory(category: FTSavedClipsCategoryModel, with fileName: String) throws -> URL? {
+         if let categoryUrl = category.url {
+             let desturl = categoryUrl.deletingLastPathComponent().appendingPathComponent(fileName)
+             if fileManager.fileExists(atPath: categoryUrl.path) {
+                 try fileManager.createDirectory(at: desturl, withIntermediateDirectories: false)
+                 return try fileManager.replaceItemAt(desturl, withItemAt: categoryUrl)
+             }
+         }
+         return nil
+     }
 
 }
 
@@ -99,7 +110,7 @@ extension FTSavedClipsProvider {
         }
         subcontents.forEach { url in
             let categoryTitle = url.lastPathComponent
-            var clipCategoryModel = FTSavedClipsCategoryModel(title: categoryTitle)
+            var clipCategoryModel = FTSavedClipsCategoryModel(title: categoryTitle, url: url)
             if let savedClips = try? self.savedClipsFor(category: categoryTitle) {
                 clipCategoryModel.savedClips = savedClips
             }
@@ -111,12 +122,12 @@ extension FTSavedClipsProvider {
     func savedClipsFor(category: String) throws -> [FTSavedClipModel] {
         var savedClips = [FTSavedClipModel]()
 
-        let subcontents = try fileManager.contentsOfDirectory(at: rootURL.appendingPathComponent(category), includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-
+        var subcontents = try fileManager.contentsOfDirectory(at: rootURL.appendingPathComponent(category), includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+        subcontents = subcontents.sorted(by: {$0.fileModificationDate > $1.fileModificationDate})
         subcontents.forEach { url in
             let fileUrl = self.imageUrlForClip(url: url)
             let image = UIImage(contentsOfFile: fileUrl.path)
-            let clipModel = FTSavedClipModel(title: url.lastPathComponent, categoryTitle: category, image: image)
+            let clipModel = FTSavedClipModel(title: url.lastPathComponent, url: url, categoryTitle: category, image: image)
             savedClips.append(clipModel)
         }
         return savedClips

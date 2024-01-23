@@ -26,27 +26,30 @@ class FTInlineTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-           super.setSelected(selected, animated: animated)
-           // Toggle the checkmark based on the cell selection
-           accessoryType = selected ? .checkmark : .none
-       }
+        super.setSelected(selected, animated: animated)
+        // Toggle the checkmark based on the cell selection
+        accessoryType = selected ? .checkmark : .none
+        self.backgroundColor = UIColor.appColor(.white60)
+    }
 
     func commonInit() {
         textField.delegate = self
         textField.borderStyle = .none
         textField.returnKeyType = .done
         textField.attributedPlaceholder = attributedPlaceHolder()
+        textField.backgroundColor = .clear
 
         textField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.backgroundColor = UIColor.appColor(.white60)
         contentView.addSubview(textField)
+
         let g = contentView.layoutMarginsGuide
         NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: g.topAnchor, constant: 0.0),
             textField.leadingAnchor.constraint(equalTo: g.leadingAnchor, constant: 0.0),
-            textField.trailingAnchor.constraint(equalTo: g.trailingAnchor, constant: 70.0),
+            textField.trailingAnchor.constraint(equalTo: g.trailingAnchor, constant: 0.0),
             textField.bottomAnchor.constraint(equalTo: g.bottomAnchor, constant: 0.0),
         ])
+
     }
 
     let attributedPlaceHolder = {
@@ -76,6 +79,14 @@ class FTInlineTableViewCell: UITableViewCell, UITextFieldDelegate {
         self.endEditing(true)
         return false
     }
+
+    // UITextFieldDelegate method to limit the number of characters
+      func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+          // Check if the total length of the text after replacement will be less than or equal to 52
+          let currentText = (textField.text ?? "") as NSString
+          let newText = currentText.replacingCharacters(in: range, with: string) as NSString
+          return newText.length <= 52
+      }
 
 }
 

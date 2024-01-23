@@ -347,7 +347,7 @@ extension FTPageViewController: FTLassoSelectionViewDelegate {
             self.lassoSelectionViewMoveToBackCommand(lassoSelectionView);
         case .openAI:
             self.startOpenAiForPage();
-        case .snippets:
+        case .saveClip:
             self.lassoSelectionViewCreateSnippetCommand(lassoSelectionView)
         }
     }
@@ -560,7 +560,6 @@ private extension FTPageViewController  {
 
 extension FTPageViewController: FTSaveClipDelegate {
     func didSelectCategory(name: String) {
-        print("Name =", name)
         let selectedAnnotations = self.lassoInfo.selectedAnnotations;
         guard !selectedAnnotations.isEmpty else {
             return;
@@ -570,8 +569,12 @@ extension FTPageViewController: FTSaveClipDelegate {
         let tempDocURL = FTDocumentFactory.tempDocumentPath(FTUtils.getUUID());
         let ftdocument = FTDocumentFactory.documentForItemAtURL(tempDocURL);
 
+        let totalBoundingRect: CGRect = selectedAnnotations.reduce(.null) { partialResult, annotation in
+            partialResult.union(annotation.boundingRect)
+        }
+
         let pdfGenerator = PDFGenerator()
-        let pdfPath = pdfGenerator.createPDF(frame: CGRect(x: 0, y: 0, width: 595.2, height: 841.8) )
+        let pdfPath = pdfGenerator.createPDF(frame: self.lassoSelectionView?.selectionRect ?? .zero)
 
         let info = FTDocumentInputInfo();
         info.isTemplate = false
@@ -582,10 +585,14 @@ extension FTPageViewController: FTSaveClipDelegate {
             let doc = (ftdocument as? FTNoteshelfDocument)
             doc?.openDocument(purpose: .write, completionHandler: { success, error in
                 let page = doc?.pages().first as? FTNoteshelfPage
-                page?.addAnnotations(selectedAnnotations, indices: [])
+                page?.deepCopyAnnotations(selectedAnnotations, onCompletion: {
+                })
+                page?.annotations().forEach { annotation in
+                    annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
+                }
                 doc?.saveAndCloseWithCompletionHandler({ success in
                     if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
-                        try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                       _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
                     }
                 })
             })
@@ -598,13 +605,7 @@ class PDFGenerator {
 
     func createPDF(frame: CGRect) -> URL {
         let render = UIPrintPageRenderer()
-        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 dpi
-//        let page = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
-        let printable = page.insetBy(dx: 0, dy: 0)
-
-        render.setValue(NSValue(cgRect: page), forKey: "paperRect")
-//        render.setValue(NSValue(cgRect: printable), forKey: "printableRect")
-
+        render.setValue(NSValue(cgRect: frame), forKey: "paperRect")
         let pdfData = NSMutableData()
         UIGraphicsBeginPDFContextToData(pdfData, .zero, nil)
 
@@ -614,7 +615,7 @@ class PDFGenerator {
         UIGraphicsEndPDFContext();
 
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pdfFilePath = documentsDirectory.appendingPathComponent("Siva.pdf")
+        let pdfFilePath = documentsDirectory.appendingPathComponent("SaveClip.pdf")
 
         do {
             try pdfData.write(to: pdfFilePath)

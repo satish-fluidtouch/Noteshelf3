@@ -265,7 +265,18 @@ class FTUserDefaults : NSObject
         }
         UserDefaults.standard.synchronize();
     }
-    
+
+    class var selectedClipCategory: String? {
+        get {
+            if let savedCategory = UserDefaults.standard.string(forKey: "selectedClipCategory") {
+                return savedCategory
+            }
+            return nil
+        } set {
+            UserDefaults.standard.setValue(newValue, forKey: "selectedClipCategory")
+        }
+    }
+
 }
 
 

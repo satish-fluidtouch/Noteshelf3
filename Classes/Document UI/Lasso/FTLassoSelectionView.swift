@@ -10,7 +10,7 @@ import UIKit
 import FTCommon
 
 @objc enum FTLassoAction: Int {
-    case copy,cut,takeScreenshot,delete,resize,color,convertToText, moveToFront, moveToBack,openAI, snippets;
+    case copy,cut,takeScreenshot,delete,resize,color,convertToText, moveToFront, moveToBack,openAI, saveClip;
 }
 
 @objc enum FTLassoSelectionType: Int {
@@ -120,7 +120,6 @@ class FTLassoSelectionView: UIView {
     func showMenuFrom(rect: CGRect) {
         #if !targetEnvironment(macCatalyst)
         self.becomeFirstResponder();
-        
         let theMenu = UIMenuController.shared;
         
         let screenshotMenuItem = UIMenuItem(title: NSLocalizedString("TakeScreenshot", comment: "Take Screenshot"), action: #selector(self.screenshotMenuAction(_:)));
@@ -133,16 +132,16 @@ class FTLassoSelectionView: UIView {
         let moveToFront = UIMenuItem(title: NSLocalizedString("BringToFront", comment: "BringToFront"), action: #selector(self.moveToFrontAction(_:)));
         let moveToBack = UIMenuItem(title: NSLocalizedString("SendToBack", comment: "SendToBack"), action: #selector(self.moveToBackAction(_:)));
         let openAI = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.openAIAction(_:)));
-        let snippet = UIMenuItem(title: "Save Clip", action: #selector(self.createSnippet(_:)));
+        let saveClip = UIMenuItem(title: "Save Clip", action: #selector(self.saveClip(_:)));
 
         var options = [cutMenuItem
                        ,copyMenuItem
                        ,deleteMenuItem
                        ,resizeMenuItem
-                       ,screenshotMenuItem
+                       ,saveClip
                        ,colorMenuItem
+                       ,screenshotMenuItem
                        ,convertToText
-                       ,snippet
                        ,moveToFront
                        ,moveToBack
         ]
@@ -157,34 +156,40 @@ class FTLassoSelectionView: UIView {
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        guard let delegate = self.delegate else {
+            return false
+        }
         var retValue = super.canPerformAction(action, withSender: sender);
         if action == #selector(FTLassoSelectionView.cutMenuAction(_:))
             || action == #selector(FTLassoSelectionView.copyMenuAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .cut) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .cut)
         }
         else if action == #selector(FTLassoSelectionView.resizeMenuAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .resize) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .resize)
         }
         else if action == #selector(FTLassoSelectionView.deleteMenuAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .delete) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .delete)
         }
         else if action == #selector(FTLassoSelectionView.screenshotMenuAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .takeScreenshot) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .takeScreenshot)
         }
         else if action == #selector(FTLassoSelectionView.colorMenuAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .color) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .color)
         }
         else if action == #selector(FTLassoSelectionView.convertToTextAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .convertToText) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .convertToText)
         }
         else if action == #selector(FTLassoSelectionView.moveToFrontAction(_:)) {
-            retValue = self.delegate?.lassoSelectionView(self, canPerform: .moveToFront) ?? true;
+            retValue = delegate.lassoSelectionView(self, canPerform: .moveToFront)
         }
         else if action == #selector(FTLassoSelectionView.moveToBackAction(_:)) {
-                 retValue = self.delegate?.lassoSelectionView(self, canPerform: .moveToBack) ?? true;
+                 retValue = delegate.lassoSelectionView(self, canPerform: .moveToBack)
+        }
+        else if action == #selector(FTLassoSelectionView.saveClip(_:)) {
+                 retValue = delegate.lassoSelectionView(self, canPerform: .saveClip)
         }
         else if action == #selector(FTLassoSelectionView.openAIAction(_:)) {
-            retValue = !FTNoteshelfAI.supportsNoteshelfAI ? false : self.delegate?.lassoSelectionView(self, canPerform: .openAI) ?? true;
+            retValue = !FTNoteshelfAI.supportsNoteshelfAI ? false : delegate.lassoSelectionView(self, canPerform: .openAI)
         }
         return retValue;
     }
@@ -574,8 +579,8 @@ extension FTLassoSelectionView {
         #endif
     }
 
-    func createSnippet(_ sender:Any?) {
-        self.delegate?.lassoSelectionView(self, perform: .snippets)
+    func saveClip(_ sender:Any?) {
+        self.delegate?.lassoSelectionView(self, perform: .saveClip)
         track("lasso_snippet_tapped", params: [:], screenName: FTScreenNames.lasso)
     }
 }
@@ -645,6 +650,13 @@ extension FTLassoSelectionView
                     self?.resizeMenuAction(nil);
                 }
                 menuItems.append(resize);
+            }
+
+            if self.delegate?.lassoSelectionView(self, canPerform: .saveClip) ?? true {
+                let saveClip = UIAction(title: "clip.saveClip".localized) { [weak self] (_) in
+                    self?.saveClip(nil);
+                }
+                menuItems.append(saveClip);
             }
 
             if self.delegate?.lassoSelectionView(self, canPerform: .takeScreenshot) ?? true {

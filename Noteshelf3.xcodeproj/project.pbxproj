@@ -469,6 +469,8 @@
 		478142CB2A8617250029378B /* FTMediaLibraryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478142CA2A8617250029378B /* FTMediaLibraryCell.swift */; };
 		478142CD2A861E800029378B /* FTLocalMediaLibraryProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478142CC2A861E800029378B /* FTLocalMediaLibraryProvider.swift */; };
 		478394AA2A55250C00EEB75C /* ZipArchive in Frameworks */ = {isa = PBXBuildFile; productRef = 478394A92A55250C00EEB75C /* ZipArchive */; };
+		4785127E2B5A33F000141544 /* FTEmptyClipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4785127C2B5A33F000141544 /* FTEmptyClipsView.swift */; };
+		4785127F2B5A33F000141544 /* FTEmptyClipsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4785127D2B5A33F000141544 /* FTEmptyClipsView.xib */; };
 		4786A7ED297A5896007FE156 /* FTShelfBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786A7EC297A5896007FE156 /* FTShelfBookmarksViewController.swift */; };
 		4786A7EF297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */; };
 		4786A7F1297A708E007FE156 /* FTShelfBookmarkPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */; };
@@ -2220,7 +2222,6 @@
 		F3B6B88F28BE15BA00ABFF1C /* FTAddMenuMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B6B88D28BE15BA00ABFF1C /* FTAddMenuMediaViewController.swift */; };
 		F3B8B20328D06B8D00F3BE50 /* FTAddMenuUnsplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8B20128D06B8D00F3BE50 /* FTAddMenuUnsplashViewController.swift */; };
 		F3B8B20628D0A78A00F3BE50 /* FTAddMenuUnsplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B8B20428D0A78A00F3BE50 /* FTAddMenuUnsplashViewModel.swift */; };
-		F3B9CF9628CCD922003FEFBC /* FTEmojisNewCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9CF9428CCD922003FEFBC /* FTEmojisNewCollectionView.swift */; };
 		F3BA9A1D28B4A59100999FE4 /* FTRackPreferenceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BA9A1B28B4A59100999FE4 /* FTRackPreferenceState.swift */; };
 		F3C7D50C28C19A29000D3BE1 /* AddMenuDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C7D50A28C19A29000D3BE1 /* AddMenuDataManager.swift */; };
 		F3CB8B6D28F95C5F001E34ED /* FTAddMenuPixabayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CB8B6C28F941F7001E34ED /* FTAddMenuPixabayViewController.swift */; };
@@ -3322,6 +3323,8 @@
 		478142CC2A861E800029378B /* FTLocalMediaLibraryProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLocalMediaLibraryProvider.swift; sourceTree = "<group>"; };
 		47817D911F24ABCC0097C9F9 /* FTLoadingIndicatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLoadingIndicatorViewController.swift; sourceTree = "<group>"; };
 		47817D941F24AC540097C9F9 /* FTCommon.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTCommon.storyboard; sourceTree = "<group>"; };
+		4785127C2B5A33F000141544 /* FTEmptyClipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEmptyClipsView.swift; sourceTree = "<group>"; };
+		4785127D2B5A33F000141544 /* FTEmptyClipsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTEmptyClipsView.xib; sourceTree = "<group>"; };
 		4786A7EC297A5896007FE156 /* FTShelfBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarksViewController.swift; sourceTree = "<group>"; };
 		4786A7EE297A5AC5007FE156 /* FTShelfBookmarksPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarksPageModel.swift; sourceTree = "<group>"; };
 		4786A7F0297A708E007FE156 /* FTShelfBookmarkPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfBookmarkPageCell.swift; sourceTree = "<group>"; };
@@ -4701,7 +4704,6 @@
 		F3B6B88D28BE15BA00ABFF1C /* FTAddMenuMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAddMenuMediaViewController.swift; sourceTree = "<group>"; };
 		F3B8B20128D06B8D00F3BE50 /* FTAddMenuUnsplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAddMenuUnsplashViewController.swift; sourceTree = "<group>"; };
 		F3B8B20428D0A78A00F3BE50 /* FTAddMenuUnsplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAddMenuUnsplashViewModel.swift; sourceTree = "<group>"; };
-		F3B9CF9428CCD922003FEFBC /* FTEmojisNewCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTEmojisNewCollectionView.swift; sourceTree = "<group>"; };
 		F3BA9A1B28B4A59100999FE4 /* FTRackPreferenceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRackPreferenceState.swift; sourceTree = "<group>"; };
 		F3C7D50A28C19A29000D3BE1 /* AddMenuDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMenuDataManager.swift; sourceTree = "<group>"; };
 		F3CB8B6C28F941F7001E34ED /* FTAddMenuPixabayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAddMenuPixabayViewController.swift; sourceTree = "<group>"; };
@@ -6495,7 +6497,6 @@
 				F305FD8028DC5C36000D670F /* FTEmojiCategoryHeaderView.swift */,
 				1897DD0924BC17A60016DFE2 /* FTEmojiesCategoryElement.swift */,
 				1897DD0724BC17A60016DFE2 /* FTEmojiesManager.swift */,
-				F3B9CF9428CCD922003FEFBC /* FTEmojisNewCollectionView.swift */,
 				1897DD0824BC17A60016DFE2 /* Emojies.json */,
 			);
 			path = FTEmojis;
@@ -8021,6 +8022,8 @@
 				478CA4312B35901900F7C8FB /* FTInlineTableViewCell.swift */,
 				47377BD92B4FE62900585BC3 /* FTEmptyCategoriesView.swift */,
 				47377BDA2B4FE62900585BC3 /* FTEmptyCategoriesView.xib */,
+				4785127C2B5A33F000141544 /* FTEmptyClipsView.swift */,
+				4785127D2B5A33F000141544 /* FTEmptyClipsView.xib */,
 			);
 			path = "Saved Clips";
 			sourceTree = "<group>";
@@ -12357,6 +12360,7 @@
 				BAF38FA22859ADF00067CA9F /* FTLaserScene.sks in Resources */,
 				BAF38FA32859ADF00067CA9F /* BrushAssets_V5.xcassets in Resources */,
 				BAF38FA42859ADF00067CA9F /* FTZoomSettingsViewController.xib in Resources */,
+				4785127F2B5A33F000141544 /* FTEmptyClipsView.xib in Resources */,
 				BAF38FA52859ADF00067CA9F /* FTDroppingViewController.xib in Resources */,
 				BAF38FA62859ADF00067CA9F /* DefaultCustomColors.plist in Resources */,
 				E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */,
@@ -13163,6 +13167,7 @@
 				BAF391082859ADF00067CA9F /* FTAudioAnnotation_SQLiteHelper.swift in Sources */,
 				BA2D9131285CB1BE001BB495 /* FTSelectNotebookForBackupViewController.swift in Sources */,
 				0971841F2A82230D00656B36 /* FTPremiumBanner.swift in Sources */,
+				4785127E2B5A33F000141544 /* FTEmptyClipsView.swift in Sources */,
 				BAF391092859ADF00067CA9F /* FTExportProgressManager.swift in Sources */,
 				BAF3910A2859ADF00067CA9F /* FTWebdavFileHierarchyViewController.swift in Sources */,
 				478CA4322B35901900F7C8FB /* FTInlineTableViewCell.swift in Sources */,
@@ -13341,7 +13346,6 @@
 				BA50E03A2959CB3C00CDC0FD /* FTCacheTagsProcessor.swift in Sources */,
 				BAF391982859ADF00067CA9F /* FTAudioAnnotationViewController.swift in Sources */,
 				BAF391992859ADF00067CA9F /* FTModernDiaryFormat.swift in Sources */,
-				F3B9CF9628CCD922003FEFBC /* FTEmojisNewCollectionView.swift in Sources */,
 				3DAA68AE29113A6100848434 /* FTColorCell.swift in Sources */,
 				BAF3919A2859ADF00067CA9F /* FTShelfItemCollectionRecent.swift in Sources */,
 				E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */,

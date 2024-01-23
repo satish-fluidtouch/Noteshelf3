@@ -1,16 +1,16 @@
 //
-//  FTEmptyCategoriesView.swift
+//  FTEmptyClipsView.swift
 //  Noteshelf3
 //
-//  Created by Siva on 11/01/24.
+//  Created by Siva on 19/01/24.
 //  Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.
 //
 
 import UIKit
 
-class FTEmptyCategoriesView: UICollectionReusableView {
+class FTEmptyClipsView: UICollectionReusableView {
     @IBOutlet weak var titleLabel: FTCustomLabel!
-    @IBOutlet weak var subTitleLabel: FTCustomLabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

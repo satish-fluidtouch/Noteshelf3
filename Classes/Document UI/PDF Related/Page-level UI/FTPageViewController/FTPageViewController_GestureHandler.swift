@@ -353,6 +353,8 @@ extension FTPageViewController : UIGestureRecognizerDelegate
                         if let activeController = self.delegate?.activeAnnotationController() {
                             let controller = self.delegate?.pageControllerFor(activeAnnotationController: activeController);
                             controller?.endEditingActiveAnnotation(activeController.annotation, refreshView: true)
+                        } else if let lassoController = self.lassoContentSelectionViewController {
+                            self.normalizeLassoView()
                         }
                         return false;
                     }

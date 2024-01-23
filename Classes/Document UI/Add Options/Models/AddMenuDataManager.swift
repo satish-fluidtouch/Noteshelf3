@@ -83,7 +83,7 @@ class AddMenuDataManager {
 
         let audioItem = MediaItem(image: UIImage(systemName: "mic.fill.badge.plus"), name: "RecordAudio".localized,type: .audio)
         let emojiItem = MediaItem(image: UIImage(systemName: "face.smiling"), name: "customizeToolbar.emojis".localized, showDiscloser: true, type: .emojis)
-        let saveClipsItem = MediaItem(image: UIImage(systemName: "appclip"), name: "Saved Clips".localized, showDiscloser: true, type: .savedClips)
+        let saveClipsItem = MediaItem(image: UIImage(systemName: "rectangle.dashed.and.paperclip"), name: "Saved Clips".localized, showDiscloser: true, type: .savedClips)
 
         let stickerItem = MediaItem(image: UIImage(named: folderPrefix + "addmenu_stickers"), name: "customizeToolbar.stickers".localized, showDiscloser: true, type: .stickers)
 

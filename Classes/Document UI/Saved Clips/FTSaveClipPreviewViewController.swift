@@ -37,9 +37,11 @@ class FTSaveClipPreviewViewController: UIViewController {
         tableView.keyboardDismissMode = .onDrag
         tableView.tableHeaderView?.bounds = CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: ((self.tableView.frame.size.width)/1.75))
 
-
         self.categories = viewModel.savedClipsCategories()
-        self.categories.insert(FTSavedClipsCategoryModel(title: "New Category..."), at: 0)
+        self.categories.insert(FTSavedClipsCategoryModel(title: "New Category...", url: nil), at: 0)
+        if let selectedCategory = FTUserDefaults.selectedClipCategory, let index = self.categories.firstIndex(where: {$0.title == selectedCategory}) {
+            selectedIndexPath = IndexPath(row: index, section: 0)
+        }
         self.tableView.reloadData()
 
         tableView.selectRow(at: selectedIndexPath, animated: false, scrollPosition: .none)
@@ -54,7 +56,10 @@ class FTSaveClipPreviewViewController: UIViewController {
     @IBAction func addClipAction(_ sender: Any) {
         self.view.endEditing(true)
         let category = categories[self.selectedIndexPath.row]
+        FTUserDefaults.selectedClipCategory = category.title
         delegate?.didSelectCategory(name: category.title)
+        let toastView = FTToastConfiguration(title: "Clip Added")
+        FTToastHostController.showToast(from: self, toastConfig: toastView)
         self.dismiss(animated: true)
     }
 }

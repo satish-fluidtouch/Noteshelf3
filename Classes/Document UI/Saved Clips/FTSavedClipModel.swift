@@ -11,9 +11,12 @@ import UIKit
 // MARK: - FTSavedClipsCategoryModel
 struct FTSavedClipsCategoryModel {
     var title: String
+    var url: URL?
     var savedClips = [FTSavedClipModel]()
-    init(title: String, savedClips: [FTSavedClipModel] = []) {
+    
+    init(title: String, url: URL?, savedClips: [FTSavedClipModel] = []) {
         self.title = title
+        self.url = url
         self.savedClips = savedClips
     }
 }
@@ -21,11 +24,13 @@ struct FTSavedClipsCategoryModel {
 // MARK: - FTSavedClipModel
 struct FTSavedClipModel {
     var title: String
+    var url: URL
     var categoryTitle: String
     var image: UIImage?
 
-    init(title: String, categoryTitle: String, image: UIImage?) {
+    init(title: String, url: URL, categoryTitle: String, image: UIImage?) {
         self.title = title
+        self.url = url
         self.image = image
         self.categoryTitle = categoryTitle
     }

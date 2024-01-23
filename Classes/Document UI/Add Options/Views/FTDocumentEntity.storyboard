@@ -2209,6 +2209,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YXx-9C-k5Q">
+                                <rect key="frame" x="16" y="102" width="382" height="36"/>
+                                <color key="backgroundColor" name="black5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="QP8-qq-ZA4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dq1-Sx-RzI" customClass="FTSegmentedControl" customModule="FTCommon">
                                 <rect key="frame" x="16" y="100.66666666666667" width="382" height="36.000000000000014"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2243,9 +2252,6 @@
                                                         <constraint firstAttribute="width" secondItem="j4b-D7-cq5" secondAttribute="height" multiplier="1:1" id="hmr-f4-3Tu"/>
                                                     </constraints>
                                                     <state key="normal" image="iconDelete"/>
-                                                    <connections>
-                                                        <action selector="closeAction:" destination="ZdO-UY-Prj" eventType="touchUpInside" id="pba-Xo-JAZ"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -2289,15 +2295,19 @@
                             <constraint firstItem="YWp-2Y-kLO" firstAttribute="leading" secondItem="wul-65-O3P" secondAttribute="leading" constant="4" id="JE8-gJ-IGR"/>
                             <constraint firstItem="wVI-66-KGf" firstAttribute="top" secondItem="nnl-wi-FPv" secondAttribute="bottom" constant="2" id="PBn-xA-geJ"/>
                             <constraint firstItem="Dq1-Sx-RzI" firstAttribute="top" secondItem="a9H-pz-jaC" secondAttribute="bottom" constant="20" id="RFd-Lt-36V"/>
+                            <constraint firstItem="wul-65-O3P" firstAttribute="trailing" secondItem="YXx-9C-k5Q" secondAttribute="trailing" constant="16" id="beK-v9-KvU"/>
                             <constraint firstItem="wVI-66-KGf" firstAttribute="leading" secondItem="wul-65-O3P" secondAttribute="leading" id="gJ6-Gc-N27"/>
                             <constraint firstItem="a9H-pz-jaC" firstAttribute="top" secondItem="wul-65-O3P" secondAttribute="top" constant="18" id="gYO-uN-Vn0"/>
+                            <constraint firstItem="YXx-9C-k5Q" firstAttribute="top" secondItem="a9H-pz-jaC" secondAttribute="bottom" constant="21.333333333333343" id="iwR-Rp-DFv"/>
                             <constraint firstItem="wVI-66-KGf" firstAttribute="bottom" secondItem="wul-65-O3P" secondAttribute="bottom" constant="-10" id="mh2-ex-vEO"/>
                             <constraint firstItem="a9H-pz-jaC" firstAttribute="centerX" secondItem="545-tj-L47" secondAttribute="centerX" id="tkZ-JL-q5E"/>
                             <constraint firstItem="nnl-wi-FPv" firstAttribute="leading" secondItem="wul-65-O3P" secondAttribute="leading" constant="16" id="uX8-mC-J0S"/>
+                            <constraint firstItem="YXx-9C-k5Q" firstAttribute="leading" secondItem="wul-65-O3P" secondAttribute="leading" constant="16" id="ugz-xQ-32Z"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="backButton" destination="YWp-2Y-kLO" id="27o-Rk-RBM"/>
+                        <outlet property="categoryTitleTextField" destination="YXx-9C-k5Q" id="3W3-5A-lFe"/>
                         <outlet property="collectionView" destination="nnl-wi-FPv" id="Dic-4w-Kmv"/>
                         <outlet property="deleteCategory" destination="wVI-66-KGf" id="m5L-CC-QZf"/>
                         <outlet property="deleteHeightConstraint" destination="BHi-Ss-uRr" id="mpe-vQ-q0b"/>
@@ -2356,7 +2366,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p8x-Zl-O5q" id="woi-eV-HGq">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" name="white60"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="white60"/>
                                     </tableViewCell>
@@ -2373,6 +2382,7 @@
                                     <constraint firstAttribute="width" secondItem="66E-L9-B7K" secondAttribute="height" multiplier="1:1" constant="36" id="jPo-vx-PD3"/>
                                     <constraint firstAttribute="width" constant="80" id="nkb-yN-Hts"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="tintColor" name="accent"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Cancel"/>
@@ -2405,7 +2415,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jtF-4p-5mj"/>
-                        <color key="backgroundColor" name="popoverBgColor"/>
+                        <color key="backgroundColor" name="formSheetBgColor"/>
                         <constraints>
                             <constraint firstItem="vmR-TJ-VSC" firstAttribute="top" secondItem="ZeF-3D-8cC" secondAttribute="bottom" constant="10" id="9f1-65-dD5"/>
                             <constraint firstItem="66E-L9-B7K" firstAttribute="leading" secondItem="jtF-4p-5mj" secondAttribute="leading" constant="20" id="GOd-jg-h4j"/>
@@ -2459,6 +2469,9 @@
         <namedColor name="black20">
             <color red="0.0" green="0.0" blue="0.0" alpha="0.20000000298023224" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="black5">
+            <color red="0.0" green="0.0" blue="0.0" alpha="0.05000000074505806" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="blueDodger">
             <color red="0.18823529411764706" green="0.36862745098039218" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -2473,6 +2486,9 @@
         </namedColor>
         <namedColor name="darkRed">
             <color red="0.86274509803921573" green="0.070588235294117646" blue="0.023529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="formSheetBgColor">
+            <color red="0.92156862745098034" green="0.90980392156862744" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="headerColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2517,13 +2533,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
