@@ -21,12 +21,12 @@
 				<key>boxRightOffset</key>
 				<real>5.27</real>
 				<key>yearY</key>
-				<real>10.78</real>
+				<real>13.64</real>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>10.59</real>
+				<real>13.64</real>
 				<key>baseBoxX</key>
 				<real>17.14</real>
 				<key>baseBoxY</key>
@@ -222,7 +222,7 @@
 			<key>year</key>
 			<dict>
 				<key>yearFontSize</key>
-				<integer>150</integer>
+				<integer>120</integer>
 				<key>titleMonthFontSize</key>
 				<integer>20</integer>
 				<key>outMonthFontSize</key>

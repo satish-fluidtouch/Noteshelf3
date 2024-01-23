@@ -823,6 +823,8 @@
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
 		97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTPreviewShape.swift */; };
+		97F4CAA32B5A55B400BFBF79 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */; };
+		97F4CAA72B5E90E100BFBF79 /* Spectral-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97F4CAA62B5E90E000BFBF79 /* Spectral-Bold.ttf */; };
 		97F5D06D2B15C8EC003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */; };
 		97F5D0712B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */; };
 		97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */; };
@@ -3858,6 +3860,7 @@
 		97F3C3BC26B92E1900E3B75E /* FTClassicDiaryiPadFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryiPadFormat.swift; sourceTree = "<group>"; };
 		97F3C3BE26B92E3000E3B75E /* FTClassicDiaryiPhoneFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryiPhoneFormat.swift; sourceTree = "<group>"; };
 		97F3C3C426BAFC3F00E3B75E /* FTClassicDiaryMonthTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryMonthTemplate.swift; sourceTree = "<group>"; };
+		97F4CAA62B5E90E000BFBF79 /* Spectral-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Spectral-Bold.ttf"; sourceTree = "<group>"; };
 		97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryCalendarTemplateFormat.swift; sourceTree = "<group>"; };
 		97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryiPadFormat.swift; sourceTree = "<group>"; };
 		97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPlanner2024DiaryFormat.swift; sourceTree = "<group>"; };
@@ -8552,6 +8555,7 @@
 		52BBD52B29E95D8C003088AE /* Spectral */ = {
 			isa = PBXGroup;
 			children = (
+				97F4CAA62B5E90E000BFBF79 /* Spectral-Bold.ttf */,
 				52BBD51D29E95BDB003088AE /* Spectral-Medium.ttf */,
 				52BBD51C29E95BDB003088AE /* Spectral-Regular.ttf */,
 				52BBD51E29E95BDC003088AE /* Spectral-SemiBold.ttf */,
@@ -12278,6 +12282,7 @@
 				52B34E0029E5684400360F10 /* Montserrat-ExtraBold.ttf in Resources */,
 				52B34E0129E5684400360F10 /* Montserrat-ExtraLight.otf in Resources */,
 				E7AC024E2A14E46B009AE92A /* FTPenTypeCollectionViewCell.xib in Resources */,
+				97F4CAA72B5E90E100BFBF79 /* Spectral-Bold.ttf in Resources */,
 				52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */,
 				52BBD4FA29E95BC9003088AE /* Inter-Regular.ttf in Resources */,
 				52BBD4FB29E95BC9003088AE /* Inter-Medium.ttf in Resources */,
@@ -14590,6 +14595,7 @@
 				4209FE63295C5CA800ACC02E /* FTShelfItemsIndexInfo.swift in Sources */,
 				4209FE89295C60D400ACC02E /* FTNoteshelfDocument_Creation_Template.swift in Sources */,
 				4209FE79295C5FAB00ACC02E /* FTNotebookRecoverPlist.swift in Sources */,
+				97F4CAA32B5A55B400BFBF79 /* FTToolbarConfig.swift in Sources */,
 				ED3532602452E810002B18EE /* FTExtensionAtttachmentsHelper.swift in Sources */,
 				4209FE72295C5F4700ACC02E /* FTFTShelfCollectionMigration.swift in Sources */,
 				4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */,

@@ -77,13 +77,13 @@ class FTModernDiaryTemplateFormat : FTDigitalDiaryTemplateFormat {
         context.restoreGState()
       }
 
-    func addHorizantalBezierLine(rect:CGRect, toContext context : CGContext, withColor color : UIColor) {
+    func addHorizantalBezierLine(rect:CGRect, toContext context : CGContext, withColor color : UIColor, bezierLineWidth : CGFloat = 1.0) {
         let  bezierLinePath = UIBezierPath()
         let  p0 = CGPoint(x: rect.origin.x, y: rect.origin.y)
         bezierLinePath.move(to: p0)
         let  p1 = CGPoint(x: rect.origin.x + rect.width , y: rect.origin.y)
         bezierLinePath.addLine(to: p1)
-        bezierLinePath.lineWidth = 1.0
+        bezierLinePath.lineWidth = bezierLineWidth
         bezierLinePath.lineCapStyle = .butt
         color.setStroke()
         context.addPath(bezierLinePath.cgPath)
