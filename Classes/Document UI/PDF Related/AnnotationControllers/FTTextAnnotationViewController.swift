@@ -299,43 +299,53 @@ class FTTextAnnotationViewController: UIViewController {
             track("textmode_page_tapped", params: ["postit_color" : "clear"], screenName: FTScreenNames.textbox)
         }
         
-        //update default properties
-        if let defaultFont = page?.parentDocument?.localMetadataCache?.defaultBodyFont {
-            textInputView.setValue(defaultFont,
-                                   forAttribute: NSAttributedString.Key.font.rawValue,
-                                   in: NSRange(location: 0, length: 0))
-        }
-        if let defaultColor = page?.parentDocument?.localMetadataCache?.defaultTextColor {
-            textInputView.setValue(defaultColor,
-                                   forAttribute: NSAttributedString.Key.foregroundColor.rawValue,
-                                   in: NSRange(location: 0, length: 0))
-        }
-        if let underlineValue = page?.parentDocument?.localMetadataCache?.defaultIsUnderline {
-            textInputView.setValue(NSNumber.init(value: underlineValue),
-                                   forAttribute: NSAttributedString.Key.underlineStyle.rawValue,
-                                   in: NSRange(location: 0, length: 0))
-        }
-        if let strikeThrough = page?.parentDocument?.localMetadataCache?.defaultIsStrikeThrough {
-            textInputView.setValue(NSNumber.init(value: strikeThrough),
-                                   forAttribute: NSAttributedString.Key.strikethroughStyle.rawValue,
-                                   in: NSRange(location: 0, length: 0))
-        }
-        if let alignment = page?.parentDocument?.localMetadataCache?.defaultTextAlignment, let lineSpace = page?.parentDocument?.localMetadataCache?.defaultAutoLineSpace  {
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = CGFloat(lineSpace)
-            paragraphStyle.alignment = NSTextAlignment(rawValue: alignment) ?? .left
-            textInputView.setValueFor(paragraphStyle, forAttribute: NSAttributedString.Key.paragraphStyle.rawValue, in: NSRange(location: 0, length: 0))
-        }
+        func updateTextConfig() {
+            if let defaultFont = page?.parentDocument?.localMetadataCache?.defaultBodyFont {
+                self.textInputView.setValue(defaultFont,
+                                            forAttribute: NSAttributedString.Key.font.rawValue,
+                                            in: NSRange(location: 0, length: 0))
+            }
+            if let defaultColor = page?.parentDocument?.localMetadataCache?.defaultTextColor {
+                self.textInputView.setValue(defaultColor,
+                                            forAttribute: NSAttributedString.Key.foregroundColor.rawValue,
+                                            in: NSRange(location: 0, length: 0))
+            }
+            if let underlineValue = page?.parentDocument?.localMetadataCache?.defaultIsUnderline {
+                self.textInputView.setValue(NSNumber.init(value: underlineValue),
+                                            forAttribute: NSAttributedString.Key.underlineStyle.rawValue,
+                                            in: NSRange(location: 0, length: 0))
+            }
+            if let strikeThrough = page?.parentDocument?.localMetadataCache?.defaultIsStrikeThrough {
+                self.textInputView.setValue(NSNumber.init(value: strikeThrough),
+                                            forAttribute: NSAttributedString.Key.strikethroughStyle.rawValue,
+                                            in: NSRange(location: 0, length: 0))
+            }
+            if let alignment = page?.parentDocument?.localMetadataCache?.defaultTextAlignment, let lineSpace = page?.parentDocument?.localMetadataCache?.defaultAutoLineSpace  {
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = CGFloat(lineSpace)
+                paragraphStyle.alignment = NSTextAlignment(rawValue: alignment) ?? .left
+                self.textInputView.setValueFor(paragraphStyle, forAttribute: NSAttributedString.Key.paragraphStyle.rawValue, in: NSRange(location: 0, length: 0))
+            }
 
-        if let isAutoLineSpaceEnabled = page?.parentDocument?.localMetadataCache?.defaultIsLineSpaceEnabled {
-            textInputView.setValueFor(NSNumber.init(value: isAutoLineSpaceEnabled), forAttribute: FTFontStorage.isLineSpaceEnabledKey, in: NSRange(location: 0, length: 0))
-        }
-        textView.scale = self.zoomScale
+            if let isAutoLineSpaceEnabled = page?.parentDocument?.localMetadataCache?.defaultIsLineSpaceEnabled {
+                self.textInputView.setValueFor(NSNumber.init(value: isAutoLineSpaceEnabled), forAttribute: FTFontStorage.isLineSpaceEnabledKey, in: NSRange(location: 0, length: 0))
+            }
+            textView.scale = self.zoomScale
 
-        #if targetEnvironment(macCatalyst)
+#if targetEnvironment(macCatalyst)
             self.delegate?.annotationControllerWillBeginEditing?(self)
-        #endif
-        self.delegate?.annotationControllerDidAdded(self)
+#endif
+            self.delegate?.annotationControllerDidAdded(self)
+        }
+
+        if !Thread.isMainThread {
+            FTLogError("Text input thread error")
+            runInMainThread {
+                updateTextConfig()
+            }
+        } else {
+            updateTextConfig()
+        }
     }
     
     override func viewDidLayoutSubviews() {
