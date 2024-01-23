@@ -132,7 +132,7 @@ class FTLassoSelectionView: UIView {
         let moveToFront = UIMenuItem(title: NSLocalizedString("BringToFront", comment: "BringToFront"), action: #selector(self.moveToFrontAction(_:)));
         let moveToBack = UIMenuItem(title: NSLocalizedString("SendToBack", comment: "SendToBack"), action: #selector(self.moveToBackAction(_:)));
         let openAI = UIMenuItem(title: "noteshelf.ai.noteshelfAI".aiLocalizedString, action: #selector(self.openAIAction(_:)));
-        let saveClip = UIMenuItem(title: "Save Clip", action: #selector(self.saveClip(_:)));
+        let saveClip = UIMenuItem(title: "clip.saveClip".localized, action: #selector(self.saveClip(_:)));
 
         var options = [cutMenuItem
                        ,copyMenuItem

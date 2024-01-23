@@ -126,8 +126,8 @@ class FTSavedClipsViewController: UIViewController {
             self.endEditing()
         }
         let rows = viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
-        let title = "Deleting this category will delete all \(rows) clips in this category and cannot be recovered."
-        let message = "Would you like to continue?"
+        let title = String(format: "clip.deleteCategory.title".localized, "\"\(rows)\"")
+        let message = "clip.deleteCategory.message".localized
         UIAlertController.showDeleteDialog(with: title, message: message, from: self) {
             do {
                 try self.viewModel.removeCategory(index: self.selectedSegmentIndex)
@@ -257,14 +257,14 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
                     let emptyCategoriesView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTEmptyCategoriesView", for: indexPath)
                     if let emptyCategoriesView = emptyCategoriesView as? FTEmptyCategoriesView  {
                         emptyCategoriesView.titleLabel.isHidden = false
-                        emptyCategoriesView.titleLabel.text = "No Saved Clips"
-                        emptyCategoriesView.subTitleLabel.text = "Lasso anything and tap ‘Save Clip’ for later use."
+                        emptyCategoriesView.titleLabel.text = "clip.noSavedClips".localized
+                        emptyCategoriesView.subTitleLabel.text = "clip.noSavedClips.description".localized
                         return emptyCategoriesView
                     }
                 } else if cellType == .emptyClips {
                     let emptyClipsView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "FTEmptyClipsView", for: indexPath)
                     if let emptyClipsView = emptyClipsView as? FTEmptyClipsView  {
-                        emptyClipsView.titleLabel.text = "This category is empty"
+                        emptyClipsView.titleLabel.text = "clip.noCategory".localized
                     return emptyClipsView
                 }
             }

@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Rimuovi segnalibro";
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Annulla";
+"clip.addClip" = "Aggiungi clip";
+"clip.deleteCategory" = "Elimina categoria";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "L'eliminazione di questa categoria cancellerà tutti i clip @% in questa categoria e non potranno essere recuperati.";
+"clip.newCategory" = "Nuova categoria...";
+"clip.noCategory" = "Questa categoria è vuota.";
+"clip.noSavedClips" = "Nessun clip salvato";
+"clip.noSavedClips.description" = "Seleziona qualsiasi cosa e tocca 'Salva Clip' per l'uso successivo.";
+"clip.saveClip" = "Salva Clip";
+"clip.savedClips" = "Clip salvati";
 "clipart404" = "Server occupato, riprova più tardi.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Si è verificato un errore durante il backup. Riprova più tardi.";
 "cloud.backup.error.failedToCreateBackup" = "Impossibile creare il file di backup. Controlla lo spazio disponibile sul tuo dispositivo.";
@@ -1577,4 +1587,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Siva on 23 January 2024 at 6:23 PM

@@ -185,7 +185,7 @@
 "Copy" = "Copie";
 "CopyNPages" = "Copier %d pages";
 "CopyToClipboard" = "Copier dans le presse-papiers";
-"Copying" = "Copie en cours...";
+"Copying" = "Copier";
 "CopyrightMessage" = "Droits d'auteur © 2019 Noteshelf. Tous droits réservés.";
 "CouldNotConnectToServer" = "Impossible de se connecter au serveur. Veuillez réessayer ultérieurement.";
 "Cover" = "Couverture";
@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Supprimer le marque-page";
 "bujoessentials" = "Essentiels du Bujo";
 "cancel" = "Annuler";
+"clip.addClip" = "Ajouter un clip";
+"clip.deleteCategory" = "Supprimer la catégorie";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "La suppression de cette catégorie supprimera tous les clips @% de cette catégorie et ne pourra pas être récupérée.";
+"clip.newCategory" = "Nouvelle catégorie...";
+"clip.noCategory" = "Cette catégorie est vide.";
+"clip.noSavedClips" = "Aucun clip enregistré";
+"clip.noSavedClips.description" = "Sélectionnez tout avec le lasso et appuyez sur 'Enregistrer le clip' pour une utilisation ultérieure.";
+"clip.saveClip" = "Enregistrer le clip";
+"clip.savedClips" = "Clips sauvegardés";
 "clipart404" = "Serveur occupé, veuillez réessayer plus tard.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Une erreur s'est produite lors de la sauvegarde. Veuillez réessayer ultérieurement.";
 "cloud.backup.error.failedToCreateBackup" = "Échec de la création du fichier de sauvegarde. Veuillez vérifier l'espace restant sur votre appareil.";
@@ -1577,4 +1587,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Siva on 23 January 2024 at 6:23 PM

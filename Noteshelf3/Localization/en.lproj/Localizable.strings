@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Remove Bookmark";
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
+"clip.addClip" = "Add Clip";
+"clip.deleteCategory" = "Delete Category";
+"clip.deleteCategory.message" = "Would you like to continue?";
+"clip.deleteCategory.title" = "Deleting this category will delete all @% clips in this category and cannot be recovered.";
+"clip.newCategory" = "New Category...";
+"clip.noCategory" = "This category is empty";
+"clip.noSavedClips" = "No Saved Clips";
+"clip.noSavedClips.description" = "Lasso anything and tap ‘Save Clip’ for later use.";
+"clip.saveClip" = "Save Clip";
+"clip.savedClips" = "Saved Clips";
 "clipart404" = "Server Busy, Please try again later.";
 "cloud.backup.error.contentPreviouslyCrashed" = "An error occured while backing up. Please try again later.";
 "cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
@@ -1577,4 +1587,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Siva on 23 January 2024 at 6:23 PM

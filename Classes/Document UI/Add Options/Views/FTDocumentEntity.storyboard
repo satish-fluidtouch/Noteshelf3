@@ -2203,11 +2203,14 @@
                                     <action selector="tapOnBackButton:" destination="y71-7s-Utg" eventType="touchUpInside" id="ITf-za-gfL"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Clips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9H-pz-jaC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Clips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a9H-pz-jaC" customClass="FTCustomLabel" customModule="FTCommon">
                                 <rect key="frame" x="156" y="61.999999999999993" width="102" height="18.666666666666664"/>
                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="clip.savedClips"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <textField hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YXx-9C-k5Q">
                                 <rect key="frame" x="16" y="102" width="382" height="36"/>
@@ -2270,7 +2273,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVI-66-KGf">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVI-66-KGf" customClass="FTCustomButton" customModule="FTCommon">
                                 <rect key="frame" x="0.0" y="852" width="414" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="BHi-Ss-uRr"/>
@@ -2278,6 +2281,9 @@
                                 <color key="tintColor" name="darkRed"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Delete Category"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="clip.deleteCategory"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="deleteCategoryAction:" destination="y71-7s-Utg" eventType="touchUpInside" id="hqX-BE-BhM"/>
                                 </connections>
@@ -2391,7 +2397,7 @@
                                     <action selector="tapOnBackButton:" destination="y71-7s-Utg" eventType="touchUpInside" id="xMz-mD-yVW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oPa-7a-SbP">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oPa-7a-SbP" customClass="FTCustomButton" customModule="FTCommon">
                                 <rect key="frame" x="24" y="794" width="366" height="44"/>
                                 <color key="backgroundColor" name="accent"/>
                                 <constraints>
@@ -2403,15 +2409,21 @@
                                     <fontDescription key="titleFontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                     <color key="baseForegroundColor" name="white100"/>
                                 </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="clip.addClip"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="addClipAction:" destination="Fbp-vb-FzK" eventType="touchUpInside" id="mvW-dk-fiT"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save Clip" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeF-3D-8cC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save Clip" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeF-3D-8cC" customClass="FTCustomLabel" customModule="FTCommon">
                                 <rect key="frame" x="166" y="58.999999999999993" width="82" height="18.666666666666664"/>
                                 <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="localizationKey" value="clip.saveClip"/>
+                                </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jtF-4p-5mj"/>

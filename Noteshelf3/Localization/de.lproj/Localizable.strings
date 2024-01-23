@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Lesezeichen entfernen";
 "bujoessentials" = "Bujo Grundlagen";
 "cancel" = "Abbrechen";
+"clip.addClip" = "Clip hinzufügen";
+"clip.deleteCategory" = "Kategorie löschen";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "Das Löschen dieser Kategorie löscht alle @% Clips in dieser Kategorie und kann nicht wiederhergestellt werden.";
+"clip.newCategory" = "Neue Kategorie...";
+"clip.noCategory" = "Diese Kategorie ist leer.";
+"clip.noSavedClips" = "Keine gespeicherten Clips";
+"clip.noSavedClips.description" = "Alles mit dem Lasso auswählen und auf 'Clip speichern' tippen, um es später zu verwenden.";
+"clip.saveClip" = "Clip speichern";
+"clip.savedClips" = "Gespeicherte Clips";
 "clipart404" = "Server beschäftigt, bitte versuchen Sie es später erneut.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Beim Erstellen einer Sicherungskopie ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.";
 "cloud.backup.error.failedToCreateBackup" = "Fehler beim Erstellen der Sicherungsdatei. Überprüfen Sie den verbleibenden Speicherplatz auf Ihrem Gerät.";
@@ -1577,4 +1587,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Siva on 23 January 2024 at 6:23 PM

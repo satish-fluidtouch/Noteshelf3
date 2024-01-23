@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "移除書籤";
 "bujoessentials" = "筆記本要點";
 "cancel" = "取消";
+"clip.addClip" = "添加片段";
+"clip.deleteCategory" = "刪除類別";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "刪除此類別將刪除此類別中的所有@％剪輯，且無法恢復。";
+"clip.newCategory" = "新分類...";
+"clip.noCategory" = "這個類別為空";
+"clip.noSavedClips" = "沒有已儲存的片段";
+"clip.noSavedClips.description" = "套索任何東西並點擊「儲存片段」以供日後使用。";
+"clip.saveClip" = "保存片段";
+"clip.savedClips" = "已儲存的片段";
 "clipart404" = "伺服器繁忙，請稍後重試。";
 "cloud.backup.error.contentPreviouslyCrashed" = "時發生錯誤。請稍後再試。";
 "cloud.backup.error.failedToCreateBackup" = "建立備份檔案失敗。 請檢查設備上的剩餘空間。";
@@ -1577,4 +1587,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Siva on 23 January 2024 at 6:23 PM
