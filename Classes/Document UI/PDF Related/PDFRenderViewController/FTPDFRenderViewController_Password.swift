@@ -162,7 +162,7 @@ extension FTPDFRenderViewController
         self.showZoomPanelIfNeeded();
     }
     
-    @objc func navigateToPage(with pageId: String) {
+    @objc func navigateToPage(with pageId: String, for documentId: String) {
         var reqIndex: Int?
         if pageId.isEmpty {
             reqIndex = 0
@@ -171,8 +171,9 @@ extension FTPDFRenderViewController
         }
         if let index = reqIndex {
             self.showPage(at: index, forceReLayout: false, animate: false)
-        } else {
-            // Page not avialable
+        } else if self.pdfDocument.documentUUID == documentId {
+            // with in same notebook
+            UIAlertController.showAlertForPageNotAvailable(from: self, completionHandler: nil)
         }
     }
 }

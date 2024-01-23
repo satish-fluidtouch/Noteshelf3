@@ -543,26 +543,67 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 }
     
     func openNotebook(using schemeUrl: URL) {
-        if let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
-           let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
-           let pageId = queryItems.first(where: { $0.name == "pageId" })?.value {
-            if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: documentId) {
-                self.docuemntViewController?.navigateToPage(with: pageId)
-            } else {
-                FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
-                    if let shelfItem = docItem {
+        guard let docVc = self.docuemntViewController,
+              let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
+              let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
+              let pageId = queryItems.first(where: { $0.name == "pageId" })?.value else {
+            return
+        }
+
+        if docVc.checkIfDocumentIsOpen(docId: documentId) {
+            docVc.navigateToPage(with: pageId, documentId: documentId)
+        } else {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
+                guard let shelfItem = docItem else {
+                    docVc.showDocumentNotAvailableAlert()
+                    return
+                }
+
+                let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                FTNoteshelfDocumentManager.shared.openDocument(request: request) { [self] token, document, error in
+                    guard let doc = document else {
+                        return
+                    }
+
+                    if let pageIndex = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
+                        handleOpenDocument(pageIndex: pageIndex)
+                    } else {
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token) { _ in
+                            handlePageNotAvailable(shelfItem: shelfItem)
+                        }
+                    }
+
+                    func handleOpenDocument(pageIndex: Int) {
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token) { _ in
+                            docVc.handleNewDocumentOpenAlert(title: shelfItem.displayTitle, pageNumber: pageIndex + 1) { yes in
+                                if yes {
+                                    openDocumentAndNavigateToPage(shelfItem: shelfItem, pageId: pageId)
+                                }
+                            }
+                        }
+                    }
+
+                    func handlePageNotAvailable(shelfItem: FTDocumentItemProtocol) {
+                        UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: docVc, notebookTitle: shelfItem.displayTitle) { yes in
+                            if yes {
+                                openDocumentAndNavigateToPage(shelfItem: shelfItem, pageId: "")
+                            }
+                        }
+                    }
+
+                    func openDocumentAndNavigateToPage(shelfItem: FTDocumentItemProtocol, pageId: String) {
                         let relativePath = shelfItem.URL.relativePathWRTCollection()
-                        self.openDocumentAtRelativePath(relativePath, inShelfItem: nil,
-                                                        animate: false,
-                                                        addToRecent: true,
-                                                        bipassPassword: true) { _, _ in
-                            self.docuemntViewController?.navigateToPage(with: pageId)
+                        openDocumentAtRelativePath(relativePath, inShelfItem: nil, animate: false, addToRecent: true, bipassPassword: true) { _, _ in
+                            runInMainThread(1) {
+                                docVc.navigateToPage(with: pageId, documentId: documentId)
+                            }
                         }
                     }
                 }
             }
         }
     }
+
     
     func startNS2ToNS3Migration() {
         self.prepareProviderIfNeeded {

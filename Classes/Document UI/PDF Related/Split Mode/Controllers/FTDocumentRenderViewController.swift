@@ -31,7 +31,10 @@ let textContainerTag: Int = 9001
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?);
-    func navigateToPage(with pageId: String)
+    func navigateToPage(with pageId: String, documentId: String)
+    func checkIfDocumentIsOpen(docId: String) -> Bool
+    func showDocumentNotAvailableAlert()
+    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: ((Bool) -> Void)?)
 }
 
 protocol FTToolbarElements : NSObjectProtocol {
@@ -314,10 +317,40 @@ extension FTDocumentRenderViewController: FTToolbarElements {
 
 //MARK:- fileprivate member Variable Access methods
 extension FTDocumentRenderViewController: FTDocumentViewPresenter {
-    func navigateToPage(with pageId: String) {
-        self.documentViewController.navigateToPage(with: pageId)
+    func navigateToPage(with pageId: String, documentId: String) {
+        self.documentViewController.navigateToPage(with: pageId, for: documentId)
     }
     
+    func checkIfDocumentIsOpen(docId: String) -> Bool {
+        var status = false
+        if let docID = self.documentViewController?.pdfDocument.documentUUID, docID == docId {
+            status = true
+        }
+        return status
+    }
+
+    func showDocumentNotAvailableAlert() {
+        let alertController = UIAlertController(title: "Document has been deleted", message: "The document linked to the content is not available.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok".localized, style: .default) { _ in
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: ((Bool) -> Void)?) {
+        let message = String(format: "Would you like to open page %d of %@", pageNumber, title)
+        let alertController = UIAlertController(title: "Closing this document", message: message, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
+            onCompletion?(true)
+        }
+        let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
+            onCompletion?(false)
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     func didCompleteDocumentPresentation() {
         isReady = true;
         self.documentViewController.didCompleteDocumentPresentation();

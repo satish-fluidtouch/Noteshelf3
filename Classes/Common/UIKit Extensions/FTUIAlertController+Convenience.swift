@@ -30,4 +30,26 @@ extension UIAlertController {
         })
         viewController?.present(alertController, animated: true, completion: nil)
     }
+
+    static func showAlertForPageNotAvailable(from controller: UIViewController, completionHandler: ((Bool) -> Void)?) {
+        let alertController = UIAlertController(title: "Page has been deleted", message: "The page linked to the content is not available.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok".localized, style: .default) { _ in
+            completionHandler?(true)
+        }
+        alertController.addAction(okAction)
+        controller.present(alertController, animated: true, completion: nil)
+    }
+
+    static func showAlertForPageNotAvailableAndSuggestToFirstPage(from controller: UIViewController, notebookTitle: String, completionHandler: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController(title: "Page has been deleted", message: "The page linked to the content is not available, would you like to navigate to the first page of \(notebookTitle)?" , preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes".localized, style: .default) { _ in
+            completionHandler(true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel) { _ in
+            completionHandler(false)
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(cancelAction)
+        controller.present(alertController, animated: true, completion: nil)
+    }
 }

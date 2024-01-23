@@ -93,21 +93,16 @@ extension FTTextAnnotationViewController {
     }
 
     @objc internal func deleteLinkAction(_ sender: Any?) {
-        guard let attrText = self.textInputView.attributedText else {
-            return
-        }
         var range = self.linkSelectedRange ?? self.textInputView.selectedRange
-        if range.length == 0 {
+        if range.length == 0 { // long pressed text
             range = NSRange(location: 0, length: self.textInputView.attributedText.length)
-            self.linkSelectedRange = range
         }
-        let attributedString: NSMutableAttributedString = NSMutableAttributedString(attributedString: attrText)
-        attributedString.removeAttribute(.link, range: range)
+        self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
         let keys = NSAttributedString.linkAttributes.keys
         keys.forEach { attr in
-            attributedString.removeAttribute(attr, range: range)
+            self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
         }
-        self.textInputView.attributedText = attributedString
+        self.saveTextEntryAttributes()
     }
 
     private func updateLinkAttribute(with url: URL, text: String) {

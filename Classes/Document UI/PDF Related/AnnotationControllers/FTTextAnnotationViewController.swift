@@ -789,7 +789,8 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         //Remove any submenu's in toolbar
         let contentScale = self.zoomScale;
         var returnValue = true
-        
+        self.updateLinkForEditedWord(range: range, replacementText: text)
+
         if (text == "\n") {
             if textInputView.hasBulletsInLineParagraph(for: textView.selectedRange) {
                 returnValue = textView.autoContinueBullets(forEditing: textView.selectedRange, scale: contentScale * textInputView.transformScale)
@@ -805,6 +806,44 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return returnValue
     }
     
+    func updateLinkForEditedWord(range: NSRange, replacementText text: String) {
+        let editedText = (self.textInputView.text as NSString).replacingCharacters(in: range, with: text)
+        let editedRange = NSRange(location: range.location, length: text.count)
+        let wordRange = (editedText as NSString).rangeOfWord(at: editedRange.location)
+        guard editedRange.location + editedRange.length <= editedText.count,
+              wordRange.location + wordRange.length <= editedText.count else {
+            return
+        }
+
+        let existingLink = self.fetchLinkForWord(in: wordRange)
+        if let existingLink = existingLink {
+            let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
+            let isWhitespace = text.trimmingCharacters(in: whitespaceCharacterSet).isEmpty
+            if isWhitespace {
+                self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
+                let keys = NSAttributedString.linkAttributes.keys
+                keys.forEach { attr in
+                    self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
+                }
+            } else {
+                self.textInputView.setValueFor(existingLink, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
+                let attrStr = NSMutableAttributedString(string: editedText)
+                attrStr.addAttributes(NSAttributedString.linkAttributes, range: wordRange)
+            }
+        }
+    }
+
+    func fetchLinkForWord(in range: NSRange) -> URL? {
+        guard let attributedText = self.textInputView.attributedText else { return nil }
+        guard range.location < attributedText.length else { return nil }
+        var effectiveRange = NSRange(location: 0, length: 0)
+        let attributes = attributedText.attributes(at: range.location, effectiveRange: &effectiveRange)
+        if let link = attributes[.link] as? URL {
+            return link
+        }
+        return nil
+    }
+
     func textView(_ textView: UITextView,
                   shouldInteractWith textAttachment: NSTextAttachment,
                   in characterRange: NSRange,
@@ -1725,3 +1764,17 @@ extension FTTextAnnotationViewController {
     }
 }
 #endif
+
+extension NSString {
+    func rangeOfWord(at index: Int) -> NSRange {
+        var start = index
+        var end = index
+        while start > 0, !CharacterSet.whitespacesAndNewlines.contains(UnicodeScalar(character(at: start - 1))!) {
+            start -= 1
+        }
+        while end < length, !CharacterSet.whitespacesAndNewlines.contains(UnicodeScalar(character(at: end))!) {
+            end += 1
+        }
+        return NSRange(location: start, length: end - start)
+    }
+}

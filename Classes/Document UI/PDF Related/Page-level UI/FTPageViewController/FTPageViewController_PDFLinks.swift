@@ -245,14 +245,21 @@ private extension FTPageViewController {
 extension URL {
     func openURL(on viewController: UIViewController) {
         if(UIApplication.shared.canOpenURL(self)) {
-            let title = NSLocalizedString("ExternalLink", comment: "Extenal Link");
-            let message = String.init(format: NSLocalizedString("ExternalLinkOpenInfo", comment: "An external applicaiton..."), (self.path));
-            UIAlertController.showConfirmationDialog(with: title,
-                                                     message: message,
-                                                     from: viewController,
-                                                     okHandler: {
-                                                        UIApplication.shared.open(self, options: [:], completionHandler: nil);
-            });
+            if (self.scheme == FTSharedGroupID.getAppBundleID()) {
+                let reqHyperlinkStr = FTSharedGroupID.getAppBundleID() + ":" +  FTAppIntentHandler.hyperlinkPath
+                if self.absoluteString.hasPrefix(reqHyperlinkStr) {
+                    UIApplication.shared.open(self, options: [:], completionHandler: nil)
+                }
+            } else {
+                let title = NSLocalizedString("ExternalLink", comment: "Extenal Link")
+                let message = String.init(format: NSLocalizedString("ExternalLinkOpenInfo", comment: "An external applicaiton..."), (self.path))
+                UIAlertController.showConfirmationDialog(with: title,
+                                                         message: message,
+                                                         from: viewController,
+                                                         okHandler: {
+                    UIApplication.shared.open(self, options: [:], completionHandler: nil)
+                })
+            }
         }
     }
 }
