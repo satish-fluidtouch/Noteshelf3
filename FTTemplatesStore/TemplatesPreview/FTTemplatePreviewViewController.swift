@@ -649,9 +649,17 @@ extension FTTemplatePreviewViewController: UIGestureRecognizerDelegate {
          guard let downloadUrl = templa.inspirationsUrl else {
              throw TemplateDownloadError.InvalidTemplate
          }
-         self.showingLoadingindicator()
-         let fileUrl = try await storeServiceApi.downloadinspirationJournalFor(url: downloadUrl, fileName: templa.fileName)
-         self.hideLoadingindicator()
+         var fileUrl = FTTemplatesCache().templatesFolder.appendingPathComponent(templa.fileName)
+
+         let currentVersion: Int = fileUrl.templateVersion
+         let shouldReDownlload = currentVersion != templa.version
+         if !FileManager.default.fileExists(atPath: fileUrl.path) || shouldReDownlload {
+             self.showingLoadingindicator()
+            fileUrl = try await storeServiceApi.downloadinspirationJournalFor(url: downloadUrl, fileName: templa.fileName)
+             self.hideLoadingindicator()
+             fileUrl.templateVersion = templa.version ?? 1
+         }
+
          createNotebookFor(fileUrl: fileUrl.appendingPathComponent(templa.fileName).appendingPathExtension("pdf"), fileName: templa.title)
          FTStorePremiumPublisher.shared.actionStream.send(.track(event: EventName.template_preview_createnotebook_tap, params: [EventParameterKey.title: templa.title], screenName: ScreenName.templatesStore))
 
