@@ -417,7 +417,13 @@ class FTTextAnnotationViewController: UIViewController {
     override var isFirstResponder: Bool {
         return textInputView.isFirstResponder
     }
-        
+
+    // Making it as internal - not intended for outside purpose, required only inside this controller files
+    internal func handleLinkTextEditUpdate() {
+        self.resizeTextViewAsNeeded()
+        self.saveTextEntryAttributes()
+    }
+
     @objc func saveTextEntryAttributes() {
         //Check if the text is empty in which case we can remove the annotation object.
         var shouldRemove = false;
@@ -806,7 +812,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return returnValue
     }
     
-    func updateLinkForEditedWord(range: NSRange, replacementText text: String) {
+   private func updateLinkForEditedWord(range: NSRange, replacementText text: String) {
         let editedText = (self.textInputView.text as NSString).replacingCharacters(in: range, with: text)
         let editedRange = NSRange(location: range.location, length: text.count)
         let wordRange = (editedText as NSString).rangeOfWord(at: editedRange.location)
@@ -814,26 +820,21 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
               wordRange.location + wordRange.length <= editedText.count else {
             return
         }
-
         let existingLink = self.fetchLinkForWord(in: wordRange)
-        if let existingLink = existingLink {
+        if nil != existingLink {
             let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
-            let isWhitespace = text.trimmingCharacters(in: whitespaceCharacterSet).isEmpty
-            if isWhitespace {
+            let toRemoveLink = text.trimmingCharacters(in: whitespaceCharacterSet).isEmpty
+            if toRemoveLink {
                 self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
                 let keys = NSAttributedString.linkAttributes.keys
                 keys.forEach { attr in
                     self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
                 }
-            } else {
-                self.textInputView.setValueFor(existingLink, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
-                let attrStr = NSMutableAttributedString(string: editedText)
-                attrStr.addAttributes(NSAttributedString.linkAttributes, range: wordRange)
             }
         }
     }
 
-    func fetchLinkForWord(in range: NSRange) -> URL? {
+    private func fetchLinkForWord(in range: NSRange) -> URL? {
         guard let attributedText = self.textInputView.attributedText else { return nil }
         guard range.location < attributedText.length else { return nil }
         var effectiveRange = NSRange(location: 0, length: 0)

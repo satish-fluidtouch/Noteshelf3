@@ -189,7 +189,7 @@ class FTLinkToTextViewModel: NSObject {
         }
     }
 
-    func closeOpenedDocumentIfNeeded() {
+    func closeOpenedDocumentIfExists() {
         // should not be closing if selected document and current document are same
         if let currentDoc = self.currentDocument, let selDoc = self.selectedDocument, currentDoc.documentUUID != selDoc.documentUUID, let token = self.token {
             FTNoteshelfDocumentManager.shared.closeDocument(document: selDoc, token: token, onCompletion: nil)

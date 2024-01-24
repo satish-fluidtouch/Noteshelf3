@@ -527,14 +527,6 @@ private extension NSMutableAttributedString
                             self.addAttribute(.customLink, value: url, range: range)
                             self.addAttributes(NSAttributedString.linkAttributes, range: range);
                         }
-//                    case .phoneNumber:
-//                        if let phoneNumber = _result.phoneNumber {
-//                            let withspace = phoneNumber.replacingOccurrences(of: " ", with: "");
-//                            if let url = URL(string: "tel:\(withspace)") {
-//                                self.addAttribute(.link, value: url, range: range)
-//                                self.addAttributes(NSAttributedString.linkAttributes, range: range);
-//                            }
-//                        }
                     default:
                         break;
                     }

@@ -35,7 +35,7 @@ class FTLinkToSelectViewController: UIViewController {
     }
 
     deinit {
-        self.viewModel.closeOpenedDocumentIfNeeded()
+        self.viewModel.closeOpenedDocumentIfExists()
     }
 
     override var shouldAvoidDismissOnSizeChange: Bool {
@@ -214,7 +214,7 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
 
 extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
     func didTapBarButtonItem(_ type: FTBarButtonItemType) {
-        self.viewModel.closeOpenedDocumentIfNeeded()
+        self.viewModel.closeOpenedDocumentIfExists()
         self.dismiss(animated: true) {
             if type == .right { // DONE
                 var isWebLink = false
@@ -230,6 +230,7 @@ extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
 extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
     func didSelect(document: FTShelfItemProtocol) {
         self.navigationController?.popToViewController(self, animated: true)
+        self.viewModel.closeOpenedDocumentIfExists() // to close if any pre-opened document was there
         if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
             var exstInfo = self.viewModel.info
             exstInfo.docUUID = docId

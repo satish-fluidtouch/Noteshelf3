@@ -124,7 +124,7 @@ extension FTTextAnnotationViewController {
         attrText.addAttributes(NSAttributedString.linkAttributes, range: newRange)
         self.textInputView.attributedText = attrText
         self.transitionInProgress = false
-        self.saveTextEntryAttributes()
+        self.handleLinkTextEditUpdate()
     }
     
     @objc internal func performLookUpMenu(_ sender: Any?) {

@@ -94,7 +94,7 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
           #else
           allowsEditingTextAttributes = false
           #endif
-          dataDetectorTypes = [.link]//[.link, .phoneNumber]
+          dataDetectorTypes = [.link]
     }
     
     var defaultAttributes: [NSAttributedString.Key : Any] {
@@ -115,17 +115,6 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
           return dictionary ?? [:]
     }
     
-    var linktextAttributes: [NSAttributedString.Key : Any]! {
-        var linkAttrs = super.linkTextAttributes
-        let customLinkAttrs = NSAttributedString.linkAttributes
-        (customLinkAttrs as NSDictionary).enumerateKeysAndObjects({ key, obj, _ in
-            if let keyAttr = key as? NSAttributedString.Key {
-                linkAttrs?[keyAttr] = obj
-            }
-        })
-        return linkAttrs
-    }
-
     #if !targetEnvironment(macCatalyst)
     override func becomeFirstResponder() -> Bool {
         let responder = super.becomeFirstResponder()
