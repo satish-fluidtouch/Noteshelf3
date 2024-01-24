@@ -749,6 +749,7 @@
 		9715E0432AEA9D2D00EC48D4 /* EDAMLimits.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E00A2AEA9D2C00EC48D4 /* EDAMLimits.m */; };
 		9715E0442AEA9D2D00EC48D4 /* EDAMUserStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E00B2AEA9D2C00EC48D4 /* EDAMUserStore.m */; };
 		9715E0452AEA9D2D00EC48D4 /* EDAMNoteStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715E00C2AEA9D2C00EC48D4 /* EDAMNoteStore.m */; };
+		9716E5C52B60F576008D35F5 /* Lora-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9716E5C42B60F576008D35F5 /* Lora-Bold.ttf */; };
 		972B52BE2A406FEF001158D9 /* StockPapers_Watch.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 972B52BD2A406FEF001158D9 /* StockPapers_Watch.bundle */; };
 		972B52E02A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B52DF2A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift */; };
 		972B53222A45CB7A001158D9 /* FTNotebookShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972B53212A45CB7A001158D9 /* FTNotebookShadowView.swift */; };
@@ -3686,6 +3687,7 @@
 		9715E00A2AEA9D2C00EC48D4 /* EDAMLimits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMLimits.m; sourceTree = "<group>"; };
 		9715E00B2AEA9D2C00EC48D4 /* EDAMUserStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMUserStore.m; sourceTree = "<group>"; };
 		9715E00C2AEA9D2C00EC48D4 /* EDAMNoteStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDAMNoteStore.m; sourceTree = "<group>"; };
+		9716E5C42B60F576008D35F5 /* Lora-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lora-Bold.ttf"; sourceTree = "<group>"; };
 		97197DE626EA31F100BA2C49 /* FTClassicDiaryCalendarTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryCalendarTemplate.swift; sourceTree = "<group>"; };
 		972B52BD2A406FEF001158D9 /* StockPapers_Watch.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = StockPapers_Watch.bundle; sourceTree = "<group>"; };
 		972B52DF2A42D806001158D9 /* FTSideBarItemContextMenuPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSideBarItemContextMenuPreview.swift; sourceTree = "<group>"; };
@@ -8566,6 +8568,7 @@
 		52BBD52C29E95D9E003088AE /* Lora */ = {
 			isa = PBXGroup;
 			children = (
+				9716E5C42B60F576008D35F5 /* Lora-Bold.ttf */,
 				52BBD50029E95BCE003088AE /* Lora-Italic.ttf */,
 				52BBD4FE29E95BCD003088AE /* Lora-Medium.ttf */,
 				52BBD4FF29E95BCD003088AE /* Lora-Regular.ttf */,
@@ -12367,6 +12370,7 @@
 				E7AE403B28755D4500C0F3EC /* themes_v8_es.plist in Resources */,
 				3DAC3FD329192543009B7BC7 /* FTColorPickerViewController.xib in Resources */,
 				E7ADA795288825A300309D16 /* GridColors.plist in Resources */,
+				9716E5C52B60F576008D35F5 /* Lora-Bold.ttf in Resources */,
 				972B52BE2A406FEF001158D9 /* StockPapers_Watch.bundle in Resources */,
 				BAF38FD22859ADF00067CA9F /* FTZoomOverlay.storyboard in Resources */,
 				BAF38FDB2859ADF00067CA9F /* FTPenSizeCollectionViewCell.xib in Resources */,

@@ -578,7 +578,7 @@ extension FTDairyFormat {
         self.drawColorBandsWith(xAxis: todayPillRect.origin.x, yAxis: todayPillRect.origin.y, context: context, width: todayPillRect.width, height: todayPillRect.height, bandColor: backgroundColor, cornerRadius: todayRectCornerRadius)
 
         let todayRect = CGRect(x: todayPillRect.origin.x + (todayPillRect.width - todayString.size().width)/2 , y: todayLinkRectY + (todayPillRect.height - todayString.size().height)/2, width: todayString.size().width, height: todayString.size().height)
-        todayString.draw(at:CGPoint(x: todayRect.origin.x + 1, y: todayRect.origin.y + 0.5))
+        todayString.draw(at:CGPoint(x: todayRect.origin.x + 1, y: todayRect.origin.y))
 
 
         let todayLinkRect = getLinkRect(location: CGPoint(x:todayPillRect.origin.x - 3, y: todayPillRect.origin.y - 3), frameSize:CGSize(width: todayPillRect.width + 6 , height: todayPillRect.height + 6))

@@ -321,5 +321,11 @@ extension UIFont {
         }
         return font
     }
+    static func LoraBold(_ fontSize : CGFloat) -> UIFont {
+        guard let font = UIFont(name: "Lora-Bold", size: fontSize) else {
+            return UIFont.systemFont(ofSize: fontSize);
+        }
+        return font
+    }
 }
 #endif
