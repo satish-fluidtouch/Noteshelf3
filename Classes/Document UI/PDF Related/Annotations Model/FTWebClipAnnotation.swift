@@ -48,7 +48,7 @@ extension FTWebClipAnnotation
         var copiedFileItem = annotation.imageContentFileItem();
         if(nil == copiedFileItem) {
             if let sourceFileItem = self.imageContentFileItem() {
-                copiedFileItem = FTFileItemImage.init(fileName: annotation.imageContentFileName());
+                copiedFileItem = FTFileItemImage.init(fileName: annotation.imageContentFileName(),document: document);
                 copiedFileItem?.securityDelegate = document;
                 document?.resourceFolderItem()?.addChildItem(copiedFileItem);
 

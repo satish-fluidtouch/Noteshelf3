@@ -10,10 +10,10 @@ import Foundation
 import FTDocumentFramework
 import FTRenderKit
 
-final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
+final class FTCachedSqliteAnnotationFileItem: FTFileItem {
     weak var documentItem: FTDocumentItemProtocol?
     convenience init(url: URL, isDirectory: Bool, documentItem: FTDocumentItemProtocol?) {
-        self.init(url: url, isDirectory: isDirectory)
+        self.init(url: url, isDirectory: isDirectory,document: nil)
         self.documentItem = documentItem
     }
 
@@ -22,11 +22,11 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
         var mediaToReturn = [FTShelfMedia]();
         let typesOfAnnotation: [Int] = [FTAnnotationType.image.rawValue];
 
-        if (false == self.schemaExists()) {
+        guard let dbQueue = self.schemaExists(self.fileItemURL) else {
             return mediaToReturn;
         }
 
-        self.databaseQueue.inDatabase({ [weak self] (db) in
+        dbQueue.inDatabase({ [weak self] (db) in
             guard let self = self else { return }
             let index = getPageIndex()
 
@@ -60,11 +60,10 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
         var mediaToReturn = [FTShelfAudio]();
         let typesOfAnnotation: [Int] = [FTAnnotationType.audio.rawValue];
 
-        if (false == self.schemaExists()) {
+        guard let dbQueue = self.schemaExists(self.fileItemURL) else {
             return mediaToReturn;
         }
-
-        self.databaseQueue.inDatabase({ [weak self] (db) in
+        dbQueue.inDatabase({ [weak self] (db) in
             guard let self = self else { return }
             let index = getPageIndex()
 
@@ -98,18 +97,20 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
         return mediaToReturn;
     }
 
-    fileprivate func schemaExists() -> Bool
+    fileprivate func schemaExists(_ url: URL?) -> FMDatabaseQueue?
     {
-        guard let fileURL = self.fileItemURL else {
-            return false;
+        guard let fileURL = url else {
+            return nil;
         }
 
-        if (!FileManager.default.fileExists(atPath: fileURL.path)) {
-            return false;
+        if (!FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false))) {
+            return nil;
+        }
+        guard let dbQueue = FMDatabaseQueue(url: self.fileItemURL) else {
+            return nil;
         }
         var success : Bool = false;
-
-        self.databaseQueue.inDatabase { (db) in
+        dbQueue.inDatabase { (db) in
             db.open();
             let checkForTavleQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='annotation'";
             let set = db.executeQuery(checkForTavleQuery, withParameterDictionary: nil);
@@ -119,7 +120,7 @@ final class FTCachedSqliteAnnotationFileItem: FTFileItemSqlite {
             }
             db.close();
         }
-        return success;
+        return success ? dbQueue : nil;
     }
 }
 

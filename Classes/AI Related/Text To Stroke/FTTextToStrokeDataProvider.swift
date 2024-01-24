@@ -26,7 +26,7 @@ class FTTextToStrokeDataProvider: NSObject {
     private var annotationFileName: String = "";
     private lazy var sqliteFileItem: FTNSqliteAnnotationFileItem? = {
         let annotationsPath = self.glyphFileURL.appending(component: "Annotations/\(self.annotationFileName)");
-        let fileItem = FTNSqliteAnnotationFileItem(url: annotationsPath, isDirectory: false);
+        let fileItem = FTNSqliteAnnotationFileItem(url: annotationsPath, isDirectory: false,document: nil);
         return fileItem;
     }();
     
@@ -109,7 +109,7 @@ private extension FTTextToStrokeDataProvider {
                 
                 if let template = page.associatedPDFFileName {
                     let templatePath = glyphFileURL.appending(component: TEMPLATES_FOLDER_NAME).appending(component: template);
-                    if let pdfFile = FTPDFKitFileItemPDF(url: templatePath, isDirectory: false) {
+                    if let pdfFile = FTPDFKitFileItemPDF(url: templatePath, isDirectory: false,document:nil) {
                         self.actualPageSize = pdfFile.pageRectOfPage(atNumber: page.associatedPDFKitPageIndex).size;
                     }
                 }

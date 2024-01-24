@@ -329,7 +329,7 @@ extension FTShelfItemCollectionICloud: FTShelfItemCollection {
                     if(nil == error) {
                         if(toCollection.isTrash) {
                             let recoveryURL = destURL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
-                            let plist = FTNotebookRecoverPlist(url: recoveryURL, isDirectory: false);
+                            let plist = FTNotebookRecoverPlist(url: recoveryURL, isDirectory: false,document: nil);
                             plist?.recovertType = .book;
                             plist?.recoverLocation = shelfItem.URL.relativePathWRTCollection().deletingLastPathComponent;
                             plist?.saveContentsOfFileItem();

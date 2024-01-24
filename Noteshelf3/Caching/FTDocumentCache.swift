@@ -235,7 +235,7 @@ extension FTDocumentCache {
     private func relativePathWRTCollectionFor(documentId: String) -> String? {
         let destinationURL = cachedLocation(for: documentId)
         let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-        if let propertiList = FTFileItemPlist(url: dest, isDirectory: false), let relativePath = propertiList.object(forKey: "relativePath") as? String {
+        if let propertiList = FTFileItemPlist(url: dest, isDirectory: false,document:nil), let relativePath = propertiList.object(forKey: "relativePath") as? String {
             return relativePath
         }
         return nil
@@ -250,7 +250,7 @@ private extension FTDocumentCache {
         func updateMetadataPlistWithRelativePathFor(docUrl: URL, documentId: String) {
             let destinationURL = cachedLocation(for: documentId)
             let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-            if let propertiList = FTFileItemPlist(url: dest, isDirectory: false) {
+            if let propertiList = FTFileItemPlist(url: dest, isDirectory: false,document:nil) {
                 let relativePath = docUrl.relativePathWRTCollection()
                 propertiList.setObject(relativePath, forKey: "relativePath")
                 try? propertiList.writeUpdates(to: dest)

@@ -20,7 +20,7 @@ class FTRecognitionCache: NSObject {
     private weak var visionCachePlistItem : FTVisionRecogCachePlistItem?;
     private var lastSavedTime : TimeInterval = 0;
     
-    private var recognitionCacheRoot: FTFileItem = FTFileItem.init(url: FTRecognitionCache.recognitionCacheDirectory(), isDirectory: true)
+    private var recognitionCacheRoot: FTFileItem = FTFileItem.init(url: FTRecognitionCache.recognitionCacheDirectory(), isDirectory: true,document: nil)
     private var documentIDFolder: FTFileItem?
     private var languageCode: String = "en_US";
     
@@ -103,7 +103,7 @@ class FTRecognitionCache: NSObject {
         if self.documentIDFolder == nil  {
             self.documentIDFolder = self.recognitionCacheRoot.childFileItem(withName: currentDoc.documentUUID);
             if(self.documentIDFolder == nil){
-                self.documentIDFolder = FTFileItem.init(fileName: currentDoc.documentUUID, isDirectory: true)
+                self.documentIDFolder = FTFileItem.init(fileName: currentDoc.documentUUID, isDirectory: true,document:nil)
                 self.recognitionCacheRoot.addChildItem(self.documentIDFolder);
             }
         }
@@ -151,10 +151,10 @@ class FTRecognitionCache: NSObject {
             //************************
             if(nil == recognitionCachePlist) {
                 if fileName == RECOGNITION_INFO_FILE_NAME {
-                    recognitionCachePlist = FTRecognitionCachePlistItem.init(fileName: plistFileName)
+                    recognitionCachePlist = FTRecognitionCachePlistItem.init(fileName: plistFileName,document:nil)
                 }
                 else {
-                    recognitionCachePlist = FTVisionRecogCachePlistItem.init(fileName: plistFileName)
+                    recognitionCachePlist = FTVisionRecogCachePlistItem.init(fileName: plistFileName,document:nil)
                 }
                 docUUIDFolder.addChildItem(recognitionCachePlist);
             }

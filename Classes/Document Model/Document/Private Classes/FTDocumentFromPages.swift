@@ -41,7 +41,7 @@ class FTDocumentFromPages: NSObject {
                         if(success) {
                             if(self.purpose == .trashRecovery) {
                                 let url = ftdocument.fileURL;
-                                let recoveryinfo = FTNotebookRecoverPlist(url: url.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST), isDirectory: false);
+                                let recoveryinfo = FTNotebookRecoverPlist(url: url.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST), isDirectory: false,document: self.document);
                                 recoveryinfo?.documentUUID = self.document.documentUUID
                                 self.recoveryInfoPlist = recoveryinfo;
                                 ftdocument.rootFileItem.addChildItem(recoveryinfo);

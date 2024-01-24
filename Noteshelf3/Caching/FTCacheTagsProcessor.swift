@@ -301,7 +301,7 @@ extension FTCacheTagsProcessor {
         if let docUUID = documentUUID {
             let destinationURL = FTDocumentCache.shared.cachedLocation(for: docUUID)
             let dest = destinationURL.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-            let propertiList = FTFileItemPlist(url: dest, isDirectory: false)
+            let propertiList = FTFileItemPlist(url: dest, isDirectory: false,document:nil)
             if let docTags = propertiList?.object(forKey: "tags") as? [String] {
                 return Array(Set.init(docTags))
             }

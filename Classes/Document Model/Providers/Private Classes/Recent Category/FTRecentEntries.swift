@@ -197,12 +197,10 @@ private class FTRecentDataProvider {
     private var items = [FTDiskRecentItem]();
     func recentItems() -> [FTDiskRecentItem] {
         lock.lock()
-        debugLog("\(self.mode.rawValue): loading - START");
         if(items.isEmpty) {
             self.items.append(contentsOf: self.loadContents());
         }
         removeStaledItems();
-        debugLog("\(self.mode.rawValue): loading - END");
         lock.unlock()
         return items;
     }
@@ -287,7 +285,6 @@ private class FTRecentDataProvider {
     
     func itemFor(_ url: URL) -> FTDiskRecentItem? {
         lock.lock()
-        debugLog("\(self.mode.rawValue): itemFor - START");
         let item = self.items.first(where: { (info) -> Bool in
             guard let resolvedURL = info.fileURL else {
                 return false;
@@ -297,7 +294,6 @@ private class FTRecentDataProvider {
             }
             return false;
         });
-        debugLog("\(self.mode.rawValue): itemFor - END");
         lock.unlock()
         return item;
     }

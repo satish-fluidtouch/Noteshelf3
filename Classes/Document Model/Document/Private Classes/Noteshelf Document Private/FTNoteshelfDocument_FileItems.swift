@@ -13,34 +13,34 @@ extension FTNoteshelfDocument : FTDocumentFileItems
 {
     func createDefaultFileItems()
     {
-        self.rootFileItem = FTFileItem.init(url: self.URL, isDirectory: true);
+        self.rootFileItem = FTFileItem.init(url: self.URL, isDirectory: true,document: self);
         self.rootFileItem.securityDelegate  = self;
         
         #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
         self.recognitionCache = FTRecognitionCache.init(withDocument: self, language: FTLanguageResourceManager.shared.currentLanguageCode);
         #endif
 
-        let resourceFolderItem = FTFileItem.init(fileName: RESOURCES_FOLDER_NAME, isDirectory: true)
+        let resourceFolderItem = FTFileItem.init(fileName: RESOURCES_FOLDER_NAME, isDirectory: true,document: self)
         resourceFolderItem?.securityDelegate  = self;
         self.rootFileItem.addChildItem(resourceFolderItem);
 
-        let metadataFolderItem = FTFileItem.init(fileName: METADATA_FOLDER_NAME, isDirectory: true)
+        let metadataFolderItem = FTFileItem.init(fileName: METADATA_FOLDER_NAME, isDirectory: true,document: self)
         metadataFolderItem?.securityDelegate  = self;
         self.rootFileItem.addChildItem(metadataFolderItem);
         
-        let templateFolderItem = FTFileItem.init(fileName: TEMPLATES_FOLDER_NAME, isDirectory: true)
+        let templateFolderItem = FTFileItem.init(fileName: TEMPLATES_FOLDER_NAME, isDirectory: true,document: self)
         templateFolderItem?.securityDelegate  = self;
         self.rootFileItem.addChildItem(templateFolderItem);
         
-        let annotationFolderItem = FTFileItem.init(fileName: ANNOTATIONS_FOLDER_NAME, isDirectory: true)
+        let annotationFolderItem = FTFileItem.init(fileName: ANNOTATIONS_FOLDER_NAME, isDirectory: true,document: self)
         annotationFolderItem?.securityDelegate  = self;
         self.rootFileItem.addChildItem(annotationFolderItem);
         
-        let documentInfoPlist = FTNSDocumentInfoPlistItem.init(fileName: DOCUMENT_INFO_FILE_NAME)
+        let documentInfoPlist = FTNSDocumentInfoPlistItem.init(fileName: DOCUMENT_INFO_FILE_NAME,document: self)
         documentInfoPlist.securityDelegate  = self;
         self.rootFileItem.addChildItem(documentInfoPlist);
         
-        let propertyPlist = FTFileItemPlist.init(fileName: PROPERTIES_PLIST)
+        let propertyPlist = FTFileItemPlist.init(fileName: PROPERTIES_PLIST,document: self)
         propertyPlist?.securityDelegate  = self;
         metadataFolderItem?.addChildItem(propertyPlist);
     }
@@ -90,7 +90,6 @@ extension FTNoteshelfDocument : FTDocumentFileItems
                 return nil;
             }
             let documentInfoPlist = self.rootFileItem.childFileItem(withName: DOCUMENT_INFO_FILE_NAME) as? FTNSDocumentInfoPlistItem;
-            documentInfoPlist?.parentDocument = self;
             self.documentPlistItem = documentInfoPlist;
         }
         return self.documentPlistItem;
@@ -114,13 +113,13 @@ extension FTNoteshelfDocument : FTDocumentFileItems
         }
         var folderItem = self.rootFileItem.childFileItem(withName: RECOGNITION_FILES_FOLDER_NAME);
         if(folderItem == nil){
-            folderItem = FTFileItem.init(fileName: RECOGNITION_FILES_FOLDER_NAME, isDirectory: true)
+            folderItem = FTFileItem.init(fileName: RECOGNITION_FILES_FOLDER_NAME, isDirectory: true,document: self)
             self.rootFileItem.addChildItem(folderItem);
         }
         let plistFileName = String.init(format: "%@_%@.plist", RECOGNITION_INFO_FILE_NAME, FTLanguageResourceManager.shared.currentLanguageCode ?? "en_US")
         var recognitionInfoPlist = folderItem!.childFileItem(withName: plistFileName) as? FTFileItemPlist;
         if(nil == recognitionInfoPlist) {
-            recognitionInfoPlist = FTFileItemPlist.init(fileName: plistFileName)
+            recognitionInfoPlist = FTFileItemPlist.init(fileName: plistFileName,document: self)
             folderItem!.addChildItem(recognitionInfoPlist);
         }
         //recognitionInfoPlist?.parentDocument = self;
@@ -133,13 +132,13 @@ extension FTNoteshelfDocument : FTDocumentFileItems
         }
         var folderItem = self.rootFileItem.childFileItem(withName: RECOGNITION_FILES_FOLDER_NAME);
         if(folderItem == nil){
-            folderItem = FTFileItem.init(fileName: RECOGNITION_FILES_FOLDER_NAME, isDirectory: true)
+            folderItem = FTFileItem.init(fileName: RECOGNITION_FILES_FOLDER_NAME, isDirectory: true,document:self)
             self.rootFileItem.addChildItem(folderItem);
         }
         let plistFileName = String.init(format: "%@_%@.plist", VISION_RECOGNITION_INFO_FILE_NAME, FTVisionLanguageMapper.currentISOLanguageCode())
         var visionRecognitionInfoPlist = folderItem!.childFileItem(withName: plistFileName) as? FTFileItemPlist;
         if(nil == visionRecognitionInfoPlist) {
-            visionRecognitionInfoPlist = FTFileItemPlist.init(fileName: plistFileName)
+            visionRecognitionInfoPlist = FTFileItemPlist.init(fileName: plistFileName,document:self)
             folderItem!.addChildItem(visionRecognitionInfoPlist);
         }
         //recognitionInfoPlist?.parentDocument = self;
@@ -170,7 +169,7 @@ extension FTNoteshelfDocument : FTDocumentFileItems
         }
         var propertyInfoPlist = self.metadataFolderItem()?.childFileItem(withName: ASSIGNMENTS_PLIST) as? FTFileItemPlist;
         if(nil == propertyInfoPlist && createIfNeeded) {
-            propertyInfoPlist = FTFileItemPlist.init(fileName: ASSIGNMENTS_PLIST)
+            propertyInfoPlist = FTFileItemPlist.init(fileName: ASSIGNMENTS_PLIST,document: self)
             propertyInfoPlist?.securityDelegate  = self;
             self.metadataFolderItem()?.addChildItem(propertyInfoPlist);
         }
@@ -226,14 +225,14 @@ extension FTNoteshelfDocument : FTDocumentFileItems
 
         var annotateFolderItem = self.rootFileItem.childFileItem(withName: ANNOTATIONS_FOLDER_NAME);
         if(nil == annotateFolderItem) {
-            annotateFolderItem = FTFileItem.init(fileName: ANNOTATIONS_FOLDER_NAME, isDirectory: true)
+            annotateFolderItem = FTFileItem.init(fileName: ANNOTATIONS_FOLDER_NAME, isDirectory: true,document: self)
             annotateFolderItem?.securityDelegate = self;
             self.rootFileItem.addChildItem(annotateFolderItem);
         }
         
         var resourceFolderItem = self.rootFileItem.childFileItem(withName: RESOURCES_FOLDER_NAME);
         if(nil == resourceFolderItem) {
-            resourceFolderItem = FTFileItem.init(fileName: RESOURCES_FOLDER_NAME, isDirectory: true)
+            resourceFolderItem = FTFileItem.init(fileName: RESOURCES_FOLDER_NAME, isDirectory: true,document: self)
             resourceFolderItem?.securityDelegate = self;
             self.rootFileItem.addChildItem(resourceFolderItem);
         }

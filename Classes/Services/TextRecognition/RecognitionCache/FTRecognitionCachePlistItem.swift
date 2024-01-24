@@ -13,16 +13,16 @@ class FTRecognitionCachePlistItem: FTFileItemPlist {
     private let currentVersion: String = "1.0"
     private var recognitionResult = [String : FTRecognitionResult]();
 
-    override init(fileName: String!) {
-        super.init(fileName: fileName);
+    override init(fileName: String!,document: FTDocument!) {
+        super.init(fileName: fileName,document: document);
     }
 
-    override init(fileName: String!, isDirectory isDir: Bool) {
-        super.init(fileName: fileName, isDirectory: isDir);
+    override init(fileName: String!, isDirectory isDir: Bool,document: FTDocument!) {
+        super.init(fileName: fileName, isDirectory: isDir,document: document);
     }
     
-    override init!(url: URL!, isDirectory isDir: Bool) {
-        super.init(url: url, isDirectory: isDir);
+    override init!(url: URL!, isDirectory isDir: Bool,document: FTDocument!) {
+        super.init(url: url, isDirectory: isDir,document: document);
     }
 
     deinit {

@@ -176,7 +176,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 var shelfItemImageFileItem = rootItem.childFileItem(withName: "cover-shelf-image.png") as? FTFileItemImage;
                 if(nil == shelfItemImageFileItem)
                 {
-                    shelfItemImageFileItem = FTFileItemImage.init(fileName: "cover-shelf-image.png");
+                    shelfItemImageFileItem = FTFileItemImage.init(fileName: "cover-shelf-image.png",document: self);
                     shelfItemImageFileItem?.securityDelegate = self;
                     rootItem.addChildItem(shelfItemImageFileItem);
                 }
@@ -544,7 +544,6 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         
         let documentInfoFileItem = self.documentInfoPlist();
         if(nil != documentInfoFileItem) {
-            documentInfoFileItem!.parentDocument = self;
             let documentsList = documentInfoFileItem!.object(forKey: DOCUMENTS_KEY) as? [String:AnyObject];
             if(documentsList != nil)
             {
@@ -732,9 +731,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     }
     
     override func fileItemFactory() -> FTFileItemFactory! {
-        let factory = FTNSDocumentFileItemFactory();
-        factory.securityDelegate = self;
-        return factory;
+        let factory = FTNSDocumentFileItemFactory(parentDocument: self);
+        factory?.securityDelegate = self;
+        return factory!;
     }
 
     //MARK:- Page Operations -
@@ -795,7 +794,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
             let fileName = FTUtils.getUUID().appending(".\(pdfExtension)");
             let path = generator.generateBlankPDFFileWithPageRect(pageRect, fileName: fileName);
             
-            if let tempFileItem = FTFileItemPDFTemp(fileName: fileName) {
+            if let tempFileItem = FTFileItemPDFTemp(fileName: fileName,document: self) {
                 tempFileItem.setSourceFileURL(NSURL.fileURL(withPath: path));
                 
                 copiedPage.associatedPDFFileName = fileName;

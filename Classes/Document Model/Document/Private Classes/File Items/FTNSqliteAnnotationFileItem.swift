@@ -10,16 +10,22 @@ import Foundation
 import FTRenderKit
 import FTDocumentFramework
 
-class FTNSqliteAnnotationFileItem : FTFileItemSqlite
+class FTNSqliteAnnotationFileItem : FTFileItem
 {
+    private let shouldSplitStroke  = false;
     fileprivate var annotationsArray : [FTAnnotation]?;
     weak var associatedPage : FTPageProtocol?;
+    
+    override func isContentLoaded() -> Bool {
+        return (nil != annotationsArray) ? true : false;
+    }
     
     var annotations : [FTAnnotation] {
         get{
             objc_sync_enter(self);
             if nil == self.annotationsArray {
-                self.loadAnnotations();
+                let dbqueue = self.loadDatabaseQueue();
+                self.loadAnnotations(dbqueue);
             }
             objc_sync_exit(self);
             return self.annotationsArray ?? [FTAnnotation]();
@@ -81,14 +87,20 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         }
     }
 
-    override func saveDatabaseChanges() -> Bool {
+    override func saveContentsOfFileItem() -> Bool {
+        if !self.isContentLoaded() {
+            guard let dbqueue = self.loadContents(of: self.fileItemURL) as? FMDatabaseQueue else {
+                return true;
+            }
+            self.loadAnnotations(dbqueue);
+        }
         FTCLSLog("annotation save pageIndex:\(self.associatedPage?.pageIndex() ?? 0)");
         var success = false;
         let strokeAnnotationsByRemovingErasedSegments = self.finalizedAnnotationsToSaveFromAnnotations(self.annotations);
         
         if strokeAnnotationsByRemovingErasedSegments.isEmpty {
             //Nothing to save
-            self.resetDatabase();
+            try? FileManager().removeItem(at: self.fileItemURL)
             return true;
         }
         
@@ -123,113 +135,20 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
         return success;
     }
     
-    fileprivate func loadAnnotations()
-    {
-        #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        (self.associatedPage as? FTPageTileAnnotationMap)?.clearMapCache();
-        #endif
-        var annotations = [FTAnnotation]();
-        if (false == self.schemaExists()) {
-            self.annotationsArray = annotations;
-            return;
-        }
-        var shouldSaveOnRepair = false
-        self.databaseQueue.inDatabase { (db) in
-            db.open();
-           
-            let annotationQuery = "SELECT * from annotation";
-            let set = db.executeQuery(annotationQuery, withParameterDictionary: nil);
-            if let _set = set, _set.columnCount > 0 {
-                while(_set.next()) {
-                        if let annotation = FTAnnotation.annotation(forSet: _set) {
-                            annotation.associatedPage = self.associatedPage;
-                            annotation.loadContents();
-                            annotations.append(annotation);
-                            #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-                            if(annotation.shouldAddToPageTile) {
-                                (self.associatedPage as? FTPageTileAnnotationMap)?.tileMapAddAnnotation(annotation);
-                            }
-                            #endif
-
-                            shouldSaveOnRepair = annotation.repairIfRequired() || shouldSaveOnRepair
-                        }
-                }
-            }
-            set?.close();
-            db.close();
-            self.annotationsArray = annotations;
-            if shouldSaveOnRepair {
-                self.associatedPage?.isDirty = true
-                track("corrupted_annotation_repaired", params: nil, screenName: "Backend", shouldLog: true)
-            }
-        }
-    }
-    
-    fileprivate func schemaExists() -> Bool
-    {
-        guard let fileURL = self.fileItemURL else {
-            return false;
-        }
-
-        if (!FileManager.default.fileExists(atPath: fileURL.path)) {
-            return false;
-        }
-        var success : Bool = false;
-        
-        self.databaseQueue.inDatabase { (db) in
-            db.open();
-            let checkForTavleQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='annotation'";
-            let set = db.executeQuery(checkForTavleQuery, withParameterDictionary: nil);
-            if(nil != set) {
-                success = set!.next();
-                set!.close();
-            }
-            db.close();
-        }
-        return success;
-    }
-    
-    private func createSchema(_ dbQueue : FMDatabaseQueue) -> Bool
-    {
-        var success = false;
-        dbQueue.inDatabase { (db) in
-            db.open();
-            db.beginTransaction()
-            success = db.executeUpdate(FTAnnotation.annotationQuery, withParameterDictionary: [:]);
-            if(!success) {
-                NSLog("failed To create Table");
-            }
-            db.commit();
-            db.close();
-        }
-        return success;
-    }
-    
-    //MARK:Splitting erased segments
-    fileprivate func finalizedAnnotationsToSaveFromAnnotations(_ inAnnotations : [FTAnnotation]) -> [FTAnnotation]
-    {
-        var localAnnotations = [FTAnnotation]();
-        localAnnotations.append(contentsOf: inAnnotations);
-        var finalSetOfAnnotations = [FTAnnotation]();
-        
-        //Go through each annotation and split any stroke that has erased segments in it
-        for eachAnnotation in localAnnotations {
-            let resultantAnnotations = eachAnnotation.finalizeToSaveToDB();
-            if(!resultantAnnotations.isEmpty) {
-                finalSetOfAnnotations.append(contentsOf: resultantAnnotations);
-            }
-        }
-        return finalSetOfAnnotations;
-    }
-
-    
     func textAnnotationsContainingKeyword(_ keyWord : String) -> [FTAnnotation]
     {
+        var annotationsToReturn = [FTAnnotation]();
+        let typesOfAnnotation: [Int] = [FTAnnotationType.text.rawValue];
+        if let _anotations = self.annotationsArray {
+            annotationsToReturn = _anotations.filter({typesOfAnnotation.contains($0.annotationType.rawValue)})
+            return annotationsToReturn;
+        }
+
         var textAnnotations = [FTAnnotation]();
-        if (false == self.schemaExists()) {
+        guard let dbQueue = self.loadDatabaseQueue() else {
             return textAnnotations;
         }
-        self.databaseQueue.inDatabase({ (db) in
+        dbQueue.inDatabase({ (db) in
             db.open();
             var keywordSelQuery = "SELECT * from annotation WHERE nonAttrText like ('%%%@%%')";
             keywordSelQuery = String.init(format: keywordSelQuery, keyWord);
@@ -266,11 +185,11 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             return annotationsToReturn;
         }
         
-        if (false == self.schemaExists()) {
+        guard let dbQueue = self.loadDatabaseQueue() else {
             return annotationsToReturn;
         }
         
-        self.databaseQueue.inDatabase({ (db) in
+        dbQueue.inDatabase({ (db) in
             db.open();
             let keywordSelQuery = "SELECT * from annotation WHERE annotationType IN (?,?,?)";
             let set = db.executeQuery(keywordSelQuery, withArgumentsIn: typesOfAnnotation);
@@ -296,5 +215,121 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             self.annotationsArray = nil;
         }
         objc_sync_exit(self);
+    }
+    
+    override func documentDidMove(to url: URL!) {
+        
+    }
+    
+    override func loadContents(of url: URL!) -> NSObjectProtocol? {
+        return self.schemaExists(url)
+    }
+}
+
+private extension FTNSqliteAnnotationFileItem {
+    func loadDatabaseQueue() -> FMDatabaseQueue? {
+        return self.performCoordinatedRead() as? FMDatabaseQueue;
+    }
+    
+    func loadAnnotations(_ queue: FMDatabaseQueue?)
+    {
+        #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        (self.associatedPage as? FTPageTileAnnotationMap)?.clearMapCache();
+        #endif
+        var annotations = [FTAnnotation]();
+        guard let _queue = queue else {
+            self.annotationsArray = annotations;
+            return;
+        }
+        var shouldSaveOnRepair = false
+        _queue.inDatabase { (db) in
+            db.open();
+            
+            let annotationQuery = "SELECT * from annotation";
+            let set = db.executeQuery(annotationQuery, withParameterDictionary: nil);
+            if let _set = set, _set.columnCount > 0 {
+                while(_set.next()) {
+                    if let annotation = FTAnnotation.annotation(forSet: _set) {
+                        annotation.associatedPage = self.associatedPage;
+                        annotation.loadContents();
+                        annotations.append(annotation);
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                        if(annotation.shouldAddToPageTile) {
+                            (self.associatedPage as? FTPageTileAnnotationMap)?.tileMapAddAnnotation(annotation);
+                        }
+#endif
+                        
+                        shouldSaveOnRepair = annotation.repairIfRequired() || shouldSaveOnRepair
+                    }
+                }
+            }
+            set?.close();
+            db.close();
+            self.annotationsArray = annotations;
+            if shouldSaveOnRepair {
+                self.associatedPage?.isDirty = true
+                track("corrupted_annotation_repaired", params: nil, screenName: "Backend", shouldLog: true)
+            }
+        }
+    }
+    
+    func schemaExists(_ url: URL?) -> FMDatabaseQueue?
+    {
+        guard let fileURL = url else {
+            return nil;
+        }
+
+        if (!FileManager.default.fileExists(atPath: fileURL.path)) {
+            return nil;
+        }
+        let dbQueue = FMDatabaseQueue(url: url);
+        var success : Bool = false;
+        dbQueue?.inDatabase { (db) in
+            db.open();
+            let checkForTavleQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='annotation'";
+            let set = db.executeQuery(checkForTavleQuery, withParameterDictionary: nil);
+            if(nil != set) {
+                success = set!.next();
+                set!.close();
+            }
+            db.close();
+        }
+        return success ? dbQueue : nil;
+    }
+    
+    func createSchema(_ dbQueue : FMDatabaseQueue) -> Bool
+    {
+        var success = false;
+        dbQueue.inDatabase { (db) in
+            db.open();
+            db.beginTransaction()
+            success = db.executeUpdate(FTAnnotation.annotationQuery, withParameterDictionary: [:]);
+            if(!success) {
+                NSLog("failed To create Table");
+            }
+            db.commit();
+            db.close();
+        }
+        return success;
+    }
+    
+    //MARK:Splitting erased segments
+    func finalizedAnnotationsToSaveFromAnnotations(_ inAnnotations : [FTAnnotation]) -> [FTAnnotation]
+    {
+        guard shouldSplitStroke else {
+            return inAnnotations;
+        }
+        var localAnnotations = [FTAnnotation]();
+        localAnnotations.append(contentsOf: inAnnotations);
+        var finalSetOfAnnotations = [FTAnnotation]();
+        
+        //Go through each annotation and split any stroke that has erased segments in it
+        for eachAnnotation in localAnnotations {
+            let resultantAnnotations = eachAnnotation.finalizeToSaveToDB();
+            if(!resultantAnnotations.isEmpty) {
+                finalSetOfAnnotations.append(contentsOf: resultantAnnotations);
+            }
+        }
+        return finalSetOfAnnotations;
     }
 }

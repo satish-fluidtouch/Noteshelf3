@@ -97,7 +97,7 @@ final class FTDocumentMigration {
     static func uuidFromURL(_ url: URL) -> String? {
         var uuid: String?
         let dest = url.appendingPathComponent(FTCacheFiles.cachePropertyPlist)
-        let propertiList = FTFileItemPlist(url: dest, isDirectory: false)
+        let propertiList = FTFileItemPlist(url: dest, isDirectory: false,document:nil)
         if let docId = propertiList?.object(forKey: DOCUMENT_ID_KEY) as? String {
             uuid = docId
         }

@@ -50,7 +50,7 @@ class FTImageAnnotation: FTAnnotation,FTImageRenderingProtocol {
             var fileItem = self.imageContentFileItem();
             if(nil == fileItem) {
                 if let page = self.associatedPage,let document = page.parentDocument as? FTNoteshelfDocument {
-                    fileItem = FTFileItemImage.init(fileName: self.imageContentFileName());
+                    fileItem = FTFileItemImage.init(fileName: self.imageContentFileName(),document: document);
                     fileItem?.securityDelegate = document
                     document.resourceFolderItem()?.addChildItem(fileItem);
                 }
@@ -85,7 +85,7 @@ class FTImageAnnotation: FTAnnotation,FTImageRenderingProtocol {
             var fileItem = self.transformedContentFileItem();
             if(nil == fileItem) {
                 if let page = self.associatedPage,let document = page.parentDocument as? FTNoteshelfDocument {
-                    fileItem = FTFileItemImage.init(fileName: self.imageContentFileName());
+                    fileItem = FTFileItemImage.init(fileName: self.imageContentFileName(),document: document);
                     fileItem?.securityDelegate = document
                     document.resourceFolderItem()?.addChildItem(fileItem);
                 }
@@ -497,7 +497,7 @@ extension FTImageAnnotation
         
         if let sourceFileItem = self.imageContentFileItem() {
             let document = toPage.parentDocument as? FTNoteshelfDocument;
-            let copiedFileItem = FTFileItemImage.init(fileName: imageAnnotation.imageContentFileName());
+            let copiedFileItem = FTFileItemImage.init(fileName: imageAnnotation.imageContentFileName(),document: document);
             copiedFileItem?.securityDelegate = document;
             document?.resourceFolderItem()?.addChildItem(copiedFileItem);
             
@@ -506,7 +506,7 @@ extension FTImageAnnotation
             var copiedTrasnformmedFileItemURL : URL?
             let trasnformmedFileItem = self.transformedContentFileItem();
             if (nil != trasnformmedFileItem) {
-                copiedTrasnformmedFileItem = FTFileItemImage.init(fileName: imageAnnotation.transformedContentFileName());
+                copiedTrasnformmedFileItem = FTFileItemImage.init(fileName: imageAnnotation.transformedContentFileName(),document: document);
                 copiedTrasnformmedFileItem?.securityDelegate = document;
                 document?.resourceFolderItem()?.addChildItem(copiedTrasnformmedFileItem);
                 

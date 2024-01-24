@@ -47,7 +47,7 @@ class FTNSDocumentInfoPlistItem : FTFileItemPlist {
                 if(nil != pageObjects) {
                     var isFirstPage:Bool = true
                     for eachObject in pageObjects! {
-                        let page = FTNoteshelfPage.init(parentDocument: self.parentDocument!);
+                        let page = FTNoteshelfPage.init(parentDocument: self.parentDocument as! FTNoteshelfDocument);
                         page.isFirstPage = isFirstPage
                         page.updatePageAttributesWithDictionary(eachObject as! Dictionary);
                         localPages.append(page);
@@ -99,19 +99,19 @@ class FTNSDocumentInfoPlistItem : FTFileItemPlist {
         }
     };
     
-    weak var parentDocument : FTNoteshelfDocument?;
+//    weak var parentDocument : FTNoteshelfDocument?;
     
-    override init(fileName: String!) {
-        super.init(fileName: fileName);
+    override init(fileName: String!,document parentDocument: FTDocument!) {
+        super.init(fileName: fileName,document: parentDocument);
         _defaultPageRect = CGRect.null;
     }
 
-    override init(fileName: String!, isDirectory isDir: Bool) {
-        super.init(fileName: fileName, isDirectory: isDir);
+    override init(fileName: String!, isDirectory isDir: Bool,document parentDocument: FTDocument!) {
+        super.init(fileName: fileName, isDirectory: isDir,document: parentDocument);
     }
     
-    override init!(url: URL!, isDirectory isDir: Bool) {
-        super.init(url: url, isDirectory: isDir);
+    override init!(url: URL!, isDirectory isDir: Bool,document parentDocument: FTDocument!) {
+        super.init(url: url, isDirectory: isDir,document: parentDocument);
     }
     
     func insertPage(_ page : FTNoteshelfPage, atIndex : Int)

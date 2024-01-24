@@ -151,7 +151,7 @@ extension FTNoteshelfDocument
                                             let pageAnnotations = firstPage.annotations();
                                             let docName = FTUtils.getUUID().appending(".\(nsPDFExtension)");
                                             //copy pdf file if needed
-                                            let pdfTemplateFileItem = FTPDFKitFileItemPDF.init(fileName: docName)!
+                                            let pdfTemplateFileItem = FTNSDocumentFileItemFactory.pdfFileItem(docName, document: self)
                                             pdfTemplateFileItem.securityDelegate = self;
                                             self.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
                                             

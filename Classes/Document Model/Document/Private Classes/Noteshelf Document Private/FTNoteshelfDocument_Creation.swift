@@ -78,7 +78,7 @@ extension FTNoteshelfDocument
                     var fileItem = self.templateFolderItem()!.childFileItem(withName: docName) as? FTPDFKitFileItemPDF;
                     if(nil == fileItem)
                     {
-                        fileItem = FTPDFKitFileItemPDF.init(fileName: docName, isDirectory: false)
+                        fileItem = FTNSDocumentFileItemFactory.pdfFileItem(docName, document: self);
                         fileItem?.documentPassword = password;
                         fileItem?.securityDelegate = self;
                         self.templateFolderItem()!.addChildItem(fileItem);
@@ -274,7 +274,7 @@ extension FTNoteshelfDocument
         var fileItem = self.templateFolderItem()!.childFileItem(withName: docName) as? FTPDFKitFileItemPDF;
         if(nil == fileItem)
         {
-            fileItem = FTPDFKitFileItemPDF.init(fileName: docName, isDirectory: false)
+            fileItem = FTNSDocumentFileItemFactory.pdfFileItem(docName, document: self);
             fileItem?.documentPassword = password;
             fileItem?.securityDelegate = self;
             self.templateFolderItem()!.addChildItem(fileItem);

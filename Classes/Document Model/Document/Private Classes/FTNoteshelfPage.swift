@@ -661,7 +661,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
             var annotationsFileItem = annotationFolder?.childFileItem(withName: self.sqliteFileName()) as? FTNSqliteAnnotationFileItem;
             if(nil == annotationsFileItem)
             {
-                annotationsFileItem = FTNSqliteAnnotationFileItem.init(fileName : self.sqliteFileName()) as FTNSqliteAnnotationFileItem;
+                annotationsFileItem = FTNSqliteAnnotationFileItem.init(fileName : self.sqliteFileName(),document:self._parent) as FTNSqliteAnnotationFileItem;
                 annotationsFileItem?.securityDelegate = self._parent;
                 annotationFolder!.addChildItem(annotationsFileItem);
             }
@@ -788,6 +788,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     //MARK:- Unload Contents -
     func unloadContents()
     {
+        guard let annotationsFileItem = self.sqliteFileItem(), annotationsFileItem.isContentLoaded() else {
+            return;
+        }
         let annotations = self.annotations();
         for eachAnnotation in annotations {
             eachAnnotation.unloadContents();
@@ -1246,7 +1249,7 @@ extension FTNoteshelfPage : FTCopying {
         //copy pdf file if needed
         let copiedPageTempateFileItem = newPage.templateFileItem();
         if(nil == copiedPageTempateFileItem) {
-            let pdfTemplateFileItem = FTPDFKitFileItemPDF.init(fileName: newPage.associatedPDFFileName)!
+            let pdfTemplateFileItem = FTNSDocumentFileItemFactory.pdfFileItem(newPage.associatedPDFFileName!, document: self._parent)
             pdfTemplateFileItem.securityDelegate = self._parent;
             
             newPage._parent!.templateFolderItem()!.addChildItem(pdfTemplateFileItem);
@@ -1331,16 +1334,18 @@ extension FTNoteshelfPage : FTDeleting {
     
     func willDelete()
     {
-        objc_sync_enter(self);
-        let filteredAnnotations = self.annotations() ;
-        filteredAnnotations.forEach({ (eachAnnotation) in
-            eachAnnotation.willDelete();
-        });
-        
-        let annotationsFileItem = self.sqliteFileItem();
-        if(nil != annotationsFileItem) {
-            annotationsFileItem!.deleteContent();
+        guard let annotationsFileItem = self.sqliteFileItem() else {
+            return;
         }
+        objc_sync_enter(self);
+        if annotationsFileItem.isContentLoaded() {
+            let filteredAnnotations = self.annotations() ;
+            filteredAnnotations.forEach({ (eachAnnotation) in
+                eachAnnotation.willDelete();
+            });
+        }
+        annotationsFileItem.deleteContent();
+
         self.thumbnail()?.delete();
         self.recognitionInfo = nil // To remove record from recognition plist
         self.undoManager?.removeAllActions(withTarget: self)

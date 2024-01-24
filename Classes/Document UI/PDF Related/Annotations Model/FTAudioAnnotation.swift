@@ -168,7 +168,7 @@ import FTDocumentFramework
     
     override func saveContents() -> Bool {
         let content = self.dictionaryRepresentation();
-        self.annotationInfoFileItem()?.content = content as NSObjectProtocol;
+        self.annotationInfoFileItem()?.updateContent(content as NSObjectProtocol);
         self.annotationInfoFileItem()?.saveContentsOfFileItem();
         return true;
     }
@@ -309,7 +309,7 @@ extension FTAudioAnnotation
         if let doc = self.associatedPage?.parentDocument as? FTNoteshelfDocument {
             fileItem = doc.resourceFolderItem()?.childFileItem(withName: self.annotationInfoPlistName()) as? FTFileItemPlist;
             if(nil == fileItem) {
-                fileItem = FTFileItemPlist.init(fileName: self.annotationInfoPlistName());
+                fileItem = FTFileItemPlist.init(fileName: self.annotationInfoPlistName(),document:doc);
                 fileItem?.securityDelegate = doc;
                 doc.resourceFolderItem()?.addChildItem(fileItem!);
             }
@@ -324,7 +324,7 @@ extension FTAudioAnnotation
             if let resourcesFolderItem = doc.resourceFolderItem() {
                 audioFileItem = resourcesFolderItem.childFileItem(withName: trackFileName) as? FTFileItemAudio;
                 if(nil == audioFileItem) {
-                    audioFileItem = FTFileItemAudio.init(fileName: trackFileName);
+                    audioFileItem = FTFileItemAudio.init(fileName: trackFileName,document:doc);
                     audioFileItem?.securityDelegate = doc;
                     resourcesFolderItem.addChildItem(audioFileItem);
                 }
@@ -363,7 +363,7 @@ extension FTAudioAnnotation
         annotation.addRequiredObservers();
 
         let content = annotation.dictionaryRepresentation();
-        annotation.annotationInfoFileItem()?.content = content as NSObjectProtocol;
+        annotation.annotationInfoFileItem()?.updateContent(content as NSObjectProtocol);
         var sourceTrackNames = [String]();
         self.recordingModel.audioTracks().forEach { (item) in
             let model = item as! FTAudioTrackModel;
@@ -406,7 +406,7 @@ extension FTAudioAnnotation
             let document = destPage.parentDocument as? FTDocumentFileItems;
             let targetFileName = targetTrackNames[index];
             
-            let copiedFileItem = FTFileItemAudio.init(fileName : targetFileName);
+            let copiedFileItem = FTFileItemAudio.init(fileName : targetFileName,document:document as? FTDocument);
             document?.resourceFolderItem()?.addChildItem(copiedFileItem);
 
             if (nil != copiedFileItem && nil != sourceFileItem) {

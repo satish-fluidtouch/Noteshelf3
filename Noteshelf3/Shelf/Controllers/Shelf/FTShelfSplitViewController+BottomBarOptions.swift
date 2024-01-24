@@ -208,7 +208,7 @@ extension FTShelfSplitViewController {
             // self.shelfBottomToolBar?.view.isUserInteractionEnabled = false
             let filePath = item.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
             if FileManager.default.fileExists(atPath: filePath.path),
-               let plist = FTNotebookRecoverPlist(url: filePath, isDirectory: false) {
+               let plist = FTNotebookRecoverPlist(url: filePath, isDirectory: false,document: nil) {
                 if plist.recovertType == .book {
                     guard let location = plist.recoverLocation else {
 #if DEBUG || BETA
@@ -366,7 +366,7 @@ extension FTShelfSplitViewController {
     private func recoverDeletedPagesFromTrash(_ shelfItem: FTShelfItemProtocol, onCompletion: @escaping ((String?,Bool,Error?) -> Void)) {
 
         let options = FTFetchShelfItemOptions()
-        let fileItem = FTNotebookRecoverPlist(url: shelfItem.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST), isDirectory: false)
+        let fileItem = FTNotebookRecoverPlist(url: shelfItem.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST), isDirectory: false,document: nil)
         let sourceFileDocumentUUID = fileItem?.documentUUID
 
         FTNoteshelfDocumentProvider.shared.fetchAllShelfItems(option:options) { (shelfItems) -> (Void) in
