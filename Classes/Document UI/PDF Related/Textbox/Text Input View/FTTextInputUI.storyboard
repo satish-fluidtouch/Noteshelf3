@@ -1899,7 +1899,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Link Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5KH-T6-Sf7">
-                                                            <rect key="frame" x="16" y="11.5" width="67.5" height="21"/>
+                                                            <rect key="frame" x="16" y="12" width="67.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1937,13 +1937,13 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Notebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tDo-rB-Yhd">
-                                                            <rect key="frame" x="16" y="11.5" width="75" height="21"/>
+                                                            <rect key="frame" x="16" y="12" width="75" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="250" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBh-CL-1M5">
-                                                            <rect key="frame" x="99" y="12" width="859" height="20"/>
+                                                            <rect key="frame" x="99" y="12" width="859" height="20.5"/>
                                                             <string key="text">Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label </string>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" name="accent"/>
@@ -1992,14 +1992,49 @@
                                             <segue destination="G95-Xl-oqP" kind="embed" identifier="FTDocumentPagesController" id="J1o-bN-anT"/>
                                         </connections>
                                     </containerView>
-                                    <wkWebView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMo-Gl-Pgw">
+                                    <wkWebView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMo-Gl-Pgw">
                                         <rect key="frame" x="24" y="164" width="976" height="1158"/>
                                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <wkWebViewConfiguration key="configuration">
                                             <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                             <wkPreferences key="preferences"/>
                                         </wkWebViewConfiguration>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
                                     </wkWebView>
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tpp-Kh-tTa" userLabel="Error Stack View">
+                                        <rect key="frame" x="412" y="683" width="200" height="120"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="wifi" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="H6k-VT-iLz">
+                                                <rect key="frame" x="0.0" y="2" width="200" height="56"/>
+                                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="lyf-si-lco"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="No Internet Connection" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHt-Hp-seg" userLabel="error text">
+                                                <rect key="frame" x="0.0" y="60" width="200" height="29.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The Internet connection appears to be offline." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spT-0L-J93" userLabel="error desc">
+                                                <rect key="frame" x="0.0" y="89.5" width="200" height="30.5"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" systemColor="systemGray2Color"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="6ik-so-NhN"/>
+                                            <constraint firstAttribute="height" constant="120" id="JG6-m0-Y6r"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="W7c-fj-4Rp" firstAttribute="bottom" secondItem="CEu-Ve-O86" secondAttribute="top" constant="-20" id="7X7-si-EEC"/>
@@ -2013,9 +2048,11 @@
                                     <constraint firstAttribute="bottom" secondItem="AMo-Gl-Pgw" secondAttribute="bottom" constant="24" id="TA1-dK-Ote"/>
                                     <constraint firstAttribute="trailing" secondItem="Yif-zw-bR3" secondAttribute="trailing" id="VGc-LS-znS"/>
                                     <constraint firstItem="Yif-zw-bR3" firstAttribute="top" secondItem="CEu-Ve-O86" secondAttribute="bottom" constant="24" id="WGf-uM-3LQ"/>
+                                    <constraint firstItem="tpp-Kh-tTa" firstAttribute="centerX" secondItem="AMo-Gl-Pgw" secondAttribute="centerX" id="ZSY-qy-07I"/>
                                     <constraint firstItem="AMo-Gl-Pgw" firstAttribute="leading" secondItem="f2X-mx-yJ0" secondAttribute="leading" constant="24" id="a0v-7h-LbV"/>
                                     <constraint firstAttribute="trailing" secondItem="CEu-Ve-O86" secondAttribute="trailing" id="asn-fW-Kgr"/>
                                     <constraint firstAttribute="trailing" secondItem="W7c-fj-4Rp" secondAttribute="trailing" constant="24" id="k6T-Mk-Kvy"/>
+                                    <constraint firstItem="tpp-Kh-tTa" firstAttribute="centerY" secondItem="AMo-Gl-Pgw" secondAttribute="centerY" id="sDK-HW-5A1"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2031,6 +2068,7 @@
                     <navigationItem key="navigationItem" id="PKc-JD-QFW"/>
                     <connections>
                         <outlet property="containerView" destination="Yif-zw-bR3" id="8qJ-In-vzj"/>
+                        <outlet property="errorStackView" destination="tpp-Kh-tTa" id="sJj-Gc-ICI"/>
                         <outlet property="segmentControl" destination="W7c-fj-4Rp" id="Kd6-ur-9Df"/>
                         <outlet property="tableView" destination="CEu-Ve-O86" id="L11-JN-lz3"/>
                         <outlet property="webView" destination="AMo-Gl-Pgw" id="hWN-4i-iPQ"/>
@@ -2066,6 +2104,7 @@
         <image name="tooliconBgcolor" width="28" height="28"/>
         <image name="tooliconStyleOn" width="28" height="28"/>
         <image name="underline" catalog="system" width="105" height="128"/>
+        <image name="wifi" catalog="system" width="128" height="90"/>
         <namedColor name="accent">
             <color red="0.094117647058823528" green="0.43529411764705883" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -2119,6 +2158,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

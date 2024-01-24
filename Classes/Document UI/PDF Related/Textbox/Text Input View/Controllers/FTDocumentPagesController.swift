@@ -101,15 +101,15 @@ extension FTDocumentPagesController: UICollectionViewDataSource, UICollectionVie
         })
         cell.selectionBadge?.isHidden = true
         cell.setIsSelected(isCellSelected)
-//        if let currentPage = self.delegate?.currentPage(in: self), currentPage.uuid == page.uuid, self.mode == .none {
-//            collectionViewCell.setAsCurrentVisiblePage()
-//        }
         cell.buttonBookmark?.tag = indexPath.item
         cell.buttonBookmark?.isSelected = false;
-        let imageName = "bookmark.fill"
-        cell.buttonBookmark?.setImage(UIImage(systemName: imageName), for: .normal)
-        let bookmarkColor = (!page.bookmarkColor.isEmpty) ? UIColor(hexString: page.bookmarkColor) : .appColor(.gray9)
-        cell.buttonBookmark?.tintColor = page.isBookmarked ? bookmarkColor : .appColor(.gray9)
+        if !page.isBookmarked {
+            cell.buttonBookmark?.isHidden = true
+        } else {
+            cell.buttonBookmark?.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            let bookmarkColor = (!page.bookmarkColor.isEmpty) ? UIColor(hexString: page.bookmarkColor) : .appColor(.gray9)
+            cell.buttonBookmark?.tintColor = bookmarkColor
+        }
         let size = AVMakeRect(aspectRatio: page.pdfPageRect.size, insideRect: CGRect(origin: CGPoint.zero, size: self.cellSize)).size
         cell.pdfSize = size;
         cell.pageSize = self.cellSize
@@ -163,5 +163,26 @@ extension FTDocumentPagesController: UICollectionViewDataSource, UICollectionVie
         let page = self.pages[indexPath.item]
         let size = AVMakeRect(aspectRatio: page.pdfPageRect.size, insideRect: CGRect.init(origin: CGPoint.zero, size: self.cellSize)).size
         return CGSize(width: self.cellSize.width, height: size.height + extraCellPadding)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let identifier = indexPath as NSIndexPath
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let previewVC = storyboard.instantiateViewController(identifier: "FTShelfPagePreviewController") as? FTShelfPagePreviewController, let cell = collectionView.cellForItem(at: indexPath) as? FTLinkPageThumbnailCell {
+            if let pageImage = FTPDFExportView.snapshot(forPage: cell.page as? FTPageProtocol,
+                                                        size: cell.page?.pdfPageRect.size ?? cell.pdfSize,
+                                                        screenScale: UIScreen.main.scale,
+                                                     shouldRenderBackground: true,
+                                                     offscreenRenderer: nil,
+                                                        with: FTSnapshotPurposeDefault) {
+                previewVC.preferredContentSize = FTPreviewDefaultSize.linkPreviewSize(for: pageImage)
+                previewVC.previewImage = pageImage
+                previewVC.imageView?.contentMode = .scaleAspectFit
+                return UIContextMenuConfiguration(identifier: identifier, previewProvider: { () -> UIViewController? in
+                    return previewVC
+                } ,actionProvider: nil)
+            }
+        }
+        return nil
     }
 }

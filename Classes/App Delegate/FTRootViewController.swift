@@ -560,7 +560,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                 }
 
                 let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
-                FTNoteshelfDocumentManager.shared.openDocument(request: request) { [self] token, document, error in
+                FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                     guard let doc = document else {
                         return
                     }
@@ -568,34 +568,29 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
                     if let pageIndex = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
                         handleOpenDocument(pageIndex: pageIndex)
                     } else {
+                        (doc as? FTNoteshelfDocument)?.setLastViewedPageIndexTo(0)
                         FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token) { _ in
                             handlePageNotAvailable(shelfItem: shelfItem)
                         }
                     }
 
                     func handleOpenDocument(pageIndex: Int) {
+                        (doc as? FTNoteshelfDocument)?.setLastViewedPageIndexTo(pageIndex)
                         FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token) { _ in
-                            docVc.handleNewDocumentOpenAlert(title: shelfItem.displayTitle, pageNumber: pageIndex + 1) { yes in
+                            self.docuemntViewController?.handleNewDocumentOpenAlert(title: shelfItem.displayTitle, pageNumber: pageIndex + 1) { [weak self] yes in
                                 if yes {
-                                    openDocumentAndNavigateToPage(shelfItem: shelfItem, pageId: pageId)
+                                    let relativePath = shelfItem.URL.relativePathWRTCollection()
+                                    self?.openDocumentAtRelativePath(relativePath, inShelfItem: nil, animate: false, addToRecent: true, bipassPassword: true, onCompletion: nil)
                                 }
                             }
                         }
                     }
 
                     func handlePageNotAvailable(shelfItem: FTDocumentItemProtocol) {
-                        UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: docVc, notebookTitle: shelfItem.displayTitle) { yes in
+                        UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: docVc, notebookTitle: shelfItem.displayTitle) { [weak self] yes in
                             if yes {
-                                openDocumentAndNavigateToPage(shelfItem: shelfItem, pageId: "")
-                            }
-                        }
-                    }
-
-                    func openDocumentAndNavigateToPage(shelfItem: FTDocumentItemProtocol, pageId: String) {
-                        let relativePath = shelfItem.URL.relativePathWRTCollection()
-                        openDocumentAtRelativePath(relativePath, inShelfItem: nil, animate: false, addToRecent: true, bipassPassword: true) { _, _ in
-                            runInMainThread(1) {
-                                docVc.navigateToPage(with: pageId, documentId: documentId)
+                                let relativePath = shelfItem.URL.relativePathWRTCollection()
+                                self?.openDocumentAtRelativePath(relativePath, inShelfItem: nil, animate: false, addToRecent: true, bipassPassword: true, onCompletion: nil)
                             }
                         }
                     }

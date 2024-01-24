@@ -7,13 +7,15 @@
 //
 
 import FTCommon
+import Reachability
 
 class FTLinkToSelectViewController: UIViewController {
     @IBOutlet private weak var segmentControl: UISegmentedControl!
     @IBOutlet private weak var tableView: UITableView?
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var webView: WKWebView!
-
+    @IBOutlet private weak var errorStackView: UIStackView!
+    
     var viewModel: FTLinkToTextViewModel!
     weak var docPagesController: FTDocumentPagesController?
 
@@ -92,12 +94,9 @@ private extension FTLinkToSelectViewController {
 
      func configWebView(with urlStr: String?) {
          self.webView.navigationDelegate = self
-        if let reqUrlStr = urlStr, let url = URL(string: reqUrlStr) {
-            self.webView.isHidden = false
-            let request = URLRequest(url: url)
-            self.webView.load(request)
-        } else {
-            self.webView.isHidden = true
+         self.errorStackView.isHidden = true
+        if let reqUrlStr = urlStr {
+            self.handleWebUrl(text: reqUrlStr)
         }
     }
 
@@ -109,6 +108,7 @@ private extension FTLinkToSelectViewController {
         } else {
             self.containerView.isHidden = false
             self.webView.isHidden = true
+            self.errorStackView.isHidden = true
         }
         self.updateDoneEnableStatus()
         self.tableView?.reloadData()
@@ -132,6 +132,23 @@ private extension FTLinkToSelectViewController {
             options = FTLinkToSegment.url.options
         }
         return options
+    }
+
+    func handleWebUrl(text: String) {
+        let reachability: Reachability = Reachability.forInternetConnection()
+        let status: NetworkStatus = reachability.currentReachabilityStatus()
+        if status == NetworkStatus.NotReachable {
+            self.webView.isHidden = true
+            self.errorStackView.isHidden = false
+        } else {
+            self.errorStackView.isHidden = true
+            if let request = text.getUrlRequestFromString() {
+                self.webView.isHidden = false
+                self.webView.load(request)
+            } else {
+                self.webView.isHidden = true
+            }
+        }
     }
 }
 
@@ -173,11 +190,8 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
                 }
                 cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
                     guard let self else { return }
-                    if let request = text?.getUrlRequestFromString() {
-                        self.webView.isHidden = false
-                        self.webView.load(request)
-                    } else {
-                        self.webView.isHidden = true
+                    if let text = text {
+                        self.handleWebUrl(text: text)
                     }
                 }
                 reqCell = cell
@@ -225,9 +239,9 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
                 self.viewModel.updateDocumentTitle(document.displayTitle)
                 self.viewModel.updatePageNumber(1)
                 if let document = doc as? FTThumbnailableCollection {
-                    self.docPagesController?.updateSelectedIndexPath(IndexPath(item: 0, section: 0), toScroll: false)
-                    self.docPagesController?.document = document
                     self.tableView?.reloadData()
+                    self.docPagesController?.document = document
+                    self.docPagesController?.updateSelectedIndexPath(IndexPath(item: 0, section: 0), toScroll: false)
                 }
             }
         }

@@ -53,11 +53,11 @@ extension FTTextAnnotationViewController {
             , copyMenuItem
             , deleteMenuItem
             , lockMenuItem
-            , bringToFrontMenuItem
-            , sendToBackMenuItem
             , linkMenuItem
             , editLinkITem
             , deleteLinkItem
+            , bringToFrontMenuItem
+            , sendToBackMenuItem
         ]
         #if DEBUG
         let convertMenuItem: UIMenuItem = UIMenuItem(title: "Conver to stroke", action: #selector(FTAnnotationBaseView.convertToStroke(_:)))

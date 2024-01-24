@@ -669,10 +669,36 @@ extension FTTextView {
             shouldShowEditLinkOptions = checkLinkConsistencyInRange(startingLocation..<endingLocation)
         } else if self.attributedText.length > 0 {
             if let textAnnotVc = self.annotationViewController, !textAnnotVc.isEditMode {
-                shouldShowEditLinkOptions = checkLinkConsistencyInRange(0..<self.attributedText.length)
+                let trimmedRange = self.trimWhitespaceAndNewlines(from: 0..<self.attributedText.length, in: self.attributedText)
+                shouldShowEditLinkOptions = checkLinkConsistencyInRange(trimmedRange)
             }
         }
         return shouldShowEditLinkOptions
+    }
+
+    private func trimWhitespaceAndNewlines(from range: Range<Int>, in attributedText: NSAttributedString) -> Range<Int> {
+        var trimmedRange = range
+        // Trim leading whitespaces, newlines, and tabs
+        while trimmedRange.count > 0 {
+            let nsRange = NSRange(location: trimmedRange.lowerBound, length: 1)
+            let substring = attributedText.attributedSubstring(from: nsRange).string
+            if let firstScalar = substring.unicodeScalars.first, CharacterSet.whitespacesAndNewlines.contains(firstScalar) || substring == "\t" {
+                trimmedRange = trimmedRange.dropFirst()
+            } else {
+                break
+            }
+        }
+        // Trim trailing whitespaces, newlines, and tabs
+        while trimmedRange.count > 0 {
+            let nsRange = NSRange(location: trimmedRange.upperBound - 1, length: 1)
+            let substring = attributedText.attributedSubstring(from: nsRange).string
+            if let firstScalar = substring.unicodeScalars.first, CharacterSet.whitespacesAndNewlines.contains(firstScalar) || substring == "\t" {
+                trimmedRange = trimmedRange.dropLast()
+            } else {
+                break
+            }
+        }
+        return trimmedRange
     }
 
     private func checkLinkConsistencyInRange(_ range: Range<Int>) -> Bool {
