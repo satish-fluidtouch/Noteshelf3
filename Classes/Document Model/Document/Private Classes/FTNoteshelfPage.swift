@@ -229,6 +229,30 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         return rect;
     }
     
+    func saveDataToAnnotationsFolder(data: Data) {
+        if let url = self.protoBuffURL {
+//            if FileManager().fileExists(atPath: url.path(percentEncoded: false)) {
+//                try? FileManager().removeItem(at: url)
+//            }
+            do {
+                try data.write(to: url)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    var protoBuffURL: URL? {
+        return (self._parent?.annotationFolderItem()?.fileItemURL.appending(path: "\(self.sqliteFileName()).proto"))!
+    }
+    
+    func protoBuffdataFromAnnotationsFolder()  -> Data? {
+        if let url = self.protoBuffURL {
+            return try? Data(contentsOf: url)
+        }
+        return nil
+    }
+    
     func pdfscale(inRect: CGRect) -> CGFloat {
         var scale : CGFloat = 1;
         if(self.templateInfo.version.floatValue == 0) {

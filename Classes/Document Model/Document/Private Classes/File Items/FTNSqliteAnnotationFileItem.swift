@@ -14,6 +14,7 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
 {
     fileprivate var annotationsArray : [FTAnnotation]?;
     weak var associatedPage : FTPageProtocol?;
+    fileprivate var annotationsBuffArray =  ProtoBuffAnnotations()
     
     var annotations : [FTAnnotation] {
         get{
@@ -91,76 +92,145 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
             self.resetDatabase();
             return true;
         }
-        
-        let localTempPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString);
-        try? FileManager().removeItem(at: localTempPath);
-        guard let dbqueue = FMDatabaseQueue.init(path: localTempPath.path) else {
-            return false;
-        }
-        _ = self.createSchema(dbqueue);
-        dbqueue.inDatabase { (dbToSave) in
-                dbToSave.open();
-                dbToSave.beginTransaction();
-                dbToSave.executeStatements("PRAGMA auto_vacuum = 1; PRAGMA journal_mode = OFF");
+        let useProtoBuffer = UserDefaults().useProtoBuffer
+        if useProtoBuffer {
+            let start = now()
+            self.saveAnnotationsToProtoBuffer(annotations: strokeAnnotationsByRemovingErasedSegments)
+            let end = now()
+            print("⏳ \("&&& Writing ann using PROTO BUFF for index\(associatedPage!.pageIndex())"): \(end-start)")
+            success = true
+        } else {
+            let localTempPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString);
+            try? FileManager().removeItem(at: localTempPath);
+            guard let dbqueue = FMDatabaseQueue.init(path: localTempPath.path) else {
+                return false;
+            }
+            _ = self.createSchema(dbqueue);
+            dbqueue.inDatabase { (dbToSave) in
+                    let start = now()
+                    dbToSave.open();
+                    dbToSave.beginTransaction();
+                    dbToSave.executeStatements("PRAGMA auto_vacuum = 1; PRAGMA journal_mode = OFF");
 
-                for eachAnnotation in strokeAnnotationsByRemovingErasedSegments {
-                    _ = eachAnnotation.saveContents();
-                    success = eachAnnotation.saveToDatabase(dbToSave);
-                    if(!success) {
-                        FTCLSLog("FAILED TO SAVE");
+                    for eachAnnotation in strokeAnnotationsByRemovingErasedSegments {
+                        _ = eachAnnotation.saveContents();
+                        success = eachAnnotation.saveToDatabase(dbToSave);
+                        if(!success) {
+                            FTCLSLog("FAILED TO SAVE");
+                        }
                     }
+                    FTCLSLog("PDF Page Saved");
+                    dbToSave.commit();
+                    dbToSave.close();
+                    let end = now()
+                    print("⏳ \("&&& Writing ann using SQLite for index\(associatedPage!.pageIndex())"): \(end-start)")
+                do {
+                    _ = try FileManager().replaceItemAt(self.fileItemURL, withItemAt: localTempPath);
                 }
-                FTCLSLog("PDF Page Saved");
-                dbToSave.commit();
-                dbToSave.close();
-            do {
-                _ = try FileManager().replaceItemAt(self.fileItemURL, withItemAt: localTempPath);
+                catch {
+                    success = false;
+                }
+            };
+        }
+        return success
+    }
+    
+    func saveAnnotationsToProtoBuffer(annotations: [FTAnnotation]) {
+        for eachAnnotation in annotations {
+           if let protoBuffAnn = eachAnnotation.annotationTosaveInProtoBuffer() as? ProtoBuffAnnotation {
+               annotationsBuffArray.annotations.append(protoBuffAnn)
             }
-            catch {
-                success = false;
-            }
-        };
-        return success;
+        }
+        if let data = try? annotationsBuffArray.serializedData(),  let page = (self.associatedPage as? FTNoteshelfPage) {
+            page.saveDataToAnnotationsFolder(data: data)
+        }
     }
     
     fileprivate func loadAnnotations()
     {
-        #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        (self.associatedPage as? FTPageTileAnnotationMap)?.clearMapCache();
-        #endif
-        var annotations = [FTAnnotation]();
-        if (false == self.schemaExists()) {
-            self.annotationsArray = annotations;
-            return;
-        }
-        var shouldSaveOnRepair = false
-        self.databaseQueue.inDatabase { (db) in
-            db.open();
-           
-            let annotationQuery = "SELECT * from annotation";
-            let set = db.executeQuery(annotationQuery, withParameterDictionary: nil);
-            if let _set = set, _set.columnCount > 0 {
-                while(_set.next()) {
+        let useProtoBuffer = UserDefaults().useProtoBuffer
+        if let page = self.associatedPage as? FTNoteshelfPage, let url = page.protoBuffURL, useProtoBuffer && FileManager().fileExists(atPath: url.path(percentEncoded: false)) {
+            let start = now()
+            loadAnnotationFromProtoBuff()
+            let end = now()
+            print("⏳ \("&&& Loading ann using PROTO BUFF for index\(associatedPage!.pageIndex())"): \(end-start)")
+        } else {
+            
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+            (self.associatedPage as? FTPageTileAnnotationMap)?.clearMapCache();
+#endif
+            var annotations = [FTAnnotation]();
+            if (false == self.schemaExists()) {
+                self.annotationsArray = annotations;
+                return;
+            }
+            var shouldSaveOnRepair = false
+            self.databaseQueue.inDatabase { (db) in
+                let start = now()
+                db.open();
+                
+                let annotationQuery = "SELECT * from annotation";
+                let set = db.executeQuery(annotationQuery, withParameterDictionary: nil);
+                if let _set = set, _set.columnCount > 0 {
+                    while(_set.next()) {
                         if let annotation = FTAnnotation.annotation(forSet: _set) {
                             annotation.associatedPage = self.associatedPage;
                             annotation.loadContents();
                             annotations.append(annotation);
-                            #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                             if(annotation.shouldAddToPageTile) {
                                 (self.associatedPage as? FTPageTileAnnotationMap)?.tileMapAddAnnotation(annotation);
                             }
-                            #endif
-
+#endif
+                            
                             shouldSaveOnRepair = annotation.repairIfRequired() || shouldSaveOnRepair
                         }
+                    }
+                }
+                set?.close();
+                db.close();
+                let end = now()
+                print("⏳ \("&&& Loading ann using SQLite for index\(associatedPage!.pageIndex())"): \(end-start)")
+                self.annotationsArray = annotations;
+                if shouldSaveOnRepair {
+                    self.associatedPage?.isDirty = true
+                    track("corrupted_annotation_repaired", params: nil, screenName: "Backend", shouldLog: true)
                 }
             }
-            set?.close();
-            db.close();
-            self.annotationsArray = annotations;
-            if shouldSaveOnRepair {
-                self.associatedPage?.isDirty = true
-                track("corrupted_annotation_repaired", params: nil, screenName: "Backend", shouldLog: true)
+        }
+    }
+    
+    func loadAnnotationFromProtoBuff() {
+        if let page = self.associatedPage as? FTNoteshelfPage {
+            var annotations = [FTAnnotation]();
+            var shouldSaveOnRepair = false
+            let t1 = now()
+            if let data = page.protoBuffdataFromAnnotationsFolder() {
+                    if let decodedData = try? ProtoBuffAnnotations(serializedData: data) {
+                        let t2 = now()
+                        let protoBuffAnnotations = decodedData.annotations
+                        print("⏳ \("&&& Loading Intermediate state ann using PROTO BUFF for index\(associatedPage!.pageIndex())"): \(t2-t1)")
+                        protoBuffAnnotations.forEach { eachAnn in
+                            if let annotation = FTAnnotation.annotation(for: eachAnn) {
+                                annotation.associatedPage = self.associatedPage;
+                                annotation.loadContents();
+                                annotations.append(annotation);
+                                #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                                if(annotation.shouldAddToPageTile) {
+                                    (self.associatedPage as? FTPageTileAnnotationMap)?.tileMapAddAnnotation(annotation);
+                                }
+                                #endif
+
+                                shouldSaveOnRepair = annotation.repairIfRequired() || shouldSaveOnRepair
+                            }
+
+                        }
+                        self.annotationsArray = annotations
+                        if shouldSaveOnRepair {
+                            self.associatedPage?.isDirty = true
+                            track("corrupted_annotation_repaired", params: nil, screenName: "Backend", shouldLog: true)
+                        }
+                    }
             }
         }
     }

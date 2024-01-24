@@ -54,6 +54,14 @@ extension FTAnnotation {
         return false;
     }
     
+    func annotationTosaveInProtoBuffer() -> Any{
+        return ProtoBuffAnnotation()
+    }
+    
+    func updateWithProtoBuffer(with annotation: Any) {
+        
+    }
+    
     static func annotation(forSet set : FMResultSet) -> FTAnnotation? {
         var annotation : FTAnnotation?
         let annotationType = set.annotationType()
@@ -82,6 +90,23 @@ extension FTAnnotation {
             fatalError("Should not enter here");
         }
         annotation?.updateWith(set: set);
+        return annotation;
+    }
+    
+    static func annotation(for protoBuff : ProtoBuffAnnotation) -> FTAnnotation? {
+        var annotation : FTAnnotation?
+        let annotationType = protoBuff.annotationType
+        switch protoBuff.extendedAttributes {
+        case .stroke(let stroke):
+            annotation = FTStroke()
+        case .none:
+            print("Hello")
+        case .some(.image(_)):
+            print("Hello")
+        case .some(.text(_)):
+            print("Hello")
+        }
+        annotation?.updateWithProtoBuffer(with: protoBuff)
         return annotation;
     }
     

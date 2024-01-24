@@ -80,4 +80,40 @@ extension FTStroke {
             return [self]
         }
     }
+    
+    override func annotationTosaveInProtoBuffer() -> Any {
+        var strokeAnnotation = ProtoBuffAnnotation()
+        strokeAnnotation.annotationType = Int64(FTAnnotationType.stroke.rawValue)
+        strokeAnnotation.strokWidth = Float(self.strokeWidth)
+        strokeAnnotation.strokeColor = Int64(self.strokeColor.rgbHex())
+        strokeAnnotation.penType = Int64(self.penType.rawValue)
+        strokeAnnotation.boundingRectX = Float(self.boundingRect.origin.x)
+        strokeAnnotation.boundingRectY = Float(self.boundingRect.origin.y)
+        strokeAnnotation.boundingRectWidth = Float(self.boundingRect.size.width)
+        strokeAnnotation.boundingRectHeight = Float(self.boundingRect.size.height)
+        strokeAnnotation.segmentCount = Int64(self.segmentCount)
+        strokeAnnotation.segmentData = self.segmentData()
+        strokeAnnotation.createdTimeInterval = Double(self.createdTimeInterval)
+        strokeAnnotation.modifiedTimeInterval = Double(self.modifiedTimeInterval)
+        strokeAnnotation.isReadOnly = self.isReadonly
+        strokeAnnotation.version = Int64(self.version)
+        strokeAnnotation.extendedAttributes = .stroke(StrokeAnnotation())
+        return strokeAnnotation
+    }
+    
+    override func updateWithProtoBuffer(with annotation: Any) {
+        if let protoBuffAnnotation = annotation as? ProtoBuffAnnotation {
+            self.boundingRect = CGRect(x: CGFloat(protoBuffAnnotation.boundingRectX), y: CGFloat(protoBuffAnnotation.boundingRectY), width: CGFloat(protoBuffAnnotation.boundingRectWidth), height: CGFloat(protoBuffAnnotation.boundingRectHeight))
+            self.isReadonly = protoBuffAnnotation.isReadOnly
+            self.version = Int(protoBuffAnnotation.version)
+            self.penType = FTPenType(rawValue: Int(protoBuffAnnotation.penType)) ?? .pen
+            self.strokeWidth = CGFloat(protoBuffAnnotation.strokWidth)
+            if let color = UIColor.color(withRGBHex: UInt32(protoBuffAnnotation.strokeColor)) {
+                self.strokeColor = color
+            }
+            let segCount = Int(protoBuffAnnotation.segmentCount);
+            let segmentData = protoBuffAnnotation.segmentData
+            self.setSegmentsData(segmentData, segmentCount: segCount)
+        }
+    }
 }

@@ -1,0 +1,43 @@
+
+syntax = "proto3";
+
+message ProtoBuffAnnotations {
+    repeated ProtoBuffAnnotation annotations = 1;
+}
+
+message StrokeAnnotation {
+    string strokeName = 1;
+}
+
+message ImageAnnotation {
+    string imageName = 1;
+}
+
+message TextAnnotation {
+    string textName = 1;
+}
+
+message ProtoBuffAnnotation {
+   
+    //Common annotation attrinutes
+   int64 annotationType = 1;
+   float strokWidth = 2;
+   int64 penType = 3;
+   float boundingRectX = 4;
+   float boundingRectY = 5;
+   float boundingRectWidth = 6;
+   float boundingRectHeight = 7;
+   int64 segmentCount = 8;
+   double createdTimeInterval = 9;
+   double ModifiedTimeInterval = 10;
+   int64 version = 11;
+   bool isReadOnly = 12;
+   bytes segmentData = 13;
+   int64 strokeColor = 14;
+    
+   oneof extended_attributes {
+       StrokeAnnotation stroke = 15;
+       ImageAnnotation image = 16;
+       TextAnnotation text = 17;
+   }
+}

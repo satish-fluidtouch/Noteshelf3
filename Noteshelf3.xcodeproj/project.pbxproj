@@ -692,6 +692,10 @@
 		52C234EA2A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */; };
 		52C234EC2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */; };
 		52C98BE82A0E3D8C00070F4A /* FTOutLineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */; };
+		52D48E7E2B5FEBB900648671 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 52D48E7D2B5FEBB900648671 /* SwiftProtobuf */; };
+		52D48E802B5FEC2600648671 /* FTAnnotationModel.proto in Sources */ = {isa = PBXBuildFile; fileRef = 52D48E7F2B5FEC2600648671 /* FTAnnotationModel.proto */; };
+		52D48E822B5FECC200648671 /* FTAnnotationModel.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D48E812B5FECC200648671 /* FTAnnotationModel.pb.swift */; };
+		52D48E842B60DC4100648671 /* FTAnnotationProtoBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D48E832B60DC4100648671 /* FTAnnotationProtoBuffer.swift */; };
 		52D7D5BD2A70E56900F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
@@ -3528,6 +3532,9 @@
 		52C234E92A7BC7C300E73F1B /* FTNoteBookToolsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTNoteBookToolsHeaderView.xib; sourceTree = "<group>"; };
 		52C234EB2A7BC91A00E73F1B /* FTNotebookToolsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookToolsHeaderView.swift; sourceTree = "<group>"; };
 		52C98BE72A0E3D8C00070F4A /* FTOutLineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTOutLineCell.swift; sourceTree = "<group>"; };
+		52D48E7F2B5FEC2600648671 /* FTAnnotationModel.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = FTAnnotationModel.proto; sourceTree = "<group>"; };
+		52D48E812B5FECC200648671 /* FTAnnotationModel.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAnnotationModel.pb.swift; sourceTree = "<group>"; };
+		52D48E832B60DC4100648671 /* FTAnnotationProtoBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAnnotationProtoBuffer.swift; sourceTree = "<group>"; };
 		52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageUndoRedoGestureDetector.swift; sourceTree = "<group>"; };
 		5E26C20520220A8300D19A53 /* FTWatchRecordings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTWatchRecordings.storyboard; sourceTree = "<group>"; };
 		5E31A16520062B2B007C28F5 /* FTExportProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportProgressManager.swift; sourceTree = "<group>"; };
@@ -4762,6 +4769,7 @@
 				09ABDCB22A790FB3008F144D /* OpenAI in Frameworks */,
 				BAF0DCD02A6FE2A9006D293B /* FTNewNotebook.framework in Frameworks */,
 				BAF0DD732A6FE676006D293B /* FTTemplatesStore.framework in Frameworks */,
+				52D48E7E2B5FEBB900648671 /* SwiftProtobuf in Frameworks */,
 				BA3F7FB5299E2F51003964C6 /* libMyScriptInk.xcframework in Frameworks */,
 				BAA84E4C2873105500DE801B /* FTCommon.framework in Frameworks */,
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
@@ -4840,6 +4848,7 @@
 			children = (
 				093E991922E0690800C52B61 /* FTAnnotation_SQLiteHelper.swift */,
 				093E991B22E0868F00C52B61 /* FTStroke_SQLiteHelper.swift */,
+				52D48E832B60DC4100648671 /* FTAnnotationProtoBuffer.swift */,
 				BAC095E4265FC189001DF931 /* FTShape_SQLiteHelper.swift */,
 				BACDEB5923F2C63E00A526F9 /* FTStroke_Migration.swift */,
 				093E991D22E086AB00C52B61 /* FTImageAnnotation_SQLiteHelper.swift */,
@@ -7496,6 +7505,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				52D48E7F2B5FEC2600648671 /* FTAnnotationModel.proto */,
+				52D48E812B5FECC200648671 /* FTAnnotationModel.pb.swift */,
 				BA2D8EAC2859E4C8001BB495 /* Noteshelf3 */,
 				0904BC5D2373F31400239DB8 /* MacCatalyst */,
 				211E2C3B1E027D72007B5CAD /* Classes */,
@@ -11993,6 +12004,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				52D48E7C2B5FEBAC00648671 /* PBXTargetDependency */,
 				BAA84E4B2873105500DE801B /* PBXTargetDependency */,
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAF0DD722A6FE676006D293B /* PBXTargetDependency */,
@@ -12010,6 +12022,7 @@
 				DDAD78EB2A08C550001D8B21 /* SDWebImage */,
 				478394A92A55250C00EEB75C /* ZipArchive */,
 				09ABDCB12A790FB3008F144D /* OpenAI */,
+				52D48E7D2B5FEBB900648671 /* SwiftProtobuf */,
 			);
 			productName = Noteshelf;
 			productReference = BAF395B12859ADF10067CA9F /* NS3 Dev.app */;
@@ -12112,6 +12125,7 @@
 				DDAD78EA2A08C550001D8B21 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */,
 				09ABDCB02A790FB3008F144D /* XCRemoteSwiftPackageReference "OpenAI" */,
+				52D48E7A2B5FEB7C00648671 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
@@ -13481,6 +13495,7 @@
 				BAF3921E2859ADF00067CA9F /* FTLocalizedString.swift in Sources */,
 				F3AC4E2F28A0E1AF004BEF5C /* FTBasePenRackViewController.swift in Sources */,
 				E7BBBE232A382EFA0021872D /* FTSearchResultGroupCell.swift in Sources */,
+				52D48E822B5FECC200648671 /* FTAnnotationModel.pb.swift in Sources */,
 				BAF3921F2859ADF00067CA9F /* NavigationControllerForFormSheet.m in Sources */,
 				BAF392202859ADF00067CA9F /* FTPDFDocumentPDFContentGenerator.swift in Sources */,
 				429E0C76292362C600C75E37 /* FTFinderCollectionviewFlowLayout.swift in Sources */,
@@ -13861,6 +13876,7 @@
 				BAF3933C2859ADF00067CA9F /* FTNS1MigrationInfoView.swift in Sources */,
 				BAF3933F2859ADF00067CA9F /* FTDBBackupManager.swift in Sources */,
 				BAF393402859ADF00067CA9F /* FTDocumentItem.swift in Sources */,
+				52D48E842B60DC4100648671 /* FTAnnotationProtoBuffer.swift in Sources */,
 				BA2D90D9285CAE65001BB495 /* FTShelfItemsViewController.swift in Sources */,
 				09ABDCA92A790F94008F144D /* FTNoteshelfAIFooterViewController.swift in Sources */,
 				BAF393432859ADF00067CA9F /* FTCloudPublishRequest.swift in Sources */,
@@ -14426,6 +14442,7 @@
 				BAF395382859ADF10067CA9F /* FTBaseExporter.m in Sources */,
 				09C714592A407C9800E69E4A /* FTNotebookTitleView.swift in Sources */,
 				BA8CDA0C2B3DAB4A0031E231 /* FTWhatsNew2024PlannerController.swift in Sources */,
+				52D48E802B5FEC2600648671 /* FTAnnotationModel.proto in Sources */,
 				4747C41F2A95EC6100B1AB59 /* FTMetricsService.swift in Sources */,
 				BAF3953B2859ADF10067CA9F /* FTAccessible.swift in Sources */,
 				BAF3953D2859ADF10067CA9F /* NSError_Display.swift in Sources */,
@@ -14638,6 +14655,10 @@
 			isa = PBXTargetDependency;
 			target = BAA84E1428730F5800DE801B /* FTStyles */;
 			targetProxy = 5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */;
+		};
+		52D48E7C2B5FEBAC00648671 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 52D48E7B2B5FEBAC00648671 /* SwiftProtobuf */;
 		};
 		BAA84E1C28730F5800DE801B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -17521,6 +17542,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		52D48E7A2B5FEB7C00648671 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.25.2;
+			};
+		};
 		BA8BA65429766D2900946CFE /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
@@ -17578,6 +17607,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 478394A82A55250C00EEB75C /* XCRemoteSwiftPackageReference "ZipArchive" */;
 			productName = ZipArchive;
+		};
+		52D48E7B2B5FEBAC00648671 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52D48E7A2B5FEB7C00648671 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		52D48E7D2B5FEBB900648671 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52D48E7A2B5FEB7C00648671 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
 		};
 		BA8BA65529766D2900946CFE /* SwiftyDropbox */ = {
 			isa = XCSwiftPackageProductDependency;

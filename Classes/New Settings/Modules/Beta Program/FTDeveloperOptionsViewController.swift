@@ -42,6 +42,8 @@ class FTDeveloperOptionsViewController: UIViewController {
     @IBOutlet private weak var showTileInfoSwitch: UISwitch?
     @IBOutlet private weak var bookOpenAnimScale: UISwitch?
     @IBOutlet private weak var enablePremiumMode: UISwitch?
+    @IBOutlet private weak var useProtoBuffSwitch: UISwitch?
+
     @IBOutlet private weak var useQLThumbnail: UISwitch?
 
     @IBOutlet private weak var textToStrokeWrapChar: UISwitch?
@@ -87,10 +89,15 @@ class FTDeveloperOptionsViewController: UIViewController {
         enablePremiumMode?.isOn = FTIAPurchaseHelper.shared.isPremiumUser
         textToStrokeSnapToLineHeight?.isOn = FTDeveloperOption.textToStrokeWrapChar
         useQLThumbnail?.isOn = FTDeveloperOption.useQuickLookThumbnailing
+        useProtoBuffSwitch?.isOn = UserDefaults().useProtoBuffer
     }
     
     @IBAction func togglePremiumMode(_ swicth: UISwitch) {
         FTIAPurchaseHelper.shared.isPremiumUser = swicth.isOn
+    }
+    
+    @IBAction func toggleProtoBuffer(_ swicth: UISwitch) {
+        UserDefaults().useProtoBuffer = swicth.isOn
     }
     
     // MARK:- Metal

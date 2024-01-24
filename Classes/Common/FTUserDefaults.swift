@@ -543,6 +543,16 @@ extension UserDefaults {
             self.synchronize()
         }
     }
+    
+    var useProtoBuffer: Bool {
+        get {
+            return self.bool(forKey: "useProtoBuffer")
+        }
+        set {
+            self.set(newValue, forKey: "useProtoBuffer")
+            self.synchronize()
+        }
+    }
 
     @objc class func isApplePencilEnabled() -> Bool
     {
