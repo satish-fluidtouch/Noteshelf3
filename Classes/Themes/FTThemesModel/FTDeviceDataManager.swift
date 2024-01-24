@@ -66,10 +66,10 @@ class FTDeviceDataManager: NSObject {
     var standardMobileDevice: FTDeviceModel {
         var dict = [String: String]()
         dict["displayName"] = "Mobile"
-        dict["dimension"] = "792_1224"
+        dict["dimension"] = "430_764"
         dict["identifier"] = UIDevice.current.name
-        dict["dimension_land"] =  "792_1224"
-        dict["dimension_port"] =  "792_1224"
+        dict["dimension_land"] =  "430_764"
+        dict["dimension_port"] =  "430_764"
         dict["isiPad"] = "1"
 
         let deviceModel = FTDeviceModel(dictionary: dict)
