@@ -29,8 +29,8 @@ class FTDeviceDataManager: NSObject {
     func getCurrentDevice() -> FTDeviceModel {
 
         let isIpad = UIDevice.current.userInterfaceIdiom == .phone ? 0: 1
-        var dimension : String = ""
-        var dimension_land : String = ""
+        let dimension : String
+        let dimension_land : String
 
         if UIDevice.current.userInterfaceIdiom == .mac {
             let standardiPadDevice = FTDeviceDataManager().standardiPadDevice
