@@ -263,7 +263,7 @@ extension FTTextPresetsViewController: UITableViewDelegate, UITableViewDataSourc
 
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         var status = true
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && tableView.isEditing && self.presetMode == .reorder {
             let selectedStyle = textStyle.styles[indexPath.row]
             if selectedStyle.isDefault {
                 status = false

@@ -134,9 +134,6 @@ class FTStoreService: FTStoreServiceApi {
 
     func downloadinspirationJournalFor(url: URL, fileName: String) async throws -> URL {
         let dest = FTTemplatesCache().templatesFolder.appendingPathComponent(fileName)
-        if FileManager.default.fileExists(atPath: dest.path) {
-            return dest
-        }
         let session = URLSession(configuration: .default)
         let request = URLRequest(url: url)
         return try await withCheckedThrowingContinuation { continuation in
