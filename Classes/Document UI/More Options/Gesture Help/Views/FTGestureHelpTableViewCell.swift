@@ -20,6 +20,7 @@ class FTGestureHelpTableViewCell : UITableViewCell {
         self.title.text = gesture.localizedTitle
         self.subTitle.text = gesture.localizedSubTitle
         self.thumbnail.image = gesture.thumbnail
+        self.thumbnail.tintColor = UIColor.appColor(.accent)
     }
 
 }
