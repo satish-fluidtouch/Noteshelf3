@@ -20,6 +20,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     let weekNumberStripColors : [Int: String] = [1 :"#AAEBF1",2:"#C4F2E7",3:"#F3E3B5",4:"#F0CBC2",5:"#F1C7EA",6:"#DDC3F2"]
     let weekDaysPastalColors = ["#AAEBF1","#C4F2E7","#F3E3B5","#F0CBC2","#F1C7EA","#DDC3F2","#AAEBF1","#C4F2E7"]
     let notesBandBGColor = UIColor(hexString: "#E7E7E7")
+    let placeHolderStripColor = UIColor(hexString: "#DDC3F2")
     //**************************************************//
 
 
@@ -33,6 +34,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     let darkPlannerWeekNumberStripColors : [Int: String] = [1 :"#6EB8BF",2:"#45B298",3:"#BAA15C",4:"#B27D6F",5:"#BD7AB2",6:"#A889C2"]
     let darkPlannerWeekDaysPastalColors = ["#6EB8BF","#45B298","#BAA15C","#B27D6F","#BD7AB2","#A889C2","#6EB8BF","#45B298"]
     let darkPlannerNotesBandBGColor = UIColor(hexString: "#504F4F")
+    let darkPlannerPlaceHolderStripColor = UIColor(hexString: "#A889C2")
     //**************************************************//
 
 
@@ -306,12 +308,6 @@ class FTPlannerDiaryFormat : FTDairyFormat {
                 diaryPagesInfo.append(FTDiaryPageInfo(type : .tracker, date : timeInterval))
             }
 
-        }
-        
-        // Render extras page
-        for index in 1...3 {
-            self.renderExtrasPage(atIndex : index,context: context)
-            self.diaryPagesInfo.append(FTDiaryPageInfo(type: .extras))
         }
     }
     func shouldAddWeekOffsetToCalendarWith(firstDay : FTDayInfo?) -> Bool {
@@ -938,5 +934,8 @@ extension FTPlannerDiaryFormat {
         }else {
             return notesBandBGColor
         }
+    }
+    var placeHolderStripBGColor : UIColor {
+        return isDarkTemplate ? darkPlannerPlaceHolderStripColor : placeHolderStripColor
     }
 }
