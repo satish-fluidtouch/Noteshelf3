@@ -42,8 +42,6 @@
 		093F78EC2B2C35BE00F124AE /* FTAudioAnnotation_DictInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F78EB2B2C35BE00F124AE /* FTAudioAnnotation_DictInfo.swift */; };
 		09415E312ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E302ACFFB8A00BB1EAA /* FTNoteshelfAIPremiumUserCreditsViewController.swift */; };
 		09415E332ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09415E322ACFFBA000BB1EAA /* FTNoteshelfAIFreeUserCreditsViewController.swift */; };
-		0951AC502B4E8B6F00D414BF /* FTDocumentFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0951AC4D2B4E8B6000D414BF /* FTDocumentFramework.framework */; };
-		0951AC512B4E8B6F00D414BF /* FTDocumentFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0951AC4D2B4E8B6000D414BF /* FTDocumentFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0951BA9C2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */; };
 		095F042E2ACD43E100205BF7 /* FTOpenAIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F042D2ACD43E100205BF7 /* FTOpenAIResponse.swift */; };
 		095F04312ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F04302ACE89C600205BF7 /* FTDigitalInkRecognitionTaskProcessor.swift */; };
@@ -54,6 +52,8 @@
 		097184282A82668200656B36 /* IAPEssentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097184272A82668200656B36 /* IAPEssentials.storyboard */; };
 		097449E02ABDB51A0008C6B6 /* AICommands.strings in Resources */ = {isa = PBXBuildFile; fileRef = 097449DF2ABDB51A0008C6B6 /* AICommands.strings */; };
 		097449E22AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097449E12AC19FB20008C6B6 /* NSAttributedString_OpenAI_Extension.swift */; };
+		097D087D2B613F6300156E8E /* FTDocumentFramework.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; };
+		097D087E2B613F6300156E8E /* FTDocumentFramework.xcframework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		098007862AF11128002C5C9A /* FTNS3BookURLThumbnailReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098007852AF11128002C5C9A /* FTNS3BookURLThumbnailReader.swift */; };
 		098007872AF112C4002C5C9A /* FTNS3BookURLThumbnailReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098007852AF11128002C5C9A /* FTNS3BookURLThumbnailReader.swift */; };
 		098007892AF1134A002C5C9A /* FTNS2BookURLThumbnailReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098007882AF1134A002C5C9A /* FTNS2BookURLThumbnailReader.swift */; };
@@ -2220,20 +2220,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0951AC4C2B4E8B6000D414BF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0951AC462B4E8B6000D414BF /* FTDocumentFramework.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8B0CA0511A1DF53400375014;
-			remoteInfo = FTDocumentFramework;
-		};
-		0951AC4E2B4E8B6000D414BF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0951AC462B4E8B6000D414BF /* FTDocumentFramework.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8B0CA05C1A1DF53400375014;
-			remoteInfo = FTDocumentFrameworkTests;
-		};
 		09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2405,9 +2391,9 @@
 			files = (
 				BAF0DCD12A6FE2A9006D293B /* FTNewNotebook.framework in CopyFiles */,
 				BAF3959B2859ADF10067CA9F /* FTRenderKit.xcframework in CopyFiles */,
+				097D087E2B613F6300156E8E /* FTDocumentFramework.xcframework in CopyFiles */,
 				BAF0DD742A6FE676006D293B /* FTTemplatesStore.framework in CopyFiles */,
 				BAF3959D2859ADF10067CA9F /* Webdav.xcframework in CopyFiles */,
-				0951AC512B4E8B6F00D414BF /* FTDocumentFramework.framework in CopyFiles */,
 				BAA84E4D2873105500DE801B /* FTCommon.framework in CopyFiles */,
 				BAA84E1E28730F5800DE801B /* FTStyles.framework in CopyFiles */,
 			);
@@ -2495,7 +2481,6 @@
 		094C985C22A0F10C00C93401 /* FTNoteshelfDocumentProvider_AllShelfItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfDocumentProvider_AllShelfItems.swift; sourceTree = "<group>"; };
 		094E5E4D20ADABEA009171B6 /* FTImageAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageAnnotationViewController.swift; sourceTree = "<group>"; };
 		094E5E5020ADB094009171B6 /* FTImageResizeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTImageResizeViewController.xib; sourceTree = "<group>"; };
-		0951AC462B4E8B6000D414BF /* FTDocumentFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FTDocumentFramework.xcodeproj; path = ../../../../General/FTDocumentFramework/FTDocumentFramework.xcodeproj; sourceTree = "<group>"; };
 		0951BA9B2AD01D3D00E9E02C /* FTNoteshelfAITokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAITokenManager.swift; sourceTree = "<group>"; };
 		09591AE1202C4AE6008848DE /* FTWatchRecordingCollection_Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingCollection_Cloud.swift; sourceTree = "<group>"; };
 		09591AE2202C4AE6008848DE /* FTWatchRecordingCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingCollection.swift; sourceTree = "<group>"; };
@@ -4773,6 +4758,7 @@
 				BA8BA67329795F4A00946CFE /* GoogleAPIClientForREST_Drive in Frameworks */,
 				BA3F7FB8299E2F51003964C6 /* libMyScriptMath.xcframework in Frameworks */,
 				BA3F7FB7299E2F51003964C6 /* libMyScriptAnalyzer.xcframework in Frameworks */,
+				097D087D2B613F6300156E8E /* FTDocumentFramework.xcframework in Frameworks */,
 				BA3F7FB6299E2F51003964C6 /* libMyScript2D.xcframework in Frameworks */,
 				BA8BA65629766D2900946CFE /* SwiftyDropbox in Frameworks */,
 				BA8BA66D29794C6400946CFE /* GoogleSignIn in Frameworks */,
@@ -4783,7 +4769,6 @@
 				BAA84E4C2873105500DE801B /* FTCommon.framework in Frameworks */,
 				BA3F7FB4299E2F51003964C6 /* libMyScriptDocument.xcframework in Frameworks */,
 				70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */,
-				0951AC502B4E8B6F00D414BF /* FTDocumentFramework.framework in Frameworks */,
 				BA3F7FB9299E2F51003964C6 /* libMyScriptShape.xcframework in Frameworks */,
 				BA3F7FB2299E2F51003964C6 /* libMyScriptPrediction.xcframework in Frameworks */,
 				DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */,
@@ -4918,15 +4903,6 @@
 				BABCB8D822FD4E0100551DAC /* FTThumbnailGenerator.swift */,
 			);
 			path = "Thumbnail Generator";
-			sourceTree = "<group>";
-		};
-		0951AC472B4E8B6000D414BF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0951AC4D2B4E8B6000D414BF /* FTDocumentFramework.framework */,
-				0951AC4F2B4E8B6000D414BF /* FTDocumentFrameworkTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		0952CA85228054F9004DBADE /* Render Provider */ = {
@@ -9445,7 +9421,6 @@
 		B86B7B2F24B6DB9100B57783 /* FTDocumentFramework */ = {
 			isa = PBXGroup;
 			children = (
-				0951AC462B4E8B6000D414BF /* FTDocumentFramework.xcodeproj */,
 				BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */,
 			);
 			path = FTDocumentFramework;
@@ -12145,12 +12120,6 @@
 			);
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 0951AC472B4E8B6000D414BF /* Products */;
-					ProjectRef = 0951AC462B4E8B6000D414BF /* FTDocumentFramework.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				BAF38F492859ADF00067CA9F /* Noteshelf3 */,
@@ -12166,23 +12135,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		0951AC4D2B4E8B6000D414BF /* FTDocumentFramework.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = FTDocumentFramework.framework;
-			remoteRef = 0951AC4C2B4E8B6000D414BF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0951AC4F2B4E8B6000D414BF /* FTDocumentFrameworkTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = FTDocumentFrameworkTests.xctest;
-			remoteRef = 0951AC4E2B4E8B6000D414BF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0964D0662AB9C27400C79C01 /* Resources */ = {
@@ -15039,7 +14991,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 375;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15483,7 +15435,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 375;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16262,7 +16214,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 375;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -17189,7 +17141,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 375;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -17255,7 +17207,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 69;
+				CURRENT_PROJECT_VERSION = 375;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FTDocument.h"
+#import <FTDocumentFramework/FTDocument.h>
 
 @interface FTDocumentModel : NSObject
 

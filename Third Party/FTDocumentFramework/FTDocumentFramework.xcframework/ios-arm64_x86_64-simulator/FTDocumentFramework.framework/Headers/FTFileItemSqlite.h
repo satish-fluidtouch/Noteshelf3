@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FTFileItem.h"
-#import "FMDB.h"
+#import <FTDocumentFramework/FTFileItem.h>
+#import <FTDocumentFramework/FMDB.h>
 
 @interface FTFileItemSqlite : FTFileItem
 @property (nonatomic, strong,readonly) FMDatabaseQueue *databaseQueue;
