@@ -237,6 +237,14 @@ private extension FTTextAnnotation
 
             //apply scale to the attributed string to match it.
             let mutStr = NSMutableAttributedString(attributedString: attrstr);
+            mutStr.beginEditing()
+            mutStr.enumerateAttribute(.link, in: NSRange(location: 0, length: mutStr.length)) { (linkValue, range, stop) in
+                if nil != linkValue {
+                    mutStr.removeAttribute(.link, range: range)
+                    mutStr.addAttributes(NSAttributedString.linkAttributes, range: range);
+                }
+            }
+            mutStr.endEditing();
             mutStr.applyScale(scaleTpApply, originalScaleToApply: CGFloat(self.transformScale)*scaleTpApply);
 
             UIGraphicsBeginImageContextWithOptions(imageSize, false, 0);

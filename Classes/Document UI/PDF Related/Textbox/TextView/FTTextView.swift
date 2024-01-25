@@ -95,6 +95,8 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
           allowsEditingTextAttributes = false
           #endif
           dataDetectorTypes = [.link]
+        
+        self.linkTextAttributes = NSAttributedString.linkAttributes;
     }
     
     var defaultAttributes: [NSAttributedString.Key : Any] {

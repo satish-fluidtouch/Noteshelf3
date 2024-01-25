@@ -71,7 +71,7 @@ extension FTTextAnnotationViewController {
         if self.linkSelectedRange?.length == 0 {
             self.linkSelectedRange = NSRange(location: 0, length: self.textInputView.attributedText.length)
         }
-        guard let attrText = self.textInputView.attributedText, var reqRange = self.linkSelectedRange else {
+        guard let attrText = self.textInputView.attributedText, let reqRange = self.linkSelectedRange else {
             return
         }
         if let annotation = self.annotation as? FTTextAnnotation, let curPage = annotation.associatedPage {
