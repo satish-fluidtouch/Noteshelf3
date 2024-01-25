@@ -924,7 +924,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
 
         // Empty Place holder rendering
-        let placeHolderStripHeightPercnt : CGFloat = isLandscaped ? 8.70 : 6.96
+        let placeHolderStripHeightPercnt : CGFloat = isLandscaped ? 8.70 : 7.34
         let placeHolderStripHeight = self.currentPageRect.size.height*placeHolderStripHeightPercnt/100
         self.drawColorBandsWith(xAxis: 0, yAxis: 0, context: context, width:placeHolderStripHeight , height: stripWidth, bandColor: placeHolderStripBGColor)
         self.addBezierLineWith(rect: CGRect(x: placeHolderStripHeight , y:0, width: stripWidth, height: 0.5), toContext: context, withColor: stripColor, shadowColor: stripShadowColor, shadowOffset: shadowOffset, shadowBlurRadius: shadowBlurRadius)
@@ -940,7 +940,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let calendarStripColor = highlightCalenderStrip ? getTemplateBackgroundColor() : getCalenderSideStripBGColor()
         self.drawColorBandsWith(xAxis: sideStripBandHeight, yAxis: 0, context: context, width: stripHeight , height: stripWidth, bandColor: calendarStripColor)
         calendarTitleString.draw(at: CGPoint(x: stripXAxis, y: stripYAxis + 1 ))
-        plannerDiarySideNavigationRectsInfo.calendarRect = self.getLinkRectForModifiedAxis(location: CGPoint(x: currentPageRect.width - stripWidth, y:  sideStripBandHeight), frameSize: CGSize(width:stripWidth, height:  stripHeight))
+        plannerDiarySideNavigationRectsInfo.calendarRect = self.getLinkRect(location: CGPoint(x: currentPageRect.width - stripWidth, y:  sideStripBandHeight), frameSize: CGSize(width: stripWidth, height:stripHeight))
         sideStripBandHeight += stripHeight
 
         //yearly planner side strip
