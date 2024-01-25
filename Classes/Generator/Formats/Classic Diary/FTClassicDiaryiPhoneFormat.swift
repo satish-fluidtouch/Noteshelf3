@@ -62,9 +62,9 @@ class FTClassicDiaryiPhoneFormat : FTClassicDiaryFormat{
         }
         // Today Pill
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let xAxisPercnt : CGFloat = isLandscaped ? 90.55 : 83.2
         let yAxisPercnt : CGFloat = isLandscaped ? 6.34 : 3.17
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        let rightXOffsetPercnt = 5.33
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func renderCalendarPage(context: CGContext, months: [FTMonthlyCalendarInfo], calendarYear: FTYearFormatInfo) {
         return
@@ -175,9 +175,9 @@ class FTClassicDiaryiPhoneFormat : FTClassicDiaryFormat{
         monthRectsInfo.append(currentMonthRectsInfo)
         // Today Pill
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let xAxisPercnt : CGFloat = isLandscaped ? 83.95 : 70.93
         let yAxisPercnt : CGFloat = isLandscaped ? 6.34 : 4.41
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        let rightXOffsetPercnt = 20.0
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
         super.renderWeekPage(context: context, weeklyInfo: weeklyInfo)
@@ -211,9 +211,9 @@ class FTClassicDiaryiPhoneFormat : FTClassicDiaryFormat{
 
             // Today Pill
             let isLandscaped = formatInfo.customVariants.isLandscape
-            let xAxisPercnt : CGFloat = isLandscaped ? 83.95 : 71.2
             let yAxisPercnt : CGFloat = isLandscaped ? 6.34 : 3.31
-            self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+            let rightXOffsetPercnt = 20.0
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
         }
         
         let weekDayfont = UIFont.SpectralMedium(withFontSize:screenInfo.fontsInfo.weekPageDetails.weekFontSize)
@@ -332,9 +332,9 @@ class FTClassicDiaryiPhoneFormat : FTClassicDiaryFormat{
         dayRectsInfo.append(currentDayRectsInfo)
         // Today Pill
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let xAxisPercnt : CGFloat = isLandscaped ? 83.80 : 71.46
         let yAxisPercnt : CGFloat = isLandscaped ? 6.34 : 3.17
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        let rightXOffsetPercnt = 20.0
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func addCalendarLinks(url : URL,format : FTDairyFormat,pageRect: CGRect, calenderYear: FTYearFormatInfo, isToDisplayOutOfMonthDate: Bool,monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly) {
         let doc = PDFDocument.init(url: url);

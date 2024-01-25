@@ -26,7 +26,7 @@
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>6.77</real>
+				<real>6.9</real>
 				<key>baseBoxX</key>
 				<real>20.02</real>
 				<key>baseBoxY</key>
@@ -36,7 +36,7 @@
 				<key>cellOffsetY</key>
 				<real>3.77</real>
 				<key>boxRightOffset</key>
-				<real>8.390000000000001</real>
+				<real>4.67</real>
 				<key>boxBottomOffset</key>
 				<real>37.4</real>
 			</dict>
@@ -93,7 +93,7 @@
 				<key>cellOffsetY</key>
 				<real>4.8</real>
 				<key>boxRightOffset</key>
-				<real>39.65</real>
+				<real>39.56</real>
 				<key>boxBottomOffset</key>
 				<real>13.5</real>
 			</dict>

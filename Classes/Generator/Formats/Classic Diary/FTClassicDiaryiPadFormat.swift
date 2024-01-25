@@ -69,7 +69,7 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
                                                         .kern: 0.0,
                                                         .foregroundColor: UIColor.init(hexString: "#64645F")]
         if let diaryStartYear = months.first?.year, let diaryEndYear = months.last?.year{
-            let yearText = diaryStartYear + "-" + diaryEndYear.suffix(2)
+            let yearText = (diaryStartYear == diaryEndYear) ? diaryStartYear : (diaryStartYear + "-" + diaryEndYear.suffix(2))
             let yearString = NSMutableAttributedString.init(string: yearText, attributes: yearAttrs)
             let yearXValue = currentPageRect.width*CGFloat(50)/100 - yearString.size().width/2
             var yearY : CGFloat = templateInfo.yearY
@@ -180,9 +180,10 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         }
         // Today Pill
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let xAxisPercnt : CGFloat = isLandscaped ? 92.35 : 89.92
-        let yAxisPercnt : CGFloat = isLandscaped ? 10.25 : 7.82
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        //let xAxisPercnt : CGFloat = isLandscaped ? 91.90 : 89.32
+        let yAxisPercnt : CGFloat = isLandscaped ? 10.38 : 7.91
+        let rightXOffsetPercnt = isLandscaped ? 3.77: 4.91
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         super.renderMonthPage(context: context, monthInfo: monthInfo, calendarYear: calendarYear)
@@ -289,9 +290,9 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         monthRectsInfo.append(currentMonthRectsInfo)
         // Today Pill
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let xAxisPercnt : CGFloat = isLandscaped ? 50.80 : 79.49
-        let yAxisPercnt : CGFloat = isLandscaped ? 10.51 : 7.44
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        let yAxisPercnt : CGFloat = isLandscaped ? 10.51 : 7.53
+        let rightXOffsetPercnt = isLandscaped ? 45.77: 12.94
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
@@ -413,9 +414,9 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
 
         // Today Pill
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let xAxisPercnt : CGFloat = isLandscaped ? 86.87 : 82.49
         let yAxisPercnt : CGFloat = isLandscaped ? 8.57 : 7.44
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        let rightXOffsetPercnt = isLandscaped ? 9.71: 12.94
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
         
@@ -503,8 +504,8 @@ class FTClassicDiaryiPadFormat : FTClassicDiaryFormat{
         dayRectsInfo.append(currentDayRectsInfo)
 
         // Today Pill
-        let xAxisPercnt : CGFloat = isLandscaped ? 86.87 : 82.49
         let yAxisPercnt : CGFloat = isLandscaped ? 14.41 : 10.68
-        self.addTodayPillWith(xPercnt: xAxisPercnt, yPercnt: yAxisPercnt, toContext: context)
+        let rightXOffsetPercnt = isLandscaped ? 9.71: 12.94
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yPercnt: yAxisPercnt, toContext: context)
     }
 }
