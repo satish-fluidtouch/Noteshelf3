@@ -213,9 +213,6 @@ class FTPlannerDiaryFormat : FTDairyFormat {
     func renderTrackerPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo){
         
     }
-    func renderExtrasPage(atIndex index : Int,context: CGContext){
-        
-    }
     func renderYearPage(atIndex index : Int,context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo){
         
     }

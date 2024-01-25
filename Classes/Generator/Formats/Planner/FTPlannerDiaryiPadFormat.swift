@@ -862,12 +862,6 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             index += 1
         })
     }
-    override func renderExtrasPage(atIndex index : Int,context: CGContext) {
-        super.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.extrasTemplate,pdfTemplate: nil)
-        self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.extras, activeMonth: nil)
-        plannerDiaryExtrasTabRectsInfo =  FTPlannerDiaryExtrasTabRectInfo();
-        plannerDiaryExtrasTabRectsInfo.plannerExtrasRects = self.drawPageNumbersFor(type: FTPlannerDiaryTemplateType.extras, currentPageIndex: index, context: context)
-    }
     func renderTxtAndColorsOnSideNavigationStrip(context: CGContext,type : FTPlannerDiaryTemplateType,activeMonth: FTMonthlyCalendarInfo?){
 
         let plannerDiarySideNavigationRectsInfo = FTPlannerDiarySideNavigationRectInfo()
@@ -1002,7 +996,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let numberOfYearPages : Int = isLandscaped ? 3 : 2
         let numberOfPages : Int = type == .year ? numberOfYearPages : numberOfExtrasPages
         let xAxisPercnt : CGFloat = isLandscaped ? 81.83 : 80.81
-        let yAxisPercnt : CGFloat = isLandscaped ? 6.23 : 5.24
+        let yAxisPercnt : CGFloat = isLandscaped ? 8.83 : 7.15
         let pageNumWidthPercnt : CGFloat = isLandscaped ? 3.59 : 4.79
         let pageNumHeightPercnt : CGFloat = isLandscaped ? 1.94 : 1.43
 
@@ -1042,8 +1036,8 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let widgetsTitles : [FTPlannerDiaryTemplateType : String] = [.month  : "MONTHLY",.week : "WEEKLY",.day :"DAILY",.notes : "NOTES",.tracker : "TRACKER"]
         let widgetElementTypes : [FTPlannerDiaryTemplateType] = [.tracker,.notes,.day,.week,.month]
 
-        let xAxisPercnt : CGFloat = isLandscaped ? 92.89 : 90.53
-        let yAxisPercnt : CGFloat = isLandscaped ? 6.62 : 5.53
+        let xAxisPercnt : CGFloat = isLandscaped ? 92.62 : 90.40
+        let yAxisPercnt : CGFloat = isLandscaped ? 9.35 : 7.53
         let widgetElementsXOffsetPercnt = isLandscaped ? 1.25 : 1.67
         let widgetElementHeightPercnt : CGFloat = isLandscaped ? 1.94 : 1.43
 

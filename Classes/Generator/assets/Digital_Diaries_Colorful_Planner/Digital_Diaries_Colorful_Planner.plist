@@ -158,7 +158,7 @@
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>5.58</real>
+				<real>9.09</real>
 				<key>baseBoxX</key>
 				<real>8.27</real>
 				<key>baseBoxY</key>
@@ -386,9 +386,9 @@
 			<key>month</key>
 			<dict>
 				<key>monthFontSize</key>
-				<integer>21</integer>
+				<integer>18</integer>
 				<key>yearFontSize</key>
-				<integer>21</integer>
+				<integer>18</integer>
 				<key>weekFontSize</key>
 				<integer>11</integer>
 				<key>dayFontSize</key>
