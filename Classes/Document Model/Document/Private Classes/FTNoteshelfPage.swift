@@ -231,9 +231,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     
     func saveDataToAnnotationsFolder(data: Data) {
         if let url = self.protoBuffURL {
-//            if FileManager().fileExists(atPath: url.path(percentEncoded: false)) {
-//                try? FileManager().removeItem(at: url)
-//            }
+            if FileManager().fileExists(atPath: url.path(percentEncoded: false)) {
+                try? FileManager().removeItem(at: url)
+            }
             do {
                 try data.write(to: url)
             } catch {
