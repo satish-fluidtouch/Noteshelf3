@@ -197,7 +197,9 @@ extension FTShelfSplitViewController {
                     onCompletion(false)
                 } else if let nsError = error as NSError? {
                     loadingIndicatorViewController.hide()
-                    nsError.showAlert(from: self);
+                    if !nsError.isInvalidPinError {
+                        nsError.showAlert(from: self);
+                    }
                     onCompletion(false)
                 }
                 else {
@@ -348,6 +350,10 @@ extension FTShelfSplitViewController {
                 loadingIndicatorViewController.hide()
                 guard FTIAPManager.shared.premiumUser.canAddFewMoreBooks(count: 1) else {
                     completion(FTPremiumUserError.nonPremiumError)
+                    return;
+                }
+                if let error, error.isInvalidPinError {
+                    completion(error)
                     return;
                 }
                 FTNoteshelfDocumentProvider.shared.uncategorizedNotesCollection { [weak self] collectionItem in
