@@ -30,7 +30,7 @@ enum FTTextMenuAction: String {
     case delete
     case linkTo
     case editLink
-    case deleteLink
+    case removeLink
     case converToStroke
 }
 
@@ -109,8 +109,8 @@ class FTAnnotationBaseView: UIView
         self.menuHandler.textMenuAction(action: .editLink, sender: sender)
     }
 
-    @objc func deleteLinkMenuItemAction(_ sender: Any?) {
-        self.menuHandler.textMenuAction(action: .deleteLink, sender: sender)
+    @objc func removeLinkMenuItemAction(_ sender: Any?) {
+        self.menuHandler.textMenuAction(action: .removeLink, sender: sender)
     }
 
     override func canPerformAction(_ action: Selector, withSender sender: Any!) -> Bool {

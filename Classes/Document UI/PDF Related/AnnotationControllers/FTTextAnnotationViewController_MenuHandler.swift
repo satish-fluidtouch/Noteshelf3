@@ -45,7 +45,7 @@ extension FTTextAnnotationViewController {
 
         let linkMenuItem = UIMenuItem(title: "Link To", action: #selector(FTAnnotationBaseView.linkToMenuItemAction(_:)))
         let editLinkITem = UIMenuItem(title: "Edit Link", action: #selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)))
-        let deleteLinkItem = UIMenuItem(title: "Delete Link", action: #selector(FTAnnotationBaseView.deleteLinkMenuItemAction(_:)))
+        let removeLinkItem = UIMenuItem(title: "Remove Link", action: #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:)))
 
         var menuItems: [UIMenuItem] = [
             editMenuItem
@@ -55,7 +55,7 @@ extension FTTextAnnotationViewController {
             , lockMenuItem
             , linkMenuItem
             , editLinkITem
-            , deleteLinkItem
+            , removeLinkItem
             , bringToFrontMenuItem
             , sendToBackMenuItem
         ]
@@ -92,7 +92,7 @@ extension FTTextAnnotationViewController {
         }
     }
 
-    @objc internal func deleteLinkAction(_ sender: Any?) {
+    @objc internal func removeLinkAction(_ sender: Any?) {
         var range = self.linkSelectedRange ?? self.textInputView.selectedRange
         if range.length == 0 { // long pressed text
             range = NSRange(location: 0, length: self.textInputView.attributedText.length)
@@ -193,7 +193,7 @@ extension FTTextAnnotationViewController: FTTextMenuActionProtocol {
             #selector(view.bringToFrontMenuItemAction(_:)), #selector(view.sendToBackMenuItemAction(_:)), #selector(view.deleteMenuItemAction(_:))].contains(action) {
             return true
         } else if self.textInputView.checkIfToShowEditLinkOptions() {
-            if [#selector(view.editLinkMenuItemAction(_:)), #selector(view.deleteLinkMenuItemAction(_:))].contains(action) {
+            if [#selector(view.editLinkMenuItemAction(_:)), #selector(view.removeLinkMenuItemAction(_:))].contains(action) {
                 return true
             }
         } else if [#selector(view.linkToMenuItemAction(_:))].contains(action) {
@@ -240,8 +240,8 @@ extension FTTextAnnotationViewController: FTTextMenuActionProtocol {
         case .linkTo, .editLink:
             self.textInputView.linkMenuItemAction(sender)
 
-        case .deleteLink:
-            self.textInputView.deleteLinkMenuItemAction(sender)
+        case .removeLink:
+            self.textInputView.removeLinkMenuItemAction(sender)
 
         case .converToStroke:
             track("textbox_delete_tapped", params: [:], screenName: FTScreenNames.textbox)

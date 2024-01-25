@@ -19,11 +19,11 @@ class FTShelfItemsViewControllerNew: UIHostingController<FTShelfItemsView>, FTPo
 
     weak var delegate: FTDocumentSelectionDelegate?
     
-    init(shelfItemsViewModel: FTShelfItemsViewModel, purpose: FTShelfItemsPurpose, delegate: FTDocumentSelectionDelegate? = nil) {
+    init(shelfItemsViewModel: FTShelfItemsViewModel, delegate: FTDocumentSelectionDelegate? = nil) {
         self.shelfItemsViewModel = shelfItemsViewModel
-        self.purpose = purpose
+        self.purpose = shelfItemsViewModel.purpose
         self.delegate = delegate
-        let view = FTShelfItemsView(viewModel: shelfItemsViewModel,purpose: purpose)
+        let view = FTShelfItemsView(viewModel: shelfItemsViewModel)
         super.init(rootView: view)
         self.rootView.viewDelegate = self
     }
@@ -55,7 +55,7 @@ extension FTShelfItemsViewControllerNew: FTShelfItemsViewDelegate {
     }
     func openShelfItemsOf(collection: FTShelfItemCollection?, group: FTGroupItemProtocol?) {
         let shelfItemsViewModel = self.getShelfItemsViewModelFor(collection: collection, group: group)
-        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, purpose: purpose, delegate: self.delegate)
+        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, delegate: self.delegate)
         if group != nil {
             controller.title =  group?.displayTitle ?? ""
         } else if collection != nil {

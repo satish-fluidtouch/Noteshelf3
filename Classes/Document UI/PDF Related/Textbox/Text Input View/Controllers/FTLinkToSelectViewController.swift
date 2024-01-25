@@ -119,8 +119,8 @@ private extension FTLinkToSelectViewController {
     }
 
     func navigateToDocumentSelectionScreen() {
-        let viewModel = FTShelfItemsViewModel(selectedShelfItems: [])
-        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, purpose: .linking, delegate: self)
+        let viewModel = FTShelfItemsViewModel(selectedShelfItems: [], purpose: .linking)
+        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: viewModel, delegate: self)
         self.navigationController?.pushViewController(controller, animated: true)
     }
 

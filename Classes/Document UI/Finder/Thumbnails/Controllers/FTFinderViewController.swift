@@ -1518,7 +1518,7 @@ extension FTFinderViewController {
     @IBAction func moveClicked() {
         let shelfItemsViewModel = FTShelfItemsViewModel(purpose: .finder)
         shelfItemsViewModel.movePageDelegate = self
-        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel, purpose: .finder)
+        let controller = FTShelfItemsViewControllerNew(shelfItemsViewModel: shelfItemsViewModel)
         controller.title = ""
         let navController = UINavigationController(rootViewController: controller)
         navController.modalPresentationStyle = .formSheet

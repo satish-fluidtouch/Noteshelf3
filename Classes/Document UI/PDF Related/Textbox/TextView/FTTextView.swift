@@ -615,9 +615,9 @@ extension FTTextView {
         }
     }
 
-    @objc func deleteLinkMenuItemAction(_ sender: Any?) {
+    @objc func removeLinkMenuItemAction(_ sender: Any?) {
         if let controller = self.annotationViewController {
-            controller.deleteLinkAction(sender)
+            controller.removeLinkAction(sender)
         }
     }
 
@@ -728,7 +728,7 @@ extension FTTextView {
                     #selector(self.delete(_:))].contains(action) {
                     return true
                 } else if self.checkIfToShowEditLinkOptions() {
-                    if [#selector(self.editLinkMenuItemAction(_:)), #selector(self.deleteLinkMenuItemAction(_:))].contains(action) {
+                    if [#selector(self.editLinkMenuItemAction(_:)), #selector(self.removeLinkMenuItemAction(_:))].contains(action) {
                         return true
                     }
                 } else if [#selector(self.linkMenuItemAction(_:))].contains(action) {
@@ -754,9 +754,9 @@ private extension FTTextView {
         
         let linkMenuItem = UIMenuItem(title: "Link To", action: #selector(FTTextView.linkMenuItemAction(_:)))
         let editLinkITem = UIMenuItem(title: "Edit Link", action: #selector(FTTextView.editLinkMenuItemAction(_:)))
-        let deleteLinkItem = UIMenuItem(title: "Delete Link", action: #selector(FTTextView.deleteLinkMenuItemAction(_:)))
+        let removeLinkItem = UIMenuItem(title: "Remove Link", action: #selector(FTTextView.removeLinkMenuItemAction(_:)))
 
-        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem, linkMenuItem, editLinkITem, deleteLinkItem]
+        let menuItems: [UIMenuItem] = [colorMenuItem, lookUpMenuItem, shareMenuItem, linkMenuItem, editLinkITem, removeLinkItem]
         let menuController = UIMenuController.shared
         menuController.menuItems = menuItems
     }

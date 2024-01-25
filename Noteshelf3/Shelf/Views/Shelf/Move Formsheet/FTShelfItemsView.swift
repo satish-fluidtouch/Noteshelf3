@@ -30,7 +30,6 @@ struct FTShelfItemsView: View {
     @ObservedObject var viewModel: FTShelfItemsViewModel
 
     weak var viewDelegate: FTShelfItemsViewDelegate?
-    var purpose: FTShelfItemsPurpose = .shelf
     var body: some View {
         ZStack {
             ScrollView {
@@ -59,9 +58,9 @@ struct FTShelfItemsView: View {
                                 FTShelfItemNotebookView(isLastItemInList: islastItemInList, notebookItem: notebookItem)
                                     .environmentObject(viewModel)
                                     .onTapGesture {
-                                        if purpose == .finder {
+                                        if viewModel.purpose == .finder {
                                             viewModel.selectedShelfItemToMove = notebookItem.notebook
-                                        } else if purpose == .linking, let item = notebookItem.notebook {
+                                        } else if viewModel.purpose == .linking, let item = notebookItem.notebook {
                                             self.viewDelegate?.didSelectShelfItem(item)
                                         }
                                     }
@@ -89,8 +88,8 @@ struct FTShelfItemsView: View {
                         .foregroundColor(.primary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if purpose != .linking {
-                        if viewModel.collection == nil && purpose == .shelf {
+                    if viewModel.purpose != .linking {
+                        if viewModel.collection == nil && viewModel.purpose == .shelf {
                             Button {
                                 viewModel.showNewCategoryCreationAlert()
                             } label: {
@@ -101,7 +100,7 @@ struct FTShelfItemsView: View {
                             }
                         } else if viewModel.collection != nil {
                             Button {
-                                if self.purpose == .finder {
+                                if viewModel.purpose == .finder {
                                     viewModel.showNewNoteBookCreationAlert()
                                 } else {
                                     viewModel.showNewGroupCreationAlert()
@@ -124,7 +123,7 @@ struct FTShelfItemsView: View {
                                 .frame(alignment: .center)
                                 .font(Font.appFont(for: .regular, with: 17))
                                 .foregroundColor(Color.appColor(.accent))
-                        }.isHidden(purpose == .linking)
+                        }.isHidden(viewModel.purpose == .linking)
                     }
                 }
             }
