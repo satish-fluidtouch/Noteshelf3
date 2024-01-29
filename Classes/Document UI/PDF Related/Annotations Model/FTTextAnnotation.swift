@@ -512,7 +512,7 @@ extension FTTextAnnotation : NSSecureCoding {
     }
 }
 
-private extension NSMutableAttributedString
+extension NSMutableAttributedString
 {
     func applyDataDetectorAttributes()
     {

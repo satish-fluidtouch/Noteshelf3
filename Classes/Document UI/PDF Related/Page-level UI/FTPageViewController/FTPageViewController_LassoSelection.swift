@@ -862,6 +862,7 @@ private extension FTPageViewController
             info.atPoint = point
         }
         info.scale = self.pageContentScale
+        info.isToPaste = true
         self.addAnnotation(info: info)
         self.addLassoViewIfNeeded()
         
