@@ -43,9 +43,9 @@ extension FTTextAnnotationViewController {
         let sendToBackMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("SendToBack", comment: "SendToBack"), action: #selector(FTAnnotationBaseView.sendToBackMenuItemAction(_:)))
         let deleteMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Delete", comment: "Delete"), action: #selector(FTAnnotationBaseView.deleteMenuItemAction(_:)))
 
-        let linkMenuItem = UIMenuItem(title: "Link To", action: #selector(FTAnnotationBaseView.linkToMenuItemAction(_:)))
-        let editLinkITem = UIMenuItem(title: "Edit Link", action: #selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)))
-        let removeLinkItem = UIMenuItem(title: "Remove Link", action: #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:)))
+        let linkMenuItem = UIMenuItem(title: "textLink_linkTo".localized, action: #selector(FTAnnotationBaseView.linkToMenuItemAction(_:)))
+        let editLinkITem = UIMenuItem(title: "textLink_editLink".localized, action: #selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)))
+        let removeLinkItem = UIMenuItem(title: "textLink_removeLink".localized, action: #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:)))
 
         var menuItems: [UIMenuItem] = [
             editMenuItem

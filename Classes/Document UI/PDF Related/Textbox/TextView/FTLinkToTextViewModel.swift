@@ -16,7 +16,7 @@ enum FTLinkToSegment: String {
         let str: String
         switch self {
         case .page:
-            str = "Page"
+            str = "Page".localized
         case .url:
             str = "URL"
         }

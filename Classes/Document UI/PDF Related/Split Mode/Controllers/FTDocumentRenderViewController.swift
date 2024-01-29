@@ -330,7 +330,7 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     }
 
     func showDocumentNotAvailableAlert() {
-        let alertController = UIAlertController(title: "Document has been deleted", message: "The document linked to the content is not available.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "textLink_documentDeleted_title".localized, message: "textLink_documentItselfNotAvailable_message".localized, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok".localized, style: .default) { _ in
         }
         alertController.addAction(okAction)
@@ -338,12 +338,12 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     }
 
     func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: ((Bool) -> Void)?) {
-        let message = String(format: "Would you like to open page %d of %@", pageNumber, title)
-        let alertController = UIAlertController(title: "Closing this document", message: message, preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
+        let message = String(format: "textLink_closingCurrentDocument_title".localized, title)
+        let alertController = UIAlertController(title: "textLink_continueConfirmation".localized, message: message, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes".localized, style: .default) { _ in
             onCompletion?(true)
         }
-        let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
+        let noAction = UIAlertAction(title: "No".localized, style: .cancel) { _ in
             onCompletion?(false)
         }
         alertController.addAction(yesAction)

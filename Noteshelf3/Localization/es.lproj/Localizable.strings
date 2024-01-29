@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Eliminar marcador";
 "bujoessentials" = "Elementos esenciales del bujo";
 "cancel" = "Cancelar";
+"clip.addClip" = "Añadir clip";
+"clip.deleteCategory" = "Eliminar categoría";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "Eliminar esta categoría eliminará todos los clips @% en esta categoría y no se podrán recuperar.";
+"clip.newCategory" = "Nueva categoría...";
+"clip.noCategory" = "Esta categoría está vacía.";
+"clip.noSavedClips" = "No hay clips guardados";
+"clip.noSavedClips.description" = "Lazo cualquier cosa y toca 'Guardar clip' para usar más tarde.";
+"clip.saveClip" = "Guardar clip";
+"clip.savedClips" = "Clips guardados";
 "clipart404" = "Servidor ocupado, por favor inténtelo de nuevo más tarde.";
 "cloud.backup.error.contentPreviouslyCrashed" = "Se produjo un error al realizar la copia de seguridad. Por favor, inténtalo de nuevo más tarde.";
 "cloud.backup.error.failedToCreateBackup" = "No se pudo crear el archivo de respaldo. Verifique el espacio restante en su dispositivo.";
@@ -1521,6 +1531,16 @@
 "text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
+"textLink_closingCurrentDocument_title" = "Esto cerrará el cuaderno actual y te redirigirá a <%@>.";
+"textLink_continueConfirmation" = "";
+"textLink_documentDeleted_title" = "El cuaderno ha sido eliminado";
+"textLink_documentItselfNotAvailable_message" = "El cuaderno vinculado al contenido ha sido eliminado.";
+"textLink_editLink" = "Editar enlace";
+"textLink_linkTo" = "Enlace a...";
+"textLink_otherbook_firstPageConfirmation_message" = "La página vinculada al contenido ha sido eliminada. ¿Te gustaría navegar al cuaderno donde se encontraba la página?";
+"textLink_pageDeleted_title" = "La página ha sido eliminada";
+"textLink_pageNotAvailable" = "La página vinculada al contenido ha sido eliminada.";
+"textLink_removeLink" = "Eliminar enlace";
 "textmode.fonttitle" = "Estilo de fuente/texto";
 "texttoolbar.fontselectionTitle" = "Seleccionar Fuente";
 "theams.unsplashDescription" = "Seleccionar de Unsplash, tomar una foto o seleccionar de tu Biblioteca de Fotos para crear tus portadas personalizadas.";
@@ -1577,4 +1597,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Narayana on 29 January 2024 at 7:18 PM

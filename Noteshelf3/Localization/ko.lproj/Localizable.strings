@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "북마크 제거";
 "bujoessentials" = "부조 필수품";
 "cancel" = "취소";
+"clip.addClip" = "클립 추가";
+"clip.deleteCategory" = "카테고리 삭제";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "이 카테고리를 삭제하면 이 카테고리의 모든 @% 클립이 삭제되며 복구할 수 없습니다.";
+"clip.newCategory" = "새로운 카테고리...";
+"clip.noCategory" = "이 카테고리는 비어 있습니다.";
+"clip.noSavedClips" = "저장된 클립 없음";
+"clip.noSavedClips.description" = "나중에 사용하기 위해 무엇이든 라쏘하고 '클립 저장'을 탭하세요.";
+"clip.saveClip" = "클립 저장";
+"clip.savedClips" = "저장된 클립";
 "clipart404" = "서버가 바쁩니다. 나중에 다시 시도해주세요.";
 "cloud.backup.error.contentPreviouslyCrashed" = "백업 중에 오류가 발생했습니다. 나중에 다시 시도하세요.";
 "cloud.backup.error.failedToCreateBackup" = "백업 파일 생성 실패. 기기의 남은 공간을 확인하세요.";
@@ -1521,6 +1531,16 @@
 "text.font.setAsDefault.menuTitle" = "다음에 대해 기본값으로 설정:";
 "text.font.setAsDefault.thisAndFutureBooks" = "이와 이후의 모든 노트북";
 "text.font.setAsDefault.thisBook" = "이 노트북";
+"textLink_closingCurrentDocument_title" = "이것은 현재 노트북을 닫고 <%@>로 리디렉션합니다.";
+"textLink_continueConfirmation" = "Vuoi continuare?";
+"textLink_documentDeleted_title" = "책이 삭제되었습니다";
+"textLink_documentItselfNotAvailable_message" = "해당 콘텐츠에 연결된 도서가 삭제되었습니다.";
+"textLink_editLink" = "링크 편집";
+"textLink_linkTo" = "링크하기";
+"textLink_otherbook_firstPageConfirmation_message" = "연결된 페이지가 삭제되었습니다. 페이지가 위치한 노트북으로 이동하시겠습니까?";
+"textLink_pageDeleted_title" = "페이지가 삭제되었습니다";
+"textLink_pageNotAvailable" = "연결된 페이지의 내용이 삭제되었습니다.";
+"textLink_removeLink" = "링크 제거";
 "textmode.fonttitle" = "글꼴/텍스트 스타일";
 "texttoolbar.fontselectionTitle" = "글꼴 선택";
 "theams.unsplashDescription" = "Unsplash에서 선택, 사진 촬영 또는 사진 라이브러리에서 선택하여 사용자 정의 표지 만들기";
@@ -1577,4 +1597,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Narayana on 29 January 2024 at 7:18 PM

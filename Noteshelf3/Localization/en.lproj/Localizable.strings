@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "Remove Bookmark";
 "bujoessentials" = "Bujo Essentials";
 "cancel" = "Cancel";
+"clip.addClip" = "Add Clip";
+"clip.deleteCategory" = "Delete Category";
+"clip.deleteCategory.message" = "Would you like to continue?";
+"clip.deleteCategory.title" = "Deleting this category will delete all %@ clips in this category and cannot be recovered.";
+"clip.newCategory" = "New Category...";
+"clip.noCategory" = "This category is empty";
+"clip.noSavedClips" = "No Saved Clips";
+"clip.noSavedClips.description" = "Lasso anything and tap ‘Save Clip’ for later use.";
+"clip.saveClip" = "Save Clip";
+"clip.savedClips" = "Saved Clips";
 "clipart404" = "Server Busy, Please try again later.";
 "cloud.backup.error.contentPreviouslyCrashed" = "An error occured while backing up. Please try again later.";
 "cloud.backup.error.failedToCreateBackup" = "Failed to create backup file. Check remaining space on your device.";
@@ -1076,9 +1086,9 @@
 "gesture.redo.hint" = "3-finger single tap";
 "gesture.redo.title" = "Redo";
 "gesture.show.quickAccessSideBar" = "Show Quick-access Sidebar";
-"gesture.show.quickAccessSideBar.hint" = "Left edge long swipe";
+"gesture.show.quickAccessSideBar.hint" = "Long swipe from left edge";
 "gesture.show.thumbnails" = "Show Page Thumbnails";
-"gesture.show.thumbnails.hint" = "Left edge Swipe";
+"gesture.show.thumbnails.hint" = "Swipe from left edge";
 "gesture.undo.hint" = "2-finger double tap";
 "gesture.undo.title" = "Undo";
 "gesture.undoredo.subTitle" = "2-finger or 3-finger single tap";
@@ -1521,6 +1531,16 @@
 "text.font.setAsDefault.menuTitle" = "Set as default for: ";
 "text.font.setAsDefault.thisAndFutureBooks" = "This and all future notebooks";
 "text.font.setAsDefault.thisBook" = "This notebook";
+"textLink_closingCurrentDocument_title" = "This will close the current notebook and redirect you to <%@>";
+"textLink_continueConfirmation" = "你想要繼續嗎？";
+"textLink_documentDeleted_title" = "Notebook has been deleted";
+"textLink_documentItselfNotAvailable_message" = "The notebook linked to the content has been deleted.";
+"textLink_editLink" = "Edit Link";
+"textLink_linkTo" = "Link To...";
+"textLink_otherbook_firstPageConfirmation_message" = "The page linked to the content has been deleted.  Would you like to navigate to the notebook where the page was located?";
+"textLink_pageDeleted_title" = "Page has been deleted";
+"textLink_pageNotAvailable" = "The page linked to the content has been deleted.";
+"textLink_removeLink" = "Remove Link";
 "textmode.fonttitle" = "Font/text style";
 "texttoolbar.fontselectionTitle" = "Select Font";
 "theams.unsplashDescription" = "Select from Unsplash, take a photo or select from your Photo Library to create your custom covers";
@@ -1577,4 +1597,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Narayana on 29 January 2024 at 7:18 PM

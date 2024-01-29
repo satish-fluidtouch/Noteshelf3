@@ -958,6 +958,16 @@
 "bookmark.removebookMark" = "移除書籤";
 "bujoessentials" = "筆記本要點";
 "cancel" = "取消";
+"clip.addClip" = "添加片段";
+"clip.deleteCategory" = "刪除類別";
+"clip.deleteCategory.message" = "";
+"clip.deleteCategory.title" = "刪除此類別將刪除此類別中的所有@％剪輯，且無法恢復。";
+"clip.newCategory" = "新分類...";
+"clip.noCategory" = "這個類別為空";
+"clip.noSavedClips" = "沒有已儲存的片段";
+"clip.noSavedClips.description" = "套索任何東西並點擊「儲存片段」以供日後使用。";
+"clip.saveClip" = "保存片段";
+"clip.savedClips" = "已儲存的片段";
 "clipart404" = "伺服器繁忙，請稍後重試。";
 "cloud.backup.error.contentPreviouslyCrashed" = "時發生錯誤。請稍後再試。";
 "cloud.backup.error.failedToCreateBackup" = "建立備份檔案失敗。 請檢查設備上的剩餘空間。";
@@ -1521,6 +1531,16 @@
 "text.font.setAsDefault.menuTitle" = "設定為預設：";
 "text.font.setAsDefault.thisAndFutureBooks" = "這本和所有未來的筆記本";
 "text.font.setAsDefault.thisBook" = "這本筆記本";
+"textLink_closingCurrentDocument_title" = "這將關閉當前筆記並將您重新導向至<%@>";
+"textLink_continueConfirmation" = "Möchten Sie fortfahren?";
+"textLink_documentDeleted_title" = "筆記本已被刪除";
+"textLink_documentItselfNotAvailable_message" = "連結到該內容的筆記本已被刪除。";
+"textLink_editLink" = "編輯連結";
+"textLink_linkTo" = "連結至...";
+"textLink_otherbook_firstPageConfirmation_message" = "鏈接到內容的頁面已被刪除。您是否要導航到頁面所在的筆記本？";
+"textLink_pageDeleted_title" = "頁面已被刪除";
+"textLink_pageNotAvailable" = "鏈接到內容的頁面已被刪除。";
+"textLink_removeLink" = "移除連結";
 "textmode.fonttitle" = "字體/文字樣式";
 "texttoolbar.fontselectionTitle" = "選擇字體";
 "theams.unsplashDescription" = "從Unsplash選擇，拍照或從照片庫中選擇以建立您的自訂封面。";
@@ -1577,4 +1597,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Fluid Touch on 17 January 2024 at 10:56 AM
+// Last Synced by Narayana on 29 January 2024 at 7:18 PM

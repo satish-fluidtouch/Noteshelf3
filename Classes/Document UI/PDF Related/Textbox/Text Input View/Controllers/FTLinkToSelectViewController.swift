@@ -61,7 +61,7 @@ class FTLinkToSelectViewController: UIViewController {
 
 private extension FTLinkToSelectViewController {
     func configureNavigationBar() {
-        self.title = "Link To"
+        self.title = "textLink_linkTo".localized
         let titleAttrs = [NSAttributedString.Key.font: UIFont.clearFaceFont(for: .medium, with: 20.0), NSAttributedString.Key.foregroundColor: UIColor.label]
         self.navigationController?.navigationBar.titleTextAttributes = titleAttrs
         let leftNavItem = FTNavBarButtonItem(type: .left, title: "Cancel".localized, delegate: self)
