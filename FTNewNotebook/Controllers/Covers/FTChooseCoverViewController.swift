@@ -407,8 +407,9 @@ extension FTChooseCoverViewController: FTCoverSelectionDelegate {
     }
 
     func didSelectCustomImage(_ image: UIImage) {
+        let scaledImage = image.scaleAndRotateImageFor1x()
         self.updatePreviewModeIfNeeded(.previewEdit)
-        self.coverEditPreview?.updatePreviewIfNeeded(image)
+        self.coverEditPreview?.updatePreviewIfNeeded(scaledImage)
         FTCurrentCoverSelection.shared.selectedCover = nil
         self.updateCornerRadius()
         self.noCoverLabel?.isHidden = true
