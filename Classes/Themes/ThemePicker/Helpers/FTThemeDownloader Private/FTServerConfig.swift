@@ -10,7 +10,7 @@ import UIKit
 import FTCommon
 
 #if DEBUG || BETA
-let userProductionServer = false; //turn it to false if wants to test of dev and beta bucket in debug or BETA builds
+let userProductionServer = true; //turn it to false if wants to test of dev and beta bucket in debug or BETA builds
 #endif
 
 class FTServerConfig: NSObject {
