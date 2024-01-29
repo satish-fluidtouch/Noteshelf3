@@ -122,4 +122,15 @@ extension UIScrollView {
         }
         return zoomRect;
     }
+    
+    @objc var maximumSupportedZoomScale: CGFloat {
+        return UIScrollView.nsMaximumZoomScale;
+    }
+    
+    @objc var miniumSupportedZoomScale: CGFloat {
+        return UIScrollView.nsMinimumZoomScale;
+    }
+    
+    @objc static let nsMinimumZoomScale: CGFloat = 1;
+    @objc static let nsMaximumZoomScale: CGFloat = 6;
 }

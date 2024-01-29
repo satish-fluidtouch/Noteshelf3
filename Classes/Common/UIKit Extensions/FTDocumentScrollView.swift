@@ -197,18 +197,24 @@ enum FTScrollViewMode: Int {
         self.setLayoutType(type, force: false);
     }
     
-    private var minZoomScale: CGFloat {
-        return FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeDefault);
+    override var maximumSupportedZoomScale: CGFloat {
+        return 6;
     }
     
-    private var maxZoomScale: CGFloat {
-        return FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
+    private var _miniumSupportedZoomScale: CGFloat = 1;
+    override var miniumSupportedZoomScale: CGFloat {
+        get {
+            return _miniumSupportedZoomScale
+        }
+        set {
+            _miniumSupportedZoomScale = newValue;
+        }
     }
-    
+        
     func zoom(_ inScale : CGFloat,animate : Bool,completionBlock : (() -> ())?)
     {
-        let minZoomScale = self.minZoomScale;
-        let maxZoomScale = self.maxZoomScale;
+        let minZoomScale = self.miniumSupportedZoomScale;
+        let maxZoomScale = self.maximumSupportedZoomScale;
 
         let scale = max(min(inScale,maxZoomScale),minZoomScale);
         
@@ -236,8 +242,8 @@ enum FTScrollViewMode: Int {
             onCompletion?();
             return;
         }
-        let minZoomScale = self.minZoomScale;
-        let maxZoomScale = self.maxZoomScale;
+        let minZoomScale = self.miniumSupportedZoomScale;
+        let maxZoomScale = self.maximumSupportedZoomScale;
 
         let scale = max(min(inScale,maxZoomScale),minZoomScale);
         
@@ -271,8 +277,8 @@ private extension FTDocumentScrollView
     func initialize()
     {
         self.addPageView();
-        self.maximumZoomScale = self.maxZoomScale
-        self.minimumZoomScale = self.minZoomScale
+        self.maximumZoomScale = self.maximumSupportedZoomScale
+        self.minimumZoomScale = self.miniumSupportedZoomScale
         
         self.scrollsToTop = false;
         self.delaysContentTouches = false;
@@ -627,6 +633,14 @@ extension FTDocumentScrollView: UIScrollViewDelegate
             contentHolderView.frame = frame;
 
             self.scrollViewDelegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale);
+        }
+        var contentSize = scrollView.contentSize;
+        if contentSize.width < scrollView.frame.width 
+            || contentSize.height < scrollView.frame.height {
+            contentSize.width = max(contentSize.width, scrollView.frame.width);
+            contentSize.height = max(contentSize.height, scrollView.frame.height);
+            scrollView.contentSize = contentSize;
+            scrollView.centerContentHolderView(contentHolderView);
         }
         self.unlockZoom();
         enableAndDisableNewPageRefreshControls()

@@ -117,7 +117,6 @@
 		09CDCB692A58320B000340FB /* FTSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDCB682A58320B000340FB /* FTSceneDelegate.swift */; };
 		09CDDCFE2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDDCFD2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift */; };
 		09CDDD002A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CDDCFF2A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift */; };
-		09CFB0DD2B482C1B0001B51F /* FTScrollViewScaleRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CFB0DC2B482C1B0001B51F /* FTScrollViewScaleRange.swift */; };
 		09DBD5262A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5252A7CDA3E00987ED1 /* FTNoteshelfAITokensConsumedAlertViewController.swift */; };
 		09DBD5282A7CDABE00987ED1 /* FTNoteshelfAI_String_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5272A7CDABE00987ED1 /* FTNoteshelfAI_String_Extension.swift */; };
 		09DBD52A2A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBD5292A7D255B00987ED1 /* FTFormSheetTransitionDelegate.swift */; };
@@ -2775,7 +2774,6 @@
 		09CDCB682A58320B000340FB /* FTSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSceneDelegate.swift; sourceTree = "<group>"; };
 		09CDDCFD2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCloudFilePublishRequest.swift; sourceTree = "<group>"; };
 		09CDDCFF2A94E85E00E9ABB4 /* FTCloudMultiFormatPublishrequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTCloudMultiFormatPublishrequest.swift; sourceTree = "<group>"; };
-		09CFB0DC2B482C1B0001B51F /* FTScrollViewScaleRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTScrollViewScaleRange.swift; sourceTree = "<group>"; };
 		09D13BFD2021FFE3000B4BB7 /* FTWatchRecordedAudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedAudioCell.swift; sourceTree = "<group>"; };
 		09D13BFE2021FFE3000B4BB7 /* FTWatchRecordedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedListViewController.swift; sourceTree = "<group>"; };
 		09D863F3201F273B0023899B /* FTDetailDiagnosisHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDetailDiagnosisHandler.swift; sourceTree = "<group>"; };
@@ -6784,7 +6782,6 @@
 				4297F6692535FA8E009F8F5A /* String+Extension.swift */,
 				423EE1DB253489DE007967F9 /* CocoaCryptoHashing.swift */,
 				423EE1DD25348A31007967F9 /* NSData256+Extension.swift */,
-				09CFB0DC2B482C1B0001B51F /* FTScrollViewScaleRange.swift */,
 			);
 			path = "UIKit Extensions";
 			sourceTree = "<group>";
@@ -13799,7 +13796,6 @@
 				09CDDCFE2A94E83A00E9ABB4 /* FTCloudFilePublishRequest.swift in Sources */,
 				9715E0432AEA9D2D00EC48D4 /* EDAMLimits.m in Sources */,
 				42A971DA28B782D600EDAC90 /* FTAudioTrackController.swift in Sources */,
-				09CFB0DD2B482C1B0001B51F /* FTScrollViewScaleRange.swift in Sources */,
 				BAF393112859ADF00067CA9F /* FTAudioRecordingModel.m in Sources */,
 				BAF393132859ADF00067CA9F /* FTSearchResultCategoryCell.swift in Sources */,
 				BAF393142859ADF00067CA9F /* FTPDFExportView.m in Sources */,

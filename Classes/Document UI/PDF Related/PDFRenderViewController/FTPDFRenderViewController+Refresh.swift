@@ -110,12 +110,12 @@ extension FTPDFRenderViewController {
             let curPageFrame = contentHolderView.frame;
             var factor = curPageFrame.width/pageFrame.width;
 
-            let minZoomScale = FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeDefault);
-            let maxZoomScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
-
-            factor = clamp(factor, minZoomScale, maxZoomScale)
-
             if(previousLayoutType == .vertical) {
+                let minZoomScale = self.mainScrollView.miniumSupportedZoomScale
+                let maxZoomScale = self.mainScrollView.maximumSupportedZoomScale
+
+                factor = clamp(factor, minZoomScale, maxZoomScale)
+
                 self.mainScrollView.contentInset = UIEdgeInsets.zero;
                 self.mainScrollView.zoom(1, animate: false, completionBlock: nil);
 
@@ -148,6 +148,11 @@ extension FTPDFRenderViewController {
                 }
             }
             else {
+                let minZoomScale = contorller.scrollView?.miniumSupportedZoomScale ?? UIScrollView.nsMinimumZoomScale;
+                let maxZoomScale = contorller.scrollView?.maximumSupportedZoomScale ?? UIScrollView.nsMaximumZoomScale;
+
+                factor = clamp(factor, minZoomScale, maxZoomScale)
+
                 let visibleControllers = self.visiblePageViewControllers();
                 visibleControllers.forEach { (controller) in
                     controller.setAccessoryViewHeight(0);
@@ -323,8 +328,8 @@ extension FTPDFRenderViewController: FTPageLayouterDelegate {
         let aspectSize = aspectFittedRect(onexframe, self.mainScrollView.frame).size;
         var scale = aspectSize.width/onexframe.width;
         
-        let minZoomScale = FTDocumentScrollViewZoomScale.shared.minimumZoomScale(FTRenderModeDefault);
-        let maxZoomScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(FTRenderModeDefault);
+        let minZoomScale = self.mainScrollView.miniumSupportedZoomScale
+        let maxZoomScale = self.mainScrollView.maximumSupportedZoomScale
         
         scale = clamp(scale, minZoomScale, maxZoomScale);
         return scale;

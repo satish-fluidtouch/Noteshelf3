@@ -85,6 +85,7 @@ class FTZoomContentViewController: UIViewController {
         self.lineHeight = CGFloat(page.lineHeight);
     }
     
+
     var contentOffset: CGPoint {
         set {
             if let pageController = self.pageViewController {
@@ -119,8 +120,8 @@ class FTZoomContentViewController: UIViewController {
             let scrollView = pageController.scrollView else {
             return;
         }
-        let minZoomScale = FTDocumentScrollViewZoomScale.shared.minimumZoomScale(scrollView.mode);
-        let maxZoomScale = FTDocumentScrollViewZoomScale.shared.maximumZoomScale(scrollView.mode);
+        let minZoomScale = scrollView.miniumSupportedZoomScale
+        let maxZoomScale = scrollView.maximumSupportedZoomScale
         
         let percentageOfZoom = self.zoomFactor / (maxZoomScale - minZoomScale);
         let maxZoom = scrollView.maximumZoomScale;

@@ -544,7 +544,10 @@
     [self updateContentSize];
     if(isFirstTime) {
         CGFloat scale = [self scaleToFitScreenForPage:self.currentPageIndexToBeShown];
-        [self.mainScrollView zoom:scale animate:false completionBlock:nil];
+        if(self.mainScrollView.zoomFactor != scale) {
+            [self.mainScrollView zoom:scale animate:false completionBlock:nil];
+            [self updateContentSize];
+        }
     }
     [self showPageAtIndex:self.currentPageIndexToBeShown
             forceReLayout:YES
@@ -563,11 +566,11 @@
     self.mainScrollView.contentInset = UIEdgeInsetsZero;
     self.mainScrollView.scrollViewDelegate = nil;
     
-    CGFloat currentZoomScale = [[FTDocumentScrollViewZoomScale shared] minimumZoomScale:FTRenderModeDefault];
+    CGFloat currentZoomScale = [self.mainScrollView miniumSupportedZoomScale];
     CGFloat newZoomScale = [self.pageLayoutHelper findZoomFactor:self.numberOfPages];
 
     if(newZoomScale != currentZoomScale) {
-        [[FTDocumentScrollViewZoomScale shared]  setMinimumZoomScale:newZoomScale mode:FTRenderModeDefault];
+        [self.mainScrollView setMiniumSupportedZoomScale:newZoomScale];
         [self.mainScrollView setMinimumZoomScale:self.mainScrollView.minimumZoomScale/(currentZoomScale/newZoomScale)];
         if(self.mainScrollView.zoomFactor < newZoomScale) {
             [self.mainScrollView zoom:newZoomScale animate:false completionBlock:nil];

@@ -129,8 +129,8 @@ parentViewController:(FTPageViewController*)controller
         self.panGestureRecognizer.maximumNumberOfTouches = 2;
         self.delegate = self;
         
-        self.maximumZoomScale = self.maxZoomScale;
-        self.minimumZoomScale = self.minZoomScale;
+        self.maximumZoomScale = self.maximumSupportedZoomScale;
+        self.minimumZoomScale = self.miniumSupportedZoomScale;
 
         self.automaticallyAdjustsScrollIndicatorInsets = false;
         
@@ -171,13 +171,21 @@ parentViewController:(FTPageViewController*)controller
     return true;
 }
 
--(CGFloat)maxZoomScale {
-    return [[FTDocumentScrollViewZoomScale shared] maximumZoomScale:self.mode];
+- (CGFloat)miniumSupportedZoomScale {
+    return UIScrollView.nsMinimumZoomScale;
 }
 
--(CGFloat)minZoomScale {
-    return [[FTDocumentScrollViewZoomScale shared] minimumZoomScale:self.mode];
+- (CGFloat)maximumSupportedZoomScale {
+    return UIScrollView.nsMaximumZoomScale;
 }
+
+//-(CGFloat)maxZoomScale {
+//    return [self maximumSupportedZoomScale];
+//}
+//
+//-(CGFloat)minZoomScale {
+//    return [self miniumSupportedZoomScale];
+//}
 
 -(void)setZoomFactor:(CGFloat)inzoomFactor
 {
@@ -795,8 +803,8 @@ parentViewController:(FTPageViewController*)controller
 
     CGFloat currentZoomScale = [self currentZoomScale];
     if(self.mode == FTRenderModeDefault) {
-        CGFloat maxVal = self.maxZoomScale/currentZoomScale;
-        CGFloat minVal = self.minZoomScale/currentZoomScale;
+        CGFloat maxVal = self.maximumSupportedZoomScale/currentZoomScale;
+        CGFloat minVal = self.miniumSupportedZoomScale/currentZoomScale;
         self.maximumZoomScale = maxVal;
         self.minimumZoomScale = minVal;
     }
@@ -1183,14 +1191,6 @@ CGPoint lastPoint1,lastPoint2;
             break;
     }
 }
-
-//+(CGFloat)maxZoomScale:(FTRenderMode)mode {
-//    return  [[FTDocumentScrollViewZoomScale shared] maximumZoomScale:mode];
-//}
-//
-//+(CGFloat)minZoomScale:(FTRenderMode)mode {
-//    return [[FTDocumentScrollViewZoomScale shared] minimumZoomScale:mode];
-//}
 
 - (BOOL)isScrolling {
     if(self.mode == FTRenderModeZoom) {
