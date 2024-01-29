@@ -118,12 +118,12 @@
 				<key>boxRightOffset</key>
 				<real>5.33</real>
 				<key>yearY</key>
-				<real>4.83</real>
+				<real>3.86</real>
 			</dict>
 			<key>month</key>
 			<dict>
 				<key>monthY</key>
-				<real>4.97</real>
+				<real>3.86</real>
 				<key>baseBoxX</key>
 				<real>9.06</real>
 				<key>baseBoxY</key>
@@ -162,7 +162,7 @@
 				<key>baseX</key>
 				<real>5.6</real>
 				<key>baseY</key>
-				<real>2.9</real>
+				<real>3.45</real>
 			</dict>
 		</dict>
 		<key>Land</key>
