@@ -25,8 +25,6 @@ class FTFiveMinJournaliPhoneFormat : FTFiveMinJournalFormat {
         let font = UIFont.LoraRegular(screenInfo.fontsInfo.yearPageDetails.yearFontSize)
         let minimumFontSize : CGFloat = 16
         let newFontSize = UIFont.getScaledFontSizeFor(font: font, screenSize: currentPageRect.size, minPointSize: minimumFontSize)
-//        let paragraphStyle = NSMutableParagraphStyle.init()
-//        paragraphStyle.alignment = .center
         let yearAttrs: [NSAttributedString.Key: Any] = [.font:UIFont.LoraRegular(newFontSize) ,
                                                         .kern: 0.0,
                                                         .foregroundColor: UIColor.init(hexString: "#78787B")]
