@@ -120,6 +120,7 @@ extension FTFinderViewController {
         pageViewController.dataManager = AddMenuDataManager()
         pageViewController.ftPresentationDelegate.source = sender
         self.ftPresentPopover(vcToPresent: pageViewController, contentSize: CGSize(width: 320, height: 400), hideNavBar: true)
+        FTFinderEventTracker.trackFinderEvent(with: "finder_newpage_more_tap")
     }
     
     @objc func didTapTagspill(_ gesture: UITapGestureRecognizer) {
