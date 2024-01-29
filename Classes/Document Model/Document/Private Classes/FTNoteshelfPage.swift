@@ -74,6 +74,14 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     var bottomMargin: Int = 0;
     var topMargin: Int = 0;
     var leftMargin: Int = 0;
+    var diaryPageInfo: FTDiaryPageInfo?
+    {
+        didSet {
+            if(!self.isInitializationInprogress) {
+                NotificationCenter.default.post(name: NSNotification.Name.FTDidChangePageProperties, object: self.parentDocument as? FTNoteshelfDocument);
+            }
+        }
+    }
 
     #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
     fileprivate var pageSqliteFileItem : FTNSqliteAnnotationFileItem?;
@@ -479,6 +487,7 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
         newPage._pageRect = self._pageRect;
         newPage.isInitializationInprogress = false;
         newPage.hasContents = self.hasContents;
+        newPage.diaryPageInfo = self.diaryPageInfo
         return newPage;
     }
     
@@ -486,6 +495,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     func updatePageAttributesWithDictionary(_ dict : [String : Any])
     {
         self.isInitializationInprogress = true;
+        if let diarypageData = dict["diaryPageInfo"] as? Data, let diaryPageInfo = try? PropertyListDecoder().decode(FTDiaryPageInfo.self,from:diarypageData) {
+            self.diaryPageInfo = diaryPageInfo
+        }
         if let uuid = dict["uuid"] as? String {
             _uuid = uuid
         }
@@ -560,7 +572,9 @@ class FTNoteshelfPage : NSObject, FTPageProtocol
     func dictionaryRepresentation() -> [String : Any]
     {
         var dictRep = [String : Any]();
-        
+        if let _diaryPageInfo = try? PropertyListEncoder().encode(self.diaryPageInfo){
+            dictRep["diaryPageInfo"] = _diaryPageInfo
+        }
         dictRep["associatedPDFFileName"] = self.associatedPDFFileName as AnyObject?;
         dictRep["associatedPageIndex"] = NSNumber.init(value: self.associatedPDFPageIndex as Int);
         dictRep["deviceModel"] = self.deviceModel as AnyObject?;
@@ -1202,6 +1216,7 @@ extension FTNoteshelfPage : FTCopying {
             newPage.addTag(eachTag);
         }
         newPage.isInitializationInprogress = false;
+        newPage.diaryPageInfo = self.diaryPageInfo
         return newPage;
     }
     

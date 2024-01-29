@@ -74,9 +74,11 @@ struct DiscoveryItem: Codable, Hashable {
     var author: String?
     var link: String?
     var previewToken: String?
+    var authorToken: String?
     var fileToken: String?
     var sectionType: Int?
     var supportOrientation: Int? = 0
+    var version: Int? = 0
 
     enum CodingKeys: String, CodingKey {
         case displayTitle
@@ -88,9 +90,11 @@ struct DiscoveryItem: Codable, Hashable {
         case author
         case link
         case previewToken
+        case authorToken
         case fileToken
         case sectionType
         case supportOrientation
+        case version
     }
 
     var templateUrl: URL {
@@ -390,6 +394,7 @@ protocol TemplateInfo {
     var fileToken: String? { get }
     var sectionType: Int? { get }
     var supportOrientation: Int? { get }
+    var version: Int? { get }
 }
 
 // MARK: - Extentions
@@ -425,11 +430,10 @@ extension DiscoveryItem: TemplateInfo {
     var authorImageUrl: URL? {
         var thumbUrl = self.templateUrl.appendingPathComponent(authorImageExtention)
         if isInChinaRegion() {
-            thumbUrl.append(queryItems: [URLQueryItem(name: "token", value: self.previewToken)])
+            thumbUrl.append(queryItems: [URLQueryItem(name: "token", value: self.authorToken)])
         }
         return thumbUrl
     }
-
 
 }
 

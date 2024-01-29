@@ -385,7 +385,7 @@ extension FTTextStyleCompactViewController: FTTextPresetSelectedDelegate {
     }
     
     func didSelectedPresetStyleId(_ style: FTTextStyleItem) {
-        print(style)
+        self.delegate?.didSelectFontStyle(style)
     }
 }
 

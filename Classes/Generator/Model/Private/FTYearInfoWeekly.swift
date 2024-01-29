@@ -60,7 +60,7 @@ class FTYearInfoWeekly: NSObject {
         let numberOFWeeks = (startDate?.numberOfWeeks(endDate!) ?? 0);
         var weekDay = startDate!;
         for _ in 0..<numberOFWeeks {
-            let weekInfo = FTWeekInfo.init(localeIdentifier: localeID, formatInfo: format.dayFormat);
+            let weekInfo = FTWeekInfo.init(localeIdentifier: localeID, formatInfo: format.dayFormat, dateFormatter: dateformatter);
             weekInfo.generate(forWeekDate: weekDay);
             weekDay = weekDay.nextWeek();
             self.weeklyInfo.append(weekInfo);
@@ -72,5 +72,13 @@ class FTYearInfoWeekly: NSObject {
     
     override var description: String {
         return weeklyInfo.description;
+    }
+    private var dateformatter : DateFormatter {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = DateFormatter.Style.full;
+        dateformatter.timeStyle = DateFormatter.Style.none;
+        let locale = Locale.init(identifier: NSCalendar.calLocale(localeID));
+        dateformatter.locale = locale;
+        return dateformatter
     }
 }

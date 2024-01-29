@@ -23,12 +23,9 @@ enum FTCustomTemplateImportConverter {
 enum FTCustomTemplateImportConverterOutput {
     case importedFileUrl(url: URL?, error: Error?)
     case createNootbookOutput(url: URL?, error: Error?)
-
 }
 
 final class FTCustomTemplateImportManager {
-    static let shared = FTCustomTemplateImportManager()
-    private init() {}
     var actionStream = PassthroughSubject<FTCustomTemplateImportActions, Never>()
     var importConverterInput = PassthroughSubject<FTCustomTemplateImportConverter, Never>()
     var importConverterOutput = PassthroughSubject<FTCustomTemplateImportConverterOutput, Never>()

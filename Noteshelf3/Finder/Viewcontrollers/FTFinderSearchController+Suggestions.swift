@@ -80,8 +80,7 @@ extension FTFinderSearchController: UITableViewDelegate, UITableViewDataSource, 
                 self.searchBar?.searchTextField.text = ""
                 self.searchBar?.searchTextField.text = searchableText
             }
-            searchInputInfo.textKey = self.searchBar?.searchTextField.text ?? ""
-            self.initiateSearch()
+            self.initiateSearch(searchText: self.searchBar?.searchTextField.text ?? "")
             runInMainThread { [weak self] in
                 guard let self = self else {
                     return
@@ -90,7 +89,7 @@ extension FTFinderSearchController: UITableViewDelegate, UITableViewDataSource, 
                     self.hideSuggestions = false
                 }
             }
-           
+            FTFinderEventTracker.trackFinderEvent(with: "finder_search_recent_tap")
         }
     }
 }
@@ -100,6 +99,7 @@ extension FTFinderSearchController: FTRecentSectionDelegate {
         UIAlertController.showConfirmationDialog(with: "finder.clear.recents".localized, message: "", from: self) { [weak self] in
             FTFilterRecentsStorage.shared.clear()
             self?.recentsTableView.reloadData()
+            FTFinderEventTracker.trackFinderEvent(with: "finder_search_recents_clear")
         }
     }
 }

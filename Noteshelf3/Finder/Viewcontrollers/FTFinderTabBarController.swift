@@ -238,8 +238,11 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
             let displayMode = splitVc.displayMode
             if displayMode == .oneBesideSecondary || displayMode == .oneOverSecondary {
                 splitVc.show(.primary)
+                FTFinderEventTracker.trackFinderEvent(with: "finder_quickaccess_open")
             } else {
                 splitVc.hide(.primary)
+                FTFinderEventTracker.trackFinderEvent(with: "finder_quickaccess_close")
+
             }
         }
     }
@@ -252,6 +255,7 @@ class FTFinderTabBarController: UITabBarController, FTFinderPresentable, FTCusto
                     displayMode = .secondaryOnly
                     splitVc.preferredSplitBehavior = .automatic
                     self.noteBookSplitViewController()?.curentPrefrredDisplayMode = .secondaryOnly
+                    FTFinderEventTracker.trackFinderEvent(with: "finder_close_tap")
                 } else if displayMode == .twoBesideSecondary || displayMode == .twoDisplaceSecondary {
                     displayMode = .oneBesideSecondary
                 }
@@ -569,10 +573,26 @@ extension FTFinderTabBarController: UITabBarControllerDelegate {
         if previousSelectedIndex != self.selectedIndex {
             previousSelectedIndex = selectedIndex
             self.document?.startRecognitionIfNeeded();
+            FTFinderEventTracker.trackFinderEvent(with: eventNameForTab())
         }
         else if let navController = viewController as? UINavigationController,
                 let vc = navController.viewControllers.first as? FTFinderTabBarProtocol {
             vc.scrollToTop()
         }
+    }
+    
+   private func eventNameForTab() -> String {
+        var eventName = ""
+        switch self.selectedIndex {
+        case 0:
+            eventName = "finder_pages_tap"
+        case 1:
+            eventName = "finder_content_tap"
+        case 2:
+            eventName = "finder_search_tap"
+        default:
+            eventName = "finder_pages_tap"
+        }
+        return eventName
     }
 }

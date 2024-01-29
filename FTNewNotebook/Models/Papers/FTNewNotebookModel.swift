@@ -38,7 +38,6 @@ public protocol FTThemeable {
     var themeFileURL: URL {get}
     var dynamicId: Int {get}
     var restrictsChangeTemplate: Bool {get}
-    var templateType: Int {get}
     var hasCover: Bool{get}
 
     var eventTrackName: String {get}

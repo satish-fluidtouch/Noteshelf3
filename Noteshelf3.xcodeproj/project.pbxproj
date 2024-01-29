@@ -565,7 +565,6 @@
 		52550F172A70FCC100E7A1E7 /* FTStoreCustomTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EC42A70FCC000E7A1E7 /* FTStoreCustomTemplateViewModel.swift */; };
 		52550F182A70FCC100E7A1E7 /* FTStoreCustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EC52A70FCC000E7A1E7 /* FTStoreCustomViewController.swift */; };
 		52550F192A70FCC100E7A1E7 /* FTStoreCustomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EC62A70FCC000E7A1E7 /* FTStoreCustomCollectionCell.swift */; };
-		52550F1A2A70FCC100E7A1E7 /* FTStoreCustomViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EC72A70FCC000E7A1E7 /* FTStoreCustomViewController+ContextMenu.swift */; };
 		52550F1B2A70FCC100E7A1E7 /* FTStoreCustomTemplatesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EC82A70FCC000E7A1E7 /* FTStoreCustomTemplatesModel.swift */; };
 		52550F1C2A70FCC100E7A1E7 /* FTStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EC92A70FCC000E7A1E7 /* FTStoreService.swift */; };
 		52550F1D2A70FCC100E7A1E7 /* FTTemplatesStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52550ECA2A70FCC000E7A1E7 /* FTTemplatesStore.storyboard */; };
@@ -578,7 +577,6 @@
 		52550F242A70FCC100E7A1E7 /* FTStoreLibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED32A70FCC000E7A1E7 /* FTStoreLibraryViewModel.swift */; };
 		52550F252A70FCC100E7A1E7 /* FTStoreLibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED42A70FCC000E7A1E7 /* FTStoreLibraryModel.swift */; };
 		52550F262A70FCC100E7A1E7 /* FTLibraryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED52A70FCC000E7A1E7 /* FTLibraryHeaderView.swift */; };
-		52550F282A70FCC100E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED72A70FCC000E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift */; };
 		52550F292A70FCC100E7A1E7 /* FTStoreLibraryHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED82A70FCC000E7A1E7 /* FTStoreLibraryHandler.swift */; };
 		52550F2A2A70FCC100E7A1E7 /* FTStoreLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550ED92A70FCC000E7A1E7 /* FTStoreLibraryViewController.swift */; };
 		52550F2B2A70FCC100E7A1E7 /* FTStoreLibraryCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52550EDA2A70FCC000E7A1E7 /* FTStoreLibraryCollectionCell.swift */; };
@@ -701,6 +699,7 @@
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
 		8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */; };
+		970EA3192B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970EA3182B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift */; };
 		9715E00D2AEA9D2C00EC48D4 /* ENCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF902AEA9D2C00EC48D4 /* ENCredentials.m */; };
 		9715E00E2AEA9D2C00EC48D4 /* ENApplicationBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF972AEA9D2C00EC48D4 /* ENApplicationBridge.m */; };
 		9715E00F2AEA9D2C00EC48D4 /* ENAuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715DF982AEA9D2C00EC48D4 /* ENAuthenticationRequest.m */; };
@@ -761,6 +760,8 @@
 		976F27372A16090800034D5A /* FTShelfView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27362A16090800034D5A /* FTShelfView+Extensions.swift */; };
 		976F27392A16664900034D5A /* FTPopoverApperanceViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27382A16664900034D5A /* FTPopoverApperanceViewModifier.swift */; };
 		976F27692A1E533700034D5A /* UIImage+Cover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 976F27682A1E533700034D5A /* UIImage+Cover.swift */; };
+		977ED1532B3D98B0000BB42E /* FTDiaryPageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970EA3182B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift */; };
+		977ED1542B3D9AD8000BB42E /* Date_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C342D123B60B7800B1D060 /* Date_Extension.swift */; };
 		978771DF2A8DF1DB00ABE982 /* FTDiscoverWhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9741222F2A73E061002D3DDB /* FTDiscoverWhatsNewView.swift */; };
 		978BC92E2860476A00BECAEC /* FTSidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978BC92D2860476900BECAEC /* FTSidebarViewModel.swift */; };
 		978D66EB286AD96D00B86704 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AAC0001EEA6314009B5922 /* Constants.m */; };
@@ -1297,7 +1298,6 @@
 		BAF391722859ADF00067CA9F /* FTShelfItemCollectionLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099094D71E810FCC0027FDDD /* FTShelfItemCollectionLocal.swift */; };
 		BAF391742859ADF00067CA9F /* FTPenAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA66DF22253867CF00616080 /* FTPenAttributes.swift */; };
 		BAF391762859ADF00067CA9F /* FTNoteshelfPage_PDFExportHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092ED64622E5C299003E3E92 /* FTNoteshelfPage_PDFExportHelper.swift */; };
-		BAF391782859ADF00067CA9F /* FTDocumentBlackDiaryPostOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9767B582265CBF0000A3D27A /* FTDocumentBlackDiaryPostOperation.swift */; };
 		BAF3917A2859ADF00067CA9F /* FTVisionRecognitionTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED34F415233B8C0F00DFA6C1 /* FTVisionRecognitionTaskManager.swift */; };
 		BAF3917B2859ADF00067CA9F /* FTUIAlertController+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2CAB1E027D72007B5CAD /* FTUIAlertController+Convenience.swift */; };
 		BAF3917C2859ADF00067CA9F /* FTTemplateMoreOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8520924F517FA00EF893A /* FTTemplateMoreOptionsTableViewCell.swift */; };
@@ -1346,7 +1346,6 @@
 		BAF391BF2859ADF00067CA9F /* FTShelfItemProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AB9D751E77D8570041A0F5 /* FTShelfItemProtocols.swift */; };
 		BAF391C12859ADF00067CA9F /* FTCalPenBrushBuilder_V2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA66DF19253867CF00616080 /* FTCalPenBrushBuilder_V2.swift */; };
 		BAF391C32859ADF00067CA9F /* FTApplePencilDoubleTapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C806624A218AC8790065DC75 /* FTApplePencilDoubleTapViewController.swift */; };
-		BAF391C42859ADF00067CA9F /* FTDocumentPostProcessOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8063B7B21A2C35100F05915 /* FTDocumentPostProcessOperation.swift */; };
 		BAF391C52859ADF00067CA9F /* FTExportContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099590911E0E482100CA1B6C /* FTExportContentGenerator.swift */; };
 		BAF391C62859ADF00067CA9F /* FTCloudDocumentConflictScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211E2C851E027D72007B5CAD /* FTCloudDocumentConflictScreen.swift */; };
 		BAF391C72859ADF00067CA9F /* FTImageAnnotation_SQLiteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093E991D22E086AB00C52B61 /* FTImageAnnotation_SQLiteHelper.swift */; };
@@ -1480,7 +1479,6 @@
 		BAF3927D2859ADF00067CA9F /* FTShelfCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09953ED51F1F2C3E00753F70 /* FTShelfCollectionViewLayoutAttributes.swift */; };
 		BAF3927E2859ADF00067CA9F /* FTImageResizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80AF55922A93F0500B7250A /* FTImageResizeViewController.swift */; };
 		BAF3927F2859ADF00067CA9F /* FTShapeArrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4221A9D627EAF80200B91890 /* FTShapeArrow.swift */; };
-		BAF392802859ADF00067CA9F /* FTGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8525624F62B1800EF893A /* FTGeneratorViewController.swift */; };
 		BAF392822859ADF00067CA9F /* FTZenDeskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423EE1D925344893007967F9 /* FTZenDeskManager.swift */; };
 		BAF392832859ADF00067CA9F /* FTAlphabetTextList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421279F4250F8F9100B98ACF /* FTAlphabetTextList.swift */; };
 		BAF392842859ADF00067CA9F /* FTWebdavBackupPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 978755C325DAB4F500CB766F /* FTWebdavBackupPublisher.swift */; };
@@ -1613,7 +1611,6 @@
 		BAF3932F2859ADF00067CA9F /* FTCheckedTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8526224F62D0E00EF893A /* FTCheckedTemplateFormat.swift */; };
 		BAF393302859ADF00067CA9F /* FTFilesDriveExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2E6EA6237969F80058FEBC /* FTFilesDriveExporter.swift */; };
 		BAF393312859ADF00067CA9F /* FTEmojiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897DD0724BC17A60016DFE2 /* FTEmojiesManager.swift */; };
-		BAF393322859ADF00067CA9F /* FTDocumentPlannerpostOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977228B9275FA3C80073C00B /* FTDocumentPlannerpostOperation.swift */; };
 		BAF393332859ADF00067CA9F /* FTShapePentagonResizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B88BED2806CCE500841065 /* FTShapePentagonResizing.swift */; };
 		BAF393342859ADF00067CA9F /* FTTouchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2E711E027D72007B5CAD /* FTTouchGestureRecognizer.m */; };
 		BAF393352859ADF00067CA9F /* FabricHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA910B01224CCE5F002869D3 /* FabricHelper.swift */; };
@@ -1802,7 +1799,6 @@
 		BAF3942D2859ADF00067CA9F /* FTSquareMarkerBrushBuilder_v5.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA66DF0C253867CF00616080 /* FTSquareMarkerBrushBuilder_v5.swift */; };
 		BAF3942F2859ADF00067CA9F /* FTNSTemplateContentGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA7C57206CBC5100FA782B /* FTNSTemplateContentGenerator.swift */; };
 		BAF394302859ADF00067CA9F /* FTBlurViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B0296A222EA71500353F40 /* FTBlurViewController.swift */; };
-		BAF394322859ADF00067CA9F /* FTDocumentTypeDairy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8063B7D21A2C36300F05915 /* FTDocumentTypeDairy.swift */; };
 		BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE13BF82215AC9C0056E599 /* FTHeaderView.swift */; };
 		BAF394352859ADF00067CA9F /* FTGoogleDriveBackupPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC77D3E2448615E002A5A03 /* FTGoogleDriveBackupPublisher.swift */; };
 		BAF394362859ADF00067CA9F /* FTGoogleDriveBackupEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16363B24485C27006B3140 /* FTGoogleDriveBackupEntry.swift */; };
@@ -1931,7 +1927,6 @@
 		BAF394F52859ADF10067CA9F /* FTBaseRenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E2E3A1E027D72007B5CAD /* FTBaseRenderViewController.m */; };
 		BAF394F62859ADF10067CA9F /* FTDeviceModalsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8520B24F5180500EF893A /* FTDeviceModalsTableViewCell.swift */; };
 		BAF394F72859ADF10067CA9F /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3430E42164DC8E00AE9CF8 /* UIColor+Additions.swift */; };
-		BAF394F92859ADF10067CA9F /* FTDocumentFiveMinJournalPostOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 975A94CF26BBF4AA004471E1 /* FTDocumentFiveMinJournalPostOperation.swift */; };
 		BAF394FA2859ADF10067CA9F /* FTPageEraseTouchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096497BA22DC6A0E00A6993D /* FTPageEraseTouchHandler.swift */; };
 		BAF394FD2859ADF10067CA9F /* FTConvertToTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C825338C213D085C00110CA4 /* FTConvertToTextViewController.swift */; };
 		BAF394FE2859ADF10067CA9F /* FTWatchRecordedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D13BFE2021FFE3000B4BB7 /* FTWatchRecordedListViewController.swift */; };
@@ -1959,7 +1954,6 @@
 		BAF3952B2859ADF10067CA9F /* FTStickyAnnotation_SQLiteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093E991F22E086B900C52B61 /* FTStickyAnnotation_SQLiteHelper.swift */; };
 		BAF3952C2859ADF10067CA9F /* FTDottedTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C8526124F62D0D00EF893A /* FTDottedTemplateFormat.swift */; };
 		BAF3952D2859ADF10067CA9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD4E8CC23017AFF006F9725 /* SceneDelegate.swift */; };
-		BAF395302859ADF10067CA9F /* FTDocumentDigitalDiaryPostOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB0838123D09FA4000DBF58 /* FTDocumentDigitalDiaryPostOperation.swift */; };
 		BAF395312859ADF10067CA9F /* FTOneDriveInfoTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C27C7D23719BB00085909E /* FTOneDriveInfoTask.swift */; };
 		BAF395322859ADF10067CA9F /* FTShelfItemPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D08645524C813A4008FF0AA /* FTShelfItemPreviewViewController.swift */; };
 		BAF395332859ADF10067CA9F /* FTShelfItemCellProgressUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F37B24208F3372004676DF /* FTShelfItemCellProgressUpdate.swift */; };
@@ -2009,6 +2003,8 @@
 		C85AFDF423324C0E00D25D5F /* NSString_Backup_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 211E30201E027D73007B5CAD /* NSString_Backup_Additions.m */; };
 		DDAD78EC2A08C550001D8B21 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DDAD78EB2A08C550001D8B21 /* SDWebImage */; };
 		E70705FA2AC2B7D500A7B341 /* FTFavoritebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */; };
+		E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */; };
+		E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */; };
 		E713D9AB299CC1CF008FDC77 /* FTConvertPreferencesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */; };
 		E713D9AD299CC23D008FDC77 /* FTCustomDictViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */; };
 		E713D9B0299CF399008FDC77 /* FTSpellCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */; };
@@ -3425,7 +3421,6 @@
 		52550EC42A70FCC000E7A1E7 /* FTStoreCustomTemplateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreCustomTemplateViewModel.swift; sourceTree = "<group>"; };
 		52550EC52A70FCC000E7A1E7 /* FTStoreCustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreCustomViewController.swift; sourceTree = "<group>"; };
 		52550EC62A70FCC000E7A1E7 /* FTStoreCustomCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreCustomCollectionCell.swift; sourceTree = "<group>"; };
-		52550EC72A70FCC000E7A1E7 /* FTStoreCustomViewController+ContextMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTStoreCustomViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		52550EC82A70FCC000E7A1E7 /* FTStoreCustomTemplatesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreCustomTemplatesModel.swift; sourceTree = "<group>"; };
 		52550EC92A70FCC000E7A1E7 /* FTStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreService.swift; sourceTree = "<group>"; };
 		52550ECA2A70FCC000E7A1E7 /* FTTemplatesStore.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FTTemplatesStore.storyboard; sourceTree = "<group>"; };
@@ -3438,7 +3433,6 @@
 		52550ED32A70FCC000E7A1E7 /* FTStoreLibraryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryViewModel.swift; sourceTree = "<group>"; };
 		52550ED42A70FCC000E7A1E7 /* FTStoreLibraryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryModel.swift; sourceTree = "<group>"; };
 		52550ED52A70FCC000E7A1E7 /* FTLibraryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTLibraryHeaderView.swift; sourceTree = "<group>"; };
-		52550ED72A70FCC000E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTStoreLibraryViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		52550ED82A70FCC000E7A1E7 /* FTStoreLibraryHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryHandler.swift; sourceTree = "<group>"; };
 		52550ED92A70FCC000E7A1E7 /* FTStoreLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryViewController.swift; sourceTree = "<group>"; };
 		52550EDA2A70FCC000E7A1E7 /* FTStoreLibraryCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTStoreLibraryCollectionCell.swift; sourceTree = "<group>"; };
@@ -3578,6 +3572,7 @@
 		8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDeskToolView.swift; sourceTree = "<group>"; };
 		8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTDeskToolView.xib; sourceTree = "<group>"; };
 		92305088215E09F40043F646 /* URL+ImagePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ImagePath.swift"; sourceTree = "<group>"; };
+		970EA3182B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDiaryPageInfo.swift; sourceTree = "<group>"; };
 		9715DF872AEA9D2C00EC48D4 /* EvernoteSDK-Mac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EvernoteSDK-Mac-Prefix.pch"; sourceTree = "<group>"; };
 		9715DF882AEA9D2C00EC48D4 /* EvernoteSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvernoteSession.h; sourceTree = "<group>"; };
 		9715DF892AEA9D2C00EC48D4 /* EvernoteUserStore+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EvernoteUserStore+Extras.h"; sourceTree = "<group>"; };
@@ -3722,7 +3717,6 @@
 		97570BCA273CE269001F1FE8 /* FTPlannerDiaryNotesTemplateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPlannerDiaryNotesTemplateFormat.swift; sourceTree = "<group>"; };
 		97570BCC273D037A001F1FE8 /* FTPlannerDiaryTrackerTemplateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPlannerDiaryTrackerTemplateFormat.swift; sourceTree = "<group>"; };
 		975A94CD26BBEFBF004471E1 /* FTFiveMinJournalHelpTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFiveMinJournalHelpTemplate.swift; sourceTree = "<group>"; };
-		975A94CF26BBF4AA004471E1 /* FTDocumentFiveMinJournalPostOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentFiveMinJournalPostOperation.swift; sourceTree = "<group>"; };
 		975A94D626BCC85F004471E1 /* FTFiveMinJournalSampleTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFiveMinJournalSampleTemplate.swift; sourceTree = "<group>"; };
 		975F7789261DD9560053F850 /* FTPresenterSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
 		975FFE8127204C8B004F2ECC /* FTRightTextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRightTextFieldTableViewCell.swift; sourceTree = "<group>"; };
@@ -3734,13 +3728,11 @@
 		97617EF3264A6B1600B5D250 /* FTMidnightDiaryPrioritiesTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTMidnightDiaryPrioritiesTemplate.swift; sourceTree = "<group>"; };
 		97617EF4264A6B1700B5D250 /* FTMidnightDiaryWeekTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTMidnightDiaryWeekTemplate.swift; sourceTree = "<group>"; };
 		97617EF9264A6E0900B5D250 /* FTDigitalDiaryYearTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDigitalDiaryYearTemplate.swift; sourceTree = "<group>"; };
-		9767B582265CBF0000A3D27A /* FTDocumentBlackDiaryPostOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentBlackDiaryPostOperation.swift; sourceTree = "<group>"; };
 		976AA9C425E7E1D00003B793 /* Webdav.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = Webdav.xcframework; sourceTree = "<group>"; };
 		976C160C26AEF4B500CCFF77 /* FTFiveMinJournalYearTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFiveMinJournalYearTemplate.swift; sourceTree = "<group>"; };
 		976F27362A16090800034D5A /* FTShelfView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfView+Extensions.swift"; sourceTree = "<group>"; };
 		976F27382A16664900034D5A /* FTPopoverApperanceViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPopoverApperanceViewModifier.swift; sourceTree = "<group>"; };
 		976F27682A1E533700034D5A /* UIImage+Cover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Cover.swift"; sourceTree = "<group>"; };
-		977228B9275FA3C80073C00B /* FTDocumentPlannerpostOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPlannerpostOperation.swift; sourceTree = "<group>"; };
 		977229FF25F8E7A20062127D /* FTWebdavFileHierarchyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWebdavFileHierarchyViewController.swift; sourceTree = "<group>"; };
 		977C3C10274CADA500B13882 /* FTPlannerDiaryExtrasTemplateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPlannerDiaryExtrasTemplateFormat.swift; sourceTree = "<group>"; };
 		978241F9264D096900107CD2 /* FTMidnightDiaryNotesTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTMidnightDiaryNotesTemplate.swift; sourceTree = "<group>"; };
@@ -3839,7 +3831,6 @@
 		97C8524F24F62AC600EF893A /* FTDairyFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDairyFormat.swift; sourceTree = "<group>"; };
 		97C8525024F62AC700EF893A /* FTDairyGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDairyGenerator.swift; sourceTree = "<group>"; };
 		97C8525424F62AEB00EF893A /* FTQuotesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTQuotesProvider.swift; sourceTree = "<group>"; };
-		97C8525624F62B1800EF893A /* FTGeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTGeneratorViewController.swift; sourceTree = "<group>"; };
 		97C8525824F62CE900EF893A /* FTDynamicTemplateGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDynamicTemplateGenerator.swift; sourceTree = "<group>"; };
 		97C8525924F62CE900EF893A /* FTDynamicTemplateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDynamicTemplateFormat.swift; sourceTree = "<group>"; };
 		97C8525A24F62CEA00EF893A /* FTDynamicTemplateInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDynamicTemplateInfo.swift; sourceTree = "<group>"; };
@@ -4116,6 +4107,7 @@
 		BA9E71872346FFDC00960985 /* FTRendererProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTRendererProvider.swift; sourceTree = "<group>"; };
 		BA9F5DD725B6C57B00864648 /* FTDocumentFramework.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = FTDocumentFramework.xcframework; sourceTree = "<group>"; };
 		BAA3C79228DDD527005B10E6 /* FTImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTImageProcessor.swift; sourceTree = "<group>"; };
+		BAA762022B57E80200DC4D21 /* MyScriptInteractiveInk-Runtime-iOS.version.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "MyScriptInteractiveInk-Runtime-iOS.version.txt"; sourceTree = "<group>"; };
 		BAA84E1528730F5800DE801B /* FTStyles.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FTStyles.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAA84E1728730F5800DE801B /* FTStyles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTStyles.h; sourceTree = "<group>"; };
 		BAA84E1828730F5800DE801B /* FTStyles.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = FTStyles.docc; sourceTree = "<group>"; };
@@ -4222,8 +4214,6 @@
 		C806291022BA549800FB37DA /* FTAudioAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTAudioAnnotationView.swift; sourceTree = "<group>"; };
 		C806339121E6FE6A00778B16 /* FTNavigation+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTNavigation+Extension.swift"; sourceTree = "<group>"; };
 		C806339721E706AC00778B16 /* FTNewSettingsConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNewSettingsConstant.swift; sourceTree = "<group>"; };
-		C8063B7B21A2C35100F05915 /* FTDocumentPostProcessOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPostProcessOperation.swift; sourceTree = "<group>"; };
-		C8063B7D21A2C36300F05915 /* FTDocumentTypeDairy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentTypeDairy.swift; sourceTree = "<group>"; };
 		C806624A218AC8790065DC75 /* FTApplePencilDoubleTapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTApplePencilDoubleTapViewController.swift; sourceTree = "<group>"; };
 		C806A3B921E872DB0053322C /* FTSettingsCommonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSettingsCommonTableViewCell.swift; sourceTree = "<group>"; };
 		C806A3BA21E872DB0053322C /* FTSettingsCommonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTSettingsCommonTableViewCell.xib; sourceTree = "<group>"; };
@@ -4326,13 +4316,14 @@
 		DA376F0023BE136400B27012 /* FTDiaryFormat2019.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTDiaryFormat2019.swift; sourceTree = "<group>"; };
 		DA376F8C23BE160D00B27012 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		DA5155B22449CD9700886367 /* FTAccountInfoRequestGoogleDrive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTAccountInfoRequestGoogleDrive.swift; sourceTree = "<group>"; };
-		DAB0838123D09FA4000DBF58 /* FTDocumentDigitalDiaryPostOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentDigitalDiaryPostOperation.swift; sourceTree = "<group>"; };
 		DABFED4F244DCEB7005A0F2E /* FTGoogleDrivePublishRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGoogleDrivePublishRequest.swift; sourceTree = "<group>"; };
 		DABFED57244DF500005A0F2E /* GoogleDriveAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveAPI.swift; sourceTree = "<group>"; };
 		DAC6A84F23BDF8A2007E4123 /* Quotes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Quotes.plist; sourceTree = "<group>"; };
 		DAC77D3E2448615E002A5A03 /* FTGoogleDriveBackupPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTGoogleDriveBackupPublisher.swift; sourceTree = "<group>"; };
 		DC887DE594A853A3DE110AAC /* Pods-Noteshelf3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.release.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.release.xcconfig"; sourceTree = "<group>"; };
 		E70705F92AC2B7D500A7B341 /* FTFavoritebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritebarViewController.swift; sourceTree = "<group>"; };
+		E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurve.swift; sourceTree = "<group>"; };
+		E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShapeCurveAnnotationController.swift; sourceTree = "<group>"; };
 		E713D9AA299CC1CF008FDC77 /* FTConvertPreferencesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FTConvertPreferencesCell.xib; sourceTree = "<group>"; };
 		E713D9AC299CC23D008FDC77 /* FTCustomDictViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTCustomDictViewController.xib; sourceTree = "<group>"; };
 		E713D9AF299CF399008FDC77 /* FTSpellCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTSpellCheckManager.swift; sourceTree = "<group>"; };
@@ -5098,6 +5089,7 @@
 				09FBB932248E168E004E4CFD /* FTDocumentFromPages.swift */,
 				B82194FD2449BDF000887A2E /* FTTemplateInfo.swift */,
 				09953E851F1F2A7F00753F70 /* FTNoteshelfPage.swift */,
+				970EA3182B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift */,
 				092ED64622E5C299003E3E92 /* FTNoteshelfPage_PDFExportHelper.swift */,
 				095E3E94227810C6005FCABA /* FTNoteshelfPage_FTPageEvernoteSyncProtocol.swift */,
 				BA708D842433745600353AD6 /* FTNoteshelfPage_UndoManagement.swift */,
@@ -6637,7 +6629,6 @@
 				211E2C791E027D72007B5CAD /* Common */,
 				211E2CC61E027D72007B5CAD /* Core Data */,
 				211E2CFF1E027D72007B5CAD /* Document Model */,
-				C8063B7921A2C33F00F05915 /* Document Post Process */,
 				211E2D411E027D72007B5CAD /* Document UI */,
 				47AD372F1E1BDF2900632699 /* Export Imports */,
 				211E2F831E027D73007B5CAD /* Exports */,
@@ -7149,6 +7140,7 @@
 				E795D5472805924A002DA202 /* FTShapeParallelogram.swift */,
 				E7B86BFE2518ED2A0046AE44 /* FTShapePolygon.swift */,
 				E7B86BFA2518EC840046AE44 /* FTShapeEllipse.swift */,
+				E70FACB02B3B04BC009B88C9 /* FTShapeCurve.swift */,
 				211E2F341E027D73007B5CAD /* FTShapeFactory.h */,
 				42532B5927F2E0AD00A46252 /* FTShapeDashLine.swift */,
 				211E2F351E027D73007B5CAD /* FTShapeFactory.mm */,
@@ -7793,6 +7785,7 @@
 				4221A9DA27EB116900B91890 /* FTShapeArrowAnnotationController.swift */,
 				427FB45327E34A5A004F3B41 /* FTShapeAnnotationController_EditDelgate.swift */,
 				4291C7FE27E2027F0017AF21 /* FTShapeEditController.swift */,
+				E70FACB22B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -8364,7 +8357,6 @@
 				52550EC42A70FCC000E7A1E7 /* FTStoreCustomTemplateViewModel.swift */,
 				52550EC52A70FCC000E7A1E7 /* FTStoreCustomViewController.swift */,
 				52550EC62A70FCC000E7A1E7 /* FTStoreCustomCollectionCell.swift */,
-				52550EC72A70FCC000E7A1E7 /* FTStoreCustomViewController+ContextMenu.swift */,
 				52550EC82A70FCC000E7A1E7 /* FTStoreCustomTemplatesModel.swift */,
 			);
 			path = CustomTemplates;
@@ -8387,7 +8379,6 @@
 				52550ED32A70FCC000E7A1E7 /* FTStoreLibraryViewModel.swift */,
 				52550ED42A70FCC000E7A1E7 /* FTStoreLibraryModel.swift */,
 				52550ED52A70FCC000E7A1E7 /* FTLibraryHeaderView.swift */,
-				52550ED72A70FCC000E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift */,
 				52550ED82A70FCC000E7A1E7 /* FTStoreLibraryHandler.swift */,
 				52550ED92A70FCC000E7A1E7 /* FTStoreLibraryViewController.swift */,
 				52550EDA2A70FCC000E7A1E7 /* FTStoreLibraryCollectionCell.swift */,
@@ -10062,6 +10053,14 @@
 			path = XCConfigurations;
 			sourceTree = "<group>";
 		};
+		BAA762012B57E80200DC4D21 /* INFO */ = {
+			isa = PBXGroup;
+			children = (
+				BAA762022B57E80200DC4D21 /* MyScriptInteractiveInk-Runtime-iOS.version.txt */,
+			);
+			path = INFO;
+			sourceTree = "<group>";
+		};
 		BAA84E1628730F5800DE801B /* FTStyles */ = {
 			isa = PBXGroup;
 			children = (
@@ -10224,19 +10223,6 @@
 				C805519B21F6FE4900710B52 /* AboutNoteshelf.storyboard */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		C8063B7921A2C33F00F05915 /* Document Post Process */ = {
-			isa = PBXGroup;
-			children = (
-				C8063B7B21A2C35100F05915 /* FTDocumentPostProcessOperation.swift */,
-				C8063B7D21A2C36300F05915 /* FTDocumentTypeDairy.swift */,
-				DAB0838123D09FA4000DBF58 /* FTDocumentDigitalDiaryPostOperation.swift */,
-				9767B582265CBF0000A3D27A /* FTDocumentBlackDiaryPostOperation.swift */,
-				975A94CF26BBF4AA004471E1 /* FTDocumentFiveMinJournalPostOperation.swift */,
-				977228B9275FA3C80073C00B /* FTDocumentPlannerpostOperation.swift */,
-			);
-			path = "Document Post Process";
 			sourceTree = "<group>";
 		};
 		C807512A21F04DD1005A9665 /* Controllers */ = {
@@ -10449,6 +10435,7 @@
 				BA3F7FA8299E2F4F003964C6 /* libMyScriptText.xcframework */,
 				BAD1F54F298BC17100B16B2B /* libMyScriptEngine.xcframework */,
 				BA111BE529880094001E854F /* libiink.xcframework */,
+				BAA762012B57E80200DC4D21 /* INFO */,
 				C82771B3213E621F00112FA7 /* include */,
 				C82771F8213E625300112FA7 /* LICENSE.txt */,
 			);
@@ -10633,7 +10620,6 @@
 				97C8523D24F55C9C00EF893A /* FTAutoTemplateGenerator.swift */,
 				97C8525424F62AEB00EF893A /* FTQuotesProvider.swift */,
 				DA376E2223BE134D00B27012 /* NSDate_Extension.swift */,
-				97C8525624F62B1800EF893A /* FTGeneratorViewController.swift */,
 				DA376E2323BE134D00B27012 /* screenInfo */,
 				DA376E2723BE134D00B27012 /* Private */,
 				DA376E2E23BE134D00B27012 /* PDFLinkAnnotation_Extension.swift */,
@@ -11987,6 +11973,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAF395AD2859ADF10067CA9F /* Build configuration list for PBXNativeTarget "Noteshelf3" */;
 			buildPhases = (
+				BA4DA0D12B57B29F004AFD90 /* Validate MyScript */,
 				BAF38F542859ADF00067CA9F /* [CP] Check Pods Manifest.lock */,
 				BAF38F552859ADF00067CA9F /* Resources */,
 				BAF3904E2859ADF00067CA9F /* Sources */,
@@ -12490,6 +12477,26 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BA4DA0D12B57B29F004AFD90 /* Validate MyScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Validate MyScript";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Third Party/My Script/myscript_download.sh\" \"${PROJECT_DIR}/Third Party/My Script\" \n";
+			showEnvVarsInLog = 0;
+		};
 		BA909A3A2990E69C00260538 /* GoogleService Info */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -12879,7 +12886,6 @@
 				52550F182A70FCC100E7A1E7 /* FTStoreCustomViewController.swift in Sources */,
 				52550F312A70FCC100E7A1E7 /* FTStoreModel.swift in Sources */,
 				52550F302A70FCC100E7A1E7 /* FTStoreSectionHandler.swift in Sources */,
-				52550F1A2A70FCC100E7A1E7 /* FTStoreCustomViewController+ContextMenu.swift in Sources */,
 				52550F412A70FCC100E7A1E7 /* FTTemplatePreviewViewController.swift in Sources */,
 				52550F532A70FCC100E7A1E7 /* FTStoreTemplatesViewModel.swift in Sources */,
 				52550F372A70FCC100E7A1E7 /* FTStoreBannerTableCell.swift in Sources */,
@@ -12924,7 +12930,6 @@
 				52550F2B2A70FCC100E7A1E7 /* FTStoreLibraryCollectionCell.swift in Sources */,
 				52550F292A70FCC100E7A1E7 /* FTStoreLibraryHandler.swift in Sources */,
 				473DB6152AA1F025006DBBA6 /* FTTemplatesAnalytics.swift in Sources */,
-				52550F282A70FCC100E7A1E7 /* FTStoreLibraryViewController+ContextMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13286,7 +13291,6 @@
 				BAF391742859ADF00067CA9F /* FTPenAttributes.swift in Sources */,
 				09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */,
 				BAF391762859ADF00067CA9F /* FTNoteshelfPage_PDFExportHelper.swift in Sources */,
-				BAF391782859ADF00067CA9F /* FTDocumentBlackDiaryPostOperation.swift in Sources */,
 				BAF3917A2859ADF00067CA9F /* FTVisionRecognitionTaskManager.swift in Sources */,
 				BAF3917B2859ADF00067CA9F /* FTUIAlertController+Convenience.swift in Sources */,
 				BAF3917C2859ADF00067CA9F /* FTTemplateMoreOptionsTableViewCell.swift in Sources */,
@@ -13328,6 +13332,7 @@
 				F3B9CF9628CCD922003FEFBC /* FTEmojisNewCollectionView.swift in Sources */,
 				3DAA68AE29113A6100848434 /* FTColorCell.swift in Sources */,
 				BAF3919A2859ADF00067CA9F /* FTShelfItemCollectionRecent.swift in Sources */,
+				E70FACB12B3B04BC009B88C9 /* FTShapeCurve.swift in Sources */,
 				42A5B1B328D1F4C200C279E8 /* FTFinderSearchController.swift in Sources */,
 				E7B0E4BA2893D9F1007B031F /* FTPDFRenderViewController+ToolbarShortcuts.swift in Sources */,
 				BAF3919B2859ADF00067CA9F /* FTVisionNotebookRecognitionHelper.swift in Sources */,
@@ -13371,7 +13376,6 @@
 				BAF391C32859ADF00067CA9F /* FTApplePencilDoubleTapViewController.swift in Sources */,
 				1445AA352B0F3DC700A52545 /* FTIAPOfferViewController.swift in Sources */,
 				E7C71A76288E795A00AF2598 /* EnvironmentValues+TrackValue.swift in Sources */,
-				BAF391C42859ADF00067CA9F /* FTDocumentPostProcessOperation.swift in Sources */,
 				BAF391C52859ADF00067CA9F /* FTExportContentGenerator.swift in Sources */,
 				BAF391C62859ADF00067CA9F /* FTCloudDocumentConflictScreen.swift in Sources */,
 				BAF391C72859ADF00067CA9F /* FTImageAnnotation_SQLiteHelper.swift in Sources */,
@@ -13606,7 +13610,6 @@
 				BAF3927F2859ADF00067CA9F /* FTShapeArrow.swift in Sources */,
 				97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */,
 				E7AE4D9F2899480A004CF608 /* FTShapeShortcutView.swift in Sources */,
-				BAF392802859ADF00067CA9F /* FTGeneratorViewController.swift in Sources */,
 				979BC27F288EAD8600208B21 /* FTShelfItemView.swift in Sources */,
 				E762186F2A4D809D004A8428 /* FTShelfBaseHostingController.swift in Sources */,
 				BAF392822859ADF00067CA9F /* FTZenDeskManager.swift in Sources */,
@@ -13745,6 +13748,7 @@
 				BAF392F42859ADF00067CA9F /* FTSearchResultCategory.swift in Sources */,
 				BAF392F62859ADF00067CA9F /* FTDateInfo.swift in Sources */,
 				09CDCB222A541BC0000340FB /* FTNotebookToolbarItem.swift in Sources */,
+				E70FACB32B3B05C2009B88C9 /* FTShapeCurveAnnotationController.swift in Sources */,
 				BAF392F72859ADF00067CA9F /* URLSessionProvider.swift in Sources */,
 				BAF392F82859ADF00067CA9F /* FTShadowImageView.swift in Sources */,
 				BA6C51C628DC691F006504EB /* FTShelfItemsViewControllerNew.swift in Sources */,
@@ -13837,7 +13841,6 @@
 				E7F479DA28858AC200577D1E /* FTRackDataModels.swift in Sources */,
 				E7F9EA96298A9B6A00504BE1 /* FTGlobalSearchController+Recents.swift in Sources */,
 				BAF393312859ADF00067CA9F /* FTEmojiesManager.swift in Sources */,
-				BAF393322859ADF00067CA9F /* FTDocumentPlannerpostOperation.swift in Sources */,
 				146E2BDB2A0A634D004A9B3A /* FTHandWritingHostingController.swift in Sources */,
 				E7ADB5352881A79B005E03B7 /* FTPasswordViewModel.swift in Sources */,
 				BAF393332859ADF00067CA9F /* FTShapePentagonResizing.swift in Sources */,
@@ -14127,7 +14130,6 @@
 				BAF394302859ADF00067CA9F /* FTBlurViewController.swift in Sources */,
 				4271849728FE885400C4986B /* FTAudioMoreOptionsViewController.swift in Sources */,
 				42B2F3A228A4D378002430C5 /* FTShelfCategoryViewController_iOS13.swift in Sources */,
-				BAF394322859ADF00067CA9F /* FTDocumentTypeDairy.swift in Sources */,
 				E7A9767D28C0AF2D009B43DC /* FTShapeShortcutHostingController.swift in Sources */,
 				BAF394342859ADF00067CA9F /* FTHeaderView.swift in Sources */,
 				3DAA689E2911041900848434 /* FTTextColorCollectionView.swift in Sources */,
@@ -14361,7 +14363,6 @@
 				BAF394F52859ADF10067CA9F /* FTBaseRenderViewController.m in Sources */,
 				BAF394F62859ADF10067CA9F /* FTDeviceModalsTableViewCell.swift in Sources */,
 				BAF394F72859ADF10067CA9F /* UIColor+Additions.swift in Sources */,
-				BAF394F92859ADF10067CA9F /* FTDocumentFiveMinJournalPostOperation.swift in Sources */,
 				BAF394FA2859ADF10067CA9F /* FTPageEraseTouchHandler.swift in Sources */,
 				9715E00E2AEA9D2C00EC48D4 /* ENApplicationBridge.m in Sources */,
 				BAF394FD2859ADF10067CA9F /* FTConvertToTextViewController.swift in Sources */,
@@ -14404,7 +14405,6 @@
 				E7C71A6C288E795A00AF2598 /* ValueSliderOptions.swift in Sources */,
 				BAF3952C2859ADF10067CA9F /* FTDottedTemplateFormat.swift in Sources */,
 				BAF3952D2859ADF10067CA9F /* SceneDelegate.swift in Sources */,
-				BAF395302859ADF10067CA9F /* FTDocumentDigitalDiaryPostOperation.swift in Sources */,
 				E7B1F45728BE2BE7002210EF /* FTPenSizeModel.swift in Sources */,
 				BAF395312859ADF10067CA9F /* FTOneDriveInfoTask.swift in Sources */,
 				BAF395322859ADF10067CA9F /* FTShelfItemPreviewViewController.swift in Sources */,
@@ -14468,6 +14468,7 @@
 				BAF395592859ADF10067CA9F /* FTThemeCategoryTableViewCell.swift in Sources */,
 				3DAC23B6290FCE0B0084E626 /* FTAddNewTextStyleCell.swift in Sources */,
 				BAF3955A2859ADF10067CA9F /* FTStroke.swift in Sources */,
+				970EA3192B3D61FB00D4B7C2 /* FTDiaryPageInfo.swift in Sources */,
 				BAF3955B2859ADF10067CA9F /* FTPopOver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14507,6 +14508,7 @@
 				4209FE7A295C5FBA00ACC02E /* FTRuledTemplateFormat.swift in Sources */,
 				4209FE74295C5F4E00ACC02E /* NSMetadataItem_Cloud.swift in Sources */,
 				4209FEA4295C622B00ACC02E /* FTSearchable.swift in Sources */,
+				977ED1542B3D9AD8000BB42E /* Date_Extension.swift in Sources */,
 				4209FED9295C799800ACC02E /* FTShareActionItemsViewController.swift in Sources */,
 				4209FEAB295C629D00ACC02E /* StoreTemplateGenerator.swift in Sources */,
 				4209FE94295C615C00ACC02E /* FTPrivateProtocols.swift in Sources */,
@@ -14540,6 +14542,7 @@
 				4209FE6B295C5EDB00ACC02E /* FTGroupItem.swift in Sources */,
 				4209FE82295C604500ACC02E /* FTAutoTemplateGenerator.swift in Sources */,
 				4209FE83295C605A00ACC02E /* FTCoverThemeGenerator.swift in Sources */,
+				977ED1532B3D98B0000BB42E /* FTDiaryPageInfo.swift in Sources */,
 				ED3532632452E889002B18EE /* NSItemProvider+Extension.swift in Sources */,
 				098007872AF112C4002C5C9A /* FTNS3BookURLThumbnailReader.swift in Sources */,
 				4209FE80295C602E00ACC02E /* FTThemesLibrary.swift in Sources */,
@@ -14955,7 +14958,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 EE Dev";
-				APP_VERSION = 1.4.5;
+				APP_VERSION = 1.4.7;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -14980,7 +14983,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -15202,10 +15205,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -15255,10 +15258,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -15308,10 +15311,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -15358,10 +15361,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -15399,7 +15402,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.4.5;
+				APP_VERSION = 1.4.7;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -15424,8 +15427,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
-				"DEBUG_INFORMATION_FORMAT[sdk=macosx*]" = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -15651,10 +15653,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -15702,10 +15704,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -15753,10 +15755,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -15801,10 +15803,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16180,7 +16182,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Beta";
-				APP_VERSION = 1.4.5;
+				APP_VERSION = 1.4.7;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -16204,7 +16206,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -16250,10 +16252,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16303,10 +16305,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16354,11 +16356,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16406,10 +16408,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16458,10 +16460,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16508,11 +16510,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16588,10 +16590,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16638,10 +16640,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16686,10 +16688,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16733,10 +16735,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -16784,10 +16786,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -16832,10 +16834,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 69;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_MODULE_VERIFIER = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -17106,7 +17108,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "NS3 Dev";
-				APP_VERSION = 1.4.5;
+				APP_VERSION = 1.4.7;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17131,7 +17133,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 69;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -17172,7 +17174,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_DISPLAY_NAME = "Noteshelf 3";
-				APP_VERSION = 1.4.5;
+				APP_VERSION = 1.4.7;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -17197,8 +17199,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 52;
-				"DEBUG_INFORMATION_FORMAT[sdk=macosx*]" = "dwarf-with-dsym";
+				CURRENT_PROJECT_VERSION = 69;
 				DEVELOPMENT_TEAM = CNTLGGQX2J;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

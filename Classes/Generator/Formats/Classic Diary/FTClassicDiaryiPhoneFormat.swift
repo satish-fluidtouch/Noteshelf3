@@ -18,7 +18,7 @@ class FTClassicDiaryiPhoneFormat : FTClassicDiaryFormat{
     override func renderYearPage(context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo) {
         super.renderYearPage(context: context, months: months, calendarYear: calendarYear)
         let templateInfo = screenInfo.spacesInfo.yearPageSpacesInfo
-        
+        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
         var currMonthIndex = CGFloat(0)
         let columnCount = getColumnCount()
         let rowCount = getRowCount()

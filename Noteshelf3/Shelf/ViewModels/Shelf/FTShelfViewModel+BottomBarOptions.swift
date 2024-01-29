@@ -26,7 +26,6 @@ extension FTShelfViewModel {
     }
     func shouldSupportBottomBarOption(_ option: FTShelfBottomBarOption) -> Bool{
         var status: Bool = true
-        let selectedShelfItems = self.shelfItems.filter({ $0.isSelected })
 
         if disableBottomBarItems {
             status = false
@@ -71,7 +70,7 @@ extension FTShelfViewModel {
 //MARK: Shelf Bottom tool operations
 extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
     func deleteShelfItems() {
-        let deletedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let deletedItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         deleteShelfItems(deletedItems)
     }
     func deleteShelfItems(_ items: [FTShelfItemProtocol]){
@@ -83,7 +82,7 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
     }
     func restoreShelfItems() {
         self.removeObserversForShelfItems()
-        var restoreItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        var restoreItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         if restoreItems.isEmpty, let updateItem = updateItem {
             restoreItems = [updateItem.model]
         }
@@ -97,11 +96,11 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
     }
 
     func moveShelfItems() {
-        let selectedShelfItems = self.shelfItems.filter({ $0.isSelected }).compactMap({$0.model})
+        let selectedShelfItems = self.selectedShelfItems.compactMap({$0.model})
         self.moveShelfItems(selectedShelfItems)
     }
     func shareShelfItems() {
-        let shareItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let shareItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         self.shareShelfItems(shareItems)
     }
     func shareShelfItems(_ items:[FTShelfItemProtocol]){
@@ -112,7 +111,7 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
         })
     }
     func trashShelfItems() {
-        let deletedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let deletedItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         trashShelfItems(deletedItems)
     }
     func trashShelfItems(_ items: [FTShelfItemProtocol]){
@@ -126,20 +125,20 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
     }
 
     func changeCover() {
-        let selectedItems :[FTShelfItemViewModel] = self.shelfItems.filter({$0.isSelected})
+        let selectedItems :[FTShelfItemViewModel] = self.selectedShelfItems
         self.delegate?.showCoverViewOnShelfWith(models: selectedItems)
     }
 
     func createGroup() {
         self.removeObserversForShelfItems()
-        let groupItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let groupItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         self.delegate?.groupShelfItems(groupItems, ofColection: collection, parentGroup: groupItem, withGroupTitle: "", showAlertForGroupName: true, onCompletion: { [weak self] in
             self?.addObserversForShelfItems()
             self?.resetShelfModeTo(.normal)
         })
     }
     func renameShelfItems(){
-        let selectedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let selectedItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         renameShelfItems(selectedItems)
     }
     func renameShelfItems(_ items: [FTShelfItemProtocol]){
@@ -160,7 +159,7 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
         self.renameShelfItems([item])
     }
     func duplicateShelfItems(){
-        let selectedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let selectedItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         duplicateShelfItems(selectedItems)
     }
     func duplicateShelfItems(_ items: [FTShelfItemProtocol]){
@@ -173,7 +172,7 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
     }
 
     func tagsShelfItems() {
-        let selectedItems :[FTShelfItemProtocol] = self.shelfItems.filter({$0.isSelected}).compactMap({$0.model})
+        let selectedItems :[FTShelfItemProtocol] = self.selectedShelfItems.compactMap({$0.model})
         self.tagsControllerDelegate?.tagsViewControllerFor(items: selectedItems, onCompletion: { [weak self] _ in
             self?.resetShelfModeTo(.normal)
         })

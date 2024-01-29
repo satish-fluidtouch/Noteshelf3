@@ -36,6 +36,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     var plannerDiaryExtrasTabRectsInfo : FTPlannerDiaryExtrasTabRectInfo =  FTPlannerDiaryExtrasTabRectInfo();
     var renderFirstWeek : Bool = true
     var monthCalendarInfo = [FTMonthlyCalendarInfo]()
+    var pdfDocumentURL : URL?
     required init(customVariants : FTPaperVariants){
         self.customVariants = customVariants
         super.init()
@@ -127,7 +128,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     var extrasTemplate : String {
         return getPlannerAssetPDFPath(ofType: FTPlanner2024DiaryTemplateType.extras,customVariants: formatInfo.customVariants)
     }
-    
+
     override func getTemplateBackgroundColor() -> UIColor {
         return UIColor(red: 254/255, green: 254/255, blue: 254/255, alpha: 1.0)
     }
@@ -197,9 +198,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     func renderTrackerPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo){
         
     }
-    func renderExtrasPage(atIndex index : Int,context: CGContext){
-        
-    }
     func renderYearPage(atIndex index : Int,context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo){
         
     }
@@ -231,28 +229,37 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
 
     //MARK:- PDF Generation and linking between pages
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly) {
-    
+
         self.monthCalendarInfo = monthlyFormatter.monthCalendarInfo
         // Render Calendar page
         
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
-        
+        diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
+
         // Render year page
         let numberOfYearPages : Int = self.formatInfo.customVariants.isLandscape ? 3 : 2
         for index in 1...numberOfYearPages {
             self.renderYearPage(atIndex: index, context: context, months: monthlyFormatter.monthInfo, calendarYear: self.formatInfo)
+            diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
         }
         
         // Render Month Pages
         let calendarMonths = monthlyFormatter.monthCalendarInfo;
         calendarMonths.forEach { (calendarMonth) in
             self.renderMonthPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
+            let utcDate = calendarMonth.dayInfo.first?.date.utcDate()
+            if let utcDate {
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .month, date : utcDate.timeIntervalSinceReferenceDate))
+            }
             let weeklyInfo = calendarMonth.weeklyInfo
             // for every calendar duration add extra week if required
             if renderFirstWeek {
                 renderFirstWeek = false
                 if shouldAddWeekOffsetToCalendarWith(firstDay: weeklyInfo.first?.dayInfo.first), let firstWeek = weeklyInfo.first{
                     self.renderWeekPage(context: context, weeklyInfo: firstWeek,monthInfo: calendarMonth)
+                    if let utcDate = firstWeek.dayInfo.first?.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+                    }
                 }
             }
             weeklyInfo.forEach { (weekInfo) in
@@ -260,19 +267,28 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
                 if firstDayOfMonth?.fullMonthString.uppercased() == calendarMonth.fullMonth.uppercased(){
                 //if self.shouldAddWeekToMonth(firstDay: firstDayOfMonth, currentMonth: calendarMonth) {
                     self.renderWeekPage(context: context, weeklyInfo: weekInfo,monthInfo: calendarMonth)
+                    if let utcDate = weekInfo.dayInfo.first?.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
+                    }
                 }
             }
             let dayInfo = calendarMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
-                self.renderDayPage(context: context, dayInfo: eachDayInfo,monthInfo: calendarMonth);
+                if eachDayInfo.belongsToSameMonth {
+                    self.renderDayPage(context: context, dayInfo: eachDayInfo,monthInfo: calendarMonth);
+                    //For Today link
+                    if let utcDate = eachDayInfo.date.utcDate() {
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate , isCurrentPage: self.setDiaryPageAsCurrentPage(pageDate: utcDate)))
+                    }
+                }
             }
             self.renderNotesPage(context: context,monthInfo: calendarMonth)
             self.renderTrackerPage(context: context, monthInfo: calendarMonth, calendarYear: formatInfo)
-        }
-        
-        // Render extras page
-        for index in 1...3 {
-            self.renderExtrasPage(atIndex : index,context: context)
+            if let utcDate {
+                let timeInterval = utcDate.timeIntervalSinceReferenceDate
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .monthlyNotes, date : timeInterval))
+                diaryPagesInfo.append(FTDiaryPageInfo(type : .tracker, date : timeInterval))
+            }
         }
     }
     func shouldAddWeekOffsetToCalendarWith(firstDay : FTDayInfo?) -> Bool {
@@ -283,6 +299,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
     }
     override func addCalendarLinks(url : URL,format : FTDairyFormat,pageRect: CGRect, calenderYear: FTYearFormatInfo, isToDisplayOutOfMonthDate: Bool,monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly) {
         let doc = PDFDocument.init(url: url);
+        pdfDocumentURL = url
         var pageIndex: Int = 0;
         var nextIndex:Int = 0;
         let offset = 0;
@@ -451,7 +468,6 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         }
         self.offsetCount = 1 + numberYearPages + numberOfMonthsBeforeCurrentDate + (numberOfMonthsBeforeCurrentDate - 1)*2 + numberOfWeeks // calender + years + months + notes + trackers + weeks count before current day.
 
-
         var weekBeforeDaysCount : Int = 0
         var monthBeforeDays : Int = 1 + numberYearPages
         var previousMonthDays : Int = 0
@@ -535,16 +551,20 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
             self.linkSideNavigationStrips(doc: doc,atPoint: atPoint, monthlyFormatter: monthlyFormatter, forPageAtIndex: monthIndex)
 
             var dayRectsCount = 0
-            eachDayBeforeDays += 1 + eachMonth.getWeeksCount() // adding month and weeks belonging to a month.
+            var weeksCount = eachMonth.weeksCount
+            if index == 0 && shouldAddWeekOffsetToCalendarWith(firstDay: eachMonth.dayInfo.first) { // checking whether to add a week offset to first month of calendar duration
+                weeksCount += 1
+            }
+            eachDayBeforeDays += 1 + weeksCount // adding month and weeks belonging to a month.
             eachMonth.dayInfo.forEach({(eachDay) in
                 if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
                     if eachDay.belongsToSameMonth {
                         if monthRectsInfo.dayRects.count > dayRectsCount {
-                            eachDayBeforeDays += 1 // adding one day
                             let dayIndex = eachDayBeforeDays
                             if let page = doc.page(at: dayIndex) {
                                 monthPage?.addLinkAnnotation(bounds: monthRectsInfo.dayRects[dayRectsCount], goToPage: page, at: atPoint)
                             }
+                            eachDayBeforeDays += 1 // adding one day
                         }
                         dayRectsCount += 1
                     }
