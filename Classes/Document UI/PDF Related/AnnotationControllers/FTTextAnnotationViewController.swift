@@ -151,9 +151,6 @@ class FTTextAnnotationViewController: UIViewController {
         get {
             let attributes: NSMutableAttributedString? = textInputView.attributedText.mutableDeepCopy()
             attributes?.applyScale(1 / textInputView.scale, originalScaleToApply: 1 * textInputView.transformScale)
-//            if let length = attributes?.length,length > 0 {
-//                attributes?.removeAttribute(.link, range: NSRange(location: 0, length: length));
-//            }
             return attributes!
         }
         set {
@@ -742,6 +739,9 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
+        let attr = NSMutableAttributedString(attributedString: textView.attributedText)
+        attr.applyDataDetectorAttributes()
+        textView.attributedText = attr
         #if !targetEnvironment(macCatalyst)
         if(!transitionInProgress) {
             self.editMode = false
@@ -795,7 +795,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         //Remove any submenu's in toolbar
         let contentScale = self.zoomScale;
         var returnValue = true
-        self.updateLinkForEditedWord(range: range, replacementText: text)
+        self.removeLinkIfNeeded(range: range, replacementText: text)
 
         if (text == "\n") {
             if textInputView.hasBulletsInLineParagraph(for: textView.selectedRange) {
@@ -812,7 +812,7 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return returnValue
     }
     
-   private func updateLinkForEditedWord(range: NSRange, replacementText text: String) {
+   private func removeLinkIfNeeded(range: NSRange, replacementText text: String) {
         let editedText = (self.textInputView.text as NSString).replacingCharacters(in: range, with: text)
         let editedRange = NSRange(location: range.location, length: text.count)
         let wordRange = (editedText as NSString).rangeOfWord(at: editedRange.location)
@@ -856,15 +856,24 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return val;
     }
     
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL,
-                  in characterRange: NSRange,
-                  interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         if !self.editMode {
-            URL.openURL(on: self);
+            URL.openURL(on: self)
+        } else {
+            let selectedTextPosition = textView.position(from: textView.beginningOfDocument, offset: characterRange.location)
+            let selectedTextLength = characterRange.length
+            let selectedTextRange = textView.textRange(from: selectedTextPosition!, to: textView.position(from: selectedTextPosition!, offset: selectedTextLength)!)
+            textInputView.selectedTextRange = selectedTextRange
+
+            let editLinkItem = UIMenuItem(title: "Edit Link", action: #selector(FTTextView.editLinkMenuItemAction(_:)))
+            let removeLinkItem = UIMenuItem(title: "Remove Link", action: #selector(FTTextView.removeLinkMenuItemAction(_:)))
+            let menuController = UIMenuController.shared
+            menuController.menuItems = [editLinkItem, removeLinkItem]
+            menuController.showMenu(from: textView, rect: textView.frame)
         }
-        return false;
+        return false
     }
-    
+
     func textStorageShouldInteractWith(_ textStorage : NSTextStorage ,
                                        attachment : NSTextAttachment ,
                                        characterRange : NSRange) -> Bool {

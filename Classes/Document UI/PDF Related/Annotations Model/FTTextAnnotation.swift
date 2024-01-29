@@ -50,30 +50,16 @@ class FTTextAnnotation: FTAnnotation,FTImageRenderingProtocol {
             if let newAttrStr = newValue,
                 let oldAttrStr = self.attributedString,
                 !newAttrStr.isEqual(toAttributedText: oldAttrStr) {
-                _detectedAttributedString = nil;
-                self.forceRender = true;
+                self.forceRender = true
             }
             else if(nil == newValue && nil != self.attributedString) {
-                _detectedAttributedString = nil;
-                self.forceRender = true;
+                self.forceRender = true
             }
             else if(nil != newValue && nil == self.attributedString) {
-                _detectedAttributedString = nil;
-                self.forceRender = true;
+                self.forceRender = true
             }
         }
     };
-    
-    private var _detectedAttributedString: NSMutableAttributedString?
-    var detectedAttributedString: NSAttributedString? {
-        if(nil == _detectedAttributedString) {
-            if let atr = self.attributedString {
-                _detectedAttributedString = NSMutableAttributedString(attributedString: atr);
-                _detectedAttributedString?.applyDataDetectorAttributes();
-            }
-        }
-        return _detectedAttributedString;
-    }
     
     var dataValue : Data? {
         get {
@@ -222,7 +208,7 @@ private extension FTTextAnnotation
     private func textToImage(scale : CGFloat) -> UIImage?
     {
         var image : UIImage?;
-        if let attrstr = self.detectedAttributedString {
+        if let attrstr = self.attributedString {
             let screenScale = UIScreen.main.scale;
 
             //get the max texture size scale
@@ -448,7 +434,7 @@ extension FTTextAnnotation : FTCGContextRendering
 
         var inset = FTTextView.textContainerInset(self.version);
         inset = UIEdgeInsetsScale(inset, CGFloat(self.transformScale));
-        guard let attributedString = self.detectedAttributedString else { return }
+        guard let attributedString = self.attributedString else { return }
         let textLayouter = FTTextLayouter.init(attributedString: attributedString,
                                                constraints: CGSize.init(width: self.boundingRect.size.width-(inset.left+inset.right),
                                                                         height: CGFloat.greatestFiniteMagnitude));
@@ -532,7 +518,7 @@ extension NSMutableAttributedString
                     switch(_result.resultType) {
                     case .link:
                         if let url = _result.url {
-                            self.addAttribute(.customLink, value: url, range: range)
+                            self.addAttribute(.link, value: url, range: range)
                             self.addAttributes(NSAttributedString.linkAttributes, range: range);
                         }
                     default:
@@ -551,10 +537,6 @@ extension NSMutableAttributedString
     class var link: UIColor {
         return UIColor(hexString: "5779F8");
     }
-}
-
-extension NSAttributedString.Key  {
-    static let customLink = NSAttributedString.Key(rawValue: "customLinkAttriuteName");
 }
 
 @objc extension NSAttributedString

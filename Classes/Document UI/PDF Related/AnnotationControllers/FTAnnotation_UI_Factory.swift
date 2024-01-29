@@ -129,8 +129,6 @@ let kAudioRecIconSize : CGSize = CGSize.init(width: audioRecordSize, height: aud
     var attributedString : NSAttributedString?
     var string : String?
     var fromConvertToText: Bool = false;
-    // Added this to identify weburl links and convert to our linking mechanism
-    var isToPaste: Bool = false
 
     func defaultTextTypingAttributes() -> [NSAttributedString.Key : Any]
     {
@@ -309,15 +307,6 @@ extension FTTextAnnotation
         else {
             if let str = textInfo.string {
                 let attrString = NSMutableAttributedString.init(string: str, attributes: attrs)
-                if textInfo.isToPaste {
-                    attrString.applyDataDetectorAttributes()
-                    attrString.enumerateAttribute(.customLink, in: NSRange(location: 0, length: attrString.length), using: { value, range, stop in
-                        if let linkValue = value {
-                            attrString.removeAttribute(.customLink, range: range)
-                            attrString.addAttribute(.link, value: linkValue, range: range)
-                        }
-                    })
-                }
                 self.attributedString = attrString
             }
             else {
