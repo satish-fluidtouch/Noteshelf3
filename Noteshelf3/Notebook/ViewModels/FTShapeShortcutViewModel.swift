@@ -44,7 +44,8 @@ class FTFavoriteShapeViewModel: ObservableObject {
         self.currentFavoriteShape = shape
     }
 
-    func handleFavoriteShapeSelection(_ shape: FTShapeType) {
+    func handleFavoriteShapeSelection(_ shape: FTShapeType, index: FavoriteShapePosition) {
+        self.shapeEditPosition = index
         self.delegate?.didSelectFavoriteShape(shape)
     }
 
@@ -78,15 +79,27 @@ extension FTFavoriteShapeViewModel {
             return FTPenShapeModel(shape: shape, isSelected: isSelected)
         })
 
-        let selectedShapes = self.favoriteShapes.filter { model in
-            model.isSelected
-        }
-
-        if selectedShapes.count > 1 {
-            for (index, shape) in selectedShapes.enumerated().reversed()  {
-                if index != 0 {
-                    shape.isSelected = false
+        // TODO: (need refactor to to have better fix)
+        // Temporary fix for restriction of same shape selection
+        for (index, shape) in self.favoriteShapes.enumerated().reversed() {
+            let selectedShapes = self.favoriteShapes.filter { model in
+                model.isSelected
+            }
+            if selectedShapes.count > 1 {
+                if let pos = self.shapeEditPosition {
+                    // when we have edit position available, other position can be de-selected
+                    if pos.rawValue != index {
+                        shape.isSelected = false
+                    }
+                } else { // rare case user
+                    // Existing case - when we have already duplicate shapes selected in prod, only first selected index we are respecting
+                    if let reqIndex = selectedShapes.firstIndex(where: { $0.isSelected }), reqIndex != index {
+                        shape.isSelected = false
+                    }
                 }
+            } else if selectedShapes.count == 1 {
+                self.shapeEditPosition = FavoriteShapePosition(rawValue: index)
+                break
             }
         }
     }

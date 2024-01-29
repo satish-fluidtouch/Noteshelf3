@@ -38,11 +38,6 @@ import FTStyles
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.shapeEditDelegate?.saveFavoriteShapes()
-    }
 }
 
 // MARK :- DataSource
@@ -71,8 +66,9 @@ extension FTShapesRackViewController: UICollectionViewDelegate {
         })
 
         let shape = shapes[indexPath.row]
-        shape.saveSelection()
         self.shapeEditDelegate?.didSelectShape(shape: shape)
+        self.shapeEditDelegate?.saveFavoriteShapes()
+        shape.saveSelection()
         dismiss(animated: true)
     }
 }
