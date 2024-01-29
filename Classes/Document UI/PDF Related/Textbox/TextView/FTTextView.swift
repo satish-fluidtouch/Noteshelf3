@@ -607,18 +607,33 @@ extension FTTextView {
     @objc func linkMenuItemAction(_ sender: Any?) {
         if let controller = self.annotationViewController {
             controller.performLinkAction(sender)
+            if controller.isEditMode {
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.selectedTextLinkToTap)
+            } else {
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToTap)
+            }
         }
     }
     
     @objc func editLinkMenuItemAction(_ sender: Any?) {
         if let controller = self.annotationViewController {
             controller.performLinkAction(sender)
+            if controller.isEditMode {
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.selectedTextEditLinkTap)
+            } else {
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.editLinkTap)
+            }
         }
     }
 
     @objc func removeLinkMenuItemAction(_ sender: Any?) {
         if let controller = self.annotationViewController {
             controller.removeLinkAction(sender)
+            if controller.isEditMode {
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.selectedTextRemoveLinkTap)
+            } else {
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.removeLinkTap)
+            }
         }
     }
 

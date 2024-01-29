@@ -116,6 +116,8 @@ private extension FTLinkToSelectViewController {
 
     @objc func segmentTapped() {
         self.handleSegmentControlSelection()
+        var segmentType = segmentControl.selectedSegmentIndex == 0 ? "page" : "URL"
+        FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToSegmentTap, params: ["segment": segmentType])
     }
 
     func navigateToDocumentSelectionScreen() {
@@ -170,6 +172,9 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
                 self.viewModel.updateLinkText(text)
                 self.updateDoneEnableStatus()
             }
+            cell.textEntryDoneHandler = {(text: String?) -> Void in
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToLinkTextType)
+            }
             reqCell = cell
         } else {
             if option == .document {
@@ -190,6 +195,7 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
                 }
                 cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
                     guard let self else { return }
+                    FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToURLType)
                     if let text = text {
                         self.handleWebUrl(text: text)
                     }
@@ -204,6 +210,7 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
         let option = linkOptions[indexPath.row]
         if option == .document {
             self.navigateToDocumentSelectionScreen()
+            FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToNotebookTap)
         }
     }
 
@@ -218,10 +225,13 @@ extension FTLinkToSelectViewController: FTBarButtonItemDelegate {
         self.dismiss(animated: true) {
             if type == .right { // DONE
                 var isWebLink = false
+                var linkType = "page"
                 if self.segmentControl.selectedSegmentIndex == 1 {
                     isWebLink = true
+                    linkType = "URL"
                 }
                 self.viewModel.saveLinkInfo(isWebLink: isWebLink)
+                FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToDoneTap, params: ["link_type": linkType])
             }
         }
     }
@@ -236,6 +246,7 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
             exstInfo.docUUID = docId
             exstInfo.pageUUID = "" // first page
             self.viewModel.updateTextLinkInfo(exstInfo)
+            FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkNotebookSelect)
             self.viewModel.getSelectedDocumentDetails { doc in
                 self.viewModel.updateDocumentTitle(document.displayTitle)
                 self.viewModel.updatePageNumber(1)
@@ -257,6 +268,7 @@ extension FTLinkToSelectViewController: FTPageSelectionDelegate {
             self.viewModel.updatePageNumber(page.pageIndex() + 1)
             self.viewModel.updateTextLinkInfo(info)
             self.tableView?.reloadData()
+            FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToPageTap)
         }
     }
 }

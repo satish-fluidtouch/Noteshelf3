@@ -194,6 +194,11 @@ extension FTTextAnnotationViewController: FTTextMenuActionProtocol {
             return true
         } else if self.textInputView.checkIfToShowEditLinkOptions() {
             if [#selector(view.editLinkMenuItemAction(_:)), #selector(view.removeLinkMenuItemAction(_:))].contains(action) {
+                // To avoid duplicate track of - pageLinkLongPress event
+                // added one more condition
+                if [#selector(view.editLinkMenuItemAction(_:))].contains(action) {
+                    FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.pageLinkLongPress)
+                }
                 return true
             }
         } else if [#selector(view.linkToMenuItemAction(_:))].contains(action) {

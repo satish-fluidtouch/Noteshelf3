@@ -196,3 +196,26 @@ class FTLinkToTextViewModel: NSObject {
         }
     }
 }
+
+class FTTextLinkEventTracker: NSObject {
+    static func trackEvent(with value: String, params: [String: Any]? = nil) {
+        track(value, params: params,screenName: FTScreenNames.textbox)
+    }
+}
+
+struct TextLinkEvents {
+    static let linkToTap = "textbox_linkto_tap"
+    static let selectedTextLinkToTap = "selectedtext_linkto_tap"
+    static let linkToLinkTextType = "linkto_linktext_type"
+    static let linkToNotebookTap = "linkto_notebook_tap"
+    static let linkNotebookSelect = "link_notebook_select"
+    static let linkToPageTap = "linkto_page_tap"
+    static let linkToSegmentTap = "linkto_segment_tap"
+    static let linkToURLType = "linkto_URL_type"
+    static let linkToDoneTap = "linkto_done_tap"
+    static let editLinkTap = "textbox_editlink_tap"
+    static let removeLinkTap = "textbox_removelink_tap"
+    static let pageLinkLongPress = "page_link_longpress"
+    static let selectedTextEditLinkTap = "selectedtext_editlink_tap"
+    static let selectedTextRemoveLinkTap = "selectedtext_removelink_tap"
+}
