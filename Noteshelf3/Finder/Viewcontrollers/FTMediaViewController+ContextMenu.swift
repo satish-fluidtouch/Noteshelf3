@@ -28,7 +28,7 @@ extension FTMediaViewController {
             return self.prepareContextMenu(for: indexPath)
         }
         contextMenu = UIContextMenuConfiguration(identifier: identifier, previewProvider: nil, actionProvider: actionProvider)
-        
+        FTFinderEventTracker.trackFinderEvent(with: "finder_content_item_longpress")
         return contextMenu
     }
     
