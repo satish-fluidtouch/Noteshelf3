@@ -204,10 +204,12 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
                             5*(currentPageRect.height*templateInfo.cellOffsetY/100))/6
         let font = UIFont.robotoMedium(screenInfo.fontsInfo.monthPageDetails.yearFontSize)
         let newFontSize = UIFont.getScaledFontSizeFor(font: font, screenSize: currentPageRect.size, minPointSize: 33)
+        let paragraphStyle = NSMutableParagraphStyle.init()
+        paragraphStyle.alignment = .center
         let yearAttrs: [NSAttributedString.Key: Any] = [.font: UIFont.robotoMedium(newFontSize),
                                                         .kern: 0.0,
-                                                        .foregroundColor: UIColor.init(hexString: "#C4C4C4")]
-        
+                                                        .foregroundColor: UIColor.init(hexString: "#C4C4C4"),.paragraphStyle : paragraphStyle]
+
         let yearString = NSMutableAttributedString.init(string: monthInfo.year, attributes: yearAttrs)
         let yearLocation = CGPoint(x: (currentPageRect.width*templateInfo.baseBoxX/100), y: (currentPageRect.height*templateInfo.monthY/100) )
         yearString.draw(in: CGRect(x: yearLocation.x, y: yearLocation.y, width: yearString.size().width, height: yearString.size().height))
@@ -261,9 +263,6 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
         
         
         let symbols = getWeekSymbols(monthInfo: monthInfo)
-        
-        let paragraphStyle = NSMutableParagraphStyle.init()
-        paragraphStyle.alignment = .center
         let weekSymbolFont = UIFont.montserratFont(for: .bold, with: screenInfo.fontsInfo.monthPageDetails.weekFontSize)
         let weekSymbolNewFontSize = UIFont.getScaledFontSizeFor(font: weekSymbolFont, screenSize: currentPageRect.size, minPointSize: 8)
         
