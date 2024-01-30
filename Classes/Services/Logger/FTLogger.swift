@@ -114,7 +114,7 @@ class FTLogger: NSObject {
 /// IMPORTATNT: This Swift function is being used only by Swift classes, there's another function in NSLogger.m with the same name and implementation in order to reduce the ObjC and Swift interference. Consider updating the ObjC file as well while modifying this.
 func FTCLSLog(_ string: String) {
     #if DEBUG
-    //print("CLS:", string)
+    print("CLS:", string)
     #endif
     if UserDefaults.standard.bool(forKey: CLS_REPORTING_ENABLED_KEY) {
         FTLogger.userFlowLogger().log(string)

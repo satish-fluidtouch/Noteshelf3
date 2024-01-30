@@ -28,7 +28,7 @@ public enum FTTemplateSize: String, Codable,CaseIterable {
     case mobile = "Mobile"
 
     public var displayTitle: String {
-        if (UIDevice.current.isIpad() && self == .iPad) {
+        if (UIDevice.current.isIpad() && self == .iPad) || (UIDevice.current.isPhone() && self == .mobile){
             return "templateSizes.currentDevice.thisDevice".localized
         }
         return self.rawValue
