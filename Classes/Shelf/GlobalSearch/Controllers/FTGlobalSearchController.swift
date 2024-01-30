@@ -10,6 +10,8 @@ import UIKit
 import FTStyles
 import FTCommon
 import FTDocumentFramework
+import Reachability
+import Combine
 
 protocol FTGlobalSearchDelegate: NSObjectProtocol {
     func willExitFromSearch(_ controller: FTGlobalSearchController)
@@ -46,6 +48,10 @@ class FTGlobalSearchController: UIViewController {
     @IBOutlet internal weak var recentsTableView: UITableView!
     @IBOutlet internal weak var collectionView: UICollectionView!
     @IBOutlet internal weak var segmentInfoStackView: UIStackView!
+    @IBOutlet weak var premiumStackView: UIView!
+    @IBOutlet weak var premiumView: UIView!
+    @IBOutlet weak var upgradeNow: UIButton!
+    @IBOutlet weak var premiumStackTopConstraint: NSLayoutConstraint!
     internal var progressView: RPCircularProgress?
 
     internal var allTags = [FTTagModel]()
@@ -64,11 +70,17 @@ class FTGlobalSearchController: UIViewController {
     private var searchedSections = [FTSearchSectionProtocol]()
     private var currentSize = CGSize.zero
     private let alignmentOffset: CGFloat = 550.0
+    private var premiumCancellableEvent: AnyCancellable?;
 
 #if targetEnvironment(macCatalyst)
     // This is used exclusively for updating search text when book is closed
     private var toUpdateSearchText = false
 #endif
+
+    deinit{
+        self.premiumCancellableEvent?.cancel();
+        self.premiumCancellableEvent = nil;
+    }
 
     var navTitle: String?
     override func viewDidLoad() {
@@ -94,8 +106,20 @@ class FTGlobalSearchController: UIViewController {
             self.configureProgressView()
         }
 #endif
+
+        premiumCancellableEvent = FTIAPManager.shared.premiumUser.$isPremiumUser.sink { [weak self] isPremium in
+            if isPremium {
+                self?.premiumView.isHidden = true
+                self?.premiumStackTopConstraint.constant = 0
+            } else {
+                self?.premiumView.isHidden = false
+                self?.premiumStackTopConstraint.constant = 22
+                self?.premiumStackView.layer.cornerRadius = 12.0
+                self?.upgradeNow.layer.cornerRadius = 8.0
+            }
+        }
     }
-    
+
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent);
         if nil == parent,self.searchController.isActive {
@@ -151,6 +175,17 @@ class FTGlobalSearchController: UIViewController {
         self.searchForNotebooks(with: searchInputInfo)
     }
 
+    @IBAction func upgradeNowAction(_ sender: Any) {
+        let reachability: Reachability = Reachability.forInternetConnection()
+        let status: NetworkStatus = reachability.currentReachabilityStatus();
+        if status == NetworkStatus.NotReachable {
+            UIAlertController.showAlert(withTitle: "MakeSureYouAreConnected".localized, message: "", from: self, withCompletionHandler: nil)
+            return
+        } else {
+            FTIAPurchaseHelper.shared.presentIAPIfNeeded(on: self);
+        }
+    }
+
     func cancelSearch() {
         runInMainThread {
             self.progressView?.isHidden = true
@@ -161,6 +196,7 @@ class FTGlobalSearchController: UIViewController {
         }
         self.searchHelper?.cancelSearching()
     }
+
 }
 
 // MARK:  **** functions declared 'internal' here are intened to to use only inside this class extensions
