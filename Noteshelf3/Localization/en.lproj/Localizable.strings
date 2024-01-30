@@ -1532,7 +1532,7 @@
 "text.font.setAsDefault.thisAndFutureBooks" = "This and all future notebooks";
 "text.font.setAsDefault.thisBook" = "This notebook";
 "textLink_closingCurrentDocument_title" = "This will close the current notebook and redirect you to <%@>";
-"textLink_continueConfirmation" = "你想要繼續嗎？";
+"textLink_continueConfirmation" = "Do you want to continue?";
 "textLink_documentDeleted_title" = "Notebook has been deleted";
 "textLink_documentItselfNotAvailable_message" = "The notebook linked to the content has been deleted.";
 "textLink_editLink" = "Edit Link";
@@ -1597,4 +1597,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 29 January 2024 at 7:18 PM
+// Last Synced by Narayana on 30 January 2024 at 10:12 AM
