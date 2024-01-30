@@ -1477,14 +1477,24 @@ extension FTFinderViewController {
     
     @IBAction func didTapAddNewPage(_ sender: UIButton) {
         let currentIndex = IndexPath(item: filteredPages.count - 1, section: 0)
-        self.performContextMenuOperation(.insertBelow, indexPath: currentIndex)
+        let pageItem = self.filteredPages[currentIndex.item]
+        if let selectedPage = pageItem as? FTPageProtocol {
+            let task = startBackgroundTask();
+            DispatchQueue.main.async {
+                self.listenToPageAddChange();
+                self.delegate?.finderViewController(self, didSelectInsertBelowForPage: selectedPage);
+                endBackgroundTask(task);
+            }
+        }
+        FTFinderEventTracker.trackFinderEvent(with: "finder_newpage_tap")
     }
 
     //MARK:- Bookmark
     @IBAction func togglePageBookmark(_ sender: UIButton) {
-        FTFinderEventTracker.trackFinderEvent(with: "finder_page_bookmarkicon_tap", params: ["location": currentFinderLocation()])
         if self.mode == .selectPages { return }
         let page = self.filteredPages[sender.tag]
+        let parameter = page.isBookmarked ? "off" : "on"
+        FTFinderEventTracker.trackFinderEvent(with: "finder_page_bookmarkicon_toggle", params: ["toggle": parameter])
         self.delegate?.finderViewController(bookMark: page)
         if(page.isBookmarked == false) {
             sender.tintColor = .appColor(.gray9)
@@ -2082,6 +2092,7 @@ extension FTFinderViewController : FTOutlinesViewControllerDelegate {
     func outlinesViewController(didSelectPage selectedPage: FTPageProtocol?) {
         if let page = selectedPage{
             self.delegate?.finderViewController(didSelectPageAtIndex: page.pageIndex())
+            FTFinderEventTracker.trackFinderEvent(with: "finder_page_tap", params: ["location": currentFinderLocation()])
         }
     }
     

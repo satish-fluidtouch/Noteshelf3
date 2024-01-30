@@ -15,6 +15,13 @@ import FTTemplatesStore
 import SafariServices
 
 extension FTShelfSplitViewController: FTShelfViewModelProtocol {
+    func canProcessNotification() -> Bool {
+        guard let state = self.view.window?.windowScene?.activationState else {
+            return false
+        }
+        return state == .foregroundActive || state == .foregroundInactive
+    }
+    
     func recordingViewController(_ recordingsViewController: FTWatchRecordedListViewController, didSelectRecording recordedAudio: FTWatchRecordedAudio, forAction actionType: FTAudioActionType) {
         recordingsViewController.dismiss(animated: true) {
             if(actionType == .exportAudio) {

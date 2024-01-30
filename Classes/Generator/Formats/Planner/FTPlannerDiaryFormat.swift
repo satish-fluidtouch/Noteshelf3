@@ -497,7 +497,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         var addWeekOffset : Bool = true
         var addWeekOffsetForTopNavigationLinks : Bool = true
         var eachDayBeforeDays = 1 + numberYearPages
-        calendarMonths.forEach { (eachMonth) in
+        for (eachMonthIndex,eachMonth) in calendarMonths.enumerated() {
             let monthRectsInfo = format.monthRectsInfo[monthRectsCount]
             let weekRectsInfo = monthRectsInfo.weekRects
             let monthIndex = monthBeforeDays
@@ -572,16 +572,20 @@ class FTPlannerDiaryFormat : FTDairyFormat {
             //Linking days of each month
 
             var dayRectsCount = 0
-            eachDayBeforeDays += 1 + eachMonth.getWeeksCount() // adding month and weeks belonging to a month.
+            var weeksCount = eachMonth.weeksCount
+            if eachMonthIndex == 0 && shouldAddWeekOffsetToCalendarWith(firstDay: eachMonth.dayInfo.first) { // checking whether to add a week offset to first month of calendar duration
+                weeksCount += 1
+            }
+            eachDayBeforeDays += 1 + weeksCount // adding month and weeks belonging to a month.
             eachMonth.dayInfo.forEach({(eachDay) in
                 if isBelongToCalendar(currentDate: eachDay.date, startDate: startDate, endDate: endDate) {
                     if eachDay.belongsToSameMonth {
                         if monthRectsInfo.dayRects.count > dayRectsCount {
-                            eachDayBeforeDays += 1 // adding one day
                             let dayIndex = eachDayBeforeDays
                             if let page = doc.page(at: dayIndex) {
                                 monthPage?.addLinkAnnotation(bounds: monthRectsInfo.dayRects[dayRectsCount], goToPage: page, at: atPoint)
                             }
+                            eachDayBeforeDays += 1 // adding one day
                         }
                         dayRectsCount += 1
                     }
