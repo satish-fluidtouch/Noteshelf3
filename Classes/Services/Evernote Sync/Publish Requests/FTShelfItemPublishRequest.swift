@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 #if !targetEnvironment(macCatalyst)
 class FTShelfItemPublishRequest  :FTBasePublishRequest {
@@ -24,7 +25,7 @@ class FTShelfItemPublishRequest  :FTBasePublishRequest {
         do {
             shelfItemRecord = try self.managedObjectContext()?.existingObject(with: objectID!) as? ENSyncRecord
         } catch {
-            self.delegate?.didCompletePublishRequestWithError?(error)
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             return
         }
         if let shelfRecord = shelfItemRecord {
@@ -48,7 +49,7 @@ class FTShelfItemPublishRequest  :FTBasePublishRequest {
         }
         commitDataChanges()
         FTENSyncUtilities.recordSyncLog("Deleted notebook record (no action taken)")
-        self.delegate?.didCompletePublishRequestWithError?(nil)
+        self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil)
         
     }
     func noteDidGetDeletedFromEvernote() {
@@ -58,7 +59,7 @@ class FTShelfItemPublishRequest  :FTBasePublishRequest {
         do {
             parentRecord = try managedObjectContext()?.existingObject(with: objectID!) as? ENSyncRecord
         } catch {
-            self.delegate?.didCompletePublishRequestWithError?(error)
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             return
         }
         parentRecord?.enGUID = nil
@@ -67,15 +68,15 @@ class FTShelfItemPublishRequest  :FTBasePublishRequest {
         if let parentRecord = parentRecord {
             predicate = NSPredicate(format: "parentRecord==%@", parentRecord)
         }
-        if let childRecords = FTENSyncUtilities.fetchItems(withEntity: "ENSyncRecord", predicate: predicate) as? [ENSyncRecord]{
+        if let childRecords = FTENSyncUtilities.fetchItems(withEntity: "ENSyncRecord", predicate: predicate) as? [ENSyncRecord] {
             for record in childRecords {
                 record.enGUID = nil
                 record.isDirty = true
                 record.isContentDirty = true
-                commitDataChanges()
-                self.delegate?.didCompletePublishRequestWithError?(nil)
             }
         }
+        commitDataChanges()
+        self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil)
     }
 }
 #endif
