@@ -32,7 +32,6 @@ import Foundation
     private func createDirectoryIfNeeded() throws {
         if !fileManager.fileExists(atPath: rootURL.path) {
             try fileManager.createDirectory(at: rootURL, withIntermediateDirectories: true)
-            try self.createDefaultCategory()
         }
     }
 
@@ -103,11 +102,7 @@ extension FTSavedClipsProvider {
     func savedClipsCategories() throws -> [FTSavedClipsCategoryModel] {
         var savedClipsCategories = [FTSavedClipsCategoryModel]()
 
-        var subcontents = try fileManager.contentsOfDirectory(at: rootURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-        if subcontents.count == 0 {
-            try createDefaultCategory()
-            subcontents = try fileManager.contentsOfDirectory(at: rootURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
-        }
+        let subcontents = try fileManager.contentsOfDirectory(at: rootURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
         subcontents.forEach { url in
             let categoryTitle = url.lastPathComponent
             var clipCategoryModel = FTSavedClipsCategoryModel(title: categoryTitle, url: url)

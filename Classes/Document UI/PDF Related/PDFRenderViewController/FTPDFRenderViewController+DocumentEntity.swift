@@ -176,9 +176,10 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
             annotations.forEach { eachAnn in
                 eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
             }
-            page.addAnnotations(annotations, indices: nil)
-            self.postRefreshNotification(for: page, annotations: annotations)
-            pageController.resizeSavedClipFor(annotations: annotations)
+            page.deepCopyAnnotations(annotations) { [pageController] in
+                self.postRefreshNotification(for: page, annotations: annotations)
+                pageController.resizeSavedClipFor(annotations: annotations)
+            }
         }
     }
 

@@ -38,7 +38,11 @@ class FTSaveClipPreviewViewController: UIViewController {
         tableView.tableHeaderView?.bounds = CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: ((self.tableView.frame.size.width)/1.75))
 
         self.categories = viewModel.savedClipsCategories()
-        self.categories.insert(FTSavedClipsCategoryModel(title: "New Category...", url: nil), at: 0)
+        self.categories.insert(FTSavedClipsCategoryModel(title: "clip.newCategory".localized, url: nil), at: 0)
+        if categories.count == 1 {
+            //TODO: Localization
+            self.categories.insert(FTSavedClipsCategoryModel(title: "My Clips", url: nil), at: 1)
+        }
         if let selectedCategory = FTUserDefaults.selectedClipCategory, let index = self.categories.firstIndex(where: {$0.title == selectedCategory}) {
             selectedIndexPath = IndexPath(row: index, section: 0)
         }

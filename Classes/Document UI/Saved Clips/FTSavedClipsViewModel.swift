@@ -9,18 +9,10 @@
 import Foundation
 
 class FTSavedClipsViewModel {
-    var showOrHideSegment:((Bool) -> Void)?
     var updatedSegmentSelection:((Int) -> Void)?
-    var updateCellType:((Int) -> Void)?
 
     private let handler = FTSavedClipsProvider.shared
-    private var categories = [FTSavedClipsCategoryModel]() {
-        didSet {
-            if categories.count > 1 {
-                self.showOrHideSegment?(false)
-            }
-        }
-    }
+    private var categories = [FTSavedClipsCategoryModel]()
 
     init() {
 

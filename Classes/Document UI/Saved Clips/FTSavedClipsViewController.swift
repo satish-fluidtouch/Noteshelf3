@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FTCommon
 
 enum FTSavedClipsCellType {
     case normal, editing, emptyCategories, emptyClips
@@ -45,23 +46,14 @@ class FTSavedClipsViewController: UIViewController {
 
         self.setupCollectionView()
         self.setupSegmentedControl()
-//        viewModel.showOrHideSegment = { hide in
-//            if hide {
-//                self.segmentHeightConstraint.constant = 0
-//            } else {
-//                self.segmentHeightConstraint.constant = 36
-//            }
-//        }
-
-        viewModel.updateCellType = { categoriesCount in
-            self.updateCellType()
-        }
+        self.updateCellType()
         // Do any additional setup after loading the view.
     }
 
     private func updateCellType() {
         if viewModel.categoriesCount() == 0 {
             self.cellType = .emptyCategories
+            self.segmentHeightConstraint.constant = 0
         } else {
             let clips = self.viewModel.numberOfRowsForSection(section: self.selectedSegmentIndex)
             self.cellType = clips == 0 ? .emptyClips : .normal
@@ -175,18 +167,20 @@ class FTSavedClipsViewController: UIViewController {
 extension FTSavedClipsViewController: FTSegmentedControlDelegate {
     private func setupSegmentedControl() {
         let titles = viewModel.categoryNames()
-        segmentedControl?.delegate = self
-        segmentedControl?.setTitles(titles, style: .adaptiveSpace(18))
-        segmentedControl.textColor = UIColor.appColor(.black70)
-        segmentedControl.textSelectedColor = UIColor.white
-        segmentedControl.textFont = UIFont.appFont(for: .medium, with: 13.0)
-        segmentedControl.textCornerRadius = 10.0
-        segmentedControl.textBorderWidth = 0.0
-        segmentedControl.segmentBgColor = UIColor.appColor(.black5)
-        segmentedControl.selectedSegmentBgColor = UIColor.appColor(.neutral)
-        segmentedControl.setCover(upDowmSpace: 0, cornerRadius: 10)
-        segmentedControl.backgroundColor = .clear
-        segmentedControl.selectedIndex = selectedSegmentIndex
+        if titles.count > 0 {
+            segmentedControl?.delegate = self
+            segmentedControl?.setTitles(titles, style: .adaptiveSpace(18))
+            segmentedControl.textColor = UIColor.appColor(.black70)
+            segmentedControl.textSelectedColor = UIColor.white
+            segmentedControl.textFont = UIFont.appFont(for: .medium, with: 13.0)
+            segmentedControl.textCornerRadius = 10.0
+            segmentedControl.textBorderWidth = 0.0
+            segmentedControl.segmentBgColor = UIColor.appColor(.black5)
+            segmentedControl.selectedSegmentBgColor = UIColor.appColor(.neutral)
+            segmentedControl.setCover(upDowmSpace: 0, cornerRadius: 10)
+            segmentedControl.backgroundColor = .clear
+            segmentedControl.selectedIndex = selectedSegmentIndex
+        }
     }
 
     public func segmentedControlSelectedIndex(_ index: Int, animated: Bool, segmentedControl: FTSegmentedControl) {

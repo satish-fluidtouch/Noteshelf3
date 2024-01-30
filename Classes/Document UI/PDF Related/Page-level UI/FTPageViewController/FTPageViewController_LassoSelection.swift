@@ -586,17 +586,16 @@ extension FTPageViewController: FTSaveClipDelegate {
             doc?.openDocument(purpose: .write, completionHandler: { success, error in
                 let page = doc?.pages().first as? FTNoteshelfPage
                 page?.deepCopyAnnotations(selectedAnnotations, onCompletion: {
-                })
-                page?.annotations().forEach { annotation in
-                    annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
-                }
-                doc?.saveAndCloseWithCompletionHandler({ success in
-                    if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
-                       _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                    page?.annotations().forEach { annotation in
+                        annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
                     }
+                    doc?.saveAndCloseWithCompletionHandler({ success in
+                        if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
+                            _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                        }
+                    })
                 })
             })
-            print(tempDocURL)
         }
     }
 }

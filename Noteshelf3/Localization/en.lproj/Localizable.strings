@@ -961,7 +961,7 @@
 "clip.addClip" = "Add Clip";
 "clip.deleteCategory" = "Delete Category";
 "clip.deleteCategory.message" = "Would you like to continue?";
-"clip.deleteCategory.title" = "Deleting this category will delete all @% clips in this category and cannot be recovered.";
+"clip.deleteCategory.title" = "Deleting this category will delete all %@ clips in this category and cannot be recovered.";
 "clip.newCategory" = "New Category...";
 "clip.noCategory" = "This category is empty";
 "clip.noSavedClips" = "No Saved Clips";
@@ -1086,9 +1086,9 @@
 "gesture.redo.hint" = "3-finger single tap";
 "gesture.redo.title" = "Redo";
 "gesture.show.quickAccessSideBar" = "Show Quick-access Sidebar";
-"gesture.show.quickAccessSideBar.hint" = "Left edge long swipe";
+"gesture.show.quickAccessSideBar.hint" = "Long swipe from left edge";
 "gesture.show.thumbnails" = "Show Page Thumbnails";
-"gesture.show.thumbnails.hint" = "Left edge Swipe";
+"gesture.show.thumbnails.hint" = "Swipe from left edge";
 "gesture.undo.hint" = "2-finger double tap";
 "gesture.undo.title" = "Undo";
 "gesture.undoredo.subTitle" = "2-finger or 3-finger single tap";
@@ -1587,4 +1587,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Siva on 23 January 2024 at 6:23 PM
+// Last Synced by Siva on 24 January 2024 at 11:08 AM

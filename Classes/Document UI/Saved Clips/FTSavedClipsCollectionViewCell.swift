@@ -19,6 +19,7 @@ class FTSavedClipsCollectionViewCell: UICollectionViewCell {
         self.contentView.layer.cornerRadius = 8
         self.contentView.layer.borderColor = UIColor.appColor(.grayDim).cgColor
         self.contentView.layer.borderWidth = 1.0
+        self.thumbnail.contentMode = .scaleAspectFit
         if let image = clip.image {
             self.thumbnail.image = image
         }
