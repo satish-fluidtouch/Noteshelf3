@@ -23,6 +23,7 @@ enum DiaryPageType: Codable {
     case dailyNotes
     case help
     case sample
+    case dailyPlan
 }
 @objcMembers class FTDiaryPageInfo: NSObject,Codable {
     let type: DiaryPageType

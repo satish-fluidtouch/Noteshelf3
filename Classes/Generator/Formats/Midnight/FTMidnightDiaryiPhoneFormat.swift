@@ -133,6 +133,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
             index += 1;
         })
         monthRectsInfo.append(currentMonthRectsInfo)
+        self.addTodayPillToMonthPageWith(context: context)
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
         if !dayInfo.belongsToSameMonth {
@@ -150,6 +151,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         chevronImage?.draw(at: CGPoint(x: dailyPlanChevronRect.origin.x, y: dailyPlanChevronRect.origin.y))
         currentDayRectsInfo.dailyPlanRect = getLinkRect(location: CGPoint(x: dailyPlanChevronRect.origin.x, y: dailyPlanChevronRect.origin.y), frameSize: dailyPlanChevronRect.size)
         dayRectsInfo.append(currentDayRectsInfo)
+        self.addTodayPillToDayPageWith(context: context)
     }
     override func renderDailyPlanPage(context : CGContext, dayInfo : FTDayInfo){
         if !dayInfo.belongsToSameMonth {
@@ -190,6 +192,11 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
         dayInfoAttrString.draw(at: dayInfoDrawLocation)
         dailyPrioritiesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+        //Today pill
+        let todayPillXOffsetPercnt = 3.73 // gap between today pill and day info
+        let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
+        let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
     }
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
         super.renderWeekPage(context: context, weeklyInfo: weeklyInfo)
@@ -225,6 +232,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         }))
         currentWeekRectInfo.weekDayRects.append(contentsOf: weekDayRects)
         weekRectsInfo.append(currentWeekRectInfo)
+        self.addTodayPillToWeekPageWith(context: context)
     }
     override func renderDailyNotesPage(context : CGContext, dayInfo : FTDayInfo) {
         
@@ -264,6 +272,11 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
         dayInfoAttrString.draw(at: dayInfoDrawLocation)
         dailyNotesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+        //Today pill
+        let todayPillXOffsetPercnt = 3.73 // gap between today pill and day info
+        let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
+        let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
     }
     private func addBezierPathWithRect( rect : CGRect, toContext context : CGContext, title:String?, tileColor : UIColor ){
         let bezierpath = UIBezierPath(roundedRect: rect, cornerRadius: 10)

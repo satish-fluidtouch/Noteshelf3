@@ -127,6 +127,7 @@ class FTMidnightDairyFormat : FTDairyFormat {
                 monthX += cellWidth + (currentPageRect.size.width*templateInfo.cellOffsetX/100)
             }
         }
+        self.addTodayPillToYearPageWith(context: context)
     }
     override func getTemplateBackgroundColor() -> UIColor {
         return UIColor(red: 40/255, green: 46/255, blue: 57/255, alpha: 1.0)
@@ -305,7 +306,6 @@ class FTMidnightDairyFormat : FTDairyFormat {
     override func generateCalendar(context : CGContext, monthlyFormatter : FTYearInfoMonthly, weeklyFormatter : FTYearInfoWeekly){
         
         self.renderCalendarPage(context: context, months: monthlyFormatter.monthCalendarInfo, calendarYear: self.formatInfo)
-        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
 
         self.renderYearPage(context: context, months: monthlyFormatter.monthInfo, calendarYear: formatInfo);
         self.diaryPagesInfo.append(FTDiaryPageInfo(type: .year))
@@ -326,8 +326,10 @@ class FTMidnightDairyFormat : FTDairyFormat {
 
             if let utcDate = weekInfo.dayInfo.first?.date.utcDate() {
                 diaryPagesInfo.append(FTDiaryPageInfo(type : .week, date : utcDate.timeIntervalSinceReferenceDate))
-                diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyPriorities , date : utcDate.timeIntervalSinceReferenceDate))
-                diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyNotes , date : utcDate.timeIntervalSinceReferenceDate))
+                if isiPad {
+                    diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyPriorities , date : utcDate.timeIntervalSinceReferenceDate))
+                    diaryPagesInfo.append(FTDiaryPageInfo(type: .weeklyNotes , date : utcDate.timeIntervalSinceReferenceDate))
+                }
             }
 
 
@@ -347,8 +349,9 @@ class FTMidnightDairyFormat : FTDairyFormat {
                     //pages info
                     if let utcDate = eachDayInfo.date.utcDate() {
                         diaryPagesInfo.append(FTDiaryPageInfo(type: .day,date: utcDate.timeIntervalSinceReferenceDate , isCurrentPage: setDiaryPageAsCurrentPage(pageDate: utcDate) ))
-                        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyPriorities , date: utcDate.timeIntervalSinceReferenceDate))
-                        self.diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyNotes , date: utcDate.timeIntervalSinceReferenceDate))
+                        let dayPageType : DiaryPageType = isiPad ? .dailyPriorities : .dailyPlan
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: dayPageType , date : utcDate.timeIntervalSinceReferenceDate))
+                        diaryPagesInfo.append(FTDiaryPageInfo(type: .dailyNotes , date : utcDate.timeIntervalSinceReferenceDate))
                     }
                 }
             }
@@ -657,5 +660,76 @@ class FTMidnightDairyFormat : FTDairyFormat {
                 }
             }
         }
+    }
+}
+extension FTMidnightDairyFormat {
+    var todayPillHeightPercnt : CGFloat {
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        var height = isLandscape ? 2.30 : 1.60
+        if !isiPad {
+            height = 2.08
+        }
+        return height
+    }
+    var todayPillYAxisPercnt : CGFloat {
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        var yAxis = isLandscape ? 10.77 : 8.39
+        if !isiPad {
+            yAxis = 5.24
+        }
+        return yAxis
+    }
+    func addTodayPillWith(rightXOffsetPercent : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let font = UIFont.robotoBold(10)
+        let textColor = UIColor.init(hexString: "#E5E5E5")
+        let isLandscape = self.formatInfo.customVariants.isLandscape
+        let rightXOffset = currentPageRect.width*rightXOffsetPercent/100
+        let yAxis = currentPageRect.height*todayPillYAxisPercnt/100
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
+
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
+
+        var todayFont = font
+        if self.layoutRequiresExplicitFont(){
+            todayFont = font.withSize(9)
+        }
+
+        let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
+                                                        .kern: 1.6,
+                                                        .foregroundColor: textColor]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+
+        let todayPillWidth = todayString.size().width + todayPillHorizontalPadding*2
+
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let xAxis = currentPageRect.width - (rightXOffset + todayPillWidth)
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: font, withTextColor: textColor, WithBackgroundColor: UIColor.init(hexString: "#54585E"))
+    }
+    func addTodayPillToCalenderPageWith(context : CGContext) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let rightXOffsetPercnt = isLandscaped ? 3.77: 4.19
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+    }
+    func addTodayPillToYearPageWith(context : CGContext) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let rightXOffsetPercnt = isiPad ? (isLandscaped ? 3.50: 4.79) : 5.33
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+    }
+    func addTodayPillToMonthPageWith(context : CGContext) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let rightXOffsetPercnt = isiPad ? (isLandscaped ? 3.59: 4.91) : 5.33
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+    }
+    func addTodayPillToWeekPageWith(context : CGContext) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let rightXOffsetPercnt = isiPad ? (isLandscaped ? 3.68: 5.03) : 5.33
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+    }
+    func addTodayPillToDayPageWith(context : CGContext) {
+        let isLandscaped = formatInfo.customVariants.isLandscape
+        let rightXOffsetPercnt = isiPad ? (isLandscaped ? 3.68: 5.03) : 5.33
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
     }
 }
