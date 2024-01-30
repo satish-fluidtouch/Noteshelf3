@@ -17,7 +17,7 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
         #if !targetEnvironment(macCatalyst)
         guard let evernoteSession = EvernoteSession.shared() else {
             let error = NSError(domain: "EDAMErrorDomain", code: Int(EDAMErrorCode_AUTH_EXPIRED.rawValue), userInfo: nil)
-            self.delegate?.didCompletePublishRequestWithError?(error)
+            self.delegate?.didCompletePublishRequestWithError?(request: self, error: error)
             return
         }
         EvernoteNoteStore(session: evernoteSession).listLinkedNotebooks { [weak self] notebooks in
@@ -32,7 +32,7 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
                         }
                     }
                 }
-                if linkedNotebook == nil{
+                if linkedNotebook == nil {
                     FTENPublishManager.recordSyncLog("Creating Noteshelf Business-Notebook")
                     let newNoteBook = EDAMNotebook()
                     newNoteBook?.name = "Noteshelf"
@@ -44,12 +44,10 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
                             }
                         })
                     } failure: { error in
-                        if(nil != error) {
-                            self?.executeBlock(onPublishQueue: {
-                                FTENPublishManager.recordSyncLog("Failed to create Business-Notebook:\(String(describing: error))")
-                                self?.delegate?.didCompletePublishRequestWithError?(error)
-                            })
-                        }
+                        self?.executeBlock(onPublishQueue: {
+                            FTENPublishManager.recordSyncLog("Failed to create Business-Notebook:\(String(describing: error))")
+                            self?.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
+                        })
                     }
                 }
                 else {
@@ -60,9 +58,11 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
             })
 
         } failure: { error in
-            FTENPublishManager.recordSyncLog("Failed to fetch notebooks from Evernote:\(String(describing: error))")
-
-            self.delegate?.didCompletePublishRequestWithError?(error)
+            self.executeBlock(onPublishQueue: {
+                FTENPublishManager.recordSyncLog("Failed to fetch notebooks from Evernote:\(String(describing: error))")
+                
+                self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
+            })
         }
         #endif
     }
@@ -70,20 +70,23 @@ class FTNoteshelfBusinessNotebookPublishRequest : FTNoteshelfNotebookPublishRequ
     func fetchSharedNotebook(notebookLinked : EDAMLinkedNotebook){
         guard let evernoteSession = EvernoteSession.shared() else {
             let error = NSError(domain: "EDAMErrorDomain", code: Int(EDAMErrorCode_AUTH_EXPIRED.rawValue), userInfo: nil)
-            self.delegate?.didCompletePublishRequestWithError?(error)
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             return
         }
         EvernoteNoteStore(session: evernoteSession).getSharedNotebookByAuth { sharedNotebook in
-            if let notebookGuid = sharedNotebook?.notebookGuid {
-                FTENPublishManager.recordSyncLog("Fetched details of the  business notebook: \(notebookGuid)")
-            }
-            FTENPublishManager.shared.noteshelfBusinessNotebookGuid = sharedNotebook?.notebookGuid
+            self.executeBlock(onPublishQueue: {
+                if let notebookGuid = sharedNotebook?.notebookGuid {
+                    FTENPublishManager.recordSyncLog("Fetched details of the  business notebook: \(notebookGuid)")
+                }
+                FTENPublishManager.shared.noteshelfBusinessNotebookGuid = sharedNotebook?.notebookGuid
+                self.delegate?.didCompletePublishRequestWithError?(request: self, error: nil);
+            })
         } failure: { error in
             self.executeBlock(onPublishQueue: { [self] in
                 if let error = error {
                     FTENSyncUtilities.recordSyncLog("Failed to get shared notebook from evernote with error \(error)")
                 }
-                self.delegate?.didCompletePublishRequestWithError?(error)
+                self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             })
         }
     }
