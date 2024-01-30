@@ -33,11 +33,9 @@ class FTBasicTemplatesDataSource: NSObject {
 
          if UIDevice.current.isMac() {
              sizeModels.append(FTTemplateSizeModel(size: standardiPadDevice.displayName, portraitSize: standardiPadDevice.dimension_port, landscapeSize: standardiPadDevice.dimension_land))
-         } else if UIDevice.current.isIpad() {
+         } else {
              let defaltDevice = deviceManager.getCurrentDevice()
              sizeModels.append(FTTemplateSizeModel(size: defaltDevice.displayName, portraitSize: defaltDevice.dimension_port, landscapeSize: defaltDevice.dimension_land))
-         } else { // logged inside mobile
-             sizeModels.append(FTTemplateSizeModel(size: standardMobileDevice.displayName, portraitSize: standardMobileDevice.dimension_port, landscapeSize: standardMobileDevice.dimension_land))
          }
 
          //Standard sizes(Letter/A3/A4/A5)
@@ -63,7 +61,11 @@ class FTBasicTemplatesDataSource: NSObject {
                  deviceModel = deviceManager.standardiPadDevice
              }
          } else { // size is mobile
-            deviceModel = deviceManager.standardMobileDevice
+             if UIDevice.current.isPhone() {
+                 deviceModel = deviceManager.getCurrentDevice()
+             } else {
+                 deviceModel = deviceManager.standardMobileDevice
+             }
          }
          return deviceModel
      }
@@ -211,9 +213,8 @@ class FTBasicTemplatesDataSource: NSObject {
      func getDefaultVariants() -> FTPaperVariants {
          let deviceManager = FTDeviceDataManager()
          let currentDevice: FTDeviceModel
-         if UIDevice.current.userInterfaceIdiom == .phone {
-             currentDevice = deviceManager.standardMobileDevice
-         } else if UIDevice.current.userInterfaceIdiom == .mac {
+
+         if UIDevice.current.userInterfaceIdiom == .mac {
              currentDevice = deviceManager.standardiPadDevice
          } else { // iPad scenario.
              currentDevice = deviceManager.getCurrentDevice()
