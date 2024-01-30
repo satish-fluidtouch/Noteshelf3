@@ -567,8 +567,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 
                     if let pageIndex = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
                         handleOpenDocument(pageIndex: pageIndex)
-                    } else if pageId.isEmpty {
-                        handleOpenDocument(pageIndex: 0)
                     } else {
                         (doc as? FTNoteshelfDocument)?.setLastViewedPageIndexTo(0)
                         FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token) { _ in

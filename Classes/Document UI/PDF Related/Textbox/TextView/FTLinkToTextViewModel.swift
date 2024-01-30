@@ -171,12 +171,12 @@ class FTLinkToTextViewModel: NSObject {
         }
     }
 
-    func getSelectedDocumentDetails(onCompletion: ((FTDocumentProtocol?) -> Void)?) {
-        if let document = self.currentDocument,  info.docUUID == document.documentUUID { // same document
+    func getSelectedDocumentDetails(using docId: String, onCompletion: ((FTDocumentProtocol?) -> Void)?) {
+        if let document = self.currentDocument,  docId == document.documentUUID { // same document
             self.selectedDocument = document
             onCompletion?(document)
         } else {
-            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
                 if let shelfItem = docItem {
                     let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
                     FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in

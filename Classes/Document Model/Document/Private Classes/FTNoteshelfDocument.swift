@@ -1342,7 +1342,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                 case .inBetween:
                     indexToInsert = startingInsertIndex + currentPageIndex;
                 case .nextToCurrent:
-                    let pageIndex = self.pages().index(where: { (item) -> Bool in
+                    let pageIndex = self.pages().firstIndex(where: { (item) -> Bool in
                         if(item.uuid == page.uuid) {
                             return true;
                         }

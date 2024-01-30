@@ -242,18 +242,20 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
         self.navigationController?.popToViewController(self, animated: true)
         self.viewModel.closeOpenedDocumentIfExists() // to close if any pre-opened document was there
         if let doc = document as? FTDocumentItemProtocol, let docId = doc.documentUUID {
-            var exstInfo = self.viewModel.info
-            exstInfo.docUUID = docId
-            exstInfo.pageUUID = "" // first page
-            self.viewModel.updateTextLinkInfo(exstInfo)
             FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkNotebookSelect)
-            self.viewModel.getSelectedDocumentDetails { doc in
-                self.viewModel.updateDocumentTitle(document.displayTitle)
-                self.viewModel.updatePageNumber(1)
-                if let document = doc as? FTThumbnailableCollection {
-                    self.tableView?.reloadData()
-                    self.docPagesController?.document = document
-                    self.docPagesController?.updateSelectedIndexPath(IndexPath(item: 0, section: 0), toScroll: false)
+            self.viewModel.getSelectedDocumentDetails(using: docId) { doc in
+                if let selectedDoc = doc {
+                    self.viewModel.updateDocumentTitle(document.displayTitle)
+                    self.viewModel.updatePageNumber(1)
+                    var exstInfo = self.viewModel.info
+                    exstInfo.docUUID = selectedDoc.documentUUID
+                    exstInfo.pageUUID = selectedDoc.pages().first?.uuid ?? ""
+                    self.viewModel.updateTextLinkInfo(exstInfo)
+                    if let document = doc as? FTThumbnailableCollection {
+                        self.tableView?.reloadData()
+                        self.docPagesController?.document = document
+                        self.docPagesController?.updateSelectedIndexPath(IndexPath(item: 0, section: 0), toScroll: false)
+                    }
                 }
             }
         }
