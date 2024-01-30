@@ -825,6 +825,7 @@
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
 		97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTPreviewShape.swift */; };
+		97F4CAA32B5A55B400BFBF79 /* FTToolbarConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CCA90C29DC007B0010D619 /* FTToolbarConfig.swift */; };
 		97F5D06D2B15C8EC003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06C2B15C8EB003ED67D /* FTPlanner2024DiaryCalendarTemplateFormat.swift */; };
 		97F5D0712B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D06F2B15C98A003ED67D /* FTPlanner2024DiaryiPadFormat.swift */; };
 		97F5D0722B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97F5D0702B15C98A003ED67D /* FTPlanner2024DiaryFormat.swift */; };
@@ -14596,6 +14597,7 @@
 				4209FE63295C5CA800ACC02E /* FTShelfItemsIndexInfo.swift in Sources */,
 				4209FE89295C60D400ACC02E /* FTNoteshelfDocument_Creation_Template.swift in Sources */,
 				4209FE79295C5FAB00ACC02E /* FTNotebookRecoverPlist.swift in Sources */,
+				97F4CAA32B5A55B400BFBF79 /* FTToolbarConfig.swift in Sources */,
 				ED3532602452E810002B18EE /* FTExtensionAtttachmentsHelper.swift in Sources */,
 				4209FE72295C5F4700ACC02E /* FTFTShelfCollectionMigration.swift in Sources */,
 				4209FEAC295C62A000ACC02E /* StoreTemplateFormat.swift in Sources */,
