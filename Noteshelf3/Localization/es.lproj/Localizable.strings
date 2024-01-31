@@ -1531,12 +1531,14 @@
 "text.font.setAsDefault.menuTitle" = "Establecer como predeterminado para:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Esta y todas las futuras libretas";
 "text.font.setAsDefault.thisBook" = "Esta libreta";
-"textLink_closingCurrentDocument_title" = "Esto cerrará el cuaderno actual y te redirigirá a <%@>.";
-"textLink_continueConfirmation" = "";
+"textLink_closingCurrentDocument_title" = "¿Te gustaría continuar?";
+"textLink_continueConfirmation" = "Esto cerrará el cuaderno actual y te redirigirá a %@.";
 "textLink_documentDeleted_title" = "El cuaderno ha sido eliminado";
 "textLink_documentItselfNotAvailable_message" = "El cuaderno vinculado al contenido ha sido eliminado.";
 "textLink_editLink" = "Editar enlace";
 "textLink_linkTo" = "Enlace a...";
+"textLink_notebookNotDownloadedMessage" = "El cuaderno vinculado a este contenido todavía no se ha descargado de iCloud. Inténtelo de nuevo después de un tiempo.";
+"textLink_notebookUnavailable" = "Cuaderno no disponible";
 "textLink_otherbook_firstPageConfirmation_message" = "La página vinculada al contenido ha sido eliminada. ¿Te gustaría navegar al cuaderno donde se encontraba la página?";
 "textLink_pageDeleted_title" = "La página ha sido eliminada";
 "textLink_pageNotAvailable" = "La página vinculada al contenido ha sido eliminada.";
@@ -1597,4 +1599,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 30 January 2024 at 10:12 AM
+// Last Synced by Narayana on 31 January 2024 at 4:55 PM

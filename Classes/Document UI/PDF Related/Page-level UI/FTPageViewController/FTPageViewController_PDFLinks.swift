@@ -252,7 +252,7 @@ extension URL {
                 }
             } else {
                 let title = NSLocalizedString("ExternalLink", comment: "Extenal Link")
-                let message = String.init(format: NSLocalizedString("ExternalLinkOpenInfo", comment: "An external applicaiton..."), (self.path))
+                let message = String.init(format: NSLocalizedString("ExternalLinkOpenInfo", comment: "An external applicaiton..."), (self.absoluteString))
                 UIAlertController.showConfirmationDialog(with: title,
                                                          message: message,
                                                          from: viewController,

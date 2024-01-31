@@ -1531,12 +1531,14 @@
 "text.font.setAsDefault.menuTitle" = "设置为默认：";
 "text.font.setAsDefault.thisAndFutureBooks" = "这本和所有未来的笔记本";
 "text.font.setAsDefault.thisBook" = "这个笔记本";
-"textLink_closingCurrentDocument_title" = "这将关闭当前笔记本并将您重定向到<%@>";
-"textLink_continueConfirmation" = "続けますか？";
+"textLink_closingCurrentDocument_title" = "你想要繼續嗎？";
+"textLink_continueConfirmation" = "这将关闭当前笔记本并将您重定向到%@";
 "textLink_documentDeleted_title" = "笔记本已被删除";
 "textLink_documentItselfNotAvailable_message" = "链接到该内容的笔记本已被删除。";
 "textLink_editLink" = "编辑链接";
 "textLink_linkTo" = "链接到...";
+"textLink_notebookNotDownloadedMessage" = "尚未从 iCloud 下载链接到此内容的笔记本。 请稍后再试。";
+"textLink_notebookUnavailable" = "笔记本不可用";
 "textLink_otherbook_firstPageConfirmation_message" = "链接到内容的页面已被删除。您是否要导航到笔记本所在的页面？";
 "textLink_pageDeleted_title" = "页面已被删除";
 "textLink_pageNotAvailable" = "链接到内容的页面已被删除。";
@@ -1597,4 +1599,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 30 January 2024 at 10:12 AM
+// Last Synced by Narayana on 31 January 2024 at 4:55 PM

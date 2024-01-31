@@ -1531,12 +1531,14 @@
 "text.font.setAsDefault.menuTitle" = "다음에 대해 기본값으로 설정:";
 "text.font.setAsDefault.thisAndFutureBooks" = "이와 이후의 모든 노트북";
 "text.font.setAsDefault.thisBook" = "이 노트북";
-"textLink_closingCurrentDocument_title" = "이것은 현재 노트북을 닫고 <%@>로 리디렉션합니다.";
-"textLink_continueConfirmation" = "Vuoi continuare?";
+"textLink_closingCurrentDocument_title" = "계속하시겠습니까?";
+"textLink_continueConfirmation" = "이것은 현재 노트북을 닫고 %@로 리디렉션합니다.";
 "textLink_documentDeleted_title" = "책이 삭제되었습니다";
 "textLink_documentItselfNotAvailable_message" = "해당 콘텐츠에 연결된 도서가 삭제되었습니다.";
 "textLink_editLink" = "링크 편집";
 "textLink_linkTo" = "링크하기";
+"textLink_notebookNotDownloadedMessage" = "이와 연관된 노트북은 아직 아이클라우드에서 다운로드되지 않았습니다. 잠시 후에 다시 시도해주세요.";
+"textLink_notebookUnavailable" = "책이 사용 불가능";
 "textLink_otherbook_firstPageConfirmation_message" = "연결된 페이지가 삭제되었습니다. 페이지가 위치한 노트북으로 이동하시겠습니까?";
 "textLink_pageDeleted_title" = "페이지가 삭제되었습니다";
 "textLink_pageNotAvailable" = "연결된 페이지의 내용이 삭제되었습니다.";
@@ -1597,4 +1599,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 30 January 2024 at 10:12 AM
+// Last Synced by Narayana on 31 January 2024 at 4:55 PM

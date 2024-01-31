@@ -58,10 +58,13 @@ struct FTShelfItemsView: View {
                                 FTShelfItemNotebookView(isLastItemInList: islastItemInList, notebookItem: notebookItem)
                                     .environmentObject(viewModel)
                                     .onTapGesture {
-                                        if viewModel.purpose == .finder {
-                                            viewModel.selectedShelfItemToMove = notebookItem.notebook
-                                        } else if viewModel.purpose == .linking, let item = notebookItem.notebook {
-                                            self.viewDelegate?.didSelectShelfItem(item)
+                                        if let item = notebookItem.notebook {
+                                            if notebookItem.notDownloaded {
+                                                notebookItem.downloadNotebook()
+                                            } else if item.URL.downloadStatus() == .downloaded {
+                                                viewModel.selectedShelfItemToMove = notebookItem.notebook
+                                                self.viewDelegate?.didSelectShelfItem(item)
+                                            }
                                         }
                                     }
                             }else {

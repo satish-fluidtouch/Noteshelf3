@@ -1531,12 +1531,14 @@
 "text.font.setAsDefault.menuTitle" = "Standard festlegen für:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Dies und alle zukünftigen Notizbücher";
 "text.font.setAsDefault.thisBook" = "Dieses Notizbuch";
-"textLink_closingCurrentDocument_title" = "Dies schließt das aktuelle Notizbuch und leitet Sie um zu <@%>.";
-"textLink_continueConfirmation" = "계속하시겠습니까?";
+"textLink_closingCurrentDocument_title" = "Möchten Sie fortfahren?";
+"textLink_continueConfirmation" = "Dies schließt das aktuelle Notizbuch und leitet Sie um zu %@.";
 "textLink_documentDeleted_title" = "Notizbuch wurde gelöscht";
 "textLink_documentItselfNotAvailable_message" = "Das mit dem Inhalt verknüpfte Notizbuch wurde gelöscht.";
 "textLink_editLink" = "Link bearbeiten";
 "textLink_linkTo" = "Verlinken zu...";
+"textLink_notebookNotDownloadedMessage" = "Das mit diesem Inhalt verlinkte Notizbuch wurde noch nicht aus iCloud heruntergeladen. Bitte versuchen Sie es nach einiger Zeit erneut.";
+"textLink_notebookUnavailable" = "Notizbuch nicht verfügbar";
 "textLink_otherbook_firstPageConfirmation_message" = "Die Seite, die mit dem Inhalt verlinkt war, wurde gelöscht. Möchten Sie zum Notizbuch navigieren, in dem sich die Seite befand?";
 "textLink_pageDeleted_title" = "Die Seite wurde gelöscht";
 "textLink_pageNotAvailable" = "Die Seite, die mit dem Inhalt verlinkt war, wurde gelöscht.";
@@ -1597,4 +1599,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 30 January 2024 at 10:12 AM
+// Last Synced by Narayana on 31 January 2024 at 4:55 PM

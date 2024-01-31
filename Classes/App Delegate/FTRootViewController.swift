@@ -555,7 +555,14 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         } else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
                 guard let shelfItem = docItem else {
+                    // Book is not available
                     docVc.showDocumentNotAvailableAlert()
+                    return
+                }
+
+                guard shelfItem.URL.downloadStatus() == .downloaded else {
+                    // Book is not downloaded yet
+                    docVc.showDocumentNotDownloadedAlert(for: shelfItem.URL)
                     return
                 }
 

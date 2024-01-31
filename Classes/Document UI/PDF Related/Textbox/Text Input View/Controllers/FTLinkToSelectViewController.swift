@@ -116,7 +116,7 @@ private extension FTLinkToSelectViewController {
 
     @objc func segmentTapped() {
         self.handleSegmentControlSelection()
-        var segmentType = segmentControl.selectedSegmentIndex == 0 ? "page" : "URL"
+        let segmentType = segmentControl.selectedSegmentIndex == 0 ? "page" : "URL"
         FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToSegmentTap, params: ["segment": segmentType])
     }
 
@@ -137,6 +137,9 @@ private extension FTLinkToSelectViewController {
     }
 
     func handleWebUrl(text: String) {
+        guard self.segmentControl.selectedSegmentIndex == 1 else {
+            return
+        }
         let reachability: Reachability = Reachability.forInternetConnection()
         let status: NetworkStatus = reachability.currentReachabilityStatus()
         if status == NetworkStatus.NotReachable {
@@ -169,8 +172,10 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
             cell.configureCell(with: option, linkText: self.viewModel.linkText)
             cell.textEntryChangeHandler = {[weak self] (text: String?) -> Void in
                 guard let self else { return }
-                self.viewModel.updateLinkText(text)
-                self.updateDoneEnableStatus()
+                if let usableText = text?.trimmingCharacters(in: CharacterSet.whitespaces) {
+                    self.viewModel.updateLinkText(usableText)
+                    self.updateDoneEnableStatus()
+                }
             }
             cell.textEntryDoneHandler = {(text: String?) -> Void in
                 FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToLinkTextType)
@@ -190,14 +195,16 @@ extension FTLinkToSelectViewController: UITableViewDataSource, UITableViewDelega
                 cell.configureCell(with: option, linkText: self.viewModel.webUrlStr)
                 cell.textEntryChangeHandler = {[weak self] (text: String?) -> Void in
                     guard let self else { return }
-                    self.viewModel.updateWebUrlString(text)
-                    self.updateDoneEnableStatus()
+                    if let usableText = text?.trimmingCharacters(in: CharacterSet.whitespaces) {
+                        self.viewModel.updateWebUrlString(usableText)
+                        self.updateDoneEnableStatus()
+                    }
                 }
                 cell.textEntryDoneHandler = {[weak self] (text: String?) -> Void in
                     guard let self else { return }
                     FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToURLType)
-                    if let text = text {
-                        self.handleWebUrl(text: text)
+                    if let usableText = text?.trimmingCharacters(in: CharacterSet.whitespaces) {
+                        self.handleWebUrl(text: usableText)
                     }
                 }
                 reqCell = cell

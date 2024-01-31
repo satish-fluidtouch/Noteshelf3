@@ -45,7 +45,7 @@ class FTTextAnnotationViewController: UIViewController {
     weak var delegate: FTAnnotationEditControllerDelegate?
     fileprivate var annotationMode: FTAnnotationMode = FTAnnotationMode.create
     fileprivate var _annotation: FTAnnotation?
-    var transitionInProgress: Bool = false
+    internal var transitionInProgress: Bool = false
     private var contentHolderview : UIView?;
     let customTransitioningDelegate = FTSlideInPresentationManager(mode: .topToBottom)
 

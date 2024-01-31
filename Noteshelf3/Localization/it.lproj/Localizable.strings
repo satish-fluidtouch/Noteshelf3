@@ -1531,13 +1531,15 @@
 "text.font.setAsDefault.menuTitle" = "Imposta come predefinito per:";
 "text.font.setAsDefault.thisAndFutureBooks" = "Questo e tutti i futuri notebook";
 "text.font.setAsDefault.thisBook" = "Questo notebook";
-"textLink_closingCurrentDocument_title" = "Questo chiuderà il notebook corrente e ti reindirizzerà a <%@>.";
-"textLink_continueConfirmation" = "";
+"textLink_closingCurrentDocument_title" = "Vuoi continuare?";
+"textLink_continueConfirmation" = "Questo chiuderà il notebook corrente e ti reindirizzerà a %@.";
 "textLink_documentDeleted_title" = "Il notebook è stato eliminato";
-"textLink_documentItselfNotAvailable_message" = "Il quaderno collegato al contenuto è stato eliminato.";
+"textLink_documentItselfNotAvailable_message" = "Il notebook collegato al contenuto è stato eliminato.";
 "textLink_editLink" = "Modifica Link";
 "textLink_linkTo" = "Agguini Link";
-"textLink_otherbook_firstPageConfirmation_message" = "La pagina collegata al contenuto è stata eliminata. Vuoi navigare al quaderno in cui si trovava la pagina?";
+"textLink_notebookNotDownloadedMessage" = "Il notebook collegato a questo contenuto non è stato ancora scaricato da iCloud. Per favore riprova più tardi.";
+"textLink_notebookUnavailable" = "Notebook non disponibile";
+"textLink_otherbook_firstPageConfirmation_message" = "La pagina collegata al contenuto è stata eliminata. Vuoi navigare al notebook in cui si trovava la pagina?";
 "textLink_pageDeleted_title" = "La pagina è stata eliminata";
 "textLink_pageNotAvailable" = "La pagina collegata al contenuto è stata eliminata.";
 "textLink_removeLink" = "Rimuovi Link";
@@ -1597,4 +1599,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 30 January 2024 at 10:12 AM
+// Last Synced by Narayana on 31 January 2024 at 4:55 PM
