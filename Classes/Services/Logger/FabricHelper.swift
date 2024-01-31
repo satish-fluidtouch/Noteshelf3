@@ -59,7 +59,6 @@ class FabricHelper: NSObject {
         keys[FabircKeys.Theme] = FTShelfThemeStyle.defaultTheme().title
         keys[FabircKeys.Locale] = Locale.current.identifier
 
-        keys[FabircKeys.Clouds] = FTZenDeskManager.cloudUsed()
         keys[FabircKeys.Recognition] = FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO";
         keys[FabircKeys.RecognitionActivated] = FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO";
         keys[FabircKeys.Layout] = (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal";
