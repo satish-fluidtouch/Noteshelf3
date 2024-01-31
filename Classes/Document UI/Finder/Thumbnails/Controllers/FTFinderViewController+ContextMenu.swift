@@ -198,6 +198,7 @@ extension FTFinderViewController {
                         contextMenuConfigurationForItemAt indexPath: IndexPath,
                         point: CGPoint) -> UIContextMenuConfiguration? {
         if self.mode == .selectPages {return nil}
+        FTFinderEventTracker.trackFinderEvent(with: "finder_page_longpress", params: ["location": currentFinderLocation()])
         #if targetEnvironment(macCatalyst)
         let page = self.filteredPages[indexPath.item]
         

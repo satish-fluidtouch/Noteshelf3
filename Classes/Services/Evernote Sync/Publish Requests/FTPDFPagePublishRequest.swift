@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+
 #if !targetEnvironment(macCatalyst)
 // import EvernoteSDK
 #endif
@@ -29,7 +31,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         do {
             let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord;
             if(nil == pageRecord) {
-                self.delegate?.didCompletePublishRequestWithError!(nil);
+                self.delegate?.didCompletePublishRequestWithError!(request: self,error:nil);
             }
             else {
                 if(pageRecord!.isDeleted()) {
@@ -43,7 +45,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
             }
         }
         catch let error as NSError {
-            self.delegate?.didCompletePublishRequestWithError!(error);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
         }
     }
     
@@ -53,11 +55,11 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         guard let session = EvernoteSession.shared(), session.isAuthenticated  else {
             let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
-            self.delegate?.didCompletePublishRequestWithError!(error);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
             return;
         }
         guard let parentGUID = pageRecord.parent.enGUID else {
-            self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
             return;
         }
         EvernoteNoteStore(session: session).getNoteWithGuid(parentGUID, withContent: true, withResourcesData: true, withResourcesRecognition: false, withResourcesAlternateData: false) { note in
@@ -98,7 +100,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                             guard EvernoteSession.shared().isAuthenticated else {
                                 let error = FTENPublishError.authError;
                                 FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
-                                self.delegate?.didCompletePublishRequestWithError!(error);
+                                self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                                 return;
                             }
                             EvernoteNoteStore(session: session).update(note) { updatedNote in
@@ -109,25 +111,23 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                             self.commitDataChanges();
                                             FTENSyncUtilities.recordSyncLog(String(format: "Deleting Page-completed for notebook: %@", (updatedNote?.title)!));
 
-                                            self.delegate?.didCompletePublishRequestWithError!(nil);
+                                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);
                                         }
                                         else {
-                                            self.delegate?.didCompletePublishRequestWithError!(nil);//Dont return error as we want to proceed in this case. (Should never come here though!)
+                                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);//Dont return error as we want to proceed in this case. (Should never come here though!)
                                             return;
                                         }
                                     }
                                     catch {
-                                        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+                                        self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
                                         return;
                                     }
 
                                 }
                             } failure: { error in
-                                if let error = error {
-                                    self.executeBlock {
-                                        FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
-                                        self.delegate?.didCompletePublishRequestWithError!(error);
-                                    };
+                                self.executeBlock {
+                                    FTENSyncUtilities.recordSyncLog("Failed with Error:\(error)");
+                                    self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                                 }
                             };
                         }
@@ -136,31 +136,31 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                             self.managedObjectContext()?.delete(pageRecord);
                             self.commitDataChanges();
 
-                            FTENSyncUtilities.recordSyncLog(String(format: "Deleting Page-completed for notebook: %@", (note?.title)!));
-                            self.delegate?.didCompletePublishRequestWithError!(nil);
+                            FTENSyncUtilities.recordSyncLog("Deleting Page-completed for notebook: \(note?.title)");
+                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);
                             return;
                         }
                     }
                     else {
-                        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+                        self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
                         return;
                     }
                 }
                 catch {
-                    self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+                    self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
                     return;
                 }
             }
         } failure: { error in
             self.executeBlock {
+                if let nsError = error as? NSError, nsError.code == Int(EDAMErrorCode_UNKNOWN.rawValue) {
+                    self.noteDidGetDeletedFromEvernote();
+                }
+                else {
+                    FTENSyncUtilities.recordSyncLog("Failed with error: \(error)");
+                    self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
+                }
                 if let error {
-                    if((error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue)) {
-                        self.noteDidGetDeletedFromEvernote();
-                    }
-                    else {
-                        FTENSyncUtilities.recordSyncLog(String(format: "Failed with error:%@", error as CVarArg));
-                        self.delegate?.didCompletePublishRequestWithError!(error);
-                    }
                 }
             }
         }
@@ -202,11 +202,11 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         guard let session = EvernoteSession.shared(), session.isAuthenticated else {
             let error = FTENPublishError.authError;
             FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
-            self.delegate?.didCompletePublishRequestWithError!(error);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
             return;
         }
         guard let parentGUID = pageRecord.parent.enGUID else {
-            self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
             return;
         }
         if FTENPublishManager.shared.ftENNotebook?.edamNote == nil {
@@ -219,19 +219,15 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                     updateNote()
                 }
             } failure: { error in
-                if let error = error {
-                    self.executeBlock(onPublishQueue: {
-                        if((error as NSError).code == Int(EDAMErrorCode_UNKNOWN.rawValue))
-                        {
-                            self.noteDidGetDeletedFromEvernote();
-                        }
-                        else
-                        {
-                            FTENSyncUtilities.recordSyncLog(String(format: "Failed with error:%@",error as CVarArg));
-                            self.delegate?.didCompletePublishRequestWithError!(error);
-                        }
-                    });
-                }
+                self.executeBlock(onPublishQueue: {
+                    if let nserror = error as? NSError, (nserror.code == Int(EDAMErrorCode_UNKNOWN.rawValue)) {
+                        self.noteDidGetDeletedFromEvernote();
+                    }
+                    else {
+                        FTENSyncUtilities.recordSyncLog("Failed with error: \(error)");
+                        self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
+                    }
+                });
             }
         }
         else {
@@ -250,7 +246,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                         if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: pageRecord.parent.nsGUID) {
                             FTENPublishManager.recordSyncLog(String(format: "Evernote Publish Skip - Document is in open state"));
                             let notebookOpenError = NSError(domain: "Noteshelf.EN.UpdatePage", code: 800, userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("evernote.openNotebook.SyncSkip", comment: "Sync failed with reason - A notebook is in open state.")])
-                            self.delegate?.didCompletePublishRequestWithError!(notebookOpenError);
+                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:notebookOpenError);
                             return;
                         }
 
@@ -361,7 +357,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 guard EvernoteSession.shared().isAuthenticated else {
                                     let error = FTENPublishError.authError;
                                     FTENSyncUtilities.recordSyncLog(String(format: "Failed with Error:%@",error as CVarArg));
-                                    self.delegate?.didCompletePublishRequestWithError!(error);
+                                    self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
                                     return;
                                 }
                                 EvernoteNoteStore(session: session).update(note) { updatedNote in
@@ -389,51 +385,45 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                                     //                                                    self.updateResourceGUIDsOfNote(updatedNote);
                                                     //                                                    self.commitDataChanges();
                                                 }
-                                                self.delegate?.didCompletePublishRequestWithError!(nil);
+                                                self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);
                                             }
                                             else {
-                                                self.delegate?.didCompletePublishRequestWithError!(nil);//Dont return error as we want to proceed in this case. (Should never come here though!)
+                                                self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);//Dont return error as we want to proceed in this case. (Should never come here though!)
                                                 return;
                                             }
                                         }
                                         catch {
-                                            self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+                                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
                                             return;
                                         }
                                     }
-                                }failure: { error in
-                                    if let error = error {
-                                        self.executeBlock(onPublishQueue: {
-
-                                            FTENSyncUtilities.recordSyncLog(String(format: "Failed to update page with error:%@", error as CVarArg));
-
-                                            do {
-                                                if let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {
-                                                    pageRecord.isDirty = true;
-                                                    if pageContentWasDirty {
-                                                        pageRecord.isContentDirty = pageContentWasDirty;
-                                                    }
-                                                    self.commitDataChanges();
+                                } failure: { error in
+                                    self.executeBlock(onPublishQueue: {
+                                        FTENSyncUtilities.recordSyncLog("Failed to update page with error: \(error)");
+                                        do {
+                                            if let pageRecord = try self.managedObjectContext()?.existingObject(with: self.objectID!) as? ENSyncRecord {
+                                                pageRecord.isDirty = true;
+                                                if pageContentWasDirty {
+                                                    pageRecord.isContentDirty = pageContentWasDirty;
                                                 }
+                                                self.commitDataChanges();
                                             }
-                                            catch {
+                                        }
+                                        catch {
 
-                                            }
+                                        }
 
-                                            if ((error as NSError).code == Int(EDAMErrorCode_LIMIT_REACHED.rawValue))
-                                            {
-
-                                                let parentURL = pageRecord.parent.url as NSString;
-                                                let title = parentURL.lastPathComponent.deletingPathExtension;
-                                                let entry = FTENIgnoreEntry(title:title , ignoreType: FTENIgnoreReasonType.dataLimitReached, notebookID: pageRecord.parent.nsGUID)
-                                                self.delegate?.didCompletePublishRequest!(withIgnore: entry);
-                                            }
-                                            else
-                                            {
-                                                self.delegate?.didCompletePublishRequestWithError!(error);
-                                            }
-                                        });
-                                    }
+                                        if let nserror = error as? NSError, (nserror.code == Int(EDAMErrorCode_LIMIT_REACHED.rawValue))
+                                        {
+                                            let parentURL = pageRecord.parent.url as NSString;
+                                            let title = parentURL.lastPathComponent.deletingPathExtension;
+                                            let entry = FTENIgnoreEntry(title:title , ignoreType: FTENIgnoreReasonType.dataLimitReached, notebookID: pageRecord.parent.nsGUID)
+                                            self.delegate?.didCompletePublishRequest?(request: self, withIgnore: entry);
+                                        }
+                                        else {
+                                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
+                                        }
+                                    });
                                 };
                             }
                             else {
@@ -444,20 +434,20 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                                 pageRecord.isDirty = false;
                                 pageRecord.isContentDirty = false;
                                 self.commitDataChanges();
-                                self.delegate?.didCompletePublishRequestWithError!(nil);
+                                self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);
                             }
                         });
                     }
                     else {
                         FTENPublishManager.recordSyncLog("ENSyncRecord is unavailable");
-                        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+                        self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
                         return;
                     }
                 }
                 catch let error as NSError {
                     FTENPublishManager.recordSyncLog(String(format: "Failed to update page with error:%@", error as CVarArg));
 
-                    self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.unexpectedError);
+                    self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.unexpectedError);
                     return;
                 }
 
@@ -553,10 +543,10 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
                 childRecord.isContentDirty = true;
             });
             self.commitDataChanges();
-            self.delegate?.didCompletePublishRequestWithError!(nil);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil);
         }
         catch let error as NSError{
-            self.delegate?.didCompletePublishRequestWithError!(error);
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error);
         }
         #endif
     }
@@ -604,7 +594,7 @@ class FTPDFPagePublishRequest: FTBasePublishRequest {
         #if !targetEnvironment(macCatalyst)
         FTENSyncUtilities.recordSyncLog("Page Snapshot failed.");
         
-        self.delegate?.didCompletePublishRequestWithError!(FTENPublishError.pageSnapshotError);
+        self.delegate?.didCompletePublishRequestWithError?(request: self,error:FTENPublishError.pageSnapshotError);
         #endif
     }
 }

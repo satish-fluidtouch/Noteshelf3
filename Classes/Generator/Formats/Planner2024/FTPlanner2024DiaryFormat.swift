@@ -502,7 +502,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
         var addWeekOffset : Bool = true
         var addWeekOffsetForTopNavigationLinks : Bool = true
         var eachDayBeforeDays = 1 + numberYearPages
-        for (index,month) in calendarMonths.enumerated() {
+        for (eachMonthIndex,month) in calendarMonths.enumerated() {
             let eachMonth :FTMonthlyCalendarInfo = month
             let monthRectsInfo = format.monthRectsInfo[monthRectsCount]
             let dayRectsInfo = format.dayRectsInfo
@@ -579,7 +579,7 @@ class FTPlanner2024DiaryFormat : FTDairyFormat {
 
             var dayRectsCount = 0
             var weeksCount = eachMonth.weeksCount
-            if index == 0 && shouldAddWeekOffsetToCalendarWith(firstDay: eachMonth.dayInfo.first) { // checking whether to add a week offset to first month of calendar duration
+            if eachMonthIndex == 0 && shouldAddWeekOffsetToCalendarWith(firstDay: eachMonth.dayInfo.first) { // checking whether to add a week offset to first month of calendar duration
                 weeksCount += 1
             }
             eachDayBeforeDays += 1 + weeksCount // adding month and weeks belonging to a month.

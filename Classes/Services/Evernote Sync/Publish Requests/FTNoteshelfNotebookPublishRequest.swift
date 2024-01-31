@@ -20,7 +20,7 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
 #if !targetEnvironment(macCatalyst)
         guard let evernoteSession = EvernoteSession.shared() else {
             let error = NSError(domain: "EDAMErrorDomain", code: Int(EDAMErrorCode_AUTH_EXPIRED.rawValue), userInfo: nil)
-            self.delegate?.didCompletePublishRequestWithError?(error)
+            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             return
         }
         EvernoteNoteStore(session: evernoteSession).listNotebooks { [self] notebooks in
@@ -43,18 +43,16 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
                             if let notebook = notebook{
                                 FTENPublishManager.shared.noteshelfNotebookGuid = notebook.guid
                             }
-                            self.delegate?.didCompletePublishRequestWithError?(nil)
+                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil)
                         })
                     } failure: { error in
                         self.executeBlock(onPublishQueue: { [self] in
-                            if let error = error {
-                                FTENSyncUtilities.recordSyncLog("Failed to create Noteshelf notebook:\(error)")
-                                self.delegate?.didCompletePublishRequestWithError?(error)
-                            }
+                            FTENSyncUtilities.recordSyncLog("Failed to create Noteshelf notebook:\(String(describing: error))")
+                            self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
                         })
                     }
                 } else {
-                    self.delegate?.didCompletePublishRequestWithError?(nil)
+                    self.delegate?.didCompletePublishRequestWithError?(request: self,error:nil)
                 }
             })
 
@@ -63,7 +61,7 @@ class FTNoteshelfNotebookPublishRequest : FTBasePublishRequest {
                 if let error = error {
                     FTENSyncUtilities.recordSyncLog("Failed to fetch notebooks from Evernote: \(error)")
                 }
-                self.delegate?.didCompletePublishRequestWithError?(error)
+                self.delegate?.didCompletePublishRequestWithError?(request: self,error:error)
             })
         }
 #endif
