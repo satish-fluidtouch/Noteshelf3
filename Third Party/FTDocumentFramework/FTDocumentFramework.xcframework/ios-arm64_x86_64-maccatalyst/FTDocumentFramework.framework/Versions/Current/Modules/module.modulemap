@@ -1,0 +1,6 @@
+framework module FTDocumentFramework {
+  umbrella header "FTDocumentFramework.h"
+  export *
+
+  module * { export * }
+}
