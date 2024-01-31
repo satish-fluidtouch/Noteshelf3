@@ -265,26 +265,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         return diskSpace
     }
 
-    class func cloudUsed() -> String {
-        let cloudUsed:NSMutableArray! = NSMutableArray()
-
-        let dropboxLinked:Bool = FTDropboxManager.sharedDropboxManager.isLoggedIn()
-        if dropboxLinked
-        {cloudUsed.add("Dropbox")}
-
-        let oneDriveLinked:Bool = FTOneDriveClient.shared.isLoggeedIn()
-        if oneDriveLinked
-        {cloudUsed.add("OneDrive")}
-
-        #if !targetEnvironment(macCatalyst)
-        let evernoteLinked:Bool = EvernoteSession.shared().isAuthenticated
-        if evernoteLinked
-        {
-            cloudUsed.add("Evernote")
-        }
-        #endif
-        return cloudUsed.componentsJoined(by: ", ")
-    }
     class func customFields() -> [String : Any] {
         let isPaired = NSUbiquitousKeyValueStore.default.isWatchPaired()
         let isWatchAppInstalled = NSUbiquitousKeyValueStore.default.isWatchAppInstalled()
@@ -298,20 +278,18 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             "User ID": UserDefaults.standard.string(forKey: "USER_ID_FOR_CRASH") ?? "",
             "App Version": "\(appVersion()) (\(appBuildVersion()))",
             "Sizes": "Free: \(self.freeDiskSpace())",
-            "Clouds Used": self.cloudUsed(),
             "Device": deviceName,
             "OS": "\(UIDevice.current.systemName) \(ProcessInfo.processInfo.operatingSystemVersionString)",
             "iCloud": FTNSiCloudManager.shared().iCloudOn() ? "YES" : "NO",
             "Autobackup": FTCloudBackUpManager.shared.activeCloudBackUpManager?.cloudBackUpName() ?? "none",
-            "ENPublish": UserDefaults.standard.bool(forKey: "EvernotePubUsed") ? "YES" : "NO",
+            "ENPublish": UserDefaults.standard.bool(forKey: "EvernotePubUsed") ? evernoteUser() : "NO",
             "Apple Pencil": UserDefaults.standard.bool(forKey: "isUsingApplePencil") ? "YES" : "NO",
             "Lang": FTUtils.currentLanguage(),
             "Locale": NSLocale.current.identifier,
             "AppleWatch": watchStatus,
-            "Recognition": FTNotebookRecognitionHelper.shouldProceedRecognition ? "YES" : "NO",
+            "Recognition": FTLanguageResourceManager.shared.currentLanguageCode ?? "NO",
             "Recog_Act": FTNotebookRecognitionHelper.myScriptActivated ? "YES" : "NO",
             "LayoutType": (UserDefaults.standard.pageLayoutType == .vertical) ? "Vertical" : "Horizontal",
-            "Battery": UIDevice.current.batteryStateString,
             "Screens": UIScreen.screensDescription,
             "Premium" : FTIAPManager.shared.premiumUser.isPremiumUser ? "YES" : "NO",
             "NS2": FTDocumentMigration.isNS2AppInstalled() ? "YES" : "NO",
@@ -323,6 +301,17 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
         }
         return customFields
     }
+     
+     class func evernoteUser() -> String {
+         var stringToTrack = "YES"
+         if let session = EvernoteSession.shared(), session.isAuthenticated {
+             stringToTrack = "personal"
+             if session.businessUser != nil {
+                 stringToTrack = "business"
+             }
+         }
+         return stringToTrack
+     }
 
     class func customFieldsString() -> String {
         let customFields = self.customFields()
@@ -332,7 +321,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             ,let operatingSystem = customFields["OS"]
             ,let Device = customFields["Device"]
             ,let sizes = customFields["Sizes"]
-            ,let cloudUsed = customFields["Clouds Used"]
             ,let pencil = customFields["Apple Pencil"]
             ,let iCloud = customFields["iCloud"]
             ,let autobackup = customFields["Autobackup"]
@@ -343,13 +331,12 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
             ,let recognition = customFields["Recognition"]
             ,let recog_Act = customFields["Recog_Act"]
             ,let layoutType = customFields["LayoutType"]
-            ,let battery = customFields["Battery"]
             ,let premium = customFields["Premium"]
             ,let ns2 = customFields["NS2"]
             ,let safemode = customFields["SafeMode"]
             ,let deviceIDs = customFields["DeviceIDs"]
         {
-            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Cloud: \(cloudUsed) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | Recognition : \(recognition) | Recog_Act: \(recog_Act) | Layout: \(layoutType) | Battery: \(battery) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode) DeviceID: \(deviceIDs)"
+            string = "User ID: \(userId) | Version: \(version) | Premium: \(premium) | OS: \(operatingSystem) | Device: \(Device) | \(sizes) | Apple Pencil: \(pencil) | iCloud: \(iCloud) | Autobackup: \(autobackup) | Publish: \(ENPublish) | Lang: \(lang) | Locale: \(locale) | AppleWatch : \(appleWatch) | RLang : \(recognition) | R_Act: \(recog_Act) | Layout: \(layoutType) | Screens : \(UIScreen.screensDescription) | NS2: \(ns2) | SafeMode: \(safemode) DeviceID: \(deviceIDs)"
         }
         return string ?? ""
     }
@@ -375,25 +362,6 @@ typealias FTZenDeskCompletionBlock = (Bool) -> Void
                                                                     action:#selector(showContactScreen(item:)))
             item.presentingController = navigationController
             viewController.navigationItem.rightBarButtonItem = item
-        }
-    }
-}
-
-private extension UIDevice {
-    var batteryStateString: String {
-        self.isBatteryMonitoringEnabled = true
-        let state = self.batteryState
-        switch state {
-        case .unknown:
-            return "unknown"
-        case .unplugged:
-            return "unplugged"
-        case .charging:
-            return "charging"
-        case .full:
-            return "full"
-        default:
-            return ""
         }
     }
 }
