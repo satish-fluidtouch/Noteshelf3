@@ -16,10 +16,11 @@ class FTDairyFormat : NSObject, FTDairyRenderTemplate, FTDairyRenderFormat , FTD
     var monthRectsInfo: [FTDiaryMonthRectsInfo] = [];
     var weekRectsInfo: [FTDiaryWeekRectsInfo] = [];
     var dayRectsInfo: [FTDiaryDayRectsInfo] = [];
-    var weekPrioritiesInfo : FTDiaryWeeklyPrioritiesRectInfo =  FTDiaryWeeklyPrioritiesRectInfo()
-    var weekNotesInfo : FTDiaryWeeklyNotesRectInfo = FTDiaryWeeklyNotesRectInfo()
-    var dailyPrioritiesInfo : FTDiaryDailyPrioritiesRectInfo =  FTDiaryDailyPrioritiesRectInfo()
-    var dailyNotesInfo : FTDiaryDailyNotesRectInfo = FTDiaryDailyNotesRectInfo()
+    var weekPrioritiesInfo : [FTDiaryWeeklyPrioritiesRectInfo] = []
+    var weekNotesInfo : [FTDiaryWeeklyNotesRectInfo] = []
+    var dailyPrioritiesInfo : [FTDiaryDailyPrioritiesRectInfo] = []
+    var dailyNotesInfo : [FTDiaryDailyNotesRectInfo] = []
+    var dailyPlansInfo : [FTDiaryDailyPlansRectInfo] = []
     var screenInfo: FTScreenInfo!
     var formatInfo:FTYearFormatInfo = FTYearFormatInfo.init(year: 2020)
     var currentPageRect: CGRect = CGRect.init(x: 0, y: 0, width: 768, height: 960);

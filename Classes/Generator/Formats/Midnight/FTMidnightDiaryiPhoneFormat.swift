@@ -191,7 +191,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         let dayInfoRect = CGRect(x: dayInfoRectX, y: dayInfoRectY, width: dayInfoAttrString.size().width, height: dayInfoAttrString.size().height)
         let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
         dayInfoAttrString.draw(at: dayInfoDrawLocation)
-        dailyPrioritiesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+        dailyPlansInfo.append(FTDiaryDailyPlansRectInfo(dayRect: getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())))
         //Today pill
         let todayPillXOffsetPercnt = 3.73 // gap between today pill and day info
         let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
@@ -271,7 +271,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         let dayInfoRect = CGRect(x: dayInfoRectX, y: dayInfoRectY, width: dayInfoAttrString.size().width, height: dayInfoAttrString.size().height)
         let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
         dayInfoAttrString.draw(at: dayInfoDrawLocation)
-        dailyNotesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+        dailyNotesInfo.append(FTDiaryDailyNotesRectInfo(dayRect:getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())))  
         //Today pill
         let todayPillXOffsetPercnt = 3.73 // gap between today pill and day info
         let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100

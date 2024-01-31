@@ -44,16 +44,19 @@ class FTDiaryDayRectsInfo: NSObject {
     var dailyPlanRect : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
     var notesRect: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
 }
-class FTDiaryWeeklyPrioritiesRectInfo : NSObject {
+struct FTDiaryWeeklyPrioritiesRectInfo {
     var weekRect : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
 }
-class FTDiaryWeeklyNotesRectInfo : NSObject {
+struct FTDiaryWeeklyNotesRectInfo {
     var weekRect : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
 }
-class FTDiaryDailyNotesRectInfo : NSObject {
+struct FTDiaryDailyNotesRectInfo {
     var dayRect : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
 }
-class FTDiaryDailyPrioritiesRectInfo : NSObject {
+struct FTDiaryDailyPrioritiesRectInfo {
+    var dayRect : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
+}
+struct FTDiaryDailyPlansRectInfo {
     var dayRect : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0);
 }
 class FTPlannerDiarySideNavigationRectInfo : NSObject {

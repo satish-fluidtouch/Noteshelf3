@@ -175,7 +175,7 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let weekInfoRect = CGRect(x: weekInfoRectX, y: weekInfoRectY, width: weekInfoAttrString.size().width, height: weekInfoAttrString.size().height)
             let weekInfoDrawLocation = CGPoint(x: weekInfoRect.origin.x, y: weekInfoRect.origin.y)
             weekInfoAttrString.draw(at: weekInfoDrawLocation)
-            weekPrioritiesInfo.weekRect = getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())
+            self.weekPrioritiesInfo.append(FTDiaryWeeklyPrioritiesRectInfo(weekRect: getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())))
             //Today pill
             let weekInfoXPercnt = (weekInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (weekInfoXPercnt - todayPillXOffsetPercnt)
@@ -199,7 +199,7 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let dayInfoRect = CGRect(x: dayInfoRectX, y: dayInfoRectY, width: dayInfoAttrString.size().width, height: dayInfoAttrString.size().height)
             let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
             dayInfoAttrString.draw(at: dayInfoDrawLocation)
-            dailyPrioritiesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+            dailyPrioritiesInfo.append(FTDiaryDailyPrioritiesRectInfo(dayRect: getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())))
 
             //Today pill
             let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
@@ -441,7 +441,7 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let weekInfoRect = CGRect(x: weekInfoRectX, y: weekInfoRectY, width: weekInfoAttrString.size().width, height: weekInfoAttrString.size().height)
             let weekInfoDrawLocation = CGPoint(x: weekInfoRect.origin.x, y: weekInfoRect.origin.y)
             weekInfoAttrString.draw(at: weekInfoDrawLocation)
-            weekNotesInfo.weekRect = getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())
+            weekNotesInfo.append(FTDiaryWeeklyNotesRectInfo(weekRect:getLinkRect(location: weekInfoDrawLocation, frameSize: weekInfoAttrString.size())))
             //Today pill
             let weekInfoXPercnt = (weekInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (weekInfoXPercnt - todayPillXOffsetPercnt)
@@ -457,7 +457,7 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             let dayInfoRect = CGRect(x: dayInfoRectX, y: dayInfoRectY, width: dayInfoAttrString.size().width, height: dayInfoAttrString.size().height)
             let dayInfoDrawLocation = CGPoint(x: dayInfoRect.origin.x, y: dayInfoRect.origin.y)
             dayInfoAttrString.draw(at: dayInfoDrawLocation)
-            dailyNotesInfo.dayRect = getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())
+            dailyNotesInfo.append(FTDiaryDailyNotesRectInfo(dayRect: getLinkRect(location: dayInfoDrawLocation, frameSize: dayInfoAttrString.size())))
             //Today pill
             let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)

@@ -527,12 +527,10 @@ class FTMidnightDairyFormat : FTDairyFormat {
             nextIndex += 1 + weeklyFormatter.weeklyInfo.count*2 // adding calendar,weekly priorities and notes count
         }
         let weeklyInfo = weeklyFormatter.weeklyInfo;
-        var weekRectsCount = 0
         var prioritiesAndNotesCounter = 0
-        weeklyInfo.forEach { (weekInfo) in
+        for (weekIndex, weekInfo) in weeklyInfo.enumerated() {
             let weekPage = doc.page(at: pageIndex);
-            let weekRectsInfo:FTDiaryWeekRectsInfo = format.weekRectsInfo[weekRectsCount]
-            
+            let weekRectsInfo:FTDiaryWeekRectsInfo = format.weekRectsInfo[weekIndex]
             if isBelongToCalendar(currentDate: weekInfo.dayInfo[0].date, startDate: startDate, endDate: endDate){
                 var monthTo = weekInfo.dayInfo[0].date.numberOfMonths(startDate)
                 if self.isiPad {
@@ -569,12 +567,20 @@ class FTMidnightDairyFormat : FTDairyFormat {
                 weekPage?.addLinkAnnotation(bounds: weekRectsInfo.prioritiesRect, goToPage: weekPrioritiesPage, at: atPoint)
                 pageIndex += 1
             }
-            if format.weekPrioritiesInfo.weekRect.size != CGSize.zero, let weekPrioritiesPage = doc.page(at: pageIndex),let weekPage = weekPage{
-                weekPrioritiesPage.addLinkAnnotation(bounds: format.weekPrioritiesInfo.weekRect, goToPage: weekPage, at: atPoint)
+            if isiPad, !format.weekPrioritiesInfo.isEmpty {
+                let priorityWeekRect : CGRect =   format.weekPrioritiesInfo[weekIndex].weekRect
+                if priorityWeekRect.size != CGSize.zero, let weekPrioritiesPage = doc.page(at: pageIndex),let weekPage = weekPage{
+                    weekPrioritiesPage.addLinkAnnotation(bounds: priorityWeekRect, goToPage: weekPage, at: atPoint)
+                }
             }
-            if format.weekNotesInfo.weekRect.size != CGSize.zero, let weekNotesPage = doc.page(at: pageIndex + 1),let weekPage = weekPage{
-                weekNotesPage.addLinkAnnotation(bounds: format.weekPrioritiesInfo.weekRect, goToPage: weekPage, at: atPoint)
+
+            if isiPad, !format.weekNotesInfo.isEmpty {
+                let notesWeekRect : CGRect = format.weekNotesInfo[weekIndex].weekRect
+                if notesWeekRect.size != CGSize.zero, let weekNotesPage = doc.page(at: pageIndex + 1),let weekPage = weekPage{
+                    weekNotesPage.addLinkAnnotation(bounds: notesWeekRect, goToPage: weekPage, at: atPoint)
+                }
             }
+
             if weekRectsInfo.notesRect.size != CGSize.zero, let notesPage = doc.page(at: pageIndex + 1){
                 
                 weekPage?.addLinkAnnotation(bounds: weekRectsInfo.notesRect, goToPage: notesPage, at: atPoint)
@@ -583,7 +589,6 @@ class FTMidnightDairyFormat : FTDairyFormat {
             nextIndex += currentWeekDaysCount
             
             pageIndex += 1
-            weekRectsCount += 1
         }
         return pageIndex
     }
@@ -604,7 +609,6 @@ class FTMidnightDairyFormat : FTDairyFormat {
         }
         
         let weekcalStartDate = startDate.offsetDate(startOffset);
-        var helperOffset = startDate.weekDay() - 1
         monthInfo.forEach { (eachMonth) in
             let dayInfo = eachMonth.dayInfo;
             dayInfo.forEach { (eachDayInfo) in
@@ -645,11 +649,15 @@ class FTMidnightDairyFormat : FTDairyFormat {
                         dayPage?.addLinkAnnotation(bounds: dayRectsInfo.dailyPlanRect, goToPage: dailyPlanPage, at: atPoint)
                         pageIndex += 1
                     }
-                    if format.dailyPrioritiesInfo.dayRect.size != CGSize.zero, let dailyPrioritiesPage = doc.page(at: pageIndex),let dayPage = dayPage{
-                        dailyPrioritiesPage.addLinkAnnotation(bounds: format.dailyPrioritiesInfo.dayRect, goToPage: dayPage, at: atPoint)
+
+                    let dayRect = self.isiPad ? format.dailyPrioritiesInfo[dayRectsCount].dayRect : format.dailyPlansInfo[dayRectsCount].dayRect
+                    if dayRect.size != CGSize.zero, let dailyPrioritiesPage = doc.page(at: pageIndex),let dayPage = dayPage{
+                        dailyPrioritiesPage.addLinkAnnotation(bounds: dayRect, goToPage: dayPage, at: atPoint)
                     }
-                    if format.dailyNotesInfo.dayRect.size != CGSize.zero, let dailyNotesPage = doc.page(at: pageIndex + 1),let dayPage = dayPage{
-                        dailyNotesPage.addLinkAnnotation(bounds: format.dailyNotesInfo.dayRect, goToPage: dayPage, at: atPoint)
+
+                    let notesDayRectInfo = format.dailyNotesInfo[dayRectsCount]
+                    if notesDayRectInfo.dayRect.size != CGSize.zero, let dailyNotesPage = doc.page(at: pageIndex + 1),let dayPage = dayPage{
+                        dailyNotesPage.addLinkAnnotation(bounds: notesDayRectInfo.dayRect, goToPage: dayPage, at: atPoint)
                     }
                     if dayRectsInfo.notesRect.size != CGSize.zero, let notesPage = doc.page(at: pageIndex + 1){
                         dayPage?.addLinkAnnotation(bounds: dayRectsInfo.notesRect, goToPage: notesPage, at: atPoint)
