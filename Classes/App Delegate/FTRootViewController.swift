@@ -131,9 +131,6 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
            let docController = self.docuemntViewController {
             return docController.prefersStatusBarHidden;
         }
-        else if let shelfVC = self.rootContentViewController {
-            return shelfVC.prefersStatusBarHidden;
-        }
         return super.prefersStatusBarHidden;
     }
 

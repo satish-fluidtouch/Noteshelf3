@@ -75,7 +75,13 @@ class FTNotebookMoreOptionsCell: UITableViewCell {
         lblDetails?.text = setting.localizedSubtitle
         let image = UIImage(icon: setting.imageIcon)
         imgViewIcon?.image = image
-        if setting.type == .disclosure {
+        if let toggleSetting = setting as? FTNotebookOptionToggle, setting.type == .toggleAccessory {
+            self.accessoryType = .none
+            let toggleSwitch = UISwitch(frame: CGRect.zero)
+            toggleSwitch.isOn = toggleSetting.isToggleTurnedOn
+            self.accessoryView = toggleSwitch
+            toggleSwitch.addTarget(self, action: #selector(switchvalueChanged(_:)), for: .valueChanged)
+        } else if setting.type == .disclosure {
             self.accessoryType = .disclosureIndicator
             self.accessoryView = nil
         } else {

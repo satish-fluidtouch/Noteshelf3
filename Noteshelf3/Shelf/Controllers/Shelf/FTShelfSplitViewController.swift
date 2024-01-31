@@ -13,7 +13,6 @@ import FTTemplatesStore
 
 // TODO: (AK) Rename this later
 protocol FTShelfPresentable {
-    var prefersStatusBarHidden: Bool { get }
     var isInSearchMode: Bool { get }
     var isInGroupMode: Bool { get }
     var currentShelfViewModel: FTShelfViewModel? { get }

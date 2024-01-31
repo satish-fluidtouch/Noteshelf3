@@ -179,6 +179,9 @@ class FTDocumentRenderViewController: UIViewController {
         if UIDevice.current.isPhone() {
             toHide = false
         }
+        if UserDefaults().showStatusBar {
+            toHide = false
+        }
         return toHide
     }
 
