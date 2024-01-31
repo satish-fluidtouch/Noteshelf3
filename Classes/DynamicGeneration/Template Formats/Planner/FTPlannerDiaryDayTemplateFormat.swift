@@ -23,7 +23,7 @@ class FTPlannerDiaryDayTemplateFormat : FTPlannerDiaryTemplateFormat {
         let boxWidth : CGFloat = isLandscaped ? 43.90 : 42.26
         var boxHeight : CGFloat = isLandscaped ? 19.81 : 20.33
         let startingXAxis : CGFloat = isLandscaped ? 3.59 : 4.79
-        let startingYAxis : CGFloat = isLandscaped ? 16.62 : 12.21
+        let startingYAxis : CGFloat = isLandscaped ? 16.62 : 13.36
         
         
         let goalXAxis : CGFloat = templateInfo.screenSize.width*startingXAxis/100

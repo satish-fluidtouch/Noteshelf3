@@ -524,7 +524,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             index += 1
             if index % numberOfDaysInRow == 0{
                 weekDayInfoY = currentPageRect.height*templateInfo.baseBoxY/100
-                weekDayInfoX = currentPageRect.width*templateInfo.baseBoxX/100 + currentPageRect.width*templateInfo.cellOffsetX/100 + currentPageRect.width*templateInfo.cellWidth/100
+                weekDayInfoX = currentPageRect.width*templateInfo.baseBoxX/100 + currentPageRect.width*templateInfo.cellOffsetX/100 + currentPageRect.width*templateInfo.cellWidth/100 + 0.5
             }
             else{
                 let cellHeight = templateInfo.cellHeight
@@ -536,8 +536,8 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         weekRectsInfo.append(currentWeekRectInfo)
 
         //notesStrip rendering
-        let notesRectXPercnt = isLandscaped ?  48.65 : 48.02
-        let notesRectYPercnt = isLandscaped ? 75.45 : 45.75
+        let notesRectXPercnt = isLandscaped ?  48.65 : 48.20
+        let notesRectYPercnt = isLandscaped ? 75.45 : 46.70
 
         let notesAttr : [NSAttributedString.Key: Any] = [.font: weekDayfont,
                                                                         .kern: 1.6,
@@ -549,7 +549,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let notesRect = CGRect(x: notesRectX + 6 + 3.5, y: notesRectY  + (weekDayRectHeigth/2) - (notesString.size().height/2) + 6 , width: notesString.size().width + 6, height: weekDayRectHeigth)
 
 
-        self.drawColorBandsWith(xAxis: notesRectX + 6, yAxis: notesRectY + 6, context: context, width: notesString.size().width + 6, height: weekDayRectHeigth, bandColor: getNotesBandBGColor(), cornerRadius: 2)
+        self.drawColorBandsWith(xAxis: notesRectX + 6.5, yAxis: notesRectY + 6, context: context, width: notesString.size().width + 6, height: weekDayRectHeigth, bandColor: getNotesBandBGColor(), cornerRadius: 2)
         notesString.draw(in: notesRect)
 
     }
@@ -565,7 +565,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         //title rendering
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let titleYPercnt : CGFloat = isLandscaped ? 5.58 : 4.67
+        let titleYPercnt : CGFloat = isLandscaped ? 5.58 : 8.39
         let titleXPercnt : CGFloat = isLandscaped ? 4.04 : 5.40
 
         let titleX = currentPageRect.width*titleXPercnt/100
@@ -679,7 +679,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let isLandscaped = self.formatInfo.customVariants.isLandscape
         let titleXPercent : CGFloat = isLandscaped ? 4.04 : 5.87
-        let titleYPercent : CGFloat = isLandscaped ? 5.58 : 4.67
+        let titleYPercent : CGFloat = isLandscaped ? 5.58 : 8.30
 
         let titleX = self.currentPageRect.width*titleXPercent/100
         let titleY = self.currentPageRect.height*titleYPercent/100
@@ -704,7 +704,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
        // color BG rendering
         let verticalGapBWLinesPercnt : CGFloat = isLandscaped ? 4.54 : 2.99
         let notesXAxisPercnt : CGFloat = isLandscaped ? 3.59 : 4.79
-        let writingAreaYAxisPercnt : CGFloat = isLandscaped ? 16.10 : 11.83
+        let writingAreaYAxisPercnt : CGFloat = isLandscaped ? 16.10 : 12.78
         let writingAreaLineWidthPercnt : CGFloat = isLandscaped ? 89.11 : 85.61
         let writingAreaLineBottomPercnt : CGFloat = isLandscaped ? 5.19 : 5.05
 
@@ -731,7 +731,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let isLandscaped = self.formatInfo.customVariants.isLandscape
         let monthXPercent : CGFloat = isLandscaped ? 4.04 : 5.87
-        let monthYPercent : CGFloat = isLandscaped ? 5.58 : 4.67
+        let monthYPercent : CGFloat = isLandscaped ? 5.58 : 8.30
 
         let monthX = self.currentPageRect.width*monthXPercent/100
         let monthY = self.currentPageRect.height*monthYPercent/100
@@ -775,7 +775,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         // Mood title rendering
 
         let moodXPercnt = isLandscaped ? 4.85 : 6.47
-        let moodYPercnt = isLandscaped ? 16.36 : 13.93
+        let moodYPercnt = isLandscaped ? 16.36 : 14.12
 
         let moodX = self.currentPageRect.width*moodXPercnt/100
         let moodY = self.currentPageRect.height*moodYPercnt/100

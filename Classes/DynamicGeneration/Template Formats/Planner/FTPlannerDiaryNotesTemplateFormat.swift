@@ -20,7 +20,7 @@ class FTPlannerDiaryNotesTemplateFormat : FTPlannerDiaryTemplateFormat {
         
         let verticalGapBWLinesPercnt : CGFloat = isLandscaped ? 4.54 : 2.99
         let notesXAxisPercnt : CGFloat = isLandscaped ? 3.59 : 4.79
-        let writingAreaYAxisPercnt : CGFloat = isLandscaped ? 20.77 : 15.74
+        let writingAreaYAxisPercnt : CGFloat = isLandscaped ? 20.77 : 16.69
         let writingAreaLineWidthPercnt : CGFloat = isLandscaped ? 89.11 : 85.61
         let writingAreaLineBottomPercnt : CGFloat = isLandscaped ? 5.19 : 5.05
         
