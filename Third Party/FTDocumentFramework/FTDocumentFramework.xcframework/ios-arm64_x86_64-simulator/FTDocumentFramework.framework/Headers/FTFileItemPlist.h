@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Fluid Touch. All rights reserved.
 //
 
-#import "FTFileItem.h"
+#import <FTDocumentFramework/FTFileItem.h>
 
 @interface FTFileItemPlist : FTFileItem
 

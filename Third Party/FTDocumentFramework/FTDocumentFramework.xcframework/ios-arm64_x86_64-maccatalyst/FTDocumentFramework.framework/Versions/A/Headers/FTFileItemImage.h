@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 FluidTouch.biz. All rights reserved.
 //
 
-#import "FTFileItem.h"
+#import <FTDocumentFramework/FTFileItem.h>
 
 @interface FTFileItemImage : FTFileItem
 @property (nonatomic,strong) UIImage *image;

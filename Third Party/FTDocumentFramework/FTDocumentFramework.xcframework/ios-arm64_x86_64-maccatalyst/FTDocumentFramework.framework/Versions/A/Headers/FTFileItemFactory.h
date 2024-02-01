@@ -8,15 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class FTFileItem;
+@class FTFileItem,FTDocument;
 @protocol FTFileItemSecurity;
 
 @interface FTFileItemFactory : NSObject
+{
+    NSMutableArray<FTFileItem*> *systemFileItems;
+    NSMutableArray<FTFileItem*> *otherFileItems;
+}
 
 @property(weak) id<FTFileItemSecurity> securityDelegate;
 @property(assign,readonly) BOOL usePDFKitForPDFFileItems;
+@property(readonly, weak) FTDocument *parentDocument;
 
--(FTFileItem*)fileItemWithURL:(NSURL*)url canLoadSubdirectory:(BOOL)canLoadSubdirectory;
+- (instancetype)initWithParentDocument:(FTDocument *)parentDocument;
+- (FTFileItem*)fileItemWithURL:(NSURL*)url canLoadSubdirectory:(BOOL)canLoadSubdirectory;
 
 - (FTFileItem*)sqliteFileItemWithURL:(NSURL*)url;
 - (FTFileItem*)imageFileItemWithURL:(NSURL*)url;

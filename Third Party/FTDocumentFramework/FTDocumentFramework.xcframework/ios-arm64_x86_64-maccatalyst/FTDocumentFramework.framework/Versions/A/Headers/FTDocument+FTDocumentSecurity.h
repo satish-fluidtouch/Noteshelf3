@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FTDocument.h"
+#import <FTDocumentFramework/FTDocument.h>
 @class FTSecurityModal;
 @protocol FTFileItemSecurity;
 

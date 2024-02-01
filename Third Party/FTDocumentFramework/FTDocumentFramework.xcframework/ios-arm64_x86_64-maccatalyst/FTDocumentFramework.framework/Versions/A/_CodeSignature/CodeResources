@@ -71,7 +71,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			06vKP4m5/pHUqBb7Uy4nibbrpqBgSn5dcWxoGkFZ3u4=
+			1smh6NcpIwTEe5qGOukbVjyzfHHIP+3QHX5M+Ugwop4=
 			</data>
 		</dict>
 		<key>Headers/FTDocument.h</key>
@@ -92,7 +92,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qHDrRovvjqQI/TNLMj92MmwsKXXdJj/cd41tfNGaCVk=
+			HZ8FuqOVBAmsspwGHgkBLrrCaweGWy4AIF2IQKn9MQs=
 			</data>
 		</dict>
 		<key>Headers/FTDocumentGroup.h</key>
@@ -106,7 +106,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			urH9aDEiGvbzvtXMdm4Ofz8SuC3DaxSBPxNMPOkYvUo=
+			EHzRsTxNc9hSW4/QXEcVzLF9oTovgf26kmUXHmiOzZU=
 			</data>
 		</dict>
 		<key>Headers/FTDocumentProvider.h</key>
@@ -155,49 +155,56 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0DNCc6CcOJGdgJJtcDJiaaI/1F+tucY5H4jCouVvQMY=
+			netwoAxSG4UGs55SDcK1k6BFyLxHArUJw+zQMBkygG8=
 			</data>
 		</dict>
 		<key>Headers/FTFileItemAudio.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1FgA/Bl/kdwrnQ28htdtjKpcS9hse3FzHj/QBYks14k=
+			bQgm39S9vwJI0BMp3mZvf5tX5QuXXX7yntLZzZDDHSg=
 			</data>
 		</dict>
 		<key>Headers/FTFileItemFactory.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OCJ2Sc5LWEiygvtp9C7AMw9W0/ZfQc0Mgr+amj+KsuU=
+			R0HhAuo5Iu0i4gVTfIfvx0DZCTzsXyQAGdAm+6xFmWY=
 			</data>
 		</dict>
 		<key>Headers/FTFileItemImage.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			30ScWjF7VPsg0DCy6Atwo4sCtItEwf2Ea7pI3FL1ba8=
+			/tsEz6aITjZgPgN4nBI5UJcMNN4a8Wsd3cGcFtOmx9E=
 			</data>
 		</dict>
 		<key>Headers/FTFileItemPDF.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Yp7b1DL6/sb5hPC1adL9NCSXQ2kvTBDjS+5p20+G67Y=
+			N98YNrQvVCTDH80dMPhl1siFQ2pb4PqMWfvKYqBTwTQ=
 			</data>
 		</dict>
 		<key>Headers/FTFileItemPlist.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			O7MVci+WhxqMqwaTIo+l9ynW+1Kliinl5sPo8tXfSrk=
+			HLFCl+MxzdFcht5x9E6QP7HyWGP6Qq/ONSt2FlQICmA=
 			</data>
 		</dict>
 		<key>Headers/FTFileItemSqlite.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1AtCjqLgGVgd+wnRW0nx8UepoQ2Tq6KyGAt5dKuHN+o=
+			5EKD/H6OqOFhB9EyFyiM41V04zRM8AYhS9OSZRQplNo=
+			</data>
+		</dict>
+		<key>Headers/FTFileItemSubclass.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			OEqqNI9FLLd9KvgWvPuEStEz6pTWxP6x6YVq23Mag6c=
 			</data>
 		</dict>
 		<key>Headers/FTFileSystemDocumentProvider.h</key>
@@ -211,7 +218,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZU1WzEJ5rN35AFjE5hq8o7yX43WLSt8hv/bHLvO4JaM=
+			Au1lcqsGQf78m7S9yyJthE/euZs086IPNkNbgodhiGk=
 			</data>
 		</dict>
 		<key>Headers/FTPasswordStorage.h</key>
