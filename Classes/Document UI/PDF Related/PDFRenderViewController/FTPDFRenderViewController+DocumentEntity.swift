@@ -480,7 +480,7 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
         }
     }
     private func addPaperTheme(_ theme:FTThemeable) {
-        guard let curPage = self.currentlyVisiblePage(), let reqTheme = theme as? FTPaperTheme else {
+        guard let reqTheme = theme as? FTPaperTheme else {
             return;
         }
         Task {
@@ -500,10 +500,12 @@ extension FTPDFRenderViewController: FTPaperTemplateDelegate {
                     }
                 }
                 else {
-                    try await changePageTemplate(docInfo: docInfo, currentPage: curPage)
-                    loadingIndicatorViewController.hide()
-                    self.pdfDocument.isDirty = true
-                    NotificationCenter.default.post(name: NSNotification.Name.FTPageDidChangePageTemplate, object: curPage);
+                    if let curPage = self.currentlyVisiblePage() {
+                        try await changePageTemplate(docInfo: docInfo, currentPage: curPage)
+                        loadingIndicatorViewController.hide()
+                        self.pdfDocument.isDirty = true
+                        NotificationCenter.default.post(name: NSNotification.Name.FTPageDidChangePageTemplate, object: curPage);
+                    }
                 }
                 loadingIndicatorViewController.hide();
             } catch let error as NSError {
