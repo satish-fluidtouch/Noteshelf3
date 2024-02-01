@@ -110,6 +110,7 @@ class FTENNotebook: NSObject {
             publishInProgress = true
             executeBlock(onPublishQueue: { [self] in
                 if self.isPublishPending(){
+                    self.currentPublishingRequest = nil;
                     _ = self.managedObjectContext()
                     FTENSyncUtilities.recordSyncLog("Publish began")
                     FTENSyncUtilities.truncateSyncLogUpperLimitIfReachedUpperLimit()
@@ -212,6 +213,9 @@ class FTENNotebook: NSObject {
             exit(-1) // Fail
         }
     }
+    
+    private var currentPublishingRequest: FTBasePublishRequest?;
+    
     // MARK: Publish request pipelining
     #if !targetEnvironment(macCatalyst)
     func publishNextRequest() {
@@ -219,7 +223,15 @@ class FTENNotebook: NSObject {
             publishDidCancel()
             return
         }
+        if(nil != self.currentPublishingRequest) {
+            FTLogError("EN-Publish", attributes: ["Reason": "requet in progress"]);
+#if DEBUG || BETA
+            fatalError("Should never enter: requet in progress")
+#endif
+            return;
+        }
         if let request = getNextPublishRequest(0) {
+            self.currentPublishingRequest = request;
             taskId = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
             request.startRequest()
         } else {
@@ -455,11 +467,21 @@ class FTENNotebook: NSObject {
         
     }
     // MARK: Publish Request delegate
-    func didCompletePublishRequestWithError(_ error: Error?) {
+    func didCompletePublishRequestWithError(request: FTBasePublishRequest?,error: Error?) {
         UIApplication.shared.endBackgroundTask(taskId)
         UserDefaults.standard.removeObject(forKey: EVERNOTE_PUBLISH_ERROR)
         UserDefaults.standard.removeObject(forKey: EN_PUBLISH_ERR_SHOW_SUPPORT)
         UserDefaults.standard.removeObject(forKey: "EVERNOTE_LAST_LOGIN_ALERT_TIME")
+        
+        if(request == self.currentPublishingRequest) {
+            self.currentPublishingRequest = nil;
+        }
+        else {
+            FTLogError("EN-Publish", attributes: ["Reason": "completion request not matching"]);
+#if DEBUG || BETA
+            fatalError("Should never enter: requet in progress")
+#endif
+        }
         
         if let error = error as NSError?{
             logPublishError(error)
@@ -472,12 +494,12 @@ class FTENNotebook: NSObject {
             })
         }
     }
-    func didCompletePublishRequest(withIgnore ignoreEntry: FTENIgnoreEntry) {
+    func didCompletePublishRequest(request: FTBasePublishRequest?,withIgnore ignoreEntry: FTENIgnoreEntry) {
         if let title = ignoreEntry.title {
             FTENPublishManager.recordSyncLog("Ignored sync for the Notebook with title - \(title)")
         }
         FTENIgnoreListManager.shared.add(ignoreEntry)
-        self.didCompletePublishRequestWithError(nil)
+        self.didCompletePublishRequestWithError(request: request, error: nil)
     }
     
     func markThisNotebook(asProblematic notebookId: String?, title: String?) {
