@@ -276,7 +276,15 @@ extension FTPasswordViewController: UITextFieldDelegate {
             self.verifyUserInputs(passwordFlow: self.passwordFlow)
             return false
         }
-        if let cell = textField.superview?.superview as? UITableViewCell {
+        var currentCell: UITableViewCell?;
+        for eachCell in self.tableView.visibleCells {
+            if let normCell = eachCell as? FTPassWordNormalCell
+                , normCell.textFeild == textField
+            {
+                currentCell = normCell;
+            }
+        }
+        if let cell = currentCell {
             if let indexPath = self.tableView.indexPath(for: cell) {
                 let nextIndexPath = getNextIndexPath(for: indexPath)
                 if let nextView = getNextInputView(for: indexPath) {
