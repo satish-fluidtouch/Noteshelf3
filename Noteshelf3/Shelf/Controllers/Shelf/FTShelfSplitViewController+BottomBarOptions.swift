@@ -461,7 +461,7 @@ private extension FTShelfSplitViewController {
         items.forEach { eachitem in
             let filePath = eachitem.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
             if FileManager.default.fileExists(atPath: filePath.path),
-               let plist = FTNotebookRecoverPlist(url: filePath, isDirectory: false) {
+               let plist = FTNotebookRecoverPlist(url: filePath, isDirectory: false, document: nil) {
                 if plist.recovertType == .pages {
                     pagesTorecover.append(eachitem);
                 }
