@@ -163,33 +163,7 @@ extension FTShelfSplitViewController {
             try? FileManager.default.removeItem(at: thumbnailPath);
         }
     }
-    
-    private func groupRecoverBooksAndPages(_ items: [FTShelfItemProtocol]) -> [FTShelfItemProtocol] {
-        var booksTorecover = [FTShelfItemProtocol]();
-        var pagesTorecover = [FTShelfItemProtocol]();
-        
-        items.forEach { eachitem in
-            let filePath = eachitem.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
-            if FileManager.default.fileExists(atPath: filePath.path),
-               let plist = FTNotebookRecoverPlist(url: filePath, isDirectory: false,document: nil) {
-                if plist.recovertType == .pages {
-                    pagesTorecover.append(eachitem);
-                }
-                else {
-                    booksTorecover.append(eachitem);
-                }
-            }
-            else {
-                booksTorecover.append(eachitem);
-            }
-        }
-        var itemsToRestore = [FTShelfItemProtocol]();
-        itemsToRestore.append(contentsOf: booksTorecover);
-        itemsToRestore.append(contentsOf: pagesTorecover);
-        return itemsToRestore;
-    }
-    
-    func restoreShelfItem( items inItems : [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void)) {
+    func restoreShelfItem( items inItems: [FTShelfItemProtocol],onCompletion:@escaping((Bool) -> Void)) {
         let items = self.groupRecoverBooksAndPages(inItems);
         let loadingIndicatorViewController = FTLoadingIndicatorViewController.show(onMode: .activityIndicator,
                                                 from: self,
@@ -477,4 +451,32 @@ extension FTShelfSplitViewController {
                 }
         });
     }
+}
+
+private extension FTShelfSplitViewController {
+    func groupRecoverBooksAndPages(_ items: [FTShelfItemProtocol]) -> [FTShelfItemProtocol] {
+        var booksTorecover = [FTShelfItemProtocol]();
+        var pagesTorecover = [FTShelfItemProtocol]();
+        
+        items.forEach { eachitem in
+            let filePath = eachitem.URL.appendingPathComponent(NOTEBOOK_RECOVERY_PLIST);
+            if FileManager.default.fileExists(atPath: filePath.path),
+               let plist = FTNotebookRecoverPlist(url: filePath, isDirectory: false) {
+                if plist.recovertType == .pages {
+                    pagesTorecover.append(eachitem);
+                }
+                else {
+                    booksTorecover.append(eachitem);
+                }
+            }
+            else {
+                booksTorecover.append(eachitem);
+            }
+        }
+        var itemsToRestore = [FTShelfItemProtocol]();
+        itemsToRestore.append(contentsOf: booksTorecover);
+        itemsToRestore.append(contentsOf: pagesTorecover);
+        return itemsToRestore;
+    }
+    
 }
