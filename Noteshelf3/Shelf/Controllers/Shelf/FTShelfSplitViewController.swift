@@ -33,7 +33,7 @@ protocol FTShelfPresentable {
     
     func hideGroup(animate: Bool, onCompletion: (() -> Void)?)
     func showGroup(with shelfItem: FTShelfItemProtocol, animate: Bool)
-    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, addToRecent: Bool,isQuickCreate: Bool,createWithAudio: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
+    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, pageUUID: String?, addToRecent: Bool,isQuickCreate: Bool,createWithAudio: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?)
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol)
     func importItemAndAutoScroll(_ item: FTImportItem, shouldOpen: Bool, completionHandler: ((FTShelfItemProtocol?, Bool) -> Void)?)
 //    func shelfItems(_ sortOrder: FTShelfSortOrder, parent: FTGroupItemProtocol?, searchKey: String?, onCompletion completionBlock: @escaping (([FTShelfItemProtocol]) -> Void))
@@ -305,7 +305,7 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
             }
         }
     }
-    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, addToRecent: Bool, isQuickCreate: Bool, createWithAudio: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
+    func showNotebookAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol, animate: Bool, pin: String?, pageUUID: String? = nil, addToRecent: Bool, isQuickCreate: Bool, createWithAudio: Bool, onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
         self.openNotebookAndAskPasswordIfNeeded(shelfItem,
                                                 animate: animate,
                                                 presentWithAnimation: false,
@@ -314,12 +314,13 @@ class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
                                                 isQuickCreate: isQuickCreate,
                                                 createWithAudio: createWithAudio,
                                                 pageIndex: nil,
+                                                pageUUID: pageUUID,
                                                 onCompletion: onCompletion)
     }
 
     func continueProcessingImport(withOpenDoc openDoc: Bool, withItem item: FTShelfItemProtocol) {
         if openDoc, self.shelfItemCollection?.collectionType != .system, !(item.isPinEnabledForDocument()) {
-            self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
+            self.showNotebookAskPasswordIfNeeded(item, animate: self.isInSearchMode, pin: nil, pageUUID: nil, addToRecent: true, isQuickCreate: false, createWithAudio: false, onCompletion: nil)
         }
     }
 
@@ -509,6 +510,7 @@ extension FTShelfSplitViewController {
                                             isQuickCreate: Bool,
                                             createWithAudio: Bool,
                                             pageIndex: Int?,
+                                            pageUUID: String? = nil,
                                             onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
 
         let notebookName = shelfItem.displayTitle
@@ -520,36 +522,37 @@ extension FTShelfSplitViewController {
                                                   pin: pin,
                                                   onViewController: self)
         { [weak self] (openedDocument, error,token) in
+            guard let self else { return }
             if let inError = error {
-                self?.view.isUserInteractionEnabled = true
-                self?.openingBookInProgress = false
+                self.view.isUserInteractionEnabled = true
+                self.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 if(inError.isConflictError) {
                     FTCLSLog("Book: \(notebookName): Conflict")
                     if let conflictedDocument = openedDocument, let item = shelfItem as? FTDocumentItemProtocol {
                         let documentConflictScreen = FTCloudDocumentConflictScreen.conflictViewControllerForDocument(conflictedDocument, documentItem:item)
-                        self?.present(documentConflictScreen, animated: true, completion: nil)
+                        self.present(documentConflictScreen, animated: true, completion: nil)
                     }
                 }
                 else if(inError.isNotDownloadedError) {
-                    self?.downloadShelfItem(shelfItem)
+                    self.downloadShelfItem(shelfItem)
                 }
                 else if inError.isNotExistError {
                     runInMainThread {
-                        self?.showAlertForError(inError as NSError)
+                        self.showAlertForError(inError as NSError)
                     }
                 }
                 else if(!inError.isInvalidPinError) {
                     FTCLSLog("Book: \(notebookName): Open failed invalid Pin")
-                        self?.handleNotebookOpenError(for: shelfItem, error: error as NSError?)
+                        self.handleNotebookOpenError(for: shelfItem, error: error as NSError?)
                 }
                 onCompletion?(nil, false)
                 return
             }
 
             guard let notebookToOpen = openedDocument, let doc = notebookToOpen as? FTNoteshelfDocument, error == nil else {
-                self?.view.isUserInteractionEnabled = true
-                self?.openingBookInProgress = false
+                self.view.isUserInteractionEnabled = true
+                self.openingBookInProgress = false
                 NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
                 onCompletion?(nil, false)
                 return
@@ -567,30 +570,79 @@ extension FTShelfSplitViewController {
             func processDocumentOpen() {
                 var shouldAnimate = animate
 
-                if self?.applicationState() != .active {
+                if self.applicationState() != .active {
                     shouldAnimate = false
                 }
 
-                var docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex ?? -1)
-                if let userActivity = self?.view.window?.windowScene?.userActivity{
-                    if let pageIndex = userActivity.currentPageIndex {
-                        docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex)
-                        userActivity.currentPageIndex = nil //Clear it as we don't need this anywhere else
+                if let pageId = pageUUID  {
+                    guard let parent = self.parent as? FTRootViewController, let docVc = parent.docuemntViewController else {
+                        return
                     }
-                }
-                docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
-
-                if let rootController = self?.parent as? FTRootViewController {
-                    rootController.switchToPDFViewer(docInfo, animate: shouldAnimate ,onCompletion: {
-                        self?.openingBookInProgress = false
-                        self?.view.isUserInteractionEnabled = true
-                        if(addToRecent) {
-                            FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                    if let index = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
+                        docVc.handleNewDocumentOpenAlert(title: shelfItem.displayTitle, pageNumber: index + 1) { yes in
+                            if yes {
+                                openBook(using: index)
+                            } else {
+                                self.view.isUserInteractionEnabled = true
+                                self.openingBookInProgress = false
+                                onCompletion?(nil, false)
+                            }
                         }
-                        NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
-                        notebookToOpen.isJustCreatedWithQuickNote = isQuickCreate
-                        onCompletion?(notebookToOpen, true)
-                    })
+                    } else {
+                        UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: docVc, notebookTitle: doc.documentName) { yes in
+                            if yes {
+                                openBook(using: 0)
+                            } else {
+                                self.view.isUserInteractionEnabled = true
+                                self.openingBookInProgress = false
+                                onCompletion?(nil, false)
+                            }
+                        }
+                    }
+
+                    func openBook(using index: Int) {
+                        var docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: index)
+                        docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
+                        switchToPDFViewer(docInfo: docInfo)
+                    }
+                } else {
+                    var docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex ?? -1)
+                    if let userActivity = self.view.window?.windowScene?.userActivity{
+                        if let pageIndex = userActivity.currentPageIndex {
+                            docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex)
+                            userActivity.currentPageIndex = nil //Clear it as we don't need this anywhere else
+                        }
+                    }
+                    docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
+                    switchToPDFViewer(docInfo: docInfo)
+                }
+
+                func switchToPDFViewer(docInfo: FTDocumentOpenInfo) {
+                    guard let rootController = self.parent as? FTRootViewController else {
+                        onCompletion?(nil,false)
+                        return
+                    }
+
+                    if let docContorller = rootController.docuemntViewController {
+                        docContorller.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { _ in
+                            openPDFViewer()
+                        }
+                    } else {
+                        openPDFViewer()
+                    }
+
+                    func openPDFViewer() {
+                        rootController.switchToPDFViewer(docInfo, animate: shouldAnimate ,onCompletion: {
+                            self.openingBookInProgress = false
+                            self.view.isUserInteractionEnabled = true
+                            if(addToRecent) {
+                                FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
+                            }
+                            NotificationCenter.default.post(name: NSNotification.Name.shelfItemRemoveLoader, object: shelfItem, userInfo: nil)
+                            notebookToOpen.isJustCreatedWithQuickNote = isQuickCreate
+                            onCompletion?(notebookToOpen, true)
+                        })
+                    }
                 }
             }
         }

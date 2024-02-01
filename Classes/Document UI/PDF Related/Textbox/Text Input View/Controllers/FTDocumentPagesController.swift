@@ -20,6 +20,7 @@ class FTDocumentPagesController: UIViewController {
     weak var document: FTThumbnailableCollection? {
         didSet {
             self.pages = self.document?.documentPages() ?? []
+            self.collectionView.collectionViewLayout.invalidateLayout()
             self.collectionView.reloadData()
         }
     }

@@ -35,7 +35,7 @@ let textContainerTag: Int = 9001
     func checkIfDocumentIsOpen(docId: String) -> Bool
     func showDocumentNotAvailableAlert()
     func showDocumentNotDownloadedAlert(for url: URL)
-    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: ((Bool) -> Void)?)
+    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping (Bool) -> Void)
 }
 
 protocol FTToolbarElements : NSObjectProtocol {
@@ -353,14 +353,14 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: ((Bool) -> Void)?) {
-        let message = String(format: "textLink_closingCurrentDocument_title".localized, title)
-        let alertController = UIAlertController(title: "textLink_continueConfirmation".localized, message: message, preferredStyle: .alert)
+    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping ((Bool) -> Void)) {
+        let title = String(format: "textLink_continueConfirmation".localized, title)
+        let alertController = UIAlertController(title: title, message: "textLink_closingCurrentDocument_title".localized, preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes".localized, style: .default) { _ in
-            onCompletion?(true)
+            onCompletion(true)
         }
         let noAction = UIAlertAction(title: "No".localized, style: .cancel) { _ in
-            onCompletion?(false)
+            onCompletion(false)
         }
         alertController.addAction(yesAction)
         alertController.addAction(noAction)

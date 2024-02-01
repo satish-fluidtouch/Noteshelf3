@@ -149,21 +149,40 @@ class FTLinkToTextViewModel: NSObject {
         } else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
                 if let shelfItem = docItem {
-                    self.updateDocumentTitle(shelfItem.displayTitle)
-                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                        if let doc = document {
-                            self.selectedDocument = doc
-                            self.token = token
-                            let pages = doc.pages()
-                            if let pageIndex = pages.firstIndex(where: { $0.uuid == self.info.pageUUID }) {
-                                self.updatePageNumber(pageIndex + 1)
-                            } else {
-                                self.updatePageNumber(1)
-                                var updatedInfo = self.info
-                                updatedInfo.pageUUID = pages.first?.uuid ?? ""
+                    if let document = FTDocumentFactory.documentForItemAtURL(shelfItem.URL) as? FTNoteshelfDocument {
+                        if document.isPinEnabled(), let controller = (self.delegate as? FTTextAnnotationViewController)?.presentedViewController {
+                            FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
+                                                                         onviewController: controller)
+                            { (pin, success,_) in
+                                if(success) {
+                                    prepareDetails(pin: pin)
+                                }
                             }
-                            onCompletion?(true)
+                        } else {
+                            prepareDetails(pin: nil)
+                        }
+                    }
+
+                    func prepareDetails(pin: String?) {
+                        self.updateDocumentTitle(shelfItem.displayTitle)
+                        let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                        if let passcode = pin {
+                            request.pin = passcode
+                        }
+                        FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                            if let doc = document {
+                                self.selectedDocument = doc
+                                self.token = token
+                                let pages = doc.pages()
+                                if let pageIndex = pages.firstIndex(where: { $0.uuid == self.info.pageUUID }) {
+                                    self.updatePageNumber(pageIndex + 1)
+                                } else {
+                                    self.updatePageNumber(1)
+                                    var updatedInfo = self.info
+                                    updatedInfo.pageUUID = pages.first?.uuid ?? ""
+                                }
+                                onCompletion?(true)
+                            }
                         }
                     }
                 }
@@ -178,11 +197,30 @@ class FTLinkToTextViewModel: NSObject {
         } else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
                 if let shelfItem = docItem {
-                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                        self.selectedDocument = document
-                        self.token = token
-                        onCompletion?(document)
+                    if let document = FTDocumentFactory.documentForItemAtURL(shelfItem.URL) as? FTNoteshelfDocument {
+                        if document.isPinEnabled(), let controller = (self.delegate as? FTTextAnnotationViewController)?.presentedViewController {
+                            FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
+                                                                         onviewController: controller)
+                            { (pin, success,_) in
+                                if(success) {
+                                    prepareDetails(pin: pin)
+                                }
+                            }
+                        } else {
+                            prepareDetails(pin: nil)
+                        }
+                    }
+
+                    func prepareDetails(pin: String?) {
+                        let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                        if let passcode = pin {
+                            request.pin = passcode
+                        }
+                        FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                            self.selectedDocument = document
+                            self.token = token
+                            onCompletion?(document)
+                        }
                     }
                 }
             }

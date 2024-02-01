@@ -175,6 +175,7 @@ final class FTAppIntentHandler {
             } else {
                 openAppScehemeURL(url: url)
             }
+            return true
         }
         return false
     }
