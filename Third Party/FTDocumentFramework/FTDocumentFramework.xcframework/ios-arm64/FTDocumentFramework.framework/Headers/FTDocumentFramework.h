@@ -40,4 +40,3 @@ FOUNDATION_EXPORT const unsigned char FTDocumentFrameworkVersionString[];
 
 #import <FTDocumentFramework/FTDocumentRequestManager.h>
 #import <FTDocumentFramework/FTConfiguration.h>
-#import <FTDocumentFramework/FTFileItemSubclass.h>

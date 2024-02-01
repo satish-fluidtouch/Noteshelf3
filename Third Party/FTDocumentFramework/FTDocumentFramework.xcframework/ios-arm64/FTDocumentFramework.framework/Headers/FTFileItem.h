@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class FTDocument;
 
 @protocol FTFileItemSecurity <NSObject>
 -(BOOL)shouldSecure;
@@ -27,16 +26,15 @@
 @property (strong) NSMutableSet *children;
 @property (readonly, nonatomic) BOOL isDirectory;
 @property (readonly, nonatomic) BOOL isModified;
-@property (strong) id<NSObject> content;
+@property (nonatomic,strong) id<NSObject> content;
 @property (weak) id<FTFileItemSecurity> securityDelegate;
 @property (assign) BOOL forceSave;
-@property (readonly, weak) FTDocument *parentDocument;
 
-- (BOOL)isContentLoaded;
+- (id<NSObject>)content;
 
-- (instancetype)initWithURL:(NSURL*)url isDirectory:(BOOL)isDir document:(FTDocument*)parentDocument;
-- (instancetype)initWithFileName:(NSString*)fileName document:(FTDocument*)parentDocument;
-- (instancetype)initWithFileName:(NSString*)fileName isDirectory:(BOOL)isDir document:(FTDocument*)parentDocument;
+- (instancetype)initWithURL:(NSURL*)url isDirectory:(BOOL)isDir;
+- (instancetype)initWithFileName:(NSString*)fileName;
+- (instancetype)initWithFileName:(NSString*)fileName isDirectory:(BOOL)isDir;
 
 - (NSData *)data;
 - (NSString *)string;
