@@ -86,11 +86,11 @@ extension FTShelfViewModel: FTShelfBottomToolbarDelegate {
         if restoreItems.isEmpty, let updateItem = updateItem {
             restoreItems = [updateItem.model]
         }
-        self.delegate?.restoreShelfItem(items: restoreItems, onCompletion: { [weak self] status in
+        self.delegate?.restoreShelfItem(items: restoreItems, onCompletion: { [weak self] success, removedItems in
             self?.addObserversForShelfItems()
             self?.mode = .normal
-            if status {
-
+            if !removedItems.isEmpty {
+                self?.reloadShelfItems(animate: true, nil);
             }
         })
     }
