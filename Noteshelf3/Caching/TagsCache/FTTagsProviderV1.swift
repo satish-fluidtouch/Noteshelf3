@@ -59,12 +59,7 @@ class FTTagsProviderV1: NSObject {
     func getTags(_ includeAllTags: Bool = false,sort:Bool = false) -> [FTTag] {
         lock.lock();
         var userCreatedTags = Array(self.userTags.values);
-        if sort {
-            userCreatedTags.sort { tag1, tage2 in
-                let compare = tag1.tagName.compare(tage2.tagName, options:[.caseInsensitive,.numeric], range: nil, locale: nil)
-                return compare == .orderedAscending
-            }
-        }
+        userCreatedTags = sort ? userCreatedTags.sortedTags() : userCreatedTags;
         if includeAllTags {
             userCreatedTags.insert(self.alTag, at: 0);
         }
@@ -185,7 +180,7 @@ private extension FTTagsProviderV1 {
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            pageEntity.documentName = documentName;
+            pageEntity.documentName = documentName ?? "";
             eachTag.addTaggedItem(pageEntity);
         }
     }
@@ -206,14 +201,14 @@ private extension FTTagsProviderV1 {
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            pageEntity.documentName = documentName;
+            pageEntity.documentName = documentName ?? "";
             (pageEntity as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
             eachTag.addTaggedItem(pageEntity);
         }
         
         let oldOnces = tagNames.subtracting(tagsToAdd)
         oldOnces.forEach { eachTag in
-            pageEntity.documentName = documentName;
+            pageEntity.documentName = documentName ?? "";
             (pageEntity as? FTPageTaggedEntity)?.updatePageProties(pageProperties);
             if pageEntity.tags.contains(eachTag), nil == eachTag.pageTaggedEntity(documentID, pageUUID: pageID) {
                 debugLog("tag present item missing")
@@ -299,7 +294,7 @@ internal extension FTTagsProviderV1 {
             enity = newEntity;
             self.addTaggedEntityToCache(newEntity);
         }
-        enity?.documentName = documentName;
+        enity?.documentName = documentName ?? "";
         lock.unlock();
         return enity;
     }

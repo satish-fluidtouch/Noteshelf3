@@ -17,15 +17,16 @@ class FTAllTag: FTTag {
         return "sidebar.allTags".localized;
     }
     
-    override func getTaggedEntities(_ onCompletion: (([FTTaggedEntity]) -> ())?) {
+    override func getTaggedEntities(sort: Bool,_ onCompletion: (([FTTaggedEntity])->())?) {
         let tags = FTTagsProviderV1.shared.getTags();
         var items = Set<FTTaggedEntity>();
         tags.forEach { eachtag in
-            eachtag.getTaggedEntities { eachEntity in
-                let newSet = Set(eachEntity);
+            eachtag.getTaggedEntities(sort: false, { taggedEntities in
+                let newSet = Set(taggedEntities);
                 items.formUnion(newSet);
-            }
+            })
         }
-        onCompletion?(Array(items));
+        let itemsToReturn = Array(items);
+        onCompletion?(sort ? itemsToReturn.sortedTaggedEntities() : itemsToReturn);
     }
 }

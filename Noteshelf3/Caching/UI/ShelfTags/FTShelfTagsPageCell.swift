@@ -78,10 +78,7 @@ extension FTShelfTagsPageCell {
     func updateTaggedEntity(taggedEntity: FTTaggedEntity, isRegular: Bool) {
         self.taggedEntity = taggedEntity;
         self.bookTitleLbl?.text = taggedEntity.documentName
-        let sortedArray = taggedEntity.tags.sorted { tag1, tag2 in
-            let compare = tag1.tagName.compare(tag2.tagName, options:[.caseInsensitive,.numeric], range: nil, locale: nil)
-            return compare == .orderedAscending
-        };
+        let sortedArray = Array(taggedEntity.tags).sortedTags();
         self.updateTagsViewWith(tags: sortedArray.compactMap{$0.tagName})
         self.thumbnail?.backgroundColor = .clear
 

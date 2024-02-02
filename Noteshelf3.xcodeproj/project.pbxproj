@@ -93,6 +93,7 @@
 		09ABDCAF2A790F94008F144D /* FTNoteshelfAIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDCA32A790F93008F144D /* FTNoteshelfAIViewController.swift */; };
 		09ABDCB22A790FB3008F144D /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 09ABDCB12A790FB3008F144D /* OpenAI */; };
 		09ABDCB42A791077008F144D /* FTPageViewController_OpenAIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */; };
+		09AC098F2B6CCE89005F0B0D /* Tag_Array_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC098E2B6CCE89005F0B0D /* Tag_Array_Extension.swift */; };
 		09AC0D5C2A83B3AC00375B1F /* FTPremiumUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */; };
 		09BAE60F2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAE60E2A654B48008CD577 /* FTShelfSplitViewController_Mac_Extension.swift */; };
 		09BC391D2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BC391C2ACC4BCF0011D8B0 /* FTQLThumbnail_Error.swift */; };
@@ -2716,6 +2717,7 @@
 		09ABDCA22A790F93008F144D /* NoteshelfAI.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NoteshelfAI.storyboard; sourceTree = "<group>"; };
 		09ABDCA32A790F93008F144D /* FTNoteshelfAIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNoteshelfAIViewController.swift; sourceTree = "<group>"; };
 		09ABDCB32A791077008F144D /* FTPageViewController_OpenAIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPageViewController_OpenAIExtension.swift; sourceTree = "<group>"; };
+		09AC098E2B6CCE89005F0B0D /* Tag_Array_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag_Array_Extension.swift; sourceTree = "<group>"; };
 		09AC0D592A83AC7000375B1F /* FTPremiumUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPremiumUser.swift; sourceTree = "<group>"; };
 		09AD81002AFBB48D0049022B /* Release Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Release Enterprise.entitlements"; sourceTree = "<group>"; };
 		09AD81012AFBB49C0049022B /* Debug Enterprise.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Debug Enterprise.entitlements"; sourceTree = "<group>"; };
@@ -4952,6 +4954,7 @@
 				0951AC552B4EAAF400D414BF /* FTTag.swift */,
 				090BCB862B5673C4008520AA /* FTDocumentTagUpdater.swift */,
 				090BCB882B56AB11008520AA /* Operation */,
+				09AC098E2B6CCE89005F0B0D /* Tag_Array_Extension.swift */,
 			);
 			path = TagsCache;
 			sourceTree = "<group>";
@@ -13762,6 +13765,7 @@
 				97C5A23029F1043300B8E251 /* FTSidebarVM+ItemContexualOperations.swift in Sources */,
 				BAF392A52859ADF00067CA9F /* FTUserDefaults_Migration3o1.swift in Sources */,
 				BAF392A62859ADF00067CA9F /* FTDropboxPublishRequest.swift in Sources */,
+				09AC098F2B6CCE89005F0B0D /* Tag_Array_Extension.swift in Sources */,
 				BAF392A72859ADF00067CA9F /* FTDashedLineView.swift in Sources */,
 				BAF392A82859ADF00067CA9F /* NSStringAdditions.m in Sources */,
 				BAF392A92859ADF00067CA9F /* FTShape_SQLiteHelper.swift in Sources */,

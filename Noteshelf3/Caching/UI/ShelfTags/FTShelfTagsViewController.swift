@@ -727,7 +727,7 @@ class FTShelfTagCategory: NSObject {
             self.allEntities.removeAll();
             var booksEntries = [FTTaggedEntity]();
             var pagessEntries = [FTTaggedEntity]();
-            self.currentTag?.getTaggedEntities({ entities in
+            self.currentTag?.getTaggedEntities(sort: true, { entities in
                 self.allEntities = entities;
                 self.allEntities.forEach { eachType in
                     if eachType.tagType == .book {

@@ -135,10 +135,11 @@ class FTTag: NSObject {
         lock.unlock()
     }
     
-    func getTaggedEntities(_ onCompletion: (([FTTaggedEntity])->())?) {
+    func getTaggedEntities(sort: Bool,_ onCompletion: (([FTTaggedEntity])->())?) {
         lock.lock()
         guard !isLoaded else {
-            onCompletion?(self.taggedEntitties);
+            let items = sort ? self.taggedEntitties.sortedTaggedEntities() : self.taggedEntitties;
+            onCompletion?(items);
             lock.unlock()
             return;
         }
@@ -184,7 +185,8 @@ class FTTag: NSObject {
             }
         }
         isLoaded = true;
-        onCompletion?(self.taggedEntitties);
+        let items = sort ? self.taggedEntitties.sortedTaggedEntities() : self.taggedEntitties;
+        onCompletion?(items);
         lock.unlock()
     }
 }
