@@ -66,7 +66,7 @@ class FTThumbReadCallbacks : NSObject
     {
 
         @discardableResult
-        func readThumbnailFromCache(reuseToken: String?) -> String {
+        func readThumbnailFromCache(reuseToken: String?) -> String? {
             return self.ns2ThumbnailReader.thumbnail(for: item
                                                      , reuseToken: reuseToken
                                                      , queue: self.thumbReadOperationQueue
