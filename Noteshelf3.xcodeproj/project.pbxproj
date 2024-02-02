@@ -971,7 +971,6 @@
 		BAA84E6D2873108800DE801B /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E5E2873108700DE801B /* UIColor+Extension.swift */; };
 		BAA84E6E2873108800DE801B /* NSCalendar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E5F2873108800DE801B /* NSCalendar+Extension.swift */; };
 		BAA84E6F2873108800DE801B /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E602873108800DE801B /* FileManager+Extension.swift */; };
-		BAB142312AF3746E001114C0 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAB2589E2959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258A02959D32F0072AEBB /* FTUtils_Swift_Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB2589D2959D32F0072AEBB /* FTUtils_Swift_Common.swift */; };
 		BAB258B0295B19040072AEBB /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
@@ -2219,13 +2218,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0964D0672AB9C27400C79C01;
-			remoteInfo = "Noteshelf3 Thumbnail";
-		};
 		0E4FDEDE2AC1B3AC0097FE16 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2376,7 +2368,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BAB142312AF3746E001114C0 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */,
 				47B0AF202AF22E4200C15810 /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -11998,7 +11989,6 @@
 				BAA84E1C28730F5800DE801B /* PBXTargetDependency */,
 				BAF0DD722A6FE676006D293B /* PBXTargetDependency */,
 				BAF0DCCF2A6FE2A9006D293B /* PBXTargetDependency */,
-				09BC39172ACC3F880011D8B0 /* PBXTargetDependency */,
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
 				0E4FDEEE2AC1B3AD0097FE16 /* PBXTargetDependency */,
 			);
@@ -14620,11 +14610,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		09BC39172ACC3F880011D8B0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0964D0672AB9C27400C79C01 /* Noteshelf3 Thumbnail */;
-			targetProxy = 09BC39162ACC3F880011D8B0 /* PBXContainerItemProxy */;
-		};
 		0E4FDEDF2AC1B3AC0097FE16 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0E4FDEDB2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension */;

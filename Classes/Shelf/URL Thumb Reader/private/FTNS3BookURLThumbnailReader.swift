@@ -5,7 +5,7 @@
 //  Created by Amar Udupa on 31/10/23.
 //  Copyright © 2023 Fluid Touch Pte Ltd. All rights reserved.
 //
-
+/*
 import UIKit
 import QuickLookThumbnailing
 import FTCommon
@@ -147,3 +147,4 @@ private class FTThumbnailRequestOperation: Operation {
         self._isfinished = true;
     }
 }
+*/

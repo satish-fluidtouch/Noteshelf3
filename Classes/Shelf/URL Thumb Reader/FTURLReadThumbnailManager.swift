@@ -22,9 +22,13 @@ class FTThumbReadCallbacks : NSObject
     private var imageCache: FTThumbnailCacheProtocol = FTThumbnailCache()
     //*****************
     
+    //TODO: Re enable these, once the iCloud document corruption issue is resolved
+    /*
     private lazy var ns3ThumbnailReader: FTNS3BookURLThumbnailReader = {
         return FTNS3BookURLThumbnailReader();
     }();
+     */
+
     private lazy var ns2ThumbnailReader: FTNS2BookURLThumbnailReader = {
         return FTNS2BookURLThumbnailReader();
     }();
@@ -69,7 +73,8 @@ class FTThumbReadCallbacks : NSObject
                                                      , cache: self.imageCache
                                                      , onCompletion: onCompletion);
         }
-
+        return readThumbnailFromCache(reuseToken: nil)
+/*
         if FTDeveloperOption.useQuickLookThumbnailing {
             // For NS3 we will be using QLThumbnail, if it fails, we will fallback to old image reading approach
             return ns3ThumbnailReader.thumbnail(for: item, queue: thumbReadOperationQueue) { image, token, fetchError in
@@ -85,6 +90,7 @@ class FTThumbReadCallbacks : NSObject
             // If we explicilty disabled the QL thumbnail
             return readThumbnailFromCache(reuseToken: nil)
         }
+ */
     }
     
     func addImageToCache(image: UIImage?, url: URL)
