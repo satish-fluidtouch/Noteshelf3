@@ -95,16 +95,15 @@ class FTSavedClipsViewModel {
         }
     }
 
-    func clipAnnotationsFor(clip: FTSavedClipModel, completion: @escaping ([FTAnnotation]?, Error?) -> Void)  {
+    func clipAnnotationsFor(clip: FTSavedClipModel, completion: @escaping (FTDocumentProtocol?, [FTAnnotation]?, Error?) -> Void)  {
         if let fileUrl = handler.fileUrlForClip(clip: clip) {
             let request = FTDocumentOpenRequest(url: fileUrl, purpose: .read)
             FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
                 if let error {
-                    completion(nil, error)
+                    completion(nil, nil, error)
                 } else if let document, let firstPage = document.pages().first {
                     let annotations = firstPage.annotations()
-                    FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token, onCompletion: nil)
-                    completion(annotations, nil)
+                    completion(document, annotations, nil)
                 }
             }
         }

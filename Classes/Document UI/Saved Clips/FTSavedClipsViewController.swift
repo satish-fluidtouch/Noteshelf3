@@ -14,7 +14,7 @@ enum FTSavedClipsCellType {
 }
 
 protocol FTSavedClipdelegate : NSObjectProtocol {
-    func didTapSavedClip(annotations: [FTAnnotation])
+    func didTapSavedClip(annotations: [FTAnnotation], document: FTDocumentProtocol)
     func dismiss()
 }
 
@@ -275,9 +275,9 @@ extension FTSavedClipsViewController: UICollectionViewDelegate, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if cellType == .normal, let clip = viewModel.itemFor(indexPath: IndexPath(item: indexPath.item, section: self.selectedSegmentIndex)) {
-            viewModel.clipAnnotationsFor(clip: clip) { [weak self] annotations, error in
-                if let annotations {
-                    self?.delegate?.didTapSavedClip(annotations: annotations)
+            viewModel.clipAnnotationsFor(clip: clip) { [weak self] document, annotations, error in
+                if let annotations = annotations, let document = document {
+                    self?.delegate?.didTapSavedClip(annotations: annotations, document: document)
                 } else {
                     // Handle Error
                 }

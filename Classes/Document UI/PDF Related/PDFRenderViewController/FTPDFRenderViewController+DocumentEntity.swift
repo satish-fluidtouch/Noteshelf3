@@ -158,7 +158,7 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
     }
 }
 extension FTPDFRenderViewController: FTSavedClipdelegate {
-    func didTapSavedClip(annotations: [FTAnnotation]) {
+    func didTapSavedClip(annotations: [FTAnnotation], document: FTDocumentProtocol) {
         self.dismiss()
         if let pageController = self.firstPageController(), let page = pageController.pdfPage as? FTNoteshelfPage {
             let vertices = annotations.map { eachAnn in
@@ -179,6 +179,8 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
             page.deepCopyAnnotations(annotations) { [pageController] in
                 self.postRefreshNotification(for: page, annotations: annotations)
                 pageController.resizeSavedClipFor(annotations: annotations)
+                FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: FTDocumentOpenToken(), onCompletion: nil)
+
             }
         }
     }
