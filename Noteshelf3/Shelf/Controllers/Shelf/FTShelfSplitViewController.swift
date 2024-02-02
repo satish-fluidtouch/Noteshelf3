@@ -601,7 +601,7 @@ extension FTShelfSplitViewController {
                     }
 
                     func openBook(using index: Int) {
-                        var docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: index)
+                        let docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: index)
                         docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
                         switchToPDFViewer(docInfo: docInfo)
                     }
@@ -624,8 +624,10 @@ extension FTShelfSplitViewController {
                     }
 
                     if let docContorller = rootController.docuemntViewController {
-                        docContorller.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { _ in
-                            openPDFViewer()
+                        docContorller.saveApplicationStateByClosingDocument(true, keepEditingOn: false) { canClose in
+                            if canClose {
+                                openPDFViewer()
+                            }
                         }
                     } else {
                         openPDFViewer()
