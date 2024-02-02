@@ -113,15 +113,9 @@ extension FTTextAnnotationViewController {
         attrText.replaceCharacters(in: exstRange, with: "")
         let newAttrStr = NSAttributedString(string: text, attributes: originalAttributes)
         attrText.insert(newAttrStr, at: exstRange.location)
-
-        let newRange = (attrText.string as NSString).range(of: text)
-        if exstRange.location + exstRange.length <= attrText.length {
-            attrText.removeAttribute(.link, range: exstRange)
-            attrText.addAttribute(.link, value: url, range: exstRange)
-        } else {
-            attrText.removeAttribute(.link, range: newRange)
-            attrText.addAttribute(.link, value: url, range: newRange)
-        }
+        let newRange = NSRange(location: exstRange.location, length: text.count)
+        attrText.removeAttribute(.link, range: newRange)
+        attrText.addAttribute(.link, value: url, range: newRange)
         attrText.addAttributes(NSAttributedString.linkAttributes, range: newRange)
         self.textInputView.attributedText = attrText
         self.transitionInProgress = false
