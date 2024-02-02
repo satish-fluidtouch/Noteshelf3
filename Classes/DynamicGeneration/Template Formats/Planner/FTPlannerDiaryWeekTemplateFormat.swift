@@ -18,7 +18,7 @@ class FTPlannerDiaryWeekTemplateFormat : FTPlannerDiaryTemplateFormat {
         let boxWidth : CGFloat = isLandscaped ? 43.91 : 42.32
         let boxHeight : CGFloat = isLandscaped ? 19.12 : 15.66
         let startingXAxis : CGFloat = isLandscaped ? 3.86 : 4.79
-        let startingYAxis : CGFloat = isLandscaped ? 14.28 : 13.35
+        let startingYAxis : CGFloat = isLandscaped ? 15.58 : 13.35
         let horizontalGapBWBoxes : CGFloat = isLandscaped ? 0.87 : 1.07
         let verticalGapBWBoxes : CGFloat = isLandscaped ? 1.29 :0.98
         

@@ -150,6 +150,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             }
         }
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.calendar, activeMonth: nil)
+        self.addTodayPillToCalenderPageWith(context: context)
     }
     override func renderYearPage(atIndex index: Int, context: CGContext, months: [FTMonthInfo], calendarYear: FTYearFormatInfo) {
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.yearTemplate,pdfTemplate: nil)
@@ -169,9 +170,9 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         paragraphStyle1.alignment = .left
 
         let yearPlannerFont = UIFont.InterRegular(screenInfo.fontsInfo.yearPageDetails.yearFontSize)
-        var yearPlannerNewFontSize = UIFont.getScaledFontSizeFor(font: yearPlannerFont, screenSize: currentPageRect.size, minPointSize: 18)
-        let yearFont = UIFont.InterRegular(15)
-        let yearNewFontSize = UIFont.getScaledFontSizeFor(font: yearFont, screenSize: currentPageRect.size, minPointSize: 12)
+        var yearPlannerNewFontSize = UIFont.getScaledFontSizeFor(font: yearPlannerFont, screenSize: currentPageRect.size, minPointSize: 15)
+        let yearFont = UIFont.InterRegular(18)
+        let yearNewFontSize = UIFont.getScaledFontSizeFor(font: yearFont, screenSize: currentPageRect.size, minPointSize: 15)
         if self.layoutRequiresExplicitFont(){
             yearPlannerNewFontSize = 15
         }
@@ -193,6 +194,8 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let yearplannerString = NSMutableAttributedString(string: "Yearly Planner".uppercased(), attributes: yearPlannerAttrs)
         let yearPlannerRect = CGRect(x: yearX, y: yearY, width: yearplannerString.size().width, height: yearplannerString.size().height)
         yearplannerString.draw(in: yearPlannerRect)
+        let yearXOffsetPercent = formatInfo.customVariants.isLandscape ? 1.43 : 1.91
+        let yearXOffset = currentPageRect.width*yearXOffsetPercent/100
         if let startYear = months.first?.year {
             var year: String = "\(startYear)"
             if let endYear = months.last?.year, endYear != startYear {
@@ -200,7 +203,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
                 year = "\(startYear)" +  "-" + "\(endYearXX)"
             }
             let yearString = NSMutableAttributedString.init(string: year, attributes: yearAttrs)
-            let yearRect = CGRect(x: yearX, y: yearY + yearplannerString.size().height , width: yearString.size().width, height: yearString.size().height)
+            let yearRect = CGRect(x: yearX + yearplannerString.size().width + yearXOffset, y: yearY  , width: yearString.size().width, height: yearString.size().height)
             let yearLocation = CGPoint(x: yearRect.origin.x, y: yearRect.origin.y)
             yearString.draw(at: yearLocation)
         }
@@ -260,6 +263,14 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         self.renderTxtAndColorsOnSideNavigationStrip(context: context,type: FTPlannerDiaryTemplateType.year, activeMonth: nil)
 
         yearRectsInfo.yearPageNumRects = self.drawPageNumbersFor(type: FTPlannerDiaryTemplateType.year, currentPageIndex: index, context: context)
+        //today pill
+
+        let rightXOffset = yearRectsInfo.yearPageNumRects.first?.origin.x ?? 0
+        let xOffsetWithOtherText = 16.0
+        let pillRightXOffsetPercent = ((rightXOffset - xOffsetWithOtherText)/currentPageRect.width)*100
+        //let yAxisPercnt : CGFloat = isLandscaped ? 8.83 : 7.0
+        let yAxisPercent = ((yearRectsInfo.yearPageNumRects.first?.origin.y ?? 0)/currentPageRect.height)/100
+        self.addTodayPillToYearPageWith(context: context, rightXOffsetPercnt: pillRightXOffsetPercent)
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
         self.renderPlannerDiaryPDF(context: context, pdfTemplatePath: self.monthTemplate,pdfTemplate: self.monthPagePDFDocument)
@@ -537,7 +548,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         //notesStrip rendering
         let notesRectXPercnt = isLandscaped ?  48.65 : 48.20
-        let notesRectYPercnt = isLandscaped ? 75.45 : 46.70
+        let notesRectYPercnt = isLandscaped ? 76.75 : 46.70
 
         let notesAttr : [NSAttributedString.Key: Any] = [.font: weekDayfont,
                                                                         .kern: 1.6,
@@ -565,7 +576,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         //title rendering
         let isLandscaped = formatInfo.customVariants.isLandscape
-        let titleYPercnt : CGFloat = isLandscaped ? 5.58 : 8.39
+        let titleYPercnt : CGFloat = isLandscaped ? 9.09 : 7.53
         let titleXPercnt : CGFloat = isLandscaped ? 4.04 : 5.40
 
         let titleX = currentPageRect.width*titleXPercnt/100
@@ -629,7 +640,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         //to do rendering
 
         let todoXPercnt = isLandscaped ? 4.58 : 5.39
-        let todoYPercnt = isLandscaped ? 38.96 : 34.35
+        let todoYPercnt = isLandscaped ? 39.71 : 35.06
 
 
         let todoX = currentPageRect.width*todoXPercnt/100
@@ -679,7 +690,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let isLandscaped = self.formatInfo.customVariants.isLandscape
         let titleXPercent : CGFloat = isLandscaped ? 4.04 : 5.87
-        let titleYPercent : CGFloat = isLandscaped ? 5.58 : 8.30
+        let titleYPercent : CGFloat = isLandscaped ? 9.09 : 7.53
 
         let titleX = self.currentPageRect.width*titleXPercent/100
         let titleY = self.currentPageRect.height*titleYPercent/100
@@ -688,7 +699,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         paragraphStyle1.alignment = .left
 
         let titleFont = UIFont.InterRegular(screenInfo.fontsInfo.yearPageDetails.yearFontSize)
-        var titleNewFontSize = UIFont.getScaledFontSizeFor(font: titleFont, screenSize: currentPageRect.size, minPointSize: 18)
+        var titleNewFontSize = UIFont.getScaledFontSizeFor(font: titleFont, screenSize: currentPageRect.size, minPointSize: 15)
         if self.layoutRequiresExplicitFont(){
             titleNewFontSize = 15
         }
@@ -704,9 +715,9 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
        // color BG rendering
         let verticalGapBWLinesPercnt : CGFloat = isLandscaped ? 4.54 : 2.99
         let notesXAxisPercnt : CGFloat = isLandscaped ? 3.59 : 4.79
-        let writingAreaYAxisPercnt : CGFloat = isLandscaped ? 16.10 : 12.78
+        let writingAreaYAxisPercnt : CGFloat = isLandscaped ? 17.40 : 12.78
         let writingAreaLineWidthPercnt : CGFloat = isLandscaped ? 89.11 : 85.61
-        let writingAreaLineBottomPercnt : CGFloat = isLandscaped ? 5.19 : 5.05
+        let writingAreaLineBottomPercnt : CGFloat = isLandscaped ? 3.89 : 4.10
 
         let writingAreaLinesXAxis = self.currentPageRect.width*notesXAxisPercnt/100
         let writingAreaLineYAxis = (self.currentPageRect.height*writingAreaYAxisPercnt/100)
@@ -716,7 +727,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let numberOfDashedLines = CGFloat(Int((self.currentPageRect.height - bezierlinesBottom - writingAreaLineYAxis)/verticalGapBWbezierlines))
 
-        let heightToBeColored = (numberOfDashedLines*verticalGapBWbezierlines) + (numberOfDashedLines*0.5)
+        let heightToBeColored = currentPageRect.height - writingAreaLineYAxis - bezierlinesBottom - numberOfDashedLines*0.5
         let monthStripColorsDict = getMonthStripColorsDict()
         if let highlightColor = monthStripColorsDict["\(monthInfo.fullMonth.uppercased())"] {
             self.drawColorBandsWith(xAxis: writingAreaLinesXAxis, yAxis: writingAreaLineYAxis, context: context, width: writingAreaLineWidth, height: heightToBeColored, bandColor: UIColor(hexString: highlightColor,alpha: 0.7))
@@ -731,7 +742,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
 
         let isLandscaped = self.formatInfo.customVariants.isLandscape
         let monthXPercent : CGFloat = isLandscaped ? 4.04 : 5.87
-        let monthYPercent : CGFloat = isLandscaped ? 5.58 : 8.30
+        let monthYPercent : CGFloat = isLandscaped ? 9.09 : 7.53
 
         let monthX = self.currentPageRect.width*monthXPercent/100
         let monthY = self.currentPageRect.height*monthYPercent/100
@@ -740,7 +751,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         paragraphStyle1.alignment = .left
 
         let monthFont = UIFont.InterRegular(screenInfo.fontsInfo.yearPageDetails.yearFontSize)
-        var monthNewFontSize = UIFont.getScaledFontSizeFor(font: monthFont, screenSize: currentPageRect.size, minPointSize: 18)
+        var monthNewFontSize = UIFont.getScaledFontSizeFor(font: monthFont, screenSize: currentPageRect.size, minPointSize: 15)
         if self.layoutRequiresExplicitFont(){
             monthNewFontSize = 15
         }
@@ -775,7 +786,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         // Mood title rendering
 
         let moodXPercnt = isLandscaped ? 4.85 : 6.47
-        let moodYPercnt = isLandscaped ? 16.36 : 14.12
+        let moodYPercnt = isLandscaped ? 20.64 : 14.12
 
         let moodX = self.currentPageRect.width*moodXPercnt/100
         let moodY = self.currentPageRect.height*moodYPercnt/100
@@ -996,7 +1007,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let numberOfYearPages : Int = isLandscaped ? 3 : 2
         let numberOfPages : Int = type == .year ? numberOfYearPages : numberOfExtrasPages
         let xAxisPercnt : CGFloat = isLandscaped ? 81.83 : 80.81
-        let yAxisPercnt : CGFloat = isLandscaped ? 8.83 : 7.15
+        let yAxisPercnt : CGFloat = isLandscaped ? 8.83 : 7.25
         let pageNumWidthPercnt : CGFloat = isLandscaped ? 3.59 : 4.79
         let pageNumHeightPercnt : CGFloat = isLandscaped ? 1.94 : 1.43
 
@@ -1037,7 +1048,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
         let widgetElementTypes : [FTPlannerDiaryTemplateType] = [.tracker,.notes,.day,.week,.month]
 
         let xAxisPercnt : CGFloat = isLandscaped ? 92.62 : 90.40
-        let yAxisPercnt : CGFloat = isLandscaped ? 9.35 : 7.53
+        let yAxisPercnt : CGFloat = isLandscaped ? 9.09 : 7.53
         let widgetElementsXOffsetPercnt = isLandscaped ? 1.25 : 1.67
         let widgetElementHeightPercnt : CGFloat = isLandscaped ? 1.94 : 1.43
 
@@ -1080,6 +1091,12 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             }
         }
         self.plannerDiaryTopNavigationRectsInfo.plannerTopNavigationRects = pageNavigationRects
+
+        // today pill
+        let rightXOffset = pageNavigationRects[.month]?.origin.x ?? 0
+        let xOffsetWithOtherText = 16.0
+        let pillRightXOffsetPercent = ((rightXOffset - xOffsetWithOtherText)/currentPageRect.width)*100
+        self.addTodayPillInlineWithTopNavCalendarOptionsFor(context: context, rightXOffsetPercent: pillRightXOffsetPercent, yAxisPercent: yAxisPercnt)
     }
     private  func layoutRequiresExplicitCrnerRadiusFrColrdBG() -> Bool {
         if self.formatInfo.customVariants.selectedDevice.identifier == "standard1" ||

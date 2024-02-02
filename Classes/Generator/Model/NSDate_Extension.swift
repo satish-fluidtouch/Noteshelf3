@@ -327,5 +327,11 @@ extension UIFont {
         }
         return font
     }
+    static func InterBold(_ fontSize : CGFloat) -> UIFont {
+        guard let font = UIFont(name: "Inter-Bold", size: fontSize) else {
+            return UIFont.systemFont(ofSize: fontSize);
+        }
+        return font
+    }
 }
 #endif

@@ -821,6 +821,7 @@
 		97D2A5002AC6F09900A0E509 /* FTFavoritePensetDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FF2AC6F09900A0E509 /* FTFavoritePensetDataModel.swift */; };
 		97E4006A29139CAD00E0E0D7 /* FTDropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */; };
 		97E65E162ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */; };
+		97E881962B6CC16800A20129 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97E881952B6CC16800A20129 /* Inter-Bold.ttf */; };
 		97EC28F329A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */; };
 		97EC28F529A74B72008CBD7D /* FTPasswordHostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */; };
 		97F2F10A2AFB739600C30B73 /* FTPreviewShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A663C329966D08006F13C8 /* FTPreviewShape.swift */; };
@@ -3853,6 +3854,7 @@
 		97D470092624852700D29C4E /* FTPresenterSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTPresenterSet.swift; sourceTree = "<group>"; };
 		97E4006929139CAD00E0E0D7 /* FTDropOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDropOverlayView.swift; sourceTree = "<group>"; };
 		97E65E152ACBD9D000B33BC3 /* FTFavoritePenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTFavoritePenCollectionViewCell.swift; sourceTree = "<group>"; };
+		97E881952B6CC16800A20129 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		97EC28F229A748FC008CBD7D /* FTShelfSplitController+CreateNotebookDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FTShelfSplitController+CreateNotebookDelegates.swift"; sourceTree = "<group>"; };
 		97EC28F429A74B72008CBD7D /* FTPasswordHostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPasswordHostController.swift; sourceTree = "<group>"; };
 		97F3C3B326B9247F00E3B75E /* FTClassicDiaryTemplateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTClassicDiaryTemplateFormat.swift; sourceTree = "<group>"; };
@@ -8579,6 +8581,7 @@
 		52BBD52E29E95DB8003088AE /* Inter */ = {
 			isa = PBXGroup;
 			children = (
+				97E881952B6CC16800A20129 /* Inter-Bold.ttf */,
 				52BBD4F829E95BC8003088AE /* Inter-Light.ttf */,
 				52BBD4F729E95BC8003088AE /* Inter-Medium.ttf */,
 				52BBD4F629E95BC7003088AE /* Inter-Regular.ttf */,
@@ -12256,6 +12259,7 @@
 				52B34DFC29E5684400360F10 /* Montserrat-Bold.otf in Resources */,
 				52B34DFD29E5684400360F10 /* Montserrat-Light.otf in Resources */,
 				52BBD52929E95D0E003088AE /* Hanuman-Bold.ttf in Resources */,
+				97E881962B6CC16800A20129 /* Inter-Bold.ttf in Resources */,
 				52BBD50129E95BCE003088AE /* Lora-Medium.ttf in Resources */,
 				52BBD50229E95BCE003088AE /* Lora-Regular.ttf in Resources */,
 				52BBD50329E95BCE003088AE /* Lora-Italic.ttf in Resources */,

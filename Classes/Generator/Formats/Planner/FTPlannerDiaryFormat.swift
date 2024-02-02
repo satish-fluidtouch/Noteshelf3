@@ -936,3 +936,50 @@ extension FTPlannerDiaryFormat {
         return isDarkTemplate ? darkPlannerPlaceHolderStripColor : placeHolderStripColor
     }
 }
+extension FTPlannerDiaryFormat {
+    var todayPillHeightPercnt : CGFloat {
+        let height = self.formatInfo.customVariants.isLandscape ? 2.08 : 1.53
+        return height
+    }
+    func addTodayPillWith(rightXOffsetPercent : CGFloat,yAxisPercnt : CGFloat, toContext context : CGContext) {
+        // Today Pill
+        let font = UIFont.InterBold(10)
+        let textColor = isDarkTemplate ? UIColor(hexString: "#FEFEF5") : UIColor(hexString: "#363636")
+        let pillBGColor = isDarkTemplate ? UIColor(hexString: "#727272") : UIColor(hexString: "#D8D8D8")
+        let rightXOffset = currentPageRect.width*rightXOffsetPercent/100
+        let yAxis = currentPageRect.height*yAxisPercnt/100
+        let todayPillHorizontalPaddingPercnt: CGFloat = 0.35
+
+        let todayPillHorizontalPadding = self.currentPageRect.width*todayPillHorizontalPaddingPercnt/100
+
+        var todayFont = font
+        if self.layoutRequiresExplicitFont(){
+            todayFont = font.withSize(9)
+        }
+
+        let todayAttrs: [NSAttributedString.Key: Any] = [.font: todayFont,
+                                                        .kern: 1.6,
+                                                        .foregroundColor: textColor]
+        let todayString = NSAttributedString.init(string: "TODAY",attributes: todayAttrs)
+
+        let todayPillWidth = todayString.size().width + todayPillHorizontalPadding*2
+
+        let todayPillHeight = currentPageRect.height*todayPillHeightPercnt/100
+        let xAxis = currentPageRect.width - (rightXOffset + todayPillWidth)
+        let todayPillRect = CGRect(x: xAxis, y: yAxis, width: 0, height: todayPillHeight)
+        self.addTodayLink(toContext: context, withRect: todayPillRect, withFont: font, withTextColor: textColor, WithBackgroundColor: pillBGColor)
+    }
+    func addTodayPillToCalenderPageWith(context : CGContext) {
+        let rightXOffsetPercnt = formatInfo.customVariants.isLandscape ? 8.45 : 9.47
+        let yAxis : CGFloat = formatInfo.customVariants.isLandscape ? 9.35 : 7.53
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercnt: yAxis, toContext: context)
+    }
+    func addTodayPillToYearPageWith(context : CGContext, rightXOffsetPercnt : CGFloat) {
+        let yAxisPercnt : CGFloat = formatInfo.customVariants.isLandscape ? 8.83 : 7.25
+        self.addTodayPillWith(rightXOffsetPercent: (100 - rightXOffsetPercnt), yAxisPercnt: yAxisPercnt, toContext: context)
+    }
+    func addTodayPillInlineWithTopNavCalendarOptionsFor(context : CGContext, rightXOffsetPercent : CGFloat, yAxisPercent : CGFloat) {
+        self.addTodayPillWith(rightXOffsetPercent: (100 - rightXOffsetPercent), yAxisPercnt: yAxisPercent, toContext: context)
+    }
+
+}

@@ -334,6 +334,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Inter-Bold.ttf</string>
 		<string>Lora-Bold.ttf</string>
 		<string>Roboto-Bold.ttf</string>
 		<string>Spectral-Bold.ttf</string>
