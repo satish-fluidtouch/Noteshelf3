@@ -16,7 +16,18 @@ class FTNS2BookURLThumbnailReader: NSObject {
                    , reuseToken: String?
                    , queue: OperationQueue
                    , cache: FTThumbnailCacheProtocol
-                   , onCompletion: @escaping (UIImage?,String?) -> ()) -> String {
+                   , onCompletion: @escaping (UIImage?,String?) -> ()) -> String? {
+        let cachedImage = cache.cachedImageForItem(item: item)
+        if(nil != cachedImage) {
+            onCompletion(cachedImage,nil);
+            return nil;
+        }
+
+        if(!FileManager().fileExists(atPath: item.URL.path)) {
+            onCompletion(nil,nil);
+            return nil;
+        }
+
         let hash = item.URL.thumbnailCacheHash()
         let callbackItem: FTThumbReadCallbacks
         if let callBack = self.readCallbacks[hash] {
