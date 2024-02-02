@@ -498,38 +498,35 @@ extension FTTextAnnotation : NSSecureCoding {
     }
 }
 
-extension NSMutableAttributedString
-{
-    func applyDataDetectorAttributes()
-    {
-        let string = self.string;
+extension NSMutableAttributedString {
+    func applyDataDetectorAttributes() {
+        let string = self.string
         guard !string.isEmpty else {
-            return;
+            return
         }
-        
         do {
-            let detector = try NSDataDetector.init(types: NSTextCheckingAllSystemTypes);
-            detector.enumerateMatches(in: string,
-                                      options: .reportCompletion,
-                                      range: NSRange(location: 0, length:string.count))
-            { (result, _, _) in
-                if let _result = result {
-                    let range = _result.range;
-                    switch(_result.resultType) {
-                    case .link:
-                        if let url = _result.url {
-                            self.addAttribute(.link, value: url, range: range)
-                            self.addAttributes(NSAttributedString.linkAttributes, range: range);
-                        }
-                    default:
-                        break;
+            let detector = try NSDataDetector(types: NSTextCheckingAllSystemTypes)
+            detector.enumerateMatches(in: string, options: .reportCompletion, range: NSRange(location: 0, length: string.count)) { (result, _, _) in
+                if let _result = result, _result.resultType == .link, let url = _result.url {
+                    if !self.containsLinkAttribute(in: _result.range) {
+                        self.addAttribute(.link, value: url, range: _result.range)
+                        self.addAttributes(NSAttributedString.linkAttributes, range: _result.range)
                     }
                 }
-            };
+            }
+        } catch {
+            // Handle error if needed
         }
-        catch {
-            
+    }
+
+    private func containsLinkAttribute(in range: NSRange) -> Bool {
+        var containsLinkAttribute = false
+        self.enumerateAttributes(in: range, options: []) { (attributes, _, _) in
+            if attributes[NSAttributedString.Key.link] != nil {
+                containsLinkAttribute = true
+            }
         }
+        return containsLinkAttribute
     }
 }
 
