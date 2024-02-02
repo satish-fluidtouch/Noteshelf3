@@ -18,7 +18,7 @@ class FTTagsProviderV1: NSObject {
     
     private var taggedEntitiesInfo = [String:FTTaggedEntity]();
 
-    private lazy var alTag: FTAllTag = {
+    private(set) lazy var alTag: FTAllTag = {
         return FTAllTag(name: "AllTags");
     }();
     

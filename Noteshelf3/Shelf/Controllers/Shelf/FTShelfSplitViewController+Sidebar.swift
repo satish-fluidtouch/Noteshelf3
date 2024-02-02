@@ -106,15 +106,6 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
             self.showDetailViewController(detailNavVC, sender: self)
         }
     }
-    func openTags(for tag: String, isAllTags: Bool) {
-        if let detailController = self.detailController(), let controller = detailController as? FTShelfTagsViewController {
-            controller.selectedTag = isAllTags ? nil : FTTagModel(text: tag)
-            self.showDetailViewController(detailController, sender: self)
-            controller.reloadContent()
-        } else {
-            self.updateRootVCToDetailNavController(rootVC: getTagsVC(for: tag))
-        }
-    }
 
     func showSettings() {
         let storyboard = UIStoryboard(name: "FTNewSettings", bundle: nil);
@@ -228,11 +219,13 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
     }
     private func getTagsVC(for selectedTag: String) -> UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "FTShelfTagsViewController") as? FTShelfTagsViewController else {
             fatalError("FTShelfTagsViewController doesnt exist")
         }
+        let tag = FTTagsProviderV1.shared.getTagsfor([selectedTag]).first ?? FTTagsProviderV1.shared.alTag;
         viewController.delegate = self
-        viewController.selectedTag = (selectedTag == "sidebar.allTags".localized) ? nil : FTTagModel(text: selectedTag);
+        viewController.setCurrentTag(tag);
         return viewController
     }
     

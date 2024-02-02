@@ -2017,25 +2017,6 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
     }
 
-    func updateShelfTagItemsFor(tag: FTTagModel) {
-        let pages = self.selectedPages.count > 0 ? self.selectedPages : contextMenuActivePages
-        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            if let _pages = pages.allObjects as? [FTThumbnailable], let documentItem = self.delegate?.currentShelfItemInShelfItemsViewController() as? FTDocumentItemProtocol {
-                tagModel.updateTagForPages(documentItem: documentItem, pages: _pages) { [weak self] items in
-                    guard let self = self else { return }
-                    items.forEach { item in
-                        if let page = _pages.first(where: {$0.uuid == item.pageUUID}) {
-                            self.selectedTagItems[page.uuid] = item
-                            (page as? FTNoteshelfPage)?.addTags(tags: item.tags.map({$0.text}))
-                        }
-                        self.refreshTagPills()
-                    }
-                }
-            }
-        }
-
-    }
-
     private func refreshTagPills() {
         var filteredPages = self.searchResultPages ?? self.documentPages;
         if self.selectedSegment == .bookmark {

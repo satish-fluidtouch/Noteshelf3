@@ -215,6 +215,7 @@ class FTShelfTagsViewController: UIViewController {
         self.emptyPlaceholderView?.isHidden = true
     }
 
+    //TODO: Tag consider removing whereever getting used
     func selectedBooksOrPages() -> [FTShelfTagsItem] {
         if !self.tagCategory.books.isEmpty, let bookCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
             
@@ -666,23 +667,6 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
         }
         self.loadShelfTagItems();
         self.activateViewMode()
-    }
-
-    func updateShelfTagItemsFor(tag: FTTagModel) {
-        let selectedItems = selectedItems
-
-        if let tagModel = FTTagsProvider.shared.getTagItemFor(tagName: tag.text) {
-            tagModel.updateTagForShelfTagItem(shelfTagItems: selectedItems) { items in
-                items.forEach { item in
-                    if item.type == .page, let pageUUID = item.pageUUID {
-                        self.selectedTagItems[pageUUID] = item
-                    } else if let docUUID = item.documentUUID {
-                        self.selectedTagItems[docUUID] = item
-                    }
-                }
-            }
-            self.collectionView.reloadData()
-        }
     }
 }
 

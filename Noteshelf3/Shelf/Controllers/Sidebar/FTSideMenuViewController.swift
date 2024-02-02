@@ -30,7 +30,6 @@ protocol FTSideMenuViewControllerDelegate: AnyObject {
     //Bookmarks, tags
     func openBookmarks()
     func openTag(_ tag: FTTag);
-    func openTags(for tag: String, isAllTags: Bool)
     func saveLastSelectedTag(_ tag:String)
     
     // Global search
@@ -169,14 +168,12 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
                 if let sidebarTag = item as? FTSideBarItemTag {
                     self?.delegate?.openTag(sidebarTag.fttag);
                 }
-//                self?.delegate?.openTags(for: item.title, isAllTags: false)
             case .bookmark:
                 self?.delegate?.openBookmarks()
             case .allTags:
                 if let sidebarTag = item as? FTSideBarItemTag {
                     self?.delegate?.openTag(sidebarTag.fttag);
                 }
-//                self?.delegate?.openTags(for: item.title, isAllTags: true)
             }
         }
     }
