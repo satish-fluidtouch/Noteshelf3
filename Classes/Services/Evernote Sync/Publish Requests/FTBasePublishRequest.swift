@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import CoreData
+
 @objc protocol FTBasePublishRequestDelegate: AnyObject {
-    @objc optional func didCompletePublishRequestWithError(_ error: Error?)
-    @objc optional func didCompletePublishRequest(withIgnore ignoreEntry: FTENIgnoreEntry)
+    @objc optional func didCompletePublishRequestWithError(request: FTBasePublishRequest?, error: Error?)
+    @objc optional func didCompletePublishRequest(request: FTBasePublishRequest?, withIgnore ignoreEntry: FTENIgnoreEntry)
 }
 
 class FTBasePublishRequest: NSObject {
