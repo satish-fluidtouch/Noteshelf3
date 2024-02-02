@@ -105,8 +105,10 @@ class FTStylusesViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - PressureSensitivity
     @IBAction func togglePressureSensitivity(_ sender: UISwitch) {
         self.currentStylus.isPressureSentiveEnabled = sender.isOn;
-        let connectedStr = self.currentStylus.isPressureSentiveEnabled ? "Yes" : "No";
-        track("Shelf_Settings_Stylus_PressureSens", params: ["toogle":connectedStr], screenName: FTScreenNames.shelfSettings)
+        let connectedStr = self.currentStylus.isPressureSentiveEnabled ? "On" : "Off";
+        if self.hideNavButtons {
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.applepencil_pressuresensitivity_toggle, params: ["toggle": connectedStr])
+        }
     }
 
     // MARK: - Apple Pencil
@@ -118,6 +120,10 @@ class FTStylusesViewController: UIViewController, UITableViewDataSource, UITable
         })
         self.currentStylus.isEnabled = sender.isOn;
         self.currentStylus.isEnabled ? self.stylusDidConnect() : self.stylusDidDisconnect()
+        if self.hideNavButtons {
+            let str = self.currentStylus.isEnabled ? "On" : "Off";
+            FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker.applepencil_useapplepencil_toggle, params: ["toggle": str])
+        }
         #if !targetEnvironment(macCatalyst)
         SharedPressurePenEngine?.refresh()
         #endif
@@ -139,6 +145,9 @@ class FTStylusesViewController: UIViewController, UITableViewDataSource, UITable
                     controller.contentSize = CGSize(width: defaultPopoverWidth, height: 340)
                 }
                 self.navigationController?.pushViewController(controller, animated: true)
+                if self.hideNavButtons {
+                    FTNotebookEventTracker.trackNotebookEvent(with: "applepencil_doubletapaction_tap")
+                }
             }
         }
     }
