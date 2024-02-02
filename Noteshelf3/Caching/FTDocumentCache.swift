@@ -205,7 +205,9 @@ extension FTDocumentCache {
             }
             dispatchGroup.notify(queue: self.queue) {
                 if itemsCached.count > 0 {
-                    FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: itemsCached)
+                    itemsCached.forEach { eachItem in
+                        FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
+                    }
                     FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: itemsCached)
                 }
             }
@@ -224,11 +226,11 @@ extension FTDocumentCache {
             let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
-                FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
+                FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: documentUUID);
                 FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: [itemToCache])
             } catch let error {
                 if let cacheError = error as? FTCacheError, cacheError == .pinEnabledDocument {
-                    FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
+                    FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: documentUUID);
                 }
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
@@ -321,9 +323,9 @@ private extension FTDocumentCache {
             let _fileManger = FileManager();
             if _fileManger.fileExists(atPath: destinationURL.path) && (doc.URL.relativePathWRTCollection() == relativePath || relativePath == nil){
                 do {
-                    FTCacheTagsProcessor.shared.removeTagsFor(documentUUID: docUUID)
                     FTBookmarksProvider.shared.removeBookmarkFor(documentId: docUUID)
                     try _fileManger.removeItem(at: destinationURL)
+                    FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: docUUID);
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)

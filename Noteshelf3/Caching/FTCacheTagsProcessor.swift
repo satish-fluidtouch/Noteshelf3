@@ -50,7 +50,6 @@ final class FTCacheTagsProcessor {
                 self.loadTagsFromDocuments()
             }
         }
-        FTTagsProvider.shared.updateTags()
         cacheLog(.info, self.cachedPageTagsLocation())
     }
 
@@ -124,48 +123,6 @@ final class FTCacheTagsProcessor {
         }
     }
 
-    private func cacheTagsIntoPlist(_ tags: [String]
-                                     , for documentUUID: String
-                                     , tagsplist cachedTagsPlist: FTCacheTagsPlist) -> (refreshSideMenu: Bool,refreshShelf: Bool) {
-        let plist = cachedTagsPlist
-        var plistTags = plist.tags
-        FTTagsProvider.shared.removeDocumentId(docId: documentUUID)
-
-        var refreshTagsView = false
-        if !Set(tags).isSubset(of: plistTags.keys) {
-            refreshTagsView = true
-        }
-        tags.forEach { tag in
-            let docIds = Set(plistTags[tag] ?? [])
-            if !docIds.contains(documentUUID) {
-                refreshTagsView = true
-            }
-        }
-        for key in plistTags.keys {
-            if var ids = plistTags[key] {
-                ids.removeAll(where: { documentUUID == $0 })
-                plistTags[key] = ids
-            }
-        }
-        tags.forEach { tag in
-            var docIds = Set(plistTags[tag] ?? [])
-            docIds.insert(documentUUID)
-            plistTags[tag] = Array(docIds)
-            if let tagItem = FTTagsProvider.shared.getTagItemFor(tagName: tag) {
-                tagItem.setDocumentIds(docIds: Array(docIds))
-                FTTagsProvider.shared.addNewTagItemIfNeeded(tagItem: tagItem)
-            }
-        }
-        // Remove Empty tags
-        plistTags.forEach { (key, value) in
-            if value.isEmpty, let index = plistTags.index(forKey: key) {
-                plistTags.remove(at: index)
-            }
-        }
-        plist.tags = plistTags;
-        return (true,refreshTagsView);
-    }
-
     func tagsPlist(completion: @escaping (NSMutableDictionary) -> Void) {
         self.readTagsInfo { cacheTagsPlist in
             if let plist = cacheTagsPlist {
@@ -198,102 +155,12 @@ final class FTCacheTagsProcessor {
     }
 
     func removeTagsFor(documentUUID: String) {
-        FTTagsProvider.shared.removeDocumentId(docId: documentUUID)
-        readTagsInfo {[weak self] cachedTagsPlist in
-            guard let self = self else {
-                return
-            }
-            if let cachedTagsPlist {
-                var plistTags = cachedTagsPlist.tags
-                for key in plistTags.keys {
-                    if var ids = plistTags[key] {
-                        ids.removeAll(where: { documentUUID == $0 })
-                        plistTags[key] = ids
-                    }
-                }
-                // Remove Empty tags
-                plistTags.forEach { (key, value) in
-                    if value.isEmpty, let index = plistTags.index(forKey: key) {
-                        plistTags.remove(at: index)
-                    }
-                }
-                self.saveTagsInfo(plistTags)
-                runInMainThread {
-                    FTTagsProvider.shared.updateTags()
-                }
-            }
-        }
+        FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: documentUUID);
     }
 
     func cacheTagsForDocuments(items: [FTItemToCache]) {
         items.forEach { eachItem in
             FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
-        }
-        return;
-        if !items.isEmpty {
-            readTagsInfo {[weak self] cachePlist in
-                guard let self = self else {
-                    return
-                }
-                if let cachePlist {
-                    var shouldRefreshSideMenu = false;
-                    var shouldRefreshShelfTag = false;
-                    func tagsFor(documentUUID: String, completion: @escaping ([String]) -> Void) {
-                        self.cachedDocumentPlistFor(documentUUID: documentUUID) { documentPlist in
-                            if documentPlist != nil, let documentPlist {
-                                let docTags = self.documentTagsFor(documentUUID: documentUUID)
-                                let pages = NSSet(set: Set.init((documentPlist.pages)))
-                                let pagesTags = self.tagsFor(pages)
-                                let tags = Array(Set.init(docTags + pagesTags))
-                                let filteredTags = tags.filter { $0.count > 0 }
-                                completion(filteredTags)
-                            } else {
-                                completion([])
-                            }
-                        }
-                    }
-
-                    let dispatchGroup = DispatchGroup()
-                    items.forEach { eachItem in
-                        dispatchGroup.enter()
-                        tagsFor(documentUUID: eachItem.documentID) { tags in
-                            let result = self.cacheTagsIntoPlist(tags, for: eachItem.documentID,tagsplist: cachePlist)
-                            shouldRefreshSideMenu = shouldRefreshSideMenu || result.refreshSideMenu;
-                            shouldRefreshShelfTag = shouldRefreshShelfTag || result.refreshShelf;
-                            dispatchGroup.leave()
-                        }
-                    }
-                    dispatchGroup.notify(queue: self.queue) {
-                        // Check wheteher documentId hold in Plist for some tag and that document doesn't contain any tags remove it from Plist
-                        var plistTags = cachePlist.tags
-                        
-                        for key in plistTags.keys {
-                            if var ids = plistTags[key] {
-                                for (index, docId) in ids.enumerated().reversed() {
-                                    tagsFor(documentUUID: docId) { tags in
-                                        if !tags.contains(key) || tags.isEmpty {
-                                            ids.remove(at: index)
-                                        }
-                                    }
-                                }
-                                plistTags[key] = ids
-                            }
-                        }
-                        cachePlist.tags = plistTags
-                        self.saveTagsInfo(cachePlist.tags);
-                        if shouldRefreshShelfTag || shouldRefreshSideMenu {
-                            runInMainThread {
-                                if shouldRefreshSideMenu {
-                                    FTTagsProvider.shared.updateTags()
-                                }
-                                if shouldRefreshShelfTag {
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshShelfTags"), object: nil)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 

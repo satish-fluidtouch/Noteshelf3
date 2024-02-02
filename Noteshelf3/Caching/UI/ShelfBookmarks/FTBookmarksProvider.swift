@@ -47,36 +47,34 @@ class FTBookmarksProvider {
     }
 
     func updateBookmarkItemsFor(cacheItems: [FTItemToCache]) {
-        let dispatchGroup = DispatchGroup()
-
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-
+            
             cacheItems.forEach { cacheItem in
-                dispatchGroup.enter()
                 let documentUUID = cacheItem.documentID
                 let item = (allItems as! [FTDocumentItemProtocol]).first(where: {$0.documentUUID == documentUUID})
                 guard let documentItem = item  else { return }
                 let matchedItems = self.bookmarkItems.filter {$0.documentUUID == documentUUID}
                 self.bookmarkItems.removeAll(where: {$0.documentUUID == documentUUID})
-                FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: documentUUID) { [weak self] docPlist in
-                    guard let self = self else {return}
-                    let pages = docPlist?.pages
-                    pages?.forEach { page in
-                        let matchedItem = matchedItems.first(where: {$0.pageUUID == page.uuid})
-                        if page.isBookmarked {
-                            var pageIndex = 0
-                            if let index = pages?.firstIndex(where: { $0.uuid == page.uuid }) {
-                                pageIndex = index
-                            }
-                            let pdfRect = page.pageRect
-                            let bookmarkPage = FTBookmarksItem(shelfItem: documentItem, documentUUID: documentUUID, pageUUID: page.uuid,pageIndex: pageIndex, pdfKitPageRect: pdfRect, bookmarkTitle: page.bookmarkTitle, isBookmarked: page.isBookmarked, bookmarkColor: page.bookmarkColor)
-                            self.bookmarkItems.append(bookmarkPage)
-                        }
+                let cachedDocument = FTCachedDocument(documentID: documentUUID);
+                cachedDocument.pages.enumerated().forEach { eachItem in
+                    let page = eachItem.element;
+                    let matchedItem = matchedItems.first(where: {$0.pageUUID == page.uuid})
+                    if page.isBookmarked {
+                        let pageIndex = eachItem.offset
+                        let pdfRect = page.pdfPageRect
+                        let bookmarkPage = FTBookmarksItem(shelfItem: documentItem
+                                                           , documentUUID: documentUUID
+                                                           , pageUUID: page.uuid
+                                                           , pageIndex: pageIndex
+                                                           , pdfKitPageRect: pdfRect
+                                                           , bookmarkTitle: page.bookmarkTitle
+                                                           , isBookmarked: page.isBookmarked
+                                                           , bookmarkColor: page.bookmarkColor)
+                        self.bookmarkItems.append(bookmarkPage)
                     }
-                    dispatchGroup.leave()
                 }
             }
-            dispatchGroup.notify(queue: .main) {
+            DispatchQueue.main.async {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refreshBookmarks"), object: nil)
             }
         }
@@ -98,37 +96,34 @@ class FTBookmarksProvider {
     }
 
     private func fetchBookmarks(completion: @escaping ([FTBookmarksItem]) -> Void) {
-        let dispatchGroup = DispatchGroup()
-
         var totalBookmarksItems: [FTBookmarksItem] = [FTBookmarksItem]()
         FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
 
             let items: [FTDocumentItemProtocol] = allItems.compactMap({ $0 as? FTDocumentItemProtocol }).filter({ $0.isDownloaded })
 
             for case let item in items where item.documentUUID != nil {
-                dispatchGroup.enter()
                 guard let docUUID = item.documentUUID else { continue }
-
-                FTCacheTagsProcessor.shared.cachedDocumentPlistFor(documentUUID: docUUID) { docPlist in
-                    let pages = docPlist?.pages
-                    var tagsPages: [FTBookmarksItem] = [FTBookmarksItem]()
-                    pages?.forEach { page in
-                        if page.isBookmarked {
-                            var pageIndex = 0
-                            if let index = pages?.firstIndex(where: { $0.uuid == page.uuid }) {
-                                pageIndex = index
-                            }
-                            let pdfRect = page.pageRect
-                            let bookmarkPage = FTBookmarksItem(shelfItem: item, documentUUID: docUUID, pageUUID: page.uuid,pageIndex: pageIndex, pdfKitPageRect: pdfRect, bookmarkTitle: page.bookmarkTitle, isBookmarked: page.isBookmarked, bookmarkColor: page.bookmarkColor)
-                            tagsPages.append(bookmarkPage)
-                        }
+                
+                let cachedDocument = FTCachedDocument(documentID: docUUID);
+                cachedDocument.pages.enumerated().forEach { eachItem in
+                    let page = eachItem.element;
+                    let pageIndex = eachItem.offset;
+                    if page.isBookmarked {
+                        let pdfRect = page.pdfPageRect
+                        let bookmarkPage = FTBookmarksItem(shelfItem: item
+                                                           , documentUUID: docUUID
+                                                           , pageUUID: page.uuid
+                                                           , pageIndex: pageIndex
+                                                           , pdfKitPageRect: pdfRect
+                                                           , bookmarkTitle: page.bookmarkTitle
+                                                           , isBookmarked: page.isBookmarked
+                                                           , bookmarkColor: page.bookmarkColor)
+                        totalBookmarksItems.append(bookmarkPage)
                     }
-                    totalBookmarksItems.append(contentsOf: tagsPages)
-                    dispatchGroup.leave()
                 }
             }
             cacheLog(.info, "Bookmarks", totalBookmarksItems.count)
-            dispatchGroup.notify(queue: .main) {
+            DispatchQueue.main.async {
                 completion(totalBookmarksItems)
             }
         }

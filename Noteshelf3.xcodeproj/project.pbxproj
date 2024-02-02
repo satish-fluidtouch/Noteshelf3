@@ -930,7 +930,6 @@
 		BA50E03A2959CB3C00CDC0FD /* FTCacheTagsProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CD5413293760F700BE0963 /* FTCacheTagsProcessor.swift */; };
 		BA50E03B2959CB3F00CDC0FD /* FTSidebarViewModel+Tags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CB62BC294869F600E7CAE4 /* FTSidebarViewModel+Tags.swift */; };
 		BA50E03C2959CB4800CDC0FD /* FTShelfTagsRepresentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */; };
-		BA50E03D2959CB4B00CDC0FD /* FTShelfTagsUpdateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */; };
 		BA56E9282A65139600BC603C /* AllAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA56E9272A65139600BC603C /* AllAssets.xcassets */; };
 		BA666A4C2A790B96002FF383 /* FTDocumentMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA666A4B2A790B96002FF383 /* FTDocumentMigration.swift */; };
 		BA6A4280293768140018BC2A /* FTCachedSqliteAnnotationFileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6A427F293768130018BC2A /* FTCachedSqliteAnnotationFileItem.swift */; };
@@ -3377,7 +3376,6 @@
 		47E994E2292389B200102297 /* FTShelfPagePreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfPagePreviewController.swift; sourceTree = "<group>"; };
 		47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTDocumentPropertyPlistItem.swift; sourceTree = "<group>"; };
 		47F4030E1F56C69F000D4C59 /* FTShelfCategoryCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfCategoryCollection.swift; sourceTree = "<group>"; };
-		47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsUpdateHandler.swift; sourceTree = "<group>"; };
 		47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWatchRecordedListReprasentableView.swift; sourceTree = "<group>"; };
 		47F652CB1EB4C0290029EC68 /* FTThemeCoverflowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FTThemeCoverflowView.swift; path = Notebook/FTThemeCoverflowView.swift; sourceTree = "<group>"; };
 		47F652CE1EB4C0440029EC68 /* FTThemeCoverflowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FTThemeCoverflowView.xib; path = Notebook/FTThemeCoverflowView.xib; sourceTree = "<group>"; };
@@ -8063,7 +8061,6 @@
 				47653CA4291CA8670068D7AE /* FTShelfTagsPageCell.swift */,
 				475E534A2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift */,
 				477862FC2A612DA800202D00 /* FTShelfTagsBooksCell+ContextMenu.swift */,
-				47F4E952292E324B00DDD64B /* FTShelfTagsUpdateHandler.swift */,
 				47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */,
 				4709F4232AE161040085A8C9 /* FTTagItemModel.swift */,
 				4709F4252AE168120085A8C9 /* FTCachedDocumentPlist.swift */,
@@ -13089,7 +13086,6 @@
 				BAF390792859ADF00067CA9F /* FTModernDiaryWeekTemplate.swift in Sources */,
 				BAF3907A2859ADF00067CA9F /* FTPageViewController_ShapeEditing.swift in Sources */,
 				BAF3907B2859ADF00067CA9F /* FTScreenSpacesInfo.swift in Sources */,
-				BA50E03D2959CB4B00CDC0FD /* FTShelfTagsUpdateHandler.swift in Sources */,
 				BAF3907E2859ADF00067CA9F /* FTPhotoAlbumTableViewCell.swift in Sources */,
 				BAF3907F2859ADF00067CA9F /* FTSearchResultHeader.swift in Sources */,
 				BAF390802859ADF00067CA9F /* FTAutoBackupItem.swift in Sources */,

@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum FTTagsType {
+    case page, book
+}
+
 class FTTaggedEntity: NSObject, Identifiable {
     
     static func taggedEntity(_ documentID: String

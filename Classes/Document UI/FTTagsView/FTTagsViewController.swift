@@ -47,9 +47,6 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
 #if targetEnvironment(macCatalyst)
     var showCloseIcon = false
 #endif
-    private var showBackButton = false
-    private var tagsType: FTTagsType = .page
-    private var lastUsedTag = ""
     
     deinit {
         debugLog("deinit \(self.classForCoder)");
