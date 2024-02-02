@@ -33,11 +33,15 @@ class FTTagsViewController: UIViewController, FTPopoverPresentable {
     @IBOutlet private weak var cancelButton: FTCustomButton?
 
     func setTagsList(_ tags: [FTTagModel]) {
-        self.tagItemsList = tags.sortedTags();
+        self.tagItemsList = tags;
         self.commonTagModels = tags.filter{$0.isSelected};
     }
     private var commonTagModels = [FTTagModel]();
-    private var tagItemsList: [FTTagModel] = [];
+    private var tagItemsList: [FTTagModel] = [] {
+        didSet {
+            tagItemsList.sortTags();
+        }
+    }
 
     private var isPresenting = false
 #if targetEnvironment(macCatalyst)

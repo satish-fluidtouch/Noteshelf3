@@ -168,20 +168,23 @@ private extension FTTagsProviderV1 {
     func syncNotebookTagsWithLocalCache(documentID: String
                                         ,documentName: String?
                                         , tagNames: Set<FTTag>) {
-        guard let pageEntity = self.tagggedEntity(documentID, documentName: documentName) else {
+        guard let documentEntity = self.tagggedEntity(documentID
+                                                      , documentName: documentName
+                                                      , pageID: nil
+                                                      , createIfNotPresent: true) else {
             return;
         }
-        let currentTags = pageEntity.tags;
+        let currentTags = documentEntity.tags;
         
         let tagsToRemove = currentTags.subtracting(tagNames);
         tagsToRemove.forEach { eachTag in
-            eachTag.removeTaggedItem(pageEntity)
+            eachTag.removeTaggedItem(documentEntity)
         }
         
         let tagsToAdd = tagNames.subtracting(currentTags);
         tagsToAdd.forEach { eachTag in
-            pageEntity.documentName = documentName ?? "";
-            eachTag.addTaggedItem(pageEntity);
+            documentEntity.documentName = documentName ?? "";
+            eachTag.addTaggedItem(documentEntity);
         }
     }
     
@@ -190,7 +193,10 @@ private extension FTTagsProviderV1 {
                                     , pageID: String
                                     , tagNames: Set<FTTag>
                                     , pageProperties: FTTaggedPageProperties) {
-        guard let pageEntity = self.tagggedEntity(documentID, documentName: documentName,pageID: pageID) else {
+        guard let pageEntity = self.tagggedEntity(documentID
+                                                  , documentName: documentName
+                                                  ,pageID: pageID
+                                                  ,createIfNotPresent: true) else {
             return;
         }
         let currentTags = pageEntity.tags;
@@ -247,23 +253,27 @@ internal extension FTTagsProviderV1 {
                                             , documentName: documentName
                                             , tagNames: newTagsSet);
         let pages = cacheDocument.pages;
-        pages.enumerated().forEach { eachItem in
-            let eachpage = eachItem.element;
-            let index = eachItem.offset;
-            let pageSet = Set(self.getTagsfor(eachpage.tags()))
-            
-            let pageProperties = FTTaggedPageProperties();
-            pageProperties.pageSize = eachpage.pdfPageRect;
-            pageProperties.pageIndex = index;
-            
-            self.syncPageTagsWithLocalCache(documentID: documentID
-                                            , documentName: documentName
-                                            , pageID: eachpage.uuid
-                                            , tagNames: pageSet
-                                            , pageProperties: pageProperties);
-            newTagsSet.formUnion(pageSet);
+        if pages.isEmpty {
+            self.removeAllTaggedItemsOfDocumentUUID(documentID);
         }
-        
+        else {
+            pages.enumerated().forEach { eachItem in
+                let eachpage = eachItem.element;
+                let index = eachItem.offset;
+                let pageSet = Set(self.getTagsfor(eachpage.tags()))
+                
+                let pageProperties = FTTaggedPageProperties();
+                pageProperties.pageSize = eachpage.pdfPageRect;
+                pageProperties.pageIndex = index;
+                
+                self.syncPageTagsWithLocalCache(documentID: documentID
+                                                , documentName: documentName
+                                                , pageID: eachpage.uuid
+                                                , tagNames: pageSet
+                                                , pageProperties: pageProperties);
+                newTagsSet.formUnion(pageSet);
+            }
+        }
         let tagsToremove = currentTags.subtracting(newTagsSet);
         tagsToremove.forEach { eachItem in
             eachItem.removeDocumentID(documentID);
@@ -297,5 +307,25 @@ internal extension FTTagsProviderV1 {
         enity?.documentName = documentName ?? "";
         lock.unlock();
         return enity;
+    }
+}
+
+
+private extension FTTagsProviderV1 {
+    func removeAllTaggedItemsOfDocumentUUID(_ documentUUID: String) {
+        lock.lock();
+        var keysToRemove = [String]();
+        self.taggedEntitiesInfo.forEach { eachItem in
+            if eachItem.value.documentUUID == documentUUID {
+                eachItem.value.tags.forEach { eachTag in
+                    eachTag.removeTaggedItem(eachItem.value);
+                }
+                keysToRemove.append(eachItem.key);
+            }
+        }
+        keysToRemove.forEach { eachKey in
+            self.taggedEntitiesInfo.removeValue(forKey: eachKey);
+        }
+        lock.unlock();
     }
 }

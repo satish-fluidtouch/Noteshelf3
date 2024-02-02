@@ -29,6 +29,7 @@ class FTTaggedEntity: NSObject, Identifiable {
 
     private(set) var documentUUID: String
     var documentName: String
+    var relativePath: String?
 
     var tagType: FTTagsType {
         fatalError("subclass should override")

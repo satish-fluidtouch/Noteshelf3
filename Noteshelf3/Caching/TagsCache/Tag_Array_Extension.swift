@@ -22,6 +22,13 @@ extension Array<FTTag>
 
 extension Array<FTTagModel>
 {
+    mutating func sortTags() {
+        self.sort { tag1, tage2 in
+            let compare = tag1.text.compare(tage2.text, options:[.caseInsensitive,.numeric], range: nil, locale: nil)
+            return compare == .orderedAscending
+        }
+    }
+    
     func sortedTags() -> Array<FTTagModel> {
         let sortedItems = self.sorted { tag1, tage2 in
             let compare = tag1.text.compare(tage2.text, options:[.caseInsensitive,.numeric], range: nil, locale: nil)

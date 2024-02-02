@@ -221,12 +221,15 @@ extension FTDocumentCache {
         }
 
         queue.async {
+            let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
-                let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
                 FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
                 FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: [itemToCache])
-            } catch {
+            } catch let error {
+                if let cacheError = error as? FTCacheError, cacheError == .pinEnabledDocument {
+                    FTCacheTagsProcessor.shared.cacheTagsForDocuments(items: [itemToCache])
+                }
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
         }
