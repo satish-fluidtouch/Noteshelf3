@@ -69,11 +69,14 @@ class FTNS2BookURLThumbnailReader: NSObject {
                     return
                 }
 #endif
-                let thumbURL = nsURL.appendingPathComponent("cover-shelf-image.png");
                 var error : NSError?;
                 let coordinator = NSFileCoordinator.init(filePresenter: nil);
-                coordinator.coordinate(readingItemAt: thumbURL!, options: NSFileCoordinator.ReadingOptions.immediatelyAvailableMetadataOnly, error: &error, byAccessor: { (readURL) in
-                    image = UIImage.init(contentsOfFile: readURL.path);
+                coordinator.coordinate(readingItemAt: item.URL
+                                       , options: .immediatelyAvailableMetadataOnly
+                                       , error: &error
+                                       , byAccessor: { (readURL) in
+                    let thumbURL = readURL.appendingPathComponent("cover-shelf-image.png");
+                    image = UIImage.init(contentsOfFile: thumbURL.path);
                     completionBlockExecution(image, item);
                 });
             }
