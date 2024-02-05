@@ -74,8 +74,6 @@ class FTFinderViewController: UIViewController, FTFinderTabBarProtocol, FTFinder
     func didTapClearButton() {
         
     }
-    private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
-
     var outlinesViewController: FTOutlinesViewController?
     @IBOutlet weak var rotateButton: UIButton!
     private weak var addPageNotificationObserver: NSObjectProtocol?

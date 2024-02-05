@@ -1,5 +1,5 @@
 //
-//  FTTagsProviderV1.swift
+//  FTTagsProvider.swift
 //  Noteshelf3
 //
 //  Created by Amar Udupa on 10/01/24.
@@ -12,8 +12,8 @@ extension Notification.Name {
     static let didUpdateTags = Notification.Name(rawValue:"didupdateTagsNotification");
 }
 
-class FTTagsProviderV1: NSObject {
-    static let shared = FTTagsProviderV1();
+class FTTagsProvider: NSObject {
+    static let shared = FTTagsProvider();
     private var lock = NSRecursiveLock();
     
     private var taggedEntitiesInfo = [String:FTTaggedEntity]();
@@ -90,7 +90,7 @@ class FTTagsProviderV1: NSObject {
     }
 }
 
-private extension FTTagsProviderV1 {
+private extension FTTagsProvider {
     func load() -> [String:FTTag] {
         var allTags = [String:FTTag]();
         let filePath = self.cacheLocation;
@@ -130,7 +130,7 @@ private extension FTTagsProviderV1 {
     }
 }
 
-private extension FTTagsProviderV1 {
+private extension FTTagsProvider {
     func addTags(_ tags: [FTTag]) {
         lock.lock();
         tags.forEach { eachTag in
@@ -164,7 +164,7 @@ private extension FTTagsProviderV1 {
     }
 }
 
-private extension FTTagsProviderV1 {
+private extension FTTagsProvider {
     func syncNotebookTagsWithLocalCache(documentID: String
                                         ,documentName: String?
                                         , tagNames: Set<FTTag>) {
@@ -223,7 +223,7 @@ private extension FTTagsProviderV1 {
     }
 }
 
-private extension FTTagsProviderV1 {
+private extension FTTagsProvider {
     var cacheLocation: URL {
         guard NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).last != nil else {
             fatalError("Unable to find cache directory")
@@ -240,7 +240,7 @@ private extension FTTag {
     }
 }
 
-internal extension FTTagsProviderV1 {
+internal extension FTTagsProvider {
     func syncTagsWithLocalCache(documentID: String) {
         lock.lock();
         let cacheDocument = FTCachedDocument(documentID: documentID);
@@ -311,7 +311,7 @@ internal extension FTTagsProviderV1 {
 }
 
 
-private extension FTTagsProviderV1 {
+private extension FTTagsProvider {
     func removeAllTaggedItemsOfDocumentUUID(_ documentUUID: String) {
         lock.lock();
         var keysToRemove = [String]();

@@ -151,10 +151,10 @@ class FTTag: NSObject {
             let docuemntTags = doc.docuemntTags
             
             if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
-                if let taggedItem = FTTagsProviderV1.shared.tagggedEntity(eachDocument
+                if let taggedItem = FTTagsProvider.shared.tagggedEntity(eachDocument
                                                                           , documentName: documentName
                                                                           , createIfNotPresent: true) {
-                    let tags = FTTagsProviderV1.shared.getTagsfor(docuemntTags);
+                    let tags = FTTagsProvider.shared.getTagsfor(docuemntTags);
                     tags.forEach { eachItem in
                         eachItem.addTaggedItemIfNeeded(taggedItem,forceAdd: eachItem == self)
                     }
@@ -171,12 +171,12 @@ class FTTag: NSObject {
                     pageProperties.pageSize = eachPage.pdfPageRect;
                     pageProperties.pageIndex = index;
                     
-                    if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(eachDocument
+                    if let pageEntity = FTTagsProvider.shared.tagggedEntity(eachDocument
                                                                               , documentName: documentName
                                                                               , pageID: eachPage.uuid
                                                                               , createIfNotPresent: true) as? FTPageTaggedEntity {
                         pageEntity.updatePageProties(pageProperties);
-                        let tags = FTTagsProviderV1.shared.getTagsfor(eachPage.tags());
+                        let tags = FTTagsProvider.shared.getTagsfor(eachPage.tags());
                         tags.forEach { eachItem in
                             eachItem.addTaggedItemIfNeeded(pageEntity,forceAdd: eachItem == self)
                         }

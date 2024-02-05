@@ -72,8 +72,8 @@ class FTDocumentTagUpdater: NSObject {
                                 }
                             }
                             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
-                                let tagsToAdd = FTTagsProviderV1.shared.getTagsfor(addedTags.map{$0.text});
-                                let tagsToRemove = FTTagsProviderV1.shared.getTagsfor(removedTags.map{$0.text});
+                                let tagsToAdd = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
+                                let tagsToRemove = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
                                 
                                 entities.forEach { eachEntity in
                                     tagsToAdd.forEach { eachTag in
@@ -83,7 +83,7 @@ class FTDocumentTagUpdater: NSObject {
                                         eachTag.removeTaggedItem(eachEntity);
                                     }
                                 }
-                                FTTagsProviderV1.shared.saveCache();
+                                FTTagsProvider.shared.saveCache();
                                 progress.completedUnitCount += 1;
                                 performAction(oncompeltion)
                             }
@@ -139,24 +139,24 @@ class FTDocumentTagUpdater: NSObject {
                             }
                             document.removeTags(removedTags.map{$0.text})
                             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
-                                let tagsToAdd = FTTagsProviderV1.shared.getTagsfor(addedTags.map{$0.text});
-                                let tagsToRemove = FTTagsProviderV1.shared.getTagsfor(removedTags.map{$0.text});
+                                let tagsToAdd = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
+                                let tagsToRemove = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
 
                                 let docName = document.URL.title
                                 tagsToAdd.forEach { eachTag in
-                                    if let taggedEntity = FTTagsProviderV1.shared.tagggedEntity(docID
+                                    if let taggedEntity = FTTagsProvider.shared.tagggedEntity(docID
                                                                                                 , documentName: docName
                                                                                                 , createIfNotPresent: true) {
                                         eachTag.addTaggedItem(taggedEntity);
                                     }
                                 }
                                 tagsToRemove.forEach { eachTag in
-                                    if let taggedEntity = FTTagsProviderV1.shared.tagggedEntity(docID
+                                    if let taggedEntity = FTTagsProvider.shared.tagggedEntity(docID
                                                                                                 , documentName: docName) {
                                         eachTag.removeTaggedItem(taggedEntity);
                                     }
                                 }
-                                FTTagsProviderV1.shared.saveCache();
+                                FTTagsProvider.shared.saveCache();
                                 progress.completedUnitCount += 1;
                                 performAction(onCompletion)
                             }
@@ -191,8 +191,8 @@ class FTDocumentTagUpdater: NSObject {
                          pages: [FTPageProtocol]) {
         let documentName = document.URL.title
         
-        let addedFTTags = FTTagsProviderV1.shared.getTagsfor(addedTags.map{$0.text});
-        let removedFTTags = FTTagsProviderV1.shared.getTagsfor(removedTags.map{$0.text});
+        let addedFTTags = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
+        let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
         
         pages.forEach { eachPage in
             let docProperties = FTTaggedPageProperties();
@@ -200,7 +200,7 @@ class FTDocumentTagUpdater: NSObject {
             docProperties.pageSize = eachPage.pdfPageRect;
             
             addedFTTags.forEach { eachTag in
-                if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID
+                if let pageEntity = FTTagsProvider.shared.tagggedEntity(document.documentUUID
                                                                           , documentName: documentName
                                                                           , pageID: eachPage.uuid
                                                                           , createIfNotPresent: true) as? FTPageTaggedEntity {
@@ -210,7 +210,7 @@ class FTDocumentTagUpdater: NSObject {
             }
             
             removedFTTags.forEach { eachTag in
-                if let pageEntity = FTTagsProviderV1.shared.tagggedEntity(document.documentUUID
+                if let pageEntity = FTTagsProvider.shared.tagggedEntity(document.documentUUID
                                                                           , documentName: documentName
                                                                           , pageID: eachPage.uuid) as? FTPageTaggedEntity {
                     eachTag.removeTaggedItem(pageEntity);
@@ -218,6 +218,6 @@ class FTDocumentTagUpdater: NSObject {
                 }
             }
         }
-        FTTagsProviderV1.shared.saveCache();
+        FTTagsProvider.shared.saveCache();
     }
 }

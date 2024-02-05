@@ -1290,19 +1290,6 @@ extension FTShelfSplitViewController: FTImagePickerDelegate {
         }
     }
 }
-extension FTShelfSplitViewController {
-    func commonTagsFor(items: [FTShelfTagsItem]) -> [String] {
-        var commonTags: Set<String> = []
-        for (index, item) in items.enumerated() {
-            if index == 0 {
-                commonTags = Set.init(item.tags.map{$0.text})
-            } else {
-                commonTags = commonTags.intersection(Set.init(item.tags.map{$0.text}))
-            }
-        }
-        return Array(commonTags)
-    }
-}
 
 extension UIBezierPath {
     convenience init(shouldRoundRect rect: CGRect, topLeftRadius: CGSize = .zero, topRightRadius: CGSize = .zero, bottomLeftRadius: CGSize = .zero, bottomRightRadius: CGSize = .zero){
@@ -1605,12 +1592,12 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
             let item = eachItem.element;
             if let documentItem = item as? FTDocumentItemProtocol, let docID = documentItem.documentUUID {
                 let doc = FTCachedDocument(documentID: docID);
-                let tags = Set(FTTagsProviderV1.shared.getTagsfor(doc.docuemntTags));
+                let tags = Set(FTTagsProvider.shared.getTagsfor(doc.docuemntTags));
                 tagsAdded.formUnion(tags);
                 commonTags = eachItem.offset == 0 ? tags : commonTags.intersection(tags);
             }
         }
-        let allTags = FTTagsProviderV1.shared.getTags();
+        let allTags = FTTagsProvider.shared.getTags();
         let tagModels = allTags.map{FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: commonTags.contains($0))};
         FTTagsViewController.showTagsController(onController: self, tags: tagModels);
     }

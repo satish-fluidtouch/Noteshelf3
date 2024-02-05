@@ -42,8 +42,6 @@ protocol FTShelfPresentable {
 }
 
 class FTShelfSplitViewController: UISplitViewController, FTShelfPresentable {
-    var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
-
     let shelfMenuDisplayInfo = FTShelfMenuOverlayInfo();
     
     internal var shelfItemCollection: FTShelfItemCollection? {

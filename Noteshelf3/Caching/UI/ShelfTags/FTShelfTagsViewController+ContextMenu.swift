@@ -30,7 +30,7 @@ extension FTShelfTagsViewController {
 #if !targetEnvironment(macCatalyst)
             let openNewWindowAction = UIAction(title: "sidebar.allTags.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
-                self.openInNewWindow()
+                self.openTaggedItemInNewWindow(item);
                 track(EventName.shelf_tag_page_openinnewwindow_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(openNewWindowAction)
@@ -52,15 +52,14 @@ extension FTShelfTagsViewController {
             return UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: actions)
         }
         return UIContextMenuConfiguration(identifier: identifier, previewProvider: { () -> UIViewController? in
-            if let identifier = identifier as? IndexPath {
-                if let cell = self.collectionView?.cellForItem(at: identifier) as? FTShelfTagsPageCell {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let previewVC = storyboard.instantiateViewController(identifier: "FTShelfPagePreviewController") as? FTShelfPagePreviewController
-                     previewVC?.preferredContentSize = FTPreviewDefaultSize.previewSize(for: (cell.thumbnail?.image)!);
-                    previewVC?.previewImage = cell.thumbnail?.image;
-                    previewVC?.imageView?.contentMode = .scaleAspectFit
-                    return previewVC
-                }
+            let nsIndexPath = identifier as IndexPath
+            if let cell = self.collectionView?.cellForItem(at: nsIndexPath) as? FTShelfTagsPageCell {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let previewVC = storyboard.instantiateViewController(identifier: "FTShelfPagePreviewController") as? FTShelfPagePreviewController
+                 previewVC?.preferredContentSize = FTPreviewDefaultSize.previewSize(for: (cell.thumbnail?.image)!);
+                previewVC?.previewImage = cell.thumbnail?.image;
+                previewVC?.imageView?.contentMode = .scaleAspectFit
+                return previewVC
             }
             return nil
         }, actionProvider: { _ in

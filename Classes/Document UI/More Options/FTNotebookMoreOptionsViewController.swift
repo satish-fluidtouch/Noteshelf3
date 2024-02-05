@@ -112,8 +112,8 @@ class FTNotebookMoreOptionsViewController: UIViewController, FTPopoverPresentabl
             getInfoVC.page = self.page
             getInfoVC.getInfoDel = self
         }  else if let tagsVc = segue.destination as? FTTagsViewController, let tagPage = page as? FTPageTagsProtocol {
-            let pageTags = FTTagsProviderV1.shared.getTagsfor(tagPage.tags());
-            let tagItems = FTTagsProviderV1.shared.getTags()
+            let pageTags = FTTagsProvider.shared.getTagsfor(tagPage.tags());
+            let tagItems = FTTagsProvider.shared.getTags()
             let allTagsModel = tagItems.map{FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: pageTags.contains($0))};
             tagsVc.setTagsList(allTagsModel)
         }

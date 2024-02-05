@@ -26,7 +26,7 @@ extension FTShelfTagsBooksCell {
 #if !targetEnvironment(macCatalyst)
             let openNewWindowAction = UIAction(title: "sidebar.allTags.contextualMenu.openInNewWindow".localized, image: UIImage(systemName: "square.split.2x1"), identifier: nil) { [weak self] (_) in
                 guard let self = self else { return }
-                self.delegate?.openItemInNewWindow()
+                self.delegate?.openTaggedItemInNewWindow(item);
                 track(EventName.shelf_tag_book_openinnewwindow_tap, screenName: ScreenName.shelf_tags)
             }
             actions.append(openNewWindowAction)

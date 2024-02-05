@@ -12,7 +12,6 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
     weak var delegate: FTShelfTagsAndBooksDelegate?
 
     @IBOutlet weak var collectionView: UICollectionView!
-    private var books = [FTShelfTagsItem]()
     private var viewState: FTShelfTagsPageState = .none
     weak var parentVC: UIViewController?
     private var tagCategory = FTShelfTagCategory()
@@ -31,23 +30,6 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
         self.collectionView.dataSource = self
     }
 
-    func prepareCellWith(books: [FTShelfTagsItem], viewState: FTShelfTagsPageState, parentVC: UIViewController) {
-        self.books = books
-        self.viewState = viewState
-        self.parentVC = parentVC
-
-        collectionView.frame = self.bounds
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-
-        let selection = collectionView.indexPathsForSelectedItems
-        self.collectionView.reloadData()
-        if books.count > 0, let items = selection {
-            for selectedItem in items {
-                self.collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: [])
-            }
-        }
-    }
-
     func prepareCell(tagCategory: FTShelfTagCategory
                      , viewState: FTShelfTagsPageState
                      , parentVC: UIViewController) {
@@ -58,13 +40,7 @@ class FTShelfTagsBooksCell: UICollectionViewCell {
         collectionView.frame = self.bounds
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
-        let selection = collectionView.indexPathsForSelectedItems
         self.collectionView.reloadData()
-        if books.count > 0, let items = selection {
-            for selectedItem in items {
-                self.collectionView.selectItem(at: selectedItem, animated: false, scrollPosition: [])
-            }
-        }
     }
 
     override func prepareForReuse() {

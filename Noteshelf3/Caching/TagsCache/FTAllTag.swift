@@ -18,7 +18,7 @@ class FTAllTag: FTTag {
     }
     
     override func getTaggedEntities(sort: Bool,_ onCompletion: (([FTTaggedEntity])->())?) {
-        let tags = FTTagsProviderV1.shared.getTags();
+        let tags = FTTagsProvider.shared.getTags();
         var items = Set<FTTaggedEntity>();
         tags.forEach { eachtag in
             eachtag.getTaggedEntities(sort: false, { taggedEntities in

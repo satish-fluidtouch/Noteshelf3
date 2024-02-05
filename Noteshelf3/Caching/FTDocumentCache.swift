@@ -206,7 +206,7 @@ extension FTDocumentCache {
             dispatchGroup.notify(queue: self.queue) {
                 if itemsCached.count > 0 {
                     itemsCached.forEach { eachItem in
-                        FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
+                        FTTagsProvider.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
                     }
                     FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: itemsCached)
                 }
@@ -226,11 +226,11 @@ extension FTDocumentCache {
             let itemToCache = FTItemToCache(url: url, documentID: documentUUID)
             do {
                 try self.cacheShelfItemIfRequired(url: url, documentUUID: documentUUID)
-                FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: documentUUID);
+                FTTagsProvider.shared.syncTagsWithLocalCache(documentID: documentUUID);
                 FTBookmarksProvider.shared.updateBookmarkItemsFor(cacheItems: [itemToCache])
             } catch let error {
                 if let cacheError = error as? FTCacheError, cacheError == .pinEnabledDocument {
-                    FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: documentUUID);
+                    FTTagsProvider.shared.syncTagsWithLocalCache(documentID: documentUUID);
                 }
                 cacheLog(.error, error.localizedDescription, url.lastPathComponent)
             }
@@ -325,7 +325,7 @@ private extension FTDocumentCache {
                 do {
                     FTBookmarksProvider.shared.removeBookmarkFor(documentId: docUUID)
                     try _fileManger.removeItem(at: destinationURL)
-                    FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: docUUID);
+                    FTTagsProvider.shared.syncTagsWithLocalCache(documentID: docUUID);
                     cacheLog(.success, "Remove", doc.URL.lastPathComponent)
                 } catch {
                     cacheLog(.error, "Remove", doc.URL.lastPathComponent)

@@ -33,7 +33,7 @@ class FTSidebarSectionTags: FTSidebarSection {
             guard let strongSelf = self else {
                 return
             }
-            let tags = FTTagsProviderV1.shared.getTags(true, sort: true);
+            let tags = FTTagsProvider.shared.getTags(true, sort: true);
             let currentTags = (strongSelf.items as! [FTSideBarItemTag]).compactMap{$0.fttag};
             
             let tagsToDelete = Set(currentTags).subtracting(Set(tags));
@@ -73,7 +73,7 @@ private extension FTSidebarSectionTags {
     func prepareItems() {
         var sideBartags = [FTSideBarItem]();
         
-        let tags = FTTagsProviderV1.shared.getTags(true, sort: true);
+        let tags = FTTagsProvider.shared.getTags(true, sort: true);
         tags.forEach { eachTag in
             let item = FTSideBarItemTag(tag: eachTag);
             sideBartags.append(item);

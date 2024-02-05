@@ -51,7 +51,7 @@ class FTTagDelete: NSObject {
 
             FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
             performDeleteOperation {
-                FTTagsProviderV1.shared.deleteTags([self.tag]);
+                FTTagsProvider.shared.deleteTags([self.tag]);
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates();
                 onCompletion?(true)
             }

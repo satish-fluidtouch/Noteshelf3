@@ -155,12 +155,12 @@ final class FTCacheTagsProcessor {
     }
 
     func removeTagsFor(documentUUID: String) {
-        FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: documentUUID);
+        FTTagsProvider.shared.syncTagsWithLocalCache(documentID: documentUUID);
     }
 
     func cacheTagsForDocuments(items: [FTItemToCache]) {
         items.forEach { eachItem in
-            FTTagsProviderV1.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
+            FTTagsProvider.shared.syncTagsWithLocalCache(documentID: eachItem.documentID);
         }
     }
 

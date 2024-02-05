@@ -223,7 +223,7 @@ extension FTShelfSplitViewController: FTSideMenuViewControllerDelegate {
         guard let viewController = storyboard.instantiateViewController(withIdentifier: "FTShelfTagsViewController") as? FTShelfTagsViewController else {
             fatalError("FTShelfTagsViewController doesnt exist")
         }
-        let tag = FTTagsProviderV1.shared.getTagsfor([selectedTag]).first ?? FTTagsProviderV1.shared.alTag;
+        let tag = FTTagsProvider.shared.getTagsfor([selectedTag]).first ?? FTTagsProvider.shared.alTag;
         viewController.delegate = self
         viewController.setCurrentTag(tag);
         return viewController

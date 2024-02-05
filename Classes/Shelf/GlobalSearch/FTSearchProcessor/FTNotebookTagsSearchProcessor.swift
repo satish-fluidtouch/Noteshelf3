@@ -42,8 +42,8 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
 
     private func processAllBooksForTags() {
         let task = startBackgroundTask()
+        //TODO: Tag refactor
         let viewModel = FTShelfTagsPageModel()
-
         if !self.tags.isEmpty {
                 viewModel.processTags(reqItems: self.shelfItems, selectedTags: self.tags, progress: progress) { result in
                 let booksInfo = result.filter({ $0.type == .book })

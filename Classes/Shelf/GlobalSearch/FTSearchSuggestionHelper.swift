@@ -13,13 +13,9 @@ class FTSearchSuggestionHelper: NSObject {
     static let shared = FTSearchSuggestionHelper()
 
     func fetchTags(completion: @escaping ([FTTagModel]) -> Void) {
-        FTTagsProvider.shared.getAllTags { allTagStrs in
-            var tags = allTagStrs.map { $0.tag}
-            tags.sort { (tag1, tag2) -> Bool in
-                (tag1.text.compare(tag2.text, options: [.caseInsensitive, .numeric], range: nil, locale: nil) == .orderedAscending)
-            }
-            completion(tags)
-        }
+        let tags = FTTagsProvider.shared.getTags(false, sort: true);
+        let models = tags.map({FTTagModel(text: $0.tagName)});
+        completion(models);
     }
 
     func fetchCurrentSelectedTagsText(using tokens: [UISearchToken]) -> [String] {

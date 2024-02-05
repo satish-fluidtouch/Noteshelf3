@@ -25,7 +25,7 @@ class FTTagRename: NSObject {
             progress.totalUnitCount += Int64(items.count);
             progress.completedUnitCount += 1
             guard !items.isEmpty else {
-                FTTagsProviderV1.shared.renameTag(self.tag, to: self.newTitle);
+                FTTagsProvider.shared.renameTag(self.tag, to: self.newTitle);
                 onCompletion?(false);
                 return;
             }
@@ -54,7 +54,7 @@ class FTTagRename: NSObject {
             }
             FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
             performRenameOperation {
-                FTTagsProviderV1.shared.renameTag(self.tag, to: self.newTitle);
+                FTTagsProvider.shared.renameTag(self.tag, to: self.newTitle);
                 FTNoteshelfDocumentProvider.shared.enableCloudUpdates();
                 onCompletion?(true)
             };

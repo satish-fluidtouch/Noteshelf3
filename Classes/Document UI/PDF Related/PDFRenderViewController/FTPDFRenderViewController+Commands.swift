@@ -211,11 +211,11 @@ extension FTPDFRenderViewController: FTShortcutActions {
             var commonTags = Set<FTTag>();
             pages.enumerated().forEach { eachPageEntry in
                 if let nspage = eachPageEntry.element as? FTNoteshelfPage {
-                    let pageTags = Set(FTTagsProviderV1.shared.getTagsfor(nspage.tags()));
+                    let pageTags = Set(FTTagsProvider.shared.getTagsfor(nspage.tags()));
                     commonTags = (eachPageEntry.offset == 0) ? pageTags : commonTags.intersection(pageTags)
                 }
             }
-            let allTags = FTTagsProviderV1.shared.getTags();
+            let allTags = FTTagsProvider.shared.getTags();
             let allTagModels = allTags.compactMap({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: commonTags.contains($0))})
             FTTagsViewController.showTagsController(fromSourceView: source, onController: controller, tags: allTagModels)
         }

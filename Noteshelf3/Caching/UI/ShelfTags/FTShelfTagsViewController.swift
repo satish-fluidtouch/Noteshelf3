@@ -24,35 +24,14 @@ protocol FTShelfTagsAndBooksDelegate: AnyObject {
     func openNotebook(shelfItem: FTDocumentItemProtocol, page: Int)
     func editTags(_ taggedEntity: [FTTaggedEntity])
     func removeTags(_ taggedEntity: [FTTaggedEntity])
-    func openItemInNewWindow()
+    func openTaggedItemInNewWindow(_ taggedEntity: FTTaggedEntity)
 }
 
 class FTShelfTagsViewController: UIViewController {
-    var viewModel: FTShelfTagsPageModel?
-    var tagItems = [FTShelfTagsItem]() {
-        didSet {
-            tagItems = tagItems.filter({$0.documentItem?.isPinEnabledForDocument() == false})
-        }
-    }
-    private var selectedTagItems = Dictionary<String, FTShelfTagsItem>();
     private var activityIndicator = UIActivityIndicatorView(style: .medium)
-    var books = [FTShelfTagsItem]()
-    var pages = [FTShelfTagsItem]()
-
-    var selectedTag: FTTagModel? {
-        didSet {
-            if self.collectionView != nil {
-                activateViewMode()
-                enableToolbarItemsIfNeeded()
-            }
-            self.updateTitle();
-        }
-    }
     
     private var currentTag: FTTag?;
     var viewState: FTShelfTagsPageState = .none
-    var selectedPaths = [IndexPath]()
-    var selectedItems = [FTShelfTagsItem]()
     private var currentSize: CGSize = .zero
 
     weak var delegate: FTShelfTagsPageDelegate?
@@ -62,9 +41,9 @@ class FTShelfTagsViewController: UIViewController {
     @IBOutlet weak var removeTagsBtn: UIButton?
     @IBOutlet weak var editTagsBtn: UIButton?
     @IBOutlet weak var shareBtn: UIButton?
-    @IBOutlet var emptyPlaceholderView: UIView?
+    @IBOutlet weak var emptyPlaceholderView: UIView?
     @IBOutlet weak private var selectButtom: UIBarButtonItem?
-    var selectAllButton: UIBarButtonItem?
+    private var selectAllButton: UIBarButtonItem?
 
     private var tagCategory = FTShelfTagCategory();
 
@@ -180,14 +159,6 @@ class FTShelfTagsViewController: UIViewController {
         activityIndicator.isHidden = true
     }
 
-    private func generateBooks() -> [FTShelfTagsItem] {
-       return self.tagItems.filter({$0.type == .book})
-    }
-
-    private func generatePages() -> [FTShelfTagsItem] {
-        return self.tagItems.filter({$0.type == .page})
-    }
-
     private func loadShelfTagItems() {
         if tagCategory.allEntities.isEmpty {
             self.showPlaceholderView();
@@ -213,32 +184,6 @@ class FTShelfTagsViewController: UIViewController {
         selectButtom?.isEnabled = true
         self.collectionView?.isHidden = false
         self.emptyPlaceholderView?.isHidden = true
-    }
-
-    //TODO: Tag consider removing whereever getting used
-    func selectedBooksOrPages() -> [FTShelfTagsItem] {
-        if !self.tagCategory.books.isEmpty, let bookCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
-            
-        }
-        var selectedTagItems = [FTShelfTagsItem]()
-
-        if let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell, let selectedBooks = booksCell.collectionView?.indexPathsForSelectedItems {
-            self.selectedPaths = selectedBooks
-        }
-        if let selectedIndexPaths = self.collectionView?.indexPathsForSelectedItems, selectedIndexPaths.count > 0 {
-            self.selectedPaths += selectedIndexPaths
-        }
-        if self.selectedPaths.count > 0 {
-            self.selectedPaths.forEach({ indexPath in
-                if indexPath.section == 0, books.count > 0 && indexPath.row <= books.count - 1 {
-                    selectedTagItems.append(books[indexPath.row])
-                } else if indexPath.section == 1, indexPath.row <= pages.count - 1 {
-                    selectedTagItems.append(pages[indexPath.row])
-                }
-            })
-            return selectedTagItems
-        }
-        return []
     }
 
      func enableToolbarItemsIfNeeded() {
@@ -279,7 +224,6 @@ class FTShelfTagsViewController: UIViewController {
             activateViewMode()
             track(EventName.shelf_tag_select_done_tap, screenName: ScreenName.shelf_tags)
         } else {
-            selectOrDeselectAllBooks(shouldSelect: false)
             activeEditMode()
             track(EventName.shelf_tag_select_tap, screenName: ScreenName.shelf_tags)
         }
@@ -302,7 +246,6 @@ class FTShelfTagsViewController: UIViewController {
         self.updateTitle();
         viewState = .none
         self.toolbar?.isHidden = true
-        self.selectedPaths = []
         self.tagCategory.deselectAll();
 #if !targetEnvironment(macCatalyst)
         selectButtom?.title = "sidebar.allTags.navbar.select".localized
@@ -314,31 +257,6 @@ class FTShelfTagsViewController: UIViewController {
             toolbar.switchMode(.tags)
         }
 #endif
-    }
-
-    func selectOrDeselectAllBooks(shouldSelect: Bool) {
-        let books = generateBooks()
-        if let booksCell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? FTShelfTagsBooksCell {
-            for (index, _) in books.enumerated() {
-                let indexPath = IndexPath(row: index, section: 0)
-                if shouldSelect {
-                    booksCell.collectionView?.selectItem(at: indexPath, animated: false, scrollPosition: [])
-                } else {
-                    booksCell.collectionView?.deselectItem(at: indexPath, animated: false)
-                }
-            }
-        }
-    }
-
-    func selectOrDeselectAllPages(shouldSelect: Bool) {
-        for (index, _) in pages.enumerated() {
-            let indexPath = IndexPath(row: index, section: 1)
-            if shouldSelect {
-                self.collectionView?.selectItem(at: indexPath, animated: false, scrollPosition: [])
-            } else {
-                self.collectionView?.deselectItem(at: indexPath, animated: false)
-            }
-        }
     }
 
     private var shouldSelectAll: Bool {
@@ -358,16 +276,6 @@ class FTShelfTagsViewController: UIViewController {
         self.collectionView?.reloadItems(at: self.collectionView.indexPathsForVisibleItems);
     }
 
-    func openInNewWindow() {
-        if let selectedItem = self.selectedBooksOrPages().first, let shelfItem = selectedItem.documentItem  {
-            if selectedItem.type == .page {
-                self.openItemInNewWindow(shelfItem, pageIndex: selectedItem.pageIndex)
-            } else {
-                self.openItemInNewWindow(shelfItem, pageIndex: 0)
-            }
-        }
-    }
-
     func shareOperation() {
         self.createDocumentForSelectedPages()
     }
@@ -382,7 +290,7 @@ class FTShelfTagsViewController: UIViewController {
             let tags = eachEntry.element.tags;
             commonTags = eachEntry.offset == 0 ? tags : commonTags.intersection(tags);
         }
-        let allTags = FTTagsProviderV1.shared.getTags();
+        let allTags = FTTagsProvider.shared.getTags();
         let allTagModels = allTags.compactMap({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: commonTags.contains($0))})
 
         FTTagsViewController.showTagsController(onController: self, tags: allTagModels);
@@ -474,24 +382,6 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
         }
     }
     
-//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-//        if viewState == .none {
-//            return true
-//        }
-//        if let cell = collectionView.cellForItem(at: indexPath) as? FTShelfTagsPageCell {
-//            cell.selectionBadge?.isHidden = viewState == .none ? true : false
-//        }
-//
-//        if let selectedItems = collectionView.indexPathsForSelectedItems {
-//            if selectedItems.contains(indexPath) {
-//                collectionView.deselectItem(at: indexPath, animated: true)
-//                return false
-//            }
-//        }
-//        track(EventName.shelf_tag_select_page_tap, screenName: ScreenName.shelf_tags)
-//        return true
-//    }
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if viewState == .none {
             if indexPath.section == 1 {
@@ -590,20 +480,48 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
 extension FTShelfTagsViewController {
 
     private func createDocumentForSelectedPages() {
-        let selectedBooks = self.selectedBooksOrPages().filter {$0.type == .book}
-        let selectedPages = self.selectedBooksOrPages().filter {$0.type == .page}
-        let bookShelfs = selectedBooks.map {$0.documentItem} as? [FTShelfItemProtocol]
-        var itemsToExport = bookShelfs
+        var selBooks = [FTTaggedEntity]();
+        var selPages = [String: [FTPageTaggedEntity]]();
+        
+        self.tagCategory.selectedEntities.forEach { eachitem in
+            if eachitem.tagType == .book {
+                selBooks.append(eachitem);
+            }
+            else if let pageEntity = eachitem as? FTPageTaggedEntity {
+                var pages = selPages[pageEntity.documentUUID] ?? [FTPageTaggedEntity]();
+                pages.append(pageEntity);
+                selPages[pageEntity.documentUUID] = pages;
+            }
+        }
+        
         let group = DispatchGroup()
-
-        let multiples = Dictionary(grouping: selectedPages, by: {$0.documentItem?.documentUUID})
-        multiples.values.forEach { tagItems in
-            group.enter()
-            let pagesUUIDs = tagItems.map({$0.pageUUID})
-            if let docUrl = tagItems.first?.documentItem?.URL {
-                let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docUrl.title)
-                let request = FTDocumentOpenRequest(url: docUrl, purpose: .read)
+        var itemsToExport = [FTShelfItemProtocol]();
+        
+        selBooks.forEach { eachItem in
+            group.enter();
+            FTNoteshelfDocumentProvider.shared.document(with: eachItem.documentUUID) { docItemProtocol in
+                if let docItem = docItemProtocol {
+                    itemsToExport.append(docItem);
+                }
+                group.leave();
+            }
+        }
+        
+        selPages.forEach { eachItem in
+            group.enter();
+            let doc = eachItem.key;
+            FTNoteshelfDocumentProvider.shared.document(with: doc) { docItemProtocol in
+                guard let docItem = docItemProtocol else {
+                    group.leave();
+                    return;
+                }
+                let request = FTDocumentOpenRequest(url: docItem.URL, purpose: .read)
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                    guard let _document = document else {
+                        group.leave()
+                        return;
+                    }
+                    let pagesUUIDs = eachItem.value.map{$0.pageUUID};
                     if let docPages = document?.pages() as? [FTPageProtocol] {
                         let pages = docPages.filter{ page in
                             return pagesUUIDs.contains(page.uuid)
@@ -612,24 +530,25 @@ extension FTShelfTagsViewController {
                         info.rootViewController = self
                         info.overlayStyle = FTCoverStyle.clearWhite
                         info.isNewBook = true
-                        if let document {
-                            document.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
-                                if error == nil {
-                                    let docum = FTDocumentItem.init(fileURL: url)
-                                    itemsToExport?.append(docum)
-                                }
-                                FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token) { _ in
-                                    group.leave()
-                                }
+                        
+                        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docItem.URL.title)
+                        _ = _document.createDocumentAtTemporaryURL(url, purpose: .default, fromPages: pages, documentInfo: info) { _, error in
+                            if error == nil {
+                                let docum = FTDocumentItem.init(fileURL: url)
+                                itemsToExport.append(docum)
+                            }
+                            FTNoteshelfDocumentManager.shared.closeDocument(document: _document, token: token) { _ in
+                                group.leave()
                             }
                         }
                     }
                 }
             }
         }
+        
         group.notify(queue: DispatchQueue.main) {
-            if let books = itemsToExport, books.count > 0 {
-                self.shareNotebooks(books)
+            if !itemsToExport.isEmpty {
+                self.shareNotebooks(itemsToExport)
             }
         }
     }
@@ -694,8 +613,18 @@ extension FTShelfTagsViewController: FTShelfTagsAndBooksDelegate {
         self.removeTagsOperation()
     }
 
-    func openItemInNewWindow() {
-        self.openInNewWindow()
+    func openTaggedItemInNewWindow(_ taggedEntity: FTTaggedEntity) {
+        FTNoteshelfDocumentProvider.shared.document(with: taggedEntity.documentUUID) { docItem in
+            guard let shelfItem = docItem else {
+                return;
+            }
+            if let pageEntity = taggedEntity as? FTPageTaggedEntity {
+                self.openItemInNewWindow(shelfItem, pageIndex: pageEntity.pageProperties.pageIndex);
+            }
+            else {
+                self.openItemInNewWindow(shelfItem, pageIndex: 0);
+            }
+        }
     }
 }
 

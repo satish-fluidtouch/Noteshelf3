@@ -292,8 +292,6 @@ extension FTPDFRenderViewController: FTAddMenuSelectImageProtocal {
 }
 
 //MARK:- TagsViewControllerDelegate
-var selectedShelfTagItems = Dictionary<String, FTShelfTagsItem>()
-
 extension FTPDFRenderViewController: FTTagsViewControllerDelegate {
     func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
         if addedTags.isEmpty, removedTags.isEmpty {
