@@ -94,19 +94,4 @@ class FTSavedClipsViewModel {
             categories[index].url = url
         }
     }
-
-    func clipAnnotationsFor(clip: FTSavedClipModel, completion: @escaping (FTDocumentProtocol?, [FTAnnotation]?, Error?) -> Void)  {
-        if let fileUrl = handler.fileUrlForClip(clip: clip) {
-            let request = FTDocumentOpenRequest(url: fileUrl, purpose: .read)
-            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                if let error {
-                    completion(nil, nil, error)
-                } else if let document, let firstPage = document.pages().first {
-                    let annotations = firstPage.annotations()
-                    completion(document, annotations, nil)
-                }
-            }
-        }
-    }
-
 }

@@ -160,35 +160,8 @@ extension FTPageViewController
     }
 
     func resizeSavedClipFor(annotations: [FTAnnotation]) {
-        normalizeLassoView()
-        let selectedAnnotations = annotations;
-        guard !selectedAnnotations.isEmpty,
-            let contentView = self.contentHolderView else {
-            return;
-        }
-
-        self.lassoSelectionView?.finalizeMove();
-        let hashKey = self.windowHash;
-        selectedAnnotations.forEach { (eachAnnotation) in
-            eachAnnotation.setSelected(true, for: hashKey);
-        }
-
-        self.lassoInfo.selectedAnnotations = selectedAnnotations;
-        var boundingRect = CGRect.zero;
-        if let selectedImage = self.snapshotOf(annotations: selectedAnnotations, enclosedRect: &boundingRect) {
-            let imageResizeViewController = FTLassoContentSelectionViewController(withImage: selectedImage, boundingRect: contentView.bounds);
-            imageResizeViewController.delegate = self;
-            self.addChild(imageResizeViewController);
-            contentView.addSubview(imageResizeViewController.view);
-            var targetRect = imageResizeViewController.view.convert(boundingRect, from: contentView);
-            targetRect = CGRect.scale(targetRect, self.pageContentScale);
-            imageResizeViewController.initialFrame = targetRect;
-            self.lassoContentSelectionViewController = imageResizeViewController;
-
-            if let lassoWriting = self.writingView as? FTLassoProtocol {
-                lassoWriting.finalizeSelection(byAddingAnnotations: nil);
-            }
-        }
+        self.lassoInfo.selectedAnnotations = annotations;
+        initiateTransformSelection()
     }
 }
 

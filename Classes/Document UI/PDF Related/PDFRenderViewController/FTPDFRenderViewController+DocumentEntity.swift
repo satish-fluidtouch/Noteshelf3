@@ -158,29 +158,41 @@ extension FTPDFRenderViewController: FTAddDocumentEntitiesViewControllerDelegate
     }
 }
 extension FTPDFRenderViewController: FTSavedClipdelegate {
-    func didTapSavedClip(annotations: [FTAnnotation], document: FTDocumentProtocol) {
-        self.dismiss()
-        if let pageController = self.firstPageController(), let page = pageController.pdfPage as? FTNoteshelfPage {
-            let vertices = annotations.map { eachAnn in
-                return CGPoint(x: eachAnn.boundingRect.midX, y: eachAnn.boundingRect.midY)
+    func didTapSavedClip(clip: FTSavedClipModel) {
+        func performCopy(annotations: [FTAnnotation], completion: @escaping () -> Void) {
+            if let pageController = self.firstPageController(), let page = pageController.pdfPage as? FTNoteshelfPage {
+                let vertices = annotations.map { eachAnn in
+                    return CGPoint(x: eachAnn.boundingRect.midX, y: eachAnn.boundingRect.midY)
+                }
+                let boundingRect = annotations.first?.boundingRect ?? CGRect.zero
+                var startRect = FTShapeUtility.boundingRect(vertices)
+                if annotations.count == 1 {
+                    startRect = boundingRect
+                }
+                let screenArea = CGRect.scale(pageController.view.frame, 1 / pageController.contentScale())
+                let targetRect = CGRect(x: (screenArea.size.width - startRect.size.width) * 0.5, y: (screenArea.size.height - startRect.size.height) * 0.5, width: startRect.size.width, height: startRect.size.height)
+                let translateX = targetRect.origin.x - startRect.origin.x;
+                let translateY = targetRect.origin.y - startRect.origin.y;
+                annotations.forEach { eachAnn in
+                    eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
+                }
+                page.deepCopyAnnotations(annotations, disableUndo: false) { [pageController] in
+                    pageController.resizeSavedClipFor(annotations: annotations)
+                    completion()
+                }
             }
-            let boundingRect = annotations.first?.boundingRect ?? CGRect.zero
-            var startRect = FTShapeUtility.boundingRect(vertices)
-            if annotations.count == 1 {
-                startRect = boundingRect
-            }
-            let screenArea = CGRect.scale(pageController.view.frame, 1 / pageController.contentScale())
-            let targetRect = CGRect(x: (screenArea.size.width - startRect.size.width) * 0.5, y: (screenArea.size.height - startRect.size.height) * 0.5, width: startRect.size.width, height: startRect.size.height)
-            let translateX = targetRect.origin.x - startRect.origin.x;
-            let translateY = targetRect.origin.y - startRect.origin.y;
-            annotations.forEach { eachAnn in
-                eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
-            }
-            page.deepCopyAnnotations(annotations) { [pageController] in
-                self.postRefreshNotification(for: page, annotations: annotations)
-                pageController.resizeSavedClipFor(annotations: annotations)
-                FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: FTDocumentOpenToken(), onCompletion: nil)
+        }
 
+        if let fileUrl = FTSavedClipsProvider.shared.fileUrlForClip(clip: clip) {
+            let request = FTDocumentOpenRequest(url: fileUrl, purpose: .read)
+            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                if error != nil {
+                } else if let document, let firstPage = document.pages().first {
+                    let annotations = firstPage.annotations()
+                    performCopy(annotations: annotations, completion: {
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token, onCompletion: nil)
+                    })
+                }
             }
         }
     }

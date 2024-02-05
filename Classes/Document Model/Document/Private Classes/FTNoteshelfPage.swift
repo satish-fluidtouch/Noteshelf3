@@ -1277,24 +1277,28 @@ extension FTNoteshelfPage : FTCopying {
 extension FTNoteshelfPage {
     func deepCopyAnnotations(_ annotations : [FTAnnotation],
                              insertFrom : Int = -1,
-                             onCompletion : @escaping  (()->()))
-    {
+                             disableUndo: Bool = true,
+                             onCompletion : @escaping  (()->())) {
         self._startCopyingAnnotations(annotations,
                                       copiedAnnotations : [FTAnnotation](),
                                       onCompletion: { (copiedAnnotations) in
-                                        self.undoManager?.disableUndoRegistration()
-                                        var indices: [Int]?
-                                        if insertFrom != -1 {
-                                            var insertIndices = [Int]();
-                                            let count = copiedAnnotations.count;
-                                            for i in 0..<count {
-                                                insertIndices.append(insertFrom + i);
-                                            }
-                                            indices = insertIndices;
-                                        }
-                                        self.addAnnotations(copiedAnnotations, indices: indices);
-                                        self.undoManager?.enableUndoRegistration()
-                                        onCompletion();
+            if disableUndo {
+                self.undoManager?.disableUndoRegistration()
+            }
+            var indices: [Int]?
+            if insertFrom != -1 {
+                var insertIndices = [Int]();
+                let count = copiedAnnotations.count;
+                for i in 0..<count {
+                    insertIndices.append(insertFrom + i);
+                }
+                indices = insertIndices;
+            }
+            self.addAnnotations(copiedAnnotations, indices: indices);
+            if disableUndo {
+                self.undoManager?.enableUndoRegistration()
+            }
+            onCompletion();
         })
     }
     
