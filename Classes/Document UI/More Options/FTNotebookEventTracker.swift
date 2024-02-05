@@ -89,6 +89,12 @@ class FTNotebookEventTracker {
     static let share_options_titleandpageno_toggle = "share_options_titleandpageno_toggle"
     static let share_share_tap = "share_share_tap"
     static let share_cancel_tap = "share_cancel_tap"
+    static let nbk_swipetoaddpage = "nbk_swipetoaddpage"
+    static let nbk_swipe_newpage_tap = "nbk_swipe_newpage_tap"
+    static let nbk_swipe_choosetemplate_tap = "nbk_swipe_choosetemplate_tap"
+    static let nbk_swipe_importdocument_tap = "nbk_swipe_importdocument_tap"
+    static let nbk_swipe_more_tap = "nbk_swipe_more_tap"
+
 
     static func trackNotebookEvent(with value: String, params: [String: Any]? = nil) {
         track(value, params: params,screenName: FTScreenNames.notebook)

@@ -290,6 +290,21 @@ extension FTRefreshViewController: FTRefreshPageDelegate {
         } else {
             self.createPageWithSelectedOption(item, fromAction: true)
         }
+        trackPageOptions(item)
+    }
+    
+    private func trackPageOptions(_ item: FTNewPageCreationOption) {
+        var eventName = FTNotebookEventTracker.nbk_swipe_newpage_tap
+        if item == .templatePage {
+             eventName = FTNotebookEventTracker.nbk_swipe_choosetemplate_tap
+        } else if item == .importPhotoPage {
+            eventName = FTNotebookEventTracker.nbk_swipe_importdocument_tap
+        } else if item == .normalPage {
+            eventName = FTNotebookEventTracker.nbk_swipe_newpage_tap
+        } else if item == .pageOptions {
+            eventName = FTNotebookEventTracker.nbk_swipe_more_tap
+        }
+        FTNotebookEventTracker.trackNotebookEvent(with: eventName)
     }
     
     private func didTapAddPageOption(_ sender: UIButton) {
