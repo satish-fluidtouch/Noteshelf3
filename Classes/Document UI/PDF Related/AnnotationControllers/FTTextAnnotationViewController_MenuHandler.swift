@@ -113,7 +113,7 @@ extension FTTextAnnotationViewController {
         attrText.replaceCharacters(in: exstRange, with: "")
         let newAttrStr = NSAttributedString(string: text, attributes: originalAttributes)
         attrText.insert(newAttrStr, at: exstRange.location)
-        let newRange = NSRange(location: exstRange.location, length: text.count)
+        let newRange = NSRange(location: exstRange.location, length: (text as NSString).length)
         attrText.removeAttribute(.link, range: newRange)
         attrText.addAttribute(.link, value: url, range: newRange)
         attrText.addAttributes(NSAttributedString.linkAttributes, range: newRange)

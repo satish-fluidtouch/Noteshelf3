@@ -812,37 +812,23 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
         return returnValue
     }
     
-   private func removeLinkIfNeeded(range: NSRange, replacementText text: String) {
+    private func removeLinkIfNeeded(range: NSRange, replacementText text: String) {
         let editedText = (self.textInputView.text as NSString).replacingCharacters(in: range, with: text)
-        let editedRange = NSRange(location: range.location, length: text.count)
+        let nsStrEditedText = NSString(string: editedText)
+        let editedRange = NSRange(location: range.location, length: (text as NSString).length)
         let wordRange = (editedText as NSString).rangeOfWord(at: editedRange.location)
-        guard editedRange.location + editedRange.length <= editedText.count,
-              wordRange.location + wordRange.length <= editedText.count else {
+        guard editedRange.location + editedRange.length <= nsStrEditedText.length,
+              wordRange.location + wordRange.length <= nsStrEditedText.length else {
             return
         }
-        let existingLink = self.fetchLinkForWord(in: wordRange)
-        if nil != existingLink {
-            let whitespaceCharacterSet = CharacterSet.whitespacesAndNewlines
-            let toRemoveLink = text.trimmingCharacters(in: whitespaceCharacterSet).isEmpty
-            if toRemoveLink {
-                self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
-                let keys = NSAttributedString.linkAttributes.keys
-                keys.forEach { attr in
-                    self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
-                }
+        let toRemoveLink = text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        if toRemoveLink {
+            self.textInputView.setValueFor(nil, forAttribute: NSAttributedString.Key.link.rawValue, in: range)
+            let keys = NSAttributedString.linkAttributes.keys
+            keys.forEach { attr in
+                self.textInputView.setValueFor(nil, forAttribute: attr.rawValue, in: range)
             }
         }
-    }
-
-    private func fetchLinkForWord(in range: NSRange) -> URL? {
-        guard let attributedText = self.textInputView.attributedText else { return nil }
-        guard range.location < attributedText.length else { return nil }
-        var effectiveRange = NSRange(location: 0, length: 0)
-        let attributes = attributedText.attributes(at: range.location, effectiveRange: &effectiveRange)
-        if let link = attributes[.link] as? URL {
-            return link
-        }
-        return nil
     }
 
     func textView(_ textView: UITextView,
@@ -1777,13 +1763,24 @@ extension FTTextAnnotationViewController {
 
 extension NSString {
     func rangeOfWord(at index: Int) -> NSRange {
+        guard index >= 0 && index < length else {
+            return NSRange(location: 0, length: 0)
+        }
         var start = index
         var end = index
-        while start > 0, !CharacterSet.whitespacesAndNewlines.contains(UnicodeScalar(character(at: start - 1))!) {
-            start -= 1
+        while start > 0, let startScalar = UnicodeScalar(character(at: start - 1)) {
+            if !CharacterSet.whitespacesAndNewlines.contains(startScalar) {
+                start -= 1
+            } else {
+                break
+            }
         }
-        while end < length, !CharacterSet.whitespacesAndNewlines.contains(UnicodeScalar(character(at: end))!) {
-            end += 1
+        while end < length, let endScalar = UnicodeScalar(character(at: end)) {
+            if !CharacterSet.whitespacesAndNewlines.contains(endScalar) {
+                end += 1
+            } else {
+                break
+            }
         }
         return NSRange(location: start, length: end - start)
     }
