@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "El cuaderno vinculado al contenido ha sido eliminado.";
 "textLink_editLink" = "Editar enlace";
 "textLink_linkTo" = "Enlace a...";
+"textLink_notebookDeletedOrUndownloaded" = "No se puede acceder al cuaderno asociado con este enlace.";
 "textLink_notebookNotDownloadedMessage" = "El cuaderno vinculado a este contenido todavía no se ha descargado de iCloud. Inténtelo de nuevo después de un tiempo.";
 "textLink_notebookUnavailable" = "Cuaderno no disponible";
 "textLink_otherbook_firstPageConfirmation_message" = "La página vinculada al contenido ha sido eliminada. ¿Te gustaría navegar al cuaderno donde se encontraba la página?";
@@ -1599,4 +1600,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 31 January 2024 at 4:55 PM
+// Last Synced by Narayana on 5 February 2024 at 4:07 PM

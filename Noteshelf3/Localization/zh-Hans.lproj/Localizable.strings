@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "链接到该内容的笔记本已被删除。";
 "textLink_editLink" = "编辑链接";
 "textLink_linkTo" = "链接到...";
+"textLink_notebookDeletedOrUndownloaded" = "无法访问与此链接关联的笔记本。";
 "textLink_notebookNotDownloadedMessage" = "尚未从 iCloud 下载链接到此内容的笔记本。 请稍后再试。";
 "textLink_notebookUnavailable" = "笔记本不可用";
 "textLink_otherbook_firstPageConfirmation_message" = "链接到内容的页面已被删除。您是否要导航到笔记本所在的页面？";
@@ -1599,4 +1600,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 31 January 2024 at 4:55 PM
+// Last Synced by Narayana on 5 February 2024 at 4:07 PM

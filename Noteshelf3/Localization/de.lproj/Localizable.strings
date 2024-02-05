@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "Das mit dem Inhalt verknüpfte Notizbuch wurde gelöscht.";
 "textLink_editLink" = "Link bearbeiten";
 "textLink_linkTo" = "Verlinken zu...";
+"textLink_notebookDeletedOrUndownloaded" = "Auf das mit diesem Link verknüpfte Notizbuch kann nicht zugegriffen werden.";
 "textLink_notebookNotDownloadedMessage" = "Das mit diesem Inhalt verlinkte Notizbuch wurde noch nicht aus iCloud heruntergeladen. Bitte versuchen Sie es nach einiger Zeit erneut.";
 "textLink_notebookUnavailable" = "Notizbuch nicht verfügbar";
 "textLink_otherbook_firstPageConfirmation_message" = "Die Seite, die mit dem Inhalt verlinkt war, wurde gelöscht. Möchten Sie zum Notizbuch navigieren, in dem sich die Seite befand?";
@@ -1599,4 +1600,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 31 January 2024 at 4:55 PM
+// Last Synced by Narayana on 5 February 2024 at 4:07 PM

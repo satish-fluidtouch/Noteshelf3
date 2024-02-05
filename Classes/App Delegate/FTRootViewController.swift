@@ -555,14 +555,38 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         } else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
                 guard let shelfItem = docItem else {
-                    // Book is not available
-                    docVc.showDocumentNotAvailableAlert()
+                    let dispatchGroup = DispatchGroup()
+                    dispatchGroup.enter()
+                    var isAvailableInTrash = false
+                    FTNoteshelfDocumentProvider.shared.checkIfDocumentExistsInTrash(byDocumentId: documentId) { status in
+                        isAvailableInTrash = status
+                        dispatchGroup.leave()
+                    }
+                    dispatchGroup.notify(queue: .main) {
+                        if isAvailableInTrash {
+                            UIAlertController.showDocumentNotAvailableAlert(from: docVc)
+                            return
+                        } else {
+                            // Book is not available
+                            let destinationURL = FTDocumentCache.shared.cachedLocation(for: documentId)
+                            guard FTDocumentCache.shared.checkIfCachedDocumentIsAvailableOrNot(url: destinationURL) else {
+                                UIAlertController.showDeletedOrUndownloadedAlert(for: destinationURL, from: docVc)
+                                return
+                            }
+                            if destinationURL.downloadStatus() != .downloaded {
+                                // Book is not downloaded yet
+                                UIAlertController.showDocumentNotDownloadedAlert(for: destinationURL, from: docVc)
+                                return
+                            }
+                            return
+                        }
+                    }
                     return
                 }
 
                 guard shelfItem.URL.downloadStatus() == .downloaded else {
                     // Book is not downloaded yet
-                    docVc.showDocumentNotDownloadedAlert(for: shelfItem.URL)
+                    UIAlertController.showDocumentNotDownloadedAlert(for: shelfItem.URL, from: docVc)
                     return
                 }
                 let relativePath = shelfItem.URL.relativePathWRTCollection()

@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "連結到該內容的筆記本已被刪除。";
 "textLink_editLink" = "編輯連結";
 "textLink_linkTo" = "連結至...";
+"textLink_notebookDeletedOrUndownloaded" = "無法存取與此連結關聯的筆記本。";
 "textLink_notebookNotDownloadedMessage" = "尚未從 iCloud 下載連結到此內容的筆記本。 請稍後再試。";
 "textLink_notebookUnavailable" = "筆記本無法使用";
 "textLink_otherbook_firstPageConfirmation_message" = "鏈接到內容的頁面已被刪除。您是否要導航到頁面所在的筆記本？";
@@ -1599,4 +1600,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 31 January 2024 at 4:55 PM
+// Last Synced by Narayana on 5 February 2024 at 4:07 PM

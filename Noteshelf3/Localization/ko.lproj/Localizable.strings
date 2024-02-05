@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "해당 콘텐츠에 연결된 도서가 삭제되었습니다.";
 "textLink_editLink" = "링크 편집";
 "textLink_linkTo" = "링크하기";
+"textLink_notebookDeletedOrUndownloaded" = "이 링크와 연결된 책에 액세스할 수 없습니다.";
 "textLink_notebookNotDownloadedMessage" = "이와 연관된 노트북은 아직 아이클라우드에서 다운로드되지 않았습니다. 잠시 후에 다시 시도해주세요.";
 "textLink_notebookUnavailable" = "책이 사용 불가능";
 "textLink_otherbook_firstPageConfirmation_message" = "연결된 페이지가 삭제되었습니다. 페이지가 위치한 노트북으로 이동하시겠습니까?";
@@ -1599,4 +1600,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 31 January 2024 at 4:55 PM
+// Last Synced by Narayana on 5 February 2024 at 4:07 PM

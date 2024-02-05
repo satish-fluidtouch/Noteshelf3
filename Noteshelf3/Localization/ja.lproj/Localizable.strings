@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "コンテンツにリンクされているノートブックが削除されました。";
 "textLink_editLink" = "編集リンク";
 "textLink_linkTo" = "リンク先";
+"textLink_notebookDeletedOrUndownloaded" = "このリンクに関連付けられたノートブックにアクセスできません。";
 "textLink_notebookNotDownloadedMessage" = "このコンテンツにリンクされているノートブックは、まだ iCloud からダウンロードされていません。 しばらくしてからもう一度お試しください。";
 "textLink_notebookUnavailable" = "ノートブック利用不可";
 "textLink_otherbook_firstPageConfirmation_message" = "コンテンツにリンクされたページは削除されました。ページがあったノートブックに移動しますか？";
@@ -1599,4 +1600,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 31 January 2024 at 4:55 PM
+// Last Synced by Narayana on 5 February 2024 at 4:07 PM

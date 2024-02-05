@@ -33,8 +33,6 @@ let textContainerTag: Int = 9001
                             onCompletion : ((Bool,NSError?) -> Void)?);
     func navigateToPage(with pageId: String, documentId: String)
     func checkIfDocumentIsOpen(docId: String) -> Bool
-    func showDocumentNotAvailableAlert()
-    func showDocumentNotDownloadedAlert(for url: URL)
     func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping (Bool) -> Void)
 }
 
@@ -330,28 +328,6 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
         return status
     }
 
-    func showDocumentNotAvailableAlert() {
-        let alertController = UIAlertController(title: "textLink_documentDeleted_title".localized, message: "textLink_documentItselfNotAvailable_message".localized, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok".localized, style: .default) { _ in
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
-
-    func showDocumentNotDownloadedAlert(for url: URL) {
-        let alertController = UIAlertController(title: "textLink_notebookUnavailable".localized, message: "textLink_notebookNotDownloadedMessage".localized, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok".localized, style: .default) { _ in
-            do {
-                try FileManager().startDownloadingUbiquitousItem(at: url)
-            }
-            catch let nserror as NSError {
-                FTCLSLog("Book url: \(url): Download Failed :\(nserror.description)")
-                FTLogError("Notebook download failed", attributes: nserror.userInfo)
-            }
-        }
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
-    }
 
     func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping ((Bool) -> Void)) {
         let title = String(format: "textLink_continueConfirmation".localized, title)
