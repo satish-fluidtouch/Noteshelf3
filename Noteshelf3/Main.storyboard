@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1cp-Yb-NXA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1cp-Yb-NXA">
     <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -185,6 +185,14 @@
                                                                             <constraint firstAttribute="width" constant="136" id="eQ2-FR-jAy"/>
                                                                         </constraints>
                                                                     </imageView>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lVO-Xg-iHB">
+                                                                        <rect key="frame" x="80.666666666666671" y="161.66666666666666" width="24" height="26.000000000000028"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" secondItem="lVO-Xg-iHB" secondAttribute="height" multiplier="1:1" id="Ebp-Rc-rlZ"/>
+                                                                            <constraint firstAttribute="width" constant="24" id="grq-RN-ffF"/>
+                                                                        </constraints>
+                                                                        <imageReference key="image" image="icloud.and.arrow.down" catalog="system" symbolScale="default"/>
+                                                                    </imageView>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circlebadge" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="zOy-4j-gSS">
                                                                         <rect key="frame" x="80" y="156.66666666666666" width="25" height="19.666666666666657"/>
                                                                         <color key="tintColor" name="accent"/>
@@ -221,15 +229,18 @@
                                                                     <constraint firstItem="rN4-CY-9kx" firstAttribute="top" secondItem="fn2-pq-ZTV" secondAttribute="top" constant="-8" id="U9E-zU-X1l"/>
                                                                     <constraint firstItem="rN4-CY-9kx" firstAttribute="bottom" secondItem="njf-NQ-Aco" secondAttribute="bottom" constant="32" id="UQ2-QY-h5E"/>
                                                                     <constraint firstItem="SMI-SH-YrM" firstAttribute="leading" secondItem="njf-NQ-Aco" secondAttribute="leading" id="ZvD-y2-Qfh"/>
+                                                                    <constraint firstItem="lVO-Xg-iHB" firstAttribute="centerX" secondItem="njf-NQ-Aco" secondAttribute="centerX" id="ldi-ld-cQd"/>
                                                                     <constraint firstItem="zOy-4j-gSS" firstAttribute="bottom" secondItem="njf-NQ-Aco" secondAttribute="bottom" constant="-10" id="nLe-yL-OPh"/>
                                                                     <constraint firstAttribute="bottom" secondItem="ooY-JZ-35d" secondAttribute="bottom" id="s2C-FM-PXR"/>
                                                                     <constraint firstItem="njf-NQ-Aco" firstAttribute="leading" secondItem="fn2-pq-ZTV" secondAttribute="leading" id="xCu-0T-HPt"/>
+                                                                    <constraint firstItem="njf-NQ-Aco" firstAttribute="bottom" secondItem="lVO-Xg-iHB" secondAttribute="bottom" constant="4" id="z7t-Kp-buo"/>
                                                                     <constraint firstAttribute="trailing" secondItem="njf-NQ-Aco" secondAttribute="trailing" id="zzB-Zu-sWB"/>
                                                                 </constraints>
                                                             </collectionViewCellContentView>
                                                             <size key="customSize" width="185" height="288"/>
                                                             <connections>
                                                                 <outlet property="bookTitleLbl" destination="SMI-SH-YrM" id="UCM-Th-Ms1"/>
+                                                                <outlet property="notDownloadStatusView" destination="lVO-Xg-iHB" id="lTe-S0-u5S"/>
                                                                 <outlet property="selectionBadge" destination="zOy-4j-gSS" id="4rB-e4-Vg8"/>
                                                                 <outlet property="shadowImageView" destination="rN4-CY-9kx" id="7uU-Us-s5j"/>
                                                                 <outlet property="tagsView" destination="ooY-JZ-35d" id="zgg-Dg-gMy"/>
@@ -269,6 +280,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="185" height="232"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TFT-kw-uEy">
+                                                    <rect key="frame" x="80.666666666666671" y="204.66666666666666" width="24" height="26.000000000000028"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="TFT-kw-uEy" secondAttribute="height" multiplier="1:1" id="3qf-jD-oAk"/>
+                                                        <constraint firstAttribute="width" constant="24" id="uK3-8y-e7b"/>
+                                                    </constraints>
+                                                    <imageReference key="image" image="icloud.and.arrow.down" catalog="system" symbolScale="default"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4T9-SB-Mne">
                                                     <rect key="frame" x="0.0" y="244" width="185" height="22"/>
                                                     <constraints>
@@ -299,9 +318,11 @@
                                                 <constraint firstAttribute="trailing" secondItem="4T9-SB-Mne" secondAttribute="trailing" id="5aB-UW-eAC"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ib3-NX-4rN" secondAttribute="bottom" id="85K-Oh-CMc"/>
                                                 <constraint firstItem="4T9-SB-Mne" firstAttribute="leading" secondItem="EWt-nM-0H9" secondAttribute="leading" id="DQt-cn-BIW"/>
+                                                <constraint firstItem="TFT-kw-uEy" firstAttribute="centerX" secondItem="EWt-nM-0H9" secondAttribute="centerX" id="GfV-7p-ACb"/>
                                                 <constraint firstItem="ffm-7U-bqP" firstAttribute="bottom" secondItem="EWt-nM-0H9" secondAttribute="bottom" constant="-10" id="QCn-ih-bDh"/>
                                                 <constraint firstItem="4T9-SB-Mne" firstAttribute="top" secondItem="EWt-nM-0H9" secondAttribute="bottom" constant="12" id="R7l-e4-Lx4"/>
                                                 <constraint firstItem="xNP-3p-gF9" firstAttribute="bottom" secondItem="EWt-nM-0H9" secondAttribute="bottom" constant="32" id="Svf-63-NYX"/>
+                                                <constraint firstItem="EWt-nM-0H9" firstAttribute="bottom" secondItem="TFT-kw-uEy" secondAttribute="bottom" constant="4" id="TLT-Tf-hP2"/>
                                                 <constraint firstItem="EWt-nM-0H9" firstAttribute="leading" secondItem="dZE-rx-WdE" secondAttribute="leading" id="VR7-xF-AeJ"/>
                                                 <constraint firstItem="xNP-3p-gF9" firstAttribute="top" secondItem="dZE-rx-WdE" secondAttribute="top" constant="-8" id="aiF-FB-Mir"/>
                                                 <constraint firstItem="EWt-nM-0H9" firstAttribute="top" secondItem="dZE-rx-WdE" secondAttribute="top" id="hxv-nr-dM7"/>
@@ -315,6 +336,7 @@
                                         <size key="customSize" width="185" height="288"/>
                                         <connections>
                                             <outlet property="bookTitleLbl" destination="4T9-SB-Mne" id="hxv-d7-TxB"/>
+                                            <outlet property="notDownloadStatusView" destination="TFT-kw-uEy" id="w3C-rV-mol"/>
                                             <outlet property="selectionBadge" destination="ffm-7U-bqP" id="F3X-8Z-T7n"/>
                                             <outlet property="shadowImageView" destination="xNP-3p-gF9" id="VcM-YE-Zhd"/>
                                             <outlet property="tagsView" destination="Ib3-NX-4rN" id="HdM-X1-MO4"/>
@@ -328,7 +350,7 @@
                                 </connections>
                             </collectionView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uav-2e-iIa">
-                                <rect key="frame" x="98" y="333" width="234" height="166"/>
+                                <rect key="frame" x="98" y="336" width="234" height="160.33333333333337"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noTags" translatesAutoresizingMaskIntoConstraints="NO" id="e7S-et-bas">
                                         <rect key="frame" x="82" y="0.0" width="70" height="64"/>
@@ -339,7 +361,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag your notes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2F-1R-KsD" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="96" width="234" height="26"/>
+                                        <rect key="frame" x="0.0" y="96" width="234" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                         <color key="textColor" name="black1"/>
                                         <nil key="highlightedColor"/>
@@ -348,7 +370,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag pages and notebooks for easier access." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0t0-jC-W0F" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="130" width="234" height="36"/>
+                                        <rect key="frame" x="0.0" y="124.33333333333331" width="234" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" name="black70"/>
                                         <nil key="highlightedColor"/>
@@ -591,7 +613,7 @@
                                 </connections>
                             </collectionView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iwx-bj-aYR">
-                                <rect key="frame" x="88" y="357.33333333333331" width="254" height="166.66666666666669"/>
+                                <rect key="frame" x="88" y="360.33333333333331" width="254" height="160.33333333333331"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noBookmarks" translatesAutoresizingMaskIntoConstraints="NO" id="Ytt-NS-NiN">
                                         <rect key="frame" x="92" y="0.0" width="70" height="64"/>
@@ -602,7 +624,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bookmark your pages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qdy-T5-5Jf" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="96" width="254" height="26.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="96" width="254" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" name="ClearfaceSerial-Medium" family="ClearfaceSerial-Medium" pointSize="22"/>
                                         <color key="textColor" name="black1"/>
                                         <nil key="highlightedColor"/>
@@ -611,7 +633,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite pages and keep an overview of large notebooks and PDFs." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyJ-Q2-lbQ" customClass="FTCustomLabel" customModule="FTCommon">
-                                        <rect key="frame" x="0.0" y="130.66666666666669" width="254" height="36"/>
+                                        <rect key="frame" x="0.0" y="124.33333333333337" width="254" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" name="black70"/>
                                         <nil key="highlightedColor"/>
@@ -1102,6 +1124,7 @@
         <image name="drop.circle.fill" catalog="system" width="128" height="123"/>
         <image name="eyedropper" catalog="system" width="128" height="118"/>
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
+        <image name="icloud.and.arrow.down" catalog="system" width="128" height="120"/>
         <image name="noBookmarks" width="64" height="64"/>
         <image name="noTags" width="64" height="64"/>
         <image name="plusImage" width="11" height="11"/>

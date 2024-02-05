@@ -28,6 +28,7 @@ internal extension FTTag {
 
 extension FTNoteshelfDocumentProvider {
     func document(with docID: String
+                  , orRelativePath: String? = nil
                   , bypassPasswordProtected : Bool = true
                   , onCompletion: @escaping ((FTDocumentItemProtocol?)->())) {
         self.allNotesShelfItemCollection.shelfItems(.none
@@ -35,14 +36,18 @@ extension FTNoteshelfDocumentProvider {
                                                     , searchKey: nil) { items in
             var itemToreturn: FTDocumentItemProtocol?
             for eachItem in items {
-                if let docItem = eachItem as? FTDocumentItemProtocol
-                    , docItem.isDownloaded, docItem.documentUUID == docID {
-                    itemToreturn = docItem;
-                    if docItem.isPinEnabledForDocument() , !bypassPasswordProtected {
-                        itemToreturn = nil;
+                if let docItem = eachItem as? FTDocumentItemProtocol {
+                    if docItem.isDownloaded, docItem.documentUUID == docID {
+                        itemToreturn = docItem;
+                        break;
                     }
-                    break;
+                    else if docItem.URL.relativePathWRTCollection() == orRelativePath {
+                        itemToreturn = docItem;
+                    }
                 }
+            }
+            if let docItem = itemToreturn, docItem.isPinEnabledForDocument(), !bypassPasswordProtected {
+                itemToreturn = nil;
             }
             onCompletion(itemToreturn);
         }

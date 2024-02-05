@@ -13,18 +13,32 @@ enum FTTagsType {
 }
 
 class FTTaggedEntity: NSObject, Identifiable {
+    @objc dynamic private(set) var downloadStatus = FTDownloadStatus.notDownloaded {
+        willSet {
+            if newValue != downloadStatus {
+                self.willChangeValue(forKey: "downloadStatus");
+            }
+        }
+        didSet {
+            if oldValue != downloadStatus {
+                self.didChangeValue(forKey: "downloadStatus");
+            }
+        }
+    }
+    
+    private var notificationObserver: NSObjectProtocol?;
     
     static func taggedEntity(_ documentID: String
-                             , documentName: String?
+                             , documentPath: String?
                              , pageID: String? = nil) -> FTTaggedEntity {
         let item: FTTaggedEntity
         if let _pageID = pageID {
             item = FTPageTaggedEntity(documentUUID: documentID
-                                      , documentName: documentName
+                                      , documentPath: documentPath
                                       , pageUUID: _pageID);
         }
         else {
-            item = FTDocumentTaggedEntity(documentUUID: documentID, documentName: documentName);
+            item = FTDocumentTaggedEntity(documentUUID: documentID, documentPath: documentPath);
         }
         return item;
     }
@@ -32,18 +46,22 @@ class FTTaggedEntity: NSObject, Identifiable {
     var id = UUID().uuidString;
 
     private(set) var documentUUID: String
-    var documentName: String
-    var relativePath: String?
+    var documentName: String {
+        return relativePath?.lastPathComponent.deletingPathExtension ?? "";
+    }
+    
+    var relativePath: String?;
 
     var tagType: FTTagsType {
         fatalError("subclass should override")
     };
     private(set) var tags = Set<FTTag>();
 
-    init(documentUUID: String,documentName: String?) {
+    init(documentUUID: String,documentPath: String?) {
         self.documentUUID = documentUUID;
-        self.documentName = documentName ?? "";
+        self.relativePath = documentPath;
         super.init()
+        self.updateURLAndDownloadStatusLocally();
     }
     
     func thumbnail(onCompletion: ((UIImage?,String)->())?) -> String {
@@ -84,6 +102,65 @@ class FTTaggedEntity: NSObject, Identifiable {
     }
     
     override var description: String {
-        return "Tag - \(self.tags.map{$0.tagName})";
+        return super.description + ">>" + "Tag Name:- \(self.tags.map{$0.tagName})";
+    }
+    
+    deinit {
+        removeObserver();
+    }
+    
+    func documentShelfItem(_ ifDownloaded: Bool = true, onCompletion: ((FTDocumentItemProtocol?)->())?) {
+        FTNoteshelfDocumentProvider.shared.document(with: self.documentUUID
+                                                    , orRelativePath: ifDownloaded ? nil : self.relativePath
+                                                    , bypassPasswordProtected: true) { docItem in
+            onCompletion?(docItem);
+        }
+    }
+}
+
+private extension FTTaggedEntity {
+    func updateURLAndDownloadStatusLocally() {
+        guard let relPath = self.relativePath
+                ,let fileURL = FTTagsProvider.shared.rootDocumentsURL?.appending(path: relPath) else {
+            return;
+        }
+        DispatchQueue.global(qos: .background).async {
+            let downloadStatus = fileURL.downloadStatus();
+            runInMainThread {
+                self.downloadStatus = downloadStatus;
+                if downloadStatus != .downloaded {
+                    self.addObserver(fileURL);
+                }
+            }
+        }
+    }
+
+    func removeObserver() {
+        guard let obserbser = self.notificationObserver else {
+            return;
+        }
+        NotificationCenter.default.removeObserver(obserbser)
+        self.notificationObserver = nil;
+    }
+    
+    func addObserver(_ path: URL) {
+        guard nil == self.notificationObserver else {
+            return;
+        }
+        self.notificationObserver = NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(path.hashKey)"),
+                                                                           object: nil,
+                                                                           queue: OperationQueue.main,
+                                                                           using:
+                                                                            { [weak self] (notification) in
+            if let object = notification.object as? FTDocumentItem {
+                if object.isDownloaded {
+                    self?.downloadStatus = .downloaded;
+                    self?.removeObserver();
+                }
+                else if object.isDownloading {
+                    self?.downloadStatus = .downloading;
+                }
+            }
+        })
     }
 }

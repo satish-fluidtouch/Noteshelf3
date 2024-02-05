@@ -127,13 +127,14 @@ extension FTShelfTagsBooksCell: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.tagCategory.books[indexPath.row]
         if viewState == .none {
-            FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == item.documentUUID}) as? FTDocumentItemProtocol {
+            item.documentShelfItem(false) { docItem in
+                if let shelfItem = docItem {
                     self.delegate?.openNotebook(shelfItem: shelfItem, page: 0)
                     track(EventName.shelf_tag_book_tap, screenName: ScreenName.shelf_tags)
                 }
             }
         }
+        
         else if viewState == .edit {
             if self.tagCategory.selectedEntities.contains(item) {
                 self.tagCategory.setSelected(item, selected: false);

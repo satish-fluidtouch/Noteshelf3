@@ -36,8 +36,15 @@ class FTCachedDocument: NSObject {
         return tags ?? [String]();
     }
     
-    var documentName: String {
+    var relativePath: String? {
         if let relativePath = self.propertyPlist.contentDictionary["relativePath"] as? String {
+            return relativePath;
+        }
+        return nil
+    }
+
+    var documentName: String {
+        if let relativePath = self.relativePath {
             return relativePath.deletingPathExtension.lastPathComponent;
         }
         else {

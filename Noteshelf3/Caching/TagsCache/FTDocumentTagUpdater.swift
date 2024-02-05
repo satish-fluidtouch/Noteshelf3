@@ -142,17 +142,17 @@ class FTDocumentTagUpdater: NSObject {
                                 let tagsToAdd = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
                                 let tagsToRemove = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
 
-                                let docName = document.URL.title
+                                let docName = document.URL.relativePathWRTCollection()
                                 tagsToAdd.forEach { eachTag in
                                     if let taggedEntity = FTTagsProvider.shared.tagggedEntity(docID
-                                                                                                , documentName: docName
-                                                                                                , createIfNotPresent: true) {
+                                                                                              , documentPath: docName
+                                                                                              , createIfNotPresent: true) {
                                         eachTag.addTaggedItem(taggedEntity);
                                     }
                                 }
                                 tagsToRemove.forEach { eachTag in
                                     if let taggedEntity = FTTagsProvider.shared.tagggedEntity(docID
-                                                                                                , documentName: docName) {
+                                                                                                , documentPath: docName) {
                                         eachTag.removeTaggedItem(taggedEntity);
                                     }
                                 }
@@ -189,7 +189,7 @@ class FTDocumentTagUpdater: NSObject {
                          removedTags: [FTTagModel],
                          document: FTDocumentProtocol,
                          pages: [FTPageProtocol]) {
-        let documentName = document.URL.title
+        let documentName = document.URL.relativePathWRTCollection()
         
         let addedFTTags = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
         let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
@@ -201,7 +201,7 @@ class FTDocumentTagUpdater: NSObject {
             
             addedFTTags.forEach { eachTag in
                 if let pageEntity = FTTagsProvider.shared.tagggedEntity(document.documentUUID
-                                                                          , documentName: documentName
+                                                                          , documentPath: documentName
                                                                           , pageID: eachPage.uuid
                                                                           , createIfNotPresent: true) as? FTPageTaggedEntity {
                     pageEntity.updatePageProties(docProperties);
@@ -211,7 +211,7 @@ class FTDocumentTagUpdater: NSObject {
             
             removedFTTags.forEach { eachTag in
                 if let pageEntity = FTTagsProvider.shared.tagggedEntity(document.documentUUID
-                                                                          , documentName: documentName
+                                                                          , documentPath: documentName
                                                                           , pageID: eachPage.uuid) as? FTPageTaggedEntity {
                     eachTag.removeTaggedItem(pageEntity);
                     pageEntity.updatePageProties(docProperties);

@@ -13,12 +13,15 @@ import FTNewNotebook
 
 class FTShelfTagsPageCell: UICollectionViewCell {
     @IBOutlet weak var thumbnail: UIImageView?
+    @IBOutlet weak var notDownloadStatusView: UIImageView?
     @IBOutlet weak var tagsView: UIStackView!
     @IBOutlet weak var bookTitleLbl: UILabel?
     @IBOutlet weak var selectionBadge: UIImageView?
     @IBOutlet weak var shadowImageView: UIImageView!
 
     private(set) weak var taggedEntity: FTTaggedEntity?;
+    
+    private var obsertver: NSKeyValueObservation?
     
     @IBOutlet weak var thumbnailHeightConstraint: NSLayoutConstraint!
     var isItemSelected: Bool = false {
@@ -29,7 +32,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
             }
         }
     }
-
+    
     private func updateTagsViewWith(tags: [String]) {
         let padding = 10.0
         let interitemSpace = 5.0
@@ -74,9 +77,44 @@ class FTShelfTagsPageCell: UICollectionViewCell {
     }
 }
 
+private extension FTShelfTagsPageCell {
+    func removeObserver() {
+        if let obsertver = self.obsertver {
+            obsertver.invalidate();
+            self.obsertver = nil;
+        }
+    }
+    
+    func downloadStatusDidChange() {
+        if !Thread.current.isMainThread {
+            runInMainThread { [weak self] in
+                self?.downloadStatusDidChange()
+            }
+            return;
+        }
+        self.notDownloadStatusView?.isHidden = (self.taggedEntity?.downloadStatus == .downloaded)
+    }
+    
+    func addObserver() {
+        self.removeObserver();
+        self.obsertver = self.taggedEntity?.observe(\.downloadStatus, options: [.new,.old], changeHandler: { (taggedEntity, _) in
+            self.downloadStatusDidChange();
+        })
+    }
+}
+
 extension FTShelfTagsPageCell {
     func updateTaggedEntity(taggedEntity: FTTaggedEntity, isRegular: Bool) {
-        self.taggedEntity = taggedEntity;
+        if self.taggedEntity?.hash != taggedEntity.hash {
+            self.removeObserver();
+
+            self.taggedEntity = taggedEntity;
+
+            if taggedEntity.downloadStatus != .downloaded {
+                self.addObserver();
+            }
+        }
+        self.downloadStatusDidChange();
         self.bookTitleLbl?.text = taggedEntity.documentName
         let sortedArray = Array(taggedEntity.tags).sortedTags();
         self.updateTagsViewWith(tags: sortedArray.compactMap{$0.tagName})

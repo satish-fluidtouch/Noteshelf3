@@ -23,7 +23,7 @@ class FTTag: NSObject {
     }
     
     override var description: String {
-        return super.description + " :"+self.tagName;
+        return super.description + ">>" + self.tagName;
     }
     
     override var hash: Int {
@@ -147,12 +147,12 @@ class FTTag: NSObject {
             let lowercasedTag = self.tagName.lowercased();
 
             let doc = FTCachedDocument(documentID: eachDocument);
-            let documentName = doc.documentName
+            let documentName = doc.relativePath
             let docuemntTags = doc.docuemntTags
             
             if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
                 if let taggedItem = FTTagsProvider.shared.tagggedEntity(eachDocument
-                                                                          , documentName: documentName
+                                                                          , documentPath: documentName
                                                                           , createIfNotPresent: true) {
                     let tags = FTTagsProvider.shared.getTagsfor(docuemntTags);
                     tags.forEach { eachItem in
@@ -172,7 +172,7 @@ class FTTag: NSObject {
                     pageProperties.pageIndex = index;
                     
                     if let pageEntity = FTTagsProvider.shared.tagggedEntity(eachDocument
-                                                                              , documentName: documentName
+                                                                              , documentPath: documentName
                                                                               , pageID: eachPage.uuid
                                                                               , createIfNotPresent: true) as? FTPageTaggedEntity {
                         pageEntity.updatePageProties(pageProperties);

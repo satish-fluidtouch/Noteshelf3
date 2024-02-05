@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import FTCommon
 
-let USE_NEW_MODELS = true;
 enum FTShelfTagsPageState {
     case edit, none
 }
@@ -388,16 +387,15 @@ extension FTShelfTagsViewController: UICollectionViewDataSource, UICollectionVie
                 let item = self.tagCategory.pages[indexPath.row];
                 let docId = item.documentUUID;
                 let pageIndex = (item as? FTPageTaggedEntity)?.pageProperties.pageIndex ?? 0
-
-                FTNoteshelfDocumentProvider.shared.allNotesShelfItemCollection.shelfItems(FTShelfSortOrder.none, parent: nil, searchKey: nil) { allItems in
-                    if let shelfItem = allItems.first(where: { ($0 as? FTDocumentItemProtocol)?.documentUUID == docId}) as? FTDocumentItemProtocol {
-                        self.delegate?.openNotebook(shelfItem: shelfItem, page: pageIndex)
+                item.documentShelfItem(false) { docItem in
+                    if let _shelfItem = docItem {
+                        self.delegate?.openNotebook(shelfItem: _shelfItem, page: pageIndex)
                         track(EventName.shelf_tag_page_tap, screenName: ScreenName.shelf_tags)
                     }
                 }
             }
         }
-        if indexPath.section == 1,USE_NEW_MODELS,viewState == .edit {
+        if indexPath.section == 1,viewState == .edit {
             let item = self.tagCategory.pages[indexPath.row];
             if self.tagCategory.selectedEntities.contains(item) {
                 self.tagCategory.setSelected(item, selected: false);
@@ -499,7 +497,7 @@ extension FTShelfTagsViewController {
         
         selBooks.forEach { eachItem in
             group.enter();
-            FTNoteshelfDocumentProvider.shared.document(with: eachItem.documentUUID) { docItemProtocol in
+            eachItem.documentShelfItem { docItemProtocol in
                 if let docItem = docItemProtocol {
                     itemsToExport.append(docItem);
                 }
@@ -614,7 +612,7 @@ extension FTShelfTagsViewController: FTShelfTagsAndBooksDelegate {
     }
 
     func openTaggedItemInNewWindow(_ taggedEntity: FTTaggedEntity) {
-        FTNoteshelfDocumentProvider.shared.document(with: taggedEntity.documentUUID) { docItem in
+        taggedEntity.documentShelfItem { docItem in
             guard let shelfItem = docItem else {
                 return;
             }

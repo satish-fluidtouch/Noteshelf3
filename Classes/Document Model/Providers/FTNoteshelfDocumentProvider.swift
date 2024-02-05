@@ -72,6 +72,7 @@ class FTNoteshelfDocumentProvider: NSObject {
 
                 FTCloudBackUpManager.shared.rootDocumentsURL = provider.rootDocumentsURL()
                 FTENPublishManager.shared.rootDocumentsURL = provider.rootDocumentsURL()
+                FTTagsProvider.shared.rootDocumentsURL = provider.rootDocumentsURL();
                 #endif
                 onCompletion?(true);
             } else {
