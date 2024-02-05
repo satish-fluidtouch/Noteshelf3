@@ -35,6 +35,9 @@ struct FTStickerItemView:View{
                 }
                 .padding(.horizontal,16)
                 .padding(.bottom,16)
+            }.onAppear{
+                FTNotebookEventTracker.trackNotebookEvent(with: FTNotebookEventTracker
+                    .nbk_addmenu_stickers_subcategory_tap,params: ["title": stickerSubCategory?.title ?? ""])
             }
         }
         .background(Color.appColor(.popoverBgColor))

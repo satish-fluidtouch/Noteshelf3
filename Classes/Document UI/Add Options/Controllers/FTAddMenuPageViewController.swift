@@ -13,10 +13,17 @@ protocol FTAddMenuPageViewControllerDelegate: AnyObject {
     func didTapPageItem(_ type: FTPageType)
 }
 
+enum FTAddpageSource: String {
+    case finder = "Finder"
+    case addPopover = "Add Popover"
+    case swipeToAddPage = "Swipe to Add Page"
+}
+
 class FTAddMenuPageViewController: UIViewController, FTPopoverPresentable {
     @IBOutlet private weak var tableView: UITableView!
     var ftPresentationDelegate = FTPopoverPresentation()
     weak var delegate: FTAddMenuPageViewControllerDelegate?
+    var source: FTAddpageSource = .addPopover
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     var dataManager: AddMenuDataManager?
     private var items: [[PageItem]]? {
@@ -54,6 +61,7 @@ extension FTAddMenuPageViewController: UITableViewDelegate {
             return
         }
         let item = rows[indexPath.row]
+        FTNotebookEventTracker.trackNotebookEvent(with: item.type.eventName, params: ["location": source.rawValue])
         self.navigationController?.dismiss(animated: false) { [weak self]  in
             self?.delegate?.didTapPageItem(item.type)
         }

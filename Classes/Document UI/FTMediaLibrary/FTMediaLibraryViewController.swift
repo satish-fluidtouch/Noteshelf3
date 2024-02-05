@@ -468,16 +468,20 @@ extension FTMediaLibraryViewController: FTMediaLibraryDataSourceDelegate {
     
     func didSelectMediaImage(_ mediaLibraryImage: UIImage) {
         var source = FTInsertImageSourceClipart
+        let eventName: String
         switch mediaSource {
         case .pixabay:
             source = FTInsertImageSourceClipart
+            eventName = FTNotebookEventTracker.nbk_addmenu_unsplash_image_tap
         case .unSplash:
             source = FTInsertImageSourceUnSplash
+            eventName = FTNotebookEventTracker.nbk_addmenu_pixabay_imag_tap
         }
         var controllerToDismiss: UIViewController = self
         if let navVc = self.navigationController {
             controllerToDismiss = navVc
         }
+        FTNotebookEventTracker.trackNotebookEvent(with: eventName)
         controllerToDismiss.dismiss(animated: true, completion: {
             self.delegate?.mediaLibraryViewController(self, didSelect: mediaLibraryImage, source: source)
         })

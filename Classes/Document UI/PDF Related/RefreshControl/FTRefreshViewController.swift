@@ -299,6 +299,7 @@ extension FTRefreshViewController: FTRefreshPageDelegate {
         }
         pageViewController.delegate = self
         pageViewController.dataManager = AddMenuDataManager()
+        pageViewController.source = .swipeToAddPage
         pageViewController.ftPresentationDelegate.source = sender
         self.ftPresentPopover(vcToPresent: pageViewController, contentSize: CGSize(width: 320, height: 400), hideNavBar: true)
     }
