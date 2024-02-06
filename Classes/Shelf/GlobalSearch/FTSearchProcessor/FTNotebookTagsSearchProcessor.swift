@@ -103,6 +103,9 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
                         gridItem.parentSection = sectionResult
                         gridItem.shelfItem = shelfItem;
                         sectionResult.items.append(gridItem);
+                        sectionResult.items.sort { item1, item2 in
+                            item1.title.compare(item2.title, options: [.caseInsensitive,.numeric], range: nil, locale: nil) == .orderedAscending;
+                        }
                         self.onSectionFinding?([sectionResult], self.token)
                     }
                     self.progress.completedUnitCount += 1;
