@@ -23,8 +23,10 @@ class FTLinkTextTableViewCell: UITableViewCell {
 
         if option == .url {
             self.linkTextTf.textColor = UIColor.appColor(.accent)
+            self.linkTextTf.placeholder = "Enter URL"
         } else {
             self.linkTextTf.textColor = UIColor.appColor(.black50)
+            self.linkTextTf.placeholder = "Enter Text"
         }
     }
 }
