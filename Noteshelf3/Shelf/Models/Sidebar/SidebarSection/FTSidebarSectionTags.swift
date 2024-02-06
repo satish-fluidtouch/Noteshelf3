@@ -27,7 +27,7 @@ class FTSidebarSectionTags: FTSidebarSection {
     }
     
     init() {
-        super.init(type: .media, items: [], supportsRearrangeOfItems: false);
+        super.init(type: .tags, items: [], supportsRearrangeOfItems: false);
         self.prepareItems();
         notificationObserver =  NotificationCenter.default.addObserver(forName: .didUpdateTags, object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {

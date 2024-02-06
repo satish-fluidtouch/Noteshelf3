@@ -16,6 +16,13 @@ class FTSidebarSection: FTSectionDisplayable, FTSideMenuDeletable, Identifiable,
         type.displayTitle ?? ""
     }
 
+    @Published var isExpanded = true {
+        didSet {
+            if isExpanded != oldValue {
+                FTUserDefaults.defaults().set(isExpanded, forKey: "isExpanded_\(type.rawValue)");
+            }
+        }
+    }
     var supportsRearrangeOfItems: Bool = false
 
     @Published var items: [FTSideBarItem] = []
@@ -26,10 +33,15 @@ class FTSidebarSection: FTSectionDisplayable, FTSideMenuDeletable, Identifiable,
         type == .tags ? FTIcon.tags : FTIcon.folder
     }
 
-    required init(type: FTSidebarSectionType, items: [FTSideBarItem],supportsRearrangeOfItems: Bool) {
+    required init(type: FTSidebarSectionType
+                  , items: [FTSideBarItem]
+                  ,supportsRearrangeOfItems: Bool) {
         self.type = type
         self.items = items
         self.supportsRearrangeOfItems = supportsRearrangeOfItems
+        if type != .all {
+            self.isExpanded = FTUserDefaults.defaults().bool(forKey: "isExpanded_\(type.rawValue)")
+        }
     }
 
     func addNewItemWith(title: String) {

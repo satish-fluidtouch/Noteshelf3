@@ -922,7 +922,6 @@
 		BA50E0312959CB2300CDC0FD /* FTShelfTagsSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D348672939BA8900A4B379 /* FTShelfTagsSectionHeader.swift */; };
 		BA50E0322959CB2600CDC0FD /* FTShelfTagsViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E994DC2923446800102297 /* FTShelfTagsViewController+ContextMenu.swift */; };
 		BA50E0332959CB2900CDC0FD /* FTShelfPagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E994E2292389B200102297 /* FTShelfPagePreviewController.swift */; };
-		BA50E0342959CB2B00CDC0FD /* FTShelfTagsPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474DFE2B291A5618006AE5BC /* FTShelfTagsPageModel.swift */; };
 		BA50E0352959CB2E00CDC0FD /* FTShelfPagesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 476991E4291BAE7A0066BB51 /* FTShelfPagesLayout.swift */; };
 		BA50E0372959CB3300CDC0FD /* FTCacheTagsPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CA207C291E4C0D0066C429 /* FTCacheTagsPlist.swift */; };
 		BA50E0392959CB3900CDC0FD /* FTDocumentPropertyPlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F34F9E293F1BE800DFDFF0 /* FTDocumentPropertyPlistItem.swift */; };
@@ -3300,7 +3299,6 @@
 		474B063E2AC1B72800A4D0F3 /* FTWatchRecordingsListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordingsListController.swift; sourceTree = "<group>"; };
 		474B063F2AC1B72900A4D0F3 /* FTWatchRecordNewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTWatchRecordNewController.swift; sourceTree = "<group>"; };
 		474B06442AC1B8A900A4D0F3 /* Noteshelf3 WatchApp Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Noteshelf3 WatchApp Extension-Bridging-Header.h"; sourceTree = "<group>"; };
-		474DFE2B291A5618006AE5BC /* FTShelfTagsPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTShelfTagsPageModel.swift; sourceTree = "<group>"; };
 		474DFE2D291A590C006AE5BC /* FTShelfTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfTagsViewController.swift; sourceTree = "<group>"; };
 		474E9D231F7CAB81009FCE3F /* FTBrandLogoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTBrandLogoView.xib; sourceTree = "<group>"; };
 		474E9D2C1F7CC638009FCE3F /* FTBrandLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBrandLogoView.swift; sourceTree = "<group>"; };
@@ -8054,7 +8052,6 @@
 				47D259E4292F49A0001E4E29 /* FTShelfTagsRepresentableView.swift */,
 				47E994DC2923446800102297 /* FTShelfTagsViewController+ContextMenu.swift */,
 				47E994E2292389B200102297 /* FTShelfPagePreviewController.swift */,
-				474DFE2B291A5618006AE5BC /* FTShelfTagsPageModel.swift */,
 				476991E4291BAE7A0066BB51 /* FTShelfPagesLayout.swift */,
 				47653CA4291CA8670068D7AE /* FTShelfTagsPageCell.swift */,
 				475E534A2A5E71A1004AB827 /* FTShelfTagsBooksCell.swift */,
@@ -14018,7 +14015,6 @@
 				BAF393792859ADF00067CA9F /* FTZoomBorderView.swift in Sources */,
 				3DD23993290A6C07006E3AC3 /* FTTextBackGroundColorViewController.swift in Sources */,
 				BAF3937A2859ADF00067CA9F /* FTPlannerDiaryiPadFormat.swift in Sources */,
-				BA50E0342959CB2B00CDC0FD /* FTShelfTagsPageModel.swift in Sources */,
 				BA8E567A2A9F5B1000DB6E05 /* FTShelfCollectionLocalRoot.swift in Sources */,
 				BAF3937D2859ADF00067CA9F /* FTAnnotation_GuestureHandler.swift in Sources */,
 				BAF3937F2859ADF00067CA9F /* FTVerticalLayout.swift in Sources */,

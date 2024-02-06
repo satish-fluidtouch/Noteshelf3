@@ -26,7 +26,6 @@ protocol FTCategoryDropDelegate: AnyObject {
 }
 
 class FTSidebarViewModel: NSObject, ObservableObject {
-
     //MARK: Delegates
     weak var delegate: FTSidebarViewDelegate?
     weak var dropDelegate: FTCategoryDropDelegate?
@@ -45,8 +44,7 @@ class FTSidebarViewModel: NSObject, ObservableObject {
              addObservers()
         }
     }
-    @Published private var sideBarStatusDict: [String: Bool] = [:]
-
+    
     //MARK: Private variables
     private(set) var sidebarItemContexualMenuVM: FTSidebarItemContextualMenuVM = FTSidebarItemContextualMenuVM()
     private var categoriesItems: [FTSideBarItem] = []
@@ -221,55 +219,22 @@ private extension FTSidebarViewModel {
             }
             .store(in: &cancellables)
     }
-    
-//    @objc func categoryDidUpdate(_ notification : Notification) {
-//        self.updateUserCreatedCategories()
-//    }
-        
-//    @objc func updateTagItems(_ notification : Notification) {
-//        if let selectedSideBarItem = self.selectedSideBarItem, selectedSideBarItem.type == .tag {
-//            if let info = notification.userInfo, let type = info["type"] as? String {
-//                let tagItems = self.menuItems.filter {$0.type == .tags}
-//                if type == "rename", let tag = info["tag"] as? String, let renamedTag = info["renamedTag"] as? String {
-//                    let tagItem = tagItems.flatMap {$0.items}.first(where: {$0.title == tag})
-//                    tagItem?.title = renamedTag
-//                } else if type == "add", let tag = info["tag"] as? String {
-//                    let item = FTSideBarItem(title: tag, icon: .number, isEditable: true, isEditing: false, type: FTSideBarItemType.tag, allowsItemDropping: false)
-//                    tagItems.first?.items.append(item)
-//                } else if type == "delete", let tag = info["tag"] as? String {
-//                    tagItems.first?.items = tagItems.flatMap({$0.items.filter({$0.title != tag})})
-//                }
-//                if var items = tagItems.first?.items {
-//                    let allTags = items.first(where: {$0.type == .allTags})
-//                    items.removeAll(where: {$0.type == .allTags})
-//                    var sortedArray = items.sorted(by: { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending })
-//                    if let allTags {
-//                        sortedArray.insert(allTags, at: 0)
-//                    }
-//                    self.menuItems.first(where: {$0.type == .tags})?.items = sortedArray
-//                    self.updateTagsSection(items: sortedArray)
-//                }
-//                self.setSideBarItemSelection()
-//            } else {
-//                self.updateTags()
-//            }
-//        } else {
-//            self.updateTags()
-//        }
-//    }
 
     func addObservers() {
         self.menuItems.forEach({ menuItem in
-            menuItem.objectWillChange
-                .sink(receiveValue: { [weak self] in self?.objectWillChange.send()})
-                .store(in: &cancellables)
-
-            menuItem.items.forEach({ eachItem in
-                eachItem.objectWillChange.sink(receiveValue: { [weak self] in self?.objectWillChange.send() })
-                    .store(in: &cancellables)
-            })
+            menuItem.$isExpanded.sink { isExpanded in
+                debugLog("---- isExpanged: \(menuItem) -> \(isExpanded)");
+                self.objectWillChange.send()
+            }.store(in: &cancellables)
+            
+            menuItem.$items.sink { [weak self] items in
+                debugLog("---- internal change");
+                self?.setSideBarItemSelection()
+                self?.objectWillChange.send()
+            }.store(in: &cancellables)
         })
     }
+
     func isGroup(_ fileURL: Foundation.URL) -> Bool {
         let fileItemURL = fileURL.urlByDeleteingPrivate();
         if(fileItemURL.pathExtension == FTFileExtension.group) {
@@ -456,53 +421,8 @@ extension FTSidebarViewModel {
     func updateUserCreatedCategories() {
 //        self.fetchUserCreatedCategories()
     }
-    
-//    private func fetchUserCreatedCategories() {
-//        userCreatedSidebarItems { [weak self] sidebarItems in
-//            guard let self = self else { return }
-//            DispatchQueue.global().async {
-//                self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true)
-//                runInMainThread {
-//                    if let item = self.menuItems.first(where: {$0.type == .categories}) {
-//                        item.items = self.categoriesItems;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
-//        FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
-//            let newlyCreatedSidebarItems = collections.filter({!$0.isUnfiledNotesShelfItemCollection}).map { shelfItem -> FTSideBarItem in
-//                let item = FTSideBarItem(shelfCollection: shelfItem)
-//                item.id = shelfItem.uuid
-//                item.isEditable = true
-//                item.allowsItemDropping = true
-//                item.type = .category
-//                return item
-//            }
-//            onCompeltion(newlyCreatedSidebarItems)
-//        }
-//    }
-
     private func fetchSidebarMenuItems() {
-        // Fetching default/migrated categories for second section of side menu
-//        userCreatedSidebarItems { [weak self] sidebarItems in
-//            guard let self = self else { return }
-//            self.categoriesItems.removeAll()
-//            self.categoriesItems.append(contentsOf: self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems))
-//        }
-
-        //Assigning respective shelf item collections to top section UI items
         self.buildSideMenuItems()
-//        DispatchQueue.global().async {
-//            self.categoriesItems = self.sortCategoriesBasedOnStoredPlistOrder(self.categoriesItems,performURLResolving: true)
-//            runInMainThread {
-//                if let item = self.menuItems.first(where: {$0.type == .categories}) {
-//                    item.items = self.categoriesItems;
-//                }
-//            }
-//        }
-
     }
 
     private func createSideBarItemWith(title: String, type: FTSideBarItemType, allowsItemDropping: Bool,icon: FTIcon) -> FTSideBarItem {
@@ -514,9 +434,14 @@ extension FTSidebarViewModel {
     }
 
     private func buildSideMenuItems(){
+        FTSidebarManager.copyBundleDataIfNeeded()
+        let sideBarDict = FTSidebarManager.getSideBarData()
+        if let sideBarStatucDict = sideBarDict["SideBarStatus"] as? [String: Bool] {
+            FTUserDefaults.defaults().register(defaults: sideBarStatucDict);
+        }
+        
         self.menuItems.append(FTSidebarSectionSystem());
         self.menuItems.append(FTSidebarSectionUserShelfs())
-//        self.menuItems.append(FTSidebarSection(type: .categories, items: self.categoriesItems,supportsRearrangeOfItems: true))
         self.menuItems.append(FTSidebarSectionMedia());
         self.menuItems.append(FTSidebarSectionTags());
         self.setSideBarItemSelection()
@@ -553,22 +478,12 @@ extension FTSidebarViewModel {
 
 //MARK: Sidebar Sections open/close status maintainance And Categories/Tags user defined order maintainance logic
 extension FTSidebarViewModel {
-    func getSideBarStatusForSection(_ section: FTSidebarSection)-> Bool {
-        self.sideBarStatusDict[section.type.rawValue] ?? false
-    }
     private func fetchSideBarData() {
-        FTSidebarManager.copyBundleDataIfNeeded()
-        let sideBarDict = FTSidebarManager.getSideBarData()
-        if let sideBarStatucDict = sideBarDict["SideBarStatus"] as? [String: Bool] {
-            self.sideBarStatusDict = sideBarStatucDict
-        }
-        if let sideBarItemsOrderDict = sideBarDict["SideBarItemsOrder"] as? [String: Any], let categoryBookmarkRawData = sideBarItemsOrderDict["categories"] as? Data, let categoryBookmarkData = try? PropertyListDecoder().decode(FTCategoryBookmarkData.self, from: categoryBookmarkRawData) {
-                self.categoryBookmarksData = categoryBookmarkData
-        }
-    }
-    func updateSideBarSectionStatus(_ section: FTSidebarSection, status: Bool) {
-        self.sideBarStatusDict[section.type.rawValue] = status
-        FTSidebarManager.save(sideBarData: self.sideBarStatusDict)
+//        FTSidebarManager.copyBundleDataIfNeeded()
+//        let sideBarDict = FTSidebarManager.getSideBarData()
+//        if let sideBarItemsOrderDict = sideBarDict["SideBarItemsOrder"] as? [String: Any], let categoryBookmarkRawData = sideBarItemsOrderDict["categories"] as? Data, let categoryBookmarkData = try? PropertyListDecoder().decode(FTCategoryBookmarkData.self, from: categoryBookmarkRawData) {
+//                self.categoryBookmarksData = categoryBookmarkData
+//        }
     }
     func updateSidebarCategoriesOrderUsingDict(_ categoriesBookmarData:FTCategoryBookmarkData){
         do {

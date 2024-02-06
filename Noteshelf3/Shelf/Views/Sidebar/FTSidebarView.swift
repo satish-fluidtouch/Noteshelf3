@@ -114,15 +114,9 @@ struct FTSidebarView: View {
     private func getDisclousreGroupForSection(_ menuSection: FTSidebarSection,availableWidth: CGFloat) -> some View {
         DisclosureGroup(
             isExpanded: Binding<Bool>(
-                get: { self.viewModel.getSideBarStatusForSection(menuSection)},
+                get: { menuSection.isExpanded},
                 set: { isExpanding in
-                    if isExpanding {
-                        self.viewModel.updateSideBarSectionStatus( menuSection, status: true)
-                        self.viewModel.trackEventForSections(section: menuSection, isExpand: true)
-                    } else {
-                        self.viewModel.updateSideBarSectionStatus( menuSection, status: false)
-                        self.viewModel.trackEventForSections(section: menuSection, isExpand: false)
-                    }
+                    menuSection.isExpanded.toggle();
                 }
             )
         ) {

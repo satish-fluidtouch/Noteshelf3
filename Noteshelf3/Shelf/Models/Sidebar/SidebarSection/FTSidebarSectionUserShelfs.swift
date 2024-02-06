@@ -23,8 +23,15 @@ class FTSidebarSectionUserShelfs: FTSidebarSection {
     }
     
     init() {
-        super.init(type: .all, items: [], supportsRearrangeOfItems: false);
-        self.prepreItems();
+        super.init(type: .categories, items: [], supportsRearrangeOfItems: false);
+        self.prepreItems(false);
+        
+        let sideBarDict = FTSidebarManager.getSideBarData()
+        if let sideBarItemsOrderDict = sideBarDict["SideBarItemsOrder"] as? [String: Any], let categoryBookmarkRawData = sideBarItemsOrderDict["categories"] as? Data, let categoryBookmarkData = try? PropertyListDecoder().decode(FTCategoryBookmarkData.self, from: categoryBookmarkRawData) {
+                self.categoryBookmarksData = categoryBookmarkData
+        }
+        
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
     }
     
@@ -39,19 +46,24 @@ class FTSidebarSectionUserShelfs: FTSidebarSection {
 }
 
 private extension FTSidebarSectionUserShelfs {
-    private func prepreItems() {
-        userCreatedSidebarItems { [weak self] sidebarItems in
+    private func prepreItems(_ inbackground: Bool = false) {
+        userCreatedSidebarItems(inbackground) { [weak self] sidebarItems in
             guard let self = self else { return }
-            runInMainThread { [weak self] in
-                self?.items = sidebarItems;
+            if Thread.current.isMainThread {
+                self.items = sidebarItems;
+            }
+            else {
+                runInMainThread {
+                    self.items = sidebarItems;
+                }
             }
         }
     }
     
-    private func userCreatedSidebarItems(onCompeltion : @escaping([FTSideBarItem]) -> Void) {
-        var currentItems = Array(self.items);
+    private func userCreatedSidebarItems(_ inbackground: Bool,onCompeltion : @escaping([FTSideBarItem]) -> Void) {
+        let currentItems = Array(self.items);
         FTNoteshelfDocumentProvider.shared.fetchAllCollections { collections in
-            DispatchQueue.global().async {
+            func performAction() {
                 var sidebarItems = [FTSideBarItem]();
                 collections.forEach { eachCollection in
                     guard !eachCollection.isUnfiledNotesShelfItemCollection else {
@@ -69,13 +81,22 @@ private extension FTSidebarSectionUserShelfs {
                     }
                 }
                 let itemsToSet = sidebarItems;//self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true)
+                self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true);
                 onCompeltion(itemsToSet);
+            }
+            if inbackground {
+                DispatchQueue.global().async {
+                    performAction();
+                }
+            }
+            else {
+                performAction();
             }
         }
     }
 
     @objc func categoryDidUpdate(_ notification : Notification) {
-        self.prepreItems()
+        self.prepreItems(true)
     }
 }
 
@@ -86,27 +107,27 @@ private extension FTSidebarSectionUserShelfs {
         sidebarItemsBookmarksData =  sortInfo.categorySortOrderInfo
         self.categoryBookmarksData = FTCategoryBookmarkData(bookmarksData: sortInfo.plistBookmarkData)
         var bookmarksData: [FTCategoryBookmarkDataItem] = self.categoryBookmarksData.bookmarksData
-        for sideBarItem in sidebarItems {
-            if let collection = sideBarItem.shelfCollection {
-                if var existingCollectionInPlistIndex = bookmarksData.firstIndex(where:{$0.name == collection.URL.lastPathComponent}) {
-                    let existingCollectionInPlist = bookmarksData[existingCollectionInPlistIndex]
-                    let collectionOrder = existingCollectionInPlist.sortOrder
-                    if existingCollectionInPlist.fileURL != collection.URL, let newBookmarkItem = newCategoryBookmarkDataItemForCollection(collection, sortOrder: collectionOrder) { // updating url in already collection existing plist data
-                        bookmarksData.remove(at: existingCollectionInPlistIndex)
-                        bookmarksData.append(newBookmarkItem)
-                    }
-                    orderedSideBarItems[sideBarItem] = collectionOrder
-                } else {
-                    let maxOrderValue = bookmarksData.map({$0.sortOrder}).max() ?? 0
-                    let newOrderValue = bookmarksData.isEmpty ? 0 : maxOrderValue + 1
-                    if let newBookmarkItem = newCategoryBookmarkDataItemForCollection(collection, sortOrder: newOrderValue){
-                        bookmarksData.append(newBookmarkItem)
-                        orderedSideBarItems[sideBarItem] = newOrderValue
-                    }
-                }
-            }
-        }
-        self.updateSidebarCategoriesOrderUsingDict(FTCategoryBookmarkData(bookmarksData: bookmarksData))
+//        for sideBarItem in sidebarItems {
+//            if let collection = sideBarItem.shelfCollection {
+//                if var existingCollectionInPlistIndex = bookmarksData.firstIndex(where:{$0.name == collection.URL.lastPathComponent}) {
+//                    let existingCollectionInPlist = bookmarksData[existingCollectionInPlistIndex]
+//                    let collectionOrder = existingCollectionInPlist.sortOrder
+//                    if existingCollectionInPlist.fileURL != collection.URL, let newBookmarkItem = newCategoryBookmarkDataItemForCollection(collection, sortOrder: collectionOrder) { // updating url in already collection existing plist data
+//                        bookmarksData.remove(at: existingCollectionInPlistIndex)
+//                        bookmarksData.append(newBookmarkItem)
+//                    }
+//                    orderedSideBarItems[sideBarItem] = collectionOrder
+//                } else {
+//                    let maxOrderValue = bookmarksData.map({$0.sortOrder}).max() ?? 0
+//                    let newOrderValue = bookmarksData.isEmpty ? 0 : maxOrderValue + 1
+//                    if let newBookmarkItem = newCategoryBookmarkDataItemForCollection(collection, sortOrder: newOrderValue){
+//                        bookmarksData.append(newBookmarkItem)
+//                        orderedSideBarItems[sideBarItem] = newOrderValue
+//                    }
+//                }
+//            }
+//        }
+//        self.updateSidebarCategoriesOrderUsingDict(FTCategoryBookmarkData(bookmarksData: bookmarksData))
         return orderedSideBarItems.sorted(by: {$0.value < $1.value}).compactMap({$0.key})
     }
     
