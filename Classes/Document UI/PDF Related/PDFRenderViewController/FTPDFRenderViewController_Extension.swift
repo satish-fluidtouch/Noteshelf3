@@ -809,7 +809,7 @@ extension FTPDFRenderViewController {
         var yOffSet: CGFloat = 0
     #if !targetEnvironment(macCatalyst)
         if self.pageLayoutHelper.layoutType == .horizontal
-            , self.toolBarState() == .normal {
+            , (self.toolBarState() == .normal || self.toolBarState() == .shortCompact) {
             yOffSet += self.deskToolBarHeight()
             self.contentHolderView.clipsToBounds = false;
         } else if (self.pageLayoutHelper.layoutType == .vertical && self.toolBarState() == .shortCompact) {

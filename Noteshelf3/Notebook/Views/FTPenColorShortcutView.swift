@@ -19,7 +19,7 @@ struct FTPenColorShortcutView: View {
             ForEach(0..<viewModel.favoriteColors.count, id: \.self) { index in
                 let favColor = viewModel.favoriteColors[index]
                 self.buildContentView(for: favColor, at: index)
-                    .macOnlyPlainButtonStyle()
+                    .buttonStyle(.plain)
             }
         }
         .frame(height: shortcutHeight)
