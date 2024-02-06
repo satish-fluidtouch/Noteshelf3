@@ -84,6 +84,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func createNotebookWithScannedPhoto()
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
+    func showPinnedWidgetAlert()
 }
 
 
@@ -92,6 +93,7 @@ final class FTAppIntentHandler {
     enum NS3LaunchIntent: String {
        case migration = "NS2Migration"
        case premiumUpgrade = "purchasePremium"
+        case pinnedWidget = "pinnedWidget"
     }
 
     private let supportedPathExts = [nsBookExtension
@@ -180,6 +182,8 @@ final class FTAppIntentHandler {
                         , queryitem.name == "intent" {
                 if queryitem.value == NS3LaunchIntent.migration.rawValue {
                     intentHandler?.startNS2ToNS3Migration()
+                } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
+                    intentHandler?.showPinnedWidgetAlert()
                 } else {
                     intentHandler?.showPremiumUpgradeScreen()
                 }

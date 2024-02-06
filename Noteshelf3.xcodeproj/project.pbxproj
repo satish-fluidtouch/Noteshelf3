@@ -696,6 +696,7 @@
 		52D7D5BE2A70F4C600F3089E /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAA84E2628730FA800DE801B /* Colors.xcassets */; };
 		52DE39482A150E3A0090A630 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52BBD4F329E9590B003088AE /* DancingScript-Regular.ttf */; };
 		52E36A452ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E36A442ABDA68A00FDDC78 /* FTPageUndoRedoGestureDetector.swift */; };
+		52FFA33D2B7220CF00740FB9 /* FTCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAA84E442873105500DE801B /* FTCommon.framework */; };
 		70E4E0B059B5E459A782F4D5 /* Pods_Noteshelf3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9D0526C5CF6A9527BEB0533 /* Pods_Noteshelf3.framework */; };
 		8E8D86C0291A385900927EE5 /* FTDeskToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8D86BE291A385900927EE5 /* FTDeskToolView.swift */; };
 		8E8D86C3291A392800927EE5 /* FTDeskToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D86C1291A392800927EE5 /* FTDeskToolView.xib */; };
@@ -810,7 +811,6 @@
 		97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97C453302B70F24000251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
-		97C453322B71111200251C73 /* Noteshelf3_Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453202B70E40500251C73 /* Noteshelf3_Widgets.swift */; };
 		97C453332B71112D00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C52E4B292223E800BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */; };
 		97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */; };
@@ -4734,6 +4734,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FFA33D2B7220CF00740FB9 /* FTCommon.framework in Frameworks */,
 				97C4531C2B70E40500251C73 /* SwiftUI.framework in Frameworks */,
 				97C4531A2B70E40500251C73 /* WidgetKit.framework in Frameworks */,
 			);
@@ -12844,7 +12845,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97C453322B71111200251C73 /* Noteshelf3_Widgets.swift in Sources */,
 				97C453332B71112D00251C73 /* SearchIntent.swift in Sources */,
 				BAA84E1928730F5800DE801B /* FTStyles.docc in Sources */,
 				BAA84E3C28730FAA00DE801B /* Fonts.swift in Sources */,

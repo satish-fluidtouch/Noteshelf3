@@ -13,5 +13,6 @@ import SwiftUI
 struct Noteshelf3_WidgetsBundle: WidgetBundle {
     var body: some Widget {
         Noteshelf3_Widgets()
+        InteractivePinnedWidget()
     }
 }

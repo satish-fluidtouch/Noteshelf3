@@ -552,6 +552,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             }
         }
     }
+    
+    func showPinnedWidgetAlert() {
+        let alertController = UIAlertController(title: "",
+                                                message: "This opens Pinned widget",
+                                                preferredStyle: .alert);
+        let cancelAction = UIAlertAction(title: NSLocalizedString("OK", comment: "Ok"), style: .cancel, handler: { _ in
+        });
+        alertController.addAction(cancelAction);
+        self.present(alertController, animated: true, completion: nil);
+    }
 
     func showPremiumUpgradeScreen() {
         self.prepareProviderIfNeeded {

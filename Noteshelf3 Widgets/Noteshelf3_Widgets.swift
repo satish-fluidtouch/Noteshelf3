@@ -8,6 +8,7 @@
 
 import WidgetKit
 import SwiftUI
+import FTCommon
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -86,6 +87,82 @@ struct Noteshelf3_Widgets: Widget {
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
+    }
+}
+
+struct InteractivePinnedWidget: Widget {
+    let kind: String = "InteractiveWidgets"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) {  entry in
+            if #available(iOS 17.0, *) {
+                FTPinnedWidgetView()
+                    .containerBackground(.fill.tertiary, for: .widget)
+                    .widgetURL(appUrl())
+            } else {
+                FTPinnedWidgetView()
+                    .padding()
+                    .background()
+                    .widgetURL(appUrl())
+            }
+        }
+        .supportedFamilies([.systemSmall])
+    }
+    
+    private func appUrl() -> URL? {
+        var components = URLComponents();
+        components.scheme = "com.fluidtouch.noteshelf3-dev"; //Should be dynamic
+//        components.scheme = "com.fluidtouch.noteshelf3"; //Enable this for PROD
+//        components.scheme = "com.fluidtouch.noteshelf3-Beta"; //Enale this For BETA
+
+        components.path = "/"
+        components.queryItems = [URLQueryItem(name: "intent", value: "pinnedWidget")];
+        return components.url
+    }
+}
+
+struct FTPinnedWidgetView : View {
+    var body: some View {
+        VStack {
+            VStack(spacing: 0) {
+                topView()
+                bottomView()
+            }
+        }.overlay(alignment: .topLeading) {
+            Image("coverImage")
+                .frame(width: 38,height: 52)
+                .padding(.top, 24)
+                .padding(.leading, 24)
+        }
+    }
+}
+struct topView: View {
+    var body: some View {
+        HStack {
+            Spacer()
+            Image("ns3Icon")
+                .frame(width: 20,height: 20)
+                .padding(.trailing, 16)
+                .padding(.top, 10)
+        }.frame(width: 160, height: 48)
+        .background(Color(uiColor: UIColor(hexString: "#E06E51")))
+    }
+}
+
+struct bottomView: View {
+    var body: some View {
+        HStack {
+            VStack {
+                Spacer()
+                Text("Note book Title")
+                    .lineLimit(2)
+                Text("5:00 pm")
+                    .lineLimit(1)
+            }.padding(.leading, 10)
+                .padding(.bottom, 12)
+            Spacer()
+        }.frame(width: 160, height: 110)
+            .background(Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#DCCDBC"))], startPoint: .top, endPoint: .bottom)))
     }
 }
 
