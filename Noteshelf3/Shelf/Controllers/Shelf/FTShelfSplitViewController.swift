@@ -576,6 +576,11 @@ extension FTShelfSplitViewController {
 
                 if let pageId = pageUUID  {
                     guard let parent = self.parent as? FTRootViewController, let docVc = parent.docuemntViewController else {
+                        if let index = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
+                            openBook(using: index)
+                        } else {
+                            openBook(using: 0)
+                        }
                         return
                     }
                     if let index = doc.pages().firstIndex(where: { $0.uuid == pageId }) {

@@ -532,7 +532,7 @@ extension NSMutableAttributedString {
 
 @objc extension UIColor {
     class var link: UIColor {
-        return UIColor(hexString: "5779F8");
+        return UIColor(hexString: "007AFF");
     }
 }
 

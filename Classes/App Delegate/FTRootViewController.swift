@@ -543,10 +543,29 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 }
     
     func openNotebook(using schemeUrl: URL) {
-        guard let docVc = self.docuemntViewController,
-              let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
+        guard let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
               let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
               let pageId = queryItems.first(where: { $0.name == "pageId" })?.value else {
+            return
+        }
+
+        guard let docVc = self.docuemntViewController else {
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
+                guard let shelfItem = docItem else {
+                    return
+                }
+                let relativePath = shelfItem.URL.relativePathWRTCollection()
+                self.getShelfItemDetails(relativePath: relativePath) { [weak self] collection, group, shelfItem in
+                    self?.showCollection(collection: collection!,
+                                         groupitem: group,
+                                         shelfItem: shelfItem!,
+                                         addToRecent: false,
+                                         passcode: nil,
+                                         pageUUID: pageId,
+                                         shouldAskforPasscode: true,
+                                         onCompletion: nil)
+                }
+            }
             return
         }
 

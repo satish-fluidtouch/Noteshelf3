@@ -130,6 +130,8 @@ class FTPDFDocumentPDFContentGenerator: FTPDFDocumentContentGenerator {
             if(!self.target.properties.hidePageTemplate) {
                 self.addAnnotations(url);
             }
+            self.addTextPDFLinksIfNeeded(from: self.pagesToExport, url: url)
+
             self.progress.completedUnitCount += Int64(val);
 
             completion(self.exportItem,nil,false);
@@ -138,6 +140,36 @@ class FTPDFDocumentPDFContentGenerator: FTPDFDocumentContentGenerator {
                 self.finalizeProcess();
             });
         };
+    }
+
+    private func addTextPDFLinksIfNeeded(from pages: [FTPageProtocol], url: URL) {
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        guard let document = PDFDocument(url: url) else {
+            return
+        }
+        pages.enumerated().forEach { index, page in
+            if let pageToExport = document.page(at: index)  {
+                let annotations = pageToExport.annotations;
+                annotations.forEach { eachAnnotation in
+                    if let action = eachAnnotation.action
+                        ,let actionURL = action as? PDFActionURL
+                        ,let url = actionURL.url
+                        ,let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems
+                        ,let documentId = queryItems.first(where: { $0.name == "documentId" })?.value
+                        ,let pageId = queryItems.first(where: { $0.name == "pageId" })?.value
+                        ,let book = self.notebook, book.documentUUID == documentId 
+                        ,let pageIndex = book.pages().firstIndex(where: { $0.uuid == pageId })
+                        ,let destPdfPage = document.page(at: pageIndex) {
+
+                        let destinationNew = PDFDestination(page: destPdfPage, at: CGPoint(x: 0, y: destPdfPage.bounds(for: .cropBox).height));
+                        let goToAction = PDFActionGoTo(destination: destinationNew)
+                        eachAnnotation.action = goToAction
+                    }
+                }
+            }
+        }
+        document.write(to: url)
+#endif
     }
 
     private func indexOfPage(_ page: PDFPage, in pages: [FTPageProtocol]) -> Int {
