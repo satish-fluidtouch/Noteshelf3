@@ -164,12 +164,12 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
                 let vertices = annotations.map { eachAnn in
                     return CGPoint(x: eachAnn.boundingRect.midX, y: eachAnn.boundingRect.midY)
                 }
-                let boundingRect = annotations.first?.boundingRect ?? CGRect.zero
                 var startRect = FTShapeUtility.boundingRect(vertices)
                 if annotations.count == 1 {
+                    let boundingRect = annotations.first?.boundingRect ?? CGRect.zero
                     startRect = boundingRect
                 }
-                let screenArea = CGRect.scale(pageController.view.frame, 1 / pageController.contentScale())
+                let screenArea = CGRect.scale(pageController.contentHolderView!.bounds, 1 / pageController.contentScale())
                 let targetRect = CGRect(x: (screenArea.size.width - startRect.size.width) * 0.5, y: (screenArea.size.height - startRect.size.height) * 0.5, width: startRect.size.width, height: startRect.size.height)
                 let translateX = targetRect.origin.x - startRect.origin.x;
                 let translateY = targetRect.origin.y - startRect.origin.y;
