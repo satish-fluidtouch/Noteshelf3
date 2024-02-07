@@ -1254,7 +1254,7 @@ extension FTNoteshelfPage : FTCopying {
                                              toURL: pdfTemplateFileItem.fileItemURL,
                                              onCompletion:
                 { (_, _) in
-                    newPage.deepCopyAnnotations(pageAnnotations){
+                newPage.deepCopyAnnotations(pageAnnotations){ _ in
                         newPage.isInitializationInprogress = false;
                         DispatchQueue.main.async {
                             onCompletion(newPage);
@@ -1263,7 +1263,7 @@ extension FTNoteshelfPage : FTCopying {
             });
         }
         else {
-            newPage.deepCopyAnnotations(pageAnnotations) {
+            newPage.deepCopyAnnotations(pageAnnotations) { _ in
                 newPage.isInitializationInprogress = false;
                 DispatchQueue.main.async {
                     onCompletion(newPage);
@@ -1278,7 +1278,7 @@ extension FTNoteshelfPage {
     func deepCopyAnnotations(_ annotations : [FTAnnotation],
                              insertFrom : Int = -1,
                              disableUndo: Bool = true,
-                             onCompletion : @escaping  (()->())) {
+                             onCompletion : @escaping  ((_: [FTAnnotation])->())) {
         self._startCopyingAnnotations(annotations,
                                       copiedAnnotations : [FTAnnotation](),
                                       onCompletion: { (copiedAnnotations) in
@@ -1298,7 +1298,7 @@ extension FTNoteshelfPage {
             if disableUndo {
                 self.undoManager?.enableUndoRegistration()
             }
-            onCompletion();
+            onCompletion(copiedAnnotations);
         })
     }
     

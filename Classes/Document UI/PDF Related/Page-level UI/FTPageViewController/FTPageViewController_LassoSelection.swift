@@ -558,7 +558,7 @@ extension FTPageViewController: FTSaveClipDelegate {
             let doc = (ftdocument as? FTNoteshelfDocument)
             doc?.openDocument(purpose: .write, completionHandler: { success, error in
                 let page = doc?.pages().first as? FTNoteshelfPage
-                page?.deepCopyAnnotations(selectedAnnotations, onCompletion: {
+                page?.deepCopyAnnotations(selectedAnnotations, onCompletion: {_ in 
                     page?.annotations().forEach { annotation in
                         annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
                     }

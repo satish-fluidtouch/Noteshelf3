@@ -176,8 +176,8 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
                 annotations.forEach { eachAnn in
                     eachAnn.setOffset(CGPoint(x: translateX, y: translateY))
                 }
-                page.deepCopyAnnotations(annotations, disableUndo: false) { [pageController] in
-                    pageController.resizeSavedClipFor(annotations: annotations)
+                page.deepCopyAnnotations(annotations, disableUndo: false) { [pageController] copiedAnnotations in
+                    pageController.resizeSavedClipFor(annotations: copiedAnnotations)
                     completion()
                 }
             }
@@ -185,12 +185,12 @@ extension FTPDFRenderViewController: FTSavedClipdelegate {
 
         if let fileUrl = FTSavedClipsProvider.shared.fileUrlForClip(clip: clip) {
             let request = FTDocumentOpenRequest(url: fileUrl, purpose: .read)
-            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, snippetsDocument, error in
                 if error != nil {
-                } else if let document, let firstPage = document.pages().first {
+                } else if let snippetsDocument, let firstPage = snippetsDocument.pages().first {
                     let annotations = firstPage.annotations()
                     performCopy(annotations: annotations, completion: {
-                        FTNoteshelfDocumentManager.shared.closeDocument(document: document, token: token, onCompletion: nil)
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: snippetsDocument, token: token, onCompletion: nil)
                     })
                 }
             }
