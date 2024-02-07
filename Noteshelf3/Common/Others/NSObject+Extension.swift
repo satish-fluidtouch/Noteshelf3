@@ -33,7 +33,7 @@ extension NSObject {
         }
     }
     
-    func openItemInNewWindow(_ item: FTDiskItemProtocol,pageIndex : Int?,docPin: String? = nil, createWithAudio: Bool = false, isQuickCreate: Bool = false) {
+    func openItemInNewWindow(_ item: FTDiskItemProtocol,pageIndex : Int?, pageUUID: String? = nil, docPin: String? = nil, createWithAudio: Bool = false, isQuickCreate: Bool = false) {
         if let shelf = item as? FTShelfItemCollection {
             self.openShelfInNewWindow(shelf)
         }
@@ -41,7 +41,7 @@ extension NSObject {
             self.openGroupInNewWindow(groupItem)
         }
         else if let shelfItem = item as? FTDocumentItemProtocol {
-            self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex,docPin: docPin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
+            self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex,pageUUID: pageUUID, docPin: docPin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
         }
         FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_openinnewwindow_tap")
     }
@@ -54,7 +54,7 @@ extension NSObject {
         self.openNonCollectionTypeInNewWindow(contentType: .tag,selectedTag:selectedTag)
     }
     
-    private func openNotebookItemInNewWindow(_ shelfItem: FTShelfItemProtocol,pageIndex : Int?,docPin: String?, createWithAudio: Bool, isQuickCreate: Bool)
+    private func openNotebookItemInNewWindow(_ shelfItem: FTShelfItemProtocol,pageIndex : Int?, pageUUID: String? = nil, docPin: String?, createWithAudio: Bool, isQuickCreate: Bool)
     {
         let sourceURL = shelfItem.URL
         let userActivityID = FTNoteshelfSessionID.openNotebook.activityIdentifier;
@@ -63,46 +63,71 @@ extension NSObject {
         userActivity.title = title
         userActivity.isAllNotesMode = false
         userActivity.isInNonCollectionMode = false
-        if let pgIndex = pageIndex {
-            userActivity.currentPageIndex = pgIndex;
+        // To find the index of page especially during linking
+        if let pageId = pageUUID {
+            let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+            if let passcode = docPin {
+                request.pin = passcode
+            }
+            FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                if let doc = document {
+                    if let index = doc.pages().firstIndex(where: {$0.uuid == pageId}) {
+                        userActivity.currentPageIndex = index;
+                    } else if let pgIndex = pageIndex {
+                        userActivity.currentPageIndex = pgIndex;
+                    }
+                    FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token, onCompletion: nil)
+                    handleBookOpen()
+                }
+            }
         }
-        var userInfo = userActivity.userInfo ?? [AnyHashable : Any]();
-        let docPath = sourceURL.relativePathWRTCollection();
-        userInfo[LastOpenedDocumentKey] = docPath;
+        else if let pgIndex = pageIndex {
+            userActivity.currentPageIndex = pgIndex
+            handleBookOpen()
+        } else {
+            handleBookOpen()
+        }
 
-        if let collectionName = docPath.collectionName() {
-            userInfo[LastSelectedCollectionKey] = collectionName;
-        }
-        if docPath.deletingLastPathComponent.pathExtension == FTFileExtension.group {
-            userInfo[LastOpenedGroupKey] = docPath.deletingLastPathComponent
-        }
-        if let _docPin = docPin {
-            userInfo["docPin"] = _docPin;
-        }
-        userActivity.userInfo = userInfo
-        userActivity.createWithAudio = createWithAudio
-        userActivity.isQuickCreate = isQuickCreate
+        func handleBookOpen() {
+            var userInfo = userActivity.userInfo ?? [AnyHashable : Any]();
+            let docPath = sourceURL.relativePathWRTCollection();
+            userInfo[LastOpenedDocumentKey] = docPath;
+
+            if let collectionName = docPath.collectionName() {
+                userInfo[LastSelectedCollectionKey] = collectionName;
+            }
+            if docPath.deletingLastPathComponent.pathExtension == FTFileExtension.group {
+                userInfo[LastOpenedGroupKey] = docPath.deletingLastPathComponent
+            }
+            if let _docPin = docPin {
+                userInfo["docPin"] = _docPin;
+            }
+            userActivity.userInfo = userInfo
+            userActivity.createWithAudio = createWithAudio
+            userActivity.isQuickCreate = isQuickCreate
 #if targetEnvironment(macCatalyst)
-        if let sesssion = UIApplication.shared.sessionForDocument(docPath) {
-            UIApplication.shared.requestSceneSessionActivation(sesssion
-                                                               , userActivity: sesssion.scene?.userActivity
-                                                               , options: nil
-                                                               , errorHandler: nil)
-        }
-        else {
+            if let sesssion = UIApplication.shared.sessionForDocument(docPath) {
+                sesssion.scene?.userActivity?.currentPageIndex = userActivity.currentPageIndex
+                UIApplication.shared.requestSceneSessionActivation(sesssion
+                                                                   , userActivity: userActivity
+                                                                   , options: nil
+                                                                   , errorHandler: nil)
+            }
+            else {
+                userActivity.becomeCurrent();
+                UIApplication.shared.requestSceneSessionActivation(nil
+                                                                   , userActivity: userActivity
+                                                                   , options: nil
+                                                                   , errorHandler: nil)
+            }
+#else
             userActivity.becomeCurrent();
             UIApplication.shared.requestSceneSessionActivation(nil
                                                                , userActivity: userActivity
                                                                , options: nil
                                                                , errorHandler: nil)
-        }
-#else
-        userActivity.becomeCurrent();
-        UIApplication.shared.requestSceneSessionActivation(nil
-                                                           , userActivity: userActivity
-                                                           , options: nil
-                                                           , errorHandler: nil)
 #endif
+        }
     }
 
     private func openShelfInNewWindow(_ shelf: FTShelfItemCollection) {

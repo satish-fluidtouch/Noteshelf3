@@ -58,6 +58,7 @@ class FTTextAnnotationViewController: UIViewController {
 
 #if targetEnvironment(macCatalyst)
     private var forceEndEditing: Bool = false
+    internal var contextMenu: UIContextMenuInteraction?
 #endif
 
     private weak var referenceLibraryController: FTReferenceLibraryViewController?;
@@ -225,8 +226,9 @@ class FTTextAnnotationViewController: UIViewController {
             self?.forceEndEditing = true
         }
         
-        let contextMenu = UIContextMenuInteraction.init(delegate: self)
-        self.view.addInteraction(contextMenu)
+        let menu = UIContextMenuInteraction.init(delegate: self)
+        self.textInputView.addInteraction(menu)
+        self.contextMenu = menu
         #endif
     }
 
@@ -1519,6 +1521,12 @@ extension FTTextAnnotationViewController : FTTouchEventProtocol
         if !self.editMode {
             saveTextEntryAttributes()
             self.setupMenuForTextViewLongPress();
+#if targetEnvironment(macCatalyst)
+            let reqMenu = self.getContextMenuForMac()
+            self.contextMenu?.updateVisibleMenu({ _ in
+                return reqMenu
+            })
+#endif
         }
         self.scheduleScrolling(delay: 0.4);
     }
@@ -1611,6 +1619,12 @@ extension FTTextAnnotationViewController : FTAnnotationEditControllerInterface
                 let convertedPoint = self.view.convert(point, to: textInputView)
                 self.textInputView.selectTextRange(at: convertedPoint)
                 setupMenuForTextViewLongPress()
+#if targetEnvironment(macCatalyst)
+                let reqMenu = self.getContextMenuForMac()
+                self.contextMenu?.updateVisibleMenu({ _ in
+                    return reqMenu
+                })
+#endif
             }
         }
     }
@@ -1743,8 +1757,14 @@ extension FTTextAnnotationViewController {
             #selector(self.delete(_:))
         ].contains(selector) {
             return true;
+        } else if self.textInputView.checkIfToShowEditLinkOptions() {
+            if [#selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)), #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:))].contains(selector) {
+                return true
+            }
+        } else if [#selector(FTAnnotationBaseView.linkToMenuItemAction(_:))].contains(selector) {
+            return true
         }
-        return false;
+        return false
     }
     
     func performAction(_ selector: Selector) {

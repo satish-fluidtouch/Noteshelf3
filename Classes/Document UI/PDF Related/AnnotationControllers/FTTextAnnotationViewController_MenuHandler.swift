@@ -284,55 +284,63 @@ extension FTTextAnnotationViewController: FTColorEyeDropperPickerDelegate {
 #if targetEnvironment(macCatalyst)
 extension FTTextAnnotationViewController: UIContextMenuInteractionDelegate {
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        if (self.isEditMode) {
+        if (self.isEditMode && !self.textInputView.isTextHighLighted()) {
             return nil
         }
         let actionProvider : ([UIMenuElement]) -> UIMenu? = {[weak self] _ in
-            var menuItems = [UIMenuElement]();
-            
-            let editmenu = UIAction(title: NSLocalizedString("Edit", comment: "Edit")) { [weak self] _  in
-                self?.textMenuAction(action: .edit, sender: nil);
-            }
-            menuItems.append(editmenu);
-            
-            let cutMenuItem = UIAction(title: NSLocalizedString("Cut", comment: "Cut")) { [weak self] _  in
-                self?.textMenuAction(action: .cut, sender: nil);
-            }
-            menuItems.append(cutMenuItem);
-
-            let copyMenuItem = UIAction(title: NSLocalizedString("Copy", comment: "Copy")) { [weak self] _  in
-                self?.textMenuAction(action: .copy, sender: nil);
-            }
-            menuItems.append(copyMenuItem);
-
-            let deleteMenuItem = UIAction(title: NSLocalizedString("Delete", comment: "Delete")) { [weak self] _  in
-                self?.textMenuAction(action: .delete, sender: nil);
-            }
-            menuItems.append(deleteMenuItem);
-
-            let lockMenuItem = UIAction(title: NSLocalizedString("Lock", comment: "Lock")) { [weak self] _  in
-                self?.textMenuAction(action: .lock, sender: nil);
-            }
-            menuItems.append(lockMenuItem);
-
-            let bringToFrontMenuItem = UIAction(title: NSLocalizedString("BringToFront", comment: "BringToFront")) { [weak self] _  in
-                self?.textMenuAction(action: .bringToFront, sender: nil);
-            }
-            menuItems.append(bringToFrontMenuItem);
-
-            let sendToBackMenuItem = UIAction(title: NSLocalizedString("SendToBack", comment: "SendToBack")) { [weak self] _  in
-                self?.textMenuAction(action: .sendToBack, sender: nil);
-            }
-            menuItems.append(sendToBackMenuItem);
-
-            let menu = UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: menuItems);
-            return menu;
+            guard let self else { return nil }
+            return self.getContextMenuForMac()
         }
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: actionProvider)
         return config
     }
-}
 
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, willDisplayMenuFor configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionAnimating?) {
+        interaction.updateVisibleMenu { menu in
+            return self.getContextMenuForMac()
+        }
+    }
+
+    func getContextMenuForMac() -> UIMenu {
+        var menuItems = [UIMenuElement]()
+
+        let cutMenuItem = UIAction(title: "Cut".localized) { [weak self] _  in
+            self?.textInputView.cut(nil)
+        }
+        menuItems.append(cutMenuItem);
+
+        let copyMenuItem = UIAction(title: "Copy".localized) { [weak self] _  in
+            self?.textInputView.copy(nil)
+        }
+        menuItems.append(copyMenuItem);
+
+        let deleteMenuItem = UIAction(title: "Delete".localized) { [weak self] _  in
+            self?.textInputView.delete(nil)
+        }
+        menuItems.append(deleteMenuItem);
+
+        if self.textInputView.checkIfToShowEditLinkOptions() {
+            let editLinkMenuItem = UIAction(title: "textLink_editLink".localized) { [weak self] _ in
+                self?.textMenuAction(action: .editLink, sender: nil);
+            }
+            menuItems.append(editLinkMenuItem)
+
+            let removeLinkMenuItem = UIAction(title: "textLink_removeLink".localized) { [weak self] _ in
+                self?.textMenuAction(action: .removeLink, sender: nil);
+            }
+            menuItems.append(removeLinkMenuItem)
+
+        } else {
+            let linkToMenuItem = UIAction(title: "textLink_linkTo".localized) { [weak self] _ in
+                self?.textMenuAction(action: .linkTo, sender: nil);
+            }
+            menuItems.append(linkToMenuItem)
+        }
+
+        let menu = UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: menuItems);
+        return menu;
+    }
+}
 #endif
 
 extension FTTextAnnotationViewController: FTTextLinkEditDelegate {

@@ -462,6 +462,7 @@ extension FTShelfSplitViewController {
                                              isQuickCreate: Bool,
                                              createWithAudio: Bool,
                                              pageIndex: Int?,
+                                             pageUUID: String? = nil,
                                              onCompletion: ((FTDocumentProtocol?, Bool) -> Void)?) {
 
         let downloadStatus = shelfItem.URL.downloadStatus();
@@ -475,7 +476,7 @@ extension FTShelfSplitViewController {
         }
 
         func openDoc(_ pin: String?) {
-            openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
+            openItemInNewWindow(shelfItem, pageIndex: nil, pageUUID: pageUUID, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
             onCompletion?(nil,true);
         }
 
