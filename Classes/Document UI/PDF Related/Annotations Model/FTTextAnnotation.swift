@@ -82,6 +82,7 @@ class FTTextAnnotation: FTAnnotation,FTImageRenderingProtocol {
                 let mappedAttr = attrStr.mapAttributesToMatch(withLineHeight: -1);
                 let mutAttrStr = NSMutableAttributedString.init(attributedString: mappedAttr!);
                 mutAttrStr.applyScale(1, originalScaleToApply: CGFloat(self.transformScale));
+                mutAttrStr.applyDataDetectorAttributes()
                 self.attributedString = mutAttrStr;
             }
         }
