@@ -49,26 +49,23 @@ extension NSNotification.Name {
     {
         URL = fileURL;
         super.init();
-        // TODO: (Optimize) This notification needs to be refactored as the launch time is affecting due to URL comparison
         // This is Mainly used to set the download status for the starred items.
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload"),
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
                                                object: nil,
                                                queue: nil,
                                                using:
-            { [weak self] (notification) in
-                if self?.downloaded == false,
-                    let object = notification.object as? FTDocumentItem,
-                    object != self,
-                    object.URL == self?.URL {
-                    self?.documentUUID = object.documentUUID;
-                    self?.downloaded = object.downloaded;
-                    
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshRecent"),
-                                                    object: self,
-                                                    userInfo: nil);
-                }
+                                                { [weak self] (notification) in
+            if self?.downloaded == false
+                ,let object = notification.object as? FTDocumentItem
+                ,object != self {
+                self?.documentUUID = object.documentUUID;
+                self?.downloaded = object.downloaded;
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "RefreshRecent"),
+                                                object: self,
+                                                userInfo: nil);
+            }
         })
-        
     }
 
     override var hash: Int {
@@ -85,7 +82,7 @@ extension NSNotification.Name {
             if(oldValue != self.downloaded) {
                 self.didChangeValue(forKey: "downloaded");
                 if(self.downloaded) {
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishedDownload"),
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "FinishedDownload_\(self.URL.hashKey)"),
                                                     object: self,
                                                     userInfo: nil);
                 }
