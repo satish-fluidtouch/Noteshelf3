@@ -202,3 +202,26 @@ extension URL {
         }
     }
 }
+extension SceneDelegate {
+    func startSearch() {
+        self.showAlertForIntentWith(title: "Search", message: "")
+    }
+    func createAQuickNote() {
+        self.showAlertForIntentWith(title: "Quick Note", message: "")
+    }
+    func createNewNotebook() {
+        self.showAlertForIntentWith(title: "New Notebook", message: "")
+    }
+    func createAudioNote() {
+        self.showAlertForIntentWith(title: "Audio Note", message: "")
+    }
+    func startScan() {
+        self.showAlertForIntentWith(title: "Staring scan", message: "")
+    }
+    func showAlertForIntentWith(title: String, message: String) {
+        if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol {
+            let handler = FTAppIntentHandler(with: handlingController)
+            handler.showAlertForIntentWith(title: title, message: message)
+        }
+    }
+}

@@ -811,9 +811,16 @@
 		97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97C453302B70F24000251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
-		97C453332B71112D00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */; };
 		97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */; };
+		97C453472B73721400251C73 /* QuickNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453462B73721400251C73 /* QuickNoteIntent.swift */; };
+		97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453462B73721400251C73 /* QuickNoteIntent.swift */; };
+		97C4534B2B73722C00251C73 /* NewNotebookIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */; };
+		97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */; };
+		97C4534F2B73723D00251C73 /* AudioNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */; };
+		97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */; };
+		97C453532B73725000251C73 /* ScanIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453522B73725000251C73 /* ScanIntent.swift */; };
+		97C453552B73725000251C73 /* ScanIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453522B73725000251C73 /* ScanIntent.swift */; };
 		97C52E4B292223E800BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */; };
 		97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */; };
 		97C52E4D292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */; };
@@ -3826,6 +3833,10 @@
 		97C4532F2B70F24000251C73 /* SearchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIntent.swift; sourceTree = "<group>"; };
 		97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookCreationWidget.swift; sourceTree = "<group>"; };
 		97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInteractiveWidgets.swift; sourceTree = "<group>"; };
+		97C453462B73721400251C73 /* QuickNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickNoteIntent.swift; sourceTree = "<group>"; };
+		97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotebookIntent.swift; sourceTree = "<group>"; };
+		97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNoteIntent.swift; sourceTree = "<group>"; };
+		97C453522B73725000251C73 /* ScanIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanIntent.swift; sourceTree = "<group>"; };
 		97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemContextualOperations.swift"; sourceTree = "<group>"; };
 		97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemOperations.swift"; sourceTree = "<group>"; };
 		97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BottomBarOptions.swift"; sourceTree = "<group>"; };
@@ -9078,15 +9089,27 @@
 		97C4531D2B70E40500251C73 /* Noteshelf3 Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				97C453452B7371EB00251C73 /* Intents */,
 				97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */,
 				97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */,
 				97C453222B70E40700251C73 /* Assets.xcassets */,
 				97C453242B70E40700251C73 /* Info.plist */,
-				97C4532F2B70F24000251C73 /* SearchIntent.swift */,
 				97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */,
 				97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */,
 			);
 			path = "Noteshelf3 Widgets";
+			sourceTree = "<group>";
+		};
+		97C453452B7371EB00251C73 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				97C4532F2B70F24000251C73 /* SearchIntent.swift */,
+				97C453462B73721400251C73 /* QuickNoteIntent.swift */,
+				97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */,
+				97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */,
+				97C453522B73725000251C73 /* ScanIntent.swift */,
+			);
+			path = Intents;
 			sourceTree = "<group>";
 		};
 		97EAB18C26A91AA200545FBB /* Midnight */ = {
@@ -12841,9 +12864,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C453552B73725000251C73 /* ScanIntent.swift in Sources */,
 				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,
 				97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */,
+				97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
 				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
+				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
+				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
 				97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */,
 				97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */,
 			);
@@ -12853,7 +12880,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97C453332B71112D00251C73 /* SearchIntent.swift in Sources */,
 				BAA84E1928730F5800DE801B /* FTStyles.docc in Sources */,
 				BAA84E3C28730FAA00DE801B /* Fonts.swift in Sources */,
 				BAA84E3228730FAA00DE801B /* Colors.swift in Sources */,
@@ -13206,6 +13232,7 @@
 				BAF390D92859ADF00067CA9F /* FTExportImportTargetProtocol.swift in Sources */,
 				42835D4B2892C73A00B041A3 /* FTFinderPresentAnimator.swift in Sources */,
 				BAF390DB2859ADF00067CA9F /* UIFont_Traits_Extension.swift in Sources */,
+				97C4534F2B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
 				BAF390DC2859ADF00067CA9F /* FTFiveMinJournalTemplateFormat.swift in Sources */,
 				3DF1B34328EAB5D800018AA5 /* FTClipAnnotation_SQLiteHelper.swift in Sources */,
 				09ABDCAF2A790F94008F144D /* FTNoteshelfAIViewController.swift in Sources */,
@@ -13634,6 +13661,7 @@
 				BAF392362859ADF00067CA9F /* FTPDFPagePublishRequest.swift in Sources */,
 				97C5A22E29F1032600B8E251 /* FTSidebarItemContextualMenuVM.swift in Sources */,
 				BAF392382859ADF00067CA9F /* FTPDFScrollView.m in Sources */,
+				97C4534B2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
 				BAF3923A2859ADF00067CA9F /* FTWebdavPublishRequest.swift in Sources */,
 				BAF3923B2859ADF00067CA9F /* CITreeViewController.swift in Sources */,
 				BAF3923C2859ADF00067CA9F /* FTFiveMinJournalHelpTemplate.swift in Sources */,
@@ -13957,6 +13985,7 @@
 				42835D492892C54400B041A3 /* FTFinderPresentationController.swift in Sources */,
 				BA50E03C2959CB4800CDC0FD /* FTShelfTagsRepresentableView.swift in Sources */,
 				BAF393372859ADF00067CA9F /* FTPencilBrushBuilder_V2.swift in Sources */,
+				97C453532B73725000251C73 /* ScanIntent.swift in Sources */,
 				BA2D911C285CAFCC001BB495 /* FTSidebarSectionType.swift in Sources */,
 				BAF393382859ADF00067CA9F /* FTSearchResultContentHeader.swift in Sources */,
 				BAF393392859ADF00067CA9F /* FTBrushBuilder.swift in Sources */,
@@ -14104,6 +14133,7 @@
 				BA111C392988E5DC001E854F /* CTRun+Metrics.swift in Sources */,
 				BAF393C82859ADF00067CA9F /* FTOneDriveFiles_Base.swift in Sources */,
 				BAF393C92859ADF00067CA9F /* FTStylusPenSettingsProtocol.swift in Sources */,
+				97C453472B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				BAF393CA2859ADF00067CA9F /* FTAccountsViewController.swift in Sources */,
 				BAF393CB2859ADF00067CA9F /* FTPenBrushBuilder_V1.swift in Sources */,
 				BAF393CC2859ADF00067CA9F /* FTMobileCommunicationManager.swift in Sources */,
@@ -16313,10 +16343,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -16333,11 +16360,11 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.Noteshelf3-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -16388,6 +16415,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.Noteshelf3-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -16439,6 +16467,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.Noteshelf3-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -16490,6 +16519,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3.Noteshelf3-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -16541,6 +16571,7 @@
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "-D NOTESHELF_WIDGET";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.Noteshelf3-Widgets";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

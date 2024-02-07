@@ -1,0 +1,22 @@
+//
+//  NewNotebookIntent.swift
+//  Noteshelf3
+//
+//  Created by Ramakrishna on 07/02/24.
+//  Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.
+//
+
+import Foundation
+import AppIntents
+
+struct NewNotebookIntent : AppIntent {
+    static var title: LocalizedStringResource = "New Notebook"
+    static var openAppWhenRun: Bool = true
+    func perform() async throws -> some IntentResult {
+    #if !NOTESHELF_WIDGET
+    let sceneDelegate = await (UIApplication.shared as? NoteshelfApplication)?.sceneDelegate as? SceneDelegate
+    await sceneDelegate?.createNewNotebook()
+    #endif
+        return .result()
+    }
+}

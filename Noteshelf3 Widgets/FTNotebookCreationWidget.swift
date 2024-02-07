@@ -10,6 +10,7 @@ import Foundation
 import WidgetKit
 import SwiftUI
 import FTCommon
+import AppIntents
 
 enum NotebookCreationType {
     case quickNote
@@ -62,33 +63,32 @@ enum NotebookCreationType {
 }
 struct NotebookCreation_WidgetsEntryView : View {
     var body: some View {
-        VStack(spacing:10.0) {
+        VStack(spacing:8.0) {
             headerView
                 .frame(height: 24,alignment: .center)
             optionsView
         }
         .frame(maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal,8)
+        .padding(.vertical,8)
     }
     private var optionsView : some View {
-        Grid(alignment: .center, horizontalSpacing: 6,verticalSpacing: 6 ) {
+        Grid(alignment: .center, horizontalSpacing: 4,verticalSpacing: 4 ) {
             GridRow {
-                optionViewForType(.quickNote)
-                optionViewForType(.newNotebook)
+                optionViewForType(.quickNote, intent: QuickNoteIntent())
+                optionViewForType(.newNotebook, intent: NewNotebookIntent())
             }
             GridRow {
-                optionViewForType(.audioNote)
-                optionViewForType(.scan)
+                optionViewForType(.audioNote, intent: AudioNoteIntent())
+                optionViewForType(.scan, intent: ScanIntent())
             }
         }
-        .frame(height: 88)
     }
-    private func optionViewForType(_ type : NotebookCreationType) -> some View {
-        Button(intent: SearchIntent()) {
+    private func optionViewForType(_ type : NotebookCreationType, intent: any AppIntent) -> some View {
+        Button(intent: intent) {
             actionViewForType(type)
         }
-        .frame(height: 42,alignment: .leading)
-        .buttonStyle(.plain)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .buttonStyle(CustomButtonStyle())
     }
 
     private var headerView : some View {
@@ -96,7 +96,7 @@ struct NotebookCreation_WidgetsEntryView : View {
             Image("appIconSmall")
                 .frame(width: 20,height: 20,alignment: .center)
                 .padding(.leading,8)
-            Text("Noteshelf")
+            Text("NOTESHELF")
                 .frame(height: 24, alignment: .center)
                 .font(.appFont(for: .bold, with: 13))
             Spacer()
@@ -105,9 +105,10 @@ struct NotebookCreation_WidgetsEntryView : View {
                     Image("searchIcon")
                         .frame(width: 20,height: 20)
                 }
-                .frame(width: 20,height: 20)
+                .frame(width: 24,height: 24,alignment: .center)
                 .border(.clear, width: 0)
                 .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+                .buttonStyle(.plain)
             } else {
                 Button(action: {
 
@@ -133,12 +134,25 @@ struct NotebookCreation_WidgetsEntryView : View {
                     .font(.appFont(for: .medium, with: 17))
             }
             Text(type.title)
-                .font(.appFont(for: .bold, with: 11))
+                .font(.appFont(for: .medium, with: 13))
                 .foregroundStyle(Color.black)
         }
-        .frame(maxWidth: .infinity,maxHeight: 42,alignment: .leading)
-        .background(Color(uiColor: UIColor(hexString: "#F5F0EB",alpha: 0.75)))
+        .frame(maxWidth: .infinity,maxHeight:.infinity, alignment: .leading)
     }
+}
+struct CustomButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(Color(uiColor: UIColor(hexString: "#F5F0EB",alpha: 0.75)))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+
+    }
+}
+@available(iOS 17.0, *)
+#Preview(as: .systemMedium) {
+    NotebookCreation_Widget()
+} timeline: {
+    SimpleEntry(date: .now, emoji: "😀")
 }
 
 

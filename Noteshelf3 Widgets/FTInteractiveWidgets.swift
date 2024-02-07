@@ -56,20 +56,12 @@ struct NotebookCreation_Widget: Widget {
                     .padding()
                     .background()
             }
-        }
+        }.contentMarginsDisabled()
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
         .supportedFamilies([.systemMedium])
     }
 }
-
-@available(iOS 17.0, *)
-#Preview(as: .systemMedium) {
-    NotebookCreation_Widget()
-} timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-}
-
 
 struct FTPinnedWidget: Widget {
     let kind: String = "InteractiveWidgets"

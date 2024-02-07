@@ -85,6 +85,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
     func showPinnedWidgetAlert()
+    func showAlertWith(title : String,message : String)
 }
 
 
@@ -246,6 +247,9 @@ final class FTAppIntentHandler {
         case .scanDocument:
             intentHandler?.createNotebookWithScannedPhoto()
         }
+    }
+    func showAlertForIntentWith(title : String,message : String) {
+        intentHandler?.showAlertWith(title: title, message: message)
     }
 }
 
