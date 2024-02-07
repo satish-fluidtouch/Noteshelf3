@@ -160,6 +160,7 @@ extension FTPageViewController
     }
 
     func resizeSavedClipFor(annotations: [FTAnnotation]) {
+        normalizeLassoView()
         self.lassoInfo.selectedAnnotations = annotations;
         initiateTransformSelection()
     }
