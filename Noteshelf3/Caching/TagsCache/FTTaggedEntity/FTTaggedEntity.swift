@@ -91,6 +91,9 @@ class FTTaggedEntity: NSObject, Identifiable {
     
     func removeTag(_ tag: FTTag) {
         self.tags.remove(tag)
+        if self.tags.isEmpty {
+//            FTTagsProvider.shared.removeItemFromCache()
+        }
     }
     
     override func isEqual(_ object: Any?) -> Bool
@@ -111,8 +114,7 @@ class FTTaggedEntity: NSObject, Identifiable {
     
     func documentShelfItem(_ ifDownloaded: Bool = true, onCompletion: ((FTDocumentItemProtocol?)->())?) {
         FTNoteshelfDocumentProvider.shared.document(with: self.documentUUID
-                                                    , orRelativePath: ifDownloaded ? nil : self.relativePath
-                                                    , bypassPasswordProtected: true) { docItem in
+                                                    , orRelativePath: ifDownloaded ? nil : self.relativePath) { docItem in
             onCompletion?(docItem);
         }
     }

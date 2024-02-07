@@ -220,14 +220,14 @@ private extension FTSidebarViewModel {
 
     func addObservers() {
         self.menuItems.forEach({ menuItem in
-            menuItem.$isExpanded.sink { isExpanded in
-                self.objectWillChange.send()
-            }.store(in: &cancellables)
+//            menuItem.$isExpanded.sink { isExpanded in
+//                self.objectWillChange.send()
+//            }.store(in: &cancellables)
             
-            menuItem.$items.sink { [weak self] items in
-                self?.setSideBarItemSelection()
-                self?.objectWillChange.send()
-            }.store(in: &cancellables)
+//            menuItem.$items.sink { [weak self] items in
+//                self?.setSideBarItemSelection()
+//                self?.objectWillChange.send()
+//            }.store(in: &cancellables)
         })
     }
 
@@ -414,18 +414,11 @@ extension FTSidebarViewModel {
     }
 
     func updateUserCreatedCategories() {
-//        self.fetchUserCreatedCategories()
+        self.menuItems.first(where: {$0.type == .categories})?.fetchItems();
     }
+    
     private func fetchSidebarMenuItems() {
         self.buildSideMenuItems()
-    }
-
-    private func createSideBarItemWith(title: String, type: FTSideBarItemType, allowsItemDropping: Bool,icon: FTIcon) -> FTSideBarItem {
-        return FTSideBarItem(title: title,
-                             icon: icon,
-                             isEditable: true,
-                             type: type,
-                             allowsItemDropping: allowsItemDropping)
     }
 
     private func buildSideMenuItems(){

@@ -86,7 +86,7 @@ class FTShelfTagsViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = []
         (self.view.toolbar as? FTShelfToolbar)?.toolbarActionDelegate = self
 #endif
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh(_ :)), name: Notification.Name(rawValue: "refreshShelfTags"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateTags(_:)), name: .didUpdateTags, object: nil);
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -125,15 +125,27 @@ class FTShelfTagsViewController: UIViewController {
         }
     }
 
-    @objc func refresh(_ notification: Notification) {
-        activateViewMode()
-        if let info = notification.userInfo, let tag = info["tag"] as? FTTag, self.currentTag == tag {
-            self.loadShelfTagItems();
+    @objc func didUpdateTags(_ notification: Notification) {
+        if let userInfo = notification.userInfo
+            , let tags = userInfo["tags"] as? [FTTag]
+            , let curTag = self.currentTag
+            ,tags.contains(curTag) {
+            if let operation = userInfo["operation"] as? String {
+//                if operation == "delete" {
+//                    self.loadShelfTagItems();
+//                    self.updateTitle();
+//                    enableToolbarItemsIfNeeded()
+//                }
+//                else 
+                if operation == "rename" {
+                    self.loadShelfTagItems();
+                    self.updateTitle();
+                    enableToolbarItemsIfNeeded()
+                }
+            }
         }
-        self.updateTitle();
-        enableToolbarItemsIfNeeded()
     }
-
+    
     func reloadContent() {
         self.loadShelfTagItems()
     }
@@ -311,7 +323,7 @@ class FTShelfTagsViewController: UIViewController {
             
             let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
             let updater = FTDocumentTagUpdater();
-            _ = updater.updateTags([], removedTags: Array(allTags), entities: Array(selectedEntities)) {
+            _ = updater.updateTags(addedTags: [], removedTags: Array(allTags), entities: Array(selectedEntities)) {
                 debugLog("removed complete: \(updater)");
                 indicator.hide();
                 self.refreshView()
@@ -508,7 +520,8 @@ extension FTShelfTagsViewController {
         selPages.forEach { eachItem in
             group.enter();
             let doc = eachItem.key;
-            FTNoteshelfDocumentProvider.shared.document(with: doc) { docItemProtocol in
+            let relativePath = FTCachedDocument(documentID: doc).relativePath
+            FTNoteshelfDocumentProvider.shared.document(with: doc,orRelativePath: relativePath) { docItemProtocol in
                 guard let docItem = docItemProtocol else {
                     group.leave();
                     return;
@@ -572,7 +585,7 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
 
         let updater = FTDocumentTagUpdater();
         let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
-        _ = updater.updateTags(addedTags, removedTags: removedTags, entities: Array(selectedItems)) {
+        _ = updater.updateTags(addedTags: addedTags, removedTags: removedTags, entities: Array(selectedItems)) { 
             debugLog("updater: \(updater)");
             indicator.hide();
         }

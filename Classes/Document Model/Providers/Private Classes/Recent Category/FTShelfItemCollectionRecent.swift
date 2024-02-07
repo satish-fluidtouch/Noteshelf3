@@ -243,9 +243,6 @@ extension URL {
     }
     
     static func resolvingAliasData(_ data: Data,isStale: inout Bool) -> URL? {
-        if(Thread.current.isMainThread) {
-            fatalError("resolvingAliasData should not be called on main thread")
-        }
         do {
             let resolvedURL = try URL(resolvingBookmarkData: data, bookmarkDataIsStale: &isStale);
             return resolvedURL;

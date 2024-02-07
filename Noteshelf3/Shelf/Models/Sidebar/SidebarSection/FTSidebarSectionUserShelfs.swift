@@ -34,6 +34,10 @@ class FTSidebarSectionUserShelfs: FTSidebarSection {
         NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
     }
     
+    override func fetchItems() {
+        self.prepreItems();
+    }
+    
     override func moveItem(fromOrder: Int, toOrder: Int) -> Bool {
         let success = super.moveItem(fromOrder: fromOrder, toOrder: toOrder)
         if success {

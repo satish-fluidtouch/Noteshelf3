@@ -11,179 +11,36 @@ import FTCommon
 
 class FTDocumentTagUpdater: NSObject {
     //MARK:-  Shelf Side bar Operations
-    func rename(tag: FTTag, to newName: String,onCompletion: ((_ success: Bool)->())?) -> Progress? {
+    func rename(tag: FTTag
+                , to newName: String
+                ,onCompletion: (()->())?) -> Progress? {
         let operation = FTTagRename(tag: tag, newTitle: newName);
         return operation.perfomAction(onCompletion);
     }
     
-    func delete(tag: FTTag,onCompletion : ((_ success: Bool)->())?) -> Progress? {
+    func delete(tag: FTTag
+                ,onCompletion : (()->())?) -> Progress? {
         let operation = FTTagDelete(tag: tag);
         return operation.perfomAction(onCompletion);
     }
     
 
     //MARK:-  Shelf Tag Operation
-    func updateTags(_ addedTags: [FTTagModel]
+    func updateTags(addedTags: [FTTagModel]
                     , removedTags: [FTTagModel]
                     , entities: [FTTaggedEntity]
-                    , onCompletion: @escaping ()->()) -> Progress {
-        let progress = Progress();
-        var tagGrouped = [String: [FTTaggedEntity]] ();
-        entities.forEach { eachEntity in
-            var item = tagGrouped[eachEntity.documentUUID] ?? [FTTaggedEntity]();
-            item.append(eachEntity);
-            tagGrouped[eachEntity.documentUUID] = item;
-        }
-        progress.totalUnitCount = Int64(tagGrouped.keys.count);
-        
-        func performAction(_ oncompeltion: @escaping ()->()) {
-            guard let item = tagGrouped.first else {
-                oncompeltion();
-                return;
-            }
-            
-            let docID = item.key;
-            let taggedEntities = item.value;
-            tagGrouped.removeValue(forKey: docID);
-            
-            FTNoteshelfDocumentProvider.shared.document(with: docID) { documentItem in
-                if let docItem = documentItem {
-                    progress.localizedDescription = "Updating: " + docItem.displayTitle
-                    let request = FTDocumentOpenRequest(url: docItem.URL, purpose: .write)
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                        if let document = document as? FTNoteshelfDocument {
-                            let docPages =  document.pages()
-                            taggedEntities.forEach { eachItem in
-                                if eachItem.tagType == .book {
-                                    addedTags.forEach { eachTag in
-                                        document.addTag(eachTag.text)
-                                    }
-                                    document.removeTags(removedTags.map{$0.text})
-                                } else if eachItem.tagType == .page
-                                            , let pageUUOD = (eachItem as? FTPageTaggedEntity)?.pageUUID {
-                                    if let page = docPages.first(where: {$0.uuid == pageUUOD}) as? FTPageTagsProtocol {
-                                        addedTags.forEach { eachTag in
-                                            page.addTag(eachTag.text)
-                                        }
-                                        removedTags.forEach { eachTag in
-                                            page.removeTag(eachTag.text);
-                                        }
-                                    }
-                                }
-                            }
-                            FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
-                                let tagsToAdd = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
-                                let tagsToRemove = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
-                                
-                                entities.forEach { eachEntity in
-                                    tagsToAdd.forEach { eachTag in
-                                        eachTag.addTaggedItem(eachEntity);
-                                    }
-                                    tagsToRemove.forEach { eachTag in
-                                        eachTag.removeTaggedItem(eachEntity);
-                                    }
-                                }
-                                FTTagsProvider.shared.saveCache();
-                                progress.completedUnitCount += 1;
-                                performAction(oncompeltion)
-                            }
-                        }
-                        else {
-                            progress.completedUnitCount += 1;
-                            performAction(oncompeltion)
-                        }
-                    }
-                }
-                else {
-                    progress.completedUnitCount += 1;
-                    performAction(oncompeltion)
-                }
-            }
-        }
-        
-        FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
-        DispatchQueue.global().async {
-            performAction({
-                FTNoteshelfDocumentProvider.shared.enableCloudUpdates();
-                runInMainThread {
-                    onCompletion();
-                }
-            })
-        }
-        return progress;
+                    , onCompletion: (()->())?) -> Progress? {
+        let operation = FTTagUpdateTagEntities(addedTags, removedTags: removedTags, entities: entities)
+        return operation.perfomAction(onCompletion);
     }
-        
-    //MARK:-  Pop UP
-    func updateNotebookTags( addedTags: [FTTagModel]
-                             , removedTags:[FTTagModel]
-                             , documentID: [String]
-                             ,onCompletion: (()->())?) -> Progress {
-        let progress = Progress();
-        progress.totalUnitCount = Int64(documentID.count);
-        
-        var documentUUIDToProcess = documentID;
-        func performAction(_ onCompletion: @escaping ()->()) {
-            guard !documentUUIDToProcess.isEmpty else {
-                onCompletion();
-                return;
-            }
-            let docID = documentUUIDToProcess.removeFirst();
-            FTNoteshelfDocumentProvider.shared.document(with: docID) { documentItem in
-                if let docItem = documentItem {
-                    progress.localizedDescription = "Updating: " + docItem.displayTitle
-                    let request = FTDocumentOpenRequest(url: docItem.URL, purpose: .write)
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                        if let document = document as? FTNoteshelfDocument {
-                            addedTags.forEach { eachTag in
-                                document.addTag(eachTag.text);
-                            }
-                            document.removeTags(removedTags.map{$0.text})
-                            FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
-                                let tagsToAdd = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
-                                let tagsToRemove = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
 
-                                let docName = document.URL.relativePathWRTCollection()
-                                tagsToAdd.forEach { eachTag in
-                                    if let taggedEntity = FTTagsProvider.shared.tagggedEntity(docID
-                                                                                              , documentPath: docName
-                                                                                              , createIfNotPresent: true) {
-                                        eachTag.addTaggedItem(taggedEntity);
-                                    }
-                                }
-                                tagsToRemove.forEach { eachTag in
-                                    if let taggedEntity = FTTagsProvider.shared.tagggedEntity(docID
-                                                                                                , documentPath: docName) {
-                                        eachTag.removeTaggedItem(taggedEntity);
-                                    }
-                                }
-                                FTTagsProvider.shared.saveCache();
-                                progress.completedUnitCount += 1;
-                                performAction(onCompletion)
-                            }
-                        }
-                        else {
-                            progress.completedUnitCount += 1;
-                            performAction(onCompletion)
-                        }
-                    }
-                }
-                else {
-                    progress.completedUnitCount += 1;
-                    performAction(onCompletion)
-                }
-            }
-        }
-        
-        runInMainThread {
-            FTNoteshelfDocumentProvider.shared.disableCloudUpdates();
-            performAction({
-                FTNoteshelfDocumentProvider.shared.enableCloudUpdates();
-                onCompletion?();
-            })
-        }
-        return progress;
+    func updateNotebookTags(addedTags: [FTTagModel]
+                            , removedTags:[FTTagModel]
+                            , documentIDs: [String]
+                            , onCompletion: (()->())?) -> Progress? {
+        let operation = FTTagUpdateNotebook(addedTags, removedTags: removedTags, docIDs: documentIDs)
+        return operation.perfomAction(onCompletion);
     }
-        
     
     func updatePageTags( addedTags: [FTTagModel],
                          removedTags: [FTTagModel],

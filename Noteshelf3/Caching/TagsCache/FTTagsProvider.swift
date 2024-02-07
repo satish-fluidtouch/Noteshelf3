@@ -36,7 +36,7 @@ class FTTagsProvider: NSObject {
             currentTag.setTagName(newName);
             userTags[tag.tagKey] = currentTag;
             save()
-            self.postTagUpdateNotification(["operation" : "add", "tags" : [currentTag]])
+            self.postTagUpdateNotification(["operation" : "rename", "tags" : [currentTag]])
         }
         lock.unlock();
     }

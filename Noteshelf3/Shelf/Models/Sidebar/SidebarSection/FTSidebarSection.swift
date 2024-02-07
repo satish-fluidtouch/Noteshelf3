@@ -39,6 +39,10 @@ class FTSidebarSection: FTSectionDisplayable, Identifiable, ObservableObject {
         }
     }
     
+    func fetchItems() {
+        
+    }
+    
     func finaliseEdit() {
         for index in 0..<self.items.count {
             self.items[index].isEditing = false

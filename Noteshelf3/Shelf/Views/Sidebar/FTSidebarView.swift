@@ -62,7 +62,8 @@ struct FTSidebarView: View {
                         }
                         else {
                             let sidebarItemWidth = self.sidebarItemSizeBasinfAvailableWidth(geometry.size.width)
-                            self.getDisclousreGroupForSection(menuSection,availableWidth: sidebarItemWidth)
+                            FTDisclosureView(menuSection: menuSection, availableWidth: sidebarItemWidth)
+                                .environmentObject(viewModel)
                                 .padding(.trailing,12)
                                 .padding(.leading,12)
                         }
@@ -89,36 +90,40 @@ struct FTSidebarView: View {
                 }
         }
     }
-    @ViewBuilder
-    private func getEditableViewForSideBarItem(_ item: FTSideBarItem,
-                                               withPlaceHolder placeHolder:String,
-                                               editableField: Bool = false,
-                                               onSubmit: @escaping (_ newTitle: String) -> Void) -> some View{
-        HStack(spacing:0) {
-            FTEditableView(placeHolder: placeHolder,
-                           onButtonSubmit:  onSubmit ,
-                           showEditableField: editableField,
-                           originalTitle: item.title)
-            .environmentObject(item)
-            .environmentObject(viewModel)
-        }
-        .frame(height: 44.0, alignment: .leading)
-        .background(Color.clear)
-        .padding(.leading,8)
-        .contentShape(Rectangle())
-    }
+    
     private func gridItemLayout() -> [GridItem] {
         return [GridItem(GridItem.Size.flexible(minimum: viewModel.sideBarItemWidth, maximum: .infinity),spacing: 0.0 ,alignment:.leading)]
     }
-    @ViewBuilder
-    private func getDisclousreGroupForSection(_ menuSection: FTSidebarSection,availableWidth: CGFloat) -> some View {
+
+    private func sidebarItemSizeBasinfAvailableWidth(_ width: CGFloat) -> CGFloat {
+        return (width > 0) ? width - 24 : 0  // 24 is horizontal padding
+    }
+}
+
+struct SidebarSectionHeader: View {
+    @EnvironmentObject var section: FTSidebarSection
+    //TODO: Check
+    var body: some View {
+        HStack {
+            if section.type == .ns2Categories {
+                Image("ns2_migration_logo")
+            }
+            Text(section.title)
+                .font(.clearFaceFont(for: .medium, with: 22))
+                .foregroundColor(.appColor(.black1))
+                .tracking(-0.41)
+        }
+    }
+}
+
+struct FTDisclosureView: View {
+    @ObservedObject var menuSection: FTSidebarSection
+    @EnvironmentObject var viewModel: FTSidebarViewModel
+    var availableWidth: CGFloat;
+    
+    var body: some View {
         DisclosureGroup(
-            isExpanded: Binding<Bool>(
-                get: { menuSection.isExpanded},
-                set: { isExpanding in
-                    menuSection.isExpanded.toggle();
-                }
-            )
+            isExpanded: $menuSection.isExpanded
         ) {
             VStack(spacing:2.0){
                 ForEach(menuSection.items, id:\.id) { item in
@@ -161,22 +166,24 @@ struct FTSidebarView: View {
         .accentColor(.appColor(.black1))
         .padding(.top,24)
     }
-    private func sidebarItemSizeBasinfAvailableWidth(_ width: CGFloat) -> CGFloat {
-        return (width > 0) ? width - 24 : 0  // 24 is horizontal padding
-    }
-}
-struct SidebarSectionHeader: View {
-    @EnvironmentObject var section: FTSidebarSection
-    //TODO: Check
-    var body: some View {
-        HStack {
-            if section.type == .ns2Categories {
-                Image("ns2_migration_logo")
-            }
-            Text(section.title)
-                .font(.clearFaceFont(for: .medium, with: 22))
-                .foregroundColor(.appColor(.black1))
-                .tracking(-0.41)
+    
+    @ViewBuilder
+    private func getEditableViewForSideBarItem(_ item: FTSideBarItem,
+                                               withPlaceHolder placeHolder:String,
+                                               editableField: Bool = false,
+                                               onSubmit: @escaping (_ newTitle: String) -> Void) -> some View{
+        HStack(spacing:0) {
+            FTEditableView(placeHolder: placeHolder,
+                           onButtonSubmit:  onSubmit ,
+                           showEditableField: editableField,
+                           originalTitle: item.title)
+            .environmentObject(item)
+            .environmentObject(viewModel)
         }
+        .frame(height: 44.0, alignment: .leading)
+        .background(Color.clear)
+        .padding(.leading,8)
+        .contentShape(Rectangle())
     }
+
 }

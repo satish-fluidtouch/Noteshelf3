@@ -18,7 +18,7 @@ class FTSidebarSectionSystem: FTSidebarSection {
         self.prepreItems();
         NotificationCenter.default.addObserver(self, selector: #selector(self.didChangeUnfiledCategoryLocation(_:)), name: .didChangeUnfiledCategoryLocation, object: nil)
     }
-    
+        
     deinit {
         NotificationCenter.default.removeObserver(self, name: .didChangeUnfiledCategoryLocation, object: nil)
     }

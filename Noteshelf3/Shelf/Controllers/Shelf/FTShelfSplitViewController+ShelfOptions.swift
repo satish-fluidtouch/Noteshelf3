@@ -1580,7 +1580,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
             return;
         }
         let updater = FTDocumentTagUpdater()
-        _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentID: docIDs) {
+        _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentIDs: docIDs) { 
             debugLog("updater: \(updater)");
         };
     }

@@ -49,6 +49,13 @@ class FTTag: NSObject {
     func removeDocumentID(_ documentID: String) {
         lock.lock()
         self.documentIDs.remove(documentID)
+        self.taggedEntitties.removeAll { eachItem in
+            if eachItem.documentUUID == documentID {
+                eachItem.removeTag(self);
+                return true;
+            }
+            return false;
+        }
         lock.unlock()
     }
 
