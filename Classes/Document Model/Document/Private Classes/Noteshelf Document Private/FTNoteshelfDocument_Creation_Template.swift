@@ -180,7 +180,7 @@ extension FTNoteshelfDocument
                                                         (page as! FTNoteshelfPage).deepCopyAnnotations(pageAnnotations,
                                                                                                        insertFrom : 0,
                                                                                                        onCompletion:
-                                                            {
+                                                                                                        {_ in 
                                                                 self.saveDocument(completionHandler: { (success) in
                                                                     tempDoc.closeDocument(completionHandler : nil);
                                                                     onCompletion(nil,success);
