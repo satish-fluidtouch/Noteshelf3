@@ -1,14 +1,14 @@
 //
-//  Noteshelf3_Widgets.swift
-//  Noteshelf3 Widgets
+//  FTInteractiveWidgets.swift
+//  Noteshelf3
 //
-//  Created by Ramakrishna on 05/02/24.
+//  Created by Ramakrishna on 07/02/24.
 //  Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.
 //
 
+import Foundation
 import WidgetKit
 import SwiftUI
-import FTCommon
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
@@ -41,56 +41,37 @@ struct SimpleEntry: TimelineEntry {
     let emoji: String
 }
 
-struct Noteshelf3_WidgetsEntryView : View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        VStack {
-            HStack {
-                Image("appIconSmall")
-                    .padding(.trailing,10)
-                    .padding(.leading,8)
-                Text("Noteshelf")
-                    //.font(.appFont(for: .regular, with: 13))
-                Spacer()
-                if #available(iOS 17.0, *) {
-                    Button(intent: SearchIntent()) {
-                        Image(systemName: "magnifyingglass.circle.fill")
-                            //.background(Color.appColor(.accent))
-                    }
-                } else {
-                    Button(action: {
-
-                    }, label: {
-                        Text("Button")
-                    })
-                }
-            }
-            Spacer()
-        }
-    }
-}
-
-struct Noteshelf3_Widgets: Widget {
-    let kind: String = "Noteshelf3_Widgets"
+struct NotebookCreation_Widget: Widget {
+    let kind: String = "NotebookCreation_Widget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
-                Noteshelf3_WidgetsEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                NotebookCreation_WidgetsEntryView()
+                    .containerBackground(for: .widget, content: {
+                        Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#DCCDBC"))], startPoint: .top, endPoint: .bottom))
+                    })
             } else {
-                Noteshelf3_WidgetsEntryView(entry: entry)
+                NotebookCreation_WidgetsEntryView()
                     .padding()
                     .background()
             }
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
+        .supportedFamilies([.systemMedium])
     }
 }
 
-struct InteractivePinnedWidget: Widget {
+@available(iOS 17.0, *)
+#Preview(as: .systemMedium) {
+    NotebookCreation_Widget()
+} timeline: {
+    SimpleEntry(date: .now, emoji: "😀")
+}
+
+
+struct FTPinnedWidget: Widget {
     let kind: String = "InteractiveWidgets"
 
     var body: some WidgetConfiguration {
@@ -108,7 +89,7 @@ struct InteractivePinnedWidget: Widget {
         }
         .supportedFamilies([.systemSmall])
     }
-    
+
     private func appUrl() -> URL? {
         var components = URLComponents();
         components.scheme = "com.fluidtouch.noteshelf3-dev"; //Should be dynamic
@@ -121,54 +102,9 @@ struct InteractivePinnedWidget: Widget {
     }
 }
 
-struct FTPinnedWidgetView : View {
-    var body: some View {
-        VStack {
-            VStack(spacing: 0) {
-                topView()
-                bottomView()
-            }
-        }.overlay(alignment: .topLeading) {
-            Image("coverImage")
-                .frame(width: 38,height: 52)
-                .padding(.top, 24)
-                .padding(.leading, 24)
-        }
-    }
-}
-struct topView: View {
-    var body: some View {
-        HStack {
-            Spacer()
-            Image("ns3Icon")
-                .frame(width: 20,height: 20)
-                .padding(.trailing, 16)
-                .padding(.top, 10)
-        }.frame(width: 160, height: 48)
-        .background(Color(uiColor: UIColor(hexString: "#E06E51")))
-    }
-}
-
-struct bottomView: View {
-    var body: some View {
-        HStack {
-            VStack {
-                Spacer()
-                Text("Note book Title")
-                    .lineLimit(2)
-                Text("5:00 pm")
-                    .lineLimit(1)
-            }.padding(.leading, 10)
-                .padding(.bottom, 12)
-            Spacer()
-        }.frame(width: 160, height: 110)
-            .background(Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#DCCDBC"))], startPoint: .top, endPoint: .bottom)))
-    }
-}
-
 @available(iOS 17.0, *)
 #Preview(as: .systemSmall) {
-    Noteshelf3_Widgets()
+    FTPinnedWidget()
 } timeline: {
     SimpleEntry(date: .now, emoji: "😀")
     SimpleEntry(date: .now, emoji: "🤩")

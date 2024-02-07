@@ -806,12 +806,14 @@
 		97C4531A2B70E40500251C73 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C453192B70E40500251C73 /* WidgetKit.framework */; };
 		97C4531C2B70E40500251C73 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C4531B2B70E40500251C73 /* SwiftUI.framework */; };
 		97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */; };
-		97C453212B70E40500251C73 /* Noteshelf3_Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453202B70E40500251C73 /* Noteshelf3_Widgets.swift */; };
+		97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */; };
 		97C453232B70E40700251C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C453222B70E40700251C73 /* Assets.xcassets */; };
 		97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		97C453302B70F24000251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
 		97C453332B71112D00251C73 /* SearchIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4532F2B70F24000251C73 /* SearchIntent.swift */; };
+		97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */; };
+		97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */; };
 		97C52E4B292223E800BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */; };
 		97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */; };
 		97C52E4D292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */; };
@@ -3817,11 +3819,13 @@
 		97C453192B70E40500251C73 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		97C4531B2B70E40500251C73 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noteshelf3_WidgetsBundle.swift; sourceTree = "<group>"; };
-		97C453202B70E40500251C73 /* Noteshelf3_Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noteshelf3_Widgets.swift; sourceTree = "<group>"; };
+		97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTPinnedNotebookWidget.swift; sourceTree = "<group>"; };
 		97C453222B70E40700251C73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C453242B70E40700251C73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97C453282B70E40900251C73 /* Noteshelf3 WidgetsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Noteshelf3 WidgetsExtension.entitlements"; sourceTree = "<group>"; };
 		97C4532F2B70F24000251C73 /* SearchIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIntent.swift; sourceTree = "<group>"; };
+		97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNotebookCreationWidget.swift; sourceTree = "<group>"; };
+		97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInteractiveWidgets.swift; sourceTree = "<group>"; };
 		97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemContextualOperations.swift"; sourceTree = "<group>"; };
 		97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemOperations.swift"; sourceTree = "<group>"; };
 		97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BottomBarOptions.swift"; sourceTree = "<group>"; };
@@ -9075,10 +9079,12 @@
 			isa = PBXGroup;
 			children = (
 				97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */,
-				97C453202B70E40500251C73 /* Noteshelf3_Widgets.swift */,
+				97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */,
 				97C453222B70E40700251C73 /* Assets.xcassets */,
 				97C453242B70E40700251C73 /* Info.plist */,
 				97C4532F2B70F24000251C73 /* SearchIntent.swift */,
+				97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */,
+				97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */,
 			);
 			path = "Noteshelf3 Widgets";
 			sourceTree = "<group>";
@@ -12835,8 +12841,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,
 				97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */,
-				97C453212B70E40500251C73 /* Noteshelf3_Widgets.swift in Sources */,
+				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
+				97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */,
 				97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
