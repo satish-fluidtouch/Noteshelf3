@@ -6,16 +6,18 @@
 //
 
 import Foundation
-class FTSidebarSection: FTSectionDisplayable, FTSideMenuDeletable, Identifiable, ObservableObject {
-
-    var type: FTSidebarSectionType
-
+class FTSidebarSection: FTSectionDisplayable, Identifiable, ObservableObject {
+    
+    var type: FTSidebarSectionType {
+        return .all;
+    }
+    
     var id = UUID().uuidString
-
+    
     var title: String {
         type.displayTitle ?? ""
     }
-
+    
     @Published var isExpanded = true {
         didSet {
             if isExpanded != oldValue {
@@ -23,52 +25,38 @@ class FTSidebarSection: FTSectionDisplayable, FTSideMenuDeletable, Identifiable,
             }
         }
     }
-    var supportsRearrangeOfItems: Bool = false
-
-    @Published var items: [FTSideBarItem] = []
-
-    var isCreating: Bool = false
-
-    var newItemIcon: FTIcon {
-        type == .tags ? FTIcon.tags : FTIcon.folder
+    
+    var supportsRearrangeOfItems: Bool {
+        return false;
     }
-
-    required init(type: FTSidebarSectionType
-                  , items: [FTSideBarItem]
-                  ,supportsRearrangeOfItems: Bool) {
-        self.type = type
+    
+    @Published var items: [FTSideBarItem] = [];
+        
+    required init() {
         self.items = items
-        self.supportsRearrangeOfItems = supportsRearrangeOfItems
         if type != .all {
             self.isExpanded = FTUserDefaults.defaults().bool(forKey: "isExpanded_\(type.rawValue)")
         }
     }
-
-    func addNewItemWith(title: String) {
-        self.items.insert(FTSideBarItem(title: title,
-                                        icon: newItemIcon,
-                                        isEditable: true,
-                                        isEditing: false,
-                                        type: .category), at: 0)
-    }
+    
     func finaliseEdit() {
         for index in 0..<self.items.count {
             self.items[index].isEditing = false
         }
     }
+
     func finaliseHightlight() {
         for index in 0..<self.items.count {
             self.items[index].highlighted = false
         }
     }
-//    func unSelectSectionItems() {
-//        for index in 0..<self.items.count {
-//            self.items[index].isSelected = false
-//        }
-//    }
-    func moveItemToTrash(_ item: FTSideBarItem) {
-        if type == .categories || type == .tags {
-            self.items.removeAll(where: { $0.id == item.id })
+        
+    func moveItem(fromOrder: Int, toOrder: Int) -> Bool {
+        if !self.items.isEmpty {
+            let movePos = min(max(toOrder,0),self.items.count-1);
+            self.items.move(fromOffsets: IndexSet(integer: fromOrder), toOffset: movePos);
+            return true;
         }
+        return false;
     }
 }

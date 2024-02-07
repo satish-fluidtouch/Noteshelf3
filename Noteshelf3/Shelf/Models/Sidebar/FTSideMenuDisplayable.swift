@@ -13,10 +13,7 @@ protocol FTSectionDisplayable {
     var title: String { get }
     var items: [FTSideBarItem] { get }
     var type: FTSidebarSectionType { get }
-    var isCreating: Bool { get set }
-    var supportsRearrangeOfItems:Bool { get set}
-
-    init(type: FTSidebarSectionType, items: [FTSideBarItem],supportsRearrangeOfItems:Bool)
+    var supportsRearrangeOfItems:Bool { get }
 }
 
 protocol FTSideMenuDisplayable {
@@ -29,10 +26,6 @@ protocol FTSideMenuDisplayable {
 
 protocol FTSideMenuRenamable: FTSideMenuDisplayable {
     mutating func rename(newName: String)
-}
-
-protocol FTSideMenuDeletable {
-    mutating func moveItemToTrash(_ item: FTSideBarItem)
 }
 
 protocol FTSideMenuEditable: FTSideMenuRenamable { }

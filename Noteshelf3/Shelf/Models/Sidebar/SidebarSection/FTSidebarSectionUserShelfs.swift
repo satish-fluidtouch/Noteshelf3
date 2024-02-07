@@ -9,34 +9,37 @@
 import UIKit
 
 class FTSidebarSectionUserShelfs: FTSidebarSection {
-    private var sidebarItemsBookmarksData: [FTCategorySortOrderInfo] = []
     private var categoryBookmarksData: FTCategoryBookmarkData = FTCategoryBookmarkData(bookmarksData: [])
-
+    private var recursiveLock = NSRecursiveLock();
+    private var currentSaveOperation: DispatchWorkItem?
+    
     override var type: FTSidebarSectionType {
-        get {return .categories}
-        set {}
+        return .categories
     }
     
     override var supportsRearrangeOfItems: Bool {
-        get { return true}
-        set {}
+        return true
     }
     
-    init() {
-        super.init(type: .categories, items: [], supportsRearrangeOfItems: false);
-        self.prepreItems(false);
+    required init() {
+        super.init();
         
         let sideBarDict = FTSidebarManager.getSideBarData()
         if let sideBarItemsOrderDict = sideBarDict["SideBarItemsOrder"] as? [String: Any], let categoryBookmarkRawData = sideBarItemsOrderDict["categories"] as? Data, let categoryBookmarkData = try? PropertyListDecoder().decode(FTCategoryBookmarkData.self, from: categoryBookmarkRawData) {
-                self.categoryBookmarksData = categoryBookmarkData
+            self.categoryBookmarksData = categoryBookmarkData;
         }
         
-
+        self.prepreItems(false);
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.categoryDidUpdate(_:)), name: .categoryItemsDidUpdateNotification, object: nil)
     }
     
-    required init(type: FTSidebarSectionType, items: [FTSideBarItem], supportsRearrangeOfItems: Bool) {
-        fatalError("init(type:items:supportsRearrangeOfItems:) has not been implemented")
+    override func moveItem(fromOrder: Int, toOrder: Int) -> Bool {
+        let success = super.moveItem(fromOrder: fromOrder, toOrder: toOrder)
+        if success {
+            self.saveSortOrderInBackground();
+        }
+        return success
     }
     
     deinit {
@@ -80,8 +83,7 @@ private extension FTSidebarSectionUserShelfs {
                         sidebarItems.append(item);
                     }
                 }
-                let itemsToSet = sidebarItems;//self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true)
-                self.sortCategoriesBasedOnStoredPlistOrder(sidebarItems,performURLResolving: true);
+                let itemsToSet = self.sortItems(sidebarItems);
                 onCompeltion(itemsToSet);
             }
             if inbackground {
@@ -101,53 +103,70 @@ private extension FTSidebarSectionUserShelfs {
 }
 
 private extension FTSidebarSectionUserShelfs {
-    func sortCategoriesBasedOnStoredPlistOrder(_ sidebarItems:[FTSideBarItem],performURLResolving:Bool = false) -> [FTSideBarItem] {
-        var orderedSideBarItems : [FTSideBarItem: Int] = [:]
-        let sortInfo = FTCategoryBookmarkData.categoriesOrderBasedOn(plistfechtedBookmarkData: self.categoryBookmarksData,performURLResolving: performURLResolving)
-        sidebarItemsBookmarksData =  sortInfo.categorySortOrderInfo
-        self.categoryBookmarksData = FTCategoryBookmarkData(bookmarksData: sortInfo.plistBookmarkData)
-        var bookmarksData: [FTCategoryBookmarkDataItem] = self.categoryBookmarksData.bookmarksData
-//        for sideBarItem in sidebarItems {
-//            if let collection = sideBarItem.shelfCollection {
-//                if var existingCollectionInPlistIndex = bookmarksData.firstIndex(where:{$0.name == collection.URL.lastPathComponent}) {
-//                    let existingCollectionInPlist = bookmarksData[existingCollectionInPlistIndex]
-//                    let collectionOrder = existingCollectionInPlist.sortOrder
-//                    if existingCollectionInPlist.fileURL != collection.URL, let newBookmarkItem = newCategoryBookmarkDataItemForCollection(collection, sortOrder: collectionOrder) { // updating url in already collection existing plist data
-//                        bookmarksData.remove(at: existingCollectionInPlistIndex)
-//                        bookmarksData.append(newBookmarkItem)
-//                    }
-//                    orderedSideBarItems[sideBarItem] = collectionOrder
-//                } else {
-//                    let maxOrderValue = bookmarksData.map({$0.sortOrder}).max() ?? 0
-//                    let newOrderValue = bookmarksData.isEmpty ? 0 : maxOrderValue + 1
-//                    if let newBookmarkItem = newCategoryBookmarkDataItemForCollection(collection, sortOrder: newOrderValue){
-//                        bookmarksData.append(newBookmarkItem)
-//                        orderedSideBarItems[sideBarItem] = newOrderValue
-//                    }
-//                }
-//            }
-//        }
-//        self.updateSidebarCategoriesOrderUsingDict(FTCategoryBookmarkData(bookmarksData: bookmarksData))
-        return orderedSideBarItems.sorted(by: {$0.value < $1.value}).compactMap({$0.key})
-    }
-    
-    func newCategoryBookmarkDataItemForCollection(_ collection: FTShelfItemCollection, sortOrder: Int) -> FTCategoryBookmarkDataItem? {
-        if let bookmarkData = URL.aliasData(collection.URL){
-            return FTCategoryBookmarkDataItem(bookmarkData: bookmarkData,
-                                       sortOrder: sortOrder,
-                                       name: collection.URL.lastPathComponent,
-                                       fileURL: collection.URL)
+    func sortItems(_ sidebarItems:[FTSideBarItem]) -> [FTSideBarItem] {
+        recursiveLock.lock()
+        let bookmarkData = self.categoryBookmarksData.bookmarksData;
+        recursiveLock.unlock();
+        
+        let sortedItems = sidebarItems.sorted { sidebaritem1, sidebaritem2 in
+            func bookmarkItem(_ item: FTSideBarItem) -> FTCategoryBookmarkDataItem? {
+                let item1 = bookmarkData.first { eachItem in
+                    if let url = eachItem.resolvedURL(), url.title == item.title {
+                        return true;
+                    }
+                    return false
+                }
+                return item1;
+            }
+            let item1 = bookmarkItem(sidebaritem1)
+            let item2 = bookmarkItem(sidebaritem2)
+            
+            if let _item1 = item1, let _item2 = item2 {
+                return _item1.sortOrder < _item2.sortOrder;
+            }
+            if nil != item1 {
+                return true;
+            }
+            if let item1URL = sidebaritem1.shelfCollection?.URL, let item2URL = sidebaritem2.shelfCollection?.URL {
+                return item1URL.fileCreationDate.compare(item2URL.fileCreationDate) == .orderedAscending
+            }
+            return sidebaritem1.title.compare(sidebaritem2.title, options: [.caseInsensitive,.numeric], range: nil, locale: nil) == .orderedAscending;
         }
-        return nil
+        return sortedItems;
     }
-    
-    func updateSidebarCategoriesOrderUsingDict(_ categoriesBookmarData:FTCategoryBookmarkData){
-        do {
-            try FTSidebarManager.saveCategoriesBookmarData(categoriesBookmarData)
-            self.categoryBookmarksData = categoriesBookmarData
-        }
-        catch {
-            debugPrint("Failed to save categories order to plist.")
+}
+
+private extension FTSidebarSectionUserShelfs {
+    func saveSortOrderInBackground() {
+        currentSaveOperation?.cancel();
+        let items = self.items;
+        var _operation: DispatchWorkItem? = nil;
+        _operation = DispatchWorkItem(block: {
+            if _operation?.isCancelled  ?? true {
+                self.recursiveLock.unlock();
+                return;
+            }
+            var bookmarksData = [FTCategoryBookmarkDataItem]();
+            items.enumerated().forEach { eachItem in
+                if let url = eachItem.element.shelfCollection?.URL, let aliasData = URL.aliasData(url) {
+                    let data = FTCategoryBookmarkDataItem(bookmarkData: aliasData, sortOrder: eachItem.offset, name: url.title, fileURL: url);
+                    bookmarksData.append(data);
+                }
+            }
+            let catagorySortData = FTCategoryBookmarkData(bookmarksData: bookmarksData);
+            self.recursiveLock.lock()
+            self.categoryBookmarksData = catagorySortData;
+            self.recursiveLock.unlock();
+            do {
+                try FTSidebarManager.saveCategoriesBookmarData(catagorySortData)
+            }
+            catch {
+                debugLog("save failed \(error.localizedDescription)");
+            }
+        })
+        self.currentSaveOperation = _operation;
+        if let operation = self.currentSaveOperation {
+            DispatchQueue.global(qos: .background).asyncAfter(deadline: DispatchTime.now() + .milliseconds(500), execute: operation);
         }
     }
 }

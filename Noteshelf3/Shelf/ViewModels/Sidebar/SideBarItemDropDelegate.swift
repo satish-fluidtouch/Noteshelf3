@@ -52,25 +52,26 @@ struct SideBarItemDropDelegate: DropDelegate {
         viewModel.currentDraggedSidebarItem = nil
         return true
     }
+    
     func validateDrop(info: DropInfo) -> Bool {
         return true
     }
+    
     func dropEntered(info: DropInfo) {
         if let droppedItem {
             viewModel.currentSideBarDropItem = droppedItem
             guard let draggedItem = self.viewModel.currentDraggedSidebarItem else {
-                        return
+                return
+            }
+            if draggedItem != droppedItem, let activeReorderingSection = viewModel.activeReorderingSidebarSectionType {
+                let sectionItems = viewModel.menuItems.first(where: {$0.type == activeReorderingSection})?.items
+                if let from = sectionItems?.firstIndex(of: draggedItem),
+                   let to = sectionItems?.firstIndex(of: droppedItem) {
+                    withAnimation(.default) {
+                        self.viewModel.moveItemInCategory(activeReorderingSection,fromOrder: from, toOrder: to > from ? to + 1 : to)
                     }
-                    if draggedItem != droppedItem, let activeReorderingSection = viewModel.activeReorderingSidebarSectionType {
-                        let sectionItems = viewModel.menuItems.first(where: {$0.type == activeReorderingSection})?.items
-                        if let from = sectionItems?.firstIndex(of: draggedItem),
-                           let to = sectionItems?.firstIndex(of: droppedItem) {
-                            self.viewModel.reOrderSidebarSectionItems(activeReorderingSection,fromOrder: from, toOrder: to)
-                            withAnimation(.default) {
-                                viewModel.menuItems.first(where: {$0.type == viewModel.activeReorderingSidebarSectionType})?.items.move(fromOffsets: IndexSet(integer: from), toOffset: to > from ? to + 1 : to)
-                            }
-                        }
-                    }
+                }
+            }
         }
     }
 

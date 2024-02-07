@@ -10,27 +10,17 @@ import UIKit
 
 class FTSidebarSectionSystem: FTSidebarSection {
     override var type: FTSidebarSectionType {
-        get {return .all}
-        set {}
+        return .all
     }
     
-    override var supportsRearrangeOfItems: Bool {
-        get {return false;}
-        set {}
-    }
-    
-    init() {
-        super.init(type: .all, items: [], supportsRearrangeOfItems: false);
+    required init() {
+        super.init();
         self.prepreItems();
         NotificationCenter.default.addObserver(self, selector: #selector(self.didChangeUnfiledCategoryLocation(_:)), name: .didChangeUnfiledCategoryLocation, object: nil)
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .didChangeUnfiledCategoryLocation, object: nil)
-    }
-    
-    required init(type: FTSidebarSectionType, items: [FTSideBarItem], supportsRearrangeOfItems: Bool) {
-        fatalError("init(type:items:supportsRearrangeOfItems:) has not been implemented")
     }
 }
 

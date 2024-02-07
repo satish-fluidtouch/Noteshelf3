@@ -11,23 +11,12 @@ import UIKit
 class FTSidebarSectionTags: FTSidebarSection {
     private var notificationObserver: NSObjectProtocol?;
     
-    override var supportsRearrangeOfItems: Bool {
-        get {
-            return false
-        }
-        set {
-        }
-    }
-    
     override var type: FTSidebarSectionType {
-        get {
-            .tags;
-        }
-        set {}
+        return .tags;
     }
     
-    init() {
-        super.init(type: .tags, items: [], supportsRearrangeOfItems: false);
+    required init() {
+        super.init();
         self.prepareItems();
         notificationObserver =  NotificationCenter.default.addObserver(forName: .didUpdateTags, object: nil, queue: .main) { [weak self] notification in
             guard let strongSelf = self else {
@@ -62,10 +51,6 @@ class FTSidebarSectionTags: FTSidebarSection {
             NotificationCenter.default.removeObserver(observer, name: .didUpdateTags, object: nil);
             self.notificationObserver = nil;
         }
-    }
-    
-    required init(type: FTSidebarSectionType, items: [FTSideBarItem], supportsRearrangeOfItems: Bool) {
-        fatalError("init(type:items:supportsRearrangeOfItems:) has not been implemented")
     }
 }
 

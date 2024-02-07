@@ -9,31 +9,13 @@
 import UIKit
 
 class FTSidebarSectionMedia: FTSidebarSection {
-    
-    override var supportsRearrangeOfItems: Bool {
-        get {
-            return false
-        }
-        set {
-        }
-    }
-    
     override var type: FTSidebarSectionType {
-        get {
-            .media;
-        }
-        set {
-            
-        }
+        return .media;
     }
     
-    init() {
-        super.init(type: .media, items: [], supportsRearrangeOfItems: false);
+    required init() {
+        super.init();
         self.prepareItems();
-    }
-    
-    required init(type: FTSidebarSectionType, items: [FTSideBarItem], supportsRearrangeOfItems: Bool) {
-        fatalError("init(type:items:supportsRearrangeOfItems:) has not been implemented")
     }
 }
 
