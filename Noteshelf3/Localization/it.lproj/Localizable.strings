@@ -1537,6 +1537,7 @@
 "textLink_documentItselfNotAvailable_message" = "Il notebook collegato al contenuto è stato eliminato.";
 "textLink_editLink" = "Modifica Link";
 "textLink_linkTo" = "Agguini Link";
+"textLink_linktext" = "Testo del Link";
 "textLink_notebookDeletedOrUndownloaded" = "Impossibile accedere al taccuino associato a questo collegamento.";
 "textLink_notebookNotDownloadedMessage" = "Il notebook collegato a questo contenuto non è stato ancora scaricato da iCloud. Per favore riprova più tardi.";
 "textLink_notebookUnavailable" = "Notebook non disponibile";
@@ -1600,4 +1601,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 5 February 2024 at 4:07 PM
+// Last Synced by Narayana on 8 February 2024 at 11:26 AM

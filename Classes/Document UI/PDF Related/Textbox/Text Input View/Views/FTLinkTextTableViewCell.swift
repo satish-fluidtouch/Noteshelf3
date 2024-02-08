@@ -18,7 +18,7 @@ class FTLinkTextTableViewCell: UITableViewCell {
     var textEntryDoneHandler: ((_ text: String?) -> Void)?
 
     func configureCell(with option: FTLinkToOption, linkText: String) {
-        self.linkTextLabel.text = option.rawValue
+        self.linkTextLabel.text = option.localizedString
         self.linkTextTf.text = linkText
 
         if option == .url {

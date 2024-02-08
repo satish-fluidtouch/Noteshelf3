@@ -15,7 +15,7 @@ class FTLinkBookTableViewCell: UITableViewCell {
     @IBOutlet private weak var bookTitleLabel: UILabel!
 
     func configureCell(with option: FTLinkToOption, title: String) {
-        self.bookLabel.text = option.rawValue
+        self.bookLabel.text = option.localizedString
         self.bookTitleLabel.text = title
     }
 }

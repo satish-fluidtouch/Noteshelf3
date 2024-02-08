@@ -1536,7 +1536,8 @@
 "textLink_documentDeleted_title" = "Notebook has been deleted";
 "textLink_documentItselfNotAvailable_message" = "The notebook linked to the content has been deleted.";
 "textLink_editLink" = "Edit Link";
-"textLink_linkTo" = "Link To...";
+"textLink_linkTo" = "Link To";
+"textLink_linktext" = "Link Text";
 "textLink_notebookDeletedOrUndownloaded" = "The notebook linked to this content might have been deleted or not downloaded yet.";
 "textLink_notebookNotDownloadedMessage" = "The notebook linked to this content is not yet downloaded from the icloud. Please try again after sometime.";
 "textLink_notebookUnavailable" = "Notebook Unavailable";
@@ -1600,4 +1601,4 @@
 // End of the generated file 
 // Modification of this file by hand is strictly prohibited. 
 // Please modify at: https://docs.google.com/spreadsheets/d/1YhEj_0gCYGmg8qC3QhuXCdv-6It3Jum3yGdSvXEwUjM/?format=tsv.
-// Last Synced by Narayana on 5 February 2024 at 4:07 PM
+// Last Synced by Narayana on 8 February 2024 at 11:26 AM

@@ -36,9 +36,22 @@ enum FTLinkToSegment: String {
 }
 
 enum FTLinkToOption: String {
-    case linkText = "Link Text"
-    case document = "Notebook"
-    case url = "URL"
+    case linkText
+    case document
+    case url
+
+    var localizedString: String {
+        let str: String
+        switch self {
+        case .linkText:
+            str = "textLink_linktext".localized
+        case .document:
+            str = "Notebook".localized
+        case .url:
+            str = "URL"
+        }
+        return str
+    }
 }
 
 struct FTPageLinkInfo {
