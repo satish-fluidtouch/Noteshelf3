@@ -450,10 +450,9 @@ extension FTShelfSplitViewController {
         detailViewController.shelfViewModel = shelfViewModel
         return detailViewController
     }
-    
+
 
 #if targetEnvironment(macCatalyst)
-    
     func  openNotebookAndAskPasswordIfNeeded(_ shelfItem: FTShelfItemProtocol,
                                              animate: Bool,
                                              presentWithAnimation: Bool,
@@ -476,8 +475,44 @@ extension FTShelfSplitViewController {
         }
 
         func openDoc(_ pin: String?) {
-            openItemInNewWindow(shelfItem, pageIndex: nil, pageUUID: pageUUID, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
-            onCompletion?(nil,true);
+            if let pageId = pageUUID {
+                var reqIndex: Int?
+                guard let docId = (shelfItem as? FTDocumentItemProtocol)?.documentUUID else { return }
+                if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: docId) {
+                    if let docVc = self.getRequiredDocumentRenderController(using: docId), let doc = docVc.getCurrentDocument(), doc.documentUUID == docId {
+                        if let index = doc.pages().firstIndex(where: { $0.uuid == pageId}) {
+                            if let sesssion = UIApplication.shared.sessionForDocument(shelfItem.URL.relativePathWRTCollection()) {
+                                if #available(macCatalyst 17.0, *) {
+                                    let request = UISceneSessionActivationRequest(session: sesssion)
+                                    UIApplication.shared.activateSceneSession(for: request, errorHandler: nil)
+                                } else {
+                                    UIApplication.shared.requestSceneSessionActivation(sesssion
+                                                                                       , userActivity: sesssion.scene?.userActivity
+                                                                                       , options: nil
+                                                                                       , errorHandler: nil)
+                                }
+                            }
+                            docVc.documentViewController.showPage(at: index, forceReLayout: true)
+                        }
+                    }
+                } else {
+                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
+                    request.pin = pin
+                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
+                        if let doc = docItem {
+                            if let index = doc.pages().firstIndex(where: { $0.uuid == pageId}) {
+                                reqIndex = index
+                                self?.openItemInNewWindow(shelfItem, pageIndex: reqIndex, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
+                                onCompletion?(nil,true)
+                            }
+                            FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token, onCompletion: nil)
+                        }
+                    }
+                }
+            } else {
+                openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
+                onCompletion?(nil,true)
+            }
         }
 
         if let documentPin = pin {
@@ -809,3 +844,45 @@ extension FTShelfSplitViewController: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
 }
+
+#if targetEnvironment(macCatalyst)
+extension FTShelfSplitViewController {
+    func fetchAllDocumentRenderControllers() -> [FTDocumentRenderViewController] {
+        var allDocumentRenderControllers = [FTDocumentRenderViewController]()
+
+        for scene in UIApplication.shared.connectedScenes {
+            if let windowScene = scene as? UIWindowScene {
+                for window in windowScene.windows {
+                    if let rootVc = window.rootViewController as? FTBookSessionRootViewController {
+                        if let documentRenderController = fetchDocumentRenderController(from: rootVc) {
+                            allDocumentRenderControllers.append(documentRenderController)
+                        }
+                    }
+                }
+            }
+        }
+
+        return allDocumentRenderControllers
+    }
+
+    func fetchDocumentRenderController(from rootVc: FTBookSessionRootViewController) -> FTDocumentRenderViewController? {
+        if let splitVc = rootVc.children.first(where: { $0 is FTNoteBookSplitViewController}) as? FTNoteBookSplitViewController,
+           let docVc =  splitVc.documentViewController {
+            return docVc
+        }
+        return nil
+    }
+
+    func getRequiredDocumentRenderController(using docId: String) -> FTDocumentRenderViewController? {
+        let docVcs = self.fetchAllDocumentRenderControllers()
+        if !docVcs.isEmpty {
+            if let docVc = docVcs.first(where: { controller in
+                controller.getCurrentDocument()?.documentUUID == docId
+            }) {
+                return docVc
+            }
+        }
+        return nil
+    }
+}
+#endif

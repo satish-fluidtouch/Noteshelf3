@@ -12,7 +12,7 @@ import FTCommon
 
 class FTBookSessionRootViewController: UIViewController {
     private weak var launchScreenController: UIViewController?
-    private weak var notebookSplitController: FTNoteBookSplitViewController?
+    private(set) weak var notebookSplitController: FTNoteBookSplitViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad();

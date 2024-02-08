@@ -164,6 +164,10 @@ class FTDocumentRenderViewController: UIViewController {
         return deskToolbarController?.screenMode ?? .normal
     }
 
+    func getCurrentDocument() -> FTDocumentProtocol? {
+        return self.documentViewController?.pdfDocument
+    }
+
     /// Required Presentation method
     class func viewController(info : FTDocumentOpenInfo, delegate: FTOpenCloseDocumentProtocol?) -> FTDocumentRenderViewController {
         let storyboard = UIStoryboard(name: "FTDocumentView", bundle: nil)
@@ -322,7 +326,7 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     
     func checkIfDocumentIsOpen(docId: String) -> Bool {
         var status = false
-        if let docID = self.documentViewController?.pdfDocument.documentUUID, docID == docId {
+        if let currentDoc = self.getCurrentDocument(), currentDoc.documentUUID == docId {
             status = true
         }
         return status
