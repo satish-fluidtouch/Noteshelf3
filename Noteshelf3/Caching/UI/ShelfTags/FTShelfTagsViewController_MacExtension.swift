@@ -41,7 +41,6 @@ extension FTShelfTagsViewController: FTToolbarActionDelegate {
         } else {
             activeEditMode()
         }
-        clearContextMenuIndex()
         collectionView.reloadData()
         enableToolbarItemsIfNeeded()
     }

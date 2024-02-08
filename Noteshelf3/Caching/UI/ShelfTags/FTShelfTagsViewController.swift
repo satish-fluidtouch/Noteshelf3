@@ -270,7 +270,7 @@ class FTShelfTagsViewController: UIViewController {
 #endif
     }
 
-    private var shouldSelectAll: Bool {
+    var shouldSelectAll: Bool {
         return self.tagCategory.selectedEntities.count != self.tagCategory.allEntities.count
     }
 
