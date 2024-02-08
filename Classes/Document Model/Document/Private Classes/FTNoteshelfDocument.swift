@@ -1920,9 +1920,10 @@ private class FTLogDocumentCorruptErrorFirstTime: NSObject {
                 }
                 let relativePath = path.relativePathWithOutExtension().lowercased()
                 if !docInfo.contains(relativePath) {
-                    
-                    FTLogError("Doc Corrupt First Time",attributes: params);
-                    track("Doc Corrupt First Time", params: params,screenName: "Doc open");
+                    var inParams = params;
+                    inParams["path"] = relativePath;
+                    FTLogError("Doc Corrupt First Time",attributes: inParams);
+                    track("Doc Corrupt First Time", params: inParams,screenName: "Doc open");
                     docInfo.append(relativePath);
                     let data = try PropertyListSerialization.data(fromPropertyList: docInfo, format: .xml, options: 0);
                     try data.write(to: filePath, options: .atomic);
