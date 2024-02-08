@@ -14,10 +14,7 @@ struct SearchIntent : AppIntent {
     static var title: LocalizedStringResource = "Search"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-        #if !NOTESHELF_WIDGET
-        let sceneDelegate = await (UIApplication.shared as? NoteshelfApplication)?.sceneDelegate as? SceneDelegate
-        await sceneDelegate?.startSearch()
-        #endif
+        FTWidgetActionController.shared.performAction(action: .search)
         return .result()
     }
 }

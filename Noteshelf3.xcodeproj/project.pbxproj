@@ -821,6 +821,10 @@
 		97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */; };
 		97C453532B73725000251C73 /* ScanIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453522B73725000251C73 /* ScanIntent.swift */; };
 		97C453552B73725000251C73 /* ScanIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453522B73725000251C73 /* ScanIntent.swift */; };
+		97C4535C2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */; };
+		97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */; };
+		97C453612B74B02900251C73 /* FTWidgetActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453602B74B02900251C73 /* FTWidgetActionController.swift */; };
+		97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453602B74B02900251C73 /* FTWidgetActionController.swift */; };
 		97C52E4B292223E800BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */; };
 		97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */; };
 		97C52E4D292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */; };
@@ -3837,6 +3841,8 @@
 		97C4534A2B73722C00251C73 /* NewNotebookIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotebookIntent.swift; sourceTree = "<group>"; };
 		97C4534E2B73723D00251C73 /* AudioNoteIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioNoteIntent.swift; sourceTree = "<group>"; };
 		97C453522B73725000251C73 /* ScanIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanIntent.swift; sourceTree = "<group>"; };
+		97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWidgetActionType.swift; sourceTree = "<group>"; };
+		97C453602B74B02900251C73 /* FTWidgetActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTWidgetActionController.swift; sourceTree = "<group>"; };
 		97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemContextualOperations.swift"; sourceTree = "<group>"; };
 		97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+ShelfItemOperations.swift"; sourceTree = "<group>"; };
 		97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FTShelfViewModel+BottomBarOptions.swift"; sourceTree = "<group>"; };
@@ -6673,6 +6679,7 @@
 		211E2C3B1E027D72007B5CAD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				97C4535F2B74AFB500251C73 /* Interactive Widgets */,
 				09C369792A5EBAE5009BCC3F /* AI Related */,
 				1897DD2124BD603C0016DFE2 /* FTServiceLayer */,
 				ED5AFC31243611720073EE1B /* FTPointerInteraction */,
@@ -9096,6 +9103,7 @@
 				97C453242B70E40700251C73 /* Info.plist */,
 				97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */,
 				97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */,
+				97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */,
 			);
 			path = "Noteshelf3 Widgets";
 			sourceTree = "<group>";
@@ -9110,6 +9118,14 @@
 				97C453522B73725000251C73 /* ScanIntent.swift */,
 			);
 			path = Intents;
+			sourceTree = "<group>";
+		};
+		97C4535F2B74AFB500251C73 /* Interactive Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				97C453602B74B02900251C73 /* FTWidgetActionController.swift */,
+			);
+			path = "Interactive Widgets";
 			sourceTree = "<group>";
 		};
 		97EAB18C26A91AA200545FBB /* Midnight */ = {
@@ -12864,10 +12880,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
 				97C453552B73725000251C73 /* ScanIntent.swift in Sources */,
 				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,
 				97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */,
 				97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
+				97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */,
 				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
 				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
@@ -13102,6 +13120,7 @@
 				BAF390682859ADF00067CA9F /* FTTileMap.swift in Sources */,
 				E7B8DA95287FF62600F0AE78 /* FTPenShortcutView.swift in Sources */,
 				BAF390692859ADF00067CA9F /* FTShapeControllerBuilder.swift in Sources */,
+				97C4535C2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
 				BAF3906A2859ADF00067CA9F /* FTShapeParallelogramResizing.swift in Sources */,
 				BAF3906B2859ADF00067CA9F /* FTDiaryTemplateInfoProtocol.swift in Sources */,
 				3DD2399B290A97E6006E3AC3 /* FTTextStyle.swift in Sources */,
@@ -14201,6 +14220,7 @@
 				BA2D911A285CAFCC001BB495 /* FTSidebarSection.swift in Sources */,
 				BAF393FC2859ADF00067CA9F /* FTVisionRecognitionTask.swift in Sources */,
 				BAF393FD2859ADF00067CA9F /* FTEmojiCollectionViewCell.swift in Sources */,
+				97C453612B74B02900251C73 /* FTWidgetActionController.swift in Sources */,
 				BAF393FE2859ADF00067CA9F /* ParentReference.swift in Sources */,
 				BAF393FF2859ADF00067CA9F /* FTVisionRecognitionTaskProcessor.swift in Sources */,
 				BAF394012859ADF00067CA9F /* FTiRateManager.swift in Sources */,

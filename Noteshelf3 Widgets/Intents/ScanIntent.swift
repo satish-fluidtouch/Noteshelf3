@@ -14,10 +14,7 @@ struct ScanIntent : AppIntent {
     static var title: LocalizedStringResource = "Scan"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-    #if !NOTESHELF_WIDGET
-    let sceneDelegate = await (UIApplication.shared as? NoteshelfApplication)?.sceneDelegate as? SceneDelegate
-    await sceneDelegate?.startScan()
-    #endif
+        FTWidgetActionController.shared.performAction(action: .scan)
         return .result()
     }
 }

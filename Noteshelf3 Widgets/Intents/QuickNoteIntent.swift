@@ -13,10 +13,7 @@ struct QuickNoteIntent : AppIntent {
     static var title: LocalizedStringResource = "Quick Note"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-    #if !NOTESHELF_WIDGET
-        let sceneDelegate = await (UIApplication.shared as? NoteshelfApplication)?.sceneDelegate as? SceneDelegate
-        await sceneDelegate?.createAQuickNote()
-    #endif
+        FTWidgetActionController.shared.performAction(action: .quickNote)
         return .result()
     }
 }

@@ -86,6 +86,7 @@ class SceneDelegate: FTSceneDelegate {
             shortcutItemToProcess = nil
         }
         FabricHelper.configure()
+        self.performWidgetActionIfRequired()
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
@@ -157,6 +158,23 @@ class SceneDelegate: FTSceneDelegate {
         #if DEBUG
         print(#function,userActivity.userInfo?.description ?? "--")
         #endif
+    }
+    func performWidgetActionIfRequired() {
+        if let widgetActionType = FTWidgetActionController.shared.actionToExecute {
+            switch widgetActionType {
+            case .quickNote:
+                createAQuickNote()
+            case .newNotebook:
+                createNewNotebook()
+            case .audioNote:
+                createAudioNote()
+            case .scan:
+                startScan()
+            case .search:
+                startSearch()
+            }
+            FTWidgetActionController.shared.resetWidgetAction()
+        }
     }
 }
 

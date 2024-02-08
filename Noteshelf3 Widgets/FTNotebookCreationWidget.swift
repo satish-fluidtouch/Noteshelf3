@@ -12,55 +12,6 @@ import SwiftUI
 import FTCommon
 import AppIntents
 
-enum NotebookCreationType {
-    case quickNote
-    case newNotebook
-    case audioNote
-    case scan
-
-    var title : String {
-        let title : String
-        switch self {
-        case .quickNote:
-            title = "Quick Note"
-        case .newNotebook:
-            title = "New Notebook"
-        case .audioNote:
-            title = "Audio Note"
-        case .scan:
-            title = "Scan"
-        }
-        return title
-    }
-    var iconName : String {
-        let iconName : String
-        switch self {
-        case .quickNote:
-            iconName = "plus.circle"
-        case .newNotebook:
-            iconName = "newNotebookIcon"
-        case .audioNote:
-            iconName = "mic"
-        case .scan:
-            iconName = "scanner"
-        }
-        return iconName
-    }
-    var hasASystemIcon : Bool {
-        let isSystemIcon : Bool
-        switch self {
-        case .quickNote:
-            isSystemIcon = true
-        case .newNotebook:
-            isSystemIcon = false
-        case .audioNote:
-            isSystemIcon = true
-        case .scan:
-            isSystemIcon = true
-        }
-        return isSystemIcon
-    }
-}
 struct NotebookCreation_WidgetsEntryView : View {
     var body: some View {
         VStack(spacing:8.0) {
@@ -84,7 +35,7 @@ struct NotebookCreation_WidgetsEntryView : View {
             }
         }
     }
-    private func optionViewForType(_ type : NotebookCreationType, intent: any AppIntent) -> some View {
+    private func optionViewForType(_ type : FTWidgetActionType, intent: any AppIntent) -> some View {
         Button(intent: intent) {
             actionViewForType(type)
         }
@@ -118,7 +69,7 @@ struct NotebookCreation_WidgetsEntryView : View {
             }
         }
     }
-    private func actionViewForType(_ type : NotebookCreationType) -> some View {
+    private func actionViewForType(_ type : FTWidgetActionType) -> some View {
         return HStack(alignment: .center, spacing:8) {
             if type.hasASystemIcon {
                 Image(systemName: type.iconName)

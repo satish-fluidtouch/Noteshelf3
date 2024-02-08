@@ -13,10 +13,7 @@ struct NewNotebookIntent : AppIntent {
     static var title: LocalizedStringResource = "New Notebook"
     static var openAppWhenRun: Bool = true
     func perform() async throws -> some IntentResult {
-    #if !NOTESHELF_WIDGET
-    let sceneDelegate = await (UIApplication.shared as? NoteshelfApplication)?.sceneDelegate as? SceneDelegate
-    await sceneDelegate?.createNewNotebook()
-    #endif
+        FTWidgetActionController.shared.performAction(action: .newNotebook)
         return .result()
     }
 }
