@@ -92,7 +92,7 @@ class FTTaggedEntity: NSObject, Identifiable {
     func removeTag(_ tag: FTTag) {
         self.tags.remove(tag)
         if self.tags.isEmpty {
-//            FTTagsProvider.shared.removeItemFromCache()
+            FTTagsProvider.shared.removeTaggedEntityFromCache(self);
         }
     }
     

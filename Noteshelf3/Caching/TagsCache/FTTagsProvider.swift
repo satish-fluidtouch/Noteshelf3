@@ -309,6 +309,18 @@ internal extension FTTagsProvider {
         lock.unlock();
         return enity;
     }
+    
+    func removeTaggedEntityFromCache(_ taggedEntity: FTTaggedEntity) {
+        lock.lock();
+        if taggedEntity.tags.isEmpty {
+            var key = taggedEntity.documentUUID;
+            if let _pageID = taggedEntity as? FTPageTaggedEntity {
+                key = key.appending("_\(_pageID.pageUUID)");
+            }
+            self.taggedEntitiesInfo.removeValue(forKey: key)
+        }
+        lock.unlock();
+    }
 }
 
 

@@ -40,17 +40,34 @@ class FTTagOperation: NSObject {
             let relativePath = FTCachedDocument(documentID: docID).relativePath;
             FTNoteshelfDocumentProvider.shared.document(with: docID,orRelativePath: relativePath) { documentItem in
                 if let docItem = documentItem {
-                    progress.localizedDescription = "Updating: " + docItem.displayTitle
-                    let request = FTDocumentOpenRequest(url: docItem.URL, purpose: .write)
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
-                        if let document = document as? FTNoteshelfDocument {
-                            operationToPerform(docID,document,token) {
+                    func performOpen() {
+                        progress.localizedDescription = "Updating: " + docItem.displayTitle
+                        let request = FTDocumentOpenRequest(url: docItem.URL, purpose: .write)
+                        FTNoteshelfDocumentManager.shared.openDocument(request: request) { token, document, error in
+                            if let document = document as? FTNoteshelfDocument {
+                                operationToPerform(docID,document,token) {
+                                    next();
+                                }
+                            }
+                            else {
                                 next();
                             }
                         }
-                        else {
-                            next();
+                    }
+                    
+                    if !docItem.isDownloaded {
+                        progress.localizedDescription = "Downloading: " + docItem.displayTitle
+                        let coordinator = NSFileCoordinator(filePresenter: nil)
+                        coordinator.coordinate(with: [NSFileAccessIntent.readingIntent(with: docItem.URL, options: [])], queue: OperationQueue()) { error in
+                            if nil != error || docItem.isPinEnabledForDocument() {
+                                next();
+                                return;
+                            }
+                            performOpen();
                         }
+                    }
+                    else {
+                        performOpen();
                     }
                 }
                 else {
