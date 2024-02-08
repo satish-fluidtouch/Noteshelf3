@@ -64,13 +64,9 @@ class FTSidebarViewModel: NSObject, ObservableObject {
 
     //MARK: Computed variables
     lazy var newItem: FTSideBarItem = {
-        return FTSideBarItem(title: "",
-                             icon: FTIcon.folder,
-                             isEditable: true,
-                             isEditing: false,
-                             type: .category,
-                             allowsItemDropping: false)
+        return FTSideBarItemNewCategory.newInstance()
     }()
+    
    weak var selectedShelfItemCollection: FTShelfItemCollection? {
        didSet {
            updateCurrentSidebarItemCollection()

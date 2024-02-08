@@ -28,6 +28,10 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
 
     var type: FTSideBarItemType = .home
 
+    var isNewCategory: Bool {
+        return false;
+    }
+    
     private(set) var shelfCollection: FTShelfItemCollection?
 
     var highlightColor: Color {
@@ -92,6 +96,7 @@ class FTSideBarItem: NSObject, FTSideMenuEditable, Identifiable, ObservableObjec
         onCompletion(shelfCollection);
     }
 }
+
 extension FTSideBarItem: NSItemProviderWriting {
     static var writableTypeIdentifiersForItemProvider: [String] {
         return [kUTTypeData as String]
@@ -110,5 +115,25 @@ extension FTSideBarItem: NSItemProviderWriting {
             completionHandler(nil, error)
         }
         return progress
+    }
+}
+
+class FTSideBarItemNewCategory: FTSideBarItem {
+    override var icon: FTIcon {
+        get { return FTIcon.plusCircle }
+        set {}
+    }
+    
+    override var isNewCategory: Bool {
+        return true;
+    }
+    
+    static func newInstance() -> FTSideBarItemNewCategory {
+        return FTSideBarItemNewCategory.init(title: "",
+                                             icon: FTIcon.folder,
+                                             isEditable: true,
+                                             isEditing: false,
+                                             type: .category,
+                                             allowsItemDropping: false);
     }
 }

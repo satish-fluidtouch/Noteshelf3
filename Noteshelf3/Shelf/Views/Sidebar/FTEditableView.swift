@@ -21,7 +21,7 @@ struct FTEditableView: View {
     var originalTitle: String = ""
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var viewModel: FTSidebarViewModel
-
+    var isNewCategoryField: Bool = false;
     
     @State private var currentTitle: String = ""
     var body: some View {
@@ -33,7 +33,9 @@ struct FTEditableView: View {
                         .focused($titleIsFocused)
                         .foregroundColor(.appColor(.black1))
                         .onSubmit {
-                            didTapSubmitOrKeyboardHideOption()
+                            if(showEditableField) {
+                                didTapSubmitOrKeyboardHideOption()
+                            }
                         }
                         .onAppear {
                             runInMainThread(0.2) {
@@ -42,7 +44,7 @@ struct FTEditableView: View {
                         }
                 } else {
                     HStack(alignment: .center) {
-                        Text(NSLocalizedString("NewCategory", comment: "New Category"))
+                        Text(item.isNewCategory ? NSLocalizedString("NewCategory", comment: "New Category") : self.currentTitle)
                             .appFont(for: .regular, with: 17)
                             .foregroundColor(.appColor(.black1))
                         Spacer()
@@ -61,13 +63,13 @@ struct FTEditableView: View {
             .frame(height: 44,alignment:.leading)
         } icon: {
             if item.isEditing {
-                Image(icon:item.type == .category ? FTIcon.folder : FTIcon.number )
+                Image(icon:item.icon)
                     .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
                     .padding(.trailing,4)
                     .font(Font.appFont(for: .regular, with: 20))
                     .foregroundColor(.appColor(.black1))
             } else {
-                Image(icon: FTIcon.plusCircle)
+                Image(icon: item.icon)
                     .frame(width: 24, height: 24, alignment: SwiftUI.Alignment.center)
                     .font(Font.appFont(for: .regular, with: 20))
                     .foregroundColor(.appColor(.black1))
@@ -78,7 +80,9 @@ struct FTEditableView: View {
             }
         }
         .onReceive(keyboardHideNotification) { _ in
-            didTapSubmitOrKeyboardHideOption()
+            if showEditableField {
+                didTapSubmitOrKeyboardHideOption()
+            }
         }
         .onAppear(perform: {
             self.currentTitle = item.title;
@@ -86,11 +90,14 @@ struct FTEditableView: View {
     }
     
     private func didTapSubmitOrKeyboardHideOption(){
-        let newTitle = currentTitle
+        var newTitle = currentTitle
         if !newTitle.isEmpty {
             if originalTitle.isEmpty { // New categpry case
                 item.title = ""
             }
+        }
+        else {
+            newTitle = originalTitle;
         }
         self.onButtonSubmit(newTitle)
         showEditableField = false

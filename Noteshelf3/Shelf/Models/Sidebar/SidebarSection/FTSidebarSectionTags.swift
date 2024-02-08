@@ -90,7 +90,7 @@ class FTSideBarItemTag: FTSideBarItem {
     init(tag: FTTag) {
         fttag = tag;
         super.init();
-        super.title = tag.tagDisplayName;
+//        super.title = tag.tagDisplayName;
         self.id = tag.id;
     }
 }
