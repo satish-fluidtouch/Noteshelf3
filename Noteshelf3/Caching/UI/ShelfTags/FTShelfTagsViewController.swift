@@ -254,8 +254,8 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     func activateViewMode() {
-        self.updateTitle();
         viewState = .none
+        self.updateTitle();
         self.toolbar?.isHidden = true
         self.tagCategory.deselectAll();
 #if !targetEnvironment(macCatalyst)
