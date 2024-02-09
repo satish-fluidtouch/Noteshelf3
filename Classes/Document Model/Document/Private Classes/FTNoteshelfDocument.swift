@@ -631,7 +631,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                     self.logDocumentCorrupt(params);
                     
                     //------ Some times In Metadata Plist isSecured bool is set to false, even though the book is secured.Logging it for further investigation -----//
-                    if self.pin != nil, !self.isSecured() {
+                    if self.isPinEnabled(),!self.isSecured() {
                         FTLogError("IS_SECURED_ERROR")
                     }
                 }
