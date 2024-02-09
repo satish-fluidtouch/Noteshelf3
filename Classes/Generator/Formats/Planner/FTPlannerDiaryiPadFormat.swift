@@ -428,7 +428,7 @@ class FTPlannerDiaryiPadFormat : FTPlannerDiaryFormat {
             if let stripColor = weekDayBgColor,isBelongToCalendarYear(currentDate: day.date){
                 if day.belongsToSameMonth {
                     let tappableHeight = formatInfo.customVariants.isLandscape ? cellHeight/3 : cellHeight/4
-                    let tappbleLinkX = formatInfo.customVariants.isLandscape ? (linkX - cellWidth/3) : (linkX + cellWidth - cellWidth/3)
+                    let tappbleLinkX = formatInfo.customVariants.isLandscape ? (linkX + cellWidth - cellWidth/4) : (linkX + cellWidth - cellWidth/3)
                     currentMonthRectsInfo.dayRects.append(getLinkRect(location: CGPoint(x: tappbleLinkX, y: dayColorRect.origin.y - (tappableHeight - dayColorRect.height )/2), frameSize: CGSize(width: cellWidth/3, height: tappableHeight)))
                     self.drawColorBandsWith(xAxis: dayColorRect.origin.x, yAxis: dayColorRect.origin.y, context: context, width: dayColorRect.width, height: dayColorRect.height, bandColor: UIColor(hexString: stripColor),cornerRadius: colorBGCornerRaidus)
                     dayString.draw(in:dayTextRect)
