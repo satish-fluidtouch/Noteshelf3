@@ -362,14 +362,14 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             weekDayInfoY += currentPageRect.height*templateInfo.cellHeight/100 + (currentPageRect.height*templateInfo.cellOffsetY/100)
         }))
         currentWeekRectInfo.weekDayRects.append(contentsOf: weekDayRects)
-        let chevronImage = UIImage(named: "right_chevron")
-        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 24), y: (prioritiesRect.origin.y + 4), width: 24, height: 24)
+        let chevronImage = UIImage(named: "right_chevron_big")
+        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 32), y: (prioritiesRect.origin.y + 4), width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y))
-        currentWeekRectInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y), frameSize: prioritiesChevronRect.size)
-        
-        let notesChevronRect = CGRect(x: (notesBoxX + notesBoxWidth - 4 - 24), y: notesBoxY + 4, width: 24, height: 24)
+        currentWeekRectInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x - 4, y: prioritiesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
+
+        let notesChevronRect = CGRect(x: (notesBoxX + notesBoxWidth - 4 - 32), y: notesBoxY + 4, width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: notesChevronRect.origin.x, y: notesChevronRect.origin.y))
-        currentWeekRectInfo.notesRect = getLinkRect(location: CGPoint(x: notesChevronRect.origin.x, y: notesChevronRect.origin.y), frameSize: notesChevronRect.size)
+        currentWeekRectInfo.notesRect = getLinkRect(location: CGPoint(x: notesChevronRect.origin.x - 4, y: notesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
         weekRectsInfo.append(currentWeekRectInfo)
         self.addTodayPillToWeekPageWith(context: context)
     }
@@ -384,10 +384,10 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
         let prioritiesBoxWidth : CGFloat = currentPageRect.width*templateInfo.priorityBoxWidth/100
         let prioritiesBoxHeight : CGFloat = currentPageRect.height*templateInfo.priorityBoxHeight/100
         let prioritiesRect = CGRect(x: prioritiesBoxX, y: prioritiesBoxY, width: prioritiesBoxWidth, height: prioritiesBoxHeight)
-        let chevronImage = UIImage(named: "right_chevron")
-        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 24), y: (prioritiesRect.origin.y + 4), width: 24, height: 24)
+        let chevronImage = UIImage(named: "right_chevron_big")
+        let prioritiesChevronRect = CGRect(x: (prioritiesRect.origin.x + prioritiesBoxWidth - 4 - 32), y: (prioritiesRect.origin.y + 4), width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y))
-        currentDayRectsInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x, y: prioritiesChevronRect.origin.y), frameSize: prioritiesChevronRect.size)
+        currentDayRectsInfo.prioritiesRect = getLinkRect(location: CGPoint(x: prioritiesChevronRect.origin.x - 4 , y: prioritiesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
         dayRectsInfo.append(currentDayRectsInfo)
         self.addTodayPillToDayPageWith(context: context)
     }

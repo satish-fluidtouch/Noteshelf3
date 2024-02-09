@@ -252,10 +252,10 @@ class FTMidnightDairyFormat : FTDairyFormat {
         let dayAndWeekLocation = CGPoint(x: navigation1Location.x + navigation1String.size().width + 8, y: titleY)
         dayAndWeekString.draw(at: dayAndWeekLocation)
         let notesRect = CGRect(x: notesBoxX , y: notesBoxY, width: notesBoxWidth, height: notesBoxHeight)
-        let chevronImage = UIImage(named: "right_chevron")
-        let notesChevronRect = CGRect(x: (notesRect.origin.x + notesBoxWidth - 4 - 24), y: (notesRect.origin.y + 4), width: 24, height: 24)
+        let chevronImage = UIImage(named: "right_chevron_big")
+        let notesChevronRect = CGRect(x: (notesRect.origin.x + notesBoxWidth - 4 - 32), y: (notesRect.origin.y + 4), width: 32, height: 32)
         chevronImage?.draw(at: CGPoint(x: notesChevronRect.origin.x, y: notesChevronRect.origin.y))
-        currentDayRectsInfo.notesRect = getLinkRect(location: CGPoint(x: notesChevronRect.origin.x, y: notesChevronRect.origin.y), frameSize: notesChevronRect.size)
+        currentDayRectsInfo.notesRect = getLinkRect(location: CGPoint(x: notesChevronRect.origin.x - 4, y: notesChevronRect.origin.y - 4), frameSize: CGSize(width: 40, height: 40))
     }
     private func getMidnightAssetPDFPath(ofType type : FTDigitalDiaryTemplateType, customVariants variants: FTPaperVariants) -> String {
         var customVariants = variants
