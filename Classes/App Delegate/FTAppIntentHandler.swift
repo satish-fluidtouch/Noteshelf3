@@ -169,7 +169,9 @@ final class FTAppIntentHandler {
         } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
             let reqHyperlinkStr = FTSharedGroupID.getAppBundleID() + ":" +  FTAppIntentHandler.hyperlinkPath
             if url.absoluteString.hasPrefix(reqHyperlinkStr) {
+#if !targetEnvironment(macCatalyst)
                 intentHandler?.openNotebook(using: url)
+#endif
             } else if url.path().contains(FTAppIntentHandler.templatesPath) {
                 intentHandler?.openTemplatesScreen(url: url)
             } else {

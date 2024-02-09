@@ -475,44 +475,8 @@ extension FTShelfSplitViewController {
         }
 
         func openDoc(_ pin: String?) {
-            if let pageId = pageUUID {
-                var reqIndex: Int?
-                guard let docId = (shelfItem as? FTDocumentItemProtocol)?.documentUUID else { return }
-                if FTNoteshelfDocumentManager.shared.isDocumentOpen(for: docId) {
-                    if let docVc = self.getRequiredDocumentRenderController(using: docId), let doc = docVc.getCurrentDocument(), doc.documentUUID == docId {
-                        if let index = doc.pages().firstIndex(where: { $0.uuid == pageId}) {
-                            if let sesssion = UIApplication.shared.sessionForDocument(shelfItem.URL.relativePathWRTCollection()) {
-                                if #available(macCatalyst 17.0, *) {
-                                    let request = UISceneSessionActivationRequest(session: sesssion)
-                                    UIApplication.shared.activateSceneSession(for: request, errorHandler: nil)
-                                } else {
-                                    UIApplication.shared.requestSceneSessionActivation(sesssion
-                                                                                       , userActivity: sesssion.scene?.userActivity
-                                                                                       , options: nil
-                                                                                       , errorHandler: nil)
-                                }
-                            }
-                            docVc.documentViewController.showPage(at: index, forceReLayout: true)
-                        }
-                    }
-                } else {
-                    let request = FTDocumentOpenRequest(url: shelfItem.URL, purpose: .read)
-                    request.pin = pin
-                    FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
-                        if let doc = docItem {
-                            if let index = doc.pages().firstIndex(where: { $0.uuid == pageId}) {
-                                reqIndex = index
-                                self?.openItemInNewWindow(shelfItem, pageIndex: reqIndex, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
-                                onCompletion?(nil,true)
-                            }
-                            FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: token, onCompletion: nil)
-                        }
-                    }
-                }
-            } else {
-                openItemInNewWindow(shelfItem, pageIndex: nil, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
-                onCompletion?(nil,true)
-            }
+            openItemInNewWindow(shelfItem, pageIndex: nil, pageUUID: pageUUID, docPin: pin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
+            onCompletion?(nil,true)
         }
 
         if let documentPin = pin {

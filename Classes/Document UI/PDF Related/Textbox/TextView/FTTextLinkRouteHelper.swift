@@ -34,4 +34,34 @@ class FTTextLinkRouteHelper: NSObject {
         let pageId = queryItems?.first(where: { $0.name == "pageId" })?.value
         return (docId: documentId, pageId: pageId)
     }
+
+    static func handeDocumentUnAvailablity(for documentId: String, on controller: UIViewController) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        var isAvailableInTrash = false
+        FTNoteshelfDocumentProvider.shared.checkIfDocumentExistsInTrash(byDocumentId: documentId) { status in
+            isAvailableInTrash = status
+            dispatchGroup.leave()
+        }
+        dispatchGroup.notify(queue: .main) {
+            if isAvailableInTrash {
+                UIAlertController.showDocumentNotAvailableAlert(from: controller)
+                return
+            } else {
+                // Book is not available
+                let destinationURL = FTDocumentCache.shared.cachedLocation(for: documentId)
+                guard FTDocumentCache.shared.checkIfCachedDocumentIsAvailableOrNot(url: destinationURL) else {
+                    UIAlertController.showDeletedOrUndownloadedAlert(for: destinationURL, from: controller)
+                    return
+                }
+                if destinationURL.downloadStatus() != .downloaded {
+                    // Book is not downloaded yet
+                    UIAlertController.showDocumentNotDownloadedAlert(for: destinationURL, from: controller)
+                    return
+                }
+                return
+            }
+        }
+        return
+    }
 }

@@ -27,6 +27,26 @@ class FTBookSessionRootViewController: UIViewController {
         }
     }
     
+    func openNotebook(using docId: String, pageId: String) {
+        FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
+            guard let shelfItem = docItem else {
+                FTTextLinkRouteHelper.handeDocumentUnAvailablity(for: docId, on: self)
+                return
+            }
+            if let splitVc = self.notebookSplitController, let docVc = splitVc.documentViewController, let doc = docVc.getCurrentDocument(), doc.documentUUID == docId {
+                docVc.navigateToPage(with: pageId, documentId: doc.documentUUID)
+            } else {
+                FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
+                                                             onviewController: self,
+                                                             onCompletion:
+                                                                { [weak self] pin, success,_ in
+                    guard let self else { return }
+                    self.openItemInNewWindow(shelfItem, pageIndex: nil, pageUUID: pageId, docPin: pin)
+                })
+            }
+        }
+    }
+
     @objc private func sceneDidDisconnect(_ scene: NSNotification) {
         if let sceneToObserve = scene.object as? UIScene {
             sceneToObserve.userActivity?.invalidate();
@@ -87,29 +107,51 @@ private extension FTBookSessionRootViewController {
                 let createWithAudio = userActivity.createWithAudio
                 let isQuickCreate = userActivity.isQuickCreate
                 FTNoteshelfDocumentManager.shared.openDocument(request: request) { [weak self] token, docItem, error in
+                    guard let self else { return }
                     if let _docitem = docItem, let doc = _docitem as? FTNoteshelfDocument {
-                        let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
-                        if shouldInsertCover {
-                            doc.insertCoverForPasswordProtectedBooks { success, error in
-                                doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
-                                processDocumentOpen()
+                        var reqIndex: Int?
+                        if let pageId = userActivity.userInfo?["pageUUID"] as? String {
+                            if let index = doc.pages().firstIndex(where: {$0.uuid == pageId }) {
+                                reqIndex = index
+                                continueProcessDocumentOpen()
+                            } else {
+                                UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: self, notebookTitle: doc.documentName) { yes in
+                                    if yes {
+                                        continueProcessDocumentOpen()
+                                    } else {
+                                        self.killSession()
+                                    }
+                                }
                             }
                         } else {
-                            processDocumentOpen()
+                            continueProcessDocumentOpen()
                         }
+
+                        func continueProcessDocumentOpen() {
+                            let shouldInsertCover = doc.propertyInfoPlist()?.object(forKey: INSERTCOVER) as? Bool ?? false
+                            if shouldInsertCover {
+                                doc.insertCoverForPasswordProtectedBooks { success, error in
+                                    doc.propertyInfoPlist()?.setObject(false, forKey: INSERTCOVER)
+                                    processDocumentOpen()
+                                }
+                            } else {
+                                processDocumentOpen()
+                            }
+                        }
+
                         func processDocumentOpen() {
-                            let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem);
+                            let docInfo = FTDocumentOpenInfo(document: _docitem, shelfItem: shelfItem, index: reqIndex ?? -1);
                             docInfo.documentOpenToken = token;
                             docItem?.isJustCreatedWithQuickNote = isQuickCreate
-                            self?.showNotebookView(docInfo);
+                            self.showNotebookView(docInfo);
                             FTNoteshelfDocumentProvider.shared.addShelfItemToList(shelfItem, mode: .recent)
                             if createWithAudio {
-                                self?.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
+                                self.notebookSplitController?.documentViewController?.startRecordingOnAudioNotebook()
                             }
                         }
                     }
                     else {
-                        self?.killSession();
+                        self.killSession()
                     }
                 }
             }

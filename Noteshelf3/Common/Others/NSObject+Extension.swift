@@ -33,7 +33,7 @@ extension NSObject {
         }
     }
     
-    func openItemInNewWindow(_ item: FTDiskItemProtocol,pageIndex : Int?, docPin: String? = nil, createWithAudio: Bool = false, isQuickCreate: Bool = false) {
+    func openItemInNewWindow(_ item: FTDiskItemProtocol,pageIndex : Int?, pageUUID: String? = nil, docPin: String? = nil, createWithAudio: Bool = false, isQuickCreate: Bool = false) {
         if let shelf = item as? FTShelfItemCollection {
             self.openShelfInNewWindow(shelf)
         }
@@ -41,7 +41,7 @@ extension NSObject {
             self.openGroupInNewWindow(groupItem)
         }
         else if let shelfItem = item as? FTDocumentItemProtocol {
-            self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex, docPin: docPin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
+            self.openNotebookItemInNewWindow(shelfItem,pageIndex: pageIndex, pageUUID: pageUUID, docPin: docPin, createWithAudio: createWithAudio, isQuickCreate: isQuickCreate)
         }
         FTFinderEventTracker.trackFinderEvent(with: "quickaccess_book_openinnewwindow_tap")
     }
@@ -54,7 +54,7 @@ extension NSObject {
         self.openNonCollectionTypeInNewWindow(contentType: .tag,selectedTag:selectedTag)
     }
     
-    private func openNotebookItemInNewWindow(_ shelfItem: FTShelfItemProtocol,pageIndex : Int?,docPin: String?, createWithAudio: Bool, isQuickCreate: Bool)
+    private func openNotebookItemInNewWindow(_ shelfItem: FTShelfItemProtocol,pageIndex : Int?, pageUUID: String? = nil, docPin: String?, createWithAudio: Bool, isQuickCreate: Bool)
     {
         let sourceURL = shelfItem.URL
         let userActivityID = FTNoteshelfSessionID.openNotebook.activityIdentifier;
@@ -79,11 +79,15 @@ extension NSObject {
         if let _docPin = docPin {
             userInfo["docPin"] = _docPin;
         }
+        if let pageId = pageUUID {
+            userInfo["pageUUID"] = pageId
+        }
         userActivity.userInfo = userInfo
         userActivity.createWithAudio = createWithAudio
         userActivity.isQuickCreate = isQuickCreate
 #if targetEnvironment(macCatalyst)
         if let sesssion = UIApplication.shared.sessionForDocument(docPath) {
+            sesssion.scene?.userActivity = userActivity
             UIApplication.shared.requestSceneSessionActivation(sesssion
                                                                , userActivity: sesssion.scene?.userActivity
                                                                , options: nil
