@@ -58,7 +58,9 @@ class FTSaveClipPreviewViewController: UIViewController {
     }
 
     @IBAction func addClipAction(_ sender: Any) {
-        self.view.endEditing(true)
+        if let editingCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? FTInlineTableViewCell {
+            editingCell.textField.resignFirstResponder()
+        }
         let category = categories[self.selectedIndexPath.row]
         FTUserDefaults.selectedClipCategory = category.title
         delegate?.didSelectCategory(name: category.title)

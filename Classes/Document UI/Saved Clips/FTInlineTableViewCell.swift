@@ -61,7 +61,7 @@ class FTInlineTableViewCell: UITableViewCell, UITextFieldDelegate {
     let lightAttributedPlaceHolder = {
         return NSAttributedString(
             string: "New Category...",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.applePlaceholderGray]
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         )
     }
 
