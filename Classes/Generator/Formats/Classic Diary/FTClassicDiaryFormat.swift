@@ -70,16 +70,16 @@ class FTClassicDiaryFormat : FTDairyFormat {
         let screenType = customVariants.selectedDevice.isiPad ? "iPad" : "iPhone"
         let screenSize = FTFiveMinJournalFormat.getScreenSize(fromVariants: customVariants)
         let key = type.displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
-//        let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
-//        if FileManager.default.fileExists(atPath: pdfURL.path){
-//            return pdfURL.path
-//        }else{
+            + "\(screenSize.height)" + "_version2"
+        let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
+        if FileManager.default.fileExists(atPath: pdfURL.path){
+            return pdfURL.path
+        }else{
             let templateDiaryInfo = FTClassicDiaryTemplateInfo(templateType: type,customVariants: customVariants)
             let generator = FTClassicDiaryTemplateAssetGenerator(templateInfo: templateDiaryInfo)
             let generatedPDFURL = generator.generate()
             return generatedPDFURL.path
-        //}
+        }
     }
     class func getScreenSize(fromVariants variants: FTPaperVariants) -> CGSize {
         let dimension = variants.isLandscape ? variants.selectedDevice.dimension_land : variants.selectedDevice.dimension_port

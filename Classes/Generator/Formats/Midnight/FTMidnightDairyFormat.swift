@@ -271,7 +271,7 @@ class FTMidnightDairyFormat : FTDairyFormat {
         let screenType = customVariants.selectedDevice.isiPad ? "iPad" : "iPhone"
         let screenSize = FTMidnightDairyFormat.getScreenSize(fromVariants: customVariants)
         let key = type.displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
+            + "\(screenSize.height)" + "_version2"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
         if FileManager.default.fileExists(atPath: pdfURL.path){
             return pdfURL.path

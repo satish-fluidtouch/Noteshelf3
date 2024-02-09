@@ -166,7 +166,7 @@ class FTPlannerDiaryFormat : FTDairyFormat {
         let screenSize = FTModernDiaryFormat.getScreenSize(fromVariants: customVariants)
         let displayName = isDarkTemplate ? type.displayName + "(Dark)" : type.displayName
         let key = displayName + "_" + screenType + "_" + orientation +  "_" + "\(screenSize.width)" + "_"
-            + "\(screenSize.height)"
+            + "\(screenSize.height)" + "_version2"
         let pdfURL = self.rootPath.appendingPathComponent(key).appendingPathExtension("pdf")
         if FileManager().fileExists(atPath: pdfURL.path) , let data = try? Data(contentsOf: pdfURL), !data.isEmpty {
             return pdfURL.path
