@@ -603,6 +603,9 @@ parentViewController:(FTPageViewController*)controller
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    if([FTDocumentScrollView supportsZoomWhileScroll] && [self isZoomingInProgress]) {
+        return;
+    }
     if(!decelerate)
     {
         [self completedScrolling];
@@ -630,6 +633,9 @@ parentViewController:(FTPageViewController*)controller
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if([FTDocumentScrollView supportsZoomWhileScroll] && [self isZoomingInProgress]) {
+        return;
+    }
     [self completedScrolling];
 }
 
@@ -642,49 +648,43 @@ parentViewController:(FTPageViewController*)controller
         return;
     }
     
-    if(_isZoomingInProgress) {
-        CGFloat prevScale = [self currentZoomScale];
-        CGFloat currentScale = prevScale*scale;
-        
-        //This should be outside the below if statement
-        if(prevScale != currentScale) {
-            [self setCurrentZoomScale:currentScale];
-
-            currentScale = currentScale;
-            
-            self.minimumZoomScale = self.minimumZoomScale/scale;
-            self.maximumZoomScale = self.maximumZoomScale/scale;
-
-            CGRect frame = self.contentHolderView.frame;
-            frame.origin = CGPointZero;
-            
-            self.contentHolderView.transform = CGAffineTransformIdentity;
-            self.contentHolderView.frame = frame;
-
-            CGFloat scale = [self zoomScaleOfPDF]*currentScale;
-            [self.writingView setScale:scale];
-            
-            [self.footerView applyScale:scale];
-            
-            [self.writingView didEndZooming:currentScale];
-            [self didChangeSearchResults:nil];
-            FTCLSLog(@"PDF Page Zoomed");
-
-            shouldEnable = YES;
-            
-            if(self.mode==FTRenderModeZoom) {
-                //If zoom mode, inform the viewcontroller to resize the zoom rectangle
-                [[NSNotificationCenter defaultCenter] postNotificationName:FTZoomRenderViewDidFinishSizing object:self.window userInfo:@{@"zoomFactor":[NSNumber numberWithFloat:currentScale]}];
-            }
-            
-        }
-        else if(self.mode==FTRenderModeZoom) {
-            //If zoom mode, inform the viewcontroller to resize the zoom rectangle
-            [[NSNotificationCenter defaultCenter] postNotificationName:FTZoomRenderViewDidFinishMoving object:self.window];
-        }
-        self.isZoomingInProgress = NO;
-    }
+    CGFloat prevScale = [self currentZoomScale];
+    CGFloat currentScale = prevScale*scale;
     
+    //This should be outside the below if statement
+    if(prevScale != currentScale) {
+        [self setCurrentZoomScale:currentScale];
+
+        currentScale = currentScale;
+        
+        self.minimumZoomScale = self.minimumZoomScale/scale;
+        self.maximumZoomScale = self.maximumZoomScale/scale;
+
+        CGRect frame = self.contentHolderView.frame;
+        frame.origin = CGPointZero;
+        
+        self.contentHolderView.transform = CGAffineTransformIdentity;
+        self.contentHolderView.frame = frame;
+
+        CGFloat scale = [self zoomScaleOfPDF]*currentScale;
+        [self.writingView setScale:scale];
+        
+        [self.footerView applyScale:scale];
+        
+        [self.writingView didEndZooming:currentScale];
+        [self didChangeSearchResults:nil];
+        FTCLSLog(@"PDF Page Zoomed");
+
+        shouldEnable = YES;
+        
+        if(self.mode==FTRenderModeZoom) {
+            //If zoom mode, inform the viewcontroller to resize the zoom rectangle
+            [[NSNotificationCenter defaultCenter] postNotificationName:FTZoomRenderViewDidFinishSizing object:self.window userInfo:@{@"zoomFactor":[NSNumber numberWithFloat:currentScale]}];
+        }
+        
+    }
+    self.isZoomingInProgress = NO;
+
     [self setNeedsLayout];
     [self.parentViewController startAcceptingTouches:YES];
     
@@ -889,9 +889,14 @@ parentViewController:(FTPageViewController*)controller
 
 -(void)handlePanGesture:(FTPanGestureRecognizer*)gesture {
     if (gesture.state == UIGestureRecognizerStateFailed) {
-        if(!_isZoomingInProgress
-           && !_isScrolling
-           && ![NSUserDefaults isApplePencilEnabled])
+        BOOL shouldContinue = false;
+        if(FTDocumentScrollView.supportsZoomWhileScroll) {
+            shouldContinue = (!_isZoomingInProgress && !_isScrolling && ![NSUserDefaults isApplePencilEnabled]);
+        }
+        else {
+            shouldContinue = (!_isZoomingInProgress && !_isScrolling);
+        }
+        if(shouldContinue)
         {
             if(!CGSizeEqualToSize(self.contentSize, self.frame.size) || (gesture.recognitionType == FTPanRecognitionTypeSingleFinger) || self.contentInset.bottom > 0)
             {
@@ -991,8 +996,14 @@ CGPoint lastPoint1,lastPoint2;
             }
             scaleJumpWhilePinch++;
             if((fabs(recognizer.scale-1) > 0.3) && shouldZoom && (scaleJumpWhilePinch > 3)) {
-                if((!_isScrolling && !_isZoomingInProgress)
-                    || [NSUserDefaults isApplePencilEnabled]) {
+                BOOL shouldContinue = false;
+                if(FTDocumentScrollView.supportsZoomWhileScroll) {
+                    shouldContinue = ((!_isScrolling && !_isZoomingInProgress) || [NSUserDefaults isApplePencilEnabled]);
+                }
+                else {
+                    shouldContinue = (!_isScrolling && !_isZoomingInProgress);
+                }
+                if(shouldContinue) {
                     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disablePinchDetection) object:nil];
                     self.isZoomingInProgress = YES;
                     self.pinchGestureReuiredToFail.enabled = NO;

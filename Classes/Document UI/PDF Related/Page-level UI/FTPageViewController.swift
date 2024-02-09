@@ -387,8 +387,8 @@ class FTLassoInfo: NSObject {
             completionBlock?();
             return;
         }
-        let maxZoomScale: CGFloat = _scrollView.miniumSupportedZoomScale;
-        let minZoomScale: CGFloat = _scrollView.maximumSupportedZoomScale;
+        let maxZoomScale: CGFloat = _scrollView.maximumSupportedZoomScale;
+        let minZoomScale: CGFloat = _scrollView.miniumSupportedZoomScale;
         
         let scale = max(min(inScale,maxZoomScale),minZoomScale);
         

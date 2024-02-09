@@ -33,6 +33,7 @@ enum FTScrollViewMode: Int {
 }
 
 @objcMembers class FTDocumentScrollView: FTCenterContentScrollView {
+    static let supportsZoomWhileScroll = true;
     weak var scrollViewDelegate : FTScrollViewDelegate?
     private var scrollViewMode: FTScrollViewMode = .none;
     private var scaleJump: Int = 0;
@@ -380,9 +381,14 @@ private extension FTDocumentScrollView
 
     @objc func handleFTPanGesture(_ gesture:UIGestureRecognizer)
     {
-        if gesture.state == .failed
-            , self.scrollViewMode == .none
-            , !UserDefaults.isApplePencilEnabled() {
+        let shouldContinue: Bool;
+        if FTDocumentScrollView.supportsZoomWhileScroll {
+            shouldContinue =  gesture.state == .failed && self.scrollViewMode == .none && !UserDefaults.isApplePencilEnabled()
+        }
+        else {
+            shouldContinue = gesture.state == .failed && self.scrollViewMode == .none
+        }
+        if shouldContinue {
             self.lockZoom();
             debugLog(">> ScrollPan: handleFTPanGesture: failed");
         }
@@ -589,12 +595,18 @@ extension FTDocumentScrollView: UIScrollViewDelegate
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if FTDocumentScrollView.supportsZoomWhileScroll && self.isZoomingInProgress {
+            return
+        }
         self.unlockZoom();
         self.scrollViewDelegate?.scrollViewDidEndDecelerating?(scrollView);
         self.scrollViewDelegate?.scrollViewDidEndPanningPage();
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if FTDocumentScrollView.supportsZoomWhileScroll && self.isZoomingInProgress {
+            return
+        }
         if(!decelerate) {
             self.unlockZoom();
         }
