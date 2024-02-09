@@ -629,6 +629,11 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                                   "Reason": "info plist Not Found"]
                     }
                     self.logDocumentCorrupt(params);
+                    
+                    //------ Some times In Metadata Plist isSecured bool is set to false, even though the book is secured.Logging it for further investigation -----//
+                    if self.isPinEnabled(), !self.isSecured() {
+                        FTLogError("IS_SECURED_ERROR")
+                    }
                 }
                 
                 self.closeDocument(completionHandler: { _ in
