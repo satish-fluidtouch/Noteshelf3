@@ -168,6 +168,10 @@ extension FTPageViewController: FTNoteshelfAIDelegate {
                 origin.y = max(origin.y, eachAnnotaiton.boundingRect.maxY);
             }
             if !annotations.isEmpty {
+                if origin.y > page.pdfPageRect.height {
+                    FTLogError("AI-Offset Issue:", attributes: ["value":origin.y]);
+                    origin.y = page.pdfPageRect.height;
+                }
                 let offset = (origin.y - page.pageTopMargin).toInt;
                 let yquotient = (offset / page.lineHeight) + 1;
 //                if offset % page.lineHeight > 0 {

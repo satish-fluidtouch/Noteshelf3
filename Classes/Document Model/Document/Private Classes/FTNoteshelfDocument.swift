@@ -594,7 +594,6 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                         self.propertyInfoPlist()?.setObject([currentUserID], forKey: USER_IDs_KEY)
                     }
                 }
-                
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
                 FTDocumentCorruptLogger.shared.markDocumentAsValid(self.fileURL);
 #endif
@@ -877,7 +876,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     override func revert(toContentsOf url: URL, completionHandler: ((Bool) -> Void)?) {
         if(!isInRevertMode && !self.documentState.contains(UIDocument.State.progressAvailable) && !self.documentState.contains(UIDocument.State.closed)) {
             isInRevertMode = true;
-            FTCLSLog("Doc: Revert");
+            FTLogError("Doc Reverted");
             if((nil == self.pin && self.isPinEnabled())
                 || (nil != self.pin && !self.isPinEnabled())) {
                 self.notifySecurityUpdate();
