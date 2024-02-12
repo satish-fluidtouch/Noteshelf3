@@ -303,6 +303,9 @@ extension FTFiveMinJournalFormat {
         let isLandscape = self.formatInfo.customVariants.isLandscape
         return self.isiPad ? (isLandscape ? 2.20 : 1.62) : 2.34
     }
+    var todayPillHeight : CGFloat {
+        return currentPageRect.height*todayPillHeightPercnt/100
+    }
     func addTodayPillRelativeToRect(_ rect : CGRect, YAxisPercnt : CGFloat, toContext context : CGContext) {
         // Today Pill
         let pillYPercnt : CGFloat = YAxisPercnt

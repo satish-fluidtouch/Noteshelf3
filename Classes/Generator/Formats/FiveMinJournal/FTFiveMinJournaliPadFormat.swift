@@ -125,8 +125,8 @@ class FTFiveMinJournaliPadFormat : FTFiveMinJournalFormat {
             }
         }
         // Today Pill
-        let todayPillYPercnt : CGFloat = self.formatInfo.customVariants.isLandscape ? 10.51 : 8.58
-        self.addTodayPillRelativeToRect(yearRect, YAxisPercnt : todayPillYPercnt, toContext : context)
+        let yAxisPercent : CGFloat = ((yearRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+        self.addTodayPillRelativeToRect(yearRect, YAxisPercnt : yAxisPercent, toContext : context)
         self.diaryPagesInfo.append(FTDiaryPageInfo(type: .calendar))
     }
     override func renderDayPage(context: CGContext, dayInfo: FTDayInfo) {
