@@ -23,10 +23,12 @@ class FTTagUpdateTagEntities: FTTagOperation {
     
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
         var tagGrouped = [String: [FTTaggedEntity]] ();
+        var tags = Set<FTTag>();
         self.taggedEntities.forEach { eachEntity in
             var item = tagGrouped[eachEntity.documentUUID] ?? [FTTaggedEntity]();
             item.append(eachEntity);
             tagGrouped[eachEntity.documentUUID] = item;
+            tags = tags.union(Set(eachEntity.tags));
         }
         let keys = tagGrouped.map({$0.key});
         
@@ -53,7 +55,7 @@ class FTTagUpdateTagEntities: FTTagOperation {
             }
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text});
-                let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text});
+                let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},createIfNeeded: false);
                 self.taggedEntities.forEach { eachEntity in
                     tagsToAdd.forEach { eachTag in
                         eachTag.addTaggedItem(eachEntity);
@@ -66,6 +68,14 @@ class FTTagUpdateTagEntities: FTTagOperation {
                 onTaskCompletion();
             }
         } onCompletion: {
+            self.taggedEntities.forEach { eachEntity in
+                tags = tags.union(eachEntity.tags);
+            }
+            if !tags.isEmpty {
+                NotificationCenter.default.post(name: Notification.Name("DidChangePageEntities")
+                                                , object: nil
+                                                , userInfo: ["tags" : Array(tags)]);
+            }
             onCompletion?();
         }
         progress.totalUnitCount = Int64(keys.count);

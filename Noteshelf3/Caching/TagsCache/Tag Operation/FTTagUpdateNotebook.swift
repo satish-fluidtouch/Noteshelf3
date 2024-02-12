@@ -22,6 +22,7 @@ class FTTagUpdateNotebook: FTTagOperation {
     }
     
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
+        var updatedTags = Set<FTTag>();
         let progress = self.enumerateDocuments(self.documentIDs) { documentID, document, token, onTaskCompletion in
             self.addedTags.forEach { eachTag in
                 document.addTag(eachTag.text);
@@ -29,7 +30,7 @@ class FTTagUpdateNotebook: FTTagOperation {
             document.removeTags(self.removedTags.map{$0.text})
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text});
-                let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text});
+                let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},createIfNeeded: false);
 
                 let docName = document.URL.relativePathWRTCollection()
                 tagsToAdd.forEach { eachTag in
@@ -37,18 +38,25 @@ class FTTagUpdateNotebook: FTTagOperation {
                                                                               , documentPath: docName
                                                                               , createIfNotPresent: true) {
                         eachTag.addTaggedItem(taggedEntity);
+                        updatedTags = updatedTags.union(taggedEntity.tags);
                     }
                 }
                 tagsToRemove.forEach { eachTag in
                     if let taggedEntity = FTTagsProvider.shared.tagggedEntity(documentID
                                                                                 , documentPath: docName) {
                         eachTag.removeTaggedItem(taggedEntity);
+                        updatedTags = updatedTags.union(taggedEntity.tags);
                     }
                 }
                 FTTagsProvider.shared.saveCache();
                 onTaskCompletion();
             }
         } onCompletion: {
+            if !updatedTags.isEmpty {
+                NotificationCenter.default.post(name: Notification.Name("DidChangePageEntities")
+                                                , object: nil
+                                                , userInfo: ["tags" : Array(updatedTags)]);
+            }
             onCompletion?();
         }
         return progress;

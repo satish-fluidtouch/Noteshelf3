@@ -49,8 +49,9 @@ class FTDocumentTagUpdater: NSObject {
         let documentName = document.URL.relativePathWRTCollection()
         
         let addedFTTags = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
-        let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text});
+        let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text},createIfNeeded: false);
         
+        var tagsUpdated = Set<FTTag>();
         pages.forEach { eachPage in
             let docProperties = FTTaggedPageProperties();
             docProperties.pageIndex = eachPage.pageIndex();
@@ -63,6 +64,7 @@ class FTDocumentTagUpdater: NSObject {
                                                                           , createIfNotPresent: true) as? FTPageTaggedEntity {
                     pageEntity.updatePageProties(docProperties);
                     eachTag.addTaggedItem(pageEntity);
+                    tagsUpdated = tagsUpdated.union(pageEntity.tags);
                 }
             }
             
@@ -72,9 +74,15 @@ class FTDocumentTagUpdater: NSObject {
                                                                           , pageID: eachPage.uuid) as? FTPageTaggedEntity {
                     eachTag.removeTaggedItem(pageEntity);
                     pageEntity.updatePageProties(docProperties);
+                    tagsUpdated = tagsUpdated.union(pageEntity.tags);
                 }
             }
         }
         FTTagsProvider.shared.saveCache();
+        if !tagsUpdated.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name("DidChangePageEntities")
+                                            , object: nil
+                                            , userInfo: ["tags" : Array(tagsUpdated)]);
+        }
     }
 }

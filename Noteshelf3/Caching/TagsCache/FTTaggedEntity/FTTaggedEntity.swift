@@ -55,7 +55,7 @@ class FTTaggedEntity: NSObject, Identifiable {
     var tagType: FTTagsType {
         fatalError("subclass should override")
     };
-    private(set) var tags = Set<FTTag>();
+    private(set) var tags = [FTTag]();
 
     init(documentUUID: String,documentPath: String?) {
         self.documentUUID = documentUUID;
@@ -85,14 +85,16 @@ class FTTaggedEntity: NSObject, Identifiable {
 
     func addTag(_ tag: FTTag) {
         if !self.tags.contains(tag) {
-            self.tags.insert(tag)
+            self.tags.append(tag)
         }
     }
     
     func removeTag(_ tag: FTTag) {
-        self.tags.remove(tag)
-        if self.tags.isEmpty {
-            FTTagsProvider.shared.removeTaggedEntityFromCache(self);
+        if let index = self.tags.firstIndex(of: tag) {
+            self.tags.remove(at: index);
+            if self.tags.isEmpty {
+                FTTagsProvider.shared.removeTaggedEntityFromCache(self);
+            }
         }
     }
     

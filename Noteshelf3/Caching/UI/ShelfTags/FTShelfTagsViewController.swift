@@ -87,6 +87,16 @@ class FTShelfTagsViewController: UIViewController {
         (self.view.toolbar as? FTShelfToolbar)?.toolbarActionDelegate = self
 #endif
         NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateTags(_:)), name: .didUpdateTags, object: nil);
+        NotificationCenter.default.addObserver(forName: Notification.Name("DidChangePageEntities"), object: nil, queue: OperationQueue.main) { [weak self] notification in
+            guard let strongSelf = self
+                    , let userInfo = notification.userInfo
+                    , let tags = userInfo["tags"] as? [FTTag]
+                    , let curTag = strongSelf.currentTag
+                    , (tags.contains(curTag) || curTag.tagType == .allTag) else {
+                return;
+            }
+            self?.refreshView();
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -129,18 +139,10 @@ class FTShelfTagsViewController: UIViewController {
         if let userInfo = notification.userInfo
             , let tags = userInfo["tags"] as? [FTTag]
             , let curTag = self.currentTag
-            ,tags.contains(curTag) {
+            ,(tags.contains(curTag) || curTag.tagType == .allTag) {
             if let operation = userInfo["operation"] as? String {
-//                if operation == "delete" {
-//                    self.loadShelfTagItems();
-//                    self.updateTitle();
-//                    enableToolbarItemsIfNeeded()
-//                }
-//                else 
                 if operation == "rename" {
-                    self.loadShelfTagItems();
-                    self.updateTitle();
-                    enableToolbarItemsIfNeeded()
+                    self.refreshView();
                 }
             }
         }
@@ -298,7 +300,7 @@ class FTShelfTagsViewController: UIViewController {
         }
         var commonTags = Set<FTTag>();
         selectedEntities.enumerated().forEach { eachEntry in
-            let tags = eachEntry.element.tags;
+            let tags = Set(eachEntry.element.tags);
             commonTags = eachEntry.offset == 0 ? tags : commonTags.intersection(tags);
         }
         let allTags = FTTagsProvider.shared.getTags();
@@ -577,7 +579,7 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
     func tagsViewController(_ contorller: FTTagsViewController, addedTags: [FTTagModel], removedTags: [FTTagModel]) {
         let selectedItems = self.tagCategory.selectedEntities;
         self.activateViewMode()
-        self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
+//        self.collectionView.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
         
         if addedTags.isEmpty, removedTags.isEmpty {
             return;

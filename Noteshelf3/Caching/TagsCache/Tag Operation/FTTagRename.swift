@@ -18,13 +18,17 @@ class FTTagRename: FTTagOperation {
     }
     
     override func perfomAction(_ onCompletion: (()->())?) -> Progress? {
+        FTNoteshelfDocumentProvider.shared.disableCloudUpdates()
+        let oldName = self.tag.tagName;
+        let newName = self.newTitle;
+        FTTagsProvider.shared.renameTag(self.tag, to: newName);
         let progress = self.enumerateDocuments(Array(tag.documentIDs)) { (documentID, document, token, onTaskCompletion) in
-            document.renameTag(self.tag.tagName, with: self.newTitle)
+            document.renameTag(oldName, with: newName)
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 onTaskCompletion();
             }
         } onCompletion: {
-            FTTagsProvider.shared.renameTag(self.tag, to: self.newTitle);
+            FTNoteshelfDocumentProvider.shared.enableCloudUpdates()
             onCompletion?();
         }
         return progress;

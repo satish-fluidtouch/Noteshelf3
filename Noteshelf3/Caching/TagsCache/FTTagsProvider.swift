@@ -68,7 +68,7 @@ class FTTagsProvider: NSObject {
         return userCreatedTags;
     }
     
-    func getTagsfor(_ names:[String]) -> [FTTag] {
+    func getTagsfor(_ names:[String],createIfNeeded: Bool = true) -> [FTTag] {
         lock.lock();
         var tagItems = [FTTag]();
         var tagsToAdd = [FTTag]();
@@ -79,7 +79,7 @@ class FTTagsProvider: NSObject {
             else if let tag = self.userTags[eachName.lowercased()] {
                 tagItems.append(tag)
             }
-            else {
+            else if createIfNeeded {
                 let tag =  FTTag(name: eachName);
                 tagsToAdd.append(tag);
                 tagItems.append(tag)
@@ -175,8 +175,7 @@ private extension FTTagsProvider {
                                                       , createIfNotPresent: true) else {
             return;
         }
-        let currentTags = documentEntity.tags;
-        
+        let currentTags = Set(documentEntity.tags);
         let tagsToRemove = currentTags.subtracting(tagNames);
         tagsToRemove.forEach { eachTag in
             eachTag.removeTaggedItem(documentEntity)
@@ -200,7 +199,7 @@ private extension FTTagsProvider {
                                                   ,createIfNotPresent: true) else {
             return;
         }
-        let currentTags = pageEntity.tags;
+        let currentTags = Set(pageEntity.tags);
         let tagsToRemove = currentTags.subtracting(tagNames);
         tagsToRemove.forEach { eachTag in
             eachTag.removeTaggedItem(pageEntity)
@@ -250,6 +249,7 @@ internal extension FTTagsProvider {
         let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
         var newTagsSet = Set(self.getTagsfor(cacheDocument.docuemntTags))
         
+        var shouldSave = false;
         self.syncNotebookTagsWithLocalCache(documentID: documentID
                                             , documentPath: documentPath
                                             , tagNames: newTagsSet);
@@ -278,10 +278,15 @@ internal extension FTTagsProvider {
         let tagsToremove = currentTags.subtracting(newTagsSet);
         tagsToremove.forEach { eachItem in
             eachItem.removeDocumentID(documentID);
+            shouldSave = true;
         }
         
         newTagsSet.forEach { eachItem in
+            shouldSave = true;
             eachItem.addDocumentID(documentID);
+        }
+        if(shouldSave) {
+            save();
         }
         lock.unlock();
     }
