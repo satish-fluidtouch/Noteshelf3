@@ -196,7 +196,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         let todayPillXOffsetPercnt = 3.73 // gap between today pill and day info
         let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
         let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
-        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: todayPillYAxisPercnt, toContext: context)
     }
     override func renderWeekPage(context: CGContext, weeklyInfo: FTWeekInfo) {
         super.renderWeekPage(context: context, weeklyInfo: weeklyInfo)
@@ -276,7 +276,7 @@ class FTMidnightDiaryiPhoneFormat : FTMidnightDairyFormat {
         let todayPillXOffsetPercnt = 3.73 // gap between today pill and day info
         let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
         let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
-        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+        self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: todayPillYAxisPercnt, toContext: context)
     }
     private func addBezierPathWithRect( rect : CGRect, toContext context : CGContext, title:String?, tileColor : UIColor ){
         let bezierpath = UIBezierPath(roundedRect: rect, cornerRadius: 10)

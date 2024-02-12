@@ -179,7 +179,8 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             //Today pill
             let weekInfoXPercnt = (weekInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (weekInfoXPercnt - todayPillXOffsetPercnt)
-            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+            let yAxisPercent : CGFloat = ((weekInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
         if let dayInfo = dayInfo {
             let title = formatInfo.customVariants.selectedDevice.isiPad ? "Daily Priorities" : "Daily Plan"
@@ -204,7 +205,8 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             //Today pill
             let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
-            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+            let yAxisPercent : CGFloat = ((dayInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
     }
     override func renderMonthPage(context: CGContext, monthInfo: FTMonthlyCalendarInfo, calendarYear: FTYearFormatInfo) {
@@ -445,7 +447,8 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             //Today pill
             let weekInfoXPercnt = (weekInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (weekInfoXPercnt - todayPillXOffsetPercnt)
-            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+            let yAxisPercent : CGFloat = ((weekInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
         if let dayInfo = dayInfo {
             let monthString = dayInfo.monthString
@@ -461,7 +464,8 @@ class FTMidnightDiaryiPadFormat : FTMidnightDairyFormat {
             //Today pill
             let dayInfoXPercnt = (dayInfoRect.origin.x/currentPageRect.width)*100
             let rightXOffsetPercnt = 100.0 - (dayInfoXPercnt - todayPillXOffsetPercnt)
-            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, toContext: context)
+            let yAxisPercent : CGFloat = ((dayInfoRect.midY - (todayPillHeight/2))/currentPageRect.height)*100
+            self.addTodayPillWith(rightXOffsetPercent: rightXOffsetPercnt, yAxisPercent: yAxisPercent, toContext: context)
         }
     }
 }
