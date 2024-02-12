@@ -286,7 +286,7 @@ extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
         guard !text.isEmpty else {
             return
         }
-        if let url = FTTextLinkRouteHelper.getLinkUrlForTextView(using: info.docUUID, pageId: info.pageUUID) {
+        if let url = URL(docId: info.docUUID, pageId: info.pageUUID) {
             self.updateLinkAttribute(with: url, text: text)
         }
     }

@@ -31,9 +31,7 @@ let textContainerTag: Int = 9001
     func addRecordingToPage(actionType: FTAudioActionType,
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?);
-    func navigateToPage(with pageId: String, documentId: String)
-//    func checkIfDocumentIsOpen(docId: String) -> Bool
-    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping (Bool) -> Void)
+    func navigateToPage(with pageId: String)
 }
 
 protocol FTToolbarElements : NSObjectProtocol {
@@ -162,10 +160,6 @@ class FTDocumentRenderViewController: UIViewController {
 
     func currentToolBarState() -> FTScreenMode {
         return deskToolbarController?.screenMode ?? .normal
-    }
-
-    func getCurrentDocument() -> FTDocumentProtocol? {
-        return self.documentViewController?.pdfDocument
     }
 
     /// Required Presentation method
@@ -320,22 +314,8 @@ extension FTDocumentRenderViewController: FTToolbarElements {
 
 //MARK:- fileprivate member Variable Access methods
 extension FTDocumentRenderViewController: FTDocumentViewPresenter {
-    func navigateToPage(with pageId: String, documentId: String) {
-        self.documentViewController.navigateToPage(with: pageId, for: documentId)
-    }
-
-    func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping ((Bool) -> Void)) {
-        let title = String(format: "textLink_continueConfirmation".localized, title)
-        let alertController = UIAlertController(title: title, message: "textLink_closingCurrentDocument_title".localized, preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes".localized, style: .default) { _ in
-            onCompletion(true)
-        }
-        let noAction = UIAlertAction(title: "No".localized, style: .cancel) { _ in
-            onCompletion(false)
-        }
-        alertController.addAction(yesAction)
-        alertController.addAction(noAction)
-        self.present(alertController, animated: true, completion: nil)
+    func navigateToPage(with pageId: String) {
+        self.documentViewController.navigateToPage(with: pageId)
     }
 
     func didCompleteDocumentPresentation() {

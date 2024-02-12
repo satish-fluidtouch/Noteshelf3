@@ -166,13 +166,10 @@ final class FTAppIntentHandler {
             track("today_widget", params: ["type": "Open Notebook"])
             intentHandler?.openDocumentForSelectedNotebook(url, isSiriCreateIntent: false)
             return true
-        } else if (url.scheme == FTSharedGroupID.getAppBundleID()) {
-            let reqHyperlinkStr = FTSharedGroupID.getAppBundleID() + ":" +  FTAppIntentHandler.hyperlinkPath
-            if url.absoluteString.hasPrefix(reqHyperlinkStr) {
-#if !targetEnvironment(macCatalyst)
+        } else if (url.isAppLink()) {
+            if url.isAppTextPageLink() {
                 intentHandler?.openNotebook(using: url)
-#endif
-            } else if url.path().contains(FTAppIntentHandler.templatesPath) {
+            } else if url.isTemplateIntentPath() {
                 intentHandler?.openTemplatesScreen(url: url)
             } else {
                 openAppScehemeURL(url: url)

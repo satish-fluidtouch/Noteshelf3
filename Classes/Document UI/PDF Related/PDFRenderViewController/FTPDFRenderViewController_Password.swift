@@ -161,21 +161,6 @@ extension FTPDFRenderViewController
     @objc func didCompleteDocumentPresentation() {
         self.showZoomPanelIfNeeded();
     }
-    
-    @objc func navigateToPage(with pageId: String, for documentId: String) {
-        var reqIndex: Int?
-        if pageId.isEmpty {
-            reqIndex = 0
-        } else if let index = self.pdfDocument.pages().firstIndex(where: { $0.uuid == pageId }) {
-            reqIndex = index
-        }
-        if let index = reqIndex {
-            self.showPage(at: index, forceReLayout: false, animate: false)
-        } else if documentId == currentDocumentLinkingId {
-            // with in same notebook
-            UIAlertController.showAlertForPageNotAvailable(from: self, completionHandler: nil)
-        }
-    }
 }
 
 //MARK:- FTSceneBackgroundHandling

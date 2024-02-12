@@ -83,4 +83,18 @@ extension UIAlertController {
         alertController.addAction(okAction)
         controller.present(alertController, animated: true, completion: nil)
     }
+
+    static func handleNewDocumentOpenAlert(title: String, pageNumber: Int, from controller: UIViewController, onCompletion: @escaping ((Bool) -> Void)) {
+        let title = String(format: "textLink_continueConfirmation".localized, title)
+        let alertController = UIAlertController(title: title, message: "textLink_closingCurrentDocument_title".localized, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes".localized, style: .default) { _ in
+            onCompletion(true)
+        }
+        let noAction = UIAlertAction(title: "No".localized, style: .cancel) { _ in
+            onCompletion(false)
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        controller.present(alertController, animated: true, completion: nil)
+    }
 }

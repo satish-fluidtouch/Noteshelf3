@@ -169,6 +169,7 @@ extension FTNoteshelfDocumentProvider {
 
                                                 dict?[DOCUMENT_ID_KEY] = newdocumentUUID;
                                                 dict?.write(to: propertyPlist, atomically: true);
+                                                try? destination.setExtendedAttributes(attributes: [FileAttributeKey.ExtendedAttribute(key: .documentUUIDKey, string: newdocumentUUID)])
 
                                                 //update dropbox/evernote/thumbanil as the document uuid is changed
                                                 if(oldDocumentUUID != nil) {

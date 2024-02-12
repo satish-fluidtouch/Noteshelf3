@@ -1771,18 +1771,14 @@ extension NSString {
         }
         var start = index
         var end = index
-        while start > 0, let startScalar = UnicodeScalar(character(at: start - 1)) {
-            if !CharacterSet.whitespacesAndNewlines.contains(startScalar) {
-                start -= 1
-            } else {
-                break
+        self.enumerateSubstrings(in: NSRange(location: 0, length: length), options: .byWords) { (subStr, range, _, _) in
+            if range.contains(start) {
+                start = range.location
             }
         }
-        while end < length, let endScalar = UnicodeScalar(character(at: end)) {
-            if !CharacterSet.whitespacesAndNewlines.contains(endScalar) {
-                end += 1
-            } else {
-                break
+        self.enumerateSubstrings(in: NSRange(location: 0, length: length), options: .byWords) { (subStr, range, _, _) in
+            if range.contains(end) {
+                end = NSMaxRange(range)
             }
         }
         return NSRange(location: start, length: end - start)

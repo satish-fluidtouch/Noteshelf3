@@ -118,7 +118,7 @@ class FTLinkToTextViewModel: NSObject {
 
     private func configPageLinkInfo() {
         if let schemeUrl = self.url { // when url is already available
-            if FTTextLinkRouteHelper.checkIfURLisAppLink(schemeUrl), let documentId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).docId, let pageId = FTTextLinkRouteHelper.getQueryItems(of: schemeUrl).pageId {
+            if schemeUrl.isAppLink(), let documentId = schemeUrl.getQueryItems().docId, let pageId = schemeUrl.getQueryItems().pageId {
                 self.info = FTPageLinkInfo(docUUID: documentId, pageUUID: pageId)
                 return
             } else {
@@ -135,7 +135,7 @@ class FTLinkToTextViewModel: NSObject {
         guard let controller = self.controllerToPresent else {
             return
         }
-        FTTextLinkRouteHelper.handeDocumentUnAvailablity(for: docID, on: controller)
+        controller.handeDocumentUnAvailablity(for: docID)
     }
 
     func updateTextLinkInfo(using doc: FTDocumentProtocol) {

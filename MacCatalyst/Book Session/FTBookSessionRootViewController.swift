@@ -27,24 +27,10 @@ class FTBookSessionRootViewController: UIViewController {
         }
     }
     
-    func openNotebook(using docId: String, pageId: String) {
-        if let splitVc = self.notebookSplitController, let docVc = splitVc.documentViewController, docId == currentDocumentLinkingId {
-            docVc.navigateToPage(with: pageId, documentId: docId)
-        } else {
-            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: docId) { docItem in
-                guard let shelfItem = docItem else {
-                    FTTextLinkRouteHelper.handeDocumentUnAvailablity(for: docId, on: self)
-                    return
-                }
-                FTDocumentPasswordValidate.validateShelfItem(shelfItem: shelfItem,
-                                                             onviewController: self,
-                                                             onCompletion:
-                                                                { [weak self] pin, success,_ in
-                    guard let self else { return }
-                    self.openItemInNewWindow(shelfItem, pageIndex: nil, pageUUID: pageId, docPin: pin)
-                })
-            }
-        }
+    func openNotebook(using pageId: String) {
+        if let splitVc = self.notebookSplitController, let docVc = splitVc.documentViewController {
+            docVc.navigateToPage(with: pageId)
+        } 
     }
 
     @objc private func sceneDidDisconnect(_ scene: NSNotification) {

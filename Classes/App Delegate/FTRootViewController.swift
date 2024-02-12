@@ -543,16 +543,16 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
 }
     
     func openNotebook(using schemeUrl: URL) {
-        guard let queryItems = URLComponents(url: schemeUrl, resolvingAgainstBaseURL: false)?.queryItems,
-              let documentId = queryItems.first(where: { $0.name == "documentId" })?.value,
-              let pageId = queryItems.first(where: { $0.name == "pageId" })?.value else {
+        let queryItems = schemeUrl.getQueryItems()
+        guard let documentId = queryItems.docId,
+              let pageId = queryItems.pageId else {
             return
         }
 
         guard let docVc = self.docuemntViewController else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
                 guard let shelfItem = docItem else {
-                    FTTextLinkRouteHelper.handeDocumentUnAvailablity(for: documentId, on: self)
+                    self.handeDocumentUnAvailablity(for: documentId)
                     return
                 }
                 let relativePath = shelfItem.URL.relativePathWRTCollection()
@@ -571,11 +571,11 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
         }
 
         if documentId == currentDocumentLinkingId {
-            docVc.navigateToPage(with: pageId, documentId: documentId)
+            docVc.navigateToPage(with: pageId)
         } else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
                 guard let shelfItem = docItem else {
-                    FTTextLinkRouteHelper.handeDocumentUnAvailablity(for: documentId, on: docVc)
+                    docVc.handeDocumentUnAvailablity(for: documentId)
                     return
                 }
                 guard shelfItem.URL.downloadStatus() == .downloaded else {

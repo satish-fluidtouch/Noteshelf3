@@ -566,63 +566,59 @@ extension FTShelfSplitViewController {
             } else {
                 processDocumentOpen()
             }
-            
+
             func processDocumentOpen() {
+                func finalizeClose() {
+                    self.view.isUserInteractionEnabled = true
+                    self.openingBookInProgress = false
+                    if let curToken = token {
+                        FTNoteshelfDocumentManager.shared.closeDocument(document: doc, token: curToken, onCompletion: nil)
+                    }
+                    onCompletion?(nil, false)
+                }
+
                 var shouldAnimate = animate
 
                 if self.applicationState() != .active {
                     shouldAnimate = false
                 }
 
-                if let pageId = pageUUID  {
-                    guard let parent = self.parent as? FTRootViewController, let docVc = parent.docuemntViewController else {
-                        if let index = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
-                            openBook(using: index)
-                        } else {
-                            openBook(using: 0)
+                var docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex ?? -1)
+                if let userActivity = self.view.window?.windowScene?.userActivity{
+                    if let pageIndex = userActivity.currentPageIndex {
+                        docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex)
+                        userActivity.currentPageIndex = nil //Clear it as we don't need this anywhere else
+                    }
+                }
+                if let pageId = pageUUID {
+                    let docController = (self.parent as? FTRootViewController)?.docuemntViewController
+                    guard let pageIndex = doc.pages().firstIndex(where: { $0.uuid == pageId }) else {
+                        UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: docController ?? self, notebookTitle: shelfItem.displayTitle) { yes in
+                            if yes {
+                                docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: 0)
+                                switchToPDFViewer(docInfo: docInfo)
+                            } else {
+                                finalizeClose()
+                            }
                         }
                         return
                     }
-                    if let index = doc.pages().firstIndex(where: { $0.uuid == pageId }) {
-                        docVc.handleNewDocumentOpenAlert(title: shelfItem.displayTitle, pageNumber: index + 1) { yes in
+                    docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex)
+                    if let docVc = docController {
+                        UIAlertController.handleNewDocumentOpenAlert(title: shelfItem.displayTitle, pageNumber: pageIndex + 1, from: docVc) { yes in
                             if yes {
-                                openBook(using: index)
+                                switchToPDFViewer(docInfo: docInfo)
                             } else {
-                                self.view.isUserInteractionEnabled = true
-                                self.openingBookInProgress = false
-                                onCompletion?(nil, false)
+                                finalizeClose()
                             }
                         }
-                    } else {
-                        UIAlertController.showAlertForPageNotAvailableAndSuggestToFirstPage(from: docVc, notebookTitle: doc.documentName) { yes in
-                            if yes {
-                                openBook(using: 0)
-                            } else {
-                                self.view.isUserInteractionEnabled = true
-                                self.openingBookInProgress = false
-                                onCompletion?(nil, false)
-                            }
-                        }
+                        return
                     }
-
-                    func openBook(using index: Int) {
-                        let docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: index)
-                        docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
-                        switchToPDFViewer(docInfo: docInfo)
-                    }
-                } else {
-                    var docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex ?? -1)
-                    if let userActivity = self.view.window?.windowScene?.userActivity{
-                        if let pageIndex = userActivity.currentPageIndex {
-                            docInfo = FTDocumentOpenInfo(document: notebookToOpen, shelfItem: shelfItem, index: pageIndex)
-                            userActivity.currentPageIndex = nil //Clear it as we don't need this anywhere else
-                        }
-                    }
-                    docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
-                    switchToPDFViewer(docInfo: docInfo)
                 }
+                switchToPDFViewer(docInfo: docInfo)
 
                 func switchToPDFViewer(docInfo: FTDocumentOpenInfo) {
+                    docInfo.documentOpenToken = token ?? FTDocumentOpenToken()
                     guard let rootController = self.parent as? FTRootViewController else {
                         onCompletion?(nil,false)
                         return

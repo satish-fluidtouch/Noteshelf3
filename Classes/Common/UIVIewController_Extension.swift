@@ -194,6 +194,28 @@ extension UIViewController {
         }
     }
 
+     func handeDocumentUnAvailablity(for documentId: String) {
+        FTNoteshelfDocumentProvider.shared.checkIfDocumentExistsInTrash(byDocumentId: documentId) { status in
+            if status {
+                UIAlertController.showDocumentNotAvailableAlert(from: self)
+                return
+            } else {
+                // Book is not available
+                let destinationURL = FTDocumentCache.shared.cachedLocation(for: documentId)
+                guard FTDocumentCache.shared.checkIfCachedDocumentIsAvailableOrNot(url: destinationURL) else {
+                    UIAlertController.showDeletedOrUndownloadedAlert(for: destinationURL, from: self)
+                    return
+                }
+                if destinationURL.downloadStatus() != .downloaded {
+                    // Book is not downloaded yet
+                    UIAlertController.showDocumentNotDownloadedAlert(for: destinationURL, from: self)
+                    return
+                }
+                return
+            }
+        }
+    }
+
     func noteBookSplitViewController() -> FTNoteBookSplitViewController? {
         return self.splitViewController as? FTNoteBookSplitViewController
     }
