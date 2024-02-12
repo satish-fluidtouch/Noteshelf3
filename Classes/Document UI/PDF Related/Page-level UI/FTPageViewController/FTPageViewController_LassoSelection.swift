@@ -143,7 +143,7 @@ extension FTPageViewController
         
         //Get the snapshot of the whole page in normal size, with selected annotations and without pdf background
         if let img = FTPDFExportView.snapshot(forPage: page,
-                                            screenScale: UIScreen.main.scale,
+                                            screenScale: 1,
                                             withAnnotations: selectedAnnotations) {
             //Crop the image to the final rect and render the image.
             UIGraphicsBeginImageContextWithOptions(integralRect.size, false, 0);
@@ -548,7 +548,7 @@ extension FTPageViewController: FTSaveClipDelegate {
         }
 
         let pdfGenerator = PDFGenerator()
-        let pdfPath = pdfGenerator.createPDF(frame: self.lassoSelectionView?.selectionRect ?? .zero)
+        let pdfPath = pdfGenerator.createPDF(pageSize: totalBoundingRect.size)
 
         let info = FTDocumentInputInfo();
         info.isTemplate = false
@@ -558,48 +558,34 @@ extension FTPageViewController: FTSaveClipDelegate {
         ftdocument.createDocument(info) { (error, _) in
             let doc = (ftdocument as? FTNoteshelfDocument)
             doc?.openDocument(purpose: .write, completionHandler: { success, error in
-                let page = doc?.pages().first as? FTNoteshelfPage
-                page?.deepCopyAnnotations(selectedAnnotations, onCompletion: { copiedAnnotations in
-                    copiedAnnotations.forEach { annotation in
-                        annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
-                    }
-                    FTPDFExportView.snapshot(forPage: page, size: THUMBNAIL_SIZE, screenScale: 2, offscreenRenderer: nil, purpose: FTSnapshotPurposeThumbnail, windowHash: nil) { image, _ in
-                        doc?.saveAndCloseWithCompletionHandler({ success in
-                            if let selectedImage = image {
-                                _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
-                            }
-                        })
-                    }
-                })
+                if let page = doc?.pages().first as? FTNoteshelfPage {
+                    page.deepCopyAnnotations(selectedAnnotations, onCompletion: { copiedAnnotations in
+                        copiedAnnotations.forEach { annotation in
+                            annotation.setOffset(CGPoint(x: -totalBoundingRect.origin.x, y: -totalBoundingRect.origin.y))
+                        }
+                        FTPDFExportView.snapshot(forPage: page, size: page.pdfPageRect.size, screenScale: 1, offscreenRenderer: nil, purpose: FTSnapshotPurposeThumbnail, windowHash: nil) { image, _ in
+                            doc?.saveAndCloseWithCompletionHandler({ success in
+                                if let selectedImage = image {
+                                    _ = try? FTSavedClipsProvider.shared.saveFileFrom(url: tempDocURL, to: name, thumbnail: selectedImage)
+                                }
+                            })
+                        }
+                    })
+                }
             })
         }
     }
 }
 
 class PDFGenerator {
+    func createPDF(pageSize: CGSize) -> URL? {
+        let pdfPath = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first! + "/" + "SaveClip.pdf"
 
-    func createPDF(frame: CGRect) -> URL {
-        let render = UIPrintPageRenderer()
-        render.setValue(NSValue(cgRect: frame), forKey: "paperRect")
-        let pdfData = NSMutableData()
-        UIGraphicsBeginPDFContextToData(pdfData, .zero, nil)
-
+        UIGraphicsBeginPDFContextToFile(pdfPath, CGRect(origin: .zero, size: pageSize), nil)
         UIGraphicsBeginPDFPage()
-        let bounds = UIGraphicsGetPDFContextBounds()
-        render.drawPage(at: 0, in: bounds)
-        UIGraphicsEndPDFContext();
-
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let pdfFilePath = documentsDirectory.appendingPathComponent("SaveClip.pdf")
-
-        do {
-            try pdfData.write(to: pdfFilePath)
-        } catch {
-            print("Error writing PDF to file: \(error.localizedDescription)")
-        }
-        return pdfFilePath
+        UIGraphicsEndPDFContext()
+        return URL(filePath: pdfPath)
     }
-
 }
 
 //MARK:- FTEditColorsViewControllerDelegate -
