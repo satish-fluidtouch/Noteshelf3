@@ -126,6 +126,37 @@ class FTTextView: UITextView, UIGestureRecognizerDelegate, NSTextStorageDelegate
     }
     #endif
 
+#if targetEnvironment(macCatalyst)
+    override func editMenu(for textRange: UITextRange, suggestedActions: [UIMenuElement]) -> UIMenu? {
+        var actions = suggestedActions
+        let menu = self.getMenuForMac()
+        actions.append(menu)
+        return UIMenu(children: actions)
+    }
+
+    func getMenuForMac() -> UIMenu {
+        var menuItems = [UIMenuElement]()
+        if self.checkIfToShowEditLinkOptions() {
+            let editLinkMenuItem = UIAction(title: "textLink_editLink".localized) { [weak self] _ in
+                self?.editLinkMenuItemAction(nil)
+            }
+            menuItems.append(editLinkMenuItem)
+
+            let removeLinkMenuItem = UIAction(title: "textLink_removeLink".localized) { [weak self] _ in
+                self?.removeLinkMenuItemAction(nil)
+            }
+            menuItems.append(removeLinkMenuItem)
+        } else {
+            let linkToMenuItem = UIAction(title: "textLink_linkTo".localized) { [weak self] _ in
+                self?.linkMenuItemAction(nil)
+            }
+            menuItems.append(linkToMenuItem)
+        }
+        let menu = UIMenu(title: "", image: nil, identifier: nil, options: .displayInline, children: menuItems);
+        return menu;
+    }
+#endif
+
     func setValueFor(_ value: Any?, forAttribute attr: String, in range: NSRange) {
         if range.length == 0 {
             var attributes = typingAttributes

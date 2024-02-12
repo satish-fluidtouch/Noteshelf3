@@ -32,7 +32,7 @@ let textContainerTag: Int = 9001
                             audio: FTAudioFileToImport,
                             onCompletion : ((Bool,NSError?) -> Void)?);
     func navigateToPage(with pageId: String, documentId: String)
-    func checkIfDocumentIsOpen(docId: String) -> Bool
+//    func checkIfDocumentIsOpen(docId: String) -> Bool
     func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping (Bool) -> Void)
 }
 
@@ -323,15 +323,6 @@ extension FTDocumentRenderViewController: FTDocumentViewPresenter {
     func navigateToPage(with pageId: String, documentId: String) {
         self.documentViewController.navigateToPage(with: pageId, for: documentId)
     }
-    
-    func checkIfDocumentIsOpen(docId: String) -> Bool {
-        var status = false
-        if let currentDoc = self.getCurrentDocument(), currentDoc.documentUUID == docId {
-            status = true
-        }
-        return status
-    }
-
 
     func handleNewDocumentOpenAlert(title: String, pageNumber: Int, onCompletion: @escaping ((Bool) -> Void)) {
         let title = String(format: "textLink_continueConfirmation".localized, title)

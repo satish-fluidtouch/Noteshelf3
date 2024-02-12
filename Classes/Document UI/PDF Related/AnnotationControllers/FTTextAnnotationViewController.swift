@@ -58,7 +58,6 @@ class FTTextAnnotationViewController: UIViewController {
 
 #if targetEnvironment(macCatalyst)
     private var forceEndEditing: Bool = false
-    internal var contextMenu: UIContextMenuInteraction?
 #endif
 
     private weak var referenceLibraryController: FTReferenceLibraryViewController?;
@@ -225,10 +224,6 @@ class FTTextAnnotationViewController: UIViewController {
                                                queue: nil) { [weak self] (notification) in
             self?.forceEndEditing = true
         }
-        
-        let menu = UIContextMenuInteraction.init(delegate: self)
-        self.textInputView.addInteraction(menu)
-        self.contextMenu = menu
         #endif
     }
 
@@ -1521,12 +1516,6 @@ extension FTTextAnnotationViewController : FTTouchEventProtocol
         if !self.editMode {
             saveTextEntryAttributes()
             self.setupMenuForTextViewLongPress();
-#if targetEnvironment(macCatalyst)
-            let reqMenu = self.getContextMenuForMac()
-            self.contextMenu?.updateVisibleMenu({ _ in
-                return reqMenu
-            })
-#endif
         }
         self.scheduleScrolling(delay: 0.4);
     }
@@ -1619,12 +1608,6 @@ extension FTTextAnnotationViewController : FTAnnotationEditControllerInterface
                 let convertedPoint = self.view.convert(point, to: textInputView)
                 self.textInputView.selectTextRange(at: convertedPoint)
                 setupMenuForTextViewLongPress()
-#if targetEnvironment(macCatalyst)
-                let reqMenu = self.getContextMenuForMac()
-                self.contextMenu?.updateVisibleMenu({ _ in
-                    return reqMenu
-                })
-#endif
             }
         }
     }

@@ -54,9 +54,23 @@ enum FTLinkToOption: String {
     }
 }
 
+let currentDocumentLinkingId: String = "SELF"
+
 struct FTPageLinkInfo {
-    var docUUID: String
-    var pageUUID: String
+    private(set) var docUUID: String
+    private(set) var pageUUID: String
+
+    mutating func updateDocumentId(_ docId: String) {
+        self.docUUID = docId
+    }
+
+    mutating func setCurrentDocumentId() {
+        self.docUUID = currentDocumentLinkingId
+    }
+
+    mutating func updatePageId(_ pageId: String) {
+        self.pageUUID = pageId
+    }
 }
 
 protocol FTPageSelectionDelegate: AnyObject {
@@ -111,8 +125,9 @@ class FTLinkToTextViewModel: NSObject {
                 self.webUrlStr = schemeUrl.absoluteString
             }
         }
-        if let doc = self.currentDocument, let page = self.currentPage {
-            self.info = FTPageLinkInfo(docUUID: doc.documentUUID, pageUUID: page.uuid)
+        if nil != self.currentDocument, let page = self.currentPage {
+            self.info.setCurrentDocumentId()
+            self.info.updatePageId(page.uuid)
         }
     }
 
@@ -120,44 +135,27 @@ class FTLinkToTextViewModel: NSObject {
         guard let controller = self.controllerToPresent else {
             return
         }
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        var isAvailableInTrash = false
-        FTNoteshelfDocumentProvider.shared.checkIfDocumentExistsInTrash(byDocumentId: docID) { status in
-            isAvailableInTrash = status
-            dispatchGroup.leave()
-        }
-        dispatchGroup.notify(queue: .main) {
-            if isAvailableInTrash {
-                UIAlertController.showDocumentNotAvailableAlert(from: controller)
-                return
-            } else {
-                // Book is not available
-                let destinationURL = FTDocumentCache.shared.cachedLocation(for: docID)
-                guard FTDocumentCache.shared.checkIfCachedDocumentIsAvailableOrNot(url: destinationURL) else {
-                    UIAlertController.showDeletedOrUndownloadedAlert(for: destinationURL, from: controller)
-                    return
-                }
-                if destinationURL.downloadStatus() != .downloaded {
-                    // Book is not downloaded yet
-                    UIAlertController.showDocumentNotDownloadedAlert(for: destinationURL, from: controller)
-                    return
-                }
-                return
-            }
-        }
+        FTTextLinkRouteHelper.handeDocumentUnAvailablity(for: docID, on: controller)
     }
 
-    func updateTextLinkInfo(_ info: FTPageLinkInfo) {
-        self.info = info
+    func updateTextLinkInfo(using doc: FTDocumentProtocol) {
+        if doc.documentUUID == self.currentDocument?.documentUUID {
+            self.info.setCurrentDocumentId()
+        } else {
+            self.info.updateDocumentId(doc.documentUUID)
+        }
+        if let firstPage = doc.pages().first {
+            self.updatePageId(using: firstPage)
+        }
+    }
+    
+    func updatePageId(using page: FTPageProtocol) {
+        self.info.updatePageId(page.uuid)
+        self.pageNumber = page.pageIndex() + 1
     }
 
     func updateDocumentTitle(_ title: String) {
         self.docTitle = title
-    }
-
-    func updatePageNumber(_ number: Int) {
-        self.pageNumber = number
     }
 
     func updateLinkText(_ text: String?) {
@@ -179,21 +177,19 @@ class FTLinkToTextViewModel: NSObject {
     }
 
     func prepareDocumentDetails(onCompletion: ((Bool) -> Void)?) {
-        if let doc = self.currentDocument,  info.docUUID == doc.documentUUID {
+        if let doc = self.currentDocument,  info.docUUID == currentDocumentLinkingId {
             self.selectedDocument = doc
-            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: info.docUUID) { docItem in
+            FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: doc.documentUUID) { docItem in
                 guard let shelfItem = docItem else {
-                    self.handleNotAvailableDocument(for: self.info.docUUID)
+                    self.handleNotAvailableDocument(for: doc.documentUUID)
                     return
                 }
                 self.updateDocumentTitle(shelfItem.displayTitle)
                 let pages = doc.pages()
-                if let pageIndex = pages.firstIndex(where: { $0.uuid == self.info.pageUUID }) {
-                    self.updatePageNumber(pageIndex + 1)
-                } else {
-                    self.updatePageNumber(1)
-                    var updatedInfo = self.info
-                    updatedInfo.pageUUID = pages.first?.uuid ?? ""
+                if let page = pages.first(where: { $0.uuid == self.info.pageUUID }) {
+                    self.updatePageId(using: page)
+                } else if let firstPage = pages.first {
+                    self.updatePageId(using: firstPage)
                 }
                 onCompletion?(true)
             }
@@ -228,12 +224,10 @@ class FTLinkToTextViewModel: NSObject {
                             self.selectedDocument = doc
                             self.token = token
                             let pages = doc.pages()
-                            if let pageIndex = pages.firstIndex(where: { $0.uuid == self.info.pageUUID }) {
-                                self.updatePageNumber(pageIndex + 1)
-                            } else {
-                                self.updatePageNumber(1)
-                                var updatedInfo = self.info
-                                updatedInfo.pageUUID = pages.first?.uuid ?? ""
+                            if let page = pages.first(where: { $0.uuid == self.info.pageUUID }) {
+                                self.updatePageId(using: page)
+                            } else if let firstPage = pages.first {
+                                self.updatePageId(using: firstPage)
                             }
                             onCompletion?(true)
                         }

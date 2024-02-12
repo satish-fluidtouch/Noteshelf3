@@ -256,11 +256,7 @@ extension FTLinkToSelectViewController: FTDocumentSelectionDelegate {
             self.viewModel.getSelectedDocumentDetails(using: docId) { doc in
                 if let selectedDoc = doc {
                     self.viewModel.updateDocumentTitle(document.displayTitle)
-                    self.viewModel.updatePageNumber(1)
-                    var exstInfo = self.viewModel.info
-                    exstInfo.docUUID = selectedDoc.documentUUID
-                    exstInfo.pageUUID = selectedDoc.pages().first?.uuid ?? ""
-                    self.viewModel.updateTextLinkInfo(exstInfo)
+                    self.viewModel.updateTextLinkInfo(using: selectedDoc)
                     if let document = doc as? FTThumbnailableCollection {
                         self.tableView?.reloadData()
                         self.docPagesController?.document = document
@@ -276,9 +272,7 @@ extension FTLinkToSelectViewController: FTPageSelectionDelegate {
     func didSelect(page: FTNoteshelfPage) {
         var info = self.viewModel.info
         if nil != self.viewModel?.selectedDocument {
-            info.pageUUID = page.uuid
-            self.viewModel.updatePageNumber(page.pageIndex() + 1)
-            self.viewModel.updateTextLinkInfo(info)
+            self.viewModel.updatePageId(using: page)
             self.tableView?.reloadData()
             FTTextLinkEventTracker.trackEvent(with: TextLinkEvents.linkToPageTap)
         }

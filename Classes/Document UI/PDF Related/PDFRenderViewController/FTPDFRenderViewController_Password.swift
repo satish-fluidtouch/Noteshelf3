@@ -171,7 +171,7 @@ extension FTPDFRenderViewController
         }
         if let index = reqIndex {
             self.showPage(at: index, forceReLayout: false, animate: false)
-        } else if self.pdfDocument.documentUUID == documentId {
+        } else if documentId == currentDocumentLinkingId {
             // with in same notebook
             UIAlertController.showAlertForPageNotAvailable(from: self, completionHandler: nil)
         }

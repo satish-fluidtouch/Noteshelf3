@@ -570,7 +570,7 @@ class FTRootViewController: UIViewController, FTIntentHandlingProtocol,FTViewCon
             return
         }
 
-        if docVc.checkIfDocumentIsOpen(docId: documentId) {
+        if documentId == currentDocumentLinkingId {
             docVc.navigateToPage(with: pageId, documentId: documentId)
         } else {
             FTNoteshelfDocumentProvider.shared.findDocumentItem(byDocumentId: documentId) { docItem in
