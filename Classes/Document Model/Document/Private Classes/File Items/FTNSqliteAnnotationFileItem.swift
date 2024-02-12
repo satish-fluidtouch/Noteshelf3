@@ -113,13 +113,13 @@ class FTNSqliteAnnotationFileItem : FTFileItemSqlite
                 FTCLSLog("PDF Page Saved");
                 dbToSave.commit();
                 dbToSave.close();
-            do {
-                _ = try FileManager().replaceItemAt(self.fileItemURL, withItemAt: localTempPath);
-            }
-            catch {
-                success = false;
-            }
         };
+        do {
+            _ = try FileManager().replaceItemAt(self.fileItemURL, withItemAt: localTempPath);
+        }
+        catch {
+            success = false;
+        }
         return success;
     }
     
