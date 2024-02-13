@@ -52,6 +52,8 @@ class FTTextAnnotationViewController: UIViewController {
     private var resizeMode: FTTextBoxResizeMode = .none;
     private var resizeDirection = FTKnobResizeDirection.bottomRight;
     private var knobHandlerImage: UIImageView!
+    internal var interaction: UIEditMenuInteraction?
+    internal var editMenuConfig: UIEditMenuConfiguration?
 
     // Don't make below viewmodel weak as this is needed for eyedropper delegate to be implemented here(since we are dismissing color edit controller)
     internal var penShortcutViewModel: FTPenShortcutViewModel?
@@ -123,7 +125,6 @@ class FTTextAnnotationViewController: UIViewController {
                 textInputView.isUserInteractionEnabled = true
                 self.checkBoxGesture?.isEnabled = false;
                 self.autocorrectionType = UITextAutocorrectionType.yes
-                UIMenuController.shared.hideMenu()
                 _ = self.becomeFirstResponder()
                 textInputView.layoutManager.invalidateDisplay(forCharacterRange: NSRange(location: 0, length: textInputView.textStorage.length));
             }
@@ -477,7 +478,6 @@ class FTTextAnnotationViewController: UIViewController {
         refLibController.title = text
         self.referenceLibraryController = refLibController;
         self.editMode = false
-        UIMenuController.shared.hideMenu()
         refLibController.onCompletion = { [weak self] in
             self?.setupMenuForTextViewLongPress();
         }
@@ -784,7 +784,6 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
             self.scheduleScrolling();
             validateKeyboard()
         }
-        
     }
     
         //#if SUPPORTS_BULLETS
@@ -842,17 +841,8 @@ extension FTTextAnnotationViewController : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         if !self.editMode {
             URL.openURL(on: self)
-        } else {
-            let selectedTextPosition = textView.position(from: textView.beginningOfDocument, offset: characterRange.location)
-            let selectedTextLength = characterRange.length
-            let selectedTextRange = textView.textRange(from: selectedTextPosition!, to: textView.position(from: selectedTextPosition!, offset: selectedTextLength)!)
-            textInputView.selectedTextRange = selectedTextRange
-
-            let editLinkItem = UIMenuItem(title: "Edit Link", action: #selector(FTTextView.editLinkMenuItemAction(_:)))
-            let removeLinkItem = UIMenuItem(title: "Remove Link", action: #selector(FTTextView.removeLinkMenuItemAction(_:)))
-            let menuController = UIMenuController.shared
-            menuController.menuItems = [editLinkItem, removeLinkItem]
-            menuController.showMenu(from: textView, rect: textView.frame)
+        } else if let editInteraction = (textView.interactions.first(where: { $0 is UIEditMenuInteraction }) as? UIEditMenuInteraction) {
+            editInteraction.reloadVisibleMenu()
         }
         return false
     }
@@ -1487,11 +1477,6 @@ extension FTTextAnnotationViewController : FTTouchEventProtocol
                 isMoving = true;
             }
         }
-        
-        if (isMoving || isScaling),!self.editMode {
-            UIMenuController.shared.hideMenu()
-        }
-
     }
     
     func processTouchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

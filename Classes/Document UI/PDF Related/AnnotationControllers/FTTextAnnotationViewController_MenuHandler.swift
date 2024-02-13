@@ -18,10 +18,11 @@ extension FTTextAnnotationViewController {
     internal func setupMenuForTextViewLongPress() {
         #if !targetEnvironment(macCatalyst)
         self.view.becomeFirstResponder()
-        let menuController = UIMenuController.shared
-        let menuItems = self.getMenuItemsForLongPress()
-        menuController.menuItems = menuItems
-        menuController.showMenu(from: self.textInputView, rect: self.textInputView.frame)
+        let interaction = UIEditMenuInteraction(delegate: self)
+        self.view.addInteraction(interaction)
+        self.interaction = interaction
+        self.editMenuConfig = UIEditMenuConfiguration(identifier: "TextLongPressMenu", sourcePoint: self.textInputView.frame.origin)
+        interaction.presentEditMenu(with: editMenuConfig!)
         #endif
     }
         
@@ -33,39 +34,62 @@ extension FTTextAnnotationViewController {
         return toHidePaste
     }
 
-    
-    internal func getMenuItemsForLongPress() -> [UIMenuItem] {
-        let editMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Edit", comment: "Edit"), action: #selector(FTAnnotationBaseView.editMenuItemAction(_:)))
-        let cutMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Cut", comment: "Cut"), action: #selector(FTAnnotationBaseView.cutMenuItemAction(_:)))
-        let copyMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Copy", comment: "Copy"), action: #selector(FTAnnotationBaseView.copyMenuItemAction(_:)))
-        let lockMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Lock", comment: "Lock"), action: #selector(FTAnnotationBaseView.lockMenuItemAction(_:)))
-        let bringToFrontMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("BringToFront", comment: "BringToFront"), action: #selector(FTAnnotationBaseView.bringToFrontMenuItemAction(_:)))
-        let sendToBackMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("SendToBack", comment: "SendToBack"), action: #selector(FTAnnotationBaseView.sendToBackMenuItemAction(_:)))
-        let deleteMenuItem: UIMenuItem = UIMenuItem(title: NSLocalizedString("Delete", comment: "Delete"), action: #selector(FTAnnotationBaseView.deleteMenuItemAction(_:)))
-
-        let linkMenuItem = UIMenuItem(title: "textLink_linkTo".localized, action: #selector(FTAnnotationBaseView.linkToMenuItemAction(_:)))
-        let editLinkITem = UIMenuItem(title: "textLink_editLink".localized, action: #selector(FTAnnotationBaseView.editLinkMenuItemAction(_:)))
-        let removeLinkItem = UIMenuItem(title: "textLink_removeLink".localized, action: #selector(FTAnnotationBaseView.removeLinkMenuItemAction(_:)))
-
-        var menuItems: [UIMenuItem] = [
-            editMenuItem
-            , cutMenuItem
-            , copyMenuItem
-            , deleteMenuItem
-            , lockMenuItem
-            , linkMenuItem
-            , editLinkITem
-            , removeLinkItem
-            , bringToFrontMenuItem
-            , sendToBackMenuItem
+    internal func getMenuItemsForLongPress() -> [UIAction] {
+        guard let baseView = self.view as? FTAnnotationBaseView else {
+            return []
+        }
+        let editAction = UIAction(title: "Edit".localized) { action in
+            baseView.editMenuItemAction(action)
+        }
+        let cutAction = UIAction(title: "Cut".localized) { action in
+            baseView.cutMenuItemAction(action)
+        }
+        let copyAction = UIAction(title: "Copy".localized) { action in
+            baseView.copyMenuItemAction(action)
+        }
+        let lockAction = UIAction(title: "Lock".localized) { action in
+            baseView.lockMenuItemAction(action)
+        }
+        let deleteAction = UIAction(title: "Delete".localized) { action in
+            baseView.deleteMenuItemAction(action)
+        }
+        let editLinkAction = UIAction(title: "textLink_editLink".localized) { action in
+            baseView.editLinkMenuItemAction(action)
+        }
+        let deleteLinkAction = UIAction(title: "textLink_removeLink".localized) { action in
+            baseView.removeLinkMenuItemAction(action)
+        }
+        let linkAction = UIAction(title: "textLink_linkTo".localized) { action in
+            baseView.linkToMenuItemAction(action)
+        }
+        let bringToFrontAction = UIAction(title: "BringToFront".localized) { action in
+            baseView.bringToFrontMenuItemAction(action)
+        }
+        let sendToBackAction = UIAction(title: "SendToBack".localized) { action in
+            baseView.sendToBackMenuItemAction(action)
+        }
+        var actions: [UIAction] = [
+            editAction,
+            cutAction,
+            copyAction,
+            deleteAction,
+            lockAction
         ]
-        #if DEBUG
-        let convertMenuItem: UIMenuItem = UIMenuItem(title: "Conver to stroke", action: #selector(FTAnnotationBaseView.convertToStroke(_:)))
-        menuItems.append(convertMenuItem);
-        #endif
-        return menuItems
+        if self.textInputView?.checkIfToShowEditLinkOptions() ?? false {
+            actions.append(contentsOf: [editLinkAction, deleteLinkAction])
+        } else {
+            actions.append(linkAction)
+        }
+        actions.append(contentsOf: [bringToFrontAction, sendToBackAction])
+#if DEBUG
+        let convertAction = UIAction(title: "Conver to stroke".localized) { action in
+            baseView.convertToStroke(action)
+        }
+        actions.append(convertAction)
+#endif
+        return actions
     }
-    
+
     @objc internal func performLinkAction(_ sender: Any?) {
         self.linkSelectedRange = self.textInputView.selectedRange
         if self.linkSelectedRange?.length == 0 {
@@ -298,3 +322,12 @@ extension FTTextAnnotationViewController: FTTextLinkEditDelegate {
         self.updateLinkAttribute(with: url, text: text)
     }
 }
+
+#if !targetEnvironment(macCatalyst)
+extension FTTextAnnotationViewController: UIEditMenuInteractionDelegate {
+    func editMenuInteraction(_ interaction: UIEditMenuInteraction, menuFor configuration: UIEditMenuConfiguration, suggestedActions: [UIMenuElement]) -> UIMenu? {
+        let menuItems = self.getMenuItemsForLongPress()
+        return UIMenu(title: "", children: menuItems)
+    }
+}
+#endif
