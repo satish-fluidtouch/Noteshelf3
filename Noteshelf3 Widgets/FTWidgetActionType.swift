@@ -35,13 +35,13 @@ public enum FTWidgetActionType {
         let iconName : String
         switch self {
         case .quickNote:
-            iconName = "plus.circle"
+            iconName = "quickNoteIcon" //"plus.circle"//"quickNoteIcon"
         case .newNotebook:
             iconName = "newNotebookIcon"
         case .audioNote:
-            iconName = "mic"
+            iconName = "audioNoteIcon" //"mic"//"audioNoteIcon"
         case .scan:
-            iconName = "scanner"
+            iconName = "scanIcon" //"scanner"//"scanIcon"
         case .search:
             iconName = "searchIcon"
         }
@@ -51,13 +51,13 @@ public enum FTWidgetActionType {
         let isSystemIcon : Bool
         switch self {
         case .quickNote:
-            isSystemIcon = true
+            isSystemIcon = false
         case .newNotebook:
             isSystemIcon = false
         case .audioNote:
-            isSystemIcon = true
+            isSystemIcon = false
         case .scan:
-            isSystemIcon = true
+            isSystemIcon = false
         case .search:
             isSystemIcon = false
         }

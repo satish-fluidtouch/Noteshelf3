@@ -825,6 +825,7 @@
 		97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */; };
 		97C453612B74B02900251C73 /* FTWidgetActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453602B74B02900251C73 /* FTWidgetActionController.swift */; };
 		97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C453602B74B02900251C73 /* FTWidgetActionController.swift */; };
+		97C453672B74E3B900251C73 /* Clearface-Serial-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1457399F2B0CB1E10052103F /* Clearface-Serial-Bold.otf */; };
 		97C52E4B292223E800BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E48292223E700BAA299 /* FTShelfViewModel+ShelfItemContextualOperations.swift */; };
 		97C52E4C292223E800BAA299 /* FTShelfViewModel+ShelfItemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E49292223E700BAA299 /* FTShelfViewModel+ShelfItemOperations.swift */; };
 		97C52E4D292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C52E4A292223E800BAA299 /* FTShelfViewModel+BottomBarOptions.swift */; };
@@ -837,6 +838,7 @@
 		97C799332B04ECEF001877B2 /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C799322B04ECEF001877B2 /* FTNSiCloudManager.swift */; };
 		97C799342B04ECEF001877B2 /* FTNSiCloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C799322B04ECEF001877B2 /* FTNSiCloudManager.swift */; };
 		97CBAB5D2AEB98DB00267A17 /* ENOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97CBAB5C2AEB98DA00267A17 /* ENOAuthViewController.m */; };
+		97CFD9D32B7B9EBC007949B2 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA84E2328730FA800DE801B /* Colors.swift */; };
 		97D2A4FA2AC6E8E800A0E509 /* FTFavoritePensetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4F92AC6E8E800A0E509 /* FTFavoritePensetManager.swift */; };
 		97D2A4FC2AC6EE0600A0E509 /* FavoritePensets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 97D2A4FB2AC6EE0600A0E509 /* FavoritePensets.plist */; };
 		97D2A4FE2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D2A4FD2AC6F01000A0E509 /* FTFavoritePensetDataManager.swift */; };
@@ -12302,6 +12304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C453232B70E40700251C73 /* Assets.xcassets in Resources */,
+				97C453672B74E3B900251C73 /* Clearface-Serial-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12881,6 +12884,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C4535E2B74AF0D00251C73 /* FTWidgetActionType.swift in Sources */,
+				97CFD9D32B7B9EBC007949B2 /* Colors.swift in Sources */,
 				97C453552B73725000251C73 /* ScanIntent.swift in Sources */,
 				97C453442B735A0100251C73 /* FTInteractiveWidgets.swift in Sources */,
 				97C453312B70F27C00251C73 /* SearchIntent.swift in Sources */,

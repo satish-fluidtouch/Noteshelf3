@@ -43,13 +43,14 @@ struct SimpleEntry: TimelineEntry {
 
 struct NotebookCreation_Widget: Widget {
     let kind: String = "NotebookCreation_Widget"
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
                 NotebookCreation_WidgetsEntryView()
                     .containerBackground(for: .widget, content: {
-                        Rectangle().fill(LinearGradient(colors: [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#DCCDBC"))], startPoint: .top, endPoint: .bottom))
+                        Rectangle().fill(LinearGradient(colors: [Color("widgetBG1"),Color("widgetBG2")], startPoint: .top, endPoint: .bottom))
                     })
             } else {
                 NotebookCreation_WidgetsEntryView()
@@ -57,9 +58,16 @@ struct NotebookCreation_Widget: Widget {
                     .background()
             }
         }.contentMarginsDisabled()
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Take Notes")
+        .description("Create a blank notebook, record audio or scan and import a document instantly")
         .supportedFamilies([.systemMedium])
+    }
+    var widgetGradientBG : [Color] {
+        if colorScheme == .light {
+            return [Color(uiColor: UIColor(hexString: "#F0EEEB")),Color(uiColor: UIColor(hexString: "#FFFFFF"))]
+        } else {
+            return [Color(uiColor: UIColor(hexString: "#282828")),Color(uiColor: UIColor(hexString: "#141414"))]
+        }
     }
 }
 

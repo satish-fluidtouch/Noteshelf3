@@ -222,19 +222,19 @@ extension URL {
 }
 extension SceneDelegate {
     func startSearch() {
-        self.showAlertForIntentWith(title: "Search", message: "")
+        self.showAlertForIntentWith(title: "Search", message: "Initiates search with the search bar active and keyboard ready for keyword entry.")
     }
     func createAQuickNote() {
-        self.showAlertForIntentWith(title: "Quick Note", message: "")
+        self.showAlertForIntentWith(title: "Quick Note", message: "Creates a blank note for immediate note-taking.")
     }
     func createNewNotebook() {
-        self.showAlertForIntentWith(title: "New Notebook", message: "")
+        self.showAlertForIntentWith(title: "New Notebook", message: "Displays options for customizing cover and paper style to create a new notebook.")
     }
     func createAudioNote() {
-        self.showAlertForIntentWith(title: "Audio Note", message: "")
+        self.showAlertForIntentWith(title: "Audio Note", message: "Instantly starts recording audio in a new notebook.")
     }
     func startScan() {
-        self.showAlertForIntentWith(title: "Staring scan", message: "")
+        self.showAlertForIntentWith(title: "Scan Doc", message: "Initiates the scanner to immediately start scanning and importing documents.")
     }
     func showAlertForIntentWith(title: String, message: String) {
         if let handlingController = window?.rootViewController as? FTIntentHandlingProtocol {
