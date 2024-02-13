@@ -47,7 +47,6 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     
     //MARK: Private variables
     private(set) var sidebarItemContexualMenuVM: FTSidebarItemContextualMenuVM = FTSidebarItemContextualMenuVM()
-    private var categoriesItems: [FTSideBarItem] = []
     private var newCollectionAddedOrUpdated: Bool = false
     private var cancellables = [AnyCancellable]()
     private var selectedSideBarItemType: FTSideBarItemType = .home

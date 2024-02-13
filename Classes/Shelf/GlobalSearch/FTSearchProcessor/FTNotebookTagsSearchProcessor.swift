@@ -53,7 +53,7 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
             }
             
             if !self.tags.isEmpty {
-                let tags = FTTagsProvider.shared.getTagsfor(self.tags);
+                let tags = FTTagsProvider.shared.getTagsfor(self.tags,shouldCreate: false);
                 var documentIDs = Set<String>();
                 tags.enumerated().forEach { eachItem in
                     let items = eachItem.element.documentIDs;

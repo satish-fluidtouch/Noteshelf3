@@ -1579,9 +1579,11 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
         if addedTags.isEmpty, removedTags.isEmpty {
             return;
         }
+        let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Updating Tags");
         let updater = FTDocumentTagUpdater()
         _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentIDs: docIDs) { 
             debugLog("updater: \(updater)");
+            loadingIndicator.hide();
         };
     }
 
@@ -1592,7 +1594,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
             let item = eachItem.element;
             if let documentItem = item as? FTDocumentItemProtocol, let docID = documentItem.documentUUID {
                 let doc = FTCachedDocument(documentID: docID);
-                let tags = Set(FTTagsProvider.shared.getTagsfor(doc.docuemntTags));
+                let tags = Set(FTTagsProvider.shared.getTagsfor(doc.docuemntTags,shouldCreate: false));
                 tagsAdded.formUnion(tags);
                 commonTags = eachItem.offset == 0 ? tags : commonTags.intersection(tags);
             }

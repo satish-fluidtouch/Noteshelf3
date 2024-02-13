@@ -173,16 +173,22 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     private func loadShelfTagItems() {
-        if tagCategory.allEntities.isEmpty {
-            self.showPlaceholderView();
-        }
-        else {
-            self.hidePlaceholderView();
-            if self.viewState == .edit, !self.tagCategory.selectedEntities.isEmpty {
-                self.collectionView?.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
-            } else {
-                self.collectionView?.reloadData()
+        self.tagCategory.loadItemsOncompletion { [weak self] in
+            guard let self else {
+                return;
             }
+            if self.tagCategory.allEntities.isEmpty {
+                self.showPlaceholderView();
+            }
+            else {
+                self.hidePlaceholderView();
+                if self.viewState == .edit, !self.tagCategory.selectedEntities.isEmpty {
+                    self.collectionView?.reloadItems(at: self.collectionView.indexPathsForVisibleItems)
+                } else {
+                    self.collectionView?.reloadData()
+                }
+            }
+            self.activateViewMode()
         }
     }
 
@@ -323,7 +329,7 @@ class FTShelfTagsViewController: UIViewController {
                 return;
             }
             
-            let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
+            let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Removing Tags");
             let updater = FTDocumentTagUpdater();
             _ = updater.updateTags(addedTags: [], removedTags: Array(allTags), entities: Array(selectedEntities)) {
                 debugLog("removed complete: \(updater)");
@@ -586,7 +592,7 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
         }
 
         let updater = FTDocumentTagUpdater();
-        let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating");
+        let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating Tags");
         _ = updater.updateTags(addedTags: addedTags, removedTags: removedTags, entities: Array(selectedItems)) { 
             debugLog("updater: \(updater)");
             indicator.hide();
@@ -598,7 +604,6 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
             self.setCurrentTag(tag);
         }
         self.loadShelfTagItems();
-        self.activateViewMode()
     }
 }
 
@@ -651,9 +656,18 @@ class FTShelfTagCategory: NSObject {
         didSet {
             self.selectedEntities.removeAll();
             self.allEntities.removeAll();
-            var booksEntries = [FTTaggedEntity]();
-            var pagessEntries = [FTTaggedEntity]();
-            self.currentTag?.getTaggedEntities(sort: true, { entities in
+        }
+    }
+    
+    func loadItemsOncompletion(_ onCompeltion: (()->())?) {
+        var booksEntries = [FTTaggedEntity]();
+        var pagessEntries = [FTTaggedEntity]();
+        self.currentTag?.getTaggedEntities(sort: true, { (entities,tag) in
+            runInMainThread {
+                guard tag == self.currentTag else {
+                    debugLog(">>>>> Tag mismatching: \(self.currentTag) -> \(tag)");
+                    return;
+                }
                 self.allEntities = entities;
                 self.allEntities.forEach { eachType in
                     if eachType.tagType == .book {
@@ -665,8 +679,9 @@ class FTShelfTagCategory: NSObject {
                 }
                 self.books = booksEntries;
                 self.pages = pagessEntries;
-            })
-        }
+                onCompeltion?();
+            }
+        })
     }
     
     func selectAll() {

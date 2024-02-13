@@ -198,6 +198,9 @@ class FTSideMenuViewController: UIHostingController<AnyView> {
 }
 
 extension FTSideMenuViewController: FTSidebarViewDelegate {
+    func showIndicatorView(_ message: String) -> FTLoadingIndicatorViewController {
+        return FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: message);
+    }
     func didTapOnSettings() {
         self.delegate?.showSettings()
     }

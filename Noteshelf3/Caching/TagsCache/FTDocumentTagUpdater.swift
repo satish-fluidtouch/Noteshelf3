@@ -48,8 +48,8 @@ class FTDocumentTagUpdater: NSObject {
                          pages: [FTPageProtocol]) {
         let documentName = document.URL.relativePathWRTCollection()
         
-        let addedFTTags = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text});
-        let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text},createIfNeeded: false);
+        let addedFTTags = FTTagsProvider.shared.getTagsfor(addedTags.map{$0.text},shouldCreate: true);
+        let removedFTTags = FTTagsProvider.shared.getTagsfor(removedTags.map{$0.text},shouldCreate: false);
         
         var tagsUpdated = Set<FTTag>();
         pages.forEach { eachPage in

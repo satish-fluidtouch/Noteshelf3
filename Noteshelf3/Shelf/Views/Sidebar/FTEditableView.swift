@@ -14,7 +14,7 @@ struct FTEditableView: View {
     var placeHolder: String
     var onButtonSubmit: (_ title:String)-> Void?
     let useTextfieldForEditing: Bool = false
-    let keyboardHideNotification = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+    let keyboardHideNotification = NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)
 
     @FocusState private var titleIsFocused: Bool
     @State var showEditableField: Bool = false

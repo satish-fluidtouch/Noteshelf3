@@ -29,8 +29,8 @@ class FTTagUpdateNotebook: FTTagOperation {
             }
             document.removeTags(self.removedTags.map{$0.text})
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
-                let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text});
-                let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},createIfNeeded: false);
+                let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text},shouldCreate: true);
+                let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},shouldCreate: false);
 
                 let docName = document.URL.relativePathWRTCollection()
                 tagsToAdd.forEach { eachTag in

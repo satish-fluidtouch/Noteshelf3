@@ -9,6 +9,9 @@
 import UIKit
 
 class FTAllTag: FTTag {
+    private var loadState: FTDataLoadState = .notLoaded;
+    private var completionBlocks = [FTTagCompletionHandler]();
+    
     override var tagType: FTTagType  {
         .allTag;
     }
@@ -17,16 +20,38 @@ class FTAllTag: FTTag {
         return "sidebar.allTags".localized;
     }
     
-    override func getTaggedEntities(sort: Bool,_ onCompletion: (([FTTaggedEntity])->())?) {
-        let tags = FTTagsProvider.shared.getTags();
+    override func getTaggedEntities(sort: Bool,_ onCompletion: FTTagCompletionHandler?) {
+        guard !loadState.isLoaded else {
+            return;
+        }
+        if let block = onCompletion {
+            completionBlocks.append(block);
+        }
+        guard !loadState.isLoading else {
+            return;
+        }
+        loadState = .loading;
+        var tags = FTTagsProvider.shared.getTags();
         var items = Set<FTTaggedEntity>();
-        tags.forEach { eachtag in
-            eachtag.getTaggedEntities(sort: false, { taggedEntities in
+        
+        func loadTagsRecursively() {
+            guard !tags.isEmpty else {
+                var itemsToReturn = Array(items);
+                itemsToReturn = (sort ? itemsToReturn.sortedTaggedEntities() : itemsToReturn);
+                self.completionBlocks.forEach { eachbloack in
+                    eachbloack(itemsToReturn,self);
+                }
+                self.loadState = .notLoaded;
+                return
+            }
+            let firstTag = tags.removeFirst();
+            firstTag.getTaggedEntities(sort: false) { (taggedEntities,tag) in
                 let newSet = Set(taggedEntities);
                 items.formUnion(newSet);
-            })
+                loadTagsRecursively();
+            }
         }
-        let itemsToReturn = Array(items);
-        onCompletion?(sort ? itemsToReturn.sortedTaggedEntities() : itemsToReturn);
+        
+        loadTagsRecursively();
     }
 }

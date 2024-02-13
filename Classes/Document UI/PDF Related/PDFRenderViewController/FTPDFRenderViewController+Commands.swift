@@ -211,7 +211,7 @@ extension FTPDFRenderViewController: FTShortcutActions {
             var commonTags = Set<FTTag>();
             pages.enumerated().forEach { eachPageEntry in
                 if let nspage = eachPageEntry.element as? FTNoteshelfPage {
-                    let pageTags = Set(FTTagsProvider.shared.getTagsfor(nspage.tags()));
+                    let pageTags = Set(FTTagsProvider.shared.getTagsfor(nspage.tags(),shouldCreate: true));
                     commonTags = (eachPageEntry.offset == 0) ? pageTags : commonTags.intersection(pageTags)
                 }
             }

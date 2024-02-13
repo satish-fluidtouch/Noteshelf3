@@ -27,7 +27,15 @@ protocol FTSidebarViewDelegate: AnyObject {
     func didTapOnSidebarItem(_ item: FTSideBarItem)
     func didSidebarItemRenamed(_ item: FTSideBarItem)
     func emptyTrash(_ collection: FTShelfItemCollection, showConfirmationAlert: Bool, onCompletion: @escaping ((Bool) -> Void))
+    func showIndicatorView(_ message:String) -> FTLoadingIndicatorViewController
 }
+
+extension FTSidebarViewDelegate {
+    func showIndicatorView(_ message:String) -> FTLoadingIndicatorViewController {
+        fatalError("Should override");
+    }
+}
+
 struct FTSidebarView: View {
 
     //@StateObject var viewModel : FTSidebarViewModel

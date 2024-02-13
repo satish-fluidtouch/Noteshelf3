@@ -9,11 +9,7 @@
 import UIKit
 
 class FTTaggedPageProperties: NSObject {
-    var pageIndex: Int = 0 {
-        didSet{
-            debugLog("enter");
-        }
-    };
+    var pageIndex: Int = 0;
     var pageSize: CGRect = CGRect.zero;
     
     func isSame(_ other: FTTaggedPageProperties) -> Bool {

@@ -2011,7 +2011,7 @@ extension FTFinderViewController: FTTagsViewControllerDelegate {
         FTDocumentTagUpdater().updatePageTags(addedTags: addedTags
                                               , removedTags: removedTags
                                               , document: doc
-                                              , pages: pages);
+                                              , pages: pages);        
         NotificationCenter.default.post(name: .shouldReloadFinderNotification, object: nil)
     }
 

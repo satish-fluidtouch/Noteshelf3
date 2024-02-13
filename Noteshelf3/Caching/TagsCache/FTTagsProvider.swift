@@ -68,7 +68,7 @@ class FTTagsProvider: NSObject {
         return userCreatedTags;
     }
     
-    func getTagsfor(_ names:[String],createIfNeeded: Bool = true) -> [FTTag] {
+    func getTagsfor(_ names:[String],shouldCreate: Bool) -> [FTTag] {
         lock.lock();
         var tagItems = [FTTag]();
         var tagsToAdd = [FTTag]();
@@ -79,7 +79,7 @@ class FTTagsProvider: NSObject {
             else if let tag = self.userTags[eachName.lowercased()] {
                 tagItems.append(tag)
             }
-            else if createIfNeeded {
+            else if shouldCreate {
                 let tag =  FTTag(name: eachName);
                 tagsToAdd.append(tag);
                 tagItems.append(tag)
@@ -242,12 +242,11 @@ private extension FTTag {
 
 internal extension FTTagsProvider {
     func syncTagsWithLocalCache(documentID: String) {
-        lock.lock();
         let cacheDocument = FTCachedDocument(documentID: documentID);
         let documentPath = cacheDocument.relativePath;
         
         let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
-        var newTagsSet = Set(self.getTagsfor(cacheDocument.docuemntTags))
+        var newTagsSet = Set(self.getTagsfor(cacheDocument.docuemntTags,shouldCreate: true))
         
         var shouldSave = false;
         self.syncNotebookTagsWithLocalCache(documentID: documentID
@@ -261,7 +260,7 @@ internal extension FTTagsProvider {
             pages.enumerated().forEach { eachItem in
                 let eachpage = eachItem.element;
                 let index = eachItem.offset;
-                let pageSet = Set(self.getTagsfor(eachpage.tags()))
+                let pageSet = Set(self.getTagsfor(eachpage.tags(), shouldCreate: true))
                 
                 let pageProperties = FTTaggedPageProperties();
                 pageProperties.pageSize = eachpage.pdfPageRect;
@@ -288,11 +287,12 @@ internal extension FTTagsProvider {
         if(shouldSave) {
             save();
         }
-        lock.unlock();
     }
     
     func saveCache() {
+        self.lock.lock()
         save();
+        self.lock.unlock()
     }
     
     func tagggedEntity(_ documentID: String
