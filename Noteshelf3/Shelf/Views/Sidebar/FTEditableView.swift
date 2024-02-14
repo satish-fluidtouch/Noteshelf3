@@ -53,6 +53,7 @@ struct FTEditableView: View {
                     .contentShape(Rectangle())
                     .if(!showEditableField) { view in
                         view.onTapGesture {
+                            self.currentTitle = item.title;
                             viewModel.endEditingActions()
                             showEditableField = true
                             track(EventName.sidebar_addnewcategory_tap, screenName: ScreenName.sidebar)
