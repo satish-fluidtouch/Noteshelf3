@@ -842,7 +842,11 @@ extension FTPageViewController: FTTextInteractionDelegate {
                 let antsView = lassoView.antsView {
             return antsView.isPointInsidePath(point);
         }
+#if targetEnvironment(macCatalyst)
+        return self.currentDeskMode() == .deskModeReadOnly
+#else
         return true;
+#endif
     }
     
     func requiredTapGestureToFail() -> UITapGestureRecognizer? {
