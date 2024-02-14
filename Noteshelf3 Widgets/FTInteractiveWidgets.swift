@@ -10,6 +10,65 @@ import Foundation
 import WidgetKit
 import SwiftUI
 
+struct FTPinnedBookEntry: TimelineEntry {
+    let date: Date
+    let name: String
+    let time: String
+    let coverImage: String
+}
+struct FTPinnedTimelineProvider: IntentTimelineProvider {
+    typealias Entry = FTPinnedBookEntry
+    
+    typealias Intent = FTPinnedIntentConfigurationIntent
+    
+    
+    func placeholder(in context: Context) -> FTPinnedBookEntry {
+        
+        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "")
+    }
+
+    func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
+                     in context: Context,
+                     completion: @escaping (FTPinnedBookEntry) -> ()) {
+        
+        let entry = FTPinnedBookEntry(date: Date(), name: "SnapShot", time: "", coverImage: "")
+        completion(entry)
+    }
+
+    func getTimeline(for configuration: FTPinnedIntentConfigurationIntent,
+                     in context: Context,
+                     completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
+        Task {
+            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Demo", time: configuration.Books?.time ?? "Demo", coverImage: configuration.Books?.coverImage ?? "Demo")
+            executeTimelineCompletion(completion, timelineEntry: entry)
+        }
+    }
+    
+    private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
+        let entry = FTPinnedBookEntry(date: Date(), name: "Empty", time: "", coverImage: "")
+
+        
+        // Trigger completion & next fetch happens 15 minutes later
+        executeTimelineCompletion(completion, timelineEntry: entry)
+    }
+    
+    func executeTimelineCompletion(_ completion: @escaping (Timeline<FTPinnedBookEntry>) -> (),
+                                   timelineEntry: FTPinnedBookEntry) {
+        
+        // Next fetch happens 15 minutes later
+        let nextUpdate = Calendar.current.date(
+            byAdding: DateComponents(minute: 15),
+            to: Date()
+        )!
+        
+        let timeline = Timeline(
+            entries: [timelineEntry],
+            policy: .after(nextUpdate)
+        )
+        
+        completion(timeline)
+    }
+}
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), emoji: "😀")
@@ -73,21 +132,21 @@ struct NotebookCreation_Widget: Widget {
 
 struct FTPinnedWidget: Widget {
     let kind: String = "InteractiveWidgets"
-
+    
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) {  entry in
+        IntentConfiguration(kind: kind, intent: FTPinnedIntentConfigurationIntent.self, provider: FTPinnedTimelineProvider()) { entry in
             if #available(iOS 17.0, *) {
-                FTPinnedWidgetView()
+                FTPinnedWidgetView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
-                    .widgetURL(appUrl())
             } else {
-                FTPinnedWidgetView()
+                FTPinnedWidgetView(entry: entry)
                     .padding()
                     .background()
-                    .widgetURL(appUrl())
             }
         }
         .supportedFamilies([.systemSmall])
+        .configurationDisplayName("My Widget")
+        .description("This is an example widget.")
     }
 
     private func appUrl() -> URL? {

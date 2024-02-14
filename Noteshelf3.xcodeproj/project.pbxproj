@@ -493,12 +493,20 @@
 		47F39E872A04DF7400CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F39E892A04E0FB00CB1599 /* FTPDFFileGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E7736B1E71632900E086AB /* FTPDFFileGenerator.swift */; };
 		47F5F2A42AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F5F2A32AC308890095CBA9 /* FTWatchRecordedListReprasentableView.swift */; };
+		5206098F2B7CA14400487CBC /* ColorThief.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5206098B2B7CA06500487CBC /* ColorThief.swift */; };
+		520609902B7CA14600487CBC /* MMCQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5206098C2B7CA06500487CBC /* MMCQ.swift */; };
 		520DA2A52A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */; };
 		520DA2AA2A2DF3D8003A6F22 /* FTFinderUI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4213C34E288955DB00A7A6F3 /* FTFinderUI.storyboard */; };
 		520DA2BC2A2F493C003A6F22 /* FTBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2BB2A2F493C003A6F22 /* FTBookmarkViewController.swift */; };
 		520DA2BE2A2F55C4003A6F22 /* FTBookmarkColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2BD2A2F55C4003A6F22 /* FTBookmarkColorCell.swift */; };
 		520DA2C82A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2C72A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift */; };
 		520DA2CA2A306C05003A6F22 /* FTBookmarkColorFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */; };
+		5219822A2B7B9A23004ABDCC /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 521982152B7B99D6004ABDCC /* Intents.framework */; };
+		5219822D2B7B9A24004ABDCC /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219822C2B7B9A24004ABDCC /* IntentHandler.swift */; };
+		521982312B7B9A24004ABDCC /* PinnedWidgetInentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 521982292B7B9A23004ABDCC /* PinnedWidgetInentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
+		5219823C2B7B9BC6004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
+		5219823D2B7B9BC7004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */; };
 		5238E7CE2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7CD2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift */; };
 		5238E7D22A0B705000F8F171 /* FTNoteBookSettingsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */; };
 		5238E7D42A0B712900F8F171 /* FTNoteBookSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */; };
@@ -2265,6 +2273,13 @@
 			remoteGlobalIDString = 0E4FDECF2AC1B3AA0097FE16;
 			remoteInfo = "Noteshelf3 WatchApp";
 		};
+		5219822F2B7B9A24004ABDCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 521982282B7B9A23004ABDCC;
+			remoteInfo = PinnedWidgetInentExtension;
+		};
 		5283D3A62A5E7AA000C6C125 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -2410,6 +2425,7 @@
 			files = (
 				BAB142312AF3746E001114C0 /* Noteshelf3 Thumbnail.appex in Embed Foundation Extensions */,
 				47B0AF202AF22E4200C15810 /* Noteshelf3 Action.appex in Embed Foundation Extensions */,
+				521982312B7B9A24004ABDCC /* PinnedWidgetInentExtension.appex in Embed Foundation Extensions */,
 				97C453272B70E40700251C73 /* Noteshelf3 WidgetsExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -3385,11 +3401,19 @@
 		47FBFD9F1EC9719B0083AA1E /* FTShelfItemPublishRequest_Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTShelfItemPublishRequest_Extension.swift; sourceTree = "<group>"; };
 		47FBFDAE1ECC1ABB0083AA1E /* UIView+RounderCorner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RounderCorner.swift"; sourceTree = "<group>"; };
 		517DC74247BEB79AB799009B /* Pods-Noteshelf3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Noteshelf3.debug.xcconfig"; path = "Target Support Files/Pods-Noteshelf3/Pods-Noteshelf3.debug.xcconfig"; sourceTree = "<group>"; };
+		5206098B2B7CA06500487CBC /* ColorThief.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorThief.swift; sourceTree = "<group>"; };
+		5206098C2B7CA06500487CBC /* MMCQ.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMCQ.swift; sourceTree = "<group>"; };
 		520DA2A42A2DAC94003A6F22 /* FTBookmarkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkCollectionViewCell.swift; sourceTree = "<group>"; };
 		520DA2BB2A2F493C003A6F22 /* FTBookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkViewController.swift; sourceTree = "<group>"; };
 		520DA2BD2A2F55C4003A6F22 /* FTBookmarkColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorCell.swift; sourceTree = "<group>"; };
 		520DA2C72A304D1E003A6F22 /* FTBookmarkColorSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorSectionHeader.swift; sourceTree = "<group>"; };
 		520DA2C92A306C05003A6F22 /* FTBookmarkColorFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTBookmarkColorFooter.swift; sourceTree = "<group>"; };
+		521982152B7B99D6004ABDCC /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		521982292B7B9A23004ABDCC /* PinnedWidgetInentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PinnedWidgetInentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		5219822C2B7B9A24004ABDCC /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		5219822E2B7B9A24004ABDCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		521982322B7B9A27004ABDCC /* PinnedWidgetInentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PinnedWidgetInentExtension.entitlements; sourceTree = "<group>"; };
+		521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = PinnedIntentDefinition.intentdefinition; sourceTree = "<group>"; };
 		5238E7CD2A0B6E5900F8F171 /* FTNoteBookSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsViewController.swift; sourceTree = "<group>"; };
 		5238E7D12A0B705000F8F171 /* FTNoteBookSettingsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTNoteBookSettingsHelper.swift; sourceTree = "<group>"; };
 		5238E7D32A0B712900F8F171 /* FTNoteBookSettings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FTNoteBookSettings.storyboard; sourceTree = "<group>"; };
@@ -4750,6 +4774,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		521982262B7B9A23004ABDCC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5219822A2B7B9A23004ABDCC /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6674,6 +6706,7 @@
 				0E4FDEDC2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension.appex */,
 				0964D0682AB9C27400C79C01 /* Noteshelf3 Thumbnail.appex */,
 				97C453182B70E40400251C73 /* Noteshelf3 WidgetsExtension.appex */,
+				521982292B7B9A23004ABDCC /* PinnedWidgetInentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7573,6 +7606,7 @@
 				0E4FDEE02AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension */,
 				0964D06A2AB9C27500C79C01 /* Noteshelf3 Thumbnail */,
 				97C4531D2B70E40500251C73 /* Noteshelf3 Widgets */,
+				5219822B2B7B9A24004ABDCC /* PinnedWidgetInentExtension */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				8BA031271A060E8300891239 /* Resources */,
 				211E39121E028265007B5CAD /* Third Party */,
@@ -7592,6 +7626,7 @@
 				BA7A5F4B2AB069AB006D5284 /* QuickLookThumbnailing.framework */,
 				97C453192B70E40500251C73 /* WidgetKit.framework */,
 				97C4531B2B70E40500251C73 /* SwiftUI.framework */,
+				521982152B7B99D6004ABDCC /* Intents.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -8175,6 +8210,25 @@
 				095E9F402366EBD3003277A4 /* FTSaveAsTemplateActivity.swift */,
 			);
 			path = SaveAsTemplate;
+			sourceTree = "<group>";
+		};
+		5206098A2B7CA03C00487CBC /* FTColorFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				5206098B2B7CA06500487CBC /* ColorThief.swift */,
+				5206098C2B7CA06500487CBC /* MMCQ.swift */,
+			);
+			path = FTColorFetcher;
+			sourceTree = "<group>";
+		};
+		5219822B2B7B9A24004ABDCC /* PinnedWidgetInentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				521982322B7B9A27004ABDCC /* PinnedWidgetInentExtension.entitlements */,
+				5219822C2B7B9A24004ABDCC /* IntentHandler.swift */,
+				5219822E2B7B9A24004ABDCC /* Info.plist */,
+			);
+			path = PinnedWidgetInentExtension;
 			sourceTree = "<group>";
 		};
 		5238E7CC2A0B6E3500F8F171 /* Notebook Settings */ = {
@@ -9098,9 +9152,11 @@
 		97C4531D2B70E40500251C73 /* Noteshelf3 Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				5206098A2B7CA03C00487CBC /* FTColorFetcher */,
 				97C453452B7371EB00251C73 /* Intents */,
 				97C4531E2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift */,
 				97C453202B70E40500251C73 /* FTPinnedNotebookWidget.swift */,
+				521982392B7B9BB5004ABDCC /* PinnedIntentDefinition.intentdefinition */,
 				97C453222B70E40700251C73 /* Assets.xcassets */,
 				97C453242B70E40700251C73 /* Info.plist */,
 				97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */,
@@ -11988,6 +12044,23 @@
 			productReference = 0E4FDEDC2AC1B3AC0097FE16 /* Noteshelf3 WatchApp Extension.appex */;
 			productType = "com.apple.product-type.watchkit2-extension";
 		};
+		521982282B7B9A23004ABDCC /* PinnedWidgetInentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 521982332B7B9A2A004ABDCC /* Build configuration list for PBXNativeTarget "PinnedWidgetInentExtension" */;
+			buildPhases = (
+				521982252B7B9A23004ABDCC /* Sources */,
+				521982262B7B9A23004ABDCC /* Frameworks */,
+				521982272B7B9A23004ABDCC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PinnedWidgetInentExtension;
+			productName = PinnedWidgetInentExtension;
+			productReference = 521982292B7B9A23004ABDCC /* PinnedWidgetInentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C4532E2B70E40C00251C73 /* Build configuration list for PBXNativeTarget "Noteshelf3 WidgetsExtension" */;
@@ -12120,6 +12193,7 @@
 				BAB258B7295B1B400072AEBB /* PBXTargetDependency */,
 				0E4FDEEE2AC1B3AD0097FE16 /* PBXTargetDependency */,
 				97C453262B70E40700251C73 /* PBXTargetDependency */,
+				521982302B7B9A24004ABDCC /* PBXTargetDependency */,
 			);
 			name = Noteshelf3;
 			packageProductDependencies = (
@@ -12166,7 +12240,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				CLASSPREFIX = FT;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Fluid Touch Pte Ltd";
 				TargetAttributes = {
@@ -12178,6 +12252,9 @@
 					};
 					0E4FDEDB2AC1B3AC0097FE16 = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					521982282B7B9A23004ABDCC = {
+						CreatedOnToolsVersion = 15.0.1;
 					};
 					97C453172B70E40400251C73 = {
 						CreatedOnToolsVersion = 15.2;
@@ -12251,6 +12328,7 @@
 				BAF0DCC92A6FE2A9006D293B /* FTNewNotebook */,
 				BAF0DD6C2A6FE675006D293B /* FTTemplatesStore */,
 				97C453172B70E40400251C73 /* Noteshelf3 WidgetsExtension */,
+				521982282B7B9A23004ABDCC /* PinnedWidgetInentExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -12296,6 +12374,13 @@
 				474B06342AC1B71500A4D0F3 /* Play-Small@2x.png in Resources */,
 				474B06272AC1B71500A4D0F3 /* playsmall.png in Resources */,
 				474B063D2AC1B71500A4D0F3 /* shine-v1.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		521982272B7B9A23004ABDCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12879,6 +12964,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		521982252B7B9A23004ABDCC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5219822D2B7B9A24004ABDCC /* IntentHandler.swift in Sources */,
+				5219823C2B7B9BC6004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		97C453142B70E40400251C73 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -12893,8 +12987,11 @@
 				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
 				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
+				5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
 				97C453212B70E40500251C73 /* FTPinnedNotebookWidget.swift in Sources */,
+				5206098F2B7CA14400487CBC /* ColorThief.swift in Sources */,
 				97C4531F2B70E40500251C73 /* Noteshelf3_WidgetsBundle.swift in Sources */,
+				520609902B7CA14600487CBC /* MMCQ.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14016,6 +14113,7 @@
 				BAF3933B2859ADF00067CA9F /* CocoaCryptoHashing.swift in Sources */,
 				E7AA516D28E311210008E473 /* FTCustomizeToolbarDataSource.swift in Sources */,
 				BAF3933C2859ADF00067CA9F /* FTNS1MigrationInfoView.swift in Sources */,
+				5219823D2B7B9BC7004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,
 				BAF3933F2859ADF00067CA9F /* FTDBBackupManager.swift in Sources */,
 				BAF393402859ADF00067CA9F /* FTDocumentItem.swift in Sources */,
 				BA2D90D9285CAE65001BB495 /* FTShelfItemsViewController.swift in Sources */,
@@ -14793,6 +14891,11 @@
 			platformFilter = ios;
 			target = 0E4FDECF2AC1B3AA0097FE16 /* Noteshelf3 WatchApp */;
 			targetProxy = 0E4FDEED2AC1B3AD0097FE16 /* PBXContainerItemProxy */;
+		};
+		521982302B7B9A24004ABDCC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 521982282B7B9A23004ABDCC /* PinnedWidgetInentExtension */;
+			targetProxy = 5219822F2B7B9A24004ABDCC /* PBXContainerItemProxy */;
 		};
 		5283D3A72A5E7AA000C6C125 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -16345,6 +16448,257 @@
 			};
 			name = "Release Enterprise";
 		};
+		521982342B7B9A2A004ABDCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PinnedWidgetInentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PinnedWidgetInentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fluidtouch.noteshelf3-dev.PinnedWidgetInentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		521982352B7B9A2A004ABDCC /* Debug Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PinnedWidgetInentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PinnedWidgetInentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.PinnedWidgetInentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug Enterprise";
+		};
+		521982362B7B9A2A004ABDCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PinnedWidgetInentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PinnedWidgetInentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.PinnedWidgetInentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		521982372B7B9A2A004ABDCC /* Release Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PinnedWidgetInentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PinnedWidgetInentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.PinnedWidgetInentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release Enterprise";
+		};
+		521982382B7B9A2A004ABDCC /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PinnedWidgetInentExtension/PinnedWidgetInentExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CNTLGGQX2J;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PinnedWidgetInentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PinnedWidgetInentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Fluid Touch Pte Ltd. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fluidtouch.noteshelf3.PinnedWidgetInentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
 		97C453292B70E40B00251C73 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -17829,6 +18183,18 @@
 				0E4FDEF32AC1B3AD0097FE16 /* Beta */,
 				4733C12E2B0E023A001E8391 /* Debug Enterprise */,
 				4733C12F2B0E023A001E8391 /* Release Enterprise */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		521982332B7B9A2A004ABDCC /* Build configuration list for PBXNativeTarget "PinnedWidgetInentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				521982342B7B9A2A004ABDCC /* Debug */,
+				521982352B7B9A2A004ABDCC /* Debug Enterprise */,
+				521982362B7B9A2A004ABDCC /* Release */,
+				521982372B7B9A2A004ABDCC /* Release Enterprise */,
+				521982382B7B9A2A004ABDCC /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
