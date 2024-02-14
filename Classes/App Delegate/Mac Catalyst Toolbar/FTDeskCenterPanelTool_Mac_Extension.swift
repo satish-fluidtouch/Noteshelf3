@@ -126,6 +126,8 @@ extension FTDeskCenterPanelTool {
             return FTDeskCenterPanelTool.hand;
         case .deskModeFavorites:
             return FTDeskCenterPanelTool.favorites;
+        case .deskModeReadOnly:
+            return FTDeskCenterPanelTool.hand;
         default:
             break;
         }
