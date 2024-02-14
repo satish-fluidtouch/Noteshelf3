@@ -245,7 +245,7 @@ private extension FTPageViewController {
 extension URL {
     func openURL(on viewController: UIViewController) {
         if(UIApplication.shared.canOpenURL(self)) {
-            if self.isAppTextPageLink() {
+            if self.isAppLink() {
                 UIApplication.shared.open(self, options: [:], completionHandler: nil)
             } else {
                 let title = NSLocalizedString("ExternalLink", comment: "Extenal Link")
