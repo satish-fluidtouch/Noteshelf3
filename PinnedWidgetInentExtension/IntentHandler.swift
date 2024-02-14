@@ -85,6 +85,26 @@ struct FTPinnedMockData {
             "bookName": "Notebook7",
             "createdTime": "11:00 PM",
             "imageName": "coverImage7"
+        ],
+        [
+            "bookName": "Notebook8",
+            "createdTime": "2:25 AM",
+            "imageName": "coverImage8"
+        ],
+        [
+            "bookName": "Notebook9",
+            "createdTime": "1:025 AM",
+            "imageName": "coverImage9"
+        ],
+        [
+            "bookName": "Notebook10",
+            "createdTime": "8:30 PM",
+            "imageName": "coverImage10"
+        ],
+        [
+            "bookName": "Notebook11",
+            "createdTime": "12:25 PM",
+            "imageName": "coverImage11"
         ]
     ]
 }

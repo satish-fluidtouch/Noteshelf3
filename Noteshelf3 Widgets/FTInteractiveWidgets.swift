@@ -9,6 +9,7 @@
 import Foundation
 import WidgetKit
 import SwiftUI
+import FTCommon
 
 struct FTPinnedBookEntry: TimelineEntry {
     let date: Date
@@ -24,14 +25,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
     
     func placeholder(in context: Context) -> FTPinnedBookEntry {
         
-        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "")
+        return FTPinnedBookEntry(date: Date(), name: "PlaceHolder", time: "5:00PM", coverImage: "coverImage1")
     }
 
     func getSnapshot(for configuration: FTPinnedIntentConfigurationIntent,
                      in context: Context,
                      completion: @escaping (FTPinnedBookEntry) -> ()) {
-        
-        let entry = FTPinnedBookEntry(date: Date(), name: "SnapShot", time: "", coverImage: "")
+        let entry = FTPinnedBookEntry(date: Date(), name: "Notebook 1", time: "5:00PM", coverImage: "coverImage1")
         completion(entry)
     }
 
@@ -39,13 +39,13 @@ struct FTPinnedTimelineProvider: IntentTimelineProvider {
                      in context: Context,
                      completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
         Task {
-            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Demo", time: configuration.Books?.time ?? "Demo", coverImage: configuration.Books?.coverImage ?? "Demo")
+            let entry = FTPinnedBookEntry(date: Date(), name: configuration.Books?.displayString ?? "Notebook 1", time: configuration.Books?.time ?? "5:00 PM", coverImage: configuration.Books?.coverImage ?? "coverImage1")
             executeTimelineCompletion(completion, timelineEntry: entry)
         }
     }
     
     private func showEmptyState(completion: @escaping (Timeline<FTPinnedBookEntry>) -> ()) {
-        let entry = FTPinnedBookEntry(date: Date(), name: "Empty", time: "", coverImage: "")
+        let entry = FTPinnedBookEntry(date: Date(), name: "Empty State", time: "6:00 PM", coverImage: "")
 
         
         // Trigger completion & next fetch happens 15 minutes later
@@ -138,6 +138,7 @@ struct FTPinnedWidget: Widget {
             if #available(iOS 17.0, *) {
                 FTPinnedWidgetView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
+                    .widgetURL(appUrl())
             } else {
                 FTPinnedWidgetView(entry: entry)
                     .padding()
@@ -145,16 +146,13 @@ struct FTPinnedWidget: Widget {
             }
         }
         .supportedFamilies([.systemSmall])
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Notebook")
+        .description(" Get quick access to one of your notebooks.")
     }
 
     private func appUrl() -> URL? {
         var components = URLComponents();
-        components.scheme = "com.fluidtouch.noteshelf3-dev"; //Should be dynamic
-//        components.scheme = "com.fluidtouch.noteshelf3"; //Enable this for PROD
-//        components.scheme = "com.fluidtouch.noteshelf3-Beta"; //Enale this For BETA
-
+        components.scheme = FTSharedGroupID.getAppBundleID()
         components.path = "/"
         components.queryItems = [URLQueryItem(name: "intent", value: "pinnedWidget")];
         return components.url

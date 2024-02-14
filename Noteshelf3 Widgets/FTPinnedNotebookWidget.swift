@@ -29,19 +29,29 @@ struct FTPinnedWidgetView : View {
 }
 struct topView: View {
     let entry: FTPinnedBookEntry
+    @State var color: UIColor = .black
+    
     var body: some View {
-        HStack {
-            Color(uiColor: UIColor(hexString: "#E06E51"))
+        ZStack {
+            Color(uiColor: color)
         }.frame(width: 160, height: 48)
-//        .background(Color.white.opacity(1))
-//        .background(Color(uiColor: adaptiveColorFromImage()))
+            .onAppear {
+                color = adaptiveColorFromImage()
+            }
+            .overlay {
+                if color.isLightColor() {
+                    Color.black.opacity(0.2)
+                } else {
+                    Color.white.opacity(0.2)
+                }
+            }
     }
     
     private func adaptiveColorFromImage() -> UIColor {
         var uiColor = UIColor(hexString: "#E06E51")
         if let uiImage = UIImage(named: entry.coverImage), let colors = ColorThief.getPalette(from: uiImage, colorCount: 5), colors.count >= 2 {
             print(colors)
-            uiColor = colors[0].makeUIColor()
+            uiColor = colors[1].makeUIColor().withAlphaComponent(0.8)
         }
         return uiColor
     }
@@ -72,3 +82,20 @@ struct bottomView: View {
 }
 
 
+
+extension UIColor {
+    func isLightColor() -> Bool {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        // Get HSB components of the color
+        if self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            if brightness > 0.88 {
+                return true
+            }
+        }
+        return false
+    }
+}
