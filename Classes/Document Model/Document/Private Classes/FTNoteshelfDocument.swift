@@ -593,7 +593,9 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
                         self.propertyInfoPlist()?.setObject([currentUserID], forKey: USER_IDs_KEY)
                     }
                 }
-                
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+                FTDocumentCorruptLogger.shared.markDocumentAsValid(self.fileURL);
+#endif
                 //****************************
                 FTCLSLog("Doc open: valid");
                 if(nil != completionHandler) {
@@ -873,7 +875,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     override func revert(toContentsOf url: URL, completionHandler: ((Bool) -> Void)?) {
         if(!isInRevertMode && !self.documentState.contains(UIDocument.State.progressAvailable) && !self.documentState.contains(UIDocument.State.closed)) {
             isInRevertMode = true;
-            FTCLSLog("Doc: Revert");
+            FTLogError("Doc Reverted");
             if((nil == self.pin && self.isPinEnabled())
                 || (nil != self.pin && !self.isPinEnabled())) {
                 self.notifySecurityUpdate();
@@ -1866,8 +1868,9 @@ extension FTNoteshelfDocument: FTPDFContentCacheProtocol {
 extension FTNoteshelfDocument {
     func logDocumentCorrupt(_ params: [String:Any]) {
         FTLogError("Doc Corrupt", attributes: params)
-        let obj = FTLogDocumentCorruptErrorFirstTime();
-        obj.logError(self.fileURL, params: params);
+#if  !NS2_SIRI_APP && !NOTESHELF_ACTION
+        FTDocumentCorruptLogger.shared.markDocumentAsCorrupted(self.fileURL, params: params);
+#endif
     }
         
     func logDocumentVersionNotSupported(_ documentVersion: String?) {
@@ -1897,34 +1900,79 @@ extension URL {
     }
 }
 
-private class FTLogDocumentCorruptErrorFirstTime: NSObject {
-    func logError(_ path: URL,params: [String:Any]) {
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION
-        if let filePath = URL.documentErrorFileURL {
+private class FTDocumentCorruptLogger: NSObject {
+    static let shared = FTDocumentCorruptLogger();
+    private lazy var queue: DispatchQueue = {
+        return DispatchQueue(label: "com.fluidtouch.doccorruptlogger");
+    }();
+    
+    private func docCorruptedInfo(_ path: URL) -> [String] {
+        var docInfo = [String]();
+        if FileManager().fileExists(atPath: path.path(percentEncoded: false)) {
             do {
-                var docInfo = [String]();
-                if FileManager().fileExists(atPath: filePath.path) {
-                    do {
-                        let data = try Data(contentsOf: filePath)
-                        if let info = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String] {
-                            docInfo = info;
-                        }
-                    }
-                }
-                let relativePath = path.relativePathWithOutExtension().lowercased()
-                if !docInfo.contains(relativePath) {
-                    
-                    FTLogError("Doc Corrupt First Time",attributes: params);
-                    track("Doc Corrupt First Time", params: params,screenName: "Doc open");
-                    docInfo.append(relativePath);
-                    let data = try PropertyListSerialization.data(fromPropertyList: docInfo, format: .xml, options: 0);
-                    try data.write(to: filePath, options: .atomic);
+                let data = try Data(contentsOf: path)
+                if let info = try PropertyListSerialization.propertyList(from: data, format: nil) as? [String] {
+                    docInfo = info;
                 }
             }
             catch {
                 
             }
         }
-#endif
+        return docInfo
+    }
+    
+    func saveDocumentCorruptInfo(path: URL, info docInfo:[String]) {
+        do {
+            let data = try PropertyListSerialization.data(fromPropertyList: docInfo, format: .xml, options: 0);
+            try data.write(to: path, options: .atomic);
+        }
+        catch {
+            
+        }
+    }
+    
+    func markDocumentAsCorrupted(_ path: URL,params: [String:Any])
+    {
+        guard let filePath = URL.documentErrorFileURL else {
+            return;
+        }
+        self.queue.async {
+            do {
+                var docInfo = self.docCorruptedInfo(filePath);
+                let relativePath = path.relativePathWithOutExtension().lowercased()
+                if !docInfo.contains(relativePath) {
+                    var inParams = params;
+                    inParams["path"] = relativePath;
+                    FTLogError("Doc Corrupt First Time",attributes: inParams);
+                    track("Doc Corrupt First Time", params: inParams,screenName: "Doc open");
+                    docInfo.append(relativePath);
+                    self.saveDocumentCorruptInfo(path: filePath, info: docInfo);
+                }
+            }
+            catch {
+                
+            }
+        }
+    }
+    
+    func markDocumentAsValid(_ path: URL) {
+        guard let filePath = URL.documentErrorFileURL else {
+            return;
+        }
+        self.queue.async {
+            var docInfo = self.docCorruptedInfo(filePath);
+            let relativePath = path.relativePathWithOutExtension().lowercased()
+            if let index = docInfo.firstIndex(of: relativePath) {
+                var params = [String:Any]();
+                params["path"] = relativePath;
+                FTLogError("Doc Corrupt Recovered",attributes: params);
+                track("Doc Corrupt Recovered", params: params,screenName: "Doc open");
+                docInfo.remove(at: index);
+                self.saveDocumentCorruptInfo(path: filePath, info: docInfo);
+            }
+        }
     }
 }
+#endif
