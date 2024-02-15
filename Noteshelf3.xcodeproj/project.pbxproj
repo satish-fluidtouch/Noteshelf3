@@ -2045,6 +2045,7 @@
 		E740163F29700B82003D3D7D /* FTGlobalSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740163E29700B82003D3D7D /* FTGlobalSearchController.swift */; };
 		E740164129700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E740164029700DD7003D3D7D /* FTGlobalSearchController+Suggestions.swift */; };
 		E746A99129A48248009B95B4 /* FTStickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E746A99029A48248009B95B4 /* FTStickersViewController.swift */; };
+		E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */; };
 		E75705D92AF5104900699764 /* FTFavoriteShortcutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705D82AF5104900699764 /* FTFavoriteShortcutController.swift */; };
 		E75705DB2AF51E8F00699764 /* FTFavoriteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75705DA2AF51E8F00699764 /* FTFavoriteEditViewController.swift */; };
 		E75A6EAE2AFCAB770039D25D /* FTFavoritePresetColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E75A6EAD2AFCAB770039D25D /* FTFavoritePresetColorsView.swift */; };
@@ -4411,6 +4412,7 @@
 		E743C12125A6EADF00D59BBF /* FTInfoTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTInfoTipView.swift; sourceTree = "<group>"; };
 		E743C12A25A7039300D59BBF /* FTQuickCreateInfoTipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickCreateInfoTipViewController.swift; sourceTree = "<group>"; };
 		E746A99029A48248009B95B4 /* FTStickersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTStickersViewController.swift; sourceTree = "<group>"; };
+		E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTQuickNoteCreateWidget.swift; sourceTree = "<group>"; };
 		E75516D9274F8F9800401F45 /* FTExportDataInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataInfoCell.swift; sourceTree = "<group>"; };
 		E75516DA274F8F9800401F45 /* FTExportDataInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FTExportDataInfoCell.xib; sourceTree = "<group>"; };
 		E75516E1274F90B600401F45 /* FTExportDataFailedItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FTExportDataFailedItemCell.swift; sourceTree = "<group>"; };
@@ -9162,6 +9164,7 @@
 				97C4533D2B73538B00251C73 /* FTNotebookCreationWidget.swift */,
 				97C453412B735A0100251C73 /* FTInteractiveWidgets.swift */,
 				97C4535B2B74AF0D00251C73 /* FTWidgetActionType.swift */,
+				E7485B7C2B7CD8DE00EE9BF2 /* FTQuickNoteCreateWidget.swift */,
 			);
 			path = "Noteshelf3 Widgets";
 			sourceTree = "<group>";
@@ -12985,6 +12988,7 @@
 				97C453512B73723D00251C73 /* AudioNoteIntent.swift in Sources */,
 				97C453632B74B02900251C73 /* FTWidgetActionController.swift in Sources */,
 				97C453402B73538B00251C73 /* FTNotebookCreationWidget.swift in Sources */,
+				E7485B7E2B7CDFE500EE9BF2 /* FTQuickNoteCreateWidget.swift in Sources */,
 				97C453492B73721400251C73 /* QuickNoteIntent.swift in Sources */,
 				97C4534D2B73722C00251C73 /* NewNotebookIntent.swift in Sources */,
 				5219823B2B7B9BC1004ABDCC /* PinnedIntentDefinition.intentdefinition in Sources */,

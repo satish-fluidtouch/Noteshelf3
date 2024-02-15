@@ -159,6 +159,36 @@ struct FTPinnedWidget: Widget {
     }
 }
 
+struct FTQuickNoteCreateWidget: Widget {
+    let kind: String = "QuickNoteCreationWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            if #available(iOS 17.0, *) {
+                FTQuickNoteCreateView()
+                    .containerBackground(for: .widget, content: {
+                        Rectangle().fill(LinearGradient(colors: [Color(hex: "E78971"), Color(hex: "E06E51")], startPoint: .top, endPoint: .bottom))
+                    }).widgetURL(appUrl())
+            } else {
+                FTQuickNoteCreateView()
+                    .padding()
+                    .background()
+            }
+        }.contentMarginsDisabled()
+            .configurationDisplayName("Quick Note")
+            .description("Create a quick note")
+            .supportedFamilies([.systemSmall])
+    }
+
+    private func appUrl() -> URL? {
+        var components = URLComponents();
+        components.scheme = FTSharedGroupID.getAppBundleID()
+        components.path = "/"
+        components.queryItems = [URLQueryItem(name: "intent", value: "quickNote")]
+        return components.url
+    }
+}
+
 @available(iOS 17.0, *)
 #Preview(as: .systemSmall) {
     FTPinnedWidget()

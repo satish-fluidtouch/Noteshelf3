@@ -85,6 +85,7 @@ protocol FTIntentHandlingProtocol: UIUserActivityRestoring {
     func startNS2ToNS3Migration()
     func showPremiumUpgradeScreen()
     func showPinnedWidgetAlert()
+    func showQuickNoteWidgetAlert()
     func showAlertWith(title : String,message : String)
 }
 
@@ -95,6 +96,7 @@ final class FTAppIntentHandler {
        case migration = "NS2Migration"
        case premiumUpgrade = "purchasePremium"
         case pinnedWidget = "pinnedWidget"
+        case quickNote = "quickNote"
     }
 
     private let supportedPathExts = [nsBookExtension
@@ -185,6 +187,8 @@ final class FTAppIntentHandler {
                     intentHandler?.startNS2ToNS3Migration()
                 } else if queryitem.value == NS3LaunchIntent.pinnedWidget.rawValue {
                     intentHandler?.showPinnedWidgetAlert()
+                } else if queryitem.value == NS3LaunchIntent.quickNote.rawValue {
+                    intentHandler?.showQuickNoteWidgetAlert()
                 } else {
                     intentHandler?.showPremiumUpgradeScreen()
                 }
