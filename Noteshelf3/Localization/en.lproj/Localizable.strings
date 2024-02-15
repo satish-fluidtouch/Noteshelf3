@@ -1170,7 +1170,7 @@
 "newnotebook" = "NEW NOTEBOOK";
 "newnotebook.create" = "Create";
 "newnotebook.exitalert.message" = "Would you like to continue?";
-"newnotebook.exitalert.title" = "This will exit the New Notebook screen and redirect you to the Templates view on the Shelf.                              ";
+"newnotebook.exitalert.title" = "This will exit the New Notebook screen and redirect you to the Templates view on the Shelf.";
 "newnotebook.moretemplates" = "More Templates";
 "newnotebook.password" = "Password";
 "newnotebook.title" = "TITLE";
