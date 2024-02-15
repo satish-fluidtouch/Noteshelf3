@@ -64,7 +64,7 @@ class FTShelfTagsPageCell: UICollectionViewCell {
                 tagsCount -= 1
                 tagsView?.addArrangedSubview(tagButton)
             } else {
-                tagButton.setTitle("\(tagsCount)+", for: .normal)
+                tagButton.setTitle("+ \(tagsCount)", for: .normal)
                 tagsView?.addArrangedSubview(tagButton)
                 return
             }

@@ -1579,7 +1579,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
         if addedTags.isEmpty, removedTags.isEmpty {
             return;
         }
-        let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "Updating Tags");
+        let loadingIndicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self, withText: "");
         let updater = FTDocumentTagUpdater()
         _ = updater.updateNotebookTags(addedTags: addedTags, removedTags: removedTags, documentIDs: docIDs) { 
             debugLog("updater: \(updater)");

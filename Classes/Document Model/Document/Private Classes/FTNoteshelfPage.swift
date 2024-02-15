@@ -889,6 +889,11 @@ extension FTNoteshelfPage : FTPageSearchProtocol
 
         guard !searchKey.isEmpty else {
             self.searchLock.signal();
+            let result = FTPageSearchingInfo()
+            result.searchKey = searchKey
+            result.pageUUID = self.uuid
+            result.pageIndex = self.pageIndex()
+            self.searchingInfo = result;
             return true;
         }
         

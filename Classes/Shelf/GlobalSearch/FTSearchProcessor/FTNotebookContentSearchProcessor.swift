@@ -83,7 +83,7 @@ class FTNotebookContentSearchProcessor: NSObject, FTSearchProcessor {
                         searchSectionItem.sectionHeaderItem = shelfItem
                         //==============================
                         let childProgress = notebook.searchDocumentsForKey(self.searchKey,
-                                                                           tags: [],
+                                                                           tags: self.tags,
                                                                            isGlobalSearch: true,
                                                                            onFinding: { (page, isCancelled) in
                                 if(!isCancelled) {

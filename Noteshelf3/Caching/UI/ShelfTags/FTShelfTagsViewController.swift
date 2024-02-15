@@ -329,7 +329,7 @@ class FTShelfTagsViewController: UIViewController {
                 return;
             }
             
-            let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Removing Tags");
+            let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "");
             let updater = FTDocumentTagUpdater();
             _ = updater.updateTags(addedTags: [], removedTags: Array(allTags), entities: Array(selectedEntities)) {
                 debugLog("removed complete: \(updater)");
@@ -592,7 +592,7 @@ extension FTShelfTagsViewController: FTTagsViewControllerDelegate {
         }
 
         let updater = FTDocumentTagUpdater();
-        let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "Updating Tags");
+        let indicator = FTLoadingIndicatorViewController.show(onMode: .activityIndicator, from: self.splitViewController ?? self, withText: "");
         _ = updater.updateTags(addedTags: addedTags, removedTags: removedTags, entities: Array(selectedItems)) { 
             debugLog("updater: \(updater)");
             indicator.hide();

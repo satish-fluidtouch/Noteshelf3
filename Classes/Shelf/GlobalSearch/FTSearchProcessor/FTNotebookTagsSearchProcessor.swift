@@ -75,9 +75,6 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
                 sectionResult.items = [FTSearchResultBookProtocol]();
                 func findShelfItems() {
                     guard let firstValue = filteredDocuments.first else {
-                        if sectionResult.items.isEmpty {
-                            self.onSectionFinding?([sectionResult], self.token)
-                        }
                         self.onCompletion?(self.token)
                         endBackgroundTask(task)
                         return;

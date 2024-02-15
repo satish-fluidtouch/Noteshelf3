@@ -63,4 +63,12 @@ class FTSidebarSection: FTSectionDisplayable, Identifiable, ObservableObject {
         }
         return false;
     }
+    
+    func removeItem(at index: Int) {
+        self.items.remove(at: index);
+    }
+    
+    func addItem(_ item: FTSideBarItem) {
+        self.items.append(item);
+    }
 }

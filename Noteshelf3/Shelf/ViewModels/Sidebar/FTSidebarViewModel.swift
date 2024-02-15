@@ -52,9 +52,6 @@ class FTSidebarViewModel: NSObject, ObservableObject {
     private var selectedSideBarItemType: FTSideBarItemType = .home
     private var lastSelectedTag: String = ""
 
-    private var topSectionGridItems:[FTSideBarItem] {
-        return menuItems.first(where: {$0.type == .all})?.items ?? []
-    }
     var activeReorderingSidebarSectionType: FTSidebarSectionType?
 
     var currentSideBarDropItem: FTSideBarItem?
@@ -330,9 +327,13 @@ extension FTSidebarViewModel {
             else if let shelfCollection = collection {
                 self?.selectedShelfItemCollection = shelfCollection
                 self?.newCollectionAddedOrUpdated = true
+                let section = self?.section(type: .categories);
+                section?.addItem(FTSideBarItem(shelfCollection: shelfCollection));
+                self?.setSideBarItemSelection();
             }
         }
     }
+    
     func renameCategory(_ category:FTSideBarItem,newTitle: String){
         guard let shelfCollection = category.shelfCollection else {
             return
@@ -358,9 +359,9 @@ extension FTSidebarViewModel {
         let currentSelectedCategpory = self.selectedSideBarItem?.shelfCollection
         FTNoteshelfDocumentProvider.shared.moveShelfToTrash(shelfCollection, onCompletion: { [weak self](error, deletedCollection) in
             //self.delegate?.shelfCategory(self, didDeleteCollection: deletedCollection!);
-            let categoriesSection = self?.menuItems.first(where: { $0.type == .categories})
+            let categoriesSection = self?.section(type: .categories)
             if let deletedCategoryIndex = categoriesSection?.items.firstIndex(where: {$0.id == category.id}) {
-                self?.menuItems.first(where: { $0.type == .categories})?.items.remove(at: deletedCategoryIndex)
+                categoriesSection?.removeItem(at: deletedCategoryIndex);
                 let sideBarItemTobeSelected: FTShelfItemCollection!
                 if category.id == currentSelectedCategpory?.uuid {//If current category is being deleted
                         if let totalCategories = categoriesSection?.items.count, totalCategories > 0 {
@@ -380,6 +381,7 @@ extension FTSidebarViewModel {
                 }
                 self?.newCollectionAddedOrUpdated = true
                 self?.selectedShelfItemCollection = sideBarItemTobeSelected
+                self?.setSideBarItemSelection();
             }
         })
     }
@@ -409,7 +411,7 @@ extension FTSidebarViewModel {
     }
 
     func updateUserCreatedCategories() {
-        self.menuItems.first(where: {$0.type == .categories})?.fetchItems();
+        self.section(type: .categories).fetchItems();
     }
     
     private func fetchSidebarMenuItems() {
@@ -462,7 +464,7 @@ extension FTSidebarViewModel {
 //MARK: Sidebar Sections open/close status maintainance And Categories/Tags user defined order maintainance logic
 extension FTSidebarViewModel {
     func moveItemInCategory(_ sectionType: FTSidebarSectionType,fromOrder: Int, toOrder: Int) {
-        _ = self.menuItems.first(where: {$0.type == sectionType})?.moveItem(fromOrder: fromOrder, toOrder: toOrder);
+        _ = self.section(type: sectionType).moveItem(fromOrder: fromOrder, toOrder: toOrder);
     }
 }
 
@@ -564,5 +566,14 @@ extension FTSidebarViewModel {
         if let event = eventMapping[section.type] {
             track(event, screenName: ScreenName.sidebar)
         }
+    }
+}
+
+internal extension FTSidebarViewModel {
+    func section(type: FTSidebarSectionType) -> FTSidebarSection {
+        guard let item = self.menuItems.first(where: {$0.type == type}) else {
+            fatalError("section cannot be nil");
+        }
+        return item;
     }
 }

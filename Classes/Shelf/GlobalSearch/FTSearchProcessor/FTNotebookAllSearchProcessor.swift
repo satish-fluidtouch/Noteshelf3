@@ -57,7 +57,7 @@ class FTNotebookAllSearchProcessor: NSObject, FTSearchProcessor {
 
     private func processAllBooksForTitles(){
         var processingToken: String = ""
-        self.currentProcessor = FTSearchProcessorFactory.getProcessor(forType: FTGlobalSearchType.titles, searchKey: searchKey)
+        self.currentProcessor = FTSearchProcessorFactory.getProcessor(forType: FTGlobalSearchType.titles, searchKey: searchKey,tags: self.tags)
         self.currentProcessor?.setDataToProcess(shelfCategories: self.shelfCategories, shelfItems: [FTShelfItemProtocol]())
          processingToken = self.currentProcessor!.startProcessing()
         self.progress.addChild(self.currentProcessor!.progress, withPendingUnitCount: Int64(self.shelfCategories.count))
@@ -87,40 +87,32 @@ class FTNotebookAllSearchProcessor: NSObject, FTSearchProcessor {
         //=============================
         self.currentProcessor?.onSectionFinding = {[weak self] (items, token) in
             if processingToken == token {
-                if self?.searchKey.isEmpty ?? false {
+                guard let searchKey = self?.searchKey, !searchKey.isEmpty else {
                     self?.onSectionFinding?(items, self?.token ?? "")
-
-                    //=============================
-                    self?.currentProcessor?.onCompletion = {[weak self] (token) in
-                        if processingToken == token {
-                            self?.onCompletion?(self?.token ?? "")
-                        }
-                    }
-                    //=============================
-
-                } else {
-                    var titleResultedShelfItems: [FTShelfItemProtocol] = []
-                    var contentToSearchShelfItems: [FTShelfItemProtocol] = []
-
-                    items.forEach { searchSection in
-                        if let resultBooks = searchSection.items as? [FTSearchResultBookProtocol] {
-                            resultBooks.forEach { resultBook in
-                                if let shelfItem = resultBook.shelfItem {
-                                    contentToSearchShelfItems.append(shelfItem)
-                                    if let key = self?.searchKey, shelfItem.title.contains(key) {
-                                        titleResultedShelfItems.append(shelfItem)
-                                    }
+                    return;
+                }
+                var titleResultedShelfItems: [FTShelfItemProtocol] = []
+                items.forEach { searchSection in
+                    if let resultBooks = searchSection.items as? [FTSearchResultBookProtocol] {
+                        resultBooks.forEach { resultBook in
+                            if let shelfItem = resultBook.shelfItem {
+                                if let key = self?.searchKey, shelfItem.title.contains(key) {
+                                    titleResultedShelfItems.append(shelfItem)
                                 }
                             }
                         }
                     }
-                    self?.shelfItems = contentToSearchShelfItems
-                    let reqResultItems = self?.getCompoundResultedBooksWithTitles(shelfItems: titleResultedShelfItems) ?? []
-                    if !reqResultItems.isEmpty {
-                        self?.onSectionFinding?(reqResultItems, self?.token ?? "")
-                    }
-                    self?.processAllBooksForContent()
                 }
+                let reqResultItems = self?.getCompoundResultedBooksWithTitles(shelfItems: titleResultedShelfItems) ?? []
+                if !reqResultItems.isEmpty {
+                    self?.onSectionFinding?(reqResultItems, self?.token ?? "")
+                }
+            }
+        }
+
+        self.currentProcessor?.onCompletion = {[weak self] (token) in
+            if processingToken == token {
+                self?.processAllBooksForContent()
             }
         }
     }
@@ -148,7 +140,7 @@ class FTNotebookAllSearchProcessor: NSObject, FTSearchProcessor {
 
     private func processAllBooksForContent(){
         var processingToken: String = ""
-        self.currentProcessor = FTSearchProcessorFactory.getProcessor(forType: FTGlobalSearchType.content, searchKey: self.searchKey)
+        self.currentProcessor = FTSearchProcessorFactory.getProcessor(forType: FTGlobalSearchType.content, searchKey: self.searchKey,tags: self.tags)
         self.currentProcessor?.setDataToProcess(shelfCategories: [FTShelfItemCollection](), shelfItems: self.shelfItems)
         processingToken = self.currentProcessor!.startProcessing()
         self.progress.addChild(self.currentProcessor!.progress, withPendingUnitCount: Int64(self.shelfItems.count))

@@ -16,7 +16,7 @@ extension FTSidebarViewModel {
                 FTTagsProvider.shared.renameTag(ftTag, to: ftTag.tagName);
                 return;
             }
-            let loadingIndicator = self.delegate?.showIndicatorView("Renaming Tag");
+            let loadingIndicator = self.delegate?.showIndicatorView("");
             runInMainThread {
                 let tagUpdated = FTDocumentTagUpdater();
                 _ = tagUpdated.rename(tag: ftTag, to: newTitle) {
@@ -28,19 +28,19 @@ extension FTSidebarViewModel {
     }
 
     func deleteTag(_ tag: FTSideBarItem) {
-        if let ftTag = (tag as? FTSideBarItemTag)?.fttag
-            , let tagSection = self.menuItems.first(where: {$0.type == .tags}) {
-            var menuItems = tagSection.items;
+        if let ftTag = (tag as? FTSideBarItemTag)?.fttag {
+            let tagSection = self.section(type: .tags)
             var index = -1;
             if self.selectedSideBarItem == tag {
-                index = menuItems.firstIndex(of: tag) ?? 0;
+                index = tagSection.items.firstIndex(of: tag) ?? 0;
             }
-            let loadingIndicator = self.delegate?.showIndicatorView("Deleting Tag");
+            let loadingIndicator = self.delegate?.showIndicatorView("");
             runInMainThread {
                 let tagUpdated = FTDocumentTagUpdater();
                 _ = tagUpdated.delete(tag: ftTag) {
                     if index != -1 {
-                        menuItems.remove(at: index);
+                        tagSection.removeItem(at: index);
+                        let menuItems = tagSection.items;
                         let indexToSet = min(index,menuItems.count-1);
                         let newItemToSet = menuItems[indexToSet];
                         self.selectedSideBarItem = newItemToSet;
