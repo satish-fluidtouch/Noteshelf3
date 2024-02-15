@@ -241,37 +241,38 @@ private extension FTTag {
 }
 
 internal extension FTTagsProvider {
-    func syncTagsWithLocalCache(documentID: String) {
-        let cacheDocument = FTCachedDocument(documentID: documentID);
-        let documentPath = cacheDocument.relativePath;
-        
+    func syncTagWithDocument(_ cacheDocument: FTDocumentProtocol) {
+        let documentID = cacheDocument.documentUUID
+        let relativePath = cacheDocument.relativePath
         let currentTags = Set(self.userTags.values.filter{$0.documentIDs.contains(documentID)});
-        var newTagsSet = Set(self.getTagsfor(cacheDocument.docuemntTags,shouldCreate: true))
+        var newTagsSet = Set(self.getTagsfor(cacheDocument.documentTags(),shouldCreate: true))
         
         var shouldSave = false;
         self.syncNotebookTagsWithLocalCache(documentID: documentID
-                                            , documentPath: documentPath
+                                            , documentPath: relativePath
                                             , tagNames: newTagsSet);
-        let pages = cacheDocument.pages;
+        let pages = cacheDocument.pages();
         if pages.isEmpty {
             self.removeAllTaggedItemsOfDocumentUUID(documentID);
         }
         else {
             pages.enumerated().forEach { eachItem in
                 let eachpage = eachItem.element;
-                let index = eachItem.offset;
-                let pageSet = Set(self.getTagsfor(eachpage.tags(), shouldCreate: true))
-                
-                let pageProperties = FTTaggedPageProperties();
-                pageProperties.pageSize = eachpage.pdfPageRect;
-                pageProperties.pageIndex = index;
-                
-                self.syncPageTagsWithLocalCache(documentID: documentID
-                                                , documentPath: documentPath
-                                                , pageID: eachpage.uuid
-                                                , tagNames: pageSet
-                                                , pageProperties: pageProperties);
-                newTagsSet.formUnion(pageSet);
+                if let tagpage = eachpage as? FTPageTagsProtocol {
+                    let index = eachItem.offset;
+                    let pageSet = Set(self.getTagsfor(tagpage.tags(), shouldCreate: true))
+                    
+                    let pageProperties = FTTaggedPageProperties();
+                    pageProperties.pageSize = eachpage.pdfPageRect;
+                    pageProperties.pageIndex = index;
+                    
+                    self.syncPageTagsWithLocalCache(documentID: documentID
+                                                    , documentPath: relativePath
+                                                    , pageID: eachpage.uuid
+                                                    , tagNames: pageSet
+                                                    , pageProperties: pageProperties);
+                    newTagsSet.formUnion(pageSet);
+                }
             }
         }
         let tagsToremove = currentTags.subtracting(newTagsSet);
@@ -287,6 +288,11 @@ internal extension FTTagsProvider {
         if(shouldSave) {
             save();
         }
+    }
+    
+    func syncTagsWithLocalCache(documentID: String) {
+        let cacheDocument = FTCachedDocument(documentID: documentID);
+        syncTagWithDocument(cacheDocument);
     }
     
     func saveCache() {

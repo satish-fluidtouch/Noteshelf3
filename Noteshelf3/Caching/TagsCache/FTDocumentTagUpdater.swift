@@ -79,6 +79,7 @@ class FTDocumentTagUpdater: NSObject {
             }
         }
         FTTagsProvider.shared.saveCache();
+        FTTagsProvider.shared.syncTagWithDocument(document);
         if !tagsUpdated.isEmpty {
             NotificationCenter.default.post(name: Notification.Name("DidChangePageEntities")
                                             , object: nil

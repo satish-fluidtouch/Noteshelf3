@@ -77,6 +77,19 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
     private var _onScreenRenderer: FTOnScreenRenderer?
     #endif
 
+    var relativePath: String? {
+        return self.fileURL.relativePathWRTCollection();
+    }
+
+    func documentTags() -> [String] {
+        if let documentInfoPlist = self.propertyInfoPlist() {
+            if let tags = documentInfoPlist.object(forKey: DOCUMENT_TAGS_KEY) as? [String] {
+                return Array(Set(tags))
+            }
+        }
+        return []
+    }
+
     fileprivate var previousFileModeificationDate : Date?;
     internal var isInDocCreationMode = false;
     var wasPinEnabled:Bool = false
@@ -1408,7 +1421,7 @@ class FTNoteshelfDocument : FTDocument,FTDocumentProtocol,FTPrepareForImporting,
         }
     }
 
-    func updateDocumentVersionToLatest()
+    private func updateDocumentVersionToLatest()
     {
         if let propertyPlist = self.propertyInfoPlist() {
             let documentVersion = propertyPlist.object(forKey: DOCUMENT_VERSION_KEY) as? String;

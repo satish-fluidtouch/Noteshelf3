@@ -59,7 +59,10 @@ protocol FTDocumentProtocolInternal: NSObjectProtocol {
     
     init(fileURL : Foundation.URL);
     var URL : Foundation.URL {get};
-
+    
+    func documentTags() -> [String];
+    var relativePath: String? {get};
+    
     var hasAnyUnsavedChanges : Bool {get};
     var shouldGenerateCoverThumbnail : Bool {get};
     var wasPinEnabled : Bool {get set};
@@ -91,9 +94,6 @@ protocol FTDocumentProtocolInternal: NSObjectProtocol {
     @discardableResult func insertPageBelow(page: FTPageProtocol) -> FTPageProtocol?;
     @discardableResult func insertPageAtIndex(_ index : Int) -> FTPageProtocol?;
     #endif
-    //Delete Tag from all pages
-    func deleteTag(_ tagName : String);
-    func allTags() -> Set<String>;
     
     //Document Operation
     var documentState : UIDocument.State  {get};
@@ -110,8 +110,6 @@ protocol FTDocumentProtocolInternal: NSObjectProtocol {
     var thumbnailGenerator: FTThumbnailGenerator? { get }
     func cancelAllThumbnailGeneration()
     #endif
-    
-    func updateDocumentVersionToLatest();
 }
 
 #if  !NS2_SIRI_APP && !NOTESHELF_ACTION

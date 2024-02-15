@@ -28,6 +28,7 @@ class FTTagUpdateNotebook: FTTagOperation {
                 document.addTag(eachTag.text);
             }
             document.removeTags(self.removedTags.map{$0.text})
+            FTTagsProvider.shared.syncTagWithDocument(document);
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 let tagsToAdd = FTTagsProvider.shared.getTagsfor(self.addedTags.map{$0.text},shouldCreate: true);
                 let tagsToRemove = FTTagsProvider.shared.getTagsfor(self.removedTags.map{$0.text},shouldCreate: false);

@@ -63,7 +63,7 @@ class FTNotebookTagsSearchProcessor: NSObject, FTSearchProcessor {
                 var filteredDocuments = [String:String]();
                 documentIDs.forEach { eachItem in
                     let document = FTCachedDocument(documentID: eachItem);
-                    let tags = Set(document.docuemntTags);
+                    let tags = Set(document.documentTags());
                     if self.tags.allSatisfy(tags.contains(_:)) {
                         filteredDocuments[eachItem] = document.relativePath ?? "";
                     }

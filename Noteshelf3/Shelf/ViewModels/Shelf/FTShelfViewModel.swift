@@ -603,7 +603,7 @@ extension FTShelfViewModel {
         }
         if let docUUID = document.documentUUID {
             let document = FTCachedDocument(documentID: docUUID);
-            let tags = document.docuemntTags;
+            let tags = document.documentTags();
             let allTags = FTTagsProvider.shared.getTags();
             let tagModels = allTags.map({FTTagModel(id: $0.id, text: $0.tagName, image: nil, isSelected: tags.contains($0.tagName))});
             self.displayTagsView(tags: tagModels)

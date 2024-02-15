@@ -28,6 +28,7 @@ class FTTagRename: FTTagOperation {
         FTTagsProvider.shared.renameTag(self.tag, to: newName);
         let progress = self.enumerateDocuments(Array(tag.documentIDs)) { (documentID, document, token, onTaskCompletion) in
             document.renameTag(oldName, with: newName)
+            FTTagsProvider.shared.syncTagWithDocument(document);
             FTNoteshelfDocumentManager.shared.saveAndClose(document: document, token: token) { _ in
                 onTaskCompletion();
             }

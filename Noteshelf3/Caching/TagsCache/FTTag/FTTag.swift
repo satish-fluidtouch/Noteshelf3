@@ -261,7 +261,7 @@ private extension FTTag {
         
         let doc = FTCachedDocument(documentID: documentID);
         let documentName = doc.relativePath
-        let docuemntTags = doc.docuemntTags
+        let docuemntTags = doc.documentTags()
         
         if docuemntTags.contains(where: {$0.lowercased() == lowercasedTag}) {
             if let taggedItem = FTTagsProvider.shared.tagggedEntity(documentID
@@ -274,12 +274,12 @@ private extension FTTag {
             }
         }
         
-        let pages = doc.pages;
+        let pages = doc.pages();
         pages.enumerated().forEach { eachItem in
             let eachPage = eachItem.element;
             let index = eachItem.offset;
-            if eachPage.tags().contains(where: {$0.lowercased() == lowercasedTag}) {
-                
+            if let tagPage = eachPage as? FTPageTagsProtocol
+                , tagPage.tags().contains(where: {$0.lowercased() == lowercasedTag}) {
                 let pageProperties = FTTaggedPageProperties();
                 pageProperties.pageSize = eachPage.pdfPageRect;
                 pageProperties.pageIndex = index;
@@ -289,7 +289,7 @@ private extension FTTag {
                                                                         , pageID: eachPage.uuid
                                                                         , createIfNotPresent: true) as? FTPageTaggedEntity {
                     pageEntity.updatePageProties(pageProperties);
-                    let tags = FTTagsProvider.shared.getTagsfor(eachPage.tags(),shouldCreate: false);
+                    let tags = FTTagsProvider.shared.getTagsfor(tagPage.tags(),shouldCreate: false);
                     tags.forEach { eachItem in
                         eachItem.addTaggedItemIfNeeded(pageEntity,forceAdd: eachItem == self)
                     }

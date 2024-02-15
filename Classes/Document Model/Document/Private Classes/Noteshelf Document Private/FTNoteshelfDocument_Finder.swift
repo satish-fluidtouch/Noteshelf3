@@ -118,15 +118,6 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
         return progress;
     }
 
-    func documentTags() -> [String] {
-        if let documentInfoPlist = self.propertyInfoPlist() {
-            if let tags = documentInfoPlist.object(forKey: DOCUMENT_TAGS_KEY) as? [String] {
-                return Array(Set(tags))
-            }
-        }
-        return []
-    }
-
     func addTag(_ tag : String) {
         var tags = self.documentTags()
         tags.append(tag)
@@ -134,7 +125,7 @@ extension FTNoteshelfDocument : FTThumbnailableCollection {
     }
 
     func addTags(tags: [String]) {
-        var tags = self.documentTags()
+        let tags = self.documentTags()
         self.updateDocumentTags(tags: tags)
     }
 

@@ -23,18 +23,12 @@ class FTSidebarSectionTags: FTSidebarSection {
                 return
             }
             let tags = FTTagsProvider.shared.getTags(true, sort: true);
-            let currentTags = (strongSelf.items as! [FTSideBarItemTag]).compactMap{$0.fttag};
-            
-            let tagsToDelete = Set(currentTags).subtracting(Set(tags));
-            
             var itemsToRefresh = [FTSideBarItem]();
-            itemsToRefresh.append(contentsOf: strongSelf.items);
-            itemsToRefresh.removeAll(where: {tagsToDelete.contains(($0 as! FTSideBarItemTag).fttag)})
-            
             for i in 0..<tags.count {
                 let eachTag = tags[i];
                 if let item = strongSelf.items.first(where: {$0.id == eachTag.id}) {
                     item.title = eachTag.tagDisplayName;
+                    itemsToRefresh.insert(item, at: i)
                 }
                 else {
                     let item = FTSideBarItemTag(tag: eachTag);

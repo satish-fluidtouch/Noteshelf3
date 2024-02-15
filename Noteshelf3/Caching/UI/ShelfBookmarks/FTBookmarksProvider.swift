@@ -56,7 +56,7 @@ class FTBookmarksProvider {
                 let matchedItems = self.bookmarkItems.filter {$0.documentUUID == documentUUID}
                 self.bookmarkItems.removeAll(where: {$0.documentUUID == documentUUID})
                 let cachedDocument = FTCachedDocument(documentID: documentUUID);
-                cachedDocument.pages.enumerated().forEach { eachItem in
+                cachedDocument.pages().enumerated().forEach { eachItem in
                     let page = eachItem.element;
                     let matchedItem = matchedItems.first(where: {$0.pageUUID == page.uuid})
                     if page.isBookmarked {
@@ -105,7 +105,7 @@ class FTBookmarksProvider {
                 guard let docUUID = item.documentUUID else { continue }
                 
                 let cachedDocument = FTCachedDocument(documentID: docUUID);
-                cachedDocument.pages.enumerated().forEach { eachItem in
+                cachedDocument.pages().enumerated().forEach { eachItem in
                     let page = eachItem.element;
                     let pageIndex = eachItem.offset;
                     if page.isBookmarked {

@@ -1594,7 +1594,7 @@ extension FTShelfSplitViewController: FTTagsViewControllerDelegate {
             let item = eachItem.element;
             if let documentItem = item as? FTDocumentItemProtocol, let docID = documentItem.documentUUID {
                 let doc = FTCachedDocument(documentID: docID);
-                let tags = Set(FTTagsProvider.shared.getTagsfor(doc.docuemntTags,shouldCreate: false));
+                let tags = Set(FTTagsProvider.shared.getTagsfor(doc.documentTags(),shouldCreate: false));
                 tagsAdded.formUnion(tags);
                 commonTags = eachItem.offset == 0 ? tags : commonTags.intersection(tags);
             }
