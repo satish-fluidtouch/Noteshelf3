@@ -173,10 +173,12 @@ class FTShelfTagsViewController: UIViewController {
     }
 
     private func loadShelfTagItems() {
+        self.showActivityIndicator()
         self.tagCategory.loadItemsOncompletion { [weak self] in
             guard let self else {
                 return;
             }
+            self.hideActivityIndicator();
             if self.tagCategory.allEntities.isEmpty {
                 self.showPlaceholderView();
             }
