@@ -138,7 +138,7 @@ struct FTPinnedWidget: Widget {
             if #available(iOS 17.0, *) {
                 FTPinnedWidgetView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
-                    .widgetURL(appUrl())
+                    .widgetURL(URLComponents(type: "pinnedWidget")?.url)
             } else {
                 FTPinnedWidgetView(entry: entry)
                     .padding()
@@ -148,14 +148,6 @@ struct FTPinnedWidget: Widget {
         .supportedFamilies([.systemSmall])
         .configurationDisplayName("Notebook")
         .description(" Get quick access to one of your notebooks.")
-    }
-
-    private func appUrl() -> URL? {
-        var components = URLComponents();
-        components.scheme = FTSharedGroupID.getAppBundleID()
-        components.path = "/"
-        components.queryItems = [URLQueryItem(name: "intent", value: "pinnedWidget")];
-        return components.url
     }
 }
 
@@ -167,6 +159,7 @@ struct FTPinnedNotebookOptionsWidget: Widget {
             if #available(iOS 17.0, *) {
                 FTPinnedNotebookOptionsWidgetView(entry: entry)
                     .containerBackground(.clear, for: .widget)
+                    .widgetURL(URLComponents(type: "pinnedWidget")?.url)
             } else {
                 FTPinnedNotebookOptionsWidgetView(entry: entry)
                     .padding()
@@ -188,7 +181,7 @@ struct FTQuickNoteCreateWidget: Widget {
                 FTQuickNoteCreateView()
                     .containerBackground(for: .widget, content: {
                         Rectangle().fill(LinearGradient(colors: [Color(hex: "E78971"), Color(hex: "E06E51")], startPoint: .top, endPoint: .bottom))
-                    }).widgetURL(appUrl())
+                    }).widgetURL(URLComponents(type: "quickNote")?.url)
             } else {
                 FTQuickNoteCreateView()
                     .padding()
@@ -199,13 +192,14 @@ struct FTQuickNoteCreateWidget: Widget {
             .description("Create a quick note")
             .supportedFamilies([.systemSmall])
     }
+}
 
-    private func appUrl() -> URL? {
-        var components = URLComponents();
-        components.scheme = FTSharedGroupID.getAppBundleID()
-        components.path = "/"
-        components.queryItems = [URLQueryItem(name: "intent", value: "quickNote")]
-        return components.url
+private extension URLComponents {
+    init?(type: String) {
+        self.init()
+        self.scheme = FTSharedGroupID.getAppBundleID()
+        self.path = "/"
+        self.queryItems = [URLQueryItem(name: "intent", value: type)]
     }
 }
 
